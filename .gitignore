@@ -21,7 +21,6 @@ OMS.API/OMS.Framework/obj/*
 OMS.API/OMS.Prisitance.Entities/obj/*
 OMS.API/OMS.Shared/obj/*
 OMS.API/OMS.FileManger.Services/obj/*
-OMS.API/OMS.Framework/OMS.Framework.csproj
 OMS.API/OMS.Framework/bin/Debug/*
 OMS.API/OMS.Prisitance.Entities/bin/*
 OMS.API/OMS.FileManger.Services/bin/Debug/*
@@ -38,6 +37,6 @@ OMS.API/Common.Helper/obj/*
 OMS.API/.vs/*
 OMS.API/Common.Helper/bin/*
 OMS.API/OMS.API/bin/Debug/*
-OMS Front End/package.json
 node_modules/
 jspm_packages/
+OMS Front End/package-lock.json
