@@ -6,7 +6,6 @@ import Breadcome from "../components/ui/breadcome/Breadcome";
 import Footer from "./components/footer/Footer";
 
 const Layout = (props) => {
-  console.log(props);
   return (
     <React.Fragment>
       <div className="main-page-layout">

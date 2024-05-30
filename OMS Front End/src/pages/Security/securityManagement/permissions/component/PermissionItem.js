@@ -1,34 +1,24 @@
+import React from "react";
+//** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
-import DropDown from "../../../../../components/ui/dropdown/DropDrown";
-import PermissionChildItem from "./PermissionChildItem";
 import Image from "../../../../../components/image/Image";
-
-const selectGrantDeny = [
-    { value: 1, label: "Grant" },
-    { value: 2, label: "Deny" },
-    { value: 6, label: "Empty" },
-];
-
-const selectViewEdit = [
-    { value: 3, label: "View Only" },
-    { value: 4, label: "Read/Write" },
-    { value: 5, label: "None" },
-    { value: 6, label: "Empty" },
-];
+import DropDown from "../../../../../components/ui/dropdown/DropDrown";
+import { SelectGrantDenyDropdown, SelectViewEditDropdown } from "../securityPermissions.Data";
+//** Component's */
+const PermissionChildItem = React.lazy(() => import("./PermissionChildItem"));
 
 const PermissionItem = ({ item, level, onParenetUpdate }) => {
 
+    //** Handle Change's */
     const onItemExpand = () => {
         item.isActive = !item.isActive;
         onParenetUpdate && onParenetUpdate(item, item.id);
     };
-
     const onValueChange = (valueItem) => {
         const value = valueItem.value;
         item.itemData.securitySettingId = value;
         onParenetUpdate && onParenetUpdate(item, item.id);
     };
-
     const onChildUpdate = (childItem) => {
         onParenetUpdate && onParenetUpdate(childItem, childItem.id);
     };
@@ -46,7 +36,7 @@ const PermissionItem = ({ item, level, onParenetUpdate }) => {
                 <div className="security-key">{item.name}</div>
                 <div className="permission-dropdown">
                     <DropDown
-                        options={item.itemData?.grantDenyFlag ? selectGrantDeny : selectViewEdit}
+                        options={item.itemData?.grantDenyFlag ? SelectGrantDenyDropdown : SelectViewEditDropdown}
                         value={item.itemData?.securitySettingId}
                         onChange={onValueChange} />
                 </div>

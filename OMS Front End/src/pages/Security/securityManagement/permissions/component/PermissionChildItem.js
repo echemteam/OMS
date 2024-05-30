@@ -1,5 +1,6 @@
 import React from 'react';
-import PermissionItem from './PermissionItem';
+//** Component's */
+const PermissionItem = React.lazy(() => import("./PermissionItem"));
 
 const PermissionChildItem = ({ childItems, level, parentItem, onParenetUpdate, ...props }) => {
     return (

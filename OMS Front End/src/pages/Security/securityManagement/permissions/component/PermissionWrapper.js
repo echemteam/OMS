@@ -1,12 +1,14 @@
 import React from "react";
-import PermissionItem from './PermissionItem';
+//** Component's */
+const PermissionItem = React.lazy(() => import("./PermissionItem"));
 
 const PermissionWrapper = ({ treeData, level, onTreeNodeDataChange, ...props }) => {
+
+    //** Handle Change's */
     const updateTreeData = (data, id) => {
         const newTreeData = treeData.map((item) =>
             item.id === id ? { ...item, ...data } : item
         );
-
         onTreeNodeDataChange && onTreeNodeDataChange(newTreeData);
     };
 
