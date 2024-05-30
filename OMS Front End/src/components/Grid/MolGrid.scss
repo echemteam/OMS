@@ -349,8 +349,8 @@ table {
     tbody {
       tr {
           border: none !important;
-        &:nth-child(odd){
-          background: #08cdaf0a;
+        &:nth-child(even){
+          background: rgb(8 142 205 / 4%);
         }
       }
     }
@@ -359,7 +359,7 @@ table {
 .table-bordered{
   table {
     thead{
-      background: #08cdaf26;
+      background: var(--themeColorLight);
       tr{
         th{
           border: 1px solid var(--inputBorder);

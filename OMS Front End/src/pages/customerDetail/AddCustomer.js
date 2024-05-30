@@ -1,14 +1,21 @@
 import React from "react";
-import "./CustomerDetail.scss";
+import "./ViewCustomer.scss";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import BasicDetail from "./features/basicDetail/BasicDetail";
 import ContactDetail from "./features/contactDetail/ContactDetail";
 import AddressDetail from "./features/addressDetail/AddressDetail";
 import CardSection from "../../components/ui/card/CardSection";
 
-const CustomerDetail = () => {
+const AddCustomer = () => {
   const tabs = [
-    
+    {
+      sMenuItemCaption: "Basic Details",
+      component: (
+        <>
+          <BasicDetail />
+        </>
+      ),
+    },
     {
       sMenuItemCaption: "Address Details",
       component: (
@@ -27,36 +34,15 @@ const CustomerDetail = () => {
     },
     {
       sMenuItemCaption: "Attachments",
-      component: (
-        <>
-          Attachment
-        </>
-      ),
+      component: <>Attachment</>,
     },
   ];
 
   return (
     <div className="card-bottom-m-0">
       <div className="row">
-        <div className="col-xl-3 col-md-3 col-12 basic-left-part">
-          <CardSection
-            cardTitle="Basic Information"
-            // buttonClassName="theme-button"
-            // rightButton={true}
-            // buttonText="Save"
-            // titleButtonClick={onEditAction}
-          >
-            <BasicDetail />
-          </CardSection>
-        </div>
-        <div className="col-xl-9 col-md-9 col-12 other-info-tab">
-          <CardSection
-            cardTitle="Other Information"
-            // buttonClassName="theme-button"
-            // rightButton={true}
-            // buttonText="Save"
-            // titleButtonClick={onEditAction}
-          >
+        <div className="col-12 other-info-tab">
+          <CardSection cardTitle="Other Information">
             <RenderTabs tabs={tabs} />
           </CardSection>
         </div>
@@ -65,4 +51,4 @@ const CustomerDetail = () => {
   );
 };
 
-export default CustomerDetail;
+export default AddCustomer;

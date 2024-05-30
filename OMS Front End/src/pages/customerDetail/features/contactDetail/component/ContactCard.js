@@ -104,10 +104,10 @@ const ContactCard = ({ isAddEditModal }) => {
                     </div>
                     <div className="edit-delete-button">
                       <button onClick={isAddEditModal} className="edit-btn">
-                        <Image imagePath={AppIcons.editIcon} />
+                        <Image imagePath={AppIcons.editThemeIcon} />
                       </button>
                       <button onClick="" className="edit-btn ml-1 mr-1">
-                        <Image imagePath={AppIcons.deleteIcon} />
+                        <Image imagePath={AppIcons.deleteThemeIcon} />
                       </button>
                     </div>
                   </div>

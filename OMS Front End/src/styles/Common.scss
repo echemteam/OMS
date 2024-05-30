@@ -346,6 +346,7 @@ a {
   margin-bottom: 20px;
   border: 1px solid #dbe0e5;
   box-shadow: var(--card-shadow);
+
   &.card-px-0 {
     padding: 12px 0;
   }
@@ -354,6 +355,7 @@ a {
     box-shadow: none;
     border: none;
   }
+
   .card-top-title-btn {
     padding-bottom: 10px;
     display: flex;
@@ -481,22 +483,22 @@ a {
 
 
 .badge-gradient-warning {
-  background: linear-gradient(to right, #e3d27d, #ffd500);
+  background: var(--gradient-warning);
   color: #ffffff;
 }
 
 .badge-gradient-success {
-  background: linear-gradient(to right, #a780e0, #5607cd);
+  background: var(--gradient-success);
   color: #ffffff;
 }
 
 .badge-gradient-info {
-  background: linear-gradient(to right, #90caf9, #047edf 99%);
+  background: var(--gradient-info);
   color: #ffffff;
 }
 
 .badge-gradient-danger {
-  background: linear-gradient(to right, #ffbf96, #fe7096);
+  background: var(--gradient-danger);
   color: #ffffff;
 }
 
@@ -535,7 +537,7 @@ a {
         border: 1px solid var(--gradient-theme);
         margin-bottom: -1px;
         background: var(--gradient-theme);
-        color: var(--textColor);
+        color: var(--whiteColor);
         // border-top: 4px solid;
       }
     }
@@ -543,13 +545,74 @@ a {
 
   .tab-content {
     padding-top: 20px;
-    min-height: calc(100vh - 250px);
+    min-height: calc(100vh - 200px);
 
     .tab-body-section {}
+  }
+
+  &.vertical-tab {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+
+    .tab-header {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 180px;
+      height: 100%;
+      border-right: 1px solid #d0d4df;
+      border-bottom: 0;
+      padding: 5px 0px 0 0px;
+
+      // background: var(--bg-main-content);
+      button {
+        margin: 0;
+        width: 100%;
+        border-radius: 0;
+        text-align: left;
+        margin-bottom: 5px;
+        border: none;
+        border-bottom: 1px solid #d0d4df;
+        margin-right: 10px;
+        z-index: 1;
+        background: #e2e6f0;
+        border-right-color: var(--whiteColor);
+        color: var(--textColor);
+
+        &.active {
+          background: var(--gradient-theme);
+          border-right: 1px solid var(--themeColor);
+          color: var(--whiteColor);
+          border-left: 4px solid var(--textColor);
+          
+
+        }
+
+      }
+    }
+
+    .tab-content {
+      width: calc(100% - 180px);
+    }
+
+    .card {
+      padding-right: 0;
+      padding-top: 10px;
+    }
+
+    .card-body-sec {
+      margin-top: 10px;
+    }
   }
 }
 
 .other-info-tab {
+  .card-body-sec {
+    margin-top: 0;
+  }
+
   .tab-section {
     .tab-content {
       padding-top: 0;
@@ -588,7 +651,7 @@ a {
   border-radius: 5px;
 
   .address-type-title {
-    background: rgba(8, 205, 175, 0.1490196078);
+    background: var(--cardTitleBg);
     padding: 5px 10px;
     display: flex;
     align-items: center;
@@ -607,7 +670,7 @@ a {
     padding: 0px 10px 10px;
 
     .address-card {
-      box-shadow: 0px 0px 17px -10px var(--themeColor);
+      box-shadow: 0px 0px 17px -10px var(--textColorLight);
       padding: 10px;
       border-radius: 12px;
       margin-bottom: 15px;
@@ -655,7 +718,7 @@ a {
   border-radius: 5px;
 
   .contact-type-title {
-    background: rgba(8, 205, 175, 0.1490196078);
+    background: var(--cardTitleBg);
     padding: 5px 10px;
     display: flex;
     align-items: center;
@@ -674,7 +737,7 @@ a {
     padding: 0px 10px 10px;
 
     .contact-card {
-      box-shadow: 0px 0px 17px -10px var(--themeColor);
+      box-shadow: 0px 0px 17px -10px var(--textColorLight);
       padding: 10px;
       border-radius: 12px;
       margin-bottom: 25px;
@@ -720,10 +783,11 @@ a {
         }
 
         span {
+          font-size: 90%;
           color: #2d3641db;
 
           &.user-name {
-            font-size: 115%;
+            font-size: 105%;
             color: var(--themeColor);
             margin-bottom: 5px;
             margin-left: 31px;
@@ -732,7 +796,7 @@ a {
 
           b {
             display: inline-block;
-            min-width: 90px;
+            min-width: 80px;
             font-weight: 600;
             letter-spacing: 0.3px;
           }

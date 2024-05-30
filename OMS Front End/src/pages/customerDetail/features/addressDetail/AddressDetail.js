@@ -19,7 +19,7 @@ const AddressDetail = () => {
   return (
     <>
       <CardSection
-        cardTitle="All Address"
+        cardTitle="Address"
         buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
@@ -32,7 +32,7 @@ const AddressDetail = () => {
 
       <SidebarModel
         modalTitle="Add/Edit Address"
-        contentClass="content-35"
+        contentClass="content-40"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}

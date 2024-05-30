@@ -1,18 +1,15 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
-import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
-import ContactDetailForm from "./component/ContactDetailForm";
 import ContactCard from "./component/ContactCard";
+import { useNavigate } from "react-router-dom";
 
 const ContactDetail = () => {
-  const [isModelOpen, setisModelOpen] = useState(false);
-  const handleToggleModal = () => {
-    setisModelOpen(true);
+  const navigate = useNavigate();
+  const handleAddEidtClick = (data) => {
+    navigate(`/addEditContact`);
   };
-  const onSidebarClose = () => {
-    setisModelOpen(false);
-  };
+
   return (
     <>
       <CardSection
@@ -22,22 +19,10 @@ const ContactDetail = () => {
         iconImg={AppIcons.PlusIcon}
         rightButton={true}
         buttonText="Add New Contact"
-        titleButtonClick={handleToggleModal}
+        titleButtonClick={handleAddEidtClick}
       >
-        <ContactCard isAddEditModal={handleToggleModal}/>
-
+        <ContactCard isAddEditModal={handleAddEidtClick} />
       </CardSection>
-      <div className="sidebar-contact-model">
-        <SidebarModel
-          modalTitle="Add/Edit Contact"
-          contentClass="content-45"
-          onClose={onSidebarClose}
-          modalTitleIcon={AppIcons.AddIcon}
-          isOpen={isModelOpen}
-        >
-          <ContactDetailForm onSidebarClose={onSidebarClose} />
-        </SidebarModel>
-      </div>
     </>
   );
 };

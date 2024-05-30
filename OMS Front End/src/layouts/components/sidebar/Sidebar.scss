@@ -41,7 +41,35 @@
             li {
 
               &.menu-item {
-
+                margin-bottom: 5px;
+                &:hover {
+                  a {
+                    background: var(--linkMenu);
+                    color: var(--textColor);
+                    i {
+                      color: var(--textColor);
+                    }
+                  }
+                }
+                &.active-menu{
+                  &:hover {
+                    .menu-arrow{
+                      background: var(--themeColorLight);
+                      color: var(--themeColor);
+                      i {
+                        color: var(--themeColor);
+                      }
+                    }
+                  }
+                  a{
+                    background: var(--themeColorLight);
+                    color: var(--themeColor);
+                    i {
+                      color: var(--themeColor);
+                    }
+                  }
+                  
+                }
                 a {
                   font-size: 100%;
                   color: var(--blackColor);
@@ -83,16 +111,8 @@
                   }
                 }
 
-                &.active-menu,
-                &:hover {
-                  a {
-                    background: var(--bg-light-content);
-                    color: var(--themeColor);
-                    i {
-                      color: var(--themeColor);
-                    }
-                  }
-                }
+                
+               
 
                 ul {
                   &.sidebar-dropdown {
@@ -153,15 +173,36 @@
                       transform: translateY(-50%);
                       height: 90%;
                       width: 1px;
-                      background: var(--textColor);
+                      background: var(--light-menuDot);
                     }
                   &.sidebar-dropdown {
                     height: auto;
                     opacity: 1;
                     
                     li{
+                      position: relative;
+                      &:before{
+                        position: absolute;
+                        content: "";
+                        background: var(--light-menuDot);
+                        height: 5px;
+                        width: 5px;
+                        border-radius: 100%;
+                        top: 50%;
+                        left: -5px;
+                        transform: translateY(-50%);
+                        transition: 0.5s all;
+                      }
                       a{
                         color: var(--textColor);
+                      }
+                      &:hover{
+                        &:before{
+                          background: var(--themeColor);
+                        }
+                        a{
+                          color: var(--themeColor);
+                        }
                       }
                     }
                   }

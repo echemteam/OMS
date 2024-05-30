@@ -5,9 +5,11 @@ import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import Users from "../../pages/Security/userManagement/Users";
 import UsersRole from "../../pages/Security/roleManagement/UsersRole";
-import CustomerDetail from "../../pages/customerDetail/CustomerDetail";
+import AddCustomer from "../../pages/customerDetail/AddCustomer";
 import AddEditUser from "../../pages/Security/userManagement/features/AddEditUser";
 import SecurityRoleManagement from "../../pages/Security/securityManagement/SecurityRoleManagement";
+import ViewCustomer from "../../pages/customerDetail/ViewCustomer";
+import AddEditContact from "../../pages/customerDetail/features/contactDetail/AddEditContact";
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
 const Permissions = React.lazy(() => import('../../pages/Security/securityManagement/permissions/Permissions'));
@@ -125,13 +127,34 @@ export const ComponentNavigation = [
     securityKey: ""
   },
   {
-    id: 'customerDetail',
-    path: '/customerDetail',
+    id: 'addCustomer',
+    path: '/addCustomer',
     exact: true,
     title: 'Customer Detail',
-    component: CustomerDetail,
+    component: AddCustomer,
     hasParams: false,
     text: 'Customer Detail',
+    securityKey: ""
+  },
+  {
+    id: 'viewCustomer',
+    path: '/viewCustomer',
+    exact: true,
+    title: 'View Detail',
+    component: ViewCustomer,
+    hasParams: false,
+    text: 'Customer Detail',
+    securityKey: ""
+  },
+  
+  {
+    id: 'addEditContact',
+    path: '/addEditContact',
+    exact: true,
+    title: '',
+    component: AddEditContact,
+    hasParams: false,
+    text: '',
     securityKey: ""
   },
   {

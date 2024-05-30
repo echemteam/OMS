@@ -1,7 +1,8 @@
 // Variable Styling Start
 
 :root {
-  --themeColor: #04a9f5;
+  --themeColor: #04A9F5;
+  --themeColorLight:#e7f6fe;
   --whiteColor: #ffffff;
   --textColor:#3e4b5b;
   --textColorLight:#6c7b8e;
@@ -11,16 +12,17 @@
   --primaryColor:#5563ff;
   --dangerColor:#fe7096;
   --warningColor:#ffd500;
-  --infoColor:#047edf;
+  --infoColor:#0056d7;
   --successColor: #07cdae;
-  --inputBorder:#ebedf2;
-  
-  
+  --inputBorder:#c2c4cb;
+  --linkMenu:#ebecef;
+  --light-menuDot:#cbcdd0;
+  --cardTitleBg:#e7f6febd;
   // Bg-Gradient Color Start
-  --gradient-theme : linear-gradient(to right, #98d7f4, var(--successColor));
+  --gradient-theme : linear-gradient(to right, #90ceeb, var(--themeColor));
   --gradient-danger: linear-gradient(to right, #ffbf96, var(--dangerColor));
   --gradient-warning : linear-gradient(to right, #f6e384, var(--warningColor));
-  --gradient-info:linear-gradient(to right, #90caf9, var(--infoColor) 99%);
+  --gradient-info:linear-gradient(to right, #90caf9, var(--infoColor));
   --gradient-success:linear-gradient(to right, #a0efe8, var(--successColor));
 
   --white-card-shadow:0px 0px 24px rgba(27, 46, 94, 0.05);

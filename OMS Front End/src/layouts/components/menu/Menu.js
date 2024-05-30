@@ -64,11 +64,22 @@ export const Menu = [
     ],
   },
   {
-    name: "Customer Detail",
-    id: "customerDetail",
-    to: "/customerDetail",
+    id: "customer",
+    name: "Customer Details",
     iconClass: "bi bi-people-fill",
-    subMenu: false,
-    children: [],
+    subMenu: true,
+    to: "#",
+    children: [
+      {
+        id: "addCustomer",
+        submenuName: "Add Customer",
+        to: "/addCustomer",
+      },
+      {
+        id: "viewCustomer",
+        submenuName: "View Customer",
+        to: "/viewCustomer",
+      },
+    ],
   },
 ];

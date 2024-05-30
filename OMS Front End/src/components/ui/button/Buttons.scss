@@ -33,49 +33,52 @@
   }
 
   &.theme-button {
-    background: var(--gradient-theme);
+    background-image: var(--gradient-theme);
 
     &:hover {
-      box-shadow: 0 5px 15px -4px hsla(171, 93%, 42%, 0.75);
+      box-shadow: 0 5px 15px -4px hsla(203, 93%, 42%, 0.75);
     }
   }
 
   &.dark-btn {
-    background: #2d3641db;
-    
+    background: linear-gradient(to right, #2d3641db, #000000db);
+
 
     &:hover {
-      background: #3f4a58c7;
-    box-shadow: 0 5px 15px -4px hsla(214, 17%, 30%, 0.75);
+      box-shadow: 0 5px 15px -4px hsla(210, 22%, 4%, 0.75);
     }
 
   }
 
   &.danger-btn {
     background-image: var(--gradient-danger);
-    &:hover{
+
+    &:hover {
       box-shadow: 0 5px 15px -4px hsla(344, 99%, 72%, 0.75);
     }
   }
 
   &.warning-btn {
     background-image: var(--gradient-warning);
-    &:hover{
+
+    &:hover {
       box-shadow: 0 5px 15px -4px hsla(50, 100%, 50%, 0.75);
     }
   }
 
   &.success-btn {
     background-image: var(--gradient-success);
-    &:hover{
+
+    &:hover {
       box-shadow: 0 5px 15px -4px hsla(171, 93%, 42%, 0.75);
     }
-    
+
   }
 
   &.info-btn {
     background-image: var(--gradient-info);
-    &:hover{
+
+    &:hover {
       box-shadow: 0 5px 15px -4px hsla(207, 96%, 45%, 0.75);
     }
   }
