@@ -1,0 +1,25 @@
+.custom-dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  .input-sec {
+    width: 95%;
+  }
+
+  .button-sec {
+    width: 70px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    .save-btn{
+      margin-left: 10px;
+    }
+    img{
+      width: 14px;
+      
+    }
+  }
+}

@@ -1,0 +1,121 @@
+// Table border-table-simple Start
+table {
+  width: 100%;
+  border-radius: 5px !important;
+  overflow: hidden;
+  background: var(--whiteColor);
+
+  thead {
+    background: var(--themeColorLight);
+
+    tr {
+      th {
+        padding: 12px 10px;
+        text-align: left; 
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border: 1px solid var(--inputBorder) !important;
+      border-left: 0 !important;
+      border-right: 0 !important;
+
+      td {
+        padding: 6px 10px;
+      }
+    }
+  }
+
+  &.dark-table-simple {
+    thead {
+      background: var(--themeColor);
+
+      tr {
+        th {
+          color: var(--whiteColor);
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border: none !important;
+
+        &:nth-child(even) {
+          background: #49ca3d0f;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+
+      border-left: 0 !important;
+      border-right: 0 !important;
+
+      td {
+        &:last-child {
+          img {
+            height: 33px;
+            width: 33px;
+            background-color: var(--themeColor);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            padding: 6px;
+          }
+        }
+
+        span {
+          width: 73px;
+          height: 23px;
+          border-radius: 70px;
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          margin: 0 auto;
+
+          &.primary {
+            background-color: var(--primaryColorLight);
+            color: var(--primaryColor);
+          }
+
+          &.secondary {
+            background-color: var(--secondaryColorLight);
+            color: var(--secondaryColor);
+          }
+
+          &.danger {
+            background-color: var(--dangerColorLight);
+            color: var(--dangerColor);
+          }
+
+          &.warning {
+            background-color: var(--warningColorLight);
+            color: var(--warningColor);
+          }
+
+          &.info {
+            background-color: var(--infoColorLight);
+            color: var(--infoColor);
+          }
+
+          &.dark {
+            background-color: var(--darkColorLight);
+            color: var(--darkColor);
+          }
+        }
+      }
+    }
+  }
+
+}
+
+// Table border-table-simple End

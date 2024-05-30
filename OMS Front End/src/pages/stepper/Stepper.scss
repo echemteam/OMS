@@ -1,0 +1,36 @@
+.stepper-section {
+  .bs-stepper-header {
+    .step {
+      .step-trigger {
+        .bs-stepper-circle {
+          border-radius: 3px;
+        }
+
+        &:hover {
+          background-color: var(--bg-main-content) !important;
+        }
+      }
+
+      &.active {
+        background-color: var(--bg-main-content) !important;
+        border-radius: 3px;
+        .step-trigger {
+          .bs-stepper-circle {
+            background: var(--gradient-theme) !important;
+          }
+
+          .bs-stepper-label {
+            color: var(--themeColor) !important;
+          }
+        }
+      }
+
+    }
+  }
+
+  .bs-stepper-content {
+    margin-top: 10px;
+    padding: 0;
+  }
+
+}

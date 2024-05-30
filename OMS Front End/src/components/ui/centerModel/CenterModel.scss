@@ -1,0 +1,92 @@
+.center-model-popup {
+  .modal-dialog {
+    top: 30%;
+    transform: translateY(-50%) !important;
+    -webkit-transform: translateY(-50%) !important;
+    -moz-transform: translateY(-50%) !important;
+    -ms-transform: translateY(-50%) !important;
+    -o-transform: translateY(-50%) !important;
+    transition: transform .3s ease-out;
+    -webkit-transition: transform .3s ease-out;
+    -moz-transition: transform .3s ease-out;
+    -ms-transition: transform .3s ease-out;
+    -o-transition: transform .3s ease-out;
+
+    .modal-content {
+      .modal-header {
+        border-bottom: 1px solid rgba(206, 211, 216, 0.431372549);
+        position: relative;
+        background: var(--lightBg-Color);
+        padding: 0;
+
+        .model-title {
+          font-size: 120%;
+          font-weight: 600;
+          padding: 10px;
+        }
+
+        .btn-close {
+          cursor: pointer;
+          --bs-btn-close-bg: none;
+          background: url(../../../assets/images/close-icon.png);
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          opacity: 1;
+          box-shadow: none !important;
+          outline: none !important;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  // .modal-dialog {
+  //   top: 50% !important;
+  //   transform: translateY(-54%) !important;
+  // }
+
+  &.w-40 {
+    .modal-dialog {
+      max-width: 40%;
+    }
+  }
+
+  &.w-45 {
+    .modal-dialog {
+      max-width: 45%;
+    }
+  }
+
+  &.w-50s {
+    .modal-dialog {
+      max-width: 50%;
+    }
+  }
+
+  &.w-55 {
+    .modal-dialog {
+      max-width: 55%;
+    }
+  }
+
+  &.w-60 {
+    .modal-dialog {
+      max-width: 60%;
+    }
+  }
+
+  &.w-65 {
+    .modal-dialog {
+      max-width: 65%;
+    }
+  }
+
+  &.w-70 {
+    .modal-dialog {
+      max-width: 70%;
+    }
+  }
+
+
+}

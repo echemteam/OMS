@@ -1,0 +1,48 @@
+.swal2-styled {
+  box-shadow: none;
+  background-size: 180% 100% !important;
+  transition: all .4s ease-in-out !important;
+  -o-transition: all .4s ease-in-out !important;
+  -webkit-transition: all .4s ease-in-out !important;
+  -moz-transition: all .4s ease-in-out !important;
+  -ms-transition: all .4s ease-in-out !important;
+  min-width: 120px !important;
+  &:hover {
+    background-image: unset !important;
+  }
+
+  &.swal2-confirm {
+    color: var(--whiteColor) !important;
+    background-image: var(--greenButtonGradient) !important;
+    box-shadow: 0 10px 20px -10px #00ab5599 !important;
+
+    &:hover {
+      background-position: 100% 0 !important;
+      transition: all .4s ease-in-out !important;
+      -o-transition: all .4s ease-in-out !important;
+      -webkit-transition: all .4s ease-in-out !important;
+      -moz-transition: all .4s ease-in-out !important;
+      -ms-transition: all .4s ease-in-out !important;
+      box-shadow: 0 10px 20px -10px #00ab56c6;
+      background-image: var(--greenButtonGradientReverse) !important;
+    }
+  }
+
+  &.swal2-cancel {
+    color: var(--whiteColor) !important;
+    background-image: var(--blueButtonGradiant) !important;
+    box-shadow: 0 10px 20px -10px #061936 !important;
+
+    &:hover {
+      background-position: 100% 0 !important;
+      transition: all .4s ease-in-out !important;
+      -o-transition: all .4s ease-in-out !important;
+      -webkit-transition: all .4s ease-in-out !important;
+      -moz-transition: all .4s ease-in-out !important;
+      -ms-transition: all .4s ease-in-out !important;
+      box-shadow: 0 10px 20px -10px #133975 !important;
+      background-image: var(--blueButtonGradientReverse) !important;
+
+    }
+  }
+}

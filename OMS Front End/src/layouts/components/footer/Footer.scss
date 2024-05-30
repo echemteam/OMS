@@ -1,0 +1,23 @@
+.footer-main {
+    display: none;
+    background: var(--blackColor);
+    color: var(--textColor);
+    position: relative;
+
+    .custom-width-foot {
+        width: 80%;
+        margin: 0 auto;
+        padding: 15px 0;
+
+        p {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 0;
+            .brand-name{
+                color: var(--themeColor);
+            }
+        }
+    }
+
+}
+

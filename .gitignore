@@ -1,0 +1,43 @@
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.dll
+*.force
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+OMS.API/OMS.Shared/obj/Debug/*
+OMS.API/OMS.Prisitance.Entities/obj/Debug/*
+OMS.API/OMS.Application.Services/bin/Debug/*
+OMS.API/OMS.API/obj/Debug/*
+OMS.API/OMS.Application.Services/obj/Debug/*
+OMS.API/OMS.Domain.Entities/bin/Debug/*
+OMS.API/OMS.Domain.Repository/bin/Debug/*
+OMS.API/OMS.Domain.Repository/obj/*
+OMS.API/OMS.FileManger.Services/obj/project.assets.json
+*.editorconfig
+OMS.API/OMS.Framework/obj/*
+OMS.API/OMS.Prisitance.Entities/obj/*
+OMS.API/OMS.Shared/obj/*
+OMS.API/OMS.FileManger.Services/obj/*
+OMS.API/OMS.Framework/OMS.Framework.csproj
+OMS.API/OMS.Framework/bin/Debug/*
+OMS.API/OMS.Prisitance.Entities/bin/*
+OMS.API/OMS.FileManger.Services/bin/Debug/*
+OMS.API/OMS.Shared/bin/Debug/*
+OMS.API/OMS.Domain.Entities/obj/Debug/*
+OMS.API/OMS.Domain.Entities/obj/*
+OMS.API/OMS.Application.Services/obj/*
+OMS.API/OMS.API/obj/*
+OMS.API/OMS.API/bin/Debug/net7.0/OMS.API.deps.json
+OMS.API/OMS.API/bin/Debug/net7.0/OMS.API.runtimeconfig.json
+OMS.API/OMS.API/bin/Debug/net7.0/appsettings.Development.json
+OMS.API/OMS.API/Properties/launchSettings.json
+OMS.API/Common.Helper/obj/*
+OMS.API/.vs/*
+OMS.API/Common.Helper/bin/*
+OMS.API/OMS.API/bin/Debug/*
+OMS Front End/package.json
+node_modules/
+jspm_packages/

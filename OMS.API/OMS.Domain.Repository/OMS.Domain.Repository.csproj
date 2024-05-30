@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OMS.Prisitance.Entities\OMS.Prisitance.Entities.csproj" />
+    <ProjectReference Include="..\OMS.Shared\OMS.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

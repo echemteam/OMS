@@ -1,0 +1,25 @@
+.unauthorized-section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 79px);
+  .left-text{
+    padding-right: 100px;
+    text-align: left;
+    h4{
+      font-size: 2.7rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    p{
+      font-size: 1.8rem;
+      margin-bottom: 0;
+    }
+  }
+  .right-img{
+    text-align: left;
+    img{
+      margin: 0 auto;
+    }
+  }
+}

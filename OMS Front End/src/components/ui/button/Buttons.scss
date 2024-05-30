@@ -1,0 +1,112 @@
+.btn {
+  padding: 7px 10px;
+  border-radius: 3px;
+  text-align: center;
+  min-width: 90px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  font-size: 95%;
+  background-size: 180% 100%;
+  transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  -moz-transition: all .4s ease-in-out;
+  -ms-transition: all .4s ease-in-out;
+  font-weight: 500;
+  color: var(--whiteColor);
+
+  &:hover {
+    background-position: 100% 0;
+    transition: all .4s ease-in-out;
+    color: var(--whiteColor);
+  }
+
+  img {
+    width: 14px;
+    margin-right: 8px;
+    filter: brightness(0) invert(1);
+    -webkit-filter: brightness(0) invert(1);
+  }
+
+  &.theme-button {
+    background: var(--gradient-theme);
+
+    &:hover {
+      box-shadow: 0 5px 15px -4px hsla(171, 93%, 42%, 0.75);
+    }
+  }
+
+  &.dark-btn {
+    background: #2d3641db;
+    
+
+    &:hover {
+      background: #3f4a58c7;
+    box-shadow: 0 5px 15px -4px hsla(214, 17%, 30%, 0.75);
+    }
+
+  }
+
+  &.danger-btn {
+    background-image: var(--gradient-danger);
+    &:hover{
+      box-shadow: 0 5px 15px -4px hsla(344, 99%, 72%, 0.75);
+    }
+  }
+
+  &.warning-btn {
+    background-image: var(--gradient-warning);
+    &:hover{
+      box-shadow: 0 5px 15px -4px hsla(50, 100%, 50%, 0.75);
+    }
+  }
+
+  &.success-btn {
+    background-image: var(--gradient-success);
+    &:hover{
+      box-shadow: 0 5px 15px -4px hsla(171, 93%, 42%, 0.75);
+    }
+    
+  }
+
+  &.info-btn {
+    background-image: var(--gradient-info);
+    &:hover{
+      box-shadow: 0 5px 15px -4px hsla(207, 96%, 45%, 0.75);
+    }
+  }
+
+
+  &.disable-btn {
+    min-width: 100px;
+    // background: #1b54c2;
+    color: #fff;
+    cursor: not-allowed !important;
+    pointer-events: unset;
+  }
+}
+
+.button-loading-part {
+  content: "";
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}

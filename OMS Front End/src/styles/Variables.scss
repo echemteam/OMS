@@ -1,0 +1,31 @@
+// Variable Styling Start
+
+:root {
+  --themeColor: #04a9f5;
+  --whiteColor: #ffffff;
+  --textColor:#3e4b5b;
+  --textColorLight:#6c7b8e;
+  --iconCOlor:#bba8bff5;
+  --bg-main-content:#f4f7fa;
+  --bg-light-content:#e7f6fe;
+  --primaryColor:#5563ff;
+  --dangerColor:#fe7096;
+  --warningColor:#ffd500;
+  --infoColor:#047edf;
+  --successColor: #07cdae;
+  --inputBorder:#ebedf2;
+  
+  
+  // Bg-Gradient Color Start
+  --gradient-theme : linear-gradient(to right, #98d7f4, var(--successColor));
+  --gradient-danger: linear-gradient(to right, #ffbf96, var(--dangerColor));
+  --gradient-warning : linear-gradient(to right, #f6e384, var(--warningColor));
+  --gradient-info:linear-gradient(to right, #90caf9, var(--infoColor) 99%);
+  --gradient-success:linear-gradient(to right, #a0efe8, var(--successColor));
+
+  --white-card-shadow:0px 0px 24px rgba(27, 46, 94, 0.05);
+  --card-shadow:0px 8px 24px rgba(27, 46, 94, 0.12);
+  // Bg-Gradient Color End
+}
+
+// Variable Styling End

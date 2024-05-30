@@ -1,0 +1,20 @@
+.dashboard-sec {
+
+
+  .card {
+    position: relative;
+    .dashboard-card {
+      .card-img-absolute {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+      }
+      h4{
+        font-size: 130%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,48 @@
+// Pagination Start
+.table-pagination {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var();
+  padding-top: 25px;
+
+  button {
+    height: 40px;
+    width: 40px;
+    border: 1.5px solid var(--themeColorLight);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--whiteColor);
+
+    img {
+      width: 17px;
+
+      &.left-arrow {
+        transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+      }
+
+      &.right-arrow {
+        transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+      }
+    }
+  }
+
+  .active-button {
+    background-color: var(--themeColor);
+    color: var(--whiteColor);
+    font-size: 16px;
+    font-weight: 600;
+    border: unset;
+  }
+}
+
+// Pagination Ends
