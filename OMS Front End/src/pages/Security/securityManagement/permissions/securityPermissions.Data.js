@@ -43,3 +43,32 @@ export const DatabaseConfigGird = {
     ],
 }
 export default SecurityPermissions;
+
+
+export const SelectGrantDenyDropdown = [
+    { value: 1, label: "Grant" },
+    { value: 2, label: "Deny" },
+    { value: 6, label: "Empty" },
+];
+
+export const SelectViewEditDropdown = [
+    { value: 3, label: "View Only" },
+    { value: 4, label: "Read/Write" },
+    { value: 5, label: "None" },
+    { value: 6, label: "Empty" },
+];
+
+export const SecurityPermissionsGrid = [
+    {
+        name: "Drop",
+        className: 'drop-menu-icon'
+    },
+    {
+        name: "Security Key",
+        className: 'security-key'
+    },
+    {
+        name: "Permission Type",
+        className: 'permission-dropdown'
+    }
+]

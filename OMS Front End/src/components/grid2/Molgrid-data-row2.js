@@ -18,7 +18,6 @@ const MolGridDataRows = (props) => {
       [rowId]: !prevState[rowId],
     }));
   };
-  // console.log("MolGridDataRows", props);
 
   const renderGridCol = (rowData, col, rowIndex,parentRowData) => {
     if (!col.colType) {

@@ -8,8 +8,6 @@ export const RenderGridAction = (rowData, col, rowIndex, onActionHandler) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  console.log(rowData, col, rowIndex, onActionHandler);
-
   useEffect(() => {
     // Add event listener to listen for clicks on the document body
     document.addEventListener("mousedown", handleClickOutside);
