@@ -32,7 +32,6 @@ OMS.API/OMS.API/obj/*
 OMS.API/OMS.API/bin/Debug/net7.0/OMS.API.deps.json
 OMS.API/OMS.API/bin/Debug/net7.0/OMS.API.runtimeconfig.json
 OMS.API/OMS.API/bin/Debug/net7.0/appsettings.Development.json
-OMS.API/OMS.API/Properties/launchSettings.json
 OMS.API/Common.Helper/obj/*
 OMS.API/.vs/*
 OMS.API/Common.Helper/bin/*
