@@ -39,3 +39,4 @@ OMS.API/OMS.API/bin/Debug/*
 node_modules/
 jspm_packages/
 OMS Front End/package-lock.json
+OMS Front End/.vscode/launch.json
