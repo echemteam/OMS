@@ -1,3 +1,5 @@
+import { securityKey } from "../../../data/SecurityKey";
+
 export const Menu = [
   {
     name: "Dashboard",
@@ -5,7 +7,8 @@ export const Menu = [
     to: "/",
     iconClass: "bi bi-file-earmark-medical",
     subMenu: false,
-    children: [],
+    securityKey: securityKey.DASHBOARD,
+    children: []
   },
   {
     name: "Form",
@@ -13,7 +16,8 @@ export const Menu = [
     to: "/themeComponent/demoForm",
     iconClass: "bi bi-file-earmark-medical",
     subMenu: false,
-    children: [],
+    securityKey: '',
+    children: []
   },
   {
     name: "Grid",
@@ -21,7 +25,8 @@ export const Menu = [
     to: "/themeComponent/demoGrid",
     iconClass: "bi bi-table",
     subMenu: false,
-    children: [],
+    securityKey: '',
+    children: []
   },
   {
     name: "Stepper",
@@ -29,7 +34,8 @@ export const Menu = [
     to: "/themeComponent/stepper",
     iconClass: "bi bi-table",
     subMenu: false,
-    children: [],
+    securityKey: '',
+    children: []
   },
   {
     name: "widgets",
@@ -37,7 +43,8 @@ export const Menu = [
     to: "/themeComponent/widgets",
     iconClass: "bi bi-clipboard-data",
     subMenu: false,
-    children: [],
+    securityKey: '',
+    children: []
   },
   {
     id: "dropdownSample",
@@ -45,23 +52,28 @@ export const Menu = [
     iconClass: "bi bi-shield-fill-check",
     subMenu: true,
     to: "#",
+    securityKey: securityKey.SECURITY,
     children: [
       {
         id: "Users",
         submenuName: "User Management",
         to: "/Users",
+        securityKey: securityKey.USERMANAGEMENT
       },
       {
         id: "roleManagement",
         submenuName: "Role Management",
         to: "/usersRole",
+        securityKey: securityKey.ROLEMANAGEMENT
       },
       {
         id: "SecurityRoleManagement",
         submenuName: "Security Roles Management",
         to: "/SecurityRoleManagement",
+        securityKey: securityKey.SECURITYROLEMANAGEMENT
       },
     ],
+
   },
   {
     id: "customer",
@@ -69,16 +81,19 @@ export const Menu = [
     iconClass: "bi bi-people-fill",
     subMenu: true,
     to: "#",
+    securityKey: "",
     children: [
       {
         id: "addCustomer",
         submenuName: "Add Customer",
         to: "/addCustomer",
+        securityKey: "",
       },
       {
         id: "viewCustomer",
         submenuName: "View Customer",
         to: "/viewCustomer",
+        securityKey: "",
       },
     ],
   },
