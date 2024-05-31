@@ -23,6 +23,7 @@ export const securityKey = {
     //**  */
     SECURITY: "Security",
 
+    //** Security Role Management */
     SECURITYROLEMANAGEMENT: "Security Role Management",
     ADDSECURITYROLE: "Add Role",
     EDITSECURITYROLE: "Edit Role",

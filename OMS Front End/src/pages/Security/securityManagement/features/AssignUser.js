@@ -111,7 +111,7 @@ const AssignUser = (props) => {
 
   useEffect(() => {
     if (molGridRef.current) {
-      const defaultPageObject = molGridRef.current.getDefulatPageObject();
+      const defaultPageObject = molGridRef.current.getCurrentPageObject();
       getLists(defaultPageObject);
     }
   }, [props.isOpen]);

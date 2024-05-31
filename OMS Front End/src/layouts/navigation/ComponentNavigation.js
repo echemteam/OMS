@@ -3,16 +3,26 @@ import DemoForm from "../../pages/demoForm/DemoForm";
 import DemoGrid from "../../pages/demoGrid/DemoGrid";
 import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
-import Users from "../../pages/Security/userManagement/Users";
-import UsersRole from "../../pages/Security/roleManagement/UsersRole";
-import AddCustomer from "../../pages/customerDetail/AddCustomer";
-import AddEditUser from "../../pages/Security/userManagement/features/AddEditUser";
-import SecurityRoleManagement from "../../pages/Security/securityManagement/SecurityRoleManagement";
-import ViewCustomer from "../../pages/customerDetail/ViewCustomer";
-import AddEditContact from "../../pages/customerDetail/features/contactDetail/AddEditContact";
+import { securityKey } from "../../data/SecurityKey";
+
+//** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
+//** Dashboard */
 const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
+//** User */
+const Users = React.lazy(() => import('../../pages/Security/userManagement/Users'));
+const AddEditUser = React.lazy(() => import('../../pages/Security/userManagement/features/AddEditUser'));
+const UsersRole = React.lazy(() => import('../../pages/Security/roleManagement/UsersRole'));
+
+//** Permissions */
 const Permissions = React.lazy(() => import('../../pages/Security/securityManagement/permissions/Permissions'));
+const SecurityRoleManagement = React.lazy(() => import('../../pages/Security/securityManagement/SecurityRoleManagement'));
+
+//**Customer  */
+// const CustomerDetail = React.lazy(() => import('../../pages/customerDetail/CustomerDetail'));
+const AddCustomer = React.lazy(() => import('../../pages/customerDetail/AddCustomer'));
+const ViewCustomer = React.lazy(() => import('../../pages/customerDetail/ViewCustomer'));
+const AddEditContact = React.lazy(() => import('../../pages/customerDetail/features/contactDetail/AddEditContact'));
 
 
 export const ComponentNavigation = [
@@ -27,14 +37,14 @@ export const ComponentNavigation = [
   },
 
   {
-    id: "dashboard",
+    id: "",
     path: "/",
     exact: true,
     title: 'Dashboard page',
     component: Dashboard,
     hasParams: false,
     text: 'Dashboard Page',
-    securityKey: ""
+    securityKey: securityKey.DASHBOARD
   },
   {
     id: 'demoForm',
@@ -74,17 +84,17 @@ export const ComponentNavigation = [
     component: Users,
     hasParams: false,
     text: 'Users',
-    securityKey: ""
+    securityKey: securityKey.USERMANAGEMENT
   },
   {
-    id: 'AddUser',
+    id: 'AddEditUser',
     path: '/AddEditUser',
     exact: true,
     title: 'Add User',
     component: AddEditUser,
     hasParams: false,
     text: 'Add User',
-    securityKey: ""
+    securityKey: securityKey.USERMANAGEMENT
   },
   {
     id: 'EditUser',
@@ -94,7 +104,7 @@ export const ComponentNavigation = [
     component: AddEditUser,
     hasParams: false,
     text: 'Edit User',
-    securityKey: ""
+    securityKey: securityKey.USERMANAGEMENT
   },
   {
     id: 'roleManagement',
@@ -104,7 +114,7 @@ export const ComponentNavigation = [
     component: UsersRole,
     hasParams: false,
     text: 'RoleManagement',
-    securityKey: ""
+    securityKey: securityKey.ROLEMANAGEMENT
   },
   {
     id: 'widgets',
@@ -124,7 +134,7 @@ export const ComponentNavigation = [
     component: SecurityRoleManagement,
     hasParams: false,
     text: 'Roles',
-    securityKey: ""
+    securityKey: securityKey.SECURITYROLEMANAGEMENT
   },
   {
     id: 'addCustomer',
@@ -146,7 +156,7 @@ export const ComponentNavigation = [
     text: 'Customer Detail',
     securityKey: ""
   },
-  
+
   {
     id: 'addEditContact',
     path: '/addEditContact',
@@ -165,7 +175,7 @@ export const ComponentNavigation = [
     component: Permissions,
     hasParams: false,
     text: 'Permissions',
-    securityKey: ""
+    securityKey: securityKey.PERMISSIONMANAGEMENT
   },
   {
     id: 'EditPermissions',
@@ -175,6 +185,6 @@ export const ComponentNavigation = [
     component: Permissions,
     hasParams: false,
     text: 'Edit Permissions',
-    securityKey: ""
+    securityKey: securityKey.PERMISSIONMANAGEMENT
   }
 ];

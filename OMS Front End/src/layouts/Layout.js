@@ -6,6 +6,7 @@ import Breadcome from "../components/ui/breadcome/Breadcome";
 import Footer from "./components/footer/Footer";
 import Unauthorize from "../pages/unauthorize/Unauthorize";
 import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation";
+import { AddPagePermissionsProvider } from "../utils/ContextAPIs/AddPagePermissions/AddPagePermissionsContext";
 
 const Layout = (props) => {
 
@@ -27,28 +28,30 @@ const Layout = (props) => {
 
   return (
     <React.Fragment>
-      <div className="main-page-layout">
-        <div className="top-sec">
-          <Sidebar componentRoutes={props.componentRoutes} />
-          <div className={`middle-page-section`}>
-            <Header />
+      <AddPagePermissionsProvider>
+        <div className="main-page-layout">
+          <div className="top-sec">
+            <Sidebar componentRoutes={props.componentRoutes} />
+            <div className={`middle-page-section`}>
+              <Header />
 
-            {/* {isAuthorize ? */}
-            <div className="center-content-part">
-              <div className="content-desc-section">
-                <Breadcome componentRoutes={props.componentRoutes} />
-                <div className="center-container">
-                  <Outlet />
+              {/* {isAuthorize ? */}
+              <div className="center-content-part">
+                <div className="content-desc-section">
+                  <Breadcome componentRoutes={props.componentRoutes} />
+                  <div className="center-container">
+                    <Outlet />
+                  </div>
+                  <Footer />
                 </div>
-                <Footer />
               </div>
+              {/* : <Unauthorize />
+              } */}
             </div>
-            {/* : <Unauthorize />
-            } */}
           </div>
-        </div>
 
-      </div>
+        </div>
+      </AddPagePermissionsProvider>
     </React.Fragment>
   );
 };
