@@ -1,26 +1,43 @@
 .stepper-section {
   .bs-stepper-header {
     .step {
+      transition: 0.5s all;
       .step-trigger {
         .bs-stepper-circle {
           border-radius: 3px;
         }
 
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        min-width: 140px;
+        transition: 0.5s all;
         &:hover {
-          background-color: var(--bg-main-content) !important;
+          background: var(--gradient-theme) !important;
+          
+          .bs-stepper-circle {
+            background: var(--whiteColor) !important;
+            color: var(--themeColor);
+          }
+
+          .bs-stepper-label {
+            color: var(--whiteColor) !important;
+          }
         }
       }
 
       &.active {
-        background-color: var(--bg-main-content) !important;
+        background: var(--gradient-theme) !important;
         border-radius: 3px;
+
         .step-trigger {
           .bs-stepper-circle {
-            background: var(--gradient-theme) !important;
+            background: var(--whiteColor) !important;
+            color: var(--themeColor);
           }
 
           .bs-stepper-label {
-            color: var(--themeColor) !important;
+            color: var(--whiteColor) !important;
           }
         }
       }
@@ -32,5 +49,9 @@
     margin-top: 10px;
     padding: 0;
   }
-
+.card{
+  .card-body-sec{
+    margin-top: 0;
+  }
+}
 }

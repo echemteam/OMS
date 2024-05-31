@@ -8,8 +8,9 @@ import { AppIcons } from "../../../../../data/appIcons";
 import MolGrid from "../../../../../components/Grid/MolGrid";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import AddEditEmailModal from "./AddEditEmailModal";
+import CardSection from "../../../../../components/ui/card/CardSection";
 
-const ContactDetailForm = ({onSidebarClose}) => {
+const ContactDetailForm = ({ onSidebarClose }) => {
   const userFormRef = useRef();
   const molGridRef = useRef();
 
@@ -85,32 +86,14 @@ const ContactDetailForm = ({onSidebarClose}) => {
   };
   return (
     <div>
-      <div className="row horizontal-form">
+      <div className="row horizontal-form mt-4">
         <FormCreator
           ref={userFormRef}
           {...contactDetailFormData}
           // onFormDataUpdate={handleFormDataChange}
         />
         <div className="col-md-12 mt-3">
-          <div className="d-flex align-item-end justify-content-between">
-            <div className="d-flex align-item-center">
-              <Buttons
-                buttonTypeClassName="info-btn mr-5"
-                buttonText="Add Email Address"
-                onClick={handleToggleModal}
-                textWithIcon={true}
-                imagePath={AppIcons.PlusIcon}
-                // isLoading={EmailLoading || updateUserLoading}
-              />
-              <Buttons
-                buttonTypeClassName="danger-btn"
-                buttonText="Add Contact Number"
-                onClick={handleToggleModalContact}
-                textWithIcon={true}
-                imagePath={AppIcons.PlusIcon}
-                // isLoading={EmailLoading || updateUserLoading}
-              />
-            </div>
+          <div className="d-flex align-item-end justify-content-end">
             <div className="d-flex align-item-end">
               <Buttons
                 buttonTypeClassName="theme-button"
@@ -126,51 +109,60 @@ const ContactDetailForm = ({onSidebarClose}) => {
             </div>
           </div>
         </div>
-        
       </div>
-      <div className="row mt-3">
-        <div className="col-md-12">
-          <div className="card card-px-0">
-            <div className="card-title border-b">
-              <h4>Email Address</h4>
+      <div className="mt-4">
+        <CardSection
+          cardTitle="Email Address"
+          buttonClassName="danger-btn"
+          textWithIcon={true}
+          iconImg={AppIcons.PlusIcon}
+          rightButton={true}
+          buttonText="Add"
+          titleButtonClick={handleToggleModal}
+        >
+          <div className="row">
+            <div className="col-md-12 table-striped role-table-sec">
+              <MolGrid
+                ref={molGridRef}
+                configuration={emailConfig}
+                dataSource={emailData}
+                allowPagination={true}
+                pagination={{
+                  totalCount: 0,
+                }}
+                onActionChange={actionHandler}
+                // onPageChange={handlePageChange}
+              />
             </div>
           </div>
-        </div>
-        <div className="col-md-12 table-bordered role-table-sec">
-          <MolGrid
-            ref={molGridRef}
-            configuration={emailConfig}
-            dataSource={emailData}
-            allowPagination={true}
-            pagination={{
-              totalCount: 0,
-            }}
-            onActionChange={actionHandler}
-            // onPageChange={handlePageChange}
-          />
-        </div>
+        </CardSection>
       </div>
-      <div className="row mt-3">
-        <div className="col-md-12">
-          <div className="card card-px-0">
-            <div className="card-title border-b">
-              <h4>Contact Number</h4>
+      <div className="mt-4">
+        <CardSection
+          cardTitle="Contact Number"
+          buttonClassName="danger-btn"
+          textWithIcon={true}
+          iconImg={AppIcons.PlusIcon}
+          rightButton={true}
+          buttonText="Add"
+          titleButtonClick={handleToggleModalContact}
+        >
+          <div className="row">
+            <div className="col-md-12 table-striped role-table-sec">
+              <MolGrid
+                ref={molGridRef}
+                configuration={contactConfig}
+                dataSource={contactData}
+                allowPagination={true}
+                pagination={{
+                  totalCount: 0,
+                }}
+                onActionChange={contactActionHandler}
+                // onPageChange={handlePageChange}
+              />
             </div>
           </div>
-        </div>
-        <div className="col-md-12 table-bordered role-table-sec">
-          <MolGrid
-            ref={molGridRef}
-            configuration={contactConfig}
-            dataSource={contactData}
-            allowPagination={true}
-            pagination={{
-              totalCount: 0,
-            }}
-            onActionChange={contactActionHandler}
-            // onPageChange={handlePageChange}
-          />
-        </div>
+        </CardSection>
       </div>
       {showModal && (
         <CenterModel

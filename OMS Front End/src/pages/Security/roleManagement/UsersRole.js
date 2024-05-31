@@ -155,7 +155,7 @@ const UsersRole = () => {
         // handleChange={}
       >
         <div className="row">
-          <div className="col-md-12 table-bordered role-table-sec">
+          <div className="col-md-12 table-striped role-table-sec">
             <MolGrid
               ref={molGridRef}
               configuration={GridConfig2}

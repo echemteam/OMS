@@ -119,7 +119,7 @@ const Users = () => {
         searchInput={true}
       >
         <div className="row">
-          <div className="col-md-12 table-bordered">
+          <div className="col-md-12 table-striped">
             <MolGrid
               ref={molGridRef}
               configuration={UserGridConfig}

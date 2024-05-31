@@ -130,10 +130,10 @@ export const ComponentNavigation = [
     id: 'addCustomer',
     path: '/addCustomer',
     exact: true,
-    title: 'Customer Detail',
+    title: 'Add Customer',
     component: AddCustomer,
     hasParams: false,
-    text: 'Customer Detail',
+    text: 'Add Customer',
     securityKey: ""
   },
   {

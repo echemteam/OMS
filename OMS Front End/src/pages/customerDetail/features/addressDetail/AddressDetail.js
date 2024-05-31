@@ -20,11 +20,11 @@ const AddressDetail = () => {
     <>
       <CardSection
         cardTitle="Address"
-        buttonClassName="theme-button"
+        buttonClassName="danger-btn"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
         rightButton={true}
-        buttonText="Add New Address"
+        buttonText="Add"
         titleButtonClick={handleToggleModal}
       >
         <AddressCard isAddEditModal={handleToggleModal} />

@@ -9,24 +9,28 @@ import CardSection from "../../components/ui/card/CardSection";
 const ViewCustomer = () => {
   const tabs = [
     {
-      sMenuItemCaption: "Address Details",
+      sMenuItemCaption: "Address",
       component: (
-        <>
+        <div className="mt-2">
           <AddressDetail />
-        </>
+        </div>
       ),
     },
     {
-      sMenuItemCaption: "Contact Details",
+      sMenuItemCaption: "Contact",
       component: (
-        <>
+        <div className="mt-2">
           <ContactDetail />
-        </>
+        </div>
       ),
+    },
+    {
+      sMenuItemCaption: "Settings",
+      component: <div className="mt-2">Settings</div>,
     },
     {
       sMenuItemCaption: "Attachments",
-      component: <>Attachment</>,
+      component: <div className="mt-2">Attachment</div>,
     },
   ];
 
@@ -41,7 +45,7 @@ const ViewCustomer = () => {
             // buttonText="Save"
             // titleButtonClick={onEditAction}
           >
-            <BasicDetail isFullWidthForm={true}/>
+            <BasicDetail isFullWidthForm={true} />
           </CardSection>
         </div>
         <div className="col-xl-9 col-md-9 col-12 other-info-tab">

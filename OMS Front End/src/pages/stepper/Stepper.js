@@ -5,41 +5,27 @@ import Stepper from "bs-stepper";
 import StepperForm from "./features/StepperForm";
 import StepperForm2 from "./features/StepperForm2";
 import StepperForm3 from "./features/StepperForm3";
+
 const steps = [
   {
     label: "Step 1",
-    content: (
-      <div>
-        <StepperForm />
-      </div>
-    ),
+    content: <StepperForm />,
   },
   {
     label: "Step 2",
-    content: (
-      <div>
-        <StepperForm2 />
-      </div>
-    ),
+    content: <StepperForm2 />,
   },
   {
     label: "Step 3",
-    content: (
-      <div>
-        <StepperForm3 />
-      </div>
-    ),
+    content: <StepperForm3 />,
   },
   {
     label: "Step 4",
-    content: (
-      <div>
-        <StepperForm3 />
-      </div>
-    ),
+    content: <StepperForm3 />,
   },
 ];
-const StepperComponent = ({ steps }) => {
+
+const StepperComponent = () => {
   const stepperRef = useRef(null);
 
   useEffect(() => {
@@ -54,69 +40,59 @@ const StepperComponent = ({ steps }) => {
   };
 
   return (
-    <>
-      <div className="card">
-        <div className="card-title">
-          <h4>Title Name</h4>
-          <p>Lorem Ipsum is simply dummy text</p>
+    <div className="card">
+      <div id="stepper1" className="bs-stepper stepper-section">
+        <div className="bs-stepper-header">
+          {steps.map((step, index) => (
+            <React.Fragment key={index}>
+              <div className="step" data-target={`#step-${index}`}>
+                <button className="step-trigger">
+                  <span className="bs-stepper-circle">{index + 1}</span>
+                  <span className="bs-stepper-label">{step.label}</span>
+                </button>
+              </div>
+              {index < steps.length - 1 && <div className="line"></div>}
+            </React.Fragment>
+          ))}
         </div>
-        <div id="stepper1" className="bs-stepper stepper-section">
-          <div className="bs-stepper-header">
+        <div className="bs-stepper-content">
+          <form onSubmit={onSubmit}>
             {steps.map((step, index) => (
-              <React.Fragment key={index}>
-                <div className="step" data-target={`#step-${index}`}>
-                  <button className="step-trigger">
-                    <span className="bs-stepper-circle">{index + 1}</span>
-                    <span className="bs-stepper-label">{step.label}</span>
-                  </button>
-                </div>
-                {index < steps.length - 1 && <div className="line"></div>}
-              </React.Fragment>
-            ))}
-          </div>
-          <div className="bs-stepper-content">
-            <form onSubmit={onSubmit}>
-              {steps.map((step, index) => (
-                <div key={index} id={`step-${index}`} className="content">
-                  <div className="row">
-                    <div className="col-12 mx-auto">
-                      {step.content}
-                      <div className="d-flex justify-content-end">
+              <div key={index} id={`step-${index}`} className="content">
+                <div className="row">
+                  <div className="col-12 mx-auto">
+                    {step.content}
+                    <div className="d-flex justify-content-end">
+                      <button
+                        type="button"
+                        className="btn dark-btn mr-3"
+                        onClick={() => stepperRef.current.previous()}
+                      >
+                        Back
+                      </button>
+                      {index < steps.length - 1 ? (
                         <button
                           type="button"
-                          className="btn dark-btn mr-3"
-                          onClick={() => stepperRef.current.previous()}
+                          className="btn theme-button"
+                          onClick={() => stepperRef.current.next()}
                         >
-                          Back
+                          Next
                         </button>
-                        {index < steps.length - 1 ? (
-                          <button
-                            type="button"
-                            className="btn theme-button"
-                            onClick={() => stepperRef.current.next()}
-                          >
-                            Next
-                          </button>
-                        ) : (
-                          <button type="submit" className="btn theme-button">
-                            Submit
-                          </button>
-                        )}
-                      </div>
+                      ) : (
+                        <button type="submit" className="btn theme-button">
+                          Submit
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
-              ))}
-            </form>
-          </div>
+              </div>
+            ))}
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-// Example usage
-
-export default function App() {
-  return <StepperComponent steps={steps} />;
-}
+export default StepperComponent;

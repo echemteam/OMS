@@ -111,7 +111,7 @@ const AddEditContact = () => {
               <div className="d-flex align-item-center">
                 <Buttons
                   buttonTypeClassName="info-btn mr-5"
-                  buttonText="Add Email Address"
+                  buttonText="Add"
                   onClick={handleToggleModal}
                   textWithIcon={true}
                   imagePath={AppIcons.PlusIcon}
@@ -119,7 +119,7 @@ const AddEditContact = () => {
                 />
                 <Buttons
                   buttonTypeClassName="danger-btn"
-                  buttonText="Add Contact Number"
+                  buttonText="Add"
                   onClick={handleToggleModalContact}
                   textWithIcon={true}
                   imagePath={AppIcons.PlusIcon}
@@ -145,7 +145,7 @@ const AddEditContact = () => {
       </CardSection>
       <CardSection cardTitle="Email Address">
         <div className="row">
-          <div className="col-md-12 table-bordered role-table-sec">
+          <div className="col-md-12 table-striped role-table-sec">
             <MolGrid
               ref={molGridRef}
               configuration={emailConfig}
@@ -162,7 +162,7 @@ const AddEditContact = () => {
       </CardSection>
       <CardSection cardTitle="Contact Number">
         <div className="row">
-          <div className="col-md-12 table-bordered role-table-sec">
+          <div className="col-md-12 table-striped role-table-sec">
             <MolGrid
               ref={molGridRef}
               configuration={contactConfig}

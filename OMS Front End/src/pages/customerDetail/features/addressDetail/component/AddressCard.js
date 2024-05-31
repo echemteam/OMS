@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
+import { Accordion } from "react-bootstrap";
 
 const AddressCard = ({ isAddEditModal }) => {
+  const [activeKey, setActiveKey] = useState(null);
   const addressTypes = [
     {
       addressTitle: "Shipping Address",
@@ -23,7 +25,6 @@ const AddressCard = ({ isAddEditModal }) => {
           country: "USA",
           zip: "62704",
         },
-        // Add more addresses as needed
       ],
     },
     {
@@ -45,7 +46,6 @@ const AddressCard = ({ isAddEditModal }) => {
           country: "USA",
           zip: "62704",
         },
-        // Add more addresses as needed
       ],
     },
     {
@@ -67,48 +67,62 @@ const AddressCard = ({ isAddEditModal }) => {
           country: "USA",
           zip: "62704",
         },
-        // Add more addresses as needed
       ],
     },
-    // Add more address groups as needed
+
   ];
 
+  const handleToggle = (eventKey) => {
+    setActiveKey(eventKey === activeKey ? null : eventKey);
+  };
   return (
     <>
-      <div className="row">
+      <Accordion className="address-card-section" activeKey={activeKey} onSelect={handleToggle}>
         {addressTypes.map((addressType, index) => (
-          <div key={index} className="col-xl-4 col-md-4 col-12">
-            <div className="address-card-section">
-              <div className="address-type-title">
-                <p>{addressType.addressTitle}</p>
-              </div>
-              <div className="add-desc-part">
+          <Accordion.Item
+            eventKey={addressType.addressTitle.toString()}
+            className={
+              activeKey === addressType.addressTitle.toString() ? "active" : ""
+            }
+            key={index}
+          >
+            <div className="header-title-btn">
+              <Accordion.Header>
+                <div>
+                  <span>{addressType.addressTitle}</span>
+                </div>
+              </Accordion.Header>
+            </div>
+            <Accordion.Body className="add-desc-part">
+              <div className="row">
                 {addressType.addresses.map((address, addrIndex) => (
-                  <div className="address-card" key={addrIndex}>
-                    <div className="add-line">
-                      <span className="label-txt">{address.name}</span>
-                      <span className="label-txt">{address.street}</span>
-                      <span className="label-txt">{address.city}</span>
-                      <span className="label-txt">{address.state}</span>
-                      <span className="label-txt">
-                        {address.country} - <span>{address.zip}</span>
-                      </span>
-                    </div>
-                    <div className="edit-delete-button">
-                      <button onClick={isAddEditModal} className="edit-btn">
-                        <Image imagePath={AppIcons.editThemeIcon} />
-                      </button>
-                      <button onClick="" className="edit-btn ml-1 mr-1">
-                        <Image imagePath={AppIcons.deleteThemeIcon} />
-                      </button>
+                  <div className="col-xl-4 col-md-4 col-12" key={addrIndex}>
+                    <div className="address-card">
+                      <div className="add-line">
+                        <span className="label-txt">{address.name}</span>
+                        <span className="label-txt">{address.street}</span>
+                        <span className="label-txt">{address.city}</span>
+                        <span className="label-txt">{address.state}</span>
+                        <span className="label-txt">
+                          {address.country} - <span>{address.zip}</span>
+                        </span>
+                      </div>
+                      <div className="edit-delete-button">
+                        <button onClick={isAddEditModal} className="edit-btn">
+                          <Image imagePath={AppIcons.editThemeIcon} />
+                        </button>
+                        <button onClick="" className="edit-btn ml-1 mr-1">
+                          <Image imagePath={AppIcons.deleteThemeIcon} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </Accordion.Body>
+          </Accordion.Item>
         ))}
-      </div>
+      </Accordion>
     </>
   );
 };

@@ -11,7 +11,7 @@ import { AppIcons } from "../../../../data/appIcons";
 const BasicDetail = ({ isFullWidthForm }) => {
   const userFormRef = useRef();
   return (
-    <div className="basic-info-sc">
+    <div className="basic-info-sec half-sec">
       {isFullWidthForm ? (
         <div className="row">
           <FormCreator
@@ -36,28 +36,13 @@ const BasicDetail = ({ isFullWidthForm }) => {
           </div>
         </div>
       ) : (
-        <CardSection cardTitle="Customer Basic Info." buttonClassName="theme-button">
-          <div className="row">
+        <CardSection buttonClassName="theme-button">
+          <div className="row ">
             <FormCreator
               ref={userFormRef}
               {...basicDetailFormDataHalf}
               // onFormDataUpdate={handleFormDataChange}
             />
-            <div className="col-md-12">
-              <div className="d-flex align-item-end justify-content-end">
-                <Buttons
-                  buttonTypeClassName="theme-button"
-                  buttonText="Save"
-                  // onClick={onHandleUser}
-                  // isLoading={EmailLoading || updateUserLoading}
-                />
-                <Buttons
-                  buttonTypeClassName="dark-btn ml-5"
-                  buttonText="Cancel"
-                  // onClick={BackButton}
-                />
-              </div>
-            </div>
           </div>
         </CardSection>
       )}

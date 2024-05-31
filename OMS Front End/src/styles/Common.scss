@@ -338,6 +338,14 @@ a {
   }
 }
 
+.basic-info-sec {
+  &.half-sec {
+    .card-section-left {
+      margin-bottom: 0;
+    }
+  }
+}
+
 .card {
   padding: 12px 12px 22px;
   background: var(--whiteColor);
@@ -354,6 +362,7 @@ a {
   .card {
     box-shadow: none;
     border: none;
+    padding: 0;
   }
 
   .card-top-title-btn {
@@ -534,7 +543,7 @@ a {
       color: var(--themeColor);
 
       &.active {
-        border: 1px solid var(--gradient-theme);
+        border: 1px solid var(--themeColor);
         margin-bottom: -1px;
         background: var(--gradient-theme);
         color: var(--whiteColor);
@@ -545,7 +554,6 @@ a {
 
   .tab-content {
     padding-top: 20px;
-    min-height: calc(100vh - 200px);
 
     .tab-body-section {}
   }
@@ -586,7 +594,7 @@ a {
           border-right: 1px solid var(--themeColor);
           color: var(--whiteColor);
           border-left: 4px solid var(--textColor);
-          
+
 
         }
 
@@ -609,9 +617,7 @@ a {
 }
 
 .other-info-tab {
-  .card-body-sec {
-    margin-top: 0;
-  }
+
 
   .tab-section {
     .tab-content {
@@ -644,30 +650,36 @@ a {
   }
 }
 
+.contact-card-section,
 .address-card-section {
-  position: relative;
-  height: 100%;
-  border: 1px solid var(--themeColor);
-  border-radius: 5px;
-
-  .address-type-title {
-    background: var(--cardTitleBg);
-    padding: 5px 10px;
-    display: flex;
-    align-items: center;
+  .accordion-item {
+    border: 1px solid var(--themeColor);
+    border-radius: 5px !important;
     margin-bottom: 15px;
+    overflow: hidden;
 
-    p {
-      font-weight: 600;
-      color: var(--textColor);
-      font-size: 115%;
-      margin: 0;
+    .header-title-btn {
+      .accordion-header {
+        button {
+          background: var(--cardTitleBg);
+          padding: 7px 10px;
+          color: var(--textColor);
+          font-size: 15px;
+          font-weight: 600;
+          outline: none;
+          box-shadow: none;
+
+          &:not(.collapsed) {
+            background: #b8e4fbbd;
+          }
+        }
+
+      }
     }
-
   }
 
   .add-desc-part {
-    padding: 0px 10px 10px;
+    padding: 10px;
 
     .address-card {
       box-shadow: 0px 0px 17px -10px var(--textColorLight);
@@ -712,10 +724,6 @@ a {
 }
 
 .contact-card-section {
-  position: relative;
-  height: 100%;
-  border: 1px solid var(--themeColor);
-  border-radius: 5px;
 
   .contact-type-title {
     background: var(--cardTitleBg);

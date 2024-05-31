@@ -1,11 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
-import { assignUserFormData, assignUserListData } from "./formData/AssignUserForm.data";
+import {
+  assignUserFormData,
+  assignUserListData,
+} from "./formData/AssignUserForm.data";
 import Buttons from "../../../../components/ui/button/Buttons";
 import MolGrid from "../../../../components/Grid/MolGrid";
-import { useAddRoleMappingMutation, useDeleteRolesMappingMutation, useGetRolesMappingByRoleIdMutation, useLazyGetUnAssignedUserByRoleIdQuery } from "../../../../app/services/rolesMappingAPI";
+import {
+  useAddRoleMappingMutation,
+  useDeleteRolesMappingMutation,
+  useGetRolesMappingByRoleIdMutation,
+  useLazyGetUnAssignedUserByRoleIdQuery,
+} from "../../../../app/services/rolesMappingAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../services/swalService/SwalService";
+import CardSection from "../../../../components/ui/card/CardSection";
 
 const AssignUser = (props) => {
   const molGridRef = useRef();
@@ -13,21 +22,27 @@ const AssignUser = (props) => {
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [listData, setListData] = useState();
   const [userForm, setUserForm] = useState(assignUserFormData);
-  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] =
+    useState(false);
 
   const { confirm } = SwalAlert();
 
-  const [addRoleMapping,
-    { isLoading: isAddRoleMappingLoading, isSuccess: isUserAddRoleMapping,
-      data: AddRoleMappingData }
+  const [
+    addRoleMapping,
+    {
+      isLoading: isAddRoleMappingLoading,
+      isSuccess: isUserAddRoleMapping,
+      data: AddRoleMappingData,
+    },
   ] = useAddRoleMappingMutation();
 
-  const [getUnAssignedUserByRoleId,
+  const [
+    getUnAssignedUserByRoleId,
     {
       isFetching: isGetUnAssignedUserByRoleIdFetching,
       isSuccess: isGetUnAssignedUserByRoleId,
-      data: GetUnAssignedUserByRoleIdData
-    }
+      data: GetUnAssignedUserByRoleIdData,
+    },
   ] = useLazyGetUnAssignedUserByRoleIdQuery();
 
   const [
@@ -40,22 +55,32 @@ const AssignUser = (props) => {
 
   useEffect(() => {
     if (props.isOpen) {
-      getUnAssignedUserByRoleId(props.initData.roleId)
+      getUnAssignedUserByRoleId(props.initData.roleId);
     }
-  }, [props.isOpen])
+  }, [props.isOpen]);
 
   useEffect(() => {
-    if (!isGetUnAssignedUserByRoleIdFetching && isGetUnAssignedUserByRoleId && GetUnAssignedUserByRoleIdData) {
-      const listdata = GetUnAssignedUserByRoleIdData.map(item => ({
+    if (
+      !isGetUnAssignedUserByRoleIdFetching &&
+      isGetUnAssignedUserByRoleId &&
+      GetUnAssignedUserByRoleIdData
+    ) {
+      const listdata = GetUnAssignedUserByRoleIdData.map((item) => ({
         value: item.userId,
-        label: item.userName
-      }))
-      const dropdownField = assignUserFormData.formFields.find(item => item.dataField === "userName");
+        label: item.userName,
+      }));
+      const dropdownField = assignUserFormData.formFields.find(
+        (item) => item.dataField === "userName"
+      );
       dropdownField.fieldSetting.options = listdata;
       // setUserForm(listdata)
-      setShouldRerenderFormCreator(prevState => !prevState);
+      setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetUnAssignedUserByRoleIdFetching, isGetUnAssignedUserByRoleId, GetUnAssignedUserByRoleIdData])
+  }, [
+    isGetUnAssignedUserByRoleIdFetching,
+    isGetUnAssignedUserByRoleId,
+    GetUnAssignedUserByRoleIdData,
+  ]);
 
   const getLists = (pageObject) => {
     const request = {
@@ -64,7 +89,7 @@ const AssignUser = (props) => {
         pageSize: pageObject.pageSize,
       },
       filters: { searchText: "" },
-      roleId: props.initData.roleId
+      roleId: props.initData.roleId,
     };
     getRolesMappingByRoleId(request);
   };
@@ -97,8 +122,8 @@ const AssignUser = (props) => {
       if (props.initData) {
         let req = {
           userId: userData.userName.value,
-          roleId: props.initData.roleId
-        }
+          roleId: props.initData.roleId,
+        };
         addRoleMapping(req);
       }
     }
@@ -122,7 +147,7 @@ const AssignUser = (props) => {
       ToastService.success(AddRoleMappingData.errorMessage);
       const currentPageObject = molGridRef.current.getCurrentPageObject();
       getLists(currentPageObject);
-      getUnAssignedUserByRoleId(props.initData.roleId)
+      getUnAssignedUserByRoleId(props.initData.roleId);
     }
   }, [isUserAddRoleMapping, AddRoleMappingData]);
 
@@ -131,7 +156,7 @@ const AssignUser = (props) => {
       ToastService.success(isDeletData.errorMessage);
       const currentPageObject = molGridRef.current.getCurrentPageObject();
       getLists(currentPageObject);
-      getUnAssignedUserByRoleId(props.initData.roleId)
+      getUnAssignedUserByRoleId(props.initData.roleId);
     }
   }, [isDeleteSuccess, isDeletData]);
 
@@ -142,7 +167,7 @@ const AssignUser = (props) => {
   return (
     <div>
       <div className="row">
-        <div className="col-md-12 horizontal-form">
+        <div className="col-md-12 horizontal-form mt-3">
           <div className="row vertical-form">
             <FormCreator
               ref={asignUserFormRef}
@@ -160,27 +185,26 @@ const AssignUser = (props) => {
             </div>
           </div>
         </div>
-        <div className="col-md-12 card mb-0 pb-2">
-          <div className="card-title">
-            <h4>Users</h4>
+        <CardSection
+          cardTitle="Users"
+        >
+          <div className="col-md-12 table-striped">
+            <MolGrid
+              ref={molGridRef}
+              configuration={assignUserListData}
+              dataSource={listData}
+              allowPagination={true}
+              pagination={{
+                totalCount: totalRowCount,
+                pageSize: 20,
+                currentPage: 1,
+              }}
+              onPageChange={handlePageChange}
+              isLoading={isListLoading}
+              onActionChange={actionHandler}
+            />
           </div>
-        </div>
-        <div className="col-md-12 table-bordered">
-          <MolGrid
-            ref={molGridRef}
-            configuration={assignUserListData}
-            dataSource={listData}
-            allowPagination={true}
-            pagination={{
-              totalCount: totalRowCount,
-              pageSize: 20,
-              currentPage: 1,
-            }}
-            onPageChange={handlePageChange}
-            isLoading={isListLoading}
-            onActionChange={actionHandler}
-          />
-        </div>
+        </CardSection>
       </div>
     </div>
   );

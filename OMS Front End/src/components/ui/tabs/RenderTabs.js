@@ -16,7 +16,7 @@ const RenderTabs = ({ tabs }) => {
             {tabs && tabs.length > 0 &&
                 <div className="row">
                     <div className="col-12">
-                        <div className="tab-section vertical-tab mb-0">
+                        <div className="tab-section mb-0">
                             <div className="tab-header">
                                 {tabs && tabs.map((tab, index) => (
                                     <button

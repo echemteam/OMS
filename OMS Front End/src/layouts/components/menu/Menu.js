@@ -91,7 +91,7 @@ export const Menu = [
       },
       {
         id: "viewCustomer",
-        submenuName: "View Customer",
+        submenuName: "Customer",
         to: "/viewCustomer",
         securityKey: "",
       },
