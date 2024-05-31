@@ -21,12 +21,8 @@ import logout from "../assets/images/logout.png";
 import shortingArrowIcon from "../assets/images/shortingArrow.png";
 
 // footer icon
-import facebook from "../assets/images/footfacebook.png";
-import footinstagram from "../assets/images/footinstagram.png";
-import footmail from "../assets/images/footmail.png";
-import footlinkedin from "../assets/images/footlinkedin.png";
-import footyoutube from "../assets/images/footyoutube.png";
-import footteli from "../assets/images/footteli.png";
+import mail from "../assets/images/email.png";
+import website from "../assets/images/web.png"
 import uploaddocumenticon from "../assets/images/uploadDocsIcon.png";
 import cardBgShape from "../assets/images/circle.svg";
 import noRecords from "../assets/images/noRecord.png";
@@ -57,12 +53,8 @@ export const AppIcons = {
 
   // footer icon set
 
-  facebook: facebook,
-  footinstagram: footinstagram,
-  footlinkedin: footlinkedin,
-  footmail: footmail,
-  footyoutube: footyoutube,
-  footteli: footteli,
+  Mail: mail,
+  Bebsite:website,
   shortingArrowIcon: shortingArrowIcon,
   Uploaddocumenticon: uploaddocumenticon,
   NoRecords: noRecords,

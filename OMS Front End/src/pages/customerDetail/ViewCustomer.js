@@ -5,6 +5,8 @@ import BasicDetail from "./features/basicDetail/BasicDetail";
 import ContactDetail from "./features/contactDetail/ContactDetail";
 import AddressDetail from "./features/addressDetail/AddressDetail";
 import CardSection from "../../components/ui/card/CardSection";
+import CustomerDetails from "./features/basicDetail/CustomerDetails";
+import { AppIcons } from "../../data/appIcons";
 
 const ViewCustomer = () => {
   const tabs = [
@@ -38,14 +40,8 @@ const ViewCustomer = () => {
     <div className="card-bottom-m-0">
       <div className="row">
         <div className="col-xl-3 col-md-3 col-12 basic-left-part">
-          <CardSection
-            cardTitle="Basic Information"
-            // buttonClassName="theme-button"
-            // rightButton={true}
-            // buttonText="Save"
-            // titleButtonClick={onEditAction}
-          >
-            <BasicDetail isFullWidthForm={true} />
+          <CardSection>
+            <CustomerDetails />
           </CardSection>
         </div>
         <div className="col-xl-9 col-md-9 col-12 other-info-tab">

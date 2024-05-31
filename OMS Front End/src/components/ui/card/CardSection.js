@@ -19,6 +19,7 @@ function CardSection({
   iconImgBack,
   handleChange,
   isLoading,
+  titleText,
   isButtonVisible
 }) {
   return (
@@ -58,6 +59,7 @@ function CardSection({
                     imagePath={iconImg}
                     imagePathBack={iconImgBack}
                     isLoading={isLoading}
+                    titleText={titleText}
                   />
                 </div>
                 // )

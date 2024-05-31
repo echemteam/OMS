@@ -1,8 +1,9 @@
 .basic-left-part {
-  .card-section-left{
-    .card-body-sec{
+  .card-section-left {
+    .card-body-sec {
       .basic-info-sc {
         min-height: calc(100vh - 208px);
+
         .text-area {
           .text-area-input {
             min-height: 100px;
@@ -11,5 +12,80 @@
       }
     }
   }
-  
+
+}
+
+
+.basic-customer-detail {
+  .profile-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    .profile-icon {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-theme);
+      border-radius: 100%;
+      color: var(--whiteColor);
+      font-size: 120%;
+      box-shadow: var(--card-shadow);
+    }
+
+    h5 {
+      font-size: 122%;
+      font-weight: 600;
+      color: var(--themeColor);
+      margin-bottom: 0px;
+    }
+
+    .input-label-part {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--themeColorLight);
+      padding-bottom: 10px;
+      margin-top: 5px;
+
+      span {
+        display: flex;
+        align-items: center;
+        margin-left: 2px;
+
+        img {
+          width: 18px;
+          margin-right: 0px;
+        }
+      }
+    }
+    .edit-icons{
+      position: absolute;
+      right: 0;
+      top: 0;
+      img{
+        width: 20px;
+      }
+    }
+  }
+
+  .field-desc {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+
+    .inf-label {
+      min-width: 120px;
+      max-width: 120px;
+      font-weight: bold;
+      color: var(--textColor);
+    }
+
+    .info-desc {}
+  }
 }

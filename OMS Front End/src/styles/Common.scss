@@ -845,3 +845,19 @@ a {
     }
   }
 }
+
+
+.basic-left-part{
+  .card{
+    .edit-icon{
+      min-width: unset;
+      padding: 0;
+      margin-left: 10px !important;
+      img{
+        filter: unset;
+        width: 20px;
+        margin: 0;
+      }
+    }
+  }
+}
