@@ -3,7 +3,9 @@ import "./Sidebar.scss";
 import { Link } from "react-router-dom";
 import { Menu } from "../menu/Menu";
 const Sidebar = (props) => {
+  
   const [selectedMenu, setSelectedMenu] = useState(null);
+  const [clickedValueSubMenu, setClickedValueSubMenu] = useState(null);
 
   const handleClick = (menu) => {
     if (selectedMenu === menu) {
@@ -11,6 +13,11 @@ const Sidebar = (props) => {
     } else {
       setSelectedMenu(menu); // Add class to the clicked menu
     }
+  };
+
+  const handleChildClick = (e , menu) => {
+    setClickedValueSubMenu(menu);
+    e.stopPropagation(); // Prevent the click event from bubbling up
   };
 
   return (
@@ -47,7 +54,7 @@ const Sidebar = (props) => {
                         <ul className="sidebar-dropdown">
                           {menuItem.children.map((subMenu, index) => (
                             <li className="dropdown-menus">
-                              <Link to={subMenu.to}>{subMenu.submenuName}</Link>
+                              <Link to={subMenu.to}  className={clickedValueSubMenu === subMenu.id ? "active-submenu" : ""} onClick={(e) => handleChildClick(e , subMenu.id)} >{subMenu.submenuName}</Link>
                             </li>
                           ))}
                         </ul>
