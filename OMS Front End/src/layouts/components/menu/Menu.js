@@ -47,7 +47,7 @@ export const Menu = [
     children: []
   },
   {
-    id: "dropdownSample",
+    id: "Security",
     name: "Security",
     iconClass: "bi bi-shield-fill-check",
     subMenu: true,
@@ -55,7 +55,7 @@ export const Menu = [
     securityKey: securityKey.SECURITY,
     children: [
       {
-        id: "Users",
+        id: "User Management",
         submenuName: "User Management",
         to: "/Users",
         securityKey: securityKey.USERMANAGEMENT
