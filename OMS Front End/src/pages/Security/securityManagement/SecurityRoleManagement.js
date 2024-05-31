@@ -114,7 +114,7 @@ const SecurityRoleManagement = () => {
 
   useEffect(() => {
     if (molGridRef.current) {
-      const defaultPageObject = molGridRef.current.getDefulatPageObject();
+      const defaultPageObject = molGridRef.current.getCurrentPageObject();
       getLists(defaultPageObject);
     }
   }, []);
@@ -148,7 +148,7 @@ const SecurityRoleManagement = () => {
   //** Success */
   const onSuccess = () => {
     onModalClose();
-    const defaultPageObject = molGridRef.current.getDefulatPageObject();
+    const defaultPageObject = molGridRef.current.getCurrentPageObject();
     getLists(defaultPageObject);
   };
 

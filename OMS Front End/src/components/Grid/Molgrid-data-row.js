@@ -5,9 +5,9 @@ import { renderGridMoneyColumn } from "./Grid Columns/MoneyColumn";
 import { renderGridDateColumn } from "./Grid Columns/DateColumn";
 import { renderGridLinkColumn } from "./Grid Columns/LinkColumn";
 import { renderGridCheckboxColumn } from "./Grid Columns/CheckBoxColumn";
-import { RenderGridAction } from "./Grid Columns/ActionColumn";
+import { renderGridAction } from "./Grid Columns/ActionColumn";
 import { renderGridLableColumn } from "./Grid Columns/LabelColumn";
-import { renderHTMLColumn } from "./Grid Columns/HTMLColumn";
+// import { renderHTMLColumn } from "./Grid Columns/HTMLColumn";/
 
 // Function for rendering the action column
 const MolGridDataRows = (props) => {
@@ -27,11 +27,11 @@ const MolGridDataRows = (props) => {
       case GridColumnType.CHECKBOX:
         return renderGridCheckboxColumn(rowData, col, rowIndex);
       case GridColumnType.ACTION:
-        return RenderGridAction(rowData, col, rowIndex, props.onActionChange);
+        return renderGridAction(rowData, col, rowIndex, props.onActionChange);
       case GridColumnType.CUSTOM:
         return col.renderCustomCol ? col.renderCustomCol(rowData, rowIndex) : null;
-      case GridColumnType.HTML:
-        return renderHTMLColumn(rowData, col, rowIndex);
+      // case GridColumnType.HTML:
+      //   return renderHTMLColumn(rowData, col, rowIndex);
       default:
         return rowData[col.fieldName];
     }

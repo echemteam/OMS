@@ -12,7 +12,7 @@ import { HasPermissions } from "../../../components/SecurityPermission/EditDelet
 import { securityKey } from "../../../data/SecurityKey";
 import { ActionFlag } from "../../../components/SecurityPermission/EditDeletePermissions.Data";
 import { AddPagePermissionsContext } from "../../../utils/ContextAPIs/AddPagePermissions/AddPagePermissionsContext";
-
+import useDebounce from "../../../app/customHooks/useDebouce";
 
 const Users = () => {
 
@@ -21,7 +21,7 @@ const Users = () => {
   const [search, setSearch] = useState("");
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [listData, setListData] = useState();
-
+  const debouncedSearch = useDebounce(search, 300);
   const { confirm } = SwalAlert();
   const navigate = useNavigate();
   const { hasAccess, CheckAddPermission } = useContext(AddPagePermissionsContext);
@@ -40,16 +40,14 @@ const Users = () => {
         pageNumber: pageObject.pageNumber,
         pageSize: pageObject.pageSize,
       },
-      filters: { searchText: search },
+      filters: { searchText: debouncedSearch },
     };
     getUsers(request);
   };
 
   const handleChange = (event) => {
     const value = event.target.value;
-    if (value.length >= 3 || value.length === 0) {
-      setSearch(value);
-    }
+    setSearch(value);
   };
 
   const handlePageChange = (page) => {
@@ -83,10 +81,10 @@ const Users = () => {
 
   useEffect(() => {
     if (molGridRef.current) {
-      const defaultPageObject = molGridRef.current.getDefulatPageObject();
+      const defaultPageObject = molGridRef.current.getCurrentPageObject();
       getLists(defaultPageObject);
     }
-  }, [search]);
+  }, [debouncedSearch]);
 
 
   const handleEidtClick = (data) => {

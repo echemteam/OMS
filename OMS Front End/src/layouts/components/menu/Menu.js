@@ -60,12 +60,12 @@ export const Menu = [
         to: "/Users",
         securityKey: securityKey.USERMANAGEMENT
       },
-      {
-        id: "roleManagement",
-        submenuName: "Role Management",
-        to: "/usersRole",
-        securityKey: securityKey.ROLEMANAGEMENT
-      },
+      // {
+      //   id: "roleManagement",
+      //   submenuName: "Role Management",
+      //   to: "/usersRole",
+      //   securityKey: securityKey.ROLEMANAGEMENT
+      // },
       {
         id: "SecurityRoleManagement",
         submenuName: "Security Roles Management",
