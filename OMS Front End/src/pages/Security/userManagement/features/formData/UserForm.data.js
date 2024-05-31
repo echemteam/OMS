@@ -63,13 +63,13 @@ export const userFormData = {
       fieldType: FormFieldTypes.PASSWORD,
       dataField: "password",
       fieldSetting: {
-          placeholder: "Enter Your Password",
+        placeholder: "Enter Your Password",
       },
       validation: [{ type: "require" }, { type: "password" }],
       style: {
-          containerCss: "col-md-6",
+        containerCss: "col-md-6",
       },
-  },
+    },
     {
       id: "isActive",
       lable: "IsActive",
@@ -105,7 +105,24 @@ export const UserGridConfig = {
       name: "Last Name",
       fieldName: "lastName",
     },
-
+    {
+      name: "IsActive",
+      fieldName: "isActive",
+      colType: GridColumnType.CHECKBOX,
+      colSettings: {
+        valueField: "isActive",
+        getLableClass: (value) => {
+          switch (value) {
+            case true:
+              return "info";
+            case false:
+              return "danger";
+            default:
+              return "secondary";
+          }
+        },
+      },
+    },
     // {
     //   name: "Status",
     //   fieldName: "status",

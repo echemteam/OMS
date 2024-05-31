@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
 import MolGrid from "../../../components/Grid/MolGrid";
@@ -13,6 +13,8 @@ import SwalAlert from "../../../services/swalService/SwalService";
 import ToastService from "../../../services/toastService/ToastService";
 import SidebarModel from "../../../components/ui/sidebarModel/SidebarModel";
 import { encryptUrlData } from "../../../services/CryptoService";
+import { securityKey } from "../../../data/SecurityKey";
+import { AddPagePermissionsContext } from "../../../utils/ContextAPIs/AddPagePermissions/AddPagePermissionsContext";
 
 const SecurityRoleManagement = () => {
   const molGridRef = useRef();
@@ -28,6 +30,11 @@ const SecurityRoleManagement = () => {
 
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
+  const { hasAccess, CheckAddPermission } = useContext(AddPagePermissionsContext);
+
+  useEffect(() => {
+    CheckAddPermission(securityKey.ADDSECURITYROLE);
+  }, [])
 
   const [
     getRoles,
@@ -107,7 +114,7 @@ const SecurityRoleManagement = () => {
 
   useEffect(() => {
     if (molGridRef.current) {
-      const defaultPageObject = molGridRef.current.getDefulatPageObject();
+      const defaultPageObject = molGridRef.current.getCurrentPageObject();
       getLists(defaultPageObject);
     }
   }, []);
@@ -141,7 +148,7 @@ const SecurityRoleManagement = () => {
   //** Success */
   const onSuccess = () => {
     onModalClose();
-    const defaultPageObject = molGridRef.current.getDefulatPageObject();
+    const defaultPageObject = molGridRef.current.getCurrentPageObject();
     getLists(defaultPageObject);
   };
 
@@ -155,7 +162,7 @@ const SecurityRoleManagement = () => {
         cardTitle="Security Roles"
         // cardSubTitle="Sub title add hear"
         buttonClassName="btn dark-btn"
-        rightButton={true}
+        rightButton={hasAccess ? true : false}
         buttonText="Add"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}

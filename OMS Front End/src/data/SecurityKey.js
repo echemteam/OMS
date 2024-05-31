@@ -1,4 +1,35 @@
 export const securityKey = {
+
+    //** Dashboard */
+    DASHBOARD: "Dashboard",
+
+    //** User Management */
+    USERMANAGEMENT: "User Management",
+    ADDUSER: "Add User",
+    EDITUSER: "Edit User",
+    DELETEUSER: "Delete User",
+
+    //** Role Management */
+    ROLEMANAGEMENT: "Role Management",
+    ADDROLE: "Add Role",
+    EDITROLE: "Edit Role",
+    DELETEROLE: "Delete Role",
+
+    //** Permissions Management */
+    PERMISSIONMANAGEMENT: "Permissions Management",
+    ADDPERMISSION: "Add Permissions",
+    SAVEPERMISSION: "Save Permissions",
+
+    //**  */
+    SECURITY: "Security",
+
+    //** Security Role Management */
+    SECURITYROLEMANAGEMENT: "Security Role Management",
+    ADDSECURITYROLE: "Add Role",
+    EDITSECURITYROLE: "Edit Role",
+    DELETESECURITYROLE: "Delete Role",
+
+
     EMPLOYERSSEARCH: "Employers Search",
 
     EMPLOYERPAGE: "Employer Page",
@@ -55,16 +86,13 @@ export const securityKey = {
     UNSIGNEDEMPLOYERS: "Unsigned Employers",
     BONDREPORT: "Bond Report",
     CONTRACTORBYSIGNDATE: "Contractor By Sign Date",
-    SECURITY: "Security",
+
 
     PERMISSIONS: "Permissions",
     ADDPERMISSIONS: "Add Permissions",
 
     //TODO : KP Need to check for the below keys.
-    USERMANAGEMENT: "User Management",
-    ADDUSER: "Add User",
-    EDITUSER: "Edit User",
-    DELETEUSER: "Delete User",
+
 
     SECURITYGROUPMANAGEMENT: "Security Group Management",
     ADDSECURITYGROUP: "Add Group",
