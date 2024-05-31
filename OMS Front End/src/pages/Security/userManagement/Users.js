@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import MolGrid from "../../../components/Grid/MolGrid";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
@@ -8,18 +8,24 @@ import { useDeleteUserMutation, useGetUsersMutation } from '../../../app/service
 import SwalAlert from "../../../services/swalService/SwalService";
 import ToastService from "../../../services/toastService/ToastService";
 import { useNavigate } from "react-router-dom";
+import { HasPermissions } from "../../../components/SecurityPermission/EditDeletePagePermissions";
+import { securityKey } from "../../../data/SecurityKey";
+import { ActionFlag } from "../../../components/SecurityPermission/EditDeletePermissions.Data";
+import { AddPagePermissionsContext } from "../../../utils/ContextAPIs/AddPagePermissions/AddPagePermissionsContext";
+
 
 const Users = () => {
-  
+
   const molGridRef = useRef();
-  
+
   const [search, setSearch] = useState("");
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [listData, setListData] = useState();
-  
+
   const { confirm } = SwalAlert();
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+  const { hasAccess, CheckAddPermission } = useContext(AddPagePermissionsContext);
+
   const [
     getUsers,
     { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
@@ -49,6 +55,12 @@ const Users = () => {
   const handlePageChange = (page) => {
     getLists(page);
   };
+
+  useEffect(() => {
+    CheckAddPermission(securityKey.ADDUSER);
+    HasPermissions(securityKey.EDITUSER, ActionFlag.Edit, UserGridConfig);
+    HasPermissions(securityKey.DELETEUSER, ActionFlag.Delete, UserGridConfig);
+  }, [])
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
@@ -111,13 +123,12 @@ const Users = () => {
         searchInputName="Search By User Name"
         titleButtonClick={AddUser}
         buttonClassName="btn theme-button"
-        rightButton={true}
+        rightButton={hasAccess ? true : false}
         buttonText="Add User"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
         handleChange={handleChange}
-        searchInput={true}
-      >
+        searchInput={true}>
         <div className="row">
           <div className="col-md-12 table-bordered">
             <MolGrid

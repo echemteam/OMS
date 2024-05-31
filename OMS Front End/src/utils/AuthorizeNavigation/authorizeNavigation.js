@@ -100,7 +100,7 @@ function checkPermissionAtFunctional(obj, targetSecurityKeyName) {
             case 1:
                 return { ...permissionObj, hasAccess: true };
             case 2:
-                return { ...permissionObj, hasAccess: true };
+                return { ...permissionObj, hasAccess: false };
             case 3:
                 return { ...permissionObj, isViewOnly: true };
             case 4:
