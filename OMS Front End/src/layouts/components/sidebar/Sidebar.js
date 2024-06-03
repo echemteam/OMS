@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./Sidebar.scss";
 import { Link } from "react-router-dom";
 import { Menu } from "../menu/Menu";
+import Image from "../../../components/image/Image";
+import { AppIcons } from "../../../data/appIcons";
 const Sidebar = (props) => {
-  
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [clickedValueSubMenu, setClickedValueSubMenu] = useState(null);
 
@@ -15,7 +16,7 @@ const Sidebar = (props) => {
     }
   };
 
-  const handleChildClick = (e , menu) => {
+  const handleChildClick = (e, menu) => {
     setClickedValueSubMenu(menu);
     e.stopPropagation(); // Prevent the click event from bubbling up
   };
@@ -45,7 +46,10 @@ const Sidebar = (props) => {
                     }
                     onClick={() => handleClick(menuItem.id)}
                   >
-                    <Link to={menuItem.to} className={menuItem.subMenu ? "menu-arrow" : ""}>
+                    <Link
+                      to={menuItem.to}
+                      className={menuItem.subMenu ? "menu-arrow" : ""}
+                    >
                       <i className={menuItem.iconClass}></i>
                       <span>{menuItem.name}</span>
                     </Link>
@@ -54,7 +58,17 @@ const Sidebar = (props) => {
                         <ul className="sidebar-dropdown">
                           {menuItem.children.map((subMenu, index) => (
                             <li className="dropdown-menus">
-                              <Link to={subMenu.to}  className={clickedValueSubMenu === subMenu.id ? "active-submenu" : ""} onClick={(e) => handleChildClick(e , subMenu.id)} >{subMenu.submenuName}</Link>
+                              <Link
+                                to={subMenu.to}
+                                className={
+                                  clickedValueSubMenu === subMenu.id
+                                    ? "active-submenu"
+                                    : ""
+                                }
+                                onClick={(e) => handleChildClick(e, subMenu.id)}
+                              >
+                                {subMenu.submenuName}
+                              </Link>
                             </li>
                           ))}
                         </ul>
@@ -66,6 +80,11 @@ const Sidebar = (props) => {
             </div>
           </div>
         </nav>
+        <div className="collapse-btn">
+          <div className="click-btn">
+            <Image imagePath={AppIcons.arrowIcon} />
+          </div>
+        </div>
       </div>
     </>
   );

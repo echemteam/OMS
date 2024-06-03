@@ -2,6 +2,7 @@
   .bs-stepper-header {
     .step {
       transition: 0.5s all;
+
       .step-trigger {
         .bs-stepper-circle {
           border-radius: 3px;
@@ -12,9 +13,10 @@
         padding: 10px;
         min-width: 140px;
         transition: 0.5s all;
+
         &:hover {
           background: var(--gradient-theme) !important;
-          
+
           .bs-stepper-circle {
             background: var(--whiteColor) !important;
             color: var(--themeColor);
@@ -49,9 +51,14 @@
     margin-top: 10px;
     padding: 0;
   }
-.card{
-  .card-body-sec{
-    margin-top: 0;
+
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+
+      .card-body-sec {
+        padding-top: 10px;
+      }
+    }
   }
-}
 }

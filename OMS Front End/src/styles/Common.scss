@@ -521,13 +521,13 @@ a {
   margin-bottom: 30px;
 
   .tab-header {
-    border-bottom: 1px solid var(--themeColor);
+    border-bottom: 1px solid var(--linkMenu);
     background: var(--whiteColor);
 
     button {
       padding: 10px 25px;
       border: none;
-      background: none;
+      background: var(--linkMenu);
       border-radius: 7px;
       -webkit-border-radius: 7px;
       -moz-border-radius: 7px;
@@ -537,13 +537,12 @@ a {
       border-bottom-right-radius: 0;
       font-weight: 600;
       font-size: 95%;
-      border: 1px solid var(--themeColor);
+      border: none;
       border-bottom: 0;
       margin-right: 10px;
-      color: var(--themeColor);
+      color: var(--textColor);
 
       &.active {
-        border: 1px solid var(--themeColor);
         margin-bottom: -1px;
         background: var(--gradient-theme);
         color: var(--whiteColor);
@@ -653,7 +652,7 @@ a {
 .contact-card-section,
 .address-card-section {
   .accordion-item {
-    border: 1px solid var(--themeColor);
+    border: 1px solid #eaf1f9;
     border-radius: 5px !important;
     margin-bottom: 15px;
     overflow: hidden;
@@ -661,7 +660,7 @@ a {
     .header-title-btn {
       .accordion-header {
         button {
-          background: var(--cardTitleBg);
+          background: var(--linkMenu);
           padding: 7px 10px;
           color: var(--textColor);
           font-size: 15px;

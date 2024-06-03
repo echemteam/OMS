@@ -5,7 +5,6 @@
   position: relative;
   width: 260px;
   height: 100vh;
-  overflow: hidden;
 
   .sidebar {
     .main-menus {
@@ -209,6 +208,31 @@
             }
           }
         }
+      }
+    }
+  }
+  .collapse-btn{
+    position: absolute;
+    padding: 7px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background: var(--bg-main-content);
+    top: 0;
+    right: -15px;
+    .click-btn{
+      background: var(--gradient-theme);
+      height: 100%;
+      width: 100%;
+      border-radius: 100%;
+      padding: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      img{
+        filter: brightness(100);
+        transform: rotate(90deg);
       }
     }
   }

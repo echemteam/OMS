@@ -4,7 +4,8 @@ import { AppIcons } from "../../../../../data/appIcons";
 import { Accordion } from "react-bootstrap";
 
 const ContactCard = ({ isAddEditModal }) => {
-  const [activeKey, setActiveKey] = useState(null);
+  // Set the initial state to the first accordion item's index
+  const [activeKey, setActiveKey] = useState("0");
   const contactTypes = [
     {
       contactTitle: "End User",
@@ -74,6 +75,7 @@ const ContactCard = ({ isAddEditModal }) => {
   const handleToggle = (eventKey) => {
     setActiveKey(activeKey === eventKey ? null : eventKey);
   };
+
   return (
     <>
       <Accordion

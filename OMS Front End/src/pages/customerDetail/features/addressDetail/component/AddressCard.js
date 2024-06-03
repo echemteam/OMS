@@ -4,7 +4,8 @@ import Image from "../../../../../components/image/Image";
 import { Accordion } from "react-bootstrap";
 
 const AddressCard = ({ isAddEditModal }) => {
-  const [activeKey, setActiveKey] = useState(null);
+  // Set the initial state to the first address title
+  const [activeKey, setActiveKey] = useState("Shipping Address");
   const addressTypes = [
     {
       addressTitle: "Shipping Address",
@@ -69,21 +70,19 @@ const AddressCard = ({ isAddEditModal }) => {
         },
       ],
     },
-
   ];
 
   const handleToggle = (eventKey) => {
     setActiveKey(eventKey === activeKey ? null : eventKey);
   };
+
   return (
     <>
       <Accordion className="address-card-section" activeKey={activeKey} onSelect={handleToggle}>
         {addressTypes.map((addressType, index) => (
           <Accordion.Item
             eventKey={addressType.addressTitle.toString()}
-            className={
-              activeKey === addressType.addressTitle.toString() ? "active" : ""
-            }
+            className={activeKey === addressType.addressTitle.toString() ? "active" : ""}
             key={index}
           >
             <div className="header-title-btn">

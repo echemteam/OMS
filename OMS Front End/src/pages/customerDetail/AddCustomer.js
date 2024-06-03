@@ -42,30 +42,28 @@ const AddCustomer = () => {
   };
   return (
     <>
-      
-        <div id="stepper1" className="bs-stepper stepper-section">
-          <div className="bs-stepper-header">
+      <div id="stepper1" className="bs-stepper stepper-section">
+        <div className="bs-stepper-header">
+          {steps.map((step, index) => (
+            <React.Fragment key={index}>
+              <div className="step" data-target={`#step-${index}`}>
+                <button className="step-trigger">
+                  <span className="bs-stepper-circle">{index + 1}</span>
+                  <span className="bs-stepper-label">{step.label}</span>
+                </button>
+              </div>
+              {index < steps.length - 1 && <div className="line"></div>}
+            </React.Fragment>
+          ))}
+        </div>
+        <div className="bs-stepper-content">
+          <form onSubmit={onSubmit}>
             {steps.map((step, index) => (
-              <React.Fragment key={index}>
-                <div className="step" data-target={`#step-${index}`}>
-                  <button className="step-trigger">
-                    <span className="bs-stepper-circle">{index + 1}</span>
-                    <span className="bs-stepper-label">{step.label}</span>
-                  </button>
-                </div>
-                {index < steps.length - 1 && <div className="line"></div>}
-              </React.Fragment>
-            ))}
-          </div>
-          <div className="bs-stepper-content">
-            <form onSubmit={onSubmit}>
-              {steps.map((step, index) => (
-                <div key={index} id={`step-${index}`} className="content">
-                  <div className="row">
-                    <div className="col-12 mx-auto">
+              <div key={index} id={`step-${index}`} className="content">
+                <div className="row">
+                  <div className="col-12 mx-auto">
                     <CardSection>
-                      {step.content}
-                      
+                      <div>{step.content}</div>
                       <div className="d-flex justify-content-end">
                         <button
                           type="button"
@@ -88,15 +86,14 @@ const AddCustomer = () => {
                           </button>
                         )}
                       </div>
-                      </CardSection>
-                    </div>
+                    </CardSection>
                   </div>
                 </div>
-              ))}
-            </form>
-          </div>
+              </div>
+            ))}
+          </form>
         </div>
-      
+      </div>
     </>
   );
 };
