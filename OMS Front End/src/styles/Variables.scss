@@ -1,13 +1,13 @@
 // Variable Styling Start
 
 :root {
-  --themeColor: #04A9F5;
-  --themeColorLight:#e7f6fe;
+  --themeColor: #696cff;
+  --themeColorLight:#696cff29;
   --whiteColor: #ffffff;
-  --textColor:#3e4b5b;
+  --textColor:#566a7f;
   --textColorLight:#6c7b8e;
   --iconCOlor:#bba8bff5;
-  --bg-main-content:#f4f7fa;
+  --bg-main-content:#f5f5f9;
   --bg-light-content:#e7f6fe;
   --primaryColor:#5563ff;
   --dangerColor:#fe7096;
@@ -20,7 +20,7 @@
   --cardTitleBg:#e7f6febd;
   
   // Bg-Gradient Color Start
-  --gradient-theme : linear-gradient(to right, #90ceeb, var(--themeColor));
+  --gradient-theme : linear-gradient(to right, #9d9ee7, var(--themeColor));
   --gradient-danger: linear-gradient(to right, #ffbf96, var(--dangerColor));
   --gradient-warning : linear-gradient(to right, #f6e384, var(--warningColor));
   --gradient-info:linear-gradient(to right, #90caf9, var(--infoColor));

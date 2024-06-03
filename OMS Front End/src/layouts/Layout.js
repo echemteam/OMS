@@ -9,22 +9,27 @@ import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation"
 import { AddPagePermissionsProvider } from "../utils/ContextAPIs/AddPagePermissions/AddPagePermissionsContext";
 
 const Layout = (props) => {
-
   // Get the current location using React Router's useLocation hook
   const location = useLocation();
 
   // Extract the last segment of the pathname as routhPath
   let routhPath = location.pathname.replace("/", "");
-  const segments = location.pathname.split('/');
+  const segments = location.pathname.split("/");
   if (segments.length > 1) {
     routhPath = segments[1];
   }
 
   // Find the matching component route based on the routhPath
-  const renderComponent = routhPath ? props.componentRoutes.find((x) => x.id.toLowerCase() === routhPath.toLowerCase()) : "";
+  const renderComponent = routhPath
+    ? props.componentRoutes.find(
+        (x) => x.id.toLowerCase() === routhPath.toLowerCase()
+      )
+    : "";
 
   // Check if the user is authorized to access the current route
-  const isAuthorize = renderComponent?.securityKey ? hasPermission(renderComponent.securityKey) : false;
+  const isAuthorize = renderComponent?.securityKey
+    ? hasPermission(renderComponent.securityKey)
+    : false;
 
   return (
     <React.Fragment>
@@ -39,7 +44,7 @@ const Layout = (props) => {
               <div className="center-content-part">
                 <div className="content-desc-section">
                   <Breadcome componentRoutes={props.componentRoutes} />
-                  <div className="center-container">
+                  <div className="center-container container-fluid">
                     <Outlet />
                   </div>
                   <Footer />
@@ -49,7 +54,6 @@ const Layout = (props) => {
               } */}
             </div>
           </div>
-
         </div>
       </AddPagePermissionsProvider>
     </React.Fragment>

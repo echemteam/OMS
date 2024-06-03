@@ -16,7 +16,7 @@ export const testFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
     {
@@ -31,7 +31,7 @@ export const testFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
     {
@@ -46,7 +46,7 @@ export const testFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
     {
@@ -61,7 +61,7 @@ export const testFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
     {
@@ -76,7 +76,7 @@ export const testFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
     
@@ -105,7 +105,7 @@ export const testFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
       },
     },
     {
@@ -120,7 +120,7 @@ export const testFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
       },
     },
     {
@@ -135,7 +135,7 @@ export const testFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
     {
@@ -150,7 +150,7 @@ export const testFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
     

@@ -20,7 +20,7 @@ const changePasswordInfo = {
             },
             validation: [{ type: "require" }, { type: "password" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-2",
             },
         },
         {
@@ -34,7 +34,7 @@ const changePasswordInfo = {
             },
             validation: [{ type: "require" }, { type: "compare", compareEle: "password" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-2",
             },
         },
     ]

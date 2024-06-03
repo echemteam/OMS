@@ -1,68 +1,122 @@
-.stepper-section {
-  .contact-card-section,
-  .address-card-section{
-    margin-top: 12px;
-  }
-  .bs-stepper-header {
-    .step {
-      transition: 0.5s all;
-
-      .step-trigger {
-        .bs-stepper-circle {
-          border-radius: 3px;
-        }
-
-        display: flex;
-        flex-direction: column;
-        padding: 10px;
-        min-width: 140px;
-        transition: 0.5s all;
-
-        &:hover {
-          background: var(--gradient-theme) !important;
-
-          .bs-stepper-circle {
-            background: var(--whiteColor) !important;
-            color: var(--themeColor);
-          }
-
-          .bs-stepper-label {
-            color: var(--whiteColor) !important;
-          }
-        }
-      }
-
-      &.active {
-        background: var(--gradient-theme) !important;
-        border-radius: 3px;
-
-        .step-trigger {
-          .bs-stepper-circle {
-            background: var(--whiteColor) !important;
-            color: var(--themeColor);
-          }
-
-          .bs-stepper-label {
-            color: var(--whiteColor) !important;
-          }
-        }
-      }
-
-    }
-  }
-
-  .bs-stepper-content {
-    margin-top: 10px;
-    padding: 0;
-  }
-
+.stepper-card {
   .card {
     .card-body-sec {
       margin-top: 0;
 
-      .card-body-sec {
-        padding-top: 10px;
+      .stepper-section {
+
+        .contact-card-section,
+        .address-card-section {
+          margin-top: 12px;
+        }
+
+        .bs-stepper-header {
+          margin: 0px 0 20px;
+          padding-bottom: 20px;
+          border-bottom: 1px solid var(--linkMenu);
+
+          .step {
+            transition: 0.5s all;
+            margin-right: 25px;
+
+            &:last-child {
+              margin-right: 0;
+            }
+
+            .step-trigger {
+              display: flex;
+              padding: 0;
+              transition: 0.5s all;
+
+              .bs-stepper-circle {
+                border-radius: 7px;
+                margin: 0;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(67,89,113,.16);
+                color: var(--textColor);
+              }
+
+              .bs-ste {
+                &.pper-label {
+                  display: flex;
+                  align-items: flex-start;
+                  flex-direction: column;
+                  margin-left: 10px;
+
+                  .small-txt {
+                    font-size: 80%;
+                    font-weight: normal;
+                    color: var(--textColorLight);
+                  }
+                }
+              }
+
+              &:hover {
+                background: transparent;
+              }
+            }
+
+            &.active {
+              .step-trigger {
+                .bs-stepper-circle {
+                  background: var(--themeColor);
+                  box-shadow: 0 .1875rem .375rem 0 rgba(105, 108, 255, .4);
+                  color: var(--whiteColor);
+                }
+
+                .pper-label {
+                  color: var(--themeColor);
+
+                  .small-txt {}
+                }
+              }
+            }
+          }
+        }
+
+        .right-arrow {
+          margin-right: 25px;
+
+          img {
+            height: 14px;
+            width: 14px;
+            transform: rotate(-90deg);
+            filter: contrast(0);
+          }
+        }
+
+        .bs-stepper-content {
+          margin-top: 10px;
+          padding: 0;
+        }
+
+        .card {
+          .card-body-sec {
+            margin-top: 0;
+
+            .card-body-sec {
+              padding-top: 10px;
+            }
+          }
+        }
       }
     }
+  }
+}
+
+.basic-info-step {
+  &.horizontal-form {
+    .input-label-part {
+      .input-label-title {
+        min-width: 155px;
+      }
+    }
+    .validation-text{
+      margin-left: 175px !important;
+    } 
   }
 }

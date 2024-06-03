@@ -1,19 +1,23 @@
 .header-section {
-  height:62px;
-  width: 100%;
+  height: 62px;
+  width: 98%;
   background: var(--whiteColor);
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  border-bottom: 1px solid var(--inputBorder);
+  padding: 0 15px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.12);
   .left-section {
     width: 40%;
   }
+
   .right-section {
     width: 60%;
     display: flex;
     align-items: center;
-    justify-content:end;
+    justify-content: end;
+
     .search-bar {
       width: 60%;
       margin-right: 25px;
@@ -113,9 +117,11 @@
                 display: flex;
                 align-items: flex-start;
                 margin-bottom: 10px;
-                &:last-child{
+
+                &:last-child {
                   margin-bottom: 0;
                 }
+
                 &:nth-child(1) {
                   .noti-img {
                     background: var(--light-red-bg-g);
@@ -182,19 +188,21 @@
             }
           }
 
-          .notification-footer{
+          .notification-footer {
             border-top: 1px solid var(--box-borderColor);
             display: flex;
             align-items: center;
             justify-content: center;
             height: 46px;
-            a{
+
+            a {
               font-weight: 500;
             }
           }
         }
-        &:hover{
-          .notification-list{
+
+        &:hover {
+          .notification-list {
             display: block;
           }
         }
@@ -275,7 +283,8 @@
               display: flex;
               transition: 0.3s all;
               font-weight: 600;
-              &.bi{
+
+              &.bi {
                 padding-top: 2px;
                 font-size: 16px;
                 margin-bottom: 0 !important;
@@ -300,7 +309,7 @@
               }
 
 
-              
+
             }
 
             &.drop-down-icon-menu {
@@ -312,6 +321,7 @@
                 }
               }
             }
+
             &:hover {
               color: var(--themeColor);
             }

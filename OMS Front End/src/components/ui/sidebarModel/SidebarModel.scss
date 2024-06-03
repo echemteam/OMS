@@ -86,6 +86,7 @@
           font-size: 120%;
           font-weight: 600;
           padding: 10px;
+          color: var(--whiteColor);
         }
 
         .close-btn {
@@ -102,7 +103,7 @@
           img {
             width: 30px;
             transition: 0.5s all;
-            filter: brightness(0)
+            filter: brightness(100)
           }
 
           &:hover {

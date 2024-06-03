@@ -16,7 +16,7 @@ export const addEditRoleFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
     
@@ -32,7 +32,7 @@ export const addEditRoleFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
     {
@@ -47,7 +47,7 @@ export const addEditRoleFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-3 mb-3 checkbox-horizontal",
+        containerCss: "col-xxl-2 col-xl-2 col-md-3 mb-2 checkbox-horizontal",
       },
     },
     

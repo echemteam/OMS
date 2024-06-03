@@ -31,8 +31,8 @@ const ViewCustomer = () => {
       component: <div className="mt-2">Settings</div>,
     },
     {
-      sMenuItemCaption: "Attachments",
-      component: <div className="mt-2">Attachment</div>,
+      sMenuItemCaption: "Documents",
+      component: <div className="mt-2">Documents</div>,
     },
   ];
 

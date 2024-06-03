@@ -84,6 +84,7 @@
                     padding-left: 15px;
                     font-size: 107%;
                     font-weight: 500;
+                    
                   }
 
                   &.menu-arrow {
@@ -218,8 +219,8 @@
     height: 40px;
     border-radius: 100%;
     background: var(--bg-main-content);
-    top: 0;
-    right: -15px;
+    top: 20px;
+    right: -20px;
     .click-btn{
       background: var(--gradient-theme);
       height: 100%;

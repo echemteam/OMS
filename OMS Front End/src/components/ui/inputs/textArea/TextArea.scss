@@ -1,20 +1,25 @@
 .text-area {
   width: 100%;
+
   .text-area-input {
     box-shadow: none !important;
     border: 1px solid var(--inputBorder) !important;
-    border-radius: 0px !important;
+    border-radius: 6px !important;
     box-shadow: none !important;
-    padding: 10px 15px;
+    padding: 10px 8px;
     outline: none;
     width: 100%;
     min-height: 120px;
     font-size: 90%;
+    transition: 0.5s all !important;
 
     &:focus-visible,
     &:focus {
       box-shadow: none !important;
       border: 1px solid var(--themeColor) !important;
+      box-shadow: 0 0 .25rem .05rem rgba(105, 108, 255, .1) !important;
+      padding-left: 12px !important;
+
     }
   }
 }

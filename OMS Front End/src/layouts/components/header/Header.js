@@ -17,7 +17,7 @@ function Header({ handleChange }) {
       <div className="left-section">
         <div className="search-bar">
           <SearchBar
-            searchText="Search"
+            searchText="Search..."
             handleChange={handleChange}
             searchValue=""
           />

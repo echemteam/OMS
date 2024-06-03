@@ -110,59 +110,56 @@ const ContactDetailForm = ({ onSidebarClose }) => {
           </div>
         </div>
       </div>
-      <div className="mt-4">
-        <CardSection
-          cardTitle="Email Address"
-          buttonClassName="danger-btn"
-          textWithIcon={true}
-          iconImg={AppIcons.PlusIcon}
-          rightButton={true}
-          buttonText="Add"
-          titleButtonClick={handleToggleModal}
-        >
-          <div className="row">
-            <div className="col-md-12 table-striped role-table-sec">
-              <MolGrid
-                ref={molGridRef}
-                configuration={emailConfig}
-                dataSource={emailData}
-                allowPagination={true}
-                pagination={{
-                  totalCount: 0,
-                }}
-                onActionChange={actionHandler}
-                // onPageChange={handlePageChange}
-              />
+      <div className="row">
+        <div className="col-xl-6 col-lg-6 col-md-6 col-12 mt-4 card-email-sec">
+          <CardSection
+            cardTitle="Email Address"
+            buttonClassName="danger-btn"
+            textWithIcon={true}
+            iconImg={AppIcons.PlusIcon}
+            rightButton={true}
+            buttonText="Add"
+            titleButtonClick={handleToggleModal}
+          >
+            <div className="row">
+              <div className="col-md-12 table-striped role-table-sec">
+                <MolGrid
+                  ref={molGridRef}
+                  configuration={emailConfig}
+                  dataSource={emailData}
+                  allowPagination={false}
+                  
+                  onActionChange={actionHandler}
+                  // onPageChange={handlePageChange}
+                />
+              </div>
             </div>
-          </div>
-        </CardSection>
-      </div>
-      <div className="mt-4">
-        <CardSection
-          cardTitle="Contact Number"
-          buttonClassName="danger-btn"
-          textWithIcon={true}
-          iconImg={AppIcons.PlusIcon}
-          rightButton={true}
-          buttonText="Add"
-          titleButtonClick={handleToggleModalContact}
-        >
-          <div className="row">
-            <div className="col-md-12 table-striped role-table-sec">
-              <MolGrid
-                ref={molGridRef}
-                configuration={contactConfig}
-                dataSource={contactData}
-                allowPagination={true}
-                pagination={{
-                  totalCount: 0,
-                }}
-                onActionChange={contactActionHandler}
-                // onPageChange={handlePageChange}
-              />
+          </CardSection>
+        </div>
+        <div className="col-xl-6 col-lg-6 col-md-6 col-12 mt-4 card-email-sec">
+          <CardSection
+            cardTitle="Contact Number"
+            buttonClassName="danger-btn"
+            textWithIcon={true}
+            iconImg={AppIcons.PlusIcon}
+            rightButton={true}
+            buttonText="Add"
+            titleButtonClick={handleToggleModalContact}
+          >
+            <div className="row">
+              <div className="col-md-12 table-striped role-table-sec">
+                <MolGrid
+                  ref={molGridRef}
+                  configuration={contactConfig}
+                  dataSource={contactData}
+                  allowPagination={false}
+                  onActionChange={contactActionHandler}
+                  // onPageChange={handlePageChange}
+                />
+              </div>
             </div>
-          </div>
-        </CardSection>
+          </CardSection>
+        </div>
       </div>
       {showModal && (
         <CenterModel

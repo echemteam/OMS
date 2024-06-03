@@ -19,7 +19,7 @@ export const assignUserFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-10 col-xl-10 col-md-10 mb-3",
+        containerCss: "col-xxl-10 col-xl-10 col-md-10 mb-2",
       },
     },
     

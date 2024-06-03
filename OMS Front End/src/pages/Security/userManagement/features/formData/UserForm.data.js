@@ -23,7 +23,7 @@ export const userFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl- col-xl-6 col-md-6 mb-3",
+        containerCss: "col-xxl- col-xl-6 col-md-6 mb-2",
       },
     },
     {
@@ -38,7 +38,7 @@ export const userFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl- col-xl-6 col-md-6 mb-3",
+        containerCss: "col-xxl- col-xl-6 col-md-6 mb-2",
       },
     },
     {
@@ -53,7 +53,7 @@ export const userFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
       },
     },
     {
@@ -82,7 +82,7 @@ export const userFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-3 mb-3",
+        containerCss: "col-xxl-2 col-xl-2 col-md-3 mb-2",
       },
     },
 

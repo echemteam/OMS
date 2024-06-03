@@ -28,13 +28,18 @@
 
   input {
     border-radius: 2px !important;    
-    padding-right: 40px;
+    padding-left: 40px;
+    border: none !important;
+    font-size: 115%;
+    &:focus{
+      border: none !important;
+    }
   }
 
   .search-btn {
     position: absolute;
     top: 50%;
-    right: 15px;
+    left: 15px;
     transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
@@ -45,11 +50,11 @@
       background: transparent;
       min-width: auto;
       padding: 0;
-      color: var(--themeColor);
-      font-weight: 900;
-
+      color: var(--textColor);
+      font-weight: bolder;
+      font-size: 115%;
       img {
-        width: 20px;
+        width: 30px;
         filter: unset;
         -webkit-filter: unset;
         margin-right: 0;

@@ -16,7 +16,7 @@ export const Stepper1FormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
       },
     },
     {
@@ -31,7 +31,7 @@ export const Stepper1FormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
       },
     },
     {
@@ -46,7 +46,7 @@ export const Stepper1FormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
       },
     },
     {
@@ -61,7 +61,7 @@ export const Stepper1FormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
       },
     },
     {
@@ -76,7 +76,7 @@ export const Stepper1FormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
       },
     },
     
@@ -92,7 +92,7 @@ export const Stepper1FormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-3 mt-4",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2 mt-4",
       },
     },
     

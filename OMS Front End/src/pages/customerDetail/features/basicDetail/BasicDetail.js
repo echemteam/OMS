@@ -6,7 +6,6 @@ import {
 } from "./component/BasicDetailForm.data";
 import Buttons from "../../../../components/ui/button/Buttons";
 import CardSection from "../../../../components/ui/card/CardSection";
-import { AppIcons } from "../../../../data/appIcons";
 
 const BasicDetail = ({ isFullWidthForm }) => {
   const userFormRef = useRef();
@@ -37,7 +36,7 @@ const BasicDetail = ({ isFullWidthForm }) => {
         </div>
       ) : (
         <CardSection buttonClassName="theme-button">
-          <div className="row ">
+          <div className="row horizontal-form basic-info-step">
             <FormCreator
               ref={userFormRef}
               {...basicDetailFormDataHalf}

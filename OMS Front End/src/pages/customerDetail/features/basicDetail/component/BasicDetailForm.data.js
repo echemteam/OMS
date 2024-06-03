@@ -16,7 +16,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
     {
@@ -31,7 +31,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
     {
@@ -46,7 +46,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
     {
@@ -61,7 +61,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
     {
@@ -76,7 +76,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
     {
@@ -91,7 +91,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
     {
@@ -106,7 +106,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
     {
@@ -121,7 +121,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
     {
@@ -151,7 +151,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-3 margin-left0-checkbox",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 margin-left0-checkbox",
       },
     },
     
@@ -167,7 +167,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
     {
@@ -182,7 +182,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-3",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
     
@@ -205,7 +205,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {
@@ -220,7 +220,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {
@@ -235,7 +235,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {
@@ -250,7 +250,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {
@@ -265,7 +265,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     
@@ -281,7 +281,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {
@@ -296,7 +296,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {
@@ -311,7 +311,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     
@@ -328,7 +328,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12",
       },
     },
     {
@@ -343,7 +343,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12",
       },
     },
     {
@@ -358,7 +358,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 margin-left0-checkbox",
       },
     },
     {
@@ -373,7 +373,7 @@ export const basicDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 margin-left0-checkbox",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 margin-left0-checkbox",
       },
     },
   ],

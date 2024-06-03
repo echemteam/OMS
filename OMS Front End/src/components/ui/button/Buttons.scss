@@ -36,7 +36,7 @@
     background-image: var(--gradient-theme);
 
     &:hover {
-      box-shadow: 0 5px 15px -4px hsla(203, 93%, 42%, 0.75);
+      box-shadow: 0 5px 15px -4px var(--themeColor);
     }
   }
 

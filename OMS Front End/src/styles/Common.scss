@@ -30,13 +30,23 @@ a {
 .input-label-part {
   width: 100%;
 
+}
+
+.input-label {
+  line-height: inherit;
+  display: inline-block;
+  margin-bottom: 5px;
+  font-size: .75rem;
+  color: var(--textColor);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: inherit;
+}
+
+.checkbox-part {
   .input-label {
-    font-weight: unset;
-    font-size: 14px;
-    line-height: inherit;
-    margin-bottom: 0px;
-    display: inline-block;
-    margin-bottom: 5px;
+    text-transform: capitalize !important;
+    font-size: inherit !important;
   }
 }
 
@@ -248,6 +258,7 @@ a {
 
   .middle-page-section {
     width: calc(100% - 190px);
+    padding: 10px 30px 0;
 
     .center-content-part {
       width: 100%;
@@ -260,7 +271,6 @@ a {
 
       .content-desc-section {
         .center-container {
-          padding: 0 22px 5px;
           height: calc(100vh - 110px);
           overflow: hidden;
           overflow-y: auto;
@@ -305,7 +315,7 @@ a {
       .input-label-part {
         display: flex;
         align-items: flex-start;
-        margin-bottom: 25px;
+        margin-bottom: 2px;
       }
     }
 
@@ -347,13 +357,12 @@ a {
 }
 
 .card {
-  padding: 12px 12px 22px;
+  padding: 22px;
   background: var(--whiteColor);
   border-radius: 12px;
-  border-bottom: 1px solid var(--inputBorder);
   margin-bottom: 20px;
-  border: 1px solid #dbe0e5;
-  box-shadow: var(--card-shadow);
+  border: none;
+  box-shadow: 0 2px 6px 0 rgba(67, 89, 113, .12);
 
   &.card-px-0 {
     padding: 12px 0;
@@ -490,6 +499,21 @@ a {
   }
 }
 
+.card-email-sec {
+  .card {
+    margin-bottom: 0;
+    box-shadow: 0px 0px 17px -10px var(--textColorLight);
+
+    .card-top-title-btn {
+      padding: 10px;
+    }
+
+    .border-table-simple {
+      width: 96%;
+      margin: 0 auto 10px;
+    }
+  }
+}
 
 .badge-gradient-warning {
   background: var(--gradient-warning);
@@ -525,7 +549,7 @@ a {
     background: var(--whiteColor);
 
     button {
-      padding: 10px 25px;
+      padding: 10px 25px 9px;
       border: none;
       background: var(--linkMenu);
       border-radius: 7px;
@@ -644,9 +668,35 @@ a {
 }
 
 .border-right-0 {
+  
   .css-13cymwt-control {
-    border-right: 0 !important;
+    border-right: 1px solid transparent !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+
   }
+  .css-12zf3ro-control,
+  .css-t3ipsp-control {
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-right: 1px solid var(--themeColor) !important;
+  }
+}
+.horizontal-form {
+  .border-left-r-0{
+    .validation-text{
+      margin-left: 5px !important;
+    }
+}
+}
+.border-left-r-0{
+  .input-label-part{
+    input{
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+    }
+  }
+  
 }
 
 .contact-card-section,
@@ -669,7 +719,8 @@ a {
           box-shadow: none;
 
           &:not(.collapsed) {
-            background: #b8e4fbbd;
+            background: var(--themeColorLight);
+            color: var(--themeColor);
           }
         }
 
@@ -846,13 +897,14 @@ a {
 }
 
 
-.basic-left-part{
-  .card{
-    .edit-icon{
+.basic-left-part {
+  .card {
+    .edit-icon {
       min-width: unset;
       padding: 0;
       margin-left: 10px !important;
-      img{
+
+      img {
         filter: unset;
         width: 20px;
         margin: 0;
@@ -863,17 +915,19 @@ a {
 
 @media only screen and (max-width: 1600px) {
   .basic-customer-detail {
-    .profile-info{
-      h5{
+    .profile-info {
+      h5 {
         font-size: 100% !important;
       }
+
       .input-label-part {
-        span{
+        span {
           font-size: 89%;
         }
       }
     }
-    .field-desc{
+
+    .field-desc {
       font-size: 87%;
     }
   }
