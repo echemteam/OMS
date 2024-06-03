@@ -1,4 +1,8 @@
 .stepper-section {
+  .contact-card-section,
+  .address-card-section{
+    margin-top: 12px;
+  }
   .bs-stepper-header {
     .step {
       transition: 0.5s all;
