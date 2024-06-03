@@ -4,9 +4,8 @@ import Sidebar from "./components/sidebar/Sidebar";
 import { Outlet, useLocation } from "react-router-dom";
 import Breadcome from "../components/ui/breadcome/Breadcome";
 import Footer from "./components/footer/Footer";
-import Unauthorize from "../pages/unauthorize/Unauthorize";
 import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation";
-import { AddPagePermissionsProvider } from "../utils/ContextAPIs/AddPagePermissions/AddPagePermissionsContext";
+import { PagePermissionsProvider } from "../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
 
 const Layout = (props) => {
   // Get the current location using React Router's useLocation hook
@@ -33,7 +32,11 @@ const Layout = (props) => {
 
   return (
     <React.Fragment>
-      <AddPagePermissionsProvider>
+      {/* <AddPagePermissionsContext.Provider value={renderComponent.permissionCongif}>
+
+      </AddPagePermissionsContext.Provider> */}
+      <PagePermissionsProvider>
+        {/* <SecurityPermissionsHOC permissionConfig={permissionConfig}> */}
         <div className="main-page-layout">
           <div className="top-sec">
             <Sidebar componentRoutes={props.componentRoutes} />
@@ -55,7 +58,8 @@ const Layout = (props) => {
             </div>
           </div>
         </div>
-      </AddPagePermissionsProvider>
+        {/* </SecurityPermissionsHOC> */}
+      </PagePermissionsProvider>
     </React.Fragment>
   );
 };

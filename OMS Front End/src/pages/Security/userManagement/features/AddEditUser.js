@@ -1,15 +1,20 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useContext, useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { useNavigate, useParams } from "react-router-dom";
 import Buttons from "../../../../components/ui/button/Buttons";
-import { userFormData } from "./formData/UserForm.data";
+import { UserGridConfig, securityKeys, userFormData } from "./formData/UserForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import { decryptUrlData } from "../../../../services/CryptoService";
 //** Services's */
+import ChangePassword from "./ChangePassword";
+import changePasswordInfo from "./formData/ChangePassword.data";
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddUserMutation, useLazyGetUserByUserIdQuery, useUpdateUserMutation } from "../../../../app/services/userAPI";
-import ChangePassword from "./ChangePassword";
+//** Context */
+import { PagePermissionsContext } from "../../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
+//** Custom Hook */
+import usePermissions from "../../../../utils/CustomHook/UsePermissions";
 
 const AddEditUser = forwardRef(() => {
   const navigate = useNavigate();
@@ -39,6 +44,10 @@ const AddEditUser = forwardRef(() => {
       data: isGetByIdData,
     },
   ] = useLazyGetUserByUserIdQuery();
+
+  const { isButtonDisable } = useContext(PagePermissionsContext);
+  usePermissions(descrypteId, securityKeys, userFormData, UserGridConfig);
+  usePermissions(descrypteId, securityKeys, changePasswordInfo);
 
   const handleUser = () => {
     let userData = userFormRef.current.getFormData(); // Get form data from the FormCreator component.
@@ -117,6 +126,7 @@ const AddEditUser = forwardRef(() => {
                 onClick={handleUser}
                 buttonText={`${descrypteId ? "Update" : "Add"}`}
                 isLoading={isAddLoading || isUpdateLoading}
+                isDisable={isButtonDisable}
               />
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"
@@ -132,7 +142,7 @@ const AddEditUser = forwardRef(() => {
         <CardSection
           cardTitle="Change Password"
         >
-          <ChangePassword descrypteId={descrypteId}/>
+          <ChangePassword descrypteId={descrypteId} isButtonDisable={isButtonDisable} />
         </CardSection>
         : null}
     </div>

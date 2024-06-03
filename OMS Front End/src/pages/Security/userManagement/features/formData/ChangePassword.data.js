@@ -37,7 +37,10 @@ const changePasswordInfo = {
                 containerCss: "col-md-6 mb-2",
             },
         },
-    ]
+    ],
+    formSetting: {
+        isViewOnly: false
+    }
 }
 
 

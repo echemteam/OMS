@@ -1,15 +1,15 @@
 import { useDispatch } from "react-redux";
 import React, { forwardRef, useContext, useEffect, useImperativeHandle, useState } from "react";
 //** Lib's */
-import { logout } from "../../../../../app/slice/authSlice";
-import { securityKey } from "../../../../../data/SecurityKey";
-import SwalAlert from "../../../../../services/swalService/SwalService";
-import CardSection from "../../../../../components/ui/card/CardSection";
+import { logout } from "../../../../app/slice/authSlice";
+import { securityKey } from "../../../../data/SecurityKey";
+import SwalAlert from "../../../../services/swalService/SwalService";
+import CardSection from "../../../../components/ui/card/CardSection";
 import { GetPermissionData, GetPermissionTreeData } from "../Util/generateTreeData";
-import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { SecurityPermissionsContext } from "../../../../../utils/ContextAPIs/SecurityPermissions/SecurityPermissionsContext";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { SecurityPermissionsContext } from "../../../../utils/ContextAPIs/SecurityPermissions/SecurityPermissionsContext";
 //** Service's */
-import { useAddSecurityPermissionsMutation, useLazyGetAllPagesByRoleIdQuery } from "../../../../../app/services/securityPermissionsAPI";
+import { useAddSecurityPermissionsMutation, useLazyGetAllPagesByRoleIdQuery } from "../../../../app/services/securityPermissionsAPI";
 //** Component's */
 const PermissionList = React.lazy(() => import("./PermissionList"));
 
@@ -24,8 +24,8 @@ const ManagePermission = forwardRef((props, ref) => {
     const { togglePermissionCard, selectedRoleId, childRef } = useContext(SecurityPermissionsContext);
 
     //** API Call's */
-    const [addSecurityPermissions, { isSuccess: isPermissionsAdded, data: isAddPermissionsData }] = useAddSecurityPermissionsMutation();
-    const [getAllPagesByRoleId, { isLoading, isSuccess: isPermissionSuccess, data: permissionData }] = useLazyGetAllPagesByRoleIdQuery();
+    const [addSecurityPermissions, { isLoading: isAddLoading, isSuccess: isPermissionsAdded, data: isAddPermissionsData }] = useAddSecurityPermissionsMutation();
+    const [getAllPagesByRoleId, { isLoading: isGetByIdLoading, isSuccess: isPermissionSuccess, data: permissionData }] = useLazyGetAllPagesByRoleIdQuery();
 
 
     //** Check Permission */
@@ -109,7 +109,7 @@ const ManagePermission = forwardRef((props, ref) => {
                     buttonClassName="btn theme-button"
                     titleButtonClick={handleSavePermission}>
                     <PermissionList onPermissionSet={onPermissionItemSet} onUpdatePermission={onUpdatePermission}
-                        isLoading={isLoading} permissionsData={permissionsData} />
+                        isLoading={isGetByIdLoading} permissionsData={permissionsData} />
                 </CardSection>
             )}
         </React.Fragment>
