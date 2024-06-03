@@ -41,10 +41,6 @@ export const SecurityRoleGridConfig = {
       },
       customAction: [
         {
-          name: "COPY",
-          iconName: AppIcons.copyIcon,
-        },
-        {
           name: "PERMISSION",
           iconName: AppIcons.permissionIcon,
         },
