@@ -57,9 +57,6 @@ const SecurityRoleManagement = () => {
     setAddRoleModal(!addRoleModal);
   };
 
-  const handleCopy = () => {
-    setAddRoleModal(!addRoleModal);
-  };
   const handlePermission = (data) => {
     navigate(`/EditPermissions/${encryptUrlData(data.roleId)}`);
   };
@@ -135,7 +132,6 @@ const SecurityRoleManagement = () => {
   const actionHandler = {
     EDIT: handleEditClick,
     DELETE: handleDeleteClick,
-    COPY: handleCopy,
     PERMISSION: handlePermission,
     USER: handleUser,
   };
