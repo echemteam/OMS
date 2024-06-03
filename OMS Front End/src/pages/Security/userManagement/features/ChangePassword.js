@@ -46,12 +46,14 @@ const ChangePassword = (props) => {
             </div>
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-center justify-content-end">
+                    {console.log('props.isButtonDisable', props.isButtonDisable)}
                     <Buttons
                         buttonTypeClassName="theme-button"
                         buttonText="Update Password"
                         onClick={handlePassword}
-                        isLoading={isLoading} />
-
+                        isLoading={isLoading}
+                        isDisable={props.isButtonDisable}
+                    />
                 </div>
             </div>
         </div>

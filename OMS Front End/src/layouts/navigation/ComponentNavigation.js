@@ -15,7 +15,7 @@ const AddEditUser = React.lazy(() => import('../../pages/Security/userManagement
 const UsersRole = React.lazy(() => import('../../pages/Security/roleManagement/UsersRole'));
 
 //** Permissions */
-const Permissions = React.lazy(() => import('../../pages/Security/securityManagement/permissions/Permissions'));
+const Permissions = React.lazy(() => import('../../pages/Security/permissions/Permissions'));
 const SecurityRoleManagement = React.lazy(() => import('../../pages/Security/securityManagement/SecurityRoleManagement'));
 
 //**Customer  */
@@ -33,7 +33,7 @@ export const ComponentNavigation = [
     title: "",
     component: NotFound,
     text: "Page not found",
-    securityKey: ""
+    securityKey: "",
   },
 
   {
@@ -84,7 +84,27 @@ export const ComponentNavigation = [
     component: Users,
     hasParams: false,
     text: 'Users',
-    securityKey: securityKey.USERMANAGEMENT
+    securityKey: securityKey.USERMANAGEMENT,
+    // securityPermissions: [
+    //   {
+    //     keyName: ActionFlag.Add,
+    //     value: securityKey.ADDUSER,
+    //     // gridConfig: UserGridConfig,
+    //     formConfig: userFormData
+    //   },
+    //   {
+    //     keyName: ActionFlag.Edit,
+    //     value: securityKey.EDITUSER,
+    //     gridConfig: UserGridConfig,
+    //     formConfig: userFormData
+    //   },
+    //   {
+    //     keyName: ActionFlag.Delete,
+    //     value: securityKey.DELETEUSER,
+    //     gridConfig: UserGridConfig,
+    //     formConfig: userFormData
+    //   }
+    // ]
   },
   {
     id: 'AddEditUser',
@@ -104,7 +124,21 @@ export const ComponentNavigation = [
     component: AddEditUser,
     hasParams: false,
     text: 'Edit User',
-    securityKey: securityKey.USERMANAGEMENT
+    securityKey: securityKey.USERMANAGEMENT,
+    // securityPermissions: [
+    //   {
+    //     keyName: ActionFlag.Add,
+    //     value: securityKey.ADDUSER,
+    //     // gridConfig: UserGridConfig,
+    //     formConfig: userFormData
+    //   },
+    //   {
+    //     keyName: ActionFlag.EditPage,
+    //     value: securityKey.EDITUSER,
+    //     gridConfig: UserGridConfig,
+    //     formConfig: userFormData
+    //   }
+    // ]
   },
   {
     id: 'roleManagement',
@@ -134,7 +168,29 @@ export const ComponentNavigation = [
     component: SecurityRoleManagement,
     hasParams: false,
     text: 'Roles',
-    securityKey: securityKey.SECURITYROLEMANAGEMENT
+    securityKey: securityKey.SECURITYROLEMANAGEMENT,
+    // securityPermissions: [
+    //   {
+    //     keyName: ActionFlag.Add,
+    //     value: securityKey.ADDSECURITYROLE,
+    //     formConfig: addEditRoleFormData
+    //   },
+    //   {
+    //     keyName: ActionFlag.Edit,
+    //     value: securityKey.EDITSECURITYROLE,
+    //     gridConfig: SecurityRoleGridConfig
+    //   },
+    //   {
+    //     keyName: ActionFlag.Delete,
+    //     value: securityKey.DELETESECURITYROLE,
+    //     gridConfig: SecurityRoleGridConfig
+    //   },
+    //   // {
+    //   //   keyName: ActionFlag.EditPage,
+    //   //   value: securityKey.EDITSECURITYROLE,
+    //   //   formConfig: addEditRoleFormData
+    //   // }
+    // ]
   },
   {
     id: 'addCustomer',

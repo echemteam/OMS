@@ -1,8 +1,8 @@
 import React from "react";
 //** Lib's */
-import { AppIcons } from "../../../../../data/appIcons";
-import Image from "../../../../../components/image/Image";
-import DropDown from "../../../../../components/ui/dropdown/DropDrown";
+import { AppIcons } from "../../../../data/appIcons";
+import Image from "../../../../components/image/Image";
+import DropDown from "../../../../components/ui/dropdown/DropDrown";
 import { SelectGrantDenyDropdown, SelectViewEditDropdown } from "../securityPermissions.Data";
 //** Component's */
 const PermissionChildItem = React.lazy(() => import("./PermissionChildItem"));

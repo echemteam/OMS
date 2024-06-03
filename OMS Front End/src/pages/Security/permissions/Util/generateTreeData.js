@@ -1,4 +1,4 @@
-import { AppIcons } from "../../../../../data/appIcons";
+import { AppIcons } from "../../../../data/appIcons";
 
 export const GetPermissionTreeData = (permissionData) => {
     let treeMainNode = GetChildNode(permissionData, 0);

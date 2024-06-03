@@ -6,15 +6,14 @@ import { useNavigate } from "react-router-dom";
 import CenterModel from "../../../components/ui/centerModel/CenterModel";
 import AddEditRole from "./features/AddEditRole";
 import AssignUser from "./features/AssignUser";
-import { SecurityRoleGridConfig, addEditRoleFormData } from "./features/formData/AddEditRoleForm.data";
+import { SecurityRoleGridConfig, addEditRoleFormData, securityKeys } from "./features/formData/AddEditRoleForm.data";
 import { useDeleteRolesMutation, useGetRolesMutation } from "../../../app/services/securityRoleAPI";
 import SwalAlert from "../../../services/swalService/SwalService";
-// import useDebounce from "../../../app/customHooks/useDebouce";
 import ToastService from "../../../services/toastService/ToastService";
 import SidebarModel from "../../../components/ui/sidebarModel/SidebarModel";
 import { encryptUrlData } from "../../../services/CryptoService";
-import { securityKey } from "../../../data/SecurityKey";
-import { AddPagePermissionsContext } from "../../../utils/ContextAPIs/AddPagePermissions/AddPagePermissionsContext";
+import usePermissions from "../../../utils/CustomHook/UsePermissions";
+import { PagePermissionsContext } from "../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
 
 const SecurityRoleManagement = () => {
   const molGridRef = useRef();
@@ -30,11 +29,9 @@ const SecurityRoleManagement = () => {
 
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
-  const { hasAccess, CheckAddPermission } = useContext(AddPagePermissionsContext);
+  const { isShowAddButton } = useContext(PagePermissionsContext);
+  usePermissions(undefined, securityKeys, addEditRoleFormData, SecurityRoleGridConfig);
 
-  useEffect(() => {
-    CheckAddPermission(securityKey.ADDSECURITYROLE);
-  }, [])
 
   const [
     getRoles,
@@ -158,7 +155,7 @@ const SecurityRoleManagement = () => {
         cardTitle="Security Roles"
         // cardSubTitle="Sub title add hear"
         buttonClassName="btn dark-btn"
-        rightButton={hasAccess ? true : false}
+        rightButton={isShowAddButton ? true : false}
         buttonText="Add"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}

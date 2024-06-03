@@ -25,9 +25,9 @@ export const securityKey = {
 
     //** Security Role Management */
     SECURITYROLEMANAGEMENT: "Security Role Management",
-    ADDSECURITYROLE: "Add Role",
-    EDITSECURITYROLE: "Edit Role",
-    DELETESECURITYROLE: "Delete Role",
+    ADDSECURITYROLE: "Add Security Role",
+    EDITSECURITYROLE: "Edit Security Role",
+    DELETESECURITYROLE: "Delete Security Role",
 
 
     EMPLOYERSSEARCH: "Employers Search",

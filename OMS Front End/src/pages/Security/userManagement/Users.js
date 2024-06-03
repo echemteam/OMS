@@ -2,17 +2,15 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import MolGrid from "../../../components/Grid/MolGrid";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
-import { UserGridConfig } from "./features/formData/UserForm.data";
+import { UserGridConfig, securityKeys, userFormData } from "./features/formData/UserForm.data";
 import { encryptUrlData } from '../../../services/CryptoService'
 import { useDeleteUserMutation, useGetUsersMutation } from '../../../app/services/userAPI'
 import SwalAlert from "../../../services/swalService/SwalService";
 import ToastService from "../../../services/toastService/ToastService";
 import { useNavigate } from "react-router-dom";
-import { HasPermissions } from "../../../components/SecurityPermission/EditDeletePagePermissions";
-import { securityKey } from "../../../data/SecurityKey";
-import { ActionFlag } from "../../../components/SecurityPermission/EditDeletePermissions.Data";
-import { AddPagePermissionsContext } from "../../../utils/ContextAPIs/AddPagePermissions/AddPagePermissionsContext";
 import useDebounce from "../../../app/customHooks/useDebouce";
+import usePermissions from "../../../utils/CustomHook/UsePermissions";
+import { PagePermissionsContext } from "../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
 
 const Users = () => {
 
@@ -24,7 +22,9 @@ const Users = () => {
   const debouncedSearch = useDebounce(search, 300);
   const { confirm } = SwalAlert();
   const navigate = useNavigate();
-  const { hasAccess, CheckAddPermission } = useContext(AddPagePermissionsContext);
+
+  const { isShowAddButton } = useContext(PagePermissionsContext);
+  usePermissions(undefined, securityKeys, userFormData, UserGridConfig);
 
   const [
     getUsers,
@@ -54,11 +54,6 @@ const Users = () => {
     getLists(page);
   };
 
-  useEffect(() => {
-    CheckAddPermission(securityKey.ADDUSER);
-    HasPermissions(securityKey.EDITUSER, ActionFlag.Edit, UserGridConfig);
-    HasPermissions(securityKey.DELETEUSER, ActionFlag.Delete, UserGridConfig);
-  }, [])
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
@@ -121,7 +116,7 @@ const Users = () => {
         searchInputName="Search By User Name"
         titleButtonClick={AddUser}
         buttonClassName="btn theme-button"
-        rightButton={hasAccess ? true : false}
+        rightButton={isShowAddButton ? true : false}
         buttonText="Add User"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}

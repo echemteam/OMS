@@ -2,15 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 //** Lib's */
 import "./Permission.scss";
-import { AppIcons } from "../../../../data/appIcons";
-import Label from "../../../../components/ui/label/Label";
-import Buttons from "../../../../components/ui/button/Buttons";
-import DropDown from "../../../../components/ui/dropdown/DropDrown";
-import CardSection from "../../../../components/ui/card/CardSection";
+import { AppIcons } from "../../../data/appIcons";
+import Label from "../../../components/ui/label/Label";
+import Buttons from "../../../components/ui/button/Buttons";
+import DropDown from "../../../components/ui/dropdown/DropDrown";
+import CardSection from "../../../components/ui/card/CardSection";
 //** Service's */
-import { decryptUrlData } from "../../../../services/CryptoService";
-import { useLazyGetAllRolesQuery } from "../../../../app/services/securityPermissionsAPI";
-import { SecurityPermissionsContext } from "../../../../utils/ContextAPIs/SecurityPermissions/SecurityPermissionsContext";
+import { decryptUrlData } from "../../../services/CryptoService";
+import { useLazyGetAllRolesQuery } from "../../../app/services/securityPermissionsAPI";
+import { SecurityPermissionsContext } from "../../../utils/ContextAPIs/SecurityPermissions/SecurityPermissionsContext";
 //** Component's */
 const ManagePermission = React.lazy(() => import("./component/ManagePermission"));
 

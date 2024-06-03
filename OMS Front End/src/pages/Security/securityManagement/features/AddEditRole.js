@@ -1,15 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { addEditRoleFormData } from './formData/AddEditRoleForm.data';
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { addEditRoleFormData, securityKeys } from './formData/AddEditRoleForm.data';
 import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
-import { useAddRolesMutation, useLazyGetRoleByRoleIdQuery, useUpdateRolesMutation } from '../../../../app/services/securityRoleAPI';
+import { useAddRolesMutation, useUpdateRolesMutation } from '../../../../app/services/securityRoleAPI';
 import ToastService from '../../../../services/toastService/ToastService';
+import { PagePermissionsContext } from '../../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext';
+import usePermissions from '../../../../utils/CustomHook/UsePermissions';
 
 const AddEditGroup = (props) => {
 
   const roleFormRef = useRef();
 
   const [roleForm, setRoleForm] = useState(addEditRoleFormData);
+  const { isButtonDisable } = useContext(PagePermissionsContext);
+  usePermissions(props.isEdit, securityKeys, addEditRoleFormData);
 
   const [
     addRoles,
@@ -105,6 +109,7 @@ const AddEditGroup = (props) => {
               onClick={handleUser}
               buttonText={`${props.isEdit ? "Update" : "Add"}`}
               isLoading={isAddRoleLoading || isUpdateRoleLoading}
+              isDisable={isButtonDisable}
             />
             <Buttons
               buttonTypeClassName="dark-btn ml-5"

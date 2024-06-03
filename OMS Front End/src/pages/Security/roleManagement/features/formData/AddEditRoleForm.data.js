@@ -19,7 +19,7 @@ export const addEditRoleFormData = {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
-    
+
     {
       id: "userRole",
       lable: "User Role :",
@@ -50,6 +50,9 @@ export const addEditRoleFormData = {
         containerCss: "col-xxl-2 col-xl-2 col-md-3 mb-2 checkbox-horizontal",
       },
     },
-    
+
   ],
+  formSetting: {
+    isViewOnly: false
+  }
 };
