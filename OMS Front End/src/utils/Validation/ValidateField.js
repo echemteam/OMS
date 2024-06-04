@@ -1,7 +1,7 @@
 import React from 'react';
 import validator from 'validator';
 
-export const required = (value) => value !== undefined && value !== null && String(value).trim() !== '';
+export const required = (value) => value !== undefined && value !== null && String(value).trim() !== '' && value !== false;
 
 export const email = (value) => value === undefined || value === null || validator.isEmail(String(value));
 
@@ -25,7 +25,7 @@ export const password = (value, props, components) => value === components['conf
 
 export const uniqueIdentifier = (value) => !!(value && String(value).trim().length && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value));
 
-export const isvalidPassword = (value) => !!(value && String(value).trim().length && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.{12,})/.test(value));
+export const isvalidPassword = (value) => !!(value && String(value).trim().length && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.{8,})/.test(value));
 
 export const isValidEIN = (value) => {
     const unmaskedValue = value.replace(/\D/g, '')

@@ -90,7 +90,7 @@ export const userFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-3 mb-2",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-2",
       },
     },
 

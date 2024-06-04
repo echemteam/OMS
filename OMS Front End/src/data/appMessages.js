@@ -1,7 +1,7 @@
 
 export const ErrorMessage = {
 	DefaultMessage: 'Something went wrong',
-	NOTVALIDPATTERN: '{0} must contain at least 12 alphanumeric, one special, one lower and upper case characters',
+	NOTVALIDPATTERN: '{0} must contain at least 8 alphanumeric, one special, one lower and upper case characters',
 	FieldRequired: 'Please enter {0}',
 	InvalidField: '{0} is invalid',
 	PasswordNotValid: 'Invalid Password',
