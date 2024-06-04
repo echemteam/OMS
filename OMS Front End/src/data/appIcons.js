@@ -12,6 +12,8 @@ import copy from "../assets/images/copy.png";
 import permissionIcon from "../assets/images/permission.png";
 import userIcon from "../assets/images/user.png";
 import notification from "../assets/images/notification.png";
+import shortcutIcon from "../assets/images/shortcut.png";
+
 import arrow from "../assets/images/arrow.png";
 import backArrowIcon from "../assets/images/BackArrowIcon.png";
 import plusIcon from "../assets/images/PlusIcon.png";
@@ -45,6 +47,7 @@ export const AppIcons = {
   permissionIcon: permissionIcon,
   userIcon: userIcon,
   notificationIcon: notification,
+  ShortcutIcon:shortcutIcon,
   arrowIcon: arrow,
   BackArrowIcon: backArrowIcon,
   PlusIcon: plusIcon,

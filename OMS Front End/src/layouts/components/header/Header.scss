@@ -8,6 +8,7 @@
   margin: 0 auto;
   border-radius: 10px;
   box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.12);
+
   .left-section {
     width: 40%;
   }
@@ -17,6 +18,71 @@
     display: flex;
     align-items: center;
     justify-content: end;
+
+    .shortcut-sec {
+      height: 20px;
+      width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      position: relative;
+
+      .shortcut-icon {
+        cursor: pointer;
+      }
+
+      .shortcuts-list {
+        position: absolute;
+        min-height: 290px;
+        width: 300px;
+        background: var(--whiteColor);
+        box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
+        top: 100%;
+        right: -15px;
+        border-radius: .75rem;
+        -webkit-border-radius: .75rem;
+        -moz-border-radius: .75rem;
+        -ms-border-radius: .75rem;
+        -o-border-radius: .75rem;
+        display: none;
+        z-index: 11;
+
+        .top-header-card-title {
+          padding: 11px 10px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-weight: 500;
+          border-bottom: 1px solid var(--inputBorder);
+
+          .title {
+            opacity: 0.5;
+            font-size: 115%;
+          }
+        }
+
+        .short-cuts-list {
+          display: flex;
+          flex-wrap: wrap;
+          .shortcut-menus{
+            width: 50%;
+            min-height: 100px;
+            border-bottom: 1px solid var(--inputBorder);
+            padding: 15px;
+            &:nth-child(odd){
+              border-right: 1px solid var(--inputBorder);
+            }
+          }
+        }
+      }
+
+      &:hover {
+        .shortcuts-list {
+          display: block;
+        }
+      }
+    }
 
     .search-bar {
       width: 60%;
@@ -40,7 +106,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: 15px;
+        margin-right: 20px;
         position: relative;
 
         .bell-icon {
@@ -75,8 +141,7 @@
           height: 290px;
           width: 300px;
           background: var(--whiteColor);
-          box-shadow: var(--box-shadow);
-          border: 1px solid var(--box-borderColor);
+          box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
           top: 100%;
           right: -15px;
           border-radius: .75rem;
@@ -85,6 +150,8 @@
           -ms-border-radius: .75rem;
           -o-border-radius: .75rem;
           display: none;
+          z-index: 11;
+
 
           .title-clearall {
             padding: 11px 10px;
@@ -92,17 +159,22 @@
             align-items: center;
             justify-content: space-between;
             font-weight: 500;
+            border-bottom: 1px solid var(--inputBorder);
 
             .title {
               opacity: 0.5;
+              font-size: 115%;
             }
 
             .clear-all {
               color: var(--themeColor);
+              cursor: pointer;
             }
           }
 
           .notification-items {
+            padding-top: 10px;
+
             ul {
               list-style-type: none;
               padding-left: 15px;
@@ -113,10 +185,11 @@
               margin: 0;
 
               li {
-                color: var(--whiteColor);
+                color: var(--textColor);
                 display: flex;
                 align-items: flex-start;
                 margin-bottom: 10px;
+                cursor: pointer;
 
                 &:last-child {
                   margin-bottom: 0;
@@ -196,7 +269,12 @@
             height: 46px;
 
             a {
-              font-weight: 500;
+              cursor: pointer;
+              font-weight: 600;
+
+              &:hover {
+                color: var(--themeColor);
+              }
             }
           }
         }
@@ -258,7 +336,7 @@
 
         .profile-dropdown-menu {
           position: absolute;
-          min-width: 130px;
+          min-width: 180px;
           background: var(--whiteColor);
           box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
           border: 1px solid var(--box-borderColor);
@@ -267,52 +345,72 @@
           border-radius: 5px;
           display: none;
           z-index: 99;
+          padding-top: 12px;
 
           .title-list {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            padding: 7px 15px;
             border-bottom: 1px solid var(--inputBorder);
+            padding-bottom: 12px;
 
+
+            .user-name {
+              font-weight: 600;
+              color: var(--themeColor);
+            }
 
             &:last-child {
               border-bottom: 0;
             }
 
-            span {
-              display: flex;
-              transition: 0.3s all;
-              font-weight: 600;
+            a {
+              padding: 6px 10px;
+              color: var(--textColor);
+              width: 100%;
+              display: inline-block;
 
-              &.bi {
-                padding-top: 2px;
-                font-size: 16px;
-                margin-bottom: 0 !important;
+
+              span {
+                display: flex;
+                transition: 0.3s all;
+                font-weight: 600;
+                width: 100%;
+
+                &.bi {
+                  padding-top: 2px;
+                  font-size: 100%;
+                  margin-bottom: 0 !important;
+                }
+
+                &::before {
+                  line-height: inherit;
+                  margin-right: 7px;
+                  font-size: 115%;
+                }
+
+                &.name-title {
+                  opacity: 0.5;
+                  color: var(--blackColor) !important;
+                  cursor: auto;
+                }
+
+                &.user-name {
+                  font-weight: 500;
+                  color: var(--blackColor) !important;
+                  cursor: auto;
+                }
+
               }
 
-              &::before {
-                line-height: inherit;
-                margin-right: 7px;
-                font-size: 115%;
+              &:hover {
+                background: var(--linkMenu);
               }
-
-              &.name-title {
-                opacity: 0.5;
-                color: var(--blackColor) !important;
-                cursor: auto;
-              }
-
-              &.user-name {
-                font-weight: 500;
-                color: var(--blackColor) !important;
-                cursor: auto;
-              }
-
-
-
             }
 
             &.drop-down-icon-menu {
+              padding-bottom: 0;
+
               span {
                 margin-bottom: 10px;
 
@@ -322,9 +420,7 @@
               }
             }
 
-            &:hover {
-              color: var(--themeColor);
-            }
+
           }
         }
       }

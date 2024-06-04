@@ -549,21 +549,15 @@ a {
     background: var(--whiteColor);
 
     button {
-      padding: 10px 25px 9px;
+      padding: 7px 25px 7px;
       border: none;
       background: var(--linkMenu);
-      border-radius: 7px;
-      -webkit-border-radius: 7px;
-      -moz-border-radius: 7px;
-      -ms-border-radius: 7px;
-      -o-border-radius: 7px;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+      border-radius: 0px;
       font-weight: 600;
       font-size: 95%;
       border: none;
-      border-bottom: 0;
-      margin-right: 10px;
+      border-right: 1px solid var(--whiteColor);
+      margin-right: 0;
       color: var(--textColor);
 
       &.active {
@@ -571,6 +565,7 @@ a {
         background: var(--gradient-theme);
         color: var(--whiteColor);
         // border-top: 4px solid;
+        border-bottom: 1px solid var(--themeColor);
       }
     }
   }

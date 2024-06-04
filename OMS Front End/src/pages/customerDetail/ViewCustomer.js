@@ -39,7 +39,7 @@ const ViewCustomer = () => {
   return (
     <div className="card-bottom-m-0">
       <div className="row">
-        <div className="col-xl-3 col-md-3 col-12 basic-left-part">
+        <div className="col-xl-3 col-md-3 col-12 basic-left-part customer-desc-left-sec">
           <CardSection>
             <CustomerDetails />
           </CardSection>
