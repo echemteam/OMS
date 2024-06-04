@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Checkbox from "../../ui/inputs/checkBox/CheckBox";
+import ValidationText from "../../ui/inputs/validation/ValidationText";
 
 const FormCheckboxField = ({
   labelName,
   name,
   onChange,
   dataField,
+  onValidation,
   checked,
   formSetting,
+  error,
   overRideProps,
   ...checkboxProps
 }) => {
@@ -17,6 +20,13 @@ const FormCheckboxField = ({
     }
   };
 
+  useEffect(() => {
+    if (onValidation) {
+      onValidation(dataField);
+    }
+  }, [checked]);
+
+
   return (
     <>
       <div className="input-field-sec">
@@ -25,7 +35,7 @@ const FormCheckboxField = ({
             <h5>{checkboxProps.hasMainTitle}</h5>
           </div>
           : ""}
-        <div className="checkbox-label-part">
+        <div className="checkbox-label-part mb-2">
           <Checkbox
             name={name}
             label={labelName}
@@ -36,6 +46,7 @@ const FormCheckboxField = ({
             {...checkboxProps}
           />
         </div>
+        <ValidationText error={error || ""} />
       </div>
     </>
   );

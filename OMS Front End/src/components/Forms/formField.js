@@ -146,6 +146,7 @@ const FormFields = ({
               onValidation={onUpdateValidation}
               formSetting={formSetting}
               formData={formData}
+              error={validState.error[field.dataField] || ""}
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
               {...field.fieldSetting}
