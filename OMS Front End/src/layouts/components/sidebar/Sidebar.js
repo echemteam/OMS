@@ -23,7 +23,7 @@ const Sidebar = (props) => {
 
   return (
     <>
-      <div className="sidebar-section">
+      
         <nav className="sidebar">
           <div className="main-menus">
             <Link className="sidebar-brand">
@@ -32,7 +32,7 @@ const Sidebar = (props) => {
                 imgCustomClassName="open-bar"
                 altText="Icon"
               ></Image> */}
-              OMS Lite
+              OMS <span className="small-sidebar">Lite</span>
             </Link>
             <div className="sidebar-menu">
               <ul className="sidebar-menu-list">
@@ -80,12 +80,8 @@ const Sidebar = (props) => {
             </div>
           </div>
         </nav>
-        <div className="collapse-btn">
-          <div className="click-btn">
-            <Image imagePath={AppIcons.arrowIcon} />
-          </div>
-        </div>
-      </div>
+        
+      
     </>
   );
 };

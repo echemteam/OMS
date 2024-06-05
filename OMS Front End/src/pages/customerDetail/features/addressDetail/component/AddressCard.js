@@ -110,9 +110,9 @@ const AddressCard = ({ isAddEditModal }) => {
                         <button onClick={isAddEditModal} className="edit-btn">
                           <Image imagePath={AppIcons.editThemeIcon} />
                         </button>
-                        <button onClick="" className="edit-btn ml-1 mr-1">
+                        {/* <button onClick="" className="edit-btn ml-1 mr-1">
                           <Image imagePath={AppIcons.deleteThemeIcon} />
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                   </div>

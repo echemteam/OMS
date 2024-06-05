@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
 import { Outlet, useLocation } from "react-router-dom";
@@ -6,10 +6,14 @@ import Breadcome from "../components/ui/breadcome/Breadcome";
 import Footer from "./components/footer/Footer";
 import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation";
 import { PagePermissionsProvider } from "../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
+import Image from "../components/image/Image";
+import { AppIcons } from "../data/appIcons";
 
 const Layout = (props) => {
   // Get the current location using React Router's useLocation hook
   const location = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
 
   // Extract the last segment of the pathname as routhPath
   let routhPath = location.pathname.replace("/", "");
@@ -30,6 +34,11 @@ const Layout = (props) => {
     ? hasPermission(renderComponent.securityKey)
     : false;
 
+
+    // Handler to toggle the collapse state
+    const handleToggleClick = () => {
+      setIsCollapsed(!isCollapsed);
+    };
   return (
     <React.Fragment>
       {/* <AddPagePermissionsContext.Provider value={renderComponent.permissionCongif}>
@@ -37,9 +46,17 @@ const Layout = (props) => {
       </AddPagePermissionsContext.Provider> */}
       <PagePermissionsProvider>
         {/* <SecurityPermissionsHOC permissionConfig={permissionConfig}> */}
-        <div className="main-page-layout">
+        <div className={`main-page-layout ${isCollapsed ? 'collapsed' : ''}`}>
           <div className="top-sec">
-            <Sidebar componentRoutes={props.componentRoutes} />
+            <div className="sidebar-section">
+              <Sidebar componentRoutes={props.componentRoutes} />
+              <div className="collapse-btn">
+                <div className="click-btn"onClick={handleToggleClick}>
+                  <Image imagePath={AppIcons.arrowIcon} />
+                </div>
+              </div>
+            </div>
+
             <div className={`middle-page-section`}>
               <Header />
 

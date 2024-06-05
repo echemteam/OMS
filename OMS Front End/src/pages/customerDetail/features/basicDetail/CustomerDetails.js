@@ -2,7 +2,7 @@ import React from "react";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 
-const CustomerDetails = (props) => {
+const CustomerDetails = ({editClick}) => {
   const customerName = "1Click Chemistry Incc";
   const customerEmail = "test.email@gmail.com";
   const customerWebsite = "1clickchemistry.com";
@@ -33,7 +33,7 @@ const CustomerDetails = (props) => {
                 <div className="profile-icon">1C</div>
                 <h5>{customerName}</h5>
               </div>
-              <div className="edit-icons" onClick="">
+              <div className="edit-icons" onClick={editClick}>
                 <Image
                   imagePath={AppIcons.editThemeIcon}
                   altText="Website Icon"
