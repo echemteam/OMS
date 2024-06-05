@@ -7,6 +7,7 @@ import { AppIcons } from "../../../../data/appIcons";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import AddressCard from "./component/AddressCard";
 import { useLazyGetAllAddressTypesQuery } from "../../../../app/services/addressAPI";
+import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
 
 const AddressDetail = () => {
   const userFormRef = useRef();
@@ -18,12 +19,18 @@ const AddressDetail = () => {
     data: allGetAllAddressTypesData
   },] = useLazyGetAllAddressTypesQuery();
 
+  const [getAllCountries, {
+    isFetching: isGetAllCountriesFetching,
+    isSuccess: isGetAllCountriesSucess,
+    data: allGetAllCountriesData
+  },] = useLazyGetAllCountriesQuery();
+
   useEffect(() => {
     getAllAddressTypes()
+    getAllCountries()
   }, [])
 
   useEffect(() => {
-    debugger
     if (!isGetAllAddressTypesFetching && isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
       const getData = allGetAllAddressTypesData.map(item => ({
         value: item.groupTypeId,
@@ -33,6 +40,17 @@ const AddressDetail = () => {
       dropdownField.fieldSetting.options = getData;
     }
   }, [isGetAllAddressTypesFetching, isGetAllAddressTypesSucess, allGetAllAddressTypesData])
+
+  useEffect(() => {
+    if (!isGetAllCountriesFetching && isGetAllCountriesSucess && allGetAllCountriesData) {
+      const getData = allGetAllCountriesData.map(item => ({
+        value: item.countryId,
+        label: item.name
+      }))
+      const dropdownField = addressFormData.formFields.find(item => item.dataField === "name");
+      dropdownField.fieldSetting.options = getData;
+    }
+  }, [isGetAllCountriesFetching, isGetAllCountriesSucess, allGetAllCountriesData])
 
   const handleToggleModal = () => {
     setisModelOpen(true);

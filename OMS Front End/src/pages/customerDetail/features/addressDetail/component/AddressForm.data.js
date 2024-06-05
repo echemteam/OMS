@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const addressFormData = {
   name: "Email From",
-  initialState: { type: "" },
+  initialState: { type: "" , name:"" },
   formFields: [
     {
       id: "addressTypeId",
@@ -95,15 +95,14 @@ export const addressFormData = {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
-    
     {
-      id: "city",
-      lable: "City :",
-      Field_Name: "City",
+      id: "countryId",
+      lable: "Country :",
+      Field_Name: "Country",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "City",
+      dataField: "name",
       fieldSetting: {
-        placeholder: "Select City",
+        placeholder: "Select Country",
         allowSpace: true,
       },
       validation: [{ type: "require" }],
@@ -127,13 +126,13 @@ export const addressFormData = {
       },
     },
     {
-      id: "country",
-      lable: "Country :",
-      Field_Name: "Country",
+      id: "city",
+      lable: "City :",
+      Field_Name: "City",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "Country",
+      dataField: "City",
       fieldSetting: {
-        placeholder: "Select Country",
+        placeholder: "Select City",
         allowSpace: true,
       },
       validation: [{ type: "require" }],

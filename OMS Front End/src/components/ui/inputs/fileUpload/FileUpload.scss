@@ -6,6 +6,7 @@
 
   input[type="file"] {
     padding-top: 8px;
+    border-radius: 6px !important;
   }
 
   input {
@@ -24,6 +25,8 @@
     border-radius: 0px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
     margin-left: 0px;
     position: absolute;
     top: 50%;

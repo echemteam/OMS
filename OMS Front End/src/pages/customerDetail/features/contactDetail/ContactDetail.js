@@ -30,6 +30,7 @@ const ContactDetail = () => {
       dropdownField.fieldSetting.options = getData;
     }
   }, [isGetAllContactTypesFetching, isGetAllContactTypesSucess, allGetAllContactTypesData])
+  
 
   const handleToggleModal = () => {
     setisModelOpen(true);
