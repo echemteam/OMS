@@ -29,5 +29,39 @@ namespace OMS.Application.Services.Common
             return repositoryManager.commonRepository.GetUnAssignedUserByRoleId(roleId);
         }
 
+        public Task<List<GetAllGroupTypesResponse>> GetAllGroupTypes()
+        {
+            return repositoryManager.commonRepository.GetAllGroupTypes();
+        }
+
+        public Task<List<GetAllTerritoriesResponse>> GetAllTerritories()
+        {
+            return repositoryManager.commonRepository.GetAllTerritories();
+        }
+
+        public Task<List<GetAllAddressTypesResponse>> GetAllAddressTypes()
+        {
+            return repositoryManager.commonRepository.GetAllAddressTypes();
+        }
+
+        public Task<List<GetAllCountriesResponse>> GetAllCountries()
+        {
+            return repositoryManager.commonRepository.GetAllCountries();
+        }
+
+        public Task<List<GetAllStatesResponse>> GetAllStates()
+        {
+            return repositoryManager.commonRepository.GetAllStates();
+        }
+
+        public Task<List<GetAllCitiesResponse>> GetAllCities()
+        {
+            return repositoryManager.commonRepository.GetAllCities();
+        }
+
+        public Task<List<GetAllContactTypesResponse>> GetAllContactTypes()
+        {
+            return repositoryManager.commonRepository.GetAllContactTypes();
+        }
     }
 }

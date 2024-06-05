@@ -12,6 +12,13 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name 
         const string GETALLROLES = "GetAllRoles";
         const string GETUNASSIGNEDUSERBYROLEID = "GetUnAssignedUserByRoleId";
+        const string GETALLGROUPTYPES = "GetAllGroupTypes";
+        const string GETALLTERRITORIES = "GetAllTerritories";
+        const string GETALLCOUNTRIES = "GetAllCountries";
+        const string GETALLSTATES = "GetAllStates";
+        const string GETALLCITIES = "GetAllCities";
+        const string GETALLCONTACTTYPES = "GetAllContactTypes";
+        const string GETALLADDRESSTYPES = "GetAllAddressTypes";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -32,5 +39,39 @@ namespace OMS.Domain.Repository.Implementation
             return getAllUsersResponse;
         }
 
+        public async Task<List<GetAllGroupTypesResponse>> GetAllGroupTypes()
+        {
+            return await _context.GetList<GetAllGroupTypesResponse>(GETALLGROUPTYPES, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllTerritoriesResponse>> GetAllTerritories()
+        {
+            return await _context.GetList<GetAllTerritoriesResponse>(GETALLTERRITORIES, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllAddressTypesResponse>> GetAllAddressTypes()
+        {
+            return await _context.GetList<GetAllAddressTypesResponse>(GETALLADDRESSTYPES, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllCountriesResponse>> GetAllCountries()
+        {
+            return await _context.GetList<GetAllCountriesResponse>(GETALLCOUNTRIES, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllStatesResponse>> GetAllStates()
+        {
+            return await _context.GetList<GetAllStatesResponse>(GETALLSTATES, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllCitiesResponse>> GetAllCities()
+        {
+            return await _context.GetList<GetAllCitiesResponse>(GETALLCITIES, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllContactTypesResponse>> GetAllContactTypes()
+        {
+            return await _context.GetList<GetAllContactTypesResponse>(GETALLCONTACTTYPES, commandType: CommandType.StoredProcedure);
+        }
     }
 }
