@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useUpdateUserPasswordMutation } from '../../../../app/services/userAPI';
-import changePasswordInfo from '../features/formData/ChangePassword.data';
+import changePasswordInfo from '../features/config/ChangePassword.data';
 import ToastService from '../../../../services/toastService/ToastService';
 import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';

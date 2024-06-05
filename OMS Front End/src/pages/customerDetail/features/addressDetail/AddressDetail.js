@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { addressFormData } from "./component/AddressForm.data";
@@ -6,10 +6,34 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import AddressCard from "./component/AddressCard";
+import { useLazyGetAllAddressTypesQuery } from "../../../../app/services/addressAPI";
 
 const AddressDetail = () => {
   const userFormRef = useRef();
   const [isModelOpen, setisModelOpen] = useState(false);
+
+  const [getAllAddressTypes, {
+    isFetching: isGetAllAddressTypesFetching,
+    isSuccess: isGetAllAddressTypesSucess,
+    data: allGetAllAddressTypesData
+  },] = useLazyGetAllAddressTypesQuery();
+
+  useEffect(() => {
+    getAllAddressTypes()
+  }, [])
+
+  useEffect(() => {
+    debugger
+    if (!isGetAllAddressTypesFetching && isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
+      const getData = allGetAllAddressTypesData.map(item => ({
+        value: item.groupTypeId,
+        label: item.type
+      }))
+      const dropdownField = addressFormData.formFields.find(item => item.dataField === "type");
+      dropdownField.fieldSetting.options = getData;
+    }
+  }, [isGetAllAddressTypesFetching, isGetAllAddressTypesSucess, allGetAllAddressTypesData])
+
   const handleToggleModal = () => {
     setisModelOpen(true);
   };

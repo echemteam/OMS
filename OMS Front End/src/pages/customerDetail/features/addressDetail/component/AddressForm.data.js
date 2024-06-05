@@ -2,14 +2,14 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const addressFormData = {
   name: "Email From",
-  initialState: { companyName: "" },
+  initialState: { type: "" },
   formFields: [
     {
-      id: "addressType",
+      id: "addressTypeId",
       lable: "Address Type :",
       Field_Name: "Address Type",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "AddressType",
+      dataField: "type",
       fieldSetting: {
         placeholder: "Select Address Type",
         allowSpace: true,

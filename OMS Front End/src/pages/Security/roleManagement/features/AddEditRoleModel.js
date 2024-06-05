@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
-import { addEditRoleFormData } from "./formData/AddEditRoleForm.data";
+import { addEditRoleFormData } from "./config/AddEditRoleForm.data";
 import Buttons from "../../../../components/ui/button/Buttons";
 
 const AddEditRoleModel = (props) => {
