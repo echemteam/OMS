@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.Entity.CommonEntity;
+﻿using OMS.Domain.Entities.API.Response.Customers;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -12,6 +13,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string ADDCUSTOMERSBASICINFORMATION = "AddCustomersBasicInformation";
         const string UPDATECUSTOMERSBASICINFORMATION = "UpdateCustomersBasicInformation";
+        const string GETCUSTOMERSBASICINFORMATIONBYID = "GetCustomersBasicInformationById";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -35,6 +37,7 @@ namespace OMS.Domain.Repository.Implementation
                 customers.RefCode,
                 customers.ListCode,
                 customers.TaxId,
+                customers.BillingCurrency,
                 customers.CreatedBy
             }, CommandType.StoredProcedure);
         }
@@ -56,8 +59,18 @@ namespace OMS.Domain.Repository.Implementation
                 customers.RefCode,
                 customers.ListCode,
                 customers.TaxId,
+                customers.BillingCurrency,
                 customers.UpdatedBy
             }, CommandType.StoredProcedure);
+        }
+
+        public async Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int CustomerId)
+        {
+            GetCustomersBasicInformationByIdResponse customerDetails = await _context.GetFrist<GetCustomersBasicInformationByIdResponse>(GETCUSTOMERSBASICINFORMATIONBYID, new
+            {
+                CustomerId
+            }, CommandType.StoredProcedure);
+            return customerDetails;
         }
         #endregion
     }

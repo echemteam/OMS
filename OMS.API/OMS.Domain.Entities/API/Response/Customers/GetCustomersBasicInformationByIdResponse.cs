@@ -1,8 +1,7 @@
-﻿namespace OMS.Domain.Entities.Entity.Customers
+﻿namespace OMS.Domain.Entities.API.Response.Customers
 {
-    public class BaseCustomersDTO
+    public class GetCustomersBasicInformationByIdResponse
     {
-        public int? CustomerId { get; set; }
         public string? Name { get; set; }
         public short? GroupTypeId { get; set; }
         public short? TerritoryId { get; set; }
