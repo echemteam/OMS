@@ -2,13 +2,13 @@ import React, { forwardRef, useContext, useEffect, useRef, useState } from "reac
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { useNavigate, useParams } from "react-router-dom";
 import Buttons from "../../../../components/ui/button/Buttons";
-import { UserGridConfig, securityKeys, userFormData } from "./formData/UserForm.data";
+import { UserGridConfig, securityKeys, userFormData } from "./config/UserForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import { decryptUrlData } from "../../../../services/CryptoService";
 //** Services's */
 import ChangePassword from "./ChangePassword";
-import changePasswordInfo from "./formData/ChangePassword.data";
+import changePasswordInfo from "./config/ChangePassword.data";
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddUserMutation, useLazyGetUserByUserIdQuery, useUpdateUserMutation } from "../../../../app/services/userAPI";
 //** Context */

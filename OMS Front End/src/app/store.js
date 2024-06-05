@@ -9,6 +9,9 @@ import userAPI from './services/userAPI';
 import securityRoleAPI from './services/securityRoleAPI';
 import rolesMappingAPI from './services/rolesMappingAPI';
 import securityPermissionsAPI from './services/securityPermissionsAPI';
+import basicdetailAPI from './services/basicdetailAPI';
+import contactAPI from './services/contactAPI';
+import addressAPI from './services/addressAPI';
 
 export const store = configureStore({
   reducer: {
@@ -18,13 +21,19 @@ export const store = configureStore({
     [securityRoleAPI.reducerPath]: securityRoleAPI.reducer,
     [rolesMappingAPI.reducerPath]: rolesMappingAPI.reducer,
     [securityPermissionsAPI.reducerPath]: securityPermissionsAPI.reducer,
+    [basicdetailAPI.reducerPath]: basicdetailAPI.reducer, 
+    [contactAPI.reducerPath]: contactAPI.reducer, 
+    [addressAPI.reducerPath]: addressAPI.reducer, 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
     authapi.middleware,
     userAPI.middleware,
     securityRoleAPI.middleware,
     rolesMappingAPI.middleware,
-    securityPermissionsAPI.middleware
+    securityPermissionsAPI.middleware,
+    basicdetailAPI.middleware,
+    contactAPI.middleware,
+    addressAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);

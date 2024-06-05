@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { addEditRoleFormData, securityKeys } from './formData/AddEditRoleForm.data';
+import { addEditRoleFormData, securityKeys } from './config/AddEditRoleForm.data';
 import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import { useAddRolesMutation, useUpdateRolesMutation } from '../../../../app/services/securityRoleAPI';

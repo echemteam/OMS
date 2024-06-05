@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const contactDetailFormData = {
   name: "Email From",
-  initialState: { companyName: "" },
+  initialState: { type: "" },
   formFields: [
     {
       id: "firstName",
@@ -50,11 +50,11 @@ export const contactDetailFormData = {
       },
     },
     {
-      id: "contactType",
+      id: "contactTypeId",
       lable: "Contact Type :",
       Field_Name: "Contact Type",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "ContactType",
+      dataField: "type",
       fieldSetting: {
         placeholder: "Select Contact Type",
         allowSpace: true,

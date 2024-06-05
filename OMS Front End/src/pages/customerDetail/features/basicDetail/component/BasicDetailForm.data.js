@@ -1,8 +1,8 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
-  export const basicDetailFormDataHalf = {
-    name: "Email From",
-    initialState: { companyName: "" },
+export const basicDetailFormDataHalf = {
+  name: "Email From",
+  initialState: { companyName: "" , type: "" , name :"" , territory : ""},
   formFields: [
     {
       id: "customerName",
@@ -20,11 +20,11 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
       },
     },
     {
-      id: "groupType",
+      id: "groupTypeId",
       lable: "Group Type :",
       Field_Name: "Group Type",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "GroupType",
+      dataField: "type",
       fieldSetting: {
         placeholder: "Select Group Type",
         allowSpace: true,
@@ -35,11 +35,11 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
       },
     },
     {
-      id: "territory",
+      id: "territoryId",
       lable: "Territory :",
       Field_Name: "Territory",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "Territory",
+      dataField: "territory",
       fieldSetting: {
         placeholder: "Select Territory",
         allowSpace: true,
@@ -50,11 +50,11 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
       },
     },
     {
-      id: "country",
+      id: "countryId",
       lable: "Country :",
       Field_Name: "Country",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "Country",
+      dataField: "name",
       fieldSetting: {
         placeholder: "Select Country",
         allowSpace: true,
@@ -79,7 +79,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
-    
+
     {
       id: "email",
       lable: "Email :",
@@ -125,8 +125,8 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
-    
-    
+
+
     {
       id: "invoiceSubInstruction",
       lable: "Invoice Submission Instruction :",

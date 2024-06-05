@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import MolGrid from "../../../components/Grid/MolGrid";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
-import { UserGridConfig, securityKeys, userFormData } from "./features/formData/UserForm.data";
+import { UserGridConfig, securityKeys, userFormData } from "./features/config/UserForm.data";
 import { encryptUrlData } from '../../../services/CryptoService'
 import { useDeleteUserMutation, useGetUsersMutation } from '../../../app/services/userAPI'
 import SwalAlert from "../../../services/swalService/SwalService";

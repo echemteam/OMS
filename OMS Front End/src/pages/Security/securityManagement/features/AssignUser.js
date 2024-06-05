@@ -3,7 +3,7 @@ import FormCreator from "../../../../components/Forms/FormCreator";
 import {
   assignUserFormData,
   assignUserListData,
-} from "./formData/AssignUserForm.data";
+} from "./config/AssignUserForm.data";
 import Buttons from "../../../../components/ui/button/Buttons";
 import MolGrid from "../../../../components/Grid/MolGrid";
 import {

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import CenterModel from "../../../components/ui/centerModel/CenterModel";
 import AddEditRole from "./features/AddEditRole";
 import AssignUser from "./features/AssignUser";
-import { SecurityRoleGridConfig, addEditRoleFormData, securityKeys } from "./features/formData/AddEditRoleForm.data";
+import { SecurityRoleGridConfig, addEditRoleFormData, securityKeys } from "./features/config/AddEditRoleForm.data";
 import { useDeleteRolesMutation, useGetRolesMutation } from "../../../app/services/securityRoleAPI";
 import SwalAlert from "../../../services/swalService/SwalService";
 import ToastService from "../../../services/toastService/ToastService";

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { addressFormData } from "./component/AddressForm.data";
@@ -6,10 +6,52 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import AddressCard from "./component/AddressCard";
+import { useLazyGetAllAddressTypesQuery } from "../../../../app/services/addressAPI";
+import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
 
 const AddressDetail = () => {
   const userFormRef = useRef();
   const [isModelOpen, setisModelOpen] = useState(false);
+
+  const [getAllAddressTypes, {
+    isFetching: isGetAllAddressTypesFetching,
+    isSuccess: isGetAllAddressTypesSucess,
+    data: allGetAllAddressTypesData
+  },] = useLazyGetAllAddressTypesQuery();
+
+  const [getAllCountries, {
+    isFetching: isGetAllCountriesFetching,
+    isSuccess: isGetAllCountriesSucess,
+    data: allGetAllCountriesData
+  },] = useLazyGetAllCountriesQuery();
+
+  useEffect(() => {
+    getAllAddressTypes()
+    getAllCountries()
+  }, [])
+
+  useEffect(() => {
+    if (!isGetAllAddressTypesFetching && isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
+      const getData = allGetAllAddressTypesData.map(item => ({
+        value: item.groupTypeId,
+        label: item.type
+      }))
+      const dropdownField = addressFormData.formFields.find(item => item.dataField === "type");
+      dropdownField.fieldSetting.options = getData;
+    }
+  }, [isGetAllAddressTypesFetching, isGetAllAddressTypesSucess, allGetAllAddressTypesData])
+
+  useEffect(() => {
+    if (!isGetAllCountriesFetching && isGetAllCountriesSucess && allGetAllCountriesData) {
+      const getData = allGetAllCountriesData.map(item => ({
+        value: item.countryId,
+        label: item.name
+      }))
+      const dropdownField = addressFormData.formFields.find(item => item.dataField === "name");
+      dropdownField.fieldSetting.options = getData;
+    }
+  }, [isGetAllCountriesFetching, isGetAllCountriesSucess, allGetAllCountriesData])
+
   const handleToggleModal = () => {
     setisModelOpen(true);
   };
