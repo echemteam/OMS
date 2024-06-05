@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Framework;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.API.Controllers
@@ -37,5 +36,56 @@ namespace OMS.API.Controllers
             List<GetUnAssignedUserByRoleIdResponse> responseData = await _serviceManager.commonServices.GetUnAssignedUserByRoleId(roleId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+
+        [HttpGet("GetAllGroupTypes")]
+        public async Task<IActionResult> GetAllGroupTypes()
+        {
+            List<GetAllGroupTypesResponse> responseData = await _serviceManager.commonServices.GetAllGroupTypes().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllTerritories")]
+        public async Task<IActionResult> GetAllTerritories()
+        {
+            List<GetAllTerritoriesResponse> responseData = await _serviceManager.commonServices.GetAllTerritories().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllAddressTypes")]
+        public async Task<IActionResult> GetAllAddressTypes()
+        {
+            List<GetAllAddressTypesResponse> responseData = await _serviceManager.commonServices.GetAllAddressTypes().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllCountries")]
+        public async Task<IActionResult> GetAllCountries()
+        {
+            List<GetAllCountriesResponse> responseData = await _serviceManager.commonServices.GetAllCountries().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllStates")]
+        public async Task<IActionResult> GetAllStates()
+        {
+            List<GetAllStatesResponse> responseData = await _serviceManager.commonServices.GetAllStates().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllCities")]
+        public async Task<IActionResult> GetAllCities()
+        {
+            List<GetAllCitiesResponse> responseData = await _serviceManager.commonServices.GetAllCities().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllContactTypes")]
+        public async Task<IActionResult> GetAllContactTypes()
+        {
+            List<GetAllContactTypesResponse> responseData = await _serviceManager.commonServices.GetAllContactTypes().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+
     }
 }

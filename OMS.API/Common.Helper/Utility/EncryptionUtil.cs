@@ -231,5 +231,20 @@ namespace Common.Helper.Utility
                 return stringBuilder.ToString();
             }
         }
+
+        public static string GenerateReferenceCode()
+        {
+            Random random = new();
+            int code = random.Next(10000, 100000);
+            return code.ToString();
+        }
+
+        public static string GenerateListCode(string taxid, string name)
+        {
+            string last4Digits = taxid.Substring(taxid.Length - 4);
+            string cleanedName = name.Trim();
+            string combinedString = last4Digits + "_" + cleanedName;
+            return combinedString;
+        }
     }
 }

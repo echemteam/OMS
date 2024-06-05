@@ -1,5 +1,6 @@
 ﻿using OMS.Application.Services.Authentication;
 using OMS.Application.Services.Common;
+using OMS.Application.Services.Customers;
 using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
@@ -28,6 +29,7 @@ namespace OMS.Application.Services
         IRolesMappingServices _rolesMappingServices;
         ISecurityServices _securityServices;
         ICommonServices _commonServices;
+        ICustomersServices _customersServices;
 
         public ITestService testService
         {
@@ -115,6 +117,18 @@ namespace OMS.Application.Services
                     _commonServices = new CommonServices(_repositoryManager, _commonSettingService);
                 }
                 return _commonServices;
+
+            }
+        }
+        public ICustomersServices customersServices 
+        {
+            get
+            {
+                if (_customersServices == null)
+                {
+                    _customersServices = new CustomersServices(_repositoryManager, _commonSettingService);
+                }
+                return _customersServices;
 
             }
         }
