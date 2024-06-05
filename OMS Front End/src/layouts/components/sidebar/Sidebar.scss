@@ -5,6 +5,7 @@
   position: relative;
   width: 260px;
   height: 100vh;
+  transition: 0.5s all;
 
   .sidebar {
     .main-menus {
@@ -18,13 +19,16 @@
         justify-content: center;
         padding: 5px 0;
         text-align: center;
-        min-height: 62px;
+        min-height: 60px;
         font-size: 28px;
         font-weight: 600;
         color: var(--themeColor);
         img {
           width: 60%;
           margin: a auto;
+        }
+        .small-sidebar{
+          display: block;
         }
       }
 
@@ -76,7 +80,7 @@
                   align-items: center;
 
                   i {
-                    font-size: 120%;
+                    font-size: 140%;
                     color: #8291ae;
                   }
 
@@ -212,31 +216,5 @@
       }
     }
   }
-  .collapse-btn{
-    position: absolute;
-    padding: 7px;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    background: var(--bg-main-content);
-    top: 20px;
-    right: -20px;
-    .click-btn{
-      background: var(--gradient-theme);
-      height: 100%;
-      width: 100%;
-      border-radius: 100%;
-      padding: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      img{
-        filter: brightness(100);
-        transform: rotate(90deg);
-      }
-    }
-  }
+ 
 }
-
-// =============================================================================================================================================

@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import {
-  basicDetailFormData,
   basicDetailFormDataHalf,
 } from "./component/BasicDetailForm.data";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -15,7 +14,7 @@ const BasicDetail = ({ isFullWidthForm }) => {
         <div className="row">
           <FormCreator
             ref={userFormRef}
-            {...basicDetailFormData}
+            {...basicDetailFormDataHalf}
             // onFormDataUpdate={handleFormDataChange}
           />
           <div className="col-md-12">

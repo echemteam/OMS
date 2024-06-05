@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ViewCustomer.scss";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import BasicDetail from "./features/basicDetail/BasicDetail";
@@ -7,8 +7,17 @@ import AddressDetail from "./features/addressDetail/AddressDetail";
 import CardSection from "../../components/ui/card/CardSection";
 import CustomerDetails from "./features/basicDetail/CustomerDetails";
 import { AppIcons } from "../../data/appIcons";
+import SidebarModel from "../../components/ui/sidebarModel/SidebarModel";
+import Buttons from "../../components/ui/button/Buttons";
 
 const ViewCustomer = () => {
+  const [isModelOpen, setisModelOpen] = useState(false);
+  const handleToggleModal = () => {
+    setisModelOpen(true);
+  };
+  const onSidebarClose = () => {
+    setisModelOpen(false);
+  };
   const tabs = [
     {
       sMenuItemCaption: "Address",
@@ -37,26 +46,54 @@ const ViewCustomer = () => {
   ];
 
   return (
-    <div className="card-bottom-m-0">
-      <div className="row">
-        <div className="col-xl-3 col-md-3 col-12 basic-left-part">
-          <CardSection>
-            <CustomerDetails />
-          </CardSection>
-        </div>
-        <div className="col-xl-9 col-md-9 col-12 other-info-tab">
-          <CardSection
-            cardTitle="Other Information"
-            // buttonClassName="theme-button"
-            // rightButton={true}
-            // buttonText="Save"
-            // titleButtonClick={onEditAction}
-          >
-            <RenderTabs tabs={tabs} />
-          </CardSection>
+    <>
+      <div className="card-bottom-m-0">
+        <div className="row">
+          <div className="col-xl-3 col-md-3 col-12 basic-left-part customer-desc-left-sec">
+            <CardSection>
+              <CustomerDetails editClick={handleToggleModal} />
+            </CardSection>
+          </div>
+          <div className="col-xl-9 col-md-9 col-12 other-info-tab">
+            <CardSection
+              cardTitle="Other Information"
+              // buttonClassName="theme-button"
+              // rightButton={true}
+              // buttonText="Save"
+              // titleButtonClick={onEditAction}
+            >
+              <RenderTabs tabs={tabs} />
+            </CardSection>
+          </div>
         </div>
       </div>
-    </div>
+      <SidebarModel
+        modalTitle="Edit Basic Information"
+        contentClass="content-65 basic-info-model"
+        onClose={onSidebarClose}
+        modalTitleIcon={AppIcons.AddIcon}
+        isOpen={isModelOpen}
+      >
+        <BasicDetail />
+        <div className="col-md-12 mt-3">
+          <div className="d-flex align-item-end justify-content-end">
+            <div className="d-flex align-item-end">
+              <Buttons
+                buttonTypeClassName="theme-button"
+                buttonText="Save"
+                // onClick={onHandleUser}
+                // isLoading={EmailLoading || updateUserLoading}
+              />
+              <Buttons
+                buttonTypeClassName="dark-btn ml-5"
+                buttonText="Cancel"
+                onClick={onSidebarClose}
+              />
+            </div>
+          </div>
+        </div>
+      </SidebarModel>
+    </>
   );
 };
 

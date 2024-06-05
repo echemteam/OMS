@@ -15,77 +15,134 @@
 
 }
 
+.customer-desc-left-sec {
+  .card-body-sec {
+    margin-top: 0;
 
-.basic-customer-detail {
-  .profile-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    position: relative;
-    .profile-icon {
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      background: var(--gradient-theme);
-      border-radius: 100%;
-      color: var(--whiteColor);
-      font-size: 120%;
-      box-shadow: var(--card-shadow);
-    }
+    .basic-customer-detail {
+      .profile-info {
+        position: relative;
+        border-bottom: 1px solid var(--light-menuDot);
+        padding-bottom: 15px;
+        margin-bottom: 15px;
 
-    h5 {
-      font-size: 122%;
-      font-weight: 600;
-      color: var(--themeColor);
-      margin-bottom: 0px;
-    }
+        .profile-icon-desc {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-bottom: 0px;
 
-    .input-label-part {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 15px;
-      border-bottom: 1px solid var(--themeColorLight);
-      padding-bottom: 10px;
-      margin-top: 5px;
+          .profile-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: var(--gradient-theme);
+            border-radius: 100%;
+            color: var(--whiteColor);
+            font-size: 110%;
+            box-shadow: var(--card-shadow);
+          }
+        }
 
-      span {
-        display: flex;
-        align-items: center;
-        margin-left: 2px;
+        h5 {
+          font-size: 122%;
+          font-weight: 600;
+          color: var(--themeColor);
+          margin-bottom: 0px;
+          padding-left: 10px;
+        }
 
-        img {
-          width: 18px;
-          margin-right: 0px;
+        .email-web-info {
+          padding-left: 5px;
+          margin-top: 10px;
+
+
+          .input-label-part {
+            margin-bottom: 0px;
+            padding-bottom: 0;
+            margin-top: 5px;
+
+            span {
+              display: flex;
+              align-items: center;
+              margin-left: 2px;
+
+              img {
+                width: 18px;
+                margin-right: 10px;
+              }
+
+              span {
+                img {
+                  margin-left: 5px;
+
+                }
+              }
+
+              &.email-desc-part {
+                margin-bottom: 5px;
+                margin-top: 7px;
+              }
+
+
+            }
+          }
+        }
+
+
+        .edit-icons {
+          cursor: pointer;
+          img {
+            width: 20px;
+          }
         }
       }
-    }
-    .edit-icons{
-      position: absolute;
-      right: 0;
-      top: 0;
-      img{
-        width: 20px;
+
+
+
+      .field-desc {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+
+        .inf-label {
+          min-width: 120px;
+          max-width: 120px;
+          font-weight: bold;
+          color: var(--textColor);
+          font-size: 94%;
+          padding-top: 2px;
+        }
+        .info-desc{
+          padding-top: 2px;
+          font-size: 94%;
+        }
+        .email-link{
+          color: var(--textColor);
+          text-decoration: underline;
+          &:hover{
+            color: var(--themeColor);
+          }
+        }
+        .copy-icon{
+          margin-left: 5px;
+          cursor: pointer;
+          img{
+            width: 17px;
+            height: 17px;
+          }
+        }
+
       }
     }
   }
+}
 
-  .field-desc {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 15px;
-
-    .inf-label {
-      min-width: 120px;
-      max-width: 120px;
-      font-weight: bold;
-      color: var(--textColor);
-    }
-
-    .info-desc {}
+.basic-info-model{
+  .card {
+    box-shadow: none;
+    padding: 10px 0 0;
   }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 
-const CustomerDetails = (props) => {
+const CustomerDetails = ({editClick}) => {
   const customerName = "1Click Chemistry Incc";
   const customerEmail = "test.email@gmail.com";
   const customerWebsite = "1clickchemistry.com";
@@ -28,23 +28,40 @@ const CustomerDetails = (props) => {
       <div className="basic-customer-detail">
         <div className="col-xl-12 col-lg-12 col-md-12 col-12">
           <div className="profile-info">
-            <div className="profile-icon">1C</div>
-            <h5>{customerName}</h5>
-            <div className="input-label-part">
-              <span>
-                <Image imagePath={AppIcons.Mail} altText="Email Icon" />
-                <span>{customerEmail}</span>
-              </span>
-              &nbsp;|&nbsp;
-              <span>
-                <Image imagePath={AppIcons.Bebsite} altText="Website Icon" />
-                <span>{customerWebsite}</span>
-              </span>
-            </div>
-            <div className="edit-icons" onClick="">
-            <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
+            <div className="profile-icon-desc">
+              <div className="d-flex align-items-center">
+                <div className="profile-icon">1C</div>
+                <h5>{customerName}</h5>
+              </div>
+              <div className="edit-icons" onClick={editClick}>
+                <Image
+                  imagePath={AppIcons.editThemeIcon}
+                  altText="Website Icon"
+                />
+              </div>
             </div>
           </div>
+          <div className="field-desc">
+            <div className="inf-label">Email</div>
+            <b>&nbsp;:&nbsp;</b>
+            <a className="email-link" href={`mailto:${customerEmail}`}>
+              <div className="info-desc">{customerEmail}</div>
+            </a>
+            <span className="copy-icon">
+              <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+            </span>
+          </div>
+          <div className="field-desc">
+            <div className="inf-label">Website</div>
+            <b>&nbsp;:&nbsp;</b>
+
+            <div className="info-desc">{customerWebsite}</div>
+
+            <span className="copy-icon">
+              <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+            </span>
+          </div>
+
           {customerData.map((customer, index) => (
             <div key={index} className="field-desc">
               <div className="inf-label">{customer.nameLabel}</div>
