@@ -16,11 +16,29 @@ const addressAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+        getAllStates: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Common/GetAllStates'),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
+        getAllCities: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Common/GetAllCities'),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
     })
 })
 
 export const {
     useLazyGetAllAddressTypesQuery,
+    useLazyGetAllStatesQuery,
+    useLazyGetAllCitiesQuery,
 } = addressAPI
 
 export default addressAPI;

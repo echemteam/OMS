@@ -17,45 +17,56 @@ const FormSelectField = ({
   isMultiSelect,
   onValidation,
   fieldSetting,
+  fieldActions,
   ...selectFormFieldProps
 }) => {
 
-  const handleChange = (selectedOption) => {
-    if (onChange) {
-      if (isMultiSelect) {
-        const selectedValues = selectedOption.map((option) => option.value);
-        onChange(dataField, selectedValues)
+  const handleChange = (selectedOptionValues , selectedOption) => {
+      if (onChange) {
+          if (isMultiSelect) {
+              const selectedValues = selectedOptionValues.map((option) => option.value);
+              onChange(dataField, selectedValues)
+              if (fieldActions) {
+                  fieldActions('DDL_CHANGED', dataField, selectedOption);
+                }
+          }
+          else {
+              onChange(dataField, selectedOptionValues)
+              if (fieldActions) {
+                  fieldActions('DDL_CHANGED', dataField, selectedOptionValues);
+                }
+          }
       }
-      else {
-        onChange(dataField, selectedOption)
-      }
-    }
   }
 
   const handleOnBlur = () => {
-    if (onValidation) {
-      onValidation(dataField)
-    }
-  }
+      if (onValidation) {
+          onValidation(dataField);
+      }
+  };
+
 
   return (
-    <>
+      <>
       <div className='input-label-part'>
-        {labelName && labelName !== "" && (
-          <Label labelName={labelName} isRequired={selectFormFieldProps.isRequired} />
-        )}
-        <Dropdown
-          placeholder={placeholder}
-          onChange={handleChange}
-          onBlur={handleOnBlur}
-          options={options}
-          value={value}
-          isMultiSelect={isMultiSelect}
-          isDisabled={formSetting?.isViewOnly || selectFormFieldProps.isDisabled}
-          {...selectFormFieldProps}
-        />
+        {labelName && <Label labelName={labelName} />}
+        <Suspense fallback={<div>Loading...</div>}>
+          <Dropdown
+            placeholder={placeholder}
+            onChange={handleChange}
+            onBlur={handleOnBlur}
+            options={options}
+            value={value}
+            isMultiSelect={isMultiSelect}
+            isDisabled={formSetting?.isViewOnly || selectFormFieldProps.isDisabled}
+            {...selectFormFieldProps}
+            dataField={dataField}
+          />
+        </Suspense>
       </div>
-      <ValidationText error={error || ""} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ValidationText error={error || ""} />
+      </Suspense>
     </>
   )
 }
