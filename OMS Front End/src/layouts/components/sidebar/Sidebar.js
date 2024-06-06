@@ -32,7 +32,7 @@ const Sidebar = (props) => {
                 imgCustomClassName="open-bar"
                 altText="Icon"
               ></Image> */}
-              OMS <span className="small-sidebar">Lite</span>
+              OMS&nbsp;<span className="small-sidebar">Lite</span>
             </Link>
             <div className="sidebar-menu">
               <ul className="sidebar-menu-list">

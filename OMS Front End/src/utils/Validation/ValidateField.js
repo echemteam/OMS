@@ -27,6 +27,8 @@ export const uniqueIdentifier = (value) => !!(value && String(value).trim().leng
 
 export const isvalidPassword = (value) => !!(value && String(value).trim().length && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.{8,})/.test(value));
 
+export const isWebsite = (value) => !!(value && String(value).trim().length && /^(https?|ftp):\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\S*)$/.test(value));
+
 export const isValidEIN = (value) => {
     const unmaskedValue = value.replace(/\D/g, '')
     const isValid = /^\d{9}$/.test(unmaskedValue);
@@ -50,11 +52,7 @@ export const isUnique = (value) => {
     return !invalidChars.test(value);
 }
 
-export const isWebsite = (value) => !!(value && String(value).trim().length && /^(https?|ftp):\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\S*)$/.test(value));
-
-// export const isTaxId = (value) => !!(value && String(value).trim().length && /^(https?|ftp):\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\S*)$/.test(value));
-
 export const isTaxId = (value) => {
-    const taxIdRegex = /^[0-10]{10}$/;
+    const taxIdRegex = /^[0-9]{9}$/;
     return taxIdRegex.test(value);
 }

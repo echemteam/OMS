@@ -2,17 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { basicDetailFormDataHalf } from "./component/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
-import {
-  useAddCustomersBasicInformationMutation,
-  useLazyGetAllCountriesQuery,
-  useLazyGetAllGroupTypesQuery,
-  useLazyGetAllTerritoriesQuery,
-} from "../../../../app/services/basicdetailAPI";
+import { useAddCustomersBasicInformationMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery } from "../../../../app/services/basicdetailAPI";
+import ToastService from "../../../../services/toastService/ToastService";
 import Buttons from "../../../../components/ui/button/Buttons";
 
-const BasicDetail = ({isFullWidthForm}) => {
+const BasicDetail = ({isFullWidthForm, onSidebarClose}) => {
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
+  const [basicId, setBasicId] = useState()
 
   const [
     getAllGroupTypes,
@@ -120,40 +117,62 @@ const BasicDetail = ({isFullWidthForm}) => {
   ]);
 
   const Add = () => {
-    debugger;
     let data = basicDetailRef.current.getFormData();
     if (data != null) {
-      // if (data) {
-      addCustomersBasicInformation(data);
-      // }
+      let req = {
+        ...data,
+        groupTypeId: data.groupTypeId.value,
+        territoryId: data.territoryId.value,
+        countryId: data.countryId.value,
+        billingCurrency: data.billingCurrency.label
+      }
+      addCustomersBasicInformation(req);
     }
   };
+
+  useEffect(() => {
+    if (isAddCustomersBasicInformationSuccess && isAddCustomersBasicInformationData) {
+      if (isAddCustomersBasicInformationData.errorMessage.includes('exists')) {
+        ToastService.warning(isAddCustomersBasicInformationData.errorMessage);
+        return;
+      }
+      setBasicId(isAddCustomersBasicInformationData.keyValue)
+      ToastService.success(isAddCustomersBasicInformationData.errorMessage);
+      onreset()
+    }
+  }, [isAddCustomersBasicInformationSuccess, isAddCustomersBasicInformationData]);
+
+  const onreset = () => {
+    let restData = { ...basicDetailFormDataHalf };
+    restData.initialState = { ...formData };
+    setFormData(restData);
+  }
 
   return (
     <div className="basic-info-sec half-sec">
       {isFullWidthForm ? (
-      <div className="row">
-        <FormCreator
-          ref={basicDetailRef}
-          {...formData}
+        <div className="row">
+          <FormCreator
+            ref={basicDetailRef}
+            {...formData}
           // onFormDataUpdate={handleFormDataChange}
-        />
-        <div className="col-md-12">
-          <div className="d-flex align-item-end justify-content-end">
-            <Buttons
-              buttonTypeClassName="dark-btn"
-              buttonText="Cancel"
-              // onClick={BackButton}
-            />
-            <Buttons
-              buttonTypeClassName="theme-button ml-5"
-              buttonText="Save"
-              onClick={Add}
-              isLoading={isAddCustomersBasicInformationLoading}
-            />
+          />
+          <div className="col-md-12">
+            <div className="d-flex align-item-end justify-content-end">
+              <Buttons
+                buttonTypeClassName="dark-btn"
+                buttonText="Cancel"
+              onClick={onSidebarClose}
+              />
+              <Buttons
+                buttonTypeClassName="theme-button ml-5"
+                buttonText="Save"
+                onClick={Add}
+                isLoading={isAddCustomersBasicInformationLoading}
+              />
+            </div>
           </div>
         </div>
-      </div>
       ) : (
         <CardSection buttonClassName="theme-button">
           <div className="row horizontal-form basic-info-step">
@@ -164,20 +183,20 @@ const BasicDetail = ({isFullWidthForm}) => {
             />
           </div>
           <div className="col-md-12">
-          <div className="d-flex align-item-end justify-content-end">
-            <Buttons
-              buttonTypeClassName="dark-btn"
-              buttonText="Cancel"
-            // onClick={BackButton}
-            />
-            <Buttons
-              buttonTypeClassName="theme-button ml-5"
-              buttonText="Save"
-              onClick={Add}
-              isLoading={isAddCustomersBasicInformationLoading}
-            />
+            <div className="d-flex align-item-end justify-content-end">
+              <Buttons
+                buttonTypeClassName="dark-btn"
+                buttonText="Cancel"
+              onClick={onSidebarClose}
+              />
+              <Buttons
+                buttonTypeClassName="theme-button ml-5"
+                buttonText="Save"
+                onClick={Add}
+                isLoading={isAddCustomersBasicInformationLoading}
+              />
+            </div>
           </div>
-        </div>
         </CardSection>
       )}
     </div>

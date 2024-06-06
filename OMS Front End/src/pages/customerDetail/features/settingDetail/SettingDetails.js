@@ -1,9 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import { SettingFormData } from "./config/SettingData";
-import Buttons from "../../../../components/ui/button/Buttons";
 import FinancialSettings from "./features/FinancialSettings";
 
 const SettingDetails = () => {
@@ -19,7 +16,9 @@ const SettingDetails = () => {
         // titleButtonClick={handleToggleModal}
       >
         {/* <div className="border-b pb-4"> */}
+        <div className="mt-3">
           <FinancialSettings />
+        </div>
         {/* </div> */}
       </CardSection>
     </>

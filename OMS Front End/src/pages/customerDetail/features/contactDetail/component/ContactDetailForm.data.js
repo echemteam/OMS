@@ -76,7 +76,7 @@ export const contactDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 pt-1",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12",
       },
     },
     {
