@@ -85,7 +85,7 @@ const BasicDetail = ({ isFullWidthForm }) => {
 
   return (
     <div className="basic-info-sec half-sec">
-      {/* {isFullWidthForm ? ( */}
+      {isFullWidthForm ? (
       <div className="row">
         <FormCreator
           ref={basicDetailRef}
@@ -108,7 +108,7 @@ const BasicDetail = ({ isFullWidthForm }) => {
           </div>
         </div>
       </div>
-      {/* ) : (
+      ) : (
         <CardSection buttonClassName="theme-button">
           <div className="row horizontal-form basic-info-step">
             <FormCreator
@@ -117,8 +117,23 @@ const BasicDetail = ({ isFullWidthForm }) => {
             // onFormDataUpdate={handleFormDataChange}
             />
           </div>
+          <div className="col-md-12">
+          <div className="d-flex align-item-end justify-content-end">
+            <Buttons
+              buttonTypeClassName="dark-btn"
+              buttonText="Cancel"
+            // onClick={BackButton}
+            />
+            <Buttons
+              buttonTypeClassName="theme-button ml-5"
+              buttonText="Save"
+              onClick={Add}
+              isLoading={isAddCustomersBasicInformationLoading}
+            />
+          </div>
+        </div>
         </CardSection>
-      )} */}
+      )}
     </div>
   );
 };
