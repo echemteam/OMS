@@ -172,7 +172,7 @@ export const basicDetailFormDataHalf = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 margin-left0-checkbox",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 margin-left0-checkbox mt-3",
       },
     },
     {

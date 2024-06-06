@@ -1,79 +1,120 @@
 import React, { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
-import {
-  basicDetailFormDataHalf,
-} from "./component/BasicDetailForm.data";
-import Buttons from "../../../../components/ui/button/Buttons";
+import { basicDetailFormDataHalf } from "./component/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { useAddCustomersBasicInformationMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
+import Buttons from "../../../../components/ui/button/Buttons";
 
-const BasicDetail = ({ isFullWidthForm }) => {
+const BasicDetail = ({isFullWidthForm}) => {
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [basicId, setBasicId] = useState()
 
-  const [getAllGroupTypes, {
-    isFetching: isGetAllGroupTypesFetching,
-    isSuccess: isGetAllGroupTypesSucess,
-    data: allGetAllGroupTypesData
-  },] = useLazyGetAllGroupTypesQuery();
+  const [
+    getAllGroupTypes,
+    {
+      isFetching: isGetAllGroupTypesFetching,
+      isSuccess: isGetAllGroupTypesSucess,
+      data: allGetAllGroupTypesData,
+    },
+  ] = useLazyGetAllGroupTypesQuery();
 
-  const [getAllCountries, {
-    isFetching: isGetAllCountriesFetching,
-    isSuccess: isGetAllCountriesSucess,
-    data: allGetAllCountriesData
-  },] = useLazyGetAllCountriesQuery();
+  const [
+    getAllCountries,
+    {
+      isFetching: isGetAllCountriesFetching,
+      isSuccess: isGetAllCountriesSucess,
+      data: allGetAllCountriesData,
+    },
+  ] = useLazyGetAllCountriesQuery();
 
-  const [getAllTerritories, {
-    isFetching: isGetAllTerritoriesFetching,
-    isSuccess: isGetAllTerritoriesSucess,
-    data: allGetAllTerritoriesData
-  },] = useLazyGetAllTerritoriesQuery();
+  const [
+    getAllTerritories,
+    {
+      isFetching: isGetAllTerritoriesFetching,
+      isSuccess: isGetAllTerritoriesSucess,
+      data: allGetAllTerritoriesData,
+    },
+  ] = useLazyGetAllTerritoriesQuery();
 
-  const [addCustomersBasicInformation, {
-    isLoading: isAddCustomersBasicInformationLoading,
-    isSuccess: isAddCustomersBasicInformationSuccess,
-    data: isAddCustomersBasicInformationData }] = useAddCustomersBasicInformationMutation();
+  const [
+    addCustomersBasicInformation,
+    {
+      isLoading: isAddCustomersBasicInformationLoading,
+      isSuccess: isAddCustomersBasicInformationSuccess,
+      data: isAddCustomersBasicInformationData,
+    },
+  ] = useAddCustomersBasicInformationMutation();
 
   useEffect(() => {
-    getAllGroupTypes()
-    getAllCountries()
-    getAllTerritories()
-  }, [])
+    getAllGroupTypes();
+    getAllCountries();
+    getAllTerritories();
+  }, []);
 
   useEffect(() => {
-    if (!isGetAllGroupTypesFetching && isGetAllGroupTypesSucess && allGetAllGroupTypesData) {
-      const getData = allGetAllGroupTypesData.map(item => ({
+    if (
+      !isGetAllGroupTypesFetching &&
+      isGetAllGroupTypesSucess &&
+      allGetAllGroupTypesData
+    ) {
+      const getData = allGetAllGroupTypesData.map((item) => ({
         value: item.groupTypeId,
-        label: item.type
-      }))
-      const dropdownField = basicDetailFormDataHalf.formFields.find(item => item.dataField === "groupTypeId");
+        label: item.type,
+      }));
+      const dropdownField = basicDetailFormDataHalf.formFields.find(
+        (item) => item.dataField === "groupTypeId"
+      );
       dropdownField.fieldSetting.options = getData;
     }
-  }, [isGetAllGroupTypesFetching, isGetAllGroupTypesSucess, allGetAllGroupTypesData])
+  }, [
+    isGetAllGroupTypesFetching,
+    isGetAllGroupTypesSucess,
+    allGetAllGroupTypesData,
+  ]);
 
   useEffect(() => {
-    if (!isGetAllCountriesFetching && isGetAllCountriesSucess && allGetAllCountriesData) {
-      const getData = allGetAllCountriesData.map(item => ({
+    if (
+      !isGetAllCountriesFetching &&
+      isGetAllCountriesSucess &&
+      allGetAllCountriesData
+    ) {
+      const getData = allGetAllCountriesData.map((item) => ({
         value: item.countryId,
-        label: item.name
-      }))
-      const dropdownField = basicDetailFormDataHalf.formFields.find(item => item.dataField === "countryId");
+        label: item.name,
+      }));
+      const dropdownField = basicDetailFormDataHalf.formFields.find(
+        (item) => item.dataField === "countryId"
+      );
       dropdownField.fieldSetting.options = getData;
     }
-  }, [isGetAllCountriesFetching, isGetAllCountriesSucess, allGetAllCountriesData])
+  }, [
+    isGetAllCountriesFetching,
+    isGetAllCountriesSucess,
+    allGetAllCountriesData,
+  ]);
 
   useEffect(() => {
-    if (!isGetAllTerritoriesFetching && isGetAllTerritoriesSucess && allGetAllTerritoriesData) {
-      const getData = allGetAllTerritoriesData.map(item => ({
+    if (
+      !isGetAllTerritoriesFetching &&
+      isGetAllTerritoriesSucess &&
+      allGetAllTerritoriesData
+    ) {
+      const getData = allGetAllTerritoriesData.map((item) => ({
         value: item.territoryId,
-        label: item.territory
-      }))
-      const dropdownField = basicDetailFormDataHalf.formFields.find(item => item.dataField === "territoryId");
+        label: item.territory,
+      }));
+      const dropdownField = basicDetailFormDataHalf.formFields.find(
+        (item) => item.dataField === "territoryId"
+      );
       dropdownField.fieldSetting.options = getData;
     }
-  }, [isGetAllTerritoriesFetching, isGetAllTerritoriesSucess, allGetAllTerritoriesData])
+  }, [
+    isGetAllTerritoriesFetching,
+    isGetAllTerritoriesSucess,
+    allGetAllTerritoriesData,
+  ]);
 
   const Add = () => {
     let data = basicDetailRef.current.getFormData();

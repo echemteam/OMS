@@ -6,7 +6,6 @@ export const FormFieldTypes = {
     DATEPICKER: 5,
     SELECT: 6,
     TEXTAREA: 7,
-    SUNEDITOR: 8,
     TINYEDITOR: 9,
     FILE: 10,
     RADIOBUTTON: 11,

@@ -1,4 +1,5 @@
-﻿using OMS.Application.Services.Authentication;
+﻿using OMS.Application.Services.Address;
+using OMS.Application.Services.Authentication;
 using OMS.Application.Services.Common;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.Roles;
@@ -30,6 +31,7 @@ namespace OMS.Application.Services
         ISecurityServices _securityServices;
         ICommonServices _commonServices;
         ICustomersServices _customersServices;
+        IAddressServices _addressServices;
 
         public ITestService testService
         {
@@ -129,6 +131,19 @@ namespace OMS.Application.Services
                     _customersServices = new CustomersServices(_repositoryManager, _commonSettingService);
                 }
                 return _customersServices;
+
+            }
+        }
+
+        public IAddressServices addressServices
+        {
+            get
+            {
+                if (_addressServices == null)
+                {
+                    _addressServices = new AddressServices(_repositoryManager, _commonSettingService);
+                }
+                return _addressServices;
 
             }
         }

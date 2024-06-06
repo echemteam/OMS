@@ -1,4 +1,5 @@
-﻿using OMS.Application.Services.Authentication;
+﻿using OMS.Application.Services.Address;
+using OMS.Application.Services.Authentication;
 using OMS.Application.Services.Common;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.Roles;
@@ -19,5 +20,6 @@ namespace OMS.Application.Services
         ISecurityServices securityServices { get; }
         ICommonServices commonServices { get; }
         ICustomersServices customersServices { get; }
+        IAddressServices addressServices { get; }
     }
 }
