@@ -12,5 +12,6 @@
         public string? Note { get; set; }
         public bool? IsCompany { get; set; }
         public string? TaxId { get; set; }
+        public string? BillingCurrency { get; set; }
     }
 }

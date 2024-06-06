@@ -100,7 +100,7 @@ export const addressFormData = {
       lable: "Country :",
       Field_Name: "Country",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "name",
+      dataField: "countryId",
       fieldSetting: {
         placeholder: "Select Country",
         allowSpace: true,
@@ -111,12 +111,13 @@ export const addressFormData = {
       },
     },
     {
-      id: "state",
+      id: "stateId",
       lable: "State :",
       Field_Name: "State",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "State",
+      dataField: "stateId",
       fieldSetting: {
+        isDisabled: true,
         placeholder: "Select State",
         allowSpace: true,
       },
@@ -126,12 +127,13 @@ export const addressFormData = {
       },
     },
     {
-      id: "city",
+      id: "cityId",
       lable: "City :",
       Field_Name: "City",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "City",
+      dataField: "cityId",
       fieldSetting: {
+        isDisabled: true,
         placeholder: "Select City",
         allowSpace: true,
       },

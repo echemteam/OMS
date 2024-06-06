@@ -37,6 +37,17 @@ namespace OMS.API.Controllers
             var updateItem = await _serviceManager.customersServices.UpdateCustomersBasicInformation(requestData, CurrentUserId);
             return APISucessResponce(updateItem);
         }
+
+        [HttpGet("GetCustomersBasicInformationById")]
+        public async Task<IActionResult> GetCustomersBasicInformationById(int CustomerId)
+        {
+            if (CustomerId > 0)
+            {
+                var customerDetails = await _serviceManager.customersServices.GetCustomersBasicInformationById(CustomerId).ConfigureAwait(true);
+                return APISucessResponce<object>(customerDetails);
+            }
+            return APISucessResponce(CustomerId);
+        }
         #endregion
     }
 }
