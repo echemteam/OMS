@@ -31,7 +31,7 @@ const LoginFormData = {
             style: {
                 containerCss: "col-md-12"
             },
-            validation: [{ type: "require"}]
+            validation: [{ type: "require"} , { type: "password" }]
         },
     ],
 };
