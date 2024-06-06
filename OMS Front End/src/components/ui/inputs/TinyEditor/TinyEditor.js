@@ -24,7 +24,7 @@ const TinyEditor = ({
     <>
       <div className="tiny-editor-sec">
         <Editor
-          apiKey="c5ekv5obelcvvqkkm9qodsa4ongup0do7yo5x0wzbmwuhd94"
+          apiKey="flvopex3kyj8z3ql91szvmrefbqwbrp6cspwi65vr6ksouo7"
           initialValue={data ? data : ""}
           value={data}
           // onEditorChange={handleInputChange}
