@@ -10,7 +10,7 @@ import {
 } from "../../../../app/services/basicdetailAPI";
 import Buttons from "../../../../components/ui/button/Buttons";
 
-const BasicDetail = () => {
+const BasicDetail = ({isFullWidthForm}) => {
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
 
