@@ -12,41 +12,35 @@ const FormTextEditorField = ({
   dataField,
   error,
   formSetting,
+  overRideProps,
   ...editorProps
 }) => {
   const handleOnChange = (e) => {
-    if (onChange) {
-      onChange(dataField, e);
-    }
+      if (onChange) {
+          onChange(dataField, e);
+      }
   };
 
   const handleOnBlur = () => {
-    if (onValidation) {
-      onValidation(dataField);
-    }
+      if (onValidation) {
+          onValidation(dataField);
+      }
   };
-
   return (
-    <>
-      <div className="input-label-part tiny-editor">
-        {labelName && labelName !== "" && (
-          <Label
-            labelName={labelName}
-            for={name}
-            isRequired={editorProps.isRequired}
-          />
-        )}
-        <TinyEditor
-          {...editorProps}
-          placeholder={placeholder}
-          onBlur={handleOnBlur}
-          onChange={handleOnChange}
-          isDisable={formSetting?.isViewOnly || editorProps?.isDisable || false}
-        />
-      </div>
-      <ValidationText error={error || ""} />
-    </>
-  );
-};
+      <>
+          <div className="input-label-part">
+              {labelName && labelName !== "" && <Label labelName={labelName} for={name} />}
+              <TinyEditor
+                  {...editorProps}
+                  placeholder={placeholder}
+                  onBlur={handleOnBlur}
+                  onTinyMceEditorChange={handleOnChange}
+                  isDisable={formSetting?.isViewOnly || editorProps?.isDisable || false || overRideProps?.isDisable}
+              />
+          </div>
+          <ValidationText error={error || ""} />
+      </>
+  )
+}
 
 export default FormTextEditorField;

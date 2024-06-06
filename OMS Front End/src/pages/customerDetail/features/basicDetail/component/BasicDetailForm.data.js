@@ -1,8 +1,7 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const basicDetailFormDataHalf = {
-  name: "Email From",
-  initialState: { name: "" , groupTypeId: "" , countryId :"" , territoryId : "" , emailAddress:"" , website:"" , invoiceSubmissionInstruction:"" , note:"" , isCompany:false , taxId:"" , billingCurrency:""},
+  initialState: { name: "", groupTypeId: "", countryId: "", territoryId: "", emailAddress: "", website: "", invoiceSubmissionInstruction: "", note: "", isCompany: false, taxId: "", billingCurrency: "" },
   formFields: [
     {
       id: "name",
@@ -14,7 +13,7 @@ export const basicDetailFormDataHalf = {
         placeholder: "Enter Customer Name",
         allowSpace: true,
       },
-      validation: [{ type: "require" } , { type: "uniqueName" }],
+      validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -64,20 +63,19 @@ export const basicDetailFormDataHalf = {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
-  //   Options: [
-  //     { name: "Doker", id: "1" },
-  //     { name: "VM", id: "2" },
-  //     { name: "Desktop", id: "3" },
-  // ],
     {
       id: "billingCurrency",
       lable: "Billing Currency :",
-      Field_Name: "billingCurrency",
+      Field_Name: "Billing Currency",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "BillingCurrency",
+      dataField: "billingCurrency",
       fieldSetting: {
         placeholder: "Select Billing Currency",
         allowSpace: true,
+        options: [
+          { label: "INR", value: 1 },
+          { label: "USD", value: 2 },
+        ],
       },
       // validation: [{ type: "require" }],
       style: {
@@ -95,7 +93,7 @@ export const basicDetailFormDataHalf = {
         placeholder: "Enter Email",
         allowSpace: true,
       },
-      validation: [{ type: "require" } , {type: "email"}],
+      validation: [{ type: "require" }, { type: "email" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -110,7 +108,7 @@ export const basicDetailFormDataHalf = {
         placeholder: "https://www.xyz.com/",
         allowSpace: true,
       },
-      validation: [{ type: "require" } , { type: "website" }],
+      validation: [{ type: "require" }, { type: "website" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -125,7 +123,7 @@ export const basicDetailFormDataHalf = {
         placeholder: "Text Id",
         allowSpace: true,
       },
-      validation: [{ type: "require" } , { type: "taxId" }],
+      validation: [{ type: "require" }, { type: "taxId" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
