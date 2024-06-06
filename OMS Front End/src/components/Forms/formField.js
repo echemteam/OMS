@@ -9,7 +9,6 @@ const FormSelectField = React.lazy(() => import("./formField/FormSelectField"));
 const FormCheckboxField = React.lazy(() => import("./formField/FormCheckBoxFields"));
 const FormDatePickerField = React.lazy(() => import("./formField/FormDatePickerField"));
 const FormRadioButtonField = React.lazy(() => import("./formField/FormRadioButtonField"));
-const FormTextEditorField = React.lazy(() => import("./formField/FormTextEditorField"));
 const FormTextAreaFields = React.lazy(() => import("./formField/FormTextAreaField"));
 const FormTinyEditorField = React.lazy(() => import("./formField/FormTinyEditorField"));
 const FormFileUploadField = React.lazy(() => import("./formField/FormFileUploadField"));
@@ -208,26 +207,6 @@ const FormFields = ({
               error={validState.error[field.dataField] || ""}
               onChange={handleInputChange}
               fieldActions={onActionChange}
-              formSetting={formSetting}
-              formData={formData}
-              changeAction={field.changeAction}
-              overRideProps={overRideProps?.[field.dataField]}
-              {...field.fieldSetting}
-            />
-          </div>
-        );
-      case FormFieldTypes.SUNEDITOR:
-        return (
-          <div className={containerCss}>
-            <FormTextEditorField
-              key={field.dataField}
-              labelName={field.lable}
-              dataField={field.dataField}
-              name={field.id}
-              onValidation={onUpdateValidation}
-              value={formData?.[field.dataField] || ""}
-              onChange={handleInputChange}
-              error={validState.error[field.dataField] || ""}
               formSetting={formSetting}
               formData={formData}
               changeAction={field.changeAction}
