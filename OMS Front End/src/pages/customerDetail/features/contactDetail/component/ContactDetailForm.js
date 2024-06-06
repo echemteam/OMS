@@ -122,13 +122,12 @@ const ContactDetailForm = ({ onSidebarClose }) => {
             titleButtonClick={handleToggleModal}
           >
             <div className="row">
-              <div className="col-md-12 table-striped role-table-sec">
+              <div className="col-md-12 table-striped pt-1">
                 <MolGrid
                   ref={molGridRef}
                   configuration={emailConfig}
                   dataSource={emailData}
                   allowPagination={false}
-                  
                   onActionChange={actionHandler}
                   // onPageChange={handlePageChange}
                 />
@@ -147,7 +146,7 @@ const ContactDetailForm = ({ onSidebarClose }) => {
             titleButtonClick={handleToggleModalContact}
           >
             <div className="row">
-              <div className="col-md-12 table-striped role-table-sec">
+              <div className="col-md-12 table-striped pt-1">
                 <MolGrid
                   ref={molGridRef}
                   configuration={contactConfig}
@@ -176,7 +175,7 @@ const ContactDetailForm = ({ onSidebarClose }) => {
           showModal={showContactModal}
           handleToggleModal={handleToggleModalContact}
           modalTitle="Add/Edit Contact Number"
-          modelSizeClass="w-40"
+          modelSizeClass="w-45"
         >
           <AddEditContactsModal handleToggleModal={handleToggleModalContact} />
         </CenterModel>

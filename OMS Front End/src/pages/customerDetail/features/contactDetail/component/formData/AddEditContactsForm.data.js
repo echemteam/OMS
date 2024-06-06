@@ -18,7 +18,7 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-2 pr-0 border-right-0",
+        containerCss: "col-xxl-4 col-xl-5 col-md-5 mb-2 pr-0 border-right-0",
       },
     },
     {
@@ -33,7 +33,7 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-8 col-xl-8 col-md-8 mb-2 pl-0 border-left-r-0",
+        containerCss: "col-xxl-8 col-xl-7 col-md-7 mb-2 pl-0 border-left-r-0",
       },
     },
   ],
