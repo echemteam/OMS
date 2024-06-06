@@ -95,7 +95,7 @@ const AddressCard = ({ isAddEditModal }) => {
             <Accordion.Body className="add-desc-part">
               <div className="row">
                 {addressType.addresses.map((address, addrIndex) => (
-                  <div className="col-xl-4 col-md-4 col-12" key={addrIndex}>
+                  <div className="col-xxl-4 col-xl-6 col-md-6 col-12" key={addrIndex}>
                     <div className="address-card">
                       <div className="add-line">
                         <span className="label-txt">{address.name}</span>

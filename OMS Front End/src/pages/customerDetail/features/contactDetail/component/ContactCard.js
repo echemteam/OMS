@@ -101,7 +101,7 @@ const ContactCard = ({ isAddEditModal }) => {
                 <div className="row">
                   {contactType.contact.map((contact, addrIndex) => (
                     <div
-                      className="col-xl-4 col-lg-4 col-md-4 col-12"
+                      className="col-xxl-4 col-xl-6 col-md-6 col-12"
                       key={addrIndex}
                     >
                       <div className="contact-card">

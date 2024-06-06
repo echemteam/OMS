@@ -20,21 +20,6 @@ export const contactDetailFormData = {
       },
     },
     {
-      id: "middleName",
-      lable: "Middle Name :",
-      Field_Name: "Middle Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
-      fieldSetting: {
-        placeholder: "Enter Middle Name",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-2",
-      },
-    },
-    {
       id: "lastName",
       lable: "Last Name :",
       Field_Name: "Last Name",
@@ -61,11 +46,10 @@ export const contactDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2",
       },
     },
-    
-     
+
     {
       id: "gender",
       label: "Gender :",
@@ -74,7 +58,6 @@ export const contactDetailFormData = {
       dataField: "gender",
       fieldSetting: {
         options: [
-          
           {
             label: "Male",
             value: "Male",
@@ -87,19 +70,13 @@ export const contactDetailFormData = {
             isDisable: false,
             optionClass: "second-radio",
           },
-          {
-            label: "Other",
-            value: "Other",
-            isDisable: false,
-            optionClass: "second-radio",
-          },
-          
+
           // Add more options if needed
         ],
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 pt-1",
       },
     },
     {
@@ -114,10 +91,9 @@ export const contactDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-2 pt-1 margin-left0-checkbox",
+        containerCss:
+          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 pt-1 margin-left0-checkbox",
       },
     },
-   
-   
   ],
 };
