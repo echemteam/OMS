@@ -2,19 +2,19 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const basicDetailFormDataHalf = {
   name: "Email From",
-  initialState: { companyName: "" , type: "" , name :"" , territory : ""},
+  initialState: { name: "" , groupTypeId: "" , countryId :"" , territoryId : "" , emailAddress:"" , website:"" , invoiceSubmissionInstruction:"" , note:"" , isCompany:false , taxId:"" , billingCurrency:""},
   formFields: [
     {
-      id: "customerName",
+      id: "name",
       lable: "Customer Name :",
       Field_Name: "Customer Name",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
+      dataField: "name",
       fieldSetting: {
         placeholder: "Enter Customer Name",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" } , { type: "uniqueName" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -24,7 +24,7 @@ export const basicDetailFormDataHalf = {
       lable: "Group Type :",
       Field_Name: "Group Type",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "type",
+      dataField: "groupTypeId",
       fieldSetting: {
         placeholder: "Select Group Type",
         allowSpace: true,
@@ -39,7 +39,7 @@ export const basicDetailFormDataHalf = {
       lable: "Territory :",
       Field_Name: "Territory",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "territory",
+      dataField: "territoryId",
       fieldSetting: {
         placeholder: "Select Territory",
         allowSpace: true,
@@ -54,7 +54,7 @@ export const basicDetailFormDataHalf = {
       lable: "Country :",
       Field_Name: "Country",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "name",
+      dataField: "countryId",
       fieldSetting: {
         placeholder: "Select Country",
         allowSpace: true,
@@ -64,10 +64,15 @@ export const basicDetailFormDataHalf = {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
+  //   Options: [
+  //     { name: "Doker", id: "1" },
+  //     { name: "VM", id: "2" },
+  //     { name: "Desktop", id: "3" },
+  // ],
     {
       id: "billingCurrency",
       lable: "Billing Currency :",
-      Field_Name: "Billing Currency",
+      Field_Name: "billingCurrency",
       fieldType: FormFieldTypes.SELECT,
       dataField: "BillingCurrency",
       fieldSetting: {
@@ -81,16 +86,16 @@ export const basicDetailFormDataHalf = {
     },
 
     {
-      id: "email",
+      id: "emailAddress",
       lable: "Email :",
       Field_Name: "Email",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Email",
+      dataField: "emailAddress",
       fieldSetting: {
         placeholder: "Enter Email",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" } , {type: "email"}],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -100,27 +105,27 @@ export const basicDetailFormDataHalf = {
       lable: "Website :",
       Field_Name: "Website",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
+      dataField: "website",
       fieldSetting: {
-        placeholder: "Enter Customer Website",
+        placeholder: "https://www.xyz.com/",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" } , { type: "website" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {
-      id: "textId",
+      id: "taxId",
       lable: "Text Id :",
       Field_Name: "Text Id",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
+      dataField: "taxId",
       fieldSetting: {
         placeholder: "Text Id",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" } , { type: "taxId" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -128,11 +133,11 @@ export const basicDetailFormDataHalf = {
 
 
     {
-      id: "invoiceSubInstruction",
+      id: "invoiceSubmissionInstruction",
       lable: "Invoice Submission Instruction :",
       Field_Name: "Invoice Submission Instruction",
       fieldType: FormFieldTypes.TINYEDITOR,
-      dataField: "Invoice Submission Instruction",
+      dataField: "invoiceSubmissionInstruction",
       fieldSetting: {
         placeholder: "Enter Invoice Submission Instruction",
         allowSpace: true,
@@ -143,11 +148,11 @@ export const basicDetailFormDataHalf = {
       },
     },
     {
-      id: "notes",
+      id: "note",
       lable: "Notes :",
       Field_Name: "Notes",
       fieldType: FormFieldTypes.TINYEDITOR,
-      dataField: "Notes",
+      dataField: "note",
       fieldSetting: {
         placeholder: "Enter Notes",
         allowSpace: true,
@@ -162,7 +167,7 @@ export const basicDetailFormDataHalf = {
       lable: "Is Company",
       Field_Name: "Is Company",
       fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "Is Company",
+      dataField: "isCompany",
       fieldSetting: {
         placeholder: "",
         allowSpace: true,
@@ -182,7 +187,7 @@ export const basicDetailFormDataHalf = {
         placeholder: "",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 margin-left0-checkbox",
       },

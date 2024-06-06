@@ -65,6 +65,24 @@ const getValidationRule = (element, validation) => {
                 message: ErrorMessage.InvalidField.replace("{0}", validation.type === 'validEIN' ? "EIN number" : validation.type === 'validPhone' ? "phone number" : "fax number")
             };
             break;
+        case "uniqueName":
+            valObj = {
+                type: validation.type,
+                message: ErrorMessage.UniqueName
+            }
+            break;
+        case "website":
+            valObj = {
+                type: validation.type,
+                message: ErrorMessage.Website.replace("{0}", "Website URL")
+            }
+            break;
+        case "taxId":
+            valObj = {
+                type: validation.type,
+                message: ErrorMessage.FieldRequired.replace("{0}", "valid Tax Id")
+            }
+            break;
         default:
             break;
     }

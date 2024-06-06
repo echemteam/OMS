@@ -3,9 +3,6 @@ import Select from "react-select";
 import "./DropdownSelect.scss";
 
 function DropdownSelect(props) {
-
-  
-
   return (
     <span className="d-inline-block custom-input">
       <Select

@@ -78,7 +78,7 @@ const AddCustomer = () => {
                   <div className="row">
                     <div className="col-12 mx-auto">
                       <div>{step.content}</div>
-                      <div className="d-flex justify-content-end">
+                      {/* <div className="d-flex justify-content-end">
                         <button
                           type="button"
                           className="btn dark-btn mr-3"
@@ -99,7 +99,7 @@ const AddCustomer = () => {
                             Submit
                           </button>
                         )}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
