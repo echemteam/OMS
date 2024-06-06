@@ -40,7 +40,7 @@ a {
   color: var(--textColor);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: inherit;
+  letter-spacing: 0.5px;
 }
 
 .checkbox-part {
@@ -435,8 +435,8 @@ a {
     min-height: 50px;
 
     .input-label-title {
-      min-width: 120px;
-      max-width: 120px;
+      min-width: 130px;
+      max-width: 130px;
     }
 
     &.tiny-editor {
@@ -889,7 +889,7 @@ a {
       .edit-delete-button {
         position: absolute;
         top: 5px;
-        right: 0px;
+        right: 5px;
 
         .edit-btn {
           border: none;
@@ -998,7 +998,7 @@ a {
       .edit-delete-button {
         position: absolute;
         top: 5px;
-        right: 0px;
+        right: 5px;
 
         .edit-btn {
           border: none;
