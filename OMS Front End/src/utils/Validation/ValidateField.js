@@ -44,3 +44,17 @@ export const isValidFax = (value) => {
     const isValid = /^\d{10}$/.test(unmaskedValue);
     return isValid;
 }
+
+export const isUnique = (value) => {
+    const invalidChars = /[^a-zA-Z0-9\-&]/;
+    return !invalidChars.test(value);
+}
+
+export const isWebsite = (value) => !!(value && String(value).trim().length && /^(https?|ftp):\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\S*)$/.test(value));
+
+// export const isTaxId = (value) => !!(value && String(value).trim().length && /^(https?|ftp):\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\S*)$/.test(value));
+
+export const isTaxId = (value) => {
+    const taxIdRegex = /^[0-10]{10}$/;
+    return taxIdRegex.test(value);
+}

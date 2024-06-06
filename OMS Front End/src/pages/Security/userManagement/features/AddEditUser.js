@@ -25,11 +25,11 @@ const AddEditUser = forwardRef(() => {
   const [userForm, setUserForm] = useState(userFormData);
 
   const [
-    add,
+    addUser,
     { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData },
   ] = useAddUserMutation();
   const [
-    update,
+    updateUser,
     {
       isLoading: isUpdateLoading,
       isSuccess: isUpdateSuccess,
@@ -53,13 +53,13 @@ const AddEditUser = forwardRef(() => {
     let userData = userFormRef.current.getFormData(); // Get form data from the FormCreator component.
     if (userData != null) {
       if (!descrypteId && userData) {
-        add(userData);
+        addUser(userData);
       } else if (descrypteId && userData) {
         let req = {
           ...userData,
           userId: descrypteId
         }
-        update(req);
+        updateUser(req);
       }
     }
   };

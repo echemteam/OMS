@@ -1,15 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { basicDetailFormDataHalf } from "./component/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import {
+  useAddCustomersBasicInformationMutation,
   useLazyGetAllCountriesQuery,
   useLazyGetAllGroupTypesQuery,
   useLazyGetAllTerritoriesQuery,
 } from "../../../../app/services/basicdetailAPI";
+import Buttons from "../../../../components/ui/button/Buttons";
 
 const BasicDetail = () => {
   const basicDetailRef = useRef();
+  const [formData, setFormData] = useState(basicDetailFormDataHalf);
 
   const [
     getAllGroupTypes,
@@ -38,6 +41,15 @@ const BasicDetail = () => {
     },
   ] = useLazyGetAllTerritoriesQuery();
 
+  const [
+    addCustomersBasicInformation,
+    {
+      isLoading: isAddCustomersBasicInformationLoading,
+      isSuccess: isAddCustomersBasicInformationSuccess,
+      data: isAddCustomersBasicInformationData,
+    },
+  ] = useAddCustomersBasicInformationMutation();
+
   useEffect(() => {
     getAllGroupTypes();
     getAllCountries();
@@ -55,7 +67,7 @@ const BasicDetail = () => {
         label: item.type,
       }));
       const dropdownField = basicDetailFormDataHalf.formFields.find(
-        (item) => item.dataField === "type"
+        (item) => item.dataField === "groupTypeId"
       );
       dropdownField.fieldSetting.options = getData;
     }
@@ -76,7 +88,7 @@ const BasicDetail = () => {
         label: item.name,
       }));
       const dropdownField = basicDetailFormDataHalf.formFields.find(
-        (item) => item.dataField === "name"
+        (item) => item.dataField === "countryId"
       );
       dropdownField.fieldSetting.options = getData;
     }
@@ -97,7 +109,7 @@ const BasicDetail = () => {
         label: item.territory,
       }));
       const dropdownField = basicDetailFormDataHalf.formFields.find(
-        (item) => item.dataField === "territory"
+        (item) => item.dataField === "territoryId"
       );
       dropdownField.fieldSetting.options = getData;
     }
@@ -107,17 +119,52 @@ const BasicDetail = () => {
     allGetAllTerritoriesData,
   ]);
 
+  const Add = () => {
+    debugger;
+    let data = basicDetailRef.current.getFormData();
+    if (data != null) {
+      // if (data) {
+      addCustomersBasicInformation(data);
+      // }
+    }
+  };
+
   return (
     <div className="basic-info-sec half-sec">
-      <CardSection buttonClassName="theme-button">
-        <div className="row horizontal-form basic-info-step">
-          <FormCreator
-            ref={basicDetailRef}
-            {...basicDetailFormDataHalf}
-            // onFormDataUpdate={handleFormDataChange}
-          />
+      {/* {isFullWidthForm ? ( */}
+      <div className="row">
+        <FormCreator
+          ref={basicDetailRef}
+          {...formData}
+          // onFormDataUpdate={handleFormDataChange}
+        />
+        <div className="col-md-12">
+          <div className="d-flex align-item-end justify-content-end">
+            <Buttons
+              buttonTypeClassName="dark-btn"
+              buttonText="Cancel"
+              // onClick={BackButton}
+            />
+            <Buttons
+              buttonTypeClassName="theme-button ml-5"
+              buttonText="Save"
+              onClick={Add}
+              isLoading={isAddCustomersBasicInformationLoading}
+            />
+          </div>
         </div>
-      </CardSection>
+      </div>
+      {/* ) : (
+        <CardSection buttonClassName="theme-button">
+          <div className="row horizontal-form basic-info-step">
+            <FormCreator
+              ref={basicDetailRef}
+              {...formData}
+            // onFormDataUpdate={handleFormDataChange}
+            />
+          </div>
+        </CardSection>
+      )} */}
     </div>
   );
 };
