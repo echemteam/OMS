@@ -119,6 +119,9 @@
       }
       .model-body{
         padding: 0 20px;
+        height: calc(100vh - 54px);
+        overflow: hidden;
+        overflow-y: auto;
       }
     }
   }

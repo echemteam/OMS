@@ -9,6 +9,8 @@ import CustomerDetails from "./features/basicDetail/CustomerDetails";
 import { AppIcons } from "../../data/appIcons";
 import SidebarModel from "../../components/ui/sidebarModel/SidebarModel";
 import Buttons from "../../components/ui/button/Buttons";
+import SettingDetails from "./features/settingDetail/SettingDetails";
+import DocumentDetails from "./features/documentsDetail/DocumentDetails";
 
 const ViewCustomer = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
@@ -37,11 +39,19 @@ const ViewCustomer = () => {
     },
     {
       sMenuItemCaption: "Settings",
-      component: <div className="mt-2">Settings</div>,
+      component: (
+        <div className="mt-2">
+          <SettingDetails />
+        </div>
+      ),
     },
     {
       sMenuItemCaption: "Documents",
-      component: <div className="mt-2">Documents</div>,
+      component: (
+        <div className="mt-2">
+          <DocumentDetails />
+        </div>
+      ),
     },
   ];
 
@@ -49,12 +59,12 @@ const ViewCustomer = () => {
     <>
       <div className="card-bottom-m-0">
         <div className="row">
-          <div className="col-xl-3 col-md-3 col-12 basic-left-part customer-desc-left-sec">
+          <div className="col-xxl-3 col-xl-4 col-md-3 col-12 basic-left-part customer-desc-left-sec">
             <CardSection>
               <CustomerDetails editClick={handleToggleModal} />
             </CardSection>
           </div>
-          <div className="col-xl-9 col-md-9 col-12 other-info-tab">
+          <div className="col-xxl-9 col-xl-8 col-md-9 col-12 other-info-tab">
             <CardSection
               cardTitle="Other Information"
               // buttonClassName="theme-button"

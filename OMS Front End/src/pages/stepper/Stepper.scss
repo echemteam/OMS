@@ -25,6 +25,7 @@
 
             .step-trigger {
               display: flex;
+              flex-wrap: nowrap;
               padding: 0;
               transition: 0.5s all;
 
@@ -36,7 +37,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: rgba(67,89,113,.16);
+                background: rgba(67, 89, 113, .16);
                 color: var(--textColor);
               }
 
@@ -111,11 +112,35 @@
 .basic-info-step {
   &.horizontal-form {
     .input-label-part {
-      .input-label-title {
+      .input-label-title {}
+    }
+
+    .validation-text {
+      margin-left: 145px !important;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 1366px) {
+  .stepper-card {
+    .card {
+      .card-body-sec {
+        .stepper-section {
+          .bs-stepper-header {
+            .step {
+              .step-trigger {
+                font-size: 100%;
+                .bs-stepper-circle {
+                  width: 32px;
+                  height: 32px;
+                  
+                }
+              }
+            }
+          }
+        }
       }
     }
-    .validation-text{
-      margin-left: 145px !important;
-    } 
   }
 }

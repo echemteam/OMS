@@ -6,6 +6,7 @@ import AddressDetail from "./features/addressDetail/AddressDetail";
 import ContactDetail from "./features/contactDetail/ContactDetail";
 import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
+import AddEditDocuments from "./features/documentsDetail/AddEditDocuments";
 const steps = [
   {
     label: "Basic Information",
@@ -23,14 +24,9 @@ const steps = [
     content: <ContactDetail />,
   },
   {
-    label: "Setting",
-    subLabel: "fdgdf",
-    content: "<StepperForm3 />",
-  },
-  {
     label: "Documents",
-    subLabel: "fdgdf",
-    content: "<StepperForm3 />",
+    subLabel: "Add Documents",
+    content: <AddEditDocuments/>,
   },
 ];
 
