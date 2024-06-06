@@ -6,7 +6,7 @@ import { useAddCustomersBasicInformationMutation, useLazyGetAllCountriesQuery, u
 import ToastService from "../../../../services/toastService/ToastService";
 import Buttons from "../../../../components/ui/button/Buttons";
 
-const BasicDetail = ({isFullWidthForm}) => {
+const BasicDetail = ({isFullWidthForm, onSidebarClose}) => {
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [basicId, setBasicId] = useState()
@@ -162,7 +162,7 @@ const BasicDetail = ({isFullWidthForm}) => {
               <Buttons
                 buttonTypeClassName="dark-btn"
                 buttonText="Cancel"
-              // onClick={BackButton}
+              onClick={onSidebarClose}
               />
               <Buttons
                 buttonTypeClassName="theme-button ml-5"
@@ -187,7 +187,7 @@ const BasicDetail = ({isFullWidthForm}) => {
               <Buttons
                 buttonTypeClassName="dark-btn"
                 buttonText="Cancel"
-              // onClick={BackButton}
+              onClick={onSidebarClose}
               />
               <Buttons
                 buttonTypeClassName="theme-button ml-5"

@@ -84,24 +84,7 @@ const ViewCustomer = () => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}
       >
-        <BasicDetail />
-        <div className="col-md-12 mt-3">
-          <div className="d-flex align-item-end justify-content-end">
-            <div className="d-flex align-item-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText="Save"
-                // onClick={onHandleUser}
-                // isLoading={EmailLoading || updateUserLoading}
-              />
-              <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-                onClick={onSidebarClose}
-              />
-            </div>
-          </div>
-        </div>
+        <BasicDetail onSidebarClose={onSidebarClose} />
       </SidebarModel>
     </>
   );

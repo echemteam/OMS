@@ -6,7 +6,7 @@ import AddressDetail from "./features/addressDetail/AddressDetail";
 import ContactDetail from "./features/contactDetail/ContactDetail";
 import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
-import AddEditDocuments from "./features/documentsDetail/AddEditDocuments";
+import DocumentDetails from "./features/documentsDetail/DocumentDetails";
 const steps = [
   {
     label: "Basic Information",
@@ -26,7 +26,7 @@ const steps = [
   {
     label: "Documents",
     subLabel: "Add Documents",
-    content: <AddEditDocuments/>,
+    content: <DocumentDetails />,
   },
 ];
 
