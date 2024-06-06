@@ -42,9 +42,9 @@ namespace OMS.Application.Services.Customers
             return await repositoryManager.customers.UpdateCustomersBasicInformation(customersDTO);
         }
 
-        public async Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int CustomerId)
+        public async Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId)
         {
-            return await repositoryManager.customers.GetCustomersBasicInformationById(CustomerId);
+            return await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
         }
         #endregion
     }

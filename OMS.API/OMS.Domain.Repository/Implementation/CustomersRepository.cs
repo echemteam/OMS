@@ -64,11 +64,11 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int CustomerId)
+        public async Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId)
         {
             GetCustomersBasicInformationByIdResponse customerDetails = await _context.GetFrist<GetCustomersBasicInformationByIdResponse>(GETCUSTOMERSBASICINFORMATIONBYID, new
             {
-                CustomerId
+                customerId
             }, CommandType.StoredProcedure);
             return customerDetails;
         }

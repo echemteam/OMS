@@ -1,0 +1,18 @@
+﻿namespace OMS.Domain.Entities.Entity.Address
+{
+    public class BaseAddressDTO
+    {
+        public short? AddressTypeId { get; set; }
+        public string? Title { get; set; }
+        public string? AddressLine1 { get; set; }
+        public string? AddressLine2 { get; set; }
+        public string? AddressLine3 { get; set; }
+        public string? AddressLine4 { get; set; }
+        public string? AddressLine5 { get; set; }
+        public int? CityId { get; set; }
+        public int? StateId { get; set; }
+        public short? CountryId { get; set; }
+        public int? ZipCode { get; set; }
+        public string? Notes { get; set; }
+    }
+}

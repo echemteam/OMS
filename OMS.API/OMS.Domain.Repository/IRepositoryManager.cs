@@ -12,5 +12,6 @@ namespace OMS.Domain.Repository
         ISecurityPermissionRepository securityPermission { get; }
         ICommonRepository commonRepository { get; }
         ICustomersRepository customers { get; }
+        IAddressRepository address { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Framework;
@@ -8,6 +9,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomersController : BaseController
     {
         #region private variable
@@ -39,14 +41,14 @@ namespace OMS.API.Controllers
         }
 
         [HttpGet("GetCustomersBasicInformationById")]
-        public async Task<IActionResult> GetCustomersBasicInformationById(int CustomerId)
+        public async Task<IActionResult> GetCustomersBasicInformationById(int customerId)
         {
-            if (CustomerId > 0)
+            if (customerId > 0)
             {
-                var customerDetails = await _serviceManager.customersServices.GetCustomersBasicInformationById(CustomerId).ConfigureAwait(true);
+                var customerDetails = await _serviceManager.customersServices.GetCustomersBasicInformationById(customerId).ConfigureAwait(true);
                 return APISucessResponce<object>(customerDetails);
             }
-            return APISucessResponce(CustomerId);
+            return APISucessResponce(customerId);
         }
         #endregion
     }

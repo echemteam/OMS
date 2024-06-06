@@ -8,6 +8,6 @@ namespace OMS.Application.Services.Customers
     {
         Task<AddEntityDTO<int>> AddCustomersBasicInformation(AddCustomersBasicInformationRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> UpdateCustomersBasicInformation(UpdateCustomersBasicInformationRequest requestData, short CurrentUserId);
-        Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int CustomerId);
+        Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId);
     }
 }

@@ -20,7 +20,8 @@ namespace OMS.Domain.Repository
         IRolesMappingRepository _rolesMappingRepository;
         ISecurityPermissionRepository _securityPermissionRepository;
         ICommonRepository _commonRepository;
-        ICustomersRepository _customers;
+        ICustomersRepository _customersRepository;
+        IAddressRepository _addressRepository;
 
         public ITestRepository test
         {
@@ -108,11 +109,23 @@ namespace OMS.Domain.Repository
         {
             get
             {
-                if (_customers== null)
+                if (_customersRepository== null)
                 {
-                    _customers= new CustomersRepository(_context);
+                    _customersRepository= new CustomersRepository(_context);
                 }
-                return _customers;
+                return _customersRepository;
+            }
+        }
+
+        public IAddressRepository address
+        {
+            get
+            {
+                if (_addressRepository == null)
+                {
+                    _addressRepository = new AddressRepository(_context);
+                }
+                return _addressRepository;
             }
         }
     }
