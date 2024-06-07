@@ -1,0 +1,77 @@
+.document-list-sec {
+  .document-listing {
+
+    .documents {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      box-shadow: 0 3px 20px -10px var(--textColorLight);
+      border-radius: 10px;
+      border: 1px solid var(--linkMenu);
+      margin-top: 20px;
+
+      .left-icons {
+        width: 70px;
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 40px;
+        }
+
+      }
+
+      .right-desc {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 100%;
+
+        .doc-details {
+          padding-left: 5px;
+
+          .document-name {
+            font-weight: 600;
+            color: var(--textColorLight);
+            font-size: 94%;
+          }
+
+          .document-type {
+            color: var(--textColorLight);
+            font-size: 80%;
+          }
+        }
+
+        .document-action {
+          span {
+            &.action-icon {
+              margin-right: 10px;
+              cursor: pointer;
+
+              img {
+                width: 15px;
+              }
+
+              &:last-child {
+                margin-right: 0;
+              }
+            }
+          }
+        }
+
+      }
+
+      &:hover {
+        box-shadow: 0 3px 20px -10px var(--themeColor);
+        border-color: var(--themeColorLight);
+      }
+    }
+
+  }
+}
+
+.document-section{
+.card-body-sec{
+  margin-top: 0 !important;
+}
+}

@@ -1,4 +1,5 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const DocumentFormData = {
   name: "Document Form",
@@ -51,5 +52,32 @@ export const DocumentFormData = {
       
     },
     
+  ],
+};
+
+
+
+export const DocumentGridConfig = {
+  columns: [
+    {
+      name: "Document Type",
+      fieldName: "documentType",
+      // allowShort: true,
+    },
+    {
+      name: "Document Name",
+      fieldName: "documentName",
+      // allowShort: true,
+    },
+    
+    {
+      name: "Action",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: true,
+        allowDelete: true,
+      },
+
+    },
   ],
 };

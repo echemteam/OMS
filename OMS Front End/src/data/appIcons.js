@@ -9,6 +9,8 @@ import deleted from "../assets/images/deleteIcon.png";
 import deleteTheme from "../assets/images/deleteIcon-theme.png";
 
 import copy from "../assets/images/copy.png";
+import downloadIcon from "../assets/images/download.png";
+
 import permissionIcon from "../assets/images/permission.png";
 import userIcon from "../assets/images/user.png";
 import notification from "../assets/images/notification.png";
@@ -33,6 +35,17 @@ import closeIcon from "../assets/images/close-icon.png";
 import folder from "../assets/images/folder.png";
 import subFolder from "../assets/images/sub-folder.png";
 import subFolder1 from "../assets/images/sub-folder1.png";
+
+
+import pdfIcon from "../assets/images/documentIcon/pdf.png";
+import DocIcon from "../assets/images/documentIcon/doc.png";
+import xlsIcon from "../assets/images/documentIcon/xls.png";
+import imgIcon from "../assets/images/documentIcon/img.png";
+import zipIcon from "../assets/images/documentIcon/zip.png";
+import pptIcon from "../assets/images/documentIcon/ppt.png";
+import csvIcon from "../assets/images/documentIcon/csv.png";
+
+
 export const AppIcons = {
   // Menus & Header Images
 
@@ -44,6 +57,7 @@ export const AppIcons = {
   deleteIcon: deleted,
   deleteThemeIcon: deleteTheme,
   copyIcon: copy,
+  DownloadIcon:downloadIcon,
   permissionIcon: permissionIcon,
   userIcon: userIcon,
   notificationIcon: notification,
@@ -66,4 +80,12 @@ export const AppIcons = {
   folderIcon: folder,
   subFolderIcon: subFolder,
   subFolder1Icon: subFolder1,
+
+  PdfIcon:pdfIcon,
+  DocIcon:DocIcon,
+  XlsIcon:xlsIcon,
+  ImgIcon:imgIcon,
+  ZipIcon:zipIcon,
+  PptIcon:pptIcon,
+  CsvIcon:csvIcon,
 };
