@@ -6,7 +6,7 @@ import AddressDetail from "./features/addressDetail/AddressDetail";
 import ContactDetail from "./features/contactDetail/ContactDetail";
 import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
-import AddEditDocuments from "./features/documentsDetail/AddEditDocuments";
+import AddEditDocuments from "./features/documentsDetail/features/AddEditDocuments";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 
