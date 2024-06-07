@@ -11,18 +11,9 @@ import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailCont
 
 
 const AddCustomer = () => {
-  const stepperRef = useRef(null);
   const nextRef = useRef(null);
-  console.log("stepperRef", stepperRef)
+  const [customerKeyId , setCustomerKeyId] = useState(0)
   console.log("nextRef", nextRef)
-
-  // useEffect(() => {
-  //   stepperRef.current = new Stepper(document.querySelector("#stepper1"), {
-  //     linear: false,
-  //     animation: true,
-  //   });
-  //   console.log("stepperRef.current", stepperRef.current)
-  // }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -34,35 +25,6 @@ const AddCustomer = () => {
     }
   };
 
-  const goBack = () => {
-    stepperRef.current.previous();
-  };
-
-  const steps = [
-    {
-      label: "Basic Information",
-      subLabel: "Enter Basic information",
-      content: <BasicDetail />,
-    },
-    {
-      label: "Address",
-      subLabel: "Enter Address Details",
-      content: <AddressDetail />,
-    },
-    {
-      label: "Contact",
-      subLabel: "Enter Contact Details",
-      content: <ContactDetail />,
-    },
-    {
-      label: "Documents",
-      subLabel: "Add Documents",
-      content: <AddEditDocuments />,
-    },
-  ];
-
-
-
   const [activeTab, setActiveTab] = useState(0);
 
   const incrementCurrent = () => {
@@ -73,11 +35,18 @@ const AddCustomer = () => {
     setActiveTab((prev) => prev - 1);
   };
 
+  const handleCustomerKey = (data) => {
+    debugger
+    setCustomerKeyId(data)
+  }
+
+  console.log("customerKeyId" , customerKeyId)
+
   const tabContent = [
     {
       label: "Basic Information",
       subLabel: "Enter Basic information",
-      content: <BasicDetail />,
+      content: <BasicDetail nextPage={incrementCurrent} onCustomerKey={handleCustomerKey}/>,
     },
     {
       label: "Address",
@@ -102,7 +71,7 @@ const AddCustomer = () => {
 
   return (
     <>
-      <BasicDetailContext.Provider value={{ stepperRef, nextRef }}>
+      {/* <BasicDetailContext.Provider value={{ stepperRef, nextRef }}>
         <div className="stepper-card">
           <CardSection>
             <div id="stepper1" className="bs-stepper stepper-section">
@@ -166,70 +135,72 @@ const AddCustomer = () => {
             </div>
           </CardSection>
         </div>
-      </BasicDetailContext.Provider>
-      <div className="stepper-card">
-        <CardSection>
-          <div className="stepper-section">
-            <div className="stepper-header">
-              {tabContent.map((step, index) => (
-                <React.Fragment key={index}>
-                <div className={`step ${activeTab === index ? 'active' : ''}`}>
-                    <button className="step-button" onClick={() => handleTabClick(index)}>
-                      <span className="stepper-box">{index + 1}</span>
-                      <span className="stepper-label">
-                        <span>{step.label}</span>
-                        <span className="small-txt">{step.subLabel}</span>
-                      </span>
-                    </button>
-                  </div>
-                  {index < tabContent.length - 1 && (
-                    <div className="right-arrow">
-                      <Image imagePath={AppIcons.arrowIcon} />
-                    </div>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-            <div className="stepper-content">
-              <form onSubmit={onSubmit}>
+      </BasicDetailContext.Provider> */}
+      <BasicDetailContext.Provider value={{ nextRef }}>
+        <div className="stepper-card">
+          <CardSection>
+            <div className="stepper-section">
+              <div className="stepper-header">
                 {tabContent.map((step, index) => (
-                  <div key={index} className={`content ${activeTab === index ? 'active' : ''}`}>
-                    <div className="row">
-                      <div className="col-12 mx-auto">
-                        {step.content}
-                        <div className="d-flex justify-content-end">
-                          {index > 0 && (
-                            <button
-                              type="button"
-                              className="btn dark-btn mr-3"
-                              onClick={decrementCurrent}
-                            >
-                              Back
-                            </button>
-                          )}
-                          {index < tabContent.length - 1 ? (
-                            <button
-                              type="button"
-                              className="btn theme-button"
-                              onClick={incrementCurrent}
-                            >
-                              Next
-                            </button>
-                          ) : (
-                            <button type="submit" className="btn theme-button">
-                              Submit
-                            </button>
-                          )}
+                  <React.Fragment key={index}>
+                    <div className={`step ${activeTab === index ? 'active' : ''}`}>
+                      <button className="step-button" onClick={() => handleTabClick(index)}>
+                        <span className="stepper-box">{index + 1}</span>
+                        <span className="stepper-label">
+                          <span>{step.label}</span>
+                          <span className="small-txt">{step.subLabel}</span>
+                        </span>
+                      </button>
+                    </div>
+                    {index < tabContent.length - 1 && (
+                      <div className="right-arrow">
+                        <Image imagePath={AppIcons.arrowIcon} />
+                      </div>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+              <div className="stepper-content">
+                <form onSubmit={onSubmit}>
+                  {tabContent.map((step, index) => (
+                    <div key={index} className={`content ${activeTab === index ? 'active' : ''}`}>
+                      <div className="row">
+                        <div className="col-12 mx-auto">
+                          {step.content}
+                          <div className="d-flex justify-content-end">
+                            {index > 0 && (
+                              <button
+                                type="button"
+                                className="btn dark-btn mr-3"
+                                onClick={decrementCurrent}
+                              >
+                                Back
+                              </button>
+                            )}
+                            {index < tabContent.length - 1 ? (
+                              <button
+                                type="button"
+                                className="btn theme-button"
+                                onClick={addCustomer}
+                              >
+                                Next
+                              </button>
+                            ) : (
+                              <button type="submit" className="btn theme-button">
+                                Submit
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </form>
+                  ))}
+                </form>
+              </div>
             </div>
-          </div>
-        </CardSection>
-      </div>
+          </CardSection>
+        </div>
+      </BasicDetailContext.Provider>
     </>
   );
 
