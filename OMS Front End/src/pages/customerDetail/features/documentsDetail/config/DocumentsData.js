@@ -1,17 +1,17 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
-export const SettingFormData = {
-  name: "Setting Form",
+export const DocumentFormData = {
+  name: "Document Form",
   initialState: { type: "" },
   formFields: [
     {
-      id: "defaultPaymentTerms",
-      lable: "Default Payment Terms Template :",
-      Field_Name: "Default Payment Terms Template",
+      id: "documentType",
+      lable: "Document Type :",
+      Field_Name: "Document Type",
       fieldType: FormFieldTypes.SELECT,
       dataField: "Input",
       fieldSetting: {
-        placeholder: "Select Default Payment Terms Template",
+        placeholder: "Select Document Type",
         allowSpace: true,
       },
       validation: [{ type: "require" }],
@@ -20,13 +20,13 @@ export const SettingFormData = {
       },
     },
     {
-      id: "creditLimit",
-      lable: "Credit Limit :",
-      Field_Name: "Credit Limit",
-      fieldType: FormFieldTypes.NUMERIC,
+      id: "documentName",
+      lable: "Document Name :",
+      Field_Name: "Document Name",
+      fieldType: FormFieldTypes.INPUT,
       dataField: "Input",
       fieldSetting: {
-        placeholder: "Enter Credit Limit",
+        placeholder: "Enter Document Name",
         allowSpace: true,
       },
       validation: [{ type: "require" }],
@@ -35,13 +35,13 @@ export const SettingFormData = {
       },
     },
     {
-      id: "paymentMethod",
-      lable: "Payment Method :",
-      Field_Name: "Payment Method",
-      fieldType: FormFieldTypes.SELECT,
+      id: "attachment",
+      lable: "Attachment :",
+      Field_Name: "Attachment",
+      fieldType: FormFieldTypes.FILE,
       dataField: "Input",
       fieldSetting: {
-        placeholder: "Select Payment Method",
+        placeholder: "Upload Attachment",
         allowSpace: true,
       },
       validation: [{ type: "require" }],

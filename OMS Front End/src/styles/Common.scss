@@ -35,12 +35,15 @@ a {
 .input-label {
   line-height: inherit;
   display: inline-block;
-  margin-bottom: 5px;
+  margin-bottom: 0;
   font-size: 87%;
   color: var(--textColor);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  min-height: 35px;
+  display: flex;
+  align-items: center;
 }
 
 .checkbox-part {
@@ -450,7 +453,7 @@ a {
 .horizontal-form {
   .input-label-part {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     min-height: 50px;
 
     .input-label-title {
@@ -488,7 +491,8 @@ a {
       .checkbox-label-part {
         margin-left: 0;
       }
-      .validation-text{
+
+      .validation-text {
         margin-left: 0 !important;
       }
     }
@@ -908,7 +912,8 @@ a {
 
         span {
           color: #2d3641db;
-          &:first-child{
+
+          &:first-child {
             font-weight: 600;
           }
         }
@@ -928,6 +933,13 @@ a {
 
           img {
             width: 20px;
+            transition: 0.5s all;
+          }
+
+          &:hover {
+            img {
+              filter: brightness(0);
+            }
           }
         }
       }
@@ -1033,6 +1045,13 @@ a {
 
           img {
             width: 20px;
+            transition: 0.5s all;
+          }
+
+          &:hover {
+            img {
+              filter: brightness(0);
+            }
           }
         }
       }
@@ -1071,7 +1090,7 @@ a {
   }
 }
 
-.border-b{
+.border-b {
   border-bottom: 2px dashed var(--inputBorder);
 }
 
@@ -1112,10 +1131,29 @@ a {
       }
     }
   }
+  
+}
+@media only screen and (max-width: 1560px) {
+   .card {
+    padding: 15px;
+  }
 }
 
 @media only screen and (max-width: 1366px) {
   .mb-2 {
     margin-bottom: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+ 
+
+  .css-1hb7zxy-IndicatorsContainer {
+    .css-1xc3v61-indicatorContainer {
+      padding: 0 !important;
+    }
+  }
+  .css-qbdosj-Input{
+    margin: 0;
   }
 }

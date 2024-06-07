@@ -13,5 +13,6 @@ namespace OMS.Domain.Repository
         ICommonRepository commonRepository { get; }
         ICustomersRepository customers { get; }
         IAddressRepository address { get; }
+        IContactRepository contact { get; }
     }
 }
