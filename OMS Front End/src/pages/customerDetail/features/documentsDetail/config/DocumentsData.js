@@ -14,6 +14,7 @@ export const DocumentFormData = {
       fieldSetting: {
         placeholder: "Select Document Type",
         allowSpace: true,
+        options:[]
       },
       validation: [{ type: "require" }],
       style: {
@@ -44,10 +45,12 @@ export const DocumentFormData = {
       fieldSetting: {
         placeholder: "Upload Attachment",
         allowSpace: true,
+        isButtonVisible:false,
+        isCustomButtonVisible:true,
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 custom-file-upload-section",
       },
       
     },

@@ -2,10 +2,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { TextInputType } from "../../../../data/formControlTypes";
-import { Button } from "react-bootstrap";
 import "./FileUpload.scss";
 import Image from "../../../image/Image";
 import { AppIcons } from "../../../../data/appIcons";
+import Buttons from "../../button/Buttons";
 
 const FileUpload = ({
   type = TextInputType.FILE,
@@ -19,11 +19,10 @@ const FileUpload = ({
   cssClass = "input-field",
   isDisable,
   isButtonVisible,
-  isDownloadButton,
   acceptedFiles,
+  isCustomButtonVisible,
 }) => {
-
-  const [fileValue, setFileValue] = useState(null)
+  const [fileValue, setFileValue] = useState(null);
 
   const fileRef = useRef();
   const handleInputChange = (e) => {
@@ -47,27 +46,29 @@ const FileUpload = ({
 
   useEffect(() => {
     if (filename && typeof filename === "object") {
-      setFileValue(filename.name || filename.fileName)
-    }
-    else if (filename) {
-      setFileValue(filename)
-    }
-    else {
+      setFileValue(filename.name || filename.fileName);
+    } else if (filename) {
+      setFileValue(filename);
+    } else {
       setFileValue(null);
       fileRef.current.value = null;
       handleClearClick();
     }
-  }, [filename])
+  }, [filename]);
 
   return (
     <>
-      <div className={`form-field custom-file-uploader ${isDisable ? "field-disabled" : ""}`}>
+      <div
+        className={`form-field custom-file-uploader ${
+          isDisable ? "field-disabled" : ""
+        }`}
+      >
         <input
           ref={fileRef}
           id={name}
           name={name}
           filename={fileValue ? fileValue : null}
-          type={type ? type : 'file'}
+          type={type ? type : "file"}
           className={cssClass}
           placeholder={placeholder}
           onChange={handleInputChange}
@@ -75,23 +76,46 @@ const FileUpload = ({
           disabled={isDisable}
           accept={acceptedFiles}
         />
-        <div className="custom-file-selector-design d-none">
+        <div className="custom-file-selector-design">
           <Image
             imagePath={AppIcons.Uploaddocumenticon}
             altText="Please Upload File"
           ></Image>
 
-          {fileValue ? <p>{fileValue}</p> : <p>Drag & Drop File Hear</p>}
-
           {fileValue ? (
-            null
+            <p className="file-name">{fileValue}</p>
           ) : (
             <>
-              <p className="or-text">Or</p>
-              <div className="theme-button">
-                <Button className="theme-button" onClick={handleClearClick}>
-                  Browse Files
-                </Button>
+              <div className="drag-drop-txt">
+                <p>Drag & Drop Your File</p>
+                <span className="small-txt">All File Formats we support</span>
+              </div>
+            </>
+          )}
+
+          {fileValue ? null : (
+            <>
+              <div className="buttons">
+                <Buttons
+                  textWithIcon={true}
+                  imagePath={AppIcons.UploadIcon}
+                  buttonTypeClassName="upload-button"
+                  buttonText="Upload Manually"
+                  onClick={handleClearClick}
+                />
+              </div>
+            </>
+          )}
+          {isCustomButtonVisible && (
+            <>
+              <div className="row clear-buttons clear-btn-sec">
+                {fileValue && (
+                  <Buttons
+                    buttonTypeClassName="btn dark-btn"
+                    buttonText="Clear"
+                    onClick={handleClearClick}
+                  />
+                )}
               </div>
             </>
           )}

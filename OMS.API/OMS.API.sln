@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMS.API", "OMS.API\OMS.API.csproj", "{97109052-2899-4340-94AC-E9C5DABA9B82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.API", "OMS.API\OMS.API.csproj", "{97109052-2899-4340-94AC-E9C5DABA9B82}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application Core", "Application Core", "{21B7A9DA-F9B6-4FCD-A087-3C50F4B63B96}"
 EndProject
@@ -13,21 +13,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Intrastructure", "Intrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Libs", "Shared Libs", "{C5D4A8CF-0AFE-4EDE-BE35-8BF5543349ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMS.Framework", "OMS.Framework\OMS.Framework.csproj", "{C7CADC67-E1E1-4F91-9C45-588D9FF8004E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.Application.Services", "OMS.Application.Services\OMS.Application.Services.csproj", "{03F728D6-2B16-4211-9B04-F2C265788FCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMS.Application.Services", "OMS.Application.Services\OMS.Application.Services.csproj", "{03F728D6-2B16-4211-9B04-F2C265788FCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.Domain.Entities", "OMS.Domain.Entities\OMS.Domain.Entities.csproj", "{3888AA39-262B-4E1B-A063-E246B0BDF690}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMS.Domain.Entities", "OMS.Domain.Entities\OMS.Domain.Entities.csproj", "{3888AA39-262B-4E1B-A063-E246B0BDF690}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.Domain.Repository", "OMS.Domain.Repository\OMS.Domain.Repository.csproj", "{BC7CA307-61E2-4293-9825-9DDDB4D84EB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMS.Domain.Repository", "OMS.Domain.Repository\OMS.Domain.Repository.csproj", "{BC7CA307-61E2-4293-9825-9DDDB4D84EB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.FileManger.Services", "OMS.FileManger.Services\OMS.FileManger.Services.csproj", "{9330761F-2E00-4170-ADF0-6B4A6242BB57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMS.FileManger.Services", "OMS.FileManger.Services\OMS.FileManger.Services.csproj", "{9330761F-2E00-4170-ADF0-6B4A6242BB57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.Prisitance.Entities", "OMS.Prisitance.Entities\OMS.Prisitance.Entities.csproj", "{1288C449-BCE4-4435-9343-F51257BDFA2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMS.Prisitance.Entities", "OMS.Prisitance.Entities\OMS.Prisitance.Entities.csproj", "{1288C449-BCE4-4435-9343-F51257BDFA2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Helper", "Common.Helper\Common.Helper.csproj", "{E0C6BB72-3136-4F3A-9B42-FFB7A71D7013}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Helper", "Common.Helper\Common.Helper.csproj", "{E0C6BB72-3136-4F3A-9B42-FFB7A71D7013}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.Shared", "OMS.Shared\OMS.Shared.csproj", "{9CA24299-788C-4983-A655-5CD3804E81E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMS.Shared", "OMS.Shared\OMS.Shared.csproj", "{9CA24299-788C-4983-A655-5CD3804E81E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMS.Framework", "OMS.Framework\OMS.Framework.csproj", "{E51D774D-AA1C-4BAF-A72C-B22A110859E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,6 @@ Global
 		{97109052-2899-4340-94AC-E9C5DABA9B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97109052-2899-4340-94AC-E9C5DABA9B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97109052-2899-4340-94AC-E9C5DABA9B82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7CADC67-E1E1-4F91-9C45-588D9FF8004E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7CADC67-E1E1-4F91-9C45-588D9FF8004E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7CADC67-E1E1-4F91-9C45-588D9FF8004E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7CADC67-E1E1-4F91-9C45-588D9FF8004E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{03F728D6-2B16-4211-9B04-F2C265788FCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{03F728D6-2B16-4211-9B04-F2C265788FCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03F728D6-2B16-4211-9B04-F2C265788FCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -71,6 +67,10 @@ Global
 		{9CA24299-788C-4983-A655-5CD3804E81E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CA24299-788C-4983-A655-5CD3804E81E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CA24299-788C-4983-A655-5CD3804E81E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E51D774D-AA1C-4BAF-A72C-B22A110859E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E51D774D-AA1C-4BAF-A72C-B22A110859E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E51D774D-AA1C-4BAF-A72C-B22A110859E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E51D774D-AA1C-4BAF-A72C-B22A110859E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

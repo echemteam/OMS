@@ -26,7 +26,7 @@ import shortingArrowIcon from "../assets/images/shortingArrow.png";
 
 // footer icon
 import mail from "../assets/images/email.png";
-import website from "../assets/images/web.png"
+import website from "../assets/images/web.png";
 import uploaddocumenticon from "../assets/images/uploadDocsIcon.png";
 import cardBgShape from "../assets/images/circle.svg";
 import noRecords from "../assets/images/noRecord.png";
@@ -36,7 +36,6 @@ import folder from "../assets/images/folder.png";
 import subFolder from "../assets/images/sub-folder.png";
 import subFolder1 from "../assets/images/sub-folder1.png";
 
-
 import pdfIcon from "../assets/images/documentIcon/pdf.png";
 import DocIcon from "../assets/images/documentIcon/doc.png";
 import xlsIcon from "../assets/images/documentIcon/xls.png";
@@ -45,6 +44,7 @@ import zipIcon from "../assets/images/documentIcon/zip.png";
 import pptIcon from "../assets/images/documentIcon/ppt.png";
 import csvIcon from "../assets/images/documentIcon/csv.png";
 
+import uploadIcon from "../assets/images/upload.png";
 
 export const AppIcons = {
   // Menus & Header Images
@@ -57,11 +57,11 @@ export const AppIcons = {
   deleteIcon: deleted,
   deleteThemeIcon: deleteTheme,
   copyIcon: copy,
-  DownloadIcon:downloadIcon,
+  DownloadIcon: downloadIcon,
   permissionIcon: permissionIcon,
   userIcon: userIcon,
   notificationIcon: notification,
-  ShortcutIcon:shortcutIcon,
+  ShortcutIcon: shortcutIcon,
   arrowIcon: arrow,
   BackArrowIcon: backArrowIcon,
   PlusIcon: plusIcon,
@@ -71,7 +71,7 @@ export const AppIcons = {
   // footer icon set
 
   Mail: mail,
-  Bebsite:website,
+  Bebsite: website,
   shortingArrowIcon: shortingArrowIcon,
   Uploaddocumenticon: uploaddocumenticon,
   NoRecords: noRecords,
@@ -81,11 +81,13 @@ export const AppIcons = {
   subFolderIcon: subFolder,
   subFolder1Icon: subFolder1,
 
-  PdfIcon:pdfIcon,
-  DocIcon:DocIcon,
-  XlsIcon:xlsIcon,
-  ImgIcon:imgIcon,
-  ZipIcon:zipIcon,
-  PptIcon:pptIcon,
-  CsvIcon:csvIcon,
+  PdfIcon: pdfIcon,
+  DocIcon: DocIcon,
+  XlsIcon: xlsIcon,
+  ImgIcon: imgIcon,
+  ZipIcon: zipIcon,
+  PptIcon: pptIcon,
+  CsvIcon: csvIcon,
+
+  UploadIcon: uploadIcon,
 };
