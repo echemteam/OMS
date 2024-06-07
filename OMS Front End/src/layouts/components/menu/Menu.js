@@ -52,7 +52,7 @@ export const Menu = [
     iconClass: "bi bi-shield-fill-check",
     subMenu: true,
     to: "#",
-    securityKey: securityKey.SECURITY,
+    securityKey: securityKey.SECURITYROLEMANAGEMENT,
     children: [
       {
         id: "User Management",

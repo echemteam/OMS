@@ -15,7 +15,7 @@ export const userFormData = {
     userName: "",
     firstName: "",
     lastName: "",
-    isActive: false,
+    isActive: true,
     password: "",
   },
   formFields: [

@@ -77,7 +77,7 @@ export const basicDetailFormDataHalf = {
           { label: "USD", value: 2 },
         ],
       },
-      // validation: [{ type: "require" }],
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
