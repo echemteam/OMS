@@ -1,13 +1,12 @@
-import Stepper from "bs-stepper";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import CardSection from "../../components/ui/card/CardSection";
 import BasicDetail from "./features/basicDetail/BasicDetail";
 import AddressDetail from "./features/addressDetail/AddressDetail";
 import ContactDetail from "./features/contactDetail/ContactDetail";
 import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
-import AddEditDocuments from "./features/documentsDetail/features/AddEditDocuments";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
+import DocumentDetails from "./features/documentsDetail/DocumentDetails";
 
 
 const AddCustomer = () => {
@@ -61,7 +60,7 @@ const AddCustomer = () => {
     {
       label: "Documents",
       subLabel: "Add Documents",
-      content: <AddEditDocuments />,
+      content: <DocumentDetails />,
     },
   ];
 
@@ -71,71 +70,7 @@ const AddCustomer = () => {
 
   return (
     <>
-      {/* <BasicDetailContext.Provider value={{ stepperRef, nextRef }}>
-        <div className="stepper-card">
-          <CardSection>
-            <div id="stepper1" className="bs-stepper stepper-section">
-              <div className="bs-stepper-header">
-                {steps.map((step, index) => (
-                  <React.Fragment key={index}>
-                    <div className="step" data-target={`#step-${index}`} >
-                      <button className="step-trigger">
-                        <span className="bs-stepper-circle">{index + 1}</span>
-                        <span className="bs-ste pper-label">
-                          <span>{step.label}</span>
-                          <span className="small-txt">{step.subLabel}</span>
-                        </span>
-                      </button>
-                    </div>
-                    {index < steps.length - 1 && (
-                      <div className="right-arrow">
-                        <Image imagePath={AppIcons.arrowIcon} />
-                      </div>
-                    )}
-                  </React.Fragment>
-                ))}
-              </div>
-              <div className="bs-stepper-content">
-                <form onSubmit={onSubmit}>
-                  {steps.map((step, index) => (
-                    <div key={index} id={`step-${index}`} className="content">
-                      <div className="row">
-                        <div className="col-12 mx-auto">
-                          <div>{step.content}</div>
-                          <div className="d-flex justify-content-end">
-                            {index > 0 && (
-                              <button
-                                type="button"
-                                className="btn dark-btn mr-3"
-                                onClick={goBack}
-                              >
-                                Back
-                              </button>
-                            )}
-                            {index < steps.length - 1 ? (
-                              <button
-                                type="button"
-                                className="btn theme-button"
-                                onClick={() => addCustomer()}
-                              >
-                                Next
-                              </button>
-                            ) : (
-                              <button type="submit" className="btn theme-button">
-                                Submit
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </form>
-              </div>
-            </div>
-          </CardSection>
-        </div>
-      </BasicDetailContext.Provider> */}
+     
       <BasicDetailContext.Provider value={{ nextRef }}>
         <div className="stepper-card">
           <CardSection>
