@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./Sidebar.scss";
 import { Link } from "react-router-dom";
 import { Menu } from "../menu/Menu";
-import Image from "../../../components/image/Image";
-import { AppIcons } from "../../../data/appIcons";
+
 const Sidebar = (props) => {
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [clickedValueSubMenu, setClickedValueSubMenu] = useState(null);
@@ -23,33 +22,24 @@ const Sidebar = (props) => {
 
   return (
     <>
-      
-        <nav className="sidebar">
-          <div className="main-menus">
-            <Link className="sidebar-brand">
-              {/* <Image
+
+      <nav className="sidebar">
+        <div className="main-menus">
+          <Link className="sidebar-brand">
+            {/* <Image
                 imagePath={AppIcons.logoImage}
                 imgCustomClassName="open-bar"
                 altText="Icon"
               ></Image> */}
-              OMS&nbsp;<span className="small-sidebar">Lite</span>
-            </Link>
-            <div className="sidebar-menu">
-              <ul className="sidebar-menu-list">
-                {Menu.map((menuItem, index) => (
-                  <li
-                    key={index}
-                    className={
-                      selectedMenu === menuItem.id
-                        ? "menu-item active-menu"
-                        : "menu-item"
-                    }
-                    onClick={() => handleClick(menuItem.id)}
-                  >
-                    <Link
-                      to={menuItem.to}
-                      className={menuItem.subMenu ? "menu-arrow" : ""}
-                    >
+            OMS&nbsp;<span className="small-sidebar">Lite</span>
+          </Link>
+          <div className="sidebar-menu">
+            <ul className="sidebar-menu-list">
+              {Menu.map((menuItem, index) => (
+                <>
+                  {/* {hasPermission(menuItem.securityKey) ? */}
+                  <li key={index} className={selectedMenu === menuItem.id ? "menu-item active-menu" : "menu-item"} onClick={() => handleClick(menuItem.id)} >
+                    <Link to={menuItem.to} className={menuItem.subMenu ? "menu-arrow" : ""}>
                       <i className={menuItem.iconClass}></i>
                       <span>{menuItem.name}</span>
                     </Link>
@@ -57,31 +47,30 @@ const Sidebar = (props) => {
                       <>
                         <ul className="sidebar-dropdown">
                           {menuItem.children.map((subMenu, index) => (
-                            <li className="dropdown-menus">
-                              <Link
-                                to={subMenu.to}
-                                className={
-                                  clickedValueSubMenu === subMenu.id
-                                    ? "active-submenu"
-                                    : ""
-                                }
-                                onClick={(e) => handleChildClick(e, subMenu.id)}
-                              >
-                                {subMenu.submenuName}
-                              </Link>
-                            </li>
+                            <>
+                              {/* {hasPermission(subMenu.securityKey) ? */}
+                              <li className="dropdown-menus">
+                                <Link to={subMenu.to} className={clickedValueSubMenu === subMenu.id ? "active-submenu" : ""} onClick={(e) => handleChildClick(e, subMenu.id)}>
+                                  {subMenu.submenuName}
+                                </Link>
+                              </li>
+                              {/* : null} */}
+                            </>
+
                           ))}
                         </ul>
                       </>
                     ) : null}
                   </li>
-                ))}
-              </ul>
-            </div>
+                  {/* : null} */}
+                </>
+              ))}
+            </ul>
           </div>
-        </nav>
-        
-      
+        </div>
+      </nav>
+
+
     </>
   );
 };
