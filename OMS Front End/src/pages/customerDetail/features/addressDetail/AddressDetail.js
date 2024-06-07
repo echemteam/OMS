@@ -90,6 +90,7 @@ const AddressDetail = () => {
   };
 
   const handleChangeDropdownList = (data, dataField) => {
+    debugger
     if (dataField === 'countryId') {
       const dataValue = selectedState?.filter(item => item.countryId === data.value).map(item => ({
         value: item.stateId,
@@ -98,6 +99,7 @@ const AddressDetail = () => {
       const dropdownFieldIndex = addressFormData.formFields.findIndex(item => item.dataField === "stateId");
       addressFormData.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
       addressFormData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
+
     }
     else if (dataField === 'stateId') {
       const dataValue = selectedCity?.filter(item => item.stateId === data.value).map(item => ({

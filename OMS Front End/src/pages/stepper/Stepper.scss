@@ -9,6 +9,7 @@
         display: flex;
         align-items: center;
         margin-right: 15px;
+        opacity: 0.7;
         .step-button {
           border: none;
           box-shadow: none;
@@ -55,6 +56,7 @@
         }
 
         &.active {
+          opacity: 1;
           .step-button {
             .stepper-box {
               background: var(--themeColor);

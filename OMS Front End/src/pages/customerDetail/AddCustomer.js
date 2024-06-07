@@ -11,20 +11,22 @@ import DocumentDetails from "./features/documentsDetail/DocumentDetails";
 
 const AddCustomer = () => {
   const nextRef = useRef(null);
-  const [customerKeyId , setCustomerKeyId] = useState(0)
-  console.log("nextRef", nextRef)
+  const [customerKeyId, setCustomerKeyId] = useState(0)
+  const [activeTab, setActiveTab] = useState(0);
 
   const onSubmit = (e) => {
     e.preventDefault();
   };
 
   const addCustomer = () => {
-    if (nextRef.current) {
-      nextRef.current.handleAddBasicDetails();
+    if (customerKeyId > 0) {
+      setActiveTab((prev) => prev + 1);
+    } else {
+      if (nextRef.current) {
+        nextRef.current.handleAddBasicDetails();
+      }
     }
   };
-
-  const [activeTab, setActiveTab] = useState(0);
 
   const incrementCurrent = () => {
     setActiveTab((prev) => prev + 1);
@@ -35,17 +37,14 @@ const AddCustomer = () => {
   };
 
   const handleCustomerKey = (data) => {
-    debugger
     setCustomerKeyId(data)
   }
-
-  console.log("customerKeyId" , customerKeyId)
 
   const tabContent = [
     {
       label: "Basic Information",
       subLabel: "Enter Basic information",
-      content: <BasicDetail nextPage={incrementCurrent} onCustomerKey={handleCustomerKey}/>,
+      content: <BasicDetail nextPage={incrementCurrent} onCustomerKey={handleCustomerKey} />,
     },
     {
       label: "Address",
@@ -70,7 +69,6 @@ const AddCustomer = () => {
 
   return (
     <>
-     
       <BasicDetailContext.Provider value={{ nextRef }}>
         <div className="stepper-card">
           <CardSection>
@@ -79,7 +77,9 @@ const AddCustomer = () => {
                 {tabContent.map((step, index) => (
                   <React.Fragment key={index}>
                     <div className={`step ${activeTab === index ? 'active' : ''}`}>
-                      <button className="step-button" onClick={() => handleTabClick(index)}>
+                      <button className="step-button"
+                        onClick={() => handleTabClick(index)}
+                      >
                         <span className="stepper-box">{index + 1}</span>
                         <span className="stepper-label">
                           <span>{step.label}</span>
