@@ -72,6 +72,10 @@ const AddEditUser = forwardRef(() => {
 
   useEffect(() => {
     if (isAddSuccess && isAddData) {
+      if (isAddData.errorMessage.includes('EXISTS')) {
+        ToastService.warning(isAddData.errorMessage);
+        return;
+      }
       backToList();
       ToastService.success(isAddData.errorMessage);
     }
