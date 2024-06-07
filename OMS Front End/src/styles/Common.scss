@@ -1,5 +1,5 @@
 @import "./Variables.scss";
-@import "../assets/fonts/exo2.scss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 /* // Common Styles Start */
 
@@ -7,7 +7,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: #0004430d;
-  font-family: "Exo 2", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   color: var(--textColor);
   overflow: hidden;
@@ -40,7 +40,6 @@ a {
   color: var(--textColor);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   min-height: 35px;
   display: flex;
   align-items: center;
@@ -551,7 +550,7 @@ a {
       content: "";
       height: 1px;
       width: 100%;
-      background: var(--inputBorder);
+      background: var(--linkMenu);
       left: 0;
       bottom: 0;
     }
@@ -726,11 +725,9 @@ a {
       color: var(--textColor);
 
       &.active {
-        margin-bottom: -1px;
+        margin-bottom: 10px;
         background: var(--gradient-theme);
         color: var(--whiteColor);
-        // border-top: 4px solid;
-        border-bottom: 1px solid var(--themeColor);
       }
     }
   }
@@ -983,7 +980,7 @@ a {
         .user-icon-name {
           display: flex;
           align-items: center;
-
+          margin-bottom: 5px;
           span {
             &.icon {
               min-height: 40px;
