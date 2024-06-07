@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./ViewCustomer.scss";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import BasicDetail from "./features/basicDetail/BasicDetail";
@@ -8,11 +8,12 @@ import CardSection from "../../components/ui/card/CardSection";
 import CustomerDetails from "./features/basicDetail/CustomerDetails";
 import { AppIcons } from "../../data/appIcons";
 import SidebarModel from "../../components/ui/sidebarModel/SidebarModel";
-import Buttons from "../../components/ui/button/Buttons";
 import SettingDetails from "./features/settingDetail/SettingDetails";
 import DocumentDetails from "./features/documentsDetail/DocumentDetails";
+import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 const ViewCustomer = () => {
+  const nextRef = useRef(null);
   const [isModelOpen, setisModelOpen] = useState(false);
   const handleToggleModal = () => {
     setisModelOpen(true);
@@ -57,6 +58,7 @@ const ViewCustomer = () => {
 
   return (
     <>
+      <BasicDetailContext.Provider value={{ nextRef }}>
       <div className="card-bottom-m-0">
         <div className="row">
           <div className="col-xxl-3 col-xl-4 col-md-3 col-12 basic-left-part customer-desc-left-sec">
@@ -84,8 +86,9 @@ const ViewCustomer = () => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}
       >
-        <BasicDetail onSidebarClose={onSidebarClose} />
+        <BasicDetail onSidebarClose={onSidebarClose} isOpen={isModelOpen} />
       </SidebarModel>
+      </BasicDetailContext.Provider>
     </>
   );
 };

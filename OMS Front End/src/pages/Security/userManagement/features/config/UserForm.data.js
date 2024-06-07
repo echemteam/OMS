@@ -88,7 +88,7 @@ export const userFormData = {
         placeholder: "",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-2",
       },
