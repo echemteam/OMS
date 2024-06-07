@@ -94,3 +94,31 @@
     }
   }
 }
+
+@media only screen and (max-width: 1600px) {
+  .stepper-card {
+    .stepper-section {
+      .stepper-header {
+        .step {
+          .step-button {
+            .stepper-box{
+              min-height: 32px;
+              min-width: 32px;
+              max-height: 32px;
+              max-width: 32px;
+              font-size: 100%;
+            }
+            .stepper-label {
+              span{
+                font-size: 100%;
+                &.small-txt{
+                  font-size: 80%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
