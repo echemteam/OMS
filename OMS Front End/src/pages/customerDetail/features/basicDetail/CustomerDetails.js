@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
+import CopyText from "../../../../utils/CopyText/CopyText";
 
 const CustomerDetails = ({editClick}) => {
   const customerName = "1Click Chemistry Incc";
@@ -23,6 +24,8 @@ const CustomerDetails = ({editClick}) => {
     { nameLabel: "Is Company ", name: "Yes" },
     { nameLabel: "Is Buying for Third Party ", name: "No" },
   ];
+
+
   return (
     <>
       <div className="basic-customer-detail">
@@ -47,19 +50,21 @@ const CustomerDetails = ({editClick}) => {
             <a className="email-link" href={`mailto:${customerEmail}`}>
               <div className="info-desc">{customerEmail}</div>
             </a>
-            <span className="copy-icon">
+            <span className="copy-icon"  onClick={() => CopyText(customerEmail, 'email')}>
               <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
             </span>
+
           </div>
           <div className="field-desc">
             <div className="inf-label">Website</div>
-            <b>&nbsp;:&nbsp;</b>
+            <b>&nbsp;:&nbsp;</b>  
 
             <div className="info-desc">{customerWebsite}</div>
 
-            <span className="copy-icon">
+            <span className="copy-icon" onClick={() => CopyText(customerWebsite,'website')}>
               <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
             </span>
+          
           </div>
 
           {customerData.map((customer, index) => (
