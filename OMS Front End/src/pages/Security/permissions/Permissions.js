@@ -12,7 +12,7 @@ import { decryptUrlData } from "../../../services/CryptoService";
 import { useLazyGetAllRolesQuery } from "../../../app/services/securityPermissionsAPI";
 import { SecurityPermissionsContext } from "../../../utils/ContextAPIs/SecurityPermissions/SecurityPermissionsContext";
 //** Component's */
-const ManagePermission = React.lazy(() => import("./component/ManagePermission"));
+const ManagePermission = React.lazy(() => import("./features/ManagePermission"));
 
 const Permissions = () => {
 
