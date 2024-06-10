@@ -7,42 +7,35 @@
   -moz-transition: all .4s ease-in-out !important;
   -ms-transition: all .4s ease-in-out !important;
   min-width: 120px !important;
+
   &:hover {
     background-image: unset !important;
   }
 
   &.swal2-confirm {
     color: var(--whiteColor) !important;
-    background-image: var(--greenButtonGradient) !important;
-    box-shadow: 0 10px 20px -10px #00ab5599 !important;
+    background-image: var(--gradient-theme) !important;
+    box-shadow: none !important;
 
     &:hover {
-      background-position: 100% 0 !important;
-      transition: all .4s ease-in-out !important;
-      -o-transition: all .4s ease-in-out !important;
-      -webkit-transition: all .4s ease-in-out !important;
-      -moz-transition: all .4s ease-in-out !important;
-      -ms-transition: all .4s ease-in-out !important;
-      box-shadow: 0 10px 20px -10px #00ab56c6;
-      background-image: var(--greenButtonGradientReverse) !important;
+      color: var(--whiteColor) !important;
+      background-image: var(--gradient-theme) !important;
+      box-shadow: 0 5px 15px -4px var(--themeColor) !important;
     }
   }
 
   &.swal2-cancel {
     color: var(--whiteColor) !important;
-    background-image: var(--blueButtonGradiant) !important;
-    box-shadow: 0 10px 20px -10px #061936 !important;
+    background: linear-gradient(to right, #2d3641db, #000000db) !important;
+    box-shadow: none !important;
 
     &:hover {
-      background-position: 100% 0 !important;
-      transition: all .4s ease-in-out !important;
-      -o-transition: all .4s ease-in-out !important;
-      -webkit-transition: all .4s ease-in-out !important;
-      -moz-transition: all .4s ease-in-out !important;
-      -ms-transition: all .4s ease-in-out !important;
-      box-shadow: 0 10px 20px -10px #133975 !important;
-      background-image: var(--blueButtonGradientReverse) !important;
-
+      background: linear-gradient(to right, #2d3641db, #000000db) !important;
+      box-shadow: 0 5px 15px -4px hsla(210, 22%, 4%, 0.75) !important;
     }
   }
+}
+div:where(.swal2-icon).swal2-question{
+  border-color: var(--warningColor) !important;
+  color: var(--warningColor) !important;
 }

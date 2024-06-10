@@ -350,7 +350,7 @@ table {
       tr {
           border: none !important;
         &:nth-child(even){
-          background: rgb(245 245 249 / 64%);
+          background: var(--themeColorLightGridRow);
         }
       }
     }

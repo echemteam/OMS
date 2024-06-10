@@ -20,7 +20,7 @@ function CardSection({
   handleChange,
   isLoading,
   titleText,
-  isButtonVisible
+  // isButtonVisible
 }) {
   return (
     <div
