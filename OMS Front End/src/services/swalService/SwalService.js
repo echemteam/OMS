@@ -19,7 +19,7 @@ const customClass= {
     inputLabel: '',
     validationMessage: '',
     actions: '',
-    confirmButton: 'btn success-btn',
+    confirmButton: 'btn theme-button',
     denyButton: 'btn dark-btn',
     cancelButton: 'btn dark-btn',
     loader: '',
