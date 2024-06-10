@@ -63,5 +63,10 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllContactTypes();
         }
+
+        public Task<List<GetAllDocumentTypesResponse>> GetAllDocumentTypes()
+        {
+            return repositoryManager.commonRepository.GetAllDocumentTypes();
+        }
     }
 }
