@@ -1,6 +1,6 @@
 import React from "react";
 //** Lib's */
-import { SecurityPermissionsGrid } from "../securityPermissions.Data";
+import { SecurityPermissionsGrid } from "../../permissions/features/config/securityPermissions.Data";
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 //** Component's */
 const PermissionListWrapper = React.lazy(() => import("./PermissionWrapper"));

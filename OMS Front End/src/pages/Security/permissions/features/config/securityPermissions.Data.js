@@ -1,5 +1,6 @@
-import { FormFieldTypes } from "../../../data/formFieldType";
-import { GridColumnType } from "../../../data/gridColumnType";
+import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../data/gridColumnType";
+
 
 const SecurityPermissions = {
     name: "Security Permissions",
