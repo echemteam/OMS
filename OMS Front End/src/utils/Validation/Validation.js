@@ -1,9 +1,9 @@
 /* Component  */
-import { compare, email, number, required, uniqueIdentifier, isvalidPassword, maxLength, minLength, maxProspects, minEndDate, maxSum, distinct, isValidEIN, isValidPhone, isValidFax, isUnique , isWebsite , isTaxId} from './ValidateField'
+import { compare, email, number, required, uniqueIdentifier, isvalidPassword, maxLength, minLength, maxProspects, minEndDate, maxSum, distinct, isValidEIN, isValidPhone, isValidFax, isUnique, isWebsite, isTaxId } from './ValidateField'
 
 // Validation functions 
 
-export function ValidateAll(state, rules) {
+export function ValidateAll(state, rules, minLengthValue = 0, maxLengthValue = 0) {
   let result = {
     isValid: true,
     error: {}
@@ -12,7 +12,7 @@ export function ValidateAll(state, rules) {
   let error = {};
   keys.forEach(key => {
     var fieldRules = rules[key]
-    var validateResult = ValidateField(state[key], fieldRules, state);
+    var validateResult = ValidateField(state[key], fieldRules, state, minLengthValue, maxLengthValue);
     if (!validateResult.isvalid) {
       result.isValid = false;
       error[key] = validateResult.message;
@@ -22,14 +22,14 @@ export function ValidateAll(state, rules) {
   return result;
 }
 
-export function Validate(state, rules, key) {
+export function Validate(state, rules, key, minLengthValue = 0, maxLengthValue = 0) {
   let result = {
     isValid: true,
     error: {}
   }
   let error = {};
   let fieldRules = rules[key]
-  let validateResult = ValidateField(state[key], fieldRules, state);
+  let validateResult = ValidateField(state[key], fieldRules, state, minLengthValue, maxLengthValue);
   if (!validateResult.isvalid) {
     result.isValid = false;
     error[key] = validateResult.message;
@@ -38,7 +38,7 @@ export function Validate(state, rules, key) {
   return result;
 }
 
-export function ValidateField(value, fieldRules, state) {
+export function ValidateField(value, fieldRules, state, minLengthValue = 0, maxLengthValue = 0) {
   let result = { isvalid: true, message: '' };
   fieldRules.forEach(rule => {
     if (result.isvalid) {
@@ -146,7 +146,7 @@ export function ValidateField(value, fieldRules, state) {
           }
           break;
         case 'taxId':
-          if (!isTaxId(value)) {
+          if (!isTaxId(value, minLengthValue, maxLengthValue)) {
             result.isvalid = false;
             result.message = rule.message
           }
