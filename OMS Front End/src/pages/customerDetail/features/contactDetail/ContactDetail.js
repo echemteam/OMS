@@ -10,11 +10,7 @@ import { contactDetailFormData } from "./component/ContactDetailForm.data";
 const ContactDetail = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
 
-  const [getAllContactTypes, {
-    isFetching: isGetAllContactTypesFetching,
-    isSuccess: isGetAllContactTypesSucess,
-    data: allGetAllContactTypesData
-  },] = useLazyGetAllContactTypesQuery();
+  const [getAllContactTypes, { isFetching: isGetAllContactTypesFetching, isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   useEffect(() => {
     getAllContactTypes()
@@ -30,7 +26,7 @@ const ContactDetail = () => {
       dropdownField.fieldSetting.options = getData;
     }
   }, [isGetAllContactTypesFetching, isGetAllContactTypesSucess, allGetAllContactTypesData])
-  
+
 
   const handleToggleModal = () => {
     setisModelOpen(true);
@@ -48,10 +44,8 @@ const ContactDetail = () => {
         iconImg={AppIcons.PlusIcon}
         rightButton={true}
         buttonText="Add"
-        titleButtonClick={handleToggleModal}
-      >
+        titleButtonClick={handleToggleModal}>
         <ContactCard isAddEditModal={handleToggleModal} />
-
       </CardSection>
       <div className="sidebar-contact-model">
         <SidebarModel
@@ -59,8 +53,7 @@ const ContactDetail = () => {
           contentClass="content-55"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
-          isOpen={isModelOpen}
-        >
+          isOpen={isModelOpen}>
           <ContactDetailForm onSidebarClose={onSidebarClose} />
         </SidebarModel>
       </div>
