@@ -12,5 +12,6 @@ namespace OMS.Application.Services.Customers
         Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId);
         Task<EntityList<GetCustomersResponse>> GetCustomers(GetCustomersRequest queryRequest);
         Task<AddEntityDTO<int>> CheckCustomerNameExist(CheckCustomerNameExistRequest requestData);
+        Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(UpdateCustomerApproveStatusRequest requestData);
     }
 }

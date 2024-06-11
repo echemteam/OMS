@@ -4,6 +4,6 @@ namespace OMS.Domain.Entities.API.Request.Customers
 {
     public class GetCustomersRequest : ListEntityRequest<BaseFilter>
     {
-        public short? StatusId { get; set; }
+        public string? StatusId { get; set; }
     }
 }

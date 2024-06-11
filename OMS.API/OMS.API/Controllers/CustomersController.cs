@@ -68,6 +68,13 @@ namespace OMS.API.Controllers
             var checkItem = await _serviceManager.customersServices.CheckCustomerNameExist(requestData);
             return APISucessResponce(checkItem);
         }
+
+        [HttpPost("UpdateCustomerApproveStatus")]
+        public async Task<IActionResult> UpdateCustomerApproveStatus(UpdateCustomerApproveStatusRequest requestData)
+        {
+            var updateItem = await _serviceManager.customersServices.UpdateCustomerApproveStatus(requestData);
+            return APISucessResponce(updateItem);
+        }
         #endregion
     }
 }

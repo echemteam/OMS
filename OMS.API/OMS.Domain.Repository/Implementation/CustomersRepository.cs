@@ -18,6 +18,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETCUSTOMERSBASICINFORMATIONBYID = "GetCustomersBasicInformationById";
         const string GETCUSTOMERS = "GetCustomers";
         const string CHECKCUSTOMERNAMEEXIST = "CheckCustomerNameExist";
+        const string UPDATECUSTOMERAPPROVESTATUS = "UpdateCustomerApproveStatus";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -89,6 +90,14 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetSingleAsync<AddEntityDTO<int>>(CHECKCUSTOMERNAMEEXIST, new
             {
                 customers.Name,
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(CustomersDTO customers)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECUSTOMERAPPROVESTATUS, new
+            {
+                customers.ApprovedBy,
             }, CommandType.StoredProcedure);
         }
         #endregion

@@ -1,5 +1,4 @@
 ﻿using Common.Helper.Extension;
-using Common.Helper.Utility;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Customers;
@@ -53,6 +52,12 @@ namespace OMS.Application.Services.Customers
         {
             CustomersDTO customersDTO = requestData.ToMapp<CheckCustomerNameExistRequest, CustomersDTO>();
             return await repositoryManager.customers.CheckCustomerNameExist(customersDTO);
+        }
+
+        public async Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(UpdateCustomerApproveStatusRequest requestData)
+        {
+            CustomersDTO customersDTO = requestData.ToMapp<UpdateCustomerApproveStatusRequest, CustomersDTO>();
+            return await repositoryManager.customers.UpdateCustomerApproveStatus(customersDTO);
         }
         #endregion
     }

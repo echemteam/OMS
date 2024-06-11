@@ -13,5 +13,6 @@ namespace OMS.Domain.Repository.Contract
         Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId);
         Task<EntityList<GetCustomersResponse>> GetCustomers(GetCustomersRequest queryRequest);
         Task<AddEntityDTO<int>> CheckCustomerNameExist(CustomersDTO customers);
+        Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(CustomersDTO customers);
     }
 }
