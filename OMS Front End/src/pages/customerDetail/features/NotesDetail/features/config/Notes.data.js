@@ -6,8 +6,8 @@ export const NotesData = {
     formFields: [
         {
             id: "notes",
-            lable: "Notes :",
-            Field_Name: "Notes :",
+            lable: "Add Notes :",
+            Field_Name: "Add Notes :",
             fieldType: FormFieldTypes.TEXTAREA,
             dataField: "type",
             fieldSetting: {

@@ -64,6 +64,7 @@ const DocumentDetails = () => {
         >
           <div className="row horizontal-form">
             <FormCreator
+              config={formData}
               ref={documentFormRef}
               {...formData}
             // onFormDataUpdate={handleFormDataChange}

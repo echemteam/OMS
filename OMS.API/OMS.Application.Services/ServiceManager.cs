@@ -2,6 +2,7 @@
 using OMS.Application.Services.Authentication;
 using OMS.Application.Services.Common;
 using OMS.Application.Services.Contact;
+using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
@@ -34,6 +35,7 @@ namespace OMS.Application.Services
         ICustomersServices _customersServices;
         IAddressServices _addressServices;
         IContactService _contactService;
+        ICustomerNotesService _customerNotesService;
 
         public ITestService testService
         {
@@ -161,5 +163,18 @@ namespace OMS.Application.Services
 
             }
         }
+        public ICustomerNotesService customerNotesService
+        {
+            get
+            {
+                if (_customerNotesService == null)
+                {
+                    _customerNotesService = new CustomerNotesService(_repositoryManager, _commonSettingService);
+                }
+                return _customerNotesService;
+
+            }
+        }
+
     }
 }

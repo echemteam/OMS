@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import FormCreator from "../../../components/Forms/FormCreator";
 import { useNavigate } from "react-router-dom";
 import { Stepper1FormData } from "./formData/Stepper1.data";
-import Buttons from "../../../components/ui/button/Buttons";
 
 const StepperForm = () => {
   const navigate = useNavigate();
@@ -24,9 +23,10 @@ const StepperForm = () => {
         <div className="col-md-12">
           <div className="row vertical-form">
             <FormCreator
+              config={Stepper1FormData}
               ref={testFromRef}
               {...Stepper1FormData}
-              // onFormDataUpdate={handleFormDataChange}
+            // onFormDataUpdate={handleFormDataChange}
             />
           </div>
         </div>

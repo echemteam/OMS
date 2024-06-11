@@ -6,11 +6,12 @@ import { useAddCustomersBasicInformationMutation, useLazyGetAllCountriesQuery, u
 import ToastService from "../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import Buttons from "../../../../components/ui/button/Buttons";
+import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
-  const { nextRef } = useContext(BasicDetailContext)
+  const { nextRef } = useContext(BasicDetailContext);
 
   const [
     getAllGroupTypes,
@@ -42,7 +43,7 @@ const BasicDetail = (props) => {
   const [
     addCustomersBasicInformation,
     {
-      isLoading: isAddCustomersBasicInformationLoading,
+      isLoading,
       isSuccess: isAddCustomersBasicInformationSuccess,
       data: isAddCustomersBasicInformationData,
     },
@@ -153,14 +154,28 @@ const BasicDetail = (props) => {
     }
   };
 
+  const handleValidateTextId = (data, dataField) => {
+    if (dataField === 'countryId') {
+      const modifyFormFields = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
+      const updatedForm = { ...formData };
+      updatedForm.formFields = modifyFormFields;
+      setFormData(updatedForm);
+    }
+  }
+
+  const formActionHandler = {
+    DDL_CHANGED: handleValidateTextId
+  };
 
   return (
     <div className="basic-info-sec half-sec">
       <CardSection buttonClassName="theme-button">
         <div className="row horizontal-form basic-info-step">
           <FormCreator
+            config={formData}
             ref={basicDetailRef}
             {...formData}
+            onActionChange={formActionHandler}
           />
         </div>
 

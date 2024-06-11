@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Stepper3FormData } from "./formData/Stepper3.data";
 
 const StepperForm3 = () => {
-  const navigate = useNavigate();
 
   // const handleAddEditCampaign = () => {
   //   navigate("/AddEditCampaign"); // Replace '/dashboard' with your actual dashboard route
@@ -23,9 +22,10 @@ const StepperForm3 = () => {
         <div className="col-md-12">
           <div className="row vertical-form">
             <FormCreator
+              config={Stepper3FormData}
               ref={testFromRef}
               {...Stepper3FormData}
-              // onFormDataUpdate={handleFormDataChange}
+            // onFormDataUpdate={handleFormDataChange}
             />
           </div>
         </div>

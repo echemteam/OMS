@@ -9,9 +9,10 @@ const FinancialSettings = () => {
     <>
       <div className="row horizontal-form">
         <FormCreator
+          config={SettingFormData}
           ref={settingFormRef}
           {...SettingFormData}
-          // onFormDataUpdate={handleFormDataChange}
+        // onFormDataUpdate={handleFormDataChange}
         />
         <div className="col-md-12 mt-2">
           <div className="d-flex align-item-end justify-content-end">
@@ -19,13 +20,13 @@ const FinancialSettings = () => {
               <Buttons
                 buttonTypeClassName="theme-button"
                 buttonText="Save"
-                // onClick={onHandleUser}
-                // isLoading={EmailLoading || updateUserLoading}
+              // onClick={onHandleUser}
+              // isLoading={EmailLoading || updateUserLoading}
               />
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"
                 buttonText="Cancel"
-                // onClick={onSidebarClose}
+              // onClick={onSidebarClose}
               />
             </div>
           </div>
