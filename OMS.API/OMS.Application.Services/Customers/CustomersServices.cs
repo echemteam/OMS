@@ -29,8 +29,6 @@ namespace OMS.Application.Services.Customers
         {
             CustomersDTO customersDTO = requestData.ToMapp<AddCustomersBasicInformationRequest, CustomersDTO>();
             customersDTO.CreatedBy = CurrentUserId;
-            customersDTO.RefCode = EncryptionUtil.GenerateReferenceCode();
-            customersDTO.ListCode = EncryptionUtil.GenerateListCode(requestData.TaxId!, requestData.Name!);
             return await repositoryManager.customers.AddCustomersBasicInformation(customersDTO);
         }
 
@@ -38,8 +36,6 @@ namespace OMS.Application.Services.Customers
         {
             CustomersDTO customersDTO = requestData.ToMapp<UpdateCustomersBasicInformationRequest, CustomersDTO>();
             customersDTO.CreatedBy = CurrentUserId;
-            customersDTO.RefCode = EncryptionUtil.GenerateReferenceCode();
-            customersDTO.ListCode = EncryptionUtil.GenerateListCode(requestData.TaxId!, requestData.Name!);
             return await repositoryManager.customers.UpdateCustomersBasicInformation(customersDTO);
         }
 

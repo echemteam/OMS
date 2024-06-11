@@ -38,8 +38,6 @@ namespace OMS.Domain.Repository.Implementation
                 customers.InvoiceSubmissionInstruction,
                 customers.Note,
                 customers.IsCompany,
-                customers.RefCode,
-                customers.ListCode,
                 customers.TaxId,
                 customers.BillingCurrency,
                 customers.CreatedBy
@@ -60,8 +58,6 @@ namespace OMS.Domain.Repository.Implementation
                 customers.InvoiceSubmissionInstruction,
                 customers.Note,
                 customers.IsCompany,
-                customers.RefCode,
-                customers.ListCode,
                 customers.TaxId,
                 customers.BillingCurrency,
                 customers.UpdatedBy
