@@ -17,6 +17,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATECUSTOMERSBASICINFORMATION = "UpdateCustomersBasicInformation";
         const string GETCUSTOMERSBASICINFORMATIONBYID = "GetCustomersBasicInformationById";
         const string GETCUSTOMERS = "GetCustomers";
+        const string CHECKCUSTOMERNAMEEXIST = "CheckCustomerNameExist";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -85,6 +86,14 @@ namespace OMS.Domain.Repository.Implementation
                 queryRequest.Pagination.PageSize,
                 queryRequest.Filters?.SearchText
             }, true);
+        }
+
+        public async Task<AddEntityDTO<int>> CheckCustomerNameExist(CustomersDTO customers)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(CHECKCUSTOMERNAMEEXIST, new
+            {
+                customers.Name,
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }

@@ -52,6 +52,12 @@ namespace OMS.Application.Services.Customers
             var customersDetails = await repositoryManager.customers.GetCustomers(queryRequest);
             return customersDetails!;
         }
+
+        public async Task<AddEntityDTO<int>> CheckCustomerNameExist(CheckCustomerNameExistRequest requestData)
+        {
+            CustomersDTO customersDTO = requestData.ToMapp<CheckCustomerNameExistRequest, CustomersDTO>();
+            return await repositoryManager.customers.CheckCustomerNameExist(customersDTO);
+        }
         #endregion
     }
 }

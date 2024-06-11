@@ -28,7 +28,6 @@ namespace OMS.API.Controllers
         [HttpPost("AddCustomersBasicInformation")]
         public async Task<IActionResult> AddCustomersBasicInformation(AddCustomersBasicInformationRequest requestData)
         {
-
             var addItem = await _serviceManager.customersServices.AddCustomersBasicInformation(requestData, CurrentUserId);
             return APISucessResponce(addItem);
         }
@@ -61,6 +60,13 @@ namespace OMS.API.Controllers
         {
             var customers = await _serviceManager.customersServices.GetCustomers(queryRequest);
             return APISucessResponce<object>(customers);
+        }
+
+        [HttpPost("CheckCustomerNameExist")]
+        public async Task<IActionResult> CheckCustomerNameExist(CheckCustomerNameExistRequest requestData)
+        {
+            var checkItem = await _serviceManager.customersServices.CheckCustomerNameExist(requestData);
+            return APISucessResponce(checkItem);
         }
         #endregion
     }
