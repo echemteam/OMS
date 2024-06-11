@@ -97,6 +97,7 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECUSTOMERAPPROVESTATUS, new
             {
+                customers.CustomerId,
                 customers.ApprovedBy,
             }, CommandType.StoredProcedure);
         }

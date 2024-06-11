@@ -4,6 +4,7 @@ using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.API.Controllers
@@ -72,7 +73,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateCustomerApproveStatus")]
         public async Task<IActionResult> UpdateCustomerApproveStatus(UpdateCustomerApproveStatusRequest requestData)
         {
-            var updateItem = await _serviceManager.customersServices.UpdateCustomerApproveStatus(requestData);
+            var updateItem = await _serviceManager.customersServices.UpdateCustomerApproveStatus(requestData, CurrentUserId);
             return APISucessResponce(updateItem);
         }
         #endregion

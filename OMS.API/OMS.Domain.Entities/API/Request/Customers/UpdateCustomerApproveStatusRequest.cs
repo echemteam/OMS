@@ -3,7 +3,6 @@
     public class UpdateCustomerApproveStatusRequest
     {
         public int? CustomerId { get; set; }
-        public short? ApprovedBy { get; set; }
 
     }
 }
