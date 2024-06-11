@@ -5,7 +5,7 @@ import { testFormData } from "./TestForm.data";
 
 const TestForm = (props) => {
   const emailFromRef = useRef();
-  const handleFormDataChange = (formData) => {};
+  const handleFormDataChange = (formData) => { };
 
   return (
     <div className="form-field-sec">
@@ -13,6 +13,7 @@ const TestForm = (props) => {
         <div className="col-md-6 card">
           <div className="row align-items-center">
             <FormCreator
+              config={testFormData}
               ref={emailFromRef}
               {...testFormData}
               onFormDataUpdate={handleFormDataChange}
@@ -21,14 +22,14 @@ const TestForm = (props) => {
               <Buttons
                 buttonTypeClassName="theme-btn"
                 buttonText="Search"
-                // onClick={handleLogin}
-                // isLoading={loginLoading}
+              // onClick={handleLogin}
+              // isLoading={loginLoading}
               />
               <Buttons
                 buttonTypeClassName="gray-btn ml-3"
                 buttonText="Cancel"
-                // onClick={handleLogin}
-                // isLoading={loginLoading}
+              // onClick={handleLogin}
+              // isLoading={loginLoading}
               />
             </div>
           </div>
@@ -36,6 +37,7 @@ const TestForm = (props) => {
         <div className="col-md-6">
           <div className="row align-items-center">
             <FormCreator
+              config={testFormData}
               ref={emailFromRef}
               {...testFormData}
               onFormDataUpdate={handleFormDataChange}
@@ -44,8 +46,8 @@ const TestForm = (props) => {
               <Buttons
                 buttonTypeClassName="theme-btn"
                 buttonText="Search"
-                // onClick={handleLogin}
-                // isLoading={loginLoading}
+              // onClick={handleLogin}
+              // isLoading={loginLoading}
               />
             </div>
           </div>

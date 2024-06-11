@@ -11,8 +11,6 @@ import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
-  const [formUpdateData, setFormUpdateData] = useState('');
-  const [fieldSettingValues, setFieldSettingValues] = useState('');
   const { nextRef } = useContext(BasicDetailContext);
   const [customerName, setCustomerName] = useState('');
 
@@ -46,7 +44,7 @@ const BasicDetail = (props) => {
   const [
     addCustomersBasicInformation,
     {
-      isLoading: isAddCustomersBasicInformationLoading,
+      isLoading,
       isSuccess: isAddCustomersBasicInformationSuccess,
       data: isAddCustomersBasicInformationData,
     },
@@ -159,8 +157,10 @@ const BasicDetail = (props) => {
 
   const handleValidateTextId = (data, dataField) => {
     if (dataField === 'countryId') {
-      const fieldSetting = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId', formUpdateData);
-      setFieldSettingValues(fieldSetting);
+      const modifyFormFields = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
+      const updatedForm = { ...formData };
+      updatedForm.formFields = modifyFormFields;
+      setFormData(updatedForm);
     }
   }
 
@@ -182,10 +182,10 @@ const BasicDetail = (props) => {
       <CardSection buttonClassName="theme-button">
         <div className="row horizontal-form basic-info-step">
           <FormCreator
+            config={formData}
             ref={basicDetailRef}
             {...formData}
             onActionChange={formActionHandler}
-            fieldSettingValue={fieldSettingValues}
             handleInputGroupButton={handleInputGroupButton}
             onFormDataChange={onFormDataChange}
           />

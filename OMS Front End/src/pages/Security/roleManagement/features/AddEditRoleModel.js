@@ -12,8 +12,9 @@ const AddEditRoleModel = (props) => {
           <div className="row vertical-form">
             <FormCreator
               ref={roleFromRef}
+              config={addEditRoleFormData}
               {...addEditRoleFormData}
-              // onFormDataUpdate={handleFormDataChange}
+            // onFormDataUpdate={handleFormDataChange}
             />
           </div>
         </div>
@@ -22,8 +23,8 @@ const AddEditRoleModel = (props) => {
             <Buttons
               buttonTypeClassName="theme-button"
               buttonText="Add Role"
-              // onClick={onHandleUser}
-              // isLoading={EmailLoading || updateUserLoading}
+            // onClick={onHandleUser}
+            // isLoading={EmailLoading || updateUserLoading}
             />
             <Buttons
               buttonTypeClassName="dark-btn ml-5"

@@ -6,7 +6,7 @@ import { getValidationRules } from "../../utils/Validation/GetValidationRule";
 import { ValidateAll, Validate } from "../../utils/Validation/Validation";
 
 const FormCreator = forwardRef((props, ref) => {
-  const [formData, setFormData] = useState(props.initialState);
+  const [formData, setFormData] = useState(props.config.initialState);
   const [validState, setValidState] = useState({
     isValid: true,
     error: {},
@@ -14,18 +14,18 @@ const FormCreator = forwardRef((props, ref) => {
   const [validationRules, setValidationRules] = useState({});
 
   useEffect(() => {
-    if (props.formSetting && props.formSetting.isViewOnly) {
-      const valRule = getValidationRules(props.formFields);
+    if (props.config.formSetting && props.config.formSetting.isViewOnly) {
+      const valRule = getValidationRules(props.config.formFields);
       setValidationRules(valRule);
       return;
     }
-    const valRule = getValidationRules(props.formFields);
+    const valRule = getValidationRules(props.config.formFields);
     setValidationRules(valRule);
-  }, [props.formFields]);
+  }, [props.config]);
 
   // reset the initial state 
   useEffect(() => {
-    setFormData(props.initialState);
+    setFormData(props.config.initialState);
     setValidState({
       isValid: true,
       error: {},
@@ -34,7 +34,7 @@ const FormCreator = forwardRef((props, ref) => {
     return () => {
 
     }
-  }, [props.initialState]);
+  }, [props.config.initialState]);
 
   useImperativeHandle(
     ref,
@@ -51,7 +51,7 @@ const FormCreator = forwardRef((props, ref) => {
   );
 
   const isValidForm = () => {
-    const validation = ValidateAll(formData, validationRules, props.fieldSettingValue?.minLength, props.fieldSettingValue?.maxLength);
+    const validation = ValidateAll(formData, validationRules);
     if (!validation.isValid) {
       setValidState(validation);
 
@@ -77,9 +77,9 @@ const FormCreator = forwardRef((props, ref) => {
   const handleOnValidateField = (dataField) => {
 
     let validationObj = { ...validState }
-
+    // const valRule = getValidationRules(props.formFields);
     if (validationRules[dataField]) {
-      let validation = Validate(formData, validationRules, dataField, props.fieldSettingValue?.minLength, props.fieldSettingValue?.maxLength);
+      let validation = Validate(formData, validationRules, dataField);
       if (!validation.isValid) {
 
         validationObj.error[dataField] = validation.error[dataField];
@@ -107,17 +107,17 @@ const FormCreator = forwardRef((props, ref) => {
   return (
     // <MinMaxLengthValidatorContextProvider>
     <>
-      {props.formFields ? (
+      {props.config.formFields ? (
         <FormFields
-          fields={props.formFields}
+          fields={props.config.formFields}
           formData={formData}
           validState={validState}
           onActionChange={onActionHandle}
           onFormStateChange={handleStateChange}
           // onFormFieldChange={handleFormFieldChange}
           onUpdateValidation={handleOnValidateField}
-          formSetting={props.formSetting}
           handleInputGroupButton={props.handleInputGroupButton}
+          formSetting={props.config.formSetting}
         />
       ) : (
         <div>No fields configured</div>
