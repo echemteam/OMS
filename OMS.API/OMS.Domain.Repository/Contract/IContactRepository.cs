@@ -12,5 +12,9 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetPhoneByContactIdResponse>> GetPhoneByContactId(int contactId);
         Task<AddEntityDTO<int>> AddContactEmail(EmailDTO email);
         Task<AddEntityDTO<int>> AddContactPhone(PhoneDTO phone);
+        Task<AddEntityDTO<int>> UpdateContactEmail(EmailDTO email);
+        Task<AddEntityDTO<int>> UpdateContactPhone(PhoneDTO phone);
+        Task<AddEntityDTO<int>> DeleteContactEmail(int emailId, int deletedBy);
+        Task<AddEntityDTO<int>> DeleteContactPhone(int phoneId, int deletedBy);
     }
 }

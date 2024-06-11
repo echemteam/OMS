@@ -57,6 +57,28 @@ namespace OMS.Application.Services.Contact
             phoneDTO.CreatedBy = CurrentUserId;
             return await repositoryManager.contact.AddContactPhone(phoneDTO);
         }
+        public async Task<AddEntityDTO<int>> UpdateContactEmail(UpdateContactEmailRequest requestData, short CurrentUserId)
+        {
+            EmailDTO emailDTO = requestData.ToMapp<UpdateContactEmailRequest, EmailDTO>();
+            emailDTO.UpdatedBy = CurrentUserId;
+            return await repositoryManager.contact.UpdateContactEmail(emailDTO);
+        }
+
+        public async Task<AddEntityDTO<int>> UpdateContactPhone(UpdateContactPhoneRequest requestData, short CurrentUserId)
+        {
+            PhoneDTO phoneDTO = requestData.ToMapp<UpdateContactPhoneRequest, PhoneDTO>();
+            phoneDTO.UpdatedBy = CurrentUserId;
+            return await repositoryManager.contact.UpdateContactPhone(phoneDTO);
+        }
+        public async Task<AddEntityDTO<int>> DeleteContactEmail(int emailId, int deletedBy)
+        {
+            return await repositoryManager.contact.DeleteContactEmail(emailId, deletedBy);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteContactPhone(int phoneId, int deletedBy)
+        {
+            return await repositoryManager.contact.DeleteContactPhone(phoneId, deletedBy);
+        }
         #endregion
 
     }

@@ -6,6 +6,7 @@ using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository;
+using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.Application.Services.Customers
@@ -45,6 +46,11 @@ namespace OMS.Application.Services.Customers
         public async Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId)
         {
             return await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+        }
+        public async Task<EntityList<GetCustomersResponse>> GetCustomers(GetCustomersRequest queryRequest)
+        {
+            var customersDetails = await repositoryManager.customers.GetCustomers(queryRequest);
+            return customersDetails!;
         }
         #endregion
     }
