@@ -45,7 +45,7 @@ const NotesCard = ({ isAddEditModal }) => {
     <>
       <div className="row">
         {NotesList.map((notes, noteIndex) => (
-          <div className="col-xxl-4 col-xl-6 col-md-6 col-12" key={noteIndex}>
+          <div className="col-xxl-4 col-xl-6 col-md-6 col-12 pb-2" key={noteIndex}>
             <div className={`notes-card randomColor ${getRandomColor(noteIndex)}`}>
               <div className="card-content">
                 <div className="note-label  ">{notes.AssignBy}</div>
