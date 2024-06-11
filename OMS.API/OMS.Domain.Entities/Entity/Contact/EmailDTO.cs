@@ -6,7 +6,7 @@
         public string? EmailAddress { get; set; }
         public string? PhoneCode { get; set; }
         public long? ContactId { get; set; }
-        public string? OwnerType { get; set; }
+        public byte? OwnerTypeId { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? CreatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }

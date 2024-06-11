@@ -8,7 +8,7 @@ namespace OMS.Domain.Entities.Entity.Contact
         public string? PhoneNumber { get; set; }
         public string? PhoneCode { get; set; }
         public long? ContactId { get; set; }
-        public string? OwnerType { get; set; }
+        public byte? OwnerTypeId { get; set; }
         public short? PhoneTypeId { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? CreatedBy { get; set; }
