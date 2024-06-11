@@ -11,6 +11,7 @@ import SidebarModel from "../../components/ui/sidebarModel/SidebarModel";
 import SettingDetails from "./features/settingDetail/SettingDetails";
 import DocumentDetails from "./features/documentsDetail/DocumentDetails";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
+import NotesDetail from "./features/NotesDetail/NotesDetail";
 
 const ViewCustomer = () => {
   const nextRef = useRef(null);
@@ -51,6 +52,14 @@ const ViewCustomer = () => {
       component: (
         <div className="mt-2">
           <DocumentDetails />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "Notes",
+      component: (
+        <div className="mt-2">
+       <NotesDetail/>
         </div>
       ),
     },
