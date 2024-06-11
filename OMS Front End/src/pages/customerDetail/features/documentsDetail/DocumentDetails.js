@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import AddEditDocuments from "./features/AddEditDocuments";
@@ -6,14 +6,38 @@ import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import Buttons from "../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { DocumentFormData } from "./config/DocumentsData";
+import { useLazyGetAllDocumentTypesQuery } from "../../../../app/services/documentAPI";
 
 const DocumentDetails = () => {
   const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState(DocumentFormData);
   const documentFormRef = useRef();
+
+  const [getAllDocumentTypes, {
+    isFetching: isGetAllDocumentTypesFetching,
+    isSuccess: isGetAllDocumentTypesSucess,
+    data: allGetAllDocumentTypesData
+  },] = useLazyGetAllDocumentTypesQuery();
+
+  useEffect(() => {
+    getAllDocumentTypes()
+  }, [])
+
+  useEffect(() => {
+    if (!isGetAllDocumentTypesFetching && isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
+      const getData = allGetAllDocumentTypesData.map(item => ({
+        value: item.documentTypeId,
+        label: item.type
+      }))
+      const dropdownField = DocumentFormData.formFields.find(item => item.dataField === "documentTypeId");
+      dropdownField.fieldSetting.options = getData;
+    }
+  }, [isGetAllDocumentTypesFetching, isGetAllDocumentTypesSucess, allGetAllDocumentTypesData])
 
   const handleToggleModal = () => {
     setShowModal(!showModal);
   };
+
   return (
     <>
       <div className="document-section">
@@ -41,8 +65,8 @@ const DocumentDetails = () => {
           <div className="row horizontal-form">
             <FormCreator
               ref={documentFormRef}
-              {...DocumentFormData}
-              // onFormDataUpdate={handleFormDataChange}
+              {...formData}
+            // onFormDataUpdate={handleFormDataChange}
             />
             <div className="col-md-12 mt-2">
               <div className="d-flex align-item-end justify-content-end">
@@ -50,8 +74,8 @@ const DocumentDetails = () => {
                   <Buttons
                     buttonTypeClassName="theme-button"
                     buttonText="Add"
-                    // onClick={onHandleUser}
-                    // isLoading={EmailLoading || updateUserLoading}
+                  // onClick={onHandleUser}
+                  // isLoading={EmailLoading || updateUserLoading}
                   />
                   <Buttons
                     buttonTypeClassName="dark-btn ml-5"

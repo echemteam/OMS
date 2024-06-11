@@ -86,6 +86,13 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
+        [HttpGet("GetAllDocumentTypes")]
+        public async Task<IActionResult> GetAllDocumentTypes()
+        {
+            List<GetAllDocumentTypesResponse> responseData = await _serviceManager.commonServices.GetAllDocumentTypes().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
 
     }
 }

@@ -12,7 +12,6 @@ const PermissionList = (props) => {
 
     return (
         <div className="tree-section-view">
-            {console.log('isLoading', isLoading)}
             <div className="section-header-part">
                 {SecurityPermissionsGrid.map((column, index) => (
                     <div key={index} className={column.className}>{column.name}</div>

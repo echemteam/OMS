@@ -49,14 +49,13 @@ export default SecurityPermissions;
 export const SelectGrantDenyDropdown = [
     { value: 1, label: "Grant" },
     { value: 2, label: "Deny" },
-    { value: 6, label: "Empty" },
+    { value: 5, label: "None" }
 ];
 
 export const SelectViewEditDropdown = [
     { value: 3, label: "View Only" },
     { value: 4, label: "Read/Write" },
-    { value: 5, label: "None" },
-    { value: 6, label: "Empty" },
+    { value: 5, label: "None" }
 ];
 
 export const SecurityPermissionsGrid = [
