@@ -11,7 +11,7 @@ import SidebarModel from "../../components/ui/sidebarModel/SidebarModel";
 import SettingDetails from "./features/settingDetail/SettingDetails";
 import DocumentDetails from "./features/documentsDetail/DocumentDetails";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
-import NotesDetail from "./features/notesDetail/NotesDetail";
+import NotesDetail from "./features/NotesDetail/NotesDetail";
 import { useGetCustomersBasicInformationByIdQuery } from "../../app/services/basicdetailAPI";
 
 const ViewCustomer = () => {
