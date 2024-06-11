@@ -88,9 +88,10 @@ const ContactDetailForm = ({ onSidebarClose }) => {
     <div>
       <div className="row horizontal-form mt-4">
         <FormCreator
+          config={contactDetailFormData}
           ref={userFormRef}
           {...contactDetailFormData}
-          // onFormDataUpdate={handleFormDataChange}
+        // onFormDataUpdate={handleFormDataChange}
         />
         <div className="col-md-12 mt-3">
           <div className="d-flex align-item-end justify-content-end">
@@ -98,8 +99,8 @@ const ContactDetailForm = ({ onSidebarClose }) => {
               <Buttons
                 buttonTypeClassName="theme-button"
                 buttonText="Save"
-                // onClick={onHandleUser}
-                // isLoading={EmailLoading || updateUserLoading}
+              // onClick={onHandleUser}
+              // isLoading={EmailLoading || updateUserLoading}
               />
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"
@@ -129,7 +130,7 @@ const ContactDetailForm = ({ onSidebarClose }) => {
                   dataSource={emailData}
                   allowPagination={false}
                   onActionChange={actionHandler}
-                  // onPageChange={handlePageChange}
+                // onPageChange={handlePageChange}
                 />
               </div>
             </div>
@@ -153,7 +154,7 @@ const ContactDetailForm = ({ onSidebarClose }) => {
                   dataSource={contactData}
                   allowPagination={false}
                   onActionChange={contactActionHandler}
-                  // onPageChange={handlePageChange}
+                // onPageChange={handlePageChange}
                 />
               </div>
             </div>

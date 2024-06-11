@@ -80,7 +80,9 @@ const getValidationRule = (element, validation) => {
         case "taxId":
             valObj = {
                 type: validation.type,
-                message: ErrorMessage.FieldRequired.replace("{0}", "valid Tax Id")
+                message: ErrorMessage.FieldRequired.replace("{0}", "valid Tax Id"),
+                minLength: validation.minLength,
+                maxLength: validation.maxLength
             }
             break;
         default:

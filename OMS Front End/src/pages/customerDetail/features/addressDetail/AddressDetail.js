@@ -158,7 +158,7 @@ const AddressDetail = (props) => {
   }
 
   const handleChangeDropdownList = (data, dataField) => {
-    const manageData = {...formData}
+    const manageData = { ...formData }
     if (dataField === 'countryId') {
       const dataValue = selectedState?.filter(item => item.countryId === data.value).map(item => ({
         value: item.stateId,
@@ -282,6 +282,7 @@ const AddressDetail = (props) => {
       >
         <div className="row horizontal-form mt-3">
           <FormCreator
+            config={formData}
             ref={userFormRef}
             {...formData}
             onActionChange={formActionHandler}

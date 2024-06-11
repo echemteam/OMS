@@ -125,7 +125,7 @@ export const basicDetailFormDataHalf = {
         minLength: 0,
         maxLength: 10,
       },
-      validation: [{ type: "require" }, { type: "taxId" }],
+      validation: [{ type: "require" }, { type: "taxId", minLength: 0, maxLength: 10 }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
