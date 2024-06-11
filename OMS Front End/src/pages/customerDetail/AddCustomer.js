@@ -7,12 +7,15 @@ import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 import DocumentDetails from "./features/documentsDetail/DocumentDetails";
+import SwalAlert from "../../services/swalService/SwalService";
 
 
 const AddCustomer = () => {
   const nextRef = useRef(null);
+  const { error } = SwalAlert();
   const [customerKeyId, setCustomerKeyId] = useState(0)
   const [activeTab, setActiveTab] = useState(0);
+  const [addressNext, setAddressNext] = useState()
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -20,7 +23,11 @@ const AddCustomer = () => {
 
   const addCustomer = () => {
     if (customerKeyId > 0) {
-      setActiveTab((prev) => prev + 1);
+      if(addressNext.length > 0){
+        setActiveTab((prev) => prev + 1);
+      }else{
+        error("Please enter Address");
+      }
     } else {
       if (nextRef.current) {
         nextRef.current.handleAddBasicDetails();
@@ -40,6 +47,10 @@ const AddCustomer = () => {
     setCustomerKeyId(data)
   }
 
+  const handleAddressNext = (data) => {
+    setAddressNext(data)
+  }
+
   const tabContent = [
     {
       label: "Basic Information",
@@ -49,7 +60,7 @@ const AddCustomer = () => {
     {
       label: "Address",
       subLabel: "Enter Address Details",
-      content: <AddressDetail />,
+      content: <AddressDetail customerKeyId={customerKeyId} onAddressNext={handleAddressNext} />,
     },
     {
       label: "Contact",
@@ -63,9 +74,9 @@ const AddCustomer = () => {
     },
   ];
 
-  const handleTabClick = (index) => {
-    setActiveTab(index);
-  };
+  // const handleTabClick = (index) => {
+  //   setActiveTab(index);
+  // };
 
   return (
     <>
@@ -78,7 +89,7 @@ const AddCustomer = () => {
                   <React.Fragment key={index}>
                     <div className={`step ${activeTab === index ? 'active' : ''}`}>
                       <button className="step-button"
-                        onClick={() => handleTabClick(index)}
+                        // onClick={() => handleTabClick(index)}
                       >
                         <span className="stepper-box">{index + 1}</span>
                         <span className="stepper-label">

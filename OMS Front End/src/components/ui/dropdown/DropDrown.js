@@ -3,8 +3,7 @@ import DropdownSelect from "./DropdownSelect"
 
 const DropDown = (props) => {
 
-
-  const defaultSelectedOption = props.value ? props.options.find(option => option.value === props.value) : null;
+  const defaultSelectedOption = props.value ? props.options?.find(option => option.value === props.value) : null;
 
   const defaultSelectedOptionMultiSelect = Array.isArray(props.value) ?
     props.options.filter(option => props.value.includes(option.value)) : [];

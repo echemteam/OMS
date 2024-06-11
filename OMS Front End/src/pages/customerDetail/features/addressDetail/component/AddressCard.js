@@ -3,116 +3,65 @@ import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import { Accordion } from "react-bootstrap";
 
-const AddressCard = ({ isAddEditModal }) => {
-  // Set the initial state to the first address title
-  const [activeKey, setActiveKey] = useState("Shipping Address");
-  const addressTypes = [
-    {
-      addressTitle: "Shipping Address",
-      addresses: [
-        {
-          name: "Gregory Cartwright",
-          street: "936 Kiehn Route",
-          city: "West Ned",
-          state: "Tennessee",
-          country: "USA",
-          zip: "11230",
-        },
-        {
-          name: "Jane Doe",
-          street: "123 Main St",
-          city: "Springfield",
-          state: "Illinois",
-          country: "USA",
-          zip: "62704",
-        },
-      ],
-    },
-    {
-      addressTitle: "Billing Address",
-      addresses: [
-        {
-          name: "Gregory Cartwright",
-          street: "936 Kiehn Route",
-          city: "West Ned",
-          state: "Tennessee",
-          country: "USA",
-          zip: "11230",
-        },
-        {
-          name: "Jane Doe",
-          street: "123 Main St",
-          city: "Springfield",
-          state: "Illinois",
-          country: "USA",
-          zip: "62704",
-        },
-      ],
-    },
-    {
-      addressTitle: "AP Address",
-      addresses: [
-        {
-          name: "Gregory Cartwright",
-          street: "936 Kiehn Route",
-          city: "West Ned",
-          state: "Tennessee",
-          country: "USA",
-          zip: "11230",
-        },
-        {
-          name: "Jane Doe",
-          street: "123 Main St",
-          city: "Springfield",
-          state: "Illinois",
-          country: "USA",
-          zip: "62704",
-        },
-      ],
-    },
-  ];
+const AddressCard = ({ isAddEditModal, addressData , onHandleSetData}) => {
+
+  const [activeKey, setActiveKey] = useState(null);
 
   const handleToggle = (eventKey) => {
     setActiveKey(eventKey === activeKey ? null : eventKey);
   };
 
+  if (!Array.isArray(addressData) || addressData.length === 0) {
+    return <div className="no-address">No addresses available</div>;
+  }
+
+  const groupedAddresses = addressData.reduce((acc, address) => {
+    if (!acc[address.addressTypeId]) {
+      acc[address.addressTypeId] = [];
+    }
+    acc[address.addressTypeId].push(address);
+    return acc;
+  }, {});
+
+  const handleEdit = (data) => {
+    isAddEditModal()
+    onHandleSetData(data)
+  }
+
   return (
     <>
       <Accordion className="address-card-section" activeKey={activeKey} onSelect={handleToggle}>
-        {addressTypes.map((addressType, index) => (
+        {Object.keys(groupedAddresses).map((addressTypeId, index) => (
           <Accordion.Item
-            eventKey={addressType.addressTitle.toString()}
-            className={activeKey === addressType.addressTitle.toString() ? "active" : ""}
-            key={index}
+            eventKey={addressTypeId}
+            className={activeKey === addressTypeId ? "active" : ""}
+            key={addressTypeId}
           >
             <div className="header-title-btn">
               <Accordion.Header>
                 <div>
-                  <span>{addressType.addressTitle}</span>
+                  <span>{groupedAddresses[addressTypeId][0].type}</span>
                 </div>
               </Accordion.Header>
             </div>
             <Accordion.Body className="add-desc-part">
               <div className="row">
-                {addressType.addresses.map((address, addrIndex) => (
+                {groupedAddresses[addressTypeId].map((address, addrIndex) => (
                   <div className="col-xxl-4 col-xl-6 col-md-6 col-12" key={addrIndex}>
                     <div className="address-card">
                       <div className="add-line">
-                        <span className="label-txt">{address.name}</span>
-                        <span className="label-txt">{address.street}</span>
-                        <span className="label-txt">{address.city}</span>
-                        <span className="label-txt">{address.state}</span>
+                        <span className="label-txt">{address.addressLine1}</span>
+                        <span className="label-txt">{address.addressLine2}</span>
+                        <span className="label-txt">{address.cityName}</span>
+                        <span className="label-txt">{address.stateName}</span>
                         <span className="label-txt">
-                          {address.country} - <span>{address.zip}</span>
+                          {address.countryName} - <span>{address.zipCode}</span>
                         </span>
                       </div>
                       <div className="edit-delete-button">
-                        <button onClick={isAddEditModal} className="edit-btn">
+                        <button onClick={() => handleEdit(address.addressId)} className="edit-btn">
                           <Image imagePath={AppIcons.editThemeIcon} />
                         </button>
-                        {/* <button onClick="" className="edit-btn ml-1 mr-1">
-                          <Image imagePath={AppIcons.deleteThemeIcon} />
-                        </button> */}
                       </div>
                     </div>
                   </div>
@@ -125,5 +74,9 @@ const AddressCard = ({ isAddEditModal }) => {
     </>
   );
 };
+
+{/* <button onClick="" className="edit-btn ml-1 mr-1">
+                          <Image imagePath={AppIcons.deleteThemeIcon} />
+                        </button> */}
 
 export default AddressCard;
