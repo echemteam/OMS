@@ -7,11 +7,11 @@ export const addEditContactsFormData = {
   formFields: [
     
     {
-      id: "contactNumber",
+      id: "phoneCode",
       lable: "Contact Number :",
-      Field_Name: "Country Code",
+      Field_Name: "Phone Code",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "Input",
+      dataField: "phoneCode",
       fieldSetting: {
         placeholder: "",
         allowSpace: true,
@@ -26,7 +26,7 @@ export const addEditContactsFormData = {
       lable: "",
       Field_Name: "Contact Number",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
+      dataField: "contactNumber",
       fieldSetting: {
         placeholder: "Enter Contact Number",
         allowSpace: true,

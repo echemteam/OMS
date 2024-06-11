@@ -1,5 +1,5 @@
 @import "./Variables.scss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
 /* // Common Styles Start */
 
@@ -29,7 +29,6 @@ a {
 
 .input-label-part {
   width: 100%;
-
 }
 
 .input-label {
@@ -51,7 +50,6 @@ a {
     font-size: inherit !important;
   }
 }
-
 
 // custom-margin start
 .m-0 {
@@ -243,8 +241,6 @@ a {
 
 // custom-padding end
 
-
-
 // Common Styling Start
 
 .main-page-layout {
@@ -319,7 +315,6 @@ a {
         width: 70px;
 
         .sidebar {
-
           .main-menus {
             .sidebar-brand {
               font-size: 160%;
@@ -377,7 +372,6 @@ a {
           width: 260px;
 
           .sidebar {
-
             .main-menus {
               .sidebar-brand {
                 font-size: 28px;
@@ -436,7 +430,6 @@ a {
 
       .middle-page-section {}
     }
-
   }
 }
 
@@ -447,7 +440,6 @@ a {
     color: var(--themeColor);
   }
 }
-
 
 .horizontal-form {
   .input-label-part {
@@ -471,7 +463,6 @@ a {
 
   .input-field-sec {
     &.text-area {
-
       .input-label-part {
         display: flex;
         align-items: flex-start;
@@ -482,7 +473,6 @@ a {
     .checkbox-label-part {
       margin-left: 135px;
     }
-
   }
 
   .margin-left0-checkbox {
@@ -526,7 +516,7 @@ a {
   border-radius: 12px;
   margin-bottom: 20px;
   border: none;
-  box-shadow: 0 2px 6px 0 rgba(67, 89, 113, .12);
+  box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.12);
 
   &.card-px-0 {
     padding: 12px 0;
@@ -555,14 +545,11 @@ a {
       bottom: 0;
     }
 
-
-
     .btn-right-sec {
       button {
         margin-left: 20px;
       }
     }
-
   }
 
   .card-title,
@@ -593,7 +580,6 @@ a {
   }
 
   .card-title {
-
     &.border-b {
       padding-bottom: 10px;
       border-bottom: 1px solid var(--inputBorder);
@@ -648,10 +634,6 @@ a {
     }
   }
 }
-
-
-
-
 
 .card-bottom-m-0 {
   // max-height: calc(100vh - 162px);
@@ -774,10 +756,7 @@ a {
           border-right: 1px solid var(--themeColor);
           color: var(--whiteColor);
           border-left: 4px solid var(--textColor);
-
-
         }
-
       }
     }
 
@@ -797,8 +776,6 @@ a {
 }
 
 .other-info-tab {
-
-
   .tab-section {
     .tab-content {
       padding-top: 0;
@@ -812,8 +789,6 @@ a {
 
 // Tab Section End
 
-
-
 ::-webkit-scrollbar {
   width: 5px;
   height: 8px;
@@ -825,12 +800,10 @@ a {
 }
 
 .border-right-0 {
-
   .css-13cymwt-control {
     border-right: 1px solid transparent !important;
     border-bottom-right-radius: 0 !important;
     border-top-right-radius: 0 !important;
-
   }
 
   .css-12zf3ro-control,
@@ -856,7 +829,6 @@ a {
       border-bottom-left-radius: 0 !important;
     }
   }
-
 }
 
 .contact-card-section,
@@ -883,7 +855,6 @@ a {
             color: var(--themeColor);
           }
         }
-
       }
     }
   }
@@ -945,7 +916,6 @@ a {
 }
 
 .contact-card-section {
-
   .contact-type-title {
     background: var(--cardTitleBg);
     padding: 5px 10px;
@@ -959,7 +929,6 @@ a {
       font-size: 115%;
       margin: 0;
     }
-
   }
 
   .add-desc-part {
@@ -981,6 +950,7 @@ a {
           display: flex;
           align-items: center;
           margin-bottom: 5px;
+
           span {
             &.icon {
               min-height: 40px;
@@ -1070,7 +1040,6 @@ a {
   }
 }
 
-
 .basic-left-part {
   .card {
     .edit-icon {
@@ -1093,7 +1062,6 @@ a {
 
 .document-list-sec {
   .document-listing {
-
     .documents {
       display: flex;
       align-items: center;
@@ -1111,7 +1079,6 @@ a {
         img {
           width: 40px;
         }
-
       }
 
       .right-desc {
@@ -1151,7 +1118,6 @@ a {
             }
           }
         }
-
       }
 
       &:hover {
@@ -1159,76 +1125,216 @@ a {
         border-color: var(--themeColorLight);
       }
     }
-
   }
 }
 
-.document-section{
-.card-body-sec{
-  margin-top: 0 !important;
-}
-}
-
-@media only screen and (max-width: 1600px) {
-  .input-label {
-    font-size: 84%;
+.document-section {
+  .card-body-sec {
+    margin-top: 0 !important;
   }
 
-  .checkbox-label-part {
+  .no-address {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--textColor);
+  }
+
+  .no-address {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--textColor);
+  }
+
+  .document-section {
+    .card-body-sec {
+      margin-top: 0 !important;
+    }
+  }
+
+  @media only screen and (max-width: 1600px) {
     .input-label {
       font-size: 84%;
     }
-  }
 
-  .basic-customer-detail {
-    .profile-info {
-      h5 {
-        font-size: 100% !important;
+    .checkbox-label-part {
+      .input-label {
+        font-size: 84%;
+      }
+    }
+
+    .basic-customer-detail {
+      .profile-info {
+        h5 {
+          font-size: 100% !important;
+        }
+
+        .input-label-part {
+          span {
+            font-size: 89%;
+          }
+        }
       }
 
+      .field-desc {
+        font-size: 87%;
+      }
+    }
+
+    .horizontal-form {
       .input-label-part {
-        span {
-          font-size: 89%;
+        .input-label-title {
+          min-width: 120px;
+          max-width: 120px;
         }
       }
     }
+  }
 
-    .field-desc {
-      font-size: 87%;
+  @media only screen and (max-width: 1560px) {
+    .card {
+      padding: 15px;
     }
   }
 
-  .horizontal-form {
-    .input-label-part {
-      .input-label-title {
-        min-width: 120px;
-        max-width: 120px;
+  @media only screen and (max-width: 1366px) {
+    .mb-2 {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  @media only screen and (max-width: 1280px) {
+    .css-1hb7zxy-IndicatorsContainer {
+      .css-1xc3v61-indicatorContainer {
+        padding: 0 !important;
+      }
+    }
+
+    .css-qbdosj-Input {
+      margin: 0;
+    }
+  }
+
+}
+
+.notes-card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--card-shadow);
+  margin: 10px 0;
+  // background: #fec971;
+  height: 100%;
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    height: 100%;
+  }
+
+  .note-text {
+    p {
+      font-size: 12px;
+      color: var(--blackColor);
+      margin-bottom: 0;
+      font-weight: 600;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  .note-label {
+    font-size: 110%;
+    color: var(--textColor);
+    margin-bottom: 5px;
+
+
+  }
+
+  .bottom-info {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .note-date {
+    font-size: 85%;
+    color: var(--textColor);
+  }
+
+  .card-notes {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-top: -10px;
+
+    .edit-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .edit-btn {
+
+        background: transparent;
+        padding: 7px;
+
+        min-width: 30px;
+        background-color: var(--lightDarkblack);
+        border-radius: 50%;
+        transition: 0.5s all;
+
+        img {
+          width: 15px;
+          margin: 0 auto;
+          filter: brightness(0);
+        }
+
+        &:hover {
+          background: var(--blackColor);
+
+          img {
+            filter: brightness(100);
+          }
+        }
       }
     }
   }
-  
-}
-@media only screen and (max-width: 1560px) {
-   .card {
-    padding: 15px;
-  }
 }
 
-@media only screen and (max-width: 1366px) {
-  .mb-2 {
-    margin-bottom: 0 !important;
+.randomColor {
+  &.lightOrange {
+    background: var(--lightOrange);
   }
-}
 
-@media only screen and (max-width: 1280px) {
- 
-
-  .css-1hb7zxy-IndicatorsContainer {
-    .css-1xc3v61-indicatorContainer {
-      padding: 0 !important;
-    }
+  &.lightBlue {
+    background: var(--lightBlue);
   }
-  .css-qbdosj-Input{
-    margin: 0;
+
+  &.lightGreen {
+    background: var(--lightGreen);
+  }
+
+  &.lightYellow {
+    background: var(--lightYellow);
+  }
+
+  &.lightPink {
+    background: var(--lightPink);
+  }
+
+  &.lightPurple {
+    background: var(--lightPurple);
+  }
+
+  &.lightGray {
+    background: var(--lightGray);
   }
 }

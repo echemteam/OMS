@@ -19,6 +19,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLCITIES = "GetAllCities";
         const string GETALLCONTACTTYPES = "GetAllContactTypes";
         const string GETALLADDRESSTYPES = "GetAllAddressTypes";
+        const string GETALLDOCUMENTTYPES = "GetAllDocumentTypes";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -72,6 +73,10 @@ namespace OMS.Domain.Repository.Implementation
         public async Task<List<GetAllContactTypesResponse>> GetAllContactTypes()
         {
             return await _context.GetList<GetAllContactTypesResponse>(GETALLCONTACTTYPES, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllDocumentTypesResponse>> GetAllDocumentTypes()
+        {
+            return await _context.GetList<GetAllDocumentTypesResponse>(GETALLDOCUMENTTYPES, commandType: CommandType.StoredProcedure);
         }
     }
 }

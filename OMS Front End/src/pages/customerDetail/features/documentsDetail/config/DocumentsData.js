@@ -3,14 +3,14 @@ import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const DocumentFormData = {
   name: "Document Form",
-  initialState: { type: "" },
+  initialState: { documentTypeId: "" , type:""},
   formFields: [
     {
-      id: "documentType",
+      id: "documentTypeId",
       lable: "Document Type :",
       Field_Name: "Document Type",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "Input",
+      dataField: "documentTypeId",
       fieldSetting: {
         placeholder: "Select Document Type",
         allowSpace: true,

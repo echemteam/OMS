@@ -122,6 +122,8 @@ export const basicDetailFormDataHalf = {
       fieldSetting: {
         placeholder: "Text Id",
         allowSpace: true,
+        minLength: 0,
+        maxLength: 10,
       },
       validation: [{ type: "require" }, { type: "taxId" }],
       style: {
@@ -140,7 +142,7 @@ export const basicDetailFormDataHalf = {
         placeholder: "Enter Invoice Submission Instruction",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-2",
       },
@@ -155,7 +157,7 @@ export const basicDetailFormDataHalf = {
         placeholder: "Enter Notes",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },

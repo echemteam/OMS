@@ -1,15 +1,15 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const addressFormData = {
-  name: "Email From",
-  initialState: { type: "" , name:"" },
+  // name: "Email From",
+  initialState: { addressTypeId: ""  , addressLine1:"" , addressLine2:"" , addressLine3:"" , addressLine4:"" , addressLine5 :"" , countryId:"" , stateId:"" ,zipCode:"", cityId:""},
   formFields: [
     {
       id: "addressTypeId",
       lable: "Address Type :",
       Field_Name: "Address Type",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "type",
+      dataField: "addressTypeId",
       fieldSetting: {
         placeholder: "Select Address Type",
         allowSpace: true,
@@ -25,7 +25,7 @@ export const addressFormData = {
       lable: "Address Line 1 :",
       Field_Name: "Address Line 1",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
+      dataField: "addressLine1",
       fieldSetting: {
         placeholder: "Enter Address Line 1",
         allowSpace: true,
@@ -40,12 +40,12 @@ export const addressFormData = {
       lable: "Address Line 2 :",
       Field_Name: "Address Line 2",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
+      dataField: "addressLine2",
       fieldSetting: {
-        placeholder: "Enter Address Line 1",
+        placeholder: "Enter Address Line 2",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
@@ -55,12 +55,12 @@ export const addressFormData = {
       lable: "Address Line 3 :",
       Field_Name: "Address Line 3",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
+      dataField: "addressLine3",
       fieldSetting: {
         placeholder: "Enter Address Line 3",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
@@ -70,12 +70,12 @@ export const addressFormData = {
       lable: "Address Line 4 :",
       Field_Name: "Address Line 4",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
+      dataField: "addressLine4",
       fieldSetting: {
         placeholder: "Enter Address Line 4",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
@@ -85,12 +85,12 @@ export const addressFormData = {
       lable: "Address Line 5 :",
       Field_Name: "Address Line 5",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
+      dataField: "addressLine5",
       fieldSetting: {
         placeholder: "Enter Address Line 5",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
@@ -147,7 +147,7 @@ export const addressFormData = {
       lable: "Zip Code :",
       Field_Name: "Zip Code",
       fieldType: FormFieldTypes.NUMERIC,
-      dataField: "Zip Code",
+      dataField: "zipCode",
       fieldSetting: {
         placeholder: "Enter Zip Code",
         allowSpace: true,
@@ -157,36 +157,36 @@ export const addressFormData = {
         containerCss: "col-xxl-6 col-xl-8 col-md-8 col-12 mb-2",
       },
     },
-    {
-      id: "isCompany",
-      lable: "Is Default",
-      Field_Name: "Is Default",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "Is Default",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
-      },
-    },
-    {
-      id: "isCompany",
-      lable: "Is Company",
-      Field_Name: "Is Company",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "Is Company",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
-      },
-    },
+    // {
+    //   id: "isCompany",
+    //   lable: "Is Default",
+    //   Field_Name: "Is Default",
+    //   fieldType: FormFieldTypes.CHECKBOX,
+    //   dataField: "Is Default",
+    //   fieldSetting: {
+    //     placeholder: "",
+    //     allowSpace: true,
+    //   },
+    //   validation: [{ type: "require" }],
+    //   style: {
+    //     containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+    //   },
+    // },
+    // {
+    //   id: "isCompany",
+    //   lable: "Is Company",
+    //   Field_Name: "Is Company",
+    //   fieldType: FormFieldTypes.CHECKBOX,
+    //   dataField: "Is Company",
+    //   fieldSetting: {
+    //     placeholder: "",
+    //     allowSpace: true,
+    //   },
+    //   validation: [{ type: "require" }],
+    //   style: {
+    //     containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+    //   },
+    // },
     
     // {
     //   id: "gender",

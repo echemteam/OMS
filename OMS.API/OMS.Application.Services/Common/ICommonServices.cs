@@ -13,5 +13,6 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllCitiesResponse>> GetAllCities();
         Task<List<GetAllContactTypesResponse>> GetAllContactTypes();
         Task<List<GetAllAddressTypesResponse>> GetAllAddressTypes();
+        Task<List<GetAllDocumentTypesResponse>> GetAllDocumentTypes();
     }
 }

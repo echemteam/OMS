@@ -43,20 +43,20 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
-        //[HttpPost("AddEmail")]
-        //public async Task<IActionResult> AddEmail(AddEmailRequest requestData)
-        //{
-        //    var addItem = await _serviceManager.contactService.AddEmail(requestData, CurrentUserId);
-        //    return APISucessResponce(addItem);
-        //}
+        [HttpPost("AddContactEmail")]
+        public async Task<IActionResult> AddContactEmail(AddContactEmailRequest requestData)
+        {
+            var addItem = await _serviceManager.contactService.AddContactEmail(requestData, CurrentUserId);
+            return APISucessResponce(addItem);
+        }
 
-        //[HttpPost("AddPhone")]
-        //public async Task<IActionResult> AddPhone(AddPhoneRequest requestData)
-        //{
+        [HttpPost("AddContactPhone")]   
+        public async Task<IActionResult> AddContactPhone(AddContactPhoneRequest requestData)
+        {
 
-        //    var addItem = await _serviceManager.contactService.AddPhone(requestData, CurrentUserId);
-        //    return APISucessResponce(addItem);
-        //}
+            var addItem = await _serviceManager.contactService.AddContactPhone(requestData, CurrentUserId);
+            return APISucessResponce(addItem);
+        }
         #endregion
 
     }
