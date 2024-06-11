@@ -779,7 +779,7 @@ a {
 // Tab Section End
 
 .main-customer-grid {
-  .card-body-sec{
+  .card-body-sec {
     margin-top: 0;
   }
   .tab-section {
@@ -887,7 +887,7 @@ a {
 
 .main-customer-grid {
   .main-inactive-grid {
-    .card-body-sec{
+    .card-body-sec {
       margin-top: 0;
     }
     .tab-sub-section {
@@ -1270,25 +1270,17 @@ a {
   }
 }
 
+.no-address {
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--textColor);
+}
+
 .document-section {
   .card-body-sec {
     margin-top: 0 !important;
-  }
-
-  .no-address {
-    display: flex;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--textColor);
-  }
-
-  .no-address {
-    display: flex;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--textColor);
   }
 
   .document-section {
@@ -1359,7 +1351,6 @@ a {
       margin: 0;
     }
   }
-
 }
 
 .notes-card {
@@ -1394,8 +1385,6 @@ a {
     font-size: 110%;
     color: var(--textColor);
     margin-bottom: 5px;
-
-
   }
 
   .bottom-info {
@@ -1424,7 +1413,6 @@ a {
       justify-content: center;
 
       .edit-btn {
-
         background: transparent;
         padding: 7px;
 
