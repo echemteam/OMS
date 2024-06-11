@@ -778,7 +778,10 @@ a {
 }
 // Tab Section End
 
-.other-info-tab {
+.main-customer-grid {
+  .card-body-sec{
+    margin-top: 0;
+  }
   .tab-section {
     margin-bottom: 30px;
 
@@ -877,6 +880,52 @@ a {
 
       .card-body-sec {
         margin-top: 10px;
+      }
+    }
+  }
+}
+
+.main-customer-grid {
+  .main-inactive-grid {
+    .card-body-sec{
+      margin-top: 0;
+    }
+    .tab-sub-section {
+      margin-bottom: 30px;
+      margin-left: 20px;
+
+      .tab-sub-header {
+        border-bottom: 1px solid var(--linkMenu);
+        background: var(--whiteColor);
+
+        button {
+          padding: 7px 25px 7px;
+          border: none;
+          background: var(--whiteColor);
+          border-radius: 0px;
+          font-weight: 600;
+          font-size: 13px;
+          border: none;
+          border-right: 1px solid var(--whiteColor);
+          margin-right: 0;
+          color: var(--textColor);
+
+          &.active {
+            margin-bottom: 0;
+            color: #000;
+            position: relative;
+            padding-bottom: 15px;
+            font-size: 15px;
+            border-bottom: 2px solid var(--themeColor);
+          }
+        }
+      }
+
+      .tab-sub-content {
+        padding-top: 0;
+
+        .tab-sub-body-section {
+        }
       }
     }
   }
