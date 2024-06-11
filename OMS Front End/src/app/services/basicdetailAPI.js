@@ -41,6 +41,15 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getCustomersBasicInformationById: builder.query({
+            query: (userID) => ({
+                url: encryptQueryString(`/Customers/GetCustomersBasicInformationById/?customerId=${Number(userID)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+
+        }),
     })
 })
 
@@ -48,6 +57,7 @@ export const {
     useLazyGetAllGroupTypesQuery,
     useLazyGetAllTerritoriesQuery,
     useLazyGetAllCountriesQuery,
+    useGetCustomersBasicInformationByIdQuery,
     useAddCustomersBasicInformationMutation,
 } = basicdetailAPI
 

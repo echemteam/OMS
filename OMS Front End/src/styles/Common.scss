@@ -1163,6 +1163,14 @@ a {
   }
 }
 
+.no-address{
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--textColor);
+}
+
 .document-section{
 .card-body-sec{
   margin-top: 0 !important;

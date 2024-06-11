@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./ViewCustomer.scss";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import BasicDetail from "./features/basicDetail/BasicDetail";
@@ -11,10 +11,25 @@ import SidebarModel from "../../components/ui/sidebarModel/SidebarModel";
 import SettingDetails from "./features/settingDetail/SettingDetails";
 import DocumentDetails from "./features/documentsDetail/DocumentDetails";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { useGetCustomersBasicInformationByIdQuery } from "../../app/services/basicdetailAPI";
 
 const ViewCustomer = () => {
   const nextRef = useRef(null);
   const [isModelOpen, setisModelOpen] = useState(false);
+
+  // const [
+  //   getCustomersBasicInformationById,
+  //   {
+  //     isFetching: isGetCustomersBasicInformationByIdFetching,
+  //     isSuccess: isGetCustomersBasicInformationById,
+  //     data: GetCustomersBasicInformationByIdData,
+  //   },
+  // ] = useGetCustomersBasicInformationByIdQuery();
+
+  useEffect(() => {
+    // getCustomersBasicInformationById()
+  }, [])
+
   const handleToggleModal = () => {
     setisModelOpen(true);
   };

@@ -6,16 +6,19 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import AddressCard from "./component/AddressCard";
-import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../app/services/addressAPI";
+import { useAddAddressMutation, useLazyGetAddresssByCustomerIdQuery, useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery, useUpdateAddAddressMutation } from "../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
+import ToastService from "../../../../services/toastService/ToastService";
 
-const AddressDetail = () => {
+const AddressDetail = (props) => {
   const userFormRef = useRef();
   const [isModelOpen, setisModelOpen] = useState(false);
   const [formData, setFormData] = useState(addressFormData);
-  // const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
+  const [addressData, setAddressData] = useState();
+  const [updateSetData, setUpdateSetData] = useState();
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const [getAllAddressTypes, {
     isFetching: isGetAllAddressTypesFetching,
@@ -41,20 +44,49 @@ const AddressDetail = () => {
     data: allGetAllCitiesData
   },] = useLazyGetAllCitiesQuery();
 
+  const [addAddress, {
+    isLoading: isAddAddressLoading,
+    isSuccess: isAddAddressSuccess,
+    data: isAddAddressData,
+  },] = useAddAddressMutation();
+
+  const [updateAddAddress, {
+    isLoading: isUpdateAddAddressLoading,
+    isSuccess: isUpdateAddAddressSuccess,
+    data: isUpdateAddAddressData,
+  },] = useUpdateAddAddressMutation();
+
+  const [
+    getAddresssByCustomerId,
+    {
+      isFetching: isGetAddresssByCustomerIdFetching,
+      isSuccess: isGetAddresssByCustomerId,
+      data: GetAddresssByCustomerIdData,
+    },
+  ] = useLazyGetAddresssByCustomerIdQuery();
+
   useEffect(() => {
     getAllAddressTypes()
     getAllCountries()
     getAllStates()
     getAllCities()
+    getAddresssByCustomerId(props.customerKeyId)
   }, [])
+
+  useEffect(() => {
+    if (!isGetAddresssByCustomerIdFetching && isGetAddresssByCustomerId && GetAddresssByCustomerIdData) {
+      setAddressData(GetAddresssByCustomerIdData)
+      props.onAddressNext(GetAddresssByCustomerIdData)
+    }
+  }, [isGetAddresssByCustomerIdFetching, isGetAddresssByCustomerId, GetAddresssByCustomerIdData]);
 
   useEffect(() => {
     if (!isGetAllAddressTypesFetching && isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
       const getData = allGetAllAddressTypesData.map(item => ({
-        value: item.groupTypeId,
+        value: item.addressTypeId,
         label: item.type
       }))
-      const dropdownField = addressFormData.formFields.find(item => item.dataField === "type");
+      const dropdownField = addressFormData.formFields.find(item => item.dataField === "addressTypeId");
       dropdownField.fieldSetting.options = getData;
     }
   }, [isGetAllAddressTypesFetching, isGetAllAddressTypesSucess, allGetAllAddressTypesData])
@@ -73,40 +105,153 @@ const AddressDetail = () => {
   useEffect(() => {
     if (!isGetAllStatesFetching && isGetAllStatesSucess && allGetAllStatesData) {
       setSelectedState(allGetAllStatesData)
+      setShouldRerenderFormCreator(prevState => !prevState);
     }
   }, [isGetAllStatesFetching, isGetAllStatesSucess, allGetAllStatesData])
 
   useEffect(() => {
     if (!isGetAllCitiesFetching && isGetAllCitiesSucess && allGetAllCitiesData) {
       setSelectedCity(allGetAllCitiesData)
+      setShouldRerenderFormCreator(prevState => !prevState);
     }
   }, [isGetAllCitiesFetching, isGetAllCitiesSucess, allGetAllCitiesData])
 
   const handleToggleModal = () => {
     setisModelOpen(true);
   };
+
+  const handleSetData = (data) => {
+    setUpdateSetData(data)
+    const setDataArray = addressData?.filter(x => x.addressId === data)
+    if (setDataArray && setDataArray.length > 0) {
+      const setData = setDataArray[0];
+      let req = {
+        customerId: props.customerKeyId,
+        addressTypeId: setData.addressTypeId,
+        addressLine1: setData.addressLine1,
+        addressLine2: setData.addressLine2,
+        addressLine3: setData.addressLine3,
+        addressLine4: setData.addressLine4,
+        addressLine5: setData.addressLine5,
+        countryId: setData.countryId,
+        stateId: setData.stateId,
+        cityId: setData.cityId,
+        zipCode: setData.zipCode
+      }
+      setFormData({
+        ...formData,
+        initialState: req
+      });
+    }
+  }
+
   const onSidebarClose = () => {
     setisModelOpen(false);
+    onreset()
   };
 
+  const onreset = () => {
+    let restData = { ...addressFormData };
+    restData.initialState = { ...formData };
+    setFormData(restData);
+    setUpdateSetData()
+  }
+
   const handleChangeDropdownList = (data, dataField) => {
+    const manageData = {...formData}
     if (dataField === 'countryId') {
       const dataValue = selectedState?.filter(item => item.countryId === data.value).map(item => ({
         value: item.stateId,
         label: item.name,
       }));
-      const dropdownFieldIndex = addressFormData.formFields.findIndex(item => item.dataField === "stateId");
-      addressFormData.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
-      addressFormData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
+      const dropdownFieldIndex = manageData.formFields.findIndex(item => item.dataField === "stateId");
+      manageData.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
+      manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
+
+      manageData.dropdownField = addressFormData.formFields[dropdownFieldIndex];
+      manageData.initialState = {
+        ...formData.initialState,
+        countryId: data.value,
+        stateId: null
+      };
+      manageData.initialState = { ...formData.initialState, countryId: data.value, stateId: null };
+      setFormData(manageData)
     }
     else if (dataField === 'stateId') {
       const dataValue = selectedCity?.filter(item => item.stateId === data.value).map(item => ({
         value: item.cityId,
         label: item.name,
       }));
-      const dropdownFieldIndex = addressFormData.formFields.findIndex(item => item.dataField === "cityId");
-      addressFormData.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
-      addressFormData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
+      const dropdownFieldIndex = manageData.formFields.findIndex(item => item.dataField === "cityId");
+      manageData.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
+      manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
+
+      manageData.dropdownField = addressFormData.formFields[dropdownFieldIndex];
+      manageData.initialState = {
+        ...formData.initialState,
+        stateId: data.value,
+        cityId: null
+      };
+      manageData.initialState = { ...formData.initialState, stateId: data.value, cityId: null };
+      setFormData(manageData)
+    }
+  }
+
+  useEffect(() => {
+    if (isAddAddressSuccess && isAddAddressData) {
+      if (isAddAddressData.errorMessage.includes('exists')) {
+        ToastService.warning(isAddAddressData.errorMessage);
+        return;
+      }
+      onreset()
+      ToastService.success(isAddAddressData.errorMessage);
+      getAddresssByCustomerId(props.customerKeyId)
+      onSidebarClose()
+    }
+  }, [isAddAddressSuccess, isAddAddressData]);
+
+  useEffect(() => {
+    if (isUpdateAddAddressSuccess && isUpdateAddAddressData) {
+      if (isUpdateAddAddressData.errorMessage.includes('exists')) {
+        ToastService.warning(isUpdateAddAddressData.errorMessage);
+        return;
+      }
+      onreset()
+      ToastService.success(isUpdateAddAddressData.errorMessage);
+      getAddresssByCustomerId(props.customerKeyId)
+      onSidebarClose()
+    }
+  }, [isUpdateAddAddressSuccess, isUpdateAddAddressData]);
+
+  const handleAddress = () => {
+    let data = userFormRef.current.getFormData();
+    if (data != null) {
+      let req = {
+        ...data,
+        customerId: props.customerKeyId,
+        addressTypeId: data.addressTypeId && typeof data.addressTypeId === "object"
+          ? data.addressTypeId.value
+          : data.addressTypeId,
+        countryId: data.countryId && typeof data.countryId === "object"
+          ? data.countryId.value
+          : data.countryId,
+        stateId: data.stateId && typeof data.stateId === "object"
+          ? data.stateId.value
+          : data.stateId,
+        cityId: data.cityId && typeof data.cityId === "object"
+          ? data.cityId.value
+          : data.cityId,
+      }
+      if (updateSetData) {
+        let setReq = {
+          ...req,
+          addressId: updateSetData,
+        }
+        updateAddAddress(setReq)
+        setAddressData(setReq)
+      } else {
+        addAddress(req);
+      }
     }
   }
 
@@ -125,11 +270,11 @@ const AddressDetail = () => {
         buttonText="Add"
         titleButtonClick={handleToggleModal}
       >
-        <AddressCard isAddEditModal={handleToggleModal} />
+        <AddressCard isAddEditModal={handleToggleModal} addressData={addressData} onHandleSetData={handleSetData} />
       </CardSection>
 
       <SidebarModel
-        modalTitle="Add/Edit Address"
+        modalTitle={updateSetData ? "Update Address" : "Add Address"}
         contentClass="content-40"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
@@ -138,17 +283,17 @@ const AddressDetail = () => {
         <div className="row horizontal-form mt-3">
           <FormCreator
             ref={userFormRef}
-            // config={addressFormData}
             {...formData}
             onActionChange={formActionHandler}
+            key={shouldRerenderFormCreator}
           />
           <div className="col-md-12 mt-2">
             <div className="d-flex align-item-end justify-content-end">
               <Buttons
                 buttonTypeClassName="theme-button"
-                buttonText="Save"
-              // onClick={onHandleUser}
-              // isLoading={EmailLoading || updateUserLoading}
+                buttonText={updateSetData ? "Update" : "Save"}
+                onClick={handleAddress}
+                isLoading={isAddAddressLoading || isUpdateAddAddressLoading}
               />
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"
