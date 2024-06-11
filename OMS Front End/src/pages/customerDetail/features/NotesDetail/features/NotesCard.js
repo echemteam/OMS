@@ -1,7 +1,7 @@
 import { AppIcons } from "../../../../../data/appIcons";
-import Image from "../../../../../components/image/Image";
+import Buttons from "../../../../../components/ui/button/Buttons";
 
-const NotesCard = ({isAddEditModal}) => {
+const NotesCard = ({ isAddEditModal }) => {
   const NotesList = [
     {
       Note: " Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
@@ -31,9 +31,13 @@ const NotesCard = ({isAddEditModal}) => {
                   <div className="card-notes ">
                     <div className="note-date ">{notes.AssignAt}</div>
                     <div className="edit-button ">
-                      <button onClick={isAddEditModal} className="edit-btn">
-                        <Image imagePath={AppIcons.editThemeIcon} />
-                      </button>
+                  <Buttons
+                        buttonTypeClassName="edit-btn"
+                        onClick={isAddEditModal}
+                        textWithIcon={true}
+                        imagePath={AppIcons.editThemeIcon}
+                      >
+                      </Buttons>
                     </div>
                   </div>
                 </div>

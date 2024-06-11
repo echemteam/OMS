@@ -3,7 +3,7 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import NotesCard from "./features/NotesCard";
 import Buttons from "../../../../components/ui/button/Buttons";
-import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
+
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { NotesData } from "./features/config/Notes.data";
 import CenterModel from "../../../../components/ui/centerModel/CenterModel";
@@ -44,7 +44,7 @@ return(<>
             <FormCreator
               ref={userFormRef}
               {...formData}
-              // onFormDataUpdate={handleFormDataChange}
+          
             />
             <div className="col-md-12 mt-2">
               <div className="d-flex align-item-end justify-content-end">
@@ -52,8 +52,7 @@ return(<>
                   <Buttons
                     buttonTypeClassName="theme-button"
                     buttonText="Add"
-                    // onClick={onHandleUser}
-                    // isLoading={EmailLoading || updateUserLoading}
+                  
                   />
                   <Buttons
                     buttonTypeClassName="dark-btn ml-5"
@@ -66,38 +65,6 @@ return(<>
           </div>
         </CenterModel>
       )}
-      {/* <SidebarModel
-        modalTitle="Add/Edit Notes"
-        contentClass="content-40"
-        onClose={onSidebarClose}
-        modalTitleIcon={AppIcons.AddIcon}
-        isOpen={isModelOpen}
-      >
-        <div className="row horizontal-form mt-3">
-          <FormCreator
-            ref={userFormRef}
-
-            {...formData}
-            // onActionChange={formActionHandler}
-          />
-          <div className="col-md-12 mt-2">
-            <div className="d-flex align-item-end justify-content-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText="Save"
-              // onClick={onHandleUser}
-              // isLoading={EmailLoading || updateUserLoading}
-              />
-              <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-                onClick={onSidebarClose}
-              />
-            </div>
-          </div>
-        </div>
-      </SidebarModel> */}
-
 </>)
 }
 export default NotesDetail;
