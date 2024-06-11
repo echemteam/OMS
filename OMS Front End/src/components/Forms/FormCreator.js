@@ -117,6 +117,7 @@ const FormCreator = forwardRef((props, ref) => {
           // onFormFieldChange={handleFormFieldChange}
           onUpdateValidation={handleOnValidateField}
           formSetting={props.formSetting}
+          handleInputGroupButton={props.handleInputGroupButton}
         />
       ) : (
         <div>No fields configured</div>

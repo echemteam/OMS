@@ -14,6 +14,7 @@ const BasicDetail = (props) => {
   const [formUpdateData, setFormUpdateData] = useState('');
   const [fieldSettingValues, setFieldSettingValues] = useState('');
   const { nextRef } = useContext(BasicDetailContext);
+  const [customerName, setCustomerName] = useState('');
 
   const [
     getAllGroupTypes,
@@ -167,6 +168,15 @@ const BasicDetail = (props) => {
     DDL_CHANGED: handleValidateTextId
   };
 
+  const handleInputGroupButton = () => {
+    // console.log('customerName', customerName)
+  }
+  const onFormDataChange = (updatedData) => {
+    if (updatedData?.name !== '' && updatedData?.name !== null) {
+      setCustomerName(updatedData?.name);
+    }
+  }
+
   return (
     <div className="basic-info-sec half-sec">
       <CardSection buttonClassName="theme-button">
@@ -176,6 +186,8 @@ const BasicDetail = (props) => {
             {...formData}
             onActionChange={formActionHandler}
             fieldSettingValue={fieldSettingValues}
+            handleInputGroupButton={handleInputGroupButton}
+            onFormDataChange={onFormDataChange}
           />
         </div>
 

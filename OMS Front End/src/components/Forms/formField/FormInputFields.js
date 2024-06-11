@@ -17,6 +17,8 @@ const FormInputFields = ({
   changeAction,
   formData,
   overRideProps,
+  inputButtonGroup,
+  handleInputGroupButton,
   ...inputProps
 }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -48,7 +50,7 @@ const FormInputFields = ({
         {labelName && labelName !== "" && (
           <Label labelName={labelName} for={name} {...inputProps} />
         )}
-        
+
         {inputProps.formSaparateTitle ? (
           <>
             <div className="input-top-title">
@@ -58,6 +60,8 @@ const FormInputFields = ({
                 filename={selectedFile}
                 onChange={handleInputChange}
                 onBlur={handleOnBlur}
+                inputButtonGroup={inputButtonGroup}
+                handleInputGroupButton={handleInputGroupButton}
                 isDisable={
                   formSetting?.isViewOnly ||
                   inputProps?.isDisable ||
@@ -74,6 +78,8 @@ const FormInputFields = ({
               filename={selectedFile}
               onChange={handleInputChange}
               onBlur={handleOnBlur}
+              inputButtonGroup={inputButtonGroup}
+              handleInputGroupButton={handleInputGroupButton}
               isDisable={
                 formSetting?.isViewOnly ||
                 inputProps?.isDisable ||

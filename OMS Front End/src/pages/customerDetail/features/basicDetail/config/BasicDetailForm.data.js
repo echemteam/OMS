@@ -17,6 +17,10 @@ export const basicDetailFormDataHalf = {
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
+      inputButtonGroup: {
+        isInputButton: true,
+        buttonText: 'Verify'
+      }
     },
     {
       id: "groupTypeId",
