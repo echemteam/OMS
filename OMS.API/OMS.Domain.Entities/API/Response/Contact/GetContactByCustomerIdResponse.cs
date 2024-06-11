@@ -8,6 +8,7 @@
         public string? Type { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public string? EmailAddress { get; set; }
         public List<GetEmailByContactIdResponse>? EmailList { get; set; }
         public List<GetPhoneByContactIdResponse>? PhoneList { get; set; }
     }
