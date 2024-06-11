@@ -9,6 +9,8 @@ import AddressCard from "./component/AddressCard";
 import { useAddAddressMutation, useLazyGetAddresssByCustomerIdQuery, useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery, useUpdateAddAddressMutation } from "../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
+import { useContext } from "react";
+import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 const AddressDetail = (props) => {
   const userFormRef = useRef();
@@ -19,6 +21,7 @@ const AddressDetail = (props) => {
   const [addressData, setAddressData] = useState();
   const [updateSetData, setUpdateSetData] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  const { customerId } = useContext(BasicDetailContext);
 
   const [getAllAddressTypes, {
     isFetching: isGetAllAddressTypesFetching,
@@ -70,7 +73,7 @@ const AddressDetail = (props) => {
     getAllCountries()
     getAllStates()
     getAllCities()
-    getAddresssByCustomerId(props.customerKeyId)
+    getAddresssByCustomerId(customerId);
   }, [])
 
   useEffect(() => {
@@ -126,7 +129,7 @@ const AddressDetail = (props) => {
     if (setDataArray && setDataArray.length > 0) {
       const setData = setDataArray[0];
       let req = {
-        customerId: props.customerKeyId,
+        customerId: customerId,
         addressTypeId: setData.addressTypeId,
         addressLine1: setData.addressLine1,
         addressLine2: setData.addressLine2,
@@ -205,7 +208,7 @@ const AddressDetail = (props) => {
       }
       onreset()
       ToastService.success(isAddAddressData.errorMessage);
-      getAddresssByCustomerId(props.customerKeyId)
+      getAddresssByCustomerId(customerId)
       onSidebarClose()
     }
   }, [isAddAddressSuccess, isAddAddressData]);
@@ -218,7 +221,7 @@ const AddressDetail = (props) => {
       }
       onreset()
       ToastService.success(isUpdateAddAddressData.errorMessage);
-      getAddresssByCustomerId(props.customerKeyId)
+      getAddresssByCustomerId(customerId)
       onSidebarClose()
     }
   }, [isUpdateAddAddressSuccess, isUpdateAddAddressData]);
@@ -228,7 +231,7 @@ const AddressDetail = (props) => {
     if (data != null) {
       let req = {
         ...data,
-        customerId: props.customerKeyId,
+        customerId: customerId,
         addressTypeId: data.addressTypeId && typeof data.addressTypeId === "object"
           ? data.addressTypeId.value
           : data.addressTypeId,

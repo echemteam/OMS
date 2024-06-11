@@ -5,27 +5,27 @@ import AddressDetail from "./features/addressDetail/AddressDetail";
 import ContactDetail from "./features/contactDetail/ContactDetail";
 import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
-import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
+import BasicDetailContext, { BasicDetailContextProvider } from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 import DocumentDetails from "./features/documentsDetail/DocumentDetails";
 import SwalAlert from "../../services/swalService/SwalService";
+import { useContext } from "react";
 
 
 const AddCustomer = () => {
-  const nextRef = useRef(null);
   const { error } = SwalAlert();
-  const [customerKeyId, setCustomerKeyId] = useState(0)
   const [activeTab, setActiveTab] = useState(0);
-  const [addressNext, setAddressNext] = useState()
+  const [addressNext, setAddressNext] = useState();
+  const { nextRef, customerId } = useContext(BasicDetailContext);
 
   const onSubmit = (e) => {
     e.preventDefault();
   };
 
   const addCustomer = () => {
-    if (customerKeyId > 0) {
-      if(addressNext.length > 0){
+    if (customerId > 0) {
+      if (addressNext.length > 0) {
         setActiveTab((prev) => prev + 1);
-      }else{
+      } else {
         error("Please enter Address");
       }
     } else {
@@ -43,9 +43,9 @@ const AddCustomer = () => {
     setActiveTab((prev) => prev - 1);
   };
 
-  const handleCustomerKey = (data) => {
-    setCustomerKeyId(data)
-  }
+  // const handleCustomerKey = (data) => {
+  //   setcustomerId(data)
+  // }
 
   const handleAddressNext = (data) => {
     setAddressNext(data)
@@ -55,12 +55,12 @@ const AddCustomer = () => {
     {
       label: "Basic Information",
       subLabel: "Enter Basic information",
-      content: <BasicDetail nextPage={incrementCurrent} onCustomerKey={handleCustomerKey} />,
+      content: <BasicDetail nextPage={incrementCurrent} />,
     },
     {
       label: "Address",
       subLabel: "Enter Address Details",
-      content: <AddressDetail customerKeyId={customerKeyId} onAddressNext={handleAddressNext} />,
+      content: <AddressDetail onAddressNext={handleAddressNext} />,
     },
     {
       label: "Contact",
@@ -80,73 +80,71 @@ const AddCustomer = () => {
 
   return (
     <>
-      <BasicDetailContext.Provider value={{ nextRef }}>
-        <div className="stepper-card">
-          <CardSection>
-            <div className="stepper-section">
-              <div className="stepper-header">
-                {tabContent.map((step, index) => (
-                  <React.Fragment key={index}>
-                    <div className={`step ${activeTab === index ? 'active' : ''}`}>
-                      <button className="step-button"
-                        // onClick={() => handleTabClick(index)}
-                      >
-                        <span className="stepper-box">{index + 1}</span>
-                        <span className="stepper-label">
-                          <span>{step.label}</span>
-                          <span className="small-txt">{step.subLabel}</span>
-                        </span>
-                      </button>
+      <div className="stepper-card">
+        <CardSection>
+          <div className="stepper-section">
+            <div className="stepper-header">
+              {tabContent.map((step, index) => (
+                <React.Fragment key={index}>
+                  <div className={`step ${activeTab === index ? 'active' : ''}`}>
+                    <button className="step-button"
+                      // onClick={() => handleTabClick(index)}
+                    >
+                      <span className="stepper-box">{index + 1}</span>
+                      <span className="stepper-label">
+                        <span>{step.label}</span>
+                        <span className="small-txt">{step.subLabel}</span>
+                      </span>
+                    </button>
+                  </div>
+                  {index < tabContent.length - 1 && (
+                    <div className="right-arrow">
+                      <Image imagePath={AppIcons.arrowIcon} />
                     </div>
-                    {index < tabContent.length - 1 && (
-                      <div className="right-arrow">
-                        <Image imagePath={AppIcons.arrowIcon} />
-                      </div>
-                    )}
-                  </React.Fragment>
-                ))}
-              </div>
-              <div className="stepper-content">
-                <form onSubmit={onSubmit}>
-                  {tabContent.map((step, index) => (
-                    <div key={index} className={`content ${activeTab === index ? 'active' : ''}`}>
-                      <div className="row">
-                        <div className="col-12 mx-auto">
-                          {step.content}
-                          <div className="d-flex justify-content-end">
-                            {index > 0 && (
-                              <button
-                                type="button"
-                                className="btn dark-btn mr-3"
-                                onClick={decrementCurrent}
-                              >
-                                Back
-                              </button>
-                            )}
-                            {index < tabContent.length - 1 ? (
-                              <button
-                                type="button"
-                                className="btn theme-button"
-                                onClick={addCustomer}
-                              >
-                                Next
-                              </button>
-                            ) : (
-                              <button type="submit" className="btn theme-button">
-                                Submit
-                              </button>
-                            )}
-                          </div>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+            <div className="stepper-content">
+              <form onSubmit={onSubmit}>
+                {tabContent.map((step, index) => (
+                  <div key={index} className={`content ${activeTab === index ? 'active' : ''}`}>
+                    <div className="row">
+                      <div className="col-12 mx-auto">
+                        {step.content}
+                        <div className="d-flex justify-content-end">
+                          {index > 0 && (
+                            <button
+                              type="button"
+                              className="btn dark-btn mr-3"
+                              onClick={decrementCurrent}
+                            >
+                              Back
+                            </button>
+                          )}
+                          {index < tabContent.length - 1 ? (
+                            <button
+                              type="button"
+                              className="btn theme-button"
+                              onClick={addCustomer}
+                            >
+                              Next
+                            </button>
+                          ) : (
+                            <button type="submit" className="btn theme-button">
+                              Submit
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
-                  ))}
-                </form>
-              </div>
+                  </div>
+                ))}
+              </form>
             </div>
-          </CardSection>
-        </div>
-      </BasicDetailContext.Provider>
+          </div>
+        </CardSection>
+      </div>
     </>
   );
 
