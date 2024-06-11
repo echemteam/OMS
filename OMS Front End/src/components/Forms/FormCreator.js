@@ -24,7 +24,7 @@ const FormCreator = forwardRef((props, ref) => {
   }, [props.formFields]);
 
   // reset the initial state 
-  useEffect(() => { 
+  useEffect(() => {
     setFormData(props.initialState);
     setValidState({
       isValid: true,
@@ -51,7 +51,7 @@ const FormCreator = forwardRef((props, ref) => {
   );
 
   const isValidForm = () => {
-    const validation = ValidateAll(formData, validationRules);
+    const validation = ValidateAll(formData, validationRules, props.fieldSettingValue?.minLength, props.fieldSettingValue?.maxLength);
     if (!validation.isValid) {
       setValidState(validation);
 
@@ -61,14 +61,13 @@ const FormCreator = forwardRef((props, ref) => {
 
   const handleStateChange = (updatedData) => {
     setFormData(updatedData);
-    if(props.onFormDataChange)
-    {
+    if (props.onFormDataChange) {
       props.onFormDataChange(updatedData)
     }
   };
 
   // const handleFormFieldChange = (fieldName,value) => {
-    
+
   //   if(props.onFormFieldValueChange)
   //   {
   //      props.onFormFieldValueChange(updatedData)
@@ -80,7 +79,7 @@ const FormCreator = forwardRef((props, ref) => {
     let validationObj = { ...validState }
 
     if (validationRules[dataField]) {
-      const validation = Validate(formData, validationRules, dataField);
+      let validation = Validate(formData, validationRules, dataField, props.fieldSettingValue?.minLength, props.fieldSettingValue?.maxLength);
       if (!validation.isValid) {
 
         validationObj.error[dataField] = validation.error[dataField];
@@ -106,6 +105,7 @@ const FormCreator = forwardRef((props, ref) => {
   }
 
   return (
+    // <MinMaxLengthValidatorContextProvider>
     <>
       {props.formFields ? (
         <FormFields
@@ -122,6 +122,7 @@ const FormCreator = forwardRef((props, ref) => {
         <div>No fields configured</div>
       )}
     </>
+    // </MinMaxLengthValidatorContextProvider>
   );
 });
 

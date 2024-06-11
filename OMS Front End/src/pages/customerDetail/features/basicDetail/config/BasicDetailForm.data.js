@@ -122,6 +122,8 @@ export const basicDetailFormDataHalf = {
       fieldSetting: {
         placeholder: "Text Id",
         allowSpace: true,
+        minLength: 0,
+        maxLength: 10,
       },
       validation: [{ type: "require" }, { type: "taxId" }],
       style: {
