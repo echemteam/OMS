@@ -23,9 +23,10 @@ const StepperForm2 = () => {
         <div className="col-md-12">
           <div className="row vertical-form">
             <FormCreator
+              config={Stepper2FormData}
               ref={testFromRef}
               {...Stepper2FormData}
-              // onFormDataUpdate={handleFormDataChange}
+            // onFormDataUpdate={handleFormDataChange}
             />
           </div>
         </div>

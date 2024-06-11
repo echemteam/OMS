@@ -1,9 +1,11 @@
-﻿using OMS.Domain.Entities.API.Response.Customers;
+﻿using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
+using OMS.Shared.Entities.CommonEntity;
 using System.Data;
 
 namespace OMS.Domain.Repository.Implementation
@@ -14,6 +16,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDCUSTOMERSBASICINFORMATION = "AddCustomersBasicInformation";
         const string UPDATECUSTOMERSBASICINFORMATION = "UpdateCustomersBasicInformation";
         const string GETCUSTOMERSBASICINFORMATIONBYID = "GetCustomersBasicInformationById";
+        const string GETCUSTOMERS = "GetCustomers";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -71,6 +74,17 @@ namespace OMS.Domain.Repository.Implementation
                 customerId
             }, CommandType.StoredProcedure);
             return customerDetails;
+        }
+
+        public async Task<EntityList<GetCustomersResponse>> GetCustomers(GetCustomersRequest queryRequest)
+        {
+            return await _context.GetListSP<GetCustomersResponse>(GETCUSTOMERS, new
+            {
+                queryRequest.StatusId,
+                queryRequest.Pagination!.PageNumber,
+                queryRequest.Pagination.PageSize,
+                queryRequest.Filters?.SearchText
+            }, true);
         }
         #endregion
     }

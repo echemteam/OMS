@@ -778,10 +778,7 @@ a {
 }
 // Tab Section End
 
-.main-customer-grid {
-  .card-body-sec{
-    margin-top: 0;
-  }
+.other-info-tab {
   .tab-section {
     margin-bottom: 30px;
 
@@ -880,52 +877,6 @@ a {
 
       .card-body-sec {
         margin-top: 10px;
-      }
-    }
-  }
-}
-
-.main-customer-grid {
-  .main-inactive-grid {
-    .card-body-sec{
-      margin-top: 0;
-    }
-    .tab-sub-section {
-      margin-bottom: 30px;
-      margin-left: 20px;
-
-      .tab-sub-header {
-        border-bottom: 1px solid var(--linkMenu);
-        background: var(--whiteColor);
-
-        button {
-          padding: 7px 25px 7px;
-          border: none;
-          background: var(--whiteColor);
-          border-radius: 0px;
-          font-weight: 600;
-          font-size: 13px;
-          border: none;
-          border-right: 1px solid var(--whiteColor);
-          margin-right: 0;
-          color: var(--textColor);
-
-          &.active {
-            margin-bottom: 0;
-            color: #000;
-            position: relative;
-            padding-bottom: 15px;
-            font-size: 15px;
-            border-bottom: 2px solid var(--themeColor);
-          }
-        }
-      }
-
-      .tab-sub-content {
-        padding-top: 0;
-
-        .tab-sub-body-section {
-        }
       }
     }
   }
@@ -1092,6 +1043,7 @@ a {
           display: flex;
           align-items: center;
           margin-bottom: 5px;
+
           span {
             &.icon {
               min-height: 40px;
@@ -1269,77 +1221,213 @@ a {
   }
 }
 
-.no-address {
-  display: flex;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 18px;
-  color: var(--textColor);
-}
-
 .document-section {
   .card-body-sec {
     margin-top: 0 !important;
   }
-}
 
-@media only screen and (max-width: 1600px) {
-  .input-label {
-    font-size: 84%;
+  .no-address {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--textColor);
   }
 
-  .checkbox-label-part {
+  .no-address {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--textColor);
+  }
+
+  .document-section {
+    .card-body-sec {
+      margin-top: 0 !important;
+    }
+  }
+
+  @media only screen and (max-width: 1600px) {
     .input-label {
       font-size: 84%;
     }
-  }
 
-  .basic-customer-detail {
-    .profile-info {
-      h5 {
-        font-size: 100% !important;
+    .checkbox-label-part {
+      .input-label {
+        font-size: 84%;
+      }
+    }
+
+    .basic-customer-detail {
+      .profile-info {
+        h5 {
+          font-size: 100% !important;
+        }
+
+        .input-label-part {
+          span {
+            font-size: 89%;
+          }
+        }
       }
 
+      .field-desc {
+        font-size: 87%;
+      }
+    }
+
+    .horizontal-form {
       .input-label-part {
-        span {
-          font-size: 89%;
+        .input-label-title {
+          min-width: 120px;
+          max-width: 120px;
         }
       }
     }
+  }
 
-    .field-desc {
-      font-size: 87%;
+  @media only screen and (max-width: 1560px) {
+    .card {
+      padding: 15px;
     }
   }
 
-  .horizontal-form {
-    .input-label-part {
-      .input-label-title {
-        min-width: 120px;
-        max-width: 120px;
+  @media only screen and (max-width: 1366px) {
+    .mb-2 {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  @media only screen and (max-width: 1280px) {
+    .css-1hb7zxy-IndicatorsContainer {
+      .css-1xc3v61-indicatorContainer {
+        padding: 0 !important;
+      }
+    }
+
+    .css-qbdosj-Input {
+      margin: 0;
+    }
+  }
+
+}
+
+.notes-card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--card-shadow);
+  margin: 10px 0;
+  // background: #fec971;
+  height: 100%;
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    height: 100%;
+  }
+
+  .note-text {
+    p {
+      font-size: 12px;
+      color: var(--blackColor);
+      margin-bottom: 0;
+      font-weight: 600;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  .note-label {
+    font-size: 110%;
+    color: var(--textColor);
+    margin-bottom: 5px;
+
+
+  }
+
+  .bottom-info {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .note-date {
+    font-size: 85%;
+    color: var(--textColor);
+  }
+
+  .card-notes {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-top: -10px;
+
+    .edit-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .edit-btn {
+
+        background: transparent;
+        padding: 7px;
+
+        min-width: 30px;
+        background-color: var(--lightDarkblack);
+        border-radius: 50%;
+        transition: 0.5s all;
+
+        img {
+          width: 15px;
+          margin: 0 auto;
+          filter: brightness(0);
+        }
+
+        &:hover {
+          background: var(--blackColor);
+
+          img {
+            filter: brightness(100);
+          }
+        }
       }
     }
   }
 }
-@media only screen and (max-width: 1560px) {
-  .card {
-    padding: 15px;
-  }
-}
 
-@media only screen and (max-width: 1366px) {
-  .mb-2 {
-    margin-bottom: 0 !important;
+.randomColor {
+  &.lightOrange {
+    background: var(--lightOrange);
   }
-}
 
-@media only screen and (max-width: 1280px) {
-  .css-1hb7zxy-IndicatorsContainer {
-    .css-1xc3v61-indicatorContainer {
-      padding: 0 !important;
-    }
+  &.lightBlue {
+    background: var(--lightBlue);
   }
-  .css-qbdosj-Input {
-    margin: 0;
+
+  &.lightGreen {
+    background: var(--lightGreen);
+  }
+
+  &.lightYellow {
+    background: var(--lightYellow);
+  }
+
+  &.lightPink {
+    background: var(--lightPink);
+  }
+
+  &.lightPurple {
+    background: var(--lightPurple);
+  }
+
+  &.lightGray {
+    background: var(--lightGray);
   }
 }

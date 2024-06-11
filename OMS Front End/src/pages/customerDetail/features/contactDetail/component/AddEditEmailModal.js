@@ -11,9 +11,10 @@ const AddEditEmailModal = (props) => {
         <div className="col-md-12 horizontal-form">
           <div className="row vertical-form">
             <FormCreator
+              config={addEditEmailFormData}
               ref={addEditEmailFormRef}
               {...addEditEmailFormData}
-              // onFormDataUpdate={handleFormDataChange}
+            // onFormDataUpdate={handleFormDataChange}
             />
           </div>
         </div>
@@ -22,8 +23,8 @@ const AddEditEmailModal = (props) => {
             <Buttons
               buttonTypeClassName="theme-button"
               buttonText="Add"
-              // onClick={onHandleUser}
-              // isLoading={EmailLoading || updateUserLoading}
+            // onClick={onHandleUser}
+            // isLoading={EmailLoading || updateUserLoading}
             />
             <Buttons
               buttonTypeClassName="dark-btn ml-5"

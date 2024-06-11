@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Address;
-using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Address;
-using OMS.Domain.Entities.API.Response.Common;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -46,9 +45,13 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateAddAddress")]
         public async Task<IActionResult> UpdateAddAddress(UpdateAddressRequest requestData)
         {
-
-            var updateItem = await _serviceManager.addressServices.UpdateAddAddress(requestData, CurrentUserId);
-            return APISucessResponce(updateItem);
+            AddEntityDTO<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.addressServices.UpdateAddAddress(requestData, CurrentUserId);
+                return APISucessResponce(requestData);
+            }
+            return APISucessResponce(requestData);
         }
         #endregion
     }

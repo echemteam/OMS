@@ -1,6 +1,7 @@
 ﻿using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Contact;
+using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
@@ -17,6 +18,10 @@ namespace OMS.Domain.Repository.Implementation
         const string GETPHONEBYCONTACTID = "GetPhoneByContactId";
         const string ADDCONTACTEMAIL = "AddContactEmail";
         const string ADDCONTACTPHONE = "AddContactPhone";
+        const string DELETECONTACTEMAIL = "DeleteContactEmail";
+        const string DELETECONTACTPHONE = "DeleteContactPhone";
+        const string UPDATECONTACTEMAIL = "UpdateContactEmail";
+        const string UPDATECONTACTPHONE = "UpdateContactPhone";
         #endregion
 
         public ContactRepository(DapperContext dapperContext) : base(dapperContext)
@@ -87,6 +92,46 @@ namespace OMS.Domain.Repository.Implementation
                 phone.CreatedBy
             }, CommandType.StoredProcedure);
         }
+
+        public async Task<AddEntityDTO<int>> UpdateContactEmail(EmailDTO email)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECONTACTEMAIL, new
+            {
+                email.EmailId,
+                email.EmailAddress,
+                email.UpdatedBy
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> UpdateContactPhone(PhoneDTO phone)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECONTACTPHONE, new
+            {
+                phone.PhoneId,
+                phone.PhoneCode,
+                phone.PhoneNumber,
+                phone.UpdatedBy
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteContactEmail(int emailId, int deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETECONTACTEMAIL, new
+            {
+                emailId,
+                deletedBy
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteContactPhone(int phoneId, int deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETECONTACTPHONE, new
+            {
+                phoneId,
+                deletedBy
+            }, CommandType.StoredProcedure);
+        }
+
         #endregion
     }
 }
