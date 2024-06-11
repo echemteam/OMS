@@ -11,7 +11,7 @@ import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
-  const { nextRef, customerKeyId, setCustomerKeyId } = useContext(BasicDetailContext);
+  const { nextRef, setCustomerId, moveNextPage } = useContext(BasicDetailContext);
 
   const [
     getAllGroupTypes,
@@ -124,9 +124,9 @@ const BasicDetail = (props) => {
         ToastService.warning(isAddCustomersBasicInformationData.errorMessage);
         return;
       }
-      setCustomerKeyId(isAddCustomersBasicInformationData.keyValue)
+      setCustomerId(isAddCustomersBasicInformationData.keyValue)
       ToastService.success(isAddCustomersBasicInformationData.errorMessage);
-      props.nextPage()
+      moveNextPage();
     }
   }, [isAddCustomersBasicInformationSuccess, isAddCustomersBasicInformationData]);
 

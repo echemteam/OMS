@@ -21,7 +21,7 @@ const AddressDetail = (props) => {
   const [addressData, setAddressData] = useState();
   const [updateSetData, setUpdateSetData] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-  const { customerId } = useContext(BasicDetailContext);
+  const { customerId, setAddressId } = useContext(BasicDetailContext);
 
   const [getAllAddressTypes, {
     isFetching: isGetAllAddressTypesFetching,
@@ -79,7 +79,7 @@ const AddressDetail = (props) => {
   useEffect(() => {
     if (!isGetAddresssByCustomerIdFetching && isGetAddresssByCustomerId && GetAddresssByCustomerIdData) {
       setAddressData(GetAddresssByCustomerIdData)
-      props.onAddressNext(GetAddresssByCustomerIdData)
+      // setAddressId(GetAddresssByCustomerIdData);
     }
   }, [isGetAddresssByCustomerIdFetching, isGetAddresssByCustomerId, GetAddresssByCustomerIdData]);
 
@@ -208,6 +208,7 @@ const AddressDetail = (props) => {
       }
       onreset()
       ToastService.success(isAddAddressData.errorMessage);
+      setAddressId(isAddAddressData.keyValue);
       getAddresssByCustomerId(customerId)
       onSidebarClose()
     }
@@ -221,6 +222,7 @@ const AddressDetail = (props) => {
       }
       onreset()
       ToastService.success(isUpdateAddAddressData.errorMessage);
+      setAddressId(isAddAddressData.keyValue);
       getAddresssByCustomerId(customerId)
       onSidebarClose()
     }
