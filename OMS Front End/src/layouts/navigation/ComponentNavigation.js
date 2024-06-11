@@ -214,8 +214,8 @@ export const ComponentNavigation = [
     securityKey: ""
   },
   {
-    id: 'customers',
-    path: '/customers',
+    id: 'Customers',
+    path: '/Customers',
     exact: true,
     title: 'Customers',
     component: Customers,
