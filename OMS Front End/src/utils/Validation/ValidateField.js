@@ -52,7 +52,7 @@ export const isUnique = (value) => {
     return !invalidChars.test(value);
 }
 
-export const isTaxId = (value) => {
-    const taxIdRegex = /^[0-9]{9}$/;
+export const isTaxId = (value, minLengthValue = 0, maxLengthValue = 0) => {
+    const taxIdRegex = new RegExp(`^[0-9]{${minLengthValue},${maxLengthValue}}$`);
     return taxIdRegex.test(value);
 }

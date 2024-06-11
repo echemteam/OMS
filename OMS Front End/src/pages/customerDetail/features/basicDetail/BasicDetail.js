@@ -6,11 +6,14 @@ import { useAddCustomersBasicInformationMutation, useLazyGetAllCountriesQuery, u
 import ToastService from "../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import Buttons from "../../../../components/ui/button/Buttons";
+import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
-  const { nextRef } = useContext(BasicDetailContext)
+  const [formUpdateData, setFormUpdateData] = useState('');
+  const [fieldSettingValues, setFieldSettingValues] = useState('');
+  const { nextRef } = useContext(BasicDetailContext);
 
   const [
     getAllGroupTypes,
@@ -153,6 +156,16 @@ const BasicDetail = (props) => {
     }
   };
 
+  const handleValidateTextId = (data, dataField) => {
+    if (dataField === 'countryId') {
+      const fieldSetting = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId', formUpdateData);
+      setFieldSettingValues(fieldSetting);
+    }
+  }
+
+  const formActionHandler = {
+    DDL_CHANGED: handleValidateTextId
+  };
 
   return (
     <div className="basic-info-sec half-sec">
@@ -161,6 +174,8 @@ const BasicDetail = (props) => {
           <FormCreator
             ref={basicDetailRef}
             {...formData}
+            onActionChange={formActionHandler}
+            fieldSettingValue={fieldSettingValues}
           />
         </div>
 
