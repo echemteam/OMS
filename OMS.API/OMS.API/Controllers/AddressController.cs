@@ -49,9 +49,9 @@ namespace OMS.API.Controllers
             if (requestData != null)
             {
                 responseData = await _serviceManager.addressServices.UpdateAddAddress(requestData, CurrentUserId);
-                return APISucessResponce(requestData);
+                return APISucessResponce(responseData);
             }
-            return APISucessResponce(requestData);
+            return APISucessResponce(responseData);
         }
         #endregion
     }
