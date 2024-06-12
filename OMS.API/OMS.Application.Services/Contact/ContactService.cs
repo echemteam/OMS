@@ -30,54 +30,11 @@ namespace OMS.Application.Services.Contact
             return await repositoryManager.contact.AddEditContact(contactDTO);
         }
 
-        public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerIdId(int customerId)
+        public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId)
         {
-            List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerIdId(customerId);
-            foreach (var contact in contactList)
-            {
-                List<GetEmailByContactIdResponse> emailList = await repositoryManager.contact.GetEmailByContactId(contact.ContactId!.Value);
-                contact.EmailList = emailList;
-
-                List<GetPhoneByContactIdResponse> phoneList = await repositoryManager.contact.GetPhoneByContactId(contact.ContactId!.Value);
-                contact.PhoneList = phoneList;
-            }
+            List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId);
 
             return contactList;
-        }
-
-        public async Task<AddEntityDTO<int>> AddContactEmail(AddContactEmailRequest requestData, short CurrentUserId)
-        {
-            EmailDTO emailDTO = requestData.ToMapp<AddContactEmailRequest, EmailDTO>();
-            emailDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.contact.AddContactEmail(emailDTO);
-        }
-        public async Task<AddEntityDTO<int>> AddContactPhone(AddContactPhoneRequest requestData, short CurrentUserId)
-        {
-            PhoneDTO phoneDTO = requestData.ToMapp<AddContactPhoneRequest, PhoneDTO>();
-            phoneDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.contact.AddContactPhone(phoneDTO);
-        }
-        public async Task<AddEntityDTO<int>> UpdateContactEmail(UpdateContactEmailRequest requestData, short CurrentUserId)
-        {
-            EmailDTO emailDTO = requestData.ToMapp<UpdateContactEmailRequest, EmailDTO>();
-            emailDTO.UpdatedBy = CurrentUserId;
-            return await repositoryManager.contact.UpdateContactEmail(emailDTO);
-        }
-
-        public async Task<AddEntityDTO<int>> UpdateContactPhone(UpdateContactPhoneRequest requestData, short CurrentUserId)
-        {
-            PhoneDTO phoneDTO = requestData.ToMapp<UpdateContactPhoneRequest, PhoneDTO>();
-            phoneDTO.UpdatedBy = CurrentUserId;
-            return await repositoryManager.contact.UpdateContactPhone(phoneDTO);
-        }
-        public async Task<AddEntityDTO<int>> DeleteContactEmail(int emailId, int deletedBy)
-        {
-            return await repositoryManager.contact.DeleteContactEmail(emailId, deletedBy);
-        }
-
-        public async Task<AddEntityDTO<int>> DeleteContactPhone(int phoneId, int deletedBy)
-        {
-            return await repositoryManager.contact.DeleteContactPhone(phoneId, deletedBy);
         }
         #endregion
 

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import CardSection from "../../components/ui/card/CardSection";
 import BasicDetail from "./features/basicDetail/BasicDetail";
 import AddressDetail from "./features/addressDetail/AddressDetail";
-import ContactDetail from "./features/contactDetail/ContactDetail";
+import ContactDetail from "./features/contactDetail/Contact/ContactDetail";
 import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
 import BasicDetailContext, { BasicDetailContextProvider } from "../../utils/ContextAPIs/Customer/BasicDetailContext";

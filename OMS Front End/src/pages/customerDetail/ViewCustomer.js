@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import "./ViewCustomer.scss";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import BasicDetail from "./features/basicDetail/BasicDetail";
-import ContactDetail from "./features/contactDetail/ContactDetail";
+import ContactDetail from "./features/contactDetail/Contact/ContactDetail";
 import AddressDetail from "./features/addressDetail/AddressDetail";
 import CardSection from "../../components/ui/card/CardSection";
 import CustomerDetails from "./features/basicDetail/CustomerDetails";

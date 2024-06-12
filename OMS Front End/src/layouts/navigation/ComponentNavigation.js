@@ -23,7 +23,7 @@ const SecurityRoleManagement = React.lazy(() => import('../../pages/Security/sec
 // const CustomerDetail = React.lazy(() => import('../../pages/customerDetail/CustomerDetail'));
 const ManageAddCustomer = React.lazy(() => import('../../pages/customerDetail/ManageAddCustomer'));
 const ViewCustomer = React.lazy(() => import('../../pages/customerDetail/ManageViewCustomer'));
-const AddEditContact = React.lazy(() => import('../../pages/customerDetail/features/contactDetail/AddEditContact'));
+const AddEditContact = React.lazy(() => import('../../pages/customerDetail/features/contactDetail/Contact/AddEditContact'));
 
 
 export const ComponentNavigation = [

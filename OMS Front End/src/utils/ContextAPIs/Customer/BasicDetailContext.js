@@ -11,10 +11,18 @@ export default BasicDetailContext;
 export const BasicDetailContextProvider = ({ children }) => {
 
     const nextRef = useRef(null);
+    const molGridRef = useRef();
     const { error } = SwalAlert();
     const [activeTab, setActiveTab] = useState(0);
     const [customerId, setCustomerId] = useState(0);
     const [addressId, setAddressId] = useState(0);
+    const [contactId, setContactId] = useState(0);
+    const [contactNumbers, setContactNumbers] = useState();
+    const [emailAddressData, setEmailAddressData] = useState();
+
+    const [isEdit, setIsEdit] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [editFormData, setEditFormData] = useState();
 
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
@@ -38,8 +46,23 @@ export const BasicDetailContextProvider = ({ children }) => {
         }
     };
 
+    const handleToggleModal = () => {
+        setShowModal(!showModal);
+        setIsEdit(false);
+    };
+
+    const handleEditModal = (data) => {
+        setShowModal(!showModal);
+        setIsEdit(true);
+        setEditFormData(data)
+    }
+
+
     return (
-        <BasicDetailContext.Provider value={{ nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId }}>
+        <BasicDetailContext.Provider value={{
+            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId, showModal, editFormData, isEdit,
+            contactId, setContactId, contactNumbers, setContactNumbers, emailAddressData, setEmailAddressData, handleToggleModal, handleEditModal, molGridRef
+        }}>
             {children}
         </BasicDetailContext.Provider>
     );
