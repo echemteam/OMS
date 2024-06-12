@@ -23,6 +23,7 @@ namespace OMS.Domain.Repository
         ICustomersRepository _customersRepository;
         IAddressRepository _addressRepository;
         IContactRepository _contactRepository;
+        ICustomerNotesRepository _customerNotesRepository;
 
         public ITestRepository test
         {
@@ -139,6 +140,17 @@ namespace OMS.Domain.Repository
                     _contactRepository = new ContactRepository(_context);
                 }
                 return _contactRepository;
+            }
+        }
+        public ICustomerNotesRepository customerNotes
+        {
+            get
+            {
+                if (_customerNotesRepository == null)
+                {
+                    _customerNotesRepository = new CustomerNotesRepository(_context);
+                }
+                return _customerNotesRepository;
             }
         }
     }

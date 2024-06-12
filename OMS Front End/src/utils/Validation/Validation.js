@@ -3,7 +3,7 @@ import { compare, email, number, required, uniqueIdentifier, isvalidPassword, ma
 
 // Validation functions 
 
-export function ValidateAll(state, rules, minLengthValue = 0, maxLengthValue = 0) {
+export function ValidateAll(state, rules) {
   let result = {
     isValid: true,
     error: {}
@@ -12,7 +12,7 @@ export function ValidateAll(state, rules, minLengthValue = 0, maxLengthValue = 0
   let error = {};
   keys.forEach(key => {
     var fieldRules = rules[key]
-    var validateResult = ValidateField(state[key], fieldRules, state, minLengthValue, maxLengthValue);
+    var validateResult = ValidateField(state[key], fieldRules, state);
     if (!validateResult.isvalid) {
       result.isValid = false;
       error[key] = validateResult.message;
@@ -22,14 +22,14 @@ export function ValidateAll(state, rules, minLengthValue = 0, maxLengthValue = 0
   return result;
 }
 
-export function Validate(state, rules, key, minLengthValue = 0, maxLengthValue = 0) {
+export function Validate(state, rules, key) {
   let result = {
     isValid: true,
     error: {}
   }
   let error = {};
   let fieldRules = rules[key]
-  let validateResult = ValidateField(state[key], fieldRules, state, minLengthValue, maxLengthValue);
+  let validateResult = ValidateField(state[key], fieldRules, state);
   if (!validateResult.isvalid) {
     result.isValid = false;
     error[key] = validateResult.message;
@@ -38,7 +38,7 @@ export function Validate(state, rules, key, minLengthValue = 0, maxLengthValue =
   return result;
 }
 
-export function ValidateField(value, fieldRules, state, minLengthValue = 0, maxLengthValue = 0) {
+export function ValidateField(value, fieldRules, state) {
   let result = { isvalid: true, message: '' };
   fieldRules.forEach(rule => {
     if (result.isvalid) {
@@ -146,7 +146,7 @@ export function ValidateField(value, fieldRules, state, minLengthValue = 0, maxL
           }
           break;
         case 'taxId':
-          if (!isTaxId(value, minLengthValue, maxLengthValue)) {
+          if (!isTaxId(value, rule?.minLength, rule?.maxLength)) {
             result.isvalid = false;
             result.message = rule.message
           }

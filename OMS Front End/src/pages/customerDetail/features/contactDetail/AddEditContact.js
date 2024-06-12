@@ -102,9 +102,10 @@ const AddEditContact = () => {
       >
         <div className="row horizontal-form">
           <FormCreator
+            config={contactDetailFormData}
             ref={userFormRef}
             {...contactDetailFormData}
-            // onFormDataUpdate={handleFormDataChange}
+          // onFormDataUpdate={handleFormDataChange}
           />
           <div className="col-md-12 mt-3">
             <div className="d-flex align-item-end justify-content-between">
@@ -115,7 +116,7 @@ const AddEditContact = () => {
                   onClick={handleToggleModal}
                   textWithIcon={true}
                   imagePath={AppIcons.PlusIcon}
-                  // isLoading={EmailLoading || updateUserLoading}
+                // isLoading={EmailLoading || updateUserLoading}
                 />
                 <Buttons
                   buttonTypeClassName="danger-btn"
@@ -123,15 +124,15 @@ const AddEditContact = () => {
                   onClick={handleToggleModalContact}
                   textWithIcon={true}
                   imagePath={AppIcons.PlusIcon}
-                  // isLoading={EmailLoading || updateUserLoading}
+                // isLoading={EmailLoading || updateUserLoading}
                 />
               </div>
               <div className="d-flex align-item-end">
                 <Buttons
                   buttonTypeClassName="theme-button"
                   buttonText="Save"
-                  // onClick={onHandleUser}
-                  // isLoading={EmailLoading || updateUserLoading}
+                // onClick={onHandleUser}
+                // isLoading={EmailLoading || updateUserLoading}
                 />
                 <Buttons
                   buttonTypeClassName="dark-btn ml-5"
@@ -155,7 +156,7 @@ const AddEditContact = () => {
                 totalCount: 0,
               }}
               onActionChange={actionHandler}
-              // onPageChange={handlePageChange}
+            // onPageChange={handlePageChange}
             />
           </div>
         </div>
@@ -172,7 +173,7 @@ const AddEditContact = () => {
                 totalCount: 0,
               }}
               onActionChange={contactActionHandler}
-              // onPageChange={handlePageChange}
+            // onPageChange={handlePageChange}
             />
           </div>
         </div>
