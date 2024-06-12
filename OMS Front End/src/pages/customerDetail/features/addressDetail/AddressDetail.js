@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
-import { addressFormData } from "./component/AddressForm.data";
+import { addressFormData } from "./features/config/AddressForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
-import AddressCard from "./component/AddressCard";
+import AddressCard from "./features/AddressCard";
 import { useAddAddressMutation, useLazyGetAddresssByCustomerIdQuery, useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery, useUpdateAddAddressMutation } from "../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
