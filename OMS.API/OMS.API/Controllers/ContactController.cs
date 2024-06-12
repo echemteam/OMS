@@ -28,7 +28,7 @@ namespace OMS.API.Controllers
         #region Contact API
 
         [HttpPost("AddEditContact")]
-        public async Task<IActionResult> AddContact(AddEditContactRequest requestData)
+        public async Task<IActionResult> AddEditContact(AddEditContactRequest requestData)
         {
 
             var addEditItem = await _serviceManager.contactService.AddEditContact(requestData, CurrentUserId);

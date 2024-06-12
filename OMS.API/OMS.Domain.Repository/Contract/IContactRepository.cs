@@ -6,7 +6,7 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IContactRepository
     {
-        Task<AddEntityDTO<int>> AddContact(ContactDTO contact);
+        Task<AddEntityDTO<int>> AddEditContact(ContactDTO contact);
         Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId);
        
     }

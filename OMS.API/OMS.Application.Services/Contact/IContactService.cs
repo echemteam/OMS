@@ -6,7 +6,7 @@ namespace OMS.Application.Services.Contact
 {
     public interface IContactService
     {
-        Task<AddEntityDTO<int>> AddContact(AddContactRequest requestData, short CurrentUserId);
+        Task<AddEntityDTO<int>> AddEditContact(AddEditContactRequest requestData, short CurrentUserId);
         Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId);
     }
 }
