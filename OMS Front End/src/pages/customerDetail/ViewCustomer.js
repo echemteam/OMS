@@ -44,6 +44,10 @@ const ViewCustomer = () => {
     }
   }, [])
 
+  const handleRepeatCall = () => {
+    getCustomersBasicInformationById(pageId)
+  }
+
   const handleToggleModal = () => {
     setisModelOpen(true);
   };
@@ -122,7 +126,7 @@ const ViewCustomer = () => {
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}
         >
-          <BasicDetail onSidebarClose={onSidebarClose} isOpen={isModelOpen} customerData={customerData} pageId={pageId} />
+          <BasicDetail onSidebarClose={onSidebarClose} isOpen={isModelOpen} customerData={customerData} pageId={pageId} onhandleRepeatCall={handleRepeatCall}/>
         </SidebarModel>
     </>
   );

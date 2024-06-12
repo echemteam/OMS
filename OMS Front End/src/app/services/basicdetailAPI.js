@@ -58,7 +58,6 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-        
         getCustomers: builder.mutation({
             query: (userQuery) => ({
                 url: '/Customers/GetCustomers',
@@ -68,10 +67,20 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        updateCustomerApproveStatus: builder.mutation({
+            query: (Details) => ({
+                url: '/Customers/UpdateCustomerApproveStatus',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
 export const {
+    useUpdateCustomerApproveStatusMutation,
     useGetCustomersMutation,
     useLazyGetAllGroupTypesQuery,
     useLazyGetAllTerritoriesQuery,

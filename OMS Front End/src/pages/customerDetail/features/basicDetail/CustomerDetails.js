@@ -48,46 +48,30 @@ const CustomerDetails = ({ editClick, customerData }) => {
           <div className="field-desc">
             <div className="inf-label">Country</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.countryId}</div>
+            <div className="info-desc">{customerData?.countryName}</div>
           </div>
 
           <div className="field-desc">
             <div className="inf-label">Group Type</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.groupTypeId}</div>
+            <div className="info-desc">{customerData?.type}</div>
           </div>
 
           <div className="field-desc">
             <div className="inf-label">Territory</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.territoryId}</div>
+            <div className="info-desc">{customerData?.territory}</div>
           </div>
-
-          <div className="field-desc">
-            <div className="inf-label">Billing Currency</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.billingCurrency}</div>
-          </div>
-
           <div className="field-desc">
             <div className="inf-label">Tax Id</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">{customerData?.taxId}</div>
           </div>
-
           <div className="field-desc">
             <div className="inf-label">Is Company</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">{customerData?.isCompany}</div>
           </div>
-
-          <div className="field-desc">
-            <div className="inf-label">Notes</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.note}</div>
-          </div>
-
-
         </div>
       </div>
     </>

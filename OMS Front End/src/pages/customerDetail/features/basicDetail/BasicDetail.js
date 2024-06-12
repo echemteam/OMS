@@ -146,6 +146,7 @@ const BasicDetail = (props) => {
         return;
       }
       // setCustomerId(isUpdateCustomersBasicInformationData.keyValue)
+      props.onhandleRepeatCall()
       ToastService.success(isUpdateCustomersBasicInformationData.errorMessage);
       onreset()
     }

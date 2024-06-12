@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import CardSection from '../../../../components/ui/card/CardSection'
 import MolGrid from '../../../../components/Grid/MolGrid';
-import { useGetCustomersMutation } from '../../../../app/services/basicdetailAPI';
+import { useGetCustomersMutation, useUpdateCustomerApproveStatusMutation } from '../../../../app/services/basicdetailAPI';
 import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext"
 import { useNavigate } from 'react-router-dom';
 import { encryptUrlData } from '../../../../services/CryptoService';
+import ToastService from '../../../../services/toastService/ToastService';
 
-export const CustomersList = ({ statusId , configFile }) => {
- const navigate = useNavigate();
+export const CustomersList = ({ statusId, configFile }) => {
+  const navigate = useNavigate();
   const molGridRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [dataSource, setDataSource] = useState();
@@ -17,6 +18,8 @@ export const CustomersList = ({ statusId , configFile }) => {
     getCustomers,
     { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
   ] = useGetCustomersMutation();
+
+  const [updateCustomerApproveStatus, { isLoading: updateCustomerLoading, isSuccess: isSuccessUpdateCustomer, data: updateCustomerData }] = useUpdateCustomerApproveStatusMutation();
 
   const handlePageChange = (page) => {
     const request = {
@@ -32,6 +35,7 @@ export const CustomersList = ({ statusId , configFile }) => {
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
+      console.log("li", isListeData)
       if (isListeData) {
         setDataSource(isListeData.dataSource);
       }
@@ -40,6 +44,13 @@ export const CustomersList = ({ statusId , configFile }) => {
       }
     }
   }, [isListSuccess, isListeData]);
+
+  useEffect(() => {
+    if (isSuccessUpdateCustomer && updateCustomerData) {
+      ToastService.success(updateCustomerData.errorMessage);
+      getListApi()
+    }
+  }, [isSuccessUpdateCustomer, updateCustomerData]);
 
   useImperativeHandle(listRef, () => ({
     getListApi,
@@ -61,6 +72,13 @@ export const CustomersList = ({ statusId , configFile }) => {
   const handleEditClick = (data) => {
     navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
   };
+
+  const handleGridCheckBoxChange = (rowData, datafield, rowindex, updatedValue, parentData) => {
+    let req = {
+      customerId: rowData.customerId
+    }
+    updateCustomerApproveStatus(req)
+  }
 
   const actionHandler = {
     EDIT: handleEditClick,
@@ -86,6 +104,7 @@ export const CustomersList = ({ statusId , configFile }) => {
                   }}
                   onPageChange={handlePageChange}
                   onActionChange={actionHandler}
+                  onCellDataChange={handleGridCheckBoxChange}
                 />
               </div>
             </div>

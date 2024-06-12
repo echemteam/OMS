@@ -127,53 +127,25 @@ export const SubmittedCustomerGridConfig = {
       // allowShort: true,
     },
     {
-      name: "Status",
-      fieldName: "status",
+      name: "Approve",
       allowShort: false,
-      colType: GridColumnType.LABLE,
+      colType: GridColumnType.CHECKBOX,
       colSettings: {
-        valueField: "status",
-        getLableClass: (value) => {
-          switch (value) {
-            case "Active":
-              return "badge-gradient-success";
-            case "Open":
-              return "badge-gradient-info";
-            case "In Active":
-              return "badge-gradient-danger";
-            case "Pending":
-              return "badge-gradient-Pending";
-            case "In progress":
-              return "badge-gradient-theme";
-            case "Submitted":
-              return "badge-gradient-Submitted";
-            case "Approved":
-              return "badge-gradient-Approved";
-            case "Freeze":
-              return "badge-gradient-Frozen";
-            case "Blocke":
-              return "badge-gradient-Blocked";
-
-            default:
-              return "badge-gradient-info";
-          }
-        },
+        allowEdit: true,
       },
     },
-    {
-      name: "Action",
-      colType: GridColumnType.MULTIACTION,
-      defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
-      },
-      customDropdownActions: [
-        { name: "EDIT" },
-        { name: "DISABLE" },
-        { name: "FREEZE" },
-        { name: "BLOCK" },
-      ],
-    },
+    // {
+    //   name: "Action",
+    //   colType: GridColumnType.MULTIACTION,
+    //   defaultAction: {
+    //     allowEdit: false,
+    //     allowDelete: false,
+    //   },
+    //   customDropdownActions: [
+    //     { name: "EDIT" },
+    //     { name: "DISABLE" },
+    //   ],
+    // },
   ],
 
 };
@@ -190,20 +162,20 @@ export const ApprovedCustomerGridConfig = {
       fieldName: "taxId",
       // allowShort: true,
     },
-    {
-      name: "Action",
-      colType: GridColumnType.MULTIACTION,
-      defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
-      },
-      customDropdownActions: [
-        { name: "EDIT" },
-        { name: "DISABLE" },
-        { name: "FREEZE" },
-        { name: "BLOCK" },
-      ],
-    },
+    // {
+    //   name: "Action",
+    //   colType: GridColumnType.MULTIACTION,
+    //   defaultAction: {
+    //     allowEdit: false,
+    //     allowDelete: false,
+    //   },
+    //   customDropdownActions: [
+    //     { name: "EDIT" },
+    //     { name: "DISABLE" },
+    //     { name: "FREEZE" },
+    //     { name: "BLOCK" },
+    //   ],
+    // },
   ],
 };
 

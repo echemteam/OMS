@@ -15,6 +15,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [activeTab, setActiveTab] = useState(0);
     const [customerId, setCustomerId] = useState(0);
     const [addressId, setAddressId] = useState(0);
+    const [addressDataLength , setAddressDataLength] = useState(0)
 
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
@@ -26,7 +27,7 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     const addCustomer = () => {
         if (customerId > 0) {
-            if (addressId > 0) {
+            if (addressDataLength > 0) {
                 setActiveTab((prev) => prev + 1);
             } else {
                 error("Please enter Address");
@@ -39,7 +40,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     };
 
     return (
-        <BasicDetailContext.Provider value={{ nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId }}>
+        <BasicDetailContext.Provider value={{ nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId , setAddressDataLength}}>
             {children}
         </BasicDetailContext.Provider>
     );
