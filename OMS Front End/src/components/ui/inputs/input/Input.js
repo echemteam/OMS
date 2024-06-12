@@ -28,7 +28,9 @@ const Input = ({
   pattern,
   maskFormat,
   extendedFormat,
-  minValueLength
+  minValueLength,
+  inputButtonGroup,
+  handleInputGroupButton
 }) => {
 
   const [inputAttributes, setInputAttributes] = useState({});
@@ -109,22 +111,45 @@ const Input = ({
           {...inputAttributes}
         />
         :
-        <input
-          id={name}
-          value={value}
-          name={name}
-          type={type}
-          className={cssClass}
-          placeholder={placeholder}
-          onChange={handleInputChange}
-          onKeyUp={onKeyup}
-          onKeyDown={handleKeyDown}
-          onBlur={onBlur}
-          disabled={isDisable}
-          min={min}
-          max={max}
-          {...inputAttributes}
-        />
+        <>
+          {inputButtonGroup?.isInputButton ?
+            <div class="input-group mb-3">
+              <input
+                id={name}
+                value={value}
+                name={name}
+                type={type}
+                className={`${cssClass} inputWithButton`}
+                placeholder={placeholder}
+                onChange={handleInputChange}
+                onKeyUp={onKeyup}
+                onKeyDown={handleKeyDown}
+                onBlur={onBlur}
+                disabled={isDisable}
+                min={min}
+                max={max}
+                {...inputAttributes} />
+              <div class="input-group-append">
+                <button class="input-button btn theme-button" type="button" onClick={handleInputGroupButton}>{inputButtonGroup?.buttonText}</button>
+              </div>
+            </div>
+            :
+            <input
+              id={name}
+              value={value}
+              name={name}
+              type={type}
+              className={cssClass}
+              placeholder={placeholder}
+              onChange={handleInputChange}
+              onKeyUp={onKeyup}
+              onKeyDown={handleKeyDown}
+              onBlur={onBlur}
+              disabled={isDisable}
+              min={min}
+              max={max}
+              {...inputAttributes} />}
+        </>
       }
 
     </>
