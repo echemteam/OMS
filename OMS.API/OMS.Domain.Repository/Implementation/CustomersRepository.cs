@@ -36,11 +36,9 @@ namespace OMS.Domain.Repository.Implementation
                 customers.CountryId,
                 customers.EmailAddress,
                 customers.Website,
-                customers.InvoiceSubmissionInstruction,
                 customers.Note,
                 customers.IsCompany,
                 customers.TaxId,
-                customers.BillingCurrency,
                 customers.CreatedBy
             }, CommandType.StoredProcedure);
         }
@@ -56,11 +54,9 @@ namespace OMS.Domain.Repository.Implementation
                 customers.CountryId,
                 customers.EmailAddress,
                 customers.Website,
-                customers.InvoiceSubmissionInstruction,
                 customers.Note,
                 customers.IsCompany,
                 customers.TaxId,
-                customers.BillingCurrency,
                 customers.UpdatedBy
             }, CommandType.StoredProcedure);
         }
@@ -97,6 +93,7 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECUSTOMERAPPROVESTATUS, new
             {
+                customers.CustomerId,
                 customers.ApprovedBy,
             }, CommandType.StoredProcedure);
         }

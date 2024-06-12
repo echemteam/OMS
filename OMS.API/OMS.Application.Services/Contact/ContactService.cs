@@ -23,11 +23,11 @@ namespace OMS.Application.Services.Contact
         #endregion
 
         #region  Contact Service
-        public async Task<AddEntityDTO<int>> AddContact(AddContactRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDTO<int>> AddEditContact(AddEditContactRequest requestData, short CurrentUserId)
         {
-            ContactDTO contactDTO = requestData.ToMapp<AddContactRequest, ContactDTO>();
+            ContactDTO contactDTO = requestData.ToMapp<AddEditContactRequest, ContactDTO>();
             contactDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.contact.AddContact(contactDTO);
+            return await repositoryManager.contact.AddEditContact(contactDTO);
         }
 
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerIdId(int customerId)

@@ -20,6 +20,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLCONTACTTYPES = "GetAllContactTypes";
         const string GETALLADDRESSTYPES = "GetAllAddressTypes";
         const string GETALLDOCUMENTTYPES = "GetAllDocumentTypes";
+        const string GETALLDEFAULTPAYMENTTEMPLETE = "GetDefaultPaymentTemplete";
+        const string GETALLPAYMENTMETHOD = "GetAllPaymentMethod";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -78,5 +80,15 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetList<GetAllDocumentTypesResponse>(GETALLDOCUMENTTYPES, commandType: CommandType.StoredProcedure);
         }
+        public async Task<List<GetAllPaymentTermsResponse>> GetAllPaymentTerms()
+        {
+            return await _context.GetList<GetAllPaymentTermsResponse>(GETALLDEFAULTPAYMENTTEMPLETE, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllPaymentMethodResponse>> GetAllPaymentMethod()
+        {
+            return await _context.GetList<GetAllPaymentMethodResponse>(GETALLPAYMENTMETHOD, commandType: CommandType.StoredProcedure);
+        }
+
+
     }
 }

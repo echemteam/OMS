@@ -5,6 +5,7 @@ using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
@@ -54,9 +55,10 @@ namespace OMS.Application.Services.Customers
             return await repositoryManager.customers.CheckCustomerNameExist(customersDTO);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(UpdateCustomerApproveStatusRequest requestData)
+        public async Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(UpdateCustomerApproveStatusRequest requestData, short CurrentUserId)
         {
             CustomersDTO customersDTO = requestData.ToMapp<UpdateCustomerApproveStatusRequest, CustomersDTO>();
+            customersDTO.ApprovedBy = CurrentUserId;
             return await repositoryManager.customers.UpdateCustomerApproveStatus(customersDTO);
         }
         #endregion

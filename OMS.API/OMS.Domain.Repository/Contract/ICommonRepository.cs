@@ -14,5 +14,7 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetAllContactTypesResponse>> GetAllContactTypes();
         Task<List<GetAllAddressTypesResponse>> GetAllAddressTypes();
         Task<List<GetAllDocumentTypesResponse>> GetAllDocumentTypes();
+        Task<List<GetAllPaymentTermsResponse>> GetAllPaymentTerms();
+        Task<List<GetAllPaymentMethodResponse>> GetAllPaymentMethod();
     }
 }

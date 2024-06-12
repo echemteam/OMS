@@ -92,6 +92,19 @@ namespace OMS.API.Controllers
             List<GetAllDocumentTypesResponse> responseData = await _serviceManager.commonServices.GetAllDocumentTypes().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpGet("GetAllPaymentTerms")]
+        public async Task<IActionResult> GetAllDefaultPaymentTemplete()
+        {
+            List<GetAllPaymentTermsResponse> responseData = await _serviceManager.commonServices.GetAllPaymentTerms().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+         
+        [HttpGet("GetAllPaymentMethod")]
+        public async Task<IActionResult> GetAllPaymentMethod()
+        {
+            List<GetAllPaymentMethodResponse> responseData = await _serviceManager.commonServices.GetAllPaymentMethod().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
 
 
     }

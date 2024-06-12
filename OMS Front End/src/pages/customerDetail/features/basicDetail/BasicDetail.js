@@ -11,6 +11,7 @@ import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
+  const [customerName, setCustomerName] = useState('');
   const { nextRef, setCustomerId, moveNextPage } = useContext(BasicDetailContext);
 
   const [
@@ -212,10 +213,23 @@ const BasicDetail = (props) => {
       setFormData(updatedForm);
     }
   }
-
   const formActionHandler = {
     DDL_CHANGED: handleValidateTextId
   };
+
+  const handleInputFields = (data, dataField) => {
+    if (dataField === 'taxId') {
+      setCustomerName(data);
+    }
+  }
+  const formInputHandler = {
+    INPUT_CHANGED: handleInputFields
+  }
+
+
+  const handleInputGroupButton = () => {
+    // console.log('customerName', customerName)
+  }
 
   return (
     <div className="basic-info-sec half-sec">
@@ -226,6 +240,8 @@ const BasicDetail = (props) => {
             ref={basicDetailRef}
             {...formData}
             onActionChange={formActionHandler}
+            onInputChange={formInputHandler}
+            handleInputGroupButton={handleInputGroupButton}
           />
         </div>
 
