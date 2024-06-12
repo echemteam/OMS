@@ -90,9 +90,9 @@ export const Menu = [
         securityKey: "",
       },
       {
-        id: "viewCustomer",
+        id: "Customers",
         submenuName: "Customer",
-        to: "/viewCustomer",
+        to: "/Customers",
         securityKey: "",
       },
     ],

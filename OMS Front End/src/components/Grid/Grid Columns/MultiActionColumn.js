@@ -90,7 +90,11 @@ export const RenderMultiGridAction = (rowData, col, rowIndex, onActionHandler) =
             <ul>
               {col.customDropdownActions.map((action, index) => (
                 <li key={`customAction_${index}`}>
-                  <Link onClick={closeDropdown} to={action.path}>
+                  <Link onClick={(e) => {
+                    e.preventDefault();
+                    handleAction(action.name, rowData);
+                    closeDropdown()
+                  }} to={action.path}>
                     {action.name}
                   </Link>
                 </li>

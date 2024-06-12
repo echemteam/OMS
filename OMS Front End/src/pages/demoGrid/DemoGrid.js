@@ -43,7 +43,7 @@ const GridConfig = {
     },
     {
       name: "Action",
-      colType: GridColumnType.MULACTION,
+      colType: GridColumnType.MULTIACTION,
       defaultAction: {
         allowEdit: false,
         allowDelete: false,

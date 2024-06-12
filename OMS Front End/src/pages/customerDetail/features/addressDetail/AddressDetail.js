@@ -73,8 +73,13 @@ const AddressDetail = (props) => {
     getAllCountries()
     getAllStates()
     getAllCities()
-    getAddresssByCustomerId(customerId);
   }, [])
+
+  useEffect(() => {
+    if (customerId > 0) {
+      getAddresssByCustomerId(customerId);
+    }
+  }, [customerId])
 
   useEffect(() => {
     if (!isGetAddresssByCustomerIdFetching && isGetAddresssByCustomerId && GetAddresssByCustomerIdData) {

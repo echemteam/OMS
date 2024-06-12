@@ -1,7 +1,7 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const basicDetailFormDataHalf = {
-  initialState: { name: "", groupTypeId: "", countryId: "", territoryId: "", emailAddress: "", website: "", invoiceSubmissionInstruction: "", note: "", isCompany: false, taxId: "", billingCurrency: "" },
+  initialState: { name: "", groupTypeId: "", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", isCompany: false, taxId: "", },
   formFields: [
     {
       id: "name",
@@ -64,26 +64,6 @@ export const basicDetailFormDataHalf = {
       },
     },
     {
-      id: "billingCurrency",
-      lable: "Billing Currency :",
-      Field_Name: "Billing Currency",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "billingCurrency",
-      fieldSetting: {
-        placeholder: "Select Billing Currency",
-        allowSpace: true,
-        options: [
-          { label: "INR", value: 1 },
-          { label: "USD", value: 2 },
-        ],
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
-      },
-    },
-
-    {
       id: "emailAddress",
       lable: "Email :",
       Field_Name: "Email",
@@ -115,12 +95,12 @@ export const basicDetailFormDataHalf = {
     },
     {
       id: "taxId",
-      lable: "Text Id :",
-      Field_Name: "Text Id",
+      lable: "Tax Id :",
+      Field_Name: "Tax Id",
       fieldType: FormFieldTypes.INPUT,
       dataField: "taxId",
       fieldSetting: {
-        placeholder: "Text Id",
+        placeholder: "Tax Id",
         allowSpace: true,
         minLength: 0,
         maxLength: 10,
@@ -128,23 +108,6 @@ export const basicDetailFormDataHalf = {
       validation: [{ type: "require" }, { type: "taxId", minLength: 0, maxLength: 10 }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
-      },
-    },
-
-
-    {
-      id: "invoiceSubmissionInstruction",
-      lable: "Invoice Submission Instruction :",
-      Field_Name: "Invoice Submission Instruction",
-      fieldType: FormFieldTypes.TINYEDITOR,
-      dataField: "invoiceSubmissionInstruction",
-      fieldSetting: {
-        placeholder: "Enter Invoice Submission Instruction",
-        allowSpace: true,
-      },
-      // validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-2",
       },
     },
     {

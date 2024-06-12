@@ -30,7 +30,7 @@ const MolGridDataRows = (props) => {
         return renderGridCheckboxColumn(rowData, col, rowIndex);
       case GridColumnType.ACTION:
         return renderGridAction(rowData, col, rowIndex, props.onActionChange);
-      case GridColumnType.MULACTION:
+      case GridColumnType.MULTIACTION:
         return RenderMultiGridAction(rowData, col, rowIndex, props.onActionChange);
       case GridColumnType.PROGRESS:
         return renderGridProgressAction(rowData, col, rowIndex);
