@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.API.Controllers
@@ -27,7 +29,6 @@ namespace OMS.API.Controllers
         [HttpPost("AddCustomersBasicInformation")]
         public async Task<IActionResult> AddCustomersBasicInformation(AddCustomersBasicInformationRequest requestData)
         {
-
             var addItem = await _serviceManager.customersServices.AddCustomersBasicInformation(requestData, CurrentUserId);
             return APISucessResponce(addItem);
         }
@@ -35,9 +36,13 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateCustomersBasicInformation")]
         public async Task<IActionResult> UpdateCustomersBasicInformation(UpdateCustomersBasicInformationRequest requestData)
         {
-
-            var updateItem = await _serviceManager.customersServices.UpdateCustomersBasicInformation(requestData, CurrentUserId);
-            return APISucessResponce(updateItem);
+            AddEntityDTO<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.customersServices.UpdateCustomersBasicInformation(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(responseData);
         }
 
         [HttpGet("GetCustomersBasicInformationById")]
@@ -49,6 +54,27 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(customerDetails);
             }
             return APISucessResponce(customerId);
+        }
+
+        [HttpPost("GetCustomers")]
+        public async Task<IActionResult> GetCustomers(GetCustomersRequest queryRequest)
+        {
+            var customers = await _serviceManager.customersServices.GetCustomers(queryRequest);
+            return APISucessResponce<object>(customers);
+        }
+
+        [HttpPost("CheckCustomerNameExist")]
+        public async Task<IActionResult> CheckCustomerNameExist(CheckCustomerNameExistRequest requestData)
+        {
+            var checkItem = await _serviceManager.customersServices.CheckCustomerNameExist(requestData);
+            return APISucessResponce(checkItem);
+        }
+
+        [HttpPost("UpdateCustomerApproveStatus")]
+        public async Task<IActionResult> UpdateCustomerApproveStatus(UpdateCustomerApproveStatusRequest requestData)
+        {
+            var updateItem = await _serviceManager.customersServices.UpdateCustomerApproveStatus(requestData, CurrentUserId);
+            return APISucessResponce(updateItem);
         }
         #endregion
     }

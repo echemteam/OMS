@@ -428,7 +428,8 @@ a {
         }
       }
 
-      .middle-page-section {}
+      .middle-page-section {
+      }
     }
   }
 }
@@ -717,7 +718,8 @@ a {
   .tab-content {
     padding-top: 20px;
 
-    .tab-body-section {}
+    .tab-body-section {
+    }
   }
 
   &.vertical-tab {
@@ -774,20 +776,160 @@ a {
     }
   }
 }
+// Tab Section End
 
-.other-info-tab {
+.main-customer-grid {
+  .card-body-sec {
+    margin-top: 0;
+  }
   .tab-section {
+    margin-bottom: 30px;
+
+    .tab-header {
+      border-bottom: 1px solid var(--linkMenu);
+      background: var(--whiteColor);
+
+      button {
+        padding: 7px 25px 7px;
+        border: none;
+        background: var(--whiteColor);
+        border-radius: 0px;
+        font-weight: 600;
+        font-size: 14px;
+        border: none;
+        border-right: 1px solid var(--whiteColor);
+        margin-right: 0;
+        color: var(--textColor);
+
+        &.active {
+          margin-bottom: 0;
+          color: #000;
+          position: relative;
+          padding-bottom: 15px;
+          font-size: 16px;
+
+          &::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(180deg);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--themeColor); /* Change color as needed */
+          }
+        }
+      }
+    }
+
     .tab-content {
       padding-top: 0;
 
-      .card-button-only {
-        padding: 10px 0;
+      .tab-body-section {
+      }
+    }
+
+    &.vertical-tab {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      height: 100%;
+
+      .tab-header {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 180px;
+        height: 100%;
+        border-right: 1px solid #d0d4df;
+        border-bottom: 0;
+        padding: 5px 0px 0 0px;
+
+        // background: var(--bg-main-content);
+        button {
+          margin: 0;
+          width: 100%;
+          border-radius: 0;
+          text-align: left;
+          margin-bottom: 5px;
+          border: none;
+          border-bottom: 1px solid #d0d4df;
+          margin-right: 10px;
+          z-index: 1;
+          background: #e2e6f0;
+          border-right-color: var(--whiteColor);
+          color: var(--textColor);
+
+          &.active {
+            background: var(--gradient-theme);
+            border-right: 1px solid var(--themeColor);
+            color: var(--whiteColor);
+            border-left: 4px solid var(--textColor);
+          }
+        }
+      }
+
+      .tab-content {
+        width: calc(100% - 180px);
+      }
+
+      .card {
+        padding-right: 0;
+        padding-top: 10px;
+      }
+
+      .card-body-sec {
+        margin-top: 10px;
       }
     }
   }
 }
 
-// Tab Section End
+.main-customer-grid {
+  .main-inactive-grid {
+    .card-body-sec {
+      margin-top: 0;
+    }
+    .tab-sub-section {
+      margin-bottom: 30px;
+      margin-left: 20px;
+
+      .tab-sub-header {
+        border-bottom: 1px solid var(--linkMenu);
+        background: var(--whiteColor);
+
+        button {
+          padding: 7px 25px 7px;
+          border: none;
+          background: var(--whiteColor);
+          border-radius: 0px;
+          font-weight: 600;
+          font-size: 13px;
+          border: none;
+          border-right: 1px solid var(--whiteColor);
+          margin-right: 0;
+          color: var(--textColor);
+
+          &.active {
+            margin-bottom: 0;
+            color: #000;
+            position: relative;
+            padding-bottom: 15px;
+            font-size: 15px;
+            border-bottom: 2px solid var(--themeColor);
+          }
+        }
+      }
+
+      .tab-sub-content {
+        padding-top: 0;
+
+        .tab-sub-body-section {
+        }
+      }
+    }
+  }
+}
 
 ::-webkit-scrollbar {
   width: 5px;
@@ -1128,25 +1270,17 @@ a {
   }
 }
 
+.no-address {
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--textColor);
+}
+
 .document-section {
   .card-body-sec {
     margin-top: 0 !important;
-  }
-
-  .no-address {
-    display: flex;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--textColor);
-  }
-
-  .no-address {
-    display: flex;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--textColor);
   }
 
   .document-section {
@@ -1217,7 +1351,6 @@ a {
       margin: 0;
     }
   }
-
 }
 
 .notes-card {
@@ -1252,8 +1385,6 @@ a {
     font-size: 110%;
     color: var(--textColor);
     margin-bottom: 5px;
-
-
   }
 
   .bottom-info {
@@ -1282,7 +1413,6 @@ a {
       justify-content: center;
 
       .edit-btn {
-
         background: transparent;
         padding: 7px;
 

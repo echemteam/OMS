@@ -45,6 +45,8 @@ namespace OMS.Domain.Entities.Entity.Customers
 
         [Column("ApprovedAt")]
         public DateTime? ApprovedAt { get; set; }
+        [Column("ApprovedBy")]
+        public short? ApprovedBy { get; set; }
         [Column("IsActive")]
         public bool? IsActive { get; set; }
         [Column("IsDeleted")]

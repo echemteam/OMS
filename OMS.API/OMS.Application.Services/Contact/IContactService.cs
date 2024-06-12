@@ -10,5 +10,9 @@ namespace OMS.Application.Services.Contact
         Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerIdId(int customerId);
         Task<AddEntityDTO<int>> AddContactEmail(AddContactEmailRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> AddContactPhone(AddContactPhoneRequest requestData, short CurrentUserId);
+        Task<AddEntityDTO<int>> UpdateContactEmail(UpdateContactEmailRequest requestData, short CurrentUserId);
+        Task<AddEntityDTO<int>> UpdateContactPhone(UpdateContactPhoneRequest requestData, short CurrentUserId);
+        Task<AddEntityDTO<int>> DeleteContactEmail(int emailId, int deletedBy);
+        Task<AddEntityDTO<int>> DeleteContactPhone(int phoneId, int deletedBy);
     }
 }

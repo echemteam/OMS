@@ -239,12 +239,20 @@ namespace Common.Helper.Utility
             return code.ToString();
         }
 
+        //public static string GenerateListCode(string taxid, string name)
+        //{
+        //    string last4Digits = taxid.Substring(taxid.Length - 4);
+        //    string cleanedName = name.Trim();
+        //    string combinedString = last4Digits + "_" + cleanedName;
+        //    return combinedString;
+        //}
         public static string GenerateListCode(string taxid, string name)
         {
-            string last4Digits = taxid.Substring(taxid.Length - 4);
+            string last4Digits = taxid.Length >= 4 ? taxid[^4..] : taxid;
             string cleanedName = name.Trim();
-            string combinedString = last4Digits + "_" + cleanedName;
-            return combinedString;
+            string first5Chars = cleanedName.Length >= 5 ? cleanedName[..5] : cleanedName;
+            string combinedString = last4Digits + "_" + first5Chars;
+            return combinedString.Length <= 10 ? combinedString : combinedString[..10];
         }
     }
 }
