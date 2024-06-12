@@ -35,7 +35,6 @@ export const CustomersList = ({ statusId, configFile }) => {
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
-      console.log("li", isListeData)
       if (isListeData) {
         setDataSource(isListeData.dataSource);
       }
