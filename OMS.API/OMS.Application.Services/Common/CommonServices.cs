@@ -68,5 +68,13 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllDocumentTypes();
         }
+        public Task<List<GetAllPaymentTermsResponse>> GetAllPaymentTerms()
+        {
+            return repositoryManager.commonRepository.GetAllPaymentTerms();
+        }
+        public Task<List<GetAllPaymentMethodResponse>> GetAllPaymentMethod()
+        {
+            return repositoryManager.commonRepository.GetAllPaymentMethod();
+        }
     }
 }
