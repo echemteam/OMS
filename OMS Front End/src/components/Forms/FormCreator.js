@@ -66,11 +66,9 @@ const FormCreator = forwardRef((props, ref) => {
     }
   };
 
-  // const handleFormFieldChange = (fieldName,value) => {
-
-  //   if(props.onFormFieldValueChange)
-  //   {
-  //      props.onFormFieldValueChange(updatedData)
+  // const handleFormFieldChange = (fieldName, value) => {
+  //   if (props.onFormFieldValueChange) {
+  //     props.onFormFieldValueChange(fieldName, value)
   //   }
   // };
 
@@ -104,8 +102,13 @@ const FormCreator = forwardRef((props, ref) => {
     }
   }
 
+  const onInputChange = (action, dataField, data) => {
+    if (props.onInputChange && props.onInputChange[action]) {
+      props.onInputChange[action](data, dataField);
+    }
+  }
+
   return (
-    // <MinMaxLengthValidatorContextProvider>
     <>
       {props.formFields ? (
         <FormFields
@@ -113,6 +116,7 @@ const FormCreator = forwardRef((props, ref) => {
           formData={formData}
           validState={validState}
           onActionChange={onActionHandle}
+          onInputChange={onInputChange}
           onFormStateChange={handleStateChange}
           // onFormFieldChange={handleFormFieldChange}
           onUpdateValidation={handleOnValidateField}
@@ -123,7 +127,6 @@ const FormCreator = forwardRef((props, ref) => {
         <div>No fields configured</div>
       )}
     </>
-    // </MinMaxLengthValidatorContextProvider>
   );
 });
 

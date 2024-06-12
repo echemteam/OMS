@@ -19,6 +19,7 @@ const FormInputFields = ({
   overRideProps,
   inputButtonGroup,
   handleInputGroupButton,
+  inputField,
   ...inputProps
 }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -28,6 +29,9 @@ const FormInputFields = ({
       if (e.target.type !== "file") {
         setSelectedFile(null);
         onChange(dataField, e.target.value);
+        if (inputField) {
+          inputField('INPUT_CHANGED', dataField, e.target.value);
+        }
       } else if (e.target.files[0]) {
         const fileObj = e.target.files[0];
 

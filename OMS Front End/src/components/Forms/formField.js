@@ -23,7 +23,8 @@ const FormFields = ({
   formSetting,
   onActionChange,
   onFormFieldChange,
-  handleInputGroupButton
+  handleInputGroupButton,
+  onInputChange
 }) => {
 
   const [overRideProps, setOverRideProps] = useState({});
@@ -108,6 +109,7 @@ const FormFields = ({
               overRideProps={overRideProps?.[field.dataField]}
               inputButtonGroup={field.inputButtonGroup}
               handleInputGroupButton={handleInputGroupButton}
+              inputField={onInputChange}
               {...field.fieldSetting}
             />
           </div>

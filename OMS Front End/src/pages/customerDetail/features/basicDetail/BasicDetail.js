@@ -163,18 +163,22 @@ const BasicDetail = (props) => {
       setFieldSettingValues(fieldSetting);
     }
   }
-
   const formActionHandler = {
     DDL_CHANGED: handleValidateTextId
   };
 
+  const handleInputFields = (data, dataField) => {
+    if (dataField === 'taxId') {
+      setCustomerName(data);
+    }
+  }
+  const formInputHandler = {
+    INPUT_CHANGED: handleInputFields
+  }
+
+
   const handleInputGroupButton = () => {
     // console.log('customerName', customerName)
-  }
-  const onFormDataChange = (updatedData) => {
-    if (updatedData?.name !== '' && updatedData?.name !== null) {
-      setCustomerName(updatedData?.name);
-    }
   }
 
   return (
@@ -185,9 +189,9 @@ const BasicDetail = (props) => {
             ref={basicDetailRef}
             {...formData}
             onActionChange={formActionHandler}
+            onInputChange={formInputHandler}
             fieldSettingValue={fieldSettingValues}
             handleInputGroupButton={handleInputGroupButton}
-            onFormDataChange={onFormDataChange}
           />
         </div>
 
