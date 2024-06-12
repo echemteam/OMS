@@ -34,11 +34,6 @@ namespace OMS.Prisitance.Entities.Entities
         [Column("StatusId")]
         public short? StatusId { get; set; }
 
-        [Column("BillingCurrency")]
-        public string? BillingCurrency { get; set; }
-        [Column("InvoiceSubmissionInstruction")]
-        public string? InvoiceSubmissionInstruction { get; set; }
-
         [Column("ApprovedAt")]
         public DateTime? ApprovedAt { get; set; }
 
