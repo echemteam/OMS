@@ -12,7 +12,7 @@ namespace OMS.Domain.Repository.Implementation
     internal class ContactRepository : BaseRepository<Contact>, IContactRepository
     {
         #region SP Name
-        const string ADDCONTACT = "AddContact";
+        const string ADDEDITCONTACT = "AddEditContact";
         const string GETCONTACTBYCUSTOMERIDID = "GetContactByCustomerIdId";
         const string GETEMAILBYCONTACTID = "GetEmailByContactId";
         const string GETPHONEBYCONTACTID = "GetPhoneByContactId";
@@ -29,10 +29,11 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Contact Repository
-        public async Task<AddEntityDTO<int>> AddContact(ContactDTO contact)
+        public async Task<AddEntityDTO<int>> AddEditContact(ContactDTO contact)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCONTACT, new
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACT, new
             {
+                contact.ContactId,
                 contact.CustomerId,
                 contact.ContactTypeId,
                 contact.FirstName,

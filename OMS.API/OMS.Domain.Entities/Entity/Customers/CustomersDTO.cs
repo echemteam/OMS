@@ -33,11 +33,6 @@ namespace OMS.Domain.Entities.Entity.Customers
         public string? TaxId { get; set; }
         [Column("StatusId")]
         public short? StatusId { get; set; }
-
-        [Column("BillingCurrency")]
-        public string? BillingCurrency { get; set; }
-        [Column("InvoiceSubmissionInstruction")]
-        public string? InvoiceSubmissionInstruction { get; set; }
         [Column("EmailAddress")]
         public string? EmailAddress { get; set; }
         [Column("Note")]
