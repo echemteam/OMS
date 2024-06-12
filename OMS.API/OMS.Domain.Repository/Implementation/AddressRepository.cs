@@ -27,7 +27,6 @@ namespace OMS.Domain.Repository.Implementation
             {
                 address.CustomerId,
                 address.AddressTypeId,
-                address.Title,
                 address.AddressLine1,
                 address.AddressLine2,
                 address.AddressLine3,
@@ -57,7 +56,6 @@ namespace OMS.Domain.Repository.Implementation
                 address.AddressId,
                 address.CustomerId,
                 address.AddressTypeId,
-                address.Title,
                 address.AddressLine1,
                 address.AddressLine2,
                 address.AddressLine3,

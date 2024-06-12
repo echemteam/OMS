@@ -7,6 +7,8 @@ import { renderGridLinkColumn } from "./Grid Columns/LinkColumn";
 import { renderGridCheckboxColumn } from "./Grid Columns/CheckBoxColumn";
 import { renderGridAction } from "./Grid Columns/ActionColumn";
 import { renderGridLableColumn } from "./Grid Columns/LabelColumn";
+import { RenderMultiGridAction } from "./Grid Columns/MultiActionColumn";
+import { renderGridProgressAction } from "./Grid Columns/ProgressColumn";
 // import { renderHTMLColumn } from "./Grid Columns/HTMLColumn";/
 
 // Function for rendering the action column
@@ -28,6 +30,10 @@ const MolGridDataRows = (props) => {
         return renderGridCheckboxColumn(rowData, col, rowIndex);
       case GridColumnType.ACTION:
         return renderGridAction(rowData, col, rowIndex, props.onActionChange);
+      case GridColumnType.MULACTION:
+        return RenderMultiGridAction(rowData, col, rowIndex, props.onActionChange);
+      case GridColumnType.PROGRESS:
+        return renderGridProgressAction(rowData, col, rowIndex);
       case GridColumnType.CUSTOM:
         return col.renderCustomCol ? col.renderCustomCol(rowData, rowIndex) : null;
       // case GridColumnType.HTML:

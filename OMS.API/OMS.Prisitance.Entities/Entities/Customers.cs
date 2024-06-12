@@ -41,6 +41,9 @@ namespace OMS.Prisitance.Entities.Entities
 
         [Column("ApprovedAt")]
         public DateTime? ApprovedAt { get; set; }
+
+        [Column("ApprovedBy")]
+        public short? ApprovedBy { get; set; }
         [Column("IsActive")]
         public bool? IsActive { get; set; }
         [Column("IsDeleted")]

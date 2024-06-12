@@ -27,7 +27,6 @@ namespace OMS.Application.Services.Address
         {
             AddressDTO addressDTO = requestData.ToMapp<AddAddressRequest, AddressDTO>();
             addressDTO.CreatedBy = CurrentUserId;
-            addressDTO.Title = "Testing";
             return await repositoryManager.address.AddAddress(addressDTO);
         }
 
@@ -40,7 +39,6 @@ namespace OMS.Application.Services.Address
         {
             AddressDTO addressDTO = requestData.ToMapp<UpdateAddressRequest, AddressDTO>();
             addressDTO.UpdatedBy = CurrentUserId;
-            addressDTO.Title = "UpdateTesting";
             return await repositoryManager.address.UpdateAddAddress(addressDTO);
         }
         #endregion

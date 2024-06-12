@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Contact;
-using OMS.Domain.Entities.API.Response.Address;
 using OMS.Domain.Entities.API.Response.Contact;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -50,12 +50,60 @@ namespace OMS.API.Controllers
             return APISucessResponce(addItem);
         }
 
-        [HttpPost("AddContactPhone")]   
+        [HttpPost("AddContactPhone")]
         public async Task<IActionResult> AddContactPhone(AddContactPhoneRequest requestData)
         {
 
             var addItem = await _serviceManager.contactService.AddContactPhone(requestData, CurrentUserId);
             return APISucessResponce(addItem);
+        }
+
+        [HttpPost("UpdateContactEmail")]
+        public async Task<IActionResult> UpdateContactEmail(UpdateContactEmailRequest requestData)
+        {
+            AddEntityDTO<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.contactService.UpdateContactEmail(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(responseData);
+        }
+
+        [HttpPost("UpdateContactPhone")]
+        public async Task<IActionResult> UpdateContactPhone(UpdateContactPhoneRequest requestData)
+        {
+            AddEntityDTO<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.contactService.UpdateContactPhone(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(responseData);
+        }
+
+        [HttpDelete("DeleteContactEmail")]
+        public async Task<IActionResult> DeleteContactEmail(int emailId)
+        {
+            if (emailId > 0)
+            {
+                int deletedBy = CurrentUserId;
+                var deleteItem = await _serviceManager.contactService.DeleteContactEmail(emailId, deletedBy).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(emailId);
+        }
+
+        [HttpDelete("DeleteContactPhone")]
+        public async Task<IActionResult> DeleteContactPhone(int phoneId)
+        {
+            if (phoneId > 0)
+            {
+                int deletedBy = CurrentUserId;
+                var deleteItem = await _serviceManager.contactService.DeleteContactPhone(phoneId, deletedBy).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(phoneId);
         }
         #endregion
 
