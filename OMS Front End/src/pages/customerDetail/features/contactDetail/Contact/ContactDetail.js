@@ -17,8 +17,10 @@ const ContactDetail = () => {
   //** State */
   const childRef = useRef();
   const editRef = useRef();
+  const addRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
   const [isModelOpen, setisModelOpen] = useState(false);
+  const [isAddModelOpen, setIsAddModelOpen] = useState(false);
   const [modifyContactData, setModifyContactData] = useState([]);
   const { customerId, setEmailAddressData, setContactMainModal, setContactId, setPhoneNumberData } = useContext(BasicDetailContext);
 
@@ -58,12 +60,17 @@ const ContactDetail = () => {
     setPhoneNumberData('');
     setEmailAddressData('');
     setContactMainModal(true);
+    setIsAddModelOpen(true);
     if (childRef.current) {
       childRef.current.callChildFunction();
+    }
+    if (addRef.current) {
+      addRef.current.callOpenModalFunction();
     }
   };
 
   const handleEdit = (data) => {
+    setIsAddModelOpen(false);
     setIsEdit(true);
     // setEditFormData(data);
     setisModelOpen(!isModelOpen);
@@ -88,7 +95,7 @@ const ContactDetail = () => {
     <>
       <CardSection
         cardTitle="Contact"
-        buttonClassName="danger-btn"
+        buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
         rightButton={true}
@@ -103,7 +110,8 @@ const ContactDetail = () => {
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}>
-          <AddEditContact onSidebarClose={onSidebarClose} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} />
+          <AddEditContact onSidebarClose={onSidebarClose} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} addRef={addRef}
+          isAddModelOpen={isAddModelOpen} />
         </SidebarModel>
       </div>
     </>

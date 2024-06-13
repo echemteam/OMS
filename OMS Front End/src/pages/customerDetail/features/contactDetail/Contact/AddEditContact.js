@@ -11,12 +11,15 @@ import { useAddEditContactMutation } from "../../../../../app/services/contactAP
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit, editRef }) => {
+const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, isEdit, editRef }) => {
 
   //** State */
   const ref = useRef();
+  const { formSetting } = contactDetailFormData;
   const [formData, setFormData] = useState(contactDetailFormData);
-  const { customerId, setContactId } = useContext(BasicDetailContext);
+  const [customerContactId, setCustomerContactId] = useState(0);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const { customerId, contactId, setContactId } = useContext(BasicDetailContext);
 
   //** API Call's */
   const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = useAddEditContactMutation();
@@ -28,11 +31,14 @@ const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit
       let request = {
         ...data,
         contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
-        customerId: customerId
+        customerId: customerId,
+        contactId: contactId,
+        customerContactId: customerContactId
       }
       addEdit(request);
     }
   };
+
 
   //** UseEffect */
   useEffect(() => {
@@ -40,6 +46,10 @@ const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit
       if (onSuccess) {
         onSuccess();
         setContactId(isAddEditData?.keyValue);
+        if (isAddModelOpen) {
+          formSetting.isViewOnly = true;
+          setIsButtonDisable(true);
+        }
       }
       ToastService.success(isAddEditData.errorMessage);
     }
@@ -50,12 +60,28 @@ const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit
     callEditFunction: handleEditMode,
   }));
 
+  useImperativeHandle(addRef, () => ({
+    callOpenModalFunction: handleOpenModal,
+  }));
+
+  const handleOpenModal = () => {
+    formSetting.isViewOnly = false;
+    setIsButtonDisable(false);
+  }
+
   const handleEditMode = (data) => {
+    formSetting.isViewOnly = false;
+    setIsButtonDisable(false);
     if (data) {
       let form = { ...contactDetailFormData };
-      form.initialState = data;
+      form.initialState = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        contactTypeId: data.contactTypeId
+      }
       setFormData(form);
       setContactId(data?.contactId);
+      setCustomerContactId(data?.customerContactId);
     }
   }
 
@@ -81,9 +107,10 @@ const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit
             <div className="d-flex align-item-end">
               <Buttons
                 buttonTypeClassName="theme-button"
-                buttonText={`${isEdit ? "Update" : "Add"}`}
+                buttonText='Save'
                 isLoading={isAddEditLoading}
                 onClick={handleAddEdit}
+                isDisable={isButtonDisable}
               />
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"

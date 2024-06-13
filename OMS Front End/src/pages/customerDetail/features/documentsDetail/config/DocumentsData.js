@@ -3,7 +3,14 @@ import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const DocumentFormData = {
   name: "Document Form",
-  initialState: { documentTypeId: "" , type:""},
+  initialState: {
+    name: "",
+    documentTypeId: "",
+    customerId: "",
+    attachment: "",
+    base64File: "",
+    storagePath: ""
+  },
   formFields: [
     {
       id: "documentTypeId",
@@ -14,7 +21,7 @@ export const DocumentFormData = {
       fieldSetting: {
         placeholder: "Select Document Type",
         allowSpace: true,
-        options:[]
+        options: []
       },
       validation: [{ type: "require" }],
       style: {
@@ -22,11 +29,11 @@ export const DocumentFormData = {
       },
     },
     {
-      id: "documentName",
+      id: "name",
       lable: "Document Name :",
       Field_Name: "Document Name",
       fieldType: FormFieldTypes.INPUT,
-      dataField: "Input",
+      dataField: "name",
       fieldSetting: {
         placeholder: "Enter Document Name",
         allowSpace: true,
@@ -41,20 +48,20 @@ export const DocumentFormData = {
       lable: "Attachment :",
       Field_Name: "Attachment",
       fieldType: FormFieldTypes.FILE,
-      dataField: "Input",
+      dataField: "attachment",
       fieldSetting: {
         placeholder: "Upload Attachment",
         allowSpace: true,
-        isButtonVisible:false,
-        isCustomButtonVisible:true,
+        isButtonVisible: false,
+        isCustomButtonVisible: true,
       },
       validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 custom-file-upload-section",
       },
-      
+
     },
-    
+
   ],
 };
 
@@ -72,7 +79,7 @@ export const DocumentGridConfig = {
       fieldName: "documentName",
       // allowShort: true,
     },
-    
+
     {
       name: "Action",
       colType: GridColumnType.ACTION,

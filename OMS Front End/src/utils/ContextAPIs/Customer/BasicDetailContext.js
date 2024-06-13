@@ -21,6 +21,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [addressDataLength, setAddressDataLength] = useState(0)
     const [emailAddressData, setEmailAddressData] = useState();
     const [phoneNumberData, setPhoneNumberData] = useState();
+    const [CustomerContactId, setCustomerContactId] = useState(0);
 
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);

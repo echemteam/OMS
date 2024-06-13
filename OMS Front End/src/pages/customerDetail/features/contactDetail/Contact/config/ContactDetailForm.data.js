@@ -100,6 +100,9 @@ export const contactDetailFormData = {
     //   },
     // },
   ],
+  formSetting: {
+    isViewOnly: false
+  }
 };
 
 export const ContactTypes = [

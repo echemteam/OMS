@@ -58,9 +58,9 @@ const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEd
                 ToastService.warning(isAddData.errorMessage);
             } else {
                 ToastService.success(isAddData.errorMessage);
-                onResetData();
-                onSuccess();
             }
+            onResetData();
+            onSuccess();
         }
     }, [isAddSuccess, isAddData]);
 
