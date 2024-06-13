@@ -9,6 +9,7 @@ namespace OMS.Domain.Entities.API.Request.CustomerAccountingNotes
     public  class AddEditCustomerSettingRequest
     {
         public int? CustomerAccountingSettingId { get; set; }
+        public int? CustomerId { get; set; }
         public short? PaymentTermId { get; set; }
         public decimal? CreditLimit { get; set; }
         public short? PaymentMethodId { get; set; }
