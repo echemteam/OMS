@@ -13,6 +13,7 @@ import basicdetailAPI from './services/basicdetailAPI';
 import contactAPI from './services/contactAPI';
 import addressAPI from './services/addressAPI';
 import documentAPI from './services/documentAPI';
+import notesAPI from './services/notesAPI';
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     [contactAPI.reducerPath]: contactAPI.reducer, 
     [addressAPI.reducerPath]: addressAPI.reducer, 
     [documentAPI.reducerPath]: documentAPI.reducer, 
+    [notesAPI.reducerPath]:notesAPI.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
     authapi.middleware,
@@ -37,6 +39,7 @@ export const store = configureStore({
     contactAPI.middleware,
     addressAPI.middleware,
     documentAPI.middleware,
+    notesAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);
