@@ -45,6 +45,10 @@ import pptIcon from "../assets/images/documentIcon/ppt.png";
 import csvIcon from "../assets/images/documentIcon/csv.png";
 
 import uploadIcon from "../assets/images/upload.png";
+import unfreezeIcone from "../assets/images/unfreeze.png";
+import blokedIcone from "../assets/images/bloked.png";
+import aciveCustomerIcone from "../assets/images/aciveCustomer.png";
+import refreshIcone from "../assets/images/refresh.png";
 
 export const AppIcons = {
   // Menus & Header Images
@@ -90,4 +94,8 @@ export const AppIcons = {
   CsvIcon: csvIcon,
 
   UploadIcon: uploadIcon,
+  unfreezeIcone: unfreezeIcone,
+  aciveCustomerIcone: aciveCustomerIcone,
+  blokedIcone: blokedIcone,
+  refreshIcone: refreshIcone,
 };

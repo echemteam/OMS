@@ -15,6 +15,7 @@ import NotesDetail from "./features/NotesDetail/NotesDetail";
 import { useLazyGetCustomersBasicInformationByIdQuery } from "../../app/services/basicdetailAPI";
 import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../services/CryptoService";
+import { HistoryDetail } from "./features/HistoryDetail/HistoryDetail";
 
 const ViewCustomer = () => {
   const { id } = useParams();
@@ -92,6 +93,14 @@ const ViewCustomer = () => {
       component: (
         <div className="mt-2">
           <NotesDetail />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "History",
+      component: (
+        <div className="">
+          <HistoryDetail />
         </div>
       ),
     },

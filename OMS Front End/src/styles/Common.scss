@@ -742,7 +742,7 @@ a {
   }
 
   .tab-content {
-    padding-top: 20px;
+    // padding-top: 20px;
 
     .tab-body-section {
     }
@@ -1494,4 +1494,8 @@ a {
   &.lightGray {
     background: var(--lightGray);
   }
+}
+
+.view-icon{
+  cursor: pointer;
 }
