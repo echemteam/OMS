@@ -1,6 +1,5 @@
-﻿using OMS.Domain.Entities.Entity.RoleMapping;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 
 namespace OMS.Domain.Entities.Entity.Customers
 {
@@ -46,7 +45,8 @@ namespace OMS.Domain.Entities.Entity.Customers
         public bool? IsActive { get; set; }
         [Column("IsDeleted")]
         public bool? IsDeleted { get; set; }
-
+        [Column("InActiveReason")]
+        public string? InActiveReason { get; set; }
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]
