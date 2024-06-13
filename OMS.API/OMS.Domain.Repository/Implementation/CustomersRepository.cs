@@ -41,7 +41,8 @@ namespace OMS.Domain.Repository.Implementation
                 customers.Note,
                 customers.IsCompany,
                 customers.TaxId,
-                customers.CreatedBy
+                customers.CreatedBy,
+                customers.IsBuyingForThirdParty,
             }, CommandType.StoredProcedure);
         }
 
@@ -59,7 +60,8 @@ namespace OMS.Domain.Repository.Implementation
                 customers.Note,
                 customers.IsCompany,
                 customers.TaxId,
-                customers.UpdatedBy
+                customers.UpdatedBy,
+                customers.IsBuyingForThirdParty,
             }, CommandType.StoredProcedure);
         }
 
