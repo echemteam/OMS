@@ -7,7 +7,7 @@ namespace OMS.Domain.Repository
         ITestRepository test { get; }
         IAuthenticationRepository authentication { get; }
         IUserRepository user { get; }
-        IRolesRepository roles {get; }
+        IRolesRepository roles { get; }
         IRolesMappingRepository rolesMapping { get; }
         ISecurityPermissionRepository securityPermission { get; }
         ICommonRepository commonRepository { get; }
@@ -18,5 +18,6 @@ namespace OMS.Domain.Repository
         ICustomerAccountingSettingsRepository customerAccountingSettings { get; }
         IEmailAddressRepository emailAddress { get; }
         IPhoneNumberRepository phoneNumber { get; }
+        ICustomerDocumentsRepository customerDocuments { get; }
     }
 }

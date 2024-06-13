@@ -16,7 +16,7 @@ export const renderGridCheckboxColumn = (rowData, col, rowIndex,parentRowData, o
   return (
     <input
       type="checkbox"
-      checked={isChecked}
+      checked=""
       disabled={isDisabled}
       onChange={(handleCheckboxChange)}
     />

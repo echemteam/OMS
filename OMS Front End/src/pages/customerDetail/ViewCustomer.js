@@ -15,6 +15,7 @@ import NotesDetail from "./features/notesDetail/NotesDetail";
 import { useLazyGetCustomersBasicInformationByIdQuery } from "../../app/services/basicdetailAPI";
 import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../services/CryptoService";
+import { HistoryDetail } from "./features/HistoryDetail/HistoryDetail";
 
 const ViewCustomer = () => {
   const { id } = useParams();
@@ -95,18 +96,26 @@ const ViewCustomer = () => {
         </div>
       ),
     },
+    {
+      sMenuItemCaption: "History",
+      component: (
+        <div className="">
+          <HistoryDetail />
+        </div>
+      ),
+    },
   ];
 
   return (
     <>
         <div className="card-bottom-m-0">
           <div className="row">
-            <div className="col-xxl-3 col-xl-4 col-md-3 col-12 basic-left-part customer-desc-left-sec">
+            <div className="col-xxl-4 col-xl-4 col-md-3 col-12 basic-left-part customer-desc-left-sec">
               <CardSection>
                 <CustomerDetails editClick={handleToggleModal} customerData={customerData} />
               </CardSection>
             </div>
-            <div className="col-xxl-9 col-xl-8 col-md-9 col-12 other-info-tab">
+            <div className="col-xxl-8 col-xl-8 col-md-9 col-12 other-info-tab">
               <CardSection
                 cardTitle="Other Information"
               // buttonClassName="theme-button"

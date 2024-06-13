@@ -176,15 +176,7 @@ const AddressDetail = (props) => {
       const dropdownFieldIndex = manageData.formFields.findIndex(item => item.dataField === "stateId");
       manageData.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
       manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
-
-      // manageData.dropdownField = addressFormData.formFields[dropdownFieldIndex];
-      // manageData.initialState = {
-      //   ...formData.initialState,
-      //   countryId: data.value,
-      //   stateId: null
-      // };
-      // manageData.initialState = { ...formData.initialState, countryId: data.value, stateId: null };
-      // setFormData(manageData)
+      userFormRef.current.updateFormFieldValue({ countryId: data.value , stateId: null });
     }
     else if (dataField === 'stateId') {
       const dataValue = selectedCity?.filter(item => item.stateId === data.value).map(item => ({
@@ -194,15 +186,7 @@ const AddressDetail = (props) => {
       const dropdownFieldIndex = manageData.formFields.findIndex(item => item.dataField === "cityId");
       manageData.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
       manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
-
-      // manageData.dropdownField = addressFormData.formFields[dropdownFieldIndex];
-      // manageData.initialState = {
-      //   ...formData.initialState,
-      //   stateId: data.value,
-      //   cityId: null
-      // };
-      // manageData.initialState = { ...formData.initialState, stateId: data.value, cityId: null };
-      // setFormData(manageData)
+      userFormRef.current.updateFormFieldValue({ stateId: data.value , cityId: null });
     }
   }
 

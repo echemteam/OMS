@@ -1,16 +1,36 @@
+import { FormFieldTypes } from "../../../../data/formFieldType";
 import { GridColumnType } from "../../../../data/gridColumnType";
+
+export const reasonData = {
+  name: "",
+  initialState: { inActiveReason: "" },
+  formFields: [
+    {
+      id: "inActiveReason",
+      lable: "Reason :",
+      Field_Name: "Reason ",
+      fieldType: FormFieldTypes.TEXTAREA,
+      dataField: "inActiveReason",
+      fieldSetting: {
+        placeholder: "please enter Reason",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
+      },
+    },],
+}
 
 export const AllCustomerGridConfig = {
   columns: [
     {
       name: "Customer Name",
       fieldName: "name",
-      // allowShort: true,
     },
     {
       name: "Tax Id",
       fieldName: "taxId",
-      // allowShort: true,
     },
     {
       name: "Status",
@@ -37,7 +57,7 @@ export const AllCustomerGridConfig = {
               return "badge-gradient-Approved";
             case "Freeze":
               return "badge-gradient-Frozen";
-            case "Blocke":
+            case "Block":
               return "badge-gradient-Blocked";
 
             default:
@@ -63,7 +83,7 @@ export const AllCustomerGridConfig = {
         { name: "EDIT" },
         { name: "DISABLE" },
         { name: "FREEZE" },
-        { name: "BLOCK" },
+        { name: "BLOCKED" },
       ],
     },
   ],
@@ -102,8 +122,6 @@ export const PendingCustomerGridConfig = {
       customDropdownActions: [
         { name: "EDIT" },
         { name: "DISABLE" },
-        { name: "FREEZE" },
-        { name: "BLOCK" },
       ],
     },
   ],
@@ -134,18 +152,18 @@ export const SubmittedCustomerGridConfig = {
         allowEdit: true,
       },
     },
-    // {
-    //   name: "Action",
-    //   colType: GridColumnType.MULTIACTION,
-    //   defaultAction: {
-    //     allowEdit: false,
-    //     allowDelete: false,
-    //   },
-    //   customDropdownActions: [
-    //     { name: "EDIT" },
-    //     { name: "DISABLE" },
-    //   ],
-    // },
+    {
+      name: "Action",
+      colType: GridColumnType.MULTIACTION,
+      defaultAction: {
+        allowEdit: false,
+        allowDelete: false,
+      },
+      customDropdownActions: [
+        { name: "EDIT" },
+        { name: "DISABLE" },
+      ],
+    },
   ],
 
 };
@@ -162,20 +180,20 @@ export const ApprovedCustomerGridConfig = {
       fieldName: "taxId",
       // allowShort: true,
     },
-    // {
-    //   name: "Action",
-    //   colType: GridColumnType.MULTIACTION,
-    //   defaultAction: {
-    //     allowEdit: false,
-    //     allowDelete: false,
-    //   },
-    //   customDropdownActions: [
-    //     { name: "EDIT" },
-    //     { name: "DISABLE" },
-    //     { name: "FREEZE" },
-    //     { name: "BLOCK" },
-    //   ],
-    // },
+    {
+      name: "Action",
+      colType: GridColumnType.MULTIACTION,
+      defaultAction: {
+        allowEdit: false,
+        allowDelete: false,
+      },
+      customDropdownActions: [
+        { name: "EDIT" },
+        { name: "DISABLE" },
+        { name: "FREEZE" },
+        { name: "BLOCKED" },
+      ],
+    },
   ],
 };
 
@@ -192,7 +210,7 @@ export const AllInActiveCustomerGridConfig = {
       // allowShort: true,
     },
     {
-      name: "Data",
+      name: "Date",
       fieldName: "taxId",
       // allowShort: true,
     },
@@ -221,7 +239,7 @@ export const AllInActiveCustomerGridConfig = {
               return "badge-gradient-Approved";
             case "Freeze":
               return "badge-gradient-Frozen";
-            case "Blocke":
+            case "Block":
               return "badge-gradient-Blocked";
 
             default:
@@ -241,20 +259,26 @@ export const FreezedInActiveCustomerGridConfig = {
     },
     {
       name: "Reason",
-      fieldName: "taxId",
+      fieldName: "inActiveReason",
     },
     {
-      name: "Data",
-      fieldName: "taxId",
+      name: "Date",
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
-    // {
-    //   name: "Action",
-    //   colType: GridColumnType.ACTION,
-    //   defaultAction: {
-    //     allowEdit: false,
-    //     allowDelete: false,
-    //   },
-    // },
+    {
+      name: "Action",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: false,
+        allowDelete: false,
+        allowUnfreeze: true,
+      },
+    },
   ],
 };
 
@@ -263,26 +287,30 @@ export const BlockedInActiveCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
-      // allowShort: true,
     },
     {
       name: "Reason",
-      fieldName: "taxId",
-      // allowShort: true,
+      fieldName: "inActiveReason",
     },
     {
-      name: "Data",
-      fieldName: "taxId",
-      // allowShort: true,
+      name: "Date",
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
-    // {
-    //   name: "Action",
-    //   colType: GridColumnType.ACTION,
-    //   defaultAction: {
-    //     allowEdit: false,
-    //     allowDelete: false,
-    //   },
-    // },
+    {
+      name: "Action",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: false,
+        allowDelete: false,
+        allowUnfreeze: false,
+        allowblocked: true,
+      },
+    },
   ],
 };
 
@@ -291,25 +319,30 @@ export const DisabledInActiveCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
-      // allowShort: true,
     },
     {
       name: "Reason",
-      fieldName: "taxId",
-      // allowShort: true,
+      fieldName: "inActiveReason",
     },
     {
-      name: "Data",
-      fieldName: "taxId",
-      // allowShort: true,
+      name: "Date",
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
-    // {
-    //   name: "Action",
-    //   colType: GridColumnType.ACTION,
-    //   defaultAction: {
-    //     allowEdit: false,
-    //     allowDelete: false,
-    //   },
-    // },
+    {
+      name: "Action",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: false,
+        allowDelete: false,
+        allowUnfreeze: false,
+        allowblocked: false,
+        allowActiveCustomer: true,
+      },
+    },
   ],
 };

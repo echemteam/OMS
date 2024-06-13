@@ -36,19 +36,28 @@ const FormCreator = forwardRef((props, ref) => {
     }
   }, [props.config.initialState]);
 
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        getFormData: () => {
-          if (isValidForm())
+  const updateFormData=(data)=>{
+    const newFromdata = {...formData,...data}
+     setFormData(newFromdata);
+}
 
-            return formData;
-        },
+useImperativeHandle(
+  ref,
+  () => {
+      return {
+          getFormData: () => {
+              if (isValidForm())
+
+                  return formData;
+          },
+          updateFormFieldValue:(data)=>{
+              updateFormData(data);
+          }
       };
-    },
-    [formData, validState, validationRules],
-  );
+  },
+  // eslint-disable-next-line
+  [formData, validState, validationRules],
+);
 
   const isValidForm = () => {
     const validation = ValidateAll(formData, validationRules);

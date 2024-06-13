@@ -6,7 +6,7 @@ import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, Disab
 import { StatusEnums } from "../../../../common/features/Enums/StatusEnums";
 
 const InActiveCustomer = ({statusId}) => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState("0");
   const DataRef = useRef();
 
   const handleTabClick = (tabIndex) => {

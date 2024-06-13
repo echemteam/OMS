@@ -2,9 +2,9 @@
 using OMS.Application.Services.Authentication;
 using OMS.Application.Services.Common;
 using OMS.Application.Services.Contact;
+using OMS.Application.Services.CustomerDocuments;
 using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
-using OMS.Application.Services.CustomerAccountingSettings;
 using OMS.Application.Services.EmailAddress;
 using OMS.Application.Services.PhoneNumber;
 using OMS.Application.Services.Roles;
@@ -31,5 +31,6 @@ namespace OMS.Application.Services
         ICustomerAccoutingSettingsService customerAccoutingSettingsService { get; }
         IEmailAddressService emailAddressService { get; }
         IPhoneNumberService phoneNumberService { get; }
+        ICustomerDocumentsService customerDocumentsService { get; }
     }
 }
