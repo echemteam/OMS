@@ -13,53 +13,18 @@ import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicD
 
 const FinancialSettings = (props) => {
   const settingFormRef = useRef();
-  const { customerId} = useContext(BasicDetailContext);
-  const [customerSettingFormData, setCustomerSettingFormData] =
-    useState(SettingFormData);
-  const [
-    getAllPaymentTerms,
-    {
-      isFetching: isGetAllPaymentTermsFetching,
-      isSuccess: isGetAllPaymentTermsSuccess,
-      data: isGetAllPaymentTermsData,
-    },
-  ] = useLazyGetAllPaymentTermsQuery();
-  const [
-    getAllPaymentMethod,
-    {
-      isFetching: isGetAllPaymentMethodFetching,
-      isSuccess: isGetAllPaymentMethodSuccess,
-      data: isGetAllPaymentMethodData,
-    },
-  ] = useLazyGetAllPaymentMethodQuery();
-
-  const [
-    GetDetailsbyCustomerID,
-    {
-      isFetching: isGetDetailByCustomerIDFetching,
-      isSuccess: isGetDetailByCustomerIDSuccess,
-      data: isGetDetailByCustomerIDData,
-    },
-  ] = useLazyGetDetailsbyCustomerIDQuery();
-
-  const [
-    addEditCustomerSettings,
-    {
-      isLoading: isAddEditCustomerSettingsLoading,
-      isSuccess: isAddEditCustomerSettingsSuccess,
-      data: isAddEditCustomerSettingsData,
-    },
-  ] = useAddEditCustomerSettingsMutation();
+  const { customerId } = useContext(BasicDetailContext);
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  const [customerSettingFormData, setCustomerSettingFormData] =useState(SettingFormData);
+  const [ getAllPaymentTerms,{  isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
+  const [ getAllPaymentMethod, {   isFetching: isGetAllPaymentMethodFetching,   isSuccess: isGetAllPaymentMethodSuccess,  data: isGetAllPaymentMethodData, },] = useLazyGetAllPaymentMethodQuery();
+const [ GetDetailsbyCustomerID, {   isFetching: isGetDetailByCustomerIDFetching,  isSuccess: isGetDetailByCustomerIDSuccess,  data: isGetDetailByCustomerIDData,  }, ] = useLazyGetDetailsbyCustomerIDQuery();
+const [ addEditCustomerSettings,{ isLoading: isAddEditCustomerSettingsLoading, isSuccess: isAddEditCustomerSettingsSuccess, data: isAddEditCustomerSettingsData, },] = useAddEditCustomerSettingsMutation();
   useEffect(() => {
-   if(customerId>0)
-    GetDetailsbyCustomerID(customerId);
+    if (customerId > 0) GetDetailsbyCustomerID(customerId);
   }, [customerId]);
   useEffect(() => {
-    if (
-      !isGetAllPaymentTermsFetching &&
-      isGetAllPaymentTermsSuccess &&
-      isGetAllPaymentTermsData
-    ) {
+    if (  !isGetAllPaymentTermsFetching &&isGetAllPaymentTermsSuccess &&isGetAllPaymentTermsData ) {
       const getData = isGetAllPaymentTermsData.map((item) => ({
         value: item.paymentTermId,
         label: item.paymentTerm,
@@ -68,19 +33,12 @@ const FinancialSettings = (props) => {
         (item) => item.dataField === "paymentTermId"
       );
       dropdownField.fieldSetting.options = getData;
+      setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [
-    isGetAllPaymentTermsFetching,
-    isGetAllPaymentTermsSuccess,
-    isGetAllPaymentTermsData,
-  ]);
+  }, [isGetAllPaymentTermsFetching,isGetAllPaymentTermsSuccess,isGetAllPaymentTermsData, ]);
 
   useEffect(() => {
-    if (
-      !isGetAllPaymentMethodFetching &&
-      isGetAllPaymentMethodSuccess &&
-      isGetAllPaymentMethodData
-    ) {
+    if (  !isGetAllPaymentMethodFetching &&  isGetAllPaymentMethodSuccess &&  isGetAllPaymentMethodData ) {
       const getData = isGetAllPaymentMethodData.map((item) => ({
         value: item.paymentMethodId,
         label: item.method,
@@ -89,24 +47,20 @@ const FinancialSettings = (props) => {
         (item) => item.dataField === "paymentMethodId"
       );
       dropdownField.fieldSetting.options = getData;
+      setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [
-    isGetAllPaymentMethodFetching,
-    isGetAllPaymentMethodSuccess,
-    isGetAllPaymentMethodData,
+  }, [ isGetAllPaymentMethodFetching, isGetAllPaymentMethodSuccess, isGetAllPaymentMethodData,
   ]);
 
   useEffect(() => {
-    if (
-      isGetDetailByCustomerIDSuccess &&
-      !isGetDetailByCustomerIDFetching &&
-      isGetDetailByCustomerIDData
-    ) {
+
+    if (   isGetDetailByCustomerIDSuccess &&  !isGetDetailByCustomerIDFetching &&  isGetDetailByCustomerIDData ) {
       if (isGetDetailByCustomerIDData) {
         let formData = { ...customerSettingFormData };
         formData.initialState = {
           ...customerSettingFormData.initialState,
-          customerAccountingSettingId:isGetDetailByCustomerIDData.customerAccountingSettingId,
+          customerAccountingSettingId:
+            isGetDetailByCustomerIDData.customerAccountingSettingId,
           paymentTermId: isGetDetailByCustomerIDData.paymentTermId,
           creditLimit: isGetDetailByCustomerIDData.creditLimit,
           paymentMethodId: isGetDetailByCustomerIDData.paymentMethodId,
@@ -117,31 +71,26 @@ const FinancialSettings = (props) => {
         setCustomerSettingFormData(formData);
       }
     }
-  }, [
-    isGetDetailByCustomerIDSuccess,
-    isGetDetailByCustomerIDFetching,
-    isGetDetailByCustomerIDData,
+  }, [  isGetDetailByCustomerIDSuccess, isGetDetailByCustomerIDFetching, isGetDetailByCustomerIDData,
   ]);
   useEffect(() => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
       if (props.onSuccess) {
         props.onSuccess();
       }
-      onreset();
       ToastService.success(isAddEditCustomerSettingsData.errorMessage);
     }
   }, [isAddEditCustomerSettingsSuccess, isAddEditCustomerSettingsData]);
 
   const onhandleEdit = () => {
-    debugger;
     const settingFormData = settingFormRef.current.getFormData();
     if (settingFormData && !settingFormData.customerAccountingSettingId) {
       const request = {
         ...settingFormData,
-     paymentTermId:settingFormData.paymentTermId.value,
-          
-        paymentMethodId:settingFormData.paymentMethodId.value,
-         
+        customerId: customerId,
+        paymentTermId: settingFormData.paymentTermId.value,
+
+        paymentMethodId: settingFormData.paymentMethodId.value,
       };
       addEditCustomerSettings(request);
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
@@ -164,12 +113,6 @@ const FinancialSettings = (props) => {
     }
   };
 
-  const onreset = () => {
-    let formData = { ...SettingFormData };
-    formData.initialState = { ...props.initData };
-    setCustomerSettingFormData(formData);
-  };
-
   useEffect(() => {
     getAllPaymentTerms();
     getAllPaymentMethod();
@@ -180,6 +123,7 @@ const FinancialSettings = (props) => {
         <FormCreator
           config={customerSettingFormData}
           ref={settingFormRef}
+          key={shouldRerenderFormCreator}
           {...customerSettingFormData}
           // onFormDataUpdate={handleFormDataChange}
         />
@@ -188,14 +132,13 @@ const FinancialSettings = (props) => {
             <div className="d-flex align-item-end">
               <Buttons
                 buttonTypeClassName="theme-button"
-                buttonText="Add"
+                buttonText="Save"
                 onClick={onhandleEdit}
                 isLoading={isAddEditCustomerSettingsLoading}
               />
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"
                 buttonText="Cancel"
-               
               />
             </div>
           </div>
