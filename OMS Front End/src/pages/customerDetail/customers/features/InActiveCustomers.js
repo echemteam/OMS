@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import CardSection from '../../../../components/ui/card/CardSection';
 import MolGrid from '../../../../components/Grid/MolGrid';
 import CustomerListContext from '../../../../utils/ContextAPIs/Customer/CustomerListContext';
-import { useGetCustomersMutation } from '../../../../app/services/basicdetailAPI';
+import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../app/services/basicdetailAPI';
+import ToastService from '../../../../services/toastService/ToastService';
+import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
 
 export const InActiveCustomers = ({ statusId, configFile }) => {
 
@@ -15,6 +17,8 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     getCustomers,
     { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
   ] = useGetCustomersMutation();
+
+  const [updateCustomerStatus, { isLoading: updateCustomerStatusLoading, isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
 
   const handlePageChange = (page) => {
     const request = {
@@ -39,6 +43,13 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     }
   }, [isListSuccess, isListeData]);
 
+  useEffect(() => {
+    if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
+      ToastService.success(updateCustomerStatusData.errorMessage);
+      getListApi()
+    }
+  }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
+
   useImperativeHandle(DataRef, () => ({
     getListApi,
   }));
@@ -56,6 +67,32 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     getCustomers(request);
   };
 
+  const handleUnfreeze = (data) => {
+    handleUpdate(data)
+  }
+
+  const handleActiveCustomer = (data) => {
+    handleUpdate(data)
+  }
+
+  const handleUnBlock = (data) => {
+    handleUpdate(data)
+  }
+
+  const handleUpdate = (data) => {
+    let req = {
+      customerId: data.customerId,
+      statusId: StatusEnums.Approved
+    }
+    updateCustomerStatus(req)
+  }
+
+  const actionHandler = {
+    UNFREEZE: handleUnfreeze,
+    ACTIVECUSTOMER: handleActiveCustomer,
+    UNBLOCKED: handleUnBlock
+  };
+
   return (
     <div>
       <div className="row">
@@ -68,13 +105,14 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
                   ref={molGridRef}
                   configuration={configFile}
                   dataSource={dataSource}
-                  isLoading={isListLoading}
+                  isLoading={isListLoading || updateCustomerStatusLoading}
                   pagination={{
                     totalCount: totalRowCount,
                     pageSize: 25,
                     currentPage: 1,
                   }}
                   onPageChange={handlePageChange}
+                  onActionChange={actionHandler}
                 />
               </div>
             </div>

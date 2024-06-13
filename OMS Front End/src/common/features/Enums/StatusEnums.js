@@ -7,3 +7,9 @@ export const StatusEnums = {
     Blocked	: "5",
     Disabled: "6",
 }
+
+export const StatusFeild = {
+    Freeze	: "Freeze",
+    Blocked	: "Blocked",
+    Disabled: "Disabled",
+}

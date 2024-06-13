@@ -74,6 +74,51 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
           <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" />
         </Link>
       )}
+
+      {col.defaultAction.allowUnfreeze && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("UNFREEZE", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="UNFREEZE"
+        >
+          <Image
+            imagePath={AppIcons.unfreezeIcone}
+            altText="unfreezeIcone Icon" />
+        </Link>
+      )}
+      {col.defaultAction.allowActiveCustomer && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("ACTIVECUSTOMER", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="ACTIVECUSTOMER"
+        >
+          <Image
+            imagePath={AppIcons.aciveCustomerIcone}
+            altText="ACTIVECUSTOMER Icon" />
+        </Link>
+      )}
+
+      {col.defaultAction.allowblocked && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("UNBLOCKED", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="UNBLOCKED"
+        >
+          <Image
+            imagePath={AppIcons.blokedIcone}
+            altText="UNBLOCKED Icon" />
+        </Link>
+      )}
+
     </div>
   );
 };
