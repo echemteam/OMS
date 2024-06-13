@@ -18,12 +18,15 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [addressId, setAddressId] = useState(0);
     const [contactId, setContactId] = useState(0);
     const [contactNumbers, setContactNumbers] = useState();
-    const [addressDataLength , setAddressDataLength] = useState(0)
+    const [addressDataLength, setAddressDataLength] = useState(0)
     const [emailAddressData, setEmailAddressData] = useState();
+    const [phoneNumberData, setPhoneNumberData] = useState();
 
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
+    const [contactMainModal, setContactMainModal] = useState(false);
+    const [allCountries, setAllCountries] = useState(false);
 
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
@@ -61,8 +64,9 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     return (
         <BasicDetailContext.Provider value={{
-            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId, showModal, editFormData, isEdit,
-            contactId, setContactId, contactNumbers, setContactNumbers, emailAddressData, setEmailAddressData, handleToggleModal, handleEditModal, molGridRef , setAddressDataLength
+            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId, showModal, editFormData, isEdit, setContactMainModal,
+            contactMainModal, setPhoneNumberData, phoneNumberData, setAllCountries, allCountries,
+            contactId, setContactId, contactNumbers, setContactNumbers, emailAddressData, setEmailAddressData, handleToggleModal, handleEditModal, molGridRef, setAddressDataLength
         }}>
             {children}
         </BasicDetailContext.Provider>

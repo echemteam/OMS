@@ -1,15 +1,15 @@
-import React, { useRef, useState } from "react";
-import CardSection from "../../components/ui/card/CardSection";
-import BasicDetail from "./features/basicDetail/BasicDetail";
-import AddressDetail from "./features/addressDetail/AddressDetail";
-import ContactDetail from "./features/contactDetail/Contact/ContactDetail";
-import Image from "../../components/image/Image";
-import { AppIcons } from "../../data/appIcons";
-import BasicDetailContext, { BasicDetailContextProvider } from "../../utils/ContextAPIs/Customer/BasicDetailContext";
-import DocumentDetails from "./features/documentsDetail/DocumentDetails";
-import SwalAlert from "../../services/swalService/SwalService";
+import React from "react";
 import { useContext } from "react";
-
+//**Lib's */
+import { AppIcons } from "../../data/appIcons";
+import Image from "../../components/image/Image";
+import CardSection from "../../components/ui/card/CardSection";
+import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
+//** Component's */
+const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
+const AddressDetail = React.lazy(() => import("./features/addressDetail/AddressDetail"));
+const DocumentDetails = React.lazy(() => import("./features/documentsDetail/DocumentDetails"));
+const ContactDetail = React.lazy(() => import("./features/contactDetail/Contact/ContactDetail"));
 
 const AddCustomer = () => {
   const { activeTab, setActiveTab, movePreviewPage, addCustomer } = useContext(BasicDetailContext);
@@ -54,9 +54,7 @@ const AddCustomer = () => {
               {tabContent.map((step, index) => (
                 <React.Fragment key={index}>
                   <div className={`step ${activeTab === index ? 'active' : ''}`}>
-                    <button className="step-button"
-                      onClick={() => handleTabClick(index)}
-                    >
+                    <button className="step-button" onClick={() => handleTabClick(index)} >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">
                         <span>{step.label}</span>
@@ -81,11 +79,7 @@ const AddCustomer = () => {
                         {step.content}
                         <div className="d-flex justify-content-end">
                           {index > 0 && (
-                            <button
-                              type="button"
-                              className="btn dark-btn mr-3"
-                              onClick={movePreviewPage}
-                            >
+                            <button type="button" className="btn dark-btn mr-3" onClick={movePreviewPage} >
                               Back
                             </button>
                           )}
