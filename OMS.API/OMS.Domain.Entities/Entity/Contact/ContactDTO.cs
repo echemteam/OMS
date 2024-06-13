@@ -17,5 +17,6 @@ namespace OMS.Domain.Entities.Entity.Contact
         public short? DeletedBy { get; set; }
         public DateTime? ApprovedAt { get; set; }
         public short? ApprovedBy { get; set; }
+        public int? CustomerContactId { get; set; }
     }
 }

@@ -4,35 +4,52 @@ import { contactDetailFormData } from "./config/ContactDetailForm.data";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import ManageEmailAddress from "../EmailAddress/ManageEmailAddress";
 import ManageContactNumbers from "../ContactNumbers/ManageContactNumbers";
-import { useAddContactMutation } from "../../../../../app/services/contactAPI";
+import { useAddContactMutation, useAddEditContactMutation } from "../../../../../app/services/contactAPI";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import ContactContext from "../../../../../utils/ContextAPIs/Customer/ContactContext";
 
 const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit, editFormData, modifyContactData }) => {
 
   const ref = useRef();
-  const { customerId } = useContext(BasicDetailContext);
-  const { setContactId, setEmailAddressData, setContactNumbers } = useContext(ContactContext);
+  const { customerId, setContactId } = useContext(BasicDetailContext);
   const [formData, setFormData] = useState(contactDetailFormData);
 
   //** API Call's */
-  const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddContactMutation();
-  // const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateMutation();
+  const [addEdit, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddEditContactMutation();
 
   //** Handle Changes */
   const handleAddEdit = () => {
     let data = ref.current.getFormData();
-    if (data && !data.contactId) {
-      let request = {
+    let request;
+    if (data) {
+      request = {
         ...data,
         contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
         customerId: 15
       }
-      add(request);
-    } else if (data && data.contactId) {
-      //update(data);
+      addEdit(request);
+      // request = {
+      //   ...data,
+      //   contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
+      //   customerId: 15
+      // }
+      // if (!data.contactId) {
+
+      // } else if (data.contactId) {
+
+      // }
     }
+    // if (data && !data.contactId) {
+
+    //   addEdit(request);
+    // } else if (data && data.contactId) {
+    //   let request = {
+    //     ...data,
+    //     contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
+    //     customerId: 15
+    //   }
+    //   addEdit(request);
+    // }
   };
 
   useEffect(() => {
@@ -48,11 +65,9 @@ const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit
   useEffect(() => {
     if (isEdit && editFormData) {
       let form = { ...contactDetailFormData };
-      form.initialState = editFormData?.cardInformation;
+      form.initialState = editFormData;
       setFormData(form);
-      setContactId(editFormData?.cardInformation.contactId);
-      setEmailAddressData(editFormData?.emailList);
-      setContactNumbers(editFormData?.phoneList);
+      setContactId(editFormData?.contactId);
     }
   }, [isEdit, editFormData])
 

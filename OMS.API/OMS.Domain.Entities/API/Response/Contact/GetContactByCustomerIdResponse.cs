@@ -2,6 +2,7 @@
 {
     public class GetContactByCustomerIdResponse
     {
+        public int? CustomerContactId { get; set; }
         public int? CustomerId { get; set; }
         public int? ContactId { get; set; }
         public short? ContactTypeId { get; set; }

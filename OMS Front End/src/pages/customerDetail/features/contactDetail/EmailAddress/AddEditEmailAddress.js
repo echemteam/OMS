@@ -3,42 +3,70 @@ import FormCreator from '../../../../../components/Forms/FormCreator'
 import Buttons from '../../../../../components/ui/button/Buttons'
 import { addEditEmailFormData } from './config/AddEditEmailForm.data';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
-import { useAddContactEmailMutation } from '../../../../../app/services/contactAPI';
+import { useAddContactEmailMutation, useUpdateContactEmailMutation } from '../../../../../app/services/emailAddressAPI';
+import ToastService from '../../../../../services/toastService/ToastService';
 import BasicDetailContext from '../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
-import ContactContext from '../../../../../utils/ContextAPIs/Customer/ContactContext';
 
-const AddEditEmailModal = () => {
+const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess }) => {
 
-    // const ref = useRef();
-    // const [formData, setFormData] = useState(addEditEmailFormData);
-    const { showSubModal, handleSubToggleModal, editFormData, isEdit, handleAddEdit, isAddLoading, formData, formRef, handleEditMode } = useContext(ContactContext);
+    const ref = useRef();
+    const [formData, setFormData] = useState(addEditEmailFormData);
+    const { contactId } = useContext(BasicDetailContext);
+    // const { showSubModal, handleSubToggleModal, editFormData, isEdit, handleAddEdit, isAddLoading, formData, formRef, handleEditMode } = useContext(ContactContext);
 
     //** API Call's */
-    // const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddContactEmailMutation();
+    const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddContactEmailMutation();
+    const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateContactEmailMutation();
 
-    // //** Handle Changes */
-    // const handleAddEdit = () => {
-    //     let data = ref.current.getFormData();
-    //     if (data && !data.contactId) {
-    //         let request = {
-    //             ...data,
-    //             contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
-    //             customerId: 15
-    //         }
-    //         add(request);
-    //     } else if (data && data.contactId) {
-    //         //update(data);
-    //     }
-    // };
+    //** Handle Changes */
+    const handleAddEdit = () => {
+        let data = ref.current.getFormData();
+        if (data && !data.emailId) {
+            let request = {
+                ...data,
+                contactId: contactId
+            }
+            add(request);
+        } else if (data && data.emailId) {
+            update(data);
+        }
+    };
 
     useEffect(() => {
-        handleEditMode();
+        if (isAddSuccess && isAddData) {
+            ToastService.success(isAddData.errorMessage);
+            onResetData();
+            onSuccess();
+        }
+    }, [isAddSuccess, isAddData]);
+
+    useEffect(() => {
+        if (isUpdateSuccess && isUpdateData) {
+            ToastService.success(isUpdateData.errorMessage);
+            onResetData();
+            onSuccess();
+        }
+    }, [isUpdateSuccess, isUpdateData]);
+
+    useEffect(() => {
+        if (isEdit && editFormData) {
+            let form = { ...addEditEmailFormData };
+            form.initialState = editFormData;
+            setFormData(form);
+        }
     }, [isEdit, editFormData])
+
+    //** Reset Data */
+    const onResetData = () => {
+        let form = { ...addEditEmailFormData };
+        form.initialState = { ...addEditEmailFormData.initialState };
+        setFormData(form);
+    };
 
     return (
         <CenterModel
-            showModal={showSubModal}
-            handleToggleModal={handleSubToggleModal}
+            showModal={showModal}
+            handleToggleModal={handleToggleModal}
             modalTitle="Add/Edit Email Address"
             modelSizeClass="w-40">
             <div>
@@ -47,7 +75,7 @@ const AddEditEmailModal = () => {
                         <div className="row vertical-form">
                             <FormCreator
                                 config={formData}
-                                ref={formRef}
+                                ref={ref}
                                 {...formData} />
                         </div>
                     </div>
@@ -62,7 +90,7 @@ const AddEditEmailModal = () => {
                             <Buttons
                                 buttonTypeClassName="dark-btn ml-5"
                                 buttonText="Cancel"
-                                onClick={handleSubToggleModal}
+                                onClick={handleToggleModal}
                             />
                         </div>
                     </div>
