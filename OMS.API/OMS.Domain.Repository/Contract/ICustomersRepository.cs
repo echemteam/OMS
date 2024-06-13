@@ -15,5 +15,6 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDTO<int>> CheckCustomerNameExist(CustomersDTO customers);
         Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(CustomersDTO customers);
         Task<AddEntityDTO<int>> UpdateCustomerInActiveStatus(CustomersDTO customers);
+        Task<AddEntityDTO<int>> UpdateCustomerStatus(CustomersDTO customers);
     }
 }

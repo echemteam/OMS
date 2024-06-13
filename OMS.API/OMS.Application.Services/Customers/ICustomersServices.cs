@@ -14,5 +14,6 @@ namespace OMS.Application.Services.Customers
         Task<AddEntityDTO<int>> CheckCustomerNameExist(CheckCustomerNameExistRequest requestData);
         Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(UpdateCustomerApproveStatusRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> UpdateCustomerInActiveStatus(UpdateCustomerInActiveStatusRequest requestData, short CurrentUserId);
+        Task<AddEntityDTO<int>> UpdateCustomerStatus(UpdateCustomerStatusRequest requestData, short CurrentUserId);
     }
 }

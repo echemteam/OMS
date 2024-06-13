@@ -68,6 +68,13 @@ namespace OMS.Application.Services.Customers
             customersDTO.UpdatedBy = CurrentUserId;
             return await repositoryManager.customers.UpdateCustomerInActiveStatus(customersDTO);
         }
+
+        public async Task<AddEntityDTO<int>> UpdateCustomerStatus(UpdateCustomerStatusRequest requestData, short CurrentUserId)
+        {
+            CustomersDTO customersDTO = requestData.ToMapp<UpdateCustomerStatusRequest, CustomersDTO>();
+            customersDTO.UpdatedBy = CurrentUserId;
+            return await repositoryManager.customers.UpdateCustomerStatus(customersDTO);
+        }
         #endregion
     }
 }
