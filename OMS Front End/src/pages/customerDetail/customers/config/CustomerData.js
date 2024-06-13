@@ -74,17 +74,19 @@ export const AllCustomerGridConfig = {
     },
     {
       name: "Action",
-      colType: GridColumnType.MULTIACTION,
+      colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
+        allowEdit: true,
+        allowDisable: true,
+        allowFreeze: true,
+        allowBlocked: true,
       },
-      customDropdownActions: [
-        { name: "EDIT" },
-        { name: "DISABLE" },
-        { name: "FREEZE" },
-        { name: "BLOCKED" },
-      ],
+      // customDropdownActions: [
+      //   { name: "EDIT" },
+      //   { name: "DISABLE" },
+      //   { name: "FREEZE" },
+      //   { name: "BLOCKED" },
+      // ],
     },
   ],
 };
@@ -114,15 +116,11 @@ export const PendingCustomerGridConfig = {
     },
     {
       name: "Action",
-      colType: GridColumnType.MULTIACTION,
+      colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
+        allowEdit: true,
+        allowDisable: true,
       },
-      customDropdownActions: [
-        { name: "EDIT" },
-        { name: "DISABLE" },
-      ],
     },
   ],
 };
@@ -148,21 +146,17 @@ export const SubmittedCustomerGridConfig = {
       name: "Approve",
       allowShort: false,
       colType: GridColumnType.CHECKBOX,
-      colSettings: {
-        allowEdit: true,
-      },
+      // colSettings: {
+      //   allowEdit: true,
+      // },
     },
     {
       name: "Action",
-      colType: GridColumnType.MULTIACTION,
+      colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
+        allowEdit: true,
+        allowDisable: true,
       },
-      customDropdownActions: [
-        { name: "EDIT" },
-        { name: "DISABLE" },
-      ],
     },
   ],
 
@@ -182,17 +176,13 @@ export const ApprovedCustomerGridConfig = {
     },
     {
       name: "Action",
-      colType: GridColumnType.MULTIACTION,
+      colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
+        allowEdit: true,
+        allowDisable: true,
+        allowFreeze: true,
+        allowBlocked: true,
       },
-      customDropdownActions: [
-        { name: "EDIT" },
-        { name: "DISABLE" },
-        { name: "FREEZE" },
-        { name: "BLOCKED" },
-      ],
     },
   ],
 };
@@ -308,7 +298,7 @@ export const BlockedInActiveCustomerGridConfig = {
         allowEdit: false,
         allowDelete: false,
         allowUnfreeze: false,
-        allowblocked: true,
+        allowUnblocked: true,
       },
     },
   ],
@@ -340,7 +330,7 @@ export const DisabledInActiveCustomerGridConfig = {
         allowEdit: false,
         allowDelete: false,
         allowUnfreeze: false,
-        allowblocked: false,
+        allowUnblocked: false,
         allowActiveCustomer: true,
       },
     },

@@ -104,7 +104,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
         </Link>
       )}
 
-      {col.defaultAction.allowblocked && (
+      {col.defaultAction.allowUnblocked && (
         <Link
           onClick={(e) => {
             e.preventDefault();
@@ -114,8 +114,53 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
           title="UNBLOCKED"
         >
           <Image
-            imagePath={AppIcons.blokedIcone}
+            imagePath={AppIcons.unblokedIcone}
             altText="UNBLOCKED Icon" />
+        </Link>
+      )}
+
+      {col.defaultAction.allowBlocked && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("BLOCKED", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="BLOCKED"
+        >
+          <Image
+            imagePath={AppIcons.blockIcone}
+            altText="BLOCKED Icon" />
+        </Link>
+      )}
+
+      {col.defaultAction.allowFreeze && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("FREEZE", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="FREEZE"
+        >
+          <Image
+            imagePath={AppIcons.freezeIcone}
+            altText="FREEZE Icon" />
+        </Link>
+      )}
+
+      {col.defaultAction.allowDisable && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("DISABLE", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="DISABLE"
+        >
+          <Image
+            imagePath={AppIcons.disableIcone}
+            altText="DISABLE Icon" />
         </Link>
       )}
 

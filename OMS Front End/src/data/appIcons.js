@@ -46,9 +46,13 @@ import csvIcon from "../assets/images/documentIcon/csv.png";
 
 import uploadIcon from "../assets/images/upload.png";
 import unfreezeIcone from "../assets/images/unfreeze.png";
-import blokedIcone from "../assets/images/bloked.png";
+import unblokedIcone from "../assets/images/unbloked.png";
 import aciveCustomerIcone from "../assets/images/aciveCustomer.png";
 import refreshIcone from "../assets/images/refresh.png";
+import disableIcone from "../assets/images/disable.png";
+import freezeIcone from "../assets/images/freeze.png";
+import blockIcone from "../assets/images/blocked.png";
+
 
 export const AppIcons = {
   // Menus & Header Images
@@ -96,6 +100,9 @@ export const AppIcons = {
   UploadIcon: uploadIcon,
   unfreezeIcone: unfreezeIcone,
   aciveCustomerIcone: aciveCustomerIcone,
-  blokedIcone: blokedIcone,
+  unblokedIcone: unblokedIcone,
   refreshIcone: refreshIcone,
+  blockIcone: blockIcone,
+  freezeIcone: freezeIcone,
+  disableIcone: disableIcone,
 };
