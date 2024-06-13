@@ -47,6 +47,8 @@ namespace OMS.Domain.Entities.Entity.Customers
         public bool? IsDeleted { get; set; }
         [Column("InActiveReason")]
         public string? InActiveReason { get; set; }
+        [Column("IsBuyingForThirdParty")]
+        public bool? IsBuyingForThirdParty { get; set; }
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]

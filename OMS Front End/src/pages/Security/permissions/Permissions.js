@@ -99,7 +99,7 @@ const Permissions = () => {
                   </div>
                   <div className="apply-btn ml-5">
                     <Buttons
-                      buttonTypeClassName="success-btn"
+                      buttonTypeClassName="theme-button"
                       buttonText="Show Permissions"
                       onClick={handleClick} />
                   </div>

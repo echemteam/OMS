@@ -40,6 +40,7 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCUSTOMERSETTINGS, new
             {
                  settings.CustomerAccountingSettingId,
+                 settings.CustomerId,
                  settings.PaymentTermId,
                  settings.PaymentMethodId,
                  settings.CreditLimit,

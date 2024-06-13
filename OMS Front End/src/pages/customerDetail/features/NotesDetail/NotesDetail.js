@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import NotesCard from "./features/NotesCard";
@@ -14,11 +14,13 @@ import {
   useLazyGetCustomerNoteByCustomerIdQuery,
   useUpdateCustomerNotesMutation,
 } from "../../../../app/services/notesAPI";
+import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 const NotesDetail = (props) => {
   const notesFormRef = useRef();
   const [showModal, setShowModal] = useState(false);
  const [formData, setFormData] = useState(NotesData);
+ const { customerId} = useContext(BasicDetailContext);
  const [isEditMode, setIsEditMode] = useState(false); 
  const [notesFormData, setNotesFormData] = useState([]);
 const [addCustomerNotes,{isLoading: isAddNotesLoading, isSuccess: isAddNotesSuccess, data: isAddNotesData, }, ] = useAddCustomerNotesMutation();
@@ -75,7 +77,7 @@ const [
   const handleNotes = () => {
  let notesData = notesFormRef.current.getFormData();
     let request = {
-      customerId: 55,
+      customerId: customerId,
       note: notesData.type,
     };
     if (notesData && !notesData.customerNoteId) {
@@ -92,7 +94,7 @@ const [
     }
   };
   const ongetNote = () => {
-    getCustomerNoteByCustomerId(55);
+    getCustomerNoteByCustomerId(customerId);
   };
   const handleNoteData = (data) => {
     resetForm();

@@ -107,6 +107,8 @@ export const CustomersList = ({ statusId, configFile }) => {
           customerId: rowData.customerId
         }
         updateCustomerApproveStatus(req)
+      } else {
+        getListApi()
       }
     });
   }
@@ -174,7 +176,7 @@ export const CustomersList = ({ statusId, configFile }) => {
                   ref={molGridRef}
                   configuration={configFile}
                   dataSource={dataSource}
-                  isLoading={isListLoading || updateCustomerLoading}
+                  isLoading={isListLoading}
                   pagination={{
                     totalCount: totalRowCount,
                     pageSize: 25,

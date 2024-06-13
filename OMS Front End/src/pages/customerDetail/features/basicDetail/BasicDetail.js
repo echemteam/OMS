@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { basicDetailFormDataHalf } from "./config/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
-import { useAddCustomersBasicInformationMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -57,6 +57,8 @@ const BasicDetail = (props) => {
       data: isUpdateCustomersBasicInformationData,
     },
   ] = useUpdateCustomersBasicInformationMutation();
+
+  const [CheckCustomerNameExist, { isLoading: isCustomerNameExistLoading, isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
 
   useEffect(() => {
     getAllGroupTypes();
@@ -213,7 +215,9 @@ const BasicDetail = (props) => {
       const modifyFormFields = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
       const updatedForm = { ...formData };
       updatedForm.formFields = modifyFormFields;
-      updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
+      if (props.isOpen) {
+        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
+      }
       setFormData(updatedForm);
     }
   }
@@ -222,8 +226,9 @@ const BasicDetail = (props) => {
   };
 
   const handleInputFields = (data, dataField) => {
-    if (dataField === 'taxId') {
-      setCustomerName(data);
+    if (dataField === 'name') {
+      const trimCustomerName = data.replace(/\s+/g, '');
+      setCustomerName(trimCustomerName);
     }
   }
   const formInputHandler = {
@@ -232,8 +237,19 @@ const BasicDetail = (props) => {
 
 
   const handleInputGroupButton = () => {
-    // console.log('customerName', customerName)
+    if (customerName !== '') {
+      let request = {
+        name: customerName
+      }
+      CheckCustomerNameExist(request);
+    }
   }
+
+  useEffect(() => {
+    if (isCustomerNameExistSucess && isCustomerNameExistData) {
+      ToastService.warning(isCustomerNameExistData.errorMessage);
+    }
+  }, [isCustomerNameExistSucess, isCustomerNameExistData]);
 
   return (
     <div className="basic-info-sec half-sec">
