@@ -66,12 +66,12 @@ export const AllCustomerGridConfig = {
         },
       },
     },
-    {
-      name: "Progress",
-      fieldName: "progress",
-      colType: GridColumnType.PROGRESS,
+    // {
+    //   name: "Progress",
+    //   fieldName: "progress",
+    //   colType: GridColumnType.PROGRESS,
 
-    },
+    // },
     {
       name: "Action",
       colType: GridColumnType.ACTION,
@@ -108,12 +108,12 @@ export const PendingCustomerGridConfig = {
       fieldName: "website",
       // allowShort: true,
     },
-    {
-      name: "Progress",
-      fieldName: "progress",
-      colType: GridColumnType.PROGRESS,
+    // {
+    //   name: "Progress",
+    //   fieldName: "progress",
+    //   colType: GridColumnType.PROGRESS,
 
-    },
+    // },
     {
       name: "Action",
       colType: GridColumnType.ACTION,

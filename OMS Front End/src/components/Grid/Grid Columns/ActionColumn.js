@@ -56,7 +56,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             handleAction("EDIT", rowData);
           }}
           className="mr-4"
-          title="EDIT"
+          title="Edit"
         >
           <Image imagePath={AppIcons.editIcon} altText="Edit Icon" />
         </Link>
@@ -69,7 +69,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             handleAction("DELETE", rowData);
           }}
           className="mr-4"
-          title="DELETE"
+          title="Delete"
         >
           <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" />
         </Link>
@@ -82,7 +82,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             handleAction("UNFREEZE", rowData);
           }}
           className="mr-4 view-icon"
-          title="UNFREEZE"
+          title="Un Freeze"
         >
           <Image
             imagePath={AppIcons.unfreezeIcone}
@@ -96,7 +96,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             handleAction("ACTIVECUSTOMER", rowData);
           }}
           className="mr-4 view-icon"
-          title="ACTIVECUSTOMER"
+          title="Active Customer"
         >
           <Image
             imagePath={AppIcons.aciveCustomerIcone}
@@ -111,7 +111,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             handleAction("UNBLOCKED", rowData);
           }}
           className="mr-4 view-icon"
-          title="UNBLOCKED"
+          title="Un Block"
         >
           <Image
             imagePath={AppIcons.unblokedIcone}
@@ -126,7 +126,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             handleAction("BLOCKED", rowData);
           }}
           className="mr-4 view-icon"
-          title="BLOCKED"
+          title="Block"
         >
           <Image
             imagePath={AppIcons.blockIcone}
@@ -141,7 +141,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             handleAction("FREEZE", rowData);
           }}
           className="mr-4 view-icon"
-          title="FREEZE"
+          title="Freeze"
         >
           <Image
             imagePath={AppIcons.freezeIcone}
@@ -156,7 +156,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             handleAction("DISABLE", rowData);
           }}
           className="mr-4 view-icon"
-          title="DISABLE"
+          title="Disable"
         >
           <Image
             imagePath={AppIcons.disableIcone}
