@@ -210,7 +210,7 @@ export const AllInActiveCustomerGridConfig = {
       // allowShort: true,
     },
     {
-      name: "Data",
+      name: "Date",
       fieldName: "taxId",
       // allowShort: true,
     },
@@ -259,11 +259,16 @@ export const FreezedInActiveCustomerGridConfig = {
     },
     {
       name: "Reason",
-      fieldName: "taxId",
+      fieldName: "inActiveReason",
     },
     {
-      name: "Data",
-      fieldName: "taxId",
+      name: "Date",
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
     {
       name: "Action",
@@ -285,11 +290,16 @@ export const BlockedInActiveCustomerGridConfig = {
     },
     {
       name: "Reason",
-      fieldName: "taxId",
+      fieldName: "inActiveReason",
     },
     {
-      name: "Data",
-      fieldName: "taxId",
+      name: "Date",
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
     {
       name: "Action",
@@ -312,11 +322,16 @@ export const DisabledInActiveCustomerGridConfig = {
     },
     {
       name: "Reason",
-      fieldName: "taxId",
+      fieldName: "inActiveReason",
     },
     {
-      name: "Data",
-      fieldName: "taxId",
+      name: "Date",
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
     {
       name: "Action",
