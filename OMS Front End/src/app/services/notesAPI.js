@@ -10,20 +10,20 @@ const notesAPI = createApi({
     endpoints: (builder) => ({
 
         addCustomerNotes: builder.mutation({
-            query: (userDetails) => ({
+            query: (data) => ({
                 url: '/CustomerNotes/AddCustomerNotes',
                 method: 'POST',
-                body: transformRequest(userDetails)
+                body: transformRequest(data)
             }),
 
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
         updateCustomerNotes: builder.mutation({
-            query: (userDetails) => ({
+            query: (data) => ({
                 url: '/CustomerNotes/UpdateCustomerNotes',
                 method: 'POST',
-                body: transformRequest(userDetails)
+                body: transformRequest(data)
             }),
 
             transformResponse: transformSucessResponse,
