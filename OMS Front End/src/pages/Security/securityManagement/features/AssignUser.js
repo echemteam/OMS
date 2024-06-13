@@ -175,7 +175,7 @@ const AssignUser = (props) => {
               {...userForm}
               key={shouldRerenderFormCreator}
             />
-            <div className="col-xxl-2 col-xl-2 col-md-2 mt-2 mb-3">
+            <div className="col-xxl-2 col-xl-2 col-md-2  mb-3">
               <Buttons
                 buttonTypeClassName="theme-button"
                 buttonText="Add"

@@ -257,7 +257,7 @@ const AddressDetail = (props) => {
     <>
       <CardSection
         cardTitle="Address"
-        buttonClassName="danger-btn"
+        buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
         rightButton={true}
