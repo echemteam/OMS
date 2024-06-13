@@ -28,26 +28,26 @@ export const ContactContextProvider = ({ children }) => {
     const [editFormData, setEditFormData] = useState();
 
     //** API Call's */
-    const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddContactEmailMutation();
-    const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateContactEmailMutation();
+    // const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddContactEmailMutation();
+    // const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateContactEmailMutation();
 
 
-    useEffect(() => {
-        if (isAddSuccess && isAddData) {
-            handleSubToggleModal();
-            ToastService.success(isAddData.errorMessage);
-            onResetData();
-        }
-    }, [isAddSuccess, isAddData]);
+    // useEffect(() => {
+    //     if (isAddSuccess && isAddData) {
+    //         handleSubToggleModal();
+    //         ToastService.success(isAddData.errorMessage);
+    //         onResetData();
+    //     }
+    // }, [isAddSuccess, isAddData]);
 
-    useEffect(() => {
-        if (isUpdateSuccess && isUpdateData) {
-            handleSubToggleModal();
-            console.log('contactNumbers',emailAddressData);
-            ToastService.success(isUpdateData.errorMessage);
-            onResetData();
-        }
-    }, [isUpdateSuccess, isUpdateData]);
+    // useEffect(() => {
+    //     if (isUpdateSuccess && isUpdateData) {
+    //         handleSubToggleModal();
+    //         console.log('contactNumbers',emailAddressData);
+    //         ToastService.success(isUpdateData.errorMessage);
+    //         onResetData();
+    //     }
+    // }, [isUpdateSuccess, isUpdateData]);
 
 
     //** Reset Data */
@@ -65,9 +65,9 @@ export const ContactContextProvider = ({ children }) => {
                 ...data,
                 contactId: contactId
             }
-            add(request);
+            // add(request);
         } else if (data && data.emailId) {
-            update(data);
+            // update(data);
         }
     };
 
@@ -108,7 +108,7 @@ export const ContactContextProvider = ({ children }) => {
 
     return (
         <ContactContext.Provider value={{
-            editFormData, isEdit, handleAddEdit, handleEditMode, formData, formRef, isAddLoading, showModal, handleSubToggleModal, setShowSubModal, showSubModal,
+            editFormData, isEdit, handleAddEdit, handleEditMode, formData, formRef,  showModal, handleSubToggleModal, setShowSubModal, showSubModal,
             contactId, setContactId, contactNumbers, setContactNumbers, emailAddressData, setEmailAddressData, handleToggleModal, handleEditModal, molGridRef,
             handleSubEditModal
         }}>

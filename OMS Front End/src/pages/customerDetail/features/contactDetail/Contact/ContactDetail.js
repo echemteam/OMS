@@ -72,6 +72,7 @@ const ContactDetail = () => {
   //** Success */
   const onSuccess = () => {
     GetContactList(15);
+    setisModelOpen(!isModelOpen);
   };
 
   return (

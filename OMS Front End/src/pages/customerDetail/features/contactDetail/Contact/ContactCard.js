@@ -6,7 +6,7 @@ const ContactCard = ({ childData, handleEdit }) => {
 
   return (
     <>
-      {childData?.cardInformation &&
+      {childData &&
         <div className="contact-card">
 
           <div className="add-line">
@@ -15,20 +15,20 @@ const ContactCard = ({ childData, handleEdit }) => {
                 <Image imagePath={AppIcons.userIcon}></Image>
               </span>
               <span className="label-txt user-name">
-                <b>{childData?.cardInformation.firstName + ' ' + childData?.cardInformation.lastName}</b>
+                <b>{childData.firstName + ' ' + childData.lastName}</b>
               </span>
             </div>
             <span className="label-txt">
               <b>Email</b>
-              <strong>:</strong>&nbsp;{childData?.cardInformation.emailAddress}
+              <strong>:</strong>&nbsp;{childData.emailAddress}
             </span>
             <span className="label-txt">
               <b>Contact No.</b>
-              <strong>:</strong>&nbsp;{childData?.cardInformation?.contactNumber}
+              <strong>:</strong>&nbsp;{childData.contactNumber}
             </span>
             <span className="label-txt">
               <b>Gender</b>
-              <strong>:</strong>&nbsp;{childData?.cardInformation?.gender}
+              <strong>:</strong>&nbsp;{childData.gender}
             </span>
           </div>
           <div className="edit-delete-button">
