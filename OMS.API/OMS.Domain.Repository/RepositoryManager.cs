@@ -25,6 +25,8 @@ namespace OMS.Domain.Repository
         IContactRepository _contactRepository;
         ICustomerNotesRepository _customerNotesRepository;
         ICustomerAccountingSettingsRepository _customerAccountingSettingsRepository;
+        IEmailAddressRepository _emailAddressRepository;
+        IPhoneNumberRepository _phoneNumberRepository;
 
         public ITestRepository test
         {
@@ -163,6 +165,29 @@ namespace OMS.Domain.Repository
                     _customerAccountingSettingsRepository = new CustomerAccountingSettingsRepository(_context);
                 }
                 return _customerAccountingSettingsRepository;
+            }
+        }
+        public IEmailAddressRepository emailAddress
+        {
+            get
+            {
+                if (_emailAddressRepository == null)
+                {
+                    _emailAddressRepository = new EmailAddressRepository(_context);
+                }
+                return _emailAddressRepository;
+            }
+        } 
+        
+        public IPhoneNumberRepository phoneNumber
+        {
+            get
+            {
+                if (_phoneNumberRepository == null)
+                {
+                    _phoneNumberRepository = new PhoneNumberRepository(_context);
+                }
+                return _phoneNumberRepository;
             }
         }
     }

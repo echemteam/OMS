@@ -129,6 +129,7 @@ const MolGrid = forwardRef((props, ref) => {
             dataSource={prop.dataSource}
             columns={prop.configuration.columns}
             onActionChange={prop.onActionChange}
+            {...prop}
           />
         ) : (
           <tr>

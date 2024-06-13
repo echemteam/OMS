@@ -41,6 +41,15 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        updateCustomersBasicInformation: builder.mutation({
+            query: (Details) => ({
+                url: '/Customers/UpdateCustomersBasicInformation',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
         getCustomersBasicInformationById: builder.query({
             query: (userID) => ({
                 url: encryptQueryString(`/Customers/GetCustomersBasicInformationById/?customerId=${Number(userID)}`),
@@ -48,17 +57,37 @@ const basicdetailAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
-
+        }),
+        getCustomers: builder.mutation({
+            query: (userQuery) => ({
+                url: '/Customers/GetCustomers',
+                method: 'POST',
+                body: transformRequest(userQuery)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        updateCustomerApproveStatus: builder.mutation({
+            query: (Details) => ({
+                url: '/Customers/UpdateCustomerApproveStatus',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
         }),
     })
 })
 
 export const {
+    useUpdateCustomerApproveStatusMutation,
+    useGetCustomersMutation,
     useLazyGetAllGroupTypesQuery,
     useLazyGetAllTerritoriesQuery,
     useLazyGetAllCountriesQuery,
-    useGetCustomersBasicInformationByIdQuery,
+    useLazyGetCustomersBasicInformationByIdQuery,
     useAddCustomersBasicInformationMutation,
+    useUpdateCustomersBasicInformationMutation,
 } = basicdetailAPI
 
 export default basicdetailAPI;

@@ -687,6 +687,32 @@ a {
   color: #ffffff;
 }
 
+.badge-gradient-Blocked {
+  background: var(--blocked-theme);
+  color: #ffffff;
+}
+
+.badge-gradient-Frozen {
+  background: var(--frozen-theme);
+  color: #ffffff;
+}
+
+.badge-gradient-Approved {
+  background: var(--approved-theme);
+  color: #ffffff;
+}
+
+.badge-gradient-Submitted {
+  background: var(--submitted-theme);
+  color: #ffffff;
+}
+
+.badge-gradient-Pending {
+  background: var(--pending-theme);
+  color: #ffffff;
+}
+
+
 // Tab Section Start
 .tab-section {
   margin-bottom: 30px;
@@ -788,6 +814,7 @@ a {
     .tab-header {
       border-bottom: 1px solid var(--linkMenu);
       background: var(--whiteColor);
+      box-shadow: 0px 5px 12px -7px #d8dde6;
 
       button {
         padding: 7px 25px 7px;
@@ -892,11 +919,11 @@ a {
     }
     .tab-sub-section {
       margin-bottom: 30px;
-      margin-left: 20px;
 
       .tab-sub-header {
         border-bottom: 1px solid var(--linkMenu);
         background: var(--whiteColor);
+        margin-left: 20px;
 
         button {
           padding: 7px 25px 7px;

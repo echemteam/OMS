@@ -4,6 +4,7 @@ namespace OMS.Domain.Entities.API.Request.Contact
 {
     public class AddEditContactRequest
     {
+        public int? CustomerContactId { get; set; }
         public int? ContactId { get; set; }
         public int? CustomerId { get; set; }
         public short? ContactTypeId { get; set; }

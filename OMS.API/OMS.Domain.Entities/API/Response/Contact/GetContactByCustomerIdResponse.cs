@@ -2,6 +2,7 @@
 {
     public class GetContactByCustomerIdResponse
     {
+        public int? CustomerContactId { get; set; }
         public int? CustomerId { get; set; }
         public int? ContactId { get; set; }
         public short? ContactTypeId { get; set; }
@@ -9,7 +10,5 @@
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? EmailAddress { get; set; }
-        public List<GetEmailByContactIdResponse>? EmailList { get; set; }
-        public List<GetPhoneByContactIdResponse>? PhoneList { get; set; }
     }
 }

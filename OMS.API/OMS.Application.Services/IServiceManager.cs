@@ -5,6 +5,8 @@ using OMS.Application.Services.Contact;
 using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.CustomerAccountingSettings;
+using OMS.Application.Services.EmailAddress;
+using OMS.Application.Services.PhoneNumber;
 using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
@@ -27,5 +29,7 @@ namespace OMS.Application.Services
         IContactService contactService { get; }
         ICustomerNotesService customerNotesService { get; }
         ICustomerAccoutingSettingsService customerAccoutingSettingsService { get; }
+        IEmailAddressService emailAddressService { get; }
+        IPhoneNumberService phoneNumberService { get; }
     }
 }

@@ -13,7 +13,7 @@ import { renderGridProgressAction } from "./Grid Columns/ProgressColumn";
 
 // Function for rendering the action column
 const MolGridDataRows = (props) => {
-  const renderGridCol = (rowData, col, rowIndex) => {
+  const renderGridCol = (rowData, col, rowIndex , parentRowData) => {
     if (!col.colType) {
       return rowData[col.fieldName];
     }
@@ -27,10 +27,10 @@ const MolGridDataRows = (props) => {
       case GridColumnType.LINK:
         return renderGridLinkColumn(rowData, col, rowIndex);
       case GridColumnType.CHECKBOX:
-        return renderGridCheckboxColumn(rowData, col, rowIndex);
+        return renderGridCheckboxColumn(rowData, col, rowIndex, parentRowData, props.onCellDataChange);
       case GridColumnType.ACTION:
         return renderGridAction(rowData, col, rowIndex, props.onActionChange);
-      case GridColumnType.MULACTION:
+      case GridColumnType.MULTIACTION:
         return RenderMultiGridAction(rowData, col, rowIndex, props.onActionChange);
       case GridColumnType.PROGRESS:
         return renderGridProgressAction(rowData, col, rowIndex);

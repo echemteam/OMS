@@ -5,6 +5,8 @@ using OMS.Application.Services.Contact;
 using OMS.Application.Services.CustomerAccountingSettings;
 using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
+using OMS.Application.Services.EmailAddress;
+using OMS.Application.Services.PhoneNumber;
 using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
@@ -38,6 +40,8 @@ namespace OMS.Application.Services
         IContactService _contactService;
         ICustomerNotesService _customerNotesService;
         ICustomerAccoutingSettingsService _customerAccoutingSettingsService;
+        IEmailAddressService _emailAddressService;
+        IPhoneNumberService _phoneNumberService;
 
         public ITestService testService
         {
@@ -186,6 +190,31 @@ namespace OMS.Application.Services
                     _customerAccoutingSettingsService = new CustomerAccountingSettingsService(_repositoryManager, _commonSettingService);
                 }
                 return _customerAccoutingSettingsService;
+            }
+        }
+
+        public IEmailAddressService emailAddressService
+        {
+            get
+            {
+                if (_emailAddressService == null)
+                {
+                    _emailAddressService = new EmailAddressService(_repositoryManager, _commonSettingService);
+                }
+                return _emailAddressService;
+
+            }
+        }
+        public IPhoneNumberService phoneNumberService
+        {
+            get
+            {
+                if (_phoneNumberService == null)
+                {
+                    _phoneNumberService = new PhoneNumberService(_repositoryManager, _commonSettingService);
+                }
+                return _phoneNumberService;
+
             }
         }
 

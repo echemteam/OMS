@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
-import { addressFormData } from "./component/AddressForm.data";
+import { addressFormData } from "./features/config/AddressForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
-import AddressCard from "./component/AddressCard";
+import AddressCard from "./features/AddressCard";
 import { useAddAddressMutation, useLazyGetAddresssByCustomerIdQuery, useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery, useUpdateAddAddressMutation } from "../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
@@ -21,7 +21,7 @@ const AddressDetail = (props) => {
   const [addressData, setAddressData] = useState();
   const [updateSetData, setUpdateSetData] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-  const { customerId, setAddressId } = useContext(BasicDetailContext);
+  const { customerId, setAddressId, setAddressDataLength } = useContext(BasicDetailContext);
 
   const [getAllAddressTypes, {
     isFetching: isGetAllAddressTypesFetching,
@@ -73,12 +73,18 @@ const AddressDetail = (props) => {
     getAllCountries()
     getAllStates()
     getAllCities()
-    getAddresssByCustomerId(customerId);
   }, [])
+
+  useEffect(() => {
+    if (customerId > 0) {
+      getAddresssByCustomerId(customerId);
+    }
+  }, [customerId])
 
   useEffect(() => {
     if (!isGetAddresssByCustomerIdFetching && isGetAddresssByCustomerId && GetAddresssByCustomerIdData) {
       setAddressData(GetAddresssByCustomerIdData)
+      setAddressDataLength(GetAddresssByCustomerIdData.length)
       // setAddressId(GetAddresssByCustomerIdData);
     }
   }, [isGetAddresssByCustomerIdFetching, isGetAddresssByCustomerId, GetAddresssByCustomerIdData]);
@@ -222,7 +228,6 @@ const AddressDetail = (props) => {
       }
       onreset()
       ToastService.success(isUpdateAddAddressData.errorMessage);
-      setAddressId(isAddAddressData.keyValue);
       getAddresssByCustomerId(customerId)
       onSidebarClose()
     }

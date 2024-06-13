@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { basicDetailFormDataHalf } from "./config/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
-import { useAddCustomersBasicInformationMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery } from "../../../../app/services/basicdetailAPI";
+import { useAddCustomersBasicInformationMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -44,11 +44,19 @@ const BasicDetail = (props) => {
   const [
     addCustomersBasicInformation,
     {
-      isLoading,
       isSuccess: isAddCustomersBasicInformationSuccess,
       data: isAddCustomersBasicInformationData,
     },
   ] = useAddCustomersBasicInformationMutation();
+
+  const [
+    updateCustomersBasicInformation,
+    {
+      isLoading,
+      isSuccess: isUpdateCustomersBasicInformationSuccess,
+      data: isUpdateCustomersBasicInformationData,
+    },
+  ] = useUpdateCustomersBasicInformationMutation();
 
   useEffect(() => {
     getAllGroupTypes();
@@ -131,11 +139,35 @@ const BasicDetail = (props) => {
     }
   }, [isAddCustomersBasicInformationSuccess, isAddCustomersBasicInformationData]);
 
-  // const onreset = () => {
-  //   let restData = { ...basicDetailFormDataHalf };
-  //   restData.initialState = { ...formData };
-  //   setFormData(restData);
-  // }
+  useEffect(() => {
+    if (isUpdateCustomersBasicInformationSuccess && isUpdateCustomersBasicInformationData) {
+      if (isUpdateCustomersBasicInformationData.errorMessage.includes('exists')) {
+        ToastService.warning(isUpdateCustomersBasicInformationData.errorMessage);
+        return;
+      }
+      // setCustomerId(isUpdateCustomersBasicInformationData.keyValue)
+      props.onhandleRepeatCall()
+      ToastService.success(isUpdateCustomersBasicInformationData.errorMessage);
+      onreset()
+    }
+  }, [isUpdateCustomersBasicInformationSuccess, isUpdateCustomersBasicInformationData]);
+
+  const onreset = () => {
+    props.onSidebarClose()
+    let restData = { ...basicDetailFormDataHalf };
+    restData.initialState = { ...formData };
+    setFormData(restData);
+  }
+
+  useEffect(() => {
+    if (props.isOpen) {
+      const removeFields = ['note']
+      let data = { ...basicDetailFormDataHalf };
+      data.initialState = { ...props.customerData };
+      data.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
+      setFormData(data);
+    }
+  }, [props.isOpen])
 
   useImperativeHandle(nextRef, () => ({
     handleAddBasicDetails,
@@ -143,23 +175,44 @@ const BasicDetail = (props) => {
 
   const handleAddBasicDetails = () => {
     let data = basicDetailRef.current.getFormData();
-    if (data != null) {
+    if (data) {
       let req = {
         ...data,
         groupTypeId: data.groupTypeId.value,
         territoryId: data.territoryId.value,
         countryId: data.countryId.value,
-        billingCurrency: data.billingCurrency.label
       }
       addCustomersBasicInformation(req);
     }
   };
 
+  const handleUpdate = () => {
+    let data = basicDetailRef.current.getFormData();
+    if (data) {
+      let req = {
+        ...data,
+        groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object"
+          ? data.groupTypeId.value
+          : data.groupTypeId,
+        territoryId: data.territoryId && typeof data.territoryId === "object"
+          ? data.territoryId.value
+          : data.territoryId,
+        countryId: data.countryId && typeof data.countryId === "object"
+          ? data.countryId.value
+          : data.countryId,
+        customerId: props.pageId
+      }
+      updateCustomersBasicInformation(req);
+    }
+  };
+
   const handleValidateTextId = (data, dataField) => {
     if (dataField === 'countryId') {
+      const removeFields = ['note']
       const modifyFormFields = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
       const updatedForm = { ...formData };
       updatedForm.formFields = modifyFormFields;
+      updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
       setFormData(updatedForm);
     }
   }
@@ -206,7 +259,8 @@ const BasicDetail = (props) => {
               <Buttons
                 buttonTypeClassName="theme-button ml-5"
                 buttonText="Update"
-              // onClick={Add}
+                onClick={handleUpdate}
+                isLoading={isLoading}
               />
             </div>
           </div>
