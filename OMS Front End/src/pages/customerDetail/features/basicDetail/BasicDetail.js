@@ -212,7 +212,9 @@ const BasicDetail = (props) => {
       const modifyFormFields = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
       const updatedForm = { ...formData };
       updatedForm.formFields = modifyFormFields;
-      updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
+      if (props.isOpen) {
+        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
+      }
       setFormData(updatedForm);
     }
   }

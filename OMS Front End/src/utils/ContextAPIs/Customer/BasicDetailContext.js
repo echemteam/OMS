@@ -18,7 +18,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [addressId, setAddressId] = useState(0);
     const [contactId, setContactId] = useState(0);
     const [contactNumbers, setContactNumbers] = useState();
-    const [addressDataLength , setAddressDataLength] = useState(0)
+    const [addressDataLength, setAddressDataLength] = useState(0)
     const [emailAddressData, setEmailAddressData] = useState();
 
     const [isEdit, setIsEdit] = useState(false);
@@ -30,13 +30,17 @@ export const BasicDetailContextProvider = ({ children }) => {
     };
 
     const movePreviewPage = () => {
-        setActiveTab((prev) => prev - 1);
+        if (addressDataLength > 0) {
+            setActiveTab((prev) => prev - 1);
+        } else {
+            error("Please enter Address");
+        }
     };
 
     const addCustomer = () => {
         if (customerId > 0) {
             if (addressDataLength > 0) {
-                setActiveTab((prev) => prev + 1);
+            setActiveTab((prev) => prev + 1);
             } else {
                 error("Please enter Address");
             }
@@ -62,7 +66,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     return (
         <BasicDetailContext.Provider value={{
             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId, showModal, editFormData, isEdit,
-            contactId, setContactId, contactNumbers, setContactNumbers, emailAddressData, setEmailAddressData, handleToggleModal, handleEditModal, molGridRef , setAddressDataLength
+            contactId, setContactId, contactNumbers, setContactNumbers, emailAddressData, setEmailAddressData, handleToggleModal, handleEditModal, molGridRef, setAddressDataLength
         }}>
             {children}
         </BasicDetailContext.Provider>
