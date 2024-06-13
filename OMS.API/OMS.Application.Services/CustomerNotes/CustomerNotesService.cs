@@ -12,7 +12,7 @@ namespace OMS.Application.Services.CustomerNotes
 {
     internal class CustomerNotesService : BaseServices, ICustomerNotesService
     {
-        #region varisble
+        #region variable
         public readonly ICommonSettingService _commonSettingService;
         #endregion
 

@@ -2,6 +2,7 @@
 using OMS.Application.Services.Authentication;
 using OMS.Application.Services.Common;
 using OMS.Application.Services.Contact;
+using OMS.Application.Services.CustomerAccountingSettings;
 using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.Roles;
@@ -36,6 +37,7 @@ namespace OMS.Application.Services
         IAddressServices _addressServices;
         IContactService _contactService;
         ICustomerNotesService _customerNotesService;
+        ICustomerAccoutingSettingsService _customerAccoutingSettingsService;
 
         public ITestService testService
         {
@@ -173,6 +175,17 @@ namespace OMS.Application.Services
                 }
                 return _customerNotesService;
 
+            }
+        }
+        public ICustomerAccoutingSettingsService customerAccoutingSettingsService
+        {
+            get
+            {
+                if (_customerAccoutingSettingsService == null)
+                {
+                    _customerAccoutingSettingsService = new CustomerAccountingSettingsService(_repositoryManager, _commonSettingService);
+                }
+                return _customerAccoutingSettingsService;
             }
         }
 
