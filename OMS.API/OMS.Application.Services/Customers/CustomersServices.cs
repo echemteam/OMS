@@ -5,7 +5,6 @@ using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 

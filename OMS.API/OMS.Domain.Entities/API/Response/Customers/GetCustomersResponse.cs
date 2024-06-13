@@ -8,5 +8,7 @@
         public string? Website { get; set; }
         public short? StatusId { get; set; }
         public string? Status { get; set; }
+        public string? InActiveReason { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }
