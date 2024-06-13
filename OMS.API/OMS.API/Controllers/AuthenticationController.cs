@@ -22,6 +22,12 @@ namespace OMS.API.Controllers
         }
         #endregion
 
+        [HttpGet("GetAllEntries")]
+        public string GetAllEntries()
+        {
+            return $"Hello api is working..!!";
+        }
+
         #region User Login
         [HttpPost("UserLogin")]
         public IActionResult UserLogin(AuthenticationRequest authData)
