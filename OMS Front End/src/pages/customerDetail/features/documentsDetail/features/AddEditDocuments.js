@@ -8,31 +8,37 @@ const AddEditDocuments = () => {
     {
       name: "Itinerary-Trip.pdf",
       type: "Trip Details",
+      documentType:" Registration Document",
       documentIcon: AppIcons.PdfIcon,
     },
     {
       name: "Itinerary-Trip.doc",
       type: "Trip Details",
+      documentType:" Customer Detail Form",
       documentIcon: AppIcons.DocIcon,
     },
     {
       name: "Itinerary-Trip.xls",
       type: "Trip Details",
+      documentType:"Our Submitted Form",
       documentIcon: AppIcons.XlsIcon,
     },
     {
       name: "Itinerary-Trip.ppt",
       type: "Trip Details",
+      documentType:" Registration Document",
       documentIcon: AppIcons.PptIcon,
     },
     {
       name: "Itinerary-Trip.zip",
       type: "Trip Details",
+      documentType:" Customer Detail Form",
       documentIcon: AppIcons.ZipIcon,
     },
     {
       name: "Itinerary-Trip.csv",
       type: "Trip Details",
+      documentType:"Our Submitted Form",
       documentIcon: AppIcons.CsvIcon,
     },
     
@@ -62,8 +68,11 @@ const AddEditDocuments = () => {
                   </div>
                   <div className="right-desc">
                     <div className="doc-details">
+                    <div className="document-typename">{doc.documentType}</div>
+                    <div className="document-type">{doc.type}</div>
+                   
                       <div className="document-name">{doc.name}</div>
-                      <div className="document-type">{doc.type}</div>
+                    
                     </div>
                     <div className="document-action">
                       <span

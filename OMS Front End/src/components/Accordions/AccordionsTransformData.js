@@ -1,6 +1,6 @@
-export const transformData = (data) => {
+export const contactTransformData = (data) => {
     return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddress, contactId, contactTypeId } = item;
+        const { type, firstName, lastName, emailAddress, contactId, contactTypeId, customerContactId } = item;
 
         const transformedItem = {
             cardInformation: {
@@ -8,7 +8,8 @@ export const transformData = (data) => {
                 lastName,
                 emailAddress,
                 contactId,
-                contactTypeId
+                contactTypeId,
+                customerContactId
             },
         };
 

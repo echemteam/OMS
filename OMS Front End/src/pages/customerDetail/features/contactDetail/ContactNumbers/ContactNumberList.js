@@ -1,41 +1,19 @@
-import MolGrid from "../../../../../components/Grid/MolGrid";
-import CardSection from "../../../../../components/ui/card/CardSection";
+import { useContext } from "react";
+//** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
-import { GridColumnType } from "../../../../../data/gridColumnType";
+import MolGrid from "../../../../../components/Grid/MolGrid";
+import { phoneNumberConfig } from "./config/AddEditContactsForm.data";
+import CardSection from "../../../../../components/ui/card/CardSection";
+import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler }) => {
 
-    const contactData = [
-        {
-            contactNo: "+91 9526335445",
-        },
-        {
-            contactNo: "+001 2026335445",
-        },
-    ];
-    const contactConfig = {
-        columns: [
-            {
-                name: "Contact Numbers",
-                fieldName: "contactNo",
-                allowShort: true,
-            },
-
-            {
-                name: "Action",
-                colType: GridColumnType.ACTION,
-                defaultAction: {
-                    allowEdit: true,
-                    allowDelete: true,
-                },
-            },
-        ],
-    };
+    const { phoneNumberData } = useContext(BasicDetailContext);
 
     return (
         <div className="col-xl-6 col-lg-6 col-md-6 col-12 mt-4 card-email-sec">
             <CardSection
-                cardTitle="Email Address"
+                cardTitle="Phone Numbers"
                 buttonClassName="danger-btn"
                 textWithIcon={true}
                 iconImg={AppIcons.PlusIcon}
@@ -46,11 +24,10 @@ const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler }) => 
                     <div className="col-md-12 table-striped pt-1">
                         <MolGrid
                             ref={molGridRef}
-                            configuration={contactConfig}
-                            dataSource={contactData}
+                            configuration={phoneNumberConfig}
+                            dataSource={phoneNumberData}
                             allowPagination={false}
                             onActionChange={actionHandler}
-                        // onPageChange={handlePageChange}
                         />
                     </div>
                 </div>

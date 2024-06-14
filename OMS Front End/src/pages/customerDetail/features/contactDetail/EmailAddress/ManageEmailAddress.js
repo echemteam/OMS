@@ -1,21 +1,26 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import EmailAddressList from "./EmailAddressList";
-import AddEditEmailModal from "./AddEditEmailAddress";
-import { useDeleteContactEmailMutation, useLazyGetEmailByContactIdQuery } from "../../../../../app/services/emailAddressAPI";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+//** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
+import { useDeleteContactEmailMutation, useLazyGetEmailByContactIdQuery } from "../../../../../app/services/emailAddressAPI";
+//** Component's */
+const EmailAddressList = React.lazy(() => import("./EmailAddressList"));
+const AddEditEmailModal = React.lazy(() => import("./AddEditEmailAddress"));
 
 const ManageEmailAddress = () => {
 
+    //** State */
     const molGridRef = useRef();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
     const { contactId, setEmailAddressData } = useContext(BasicDetailContext);
 
+    //** API Call's */
     const [getEmailList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetEmailByContactIdQuery();
     const [deleteContactEmail, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactEmailMutation();
 
+    //** UseEffect */
     useEffect(() => {
         contactId && getEmailList(contactId);
     }, [contactId])
@@ -33,16 +38,15 @@ const ManageEmailAddress = () => {
         }
     }, [isDeleteSucess, isDeleteData, isDeleteFetching]);
 
+    //** Handle Changes */
     const handleToggleModal = () => {
-        setShowModal(!showModal);
-        setIsEdit(false);
+        if (contactId > 0) {
+            setShowModal(!showModal);
+            setIsEdit(false);
+        } else {
+            ToastService.warning("Please save the first contact details fields before proceeding.");
+        }
     };
-
-    const handleEditModal = (data) => {
-        setShowModal(!showModal);
-        setIsEdit(true);
-        setEditFormData(data)
-    }
 
     //** Success */
     const onSuccess = () => {
@@ -51,10 +55,15 @@ const ManageEmailAddress = () => {
         contactId && getEmailList(contactId);
     };
 
+    //** Action Handler */
+    const handleEditModal = (data) => {
+        setShowModal(!showModal);
+        setIsEdit(true);
+        setEditFormData(data)
+    }
     const handleDeleteClick = (data) => {
         deleteContactEmail(data.emailId);
     }
-
     const actionHandler = {
         EDIT: handleEditModal,
         DELETE: handleDeleteClick,

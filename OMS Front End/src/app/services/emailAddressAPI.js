@@ -29,15 +29,6 @@ const emailAddressAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
-        // deleteContactEmail: builder.query({
-        //     query: (id) => ({
-        //         url: encryptQueryString(`/EmailAddress/DeleteContactEmail/?emailId=${Number(id)}`),
-        //         Method: 'DELETE',
-        //     }),
-        //     transformResponse: transformSucessResponse,
-        //     transformErrorResponse: transformErrorResponse
-        // }),
-
         deleteContactEmail: builder.mutation({
             query: (id) => ({
                 url: encryptQueryString(`/EmailAddress/DeleteContactEmail/?emailId=${id}`),
