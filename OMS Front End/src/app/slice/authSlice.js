@@ -29,7 +29,8 @@ const authSlice = createSlice({
       //Use to create cookie.
       const { securityPermissions, ...newAuthProps } = action.payload;
       setAuthProps(newAuthProps);
-      const { isAuthenticated, message, token, user, sessionTimeout, ...permissionList } = action.payload;
+      const { isAuthenticated, message, token, user, sessionTimeout,fullname, ...permissionList } = action.payload;
+      state.user = user;
       state.userPermissions = permissionList;
       saveData('SecurityPermission', permissionList);
       state.isLogedin = true;
