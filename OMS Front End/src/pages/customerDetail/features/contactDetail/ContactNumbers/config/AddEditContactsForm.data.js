@@ -30,7 +30,7 @@ export const addEditContactsFormData = {
       id: "phoneNumber",
       lable: "",
       Field_Name: "Phone Number",
-      fieldType: FormFieldTypes.INPUT,
+      fieldType: FormFieldTypes.NUMERIC,
       dataField: "phoneNumber",
       fieldSetting: {
         placeholder: "Enter Phone Number",
