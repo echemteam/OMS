@@ -1,4 +1,6 @@
-﻿using OMS.Domain.Entities.Entity.CommonEntity;
+﻿using OMS.Domain.Entities.API.Response.CustomerDocuments;
+using OMS.Domain.Entities.API.Response.Customers;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Contact;
 using OMS.Domain.Entities.Entity.CustomerDocuments;
 using OMS.Domain.Repository.Contract;
@@ -12,6 +14,8 @@ namespace OMS.Domain.Repository.Implementation
     {
         #region SP Name
         const string ADDCUSTOMERDOCUMENTS = "AddCustomerDocuments";
+        const string GETCUSTOMERDOCUMENTSBYID = "GetCustomerDocumentsById";
+        const string DELETECUSTOMERDOCUMENTSBYID = "DeleteCustomerDocumentsById";
         #endregion
 
         public CustomerDocumentsRepository(DapperContext dapperContext) : base(dapperContext)
@@ -30,6 +34,24 @@ namespace OMS.Domain.Repository.Implementation
                 customerDocuments.CreatedBy
             }, CommandType.StoredProcedure);
         }
+
+        public async Task<List<GetCustomerDocumentsByIdResponse>> GetCustomerDocumentsById(int CustomerId)
+        {
+            List<GetCustomerDocumentsByIdResponse> customerDetails = await _context.GetList<GetCustomerDocumentsByIdResponse>(GETCUSTOMERDOCUMENTSBYID, new
+            {
+                CustomerId
+            }, CommandType.StoredProcedure);
+            return customerDetails;
+        }
+        public async Task<AddEntityDTO<int>> DeleteCustomerDocumentsById(int customerDocumentId, int deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETECUSTOMERDOCUMENTSBYID, new
+            {
+                customerDocumentId,
+                deletedBy
+            }, CommandType.StoredProcedure);
+        }
+
         #endregion
     }
 }

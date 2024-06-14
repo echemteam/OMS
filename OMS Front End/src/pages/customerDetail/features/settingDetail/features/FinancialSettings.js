@@ -54,7 +54,7 @@ const [ addEditCustomerSettings,{ isLoading: isAddEditCustomerSettingsLoading, i
 
   useEffect(() => {
 
-    if (   isGetDetailByCustomerIDSuccess &&  !isGetDetailByCustomerIDFetching &&  isGetDetailByCustomerIDData ) {
+    if ( isGetDetailByCustomerIDSuccess &&  !isGetDetailByCustomerIDFetching &&  isGetDetailByCustomerIDData ) {
       if (isGetDetailByCustomerIDData) {
         let formData = { ...customerSettingFormData };
         formData.initialState = {
@@ -64,9 +64,8 @@ const [ addEditCustomerSettings,{ isLoading: isAddEditCustomerSettingsLoading, i
           paymentTermId: isGetDetailByCustomerIDData.paymentTermId,
           creditLimit: isGetDetailByCustomerIDData.creditLimit,
           paymentMethodId: isGetDetailByCustomerIDData.paymentMethodId,
-          billingCurrency: isGetDetailByCustomerIDData.billingCurrency,
-          invoiceSubmissionInstruction:
-            isGetDetailByCustomerIDData.invoiceSubmissionInstruction,
+          billingCurrency: isGetDetailByCustomerIDData.billingCurrency,     
+        invoiceSubmissionInstruction: isGetDetailByCustomerIDData.invoiceSubmissionInstruction,
         };
         setCustomerSettingFormData(formData);
       }
@@ -98,6 +97,7 @@ const [ addEditCustomerSettings,{ isLoading: isAddEditCustomerSettingsLoading, i
         ...settingFormData,
         customerAccountingSettingId:
           settingFormData.customerAccountingSettingId,
+          customerId: customerId,
         paymentTermId:
           settingFormData.paymentTermId &&
           typeof settingFormData.paymentTermId === "object"

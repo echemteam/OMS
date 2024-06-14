@@ -40,3 +40,11 @@ node_modules/
 jspm_packages/
 OMS Front End/package-lock.json
 OMS Front End/.vscode/launch.json
+OMS.API/OMS.API/bin/Release/net8.0/*
+OMS.API/OMS.Domain.Repository/bin/Release/net8.0/*
+OMS.API/OMS.Application.Services/bin/Release/net8.0/*
+OMS.API/OMS.API/Properties/PublishProfiles/FolderProfile.pubxml
+OMS.API/OMS.Shared/bin/Release/net8.0/*
+OMS.API/OMS.Domain.Entities/bin/Release/net8.0/*
+OMS.API/OMS.FileManger.Services/bin/Release/net8.0/*
+OMS.API/OMS.Framework/bin/Release/net8.0/*
