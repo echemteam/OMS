@@ -2,14 +2,14 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const SettingFormData = {
   name: "Setting Form",
-  initialState: { type: "" },
+  initialState: { paymentTermId: "" ,creditLimit:"",paymentMethodId:"",billingCurrency:"",invoiceSubmissionInstruction:""},
   formFields: [
     {
-      id: "defaultPaymentTerms",
+      id: "paymentTermId",
       lable: "Default Payment Terms Template :",
       Field_Name: "Default Payment Terms Template",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "defaultPaymentTerms",
+      dataField: "paymentTermId",
       fieldSetting: {
         placeholder: "Select Default Payment Terms Template",
         allowSpace: true,
@@ -35,11 +35,11 @@ export const SettingFormData = {
       },
     },
     {
-      id: "paymentMethod",
+      id: "paymentMethodId",
       lable: "Payment Method :",
       Field_Name: "Payment Method",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "paymentMethod",
+      dataField: "paymentMethodId",
       fieldSetting: {
         placeholder: "Select Payment Method",
         allowSpace: true,

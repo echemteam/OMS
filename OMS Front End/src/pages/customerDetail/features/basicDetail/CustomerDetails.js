@@ -70,7 +70,10 @@ const CustomerDetails = ({ editClick, customerData }) => {
           <div className="field-desc">
             <div className="inf-label">Is Company</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.isCompany}</div>
+            <div className="info-desc">
+            {customerData?.isCompany}
+            {customerData && customerData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
+            </div>
           </div>
         </div>
       </div>

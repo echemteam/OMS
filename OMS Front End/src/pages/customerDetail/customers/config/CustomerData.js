@@ -66,25 +66,27 @@ export const AllCustomerGridConfig = {
         },
       },
     },
-    {
-      name: "Progress",
-      fieldName: "progress",
-      colType: GridColumnType.PROGRESS,
+    // {
+    //   name: "Progress",
+    //   fieldName: "progress",
+    //   colType: GridColumnType.PROGRESS,
 
-    },
+    // },
     {
       name: "Action",
-      colType: GridColumnType.MULTIACTION,
+      colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
+        allowEdit: true,
+        allowDisable: true,
+        allowFreeze: true,
+        allowBlocked: true,
       },
-      customDropdownActions: [
-        { name: "EDIT" },
-        { name: "DISABLE" },
-        { name: "FREEZE" },
-        { name: "BLOCKED" },
-      ],
+      // customDropdownActions: [
+      //   { name: "EDIT" },
+      //   { name: "DISABLE" },
+      //   { name: "FREEZE" },
+      //   { name: "BLOCKED" },
+      // ],
     },
   ],
 };
@@ -106,23 +108,19 @@ export const PendingCustomerGridConfig = {
       fieldName: "website",
       // allowShort: true,
     },
-    {
-      name: "Progress",
-      fieldName: "progress",
-      colType: GridColumnType.PROGRESS,
+    // {
+    //   name: "Progress",
+    //   fieldName: "progress",
+    //   colType: GridColumnType.PROGRESS,
 
-    },
+    // },
     {
       name: "Action",
-      colType: GridColumnType.MULTIACTION,
+      colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
+        allowEdit: true,
+        allowDisable: true,
       },
-      customDropdownActions: [
-        { name: "EDIT" },
-        { name: "DISABLE" },
-      ],
     },
   ],
 };
@@ -148,21 +146,17 @@ export const SubmittedCustomerGridConfig = {
       name: "Approve",
       allowShort: false,
       colType: GridColumnType.CHECKBOX,
-      colSettings: {
-        allowEdit: true,
-      },
+      // colSettings: {
+      //   allowEdit: true,
+      // },
     },
     {
       name: "Action",
-      colType: GridColumnType.MULTIACTION,
+      colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
+        allowEdit: true,
+        allowDisable: true,
       },
-      customDropdownActions: [
-        { name: "EDIT" },
-        { name: "DISABLE" },
-      ],
     },
   ],
 
@@ -182,17 +176,13 @@ export const ApprovedCustomerGridConfig = {
     },
     {
       name: "Action",
-      colType: GridColumnType.MULTIACTION,
+      colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
+        allowEdit: true,
+        allowDisable: true,
+        allowFreeze: true,
+        allowBlocked: true,
       },
-      customDropdownActions: [
-        { name: "EDIT" },
-        { name: "DISABLE" },
-        { name: "FREEZE" },
-        { name: "BLOCKED" },
-      ],
     },
   ],
 };
@@ -210,7 +200,7 @@ export const AllInActiveCustomerGridConfig = {
       // allowShort: true,
     },
     {
-      name: "Data",
+      name: "Date",
       fieldName: "taxId",
       // allowShort: true,
     },
@@ -259,11 +249,16 @@ export const FreezedInActiveCustomerGridConfig = {
     },
     {
       name: "Reason",
-      fieldName: "taxId",
+      fieldName: "inActiveReason",
     },
     {
-      name: "Data",
-      fieldName: "taxId",
+      name: "Date",
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
     {
       name: "Action",
@@ -285,11 +280,16 @@ export const BlockedInActiveCustomerGridConfig = {
     },
     {
       name: "Reason",
-      fieldName: "taxId",
+      fieldName: "inActiveReason",
     },
     {
-      name: "Data",
-      fieldName: "taxId",
+      name: "Date",
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
     {
       name: "Action",
@@ -298,7 +298,7 @@ export const BlockedInActiveCustomerGridConfig = {
         allowEdit: false,
         allowDelete: false,
         allowUnfreeze: false,
-        allowblocked: true,
+        allowUnblocked: true,
       },
     },
   ],
@@ -312,11 +312,16 @@ export const DisabledInActiveCustomerGridConfig = {
     },
     {
       name: "Reason",
-      fieldName: "taxId",
+      fieldName: "inActiveReason",
     },
     {
-      name: "Data",
-      fieldName: "taxId",
+      name: "Date",
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
     {
       name: "Action",
@@ -325,7 +330,7 @@ export const DisabledInActiveCustomerGridConfig = {
         allowEdit: false,
         allowDelete: false,
         allowUnfreeze: false,
-        allowblocked: false,
+        allowUnblocked: false,
         allowActiveCustomer: true,
       },
     },

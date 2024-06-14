@@ -94,6 +94,15 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        checkCustomerNameExist: builder.mutation({
+            query: (Details) => ({
+                url: '/Customers/CheckCustomerNameExist',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        })
     })
 })
 
@@ -108,6 +117,7 @@ export const {
     useLazyGetCustomersBasicInformationByIdQuery,
     useAddCustomersBasicInformationMutation,
     useUpdateCustomersBasicInformationMutation,
+    useCheckCustomerNameExistMutation,
 } = basicdetailAPI
 
 export default basicdetailAPI;

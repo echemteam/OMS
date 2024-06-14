@@ -11,9 +11,11 @@ import CenterModel from '../../../../components/ui/centerModel/CenterModel';
 import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import { StatusEnums, StatusFeild } from '../../../../common/features/Enums/StatusEnums';
+import SwalAlert from '../../../../services/swalService/SwalService';
 
 export const CustomersList = ({ statusId, configFile }) => {
   const navigate = useNavigate();
+  const { confirm } = SwalAlert();
   const molGridRef = useRef();
   const reasonRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
@@ -21,8 +23,8 @@ export const CustomersList = ({ statusId, configFile }) => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(reasonData);
   const [customerID, setcustomerId] = useState();
-  const [staticId , setStaticId] = useState()
-  const [statusFeild , setStatusFeild] = useState()
+  const [staticId, setStaticId] = useState()
+  const [statusFeild, setStatusFeild] = useState()
   const { listRef } = useContext(CustomerContext);
 
   const [
@@ -94,10 +96,21 @@ export const CustomersList = ({ statusId, configFile }) => {
   };
 
   const handleGridCheckBoxChange = (rowData, datafield, rowindex, updatedValue, parentData) => {
-    let req = {
-      customerId: rowData.customerId
-    }
-    updateCustomerApproveStatus(req)
+    confirm(
+      "Warning?",
+      "Are you sure you want to approve the customer?",
+      "Yes",
+      "Cancel"
+    ).then((confirmed) => {
+      if (confirmed) {
+        let req = {
+          customerId: rowData.customerId
+        }
+        updateCustomerApproveStatus(req)
+      } else {
+        getListApi()
+      }
+    });
   }
 
   const handleToggleModal = () => {
@@ -163,7 +176,7 @@ export const CustomersList = ({ statusId, configFile }) => {
                   ref={molGridRef}
                   configuration={configFile}
                   dataSource={dataSource}
-                  isLoading={isListLoading || updateCustomerLoading}
+                  isLoading={isListLoading}
                   pagination={{
                     totalCount: totalRowCount,
                     pageSize: 25,
