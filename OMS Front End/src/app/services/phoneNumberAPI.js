@@ -29,10 +29,10 @@ const phoneNumberAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
-        deleteContactPhone: builder.query({
+        deleteContactPhone: builder.mutation({
             query: (id) => ({
                 url: encryptQueryString(`/PhoneNumber/DeleteContactPhone/?phoneId=${Number(id)}`),
-                Method: 'GET',
+                method: 'DELETE'
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
@@ -50,7 +50,7 @@ const phoneNumberAPI = createApi({
 })
 
 export const {
-    useAddContactPhoneMutation, useUpdateContactPhoneMutation, useLazyDeleteContactPhoneQuery, useLazyGetPhoneByContactIdQuery
+    useAddContactPhoneMutation, useUpdateContactPhoneMutation, useDeleteContactPhoneMutation, useLazyGetPhoneByContactIdQuery
 } = phoneNumberAPI
 
 export default phoneNumberAPI;

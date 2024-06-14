@@ -12,7 +12,7 @@ const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
-  const { nextRef, setCustomerId, moveNextPage } = useContext(BasicDetailContext);
+  const { nextRef, setCustomerId, moveNextPage, setAllCountries } = useContext(BasicDetailContext);
 
   const [
     getAllGroupTypes,
@@ -101,6 +101,7 @@ const BasicDetail = (props) => {
         (item) => item.dataField === "countryId"
       );
       dropdownField.fieldSetting.options = getData;
+      setAllCountries(allGetAllCountriesData);
     }
   }, [
     isGetAllCountriesFetching,
