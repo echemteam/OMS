@@ -71,7 +71,7 @@ const DocumentDetails = () => {
         base64File: data.attachment.base64Data,
         attachment: data.attachment.fileName,
         storagePath: "Customer",
-        customerId: 15,
+        customerId: customerId,
         documentTypeId: data.documentTypeId && typeof data.documentTypeId === "object" ? data.documentTypeId.value : data.documentTypeId,
       };
       add(requestData);

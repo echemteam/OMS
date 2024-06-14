@@ -22,8 +22,7 @@ const ManageDocumentList = forwardRef(({ childRef }) => {
 
     //** UseEffect */
     useEffect(() => {
-        // customerId && getList(customerId);
-        getList(15);
+        customerId && getList(customerId);
     }, [])
 
     useEffect(() => {
@@ -46,8 +45,7 @@ const ManageDocumentList = forwardRef(({ childRef }) => {
     useEffect(() => {
         if (isDeleteSucess && isDeleteData) {
             ToastService.success(isDeleteData.errorMessage);
-            // customerId && getList(customerId);
-            getList(15);
+            customerId && getList(customerId);
         }
     }, [isDeleteSucess, isDownalodData]);
 
@@ -55,7 +53,7 @@ const ManageDocumentList = forwardRef(({ childRef }) => {
     const handleDownload = (name) => {
         let request = {
             folderName: 'Customer',
-            customerId: 15,
+            customerId: customerId,
             fileName: name
         }
         Downalod(request);
@@ -65,7 +63,7 @@ const ManageDocumentList = forwardRef(({ childRef }) => {
     };
 
     const onGetData = () => {
-        getList(15);
+        customerId && getList(customerId);
     };
 
     //** Use Imperative Handle  */
