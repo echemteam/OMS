@@ -6,6 +6,7 @@ import Image from "../../components/image/Image";
 import CardSection from "../../components/ui/card/CardSection";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { TabEnum } from "../../common/features/Enums/TabsEnums";
+import { useNavigate } from "react-router-dom";
 //** Component's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
 const AddressDetail = React.lazy(() => import("./features/addressDetail/AddressDetail"));
@@ -13,6 +14,7 @@ const DocumentDetails = React.lazy(() => import("./features/documentsDetail/Docu
 const ContactDetail = React.lazy(() => import("./features/contactDetail/Contact/ContactDetail"));
 
 const AddCustomer = () => {
+  const navigate = useNavigate();
   const { activeTab, setActiveTab, movePreviewPage, addCustomer } = useContext(BasicDetailContext);
 
   const onSubmit = (e) => {
@@ -50,6 +52,10 @@ const AddCustomer = () => {
   //   setActiveTab(index);
   // };
 
+  const handleSubmit = () => {
+    navigate('/Customers');
+  };
+
   return (
     <>
       <div className="stepper-card">
@@ -60,7 +66,7 @@ const AddCustomer = () => {
                 <React.Fragment key={index}>
                   <div className={`step ${activeTab === index ? 'active' : ''}`}>
                     <button className="step-button"
-                      // onClick={() => handleTabClick(index)}
+                    //onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">
@@ -99,7 +105,7 @@ const AddCustomer = () => {
                               Next
                             </button>
                           ) : (
-                            <button type="submit" className="btn theme-button">
+                            <button type="submit" className="btn theme-button" onClick={handleSubmit}>
                               Submit
                             </button>
                           )}

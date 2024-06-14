@@ -9,7 +9,7 @@ export default BasicDetailContext;
 
 
 export const BasicDetailContextProvider = ({ children }) => {
-
+    const childRef = useRef();
     const nextRef = useRef(null);
     const molGridRef = useRef();
     const { error } = SwalAlert();

@@ -24,13 +24,40 @@ const documentAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
+        }),
+        getCustomerDocumentsById: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/CustomerDocuments/GetCustomerDocumentsById/?customerId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        deleteCustomerDocumentsById: builder.mutation({
+            query: (id) => ({
+                url: encryptQueryString(`/CustomerDocuments/DeleteCustomerDocumentsById/?customerDocumentId=${id}`),
+                method: 'DELETE',
+                body: transformRequest(id)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        downloadCustomerDocument: builder.query({
+            query: (requestData) => ({
+                url: encryptQueryString(`/CustomerDocuments/DownloadCustomerDocument/?folderName=${requestData.folderName}&fileName=${requestData.fileName}&customerId=${requestData.customerId}`),
+                Method: 'GET',
+                responseHandler: (response) => response.blob()
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
         })
 
     })
 })
 
 export const {
-    useLazyGetAllDocumentTypesQuery, useAddCustomerDocumentsMutation
+    useLazyGetAllDocumentTypesQuery, useAddCustomerDocumentsMutation,
+    useLazyGetCustomerDocumentsByIdQuery, useDeleteCustomerDocumentsByIdMutation, useLazyDownloadCustomerDocumentQuery,
 } = documentAPI
 
 export default documentAPI;
