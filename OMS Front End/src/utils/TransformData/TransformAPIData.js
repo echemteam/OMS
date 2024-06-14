@@ -2,7 +2,7 @@ import { FileTypeIcons } from "../../pages/customerDetail/features/documentsDeta
 
 export const contactTransformData = (data) => {
     return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddress, contactId, contactTypeId, customerContactId } = item;
+        const { type, firstName, lastName, emailAddress, contactId, contactTypeId, customerContactId,phoneNumber } = item;
 
         const transformedItem = {
             cardInformation: {
@@ -11,7 +11,8 @@ export const contactTransformData = (data) => {
                 emailAddress,
                 contactId,
                 contactTypeId,
-                customerContactId
+                customerContactId,
+                phoneNumber
             },
         };
 
