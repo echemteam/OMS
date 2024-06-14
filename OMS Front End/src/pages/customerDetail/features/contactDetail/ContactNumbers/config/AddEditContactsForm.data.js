@@ -1,11 +1,16 @@
 import { FormFieldTypes } from "../../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../../data/gridColumnType";
 
 
 export const addEditContactsFormData = {
   name: "Add Edit Role Form",
-  initialState: { companyName: "" },
+  initialState: {
+    phoneCode: '',
+    phoneNumber: '',
+    phoneTypeId: 0
+  },
   formFields: [
-    
+
     {
       id: "phoneCode",
       lable: "Contact Number :",
@@ -22,13 +27,13 @@ export const addEditContactsFormData = {
       },
     },
     {
-      id: "contactNumber",
+      id: "phoneNumber",
       lable: "",
-      Field_Name: "Contact Number",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "contactNumber",
+      Field_Name: "Phone Number",
+      fieldType: FormFieldTypes.NUMERIC,
+      dataField: "phoneNumber",
       fieldSetting: {
-        placeholder: "Enter Contact Number",
+        placeholder: "Enter Phone Number",
         allowSpace: true,
       },
       validation: [{ type: "require" }],
@@ -38,3 +43,25 @@ export const addEditContactsFormData = {
     },
   ],
 };
+
+
+export const phoneNumberConfig = {
+  columns: [
+    {
+      name: "Phone Number",
+      fieldName: "phoneCode,phoneNumber",
+      colType: GridColumnType.CUSTOM,
+      renderCustomCol: (rowData) => {
+        return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
+      },
+    },
+    {
+      name: "Action",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: true,
+        allowDelete: true,
+      },
+    },
+  ]
+}

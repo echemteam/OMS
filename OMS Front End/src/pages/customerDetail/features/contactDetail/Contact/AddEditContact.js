@@ -1,76 +1,89 @@
 import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
+//** Lib's */
+import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { contactDetailFormData } from "./config/ContactDetailForm.data";
-import Buttons from "../../../../../components/ui/button/Buttons";
-import ManageEmailAddress from "../EmailAddress/ManageEmailAddress";
-import ManageContactNumbers from "../ContactNumbers/ManageContactNumbers";
-import { useAddContactMutation, useAddEditContactMutation } from "../../../../../app/services/contactAPI";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+//** Service's */
+import { useAddEditContactMutation } from "../../../../../app/services/contactAPI";
+//** Component's */
+const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
+const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit, editFormData, modifyContactData }) => {
+const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, isEdit, editRef }) => {
 
+  //** State */
   const ref = useRef();
-  const { customerId, setContactId } = useContext(BasicDetailContext);
+  const { formSetting } = contactDetailFormData;
   const [formData, setFormData] = useState(contactDetailFormData);
+  const [customerContactId, setCustomerContactId] = useState(0);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const { customerId, contactId, setContactId } = useContext(BasicDetailContext);
 
   //** API Call's */
-  const [addEdit, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddEditContactMutation();
+  const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = useAddEditContactMutation();
 
   //** Handle Changes */
   const handleAddEdit = () => {
     let data = ref.current.getFormData();
-    let request;
     if (data) {
-      request = {
+      let request = {
         ...data,
         contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
-        customerId: 15
+        customerId: customerId,
+        contactId: contactId,
+        customerContactId: customerContactId
       }
       addEdit(request);
-      // request = {
-      //   ...data,
-      //   contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
-      //   customerId: 15
-      // }
-      // if (!data.contactId) {
-
-      // } else if (data.contactId) {
-
-      // }
     }
-    // if (data && !data.contactId) {
-
-    //   addEdit(request);
-    // } else if (data && data.contactId) {
-    //   let request = {
-    //     ...data,
-    //     contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
-    //     customerId: 15
-    //   }
-    //   addEdit(request);
-    // }
   };
 
+
+  //** UseEffect */
   useEffect(() => {
-    if (isAddSuccess && isAddData) {
+    if (isAddEditSuccess && isAddEditData) {
       if (onSuccess) {
         onSuccess();
-        onResetData();
+        setContactId(isAddEditData?.keyValue);
+        if (isAddModelOpen) {
+          formSetting.isViewOnly = true;
+          setIsButtonDisable(true);
+        }
       }
-      ToastService.success(isAddData.errorMessage);
+      ToastService.success(isAddEditData.errorMessage);
     }
-  }, [isAddSuccess, isAddData]);
+  }, [isAddEditSuccess, isAddEditData]);
 
-  useEffect(() => {
-    if (isEdit && editFormData) {
+  //** Use Imperative Handle  */
+  useImperativeHandle(editRef, () => ({
+    callEditFunction: handleEditMode,
+  }));
+
+  useImperativeHandle(addRef, () => ({
+    callOpenModalFunction: handleOpenModal,
+  }));
+
+  const handleOpenModal = () => {
+    formSetting.isViewOnly = false;
+    setIsButtonDisable(false);
+  }
+
+  const handleEditMode = (data) => {
+    formSetting.isViewOnly = false;
+    setIsButtonDisable(false);
+    if (data) {
       let form = { ...contactDetailFormData };
-      form.initialState = editFormData;
+      form.initialState = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        contactTypeId: data.contactTypeId
+      }
       setFormData(form);
-      setContactId(editFormData?.contactId);
+      setContactId(data?.contactId);
+      setCustomerContactId(data?.customerContactId);
     }
-  }, [isEdit, editFormData])
-
+  }
 
   //** Reset Data */
   const onResetData = () => {
@@ -84,9 +97,9 @@ const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit
     callChildFunction: onResetData,
   }));
 
+
   return (
     <div>
-      {/* Add-Edit Contact */}
       <div className="row horizontal-form mt-4">
         <FormCreator config={formData} ref={ref} {...formData} />
         <div className="col-md-12 mt-3">
@@ -94,10 +107,10 @@ const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit
             <div className="d-flex align-item-end">
               <Buttons
                 buttonTypeClassName="theme-button"
-                buttonText={`${isEdit ? "Update" : "Add"}`}
-                // isLoading={isAddLoading || isUpdateLoading}
+                buttonText='Save'
+                isLoading={isAddEditLoading}
                 onClick={handleAddEdit}
-                isLoading={isAddLoading}
+                isDisable={isButtonDisable}
               />
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"
@@ -109,9 +122,7 @@ const AddEditContact = forwardRef(({ onSidebarClose, onSuccess, childRef, isEdit
         </div>
       </div>
       <div className="row">
-        {/* Email Address List */}
         <ManageEmailAddress />
-        {/* Contact Number List */}
         <ManageContactNumbers />
       </div>
     </div >

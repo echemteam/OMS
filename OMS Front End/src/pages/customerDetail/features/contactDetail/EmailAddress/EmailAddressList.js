@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import MolGrid from "../../../../../components/Grid/MolGrid";
-import CardSection from "../../../../../components/ui/card/CardSection";
+//** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
 import { emailConfig } from "./config/AddEditEmailForm.data";
-import ContactContext from "../../../../../utils/ContextAPIs/Customer/ContactContext";
+import MolGrid from "../../../../../components/Grid/MolGrid";
+import CardSection from "../../../../../components/ui/card/CardSection";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler }) => {

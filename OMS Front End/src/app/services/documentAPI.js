@@ -16,11 +16,21 @@ const documentAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+        addCustomerDocuments: builder.mutation({
+            query: (requestData) => ({
+                url: '/CustomerDocuments/AddCustomerDocuments',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        })
+
     })
 })
 
 export const {
-    useLazyGetAllDocumentTypesQuery,
+    useLazyGetAllDocumentTypesQuery, useAddCustomerDocumentsMutation
 } = documentAPI
 
 export default documentAPI;

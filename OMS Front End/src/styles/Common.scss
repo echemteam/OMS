@@ -1269,6 +1269,11 @@ a {
             color: var(--textColorLight);
             font-size: 80%;
           }
+          .document-typename {
+            color: var(--themeColor);
+            font-size: 90%;
+            font-weight: 600;
+          }
         }
 
         .document-action {

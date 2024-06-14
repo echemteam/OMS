@@ -1,15 +1,16 @@
 import React from "react";
-import CardSection from "../../components/ui/card/CardSection";
-import BasicDetail from "./features/basicDetail/BasicDetail";
-import AddressDetail from "./features/addressDetail/AddressDetail";
-import ContactDetail from "./features/contactDetail/Contact/ContactDetail";
-import Image from "../../components/image/Image";
-import { AppIcons } from "../../data/appIcons";
-import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
-import DocumentDetails from "./features/documentsDetail/DocumentDetails";
 import { useContext } from "react";
+//**Lib's */
+import { AppIcons } from "../../data/appIcons";
+import Image from "../../components/image/Image";
+import CardSection from "../../components/ui/card/CardSection";
+import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
+//** Component's */
+const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
+const AddressDetail = React.lazy(() => import("./features/addressDetail/AddressDetail"));
+const DocumentDetails = React.lazy(() => import("./features/documentsDetail/DocumentDetails"));
+const ContactDetail = React.lazy(() => import("./features/contactDetail/Contact/ContactDetail"));
 import { TabEnum } from "../../common/features/Enums/TabsEnums";
-
 
 const AddCustomer = () => {
   const { activeTab, setActiveTab, movePreviewPage, addCustomer } = useContext(BasicDetailContext);
@@ -85,11 +86,7 @@ const AddCustomer = () => {
                         {step.content}
                         <div className="d-flex justify-content-end">
                           {index > 0 && (
-                            <button
-                              type="button"
-                              className="btn dark-btn mr-3"
-                              onClick={movePreviewPage}
-                            >
+                            <button type="button" className="btn dark-btn mr-3" onClick={movePreviewPage} >
                               Back
                             </button>
                           )}
