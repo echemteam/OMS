@@ -1,6 +1,4 @@
-﻿using System.IO.Compression;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Security.Cryptography;
 
 namespace OMS.FileManger.Services
 {
@@ -958,34 +956,47 @@ namespace OMS.FileManger.Services
             return UniqueName;
         }
 
+        public static async Task<byte[]> DownloadDecryptFile(string filePath, string aesKey, string aesIV)
+        {
+            byte[] encryptedBytes = await File.ReadAllBytesAsync(filePath);
+
+            byte[] decryptedBytes = DecryptFile(encryptedBytes, aesKey, aesIV);
+
+            return decryptedBytes;
+        }
+
+
+
         public static byte[] EncryptFile(byte[] fileBytes, string AESKey, string AESIV)
         {
-            using (Aes aes = Aes.Create())
+            try
             {
-                // Convert AESKey and AESIV from string to byte arrays
-                byte[] keyBytes = Encoding.UTF8.GetBytes(AESKey);
-                byte[] ivBytes = Encoding.UTF8.GetBytes(AESIV);
-
-                // Ensure AES IV is of correct length (16 bytes for AES)
-                byte[] ivFixed = new byte[16];
-                Array.Copy(ivBytes, ivFixed, Math.Min(ivBytes.Length, ivFixed.Length));
-
-                // Set AES key and IV
-                aes.Key = keyBytes;
-                aes.IV = ivFixed;
-
-                using (MemoryStream ms = new MemoryStream())
+                using (Aes aes = Aes.Create())
                 {
-                    // Create an encryptor to perform the stream transform
-                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(fileBytes, 0, fileBytes.Length);
-                        cs.FlushFinalBlock(); // Ensure any remaining data is flushed
-                    }
+                    // Convert AESKey and AESIV from string to byte arrays
+                    byte[] keyBytes = Convert.FromBase64String(AESKey);
+                    byte[] ivBytes = Convert.FromBase64String(AESIV);
 
-                    // Return the encrypted data from the MemoryStream
-                    return ms.ToArray();
+                    // Set AES key and IV
+                    aes.Key = keyBytes;
+                    aes.IV = ivBytes;
+                    aes.Padding = PaddingMode.PKCS7;
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        // Create an encryptor to perform the stream transform
+                        using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                        {
+                            cs.Write(fileBytes, 0, fileBytes.Length);
+                            cs.FlushFinalBlock(); // Ensure any remaining data is flushed
+                            return ms.ToArray();
+                        }
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -994,6 +1005,7 @@ namespace OMS.FileManger.Services
         {
             byte[] keyBytes = Convert.FromBase64String(AESKey);
             byte[] ivBytes = Convert.FromBase64String(AESIV);
+
             try
             {
                 using (Aes aes = Aes.Create())
@@ -1008,16 +1020,17 @@ namespace OMS.FileManger.Services
                         {
                             cs.Write(data, 0, data.Length);
                             cs.FlushFinalBlock();
+                            return ms.ToArray();
                         }
-                        return ms.ToArray();
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw ex!;
+                throw ex;
             }
         }
+
 
     }
 }
