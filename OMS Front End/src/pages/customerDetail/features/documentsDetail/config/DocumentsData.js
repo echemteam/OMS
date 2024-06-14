@@ -1,3 +1,4 @@
+import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
@@ -91,3 +92,37 @@ export const DocumentGridConfig = {
     },
   ],
 };
+
+
+export const DocumentTypes = [
+  { value: 1, label: "Tax or Registration document" },
+  { value: 2, label: "Customer details form" },
+  { value: 3, label: "Our submitted forms" }
+];
+
+export const FileTypeIcons = [
+  {
+    type: 'pdf',
+    icon: AppIcons.PdfIcon
+  },
+  {
+    type: 'doc',
+    icon: AppIcons.DocIcon
+  },
+  {
+    type: 'xls',
+    icon: AppIcons.XlsIcon
+  },
+  {
+    type: 'ppt',
+    icon: AppIcons.PptIcon
+  },
+  {
+    type: 'zip',
+    icon: AppIcons.ZipIcon
+  },
+  {
+    type: 'csv',
+    icon: AppIcons.CsvIcon
+  }
+]

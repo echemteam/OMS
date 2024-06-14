@@ -22,6 +22,9 @@ export const transformSucessResponse = async (response, meta, arg) => {
     else if (meta.request.url.includes('Report')) {
         // Decrypt the data.
         return response;
+    } else if (meta.request.url.includes('DownloadCustomerDocument') && arg?.fileName) {
+        rData = response;
+        apiData = rData;
     }
     else {
 
@@ -33,6 +36,12 @@ export const transformSucessResponse = async (response, meta, arg) => {
 
     // Check if the API response status code is 200 (OK).
     if (meta.request.url.includes('DownloadFile') && meta.response.status === 200 && arg.fileName) {
+        const responseData = {
+            fileName: arg.fileName,
+            fileData: apiData
+        }
+        return responseData;
+    } else if (meta.request.url.includes('DownloadCustomerDocument') && meta.response.status === 200 && arg.fileName) {
         const responseData = {
             fileName: arg.fileName,
             fileData: apiData
