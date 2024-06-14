@@ -4,12 +4,16 @@ import Image from "../../../components/image/Image";
 import { AppIcons } from "../../../data/appIcons";
 import SearchBar from "../../../common/features/component/SearchBar";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../app/slice/authSlice";
 // import { a } from "react-router-dom";
 
 function Header({ handleChange }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const shortcutSecRef = useRef(null);
+  const authState = useSelector((state) => state.auth);
 
   const data = [
     {
@@ -71,7 +75,7 @@ function Header({ handleChange }) {
     },
   ];
   const LogoutButton = () => {
-    navigate("/login");
+    dispatch(logout());
   };
   const handleClickOutside = (event) => {
     if (shortcutSecRef.current && !shortcutSecRef.current.contains(event.target)) {
@@ -99,44 +103,44 @@ function Header({ handleChange }) {
       </div>
       <div className="right-section">
         <div className="profile-section">
-        <div className={`shortcut-sec ${isActive ? 'active' : ''}`} ref={shortcutSecRef}>
-      <div className="shortcut-icon" onClick={() => setIsActive(!isActive)}>
-        <Image
-          imagePath={AppIcons.ShortcutIcon}
-          imgCustomClassName="shortcut-icon"
-          altText="Icon"
-        />
-      </div>
-      <div className="shortcuts-list">
-        <div className="top-header-card-title">
-          <span className="title">ShortCuts</span>
-          <span className="add-short-cut" title="Create New Shortcut">
-            <i className="bi bi-plus-circle-fill"></i>
-          </span>
-        </div>
-        <div className="short-cuts-list">
-          {data.map((row) => (
-            <div key={row.rowId} className="row m-0 manus-items">
-              {row.items.map((item) => (
-                <div key={item.id} className="col-6 p-0 shortcut-menus">
-                  <span onClick={item.navigationLink}>
-                    <div className="shortcuts">
-                      <div className="shortcut-icon">
-                        <Image imagePath={item.iconPath} altText="Icon" />
-                      </div>
-                      <div className="shortcut-desc">
-                        <h6>{item.title}</h6>
-                        <p>{item.description}</p>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-              ))}
+          <div className={`shortcut-sec ${isActive ? 'active' : ''}`} ref={shortcutSecRef}>
+            <div className="shortcut-icon" onClick={() => setIsActive(!isActive)}>
+              <Image
+                imagePath={AppIcons.ShortcutIcon}
+                imgCustomClassName="shortcut-icon"
+                altText="Icon"
+              />
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
+            <div className="shortcuts-list">
+              <div className="top-header-card-title">
+                <span className="title">ShortCuts</span>
+                <span className="add-short-cut" title="Create New Shortcut">
+                  <i className="bi bi-plus-circle-fill"></i>
+                </span>
+              </div>
+              <div className="short-cuts-list">
+                {data.map((row) => (
+                  <div key={row.rowId} className="row m-0 manus-items">
+                    {row.items.map((item) => (
+                      <div key={item.id} className="col-6 p-0 shortcut-menus">
+                        <span onClick={item.navigationLink}>
+                          <div className="shortcuts">
+                            <div className="shortcut-icon">
+                              <Image imagePath={item.iconPath} altText="Icon" />
+                            </div>
+                            <div className="shortcut-desc">
+                              <h6>{item.title}</h6>
+                              <p>{item.description}</p>
+                            </div>
+                          </div>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
           <div className="notification">
             <div className="bell-icon">
               <Image
@@ -218,7 +222,7 @@ function Header({ handleChange }) {
             <div className="profile-dropdown-menu">
               <div className="title-list ">
                 <span className="name-title ">Signed in as</span>
-                <span className="user-name">Pankaj Chauhan</span>
+                <span className="user-name">{authState?.user?.fullName}</span>
               </div>
               <div className="title-list drop-down-icon-menu">
                 <a href="#">

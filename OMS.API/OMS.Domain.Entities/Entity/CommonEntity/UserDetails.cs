@@ -7,5 +7,6 @@
         public string? EmailAddress { get; set; }
         public bool? IsActive { get; set; }
         public bool PasswordResetRequired { get; set; }
+        public string? FullName { get; set; }
     }
 }

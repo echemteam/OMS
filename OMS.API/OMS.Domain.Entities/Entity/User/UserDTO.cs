@@ -39,6 +39,7 @@ namespace OMS.Domain.Entities.Entity.User
         [Required]
         [Column("IsBLAdmin")]
         public bool IsBLAdmin { get; set; }
+        public string? FullName { get; set; }
 
         public DateTime? CreatedAt { get; set; }
         public short? CreatedBy { get; set; }
