@@ -30,7 +30,7 @@ namespace OMS.Application.Services.CustomerDocuments
             {
                 string AESKey = commonSettingService.EncryptionSettings.AESKey!;
                 string AESIV = commonSettingService.EncryptionSettings.AESIV!;
-                requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath, requestData.Attachment, AESKey, AESIV);
+                requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.CustomerId, requestData.Attachment, AESKey, AESIV);
             }
             CustomerDocumentsDTO customerDocumentsDTO = requestData.ToMapp<AddCustomerDocumentsRequest, CustomerDocumentsDTO>();
             customerDocumentsDTO.CreatedBy = CurrentUserId;
