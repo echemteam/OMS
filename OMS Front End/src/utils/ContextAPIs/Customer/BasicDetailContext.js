@@ -53,8 +53,14 @@ export const BasicDetailContextProvider = ({ children }) => {
             } else {
                 error("Please enter Address");
             }
-        }
-    };
+        } else if (data === 3) {
+            if (contactId > 0) {
+                setActiveTab((prev) => prev + 1);
+            } else {
+                error("Please enter Contact");
+            }
+        };
+    }
 
     const handleToggleModal = () => {
         setShowModal(!showModal);
@@ -70,7 +76,7 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     return (
         <BasicDetailContext.Provider value={{
-             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId, showModal, editFormData, isEdit, setContactMainModal,
+            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId, showModal, editFormData, isEdit, setContactMainModal,
             contactMainModal, setPhoneNumberData, phoneNumberData, setAllCountries, allCountries,
             contactId, setContactId, contactNumbers, setContactNumbers, emailAddressData, setEmailAddressData, handleToggleModal, handleEditModal, molGridRef, setAddressDataLength
         }}>

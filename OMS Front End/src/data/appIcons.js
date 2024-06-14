@@ -52,6 +52,9 @@ import refreshIcone from "../assets/images/refresh.png";
 import disableIcone from "../assets/images/disable.png";
 import freezeIcone from "../assets/images/freeze.png";
 import blockIcone from "../assets/images/blocked.png";
+import blockredIcone from "../assets/images/block-red.png";
+import disablethemeIcone from "../assets/images/disable-theme.png";
+import freezeblueIcone from "../assets/images/freeze-blue.png";
 
 
 export const AppIcons = {
@@ -105,4 +108,8 @@ export const AppIcons = {
   blockIcone: blockIcone,
   freezeIcone: freezeIcone,
   disableIcone: disableIcone,
+
+  freezeblueIcone : freezeblueIcone,
+  disablethemeIcone : disablethemeIcone,
+  blockredIcone : blockredIcone
 };
