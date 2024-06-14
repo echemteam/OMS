@@ -1,15 +1,22 @@
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
-import { basicDetailFormDataHalf } from "./config/BasicDetailForm.data";
+import { basicDetailFormDataHalf, securityKeys } from "./config/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
+// import {AllCustomerGridConfig} from "../../customers/config/CustomerData"
+// import { decryptUrlData } from "../../../../services/CryptoService";
+// import { useParams } from "react-router-dom";
+// import { PagePermissionsContext } from "../../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
+// import usePermissions from "../../../../utils/CustomHook/UsePermissions";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
+  // const { id } = useParams();
+  // const descrypteId = id ? decryptUrlData(id) : 0;
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
   const { nextRef, setCustomerId, moveNextPage, setAllCountries } = useContext(BasicDetailContext);
@@ -59,6 +66,9 @@ const BasicDetail = (props) => {
   ] = useUpdateCustomersBasicInformationMutation();
 
   const [CheckCustomerNameExist, { isLoading: isCustomerNameExistLoading, isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
+
+  // const { isButtonDisable } = useContext(PagePermissionsContext);
+  // usePermissions(descrypteId, securityKeys, basicDetailFormDataHalf, AllCustomerGridConfig);
 
   useEffect(() => {
     getAllGroupTypes();
@@ -268,7 +278,7 @@ const BasicDetail = (props) => {
         {props.isOpen &&
           <div className="col-md-12">
             <div className="d-flex align-item-end justify-content-end">
-              <Buttons
+            <Buttons
                 buttonTypeClassName="dark-btn"
                 buttonText="Cancel"
                 onClick={props.onSidebarClose}
@@ -278,6 +288,12 @@ const BasicDetail = (props) => {
                 buttonText="Update"
                 onClick={handleUpdate}
                 isLoading={isLoading}
+                // isDisable={isButtonDisable}
+              />
+               <Buttons
+                buttonTypeClassName="dark-btn"
+                buttonText="Cancel"
+                onClick={props.onSidebarClose}
               />
             </div>
           </div>

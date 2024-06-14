@@ -60,7 +60,7 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData }) => {
                         </span>
                       </div>
                       <div className="edit-delete-button">
-                        <button onClick={() => handleEdit(address.addressId)} className="edit-btn">
+                        <button onClick={() => handleEdit(address)} className="edit-btn">
                           <Image imagePath={AppIcons.editThemeIcon} />
                         </button>
                       </div>

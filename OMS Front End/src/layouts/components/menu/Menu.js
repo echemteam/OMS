@@ -10,42 +10,42 @@ export const Menu = [
     securityKey: securityKey.DASHBOARD,
     children: []
   },
-  {
-    name: "Form",
-    id: "form",
-    to: "/themeComponent/demoForm",
-    iconClass: "bi bi-file-earmark-medical",
-    subMenu: false,
-    securityKey: '',
-    children: []
-  },
-  {
-    name: "Grid",
-    id: "gridPage",
-    to: "/themeComponent/demoGrid",
-    iconClass: "bi bi-table",
-    subMenu: false,
-    securityKey: '',
-    children: []
-  },
-  {
-    name: "Stepper",
-    id: "Stepper",
-    to: "/themeComponent/stepper",
-    iconClass: "bi bi-table",
-    subMenu: false,
-    securityKey: '',
-    children: []
-  },
-  {
-    name: "widgets",
-    id: "widgets",
-    to: "/themeComponent/widgets",
-    iconClass: "bi bi-clipboard-data",
-    subMenu: false,
-    securityKey: '',
-    children: []
-  },
+  // {
+  //   name: "Form",
+  //   id: "form",
+  //   to: "/themeComponent/demoForm",
+  //   iconClass: "bi bi-file-earmark-medical",
+  //   subMenu: false,
+  //   securityKey: '',
+  //   children: []
+  // },
+  // {
+  //   name: "Grid",
+  //   id: "gridPage",
+  //   to: "/themeComponent/demoGrid",
+  //   iconClass: "bi bi-table",
+  //   subMenu: false,
+  //   securityKey: '',
+  //   children: []
+  // },
+  // {
+  //   name: "Stepper",
+  //   id: "Stepper",
+  //   to: "/themeComponent/stepper",
+  //   iconClass: "bi bi-table",
+  //   subMenu: false,
+  //   securityKey: '',
+  //   children: []
+  // },
+  // {
+  //   name: "widgets",
+  //   id: "widgets",
+  //   to: "/themeComponent/widgets",
+  //   iconClass: "bi bi-clipboard-data",
+  //   subMenu: false,
+  //   securityKey: '',
+  //   children: []
+  // },
   {
     id: "Security",
     name: "Security",
@@ -71,7 +71,7 @@ export const Menu = [
         submenuName: "Security Roles Management",
         to: "/SecurityRoleManagement",
         securityKey: securityKey.SECURITYROLEMANAGEMENT
-      },
+      }, 
     ],
 
   },

@@ -90,8 +90,8 @@ const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEd
 
     return (
         <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}
-            modalTitle="Add/Edit Email Address" modelSizeClass="w-40">
-            <div className="row">
+            modalTitle="Add/Edit Contact" modelSizeClass="w-40">
+            <div className="row  phone-numer-card">
                 <div className="col-md-12 horizontal-form">
                     <div className="row vertical-form">
                         <FormCreator config={formData} ref={ref} {...formData} />
