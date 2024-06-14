@@ -13,14 +13,14 @@
   &:focus {
     border: 1px solid var(--themeColor) !important;
     outline-offset: 1px !important;
-    box-shadow: 0 0 .25rem .05rem rgba(105, 108, 255, .1) !important;
+    box-shadow: 0 0 0.25rem 0.05rem rgba(105, 108, 255, 0.1) !important;
     padding-left: 12px !important;
   }
 
   &:focus-visible {
     outline: none;
     border-color: var(--themeColor) !important;
-    box-shadow: 0 0 .25rem .05rem rgba(105, 108, 255, .1) !important;
+    box-shadow: 0 0 0.25rem 0.05rem rgba(105, 108, 255, 0.1) !important;
     padding-left: 12px !important;
   }
 }
@@ -42,7 +42,6 @@
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
 }
-
 
 .validation-text {
   color: #e30000;
@@ -94,12 +93,13 @@ form {
   .input-group-append {
     .input-button {
       height: 30px;
+      padding: 0 5px;
+      margin-top: 1px;
     }
   }
 }
 
 @media only screen and (max-width: 1366px) {
-
   .css-qbdosj-Input {
     margin: 0px !important;
   }

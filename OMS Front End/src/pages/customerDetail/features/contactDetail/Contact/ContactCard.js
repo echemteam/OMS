@@ -24,11 +24,7 @@ const ContactCard = ({ childData, handleEdit }) => {
             </span>
             <span className="label-txt">
               <b>Contact No.</b>
-              <strong>:</strong>&nbsp;{childData.contactNumber}
-            </span>
-            <span className="label-txt">
-              <b>Gender</b>
-              <strong>:</strong>&nbsp;{childData.gender}
+              <strong>:</strong>&nbsp;{childData.phoneNumber}
             </span>
           </div>
           <div className="edit-delete-button">

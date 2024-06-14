@@ -1,7 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Response.CustomerDocuments;
-using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.Contact;
 using OMS.Domain.Entities.Entity.CustomerDocuments;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -35,11 +33,11 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<List<GetCustomerDocumentsByIdResponse>> GetCustomerDocumentsById(int CustomerId)
+        public async Task<List<GetCustomerDocumentsByIdResponse>> GetCustomerDocumentsById(int customerId)
         {
             List<GetCustomerDocumentsByIdResponse> customerDetails = await _context.GetList<GetCustomerDocumentsByIdResponse>(GETCUSTOMERDOCUMENTSBYID, new
             {
-                CustomerId
+                customerId
             }, CommandType.StoredProcedure);
             return customerDetails;
         }

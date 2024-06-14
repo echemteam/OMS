@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Common.Helper.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Response.CustomerDocuments;
 using OMS.FileManger.Services;
 using OMS.Framework;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.API.Controllers
@@ -35,14 +37,14 @@ namespace OMS.API.Controllers
         }
 
         [HttpGet("GetCustomerDocumentsById")]
-        public async Task<IActionResult> GetCustomerDocumentsById(int CustomerId)
+        public async Task<IActionResult> GetCustomerDocumentsById(int customerId)
         {
-            if (CustomerId > 0)
+            if (customerId > 0)
             {
-                List<GetCustomerDocumentsByIdResponse> responseData = await _serviceManager.customerDocumentsService.GetCustomerDocumentsById(CustomerId).ConfigureAwait(true);
+                List<GetCustomerDocumentsByIdResponse> responseData = await _serviceManager.customerDocumentsService.GetCustomerDocumentsById(customerId).ConfigureAwait(true);
                 return APISucessResponce<object>(responseData);
             }
-            return APISucessResponce(CustomerId);
+            return APISucessResponce(customerId);
         }
 
 
@@ -58,44 +60,23 @@ namespace OMS.API.Controllers
             return APISucessResponce(customerDocumentId);
         }
 
-        //[HttpGet("DownloadCustomerDocument")]
-        //public IActionResult DownloadCustomerDocument(string folderName, string fileName)
-        //{
-        //    var contentPath = _commonSettingService.ApplicationSettings.SaveFilePath;
-        //    var filePath = Path.Combine(contentPath!, folderName, fileName);
-
-        //    if (!System.IO.File.Exists(filePath))
-        //    {
-        //        return NotFound(); // Return 404 if the file is not found
-        //    }
-
-        //    var memory = new MemoryStream();
-        //    using (var stream = new FileStream(filePath, FileMode.Open))
-        //    {
-        //        stream.CopyTo(memory);
-        //    }
-        //    memory.Position = 0;
-
-        //    string ext = FileManager.GetExtension(fileName);
-        //    string miniType = FileManager.GetMimeType(ext);
-        //    var contentType = miniType; // You may need to set the appropriate content type based on your file type.
-        //    // Return the file
-        //    return File(memory, contentType, fileName);
-        //}
-
-
         [HttpGet("DownloadCustomerDocument")]
-        public async Task<IActionResult> DownloadCustomerDocument(string folderName, string fileName)
+        public async Task<IActionResult> DownloadCustomerDocument(string folderName, string fileName,int customerId)
         {
 
-            byte[] decryptedBytes = await _serviceManager.customerDocumentsService.DownloadCustomerDocument(folderName, fileName);
-
-            var memory = new MemoryStream(decryptedBytes);
-            memory.Position = 0;
+            byte[] decryptedBytes = await _serviceManager.customerDocumentsService.DownloadCustomerDocument(folderName, fileName, customerId);
+            if (decryptedBytes == null)
+            {
+                return APISucessResponce("File not found.");
+            }
+            var memory = new MemoryStream(decryptedBytes)
+            {
+                Position = 0
+            };
 
             string ext = FileManager.GetExtension(fileName);
             string mimeType = FileManager.GetMimeType(ext);
-            var contentType = mimeType; 
+            var contentType = mimeType;
 
             return File(memory, contentType, fileName);
         }

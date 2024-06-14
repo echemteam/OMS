@@ -9,7 +9,7 @@ export default BasicDetailContext;
 
 
 export const BasicDetailContextProvider = ({ children }) => {
-
+    const childRef = useRef();
     const nextRef = useRef(null);
     const molGridRef = useRef();
     const { error } = SwalAlert();
@@ -34,26 +34,33 @@ export const BasicDetailContextProvider = ({ children }) => {
     };
 
     const movePreviewPage = () => {
-        if (addressDataLength > 0) {
-            setActiveTab((prev) => prev - 1);
-        } else {
-            error("Please enter Address");
-        }
+        setActiveTab((prev) => prev - 1);
     };
 
-    const addCustomer = () => {
-        if (customerId > 0) {
+    const addCustomer = (data) => {
+        if (data === 1) {
+            if (customerId > 0) {
+                setActiveTab((prev) => prev + 1);
+            }
+            else {
+                if (nextRef.current) {
+                    nextRef.current.handleAddBasicDetails();
+                }
+            }
+        } else if (data === 2) {
             if (addressDataLength > 0) {
-            setActiveTab((prev) => prev + 1);
+                setActiveTab((prev) => prev + 1);
             } else {
                 error("Please enter Address");
             }
-        } else {
-            if (nextRef.current) {
-                nextRef.current.handleAddBasicDetails();
+        } else if (data === 3) {
+            if (contactId > 0) {
+                setActiveTab((prev) => prev + 1);
+            } else {
+                error("Please enter Contact");
             }
-        }
-    };
+        };
+    }
 
     const handleToggleModal = () => {
         setShowModal(!showModal);
@@ -69,7 +76,7 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     return (
         <BasicDetailContext.Provider value={{
-             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId, showModal, editFormData, isEdit, setContactMainModal,
+            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setAddressId, showModal, editFormData, isEdit, setContactMainModal,
             contactMainModal, setPhoneNumberData, phoneNumberData, setAllCountries, allCountries,
             contactId, setContactId, contactNumbers, setContactNumbers, emailAddressData, setEmailAddressData, handleToggleModal, handleEditModal, molGridRef, setAddressDataLength
         }}>

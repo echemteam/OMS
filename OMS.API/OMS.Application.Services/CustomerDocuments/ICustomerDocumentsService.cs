@@ -7,8 +7,8 @@ namespace OMS.Application.Services.CustomerDocuments
     public interface ICustomerDocumentsService
     {
         Task<AddEntityDTO<int>> AddCustomerDocuments(AddCustomerDocumentsRequest requestData, short CurrentUserId);
-        Task<List<GetCustomerDocumentsByIdResponse>> GetCustomerDocumentsById(int CustomerId);
+        Task<List<GetCustomerDocumentsByIdResponse>> GetCustomerDocumentsById(int customerId);
         Task<AddEntityDTO<int>> DeleteCustomerDocumentsById(int customerDocumentId, int deletedBy);
-        Task<byte[]> DownloadCustomerDocument(string folderName, string fileName);
+        Task<byte[]> DownloadCustomerDocument(string folderName, string fileName,int customerId);
     }
 }

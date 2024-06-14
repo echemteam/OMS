@@ -4,7 +4,6 @@ import DemoGrid from "../../pages/demoGrid/DemoGrid";
 import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
-import Customers from "../../pages/customerDetail/customers/Customers";
 
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
@@ -21,8 +20,9 @@ const SecurityRoleManagement = React.lazy(() => import('../../pages/Security/sec
 
 //**Customer  */
 // const CustomerDetail = React.lazy(() => import('../../pages/customerDetail/CustomerDetail'));
-const ManageAddCustomer = React.lazy(() => import('../../pages/customerDetail/ManageAddCustomer'));
+const Customers = React.lazy(() => import('../../pages/customerDetail/customers/Customers'));
 const ViewCustomer = React.lazy(() => import('../../pages/customerDetail/ManageViewCustomer'));
+const ManageAddCustomer = React.lazy(() => import('../../pages/customerDetail/ManageAddCustomer'));
 const AddEditContact = React.lazy(() => import('../../pages/customerDetail/features/contactDetail/Contact/AddEditContact'));
 
 
@@ -223,7 +223,7 @@ export const ComponentNavigation = [
     text: 'Customers',
     securityKey: ""
   },
-  
+
   {
     id: 'addEditContact',
     path: '/addEditContact',

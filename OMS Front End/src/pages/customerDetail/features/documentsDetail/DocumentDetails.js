@@ -1,32 +1,34 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import CardSection from "../../../../components/ui/card/CardSection";
+//** Lib's */
 import { AppIcons } from "../../../../data/appIcons";
-import AddEditDocuments from "./features/AddEditDocuments";
-import CenterModel from "../../../../components/ui/centerModel/CenterModel";
+import { DocumentFormData } from "./config/DocumentsData";
 import Buttons from "../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../components/Forms/FormCreator";
-import { DocumentFormData } from "./config/DocumentsData";
+import CardSection from "../../../../components/ui/card/CardSection";
+import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import { useAddCustomerDocumentsMutation, useLazyGetAllDocumentTypesQuery } from "../../../../app/services/documentAPI";
+//** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
+import { useAddCustomerDocumentsMutation, useLazyGetAllDocumentTypesQuery } from "../../../../app/services/documentAPI";
+
+const ManageDocumentList = React.lazy(() => import("./features/ManageDocumentList"));
 
 const DocumentDetails = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState(DocumentFormData);
-  const { customerId } = useContext(BasicDetailContext);
+
+  //** State */
   const documentFormRef = useRef();
+  const childRef = useRef();
+  const [showModal, setShowModal] = useState(false);
+  const { customerId } = useContext(BasicDetailContext);
 
-  const [getAllDocumentTypes, {
-    isFetching: isGetAllDocumentTypesFetching,
-    isSuccess: isGetAllDocumentTypesSucess,
-    data: allGetAllDocumentTypesData
-  },] = useLazyGetAllDocumentTypesQuery();
-
+  //** API Call's */
   const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddCustomerDocumentsMutation();
+  const [getAllDocumentTypes, { isFetching: isGetAllDocumentTypesFetching, isSuccess: isGetAllDocumentTypesSucess, data: allGetAllDocumentTypesData }] = useLazyGetAllDocumentTypesQuery();
 
+  //** UseEffect */
   useEffect(() => {
     getAllDocumentTypes();
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (!isGetAllDocumentTypesFetching && isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
@@ -41,11 +43,22 @@ const DocumentDetails = () => {
 
   useEffect(() => {
     if (isAddSuccess && isAddData) {
+      if (isAddData.errorMessage.includes('Document name')) {
+        ToastService.warning(isAddData.errorMessage);
+        return;
+      } else if (isAddData.errorMessage.includes('exists')) {
+        ToastService.warning(isAddData.errorMessage);
+        return;
+      }
       setShowModal(!showModal);
       ToastService.success(isAddData.errorMessage);
+      if (childRef.current) {
+        childRef.current.callChildFunction();
+      }
     }
   }, [isAddSuccess, isAddData]);
 
+  //** Handle Change's */
   const handleToggleModal = () => {
     setShowModal(!showModal);
   };
@@ -57,8 +70,8 @@ const DocumentDetails = () => {
         ...data,
         base64File: data.attachment.base64Data,
         attachment: data.attachment.fileName,
-        storagePath: "document",
-        customerId: 15,
+        storagePath: "Customer",
+        customerId: customerId,
         documentTypeId: data.documentTypeId && typeof data.documentTypeId === "object" ? data.documentTypeId.value : data.documentTypeId,
       };
       add(requestData);
@@ -77,23 +90,15 @@ const DocumentDetails = () => {
           buttonText="Add"
           titleButtonClick={handleToggleModal}>
           <div className="">
-            <AddEditDocuments />
+            <ManageDocumentList childRef={childRef} />
           </div>
         </CardSection>
       </div>
       {showModal && (
-        <CenterModel
-          showModal={showModal}
-          handleToggleModal={handleToggleModal}
-          modalTitle="Add Document"
-          modelSizeClass="w-50s">
-          {/* <UploadFiles formData={formData} uploadRef={documentFormRef} handleToggleModal={handleToggleModal} uploadFilesTypeId={UploadFilesType.CUSTOMERDOCUMENT} /> */}
+        <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}
+          modalTitle="Add Document" modelSizeClass="w-50s">
           <div className="row horizontal-form">
-            <FormCreator
-              config={formData}
-              ref={documentFormRef}
-              {...formData}
-            />
+            <FormCreator config={DocumentFormData} ref={documentFormRef} {...DocumentFormData} />
             <div className="col-md-12 mt-2">
               <div className="d-flex align-item-end justify-content-end">
                 <div className="d-flex align-item-end">
@@ -101,13 +106,11 @@ const DocumentDetails = () => {
                     buttonTypeClassName="theme-button"
                     buttonText="Add"
                     onClick={handleSave}
-                  // isLoading={EmailLoading || updateUserLoading}
-                  />
+                    isLoading={isAddLoading} />
                   <Buttons
                     buttonTypeClassName="dark-btn ml-5"
                     buttonText="Cancel"
-                    onClick={handleToggleModal}
-                  />
+                    onClick={handleToggleModal} />
                 </div>
               </div>
             </div>

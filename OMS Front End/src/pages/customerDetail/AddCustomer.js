@@ -5,6 +5,8 @@ import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
 import CardSection from "../../components/ui/card/CardSection";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { TabEnum } from "../../common/features/Enums/TabsEnums";
+import { useNavigate } from "react-router-dom";
 //** Component's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
 const AddressDetail = React.lazy(() => import("./features/addressDetail/AddressDetail"));
@@ -12,6 +14,7 @@ const DocumentDetails = React.lazy(() => import("./features/documentsDetail/Docu
 const ContactDetail = React.lazy(() => import("./features/contactDetail/Contact/ContactDetail"));
 
 const AddCustomer = () => {
+  const navigate = useNavigate();
   const { activeTab, setActiveTab, movePreviewPage, addCustomer } = useContext(BasicDetailContext);
 
   const onSubmit = (e) => {
@@ -23,27 +26,35 @@ const AddCustomer = () => {
       label: "Basic Information",
       subLabel: "Enter Basic information",
       content: <BasicDetail />,
+      tab: TabEnum.BasicInformation
     },
     {
       label: "Address",
       subLabel: "Enter Address Details",
       content: <AddressDetail />,
+      tab: TabEnum.Address
     },
     {
       label: "Contact",
       subLabel: "Enter Contact Details",
       content: <ContactDetail />,
+      tab: TabEnum.Contact
     },
     {
       label: "Documents",
       subLabel: "Add Documents",
       content: <DocumentDetails />,
+      tab: TabEnum.Documents
     },
   ];
 
   // const handleTabClick = (index) => {
   //   setActiveTab(index);
   // };
+
+  const handleSubmit = () => {
+    navigate('/Customers');
+  };
 
   return (
     <>
@@ -55,7 +66,7 @@ const AddCustomer = () => {
                 <React.Fragment key={index}>
                   <div className={`step ${activeTab === index ? 'active' : ''}`}>
                     <button className="step-button"
-                      // onClick={() => handleTabClick(index)}
+                    //onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">
@@ -89,12 +100,12 @@ const AddCustomer = () => {
                             <button
                               type="button"
                               className="btn theme-button"
-                              onClick={addCustomer}
+                              onClick={() => addCustomer(step.tab)}
                             >
                               Next
                             </button>
                           ) : (
-                            <button type="submit" className="btn theme-button">
+                            <button type="submit" className="btn theme-button" onClick={handleSubmit}>
                               Submit
                             </button>
                           )}
