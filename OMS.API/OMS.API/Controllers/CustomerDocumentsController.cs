@@ -61,10 +61,10 @@ namespace OMS.API.Controllers
         }
 
         [HttpGet("DownloadCustomerDocument")]
-        public async Task<IActionResult> DownloadCustomerDocument(string folderName, string fileName)
+        public async Task<IActionResult> DownloadCustomerDocument(string folderName, string fileName,int customerId)
         {
 
-            byte[] decryptedBytes = await _serviceManager.customerDocumentsService.DownloadCustomerDocument(folderName, fileName);
+            byte[] decryptedBytes = await _serviceManager.customerDocumentsService.DownloadCustomerDocument(folderName, fileName, customerId);
             if (decryptedBytes == null)
             {
                 return APISucessResponce("File not found.");
