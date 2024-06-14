@@ -30,23 +30,24 @@ export const BasicDetailContextProvider = ({ children }) => {
     };
 
     const movePreviewPage = () => {
-        if (addressDataLength > 0) {
-            setActiveTab((prev) => prev - 1);
-        } else {
-            error("Please enter Address");
-        }
+        setActiveTab((prev) => prev - 1);
     };
 
-    const addCustomer = () => {
-        if (customerId > 0) {
+    const addCustomer = (data) => {
+        if (data === 1) {
+            if (customerId > 0) {
+                setActiveTab((prev) => prev + 1);
+            }
+            else {
+                if (nextRef.current) {
+                    nextRef.current.handleAddBasicDetails();
+                }
+            }
+        } else if (data === 2) {
             if (addressDataLength > 0) {
-            setActiveTab((prev) => prev + 1);
+                setActiveTab((prev) => prev + 1);
             } else {
                 error("Please enter Address");
-            }
-        } else {
-            if (nextRef.current) {
-                nextRef.current.handleAddBasicDetails();
             }
         }
     };

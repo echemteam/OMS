@@ -1,14 +1,14 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import CardSection from "../../components/ui/card/CardSection";
 import BasicDetail from "./features/basicDetail/BasicDetail";
 import AddressDetail from "./features/addressDetail/AddressDetail";
 import ContactDetail from "./features/contactDetail/Contact/ContactDetail";
 import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
-import BasicDetailContext, { BasicDetailContextProvider } from "../../utils/ContextAPIs/Customer/BasicDetailContext";
+import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 import DocumentDetails from "./features/documentsDetail/DocumentDetails";
-import SwalAlert from "../../services/swalService/SwalService";
 import { useContext } from "react";
+import { TabEnum } from "../../common/features/Enums/TabsEnums";
 
 
 const AddCustomer = () => {
@@ -23,21 +23,25 @@ const AddCustomer = () => {
       label: "Basic Information",
       subLabel: "Enter Basic information",
       content: <BasicDetail />,
+      tab: TabEnum.BasicInformation
     },
     {
       label: "Address",
       subLabel: "Enter Address Details",
       content: <AddressDetail />,
+      tab: TabEnum.Address
     },
     {
       label: "Contact",
       subLabel: "Enter Contact Details",
       content: <ContactDetail />,
+      tab: TabEnum.Contact
     },
     {
       label: "Documents",
       subLabel: "Add Documents",
       content: <DocumentDetails />,
+      tab: TabEnum.Documents
     },
   ];
 
@@ -93,7 +97,7 @@ const AddCustomer = () => {
                             <button
                               type="button"
                               className="btn theme-button"
-                              onClick={addCustomer}
+                              onClick={() => addCustomer(step.tab)}
                             >
                               Next
                             </button>

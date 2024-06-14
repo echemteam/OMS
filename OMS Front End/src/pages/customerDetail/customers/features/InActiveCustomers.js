@@ -106,6 +106,7 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
                   configuration={configFile}
                   dataSource={dataSource}
                   isLoading={isListLoading}
+                  allowPagination={true}
                   pagination={{
                     totalCount: totalRowCount,
                     pageSize: 25,
