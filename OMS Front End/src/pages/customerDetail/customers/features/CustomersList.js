@@ -184,6 +184,7 @@ export const CustomersList = ({ statusId, configFile }) => {
                   }}
                   onPageChange={handlePageChange}
                   onActionChange={actionHandler}
+                  allowPagination={true}
                   onCellDataChange={handleGridCheckBoxChange}
                 />
               </div>
