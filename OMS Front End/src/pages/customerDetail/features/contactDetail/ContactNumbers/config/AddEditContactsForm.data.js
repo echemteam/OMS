@@ -49,7 +49,11 @@ export const phoneNumberConfig = {
   columns: [
     {
       name: "Phone Number",
-      fieldName: "phoneNumber"
+      fieldName: "phoneCode,phoneNumber",
+      colType: GridColumnType.CUSTOM,
+      renderCustomCol: (rowData) => {
+        return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
+      },
     },
     {
       name: "Action",
