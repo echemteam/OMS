@@ -3,9 +3,9 @@ import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import { Accordion } from "react-bootstrap";
 
-const AddressCard = ({ isAddEditModal, addressData , onHandleSetData}) => {
+const AddressCard = ({ isAddEditModal, addressData, onHandleSetData }) => {
 
-  const [activeKey, setActiveKey] = useState(null);
+  const [activeKey, setActiveKey] = useState("0");
 
   const handleToggle = (eventKey) => {
     setActiveKey(eventKey === activeKey ? null : eventKey);
@@ -33,8 +33,9 @@ const AddressCard = ({ isAddEditModal, addressData , onHandleSetData}) => {
       <Accordion className="address-card-section" activeKey={activeKey} onSelect={handleToggle}>
         {Object.keys(groupedAddresses).map((addressTypeId, index) => (
           <Accordion.Item
-            eventKey={addressTypeId}
-            className={activeKey === addressTypeId ? "active" : ""}
+            eventKey={index.toString()} className={activeKey === index.toString() ? "active" : ""}
+            // eventKey={addressTypeId}
+            // className={activeKey === addressTypeId ? "active" : ""}
             key={addressTypeId}
           >
             <div className="header-title-btn">

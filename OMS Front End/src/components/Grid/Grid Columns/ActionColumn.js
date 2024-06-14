@@ -129,7 +129,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
           title="Block"
         >
           <Image
-            imagePath={AppIcons.blockIcone}
+            imagePath={AppIcons.blockredIcone}
             altText="BLOCKED Icon" />
         </Link>
       )}
@@ -144,7 +144,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
           title="Freeze"
         >
           <Image
-            imagePath={AppIcons.freezeIcone}
+            imagePath={AppIcons.freezeblueIcone}
             altText="FREEZE Icon" />
         </Link>
       )}
@@ -159,7 +159,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
           title="Disable"
         >
           <Image
-            imagePath={AppIcons.disableIcone}
+            imagePath={AppIcons.disablethemeIcone}
             altText="DISABLE Icon" />
         </Link>
       )}
