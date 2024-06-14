@@ -1,7 +1,7 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const basicDetailFormDataHalf = {
-  initialState: { name: "", groupTypeId: "", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", isCompany: false, taxId: "", },
+  initialState: { name: "", groupTypeId: "", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty:false },
   formFields: [
     {
       id: "name",
@@ -145,11 +145,11 @@ export const basicDetailFormDataHalf = {
       },
     },
     {
-      id: "isBuyingforThird",
+      id: "isBuyingForThirdParty",
       lable: "Is Buying for Third Party",
       Field_Name: "Is Buying for Third Party",
       fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "Is Buying for Third Party",
+      dataField: "isBuyingForThirdParty",
       fieldSetting: {
         placeholder: "",
         allowSpace: true,
