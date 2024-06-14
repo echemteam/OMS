@@ -925,16 +925,19 @@ namespace OMS.FileManger.Services
             // Encrypt the file bytes
             byte[] encryptedFileBytes = EncryptFile(fileBytes, AESKey, AESIV);
 
-            if (Directory.Exists(path))
+            if (!Directory.Exists(path))
             {
                 CreateDirectory(path);
             }
-            string UniqueName = GetUniqueFilename(path, FileName);
-            string encryptedFilePath = Path.Combine(path, $"{UniqueName}");
+            //string UniqueName = GetUniqueFilename(path, FileName);
+            string UniqueName = $"{Guid.NewGuid()}{ext}";
+            string encryptedFilePath = Path.Combine(path, UniqueName);
+            //string encryptedFilePath = Path.Combine(path, $"{uniqueFileName}");
 
             // Save the encrypted file
             File.WriteAllBytes(encryptedFilePath, encryptedFileBytes);
 
+            #region Create a zip archive
             // Create a zip archive
             //string zipFileName = $"{Path.GetFileNameWithoutExtension(FileName)}.zip";
             //string zipPath = Path.Combine(path, zipFileName);
@@ -953,6 +956,7 @@ namespace OMS.FileManger.Services
             //File.Delete(encryptedFilePath);
 
             //return zipFileName;
+            #endregion
             return UniqueName;
         }
 
