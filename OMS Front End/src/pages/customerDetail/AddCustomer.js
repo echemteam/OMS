@@ -5,12 +5,12 @@ import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
 import CardSection from "../../components/ui/card/CardSection";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { TabEnum } from "../../common/features/Enums/TabsEnums";
 //** Component's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
 const AddressDetail = React.lazy(() => import("./features/addressDetail/AddressDetail"));
 const DocumentDetails = React.lazy(() => import("./features/documentsDetail/DocumentDetails"));
 const ContactDetail = React.lazy(() => import("./features/contactDetail/Contact/ContactDetail"));
-import { TabEnum } from "../../common/features/Enums/TabsEnums";
 
 const AddCustomer = () => {
   const { activeTab, setActiveTab, movePreviewPage, addCustomer } = useContext(BasicDetailContext);
