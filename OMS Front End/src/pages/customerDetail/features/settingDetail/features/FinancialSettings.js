@@ -15,63 +15,57 @@ const FinancialSettings = (props) => {
   const settingFormRef = useRef();
   const { customerId } = useContext(BasicDetailContext);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-  const [customerSettingFormData, setCustomerSettingFormData] =useState(SettingFormData);
-  const [ getAllPaymentTerms,{  isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
-  const [ getAllPaymentMethod, {   isFetching: isGetAllPaymentMethodFetching,   isSuccess: isGetAllPaymentMethodSuccess,  data: isGetAllPaymentMethodData, },] = useLazyGetAllPaymentMethodQuery();
-const [ GetDetailsbyCustomerID, {   isFetching: isGetDetailByCustomerIDFetching,  isSuccess: isGetDetailByCustomerIDSuccess,  data: isGetDetailByCustomerIDData,  }, ] = useLazyGetDetailsbyCustomerIDQuery();
-const [ addEditCustomerSettings,{ isLoading: isAddEditCustomerSettingsLoading, isSuccess: isAddEditCustomerSettingsSuccess, data: isAddEditCustomerSettingsData, },] = useAddEditCustomerSettingsMutation();
+  const [customerSettingFormData, setCustomerSettingFormData] =  useState(SettingFormData);
+  const [getAllPaymentTerms, {isFetching: isGetAllPaymentTermsFetching,isSuccess: isGetAllPaymentTermsSuccess,data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
+  const [ getAllPaymentMethod,{isFetching: isGetAllPaymentMethodFetching, isSuccess: isGetAllPaymentMethodSuccess,data: isGetAllPaymentMethodData, },] = useLazyGetAllPaymentMethodQuery();
+  const [ GetDetailsbyCustomerID, {isFetching: isGetDetailByCustomerIDFetching,isSuccess: isGetDetailByCustomerIDSuccess,data: isGetDetailByCustomerIDData,},] = useLazyGetDetailsbyCustomerIDQuery();
+  const [addEditCustomerSettings,{ isLoading: isAddEditCustomerSettingsLoading,isSuccess: isAddEditCustomerSettingsSuccess,data: isAddEditCustomerSettingsData,},] = useAddEditCustomerSettingsMutation();
+  
   useEffect(() => {
     if (customerId > 0) GetDetailsbyCustomerID(customerId);
   }, [customerId]);
   useEffect(() => {
-    if (  !isGetAllPaymentTermsFetching &&isGetAllPaymentTermsSuccess &&isGetAllPaymentTermsData ) {
+    if (!isGetAllPaymentTermsFetching &&isGetAllPaymentTermsSuccess &&isGetAllPaymentTermsData ) {
       const getData = isGetAllPaymentTermsData.map((item) => ({
         value: item.paymentTermId,
         label: item.paymentTerm,
       }));
-      const dropdownField = SettingFormData.formFields.find(
-        (item) => item.dataField === "paymentTermId"
-      );
+      const dropdownField = SettingFormData.formFields.find((item) => item.dataField === "paymentTermId");
       dropdownField.fieldSetting.options = getData;
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetAllPaymentTermsFetching,isGetAllPaymentTermsSuccess,isGetAllPaymentTermsData, ]);
+  }, [isGetAllPaymentTermsFetching,isGetAllPaymentTermsSuccess,isGetAllPaymentTermsData,]);
 
   useEffect(() => {
-    if (  !isGetAllPaymentMethodFetching &&  isGetAllPaymentMethodSuccess &&  isGetAllPaymentMethodData ) {
+    if (!isGetAllPaymentMethodFetching && isGetAllPaymentMethodSuccess && isGetAllPaymentMethodData ) {
       const getData = isGetAllPaymentMethodData.map((item) => ({
         value: item.paymentMethodId,
         label: item.method,
       }));
-      const dropdownField = SettingFormData.formFields.find(
-        (item) => item.dataField === "paymentMethodId"
-      );
+      const dropdownField = SettingFormData.formFields.find((item) => item.dataField === "paymentMethodId");
       dropdownField.fieldSetting.options = getData;
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [ isGetAllPaymentMethodFetching, isGetAllPaymentMethodSuccess, isGetAllPaymentMethodData,
-  ]);
+  }, [isGetAllPaymentMethodFetching,isGetAllPaymentMethodSuccess,isGetAllPaymentMethodData,]);
 
   useEffect(() => {
-
-    if ( isGetDetailByCustomerIDSuccess &&  !isGetDetailByCustomerIDFetching &&  isGetDetailByCustomerIDData ) {
+    if (isGetDetailByCustomerIDSuccess &&!isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDData) {
       if (isGetDetailByCustomerIDData) {
         let formData = { ...customerSettingFormData };
         formData.initialState = {
           ...customerSettingFormData.initialState,
-          customerAccountingSettingId:
-            isGetDetailByCustomerIDData.customerAccountingSettingId,
+          customerAccountingSettingId:isGetDetailByCustomerIDData.customerAccountingSettingId,
           paymentTermId: isGetDetailByCustomerIDData.paymentTermId,
           creditLimit: isGetDetailByCustomerIDData.creditLimit,
           paymentMethodId: isGetDetailByCustomerIDData.paymentMethodId,
-          billingCurrency: isGetDetailByCustomerIDData.billingCurrency,     
-        invoiceSubmissionInstruction: isGetDetailByCustomerIDData.invoiceSubmissionInstruction,
+          billingCurrency: isGetDetailByCustomerIDData.billingCurrency,
+          invoiceSubmissionInstruction:isGetDetailByCustomerIDData.invoiceSubmissionInstruction,
         };
         setCustomerSettingFormData(formData);
       }
     }
-  }, [  isGetDetailByCustomerIDSuccess, isGetDetailByCustomerIDFetching, isGetDetailByCustomerIDData,
-  ]);
+  }, [isGetDetailByCustomerIDSuccess,isGetDetailByCustomerIDFetching,isGetDetailByCustomerIDData,]);
+
   useEffect(() => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
       if (props.onSuccess) {
@@ -88,24 +82,18 @@ const [ addEditCustomerSettings,{ isLoading: isAddEditCustomerSettingsLoading, i
         ...settingFormData,
         customerId: customerId,
         paymentTermId: settingFormData.paymentTermId.value,
-
         paymentMethodId: settingFormData.paymentMethodId.value,
       };
       addEditCustomerSettings(request);
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
       const updaterequest = {
         ...settingFormData,
-        customerAccountingSettingId:
-          settingFormData.customerAccountingSettingId,
-          customerId: customerId,
-        paymentTermId:
-          settingFormData.paymentTermId &&
-          typeof settingFormData.paymentTermId === "object"
+        customerAccountingSettingId: settingFormData.customerAccountingSettingId,
+        customerId: customerId,
+        paymentTermId: settingFormData.paymentTermId && typeof settingFormData.paymentTermId === "object"
             ? settingFormData.paymentTermId.value
             : settingFormData.paymentTermId,
-        paymentMethodId:
-          settingFormData.paymentMethodId &&
-          typeof settingFormData.paymentMethodId === "object"
+        paymentMethodId: settingFormData.paymentMethodId && typeof settingFormData.paymentMethodId === "object"
             ? settingFormData.paymentMethodId.value
             : settingFormData.paymentMethodId,
       };
