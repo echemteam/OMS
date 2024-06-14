@@ -1,4 +1,8 @@
-﻿namespace OMS.FileManger.Services
+﻿using System.IO.Compression;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace OMS.FileManger.Services
 {
     public class FileManager
     {
@@ -912,5 +916,108 @@
             string mime;
             return _mappings.Value.TryGetValue(extension, out mime) ? mime : "application/octet-stream";
         }
+
+        public static string SaveEncryptFile(string Base64FileData, string path, string FileName, string AESKey, string AESIV)
+        {
+            string ext = GetExtension(FileName);
+            string miniType = GetMimeType(ext);
+            string base64Data = Base64FileData.Replace($"data:{miniType};base64,", "");
+            byte[] fileBytes = Convert.FromBase64String(base64Data!);
+
+            // Encrypt the file bytes
+            byte[] encryptedFileBytes = EncryptFile(fileBytes, AESKey, AESIV);
+
+            if (Directory.Exists(path))
+            {
+                CreateDirectory(path);
+            }
+            string UniqueName = GetUniqueFilename(path, FileName);
+            string encryptedFilePath = Path.Combine(path, $"{UniqueName}");
+
+            // Save the encrypted file
+            File.WriteAllBytes(encryptedFilePath, encryptedFileBytes);
+
+            // Create a zip archive
+            //string zipFileName = $"{Path.GetFileNameWithoutExtension(FileName)}.zip";
+            //string zipPath = Path.Combine(path, zipFileName);
+            //using (FileStream zipToOpen = new FileStream(zipPath, FileMode.Create))
+            //{
+            //    using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
+            //    {
+            //        ZipArchiveEntry encryptedFileEntry = archive.CreateEntry($"{UniqueName}");
+            //        using (var entryStream = encryptedFileEntry.Open())
+            //        using (var fileToCompressStream = new MemoryStream(encryptedFileBytes))
+            //        {
+            //            fileToCompressStream.CopyTo(entryStream);
+            //        }
+            //    }
+            //}
+            //File.Delete(encryptedFilePath);
+
+            //return zipFileName;
+            return UniqueName;
+        }
+
+        public static byte[] EncryptFile(byte[] fileBytes, string AESKey, string AESIV)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                // Convert AESKey and AESIV from string to byte arrays
+                byte[] keyBytes = Encoding.UTF8.GetBytes(AESKey);
+                byte[] ivBytes = Encoding.UTF8.GetBytes(AESIV);
+
+                // Ensure AES IV is of correct length (16 bytes for AES)
+                byte[] ivFixed = new byte[16];
+                Array.Copy(ivBytes, ivFixed, Math.Min(ivBytes.Length, ivFixed.Length));
+
+                // Set AES key and IV
+                aes.Key = keyBytes;
+                aes.IV = ivFixed;
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    // Create an encryptor to perform the stream transform
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(fileBytes, 0, fileBytes.Length);
+                        cs.FlushFinalBlock(); // Ensure any remaining data is flushed
+                    }
+
+                    // Return the encrypted data from the MemoryStream
+                    return ms.ToArray();
+                }
+            }
+        }
+
+
+        public static byte[] DecryptFile(byte[] data, string AESKey, string AESIV)
+        {
+            byte[] keyBytes = Convert.FromBase64String(AESKey);
+            byte[] ivBytes = Convert.FromBase64String(AESIV);
+            try
+            {
+                using (Aes aes = Aes.Create())
+                {
+                    aes.Key = keyBytes;
+                    aes.IV = ivBytes;
+                    aes.Padding = PaddingMode.PKCS7;
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                        {
+                            cs.Write(data, 0, data.Length);
+                            cs.FlushFinalBlock();
+                        }
+                        return ms.ToArray();
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex!;
+            }
+        }
+
     }
 }
