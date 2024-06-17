@@ -294,11 +294,6 @@ const BasicDetail = (props) => {
                 isLoading={isLoading}
               // isDisable={isButtonDisable}
               />
-              <Buttons
-                buttonTypeClassName="dark-btn"
-                buttonText="Cancel"
-                onClick={props.onSidebarClose}
-              />
             </div>
           </div>
         }
