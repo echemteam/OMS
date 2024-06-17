@@ -1043,6 +1043,7 @@ a {
       }
 
       .add-line {
+        width: 92%;
         display: flex;
         flex-direction: column;
 
@@ -1276,6 +1277,8 @@ a {
         }
 
         .document-action {
+          display: flex;
+          align-items: center;
           span {
             &.action-icon {
               margin-right: 10px;
