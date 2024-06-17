@@ -88,22 +88,22 @@ const ViewCustomer = () => {
         </div>
       ),
     },
-    {
-      sMenuItemCaption: "Notes",
-      component: (
-        <div className="mt-2">
-          <NotesDetail />
-        </div>
-      ),
-    },
-    {
-      sMenuItemCaption: "History",
-      component: (
-        <div className="">
-          <HistoryDetail />
-        </div>
-      ),
-    },
+    // {
+    //   sMenuItemCaption: "Notes",
+    //   component: (
+    //     <div className="mt-2">
+    //       <NotesDetail />
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   sMenuItemCaption: "History",
+    //   component: (
+    //     <div className="">
+    //       <HistoryDetail />
+    //     </div>
+    //   ),
+    // },
   ];
 
   return (
@@ -116,7 +116,7 @@ const ViewCustomer = () => {
             </CardSection>
           </div>
           <div className="col-xxl-8 col-xl-8 col-md-9 col-12 other-info-tab">
-            <RenderTabs tabs={tabs} />
+              <RenderTabs tabs={tabs} />
           </div>
         </div>
       </div>

@@ -6,7 +6,6 @@ import { customFetchBase, defaultBaseQuery } from '../../utils/API/fetchBaseQuer
 const notesAPI = createApi({
     reducerPath: 'notesAPI',
     baseQuery: customFetchBase,
-    // baseQuery: defaultBaseQuery,
     endpoints: (builder) => ({
 
         addCustomerNotes: builder.mutation({

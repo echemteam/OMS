@@ -61,11 +61,6 @@ const UsersRole = () => {
     ],
   };
 
-  const onEditAction = (data) => {
-    // alert("Edit called"); // Check navigate
-    navigate("/ViewEditUser", { state: { userData: data } });
-  };
-
   const actionHandler = {
     EDIT: handleToggleModal,
   };

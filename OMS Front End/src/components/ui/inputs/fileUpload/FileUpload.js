@@ -40,10 +40,6 @@ const FileUpload = ({
     }
   };
 
-  const handleActionClick = () => {
-    onActionClick();
-  };
-
   useEffect(() => {
     if (filename && typeof filename === "object") {
       setFileValue(filename.name || filename.fileName);

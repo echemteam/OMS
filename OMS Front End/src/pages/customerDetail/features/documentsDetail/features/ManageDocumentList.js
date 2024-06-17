@@ -19,7 +19,7 @@ const ManageDocumentList = forwardRef(({ childRef }) => {
     const [documentListData, setDocumentListData] = useState([]);
 
     //** API Call's */
-    const [Delete, { isLoading, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteCustomerDocumentsByIdMutation();
+    const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteCustomerDocumentsByIdMutation();
     const [getList, { isFetching: isListFetching, isSuccess: isListSucess, data: isListData }] = useLazyGetCustomerDocumentsByIdQuery();
     const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = useLazyDownloadCustomerDocumentQuery();
 

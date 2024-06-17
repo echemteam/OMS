@@ -46,7 +46,7 @@ const Permissions = () => {
   //** Use Effect's */
   useEffect(() => {
     getAllRoles();
-  }, []);
+  });
   useEffect(() => {
     if (isSuccessAllRoles && isAllRolesData && !isFetchingAllRoles) {
       const roleList = isAllRolesData.map((item) => ({
@@ -61,7 +61,7 @@ const Permissions = () => {
       setselectedRoleId(0);
       setTogglePermissionCard(false);
     }
-  }, [location.pathname]);
+  }, [id, location.pathname]);
   useEffect(() => {
     if (roleId > 0) {
       setselectedRoleId(roleId);

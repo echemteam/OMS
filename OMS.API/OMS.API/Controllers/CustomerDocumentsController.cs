@@ -1,12 +1,10 @@
-﻿using Common.Helper.Enum;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Response.CustomerDocuments;
 using OMS.FileManger.Services;
 using OMS.Framework;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.API.Controllers
@@ -61,7 +59,7 @@ namespace OMS.API.Controllers
         }
 
         [HttpGet("DownloadCustomerDocument")]
-        public async Task<IActionResult> DownloadCustomerDocument(string folderName, string fileName,int customerId)
+        public async Task<IActionResult> DownloadCustomerDocument(string folderName, string fileName, int customerId)
         {
 
             byte[] decryptedBytes = await _serviceManager.customerDocumentsService.DownloadCustomerDocument(folderName, fileName, customerId);
