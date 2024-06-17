@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
 //**Lib's */
 import { AppIcons } from "../../data/appIcons";
@@ -7,6 +7,9 @@ import CardSection from "../../components/ui/card/CardSection";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { TabEnum } from "../../common/features/Enums/TabsEnums";
 import { useNavigate } from "react-router-dom";
+import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
+import ToastService from "../../services/toastService/ToastService";
+import { StatusEnums } from "../../common/features/Enums/StatusEnums";
 //** Component's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
 const AddressDetail = React.lazy(() => import("./features/addressDetail/AddressDetail"));
@@ -15,46 +18,62 @@ const ContactDetail = React.lazy(() => import("./features/contactDetail/Contact/
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage, addCustomer } = useContext(BasicDetailContext);
+  const { activeTab, setActiveTab, movePreviewPage, addCustomer , customerId } = useContext(BasicDetailContext);
+  const [updateCustomerStatus, { isLoading: updateCustomerStatusLoading, isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
 
   const onSubmit = (e) => {
     e.preventDefault();
   };
 
+  useEffect(() => {
+    if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
+      ToastService.success(updateCustomerStatusData.errorMessage);
+    }
+  }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
+
   const tabContent = [
     {
       label: "Basic Information",
-      subLabel: "Enter Basic information",
+      subLabel: "Enter Customer Basic information",
       content: <BasicDetail />,
       tab: TabEnum.BasicInformation
     },
     {
       label: "Address",
-      subLabel: "Enter Address Details",
+      subLabel: "Enter Customer Address Details",
       content: <AddressDetail />,
       tab: TabEnum.Address
     },
     {
       label: "Contact",
-      subLabel: "Enter Contact Details",
+      subLabel: "Enter Customer Contact Details",
       content: <ContactDetail />,
       tab: TabEnum.Contact
     },
     {
       label: "Documents",
-      subLabel: "Add Documents",
+      subLabel: "Add Customer Documents Details",
       content: <DocumentDetails />,
       tab: TabEnum.Documents
     },
   ];
 
-  // const handleTabClick = (index) => {
-  //   setActiveTab(index);
-  // };
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
 
   const handleSubmit = () => {
+    let req = {
+      customerId: customerId,
+      statusId: StatusEnums.Approved
+    }
+    updateCustomerStatus(req)
+  };
+
+  const handleDraft = () => {
     navigate('/Customers');
   };
+
 
   return (
     <>
@@ -66,7 +85,7 @@ const AddCustomer = () => {
                 <React.Fragment key={index}>
                   <div className={`step ${activeTab === index ? 'active' : ''}`}>
                     <button className="step-button"
-                    // onClick={() => handleTabClick(index)}
+                      onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">
@@ -105,9 +124,15 @@ const AddCustomer = () => {
                               Next
                             </button>
                           ) : (
-                            <button type="submit" className="btn theme-button" onClick={handleSubmit}>
-                              Submit
-                            </button>
+                            <>
+                              <button type="submit" className="btn theme-button" onClick={handleDraft}>
+                                Save as Draft
+                              </button>
+
+                              <button type="submit" className="btn theme-button ml-3" onClick={handleSubmit}>
+                                Save as Submit
+                              </button>
+                            </>
                           )}
                         </div>
                       </div>
