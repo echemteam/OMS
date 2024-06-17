@@ -127,4 +127,14 @@ export const securityKey = {
     DELETECONTRACTTYPES: "Delete Contract Types",
 
     EMPLOYERMERGE: "EmployerMerge",
+
+     /* customer */
+     ADDCUSTOMER : "Add Customer",
+     EDITCUSTOMER : "Edit Customer",
+  // DELETE: securityKey.DELETECUSTOMER : "Delete Customer",
+       // BLOCK: securityKey.BLOCKCUSTOMER : "Block Customer",
+  // FREEZE: securityKey.FREEZECUSTOMER : "Freeze Customer",
+  // UNFREEZE: securityKey.DISABLECUSTOMER : "UnFreeze Customer",
+  // UNBLOCK: securityKey.DISABLECUSTOMER : "UnBlock Customer",
+  // ACTIVE: securityKey.ACTIVECUSTOMER : "Active Customer",
 };
