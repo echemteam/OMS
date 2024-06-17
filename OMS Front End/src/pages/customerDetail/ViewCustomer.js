@@ -117,15 +117,7 @@ const ViewCustomer = () => {
             </CardSection>
           </div>
           <div className="col-xxl-8 col-xl-8 col-md-9 col-12 other-info-tab">
-            <CardSection
-              cardTitle="Other Information"
-            // buttonClassName="theme-button"
-            // rightButton={true}
-            // buttonText="Save"
-            // titleButtonClick={onEditAction}
-            >
               <RenderTabs tabs={tabs} />
-            </CardSection>
           </div>
         </div>
       </div>

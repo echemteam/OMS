@@ -718,12 +718,12 @@ a {
 
   .tab-header {
     border-bottom: 1px solid var(--linkMenu);
-    background: var(--whiteColor);
+    // background: var(--whiteColor);
 
     button {
       padding: 7px 25px 7px;
       border: none;
-      background: var(--linkMenu);
+      background: #dcdde0;
       border-radius: 0px;
       font-weight: 600;
       font-size: 95%;

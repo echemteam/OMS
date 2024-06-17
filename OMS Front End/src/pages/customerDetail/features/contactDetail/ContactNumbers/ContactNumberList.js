@@ -14,7 +14,7 @@ const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler,isLoad
         <div className="col-xl-6 col-lg-6 col-md-6 col-12 mt-4 card-email-sec">
             <CardSection
                 cardTitle="Phone Numbers"
-                buttonClassName="danger-btn"
+                buttonClassName="theme-button"
                 textWithIcon={true}
                 iconImg={AppIcons.PlusIcon}
                 rightButton={true}
