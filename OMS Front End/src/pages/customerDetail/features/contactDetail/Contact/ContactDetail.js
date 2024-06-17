@@ -91,6 +91,11 @@ const ContactDetail = () => {
     customerId && GetContactList(customerId);
   };
 
+   //** Get Contact List */
+   const onGetContactList = () => {
+    customerId && GetContactList(customerId);
+  };
+
   return (
     <>
       <CardSection
@@ -111,7 +116,7 @@ const ContactDetail = () => {
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}>
           <AddEditContact onSidebarClose={onSidebarClose} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} addRef={addRef}
-            isAddModelOpen={isAddModelOpen} />
+            isAddModelOpen={isAddModelOpen} onGetContactList={onGetContactList} />
         </SidebarModel>
       </div>
     </>

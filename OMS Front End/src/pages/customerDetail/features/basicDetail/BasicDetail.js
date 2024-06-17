@@ -257,7 +257,11 @@ const BasicDetail = (props) => {
 
   useEffect(() => {
     if (isCustomerNameExistSucess && isCustomerNameExistData) {
-      ToastService.warning(isCustomerNameExistData.errorMessage);
+      if (isCustomerNameExistData.errorMessage.includes('exists')) {
+        ToastService.warning(isCustomerNameExistData.errorMessage);
+        return;
+      }
+      ToastService.success(isCustomerNameExistData.errorMessage);
     }
   }, [isCustomerNameExistSucess, isCustomerNameExistData]);
 
@@ -278,7 +282,7 @@ const BasicDetail = (props) => {
         {props.isOpen &&
           <div className="col-md-12">
             <div className="d-flex align-item-end justify-content-end">
-            <Buttons
+              <Buttons
                 buttonTypeClassName="dark-btn"
                 buttonText="Cancel"
                 onClick={props.onSidebarClose}
@@ -288,9 +292,9 @@ const BasicDetail = (props) => {
                 buttonText="Update"
                 onClick={handleUpdate}
                 isLoading={isLoading}
-                // isDisable={isButtonDisable}
+              // isDisable={isButtonDisable}
               />
-               <Buttons
+              <Buttons
                 buttonTypeClassName="dark-btn"
                 buttonText="Cancel"
                 onClick={props.onSidebarClose}

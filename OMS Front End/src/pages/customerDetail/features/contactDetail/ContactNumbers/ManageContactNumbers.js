@@ -4,14 +4,16 @@ import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicD
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useDeleteContactPhoneMutation, useLazyGetPhoneByContactIdQuery } from "../../../../../app/services/phoneNumberAPI";
+import SwalAlert from "../../../../../services/swalService/SwalService";
 //** Component's */
 const ContactNumberList = React.lazy(() => import("./ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./AddEditContactNumber"));
 
-const ManageContactNumbers = () => {
+const ManageContactNumbers = ({ onGetContactList }) => {
 
     //** State */
     const molGridRef = useRef();
+    const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
@@ -36,6 +38,7 @@ const ManageContactNumbers = () => {
         if (isDeleteSucess && isDeleteData && !isDeleteFetching) {
             ToastService.success(isDeleteData.errorMessage);
             contactId && getList(contactId);
+            onGetContactList();
         }
     }, [isDeleteSucess, isDeleteData, isDeleteFetching]);
 
@@ -54,6 +57,7 @@ const ManageContactNumbers = () => {
         setShowModal(!showModal);
         setIsEdit(false);
         contactId && getList(contactId);
+        onGetContactList();
     };
 
     //** Action Handler */
@@ -63,7 +67,14 @@ const ManageContactNumbers = () => {
         setEditFormData(data)
     }
     const handleDeleteClick = (data) => {
-        deletePhoneNumber(data.phoneId);
+        confirm("Delete?",
+            "Are you sure you want to Delete?",
+            "Delete", "Cancel"
+        ).then((confirmed) => {
+            if (confirmed) {
+                deletePhoneNumber(data.phoneId);
+            }
+        });
     }
     const actionHandler = {
         EDIT: handleEditModal,
