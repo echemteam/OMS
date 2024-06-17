@@ -252,6 +252,8 @@ const BasicDetail = (props) => {
         name: customerName
       }
       CheckCustomerNameExist(request);
+    } else {
+      ToastService.warning('Username required. Please enter username.');
     }
   }
 
