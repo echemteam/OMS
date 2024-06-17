@@ -26,15 +26,19 @@ namespace OMS.Application.Services.CustomerDocuments
         #region Customer Documents Services
         public async Task<AddEntityDTO<int>> AddCustomerDocuments(AddCustomerDocumentsRequest requestData, short CurrentUserId)
         {
-            if (requestData.Base64File != null && requestData.Attachment != null)
+            AddEntityDTO<int> responseData = new();
+
+            CustomerDocumentsDTO customerDocumentsDTO = requestData.ToMapp<AddCustomerDocumentsRequest, CustomerDocumentsDTO>();
+            customerDocumentsDTO.CreatedBy = CurrentUserId;
+            responseData = await repositoryManager.customerDocuments.AddCustomerDocuments(customerDocumentsDTO);
+
+            if (responseData.KeyValue > 0)
             {
                 string AESKey = commonSettingService.EncryptionSettings.AESKey!;
                 string AESIV = commonSettingService.EncryptionSettings.AESIV!;
-                requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.CustomerId, requestData.Attachment, AESKey, AESIV);
+                requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File!, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.CustomerId, requestData.Attachment!, AESKey, AESIV);
             }
-            CustomerDocumentsDTO customerDocumentsDTO = requestData.ToMapp<AddCustomerDocumentsRequest, CustomerDocumentsDTO>();
-            customerDocumentsDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.customerDocuments.AddCustomerDocuments(customerDocumentsDTO);
+            return responseData;
         }
 
         public async Task<List<GetCustomerDocumentsByIdResponse>> GetCustomerDocumentsById(int customerId)
@@ -54,7 +58,7 @@ namespace OMS.Application.Services.CustomerDocuments
             string AESKey = commonSettingService.EncryptionSettings.AESKey!;
             string AESIV = commonSettingService.EncryptionSettings.AESIV!;
             var contentPath = commonSettingService.ApplicationSettings.SaveFilePath;
-            string filePath = Path.Combine(contentPath!, folderName,customerId.ToString(), fileName);
+            string filePath = Path.Combine(contentPath!, folderName, customerId.ToString(), fileName);
 
             if (File.Exists(filePath))
             {
