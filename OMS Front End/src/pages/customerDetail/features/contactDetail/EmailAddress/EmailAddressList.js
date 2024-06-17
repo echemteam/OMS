@@ -14,7 +14,7 @@ const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler }) => {
         <div className="col-xl-6 col-lg-6 col-md-6 col-12 mt-4 card-email-sec">
             <CardSection
                 cardTitle="Email Address"
-                buttonClassName="danger-btn"
+                buttonClassName="theme-button"
                 textWithIcon={true}
                 iconImg={AppIcons.PlusIcon}
                 rightButton={true}
