@@ -6,7 +6,6 @@ import { customFetchBase, defaultBaseQuery } from '../../utils/API/fetchBaseQuer
 const userAPI = createApi({
     reducerPath: 'userAPI',
     baseQuery: customFetchBase,
-    // baseQuery: defaultBaseQuery,
     tagTypes: ['User'],
     endpoints: (builder) => ({
 
@@ -29,7 +28,6 @@ const userAPI = createApi({
                 method: 'POST',
                 body: transformRequest(userDetails)
             }),
-            // invalidatesTags: ['User'],
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),

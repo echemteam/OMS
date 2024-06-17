@@ -8,7 +8,6 @@ import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation"
 import { PagePermissionsProvider } from "../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
 import Image from "../components/image/Image";
 import { AppIcons } from "../data/appIcons";
-import { ContactContextProvider } from "../utils/ContextAPIs/Customer/ContactContext";
 
 const Layout = (props) => {
   // Get the current location using React Router's useLocation hook
@@ -46,39 +45,37 @@ const Layout = (props) => {
 
       </AddPagePermissionsContext.Provider> */}
       <PagePermissionsProvider>
-        <ContactContextProvider>
-          {/* <SecurityPermissionsHOC permissionConfig={permissionConfig}> */}
-          <div className={`main-page-layout ${isCollapsed ? 'collapsed' : ''}`}>
-            <div className="top-sec">
-              <div className="sidebar-section">
-                <Sidebar componentRoutes={props.componentRoutes} />
-                <div className="collapse-btn">
-                  <div className="click-btn" onClick={handleToggleClick}>
-                    <Image imagePath={AppIcons.arrowIcon} />
-                  </div>
+        {/* <SecurityPermissionsHOC permissionConfig={permissionConfig}> */}
+        <div className={`main-page-layout ${isCollapsed ? 'collapsed' : ''}`}>
+          <div className="top-sec">
+            <div className="sidebar-section">
+              <Sidebar componentRoutes={props.componentRoutes} />
+              <div className="collapse-btn">
+                <div className="click-btn" onClick={handleToggleClick}>
+                  <Image imagePath={AppIcons.arrowIcon} />
                 </div>
-              </div>
-
-              <div className={`middle-page-section`}>
-                <Header />
-
-                {/* {isAuthorize ? */}
-                <div className="center-content-part">
-                  <div className="content-desc-section">
-                    <Breadcome componentRoutes={props.componentRoutes} />
-                    <div className="center-container container-fluid">
-                      <Outlet />
-                    </div>
-                    <Footer />
-                  </div>
-                </div>
-                {/* : <Unauthorize />
-              } */}
               </div>
             </div>
+
+            <div className={`middle-page-section`}>
+              <Header />
+
+              {/* {isAuthorize ? */}
+              <div className="center-content-part">
+                <div className="content-desc-section">
+                  <Breadcome componentRoutes={props.componentRoutes} />
+                  <div className="center-container container-fluid">
+                    <Outlet />
+                  </div>
+                  <Footer />
+                </div>
+              </div>
+              {/* : <Unauthorize />
+              } */}
+            </div>
           </div>
-          {/* </SecurityPermissionsHOC> */}
-        </ContactContextProvider>
+        </div>
+        {/* </SecurityPermissionsHOC> */}
       </PagePermissionsProvider>
     </React.Fragment>
   );

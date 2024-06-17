@@ -6,7 +6,6 @@ import { customFetchBase, defaultBaseQuery } from '../../utils/API/fetchBaseQuer
 const rolesMappingAPI = createApi({
     reducerPath: 'rolesMappingAPI',
     baseQuery: customFetchBase,
-    // tagTypes: ['User'],
     endpoints: (builder) => ({
         // Add User 
         addRoleMapping: builder.mutation({
@@ -15,7 +14,6 @@ const rolesMappingAPI = createApi({
                 method: 'POST',
                 body: transformRequest(userDetails)
             }),
-            // invalidatesTags: ['User'],
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),

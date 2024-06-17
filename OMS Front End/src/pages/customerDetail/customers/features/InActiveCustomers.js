@@ -105,7 +105,7 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
                   ref={molGridRef}
                   configuration={configFile}
                   dataSource={dataSource}
-                  isLoading={isListLoading}
+                  isLoading={isListLoading || updateCustomerStatusLoading}
                   allowPagination={true}
                   pagination={{
                     totalCount: totalRowCount,

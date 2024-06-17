@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
-import { basicDetailFormDataHalf, securityKeys } from "./config/BasicDetailForm.data";
+import { basicDetailFormDataHalf } from "./config/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";

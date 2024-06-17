@@ -10,7 +10,6 @@ import { logout } from "../../../app/slice/authSlice";
 
 function Header({ handleChange }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const shortcutSecRef = useRef(null);
   const authState = useSelector((state) => state.auth);

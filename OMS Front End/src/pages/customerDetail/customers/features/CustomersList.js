@@ -32,7 +32,7 @@ export const CustomersList = ({ statusId, configFile }) => {
     { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
   ] = useGetCustomersMutation();
 
-  const [updateCustomerApproveStatus, { isLoading: updateCustomerLoading, isSuccess: isSuccessUpdateCustomer, data: updateCustomerData }] = useUpdateCustomerApproveStatusMutation();
+  const [updateCustomerApproveStatus, { isSuccess: isSuccessUpdateCustomer, data: updateCustomerData }] = useUpdateCustomerApproveStatusMutation();
 
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
 

@@ -24,7 +24,7 @@ const ManagePermission = forwardRef((props, ref) => {
     const { togglePermissionCard, selectedRoleId, childRef } = useContext(SecurityPermissionsContext);
 
     //** API Call's */
-    const [addSecurityPermissions, { isLoading: isAddLoading, isSuccess: isPermissionsAdded, data: isAddPermissionsData }] = useAddSecurityPermissionsMutation();
+    const [addSecurityPermissions, { isSuccess: isPermissionsAdded, data: isAddPermissionsData }] = useAddSecurityPermissionsMutation();
     const [getAllPagesByRoleId, { isLoading: isGetByIdLoading, isSuccess: isPermissionSuccess, data: permissionData }] = useLazyGetAllPagesByRoleIdQuery();
 
 

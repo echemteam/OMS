@@ -5,8 +5,15 @@ import { getAuthProps } from '../../lib/authenticationLibrary';
 const { Mutex } = require('async-mutex');
 
 const mutex = new Mutex();
-const IsProdMode = false
-const APIUrl = (IsProdMode) ? process.env.REACT_APP_TestSiteBaseUrl : process.env.REACT_APP_LOCALURLS
+
+export const IsProdMode = false
+export const IsTestMode = true
+
+const liveURL = ''
+const testURL = process.env.REACT_APP_TESTURLS
+const localHost = process.env.REACT_APP_LOCALURLS
+
+const APIUrl = (IsProdMode) ? liveURL : (IsTestMode) ? testURL : localHost;
 
 const baseQuery = fetchBaseQuery({
   baseUrl: APIUrl,

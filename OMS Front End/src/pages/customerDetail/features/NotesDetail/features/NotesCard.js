@@ -2,9 +2,9 @@ import { AppIcons } from "../../../../../data/appIcons";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { getRandomColor } from "../../../../../utils/RandomColors/RandomColors";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-const NotesCard = ({ isAddEditModal, onHandleNote ,ongetcustomerNote,notesFormData}) => {
+const NotesCard = ({ isAddEditModal, onHandleNote, ongetcustomerNote, notesFormData }) => {
 
   useEffect(() => {
     ongetcustomerNote();
