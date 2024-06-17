@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 

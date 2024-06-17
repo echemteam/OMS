@@ -26,7 +26,7 @@ namespace OMS.Application.Services.Supplier
         {
             SupplierDTO supplierDTO = requestData.ToMapp<AddEditSupplierBasicInformationRequest, SupplierDTO>();
             supplierDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.customers.AddEditSupplierBasicInformation(supplierDTO);
+            return await repositoryManager.supplier.AddEditSupplierBasicInformation(supplierDTO);
         }
         #endregion
 
