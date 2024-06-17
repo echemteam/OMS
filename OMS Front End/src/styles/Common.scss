@@ -712,7 +712,6 @@ a {
   color: #ffffff;
 }
 
-
 // Tab Section Start
 .tab-section {
   margin-bottom: 30px;
@@ -1501,7 +1500,7 @@ a {
   }
 }
 
-.view-icon{
+.view-icon {
   cursor: pointer !important;
 }
 
@@ -1515,4 +1514,16 @@ a {
   color: red;
   font-size: 20px;
   font-weight: lighter;
+}
+
+.label-txt {
+  b {
+    min-width: 100px;
+  }
+  .fix-data {
+    word-break: break-all;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 }
