@@ -3,14 +3,16 @@ import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicD
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useDeleteContactEmailMutation, useLazyGetEmailByContactIdQuery } from "../../../../../app/services/emailAddressAPI";
+import SwalAlert from "../../../../../services/swalService/SwalService";
 //** Component's */
 const EmailAddressList = React.lazy(() => import("./EmailAddressList"));
 const AddEditEmailModal = React.lazy(() => import("./AddEditEmailAddress"));
 
-const ManageEmailAddress = () => {
+const ManageEmailAddress = ({ onGetContactList }) => {
 
     //** State */
     const molGridRef = useRef();
+    const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
@@ -35,6 +37,7 @@ const ManageEmailAddress = () => {
         if (isDeleteSucess && isDeleteData && !isDeleteFetching) {
             ToastService.success(isDeleteData.errorMessage);
             contactId && getEmailList(contactId);
+            onGetContactList();
         }
     }, [isDeleteSucess, isDeleteData, isDeleteFetching]);
 
@@ -53,6 +56,7 @@ const ManageEmailAddress = () => {
         setShowModal(!showModal);
         setIsEdit(false);
         contactId && getEmailList(contactId);
+        onGetContactList();
     };
 
     //** Action Handler */
@@ -62,7 +66,14 @@ const ManageEmailAddress = () => {
         setEditFormData(data)
     }
     const handleDeleteClick = (data) => {
-        deleteContactEmail(data.emailId);
+        confirm("Delete?",
+            "Are you sure you want to Delete?",
+            "Delete", "Cancel"
+        ).then((confirmed) => {
+            if (confirmed) {
+                deleteContactEmail(data.emailId);
+            }
+        });
     }
     const actionHandler = {
         EDIT: handleEditModal,

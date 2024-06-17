@@ -11,7 +11,7 @@ import { useAddEditContactMutation } from "../../../../../app/services/contactAP
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, isEdit, editRef }) => {
+const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, isEdit, editRef, onGetContactList }) => {
 
   //** State */
   const ref = useRef();
@@ -44,12 +44,12 @@ const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onS
   useEffect(() => {
     if (isAddEditSuccess && isAddEditData) {
       if (onSuccess) {
-        onSuccess();
         setContactId(isAddEditData?.keyValue);
         if (isAddModelOpen) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
         }
+        onSuccess();
       }
       ToastService.success(isAddEditData.errorMessage);
     }
@@ -122,8 +122,8 @@ const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onS
         </div>
       </div>
       <div className="row">
-        <ManageEmailAddress />
-        <ManageContactNumbers />
+        <ManageEmailAddress onGetContactList={onGetContactList} />
+        <ManageContactNumbers onGetContactList={onGetContactList} />
       </div>
     </div >
   );
