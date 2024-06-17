@@ -6,7 +6,7 @@ import { phoneNumberConfig } from "./config/AddEditContactsForm.data";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
-const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler }) => {
+const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler,isLoading }) => {
 
     const { phoneNumberData } = useContext(BasicDetailContext);
 
@@ -28,6 +28,7 @@ const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler }) => 
                             dataSource={phoneNumberData}
                             allowPagination={false}
                             onActionChange={actionHandler}
+                            isLoading={isLoading}
                         />
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import MolGrid from "../../../../../components/Grid/MolGrid";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
-const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler }) => {
+const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler, isLoading }) => {
 
     const { emailAddressData } = useContext(BasicDetailContext);
 
@@ -28,6 +28,7 @@ const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler }) => {
                             dataSource={emailAddressData}
                             allowPagination={false}
                             onActionChange={actionHandler}
+                            isLoading={isLoading}
                         />
                     </div>
                 </div>

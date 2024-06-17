@@ -3,8 +3,9 @@ import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import { Accordion } from "react-bootstrap";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
-const AddressCard = ({ isAddEditModal, addressData, onHandleSetData }) => {
+const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLoading }) => {
 
   const [activeKey, setActiveKey] = useState("0");
 
@@ -12,17 +13,23 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData }) => {
     setActiveKey(eventKey === activeKey ? null : eventKey);
   };
 
-  if (!Array.isArray(addressData) || addressData.length === 0) {
-    return <div className="no-address"><NoRecordFound /></div>;
+  if (!isGetByIdLoading) {
+    if (!Array.isArray(addressData) || addressData.length === 0) {
+      return <div className="no-address"><NoRecordFound /></div>;
+    }
   }
 
-  const groupedAddresses = addressData.reduce((acc, address) => {
-    if (!acc[address.addressTypeId]) {
-      acc[address.addressTypeId] = [];
-    }
-    acc[address.addressTypeId].push(address);
-    return acc;
-  }, {});
+
+  const groupedAddresses = Array.isArray(addressData)
+    ? addressData.reduce((acc, address) => {
+      if (!acc[address.addressTypeId]) {
+        acc[address.addressTypeId] = [];
+      }
+      acc[address.addressTypeId].push(address);
+      return acc;
+    }, {})
+    : {};
+
 
   const handleEdit = (data) => {
     isAddEditModal()
@@ -30,7 +37,7 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData }) => {
   }
 
   return (
-    <>
+    !isGetByIdLoading ?
       <Accordion className="address-card-section" activeKey={activeKey} onSelect={handleToggle}>
         {Object.keys(groupedAddresses).map((addressTypeId, index) => (
           <Accordion.Item
@@ -73,7 +80,7 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData }) => {
           </Accordion.Item>
         ))}
       </Accordion>
-    </>
+      : <DataLoader />
   );
 };
 

@@ -15,6 +15,7 @@ import { useAddUserMutation, useLazyGetUserByUserIdQuery, useUpdateUserMutation 
 import { PagePermissionsContext } from "../../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
 //** Custom Hook */
 import usePermissions from "../../../../utils/CustomHook/UsePermissions";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
 const AddEditUser = forwardRef(() => {
   const navigate = useNavigate();
@@ -116,11 +117,14 @@ const AddEditUser = forwardRef(() => {
         <div className="row">
           <div className="col-md-12 horizontal-form">
             <div className="row vertical-form">
-              <FormCreator
-                config={userForm}
-                ref={userFormRef}
-                {...userForm}
-              />
+              {!isGetByIdFetching ?
+                < FormCreator
+                  config={userForm}
+                  ref={userFormRef}
+                  {...userForm}
+                  isLoading={isGetByIdFetching}
+                />
+                : <DataLoader />}
             </div>
           </div>
           <div className="col-md-12 mt-2">

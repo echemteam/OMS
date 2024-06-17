@@ -2,11 +2,12 @@ import React from "react";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import CopyText from "../../../../utils/CopyText/CopyText";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
-const CustomerDetails = ({ editClick, customerData }) => {
+const CustomerDetails = ({ editClick, customerData, isLoading }) => {
   return (
-    <>
-      <div className="basic-customer-detail">
+    !isLoading ?
+      < div className="basic-customer-detail" >
         <div className="col-xl-12 col-lg-12 col-md-12 col-12">
           <div className="profile-info">
             <div className="profile-icon-desc">
@@ -71,13 +72,13 @@ const CustomerDetails = ({ editClick, customerData }) => {
             <div className="inf-label">Is Company</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">
-            {customerData?.isCompany}
-            {customerData && customerData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
+              {customerData?.isCompany}
+              {customerData && customerData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </div >
+      : <DataLoader />
   );
 };
 

@@ -35,6 +35,7 @@ const ViewCustomer = () => {
   useEffect(() => {
     if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
       setCustomerData(GetCustomersBasicInformationByIdData)
+      console.log('isGetCustomersBasicInformationByIdFetching', isGetCustomersBasicInformationByIdFetching);
     }
   }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
 
@@ -88,22 +89,22 @@ const ViewCustomer = () => {
         </div>
       ),
     },
-    // {
-    //   sMenuItemCaption: "Notes",
-    //   component: (
-    //     <div className="mt-2">
-    //       <NotesDetail />
-    //     </div>
-    //   ),
-    // },
-    // {
-    //   sMenuItemCaption: "History",
-    //   component: (
-    //     <div className="">
-    //       <HistoryDetail />
-    //     </div>
-    //   ),
-    // },
+    {
+      sMenuItemCaption: "Notes",
+      component: (
+        <div className="mt-2">
+          <NotesDetail />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "History",
+      component: (
+        <div className="">
+          <HistoryDetail />
+        </div>
+      ),
+    },
   ];
 
   return (
@@ -112,7 +113,7 @@ const ViewCustomer = () => {
         <div className="row">
           <div className="col-xxl-4 col-xl-4 col-md-3 col-12 basic-left-part customer-desc-left-sec">
             <CardSection>
-              <CustomerDetails editClick={handleToggleModal} customerData={customerData} />
+              <CustomerDetails editClick={handleToggleModal} customerData={customerData} isLoading={isGetCustomersBasicInformationByIdFetching} />
             </CardSection>
           </div>
           <div className="col-xxl-8 col-xl-8 col-md-9 col-12 other-info-tab">

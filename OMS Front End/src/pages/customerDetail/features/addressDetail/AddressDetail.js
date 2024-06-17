@@ -286,7 +286,7 @@ const AddressDetail = (props) => {
         buttonText="Add"
         titleButtonClick={handleToggleModal}
       >
-        <AddressCard isAddEditModal={handleToggleModal} addressData={addressData} onHandleSetData={handleSetData} />
+        <AddressCard isAddEditModal={handleToggleModal} addressData={addressData} onHandleSetData={handleSetData} isGetByIdLoading={isGetAddresssByCustomerIdFetching}/>
       </CardSection>
 
       <SidebarModel

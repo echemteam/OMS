@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
+import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useDeleteContactEmailMutation, useLazyGetEmailByContactIdQuery } from "../../../../../app/services/emailAddressAPI";
-import SwalAlert from "../../../../../services/swalService/SwalService";
 //** Component's */
 const EmailAddressList = React.lazy(() => import("./EmailAddressList"));
 const AddEditEmailModal = React.lazy(() => import("./AddEditEmailAddress"));
@@ -82,7 +82,7 @@ const ManageEmailAddress = ({ onGetContactList }) => {
 
     return (
         <React.Fragment>
-            <EmailAddressList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} />
+            <EmailAddressList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} isLoading={isGetContactFetching} />
             {showModal && (
                 <AddEditEmailModal handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} editFormData={editFormData} isEdit={isEdit} />
             )}

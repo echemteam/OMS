@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
-import { basicDetailFormDataHalf } from "./config/BasicDetailForm.data";
+import { basicDetailFormDataHalf, securityKeys } from "./config/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
@@ -252,8 +252,6 @@ const BasicDetail = (props) => {
         name: customerName
       }
       CheckCustomerNameExist(request);
-    } else {
-      ToastService.warning('Username required. Please enter username.');
     }
   }
 
@@ -285,16 +283,16 @@ const BasicDetail = (props) => {
           <div className="col-md-12">
             <div className="d-flex align-item-end justify-content-end">
               <Buttons
-                buttonTypeClassName="dark-btn"
-                buttonText="Cancel"
-                onClick={props.onSidebarClose}
-              />
-              <Buttons
-                buttonTypeClassName="theme-button ml-5"
+                buttonTypeClassName="theme-button"
                 buttonText="Update"
                 onClick={handleUpdate}
                 isLoading={isLoading}
               // isDisable={isButtonDisable}
+              />
+              <Buttons
+                buttonTypeClassName="dark-btn ml-5"
+                buttonText="Cancel"
+                onClick={props.onSidebarClose}
               />
             </div>
           </div>

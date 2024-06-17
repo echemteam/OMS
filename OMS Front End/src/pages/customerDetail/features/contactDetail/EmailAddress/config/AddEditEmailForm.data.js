@@ -14,7 +14,7 @@ export const addEditEmailFormData = {
       dataField: "emailAddress",
       fieldSetting: {
         placeholder: "Enter Email Address",
-        allowSpace: true,
+        allowSpace: false,
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {

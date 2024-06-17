@@ -25,7 +25,7 @@ const ContactDetail = () => {
   const { customerId, setEmailAddressData, setContactMainModal, setContactId, setPhoneNumberData } = useContext(BasicDetailContext);
 
   //** API Call's */
-  const [GetContactList, { isLoading,isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetContactByCustomerIdQuery();
+  const [GetContactList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetContactByCustomerIdQuery();
   const [getAllContactTypes, { isFetching: isGetAllContactTypesFetching, isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   //** UseEffect */
@@ -106,7 +106,7 @@ const ContactDetail = () => {
         rightButton={true}
         buttonText="Add"
         titleButtonClick={handleToggleModal}>
-        <ManageContactList handleEdit={handleEdit} modifyContactData={modifyContactData} isLoading={isLoading} />
+        <ManageContactList handleEdit={handleEdit} modifyContactData={modifyContactData} isLoading={isGetContactFetching} />
       </CardSection>
       <div className="sidebar-contact-model">
         <SidebarModel

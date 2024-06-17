@@ -48,7 +48,11 @@ const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit,
 
     useEffect(() => {
         if (isUpdateSuccess && isUpdateData) {
-            ToastService.success(isUpdateData.errorMessage);
+            if (isUpdateData.errorMessage.includes('exists')) {
+                ToastService.warning(isUpdateData.errorMessage);
+            } else {
+                ToastService.success(isUpdateData.errorMessage);
+            }
             onResetData();
             onSuccess();
         }
