@@ -25,6 +25,9 @@ const ViewCustomer = React.lazy(() => import('../../pages/customerDetail/ManageV
 const ManageAddCustomer = React.lazy(() => import('../../pages/customerDetail/ManageAddCustomer'));
 const AddEditContact = React.lazy(() => import('../../pages/customerDetail/features/contactDetail/Contact/AddEditContact'));
 
+const Suppliers = React.lazy(() => import('../../pages/supplierDetails/suppliers/Suppliers'));
+const ManageAddSupplier = React.lazy(() => import('../../pages/supplierDetails/addSupplier/ManageAddSupplier'));
+
 
 export const ComponentNavigation = [
   {
@@ -253,5 +256,26 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'Edit Permissions',
     securityKey: securityKey.PERMISSIONMANAGEMENT
-  }
+  },
+  {
+    id: 'addSupplier',
+    path: '/addSupplier',
+    exact: true,
+    title: 'Add Supplier',
+    component: ManageAddSupplier,
+    hasParams: false,
+    text: 'Add Supplier',
+    securityKey: ""
+  },
+  {
+    id: 'Suppliers',
+    path: '/Suppliers',
+    exact: true,
+    title: 'Suppliers',
+    component: Suppliers,
+    hasParams: false,
+    text: 'Suppliers',
+    securityKey: ""
+  },
+
 ];
