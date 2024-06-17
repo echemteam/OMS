@@ -3,7 +3,7 @@ import { encryptAES } from "../../services/CryptoService";
 
 // const isEncryptionEnabled = process.env.REACT_APP_IsEncryption;
 
-const isEncryptionEnabled = false;
+const isEncryptionEnabled = true;
 
 export const transformRequest = (data) => {
     if (isEncryptionEnabled) {
