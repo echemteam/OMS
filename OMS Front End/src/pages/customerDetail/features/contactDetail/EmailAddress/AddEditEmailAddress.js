@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 //** Lib's */
+import { Message } from '../Util/ContactMessages';
 import Buttons from '../../../../../components/ui/button/Buttons';
 import { addEditEmailFormData } from './config/AddEditEmailForm.data';
+import { addData, updateData } from '../Util/ContactEmailAddressUtil';
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import ToastService from '../../../../../services/toastService/ToastService';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
@@ -13,8 +15,8 @@ const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit,
 
     //** State */
     const ref = useRef();
-    const { contactId } = useContext(BasicDetailContext);
     const [formData, setFormData] = useState(addEditEmailFormData);
+    const { contactId, emailAddressData, setEmailAddressData } = useContext(BasicDetailContext);
 
     //** API Call's */
     const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddContactEmailMutation();
@@ -23,14 +25,10 @@ const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit,
     //** Handle Changes */
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
-        if (data && !data.emailId) {
-            let request = {
-                ...data,
-                contactId: contactId
-            }
-            add(request);
-        } else if (data && data.emailId) {
-            update(data);
+        if (data && !data.id) {
+            addData(data, contactId, emailAddressData, setEmailAddressData, Message.EmailAdded, Message.EmailMaxLength, Message.DuplicateEmail, onResetData, onSuccess);
+        } else if (data && data.id) {
+            updateData(data, emailAddressData, setEmailAddressData, Message.EmailUpdated, Message.DuplicateEmail, Message.InvalidData, onResetData, onSuccess);
         }
     };
 

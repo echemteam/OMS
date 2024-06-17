@@ -7,12 +7,12 @@ import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel
 import { contactTransformData } from "../../../../../utils/TransformData/TransformAPIData";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
-import { useLazyGetAllContactTypesQuery, useLazyGetContactByCustomerIdQuery } from "../../../../../app/services/contactAPI";
+import { useLazyGetAllContactTypesQuery } from "../../../../../app/services/contactAPI";
 //** Component's */
 const AddEditContact = React.lazy(() => import("./AddEditContact"));
 const ManageContactList = React.lazy(() => import("./ManageContactList"));
 
-const ContactDetail = () => {
+const ContactDetail = ({ getContactByIdQuery, useAddEditContactMutation }) => {
 
   //** State */
   const childRef = useRef();
@@ -25,7 +25,7 @@ const ContactDetail = () => {
   const { customerId, setEmailAddressData, setContactMainModal, setContactId, setPhoneNumberData } = useContext(BasicDetailContext);
 
   //** API Call's */
-  const [GetContactList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetContactByCustomerIdQuery();
+  const [GetContactList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = getContactByIdQuery();
   const [getAllContactTypes, { isFetching: isGetAllContactTypesFetching, isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   //** UseEffect */
@@ -116,7 +116,7 @@ const ContactDetail = () => {
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}>
           <AddEditContact onSidebarClose={onSidebarClose} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} addRef={addRef}
-            isAddModelOpen={isAddModelOpen} onGetContactList={onGetContactList} />
+            isAddModelOpen={isAddModelOpen} onGetContactList={onGetContactList} useAddEditContactMutation={useAddEditContactMutation} />
         </SidebarModel>
       </div>
     </>

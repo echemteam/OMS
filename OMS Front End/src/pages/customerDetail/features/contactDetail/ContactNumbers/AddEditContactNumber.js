@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 //** Lib's */
+import { Message } from '../Util/ContactMessages';
 import Buttons from '../../../../../components/ui/button/Buttons';
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import { addEditContactsFormData } from './config/AddEditContactsForm.data';
 import ToastService from '../../../../../services/toastService/ToastService';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
+import { addPhoneNumberData, updatePhoneNumberData } from '../Util/ContactPhoneNumberUtil';
 import BasicDetailContext from '../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
 //** Service's */
 import { useAddContactPhoneMutation, useUpdateContactPhoneMutation } from '../../../../../app/services/phoneNumberAPI';
@@ -14,7 +16,7 @@ const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEd
     //** State */
     const ref = useRef();
     const [formData, setFormData] = useState(addEditContactsFormData);
-    const { contactId, allCountries } = useContext(BasicDetailContext);
+    const { contactId, allCountries, setPhoneNumberData, phoneNumberData } = useContext(BasicDetailContext);
 
     //** API Call's */
     const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddContactPhoneMutation();
@@ -24,16 +26,10 @@ const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEd
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
         if (data) {
-            let request = {
-                ...data,
-                phoneCode: data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode,
-                contactId: contactId,
-                phoneTypeId: 1
-            }
-            if (!data.phoneId) {
-                add(request);
-            } else if (data.phoneId) {
-                update(request);
+            if (!data.id) {
+                addPhoneNumberData(data, contactId, phoneNumberData, setPhoneNumberData, Message.ContactNumberAdded, Message.ContactNumberMaxLength, Message.ContactNumberDuplicate, onResetData, onSuccess);
+            } else if (data.id) {
+                updatePhoneNumberData(data, phoneNumberData, setPhoneNumberData, Message.ContactNumberUpdated, Message.ContactNumberDuplicate, onResetData, onSuccess);
             }
         }
     };

@@ -6,12 +6,12 @@ import { contactDetailFormData } from "./config/ContactDetailForm.data";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
-import { useAddEditContactMutation } from "../../../../../app/services/contactAPI";
+// import { useAddEditContactMutation } from "../../../../../app/services/contactAPI";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, isEdit, editRef, onGetContactList }) => {
+const AddEditContact = forwardRef(({ useAddEditContactMutation, isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, editRef, onGetContactList }) => {
 
   //** State */
   const ref = useRef();

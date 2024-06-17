@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
 import ToastService from "../../services/toastService/ToastService";
 import { StatusEnums } from "../../common/features/Enums/StatusEnums";
+import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetContactByCustomerIdQuery } from "../../app/services/contactAPI";
 //** Component's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
 const AddressDetail = React.lazy(() => import("./features/addressDetail/AddressDetail"));
@@ -18,7 +19,7 @@ const ContactDetail = React.lazy(() => import("./features/contactDetail/Contact/
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage, addCustomer , customerId } = useContext(BasicDetailContext);
+  const { activeTab, setActiveTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
   const [updateCustomerStatus, { isLoading: updateCustomerStatusLoading, isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
 
   const onSubmit = (e) => {
@@ -47,7 +48,7 @@ const AddCustomer = () => {
     {
       label: "Contact",
       subLabel: "Enter Customer Contact Details",
-      content: <ContactDetail />,
+      content: <ContactDetail getContactByIdQuery={useLazyGetContactByCustomerIdQuery} useAddEditContactMutation={useAddEditContactMutation}/>,
       tab: TabEnum.Contact
     },
     {
