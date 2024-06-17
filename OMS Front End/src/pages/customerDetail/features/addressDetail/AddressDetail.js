@@ -216,6 +216,7 @@ const AddressDetail = (props) => {
     if (isAddAddressSuccess && isAddAddressData) {
       if (isAddAddressData.errorMessage.includes('exists')) {
         ToastService.warning(isAddAddressData.errorMessage);
+        getAddresssByCustomerId(customerId)
         return;
       }
       onreset()
@@ -230,6 +231,7 @@ const AddressDetail = (props) => {
     if (isUpdateAddAddressSuccess && isUpdateAddAddressData) {
       if (isUpdateAddAddressData.errorMessage.includes('exists')) {
         ToastService.warning(isUpdateAddAddressData.errorMessage);
+        getAddresssByCustomerId(customerId)
         return;
       }
       onreset()
