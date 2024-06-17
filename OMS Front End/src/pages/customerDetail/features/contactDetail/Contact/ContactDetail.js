@@ -25,7 +25,7 @@ const ContactDetail = () => {
   const { customerId, setEmailAddressData, setContactMainModal, setContactId, setPhoneNumberData } = useContext(BasicDetailContext);
 
   //** API Call's */
-  const [GetContactList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetContactByCustomerIdQuery();
+  const [GetContactList, { isLoading,isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetContactByCustomerIdQuery();
   const [getAllContactTypes, { isFetching: isGetAllContactTypesFetching, isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   //** UseEffect */
@@ -91,6 +91,11 @@ const ContactDetail = () => {
     customerId && GetContactList(customerId);
   };
 
+  //** Get Contact List */
+  const onGetContactList = () => {
+    customerId && GetContactList(customerId);
+  };
+
   return (
     <>
       <CardSection
@@ -101,7 +106,7 @@ const ContactDetail = () => {
         rightButton={true}
         buttonText="Add"
         titleButtonClick={handleToggleModal}>
-        <ManageContactList handleEdit={handleEdit} modifyContactData={modifyContactData} />
+        <ManageContactList handleEdit={handleEdit} modifyContactData={modifyContactData} isLoading={isLoading} />
       </CardSection>
       <div className="sidebar-contact-model">
         <SidebarModel
@@ -111,7 +116,7 @@ const ContactDetail = () => {
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}>
           <AddEditContact onSidebarClose={onSidebarClose} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} addRef={addRef}
-            isAddModelOpen={isAddModelOpen} />
+            isAddModelOpen={isAddModelOpen} onGetContactList={onGetContactList} />
         </SidebarModel>
       </div>
     </>

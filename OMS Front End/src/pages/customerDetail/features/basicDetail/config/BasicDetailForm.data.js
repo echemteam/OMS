@@ -1,4 +1,17 @@
+import { securityKey } from "../../../../../data/SecurityKey";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
+
+// export const securityKeys = {
+//   ADD: securityKey.ADDCUSTOMER,
+//   EDIT: securityKey.EDITCUSTOMER,
+//   // DELETE: securityKey.DELETECUSTOMER
+//   // BLOCK: securityKey.BLOCKCUSTOMER
+//   // FREEZE: securityKey.FREEZECUSTOMER
+//   // UNFREEZE: securityKey.DISABLECUSTOMER
+//   // UNBLOCK: securityKey.DISABLECUSTOMER
+//   // ACTIVE: securityKey.ACTIVECUSTOMER
+// };
+
 
 export const basicDetailFormDataHalf = {
   initialState: { name: "", groupTypeId: "", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty:false },
@@ -38,13 +51,13 @@ export const basicDetailFormDataHalf = {
       },
     },
     {
-      id: "territoryId",
-      lable: "Territory :",
-      Field_Name: "Territory",
+      id: "countryId",
+      lable: "Country :",
+      Field_Name: "Country",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "territoryId",
+      dataField: "countryId",
       fieldSetting: {
-        placeholder: "Select Territory",
+        placeholder: "Select Country",
         allowSpace: true,
       },
       validation: [{ type: "require" }],
@@ -53,13 +66,13 @@ export const basicDetailFormDataHalf = {
       },
     },
     {
-      id: "countryId",
-      lable: "Country :",
-      Field_Name: "Country",
+      id: "territoryId",
+      lable: "Territory :",
+      Field_Name: "Territory",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "countryId",
+      dataField: "territoryId",
       fieldSetting: {
-        placeholder: "Select Country",
+        placeholder: "Select Territory",
         allowSpace: true,
       },
       validation: [{ type: "require" }],

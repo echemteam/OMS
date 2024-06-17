@@ -4,6 +4,11 @@ import { AppIcons } from "../../../../../data/appIcons";
 
 const ContactCard = ({ childData, handleEdit }) => {
 
+  // Split the email addresses and phone numbers into arrays
+  const emailAddresses = childData.emailAddress.split(',');
+  const phoneNumbers = childData.phoneNumber.split(',');
+
+
   return (
     <>
       {childData &&
@@ -18,14 +23,30 @@ const ContactCard = ({ childData, handleEdit }) => {
                 <b>{childData.firstName + ' ' + childData.lastName}</b>
               </span>
             </div>
-            <span className="label-txt">
+            <div className="label-txt d-flex">
               <b>Email</b>
-              <strong>:</strong>&nbsp;{childData.emailAddress}
-            </span>
-            <span className="label-txt">
-              <b>Contact No.</b>
-              <strong>:</strong>&nbsp;{childData.phoneNumber}
-            </span>
+              <strong>:</strong>
+              <div className="fix-data">
+                {emailAddresses.map((email, index) => (
+                  <div key={index}>
+                    &nbsp;{email.trim()}
+                    {index < emailAddresses.length - 1 && ','}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="label-txt mt-2 d-flex">
+              <b>Contact No</b>
+              <strong>:</strong>
+              <div className="fix-data">
+                {phoneNumbers.map((pair, index) => (
+                  <div key={index}>
+                    &nbsp;{pair.trim()}
+                    {index < phoneNumbers.length - 1 && ','}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
           <div className="edit-delete-button">
             <button onClick={() => handleEdit(childData)} className="edit-btn">

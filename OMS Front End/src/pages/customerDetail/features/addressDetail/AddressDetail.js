@@ -16,8 +16,8 @@ const AddressDetail = (props) => {
   const userFormRef = useRef();
   const [isModelOpen, setisModelOpen] = useState(false);
   const [formData, setFormData] = useState(addressFormData);
-  const [selectedState, setSelectedState] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
+  // const [selectedState, setSelectedState] = useState(null);
+  // const [selectedCity, setSelectedCity] = useState(null);
   const [addressData, setAddressData] = useState();
   const [updateSetData, setUpdateSetData] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
@@ -113,14 +113,26 @@ const AddressDetail = (props) => {
 
   useEffect(() => {
     if (!isGetAllStatesFetching && isGetAllStatesSucess && allGetAllStatesData) {
-      setSelectedState(allGetAllStatesData)
+      const getData = allGetAllStatesData.map(item => ({
+        value: item.stateId,
+        label: item.name
+      }))
+      const dropdownField = addressFormData.formFields.find(item => item.dataField === "stateId");
+      dropdownField.fieldSetting.options = getData;
+      // setSelectedState(allGetAllStatesData)
       setShouldRerenderFormCreator(prevState => !prevState);
     }
   }, [isGetAllStatesFetching, isGetAllStatesSucess, allGetAllStatesData])
 
   useEffect(() => {
     if (!isGetAllCitiesFetching && isGetAllCitiesSucess && allGetAllCitiesData) {
-      setSelectedCity(allGetAllCitiesData)
+      const getData = allGetAllCitiesData.map(item => ({
+        value: item.cityId,
+        label: item.name
+      }))
+      const dropdownField = addressFormData.formFields.find(item => item.dataField === "cityId");
+      dropdownField.fieldSetting.options = getData;
+      // setSelectedCity(allGetAllCitiesData)
       setShouldRerenderFormCreator(prevState => !prevState);
     }
   }, [isGetAllCitiesFetching, isGetAllCitiesSucess, allGetAllCitiesData])
@@ -130,28 +142,38 @@ const AddressDetail = (props) => {
   };
 
   const handleSetData = (data) => {
-    setUpdateSetData(data)
-    const setDataArray = addressData?.filter(x => x.addressId === data)
-    if (setDataArray && setDataArray.length > 0) {
-      const setData = setDataArray[0];
-      let req = {
-        customerId: customerId,
-        addressTypeId: setData.addressTypeId,
-        addressLine1: setData.addressLine1,
-        addressLine2: setData.addressLine2,
-        addressLine3: setData.addressLine3,
-        addressLine4: setData.addressLine4,
-        addressLine5: setData.addressLine5,
-        countryId: setData.countryId,
-        stateId: setData.stateId,
-        cityId: setData.cityId,
-        zipCode: setData.zipCode
-      }
-      setFormData({
-        ...formData,
-        initialState: req
-      });
+    setUpdateSetData(data.addressId)
+    let form = { ...formData };
+    if (data.countryId) {
+      const dataValue = allGetAllStatesData?.filter(item => item.countryId === data.countryId).map(item => ({
+        value: item.stateId,
+        label: item.name,
+      }));
+      const dropdownFieldIndex = form.formFields.findIndex(item => item.dataField === "stateId");
+      form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
     }
+    if (data.stateId) {
+      const dataValue = allGetAllCitiesData?.filter(item => item.stateId === data.stateId).map(item => ({
+        value: item.cityId,
+        label: item.name,
+      }));
+      const dropdownFieldIndex = form.formFields.findIndex(item => item.dataField === "cityId");
+      form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
+    }
+    form.initialState = {
+      customerId: customerId,
+      addressTypeId: data.addressTypeId,
+      addressLine1: data.addressLine1,
+      addressLine2: data.addressLine2,
+      addressLine3: data.addressLine3,
+      addressLine4: data.addressLine4,
+      addressLine5: data.addressLine5,
+      countryId: data.countryId,
+      stateId: data.stateId,
+      cityId: data.cityId,
+      zipCode: data.zipCode
+    }
+    setFormData(form)
   }
 
   const onSidebarClose = () => {
@@ -161,32 +183,32 @@ const AddressDetail = (props) => {
 
   const onreset = () => {
     let restData = { ...addressFormData };
-    restData.initialState = { ...formData };
+    restData.initialState = { ...addressFormData.initialState };
     setFormData(restData);
-    setUpdateSetData()
+    setUpdateSetData(null)
   }
 
   const handleChangeDropdownList = (data, dataField) => {
     const manageData = { ...formData }
     if (dataField === 'countryId') {
-      const dataValue = selectedState?.filter(item => item.countryId === data.value).map(item => ({
+      const dataValue = allGetAllStatesData?.filter(item => item.countryId === data.value).map(item => ({
         value: item.stateId,
         label: item.name,
       }));
       const dropdownFieldIndex = manageData.formFields.findIndex(item => item.dataField === "stateId");
       manageData.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
       manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
-      userFormRef.current.updateFormFieldValue({ countryId: data.value , stateId: null });
+      userFormRef.current.updateFormFieldValue({ countryId: data.value, stateId: null });
     }
     else if (dataField === 'stateId') {
-      const dataValue = selectedCity?.filter(item => item.stateId === data.value).map(item => ({
+      const dataValue = allGetAllCitiesData?.filter(item => item.stateId === data.value).map(item => ({
         value: item.cityId,
         label: item.name,
       }));
       const dropdownFieldIndex = manageData.formFields.findIndex(item => item.dataField === "cityId");
       manageData.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
       manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
-      userFormRef.current.updateFormFieldValue({ stateId: data.value , cityId: null });
+      userFormRef.current.updateFormFieldValue({ stateId: data.value, cityId: null });
     }
   }
 

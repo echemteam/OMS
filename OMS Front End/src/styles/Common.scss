@@ -712,7 +712,6 @@ a {
   color: #ffffff;
 }
 
-
 // Tab Section Start
 .tab-section {
   margin-bottom: 30px;
@@ -1030,12 +1029,12 @@ a {
 
   .add-desc-part {
     padding: 10px;
-
+    padding-bottom: 0;
     .address-card {
       box-shadow: 0px 0px 17px -10px var(--textColorLight);
       padding: 10px;
       border-radius: 12px;
-      margin-bottom: 15px;
+      margin-bottom: 10px !important;
       position: relative;
       min-height: 125px;
 
@@ -1044,6 +1043,7 @@ a {
       }
 
       .add-line {
+        width: 92%;
         display: flex;
         flex-direction: column;
 
@@ -1277,6 +1277,8 @@ a {
         }
 
         .document-action {
+          display: flex;
+          align-items: center;
           span {
             &.action-icon {
               margin-right: 10px;
@@ -1360,11 +1362,11 @@ a {
     }
   }
 
-  @media only screen and (max-width: 1560px) {
-    .card {
-      padding: 15px;
-    }
-  }
+  // @media only screen and (max-width: 1560px) {
+  //   .card {
+  //     padding: 15px;
+  //   }
+  // }
 
   @media only screen and (max-width: 1366px) {
     .mb-2 {
@@ -1501,7 +1503,7 @@ a {
   }
 }
 
-.view-icon{
+.view-icon {
   cursor: pointer !important;
 }
 
@@ -1515,4 +1517,16 @@ a {
   color: red;
   font-size: 20px;
   font-weight: lighter;
+}
+
+.label-txt {
+  b {
+    min-width: 100px;
+  }
+  .fix-data {
+    word-break: break-all;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 }

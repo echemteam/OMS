@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import { Accordion } from "react-bootstrap";
+import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 
 const AddressCard = ({ isAddEditModal, addressData, onHandleSetData }) => {
 
@@ -12,7 +13,7 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData }) => {
   };
 
   if (!Array.isArray(addressData) || addressData.length === 0) {
-    return <div className="no-address">No addresses available</div>;
+    return <div className="no-address"><NoRecordFound /></div>;
   }
 
   const groupedAddresses = addressData.reduce((acc, address) => {
@@ -60,7 +61,7 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData }) => {
                         </span>
                       </div>
                       <div className="edit-delete-button">
-                        <button onClick={() => handleEdit(address.addressId)} className="edit-btn">
+                        <button onClick={() => handleEdit(address)} className="edit-btn">
                           <Image imagePath={AppIcons.editThemeIcon} />
                         </button>
                       </div>
