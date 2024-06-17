@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../data/formFieldType";
 
 const LoginFormData = {
     name: "Login From",
-    initialState: { email: "kirtan@gmail.com", password: "Mol@1234" },
+    initialState: { email: "admin@gmail.com", password: "Mol@1234" },
     formFields: [
         {
             id: "email",
