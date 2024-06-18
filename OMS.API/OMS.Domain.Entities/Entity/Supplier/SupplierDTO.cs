@@ -44,6 +44,8 @@ namespace OMS.Domain.Entities.Entity.Supplier
 
         [Column("BillingCurrency")]
         public string? BillingCurrency { get; set; }
+        [Column("InActiveReason")]
+        public string? InActiveReason { get; set; }
 
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
@@ -65,5 +67,12 @@ namespace OMS.Domain.Entities.Entity.Supplier
 
         [Column("IsDeleted")]
         public bool? IsDeleted { get; set; }
+        [Column("Note")]
+        public string? Note { get; set; }
+
+        [Column("ApprovedAt")]
+        public DateTime? ApprovedAt { get; set; }
+        [Column("ApprovedBy")]
+        public short? ApprovedBy { get; set; }
     }
 }

@@ -32,6 +32,39 @@ namespace OMS.API.Controllers
             return APISucessResponce(addEditItem);
         }
 
+        [HttpGet("GetSupplierBasicInformationById")]
+        public async Task<IActionResult> GetSupplierBasicInformationById(int supplierId)
+        {
+            if (supplierId > 0)
+            {
+                var supplierDetails = await _serviceManager.supplierServices.GetSupplierBasicInformationById(supplierId).ConfigureAwait(true);
+                return APISucessResponce<object>(supplierDetails);
+            }
+            return APISucessResponce(supplierId);
+        }
+
+        [HttpPost("GetSuppliers")]
+        public async Task<IActionResult> GetSuppliers(GetSuppliersRequest queryRequest)
+        {
+            var suppliersList = await _serviceManager.supplierServices.GetSuppliers(queryRequest);
+            return APISucessResponce<object>(suppliersList);
+        }
+
+
+        [HttpPost("UpdateSupplierInActiveStatus")]
+        public async Task<IActionResult> UpdateSupplierInActiveStatus(UpdateSupplierInActiveStatusRequest requestData)
+        {
+            var updateItem = await _serviceManager.supplierServices.UpdateSupplierInActiveStatus(requestData, CurrentUserId);
+            return APISucessResponce(updateItem);
+        }
+
+        [HttpPost("UpdateSupplierApproveStatus")]
+        public async Task<IActionResult> UpdateSupplierApproveStatus(UpdateSupplierApproveStatusRequest requestData)
+        {
+            var updateItem = await _serviceManager.supplierServices.UpdateSupplierApproveStatus(requestData, CurrentUserId);
+            return APISucessResponce(updateItem);
+        }
+
         #endregion
     }
 }
