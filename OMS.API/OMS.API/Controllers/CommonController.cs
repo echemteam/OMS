@@ -106,6 +106,11 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
-
+        [HttpGet("GetAllSupplierType")]
+        public async Task<IActionResult> GetAllSupplierType()
+        {
+            List<GetAllSupplierTypeResponse> responseData = await _serviceManager.commonServices.GetAllSupplierType().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

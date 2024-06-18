@@ -14,6 +14,8 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDADDRESS = "AddAddress";
         const string GETADDRESSSBYCUSTOMERID = "GetAddresssByCustomerId";
         const string UPDATEADDADDRESS = "UpdateAddAddress";
+        const string ADDADDRESSFORCUSTOMER = "AddAddressForCustomer";
+        const string GETADDRESSSBYSUPPLIERID = "GetAddresssBySupplierId";
         #endregion
 
         public AddressRepository(DapperContext dapperContext) : base(dapperContext)
@@ -67,6 +69,16 @@ namespace OMS.Domain.Repository.Implementation
                 address.ZipCode,
                 address.UpdatedBy
             }, CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAddresssBySupplierIdResponse>> GetAddresssBySupplierId(int supplierId)
+        {
+            List<GetAddresssBySupplierIdResponse> getAddresssBySupplierIdResponse = await _context.GetList<GetAddresssBySupplierIdResponse>(GETADDRESSSBYSUPPLIERID, new
+            {
+                supplierId
+            }, commandType: CommandType.StoredProcedure);
+            return getAddresssBySupplierIdResponse;
+
         }
         #endregion
     }
