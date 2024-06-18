@@ -5,7 +5,7 @@ export const contactDetailFormData = {
   initialState: {
     firstName: "",
     lastName: "",
-    contactTypeId: 0,
+    contactTypeId: "",
   },
   formFields: [
     {

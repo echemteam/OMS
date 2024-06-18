@@ -7,7 +7,8 @@ export const addEditContactsFormData = {
   initialState: {
     phoneCode: '',
     phoneNumber: '',
-    phoneTypeId: 0
+    phoneTypeId: 0,
+    extension: ''
   },
   formFields: [
 
@@ -39,6 +40,22 @@ export const addEditContactsFormData = {
       validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-7 col-xl-7 col-md-7 mb-2 pl-0 border-left-r-0",
+      },
+    },
+    {
+      id: "extension",
+      lable: "Extension",
+      Field_Name: "Extension",
+      fieldType: FormFieldTypes.NUMERIC,
+      dataField: "extension",
+      fieldSetting: {
+        placeholder: "Enter Extension",
+        allowSpace: false,
+        minLength: 1,
+        maxLength: 6,
+      },
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
       },
     },
   ],

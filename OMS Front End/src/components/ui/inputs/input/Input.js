@@ -68,6 +68,11 @@ const Input = ({
 
   const handleInputChange = (e) => {
     if (onChange) {
+      if (type === TextInputType.NUMBER && maxLength) {
+        let inputValue = e.target.value;
+        inputValue = inputValue.slice(0, maxLength);
+        e.target.value = inputValue;
+      }
       onChange(e);
       const unMaskedValue = e.target.value.replace(/\D/g, '')
       setFormat(unMaskedValue.length >= minValueLength ? extendedFormat : maskFormat);
