@@ -21,7 +21,7 @@ const AddressDetail = (props) => {
   const [addressData, setAddressData] = useState();
   const [updateSetData, setUpdateSetData] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-  const { customerId, setAddressId, setAddressDataLength } = useContext(BasicDetailContext);
+  const { customerId } = useContext(BasicDetailContext);
 
   const [getAllAddressTypes, {
     isFetching: isGetAllAddressTypesFetching,
@@ -84,8 +84,6 @@ const AddressDetail = (props) => {
   useEffect(() => {
     if (!isGetAddresssByCustomerIdFetching && isGetAddresssByCustomerId && GetAddresssByCustomerIdData) {
       setAddressData(GetAddresssByCustomerIdData)
-      setAddressDataLength(GetAddresssByCustomerIdData.length)
-      // setAddressId(GetAddresssByCustomerIdData);
     }
   }, [isGetAddresssByCustomerIdFetching, isGetAddresssByCustomerId, GetAddresssByCustomerIdData]);
 
@@ -221,7 +219,6 @@ const AddressDetail = (props) => {
       }
       onreset()
       ToastService.success(isAddAddressData.errorMessage);
-      setAddressId(isAddAddressData.keyValue);
       getAddresssByCustomerId(customerId)
       onSidebarClose()
     }
@@ -288,7 +285,7 @@ const AddressDetail = (props) => {
         buttonText="Add"
         titleButtonClick={handleToggleModal}
       >
-        <AddressCard isAddEditModal={handleToggleModal} addressData={addressData} onHandleSetData={handleSetData} isGetByIdLoading={isGetAddresssByCustomerIdFetching}/>
+        <AddressCard isAddEditModal={handleToggleModal} addressData={addressData} onHandleSetData={handleSetData} isGetByIdLoading={isGetAddresssByCustomerIdFetching} />
       </CardSection>
 
       <SidebarModel

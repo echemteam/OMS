@@ -1,10 +1,24 @@
-import React from 'react'
-import ContactDetail from '../../../../customerDetail/features/contactDetail/Contact/ContactDetail'
+import React, { useContext, useEffect } from 'react'
+import BasicDetailContext from '../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
+//** Service */
 import { useAddEditContactMutation, useLazyGetContactByCustomerIdQuery } from '../../../../../app/services/contactAPI'
+//** Component's */
+const ContactDetail = React.lazy(() => import("../../../../customerDetail/features/contactDetail/Contact/ContactDetail"));
 
 const SupplierContactDetail = () => {
+
+  const { customerId, setMainId } = useContext(BasicDetailContext);
+
+  useEffect(() => {
+    if (customerId > 0) {
+      //****  If we have supplier page we have set main id as supplierId. and If we have customer page we have set main id as customerId   */
+      setMainId(customerId);
+    }
+  }, [customerId]);
+
   return (
-    <ContactDetail getContactByIdQuery={useLazyGetContactByCustomerIdQuery} useAddEditContactMutation={useAddEditContactMutation} />
+    //** Also, We replace the API for the customer and supplier */
+    <ContactDetail isSupplier={true} getContactByIdQuery={useLazyGetContactByCustomerIdQuery} addEditContactMutation={useAddEditContactMutation} />
   )
 }
 

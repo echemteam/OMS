@@ -12,7 +12,7 @@ import { useLazyGetAllContactTypesQuery } from "../../../../../app/services/cont
 const AddEditContact = React.lazy(() => import("./AddEditContact"));
 const ManageContactList = React.lazy(() => import("./ManageContactList"));
 
-const ContactDetail = ({ getContactByIdQuery, useAddEditContactMutation }) => {
+const ContactDetail = ({ getContactByIdQuery, addEditContactMutation }) => {
 
   //** State */
   const childRef = useRef();
@@ -22,7 +22,7 @@ const ContactDetail = ({ getContactByIdQuery, useAddEditContactMutation }) => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [isAddModelOpen, setIsAddModelOpen] = useState(false);
   const [modifyContactData, setModifyContactData] = useState([]);
-  const { customerId, setEmailAddressData, setContactMainModal, setContactId, setPhoneNumberData } = useContext(BasicDetailContext);
+  const { mainId, setEmailAddressData, setContactMainModal, setContactId, setPhoneNumberData } = useContext(BasicDetailContext);
 
   //** API Call's */
   const [GetContactList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = getContactByIdQuery();
@@ -31,8 +31,8 @@ const ContactDetail = ({ getContactByIdQuery, useAddEditContactMutation }) => {
   //** UseEffect */
   useEffect(() => {
     getAllContactTypes();
-    customerId && GetContactList(customerId);
-  }, [customerId]);
+    mainId && GetContactList(mainId);
+  }, [mainId]);
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetContactData) {
@@ -88,12 +88,12 @@ const ContactDetail = ({ getContactByIdQuery, useAddEditContactMutation }) => {
 
   //** Success */
   const onSuccess = () => {
-    customerId && GetContactList(customerId);
+    mainId && GetContactList(mainId);
   };
 
   //** Get Contact List */
   const onGetContactList = () => {
-    customerId && GetContactList(customerId);
+    mainId && GetContactList(mainId);
   };
 
   return (
@@ -116,7 +116,7 @@ const ContactDetail = ({ getContactByIdQuery, useAddEditContactMutation }) => {
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}>
           <AddEditContact onSidebarClose={onSidebarClose} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} addRef={addRef}
-            isAddModelOpen={isAddModelOpen} onGetContactList={onGetContactList} useAddEditContactMutation={useAddEditContactMutation} />
+            isAddModelOpen={isAddModelOpen} onGetContactList={onGetContactList} addEditContactMutation={addEditContactMutation} />
         </SidebarModel>
       </div>
     </>
