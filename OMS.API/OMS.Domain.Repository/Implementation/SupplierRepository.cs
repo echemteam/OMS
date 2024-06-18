@@ -1,9 +1,6 @@
-﻿using OMS.Domain.Entities.API.Request.Customers;
-using OMS.Domain.Entities.API.Request.Supplier;
-using OMS.Domain.Entities.API.Response.Customers;
+﻿using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Entities.Entity.Supplier;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -13,7 +10,7 @@ using System.Data;
 
 namespace OMS.Domain.Repository.Implementation
 {
-    internal class SupplierRepository : BaseRepository<Addresses>, ISupplierRepository
+    internal class SupplierRepository : BaseRepository<Suppliers>, ISupplierRepository
     {
         #region SP Name
         const string ADDEDITSUPPLIERBASICINFORMATION = "AddEditSupplierBasicInformation";
@@ -21,6 +18,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETSUPPLIERS = "GetSuppliers";
         const string UPDATECUSTOMERINACTIVESTATUS = "UpdateSupplierInActiveStatus";
         const string UPDATESUPPLIERAPPROVESTATUS = "UpdateSupplierApproveStatus";
+        const string ADDADDRESSFORSUPPLIER = "AddAddressForSupplier";
+        const string UPDATEADDRESSFORSUPPLIER = "UpdateAddressForSupplier";
         #endregion
 
         public SupplierRepository(DapperContext dapperContext) : base(dapperContext)
@@ -42,6 +41,7 @@ namespace OMS.Domain.Repository.Implementation
                 supplier.CountryId,
                 supplier.TaxId,
                 supplier.Note,
+                supplier.EmailAddress,
                 supplier.CreatedBy
             }, CommandType.StoredProcedure);
         }
@@ -82,6 +82,32 @@ namespace OMS.Domain.Repository.Implementation
             {
                 supplier.SupplierId,
                 supplier.ApprovedBy,
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> AddAddressForSupplier(AddAddressForSupplierRequest requestData, short createdBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDADDRESSFORSUPPLIER, new
+            {
+                requestData.SupplierId,
+                requestData.AddressId,
+                requestData.AddressTypeId,
+                requestData.IsPreferredBilling,
+                requestData.IsPreferredShipping,
+                createdBy
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> UpdateAddressForSupplier(UpdateAddressForSupplierRequest requestData, short updatedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEADDRESSFORSUPPLIER, new
+            {
+                requestData.SupplierId,
+                requestData.AddressId,
+                requestData.AddressTypeId,
+                requestData.IsPreferredBilling,
+                requestData.IsPreferredShipping,
+                updatedBy
             }, CommandType.StoredProcedure);
         }
         #endregion

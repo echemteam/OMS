@@ -16,5 +16,6 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllDocumentTypesResponse>> GetAllDocumentTypes();
         Task<List<GetAllPaymentTermsResponse>> GetAllPaymentTerms();
         Task<List<GetAllPaymentMethodResponse>> GetAllPaymentMethod();
+        Task<List<GetAllSupplierTypeResponse>> GetAllSupplierType();
     }
 }

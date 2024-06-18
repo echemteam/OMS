@@ -53,6 +53,13 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(responseData);
         }
+
+        [HttpGet("GetAddresssBySupplierId")]
+        public async Task<IActionResult> GetAddresssBySupplierId(int supplierId)
+        {
+            List<GetAddresssBySupplierIdResponse> responseData = await _serviceManager.addressServices.GetAddresssBySupplierId(supplierId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
         #endregion
     }
 }

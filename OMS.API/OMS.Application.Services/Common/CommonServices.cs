@@ -76,5 +76,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllPaymentMethod();
         }
+        public Task<List<GetAllSupplierTypeResponse>> GetAllSupplierType()
+        {
+            return repositoryManager.commonRepository.GetAllSupplierType();
+        }
     }
 }

@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OMS.Domain.Entities.Entity.Supplier
+namespace OMS.Prisitance.Entities.Entities
 {
-    public class SupplierDTO : BaseSuppliersDTO, ISupplier, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    [Table("Suppliers")]
+    public class Suppliers
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -67,14 +68,5 @@ namespace OMS.Domain.Entities.Entity.Supplier
 
         [Column("IsDeleted")]
         public bool? IsDeleted { get; set; }
-        [Column("Note")]
-        public string? Note { get; set; }
-        [Column("EmailAddress")]
-        public string? EmailAddress { get; set; }
-
-        [Column("ApprovedAt")]
-        public DateTime? ApprovedAt { get; set; }
-        [Column("ApprovedBy")]
-        public short? ApprovedBy { get; set; }
     }
 }

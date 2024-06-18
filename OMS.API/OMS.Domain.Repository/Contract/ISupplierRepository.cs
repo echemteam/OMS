@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Request.Supplier;
+﻿using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Supplier;
@@ -13,5 +14,7 @@ namespace OMS.Domain.Repository.Contract
         Task<EntityList<GetSuppliersResponse>> GetSuppliers(GetSuppliersRequest queryRequest);
         Task<AddEntityDTO<int>> UpdateSupplierInActiveStatus(SupplierDTO supplier);
         Task<AddEntityDTO<int>> UpdateSupplierApproveStatus(SupplierDTO supplier);
+        Task<AddEntityDTO<int>> AddAddressForSupplier(AddAddressForSupplierRequest requestData, short CurrentUserId);
+        Task<AddEntityDTO<int>> UpdateAddressForSupplier(UpdateAddressForSupplierRequest requestData, short updatedBy);
     }
 }

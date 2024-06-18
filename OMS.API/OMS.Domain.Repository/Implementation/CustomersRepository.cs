@@ -1,5 +1,6 @@
 ﻿using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Customers;
+using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
@@ -21,6 +22,8 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATECUSTOMERAPPROVESTATUS = "UpdateCustomerApproveStatus";
         const string UPDATECUSTOMERINACTIVESTATUS = "UpdateCustomerInActiveStatus";
         const string UPDATECUSTOMERSTATUS = "UpdateCustomerStatus";
+        const string ADDADDRESSFORCUSTOMER = "AddAddressForCustomer";
+        const string UPDATEADDRESSFORCUSTOMER = "UpdateAddressForCustomer";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -122,6 +125,30 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
+        public async Task<AddEntityDTO<int>> AddAddressForCustomer(AddAddressForCustomerRequest requestData, short createdBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDADDRESSFORCUSTOMER, new
+            {
+                requestData.CustomerId,
+                requestData.AddressId,
+                requestData.AddressTypeId,
+                requestData.IsPreferredBilling,
+                requestData.IsPreferredShipping,
+                createdBy
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDTO<int>> UpdateAddressForCustomer(UpdateAddressForCustomerRequest requestData, short updatedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEADDRESSFORCUSTOMER, new
+            {
+                requestData.CustomerId,
+                requestData.AddressId,
+                requestData.AddressTypeId,
+                requestData.IsPreferredBilling,
+                requestData.IsPreferredShipping,
+                updatedBy
+            }, CommandType.StoredProcedure);
+        }
         #endregion
     }
 }
