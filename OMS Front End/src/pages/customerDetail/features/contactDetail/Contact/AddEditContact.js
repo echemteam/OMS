@@ -11,7 +11,7 @@ import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicD
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ addEditContactMutation, isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, editRef, onGetContactList }) => {
+const AddEditContact = forwardRef(({ mainId, addEditContactMutation, isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, editRef, onGetContactList }) => {
 
   //** State */
   const ref = useRef();
@@ -19,7 +19,7 @@ const AddEditContact = forwardRef(({ addEditContactMutation, isAddModelOpen, add
   const [formData, setFormData] = useState(contactDetailFormData);
   const [customerContactId, setCustomerContactId] = useState(0);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const { mainId, contactId, setContactId } = useContext(BasicDetailContext);
+  const { contactId, setContactId } = useContext(BasicDetailContext);
 
   //** API Call's */
   const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
