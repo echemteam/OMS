@@ -69,6 +69,8 @@ namespace OMS.Domain.Entities.Entity.Supplier
         public bool? IsDeleted { get; set; }
         [Column("Note")]
         public string? Note { get; set; }
+        [Column("EmailAddress")]
+        public string? EmailAddress { get; set; }
 
         [Column("ApprovedAt")]
         public DateTime? ApprovedAt { get; set; }
