@@ -15,8 +15,7 @@ const ManageContactList = ({ handleEdit, modifyContactData, isLoading }) => {
             {!isLoading ?
                 <>
                     {hasData ?
-                        <AccordionCollapse accordionList={modifyContactData} contentTypeId={contentType.CONTACT
-                        } handleEdit={handleEdit} />
+                        <AccordionCollapse accordionList={modifyContactData} contentTypeId={contentType.CONTACT} handleEdit={handleEdit} />
                         : <NoRecordFound />}
                 </>
                 : <DataLoader />}

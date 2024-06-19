@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+//** Lib's */
+import { Message } from "../Util/ContactMessages";
+import { deleteData } from "../Util/ContactEmailAddressUtil";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
-import { useDeleteContactEmailMutation, useLazyGetEmailByContactIdQuery } from "../../../../../app/services/emailAddressAPI";
+import { useDeleteContactEmailMutation } from "../../../../../app/services/emailAddressAPI";
 //** Component's */
 const EmailAddressList = React.lazy(() => import("./EmailAddressList"));
 const AddEditEmailModal = React.lazy(() => import("./AddEditEmailAddress"));
@@ -16,27 +19,16 @@ const ManageEmailAddress = ({ onGetContactList }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
-    const { contactId, setEmailAddressData } = useContext(BasicDetailContext);
+    const { contactId, setEmailAddressData, emailAddressData } = useContext(BasicDetailContext);
 
     //** API Call's */
-    const [getEmailList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetEmailByContactIdQuery();
     const [deleteContactEmail, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactEmailMutation();
 
     //** UseEffect */
-    useEffect(() => {
-        contactId && getEmailList(contactId);
-    }, [contactId])
-
-    useEffect(() => {
-        if (isGetContactSucess && isGetContactData && !isGetContactFetching) {
-            setEmailAddressData(isGetContactData);
-        }
-    }, [isGetContactSucess, isGetContactData, isGetContactFetching]);
 
     useEffect(() => {
         if (isDeleteSucess && isDeleteData && !isDeleteFetching) {
             ToastService.success(isDeleteData.errorMessage);
-            contactId && getEmailList(contactId);
             onGetContactList();
         }
     }, [isDeleteSucess, isDeleteData, isDeleteFetching]);
@@ -55,7 +47,6 @@ const ManageEmailAddress = ({ onGetContactList }) => {
     const onSuccess = () => {
         setShowModal(!showModal);
         setIsEdit(false);
-        contactId && getEmailList(contactId);
         onGetContactList();
     };
 
@@ -71,7 +62,7 @@ const ManageEmailAddress = ({ onGetContactList }) => {
             "Delete", "Cancel"
         ).then((confirmed) => {
             if (confirmed) {
-                deleteContactEmail(data.emailId);
+                deleteData(data.emailId, data.id, deleteContactEmail, emailAddressData, setEmailAddressData, Message.EmailDelete)
             }
         });
     }
@@ -82,7 +73,7 @@ const ManageEmailAddress = ({ onGetContactList }) => {
 
     return (
         <React.Fragment>
-            <EmailAddressList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} isLoading={isGetContactFetching} />
+            <EmailAddressList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} />
             {showModal && (
                 <AddEditEmailModal handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} editFormData={editFormData} isEdit={isEdit} />
             )}

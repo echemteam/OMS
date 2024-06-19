@@ -16,6 +16,9 @@
         public string? TaxId { get; set; }
         public short? StatusId { get; set; }
         public string? Status { get; set; }
+        public string? Territory { get; set; }
+        public string? EmailAddress { get; set; }
+
 
     }
 }

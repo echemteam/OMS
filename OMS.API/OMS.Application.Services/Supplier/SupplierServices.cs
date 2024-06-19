@@ -1,10 +1,8 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
-using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Entities.Entity.Supplier;
 using OMS.Domain.Repository;
 using OMS.Shared.Entities.CommonEntity;
@@ -55,6 +53,13 @@ namespace OMS.Application.Services.Supplier
             SupplierDTO supplierDTO = requestData.ToMapp<UpdateSupplierApproveStatusRequest, SupplierDTO>();
             supplierDTO.ApprovedBy = CurrentUserId;
             return await repositoryManager.supplier.UpdateSupplierApproveStatus(supplierDTO);
+        }
+
+        public async Task<AddEntityDTO<int>> UpdateSupplierStatus(UpdateSupplierStatusRequest requestData, short CurrentUserId)
+        {
+            SupplierDTO supplierDTO = requestData.ToMapp<UpdateSupplierStatusRequest, SupplierDTO>();
+            supplierDTO.UpdatedBy = CurrentUserId;
+            return await repositoryManager.supplier.UpdateSupplierStatus(supplierDTO);
         }
         #endregion
 

@@ -16,6 +16,7 @@ import { useLazyGetCustomersBasicInformationByIdQuery } from "../../app/services
 import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../services/CryptoService";
 import { HistoryDetail } from "./features/HistoryDetail/HistoryDetail";
+import { useAddEditContactMutation, useLazyGetContactByCustomerIdQuery } from "../../app/services/contactAPI";
 
 const ViewCustomer = () => {
   const { id } = useParams();
@@ -69,7 +70,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2">
-          <ContactDetail />
+          <ContactDetail  getContactByIdQuery={useLazyGetContactByCustomerIdQuery} addEditContactMutation={useAddEditContactMutation}/>
         </div>
       ),
     },

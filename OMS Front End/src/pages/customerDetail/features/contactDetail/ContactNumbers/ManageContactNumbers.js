@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
+import { Message } from "../Util/ContactMessages";
+import { deleteData } from "../Util/ContactEmailAddressUtil";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
+import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useDeleteContactPhoneMutation, useLazyGetPhoneByContactIdQuery } from "../../../../../app/services/phoneNumberAPI";
-import SwalAlert from "../../../../../services/swalService/SwalService";
 //** Component's */
 const ContactNumberList = React.lazy(() => import("./ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./AddEditContactNumber"));
@@ -17,7 +19,7 @@ const ManageContactNumbers = ({ onGetContactList }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
-    const { contactId, setPhoneNumberData } = useContext(BasicDetailContext);
+    const { contactId, setPhoneNumberData, phoneNumberData } = useContext(BasicDetailContext);
 
     //** API Call's */
     const [getList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetPhoneByContactIdQuery();
@@ -28,11 +30,11 @@ const ManageContactNumbers = ({ onGetContactList }) => {
         contactId && getList(contactId);
     }, [contactId])
 
-    useEffect(() => {
-        if (isGetContactSucess && isGetContactData && !isGetContactFetching) {
-            setPhoneNumberData(isGetContactData);
-        }
-    }, [isGetContactSucess, isGetContactData, isGetContactFetching]);
+    // useEffect(() => {
+    //     if (isGetContactSucess && isGetContactData && !isGetContactFetching) {
+    //         setPhoneNumberData(isGetContactData);
+    //     }
+    // }, [isGetContactSucess, isGetContactData, isGetContactFetching]);
 
     useEffect(() => {
         if (isDeleteSucess && isDeleteData && !isDeleteFetching) {
@@ -56,7 +58,7 @@ const ManageContactNumbers = ({ onGetContactList }) => {
     const onSuccess = () => {
         setShowModal(!showModal);
         setIsEdit(false);
-        contactId && getList(contactId);
+        // contactId && getList(contactId);
         onGetContactList();
     };
 
@@ -72,7 +74,7 @@ const ManageContactNumbers = ({ onGetContactList }) => {
             "Delete", "Cancel"
         ).then((confirmed) => {
             if (confirmed) {
-                deletePhoneNumber(data.phoneId);
+                deleteData(data.phoneId, data.id, deletePhoneNumber, phoneNumberData, setPhoneNumberData, Message.ContactNumberDelete)
             }
         });
     }

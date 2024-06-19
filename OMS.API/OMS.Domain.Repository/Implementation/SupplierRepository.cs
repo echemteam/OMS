@@ -20,6 +20,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATESUPPLIERAPPROVESTATUS = "UpdateSupplierApproveStatus";
         const string ADDADDRESSFORSUPPLIER = "AddAddressForSupplier";
         const string UPDATEADDRESSFORSUPPLIER = "UpdateAddressForSupplier";
+        const string UPDATESUPPLIERSTATUS = "UpdateSupplierStatus";
         #endregion
 
         public SupplierRepository(DapperContext dapperContext) : base(dapperContext)
@@ -110,6 +111,16 @@ namespace OMS.Domain.Repository.Implementation
                 updatedBy
             }, CommandType.StoredProcedure);
         }
+        public async Task<AddEntityDTO<int>> UpdateSupplierStatus(SupplierDTO supplier)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATESUPPLIERSTATUS, new
+            {
+                supplier.SupplierId,
+                supplier.StatusId,
+                supplier.UpdatedBy,
+            }, CommandType.StoredProcedure);
+        }
+
         #endregion
     }
 }

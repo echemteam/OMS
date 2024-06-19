@@ -18,7 +18,6 @@ const ManageDocumentList = forwardRef(({ childRef }) => {
     const { confirm } = SwalAlert();
     const { customerId } = useContext(BasicDetailContext);
     const [documentListData, setDocumentListData] = useState([]);
-    const [isDataList, setIsDataList] = useState(false);
 
     //** API Call's */
     const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteCustomerDocumentsByIdMutation();

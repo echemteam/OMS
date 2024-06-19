@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -65,6 +64,13 @@ namespace OMS.API.Controllers
             return APISucessResponce(updateItem);
         }
 
+
+        [HttpPost("UpdateSupplierStatus")]
+        public async Task<IActionResult> UpdateSupplierStatus(UpdateSupplierStatusRequest requestData)
+        {
+            var updateItem = await _serviceManager.supplierServices.UpdateSupplierStatus(requestData, CurrentUserId);
+            return APISucessResponce(updateItem);
+        }
         #endregion
     }
 }
