@@ -71,7 +71,7 @@ const SupplierData = ({ editClick, supplierData, isLoading, supplierId }) => {
     setStaticId(selectedOption.value)
     setStatusFeild(selectedOption.label)
     if (selectedOption.label === supplierData.status) {
-      ToastService.warning("Do Not Change current Status");
+      ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
       if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "3") {
         confirm(
