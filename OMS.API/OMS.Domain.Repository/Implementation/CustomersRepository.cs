@@ -142,6 +142,7 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEADDRESSFORCUSTOMER, new
             {
+                requestData.CustomerAddressId,
                 requestData.CustomerId,
                 requestData.AddressId,
                 requestData.AddressTypeId,
