@@ -94,7 +94,7 @@ const DocumentDetails = () => {
           </div>
         </CardSection>
       </div>
-      {showModal && (
+   
         <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}
           modalTitle="Add Document" modelSizeClass="w-50s">
           <div className="row horizontal-form">
@@ -116,7 +116,7 @@ const DocumentDetails = () => {
             </div>
           </div>
         </CenterModel>
-      )}
+ 
     </>
   );
 };

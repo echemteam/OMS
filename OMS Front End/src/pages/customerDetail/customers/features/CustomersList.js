@@ -190,7 +190,7 @@ export const CustomersList = ({ statusId, configFile }) => {
               </div>
             </div>
           </CardSection>
-          {showModal && (
+  
             <CenterModel
               showModal={showModal}
               handleToggleModal={handleToggleModal}
@@ -223,7 +223,7 @@ export const CustomersList = ({ statusId, configFile }) => {
                 </div>
               </div>
             </CenterModel>
-          )}
+        
         </div>
       </div>
     </div>

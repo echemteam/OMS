@@ -180,7 +180,7 @@ const SecurityRoleManagement = () => {
           </div>
         </div>
       </CardSection>
-      {addRoleModal && (
+      
         <CenterModel
           showModal={addRoleModal}
           handleToggleModal={handleAdd}
@@ -193,7 +193,7 @@ const SecurityRoleManagement = () => {
             onSuccess={onSuccess}
           />
         </CenterModel>
-      )}
+
       <SidebarModel
         modalTitle="Assign Users"
         contentClass="content-35"
