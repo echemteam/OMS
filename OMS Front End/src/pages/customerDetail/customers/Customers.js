@@ -5,6 +5,7 @@ import CustomerContext from "../../../utils/ContextAPIs/Customer/CustomerListCon
 import { StatusEnums } from "../../../common/features/Enums/StatusEnums";
 import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, SubmittedCustomerGridConfig } from "./config/CustomerData";
 import InActiveCustomer from "./features/InActiveCustomer";
+import Button from "../../../components/ui/button/Buttons";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -90,6 +91,7 @@ const Customers = () => {
                                 {tab.sMenuItemCaption}
                               </button>
                             ))}
+                            <Button></Button>
                           </div>
                           {activeTab !== -1 && tabs[activeTab].component && (
                             <div className="tab-content">

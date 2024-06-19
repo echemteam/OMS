@@ -448,7 +448,7 @@ a {
     min-height: 50px;
 
     .input-label-title {
-      min-width: 50px;
+      min-width: 130px;
       max-width: 130px;
     }
 
@@ -711,14 +711,14 @@ a {
   color: #ffffff;
 }
 
-.status-btn{
-    color: #ffffff;
-    display: inline-block;
-    width: 80px;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(126, 126, 126, 0.2), 0 6px 20px rgba(116, 116, 116, 0.19);
-    font-weight: bold;
-    text-align: center;
+.status-btn {
+  color: #ffffff;
+  display: inline-block;
+  width: 95px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(126, 126, 126, 0.2), 0 6px 20px rgba(116, 116, 116, 0.19);
+  font-weight: bold;
+  text-align: center;
 }
 
 // Tab Section Start
@@ -969,13 +969,16 @@ a {
     .card {
       padding-top: 10px;
     }
+
     .tab-2-section {
       .main-inactive-grid {
         .tab-sub-section {
           .tab-sub-header {
             margin-left: 0;
-            button {  
+
+            button {
               padding: 7px 15px;
+
               &.active {
                 padding-bottom: 12px;
                 color: var(--themeColor);
@@ -1582,6 +1585,7 @@ a {
   width: auto;
   position: relative;
   padding-right: 0;
+
   &:before {
     content: "";
     position: absolute;
@@ -1595,75 +1599,95 @@ a {
     top: 50%;
     transform: translateY(-50%);
   }
+
   .css-1dimb5e-singleValue {
     margin-left: 0 !important;
     font-size: 94%;
   }
+
   .css-13cymwt-control {
     cursor: pointer;
     background: transparent !important;
     border: none !important;
+
     // padding-top: 3px;
     .css-qbdosj-Input {
       margin: 0 !important;
     }
   }
+
   .css-1hb7zxy-IndicatorsContainer {
     visibility: hidden;
   }
+
   .css-t3ipsp-control {
     cursor: pointer;
     padding-top: 3px;
     // background: transparent !important;
     border: none !important;
     box-shadow: none !important;
+
     .css-qbdosj-Input {
       margin: 0 !important;
     }
   }
+
   &.badge-gradient-Approved {
     background: transparent;
+
     .css-1dimb5e-singleValue {
       color: var(--approved-theme);
       font-weight: 600;
     }
   }
+
   &.badge-gradient-Submitted {
     background: transparent;
+
     .css-1dimb5e-singleValue {
       color: var(--submitted-theme);
       font-weight: 600;
     }
   }
+
   &.badge-gradient-Pending {
     background: transparent;
+
     .css-1dimb5e-singleValue {
       color: var(--pending-theme);
       font-weight: 600;
     }
   }
+
   &.badge-gradient-Blocked {
     background: transparent;
+
     .css-1dimb5e-singleValue {
       color: var(--blocked-theme);
       font-weight: 600;
     }
   }
+
   &.badge-gradient-Frozen {
     background: transparent;
+
     .css-1dimb5e-singleValue {
       color: var(--frozen-theme);
       font-weight: 600;
     }
   }
+
   &.badge-gradient-info {
     background: transparent;
+
     .css-1dimb5e-singleValue {
       color: var(--themeColor);
       font-weight: 600;
     }
   }
+
   .css-1nmdiq5-menu {
+
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
