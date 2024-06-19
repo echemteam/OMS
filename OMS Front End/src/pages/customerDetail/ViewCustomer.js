@@ -22,7 +22,6 @@ import {
 } from "../../app/services/contactAPI";
 import { useNavigate } from "react-router-dom/dist";
 import Button from "../../components/ui/button/Buttons";
-import { Button } from "react-bootstrap";
 
 const ViewCustomer = () => {
   const navigate = useNavigate();
