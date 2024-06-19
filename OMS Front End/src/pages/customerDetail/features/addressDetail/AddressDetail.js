@@ -350,6 +350,7 @@ const AddressDetail = (props) => {
         let setReq = {
           ...req,
           addressId: updateSetData.addressId,
+          customerAddressId : updateSetData.customerAddressId
         }
         updateAddAddress(setReq)
         setAddressData(setReq)
