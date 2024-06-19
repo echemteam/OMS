@@ -167,7 +167,7 @@ const AssignUser = (props) => {
   return (
     <div>
       <div className="row">
-        <div className="col-md-12 horizontal-form mt-3">
+        <div className="col-12 col-md-11 horizontal-form mt-3">
           <div className="row vertical-form">
             <FormCreator
               ref={asignUserFormRef}
