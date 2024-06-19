@@ -75,6 +75,14 @@ const CustomerDetails = ({ editClick, customerData }) => {
             {customerData && customerData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
             </div>
           </div>
+          <div className="field-desc">
+            <div className="inf-label">Is Buying for Third Party</div>
+            <b>&nbsp;:&nbsp;</b>
+            <div className="info-desc">
+            {customerData?.isBuyingForThirdParty}
+            {customerData && customerData.isBuyingForThirdParty ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
+            </div>
+          </div>
         </div>
       </div>
     </>
