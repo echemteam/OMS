@@ -6,12 +6,12 @@ import { contactDetailFormData } from "./config/ContactDetailForm.data";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
-import { useAddEditContactMutation } from "../../../../../app/services/contactAPI";
+// import { useAddEditContactMutation } from "../../../../../app/services/contactAPI";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, isEdit, editRef, onGetContactList }) => {
+const AddEditContact = forwardRef(({ mainId, addEditContactMutation, isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, editRef, onGetContactList }) => {
 
   //** State */
   const ref = useRef();
@@ -19,10 +19,10 @@ const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onS
   const [formData, setFormData] = useState(contactDetailFormData);
   const [customerContactId, setCustomerContactId] = useState(0);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const { customerId, contactId, setContactId } = useContext(BasicDetailContext);
+  const { contactId, setContactId } = useContext(BasicDetailContext);
 
   //** API Call's */
-  const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = useAddEditContactMutation();
+  const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
 
   //** Handle Changes */
   const handleAddEdit = () => {
@@ -31,7 +31,7 @@ const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onS
       let request = {
         ...data,
         contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
-        customerId: customerId,
+        customerId: mainId,
         contactId: contactId,
         customerContactId: customerContactId
       }

@@ -1,24 +1,25 @@
-import React, { useEffect } from "react";
 import { useContext } from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 //**Lib's */
 import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
 import CardSection from "../../components/ui/card/CardSection";
-import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { TabEnum } from "../../common/features/Enums/TabsEnums";
-import { useNavigate } from "react-router-dom";
-import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
 import ToastService from "../../services/toastService/ToastService";
 import { StatusEnums } from "../../common/features/Enums/StatusEnums";
+import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
+//** Service's */
+import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
 //** Component's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
 const AddressDetail = React.lazy(() => import("./features/addressDetail/AddressDetail"));
 const DocumentDetails = React.lazy(() => import("./features/documentsDetail/DocumentDetails"));
-const ContactDetail = React.lazy(() => import("./features/contactDetail/Contact/ContactDetail"));
+const CustomerContactDetails = React.lazy(() => import("./features/contactDetail/Contact/CustomerContactDetails"));
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage, addCustomer , customerId } = useContext(BasicDetailContext);
+  const { activeTab, setActiveTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
   const [updateCustomerStatus, { isLoading: updateCustomerStatusLoading, isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
 
   const onSubmit = (e) => {
@@ -47,7 +48,7 @@ const AddCustomer = () => {
     {
       label: "Contact",
       subLabel: "Enter Customer Contact Details",
-      content: <ContactDetail />,
+      content: <CustomerContactDetails />,
       tab: TabEnum.Contact
     },
     {
