@@ -56,7 +56,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId }) => 
         default:
           setOptions([]);
       }
-      setSelectedStatus(StatusValue[statusId - 1].label);
+      // setSelectedStatus(StatusValue[statusId - 1].label);
     }
   }, [customerData]);
 
