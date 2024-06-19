@@ -89,13 +89,6 @@ const AddressDetail = (props) => {
     setFormData(manageData)
   };
 
-  const manageUpdateFilterForm = () => {
-    const manageData = { ...formData }
-    const filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isShippingAndBilling");
-    manageData.formFields = filteredFormFields;
-    setFormData(manageData)
-  };
-
   useEffect(() => {
     if (!isGetAddresssByCustomerIdFetching && isGetAddresssByCustomerId && GetAddresssByCustomerIdData) {
       setAddressData(GetAddresssByCustomerIdData)
@@ -196,14 +189,19 @@ const AddressDetail = (props) => {
 
   useEffect(() => {
     if (updateSetData) {
-      if (updateSetData.type === "Billing"){
+      if (updateSetData.type === "Billing") {
         const manageData = { ...formData }
         const filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isShippingAndBilling" && field.dataField !== "isPreferredShipping");
         manageData.formFields = filteredFormFields;
         setFormData(manageData)
-      } else if(updateSetData.type === "Shipping"){
+      } else if (updateSetData.type === "Shipping") {
         const manageData = { ...formData }
         const filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isShippingAndBilling" && field.dataField !== "isPreferredBilling");
+        manageData.formFields = filteredFormFields;
+        setFormData(manageData)
+      } else if(updateSetData.type === "AP" || updateSetData.type === "Primary"){
+        const manageData = { ...formData }
+        const filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isShippingAndBilling" && field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping");
         manageData.formFields = filteredFormFields;
         setFormData(manageData)
       }
@@ -246,11 +244,12 @@ const AddressDetail = (props) => {
     }
     else if (dataField === 'addressTypeId') {
       const form = { ...addressFormData }
+      const updateForm = { ...formData }
       if (data.label === "Billing") {
         if (updateSetData) {
           const filteredFormFields = form.formFields.filter(field => field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling");
-          form.formFields = filteredFormFields;
-          setFormData(form)
+          updateForm.formFields = filteredFormFields;
+          setFormData(updateForm)
         } else {
           const filteredFormFields = form.formFields.filter(field => field.dataField !== "isPreferredShipping");
           form.formFields = filteredFormFields;
@@ -259,8 +258,8 @@ const AddressDetail = (props) => {
       } else if (data.label === "Shipping") {
         if (updateSetData) {
           const filteredFormFields = form.formFields.filter(field => field.dataField !== "isPreferredBilling" && field.dataField !== "isShippingAndBilling");
-          form.formFields = filteredFormFields;
-          setFormData(form)
+          updateForm.formFields = filteredFormFields;
+          setFormData(updateForm)
         } else {
           const filteredFormFields = form.formFields.filter(field => field.dataField !== "isPreferredBilling");
           form.formFields = filteredFormFields;
@@ -268,18 +267,34 @@ const AddressDetail = (props) => {
         }
       }
       else if (data.label === "AP") {
-        const filteredFormFields = form.formFields.filter(field => {
-          return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling";
-        });
-        form.formFields = filteredFormFields;
-        setFormData(form)
+        if (updateSetData) {
+          const filteredFormFields = form.formFields.filter(field => {
+            return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling";
+          });
+          updateForm.formFields = filteredFormFields;
+          setFormData(updateForm)
+        } else {
+          const filteredFormFields = form.formFields.filter(field => {
+            return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling";
+          });
+          form.formFields = filteredFormFields;
+          setFormData(form)
+        }
       }
       else if (data.label === "Primary") {
-        const filteredFormFields = form.formFields.filter(field => {
-          return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling";
-        });
-        form.formFields = filteredFormFields;
-        setFormData(form)
+        if (updateSetData) {
+          const filteredFormFields = form.formFields.filter(field => {
+            return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling";
+          });
+          updateForm.formFields = filteredFormFields;
+          setFormData(updateForm)
+        } else {
+          const filteredFormFields = form.formFields.filter(field => {
+            return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling";
+          });
+          form.formFields = filteredFormFields;
+          setFormData(form)
+        }
       }
     }
   }
@@ -335,6 +350,7 @@ const AddressDetail = (props) => {
         let setReq = {
           ...req,
           addressId: updateSetData.addressId,
+          customerAddressId : updateSetData.customerAddressId
         }
         updateAddAddress(setReq)
         setAddressData(setReq)
