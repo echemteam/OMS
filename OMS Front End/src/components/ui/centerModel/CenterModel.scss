@@ -61,6 +61,10 @@
   &.w-50s {
     .modal-dialog {
       max-width: 50%;
+      
+      @media only screen and (max-width: 1300px){
+        max-width: 65%;
+      }
     }
   }
 
@@ -87,6 +91,5 @@
       max-width: 70%;
     }
   }
-
 
 }
