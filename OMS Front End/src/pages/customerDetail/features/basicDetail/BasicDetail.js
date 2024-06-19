@@ -177,6 +177,12 @@ const BasicDetail = (props) => {
       const removeFields = ['note']
       let data = { ...basicDetailFormDataHalf };
       data.initialState = { ...props.customerData };
+      if (data.initialState.countryId > 0) {
+        let det = {
+          value: data.initialState.countryId
+        }
+        handleValidateTextId(det, "countryId");
+      }
       data.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
       setFormData(data);
     }
