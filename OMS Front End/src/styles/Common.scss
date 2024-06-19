@@ -448,7 +448,7 @@ a {
     min-height: 50px;
 
     .input-label-title {
-      min-width: 130px;
+      min-width: 50px;
       max-width: 130px;
     }
 
@@ -471,7 +471,7 @@ a {
     }
 
     .checkbox-label-part {
-      margin-left: 135px;
+      margin-left: 148px;
     }
   }
 
@@ -709,6 +709,16 @@ a {
 .badge-gradient-Pending {
   background: var(--pending-theme);
   color: #ffffff;
+}
+
+.status-btn{
+    color: #ffffff;
+    display: inline-block;
+    width: 80px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(126, 126, 126, 0.2), 0 6px 20px rgba(116, 116, 116, 0.19);
+    font-weight: bold;
+    text-align: center;
 }
 
 // Tab Section Start
@@ -1407,6 +1417,18 @@ a {
 
     .css-qbdosj-Input {
       margin: 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 1180px) {
+  .tab-section {
+
+    .tab-header {
+
+      button {
+        padding: 7px 10px 7px;
+      }
     }
   }
 }

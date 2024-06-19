@@ -42,26 +42,26 @@ export const AllCustomerGridConfig = {
         getLableClass: (value) => {
           switch (value) {
             case "Active":
-              return "badge-gradient-success";
+              return "status-btn badge-gradient-success";
             case "Open":
-              return "badge-gradient-info";
+              return "status-btn badge-gradient-info";
             case "In Active":
-              return "badge-gradient-danger";
+              return "status-btn badge-gradient-danger";
             case "Pending":
-              return "badge-gradient-Pending";
+              return "status-btn badge-gradient-Pending";
             case "In progress":
-              return "badge-gradient-theme";
+              return "status-btn badge-gradient-theme";
             case "Submitted":
-              return "badge-gradient-Submitted";
+              return "status-btn badge-gradient-Submitted";
             case "Approved":
-              return "badge-gradient-Approved";
+              return "status-btn badge-gradient-Approved";
             case "Freeze":
-              return "badge-gradient-Frozen";
+              return "status-btn badge-gradient-Frozen";
             case "Block":
-              return "badge-gradient-Blocked";
+              return "status-btn badge-gradient-Blocked";
 
             default:
-              return "badge-gradient-info";
+              return "status-btn badge-gradient-info";
           }
         },
       },
@@ -214,26 +214,26 @@ export const AllInActiveCustomerGridConfig = {
         getLableClass: (value) => {
           switch (value) {
             case "Active":
-              return "badge-gradient-success";
+              return "status-btn badge-gradient-success";
             case "Open":
-              return "badge-gradient-info";
+              return "status-btn badge-gradient-info";
             case "In Active":
-              return "badge-gradient-danger";
+              return "status-btn badge-gradient-danger";
             case "Pending":
-              return "badge-gradient-Pending";
+              return "status-btn badge-gradient-Pending";
             case "In progress":
-              return "badge-gradient-theme";
+              return "status-btn badge-gradient-theme";
             case "Submitted":
-              return "badge-gradient-Submitted";
+              return "status-btn badge-gradient-Submitted";
             case "Approved":
-              return "badge-gradient-Approved";
+              return "status-btn badge-gradient-Approved";
             case "Freeze":
-              return "badge-gradient-Frozen";
+              return "status-btn badge-gradient-Frozen";
             case "Block":
-              return "badge-gradient-Blocked";
+              return "status-btn badge-gradient-Blocked";
 
             default:
-              return "badge-gradient-info";
+              return "status-btn badge-gradient-info";
           }
         },
       },
