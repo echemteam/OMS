@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../services/CryptoService";
 import { HistoryDetail } from "./features/HistoryDetail/HistoryDetail";
 import { useAddEditContactMutation, useLazyGetContactByCustomerIdQuery } from "../../app/services/contactAPI";
+import { Button } from "react-bootstrap";
 
 const ViewCustomer = () => {
   const { id } = useParams();
