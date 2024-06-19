@@ -208,7 +208,7 @@ const AddressDetail = (props) => {
   }
 
   const handleChangeDropdownList = (data, dataField) => {
-    debugger
+    // debugger
     const manageData = { ...formData }
     if (dataField === 'countryId') {
       const dataValue = allGetAllStatesData?.filter(item => item.countryId === data.value).map(item => ({
@@ -317,7 +317,7 @@ const AddressDetail = (props) => {
   }, [isUpdateAddAddressSuccess, isUpdateAddAddressData]);
 
   const handleAddress = () => {
-    debugger
+    // debugger
     let data = userFormRef.current.getFormData();
     if (data != null) {
       let req = {
@@ -350,7 +350,7 @@ const AddressDetail = (props) => {
   }
 
   const handleCheckBoxChange = (data, dataField) => {
-    debugger
+    // debugger
     const updatedFormData = { ...formData };
     if (dataField === "isBillingandShipping") {
       if (billing) {
