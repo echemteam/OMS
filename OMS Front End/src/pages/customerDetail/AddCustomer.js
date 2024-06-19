@@ -18,7 +18,7 @@ const ContactDetail = React.lazy(() => import("./features/contactDetail/Contact/
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage, addCustomer , customerId } = useContext(BasicDetailContext);
+  const { activeTab, setActiveTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
   const [updateCustomerStatus, { isLoading: updateCustomerStatusLoading, isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
 
   const onSubmit = (e) => {
@@ -28,6 +28,7 @@ const AddCustomer = () => {
   useEffect(() => {
     if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
       ToastService.success(updateCustomerStatusData.errorMessage);
+      navigate('/Customers');
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
@@ -71,7 +72,11 @@ const AddCustomer = () => {
   };
 
   const handleDraft = () => {
-    navigate('/Customers');
+    let req = {
+      customerId: customerId,
+      statusId: StatusEnums.Pending
+    }
+    updateCustomerStatus(req)
   };
 
 

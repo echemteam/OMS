@@ -1530,3 +1530,104 @@ a {
     flex-wrap: wrap;
   }
 }
+
+.status-dropdown {
+  width: auto;
+  position: relative;
+  padding-right: 0;
+  &:before {
+    content: "";
+    position: absolute;
+    background: url(../assets/images/editIcon-theme.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 16px;
+    width: 16px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .css-1dimb5e-singleValue {
+    margin-left: 0 !important;
+    font-size: 94%;
+  }
+  .css-13cymwt-control {
+    cursor: pointer;
+    background: transparent !important;
+    border: none !important;
+    // padding-top: 3px;
+    .css-qbdosj-Input {
+      margin: 0 !important;
+    }
+  }
+  .css-1hb7zxy-IndicatorsContainer {
+    visibility: hidden;
+  }
+  .css-t3ipsp-control {
+    cursor: pointer;
+    padding-top: 3px;
+    // background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    .css-qbdosj-Input {
+      margin: 0 !important;
+    }
+  }
+  &.badge-gradient-Approved {
+    background: transparent;
+    .css-1dimb5e-singleValue {
+      color: var(--approved-theme);
+      font-weight: 600;
+    }
+  }
+  &.badge-gradient-Submitted {
+    background: transparent;
+    .css-1dimb5e-singleValue {
+      color: var(--submitted-theme);
+      font-weight: 600;
+    }
+  }
+  &.badge-gradient-Pending {
+    background: transparent;
+    .css-1dimb5e-singleValue {
+      color: var(--pending-theme);
+      font-weight: 600;
+    }
+  }
+  &.badge-gradient-Blocked {
+    background: transparent;
+    .css-1dimb5e-singleValue {
+      color: var(--blocked-theme);
+      font-weight: 600;
+    }
+  }
+  &.badge-gradient-Frozen {
+    background: transparent;
+    .css-1dimb5e-singleValue {
+      color: var(--frozen-theme);
+      font-weight: 600;
+    }
+  }
+  &.badge-gradient-info {
+    background: transparent;
+    .css-1dimb5e-singleValue {
+      color: var(--themeColor);
+      font-weight: 600;
+    }
+  }
+  .css-1nmdiq5-menu {
+    .css-10wo9uf-option,
+    .css-d7l1ni-option {
+      color: var(--textColor);
+    }
+  }
+}
+
+@media only screen and (max-width: 1560px) {
+  .status-dropdown {
+    .css-13cymwt-control {
+      padding: 0 !important;
+    }
+  }
+}

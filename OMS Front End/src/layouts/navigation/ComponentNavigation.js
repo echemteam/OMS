@@ -4,6 +4,7 @@ import DemoGrid from "../../pages/demoGrid/DemoGrid";
 import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
+import SupplierDetails from "../../pages/supplierDetails/suppliers/ManageSupplier";
 
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
@@ -277,5 +278,14 @@ export const ComponentNavigation = [
     text: 'Suppliers',
     securityKey: ""
   },
-
+  {
+    id: 'SupplierDetails',
+    path: '/SupplierDetails/:id',
+    exact: true,
+    title: 'Supplier Details',
+    component: SupplierDetails,
+    hasParams: false,
+    text: 'Supplier Detail',
+    securityKey: ""
+  },
 ];

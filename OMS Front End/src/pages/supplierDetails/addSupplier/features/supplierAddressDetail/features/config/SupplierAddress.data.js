@@ -172,52 +172,5 @@ export const SupplierAddressData = {
     //     containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
     //   },
     // },
-    // {
-    //   id: "isCompany",
-    //   lable: "Is Company",
-    //   Field_Name: "Is Company",
-    //   fieldType: FormFieldTypes.CHECKBOX,
-    //   dataField: "Is Company",
-    //   fieldSetting: {
-    //     placeholder: "",
-    //     allowSpace: true,
-    //   },
-    //   validation: [{ type: "require" }],
-    //   style: {
-    //     containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
-    //   },
-    // },
-    
-    // {
-    //   id: "gender",
-    //   label: "Gender :",
-    //   fieldName: "Instrument Type",
-    //   fieldType: FormFieldTypes.RADIOBUTTON,
-    //   dataField: "gender",
-    //   fieldSetting: {
-    //     options: [
-    //       {
-    //         label: "Male",
-    //         value: "Male",
-    //         isDisable: false,
-    //         optionClass: "",
-    //       },
-    //       {
-    //         label: "Female",
-    //         value: "Female",
-    //         isDisable: false,
-    //         optionClass: "second-radio",
-    //       },
-    //       // Add more options if needed
-    //     ],
-    //   },
-    //   validation: [{ type: "require" }],
-    //   style: {
-    //     containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 mt-3",
-    //   },
-    // },
-    
-    
-   
   ],
 };
