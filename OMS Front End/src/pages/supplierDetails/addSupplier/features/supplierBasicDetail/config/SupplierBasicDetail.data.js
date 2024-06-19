@@ -13,16 +13,16 @@ import { FormFieldTypes } from "../../../../../../data/formFieldType";
 
 
 export const supplierBasicData = {
-  initialState: { name: "", groupTypeId: "", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty:false },
+  initialState: { name: "", groupTypeId: "", supplierTypeId:"", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", taxId: "", dbaName:"" },
   formFields: [
     {
       id: "name",
-      lable: "Customer Name :",
-      Field_Name: "Customer Name",
+      lable: "Supplier Name :",
+      Field_Name: "Supplier Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "name",
       fieldSetting: {
-        placeholder: "Enter Customer Name",
+        placeholder: "Enter Supplier Name",
         allowSpace: true,
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
@@ -75,6 +75,36 @@ export const supplierBasicData = {
         allowSpace: true,
       },
       validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+      },
+    },
+    {
+      id: "supplierTypeId",
+      lable: "Supplier Type :",
+      Field_Name: "Supplier Type",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "supplierTypeId",
+      fieldSetting: {
+        placeholder: "Select Supplier Type",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+      },
+    },
+    {
+      id: "dbaName",
+      lable: "Doing Business As Name :",
+      Field_Name: "Doing Business As Name",
+      fieldType: FormFieldTypes.NUMERIC,
+      dataField: "dbaName",
+      fieldSetting: {
+        placeholder: "Doing Business As Name",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" } , { type: "number "}],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -139,36 +169,6 @@ export const supplierBasicData = {
       validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-7 col-xl-6 col-md-6 col-12 mb-2",
-      },
-    },
-    {
-      id: "isCompany",
-      lable: "Is Company",
-      Field_Name: "Is Company",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isCompany",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-0 margin-left0-checkbox mt-0",
-      },
-    },
-    {
-      id: "isBuyingForThirdParty",
-      lable: "Is Buying for Third Party",
-      Field_Name: "Is Buying for Third Party",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isBuyingForThirdParty",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      // validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 margin-left0-checkbox mb-0",
       },
     },
   ],

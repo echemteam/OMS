@@ -1,19 +1,19 @@
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import CardSection from '../../../../components/ui/card/CardSection'
-import MolGrid from '../../../../components/Grid/MolGrid';
-import { useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from '../../../../app/services/basicdetailAPI';
-import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext"
 import { useNavigate } from 'react-router-dom';
-import { encryptUrlData } from '../../../../services/CryptoService';
+import SwalAlert from '../../../../services/swalService/SwalService';
+import { reasonData } from '../../../customerDetail/customers/config/CustomerData';
+import SupplierContext from "../../../../utils/ContextAPIs/Supplier/SupplierListContext"
+import Buttons from '../../../../components/ui/button/Buttons';
 import ToastService from '../../../../services/toastService/ToastService';
-import { reasonData } from '../config/CustomerData';
+import { StatusEnums, StatusFeild } from '../../../../common/features/Enums/StatusEnums';
+import CardSection from '../../../../components/ui/card/CardSection';
+import MolGrid from '../../../../components/Grid/MolGrid';
 import CenterModel from '../../../../components/ui/centerModel/CenterModel';
 import FormCreator from '../../../../components/Forms/FormCreator';
-import Buttons from '../../../../components/ui/button/Buttons';
-import { StatusEnums, StatusFeild } from '../../../../common/features/Enums/StatusEnums';
-import SwalAlert from '../../../../services/swalService/SwalService';
+import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../app/services/supplierAPI';
+import { encryptUrlData } from '../../../../services/CryptoService';
 
-export const CustomersList = ({ statusId, configFile }) => {
+const SupplierList = ({ statusId, configFile }) => {
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
   const molGridRef = useRef();
@@ -22,19 +22,19 @@ export const CustomersList = ({ statusId, configFile }) => {
   const [dataSource, setDataSource] = useState();
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(reasonData);
-  const [customerID, setcustomerId] = useState();
+  const [supplierID, setSupplierId] = useState();
   const [staticId, setStaticId] = useState()
   const [statusFeild, setStatusFeild] = useState()
-  const { listRef } = useContext(CustomerContext);
+  const { supplierListRef } = useContext(SupplierContext);
 
   const [
-    getCustomers,
+    getSuppliers,
     { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
-  ] = useGetCustomersMutation();
+  ] = useGetSuppliersMutation();
 
-  const [updateCustomerApproveStatus, { isSuccess: isSuccessUpdateCustomer, data: updateCustomerData }] = useUpdateCustomerApproveStatusMutation();
+  const [updateSupplierApproveStatus, { isSuccess: isSuccessUpdateSupplier, data: updateSupplierData }] = useUpdateSupplierApproveStatusMutation();
 
-  const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
+  const [updateSupplierInActiveStatus, { isLoading: updateInActiveStatusSupplierLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
 
   const handlePageChange = (page) => {
     const request = {
@@ -45,7 +45,7 @@ export const CustomersList = ({ statusId, configFile }) => {
       filters: { searchText: "" },
       statusId: statusId
     };
-    getCustomers(request);
+    getSuppliers(request);
   };
 
   useEffect(() => {
@@ -60,21 +60,21 @@ export const CustomersList = ({ statusId, configFile }) => {
   }, [isListSuccess, isListeData]);
 
   useEffect(() => {
-    if (isSuccessUpdateCustomer && updateCustomerData) {
-      ToastService.success(updateCustomerData.errorMessage);
+    if (isSuccessUpdateSupplier && updateSupplierData) {
+      ToastService.success(updateSupplierData.errorMessage);
       getListApi()
     }
-  }, [isSuccessUpdateCustomer, updateCustomerData]);
+  }, [isSuccessUpdateSupplier, updateSupplierData]);
 
   useEffect(() => {
-    if (isSuccessUpdateCustomerInActiveStatus && updateCustomerInActiveStatusData) {
-      ToastService.success(updateCustomerInActiveStatusData.errorMessage);
+    if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
+      ToastService.success(updateSupplierInActiveStatusData.errorMessage);
       getListApi()
       handleToggleModal()
     }
-  }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
+  }, [isSuccessUpdateSupplierInActiveStatus, updateSupplierInActiveStatusData]);
 
-  useImperativeHandle(listRef, () => ({
+  useImperativeHandle(supplierListRef, () => ({
     getListApi,
   }));
 
@@ -88,25 +88,25 @@ export const CustomersList = ({ statusId, configFile }) => {
       filters: { searchText: "" },
       statusId: statusId
     };
-    getCustomers(request);
+    getSuppliers(request);
   };
 
   const handleEditClick = (data) => {
-    navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
+    navigate(`/SupplierDetails/${encryptUrlData(data.supplierId)}`, "_blank");
   };
 
   const handleGridCheckBoxChange = (rowData, datafield, rowindex, updatedValue, parentData) => {
     confirm(
       "Warning?",
-      "Are you sure you want to approve the customer?",
+      "Are you sure you want to approve the supplier?",
       "Yes",
       "Cancel"
     ).then((confirmed) => {
       if (confirmed) {
         let req = {
-          customerId: rowData.customerId
+          supplierId: rowData.supplierId
         }
-        updateCustomerApproveStatus(req)
+        updateSupplierApproveStatus(req)
       } else {
         getListApi()
       }
@@ -120,21 +120,21 @@ export const CustomersList = ({ statusId, configFile }) => {
 
   const handlefreeze = (data) => {
     setShowModal(true);
-    setcustomerId(data.customerId)
+    setSupplierId(data.supplierId)
     setStaticId(StatusEnums.Freeze)
     setStatusFeild(StatusFeild.Freeze)
   }
 
   const handleDiseble = (data) => {
     setShowModal(true);
-    setcustomerId(data.customerId)
+    setSupplierId(data.supplierId)
     setStaticId(StatusEnums.Disable)
     setStatusFeild(StatusFeild.Disable)
   }
 
   const handleBlock = (data) => {
     setShowModal(true);
-    setcustomerId(data.customerId)
+    setSupplierId(data.supplierId)
     setStaticId(StatusEnums.Block)
     setStatusFeild(StatusFeild.Block)
   }
@@ -150,10 +150,10 @@ export const CustomersList = ({ statusId, configFile }) => {
     if (custData) {
       let req = {
         ...custData,
-        customerId: customerID,
+        supplierId: supplierID,
         statusId: staticId
       }
-      updateCustomerInActiveStatus(req)
+      updateSupplierInActiveStatus(req)
     }
   }
 
@@ -210,7 +210,7 @@ export const CustomersList = ({ statusId, configFile }) => {
                       <Buttons
                         buttonTypeClassName="theme-button"
                         buttonText="Update"
-                        isLoading={updateCustomerInActiveStatusCustomerLoading}
+                        isLoading={updateInActiveStatusSupplierLoading}
                         onClick={handleUpdate}
                       />
                       <Buttons
@@ -229,3 +229,5 @@ export const CustomersList = ({ statusId, configFile }) => {
     </div>
   )
 }
+
+export default SupplierList

@@ -21,6 +21,9 @@ const AddressDetail = (props) => {
   const [addressData, setAddressData] = useState();
   const [updateSetData, setUpdateSetData] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  const [billing, setBilling] = useState(false)
+  const [shipping, setShipping] = useState(false)
+
   const { customerId } = useContext(BasicDetailContext);
 
   const [getAllAddressTypes, {
@@ -81,6 +84,23 @@ const AddressDetail = (props) => {
     }
   }, [customerId])
 
+  const manageFilteredForm = () => {
+
+    const manageData = { ...formData }
+    const filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isPreferredShipping" && field.dataField !== "isBillingandShipping" && field.dataField !== "isPreferredBilling");
+    manageData.formFields = filteredFormFields;
+
+    setFormData(manageData)
+    // setFormData(prevForm => {
+    //   const updatedForm = { ...prevForm };
+    //   updatedForm.formFields = prevForm.formFields.filter(
+    //     field => field.id !== "isPreferredShipping" && field.id !== "isBillingandShipping" && field.id !== "isPreferredBilling"
+    //   );
+    //   return updatedForm;
+    // });
+    // setShouldRerenderFormCreator(prevState => !prevState);
+  };
+
   useEffect(() => {
     if (!isGetAddresssByCustomerIdFetching && isGetAddresssByCustomerId && GetAddresssByCustomerIdData) {
       setAddressData(GetAddresssByCustomerIdData)
@@ -137,6 +157,7 @@ const AddressDetail = (props) => {
 
   const handleToggleModal = () => {
     setisModelOpen(true);
+    manageFilteredForm()
   };
 
   const handleSetData = (data) => {
@@ -169,7 +190,7 @@ const AddressDetail = (props) => {
       countryId: data.countryId,
       stateId: data.stateId,
       cityId: data.cityId,
-      zipCode: data.zipCode
+      zipCode: data.zipCode,
     }
     setFormData(form)
   }
@@ -187,6 +208,7 @@ const AddressDetail = (props) => {
   }
 
   const handleChangeDropdownList = (data, dataField) => {
+    // debugger
     const manageData = { ...formData }
     if (dataField === 'countryId') {
       const dataValue = allGetAllStatesData?.filter(item => item.countryId === data.value).map(item => ({
@@ -207,6 +229,62 @@ const AddressDetail = (props) => {
       manageData.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
       manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
       userFormRef.current.updateFormFieldValue({ stateId: data.value, cityId: null });
+    }
+    else if (dataField === 'addressTypeId') {
+      const form = { ...addressFormData }
+      if (data.label === "Billing") {
+        setBilling(true)
+        setShipping(false)
+        const filteredFormFields = form.formFields.filter(field => field.dataField !== "isPreferredShipping");
+        form.formFields = filteredFormFields;
+        form.initialState = {
+          ...addressFormData.initialState,
+          addressTypeId: 1
+        }
+        setFormData(form)
+      } else if (data.label === "Shipping") {
+        setBilling(false)
+        setShipping(true)
+        const filteredFormFields = form.formFields.filter(field => field.dataField !== "isPreferredBilling");
+        form.formFields = filteredFormFields;
+        form.initialState = {
+          ...addressFormData.initialState,
+          addressTypeId: 2
+        }
+        setFormData(form)
+      }
+      else if (data.label === "AP") {
+        setBilling(false)
+        setShipping(false)
+        const filteredFormFields = form.formFields.filter(field => {
+          return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isBillingandShipping";
+        });
+        form.formFields = filteredFormFields;
+        form.initialState = {
+          ...addressFormData.initialState,
+          addressTypeId: 3,
+          isBillingandShipping: false,
+          isPreferredBilling: false,
+          isPreferredShipping: false
+        }
+        setFormData(form)
+      }
+      else if (data.label === "Primary") {
+        setBilling(false)
+        setShipping(false)
+        const filteredFormFields = form.formFields.filter(field => {
+          return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isBillingandShipping";
+        });
+        form.formFields = filteredFormFields;
+        form.initialState = {
+          ...addressFormData.initialState,
+          addressTypeId: 4,
+          isBillingandShipping: false,
+          isPreferredBilling: false,
+          isPreferredShipping: false
+        }
+        setFormData(form)
+      }
     }
   }
 
@@ -239,6 +317,7 @@ const AddressDetail = (props) => {
   }, [isUpdateAddAddressSuccess, isUpdateAddAddressData]);
 
   const handleAddress = () => {
+    // debugger
     let data = userFormRef.current.getFormData();
     if (data != null) {
       let req = {
@@ -270,8 +349,35 @@ const AddressDetail = (props) => {
     }
   }
 
+  const handleCheckBoxChange = (data, dataField) => {
+    // debugger
+    const updatedFormData = { ...formData };
+    if (dataField === "isBillingandShipping") {
+      if (billing) {
+        updatedFormData.initialState = {
+          isBillingandShipping: data,
+          isPreferredBilling: data,
+          isPreferredShipping: false,
+          addressTypeId: 1
+        }
+      } else if (shipping) {
+        updatedFormData.initialState = {
+          isBillingandShipping: data,
+          isPreferredBilling: false,
+          isPreferredShipping: data,
+          addressTypeId: 2
+        }
+      }
+      setFormData(updatedFormData)
+    }
+  }
+
   const formActionHandler = {
-    DDL_CHANGED: handleChangeDropdownList
+    DDL_CHANGED: handleChangeDropdownList,
+  };
+
+  const formCheckBoxHandler = {
+    CHECK_CHANGE: handleCheckBoxChange
   };
 
   return (
@@ -301,6 +407,7 @@ const AddressDetail = (props) => {
             ref={userFormRef}
             {...formData}
             onActionChange={formActionHandler}
+            onCheckBoxChange={formCheckBoxHandler}
             key={shouldRerenderFormCreator}
           />
           <div className="col-md-12 mt-2">

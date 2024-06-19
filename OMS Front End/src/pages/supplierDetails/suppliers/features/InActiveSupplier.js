@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
-import { InActiveCustomers } from "./InActiveCustomers";
-import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext"
-import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../config/CustomerData";
+import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../pages/customerDetail/customers/config/CustomerData";
 import { StatusEnums } from "../../../../common/features/Enums/StatusEnums";
+import SupplierListContext from "../../../../utils/ContextAPIs/Supplier/SupplierListContext";
+import { InActiveSuppliers } from "./InActiveSuppliers";
 
-const InActiveCustomer = ({statusId}) => {
+const InActiveSupplier = ({ statusId }) => {
   const [activeTab, setActiveTab] = useState("0");
   const DataRef = useRef();
 
@@ -28,7 +28,7 @@ const InActiveCustomer = ({statusId}) => {
       sMenuItemCaption: "All",
       component: (
         <div className="mt-2">
-          <InActiveCustomers statusId={statusId} configFile={AllInActiveCustomerGridConfig}/>
+          <InActiveSuppliers statusId={statusId} configFile={AllInActiveCustomerGridConfig} />
         </div>
       ),
     },
@@ -36,7 +36,7 @@ const InActiveCustomer = ({statusId}) => {
       sMenuItemCaption: "Freezed",
       component: (
         <div className="mt-2">
-          <InActiveCustomers statusId={StatusEnums.Freeze} configFile={FreezedInActiveCustomerGridConfig}/>
+          <InActiveSuppliers statusId={StatusEnums.Freeze} configFile={FreezedInActiveCustomerGridConfig} />
         </div>
       ),
     },
@@ -44,7 +44,7 @@ const InActiveCustomer = ({statusId}) => {
       sMenuItemCaption: "Block",
       component: (
         <div className="mt-2">
-          <InActiveCustomers statusId={StatusEnums.Block} configFile={BlockedInActiveCustomerGridConfig}/>
+          <InActiveSuppliers statusId={StatusEnums.Block} configFile={BlockedInActiveCustomerGridConfig} />
         </div>
       ),
     },
@@ -52,7 +52,7 @@ const InActiveCustomer = ({statusId}) => {
       sMenuItemCaption: "Disable",
       component: (
         <div className="mt-2">
-          <InActiveCustomers statusId={StatusEnums.Disable} configFile={DisabledInActiveCustomerGridConfig} />
+          <InActiveSuppliers statusId={StatusEnums.Disable} configFile={DisabledInActiveCustomerGridConfig} />
         </div>
       ),
     },
@@ -60,7 +60,7 @@ const InActiveCustomer = ({statusId}) => {
 
   return (
     <>
-      <CustomerContext.Provider value={{ DataRef }}>
+      <SupplierListContext.Provider value={{ DataRef }}>
         <div className="main-inactive-grid">
           <div className="row">
             <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
@@ -99,9 +99,9 @@ const InActiveCustomer = ({statusId}) => {
             </div>
           </div>
         </div>
-      </CustomerContext.Provider>
+      </SupplierListContext.Provider>
     </>
   );
 };
 
-export default InActiveCustomer;
+export default InActiveSupplier;

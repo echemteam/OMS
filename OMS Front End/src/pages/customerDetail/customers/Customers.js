@@ -61,7 +61,7 @@ const Customers = () => {
       sMenuItemCaption: "INACTIVE",
       component: (
         <div className="mt-2">
-          <InActiveCustomer statusId={[StatusEnums.Freeze, StatusEnums.Blocked, StatusEnums.Disabled]}/>
+          <InActiveCustomer statusId={[StatusEnums.Freeze, StatusEnums.Block, StatusEnums.Disable]}/>
         </div>
       ),
     },

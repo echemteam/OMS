@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { createContext } from 'react';
 
 const AddSupplierContext = createContext();
@@ -7,14 +7,34 @@ export default AddSupplierContext;
 
 
 export const AddSupplierContextProvider = ({ children }) => {
-
+    const nextStepRef = useRef(null);
     const [mainId, setMainId] = useState(0);
     const [activeTab, setActiveTab] = useState(0);
     const [supplierId, setSupplierId] = useState(0);
+    const [allCountries, setAllCountries] = useState(false);
+
+    const moveNextPage = () => {
+        setActiveTab((prev) => prev + 1);
+    };
+
+    const movePreviewPage = () => {
+        setActiveTab((prev) => prev - 1);
+    };
+
+    const addSupplier = () => {
+        if (supplierId > 0) {
+            setActiveTab((prev) => prev + 1);
+        }
+        else {
+            if (nextStepRef.current) {
+                nextStepRef.current.handleAddSupplierBasicDetails();
+            }
+        }
+    }
 
     return (
         <AddSupplierContext.Provider value={{
-            activeTab, setActiveTab, setMainId, mainId, setSupplierId, supplierId
+            nextStepRef, supplierId, setSupplierId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addSupplier , setAllCountries,allCountries,setMainId, mainId
         }}>
             {children}
         </AddSupplierContext.Provider>

@@ -12,11 +12,15 @@ const FormCheckboxField = ({
   formSetting,
   error,
   overRideProps,
+  fieldActions,
   ...checkboxProps
 }) => {
   const handleCheckboxChange = (dataField, value) => {
     if (onChange) {
       onChange(dataField, value);
+    }
+    if (fieldActions) {
+      fieldActions('CHECK_CHANGE', dataField, value);
     }
   };
 

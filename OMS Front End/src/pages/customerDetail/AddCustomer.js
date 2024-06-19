@@ -29,6 +29,7 @@ const AddCustomer = () => {
   useEffect(() => {
     if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
       ToastService.success(updateCustomerStatusData.errorMessage);
+      navigate('/Customers');
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
@@ -72,7 +73,11 @@ const AddCustomer = () => {
   };
 
   const handleDraft = () => {
-    navigate('/Customers');
+    let req = {
+      customerId: customerId,
+      statusId: StatusEnums.Pending
+    }
+    updateCustomerStatus(req)
   };
 
 

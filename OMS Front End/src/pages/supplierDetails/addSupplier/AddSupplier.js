@@ -13,7 +13,7 @@ import { TabEnum } from "../../../common/features/Enums/TabsEnums";
 
 const AddSupplier = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage } = useContext(AddSupplierContext);
+  const { activeTab, setActiveTab, movePreviewPage, addSupplier, supplierId } = useContext(AddSupplierContext);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -104,7 +104,7 @@ const AddSupplier = () => {
                             <button
                               type="button"
                               className="btn theme-button"
-                            // onClick={() => addCustomer(step.tab)}
+                              onClick={() => addSupplier(step.tab)}
                             >
                               Next
                             </button>

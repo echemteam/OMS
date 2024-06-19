@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../../data/formFieldType";
 
 export const addressFormData = {
   // name: "Email From",
-  initialState: { addressTypeId: ""  , addressLine1:"" , addressLine2:"" , addressLine3:"" , addressLine4:"" , addressLine5 :"" , countryId:"" , stateId:"" ,zipCode:"", cityId:""},
+  initialState: { addressTypeId: ""  , addressLine1:"" , addressLine2:"" , addressLine3:"" , addressLine4:"" , addressLine5 :"" , countryId:"" , stateId:"" ,zipCode:"", cityId:"" , supplierId : 0 , isPreferredBilling:false , isBillingandShipping:false , isPreferredShipping:false},
   formFields: [
     {
       id: "addressTypeId",
@@ -157,67 +157,50 @@ export const addressFormData = {
         containerCss: "col-xxl-6 col-xl-8 col-md-8 col-12 mb-2",
       },
     },
-    // {
-    //   id: "isCompany",
-    //   lable: "Is Default",
-    //   Field_Name: "Is Default",
-    //   fieldType: FormFieldTypes.CHECKBOX,
-    //   dataField: "Is Default",
-    //   fieldSetting: {
-    //     placeholder: "",
-    //     allowSpace: true,
-    //   },
-    //   validation: [{ type: "require" }],
-    //   style: {
-    //     containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
-    //   },
-    // },
-    // {
-    //   id: "isCompany",
-    //   lable: "Is Company",
-    //   Field_Name: "Is Company",
-    //   fieldType: FormFieldTypes.CHECKBOX,
-    //   dataField: "Is Company",
-    //   fieldSetting: {
-    //     placeholder: "",
-    //     allowSpace: true,
-    //   },
-    //   validation: [{ type: "require" }],
-    //   style: {
-    //     containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
-    //   },
-    // },
-    
-    // {
-    //   id: "gender",
-    //   label: "Gender :",
-    //   fieldName: "Instrument Type",
-    //   fieldType: FormFieldTypes.RADIOBUTTON,
-    //   dataField: "gender",
-    //   fieldSetting: {
-    //     options: [
-    //       {
-    //         label: "Male",
-    //         value: "Male",
-    //         isDisable: false,
-    //         optionClass: "",
-    //       },
-    //       {
-    //         label: "Female",
-    //         value: "Female",
-    //         isDisable: false,
-    //         optionClass: "second-radio",
-    //       },
-    //       // Add more options if needed
-    //     ],
-    //   },
-    //   validation: [{ type: "require" }],
-    //   style: {
-    //     containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 mt-3",
-    //   },
-    // },
-    
-    
-   
+    {
+      id: "isBillingandShipping",
+      lable: "Is Billing and Shipping",
+      Field_Name: "Is Billing and Shipping",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isBillingandShipping",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      // validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+      },
+    },
+    {
+      id: "isPreferredBilling",
+      lable: "Is PreferredBilling",
+      Field_Name: "Is PreferredBilling",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isPreferredBilling",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      // validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+      },
+    },
+    {
+      id: "isPreferredShipping",
+      lable: "Is PreferredShipping",
+      Field_Name: "Is PreferredShipping",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isPreferredShipping",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      // validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+      },
+    },
   ],
 };

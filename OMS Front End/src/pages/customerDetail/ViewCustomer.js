@@ -24,7 +24,7 @@ const ViewCustomer = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null)
 
-  const { setCustomerId } = useContext(BasicDetailContext);
+  const { setCustomerId , customerId} = useContext(BasicDetailContext);
 
   const [getCustomersBasicInformationById,
     {
@@ -114,7 +114,7 @@ const ViewCustomer = () => {
         <div className="row">
           <div className="col-xxl-4 col-xl-4 col-md-3 col-12 basic-left-part customer-desc-left-sec">
             <CardSection>
-              <CustomerDetails editClick={handleToggleModal} customerData={customerData} isLoading={isGetCustomersBasicInformationByIdFetching} />
+              <CustomerDetails editClick={handleToggleModal} customerData={customerData} isLoading={isGetCustomersBasicInformationByIdFetching} customerId={customerId}/>
             </CardSection>
           </div>
           <div className="col-xxl-8 col-xl-8 col-md-9 col-12 other-info-tab">

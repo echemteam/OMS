@@ -117,6 +117,12 @@ useImperativeHandle(
     }
   }
 
+  const onCheckBoxHandle = (action, dataField, data) => {
+    if (props.onCheckBoxChange && props.onCheckBoxChange[action]) {
+      props.onCheckBoxChange[action](data, dataField);
+    }
+  }
+
   return (
     <>
       {props.config.formFields ? (
@@ -125,6 +131,7 @@ useImperativeHandle(
           formData={formData}
           validState={validState}
           onActionChange={onActionHandle}
+          onCheckBoxChange={onCheckBoxHandle}
           onInputChange={onInputChange}
           onFormStateChange={handleStateChange}
           // onFormFieldChange={handleFormFieldChange}

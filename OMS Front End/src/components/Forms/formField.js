@@ -24,7 +24,8 @@ const FormFields = ({
   onActionChange,
   onFormFieldChange,
   handleInputGroupButton,
-  onInputChange
+  onInputChange,
+  onCheckBoxChange
 }) => {
 
   const [overRideProps, setOverRideProps] = useState({});
@@ -148,6 +149,7 @@ const FormFields = ({
               name={field.id}
               onChange={handleInputChange}
               onValidation={onUpdateValidation}
+              fieldActions={onCheckBoxChange}
               formSetting={formSetting}
               formData={formData}
               error={validState.error[field.dataField] || ""}
