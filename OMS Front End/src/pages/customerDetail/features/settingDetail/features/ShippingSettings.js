@@ -12,6 +12,8 @@ import {
 import Buttons from "../../../../../components/ui/button/Buttons";
 import MolGrid from "../../../../../components/Grid/MolGrid";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
+import CardSection from "../../../../../components/ui/card/CardSection";
+import { AppIcons } from "../../../../../data/appIcons";
 
 const ShippingSettings = () => {
   const shippingFormRef = useRef();
@@ -51,23 +53,47 @@ const ShippingSettings = () => {
         />
 
         <div className="grid-section">
-          <div className="account-table table-striped mb-3">
-            <MolGrid
-              ref={customerGridRef}
-              configuration={AccountGridConfig}
-              dataSource={collectAccountData}
-              allowPagination={false}
-              onActionChange={actionHandler}
-            />
+          <div className="first-card">
+            <CardSection
+              cardTitle="Carrier Details"
+              rightButton={true}
+              buttonClassName="theme-button "
+              titleButtonClick=""
+              buttonText="Add"
+              textWithIcon={true}
+              iconImg={AppIcons.PlusIcon}
+            >
+              <div className="account-table table-striped mb-3">
+                <MolGrid
+                  ref={customerGridRef}
+                  configuration={AccountGridConfig}
+                  dataSource={collectAccountData}
+                  allowPagination={false}
+                  onActionChange={actionHandler}
+                />
+              </div>
+            </CardSection>
           </div>
-          <div className="account-table our-account-table table-striped">
-            <MolGrid
-              ref={customerGridRef}
-              configuration={OurAccountGridConfig}
-              dataSource={ourAccountData}
-              allowPagination={false}
-              onActionChange={ourAccountactionHandler}
-            />
+          <div className="last-card">
+          <CardSection
+            cardTitle="Delivery Method Details"
+            rightButton={true}
+            buttonClassName="theme-button "
+            titleButtonClick=""
+            buttonText="Add"
+            textWithIcon={true}
+            iconImg={AppIcons.PlusIcon}
+          >
+            <div className="account-table our-account-table table-striped">
+              <MolGrid
+                ref={customerGridRef}
+                configuration={OurAccountGridConfig}
+                dataSource={ourAccountData}
+                allowPagination={false}
+                onActionChange={ourAccountactionHandler}
+              />
+            </div>
+          </CardSection>
           </div>
         </div>
       </div>
