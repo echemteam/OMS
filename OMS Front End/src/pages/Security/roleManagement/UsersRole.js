@@ -32,19 +32,19 @@ const UsersRole = () => {
           getLableClass: (value) => {
             switch (value) {
               case "Active":
-                return "badge-gradient-success";
+                return "status-btn badge-gradient-success";
               case "Open":
-                return "badge-gradient-info";
+                return "status-btn badge-gradient-info";
               case "In Active":
-                return "badge-gradient-danger";
+                return "status-btn badge-gradient-danger";
               case "Pending":
-                return "badge-gradient-warning";
+                return "status-btn badge-gradient-warning";
 
               case "In progress":
-                return "badge-gradient-theme";
+                return "status-btn badge-gradient-theme";
 
               default:
-                return "badge-gradient-info";
+                return "status-btn badge-gradient-info";
             }
           },
         },

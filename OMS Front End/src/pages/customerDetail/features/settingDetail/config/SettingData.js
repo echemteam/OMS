@@ -1,4 +1,5 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const SettingFormData = {
   name: "Setting Form",
@@ -83,3 +84,101 @@ export const SettingFormData = {
     
   ],
 };
+
+export const shippingFormData = {
+  name: "Shipping Form",
+  initialState: { accountType: ""},
+  formFields: [
+    {
+      id: "accountType",
+      lable: "Account Type :",
+      Field_Name: "",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "accountType",
+      fieldSetting: {
+        placeholder: "Select Account",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
+      },
+    },
+    
+    
+  ],
+};
+
+export const ShippingGridConfig = {
+  columns: [
+    {
+      name: "selectAll",
+      fieldName: "",
+      colType: GridColumnType.CHECKBOX,
+      colSettings: {
+        valueField: "",
+      },
+    },
+    {
+      name: "No",
+      fieldName: "no",
+      allowShort: true,
+    },
+    {
+      name: "Carrier",
+      fieldName: "carrier",
+      // allowShort: true,
+    },
+    {
+      name: "Account Number",
+      fieldName: "accountNumber",
+    },
+    {
+      name: "Is Primary",
+      fieldName: "isPrimary",
+      colType: GridColumnType.CHECKBOX,
+      colSettings: {
+        valueField: "isPrimary",
+        getLableClass: (value) => {
+          switch (value) {
+            case true:
+              return "info";
+            case false:
+              return "danger";
+            default:
+              return "secondary";
+          }
+        },
+      },
+    },
+    
+    {
+      name: "Action",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: true,
+        allowDelete: false,
+      },
+
+    },
+  ],
+};
+
+
+export const collectAccountData = [
+  {
+    no: "1",
+    carrier:"Fedex",
+    accountNumber:"2165241460",
+  },
+  {
+    no: "1",
+    carrier:"DHL",
+    accountNumber:"1105652414",
+  },
+  {
+    no: "1",
+    carrier:"UPS",
+    accountNumber:"1104056025",
+  },
+];

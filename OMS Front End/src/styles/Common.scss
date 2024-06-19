@@ -428,8 +428,7 @@ a {
         }
       }
 
-      .middle-page-section {
-      }
+      .middle-page-section {}
     }
   }
 }
@@ -449,7 +448,7 @@ a {
     min-height: 50px;
 
     .input-label-title {
-      min-width: 130px;
+      min-width: 50px;
       max-width: 130px;
     }
 
@@ -472,7 +471,7 @@ a {
     }
 
     .checkbox-label-part {
-      margin-left: 135px;
+      margin-left: 148px;
     }
   }
 
@@ -712,6 +711,16 @@ a {
   color: #ffffff;
 }
 
+.status-btn{
+    color: #ffffff;
+    display: inline-block;
+    width: 80px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(126, 126, 126, 0.2), 0 6px 20px rgba(116, 116, 116, 0.19);
+    font-weight: bold;
+    text-align: center;
+}
+
 // Tab Section Start
 .tab-section {
   margin-bottom: 30px;
@@ -743,8 +752,7 @@ a {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {
-    }
+    .tab-body-section {}
   }
 
   &.vertical-tab {
@@ -801,12 +809,14 @@ a {
     }
   }
 }
+
 // Tab Section End
 
 .main-customer-grid {
   .card-body-sec {
     margin-top: 0;
   }
+
   .tab-section {
     margin-bottom: 30px;
 
@@ -842,7 +852,8 @@ a {
             transform: translateX(-50%) rotate(180deg);
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
-            border-top: 10px solid var(--themeColor); /* Change color as needed */
+            border-top: 10px solid var(--themeColor);
+            /* Change color as needed */
           }
         }
       }
@@ -851,8 +862,7 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {
-      }
+      .tab-body-section {}
     }
 
     &.vertical-tab {
@@ -916,6 +926,7 @@ a {
     .card-body-sec {
       margin-top: 0;
     }
+
     .tab-sub-section {
       margin-bottom: 30px;
 
@@ -930,7 +941,7 @@ a {
           background: var(--whiteColor);
           border-radius: 0px;
           font-weight: 600;
-          font-size: 13px;
+          font-size: 100%;
           border: none;
           border-right: 1px solid var(--whiteColor);
           margin-right: 0;
@@ -941,7 +952,6 @@ a {
             color: #000;
             position: relative;
             padding-bottom: 15px;
-            font-size: 15px;
             border-bottom: 2px solid var(--themeColor);
           }
         }
@@ -950,7 +960,28 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {
+        .tab-sub-body-section {}
+      }
+    }
+  }
+
+  &.setting-tab-sec {
+    .card {
+      padding-top: 10px;
+    }
+    .tab-2-section {
+      .main-inactive-grid {
+        .tab-sub-section {
+          .tab-sub-header {
+            margin-left: 0;
+            button {  
+              padding: 7px 15px;
+              &.active {
+                padding-bottom: 12px;
+                color: var(--themeColor);
+              }
+            }
+          }
         }
       }
     }
@@ -1030,6 +1061,7 @@ a {
   .add-desc-part {
     padding: 10px;
     padding-bottom: 0;
+
     .address-card {
       box-shadow: 0px 0px 17px -10px var(--textColorLight);
       padding: 10px;
@@ -1269,6 +1301,7 @@ a {
             color: var(--textColorLight);
             font-size: 80%;
           }
+
           .document-typename {
             color: var(--themeColor);
             font-size: 90%;
@@ -1279,6 +1312,7 @@ a {
         .document-action {
           display: flex;
           align-items: center;
+
           span {
             &.action-icon {
               margin-right: 10px;
@@ -1383,6 +1417,18 @@ a {
 
     .css-qbdosj-Input {
       margin: 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 1180px) {
+  .tab-section {
+
+    .tab-header {
+
+      button {
+        padding: 7px 10px 7px;
+      }
     }
   }
 }
@@ -1523,6 +1569,7 @@ a {
   b {
     min-width: 100px;
   }
+
   .fix-data {
     word-break: break-all;
     display: flex;

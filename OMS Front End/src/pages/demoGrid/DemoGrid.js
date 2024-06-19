@@ -25,18 +25,18 @@ const GridConfig = {
               getLableClass: (value) => {
                 switch (value) {
                   case "Open":
-                    return "badge-gradient-info";
+                    return "status-btn badge-gradient-info";
                   case "Close":
-                    return "badge-gradient-danger";
+                    return "status-btn badge-gradient-danger";
                   case "Pending":
-                    return "badge-gradient-warning";
+                    return "status-btn badge-gradient-warning";
                   case "Completed":
-                    return "badge-gradient-success";
+                    return "status-btn badge-gradient-success";
                   case "In progress":
-                    return "badge-gradient-theme";
+                    return "status-btn badge-gradient-theme";
                   
                   default:
-                    return "badge-gradient-info";
+                    return "status-btn badge-gradient-info";
                 }
               },
       },
@@ -102,18 +102,18 @@ const GridConfig2 = {
               getLableClass: (value) => {
                 switch (value) {
                   case "Open":
-                    return "badge-gradient-info";
+                    return "status-btn badge-gradient-info";
                   case "Close":
-                    return "badge-gradient-danger";
+                    return "status-btn badge-gradient-danger";
                   case "Pending":
-                    return "badge-gradient-warning";
+                    return "status-btn badge-gradient-warning";
                   case "Completed":
-                    return "badge-gradient-success";
+                    return "status-btn badge-gradient-success";
                   case "In progress":
-                    return "badge-gradient-theme";
+                    return "status-btn badge-gradient-theme";
                   
                   default:
-                    return "badge-gradient-info";
+                    return "status-btn badge-gradient-info";
                 }
               },
       },
