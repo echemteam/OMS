@@ -41,12 +41,13 @@ namespace OMS.Application.Services.Address
                     AddressId = responceData.KeyValue,
                     AddressTypeId = addressDTO.AddressTypeId,
                     IsPreferredShipping = requestData.IsPreferredShipping,
-                    IsPreferredBilling = requestData.IsPreferredBilling
+                    IsPreferredBilling = requestData.IsPreferredBilling,
+                    IsShippingAndBilling = requestData.IsShippingAndBilling,
                 };
 
                 _ = await repositoryManager.customers.AddAddressForCustomer(addAddressForCustomerRequest, CurrentUserId);
             }
-            if (requestData.SupplierId > 0 && responceData.KeyValue > 0)
+            else if (requestData.SupplierId > 0 && responceData.KeyValue > 0)
             {
                 AddAddressForSupplierRequest addAddressForCustomerRequest = new()
                 {

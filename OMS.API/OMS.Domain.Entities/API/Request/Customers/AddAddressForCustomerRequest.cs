@@ -7,5 +7,6 @@
         public short? AddressTypeId { get; set; }
         public bool? IsPreferredShipping { get; set; }
         public bool? IsPreferredBilling { get; set; }
+        public bool? IsShippingAndBilling { get; set; }
     }
 }

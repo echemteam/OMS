@@ -18,6 +18,7 @@ namespace OMS.Domain.Entities.API.Request.Address
         public int? ZipCode { get; set; }
         public bool? IsPreferredShipping { get; set; }
         public bool? IsPreferredBilling { get; set; }
+        public bool? IsShippingAndBilling { get; set; }
 
     }
 }
