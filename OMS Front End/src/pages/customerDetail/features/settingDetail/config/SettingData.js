@@ -111,7 +111,7 @@ export const shippingFormData = {
 
 
 
-export const ShippingGridConfig = {
+export const AccountGridConfig = {
   columns: [
     
     {
@@ -209,3 +209,128 @@ export const addEditCarrierFormData = {
     
   ],
 };
+
+export const OurAccountGridConfig = {
+  columns: [
+    
+    {
+      name: "Zone",
+      fieldName: "zone",
+      // allowShort: true,
+    },
+    {
+      name: "Charge Type",
+      fieldName: "chargeType",
+    },
+    {
+      name: "Charge",
+      fieldName: "charge",
+    },
+    {
+      name: "Is Primary",
+      fieldName: "isPrimary",
+      colType: GridColumnType.CHECKBOX,
+      colSettings: {
+        valueField: "isPrimary",
+        getLableClass: (value) => {
+          switch (value) {
+            case true:
+              return "info";
+            case false:
+              return "danger";
+            default:
+              return "secondary";
+          }
+        },
+      },
+    },
+    
+    {
+      name: "Action",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: true,
+        allowDelete: false,
+      },
+
+    },
+  ],
+};
+export const ourAccountData = [
+  {
+    zone:"Domestic",
+    chargeType:"Overnight",
+    charge:"$125",
+  },
+  {
+    zone:"Domestic",
+    chargeType:"2nd Day",
+    charge:"$50",
+  },
+  {
+    zone:"International",
+    chargeType:"International Property",
+    charge:"$120",
+  },
+  {
+    zone:"International",
+    chargeType:"International Property",
+    charge:"$94",
+  },
+  
+];
+export const addEditDeliveryFormData = {
+  name: "Shipping Form",
+  initialState: { accountType: ""},
+  formFields: [
+    {
+      id: "zone",
+      lable: "Zone :",
+      Field_Name: "",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "zone",
+      fieldSetting: {
+        placeholder: "Zone",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2",
+      },
+    },
+    {
+      id: "chargeType",
+      lable: "Charge Type :",
+      Field_Name: "Charge Type",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "chargeType",
+      fieldSetting: {
+        placeholder: "Select Charge Type",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2",
+      },
+    },
+    {
+      id: "charge",
+      lable: "Charge :",
+      Field_Name: "Charge",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "charge",
+      fieldSetting: {
+        placeholder: "Enter Charge",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2",
+      },
+    },
+    
+    
+  ],
+};
+
+
