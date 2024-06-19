@@ -9,39 +9,52 @@ import { AppIcons } from "../../../../../data/appIcons";
 import SupplierData from "./features/SupplierData";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import SupplierBasicDetail from "../../../addSupplier/features/supplierBasicDetail/SupplierBasicDetail";
-import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import Buttons from "../../../../../components/ui/button/Buttons";
+import { useNavigate } from "react-router-dom/dist";
 
 const SupplierDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const pageId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setisModelOpen] = useState(false);
-  const [supplierData, setSupplierData] = useState(null)
+  const [supplierData, setSupplierData] = useState(null);
 
   const { nextStepRef } = useContext(AddSupplierContext);
 
-  const [getSupplierBasicInformationById,
+  const [
+    getSupplierBasicInformationById,
     {
       isFetching: isGetSupplierBasicInformationByIdFetching,
       isSuccess: isGetSupplierBasicInformationById,
       data: GetSupplierBasicInformationByIdData,
-    },] = useLazyGetSupplierBasicInformationByIdQuery();
+    },
+  ] = useLazyGetSupplierBasicInformationByIdQuery();
 
   useEffect(() => {
-    if (isGetSupplierBasicInformationById && GetSupplierBasicInformationByIdData && !isGetSupplierBasicInformationByIdFetching) {
-      setSupplierData(GetSupplierBasicInformationByIdData)
+    if (
+      isGetSupplierBasicInformationById &&
+      GetSupplierBasicInformationByIdData &&
+      !isGetSupplierBasicInformationByIdFetching
+    ) {
+      setSupplierData(GetSupplierBasicInformationByIdData);
     }
-  }, [isGetSupplierBasicInformationById, GetSupplierBasicInformationByIdData, isGetSupplierBasicInformationByIdFetching]);
+  }, [
+    isGetSupplierBasicInformationById,
+    GetSupplierBasicInformationByIdData,
+    isGetSupplierBasicInformationByIdFetching,
+  ]);
 
   useEffect(() => {
     if (pageId) {
       // setSupplierId(pageId);
-      getSupplierBasicInformationById(pageId)
+      getSupplierBasicInformationById(pageId);
     }
-  }, [])
+  }, []);
 
   const handleRepeatCall = () => {
-    getSupplierBasicInformationById(pageId)
-  }
+    getSupplierBasicInformationById(pageId);
+  };
 
   const handleToggleModal = () => {
     setisModelOpen(true);
@@ -49,14 +62,13 @@ const SupplierDetails = () => {
   const onSidebarClose = () => {
     setisModelOpen(false);
   };
+  const handleBackClick = () => {
+    navigate("/Suppliers");
+  };
   const tabs = [
     {
       sMenuItemCaption: "Address",
-      component: (
-        <div className="mt-2">
-          {/* <AddressDetail /> */}
-        </div>
-      ),
+      component: <div className="mt-2">{/* <AddressDetail /> */}</div>,
     },
     // {
     //   sMenuItemCaption: "Contact",
@@ -68,11 +80,7 @@ const SupplierDetails = () => {
     // },
     {
       sMenuItemCaption: "Settings",
-      component: (
-        <div className="mt-2">
-          {/* <SettingDetails /> */}
-        </div>
-      ),
+      component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
     },
   ];
 
@@ -80,14 +88,24 @@ const SupplierDetails = () => {
     <>
       <div className="card-bottom-m-0">
         <div className="row">
-          <div className="col-xxl-4 col-xl-4 col-md-3 col-12 basic-left-part customer-desc-left-sec">
+          <div className="col-xxl-4 col-xl-4 col-md-5 col-12 basic-left-part customer-desc-left-sec">
             <CardSection>
-              <SupplierData editClick={handleToggleModal} supplierData={supplierData} isLoading={isGetSupplierBasicInformationByIdFetching}
+              <SupplierData
+                editClick={handleToggleModal}
+                supplierData={supplierData}
+                isLoading={isGetSupplierBasicInformationByIdFetching}
                 supplierId={pageId}
               />
             </CardSection>
           </div>
-          <div className="col-xxl-8 col-xl-8 col-md-9 col-12 other-info-tab">
+          <div className="col-xxl-8 col-xl-8 col-md-7 col-12 other-info-tab">
+            <Buttons
+              buttonTypeClassName="back-button btn dark-btn"
+              onClick={handleBackClick}
+              textWithIcon={true}
+              buttonText="Back"
+              imagePath={AppIcons.BackArrowIcon}
+            ></Buttons>
             <RenderTabs tabs={tabs} />
           </div>
         </div>
@@ -99,7 +117,13 @@ const SupplierDetails = () => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}
       >
-        <SupplierBasicDetail onSidebarClose={onSidebarClose} isOpen={isModelOpen} supplierData={supplierData} pageId={pageId} onhandleRepeatCall={handleRepeatCall} />
+        <SupplierBasicDetail
+          onSidebarClose={onSidebarClose}
+          isOpen={isModelOpen}
+          supplierData={supplierData}
+          pageId={pageId}
+          onhandleRepeatCall={handleRepeatCall}
+        />
       </SidebarModel>
     </>
   );
