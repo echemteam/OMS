@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../components/ui/card/CardSection";
 import { CustomersList } from "./features/CustomersList";
-import CustomerContext from "../../../utils/ContextAPIs/Customer/CustomerListContext"
+import CustomerContext from "../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { StatusEnums } from "../../../common/features/Enums/StatusEnums";
-import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, SubmittedCustomerGridConfig } from "./config/CustomerData";
+import {
+  AllCustomerGridConfig,
+  ApprovedCustomerGridConfig,
+  PendingCustomerGridConfig,
+  SubmittedCustomerGridConfig,
+} from "./config/CustomerData";
 import InActiveCustomer from "./features/InActiveCustomer";
-import Button from "../../../components/ui/button/Buttons";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -30,7 +34,10 @@ const Customers = () => {
       sMenuItemCaption: "ALL",
       component: (
         <div className="mt-2">
-          <CustomersList statusId={StatusEnums.ALL} configFile={AllCustomerGridConfig} />
+          <CustomersList
+            statusId={StatusEnums.ALL}
+            configFile={AllCustomerGridConfig}
+          />
         </div>
       ),
     },
@@ -38,7 +45,10 @@ const Customers = () => {
       sMenuItemCaption: "PENDING",
       component: (
         <div className="mt-2">
-          <CustomersList statusId={StatusEnums.Pending} configFile={PendingCustomerGridConfig} />
+          <CustomersList
+            statusId={StatusEnums.Pending}
+            configFile={PendingCustomerGridConfig}
+          />
         </div>
       ),
     },
@@ -46,7 +56,10 @@ const Customers = () => {
       sMenuItemCaption: "SUBMITTED",
       component: (
         <div className="mt-2">
-          <CustomersList statusId={StatusEnums.Submitted} configFile={SubmittedCustomerGridConfig} />
+          <CustomersList
+            statusId={StatusEnums.Submitted}
+            configFile={SubmittedCustomerGridConfig}
+          />
         </div>
       ),
     },
@@ -54,7 +67,10 @@ const Customers = () => {
       sMenuItemCaption: "APPROVED",
       component: (
         <div className="mt-2">
-          <CustomersList statusId={StatusEnums.Approved} configFile={ApprovedCustomerGridConfig} />
+          <CustomersList
+            statusId={StatusEnums.Approved}
+            configFile={ApprovedCustomerGridConfig}
+          />
         </div>
       ),
     },
@@ -62,11 +78,18 @@ const Customers = () => {
       sMenuItemCaption: "INACTIVE",
       component: (
         <div className="mt-2">
-          <InActiveCustomer statusId={[StatusEnums.Freeze, StatusEnums.Block, StatusEnums.Disable]}/>
+          <InActiveCustomer
+            statusId={[
+              StatusEnums.Freeze,
+              StatusEnums.Block,
+              StatusEnums.Disable,
+            ]}
+          />
         </div>
       ),
     },
   ];
+
   return (
     <>
       <CustomerContext.Provider value={{ listRef }}>
@@ -77,21 +100,27 @@ const Customers = () => {
               // cardTitle="Other Information"
               >
                 <>
-                  {tabs && tabs.length > 0 &&
+                  {tabs && tabs.length > 0 && (
                     <div className="row">
                       <div className="col-12">
                         <div className="tab-section mb-0">
                           <div className="tab-header">
-                            {tabs && tabs.map((tab, index) => (
-                              <button
-                                key={index}
-                                className={activeTab === index.toString()  ? "active" : ""}
-                                onClick={() => handleTabClick(index, tab.sPage)}
-                              >
-                                {tab.sMenuItemCaption}
-                              </button>
-                            ))}
-                            <Button></Button>
+                            {tabs &&
+                              tabs.map((tab, index) => (
+                                <button
+                                  key={index}
+                                  className={
+                                    activeTab === index.toString()
+                                      ? "active"
+                                      : ""
+                                  }
+                                  onClick={() =>
+                                    handleTabClick(index, tab.sPage)
+                                  }
+                                >
+                                  {tab.sMenuItemCaption}
+                                </button>
+                              ))}
                           </div>
                           {activeTab !== -1 && tabs[activeTab].component && (
                             <div className="tab-content">
@@ -103,7 +132,7 @@ const Customers = () => {
                         </div>
                       </div>
                     </div>
-                  }
+                  )}
                 </>
               </CardSection>
             </div>
