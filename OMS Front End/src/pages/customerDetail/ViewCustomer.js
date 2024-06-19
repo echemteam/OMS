@@ -70,7 +70,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2">
-          <ContactDetail  getContactByIdQuery={useLazyGetContactByCustomerIdQuery} useAddEditContactMutation={useAddEditContactMutation}/>
+          <ContactDetail  getContactByIdQuery={useLazyGetContactByCustomerIdQuery} addEditContactMutation={useAddEditContactMutation}/>
         </div>
       ),
     },
