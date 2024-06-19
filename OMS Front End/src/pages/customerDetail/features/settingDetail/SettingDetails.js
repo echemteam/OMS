@@ -14,7 +14,7 @@ const SettingDetails = () => {
     {
       sMenuItemCaption: "Financial Settings",
       component: (
-        <div className="mt-4">
+        <div className="mt-4 financial-sec">
           <FinancialSettings />
         </div>
       ),
@@ -22,7 +22,7 @@ const SettingDetails = () => {
     {
       sMenuItemCaption: "Shipping Settings",
       component: (
-        <div className="mt-4">
+        <div className="mt-4 financial-sec">
           <ShippingSettings />
         </div>
       ),

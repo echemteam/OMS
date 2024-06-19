@@ -109,21 +109,11 @@ export const shippingFormData = {
   ],
 };
 
+
+
 export const ShippingGridConfig = {
   columns: [
-    {
-      name: "selectAll",
-      fieldName: "",
-      colType: GridColumnType.CHECKBOX,
-      colSettings: {
-        valueField: "",
-      },
-    },
-    {
-      name: "No",
-      fieldName: "no",
-      allowShort: true,
-    },
+    
     {
       name: "Carrier",
       fieldName: "carrier",
@@ -167,18 +157,55 @@ export const ShippingGridConfig = {
 
 export const collectAccountData = [
   {
-    no: "1",
     carrier:"Fedex",
     accountNumber:"2165241460",
   },
   {
-    no: "1",
     carrier:"DHL",
     accountNumber:"1105652414",
   },
   {
-    no: "1",
     carrier:"UPS",
     accountNumber:"1104056025",
   },
 ];
+
+
+export const addEditCarrierFormData = {
+  name: "Shipping Form",
+  initialState: { accountType: ""},
+  formFields: [
+    {
+      id: "carrier",
+      lable: "Carrier :",
+      Field_Name: "",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "carrier",
+      fieldSetting: {
+        placeholder: "Select Carrier",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2",
+      },
+    },
+    {
+      id: "accountNumber",
+      lable: "Account Number :",
+      Field_Name: "Account Number",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "accountNumber",
+      fieldSetting: {
+        placeholder: "Enter Account Number",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2",
+      },
+    },
+    
+    
+  ],
+};
