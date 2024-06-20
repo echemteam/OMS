@@ -18,7 +18,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   const [formData, setFormData] = useState(contactDetailFormData);
   const [customerContactId, setCustomerContactId] = useState(0);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const { contactId, setContactId } = useContext(BasicDetailContext);
+  const { contactId, setContactId, emailAddressData, phoneNumberData } = useContext(BasicDetailContext);
 
   //** API Call's */
   const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
@@ -32,7 +32,9 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
         customerId: mainId,
         contactId: contactId,
-        customerContactId: customerContactId
+        customerContactId: customerContactId,
+        emailList: emailAddressData,
+        phoneList: phoneNumberData
       }
       addEdit(request);
     }
@@ -56,7 +58,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   }));
 
   useEffect(() => {
-    if (isEditablePage) {
+    if (isEditablePage && SecurityKey) {
       const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
       const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
       if (hasEditPermission && formSetting) {
@@ -78,7 +80,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         }
       }
     }
-  }, [editRef, editFormData])
+  }, [editRef, editFormData, SecurityKey])
 
   const handleEditMode = (data) => {
     if (data) {
