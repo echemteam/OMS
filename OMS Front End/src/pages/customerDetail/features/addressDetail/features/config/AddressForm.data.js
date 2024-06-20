@@ -174,7 +174,7 @@ export const addressFormData = {
     },
     {
       id: "isPreferredBilling",
-      lable: "Is PreferredBilling",
+      lable: "Is Preferred Billing",
       Field_Name: "Is PreferredBilling",
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isPreferredBilling",
@@ -189,7 +189,7 @@ export const addressFormData = {
     },
     {
       id: "isPreferredShipping",
-      lable: "Is PreferredShipping",
+      lable: "Is Preferred Shipping",
       Field_Name: "Is PreferredShipping",
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isPreferredShipping",
