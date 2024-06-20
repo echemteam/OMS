@@ -2,18 +2,22 @@ import { FileTypeIcons } from "../../pages/customerDetail/features/documentsDeta
 
 export const contactTransformData = (data) => {
     return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddress, contactId, contactTypeId, customerContactId,phoneNumber } = item;
+        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit } = item;
 
+        const emailAddress = emailAddressLst.map(item => item.emailAddress).join(',');
+        const phoneNumber = phoneNumberLsit.map(item => item.phoneNumber).join(',');
         const transformedItem = {
             cardInformation: {
                 firstName,
                 lastName,
-                emailAddress,
                 contactId,
                 contactTypeId,
                 customerContactId,
+                emailAddress,
                 phoneNumber
             },
+            emailAddressLst,
+            phoneNumberLsit
         };
 
         if (!acc[type]) {

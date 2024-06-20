@@ -7,10 +7,41 @@ export const addEditContactsFormData = {
   initialState: {
     phoneCode: '',
     phoneNumber: '',
-    phoneTypeId: 0
+    phoneTypeId: 0,
+    extension: 0
   },
   formFields: [
-
+    {
+      id: "phoneTypeId",
+      lable: "Phone Type",
+      Field_Name: "phoneType",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "phoneTypeId",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-12 mb-2 pr-0",
+      },
+    },
+    {
+      id: "extension",
+      lable: "Extension",
+      Field_Name: "Extension",
+      fieldType: FormFieldTypes.NUMERIC,
+      dataField: "extension",
+      fieldSetting: {
+        placeholder: "Enter Extension",
+        allowSpace: true,
+        minLength: 0,
+        maxLength: 6,
+      },
+      style: {
+        containerCss: "col-xxl-5 col-xl-5 col-md-4 mb-2 pr-0 ",
+      },
+    },
     {
       id: "phoneCode",
       lable: "Contact Number :",
@@ -23,7 +54,7 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-5 col-xl-5 col-md-5 mb-2 pr-0 border-right-0",
+        containerCss: "col-xxl-5 col-xl-5 col-md-4 mb-2 pr-0 border-right-0",
       },
     },
     {
@@ -38,9 +69,11 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-7 col-xl-7 col-md-7 mb-2 pl-0 border-left-r-0",
+        containerCss: "col-xxl-5 col-xl-5 col-md-7 mb-2 pl-0 border-left-r-0",
       },
     },
+
+
   ],
 };
 
@@ -48,17 +81,39 @@ export const addEditContactsFormData = {
 export const phoneNumberConfig = {
   columns: [
     {
-      name: "Phone Number",
-      width : "60%",
-      fieldName: "phoneCode,phoneNumber",
-      colType: GridColumnType.CUSTOM,
+      name: "Type",
+      fieldName: "phoneType",
+      width: "25%",
       renderCustomCol: (rowData) => {
         return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
       },
     },
     {
+      name: "Phone Number",
+      fieldName: "phoneCode,phoneNumber",
+      colType: GridColumnType.CUSTOM,
+      width: "30%",
+      renderCustomCol: (rowData) => {
+        return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
+      },
+    },
+    {
+      name: "Extension",
+      width: "25%",
+      fieldName: "extension"
+    },
+    // {
+    //   name: "Extension",
+    //   width: "60%",
+    //   fieldName: "extension",
+    //   colType: GridColumnType.CUSTOM,
+    //   renderCustomCol: (rowData) => {
+    //     return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
+    //   },
+    // },
+    {
       name: "Action",
-      width : "40%",
+      width: "20%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

@@ -53,7 +53,7 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetContactData) {
       const modifyData = contactTransformData(isGetContactData);
-      setModifyContactData(modifyData)
+      setModifyContactData(modifyData);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetContactData])
 
@@ -82,13 +82,15 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
     }
   };
 
-  const handleEdit = (data) => {
+  const handleEdit = (data, emailAddressList, phoneNumberLsit) => {
     setIsEdit(true);
     setEditFormData(data);
     setisModelOpen(!isModelOpen);
     if (editRef.current) {
       editRef.current.callEditFunction(data);
     }
+    setPhoneNumberData(phoneNumberLsit);
+    setEmailAddressData(emailAddressList);
   };
 
   const onSidebarClose = () => {
@@ -101,11 +103,12 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
   //** Success */
   const onSuccess = () => {
     onGetContactList();
+    setisModelOpen(!isModelOpen);
   };
 
   //** Get Contact List */
   const onGetContactList = () => {
-    80 && GetContactList(80);
+    mainId && GetContactList(mainId);
   };
 
   return (
@@ -123,7 +126,7 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
       <div className="sidebar-contact-model">
         <SidebarModel
           modalTitle="Add/Edit Contact"
-          contentClass="content-55"
+          contentClass="content-65"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}>

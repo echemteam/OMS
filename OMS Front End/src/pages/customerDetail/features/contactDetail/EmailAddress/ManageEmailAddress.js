@@ -19,7 +19,7 @@ const ManageEmailAddress = ({ onGetContactList }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
-    const { contactId, setEmailAddressData, emailAddressData } = useContext(BasicDetailContext);
+    const { setEmailAddressData, emailAddressData } = useContext(BasicDetailContext);
 
     //** API Call's */
     const [deleteContactEmail, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactEmailMutation();
@@ -35,11 +35,11 @@ const ManageEmailAddress = ({ onGetContactList }) => {
 
     //** Handle Changes */
     const handleToggleModal = () => {
-        if (contactId > 0) {
+        if (emailAddressData?.length < 2) {
             setShowModal(!showModal);
             setIsEdit(false);
         } else {
-            ToastService.warning("Please save the first contact details fields before proceeding.");
+            ToastService.warning("You have reached the maximum number of Email Address. Please remove an existing email address before adding a new one.")
         }
     };
 
@@ -62,7 +62,7 @@ const ManageEmailAddress = ({ onGetContactList }) => {
             "Delete", "Cancel"
         ).then((confirmed) => {
             if (confirmed) {
-                deleteData(data.emailId, data.id, deleteContactEmail, emailAddressData, setEmailAddressData, Message.EmailDelete)
+                deleteData(data.emailId, data.id, deleteContactEmail, emailAddressData, setEmailAddressData, Message.EmailDelete, true)
             }
         });
     }

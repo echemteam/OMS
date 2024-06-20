@@ -3,10 +3,11 @@ import ToastService from "../../../../../services/toastService/ToastService";
 export const addPhoneNumberData = (data, contactId, listData, setListData, successMessage, maxLengthMessage, duplicateMessage, onResetData, onSuccess) => {
     let request = {
         ...data,
-        phoneCode: data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode,
         contactId: contactId,
-        phoneTypeId: 1,
-        id: listData ? listData?.length + 1 : 1
+        id: listData ? listData?.length + 1 : 1,
+        phoneCode: data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode,
+        phoneTypeId: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId,
+        phoneType: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.label : data.phoneTypeId
     }
     let addData;
     if (listData && listData.length === 5) {
@@ -39,12 +40,18 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
 
 export const updatePhoneNumberData = (data, listData, setListData, successMessage, duplicateMessage, inValidDate, onResetData, onSuccess) => {
     if (listData && data.id > 0) {
-        const isDuplicate = listData && listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === data.phoneCode);
+        const phoneCode = data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode
+        const phoneTypeId = data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId
+        const phoneType = data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.label : data.phoneTypeId
+        const isDuplicate = listData && listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === phoneCode && item.phoneCode === phoneCode
+            && item.id !== data.id);
         if (!isDuplicate) {
             const updatedData = [...listData];
             updatedData[data.id - 1] = {
                 ...updatedData[data.id - 1],
-                phoneCode: data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode,
+                phoneCode: phoneCode,
+                phoneTypeId: phoneTypeId,
+                phoneType: phoneType,
                 phoneNumber: data.phoneNumber
             };
             setListData(updatedData);

@@ -45,12 +45,21 @@ const phoneNumberAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
-        })
+        }),
+
+        getAllPhoneTypes: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Common/GetAllPhoneTypes'),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
     })
 })
 
 export const {
-    useAddContactPhoneMutation, useUpdateContactPhoneMutation, useDeleteContactPhoneMutation, useLazyGetPhoneByContactIdQuery
+    useAddContactPhoneMutation, useUpdateContactPhoneMutation, useDeleteContactPhoneMutation, useLazyGetPhoneByContactIdQuery, useGetAllPhoneTypesQuery
 } = phoneNumberAPI
 
 export default phoneNumberAPI;

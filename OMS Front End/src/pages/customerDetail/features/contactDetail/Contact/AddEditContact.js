@@ -113,28 +113,28 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     <div>
       <div className="row horizontal-form mt-4">
         <FormCreator config={formData} ref={ref} {...formData} />
-        <div className="col-md-12 mt-3">
-          <div className="d-flex align-item-end justify-content-end">
-            <div className="d-flex align-item-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText='Save'
-                isLoading={isAddEditLoading}
-                onClick={handleAddEdit}
-                isDisable={isButtonDisable}
-              />
-              <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-                onClick={onSidebarClose}
-              />
-            </div>
-          </div>
-        </div>
       </div>
       <div className="row">
         <ManageEmailAddress onGetContactList={onGetContactList} />
         <ManageContactNumbers onGetContactList={onGetContactList} />
+      </div>
+      <div className="col-md-12 mt-5">
+        <div className="d-flex align-item-end justify-content-end">
+          <div className="d-flex align-item-end">
+            <Buttons
+              buttonTypeClassName="theme-button"
+              buttonText='Save'
+              isLoading={isAddEditLoading}
+              onClick={handleAddEdit}
+              isDisable={isButtonDisable}
+            />
+            <Buttons
+              buttonTypeClassName="dark-btn ml-5"
+              buttonText="Cancel"
+              onClick={onSidebarClose}
+            />
+          </div>
+        </div>
       </div>
     </div >
   );
