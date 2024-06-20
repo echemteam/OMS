@@ -1,7 +1,6 @@
 ﻿using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Contact;
-using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
@@ -14,6 +13,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string ADDEDITCONTACT = "AddEditContact";
         const string GETCONTACTBYCUSTOMERID = "GetContactByCustomerId";
+        const string ADDEDITCONTACTWITHDATATABLE = "AddEditContactWithDataTable";
 
         #endregion
 
@@ -25,13 +25,14 @@ namespace OMS.Domain.Repository.Implementation
         public async Task<AddEntityDTO<int>> AddEditContact(ContactDTO contact)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACT, new
-            {   
+            {
                 contact.CustomerContactId,
                 contact.ContactId,
                 contact.CustomerId,
                 contact.ContactTypeId,
                 contact.FirstName,
                 contact.LastName,
+                contact.IsPrimary,
                 contact.CreatedBy
             }, CommandType.StoredProcedure);
         }
@@ -45,7 +46,6 @@ namespace OMS.Domain.Repository.Implementation
             return getContactByContactIdResponse;
 
         }
-
         #endregion
     }
 }

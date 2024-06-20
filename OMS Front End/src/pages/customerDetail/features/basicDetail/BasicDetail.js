@@ -7,11 +7,8 @@ import ToastService from "../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
-// import {AllCustomerGridConfig} from "../../customers/config/CustomerData"
-// import { decryptUrlData } from "../../../../services/CryptoService";
-// import { useParams } from "react-router-dom";
-// import { PagePermissionsContext } from "../../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
-// import usePermissions from "../../../../utils/CustomHook/UsePermissions";
+import { securityKey } from "../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
@@ -20,6 +17,23 @@ const BasicDetail = (props) => {
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
   const { nextRef, setCustomerId, moveNextPage, setAllCountries } = useContext(BasicDetailContext);
+
+  const { formSetting } = basicDetailFormDataHalf;
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
+
+  useEffect(() => {
+    if (props.isOpen) {
+      if (hasEditPermission.isViewOnly === true) {
+        formSetting.isViewOnly = true;
+        setIsButtonDisable(true);
+      }
+      else {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+      }
+    }
+  }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
 
   const [
     getAllGroupTypes,
@@ -67,8 +81,6 @@ const BasicDetail = (props) => {
 
   const [CheckCustomerNameExist, { isLoading: isCustomerNameExistLoading, isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
 
-  // const { isButtonDisable } = useContext(PagePermissionsContext);
-  // usePermissions(descrypteId, securityKeys, basicDetailFormDataHalf, AllCustomerGridConfig);
 
   useEffect(() => {
     getAllGroupTypes();
@@ -293,7 +305,7 @@ const BasicDetail = (props) => {
                 buttonText="Update"
                 onClick={handleUpdate}
                 isLoading={isLoading}
-              // isDisable={isButtonDisable}
+                isDisable={isButtonDisable}
               />
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"

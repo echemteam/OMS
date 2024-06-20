@@ -18,5 +18,6 @@ namespace OMS.Domain.Entities.Entity.Contact
         public DateTime? ApprovedAt { get; set; }
         public short? ApprovedBy { get; set; }
         public int? CustomerContactId { get; set; }
+        public bool? IsPrimary { get; set; }
     }
 }

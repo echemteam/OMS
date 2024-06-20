@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Contact;
 using OMS.Domain.Entities.API.Response.Contact;
-using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -30,11 +29,9 @@ namespace OMS.API.Controllers
         [HttpPost("AddEditContact")]
         public async Task<IActionResult> AddEditContact(AddEditContactRequest requestData)
         {
-
             var addEditItem = await _serviceManager.contactService.AddEditContact(requestData, CurrentUserId);
             return APISucessResponce(addEditItem);
         }
-
 
         [HttpGet("GetContactByCustomerId")]
         public async Task<IActionResult> GetContactByCustomerId(int customerId)
@@ -42,7 +39,6 @@ namespace OMS.API.Controllers
             List<GetContactByCustomerIdResponse> responseData = await _serviceManager.contactService.GetContactByCustomerId(customerId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
-
         #endregion
 
     }

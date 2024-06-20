@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.Contact;
+﻿using Dapper;
+using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Contact;
 using OMS.Domain.Repository.Contract;
@@ -15,6 +16,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATECONTACTEMAIL = "UpdateContactEmail";
         const string GETEMAILBYCONTACTID = "GetEmailByContactId";
         const string DELETECONTACTEMAIL = "DeleteContactEmail";
+        const string ADDEDITCONTACTEMAIL = "AddEditContactEmail";
         #endregion
 
         public EmailAddressRepository(DapperContext dapperContext) : base(dapperContext)
@@ -56,6 +58,20 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getEmailByContactIdResponse;
 
+        }
+
+        public async Task<AddEntityDTO<int>> AddEditContactEmail(DataTable emailList, int contactId)
+        {
+            AddEntityDTO<int> responceData = new();
+            var parameters = new
+            {
+                emailList = emailList.AsTableValuedParameter("[dbo].[EmailTypeTable]"),
+                contactId
+            };
+            responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTEMAIL,
+            parameters
+            ,CommandType.StoredProcedure);
+            return responceData;
         }
     }
 }

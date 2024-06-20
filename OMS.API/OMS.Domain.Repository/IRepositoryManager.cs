@@ -20,5 +20,6 @@ namespace OMS.Domain.Repository
         IPhoneNumberRepository phoneNumber { get; }
         ICustomerDocumentsRepository customerDocuments { get; }
         ISupplierRepository supplier { get; }
+        ISupplierdocuementsRepositery supplierdocuements { get; }
     }
 }

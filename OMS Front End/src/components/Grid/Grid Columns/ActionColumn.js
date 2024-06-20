@@ -164,6 +164,36 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
         </Link>
       )}
 
+      {col.defaultAction.allowPermission && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("PERMISSION", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="Permission"
+        >
+          <Image
+            imagePath={AppIcons.permissionIcon}
+            altText="DISABLE Icon" />
+        </Link>
+      )}
+
+      {col.defaultAction.allowUser && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("USER", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="User"
+        >
+          <Image
+            imagePath={AppIcons.userIcon}
+            altText="DISABLE Icon" />
+        </Link>
+      )}
+
     </div>
   );
 };

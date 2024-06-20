@@ -203,4 +203,7 @@ export const addressFormData = {
       },
     },
   ],
+  formSetting: {
+    isViewOnly: false
+  }
 };

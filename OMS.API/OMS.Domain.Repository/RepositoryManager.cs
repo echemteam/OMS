@@ -29,7 +29,7 @@ namespace OMS.Domain.Repository
         IPhoneNumberRepository _phoneNumberRepository;
         ICustomerDocumentsRepository _customerDocumentsRepository;
         ISupplierRepository _supplierRepository;
-
+        ISupplierdocuementsRepositery _supplierdocuementsRepositery;
         public ITestRepository test
         {
             get
@@ -214,6 +214,17 @@ namespace OMS.Domain.Repository
                     _supplierRepository = new SupplierRepository(_context);
                 }
                 return _supplierRepository;
+            }
+        }
+        public ISupplierdocuementsRepositery supplierdocuements
+        {
+            get
+            {
+                if (_supplierdocuementsRepositery == null)
+                {
+                    _supplierdocuementsRepositery = new SupplierdocuementsRepositery(_context);
+                }
+                return _supplierdocuementsRepositery;
             }
         }
     }

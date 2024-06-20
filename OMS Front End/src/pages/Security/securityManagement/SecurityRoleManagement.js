@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
 import MolGrid from "../../../components/Grid/MolGrid";
@@ -6,14 +6,15 @@ import { useNavigate } from "react-router-dom";
 import CenterModel from "../../../components/ui/centerModel/CenterModel";
 import AddEditRole from "./features/AddEditRole";
 import AssignUser from "./features/AssignUser";
-import { SecurityRoleGridConfig, addEditRoleFormData, securityKeys } from "./features/config/AddEditRoleForm.data";
+import { SecurityRoleGridConfig, addEditRoleFormData } from "./features/config/AddEditRoleForm.data";
 import { useDeleteRolesMutation, useGetRolesMutation } from "../../../app/services/securityRoleAPI";
 import SwalAlert from "../../../services/swalService/SwalService";
 import ToastService from "../../../services/toastService/ToastService";
 import SidebarModel from "../../../components/ui/sidebarModel/SidebarModel";
 import { encryptUrlData } from "../../../services/CryptoService";
-import usePermissions from "../../../utils/CustomHook/UsePermissions";
-import { PagePermissionsContext } from "../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
+import { securityKey } from "../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
+
 
 const SecurityRoleManagement = () => {
   const molGridRef = useRef();
@@ -29,9 +30,67 @@ const SecurityRoleManagement = () => {
 
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
-  const { isShowAddButton } = useContext(PagePermissionsContext);
-  usePermissions(undefined, securityKeys, addEditRoleFormData, SecurityRoleGridConfig);
 
+  const [buttonVisible, setButtonVisible] = useState(false);
+  const { formSetting } = addEditRoleFormData;
+  const actionColumn = SecurityRoleGridConfig.columns.find(column => column.name === "Action");
+
+  const hasAssingUser = hasFunctionalPermission(securityKey.ASSIGNUSERS);
+  const hasAddPermission = hasFunctionalPermission(securityKey.ADDSECURITYROLE);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITSECURITYROLE);
+  const hasDeletePermission = hasFunctionalPermission(securityKey.DELETESECURITYROLE);
+  const hasPermissionsManagement = hasFunctionalPermission(securityKey.PERMISSIONMANAGEMENT);
+
+  //** Check grid Action Permission */
+  useEffect(() => {
+    if (hasEditPermission.isViewOnly === true) {
+      actionColumn.defaultAction.allowEdit = true;
+    }
+    else if (hasEditPermission.isEditable === true) {
+      actionColumn.defaultAction.allowEdit = true;
+    }
+    else {
+      actionColumn.defaultAction.allowEdit = false;
+    }
+  }, [hasEditPermission, actionColumn.defaultAction.allowEdit])
+
+  //** Check grid Action Permission */
+  useEffect(() => {
+    if (hasDeletePermission.hasAccess === true) {
+      actionColumn.defaultAction.allowDelete = true;
+    }
+    else if (hasDeletePermission.hasAccess === false) {
+      actionColumn.defaultAction.allowDelete = false;
+    }
+  }, [hasDeletePermission, actionColumn.defaultAction.allowDelete]);
+
+  // ** Check Form fields Permission */
+  useEffect(() => {
+    if (hasAddPermission.hasAccess) {
+      formSetting.isViewOnly = false;
+      setButtonVisible(true);
+    } else {
+      setButtonVisible(false);
+    }
+  }, [hasEditPermission, hasAddPermission, formSetting.isViewOnly])
+
+  useEffect(() => {
+    if (hasPermissionsManagement.hasAccess === true) {
+      actionColumn.defaultAction.allowPermission = true;
+    }
+    else if (hasPermissionsManagement.hasAccess === false) {
+      actionColumn.defaultAction.allowPermission = false;
+    }
+  }, [hasPermissionsManagement, actionColumn.defaultAction.allowPermission]);
+
+  useEffect(() => {
+    if (hasAssingUser.hasAccess === true) {
+      actionColumn.defaultAction.allowUser = true;
+    }
+    else if (hasAssingUser.hasAccess === false) {
+      actionColumn.defaultAction.allowUser = false;
+    }
+  }, [hasAssingUser, actionColumn.defaultAction.allowUser])
 
   const [
     getRoles,
@@ -155,7 +214,7 @@ const SecurityRoleManagement = () => {
         cardTitle="Security Roles"
         // cardSubTitle="Sub title add hear"
         buttonClassName="btn dark-btn"
-        rightButton={isShowAddButton ? true : false}
+        rightButton={buttonVisible ? true : false}
         buttonText="Add"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}

@@ -22,6 +22,8 @@ import {
 } from "../../app/services/contactAPI";
 import { useNavigate } from "react-router-dom/dist";
 import Button from "../../components/ui/button/Buttons";
+import CustomerContactDetails from "./features/contactDetail/Contact/CustomerContactDetails";
+import CustomerDocumentDetails from "./features/documentsDetail/CustomerDocumentDetails";
 
 const ViewCustomer = () => {
   const navigate = useNavigate();
@@ -85,7 +87,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Address",
       component: (
         <div className="mt-2">
-          <AddressDetail />
+          <AddressDetail isEditablePage={true} />
         </div>
       ),
     },
@@ -93,10 +95,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2">
-          <ContactDetail
-            getContactByIdQuery={useLazyGetContactByCustomerIdQuery}
-            addEditContactMutation={useAddEditContactMutation}
-          />
+          <CustomerContactDetails isEditablePage={true} />
         </div>
       ),
     },
@@ -112,7 +111,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          <DocumentDetails />
+          <CustomerDocumentDetails isEditablePage={true} />
         </div>
       ),
     },
