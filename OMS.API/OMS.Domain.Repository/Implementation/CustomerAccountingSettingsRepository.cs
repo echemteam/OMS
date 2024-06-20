@@ -20,6 +20,8 @@ namespace OMS.Domain.Repository.Implementation
         #region SP
         const string GETDETAILSBYCUSTOMERID = "GetDetailsByCustomerId";
         const string ADDEDITCUSTOMERSETTINGS = "AddEditCustomerSettings";
+        const string DELETECUSTOMERDELIVERYCARRIERSBYID = "DeleteCustomerDeliveryCarriersById";
+        const string DELETECUSTOMERDELIVERYMETHODSBYID = "DeleteCustomerDeliveryMethodsById";
         #endregion
 
         public CustomerAccountingSettingsRepository(DapperContext dapperContext) : base(dapperContext)
@@ -47,6 +49,24 @@ namespace OMS.Domain.Repository.Implementation
                  settings.BillingCurrency,
                  settings.InvoiceSubmissionInstruction,
                  settings.CreatedBy,
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETECUSTOMERDELIVERYCARRIERSBYID, new
+            {
+                customerDeliveryCarrierId,
+                deletedBy
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteCustomerDeliveryMethodsById(int customerDeliveryMethodId, int deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETECUSTOMERDELIVERYMETHODSBYID, new
+            {
+                customerDeliveryMethodId,
+                deletedBy
             }, CommandType.StoredProcedure);
         }
         #endregion

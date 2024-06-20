@@ -8,5 +8,7 @@ namespace OMS.Domain.Repository.Contract
     {
         Task<AddEntityDTO<int>> AddEditCustomerSettings(CustomerAccountingSettingsDTO customerAccountingSettingsDTO);
         Task<GetDetailsByCustomerIdResponse> GetDetailsbyCustomerID(int customerId);
+        Task<AddEntityDTO<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy);
+        Task<AddEntityDTO<int>> DeleteCustomerDeliveryMethodsById(int customerDeliveryMethodId, int deletedBy);
     }
 }

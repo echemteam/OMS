@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.Contact;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -42,6 +41,39 @@ namespace OMS.API.Controllers
             var addEditSetting = await _serviceManager.customerAccoutingSettingsService.AddEditCustomerSettings(requestData, CurrentUserId);
             return APISucessResponce(addEditSetting);
         }
+
+        [HttpDelete("DeleteCustomerDeliveryCarriersById")]
+        public async Task<IActionResult> DeleteCustomerDeliveryCarriersById(int CustomerDeliveryCarrierId)
+        {
+            if (CustomerDeliveryCarrierId > 0)
+            {
+                int deletedBy = CurrentUserId;
+                var deleteItem = await _serviceManager.customerAccoutingSettingsService.DeleteCustomerDeliveryCarriersById(CustomerDeliveryCarrierId, deletedBy).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(CustomerDeliveryCarrierId);
+        }
+
+        [HttpDelete("DeleteCustomerDeliveryMethodsById")]
+        public async Task<IActionResult> DeleteCustomerDeliveryMethodsById(int CustomerDeliveryMethodId)
+        {
+            if (CustomerDeliveryMethodId > 0)
+            {
+                int deletedBy = CurrentUserId;
+                var deleteItem = await _serviceManager.customerAccoutingSettingsService.DeleteCustomerDeliveryMethodsById(CustomerDeliveryMethodId, deletedBy).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(CustomerDeliveryMethodId);
+        }
+
+
+
+
+
+
+
+
+
         #endregion
     }
 }
