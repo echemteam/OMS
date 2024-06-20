@@ -48,7 +48,7 @@ const MolGridDataRows = (props) => {
       {props.dataSource && props.dataSource.map((row, rowIndex) => (
         <tr key={`row_${rowIndex}`}>
           {props.columns.map((col, colIndex) => (
-            <td key={`col_${colIndex}`} className="whitespace-nowrap">
+            <td key={`col_${colIndex}`} className="whitespace-nowrap"  style={{ width: col.width }}>
               {renderGridCol(row, col, rowIndex)}
             </td>
           ))}

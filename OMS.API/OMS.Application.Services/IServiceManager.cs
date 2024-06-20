@@ -13,6 +13,7 @@ using OMS.Application.Services.Security;
 using OMS.Application.Services.Supplier;
 using OMS.Application.Services.Test;
 using OMS.Application.Services.User;
+using OMS.Application.Services.SupplierDocuements;
 
 namespace OMS.Application.Services
 {
@@ -34,5 +35,7 @@ namespace OMS.Application.Services
         IPhoneNumberService phoneNumberService { get; }
         ICustomerDocumentsService customerDocumentsService { get; }
         ISupplierServices supplierServices { get; }
+        ISupplierDocuementsService supplierDocuementsService { get; }
+        
     }
 }
