@@ -8,7 +8,7 @@ const NotesCard = ({ isAddEditModal, onHandleNote, ongetcustomerNote, notesFormD
 
   useEffect(() => {
     ongetcustomerNote();
-  }, [ongetcustomerNote]);
+  }, []);
 
   const handleEditClick = (note) => {
     isAddEditModal(true);
