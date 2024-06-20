@@ -13,7 +13,7 @@ import Buttons from '../../../../../../components/ui/button/Buttons';
 import DataLoader from '../../../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../../../components/ui/centerModel/CenterModel';
 
-const SupplierData = ({ editClick, supplierData, isLoading, supplierId }) => {
+const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId }) => {
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -265,4 +265,4 @@ const SupplierData = ({ editClick, supplierData, isLoading, supplierId }) => {
   );
 }
 
-export default SupplierData
+export default SupplierViewDetail
