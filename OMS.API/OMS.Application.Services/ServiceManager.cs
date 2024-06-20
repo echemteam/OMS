@@ -13,6 +13,7 @@ using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
 using OMS.Application.Services.Supplier;
 using OMS.Application.Services.SupplierDocuements;
+using OMS.Application.Services.SupplierNotes;
 using OMS.Application.Services.Test;
 using OMS.Application.Services.User;
 using OMS.Domain.Repository;
@@ -48,6 +49,7 @@ namespace OMS.Application.Services
         ICustomerDocumentsService _customerDocumentsService;
         ISupplierServices _supplierServices;
         ISupplierDocuementsService _supplierDocuementsService;
+        ISupplierNotesService _supplierNotesService;
 
         public ITestService testService
         {
@@ -258,6 +260,19 @@ namespace OMS.Application.Services
                     _supplierDocuementsService = new SupplierDocuementsService(_repositoryManager, _commonSettingService);
                 }
                 return _supplierDocuementsService;
+
+            }
+        }
+
+        public ISupplierNotesService supplierNotesService
+        {
+            get
+            {
+                if (_supplierNotesService == null)
+                {
+                    _supplierNotesService = new SupplierNotesService(_repositoryManager, _commonSettingService);
+                }
+                return _supplierNotesService;
 
             }
         }

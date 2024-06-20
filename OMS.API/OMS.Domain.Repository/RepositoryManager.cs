@@ -30,6 +30,7 @@ namespace OMS.Domain.Repository
         ICustomerDocumentsRepository _customerDocumentsRepository;
         ISupplierRepository _supplierRepository;
         ISupplierdocuementsRepositery _supplierdocuementsRepositery;
+        ISupplierNotesRepository _supplierNotesRepository;
         public ITestRepository test
         {
             get
@@ -225,6 +226,18 @@ namespace OMS.Domain.Repository
                     _supplierdocuementsRepositery = new SupplierdocuementsRepositery(_context);
                 }
                 return _supplierdocuementsRepositery;
+            }
+        }
+
+        public ISupplierNotesRepository supplierNotes
+        {
+            get
+            {
+                if (_supplierNotesRepository == null)
+                {
+                    _supplierNotesRepository = new SupplierNotesRepository(_context);
+                }
+                return _supplierNotesRepository;
             }
         }
     }

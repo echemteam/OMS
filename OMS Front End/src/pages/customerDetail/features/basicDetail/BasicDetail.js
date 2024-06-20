@@ -86,7 +86,15 @@ const BasicDetail = (props) => {
     getAllGroupTypes();
     getAllCountries();
     getAllTerritories();
+    manageFilteredForm();
   }, []);
+
+  const manageFilteredForm = () => {
+    const manageData = { ...formData }
+    const filteredFormFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input");
+    manageData.formFields = filteredFormFields;
+    setFormData(manageData)
+  };
 
   useEffect(() => {
     if (
@@ -186,7 +194,6 @@ const BasicDetail = (props) => {
 
   useEffect(() => {
     if (props.isOpen) {
-      const removeFields = ['note']
       let data = { ...basicDetailFormDataHalf };
       data.initialState = { ...props.customerData };
       if (data.initialState.countryId > 0) {
@@ -195,7 +202,7 @@ const BasicDetail = (props) => {
         }
         handleValidateTextId(det, "countryId");
       }
-      data.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
+      data.formFields = basicDetailFormDataHalf.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
       setFormData(data);
     }
   }, [props.isOpen])
@@ -239,16 +246,19 @@ const BasicDetail = (props) => {
 
   const handleValidateTextId = (data, dataField) => {
     if (dataField === 'countryId') {
-      const removeFields = ['note']
       const modifyFormFields = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
       const updatedForm = { ...formData };
       updatedForm.formFields = modifyFormFields;
       if (props.isOpen) {
-        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
+        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
+      }else{
+        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input");
       }
       setFormData(updatedForm);
     }
   }
+
+
   const formActionHandler = {
     DDL_CHANGED: handleValidateTextId
   };

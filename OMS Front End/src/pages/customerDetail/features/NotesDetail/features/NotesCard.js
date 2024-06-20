@@ -12,7 +12,7 @@ const NotesCard = ({
 }) => {
   useEffect(() => {
     ongetcustomerNote();
-  }, [ongetcustomerNote]);
+  }, []);
 
   const handleEditClick = (note) => {
     isAddEditModal(true);

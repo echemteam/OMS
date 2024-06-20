@@ -11,5 +11,7 @@ namespace OMS.Application.Services
     {
         Task<GetDetailsByCustomerIdResponse> GetDetailsbyCustomerID(int customerId);
         Task<AddEntityDTO<int>> AddEditCustomerSettings(AddEditCustomerSettingRequest requestData, short currentUserId);
+        Task<AddEntityDTO<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy);
+        Task<AddEntityDTO<int>> DeleteCustomerDeliveryMethodsById(int customerDeliveryMethodId, int deletedBy);
     }
 }
