@@ -30,7 +30,7 @@ const ManageDocumentList = forwardRef(({ mainId, downloadDocument, deleteDocumen
     }, []);
 
     useEffect(() => {
-        if (isEditablePage) {
+        if (isEditablePage && SecurityKey) {
             const hasDeletePermission = hasFunctionalPermission(SecurityKey.DELETE);
             const hasDownalodPermission = hasFunctionalPermission(SecurityKey.DOWNALOD);
             if (hasDeletePermission) {
@@ -50,7 +50,7 @@ const ManageDocumentList = forwardRef(({ mainId, downloadDocument, deleteDocumen
                 }
             }
         }
-    }, [isEditablePage]);
+    }, [isEditablePage, SecurityKey]);
 
     useEffect(() => {
         if (isListSucess && isListData && !isListFetching) {

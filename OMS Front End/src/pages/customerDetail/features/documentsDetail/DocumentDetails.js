@@ -32,7 +32,7 @@ const DocumentDetails = ({ mainId, addDocuments, downloadDocument, deleteDocumen
   }, []);
 
   useEffect(() => {
-    if (isEditablePage) {
+    if (isEditablePage && SecurityKey) {
       const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
 
       if (hasAddPermission) {
@@ -44,7 +44,7 @@ const DocumentDetails = ({ mainId, addDocuments, downloadDocument, deleteDocumen
         }
       }
     }
-  }, [isEditablePage]);
+  }, [isEditablePage, SecurityKey]);
 
   useEffect(() => {
     if (!isGetAllDocumentTypesFetching && isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {

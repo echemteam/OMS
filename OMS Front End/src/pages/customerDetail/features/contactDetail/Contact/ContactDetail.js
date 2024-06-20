@@ -32,11 +32,11 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
   //** UseEffect */
   useEffect(() => {
     getAllContactTypes();
-    mainId && GetContactList(mainId);
+    onGetContactList();
   }, [mainId]);
 
   useEffect(() => {
-    if (isEditablePage === true) {
+    if (isEditablePage && SecurityKey) {
       const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
 
       if (hasAddPermission) {
@@ -48,7 +48,7 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
         }
       }
     }
-  }, [isEditablePage, isSupplier]);
+  }, [isEditablePage, isSupplier, SecurityKey]);
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetContactData) {
@@ -100,12 +100,12 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
 
   //** Success */
   const onSuccess = () => {
-    mainId && GetContactList(mainId);
+    onGetContactList();
   };
 
   //** Get Contact List */
   const onGetContactList = () => {
-    mainId && GetContactList(mainId);
+    80 && GetContactList(80);
   };
 
   return (
