@@ -8,7 +8,7 @@ export const NotesData = {
             id: "notes",
             lable: "Add Notes :",
             Field_Name: "Add Notes :",
-            fieldType: FormFieldTypes.TEXTAREA,
+            fieldType: FormFieldTypes.TINYEDITOR,
             dataField: "type",
             fieldSetting: {
               placeholder: "",
