@@ -52,7 +52,11 @@ namespace OMS.Application.Services.Contact
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId)
         {
             List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId);
-
+            foreach (var contact in contactList)
+            {
+                contact.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId);
+                contact.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+            }
             return contactList;
         }
         #endregion

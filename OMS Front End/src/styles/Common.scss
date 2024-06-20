@@ -1703,14 +1703,6 @@ a {
   }
 }
 
-@media only screen and (max-width: 1560px) {
-  .status-dropdown {
-    .css-13cymwt-control {
-      padding: 0 !important;
-    }
-  }
-}
-
 .inactive-scroll-bar {
   table {
     tbody {
@@ -1719,6 +1711,47 @@ a {
       overflow-y: auto;
       width: 100%;
       overflow-x: hidden;
+    }
+  }
+}
+
+.customer-list{
+  table {
+    thead {
+      tr {
+        th {
+          &:nth-child(3) {
+            display: flex;
+            justify-content: center;
+          }
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          &:nth-child(3) {
+            display: flex;
+            justify-content: center;
+          }
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1560px) {
+  .status-dropdown {
+    .css-13cymwt-control {
+      padding: 0 !important;
     }
   }
 }

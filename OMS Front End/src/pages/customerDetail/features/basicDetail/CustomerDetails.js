@@ -13,7 +13,7 @@ import { reasonData } from "../../customers/config/CustomerData";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 
-const CustomerDetails = ({ editClick, customerData, isLoading, customerId }) => {
+const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onhandleRepeatCall}) => {
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -116,6 +116,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId }) => 
   const handleToggleModal = () => {
     setShowModal(false);
     onReset()
+    onhandleRepeatCall()
+    setSelectedStatus(customerData.status)
   };
 
   const getStatusClass = () => {
