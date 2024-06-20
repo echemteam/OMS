@@ -10,6 +10,10 @@ namespace OMS.Domain.Entities.API.Request.Contact
         public short? ContactTypeId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public bool? IsPrimary { get; set; }
+
+        public List<AddContactEmailRequest>? EmailList {get;set;}
+        public List<AddContactPhoneRequest>? PhoneList { get; set; }
 
     }
 }
