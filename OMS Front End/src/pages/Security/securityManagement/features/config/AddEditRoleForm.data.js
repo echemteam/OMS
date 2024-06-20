@@ -41,9 +41,11 @@ export const SecurityRoleGridConfig = {
       name: "Role Name",
       fieldName: "roleName",
       // allowShort: true,
+      width:"80%",
     },
     {
       name: "Action",
+      width:"20%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

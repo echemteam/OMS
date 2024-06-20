@@ -31,10 +31,12 @@ export const assignUserListData = {
     {
       name: "User Name",
       fieldName: "userName",
+      width:"80%",
       // allowShort: true,
     },
     {
       name: "Action",
+      width:"20%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: false,

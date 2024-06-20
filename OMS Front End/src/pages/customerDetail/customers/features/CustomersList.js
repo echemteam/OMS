@@ -172,21 +172,21 @@ export const CustomersList = ({ statusId, configFile }) => {
           >
             <div className="row">
               <div className="col-md-12 table-striped">
-                <MolGrid
-                  ref={molGridRef}
-                  configuration={configFile}
-                  dataSource={dataSource}
-                  isLoading={isListLoading}
-                  pagination={{
-                    totalCount: totalRowCount,
-                    pageSize: 25,
-                    currentPage: 1,
-                  }}
-                  onPageChange={handlePageChange}
-                  onActionChange={actionHandler}
-                  allowPagination={true}
-                  onCellDataChange={handleGridCheckBoxChange}
-                />
+                  <MolGrid
+                    ref={molGridRef}
+                    configuration={configFile}
+                    dataSource={dataSource}
+                    isLoading={isListLoading}
+                    pagination={{
+                      totalCount: totalRowCount,
+                      pageSize: 25,
+                      currentPage: 1,
+                    }}
+                    onPageChange={handlePageChange}
+                    onActionChange={actionHandler}
+                    allowPagination={true}
+                    onCellDataChange={handleGridCheckBoxChange}
+                  />
               </div>
             </div>
           </CardSection>
