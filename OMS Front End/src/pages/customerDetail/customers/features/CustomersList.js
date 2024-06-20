@@ -35,78 +35,37 @@ export const CustomersList = ({ statusId, configFile }) => {
   const [updateCustomerApproveStatus, { isSuccess: isSuccessUpdateCustomer, data: updateCustomerData }] = useUpdateCustomerApproveStatusMutation();
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
 
-  const actionColumn = configFile?.columns.find(column => column.name === "Action");
-
-  const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
-  const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
-  const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
-  const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
-  const hasDisable = hasFunctionalPermission(securityKey.DISABLECUSTOMER);
-  const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
-  const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
 
   useEffect(() => {
-    if (hasEdit.hasAccess === true) {
-      actionColumn.defaultAction.allowEdit = true;
-    }
-    else if (hasEdit.hasAccess === false) {
-      actionColumn.defaultAction.allowEdit = false;
-    }
-  }, [hasEdit, actionColumn.defaultAction.allowEdit]);
+    const actionColumn = configFile?.columns.find(column => column.name === "Action");
+    if (actionColumn) {
 
-  useEffect(() => {
-    if (hasBlock.hasAccess === true) {
-      actionColumn.defaultAction.allowBlocked = true;
-    }
-    else if (hasBlock.hasAccess === false) {
-      actionColumn.defaultAction.allowBlocked = false;
-    }
-  }, [hasBlock, actionColumn.defaultAction.allowBlocked]);
+      const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
+      const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
+      const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
+      const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
+      const hasDisable = hasFunctionalPermission(securityKey.DISABLECUSTOMER);
+      const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
+      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
 
-  useEffect(() => {
-    if (hasFreeze.hasAccess === true) {
-      actionColumn.defaultAction.allowFreeze = true;
-    }
-    else if (hasFreeze.hasAccess === false) {
-      actionColumn.defaultAction.allowFreeze = false;
-    }
-  }, [hasFreeze, actionColumn.defaultAction.allowFreeze]);
 
-  useEffect(() => {
-    if (hasActive.hasAccess === true) {
-      actionColumn.defaultAction.allowActiveCustomer = true;
+      if (actionColumn.defaultAction.allowEdit) {
+        actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
+      } else if (actionColumn.defaultAction.allowBlocked) {
+        actionColumn.defaultAction.allowBlocked = hasBlock?.hasAccess;
+      } else if (actionColumn.defaultAction.allowFreeze) {
+        actionColumn.defaultAction.allowFreeze = hasFreeze?.hasAccess;
+      } else if (actionColumn.defaultAction.allowActiveCustomer) {
+        actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+      } else if (actionColumn.defaultAction.allowDisable) {
+        actionColumn.defaultAction.allowDisable = hasDisable?.hasAccess;
+      } else if (actionColumn.defaultAction.allowUnblocked) {
+        actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
+      } else if (actionColumn.defaultAction.allowUnfreeze) {
+        actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+      }
     }
-    else if (hasActive.hasAccess === false) {
-      actionColumn.defaultAction.allowActiveCustomer = false;
-    }
-  }, [hasActive, actionColumn.defaultAction.allowActiveCustomer]);
-
-  useEffect(() => {
-    if (hasDisable.hasAccess === true) {
-      actionColumn.defaultAction.allowDisable = true;
-    }
-    else if (hasDisable.hasAccess === false) {
-      actionColumn.defaultAction.allowDisable = false;
-    }
-  }, [hasDisable, actionColumn.defaultAction.allowDisable]);
-
-  useEffect(() => {
-    if (hasUnBlock.hasAccess === true) {
-      actionColumn.defaultAction.allowUnblocked = true;
-    }
-    else if (hasUnBlock.hasAccess === false) {
-      actionColumn.defaultAction.allowUnblocked = false;
-    }
-  }, [hasUnBlock, actionColumn.defaultAction.allowUnblocked]);
-
-  useEffect(() => {
-    if (hasUnFreeze.hasAccess === true) {
-      actionColumn.defaultAction.allowUnfreeze = true;
-    }
-    else if (hasUnFreeze.hasAccess === false) {
-      actionColumn.defaultAction.allowUnfreeze = false;
-    }
-  }, [hasUnFreeze, actionColumn.defaultAction.allowUnfreeze]);
+  }, [configFile]);
 
   const handlePageChange = (page) => {
     const request = {
@@ -123,7 +82,7 @@ export const CustomersList = ({ statusId, configFile }) => {
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
-        setDataSource(isListeData.dataSource);
+        setDataSource(isListeData.dataSource)
       }
       if (isListeData.totalRecord) {
         setTotalRowCount(isListeData.totalRecord);
@@ -262,40 +221,40 @@ export const CustomersList = ({ statusId, configFile }) => {
               </div>
             </div>
           </CardSection>
-  
-            <CenterModel
-              showModal={showModal}
-              handleToggleModal={handleToggleModal}
-              modalTitle={statusFeild + " " + "Reason"}
-              modelSizeClass="w-50s"
-            >
-              <div className="row horizontal-form">
-                <FormCreator
-                  config={formData}
-                  ref={reasonRef}
-                  {...formData}
 
-                />
-                <div className="col-md-12 mt-2">
-                  <div className="d-flex align-item-end justify-content-end">
-                    <div className="d-flex align-item-end">
-                      <Buttons
-                        buttonTypeClassName="theme-button"
-                        buttonText="Update"
-                        isLoading={updateCustomerInActiveStatusCustomerLoading}
-                        onClick={handleUpdate}
-                      />
-                      <Buttons
-                        buttonTypeClassName="dark-btn ml-5"
-                        buttonText="Cancel"
-                        onClick={handleToggleModal}
-                      />
-                    </div>
+          <CenterModel
+            showModal={showModal}
+            handleToggleModal={handleToggleModal}
+            modalTitle={statusFeild + " " + "Reason"}
+            modelSizeClass="w-50s"
+          >
+            <div className="row horizontal-form">
+              <FormCreator
+                config={formData}
+                ref={reasonRef}
+                {...formData}
+
+              />
+              <div className="col-md-12 mt-2">
+                <div className="d-flex align-item-end justify-content-end">
+                  <div className="d-flex align-item-end">
+                    <Buttons
+                      buttonTypeClassName="theme-button"
+                      buttonText="Update"
+                      isLoading={updateCustomerInActiveStatusCustomerLoading}
+                      onClick={handleUpdate}
+                    />
+                    <Buttons
+                      buttonTypeClassName="dark-btn ml-5"
+                      buttonText="Cancel"
+                      onClick={handleToggleModal}
+                    />
                   </div>
                 </div>
               </div>
-            </CenterModel>
-        
+            </div>
+          </CenterModel>
+
         </div>
       </div>
     </div>
