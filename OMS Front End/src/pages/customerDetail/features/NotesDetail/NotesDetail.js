@@ -19,7 +19,6 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import { securityKey } from "../../../../data/SecurityKey";
 
 const NotesDetail = (props) => {
-
   const notesFormRef = useRef();
   const { formSetting } = NotesData;
   const [showModal, setShowModal] = useState(false);
@@ -30,8 +29,22 @@ const NotesDetail = (props) => {
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isEditModeData, setIsEditModeData] = useState();
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const [addCustomerNotes, { isLoading: isAddNotesLoading, isSuccess: isAddNotesSuccess, data: isAddNotesData, },] = useAddCustomerNotesMutation();
-  const [updateCustomerNotes, { isLoading: isUpdateNotesLoading, isSuccess: isUpdateNotesSuccess, data: isUpdateNotesData }] = useUpdateCustomerNotesMutation();
+  const [
+    addCustomerNotes,
+    {
+      isLoading: isAddNotesLoading,
+      isSuccess: isAddNotesSuccess,
+      data: isAddNotesData,
+    },
+  ] = useAddCustomerNotesMutation();
+  const [
+    updateCustomerNotes,
+    {
+      isLoading: isUpdateNotesLoading,
+      isSuccess: isUpdateNotesSuccess,
+      data: isUpdateNotesData,
+    },
+  ] = useUpdateCustomerNotesMutation();
   const [
     getCustomerNoteByCustomerId,
     {
@@ -42,20 +55,22 @@ const NotesDetail = (props) => {
   ] = useLazyGetCustomerNoteByCustomerIdQuery();
 
   useEffect(() => {
-    const hasAddPermission = hasFunctionalPermission(securityKey.ADDCUSTOMERNOTE);
-    const hasEditPermission = hasFunctionalPermission(securityKey.EDITCUSTOMERNOTE);
+    const hasAddPermission = hasFunctionalPermission(
+      securityKey.ADDCUSTOMERNOTE
+    );
+    const hasEditPermission = hasFunctionalPermission(
+      securityKey.EDITCUSTOMERNOTE
+    );
     if (hasEditPermission && formSetting) {
       if (isEditModeData) {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
-        }
-        else {
+        } else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
         }
-      }
-      else if (!isEditModeData) {
+      } else if (!isEditModeData) {
         if (hasAddPermission.hasAccess === true) {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
@@ -78,7 +93,6 @@ const NotesDetail = (props) => {
     }
   }, [isAddNotesSuccess, isAddNotesData]);
 
-
   useEffect(() => {
     if (!isGetNotesFetching && isGetNotesSuccess && isGetNotesData) {
       if (Array.isArray(isGetNotesData)) {
@@ -99,10 +113,10 @@ const NotesDetail = (props) => {
 
   const handleToggleModal = () => {
     setIsEditMode(false);
-    resetForm()
+    resetForm();
     setShowModal(!showModal);
-    setIsEditModeData('');
-  }
+    setIsEditModeData("");
+  };
 
   const resetForm = () => {
     let form = { ...NotesData };
@@ -116,15 +130,13 @@ const NotesDetail = (props) => {
     };
     if (notesData && !notesData.customerNoteId) {
       addCustomerNotes(request);
-
     } else if (notesData && notesData.customerNoteId) {
       const updateRequest = {
         ...request,
         customerNoteId: notesData.customerNoteId,
       };
-      updateCustomerNotes(updateRequest)
+      updateCustomerNotes(updateRequest);
       ongetNote();
-
     }
   };
   const ongetNote = () => {
@@ -135,7 +147,11 @@ const NotesDetail = (props) => {
     setIsEditMode(true);
     setIsEditModeData(data);
     const newformData = { ...formData };
-    newformData.initialState = { ...newformData, type: data.note, customerNoteId: data.customerNoteId };
+    newformData.initialState = {
+      ...newformData,
+      type: data.note,
+      customerNoteId: data.customerNoteId,
+    };
     setFormData(newformData);
   };
 
@@ -150,22 +166,23 @@ const NotesDetail = (props) => {
         buttonText="Add"
         titleButtonClick={handleToggleModal}
       >
-        <NotesCard
-          isAddEditModal={handleToggleModal}
-          onHandleNote={handleNoteData}
-          ongetcustomerNote={ongetNote}
-          notesFormData={notesFormData}
-        />
+        <div className="note-card-sec">
+          <NotesCard
+            isAddEditModal={handleToggleModal}
+            onHandleNote={handleNoteData}
+            ongetcustomerNote={ongetNote}
+            notesFormData={notesFormData}
+          />
+        </div>
       </CardSection>
-
 
       <CenterModel
         showModal={showModal}
         handleToggleModal={handleToggleModal}
         modalTitle="Add/Edit Notes"
-        modelSizeClass="w-50s"
+        modelSizeClass="w-60"
       >
-        <div className="row horizontal-form">
+        <div className="row horizontal-form custom-height-tiny">
           <FormCreator config={formData} ref={notesFormRef} {...formData} />
           <div className="col-md-12 mt-2">
             <div className="d-flex align-item-end justify-content-end">
@@ -187,7 +204,6 @@ const NotesDetail = (props) => {
           </div>
         </div>
       </CenterModel>
-
     </>
   );
 };

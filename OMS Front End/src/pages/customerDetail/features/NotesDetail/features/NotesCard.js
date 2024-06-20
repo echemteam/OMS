@@ -4,8 +4,12 @@ import { getRandomColor } from "../../../../../utils/RandomColors/RandomColors";
 
 import { useEffect } from "react";
 
-const NotesCard = ({ isAddEditModal, onHandleNote, ongetcustomerNote, notesFormData }) => {
-
+const NotesCard = ({
+  isAddEditModal,
+  onHandleNote,
+  ongetcustomerNote,
+  notesFormData,
+}) => {
   useEffect(() => {
     ongetcustomerNote();
   }, [ongetcustomerNote]);
@@ -23,7 +27,7 @@ const NotesCard = ({ isAddEditModal, onHandleNote, ongetcustomerNote, notesFormD
         {notesFormData.length > 0 ? (
           notesFormData.map((notes, noteIndex) => (
             <div
-              className="col-xxl-4 col-xl-6 col-md-6 col-12 pb-2"
+              className="col-xxl-6 col-xl-6 col-md-6 col-12 pb-2"
               key={noteIndex}
             >
               <div
@@ -35,7 +39,11 @@ const NotesCard = ({ isAddEditModal, onHandleNote, ongetcustomerNote, notesFormD
                   <div className="note-label  ">{notes.fullName}</div>
                   <div className="bottom-info">
                     <div className="note-text editor-section">
-                      <p>{notes.note}</p>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: notes.note,
+                        }}
+                      ></div>
                     </div>
                     <div className="card-notes ">
                       <div className="note-date ">{notes.noteDate}</div>

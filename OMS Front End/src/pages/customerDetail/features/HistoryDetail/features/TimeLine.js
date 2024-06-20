@@ -2,44 +2,34 @@ import React from "react";
 import "./../../HistoryDetail/TimeLine.scss";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { AppIcons } from "../../../../../data/appIcons";
-import Image from "../../../../../components/image/Image";
 
-const events = [
+
+const timelineItems = [
   {
-    id: 1,
-    name: "Aurumusit +",
-    email: "nisarg@gmail.com",
-    action: "Changed the this document .",
-    time: "1 day ago",
+    icon: AppIcons.PlusIcon,
+    name: "Pankaj Chauhan",
+    dateTime: "2024-05-01 10:00",
+    typeName: "Customer Added",
+    message:
+      "Initial creation of the customer record by Pankaj Chauhan at 10:00 AM on 05/01/2024.",
   },
   {
-    id: 2,
-    name: "Aurumusit +",
-    email: "amit@gmail.com",
-    action: "Changed the this document .",
-    time: "1 day ago",
+    icon: AppIcons.UpdateIcon,
+    name: "Kirtan Patel",
+    dateTime: "2024-05-02 14:30",
+    typeName: "Basic Details Updated",
+    message:
+      "Updated customer name and reference codes by Kirtan Patel at 2:30 PM on 05/02/2024.",
   },
   {
-    id: 3,
-    name: "Aurumusit +",
-    email: "amit@gmail.com",
-    action: "Changed the this document .",
-    time: "1 day ago",
+    icon: AppIcons.TimelineIcon,
+    name: "Pankaj Chauhan",
+    dateTime: "2024-05-09 10:45",
+    typeName: "Financial Settings Added",
+    message:
+      "Added default payment terms and preferred payment method by Pankaj Chauhan at 10:45 AM on 05/09/2024.",
   },
-  {
-    id: 4,
-    name: "Aurumusit +",
-    email: "amit@gmail.com",
-    action: "Changed the this document .",
-    time: "1 day ago",
-  },
-  {
-    id: 5,
-    name: "Aurumusit +",
-    email: "amit@gmail.com",
-    action: "Changed the this document .",
-    time: "1 day ago",
-  },
+  // Add more timeline items here
 ];
 
 const TimeLine = () => {
@@ -82,34 +72,25 @@ const TimeLine = () => {
 
             <div className="new-timeline-sec">
               <ol class="timeline">
-                <li class="timeline-item">
-                  <span class="timeline-item-icon">
-                    <Image
-                    // imagePath={timeLineIcon}
-                    altText="Timeline Icon"
-                     />
-
-                  </span>
-                  <div class="timeline-item-description">
-                    <span>
-                      <a href="#">Luna Bonifacio</a> has changed{" "}
-                      <a href="#">2 attributes</a> on{" "}
-                      <time datetime="21-01-2021">Jan 21, 2021</time>
+                {timelineItems.map((item) => (
+                  <li className="timeline-item" key={item.id}>
+                    <span className="timeline-item-icon">
+                      <img src={item.icon} alt="Timeline Icon" />
                     </span>
-                  </div>
-                </li>
-                <li class="timeline-item">
-                  <span class="timeline-item-icon">
-                    icon
-                  </span>
-                  <div class="timeline-item-description">
-                    <span>
-                      <a href="#">Luna Bonifacio</a> has changed{" "}
-                      <a href="#">2 attributes</a> on{" "}
-                      <time datetime="21-01-2021">Jan 21, 2021</time>
-                    </span>
-                  </div>
-                </li>
+                    <div className="timeline-item-description">
+                      <div className="right-desc-sec">
+                        <div className="d-flex align-items-center">
+                          <div className="timeline-name">{item.name}</div>
+                          <div className="date-time ml-4"> {item.dateTime}</div>
+                        </div>
+                        <div className="type-name">{item.typeName}</div>
+                      </div>
+                      <div className="msg-section">
+                        <p>{item.message}</p>
+                      </div>
+                    </div>
+                  </li>
+                ))}
               </ol>
             </div>
           </div>

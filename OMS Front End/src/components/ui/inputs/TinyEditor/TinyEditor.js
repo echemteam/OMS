@@ -34,10 +34,34 @@ const TinyEditor = ({
           {...editorProps}
           disabled={isDisable}
           init={{
-            plugins: ["link image code lists wordcount table"],
-            toolbar: [
-              "undo redo | formatselect | bold italic underline linethrough backcolor | alignleft aligncenter alignright | code | bullist numlist checklist outdent indent | table",
+            plugins: [
+              "advlist",
+              "autolink",
+              "lists",
+              "link",
+              "image",
+              "charmap",
+              "preview",
+              "anchor",
+              "searchreplace",
+              "visualblocks",
+              "code",
+              "fullscreen",
+              "insertdatetime",
+              "media",
+              "table",
+              "code",
+              "help",
+              "wordcount",
             ],
+            // toolbar: [
+            //   "undo redo | formatselect | bold italic underline linethrough backcolor | alignleft aligncenter alignright | code | bullist numlist checklist outdent indent | table",
+            // ],
+            toolbar:
+              "undo redo | blocks | " +
+              "bold italic forecolor | alignleft aligncenter " +
+              "alignright alignjustify | bullist numlist outdent indent | " +
+              "removeformat | help",
             statusbar: false,
             visual: false,
             content_css: "index.css",
