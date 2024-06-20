@@ -1748,6 +1748,24 @@ a {
   }
 }
 
+.status-desc {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  .field-info {
+    padding: 4px 12px;
+    border-top-left-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+
+    &.active-green-color {
+      background: green;
+      color: #fff !important;
+    }
+  }
+}
+
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
     .css-13cymwt-control {
