@@ -101,20 +101,22 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
                     >
                         <div className="row">
                             <div className="col-md-12 table-striped">
-                                <MolGrid
-                                    ref={molGridRef}
-                                    configuration={configFile}
-                                    dataSource={dataSource}
-                                    isLoading={isListLoading || updateSupplierStatusLoading}
-                                    allowPagination={true}
-                                    pagination={{
-                                        totalCount: totalRowCount,
-                                        pageSize: 25,
-                                        currentPage: 1,
-                                    }}
-                                    onPageChange={handlePageChange}
-                                    onActionChange={actionHandler}
-                                />
+                                <div className='inactive-scroll-bar'>
+                                    <MolGrid
+                                        ref={molGridRef}
+                                        configuration={configFile}
+                                        dataSource={dataSource}
+                                        isLoading={isListLoading || updateSupplierStatusLoading}
+                                        allowPagination={true}
+                                        pagination={{
+                                            totalCount: totalRowCount,
+                                            pageSize: 25,
+                                            currentPage: 1,
+                                        }}
+                                        onPageChange={handlePageChange}
+                                        onActionChange={actionHandler}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </CardSection>

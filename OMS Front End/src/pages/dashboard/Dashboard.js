@@ -19,7 +19,7 @@ function Dashboard() {
                 <h4 className="font-weight-normal mb-3">
                   Weekly Sales <i className="bi bi-archive float-end"></i>
                 </h4>
-                <h2 className="mb-5">$ 15,0000</h2>
+                <h2 className="mb-5">$ 1,50,000</h2>
                 <h6 className="card-text">Increased by 60%</h6>
               </div>
             </div>
@@ -35,7 +35,7 @@ function Dashboard() {
                 <h4 className="font-weight-normal mb-3">
                   Weekly Orders <i className="bi bi-briefcase float-end"></i>
                 </h4>
-                <h2 className="mb-5">45,6334</h2>
+                <h2 className="mb-5">4,56,334</h2>
                 <h6 className="card-text">Decreased by 10%</h6>
               </div>
             </div>
@@ -51,7 +51,7 @@ function Dashboard() {
                 <h4 className="font-weight-normal mb-3">
                   Weekly Sales <i className="bi bi-bank float-end"></i>
                 </h4>
-                <h2 className="mb-5">95,5741</h2>
+                <h2 className="mb-5">9,55,741</h2>
                 <h6 className="card-text">Increased by 5%</h6>
               </div>
             </div>
@@ -62,7 +62,7 @@ function Dashboard() {
             <div className="card">
               <div className="card-title">
                 <h4>Title Name</h4>
-                <p>Lorem Ipsum is simply dummy text</p>
+                <p>Lorem Ipsum is simply dummy text.</p>
               </div>
             </div>
           </div>

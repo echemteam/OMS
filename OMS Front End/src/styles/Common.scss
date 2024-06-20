@@ -428,7 +428,8 @@ a {
         }
       }
 
-      .middle-page-section {}
+      .middle-page-section {
+      }
     }
   }
 }
@@ -716,7 +717,9 @@ a {
   display: inline-block;
   width: 95px;
   border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(126, 126, 126, 0.2), 0 6px 20px rgba(116, 116, 116, 0.19);
+  box-shadow:
+    0 4px 8px rgba(126, 126, 126, 0.2),
+    0 6px 20px rgba(116, 116, 116, 0.19);
   font-weight: bold;
   text-align: center;
 }
@@ -728,6 +731,9 @@ a {
   .tab-header {
     border-bottom: 1px solid var(--linkMenu);
     // background: var(--whiteColor);
+    @media only screen and (max-width: 1366px) {
+      width: 80%;
+    }
 
     button {
       padding: 7px 25px 7px;
@@ -752,7 +758,8 @@ a {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {}
+    .tab-body-section {
+    }
   }
 
   &.vertical-tab {
@@ -826,7 +833,7 @@ a {
       box-shadow: 0px 5px 12px -7px #d8dde6;
 
       button {
-        padding: 7px 25px 7px;
+        padding: 2px 25px 7px;
         border: none;
         background: var(--whiteColor);
         border-radius: 0px;
@@ -841,7 +848,7 @@ a {
           margin-bottom: 0;
           color: #000;
           position: relative;
-          padding-bottom: 15px;
+          padding-bottom: 16px;
           font-size: 16px;
 
           &::before {
@@ -862,7 +869,8 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {}
+      .tab-body-section {
+      }
     }
 
     &.vertical-tab {
@@ -960,7 +968,8 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {}
+        .tab-sub-body-section {
+        }
       }
     }
   }
@@ -1426,9 +1435,7 @@ a {
 
 @media only screen and (max-width: 1180px) {
   .tab-section {
-
     .tab-header {
-
       button {
         padding: 7px 10px 7px;
       }
@@ -1689,7 +1696,6 @@ a {
   }
 
   .css-1nmdiq5-menu {
-
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -1701,6 +1707,18 @@ a {
   .status-dropdown {
     .css-13cymwt-control {
       padding: 0 !important;
+    }
+  }
+}
+
+.inactive-scroll-bar {
+  table {
+    tbody {
+      display: block;
+      max-height: calc(100vh - 450px);
+      overflow-y: auto;
+      width: 100%;
+      overflow-x: hidden;
     }
   }
 }

@@ -11,6 +11,8 @@ import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetai
 import ToastService from "../../../../services/toastService/ToastService";
 import { useContext } from "react";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { securityKey } from "../../../../data/SecurityKey";
 
 const AddressDetail = (props) => {
   const userFormRef = useRef();
@@ -23,6 +25,45 @@ const AddressDetail = (props) => {
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const { customerId } = useContext(BasicDetailContext);
+
+
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true);
+
+  useEffect(() => {
+    if (props.isEditablePage) {
+      const { formSetting } = addressFormData;
+      const hasAddPermission = hasFunctionalPermission(securityKey.ADDCUSTOMERADDRESS);
+      const hasEditPermission = hasFunctionalPermission(securityKey.EDITCUSTOMERADDRESS);
+
+      if (hasAddPermission) {
+        if (hasAddPermission.hasAccess === true) {
+          setButtonVisible(true);
+        }
+        else {
+          setButtonVisible(false);
+        }
+      }
+      if (hasEditPermission && formSetting) {
+        if (updateSetData) {
+          if (hasEditPermission.isViewOnly === true) {
+            formSetting.isViewOnly = true;
+            setIsButtonDisable(true);
+          }
+          else {
+            formSetting.isViewOnly = false;
+            setIsButtonDisable(false);
+          }
+        }
+        else if (!updateSetData) {
+          if (hasAddPermission.hasAccess === true) {
+            formSetting.isViewOnly = false;
+            setIsButtonDisable(false);
+          }
+        }
+      }
+    }
+  }, [updateSetData, props.isEditablePage]);
 
   const [getAllAddressTypes, {
     isFetching: isGetAllAddressTypesFetching,
@@ -199,7 +240,7 @@ const AddressDetail = (props) => {
         const filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isShippingAndBilling" && field.dataField !== "isPreferredBilling");
         manageData.formFields = filteredFormFields;
         setFormData(manageData)
-      } else if(updateSetData.type === "AP" || updateSetData.type === "Primary"){
+      } else if (updateSetData.type === "AP" || updateSetData.type === "Primary") {
         const manageData = { ...formData }
         const filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isShippingAndBilling" && field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping");
         manageData.formFields = filteredFormFields;
@@ -243,60 +284,37 @@ const AddressDetail = (props) => {
       userFormRef.current.updateFormFieldValue({ stateId: data.value, cityId: null });
     }
     else if (dataField === 'addressTypeId') {
-      const form = { ...addressFormData }
-      const updateForm = { ...formData }
+      let filteredFormFields;
       if (data.label === "Billing") {
         if (updateSetData) {
-          const filteredFormFields = form.formFields.filter(field => field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling");
-          updateForm.formFields = filteredFormFields;
-          setFormData(updateForm)
+          filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling");
         } else {
-          const filteredFormFields = form.formFields.filter(field => field.dataField !== "isPreferredShipping");
-          form.formFields = filteredFormFields;
-          setFormData(form)
+          filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isPreferredShipping");
         }
       } else if (data.label === "Shipping") {
         if (updateSetData) {
-          const filteredFormFields = form.formFields.filter(field => field.dataField !== "isPreferredBilling" && field.dataField !== "isShippingAndBilling");
-          updateForm.formFields = filteredFormFields;
-          setFormData(updateForm)
+          filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isPreferredBilling" && field.dataField !== "isShippingAndBilling");
         } else {
-          const filteredFormFields = form.formFields.filter(field => field.dataField !== "isPreferredBilling");
-          form.formFields = filteredFormFields;
-          setFormData(form)
+          filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isPreferredBilling");
         }
+      } else if (data.label === "AP" || data.label === "Primary") {
+        filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling");
       }
-      else if (data.label === "AP") {
-        if (updateSetData) {
-          const filteredFormFields = form.formFields.filter(field => {
-            return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling";
-          });
-          updateForm.formFields = filteredFormFields;
-          setFormData(updateForm)
-        } else {
-          const filteredFormFields = form.formFields.filter(field => {
-            return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling";
-          });
-          form.formFields = filteredFormFields;
-          setFormData(form)
-        }
+      manageData.formFields = filteredFormFields;
+      if (updateSetData) {
+        manageData.initialState = {
+          ...formData.initialState,
+          addressTypeId: data.value
+        };
+      } else {
+        manageData.initialState = {
+          ...addressFormData.initialState,
+          addressTypeId: data.value
+        };
       }
-      else if (data.label === "Primary") {
-        if (updateSetData) {
-          const filteredFormFields = form.formFields.filter(field => {
-            return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling";
-          });
-          updateForm.formFields = filteredFormFields;
-          setFormData(updateForm)
-        } else {
-          const filteredFormFields = form.formFields.filter(field => {
-            return field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping" && field.dataField !== "isShippingAndBilling";
-          });
-          form.formFields = filteredFormFields;
-          setFormData(form)
-        }
-      }
+      setFormData(manageData);
     }
+    // setShouldRerenderFormCreator(prevState => !prevState);
   }
 
   useEffect(() => {
@@ -350,7 +368,7 @@ const AddressDetail = (props) => {
         let setReq = {
           ...req,
           addressId: updateSetData.addressId,
-          customerAddressId : updateSetData.customerAddressId
+          customerAddressId: updateSetData.customerAddressId
         }
         updateAddAddress(setReq)
         setAddressData(setReq)
@@ -371,7 +389,7 @@ const AddressDetail = (props) => {
         buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
-        rightButton={true}
+        rightButton={buttonVisible ? true : false}
         buttonText="Add"
         titleButtonClick={handleToggleModal}
       >
@@ -400,6 +418,7 @@ const AddressDetail = (props) => {
                 buttonText={updateSetData ? "Update" : "Save"}
                 onClick={handleAddress}
                 isLoading={isAddAddressLoading || isUpdateAddAddressLoading}
+                isDisable={isButtonDisable}
               />
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"

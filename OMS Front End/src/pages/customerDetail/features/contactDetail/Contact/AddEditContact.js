@@ -5,13 +5,12 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import { contactDetailFormData } from "./config/ContactDetailForm.data";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-//** Service's */
-// import { useAddEditContactMutation } from "../../../../../app/services/contactAPI";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ mainId, addEditContactMutation, isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, editRef, onGetContactList }) => {
+const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey, isEditablePage }) => {
 
   //** State */
   const ref = useRef();
@@ -45,10 +44,6 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, isAddModelO
     if (isAddEditSuccess && isAddEditData) {
       if (onSuccess) {
         setContactId(isAddEditData?.keyValue);
-        if (isAddModelOpen) {
-          formSetting.isViewOnly = true;
-          setIsButtonDisable(true);
-        }
         onSuccess();
       }
       ToastService.success(isAddEditData.errorMessage);
@@ -60,18 +55,32 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, isAddModelO
     callEditFunction: handleEditMode,
   }));
 
-  useImperativeHandle(addRef, () => ({
-    callOpenModalFunction: handleOpenModal,
-  }));
-
-  const handleOpenModal = () => {
-    formSetting.isViewOnly = false;
-    setIsButtonDisable(false);
-  }
+  useEffect(() => {
+    if (isEditablePage) {
+      const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
+      const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+      if (hasEditPermission && formSetting) {
+        if (editFormData) {
+          if (hasEditPermission.isViewOnly === true) {
+            formSetting.isViewOnly = true;
+            setIsButtonDisable(true);
+          }
+          else {
+            formSetting.isViewOnly = false;
+            setIsButtonDisable(false);
+          }
+        }
+        else if (!editFormData) {
+          if (hasAddPermission.hasAccess === true) {
+            formSetting.isViewOnly = false;
+            setIsButtonDisable(false);
+          }
+        }
+      }
+    }
+  }, [editRef, editFormData])
 
   const handleEditMode = (data) => {
-    formSetting.isViewOnly = false;
-    setIsButtonDisable(false);
     if (data) {
       let form = { ...contactDetailFormData };
       form.initialState = {

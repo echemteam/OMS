@@ -27,7 +27,7 @@ namespace OMS.API.Controllers
 
         #region API
         [HttpPost("AddCustomerNotes")]
-        public async Task<IActionResult> AddContact(AddCustomerNotesRequest requestData)
+        public async Task<IActionResult> AddCustomerNotes(AddCustomerNotesRequest requestData)
         {
 
             var addNotes = await _serviceManager.customerNotesService.AddCustomerNotes(requestData, CurrentUserId);

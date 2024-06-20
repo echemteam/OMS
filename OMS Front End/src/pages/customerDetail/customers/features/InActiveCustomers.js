@@ -5,6 +5,8 @@ import CustomerListContext from '../../../../utils/ContextAPIs/Customer/Customer
 import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../app/services/basicdetailAPI';
 import ToastService from '../../../../services/toastService/ToastService';
 import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
+import { securityKey } from '../../../../data/SecurityKey';
+import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 
 export const InActiveCustomers = ({ statusId, configFile }) => {
 
@@ -31,6 +33,26 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     };
     getCustomers(request);
   };
+
+
+  useEffect(() => {
+    const actionColumn = configFile?.columns.find(column => column.name === "Action");
+    if (actionColumn) {
+
+      const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
+      const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
+      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+
+      if (actionColumn.defaultAction.allowActiveCustomer) {
+        actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+      } else if (actionColumn.defaultAction.allowUnblocked) {
+        actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
+      } else if (actionColumn.defaultAction.allowUnfreeze) {
+        actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+      }
+    }
+  }, [configFile]);
+
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
@@ -101,20 +123,22 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
           >
             <div className="row">
               <div className="col-md-12 table-striped">
-                <MolGrid
-                  ref={molGridRef}
-                  configuration={configFile}
-                  dataSource={dataSource}
-                  isLoading={isListLoading || updateCustomerStatusLoading}
-                  allowPagination={true}
-                  pagination={{
-                    totalCount: totalRowCount,
-                    pageSize: 25,
-                    currentPage: 1,
-                  }}
-                  onPageChange={handlePageChange}
-                  onActionChange={actionHandler}
-                />
+                <div className='inactive-scroll-bar'>
+                  <MolGrid
+                    ref={molGridRef}
+                    configuration={configFile}
+                    dataSource={dataSource}
+                    isLoading={isListLoading || updateCustomerStatusLoading}
+                    allowPagination={true}
+                    pagination={{
+                      totalCount: totalRowCount,
+                      pageSize: 25,
+                      currentPage: 1,
+                    }}
+                    onPageChange={handlePageChange}
+                    onActionChange={actionHandler}
+                  />
+                </div>
               </div>
             </div>
           </CardSection>

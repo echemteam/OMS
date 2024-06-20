@@ -49,6 +49,7 @@ export const phoneNumberConfig = {
   columns: [
     {
       name: "Phone Number",
+      width : "60%",
       fieldName: "phoneCode,phoneNumber",
       colType: GridColumnType.CUSTOM,
       renderCustomCol: (rowData) => {
@@ -57,6 +58,7 @@ export const phoneNumberConfig = {
     },
     {
       name: "Action",
+      width : "40%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

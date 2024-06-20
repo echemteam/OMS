@@ -84,8 +84,17 @@ const MolGridHeader = (props) => {
 
   return (
     <tr>
-      {props.columns.map((col, index) => (
+      {/* {props.columns.map((col, index) => (
         <th key={`col_${index}`} className="whitespace-nowrap">
+          {col.allowShort ? (
+            <span className="heading-shorting">{renderShortColumn(col)}</span>
+          ) : (
+            <>{col.name}</>
+          )}
+        </th>
+      ))} */}
+      {props.columns.map((col, index) => (
+        <th key={`col_${index}`} style={{ width: col.width }} className="whitespace-nowrap">
           {col.allowShort ? (
             <span className="heading-shorting">{renderShortColumn(col)}</span>
           ) : (
