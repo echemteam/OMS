@@ -1,13 +1,6 @@
-import { securityKey } from "../../../../../data/SecurityKey";
-import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
-export const securityKeys = {
-  ADD: securityKey.ADDSECURITYROLE,
-  EDIT: securityKey.EDITSECURITYROLE,
-  DELETE: securityKey.DELETESECURITYROLE
-};
 
 export const addEditRoleFormData = {
   name: "Add Edit Role Form",
@@ -48,19 +41,11 @@ export const SecurityRoleGridConfig = {
       width:"20%",
       colType: GridColumnType.ACTION,
       defaultAction: {
+        allowUser: true,
+        allowPermission: true,
         allowEdit: true,
         allowDelete: true,
       },
-      customAction: [
-        {
-          name: "PERMISSION",
-          iconName: AppIcons.permissionIcon,
-        },
-        {
-          name: "USER",
-          iconName: AppIcons.userIcon,
-        },
-      ],
     },
   ],
 };

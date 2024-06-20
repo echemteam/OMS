@@ -165,7 +165,7 @@ const UsersRole = () => {
           </div>
         </div>
       </CardSection>
-      {showModal && (
+
         <CenterModel
           showModal={showModal}
           handleToggleModal={handleToggleModal}
@@ -174,7 +174,7 @@ const UsersRole = () => {
         >
           <AddEditRoleModel handleToggleModal={handleToggleModal} />
         </CenterModel>
-      )}
+ 
     </div>
   );
 };

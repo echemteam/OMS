@@ -731,6 +731,9 @@ a {
   .tab-header {
     border-bottom: 1px solid var(--linkMenu);
     // background: var(--whiteColor);
+    @media only screen and (max-width: 1366px) {
+      width: 80%;
+    }
 
     button {
       padding: 7px 25px 7px;
@@ -1599,9 +1602,11 @@ a {
     background-size: contain;
     height: 16px;
     width: 16px;
-    right: 0;
+    right: 4px;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 2;
+    pointer-events: none;
   }
 
   .css-1dimb5e-singleValue {

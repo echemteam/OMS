@@ -18,59 +18,78 @@ export const PagePermissionsProvider = ({ children }) => {
         const actionColumn = gridConfig ? gridConfig.columns.find(column => column.name === "Action") : '';
 
         if (permission) {
-            if (actionFlag === ActionFlag.Edit) {
-                CheckEditButtonPermission(permission, actionColumn);
-            } else if (actionFlag === ActionFlag.Delete) {
-                CheckDeletePermission(permission, actionColumn);
-            } else if (actionFlag === ActionFlag.Add) {
-                CheckAddPermission(permission, formConfig.formSetting);
-            } else if (actionFlag === ActionFlag.EditPage) {
-                CheckEditPagePermission(permission, formConfig.formSetting);
+            switch (actionFlag) {
+                case ActionFlag.Edit:
+                case ActionFlag.Block:
+                case ActionFlag.UnBlock:
+                case ActionFlag.Delete:
+                case ActionFlag.Permission:
+                case ActionFlag.AssignUser:
+                case ActionFlag.Freeze:
+                case ActionFlag.Unfreeze:
+                case ActionFlag.Disable:
+                case ActionFlag.ActiveCustomer:
+                    CheckGridIcon(actionFlag, permission, actionColumn);
+                    break;
+                default:
+                    // Handle any default actions if necessary
+                    break;
             }
         }
     };
 
-    const CheckAddPermission = (permission, formSetting) => {
-        if (permission.hasAccess === true) {
-            formSetting.isViewOnly = false;
-            setIsShowAddButton(true);
-            setIsButtonDisable(false);
-        } else {
-            setIsShowAddButton(false);
-        }
-    }
+    const CheckGridIcon = (actionFlag, permission, actionColumn) => {
+        const flagToActionMap = {
+            [ActionFlag.Edit]: 'allowEdit',
+            [ActionFlag.Block]: 'allowBlocked',
+            [ActionFlag.Delete]: 'allowDelete',
+            [ActionFlag.Freeze]: 'allowFreeze',
+            [ActionFlag.Disable]: 'allowDisable',
+            [ActionFlag.AssignUser]: 'allowUser',
+            [ActionFlag.Unfreeze]: 'allowUnfreeze',
+            [ActionFlag.UnBlock]: 'allowUnblocked',
+            [ActionFlag.Permission]: 'allowPermission',
+            [ActionFlag.ActiveCustomer]: 'allowActiveCustomer',
+        };
 
-    const CheckDeletePermission = (permission, actionColumn) => {
-        if (permission.hasAccess === true) {
-            actionColumn.defaultAction.allowDelete = true;
+        const actionProperty = flagToActionMap[actionFlag];
+        if (actionProperty) {
+            actionColumn.defaultAction[actionProperty] = permission.hasAccess;
         }
-        else if (permission.hasAccess === false) {
-            actionColumn.defaultAction.allowDelete = false;
-        }
-    }
+    };
 
-    const CheckEditButtonPermission = (permission, actionColumn) => {
-        if (permission.isViewOnly === true) {
-            actionColumn.defaultAction.allowEdit = true;
-        }
-        else if (permission.isEditable === true) {
-            actionColumn.defaultAction.allowEdit = true;
-        }
-        else {
-            actionColumn.defaultAction.allowEdit = false;
-        }
-    }
+    // const CheckAddPermission = (permission, formSetting) => {
+    //     if (permission.hasAccess === true) {
+    //         formSetting.isViewOnly = false;
+    //         setIsShowAddButton(true);
+    //         setIsButtonDisable(false);
+    //     } else {
+    //         setIsShowAddButton(false);
+    //     }
+    // }
 
-    const CheckEditPagePermission = (permission, formSetting) => {
-        if (permission.isViewOnly === true) {
-            formSetting.isViewOnly = true;
-            setIsButtonDisable(true);
-        }
-        else {
-            formSetting.isViewOnly = false;
-            setIsButtonDisable(false);
-        }
-    }
+    // const CheckEditButtonPermission = (permission, actionColumn) => {
+    //     if (permission.isViewOnly === true) {
+    //         actionColumn.defaultAction.allowEdit = true;
+    //     }
+    //     else if (permission.isEditable === true) {
+    //         actionColumn.defaultAction.allowEdit = true;
+    //     }
+    //     else {
+    //         actionColumn.defaultAction.allowEdit = false;
+    //     }
+    // }
+
+    // const CheckEditPagePermission = (permission, formSetting) => {
+    //     if (permission.isViewOnly === true) {
+    //         formSetting.isViewOnly = true;
+    //         setIsButtonDisable(true);
+    //     }
+    //     else {
+    //         formSetting.isViewOnly = false;
+    //         setIsButtonDisable(false);
+    //     }
+    // }
 
     return (
         <PagePermissionsContext.Provider value={{ isShowAddButton, isButtonDisable, HasPermissions }}>

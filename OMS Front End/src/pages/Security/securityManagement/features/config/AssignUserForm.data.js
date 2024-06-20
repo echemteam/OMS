@@ -22,8 +22,10 @@ export const assignUserFormData = {
         containerCss: "col-xxl-10 col-xl-10 col-md-10 mb-2",
       },
     },
-    
   ],
+  formSetting: {
+    isViewOnly: false
+  }
 };
 
 export const assignUserListData = {

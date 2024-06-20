@@ -109,8 +109,6 @@ export const shippingFormData = {
   ],
 };
 
-
-
 export const AccountGridConfig = {
   columns: [
     
@@ -159,6 +157,7 @@ export const collectAccountData = [
   {
     carrier:"Fedex",
     accountNumber:"2165241460",
+    isPrimary:true,
   },
   {
     carrier:"DHL",

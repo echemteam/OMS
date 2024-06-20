@@ -2,29 +2,41 @@ import { useContext, useEffect } from "react";
 import { ActionFlag } from "../ContextAPIs/PagePermissions/ActionFlag.Data";
 import { PagePermissionsContext } from "../ContextAPIs/PagePermissions/PagePermissionsContext";
 
-const usePermissions = (isEdit, securityKeys, formData, gridConfig) => {
+const usePermissions = (securityKeys, formData, gridConfig) => {
 
     const { HasPermissions } = useContext(PagePermissionsContext);
 
     useEffect(() => {
-        if (isEdit !== undefined) {
-            if (isEdit) {
-                HasPermissions(securityKeys.EDIT, ActionFlag.EditPage, '', formData);
-            } else {
-                HasPermissions(securityKeys.ADD, ActionFlag.Add, '', formData);
-            }
-        } else {
-            if (securityKeys.ADD) {
-                HasPermissions(securityKeys.ADD, ActionFlag.Add, '', formData);
-            }
-            if (securityKeys.EDIT) {
-                HasPermissions(securityKeys.EDIT, ActionFlag.Edit, gridConfig ? gridConfig : '');
-            }
-            if (securityKeys.DELETE) {
-                HasPermissions(securityKeys.DELETE, ActionFlag.Delete, gridConfig ? gridConfig : '');
-            }
-        }
-    }, [isEdit, securityKeys, formData, gridConfig]);
+        securityKeys && securityKeys.forEach(({ type, keyName }) => {
+            HasPermissions(keyName, type, gridConfig, formData);
+
+            // switch (type) {
+            //     case 'ADD':
+            //         HasPermissions(keyName, ActionFlag.Add, '', formData);
+            //         break;
+            //     case 'EDIT':
+            //         HasPermissions(keyName, ActionFlag.Edit, gridConfig ? gridConfig : '');
+            //         break;
+            //     case 'DELETE':
+            //         HasPermissions(keyName, ActionFlag.Delete, gridConfig ? gridConfig : '');
+            //         break;
+            //     case 'EDITPAGE':
+            //         HasPermissions(keyName, ActionFlag.EditPage, '', formData ? formData : '');
+            //         break;
+            //     case 'PERMISSION':
+            //         HasPermissions(keyName, ActionFlag.Permission, gridConfig ? gridConfig : '');
+            //         break;
+            //     case 'ASSIGNUSER':
+            //         HasPermissions(keyName, ActionFlag.AssignUser, gridConfig ? gridConfig : '');
+            //         break;
+            //     case 'Block':
+            //         HasPermissions(keyName, ActionFlag.AssignUser, gridConfig ? gridConfig : '');
+            //         break;
+            //     default:
+            //         break;
+            // }
+        });
+    }, [securityKeys, formData, gridConfig]);
 };
 
 export default usePermissions;
