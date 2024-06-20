@@ -33,33 +33,57 @@ namespace OMS.Application.Services.Address
             addressDTO.CreatedBy = CurrentUserId;
             responceData = await repositoryManager.address.AddAddress(addressDTO);
 
-            if (requestData.CustomerId > 0 && responceData.KeyValue > 0)
+            if (responceData.KeyValue > 0)
+            {
+                await LinkSameAddress(requestData, responceData.KeyValue, CurrentUserId);
+            }
+
+            if (responceData.KeyValue > 0 && requestData.IsShippingAndBilling == true)
+            {
+                switch (requestData.AddressTypeId)
+                {
+                    case 1:
+                        requestData.AddressTypeId = 2;
+                        break;
+
+                    case 2:
+                        requestData.AddressTypeId = 1;
+                        break;
+              }
+                var duplicateResponseData = await repositoryManager.address.AddAddress(addressDTO);
+                await LinkSameAddress(requestData, duplicateResponseData.KeyValue, CurrentUserId);
+            }
+
+            return responceData;
+        }
+
+        private async Task LinkSameAddress(AddAddressRequest requestData, int addressId, short CurrentUserId)
+        {
+            if (requestData.CustomerId > 0)
             {
                 AddAddressForCustomerRequest addAddressForCustomerRequest = new()
                 {
                     CustomerId = requestData.CustomerId,
-                    AddressId = responceData.KeyValue,
-                    AddressTypeId = addressDTO.AddressTypeId,
+                    AddressId = addressId,
+                    AddressTypeId = requestData.AddressTypeId,
                     IsPreferredShipping = requestData.IsPreferredShipping,
-                    IsPreferredBilling = requestData.IsPreferredBilling,
-                    IsShippingAndBilling = requestData.IsShippingAndBilling,
+                    IsPreferredBilling = requestData.IsPreferredBilling
                 };
 
                 _ = await repositoryManager.customers.AddAddressForCustomer(addAddressForCustomerRequest, CurrentUserId);
             }
-            else if (requestData.SupplierId > 0 && responceData.KeyValue > 0)
+            else if (requestData.SupplierId > 0)
             {
                 AddAddressForSupplierRequest addAddressForCustomerRequest = new()
                 {
                     SupplierId = requestData.SupplierId,
-                    AddressId = responceData.KeyValue,
-                    AddressTypeId = addressDTO.AddressTypeId,
+                    AddressId = addressId,
+                    AddressTypeId = requestData.AddressTypeId,
                     IsPreferredShipping = requestData.IsPreferredShipping,
                     IsPreferredBilling = requestData.IsPreferredBilling
                 };
                 _ = await repositoryManager.supplier.AddAddressForSupplier(addAddressForCustomerRequest, CurrentUserId);
             }
-            return responceData;
         }
         public Task<List<GetAddresssByCustomerIdResponse>> GetAddresssByCustomerId(int customerId)
         {
@@ -87,7 +111,7 @@ namespace OMS.Application.Services.Address
 
                 _ = await repositoryManager.customers.UpdateAddressForCustomer(updateAddressForCustomerRequest, CurrentUserId);
             }
-            if (requestData.SupplierId > 0 && responceData.KeyValue > 0)
+            else if (requestData.SupplierId > 0 && responceData.KeyValue > 0)
             {
                 UpdateAddressForSupplierRequest updateAddressForCustomerRequest = new()
                 {

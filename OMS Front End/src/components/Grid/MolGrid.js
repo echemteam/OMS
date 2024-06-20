@@ -119,10 +119,8 @@ const MolGrid = forwardRef((props, ref) => {
     return (
       <>
         {prop.isLoading ? (
-          <tr>
-            <td colSpan={100}>
-              <DataLoader />
-            </td>
+          <tr className="no-address">
+            <DataLoader />
           </tr>
         ) : isRenderRow ? (
           <MolGridDataRows
