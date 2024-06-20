@@ -1451,7 +1451,7 @@ a {
     height: 100%;
   }
 
-  .note-text {
+  .editor-section{
     p {
       font-size: 12px;
       color: var(--blackColor);
@@ -1461,6 +1461,14 @@ a {
       -webkit-line-clamp: 5;
       -webkit-box-orient: vertical;
       overflow: hidden;
+    }
+    a{
+      color: var(--themeColor);
+    }
+    ul{
+      li{
+        
+      }
     }
   }
 
@@ -1520,6 +1528,8 @@ a {
       }
     }
   }
+
+  
 }
 
 .randomColor {
@@ -1696,7 +1706,46 @@ a {
     }
   }
 }
-
+input[type=checkbox] {
+  position: relative;
+  cursor: pointer;
+}input[type=checkbox] {
+  position: relative;
+  cursor: pointer;
+}
+input[type=checkbox]:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 0;
+  left: 0;
+  background-color:var(--whiteColor);
+  border: 1px solid var(--inputBorder);
+}
+input[type=checkbox]:checked:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 0;
+  left: 0;
+  background-color:var(--themeColor);
+}
+input[type=checkbox]:checked:after {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 10px;
+  border: solid var(--whiteColor);
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+  position: absolute;
+  top: 70%;
+  left: 80%;
+}
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
     .css-13cymwt-control {

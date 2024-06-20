@@ -34,7 +34,7 @@ const NotesCard = ({ isAddEditModal, onHandleNote, ongetcustomerNote, notesFormD
                 <div className="card-content">
                   <div className="note-label  ">{notes.fullName}</div>
                   <div className="bottom-info">
-                    <div className="note-text ">
+                    <div className="note-text editor-section">
                       <p>{notes.note}</p>
                     </div>
                     <div className="card-notes ">
