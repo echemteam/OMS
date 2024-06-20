@@ -12,6 +12,7 @@ using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
 using OMS.Application.Services.Supplier;
+using OMS.Application.Services.SupplierDocuements;
 using OMS.Application.Services.Test;
 using OMS.Application.Services.User;
 using OMS.Domain.Repository;
@@ -46,6 +47,7 @@ namespace OMS.Application.Services
         IPhoneNumberService _phoneNumberService;
         ICustomerDocumentsService _customerDocumentsService;
         ISupplierServices _supplierServices;
+        ISupplierDocuementsService _supplierDocuementsService;
 
         public ITestService testService
         {
@@ -244,6 +246,18 @@ namespace OMS.Application.Services
                     _supplierServices = new SupplierServices(_repositoryManager, _commonSettingService);
                 }
                 return _supplierServices;
+
+            }
+        }
+        public ISupplierDocuementsService supplierDocuementsService
+        {
+            get
+            {
+                if (_supplierDocuementsService == null)
+                {
+                    _supplierDocuementsService = new SupplierDocuementsService(_repositoryManager, _commonSettingService);
+                }
+                return _supplierDocuementsService;
 
             }
         }
