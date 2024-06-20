@@ -33,7 +33,7 @@ const ViewCustomer = () => {
   const [customerData, setCustomerData] = useState(null);
 
   const { setCustomerId, customerId } = useContext(BasicDetailContext);
-
+  
   const [
     getCustomersBasicInformationById,
     {
@@ -144,6 +144,7 @@ const ViewCustomer = () => {
                 customerData={customerData}
                 isLoading={isGetCustomersBasicInformationByIdFetching}
                 customerId={customerId}
+                onhandleRepeatCall={handleRepeatCall}
               />
             </CardSection>
           </div>
