@@ -145,16 +145,16 @@ export const ComponentNavigation = [
     //   }
     // ]
   },
-  {
-    id: 'roleManagement',
-    path: '/usersRole',
-    exact: true,
-    title: 'Role Management',
-    component: UsersRole,
-    hasParams: false,
-    text: 'RoleManagement',
-    securityKey: securityKey.ROLEMANAGEMENT
-  },
+  // {
+  //   id: 'roleManagement',
+  //   path: '/usersRole',
+  //   exact: true,
+  //   title: 'Role Management',
+  //   component: UsersRole,
+  //   hasParams: false,
+  //   text: 'RoleManagement',
+  //   securityKey:""
+  // },
   {
     id: 'widgets',
     path: '/themeComponent/widgets',
@@ -205,7 +205,7 @@ export const ComponentNavigation = [
     component: ManageAddCustomer,
     hasParams: false,
     text: 'Add Customer',
-    securityKey: ""
+    securityKey: securityKey.ADDCUSTOMER
   },
   {
     id: 'viewCustomer',
@@ -215,7 +215,7 @@ export const ComponentNavigation = [
     component: ViewCustomer,
     hasParams: false,
     text: 'Customer Detail',
-    securityKey: ""
+    securityKey: securityKey.CUSTOMER
   },
   {
     id: 'Customers',
@@ -238,16 +238,16 @@ export const ComponentNavigation = [
     text: '',
     securityKey: ""
   },
-  {
-    id: 'permissions',
-    path: '/permissions',
-    exact: true,
-    title: 'Permissions',
-    component: Permissions,
-    hasParams: false,
-    text: 'Permissions',
-    securityKey: securityKey.PERMISSIONMANAGEMENT
-  },
+  // {
+  //   id: 'permissions',
+  //   path: '/permissions',
+  //   exact: true,
+  //   title: 'Permissions',
+  //   component: Permissions,
+  //   hasParams: false,
+  //   text: 'Permissions',
+  //   securityKey: securityKey.PERMISSIONMANAGEMENT
+  // },
   {
     id: 'EditPermissions',
     path: '/EditPermissions/:id',

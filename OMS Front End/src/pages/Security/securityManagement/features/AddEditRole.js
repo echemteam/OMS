@@ -1,19 +1,42 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import { addEditRoleFormData, securityKeys } from './config/AddEditRoleForm.data';
+import React, { useEffect, useRef, useState } from 'react'
+import { addEditRoleFormData } from './config/AddEditRoleForm.data';
 import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import { useAddRolesMutation, useUpdateRolesMutation } from '../../../../app/services/securityRoleAPI';
 import ToastService from '../../../../services/toastService/ToastService';
-import { PagePermissionsContext } from '../../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext';
-import usePermissions from '../../../../utils/CustomHook/UsePermissions';
+import { securityKey } from '../../../../data/SecurityKey';
+import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
+
 
 const AddEditGroup = (props) => {
 
   const roleFormRef = useRef();
 
   const [roleForm, setRoleForm] = useState(addEditRoleFormData);
-  const { isButtonDisable } = useContext(PagePermissionsContext);
-  usePermissions(props.isEdit, securityKeys, addEditRoleFormData);
+
+  const { formSetting } = addEditRoleFormData;
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const hasAddPermission = hasFunctionalPermission(securityKey.ADDSECURITYROLE);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITSECURITYROLE);
+
+  useEffect(() => {
+    if (props.isEdit) {
+      if (hasEditPermission.isViewOnly === true) {
+        formSetting.isViewOnly = true;
+        setIsButtonDisable(true);
+      }
+      else {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+      }
+    }
+    else if (!props.isEdit) {
+      if (hasAddPermission.hasAccess === true) {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+      }
+    }
+  }, [props.isEdit, hasEditPermission, hasAddPermission, formSetting.isViewOnly])
 
   const [
     addRoles,

@@ -5,6 +5,8 @@ import CustomerListContext from '../../../../utils/ContextAPIs/Customer/Customer
 import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../app/services/basicdetailAPI';
 import ToastService from '../../../../services/toastService/ToastService';
 import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
+import { securityKey } from '../../../../data/SecurityKey';
+import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 
 export const InActiveCustomers = ({ statusId, configFile }) => {
 
@@ -31,6 +33,26 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     };
     getCustomers(request);
   };
+
+
+  useEffect(() => {
+    const actionColumn = configFile?.columns.find(column => column.name === "Action");
+    if (actionColumn) {
+
+      const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
+      const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
+      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+
+      if (actionColumn.defaultAction.allowActiveCustomer) {
+        actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+      } else if (actionColumn.defaultAction.allowUnblocked) {
+        actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
+      } else if (actionColumn.defaultAction.allowUnfreeze) {
+        actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+      }
+    }
+  }, [configFile]);
+
 
   useEffect(() => {
     if (isListSuccess && isListeData) {

@@ -5,14 +5,14 @@ import { useAddEditContactMutation, useLazyGetContactByCustomerIdQuery } from '.
 //** Component's */
 const ContactDetail = React.lazy(() => import("../../../../customerDetail/features/contactDetail/Contact/ContactDetail"));
 
-const SupplierContactDetail = () => {
+const SupplierContactDetail = (isEditSupplierPage) => {
 
   const { supplierId } = useContext(AddSupplierContext);
 
 
   return (
     //** Also, We replace the API Name and mainId based on the customer and supplier module*/
-    <ContactDetail isSupplier={true} mainId={supplierId ? supplierId : 0} getContactByIdQuery={useLazyGetContactByCustomerIdQuery} addEditContactMutation={useAddEditContactMutation} />
+    <ContactDetail isSupplier={true} isEditablePage={isEditSupplierPage} mainId={supplierId ? supplierId : 0} getContactByIdQuery={useLazyGetContactByCustomerIdQuery} addEditContactMutation={useAddEditContactMutation} />
   )
 }
 

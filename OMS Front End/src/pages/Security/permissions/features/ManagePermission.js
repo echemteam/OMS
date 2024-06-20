@@ -29,7 +29,7 @@ const ManagePermission = forwardRef((props, ref) => {
 
 
     //** Check Permission */
-    const hasAddPermission = hasFunctionalPermission(securityKey.ADDPERMISSIONS);
+    const hasAddPermission = hasFunctionalPermission(securityKey.SAVEPERMISSIONS);
 
     //** Handle Change's */
     const onUpdatePermission = (data) => {

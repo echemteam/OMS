@@ -11,6 +11,8 @@ import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetai
 import ToastService from "../../../../services/toastService/ToastService";
 import { useContext } from "react";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { securityKey } from "../../../../data/SecurityKey";
 
 const AddressDetail = (props) => {
   const userFormRef = useRef();
@@ -23,6 +25,45 @@ const AddressDetail = (props) => {
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const { customerId } = useContext(BasicDetailContext);
+
+
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true);
+
+  useEffect(() => {
+    if (props.isEditablePage) {
+      const { formSetting } = addressFormData;
+      const hasAddPermission = hasFunctionalPermission(securityKey.ADDCUSTOMERADDRESS);
+      const hasEditPermission = hasFunctionalPermission(securityKey.EDITCUSTOMERADDRESS);
+
+      if (hasAddPermission) {
+        if (hasAddPermission.hasAccess === true) {
+          setButtonVisible(true);
+        }
+        else {
+          setButtonVisible(false);
+        }
+      }
+      if (hasEditPermission && formSetting) {
+        if (updateSetData) {
+          if (hasEditPermission.isViewOnly === true) {
+            formSetting.isViewOnly = true;
+            setIsButtonDisable(true);
+          }
+          else {
+            formSetting.isViewOnly = false;
+            setIsButtonDisable(false);
+          }
+        }
+        else if (!updateSetData) {
+          if (hasAddPermission.hasAccess === true) {
+            formSetting.isViewOnly = false;
+            setIsButtonDisable(false);
+          }
+        }
+      }
+    }
+  }, [updateSetData, props.isEditablePage]);
 
   const [getAllAddressTypes, {
     isFetching: isGetAllAddressTypesFetching,
@@ -199,7 +240,7 @@ const AddressDetail = (props) => {
         const filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isShippingAndBilling" && field.dataField !== "isPreferredBilling");
         manageData.formFields = filteredFormFields;
         setFormData(manageData)
-      } else if(updateSetData.type === "AP" || updateSetData.type === "Primary"){
+      } else if (updateSetData.type === "AP" || updateSetData.type === "Primary") {
         const manageData = { ...formData }
         const filteredFormFields = addressFormData.formFields.filter(field => field.dataField !== "isShippingAndBilling" && field.dataField !== "isPreferredBilling" && field.dataField !== "isPreferredShipping");
         manageData.formFields = filteredFormFields;
@@ -350,7 +391,7 @@ const AddressDetail = (props) => {
         let setReq = {
           ...req,
           addressId: updateSetData.addressId,
-          customerAddressId : updateSetData.customerAddressId
+          customerAddressId: updateSetData.customerAddressId
         }
         updateAddAddress(setReq)
         setAddressData(setReq)
@@ -371,7 +412,7 @@ const AddressDetail = (props) => {
         buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
-        rightButton={true}
+        rightButton={buttonVisible ? true : false}
         buttonText="Add"
         titleButtonClick={handleToggleModal}
       >
@@ -400,6 +441,7 @@ const AddressDetail = (props) => {
                 buttonText={updateSetData ? "Update" : "Save"}
                 onClick={handleAddress}
                 isLoading={isAddAddressLoading || isUpdateAddAddressLoading}
+                isDisable={isButtonDisable}
               />
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"

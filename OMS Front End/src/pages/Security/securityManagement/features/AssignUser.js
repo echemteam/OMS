@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import {
   assignUserFormData,
@@ -15,6 +15,9 @@ import {
 import ToastService from "../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../services/swalService/SwalService";
 import CardSection from "../../../../components/ui/card/CardSection";
+import { securityKey } from "../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+
 
 const AssignUser = (props) => {
   const molGridRef = useRef();
@@ -22,8 +25,31 @@ const AssignUser = (props) => {
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [listData, setListData] = useState();
   const [userForm, setUserForm] = useState(assignUserFormData);
-  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] =
-    useState(false);
+  const [buttonVisible, setButtonVisible] = useState(false);
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+
+  const { formSetting } = assignUserFormData;
+  const actionColumn = assignUserListData.columns.find(column => column.name === "Action");
+  const hasAddPermission = hasFunctionalPermission(securityKey.ADDASSIGNUSERS);
+  const hasDeletePermission = hasFunctionalPermission(securityKey.DELETEASSIGNUSERS);
+
+  useEffect(() => {
+    if (hasDeletePermission.hasAccess === true) {
+      actionColumn.defaultAction.allowDelete = true;
+    }
+    else if (hasDeletePermission.hasAccess === false) {
+      actionColumn.defaultAction.allowDelete = false;
+    }
+  }, [hasDeletePermission, actionColumn.defaultAction.allowDelete]);
+
+  useEffect(() => {
+    if (hasAddPermission.hasAccess) {
+      formSetting.isViewOnly = false;
+      setButtonVisible(true);
+    } else {
+      setButtonVisible(false);
+    }
+  }, [hasAddPermission, formSetting.isViewOnly])
 
   const { confirm } = SwalAlert();
 
@@ -176,12 +202,14 @@ const AssignUser = (props) => {
               key={shouldRerenderFormCreator}
             />
             <div className="col-xxl-2 col-xl-2 col-md-2  mb-3">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText="Add"
-                onClick={handleUser}
-                isLoading={isAddRoleMappingLoading}
-              />
+              {buttonVisible ?
+                <Buttons
+                  buttonTypeClassName="theme-button"
+                  buttonText="Add"
+                  onClick={handleUser}
+                  isLoading={isAddRoleMappingLoading}
+                />
+                : null}
             </div>
           </div>
         </div>

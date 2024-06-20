@@ -12,6 +12,9 @@ import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import { StatusEnums, StatusFeild } from '../../../../common/features/Enums/StatusEnums';
 import SwalAlert from '../../../../services/swalService/SwalService';
+import { securityKey } from '../../../../data/SecurityKey';
+import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
+
 
 export const CustomersList = ({ statusId, configFile }) => {
   const navigate = useNavigate();
@@ -27,14 +30,83 @@ export const CustomersList = ({ statusId, configFile }) => {
   const [statusFeild, setStatusFeild] = useState()
   const { listRef } = useContext(CustomerContext);
 
-  const [
-    getCustomers,
-    { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
-  ] = useGetCustomersMutation();
 
+  const [getCustomers, { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },] = useGetCustomersMutation();
   const [updateCustomerApproveStatus, { isSuccess: isSuccessUpdateCustomer, data: updateCustomerData }] = useUpdateCustomerApproveStatusMutation();
-
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
+
+  const actionColumn = configFile?.columns.find(column => column.name === "Action");
+
+  const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
+  const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
+  const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
+  const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
+  const hasDisable = hasFunctionalPermission(securityKey.DISABLECUSTOMER);
+  const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
+  const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+
+  useEffect(() => {
+    if (hasEdit.hasAccess === true) {
+      actionColumn.defaultAction.allowEdit = true;
+    }
+    else if (hasEdit.hasAccess === false) {
+      actionColumn.defaultAction.allowEdit = false;
+    }
+  }, [hasEdit, actionColumn.defaultAction.allowEdit]);
+
+  useEffect(() => {
+    if (hasBlock.hasAccess === true) {
+      actionColumn.defaultAction.allowBlocked = true;
+    }
+    else if (hasBlock.hasAccess === false) {
+      actionColumn.defaultAction.allowBlocked = false;
+    }
+  }, [hasBlock, actionColumn.defaultAction.allowBlocked]);
+
+  useEffect(() => {
+    if (hasFreeze.hasAccess === true) {
+      actionColumn.defaultAction.allowFreeze = true;
+    }
+    else if (hasFreeze.hasAccess === false) {
+      actionColumn.defaultAction.allowFreeze = false;
+    }
+  }, [hasFreeze, actionColumn.defaultAction.allowFreeze]);
+
+  useEffect(() => {
+    if (hasActive.hasAccess === true) {
+      actionColumn.defaultAction.allowActiveCustomer = true;
+    }
+    else if (hasActive.hasAccess === false) {
+      actionColumn.defaultAction.allowActiveCustomer = false;
+    }
+  }, [hasActive, actionColumn.defaultAction.allowActiveCustomer]);
+
+  useEffect(() => {
+    if (hasDisable.hasAccess === true) {
+      actionColumn.defaultAction.allowDisable = true;
+    }
+    else if (hasDisable.hasAccess === false) {
+      actionColumn.defaultAction.allowDisable = false;
+    }
+  }, [hasDisable, actionColumn.defaultAction.allowDisable]);
+
+  useEffect(() => {
+    if (hasUnBlock.hasAccess === true) {
+      actionColumn.defaultAction.allowUnblocked = true;
+    }
+    else if (hasUnBlock.hasAccess === false) {
+      actionColumn.defaultAction.allowUnblocked = false;
+    }
+  }, [hasUnBlock, actionColumn.defaultAction.allowUnblocked]);
+
+  useEffect(() => {
+    if (hasUnFreeze.hasAccess === true) {
+      actionColumn.defaultAction.allowUnfreeze = true;
+    }
+    else if (hasUnFreeze.hasAccess === false) {
+      actionColumn.defaultAction.allowUnfreeze = false;
+    }
+  }, [hasUnFreeze, actionColumn.defaultAction.allowUnfreeze]);
 
   const handlePageChange = (page) => {
     const request = {

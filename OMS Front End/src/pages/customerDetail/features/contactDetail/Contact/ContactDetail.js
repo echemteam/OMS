@@ -8,19 +8,20 @@ import { contactTransformData } from "../../../../../utils/TransformData/Transfo
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import { useLazyGetAllContactTypesQuery } from "../../../../../app/services/contactAPI";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Component's */
 const AddEditContact = React.lazy(() => import("./AddEditContact"));
 const ManageContactList = React.lazy(() => import("./ManageContactList"));
 
-const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation }) => {
+const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, isSupplier, isEditablePage, SecurityKey }) => {
 
   //** State */
-  const childRef = useRef();
   const editRef = useRef();
-  const addRef = useRef();
+  const childRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
+  const [editFormData, setEditFormData] = useState();
   const [isModelOpen, setisModelOpen] = useState(false);
-  const [isAddModelOpen, setIsAddModelOpen] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true);
   const [modifyContactData, setModifyContactData] = useState([]);
   const { setEmailAddressData, setContactMainModal, setContactId, setPhoneNumberData } = useContext(BasicDetailContext);
 
@@ -33,6 +34,21 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation }) 
     getAllContactTypes();
     mainId && GetContactList(mainId);
   }, [mainId]);
+
+  useEffect(() => {
+    if (isEditablePage === true) {
+      const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+
+      if (hasAddPermission) {
+        if (hasAddPermission.hasAccess === true) {
+          setButtonVisible(true);
+        }
+        else {
+          setButtonVisible(false);
+        }
+      }
+    }
+  }, [isEditablePage, isSupplier]);
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetContactData) {
@@ -60,19 +76,15 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation }) 
     setPhoneNumberData('');
     setEmailAddressData('');
     setContactMainModal(true);
-    setIsAddModelOpen(true);
+    setEditFormData('');
     if (childRef.current) {
       childRef.current.callChildFunction();
-    }
-    if (addRef.current) {
-      addRef.current.callOpenModalFunction();
     }
   };
 
   const handleEdit = (data) => {
-    setIsAddModelOpen(false);
     setIsEdit(true);
-    // setEditFormData(data);
+    setEditFormData(data);
     setisModelOpen(!isModelOpen);
     if (editRef.current) {
       editRef.current.callEditFunction(data);
@@ -103,7 +115,7 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation }) 
         buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
-        rightButton={true}
+        rightButton={buttonVisible ? true : false}
         buttonText="Add"
         titleButtonClick={handleToggleModal}>
         <ManageContactList handleEdit={handleEdit} modifyContactData={modifyContactData} isLoading={isGetContactFetching} />
@@ -115,8 +127,8 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation }) 
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}>
-          <AddEditContact onSidebarClose={onSidebarClose} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} addRef={addRef}
-            isAddModelOpen={isAddModelOpen} onGetContactList={onGetContactList} addEditContactMutation={addEditContactMutation} mainId={mainId} />
+          <AddEditContact onSidebarClose={onSidebarClose} editFormData={editFormData} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} SecurityKey={SecurityKey}
+            onGetContactList={onGetContactList} addEditContactMutation={addEditContactMutation} mainId={mainId} isEditablePage={isEditablePage} />
         </SidebarModel>
       </div>
     </>

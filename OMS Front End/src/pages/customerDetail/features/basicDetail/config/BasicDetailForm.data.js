@@ -13,7 +13,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 
 export const basicDetailFormDataHalf = {
-  initialState: { name: "", groupTypeId: "", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty:false },
+  initialState: { name: "", groupTypeId: "", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false },
   formFields: [
     {
       id: "name",
@@ -172,5 +172,7 @@ export const basicDetailFormDataHalf = {
       },
     },
   ],
-
+  formSetting: {
+    isViewOnly: false
+  }
 };

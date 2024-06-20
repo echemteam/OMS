@@ -1,33 +1,56 @@
-import React, { forwardRef, useContext, useEffect, useImperativeHandle, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import ToastService from "../../../../../services/toastService/ToastService";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import { documentTransformData } from "../../../../../utils/TransformData/TransformAPIData";
-import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Service's */
 import SwalAlert from "../../../../../services/swalService/SwalService";
-import { useDeleteCustomerDocumentsByIdMutation, useLazyDownloadCustomerDocumentQuery, useLazyGetCustomerDocumentsByIdQuery } from "../../../../../app/services/documentAPI";
-import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
 
-const ManageDocumentList = forwardRef(({ childRef }) => {
+const ManageDocumentList = forwardRef(({ mainId, downloadDocument, deleteDocumentsById, getDocumentsById, childRef, SecurityKey, isEditablePage }) => {
 
     //** State */
     const { confirm } = SwalAlert();
-    const { customerId } = useContext(BasicDetailContext);
     const [documentListData, setDocumentListData] = useState([]);
+    const [showDeleteButton, setShowDeleteButton] = useState(true);
+    const [showDownalodButton, setShowDownalodButton] = useState(true);
 
     //** API Call's */
-    const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteCustomerDocumentsByIdMutation();
-    const [getList, { isFetching: isListFetching, isSuccess: isListSucess, data: isListData }] = useLazyGetCustomerDocumentsByIdQuery();
-    const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = useLazyDownloadCustomerDocumentQuery();
+    const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] = deleteDocumentsById();
+    const [getList, { isFetching: isListFetching, isSuccess: isListSucess, data: isListData }] = getDocumentsById();
+    const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = downloadDocument();
 
     //** UseEffect */
     useEffect(() => {
-        customerId && getList(customerId);
-    }, [])
+        mainId && getList(mainId);
+    }, []);
+
+    useEffect(() => {
+        if (isEditablePage) {
+            const hasDeletePermission = hasFunctionalPermission(SecurityKey.DELETE);
+            const hasDownalodPermission = hasFunctionalPermission(SecurityKey.DOWNALOD);
+            if (hasDeletePermission) {
+                if (hasDeletePermission.hasAccess === true) {
+                    setShowDeleteButton(true);
+                }
+                else {
+                    setShowDeleteButton(false);
+                }
+            }
+            if (hasDownalodPermission) {
+                if (hasDownalodPermission.hasAccess === true) {
+                    setShowDownalodButton(true);
+                }
+                else {
+                    setShowDownalodButton(false);
+                }
+            }
+        }
+    }, [isEditablePage]);
 
     useEffect(() => {
         if (isListSucess && isListData && !isListFetching) {
@@ -49,7 +72,7 @@ const ManageDocumentList = forwardRef(({ childRef }) => {
     useEffect(() => {
         if (isDeleteSucess && isDeleteData) {
             ToastService.success(isDeleteData.errorMessage);
-            customerId && getList(customerId);
+            onGetData();
         }
     }, [isDeleteSucess, isDownalodData]);
 
@@ -57,7 +80,7 @@ const ManageDocumentList = forwardRef(({ childRef }) => {
     const handleDownload = (name) => {
         let request = {
             folderName: 'Customer',
-            customerId: customerId,
+            customerId: mainId,
             fileName: name
         }
         Downalod(request);
@@ -74,7 +97,7 @@ const ManageDocumentList = forwardRef(({ childRef }) => {
     };
 
     const onGetData = () => {
-        customerId && getList(customerId);
+        mainId && getList(mainId);
     };
 
     //** Use Imperative Handle  */
@@ -105,12 +128,16 @@ const ManageDocumentList = forwardRef(({ childRef }) => {
                                                                 <div className="document-type">{data.attachment}</div>
                                                             </div>
                                                             <div className="document-action">
-                                                                <span className="action-icon" onClick={() => handleDownload(data.attachment)} >
-                                                                    <Image imagePath={AppIcons.DownloadIcon} alt="Download Icon" />
-                                                                </span>
-                                                                <span className="action-icon" onClick={() => handleDelete(data.customerDocumentId)} >
-                                                                    <Image imagePath={AppIcons.deleteIcon} alt="Delete Icon" />
-                                                                </span>
+                                                                {showDeleteButton ?
+                                                                    <span className="action-icon" onClick={() => handleDownload(data.attachment)} >
+                                                                        <Image imagePath={AppIcons.DownloadIcon} alt="Download Icon" />
+                                                                    </span>
+                                                                    : null}
+                                                                {showDownalodButton ?
+                                                                    <span className="action-icon" onClick={() => handleDelete(data.customerDocumentId)} >
+                                                                        <Image imagePath={AppIcons.deleteIcon} alt="Delete Icon" />
+                                                                    </span>
+                                                                    : null}
                                                             </div>
                                                         </div>
                                                     </div>

@@ -2,12 +2,6 @@ import { securityKey } from "../../../../../data/SecurityKey";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
-export const securityKeys = {
-  ADD: securityKey.ADDUSER,
-  EDIT: securityKey.EDITUSER,
-  DELETE: securityKey.DELETEUSER
-};
-
 
 export const userFormData = {
   name: "User From",
