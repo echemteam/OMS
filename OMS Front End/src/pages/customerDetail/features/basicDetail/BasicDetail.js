@@ -86,7 +86,15 @@ const BasicDetail = (props) => {
     getAllGroupTypes();
     getAllCountries();
     getAllTerritories();
+    manageFilteredForm();
   }, []);
+
+  const manageFilteredForm = () => {
+    const manageData = { ...formData }
+    const filteredFormFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input");
+    manageData.formFields = filteredFormFields;
+    setFormData(manageData)
+  };
 
   useEffect(() => {
     if (
@@ -186,7 +194,6 @@ const BasicDetail = (props) => {
 
   useEffect(() => {
     if (props.isOpen) {
-      const removeFields = ['note']
       let data = { ...basicDetailFormDataHalf };
       data.initialState = { ...props.customerData };
       if (data.initialState.countryId > 0) {
@@ -195,7 +202,7 @@ const BasicDetail = (props) => {
         }
         handleValidateTextId(det, "countryId");
       }
-      data.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
+      data.formFields = basicDetailFormDataHalf.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
       setFormData(data);
     }
   }, [props.isOpen])
