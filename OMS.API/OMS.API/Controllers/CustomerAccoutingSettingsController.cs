@@ -2,6 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
+using OMS.Domain.Entities.API.Request.User;
+using OMS.Domain.Entities.API.Response.Common;
+using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -42,6 +46,54 @@ namespace OMS.API.Controllers
             return APISucessResponce(addEditSetting);
         }
 
+
+        [HttpPost("AddCustomerShppingDeliveryCarriersAndDeliveryMethods")]
+        public async Task<IActionResult> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(AddCustomerShppingDeliveryCarriersAndDeliveryMethodsRequest requestData)
+        {
+            var addItem = await _serviceManager.customerAccoutingSettingsService.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(requestData, CurrentUserId);
+            return APISucessResponce(addItem);
+        }
+
+        [HttpPost("UpdateShppingDeliveryCarriers")]
+        public async Task<IActionResult> UpdateShppingDeliveryCarriers(UpdateShppingDeliveryCarriersRequest requestData)
+        {
+            AddEntityDTO<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.customerAccoutingSettingsService.UpdateShppingDeliveryCarriers(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce<object>(responseData);
+        }
+
+
+        [HttpGet("GetShppingDeliveryCarriersByCustomerId")]
+        public async Task<IActionResult> GetShppingDeliveryCarriersByCustomerId(int customerId)
+        {
+            List<GetShppingDeliveryCarriersByCustomerIdResponse> responseData = await _serviceManager.customerAccoutingSettingsService.GetShppingDeliveryCarriersByCustomerId(customerId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetDeliveryMethodsCustomerId")]
+        public async Task<IActionResult> GetDeliveryMethodsCustomerId(int customerId)
+        {
+            List<GetDeliveryMethodsCustomerIdResponse> responseData = await _serviceManager.customerAccoutingSettingsService.GetDeliveryMethodsCustomerId(customerId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpPost("UpdateDeliveryMethods")]
+        public async Task<IActionResult> UpdateDeliveryMethods(UpdateDeliveryMethodsRequest requestData)
+        {
+            AddEntityDTO<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.customerAccoutingSettingsService.UpdateDeliveryMethods(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce<object>(responseData);
+        }
+
+
         [HttpDelete("DeleteCustomerDeliveryCarriersById")]
         public async Task<IActionResult> DeleteCustomerDeliveryCarriersById(int CustomerDeliveryCarrierId)
         {
@@ -65,14 +117,6 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(CustomerDeliveryMethodId);
         }
-
-
-
-
-
-
-
-
 
         #endregion
     }

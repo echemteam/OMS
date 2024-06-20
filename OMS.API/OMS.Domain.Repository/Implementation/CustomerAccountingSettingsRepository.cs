@@ -1,17 +1,10 @@
 ﻿using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
-using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.Contact;
 using OMS.Domain.Entities.Entity.CustomerAccountingSettings;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Implementation
 {
@@ -20,6 +13,11 @@ namespace OMS.Domain.Repository.Implementation
         #region SP
         const string GETDETAILSBYCUSTOMERID = "GetDetailsByCustomerId";
         const string ADDEDITCUSTOMERSETTINGS = "AddEditCustomerSettings";
+        const string ADDCUSTOMERSHPPINGDELIVERYCARRIERS = "AddCustomerShppingDeliveryCarriers";
+        const string UPDATESHPPINGDELIVERYCARRIERS = "UpdateShppingDeliveryCarriers";
+        const string GETSHPPINGDELIVERYCARRIERSBYCUSTOMERID = "GetShppingDeliveryCarriersByCustomerId";
+        const string GETDELIVERYMETHODSCUSTOMERID = "GetDeliveryMethodsCustomerId";
+        const string UPDATEDELIVERYMETHODS = "UpdateDeliveryMethods";
         const string DELETECUSTOMERDELIVERYCARRIERSBYID = "DeleteCustomerDeliveryCarriersById";
         const string DELETECUSTOMERDELIVERYMETHODSBYID = "DeleteCustomerDeliveryMethodsById";
         #endregion
@@ -41,14 +39,67 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCUSTOMERSETTINGS, new
             {
-                 settings.CustomerAccountingSettingId,
-                 settings.CustomerId,
-                 settings.PaymentTermId,
-                 settings.PaymentMethodId,
-                 settings.CreditLimit,
-                 settings.BillingCurrency,
-                 settings.InvoiceSubmissionInstruction,
-                 settings.CreatedBy,
+                settings.CustomerAccountingSettingId,
+                settings.CustomerId,
+                settings.PaymentTermId,
+                settings.PaymentMethodId,
+                settings.CreditLimit,
+                settings.BillingCurrency,
+                settings.InvoiceSubmissionInstruction,
+                settings.CreatedBy,
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDTO Carriers)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERSHPPINGDELIVERYCARRIERS, new
+            {
+                Carriers.DeliveryAccountId,
+                Carriers.CustomerId,
+                Carriers.CreatedBy,
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> UpdateShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDTO updateCarriers)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATESHPPINGDELIVERYCARRIERS, new
+            {
+                updateCarriers.CustomerId,
+                updateCarriers.CustomerDeliveryCarrierId,
+                updateCarriers.AccountNumber,
+                updateCarriers.IsPrimary,
+                updateCarriers.UpdatedBy
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetShppingDeliveryCarriersByCustomerIdResponse>> GetShppingDeliveryCarriersByCustomerId(int customerid)
+        {
+            List<GetShppingDeliveryCarriersByCustomerIdResponse> getShppingDeliveryCarriersList = await _context.GetList<GetShppingDeliveryCarriersByCustomerIdResponse>(GETSHPPINGDELIVERYCARRIERSBYCUSTOMERID, new
+            {
+                customerid
+            }, commandType: CommandType.StoredProcedure);
+            return getShppingDeliveryCarriersList;
+        }
+
+        public async Task<List<GetDeliveryMethodsCustomerIdResponse>> GetDeliveryMethodsCustomerId(int customerid)
+        {
+            List<GetDeliveryMethodsCustomerIdResponse> getDeliveryMethodsList = await _context.GetList<GetDeliveryMethodsCustomerIdResponse>(GETDELIVERYMETHODSCUSTOMERID, new
+            {
+                customerid
+            }, commandType: CommandType.StoredProcedure);
+            return getDeliveryMethodsList;
+        }
+
+        public async Task<AddEntityDTO<int>> UpdateDeliveryMethods(CustomerDeliveryMethodsDTO updateDeliveryMethods)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEDELIVERYMETHODS, new
+            {
+                updateDeliveryMethods.CustomerId,
+                updateDeliveryMethods.CustomerDeliveryMethodId,
+                updateDeliveryMethods.DeliveryMethodId,
+                updateDeliveryMethods.Charge,
+                updateDeliveryMethods.IsPrimary,
+                updateDeliveryMethods.UpdatedBy
             }, CommandType.StoredProcedure);
         }
 

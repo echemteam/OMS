@@ -127,6 +127,13 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
+        [HttpGet("GetAllDeliveryAccounts")]
+        public async Task<IActionResult> GetAllDeliveryAccounts()
+        {
+            List<GetAllDeliveryAccountsResponse> responseData = await _serviceManager.commonServices.GetAllDeliveryAccounts().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
         [HttpGet("GetAllPhoneTypes")]
         public async Task<IActionResult> GetAllPhoneTypes()
         {
