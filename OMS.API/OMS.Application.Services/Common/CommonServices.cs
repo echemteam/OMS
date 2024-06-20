@@ -1,7 +1,6 @@
 ﻿using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Repository;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.Application.Services.Common
@@ -79,6 +78,20 @@ namespace OMS.Application.Services.Common
         public Task<List<GetAllSupplierTypeResponse>> GetAllSupplierType()
         {
             return repositoryManager.commonRepository.GetAllSupplierType();
+        }
+
+        public Task<List<GetAllDeliveryCarriersResponse>> GetAllDeliveryCarriers()
+        {
+            return repositoryManager.commonRepository.GetAllDeliveryCarriers();
+        }
+        public Task<List<GetAllDeliveryMethodsResponse>> GetAllDeliveryMethods()
+        {
+            return repositoryManager.commonRepository.GetAllDeliveryMethods();
+        }
+
+        public Task<List<GetAllPhoneTypesResponse>> GetAllPhoneTypes()
+        {
+            return repositoryManager.commonRepository.GetAllPhoneTypes();
         }
     }
 }
