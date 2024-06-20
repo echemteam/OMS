@@ -11,6 +11,7 @@ import { StatusEnums } from "../../common/features/Enums/StatusEnums";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
+import CustomerDocumentDetails from "./features/documentsDetail/CustomerDocumentDetails";
 //** Component's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
 const AddressDetail = React.lazy(() => import("./features/addressDetail/AddressDetail"));
@@ -43,26 +44,26 @@ const AddCustomer = () => {
     {
       label: "Address",
       subLabel: "Enter Customer Address Details",
-      content: <AddressDetail />,
+      content: <AddressDetail isEditablePage={false} />,
       tab: TabEnum.Address
     },
     {
       label: "Contact",
       subLabel: "Enter Customer Contact Details",
-      content: <CustomerContactDetails />,
+      content: <CustomerContactDetails isEditablePage={false} />,
       tab: TabEnum.Contact
     },
     {
       label: "Documents",
       subLabel: "Add Customer Documents Details",
-      content: <DocumentDetails />,
+      content: <CustomerDocumentDetails isEditablePage={false} />,
       tab: TabEnum.Documents
     },
   ];
 
-  const handleTabClick = (index) => {
-    setActiveTab(index);
-  };
+  // const handleTabClick = (index) => {
+  //   setActiveTab(index);
+  // };
 
   const handleSubmit = () => {
     let req = {
@@ -91,7 +92,7 @@ const AddCustomer = () => {
                 <React.Fragment key={index}>
                   <div className={`step ${activeTab === index ? 'active' : ''}`}>
                     <button className="step-button"
-                      onClick={() => handleTabClick(index)}
+                      // onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">

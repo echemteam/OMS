@@ -16,40 +16,61 @@ import { useLazyGetCustomersBasicInformationByIdQuery } from "../../app/services
 import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../services/CryptoService";
 import { HistoryDetail } from "./features/HistoryDetail/HistoryDetail";
-import { useAddEditContactMutation, useLazyGetContactByCustomerIdQuery } from "../../app/services/contactAPI";
+import {
+  useAddEditContactMutation,
+  useLazyGetContactByCustomerIdQuery,
+} from "../../app/services/contactAPI";
+import { useNavigate } from "react-router-dom/dist";
+import Button from "../../components/ui/button/Buttons";
+import CustomerContactDetails from "./features/contactDetail/Contact/CustomerContactDetails";
+import CustomerDocumentDetails from "./features/documentsDetail/CustomerDocumentDetails";
 
 const ViewCustomer = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const pageId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setisModelOpen] = useState(false);
-  const [customerData, setCustomerData] = useState(null)
+  const [customerData, setCustomerData] = useState(null);
 
-  const { setCustomerId , customerId} = useContext(BasicDetailContext);
+  const { setCustomerId, customerId } = useContext(BasicDetailContext);
 
-  const [getCustomersBasicInformationById,
+  const [
+    getCustomersBasicInformationById,
     {
       isFetching: isGetCustomersBasicInformationByIdFetching,
       isSuccess: isGetCustomersBasicInformationById,
       data: GetCustomersBasicInformationByIdData,
-    },] = useLazyGetCustomersBasicInformationByIdQuery();
+    },
+  ] = useLazyGetCustomersBasicInformationByIdQuery();
 
   useEffect(() => {
-    if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
-      setCustomerData(GetCustomersBasicInformationByIdData)
-      console.log('isGetCustomersBasicInformationByIdFetching', isGetCustomersBasicInformationByIdFetching);
+    if (
+      isGetCustomersBasicInformationById &&
+      GetCustomersBasicInformationByIdData &&
+      !isGetCustomersBasicInformationByIdFetching
+    ) {
+      setCustomerData(GetCustomersBasicInformationByIdData);
+      console.log(
+        "isGetCustomersBasicInformationByIdFetching",
+        isGetCustomersBasicInformationByIdFetching
+      );
     }
-  }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
+  }, [
+    isGetCustomersBasicInformationById,
+    GetCustomersBasicInformationByIdData,
+    isGetCustomersBasicInformationByIdFetching,
+  ]);
 
   useEffect(() => {
     if (pageId) {
       setCustomerId(pageId);
-      getCustomersBasicInformationById(pageId)
+      getCustomersBasicInformationById(pageId);
     }
-  }, [])
+  }, []);
 
   const handleRepeatCall = () => {
-    getCustomersBasicInformationById(pageId)
-  }
+    getCustomersBasicInformationById(pageId);
+  };
 
   const handleToggleModal = () => {
     setisModelOpen(true);
@@ -57,12 +78,16 @@ const ViewCustomer = () => {
   const onSidebarClose = () => {
     setisModelOpen(false);
   };
+  const handleBackClick = () => {
+    navigate("/Customers");
+  };
+
   const tabs = [
     {
       sMenuItemCaption: "Address",
       component: (
         <div className="mt-2">
-          <AddressDetail />
+          <AddressDetail isEditablePage={true} />
         </div>
       ),
     },
@@ -70,7 +95,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2">
-          <ContactDetail  getContactByIdQuery={useLazyGetContactByCustomerIdQuery} addEditContactMutation={useAddEditContactMutation}/>
+          <CustomerContactDetails isEditablePage={true} />
         </div>
       ),
     },
@@ -86,7 +111,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          <DocumentDetails />
+          <CustomerDocumentDetails isEditablePage={true} />
         </div>
       ),
     },
@@ -114,11 +139,23 @@ const ViewCustomer = () => {
         <div className="row">
           <div className="col-xxl-4 col-xl-4 col-md-5 col-12 basic-left-part customer-desc-left-sec">
             <CardSection>
-              <CustomerDetails editClick={handleToggleModal} customerData={customerData} isLoading={isGetCustomersBasicInformationByIdFetching} customerId={customerId}/>
+              <CustomerDetails
+                editClick={handleToggleModal}
+                customerData={customerData}
+                isLoading={isGetCustomersBasicInformationByIdFetching}
+                customerId={customerId}
+              />
             </CardSection>
           </div>
           <div className="col-xxl-8 col-xl-8 col-md-7 col-12 other-info-tab">
-              <RenderTabs tabs={tabs} />
+            <Button
+              buttonTypeClassName="back-button btn dark-btn"
+              onClick={handleBackClick}
+              textWithIcon={true}
+              buttonText="Back"
+              imagePath={AppIcons.BackArrowIcon}
+            ></Button>
+            <RenderTabs tabs={tabs} />
           </div>
         </div>
       </div>
@@ -129,7 +166,13 @@ const ViewCustomer = () => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}
       >
-        <BasicDetail onSidebarClose={onSidebarClose} isOpen={isModelOpen} customerData={customerData} pageId={pageId} onhandleRepeatCall={handleRepeatCall} />
+        <BasicDetail
+          onSidebarClose={onSidebarClose}
+          isOpen={isModelOpen}
+          customerData={customerData}
+          pageId={pageId}
+          onhandleRepeatCall={handleRepeatCall}
+        />
       </SidebarModel>
     </>
   );

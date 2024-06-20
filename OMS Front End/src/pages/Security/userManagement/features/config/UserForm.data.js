@@ -2,12 +2,6 @@ import { securityKey } from "../../../../../data/SecurityKey";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
-export const securityKeys = {
-  ADD: securityKey.ADDUSER,
-  EDIT: securityKey.EDITUSER,
-  DELETE: securityKey.DELETEUSER
-};
-
 
 export const userFormData = {
   name: "User From",
@@ -105,24 +99,29 @@ export const UserGridConfig = {
     {
       name: "User Name",
       fieldName: "userName",
+      width:"20%",
       // allowShort: true,
     },
     {
       name: "First Name",
       fieldName: "firstName",
       // allowShort: true,
+      width:"20%",
     },
     {
       name: "Last Name",
       fieldName: "lastName",
+      width:"20%",
     },
     {
       name: "IsActive",
       fieldName: "isActive",
+      width:"20%",
       colType: GridColumnType.CHECKBOX,
     },
     {
       name: "Action",
+      width:"20%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

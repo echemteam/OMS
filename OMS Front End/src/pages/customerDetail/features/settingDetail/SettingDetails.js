@@ -12,17 +12,17 @@ const SettingDetails = () => {
   };
   const tabs = [
     {
-      sMenuItemCaption: "Financial Settings",
+      sMenuItemCaption: "Financial",
       component: (
-        <div className="mt-4">
+        <div className="mt-4 financial-sec">
           <FinancialSettings />
         </div>
       ),
     },
     {
-      sMenuItemCaption: "Shipping Settings",
+      sMenuItemCaption: "Shipping",
       component: (
-        <div className="mt-4">
+        <div className="mt-4 financial-sec">
           <ShippingSettings />
         </div>
       ),

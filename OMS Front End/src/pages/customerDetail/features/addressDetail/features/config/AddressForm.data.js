@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../../data/formFieldType";
 
 export const addressFormData = {
   // name: "Email From",
-  initialState: { addressTypeId: ""  , addressLine1:"" , addressLine2:"" , addressLine3:"" , addressLine4:"" , addressLine5 :"" , countryId:"" , stateId:"" ,zipCode:"", cityId:"" , supplierId : 0 , isPreferredBilling:false , isBillingandShipping:false , isPreferredShipping:false},
+  initialState: { addressTypeId: ""  , addressLine1:"" , addressLine2:"" , addressLine3:"" , addressLine4:"" , addressLine5 :"" , countryId:"" , stateId:"" ,zipCode:"", cityId:"" , supplierId : 0 , isPreferredBilling:false , isShippingAndBilling:false , isPreferredShipping:false},
   formFields: [
     {
       id: "addressTypeId",
@@ -158,11 +158,11 @@ export const addressFormData = {
       },
     },
     {
-      id: "isBillingandShipping",
+      id: "isShippingAndBilling",
       lable: "Is Billing and Shipping",
       Field_Name: "Is Billing and Shipping",
       fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isBillingandShipping",
+      dataField: "isShippingAndBilling",
       fieldSetting: {
         placeholder: "",
         allowSpace: true,
@@ -203,4 +203,7 @@ export const addressFormData = {
       },
     },
   ],
+  formSetting: {
+    isViewOnly: false
+  }
 };

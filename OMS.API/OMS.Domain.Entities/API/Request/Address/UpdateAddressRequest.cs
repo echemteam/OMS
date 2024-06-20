@@ -4,6 +4,7 @@ namespace OMS.Domain.Entities.API.Request.Address
 {
     public class UpdateAddressRequest 
     {
+        public int? CustomerAddressId { get; set; }
         public int? CustomerId { get; set; }
         public int? AddressId { get; set; }
         public short? AddressTypeId { get; set; }

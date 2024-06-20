@@ -1,140 +1,54 @@
 export const securityKey = {
 
-    //** Dashboard */
-    DASHBOARD: "Dashboard",
+     //** Dashboard */
+     DASHBOARD: "Dashboard",
 
-    //** User Management */
-    USERMANAGEMENT: "User Management",
-    ADDUSER: "Add User",
-    EDITUSER: "Edit User",
-    DELETEUSER: "Delete User",
+     //** User Management */
+     USERMANAGEMENT: "User Management",
+     ADDUSER: "Add User",
+     EDITUSER: "Edit User",
+     DELETEUSER: "Delete User",
 
-    //** Role Management */
-    ROLEMANAGEMENT: "Role Management",
-    ADDROLE: "Add Role",
-    EDITROLE: "Edit Role",
-    DELETEROLE: "Delete Role",
+     //** Security Role Management */
+     SECURITYROLEMANAGEMENT: "Security Role Management",
+     ADDSECURITYROLE: "Add Security Role",
+     EDITSECURITYROLE: "Edit Security Role",
+     DELETESECURITYROLE: "Delete Security Role",
 
-    //** Permissions Management */
-    PERMISSIONMANAGEMENT: "Permissions Management",
-    ADDPERMISSION: "Add Permissions",
-    SAVEPERMISSION: "Save Permissions",
-
-    //**  */
-    SECURITY: "Security",
-
-    //** Security Role Management */
-    SECURITYROLEMANAGEMENT: "Security Role Management",
-    ADDSECURITYROLE: "Add Security Role",
-    EDITSECURITYROLE: "Edit Security Role",
-    DELETESECURITYROLE: "Delete Security Role",
+     //** Assing User */
+     ASSIGNUSERS: "Assign Users",
+     ADDASSIGNUSERS: "Add Assign Users",
+     DELETEASSIGNUSERS: "Delete Assign Users",
 
 
-    EMPLOYERSSEARCH: "Employers Search",
-
-    EMPLOYERPAGE: "Employer Page",
-    ADDEMPLOYER: "Add Employer",
-    EDITEMPLOYER: "Edit Employer",
-    DELETEEMPLOYER: "Delete Employer",
-
-    // EMPLOYER TABS
-    // Audit
-    ADDEMPLOYERAUDIT: "Add Employer Audit",
-    EDITEMPLOYERAUDIT: "Edit Employer Audit",
-    DELETEEMPLOYERAUDIT: "Delete Employer Audit",
-
-    // Bankruptcy
-    EDITEMPLOYERBANKRUPTCY: "Edit Employer Bankruptcy",
-
-    // Comments
-    ADDEMPLOYERCOMMENTS: "Add Employer Comments",
-    EDITEMPLOYERCOMMENTS: "Edit Employer Comments",
-    DELETEEMPLOYERCOMMENTS: "Delete Employer Comments",
-
-    // Employer Contracts
-    ADDEMPLOYERCONTRACTS: "Add Employer Contracts",
-    EDITEMPLOYERCONTRACTS: "Edit Employer Contracts",
-    DELETEEMPLOYERCONTRACTS: "Delete Employer Contracts",
-
-    // Employer Associations
-    ADDEMPLOYERASSOCIATIONS: "Add Employe Associations",
-    EDITEMPLOYERASSOCIATIONS: "Edit Employer Associations",
-    DELETEEMPLOYERASSOCIATIONS: "Delete Employer Associations",
-
-    // Bonds
-    ADDEMPLOYERBONDS: "Add Employer Bonds",
-    EDITEMPLOYERBONDS: "Edit Employer Bonds",
-    DELETEEMPLOYERBONDS: "Delete Employer Bonds",
-
-    // Contracts
-    CONTRACTS: "Contracts",
-    ADDCONTRACTS: "Add Contracts",
-    EDITCONTRACTS: "Edit Contracts",
-    DELETECONTRACTS: "Delete Contracts",
-
-    // Associations
-    ASSOCIATIONS: "Associations",
-    ADDASSOCIATIONS: "Add Associations",
-    EDITASSOCIATIONS: "Edit Associations",
-    DELETEASSOCIATIONS: "Delete Associations",
-
-    REPORTS: "Reports",
-    EMPLOYERLIST: "Employer List",
-    CONTRACTBYCRAFTREPORT: "Contract By Craft Report",
-    EMPLOYERDEMOGRAPHICREPORT: "Employer Demographic Report",
-    CONTRACTSBYASSOCIATIONREPORT: "Contracts By Association Report",
-    UNSIGNEDEMPLOYERS: "Unsigned Employers",
-    BONDREPORT: "Bond Report",
-    CONTRACTORBYSIGNDATE: "Contractor By Sign Date",
+     //** Customer */
+     CUSTOMER: "Customer",
+     ADDCUSTOMER: "Add Customer",
+     EDITCUSTOMER: "Edit Customer",
+     BLOCKCUSTOMER: "Block Customer",
+     UNBLOCKCUSTOMER: "UnBlock Customer",
+     DISABLECUSTOMER: "Disable Customer",
+     FREEZECUSTOMER: "Freeze Customer",
+     UNFREEZECUSTOMER: "UnFreeze Customer",
+     ACTIVECUSTOMER: "Active Customer",
+     EDITBASICCUSTOMERDETAILS: "Edit Basic Customer Details",
+     ADDCUSTOMERADDRESS: "Add Customer Address",
+     EDITCUSTOMERADDRESS: "Edit Customer Address",
+     ADDCUSTOMERCONTACT: "Add Customer Contact",
+     EDITCUSTOMERCONTACT: "Edit Customer Contact",
+     ADDCUSTOMERDOCUMENT: "Add Customer Document",
+     DELETECUSTOMERDOCUMENT: "Delete Customer Document",
+     DOWNALODCUSTOMERDOCUMENT: "Downalod Customer Document",
+     ADDCUSTOMERNOTE: "Add Customer Note",
+     EDITCUSTOMERNOTE: "Edit Customer Note",
+     //** Wating for the generate keys */
+     ADDCUSTOMERSETTING: "Add Customer Setting",
+     EDITCUSTOMERSETTING: "Edit Customer Setting",
 
 
-    PERMISSIONS: "Permissions",
-    ADDPERMISSIONS: "Add Permissions",
 
-    //TODO : KP Need to check for the below keys.
+     //** Permissions Management */ -- Pending 
+     PERMISSIONMANAGEMENT: "Permissions Management",
+     SAVEPERMISSIONS: "Save Permission",
 
-
-    SECURITYGROUPMANAGEMENT: "Security Group Management",
-    ADDSECURITYGROUP: "Add Group",
-    EDITSECURITYGROUP: "Edit Group",
-    DELETESECURITYGROUP: "Delete Group",
-
-    UTILITIES: "Utilities",
-
-    CRAFTS: "Crafts",
-    ADDCRAFTS: "Add Crafts",
-    EDITCRAFTS: "Edit Crafts",
-    DELETECRAFTS: "Delete Crafts",
-
-    LOCALS: "Locals",
-    ADDLOCALS: "Add Locals",
-    EDITLOCALS: "Edit Locals",
-    DELETELOCALS: "Delete Locals",
-
-    CONTRACTORWORKTYPES: "Contractor Work Types",
-    ADDCONTRACTORWORKTYPES: "Add Contractor Work Types",
-    EDITCONTRACTORWORKTYPES: "Edit Contractor Work Types",
-    DELETECONTRACTORWORKTYPES: "Delete Contractor Work Types",
-
-    EMPLOYERTYPES: "Employer Types",
-    ADDEMPLOYERTYPES: "Add Employer Types",
-    EDITEMPLOYERTYPES: "Edit Employer Types",
-    DELETEEMPLOYERTYPES: "Delete Employer Types",
-
-    CONTRACTTYPES: "Contract Types",
-    ADDCONTRACTTYPES: "Add Contract Types",
-    EDITCONTRACTTYPES: "Edit Contract Types",
-    DELETECONTRACTTYPES: "Delete Contract Types",
-
-    EMPLOYERMERGE: "EmployerMerge",
-
-     /* customer */
-     ADDCUSTOMER : "Add Customer",
-     EDITCUSTOMER : "Edit Customer",
-  // DELETE: securityKey.DELETECUSTOMER : "Delete Customer",
-       // BLOCK: securityKey.BLOCKCUSTOMER : "Block Customer",
-  // FREEZE: securityKey.FREEZECUSTOMER : "Freeze Customer",
-  // UNFREEZE: securityKey.DISABLECUSTOMER : "UnFreeze Customer",
-  // UNBLOCK: securityKey.DISABLECUSTOMER : "UnBlock Customer",
-  // ACTIVE: securityKey.ACTIVECUSTOMER : "Active Customer",
 };

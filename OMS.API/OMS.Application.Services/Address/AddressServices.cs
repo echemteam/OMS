@@ -77,6 +77,7 @@ namespace OMS.Application.Services.Address
             {
                 UpdateAddressForCustomerRequest updateAddressForCustomerRequest = new()
                 {
+                    CustomerAddressId = requestData.CustomerAddressId,
                     CustomerId = requestData.CustomerId,
                     AddressId = requestData.AddressId,
                     AddressTypeId = addressDTO.AddressTypeId,

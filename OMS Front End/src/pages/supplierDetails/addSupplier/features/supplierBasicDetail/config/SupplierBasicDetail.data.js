@@ -168,7 +168,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-7 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-7 col-xl-6 col-md-12 col-12 mb-2",
       },
     },
   ],

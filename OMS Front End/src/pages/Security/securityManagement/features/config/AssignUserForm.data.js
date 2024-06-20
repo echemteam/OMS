@@ -22,8 +22,10 @@ export const assignUserFormData = {
         containerCss: "col-xxl-10 col-xl-10 col-md-10 mb-2",
       },
     },
-    
   ],
+  formSetting: {
+    isViewOnly: false
+  }
 };
 
 export const assignUserListData = {
@@ -31,10 +33,12 @@ export const assignUserListData = {
     {
       name: "User Name",
       fieldName: "userName",
+      width:"80%",
       // allowShort: true,
     },
     {
       name: "Action",
+      width:"20%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: false,
