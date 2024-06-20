@@ -10,6 +10,7 @@ using OMS.Domain.Entities.Entity.Contact;
 using OMS.Domain.Entities.Entity.CustomerAccountingSettings;
 using OMS.Domain.Entities.Entity.CustomerNotes;
 using OMS.Domain.Repository;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,17 @@ namespace OMS.Application.Services.CustomerAccountingSettings
            CustomerAccountingSettingsDTO  customerAccountingSettingsDTO  = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDTO>();
            customerAccountingSettingsDTO.CreatedBy = CurrentUserId;
            return await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDTO);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy)
+        {
+            return await repositoryManager.customerAccountingSettings.DeleteCustomerDeliveryCarriersById(customerDeliveryCarrierId, deletedBy);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteCustomerDeliveryMethodsById(int customerDeliveryMethodId, int deletedBy)
+        {
+            return await repositoryManager.customerAccountingSettings.DeleteCustomerDeliveryMethodsById(customerDeliveryMethodId, deletedBy);
+
         }
         #endregion
     }
