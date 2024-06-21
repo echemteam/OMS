@@ -30,7 +30,7 @@ const SettingDetails = () => {
   ];
   return (
     <>
-      <div className="main-customer-grid setting-tab-sec d-none">
+      <div className="main-customer-grid setting-tab-sec">
         <CardSection>
           <div className="tab-section tab-2-section">
             {tabs && tabs.length > 0 && (
@@ -65,9 +65,7 @@ const SettingDetails = () => {
           </div>
         </CardSection>
       </div>
-      <div className="mt-3">
-        <ShippingSettings />
-      </div>
+      
     </>
   );
 };
