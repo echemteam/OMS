@@ -98,7 +98,7 @@ const AddCustomer = () => {
   const handleSubmit = () => {
     let req = {
       customerId: customerId,
-      statusId: StatusEnums.Approved,
+      statusId: StatusEnums.Submitted,
     };
     updateCustomerStatus(req);
   };
