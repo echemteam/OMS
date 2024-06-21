@@ -13,21 +13,13 @@ const TinyEditor = ({
   isDisable,
   ...editorProps
 }) => {
-  // const handleInputChange = (content) => {
-  //   if (onTinyMceEditorChange) {
-  //     const plainText = new DOMParser().parseFromString(content, 'text/html').body.textContent;
-  //     onTinyMceEditorChange(plainText);
-  //   }
-  // }
-
+  
   return (
     <>
       <div className="tiny-editor-sec">
         <Editor
           apiKey="y420gmy1qxek6l0hxa1q7m0h7vllwqnopw9maudjccq0wvf1"
-          initialValue={data ? data : ""}
           value={data}
-          // onEditorChange={handleInputChange}
           onEditorChange={(newText, editor) =>
             onTinyMceEditorChange(newText, editor)
           }
