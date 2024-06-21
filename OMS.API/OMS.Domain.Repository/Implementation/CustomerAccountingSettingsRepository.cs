@@ -69,6 +69,7 @@ namespace OMS.Domain.Repository.Implementation
             {
                 updateCarriers.CustomerId,
                 updateCarriers.CustomerDeliveryCarrierId,
+                updateCarriers.CarrierId,
                 updateCarriers.AccountNumber,
                 updateCarriers.IsPrimary,
                 updateCarriers.UpdatedBy
