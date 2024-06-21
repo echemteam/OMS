@@ -62,6 +62,8 @@ export const AllCustomerGridConfig = {
               return "status-btn badge-gradient-Frozen";
             case "Block":
               return "status-btn badge-gradient-Blocked";
+            case "Disable":
+              return "status-btn badge-gradient-disabled";
 
             default:
               return "status-btn badge-gradient-info";
@@ -251,6 +253,8 @@ export const AllInActiveCustomerGridConfig = {
               return "status-btn badge-gradient-Frozen";
             case "Block":
               return "status-btn badge-gradient-Blocked";
+            case "Disable":
+              return "status-btn badge-gradient-disabled";
 
             default:
               return "status-btn badge-gradient-info";
