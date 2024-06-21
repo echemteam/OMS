@@ -104,53 +104,6 @@
 .css-1dimb5e-singleValue{
   font-size: 80%;
 }
-
-@media only screen and (max-width: 1560px) {
-  .css-16xfy0z-control,
-  .css-t3ipsp-control,
-  .css-13cymwt-control {
-    min-height: 30px !important;
-    height: 30px !important;
-  }
-
-  // .css-qbdosj-Input {
-  //   min-width: 80px;
-  // }
-
-  .css-13cymwt-control{
-    padding: 0 5px;
-    margin-top: 1px;
-  }
-
-  .css-12zf3ro-control {
-    &:hover {
-      min-height: 30px !important;
-      height: 30px !important;
-    }
-  }
-
-  .css-1hb7zxy-IndicatorsContainer {
-    height: 28px !important;
-  }
-
-  .css-1xc3v61-indicatorContainer {
-    padding: 3px !important;
-  }
-
-  .css-1fdsijx-ValueContainer {
-    padding: 0 3px !important;
-  }
-
-  .css-15lsz6c-indicatorContainer {
-    padding: 3px !important;
-  }
-}
-@media only screen and (max-width: 1560px) {
-  .css-1hb7zxy-IndicatorsContainer {
-    .css-1xc3v61-indicatorContainer {
-    }
-  }
-}
 @media only screen and (max-width: 1366px) {
   .css-1hb7zxy-IndicatorsContainer {
     .css-1xc3v61-indicatorContainer {
