@@ -12,6 +12,7 @@ import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailCont
 //** Service's */
 import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
 import CustomerDocumentDetails from "./features/documentsDetail/CustomerDocumentDetails";
+import SettingDetails from "./features/settingDetail/SettingDetails";
 //** Component's */
 const BasicDetail = React.lazy(() =>
   import("./features/basicDetail/BasicDetail")
@@ -78,10 +79,7 @@ const AddCustomer = () => {
     {
       label: "Setting",
       subLabel: "Shipping Method",
-      content: 
-      <>
-      Shipping setting
-      </>,
+      content:  <SettingDetails/>,
       tab: TabEnum.Contact,
     },
   ];
