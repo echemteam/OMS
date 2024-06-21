@@ -1,8 +1,8 @@
 import { FormFieldTypes } from "../../../../../../../data/formFieldType";
 
-export const SupplierAddressData = {
+export const supplierAddressData = {
   // name: "Email From",
-  initialState: { addressTypeId: ""  , addressLine1:"" , addressLine2:"" , addressLine3:"" , addressLine4:"" , addressLine5 :"" , countryId:"" , stateId:"" ,zipCode:"", cityId:""},
+  initialState: { addressTypeId: ""  , addressLine1:"" , addressLine2:"" , addressLine3:"" , addressLine4:"" , addressLine5 :"" , countryId:"" , stateId:"" ,zipCode:"", cityId:"" , customerId : 0 , isPreferredBilling:false , isShippingAndBilling:false , isPreferredShipping:false},
   formFields: [
     {
       id: "addressTypeId",
@@ -157,20 +157,53 @@ export const SupplierAddressData = {
         containerCss: "col-xxl-6 col-xl-8 col-md-8 col-12 mb-2",
       },
     },
-    // {
-    //   id: "isCompany",
-    //   lable: "Is Default",
-    //   Field_Name: "Is Default",
-    //   fieldType: FormFieldTypes.CHECKBOX,
-    //   dataField: "Is Default",
-    //   fieldSetting: {
-    //     placeholder: "",
-    //     allowSpace: true,
-    //   },
-    //   validation: [{ type: "require" }],
-    //   style: {
-    //     containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
-    //   },
-    // },
+    {
+      id: "isShippingAndBilling",
+      lable: "Is Billing and Shipping",
+      Field_Name: "Is Billing and Shipping",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isShippingAndBilling",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      // validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+      },
+    },
+    {
+      id: "isPreferredBilling",
+      lable: "Is Preferred Billing",
+      Field_Name: "Is PreferredBilling",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isPreferredBilling",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      // validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+      },
+    },
+    {
+      id: "isPreferredShipping",
+      lable: "Is Preferred Shipping",
+      Field_Name: "Is PreferredShipping",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isPreferredShipping",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      // validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+      },
+    },
   ],
+  formSetting: {
+    isViewOnly: false
+  }
 };

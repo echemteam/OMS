@@ -711,6 +711,11 @@ a {
   color: #ffffff;
 }
 
+.badge-gradient-disabled {
+  background: var(--disabled-theme);
+  color: #ffffff;
+}
+
 .status-btn {
   color: #ffffff;
   display: inline-block;
@@ -1746,6 +1751,15 @@ a {
 
     .css-1dimb5e-singleValue {
       color: var(--themeColor);
+      font-weight: 600;
+    }
+  }
+
+  &.badge-gradient-disabled {
+    background: transparent;
+
+    .css-1dimb5e-singleValue {
+      color: var(--disabled-theme);
       font-weight: 600;
     }
   }

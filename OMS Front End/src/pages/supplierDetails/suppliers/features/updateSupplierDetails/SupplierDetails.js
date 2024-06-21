@@ -12,6 +12,7 @@ import SupplierBasicDetail from "../../../addSupplier/features/supplierBasicDeta
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { useNavigate } from "react-router-dom/dist";
+import SupplierAddressDetail from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetail";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const SupplierDetails = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [supplierData, setSupplierData] = useState(null);
 
-  const { nextStepRef } = useContext(AddSupplierContext);
+  const { setSupplierId , supplierId } = useContext(AddSupplierContext);
 
   const [
     getSupplierBasicInformationById,
@@ -47,7 +48,7 @@ const SupplierDetails = () => {
 
   useEffect(() => {
     if (pageId) {
-      // setSupplierId(pageId);
+      setSupplierId(pageId);
       getSupplierBasicInformationById(pageId);
     }
   }, []);
@@ -68,7 +69,9 @@ const SupplierDetails = () => {
   const tabs = [
     {
       sMenuItemCaption: "Address",
-      component: <div className="mt-2">{/* <AddressDetail /> */}</div>,
+      component: <div className="mt-2">
+        <SupplierAddressDetail />
+      </div>,
     },
     // {
     //   sMenuItemCaption: "Contact",
@@ -94,7 +97,8 @@ const SupplierDetails = () => {
                 editClick={handleToggleModal}
                 supplierData={supplierData}
                 isLoading={isGetSupplierBasicInformationByIdFetching}
-                supplierId={pageId}
+                supplierId={supplierId}
+                onhandleRepeatCall={handleRepeatCall}
               />
             </CardSection>
           </div>

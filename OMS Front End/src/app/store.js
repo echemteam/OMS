@@ -18,6 +18,7 @@ import phoneNumberAPI from './services/phoneNumberAPI';
 import emailAddressAPI from './services/emailAddressAPI';
 import customerSettingsAPI from './services/customerSettingsAPI';
 import supplierAPI from './services/supplierAPI';
+import supplierAddressAPI from './services/supplierAddressAPI';
 import commonAPI from './services/commonAPI';
 
 export const store = configureStore({
@@ -38,6 +39,7 @@ export const store = configureStore({
     [customerSettingsAPI.reducerPath]: customerSettingsAPI.reducer,
     [supplierAPI.reducerPath]: supplierAPI.reducer,
     [commonAPI.reducerPath]: commonAPI.reducer,
+    [supplierAddressAPI.reducerPath]: supplierAddressAPI.reducer,
 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
@@ -56,6 +58,7 @@ export const store = configureStore({
     customerSettingsAPI.middleware,
     supplierAPI.middleware,
     commonAPI.middleware,
+    supplierAddressAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);

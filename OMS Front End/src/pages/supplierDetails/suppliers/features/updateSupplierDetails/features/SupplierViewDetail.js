@@ -13,7 +13,7 @@ import Buttons from '../../../../../../components/ui/button/Buttons';
 import DataLoader from '../../../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../../../components/ui/centerModel/CenterModel';
 
-const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId }) => {
+const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , onhandleRepeatCall}) => {
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -117,6 +117,8 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId }) 
   const handleToggleModal = () => {
     setShowModal(false);
     onReset()
+    onhandleRepeatCall()
+    setSelectedStatus(supplierData.status)
   };
 
   const getStatusClass = () => {
@@ -131,6 +133,8 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId }) 
         return "badge-gradient-Frozen";
       case "Block":
         return "badge-gradient-Blocked";
+      case "Disable":
+        return "badge-gradient-disabled";
       default:
         return "badge-gradient-info";
     }
