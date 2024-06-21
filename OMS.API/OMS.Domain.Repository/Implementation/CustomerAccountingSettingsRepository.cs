@@ -83,20 +83,20 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return shppingDetails;
         }
-        public async Task<List<GetShppingDeliveryCarriersByCustomerIdResponse>> GetShppingDeliveryCarriersByCustomerId(int customerid)
+        public async Task<List<GetShppingDeliveryCarriersByCustomerIdResponse>> GetShppingDeliveryCarriersByCustomerId(int customerId)
         {
             List<GetShppingDeliveryCarriersByCustomerIdResponse> getShppingDeliveryCarriersList = await _context.GetList<GetShppingDeliveryCarriersByCustomerIdResponse>(GETSHPPINGDELIVERYCARRIERSBYCUSTOMERID, new
             {
-                customerid
+                customerId
             }, commandType: CommandType.StoredProcedure);
             return getShppingDeliveryCarriersList;
         }
 
-        public async Task<List<GetDeliveryMethodsCustomerIdResponse>> GetDeliveryMethodsCustomerId(int customerid)
+        public async Task<List<GetDeliveryMethodsCustomerIdResponse>> GetDeliveryMethodsCustomerId(int customerId)
         {
             List<GetDeliveryMethodsCustomerIdResponse> getDeliveryMethodsList = await _context.GetList<GetDeliveryMethodsCustomerIdResponse>(GETDELIVERYMETHODSCUSTOMERID, new
             {
-                customerid
+                customerId
             }, commandType: CommandType.StoredProcedure);
             return getDeliveryMethodsList;
         }

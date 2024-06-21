@@ -52,7 +52,7 @@ namespace OMS.Application.Services.CustomerAccountingSettings
             GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse shppingDetails = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarrierAndDeliveryMethodsById(customerId);
             if (shppingDetails.DeliveryAccountId == 1)
             {
-                shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
+                shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
             }
             else if (shppingDetails.DeliveryAccountId == 2)
             {
