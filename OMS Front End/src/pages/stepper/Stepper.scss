@@ -1,10 +1,13 @@
 .stepper-card {
+  overflow: hidden;
+  width: 100%;
   .stepper-section {
     .stepper-header {
       display: flex;
       align-items: center;
       border-bottom: 1px solid var(--linkMenu);
       padding-bottom: 15px;
+      width: 100%;
 
       .step {
         display: flex;
@@ -94,6 +97,12 @@
 
     .stepper-content {
       padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 280px);
+      overflow: hidden;
+      overflow-y: auto;
+      width: 100%;
 
       .content {
         display: none;
@@ -131,6 +140,16 @@
             }
           }
         }
+      }
+    }
+  }
+}
+ 
+@media only screen and (max-width: 1366px) {
+  .stepper-card {
+    .stepper-section {
+      .stepper-content {
+        max-height: calc(100vh - 300px);
       }
     }
   }
