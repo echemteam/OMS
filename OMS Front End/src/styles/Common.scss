@@ -1696,9 +1696,11 @@ a {
 
     .css-qbdosj-Input {
       margin: 0 !important;
+      padding: 0 !important;
     }
   }
 
+  
   &.badge-gradient-Approved {
     background: transparent;
 
@@ -1817,7 +1819,12 @@ input[type=checkbox]:checked:after {
   left: 80%;
 }
 
-
+.add-setting-detail{
+  .first-card{
+    margin-bottom: 10px !important;
+    border-color: var(--linkMenu);
+  }
+}
 
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
