@@ -78,6 +78,18 @@ form {
   }
 }
 
+.label-name-small {
+  .input-label-part {
+    .input-label-title {
+      min-width: 70px;
+      max-width: 70px;
+    }
+  }
+  .validation-text{
+    margin-left: 87px !important;
+    margin-top: -18px !important;
+  }
+}
 @media only screen and (max-width: 1560px) {
   .validation-text {
     margin-left: 120px;

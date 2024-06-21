@@ -1518,26 +1518,28 @@ a {
 .card {
   .card-body-sec {
     .note-card-sec {
-      max-height:calc(100vh - 296px) ;
+      max-height: calc(100vh - 296px);
       overflow: hidden;
       overflow-y: auto;
     }
   }
 }
-.setting-tab-sec{
-  .tab-sub-section{
-    .tab-sub-content{
-      .grid-section{
-        max-height:calc(100vh - 362px) ;
+
+.setting-tab-sec {
+  .tab-sub-section {
+    .tab-sub-content {
+      .grid-section {
+        max-height: calc(100vh - 362px);
         overflow: hidden;
         overflow-y: auto;
       }
     }
   }
+
   .card {
     .card-body-sec {
       .note-card-sec {
-        max-height:calc(100vh - 296px) ;
+        max-height: calc(100vh - 296px);
         overflow: hidden;
         overflow-y: auto;
       }
@@ -1801,6 +1803,8 @@ input[type=checkbox]:checked:after {
   left: 80%;
 }
 
+
+
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
     .css-13cymwt-control {
@@ -1817,6 +1821,72 @@ input[type=checkbox]:checked:after {
       overflow-y: auto;
       width: 100%;
       overflow-x: hidden;
+    }
+  }
+}
+
+.inactive-scroll-bar {
+  table {
+    tbody {
+      display: block;
+      max-height: calc(100vh - 450px);
+      overflow-y: auto;
+      width: 100%;
+      overflow-x: hidden;
+    }
+  }
+}
+
+.customer-list {
+  table {
+    thead {
+      tr {
+        th {
+          &:nth-child(3) {
+            display: flex;
+            justify-content: center;
+          }
+
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          &:nth-child(3) {
+            display: flex;
+            justify-content: center;
+          }
+
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+.status-desc {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  .field-info {
+    padding: 4px 12px;
+    border-top-left-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.active-green-color {
+      background: green;
+      color: #fff !important;
     }
   }
 }

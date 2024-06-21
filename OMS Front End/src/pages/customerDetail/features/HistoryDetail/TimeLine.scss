@@ -160,7 +160,7 @@
         max-width: 97%;
         display: flex;
         flex-direction: column;
-        padding: 15px 0 30px 30px;
+        padding: 15px 0 0px 30px;
         border-left: 3px dashed var(--textColor);
         margin-left: 3%;
         margin-right: 2%;
@@ -168,7 +168,7 @@
         .timeline-item {
             display: flex;
             gap: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
 
             .timeline-item-icon {
                 display: flex;
@@ -213,14 +213,18 @@
                     display: flex;
                     align-items: flex-start;
                     justify-content: space-between;
+                    margin-bottom: 1px;
                     .timeline-name {
                         font-weight: bold;
+                        font-size: 77%;
                     }
 
                     .date-time {
                         font-size: 80%;
                         color: var(--themeColor);
-                        padding-top: 3px;
+                        position: absolute;
+                        top: -17px;
+                        left: 5px;
                     }
                     .type-name {
                         font-size: 80%;
