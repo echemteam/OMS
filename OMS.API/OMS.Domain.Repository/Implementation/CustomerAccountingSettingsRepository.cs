@@ -15,11 +15,14 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDEDITCUSTOMERSETTINGS = "AddEditCustomerSettings";
         const string ADDCUSTOMERSHPPINGDELIVERYCARRIERSANDDELIVERYMETHODS = "AddCustomerShppingDeliveryCarriersAndDeliveryMethods";
         const string UPDATESHPPINGDELIVERYCARRIERS = "UpdateShppingDeliveryCarriers";
+        const string GETSHPPINGDELIVERYCARRIERANDDELIVERYMETHODSBYID = "GetShppingDeliveryCarrierAndDeliveryMethodsById";
         const string GETSHPPINGDELIVERYCARRIERSBYCUSTOMERID = "GetShppingDeliveryCarriersByCustomerId";
         const string GETDELIVERYMETHODSCUSTOMERID = "GetDeliveryMethodsCustomerId";
         const string UPDATEDELIVERYMETHODS = "UpdateDeliveryMethods";
         const string DELETECUSTOMERDELIVERYCARRIERSBYID = "DeleteCustomerDeliveryCarriersById";
         const string DELETECUSTOMERDELIVERYMETHODSBYID = "DeleteCustomerDeliveryMethodsById";
+        const string ADDSHPPINGDELIVERYCARRIERS = "AddShppingDeliveryCarriers";
+        const string ADDDELIVERYMETHODS = "AddDeliveryMethods";
         #endregion
 
         public CustomerAccountingSettingsRepository(DapperContext dapperContext) : base(dapperContext)
@@ -50,13 +53,13 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDTO Carriers)
+        public async Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDTO carriers)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERSHPPINGDELIVERYCARRIERSANDDELIVERYMETHODS, new
             {
-                Carriers.DeliveryAccountId,
-                Carriers.CustomerId,
-                Carriers.CreatedBy,
+                carriers.DeliveryAccountId,
+                carriers.CustomerId,
+                carriers.CreatedBy,
             }, CommandType.StoredProcedure);
         }
 
@@ -72,6 +75,14 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
+        public async Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId)
+        {
+            GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse shppingDetails = await _context.GetFrist<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse>(GETSHPPINGDELIVERYCARRIERANDDELIVERYMETHODSBYID, new
+            {
+                customerId
+            }, CommandType.StoredProcedure);
+            return shppingDetails;
+        }
         public async Task<List<GetShppingDeliveryCarriersByCustomerIdResponse>> GetShppingDeliveryCarriersByCustomerId(int customerid)
         {
             List<GetShppingDeliveryCarriersByCustomerIdResponse> getShppingDeliveryCarriersList = await _context.GetList<GetShppingDeliveryCarriersByCustomerIdResponse>(GETSHPPINGDELIVERYCARRIERSBYCUSTOMERID, new
@@ -118,6 +129,29 @@ namespace OMS.Domain.Repository.Implementation
             {
                 customerDeliveryMethodId,
                 deletedBy
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDTO<int>> AddShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDTO carriers)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDSHPPINGDELIVERYCARRIERS, new
+            {
+                carriers.CustomerId,
+                carriers.CarrierId,
+                carriers.AccountNumber,
+                carriers.IsPrimary,
+                carriers.CreatedBy,
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDTO<int>> AddDeliveryMethods(CustomerDeliveryMethodsDTO deliveryMethods)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDDELIVERYMETHODS, new
+            {
+                deliveryMethods.CustomerId,
+                deliveryMethods.DeliveryMethodId,
+                deliveryMethods.Charge,
+                deliveryMethods.IsPrimary,
+                deliveryMethods.CreatedBy,
             }, CommandType.StoredProcedure);
         }
         #endregion

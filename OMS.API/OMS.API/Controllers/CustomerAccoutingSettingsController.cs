@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
-using OMS.Domain.Entities.API.Request.User;
-using OMS.Domain.Entities.API.Response.Common;
-using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -66,19 +63,15 @@ namespace OMS.API.Controllers
             return APISucessResponce<object>(responseData);
         }
 
-
-        [HttpGet("GetShppingDeliveryCarriersByCustomerId")]
-        public async Task<IActionResult> GetShppingDeliveryCarriersByCustomerId(int customerId)
+        [HttpGet("GetShppingDeliveryCarrierAndDeliveryMethodsById")]
+        public async Task<IActionResult> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId)
         {
-            List<GetShppingDeliveryCarriersByCustomerIdResponse> responseData = await _serviceManager.customerAccoutingSettingsService.GetShppingDeliveryCarriersByCustomerId(customerId).ConfigureAwait(true);
-            return APISucessResponce(responseData);
-        }
-
-        [HttpGet("GetDeliveryMethodsCustomerId")]
-        public async Task<IActionResult> GetDeliveryMethodsCustomerId(int customerId)
-        {
-            List<GetDeliveryMethodsCustomerIdResponse> responseData = await _serviceManager.customerAccoutingSettingsService.GetDeliveryMethodsCustomerId(customerId).ConfigureAwait(true);
-            return APISucessResponce(responseData);
+            if (customerId > 0)
+            {
+                var shppingDetails = await _serviceManager.customerAccoutingSettingsService.GetShppingDeliveryCarrierAndDeliveryMethodsById(customerId).ConfigureAwait(true);
+                return APISucessResponce<object>(shppingDetails);
+            }
+            return APISucessResponce(customerId);
         }
 
         [HttpPost("UpdateDeliveryMethods")]
@@ -118,6 +111,19 @@ namespace OMS.API.Controllers
             return APISucessResponce(CustomerDeliveryMethodId);
         }
 
+        [HttpPost("AddShppingDeliveryCarriers")]
+        public async Task<IActionResult> AddShppingDeliveryCarriers(AddShppingDeliveryCarriersRequest requestData)
+        {
+            var addiItem = await _serviceManager.customerAccoutingSettingsService.AddShppingDeliveryCarriers(requestData, CurrentUserId);
+            return APISucessResponce(addiItem);
+        }
+
+        [HttpPost("AddDeliveryMethods")]
+        public async Task<IActionResult> AddDeliveryMethods(AddDeliveryMethodsRequest requestData)
+        {
+            var addiItem = await _serviceManager.customerAccoutingSettingsService.AddDeliveryMethods(requestData, CurrentUserId);
+            return APISucessResponce(addiItem);
+        }
         #endregion
     }
 }

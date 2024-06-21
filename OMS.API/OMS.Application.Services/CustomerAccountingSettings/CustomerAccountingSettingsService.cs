@@ -47,14 +47,19 @@ namespace OMS.Application.Services.CustomerAccountingSettings
             return await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDTO);
         }
 
-        public Task<List<GetShppingDeliveryCarriersByCustomerIdResponse>> GetShppingDeliveryCarriersByCustomerId(int customerid)
+        public async Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId)
         {
-            return repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerid);
-        }
-
-        public Task<List<GetDeliveryMethodsCustomerIdResponse>> GetDeliveryMethodsCustomerId(int customerid)
-        {
-            return repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerid);
+            GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse shppingDetails = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarrierAndDeliveryMethodsById(customerId);
+            if (shppingDetails.DeliveryAccountId == 1)
+            {
+                shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
+            }
+            else if (shppingDetails.DeliveryAccountId == 2)
+            {
+                shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
+                shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
+            }
+            return shppingDetails;
         }
 
         public async Task<AddEntityDTO<int>> UpdateDeliveryMethods(UpdateDeliveryMethodsRequest requestData, short CurrentUserId)
@@ -73,6 +78,20 @@ namespace OMS.Application.Services.CustomerAccountingSettings
         {
             return await repositoryManager.customerAccountingSettings.DeleteCustomerDeliveryMethodsById(customerDeliveryMethodId, deletedBy);
 
+        }
+
+        public async Task<AddEntityDTO<int>> AddShppingDeliveryCarriers(AddShppingDeliveryCarriersRequest requestData, short CurrentUserId)
+        {
+            CustomerShppingDeliveryCarriersDTO customerShppingDeliveryCarriersDTO = requestData.ToMapp<AddShppingDeliveryCarriersRequest, CustomerShppingDeliveryCarriersDTO>();
+            customerShppingDeliveryCarriersDTO.CreatedBy = CurrentUserId;
+            return await repositoryManager.customerAccountingSettings.AddShppingDeliveryCarriers(customerShppingDeliveryCarriersDTO);
+        }
+
+        public async Task<AddEntityDTO<int>> AddDeliveryMethods(AddDeliveryMethodsRequest requestData, short CurrentUserId)
+        {
+            CustomerDeliveryMethodsDTO customerDeliveryMethodsDTO = requestData.ToMapp<AddDeliveryMethodsRequest, CustomerDeliveryMethodsDTO>();
+            customerDeliveryMethodsDTO.CreatedBy = CurrentUserId;
+            return await repositoryManager.customerAccountingSettings.AddDeliveryMethods(customerDeliveryMethodsDTO);
         }
         #endregion
     }
