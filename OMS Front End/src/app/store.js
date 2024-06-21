@@ -19,6 +19,7 @@ import emailAddressAPI from './services/emailAddressAPI';
 import customerSettingsAPI from './services/customerSettingsAPI';
 import supplierAPI from './services/supplierAPI';
 import supplierAddressAPI from './services/supplierAddressAPI';
+import commonAPI from './services/commonAPI';
 
 export const store = configureStore({
   reducer: {
@@ -28,17 +29,18 @@ export const store = configureStore({
     [securityRoleAPI.reducerPath]: securityRoleAPI.reducer,
     [rolesMappingAPI.reducerPath]: rolesMappingAPI.reducer,
     [securityPermissionsAPI.reducerPath]: securityPermissionsAPI.reducer,
-    [basicdetailAPI.reducerPath]: basicdetailAPI.reducer, 
-    [contactAPI.reducerPath]: contactAPI.reducer, 
-    [addressAPI.reducerPath]: addressAPI.reducer, 
-    [documentAPI.reducerPath]: documentAPI.reducer, 
-    [notesAPI.reducerPath]:notesAPI.reducer,
-    [phoneNumberAPI.reducerPath]: phoneNumberAPI.reducer, 
-    [emailAddressAPI.reducerPath]: emailAddressAPI.reducer, 
-    [customerSettingsAPI.reducerPath]:customerSettingsAPI.reducer,
-    [supplierAPI.reducerPath]:supplierAPI.reducer,
-    [supplierAddressAPI.reducerPath]:supplierAddressAPI.reducer,
-    
+    [basicdetailAPI.reducerPath]: basicdetailAPI.reducer,
+    [contactAPI.reducerPath]: contactAPI.reducer,
+    [addressAPI.reducerPath]: addressAPI.reducer,
+    [documentAPI.reducerPath]: documentAPI.reducer,
+    [notesAPI.reducerPath]: notesAPI.reducer,
+    [phoneNumberAPI.reducerPath]: phoneNumberAPI.reducer,
+    [emailAddressAPI.reducerPath]: emailAddressAPI.reducer,
+    [customerSettingsAPI.reducerPath]: customerSettingsAPI.reducer,
+    [supplierAPI.reducerPath]: supplierAPI.reducer,
+    [commonAPI.reducerPath]: commonAPI.reducer,
+    [supplierAddressAPI.reducerPath]: supplierAddressAPI.reducer,
+
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
     authapi.middleware,
@@ -55,6 +57,7 @@ export const store = configureStore({
     emailAddressAPI.middleware,
     customerSettingsAPI.middleware,
     supplierAPI.middleware,
+    commonAPI.middleware,
     supplierAddressAPI.middleware,
   ),
 })

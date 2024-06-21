@@ -1523,26 +1523,28 @@ a {
 .card {
   .card-body-sec {
     .note-card-sec {
-      max-height:calc(100vh - 296px) ;
+      max-height: calc(100vh - 296px);
       overflow: hidden;
       overflow-y: auto;
     }
   }
 }
-.setting-tab-sec{
-  .tab-sub-section{
-    .tab-sub-content{
-      .grid-section{
-        max-height:calc(100vh - 362px) ;
+
+.setting-tab-sec {
+  .tab-sub-section {
+    .tab-sub-content {
+      .grid-section {
+        max-height: calc(100vh - 362px);
         overflow: hidden;
         overflow-y: auto;
       }
     }
   }
+
   .card {
     .card-body-sec {
       .note-card-sec {
-        max-height:calc(100vh - 296px) ;
+        max-height: calc(100vh - 296px);
         overflow: hidden;
         overflow-y: auto;
       }
@@ -1815,6 +1817,8 @@ input[type=checkbox]:checked:after {
   left: 80%;
 }
 
+
+
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
     .css-13cymwt-control {
@@ -1847,7 +1851,7 @@ input[type=checkbox]:checked:after {
   }
 }
 
-.customer-list{
+.customer-list {
   table {
     thead {
       tr {
@@ -1856,6 +1860,7 @@ input[type=checkbox]:checked:after {
             display: flex;
             justify-content: center;
           }
+
           &:nth-child(4) {
             display: flex;
             justify-content: center;
@@ -1863,6 +1868,7 @@ input[type=checkbox]:checked:after {
         }
       }
     }
+
     tbody {
       tr {
         td {
@@ -1870,6 +1876,7 @@ input[type=checkbox]:checked:after {
             display: flex;
             justify-content: center;
           }
+
           &:nth-child(4) {
             display: flex;
             justify-content: center;
@@ -1896,4 +1903,17 @@ input[type=checkbox]:checked:after {
       color: #fff !important;
     }
   }
+}
+@media only screen and (max-width: 1560px) {
+.address-model{
+  .sidebar-model{
+    .side-model-section{
+      .model-content{
+        &.content-40{
+          width: 50%;
+        }
+      }
+    }
+  }
+}
 }
