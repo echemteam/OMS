@@ -12,8 +12,7 @@ import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailCont
 //** Service's */
 import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
 import CustomerDocumentDetails from "./features/documentsDetail/CustomerDocumentDetails";
-import SettingDetails from "./features/settingDetail/SettingDetails";
-import ShippingSettings from "./features/settingDetail/features/ShippingSettings";
+import ShippingSettings from "./features/settingDetail/features/ShippingSetting/ShippingSettings";
 //** Component's */
 const BasicDetail = React.lazy(() =>
   import("./features/basicDetail/BasicDetail")
@@ -71,18 +70,18 @@ const AddCustomer = () => {
       content: <CustomerContactDetails isEditablePage={false} />,
       tab: TabEnum.Contact,
     },
-    // {
-    //   label: "Setting",
-    //   subLabel: "Shipping Method",
-    //   content: (
-    //     <>
-    //       <div className="mt-4 add-setting-detail">
-    //         <ShippingSettings />
-    //       </div>
-    //     </>
-    //   ),
-    //   tab: TabEnum.Contact,
-    // },
+    {
+      label: "Setting",
+      subLabel: "Shipping Method",
+      content: (
+        <>
+          {/* <div className="mt-4"> */}
+            <ShippingSettings />
+          {/* </div> */}
+        </>
+      ),
+      tab: TabEnum.Contact,
+    },
     {
       label: "Documents",
       subLabel: "Add Customer Documents Details",
@@ -91,9 +90,9 @@ const AddCustomer = () => {
     },
   ];
 
-  // const handleTabClick = (index) => {
-  //   setActiveTab(index);
-  // };
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
 
   const handleSubmit = () => {
     let req = {
@@ -124,7 +123,7 @@ const AddCustomer = () => {
                   >
                     <button
                       className="step-button"
-                      // onClick={() => handleTabClick(index)}
+                      onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">

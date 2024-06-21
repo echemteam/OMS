@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import FormCreator from "../../../../../components/Forms/FormCreator";
-import { SettingFormData } from "../config/SettingData";
-import Buttons from "../../../../../components/ui/button/Buttons";
-import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../../app/services/customerSettingsAPI";
-import ToastService from "../../../../../services/toastService/ToastService";
-import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
+import FormCreator from "../../../../components/Forms/FormCreator";
+import { SettingFormData } from "./config/SettingData";
+import Buttons from "../../../../components/ui/button/Buttons";
+import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
+import ToastService from "../../../../services/toastService/ToastService";
+import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
 const FinancialSettings = (props) => {
   const settingFormRef = useRef();
