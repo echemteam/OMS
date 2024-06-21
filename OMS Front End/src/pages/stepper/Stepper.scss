@@ -5,11 +5,13 @@
       align-items: center;
       border-bottom: 1px solid var(--linkMenu);
       padding-bottom: 15px;
+
       .step {
         display: flex;
         align-items: center;
-        margin-right: 15px;
+        margin-right: 8px;
         opacity: 0.7;
+
         .step-button {
           border: none;
           box-shadow: none;
@@ -21,17 +23,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 40px;
-            min-width: 40px;
-            max-height: 40px;
-            max-width: 40px;
+            min-height: 35px;
+            min-width: 35px;
+            max-height: 35px;
+            max-width: 35px;
             background: var(--linkMenu);
             font-weight: 600;
             font-size: 110%;
             border-radius: 6px;
             margin-right: 12px;
             color: var(--textColor);
-            
+
           }
 
           .stepper-label {
@@ -46,7 +48,7 @@
               font-weight: 600;
               line-height: 125%;
               color: var(--textColor);
-              
+
               &.small-txt {
                 font-size: 90%;
                 font-weight: normal;
@@ -58,16 +60,19 @@
 
         &.active {
           opacity: 1;
+
           .step-button {
             .stepper-box {
               background: var(--themeColor);
               color: var(--whiteColor);
-              box-shadow: 0 .1875rem .375rem 0 rgba(105,108,255,.4);
+              box-shadow: 0 .1875rem .375rem 0 rgba(105, 108, 255, .4);
             }
-            .stepper-label{
-              span{
+
+            .stepper-label {
+              span {
                 color: var(--themeColor);
-                &.small-txt{
+
+                &.small-txt {
                   color: var(--textColor);
                 }
               }
@@ -75,9 +80,11 @@
           }
         }
       }
-      .right-arrow{
+
+      .right-arrow {
         margin-right: 15px;
-        img{
+
+        img {
           width: 12px;
           transform: rotate(270deg);
           filter: contrast(0);
@@ -87,6 +94,7 @@
 
     .stepper-content {
       padding-top: 10px;
+
       .content {
         display: none;
 
@@ -104,17 +112,19 @@
       .stepper-header {
         .step {
           .step-button {
-            .stepper-box{
+            .stepper-box {
               min-height: 32px;
               min-width: 32px;
               max-height: 32px;
               max-width: 32px;
               font-size: 100%;
             }
+
             .stepper-label {
-              span{
+              span {
                 font-size: 100%;
-                &.small-txt{
+
+                &.small-txt {
                   font-size: 80%;
                 }
               }

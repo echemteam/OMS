@@ -12,16 +12,33 @@ import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailCont
 //** Service's */
 import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
 import CustomerDocumentDetails from "./features/documentsDetail/CustomerDocumentDetails";
+import SettingDetails from "./features/settingDetail/SettingDetails";
 //** Component's */
-const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
-const AddressDetail = React.lazy(() => import("./features/addressDetail/AddressDetail"));
-const DocumentDetails = React.lazy(() => import("./features/documentsDetail/DocumentDetails"));
-const CustomerContactDetails = React.lazy(() => import("./features/contactDetail/Contact/CustomerContactDetails"));
+const BasicDetail = React.lazy(() =>
+  import("./features/basicDetail/BasicDetail")
+);
+const AddressDetail = React.lazy(() =>
+  import("./features/addressDetail/AddressDetail")
+);
+const DocumentDetails = React.lazy(() =>
+  import("./features/documentsDetail/DocumentDetails")
+);
+const CustomerContactDetails = React.lazy(() =>
+  import("./features/contactDetail/Contact/CustomerContactDetails")
+);
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
-  const [updateCustomerStatus, { isLoading: updateCustomerStatusLoading, isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
+  const { activeTab, setActiveTab, movePreviewPage, addCustomer, customerId } =
+    useContext(BasicDetailContext);
+  const [
+    updateCustomerStatus,
+    {
+      isLoading: updateCustomerStatusLoading,
+      isSuccess: isSuccessUpdateCustomerStatus,
+      data: updateCustomerStatusData,
+    },
+  ] = useUpdateCustomerStatusMutation();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +47,7 @@ const AddCustomer = () => {
   useEffect(() => {
     if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
       ToastService.success(updateCustomerStatusData.errorMessage);
-      navigate('/Customers');
+      navigate("/Customers");
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
@@ -39,25 +56,31 @@ const AddCustomer = () => {
       label: "Basic Information",
       subLabel: "Enter Customer Basic information",
       content: <BasicDetail />,
-      tab: TabEnum.BasicInformation
+      tab: TabEnum.BasicInformation,
     },
     {
       label: "Address",
       subLabel: "Enter Customer Address Details",
       content: <AddressDetail isEditablePage={false} />,
-      tab: TabEnum.Address
+      tab: TabEnum.Address,
     },
     {
       label: "Contact",
       subLabel: "Enter Customer Contact Details",
       content: <CustomerContactDetails isEditablePage={false} />,
-      tab: TabEnum.Contact
+      tab: TabEnum.Contact,
     },
     {
       label: "Documents",
       subLabel: "Add Customer Documents Details",
       content: <CustomerDocumentDetails isEditablePage={false} />,
-      tab: TabEnum.Documents
+      tab: TabEnum.Documents,
+    },
+    {
+      label: "Setting",
+      subLabel: "Shipping Method",
+      content:  <SettingDetails/>,
+      tab: TabEnum.Contact,
     },
   ];
 
@@ -68,19 +91,18 @@ const AddCustomer = () => {
   const handleSubmit = () => {
     let req = {
       customerId: customerId,
-      statusId: StatusEnums.Approved
-    }
-    updateCustomerStatus(req)
+      statusId: StatusEnums.Approved,
+    };
+    updateCustomerStatus(req);
   };
 
   const handleDraft = () => {
     let req = {
       customerId: customerId,
-      statusId: StatusEnums.Pending
-    }
-    updateCustomerStatus(req)
+      statusId: StatusEnums.Pending,
+    };
+    updateCustomerStatus(req);
   };
-
 
   return (
     <>
@@ -90,8 +112,11 @@ const AddCustomer = () => {
             <div className="stepper-header">
               {tabContent.map((step, index) => (
                 <React.Fragment key={index}>
-                  <div className={`step ${activeTab === index ? 'active' : ''}`}>
-                    <button className="step-button"
+                  <div
+                    className={`step ${activeTab === index ? "active" : ""}`}
+                  >
+                    <button
+                      className="step-button"
                       onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
@@ -112,13 +137,20 @@ const AddCustomer = () => {
             <div className="stepper-content">
               <form onSubmit={onSubmit}>
                 {tabContent.map((step, index) => (
-                  <div key={index} className={`content ${activeTab === index ? 'active' : ''}`}>
+                  <div
+                    key={index}
+                    className={`content ${activeTab === index ? "active" : ""}`}
+                  >
                     <div className="row">
                       <div className="col-12 mx-auto">
                         {step.content}
                         <div className="d-flex justify-content-end">
                           {index > 0 && (
-                            <button type="button" className="btn dark-btn mr-3" onClick={movePreviewPage} >
+                            <button
+                              type="button"
+                              className="btn dark-btn mr-3"
+                              onClick={movePreviewPage}
+                            >
                               Back
                             </button>
                           )}
@@ -132,11 +164,19 @@ const AddCustomer = () => {
                             </button>
                           ) : (
                             <>
-                              <button type="submit" className="btn theme-button" onClick={handleDraft}>
+                              <button
+                                type="submit"
+                                className="btn theme-button"
+                                onClick={handleDraft}
+                              >
                                 Save as Draft
                               </button>
 
-                              <button type="submit" className="btn theme-button ml-3" onClick={handleSubmit}>
+                              <button
+                                type="submit"
+                                className="btn theme-button ml-3"
+                                onClick={handleSubmit}
+                              >
                                 Save as Submit
                               </button>
                             </>
@@ -153,8 +193,6 @@ const AddCustomer = () => {
       </div>
     </>
   );
-
-
 };
 
 export default AddCustomer;
