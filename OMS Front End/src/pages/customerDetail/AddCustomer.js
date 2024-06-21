@@ -80,7 +80,7 @@ const AddCustomer = () => {
       subLabel: "Shipping Method",
       content: 
       <>
-      
+      Shipping setting
       </>,
       tab: TabEnum.Contact,
     },
