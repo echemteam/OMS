@@ -1820,3 +1820,66 @@ input[type=checkbox]:checked:after {
     }
   }
 }
+
+.inactive-scroll-bar {
+  table {
+    tbody {
+      display: block;
+      max-height: calc(100vh - 450px);
+      overflow-y: auto;
+      width: 100%;
+      overflow-x: hidden;
+    }
+  }
+}
+
+.customer-list{
+  table {
+    thead {
+      tr {
+        th {
+          &:nth-child(3) {
+            display: flex;
+            justify-content: center;
+          }
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          &:nth-child(3) {
+            display: flex;
+            justify-content: center;
+          }
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+.status-desc {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  .field-info {
+    padding: 4px 12px;
+    border-top-left-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.active-green-color {
+      background: green;
+      color: #fff !important;
+    }
+  }
+}
