@@ -13,7 +13,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP
         const string GETDETAILSBYCUSTOMERID = "GetDetailsByCustomerId";
         const string ADDEDITCUSTOMERSETTINGS = "AddEditCustomerSettings";
-        const string ADDCUSTOMERSHPPINGDELIVERYCARRIERS = "AddCustomerShppingDeliveryCarriers";
+        const string ADDCUSTOMERSHPPINGDELIVERYCARRIERSANDDELIVERYMETHODS = "AddCustomerShppingDeliveryCarriersAndDeliveryMethods";
         const string UPDATESHPPINGDELIVERYCARRIERS = "UpdateShppingDeliveryCarriers";
         const string GETSHPPINGDELIVERYCARRIERSBYCUSTOMERID = "GetShppingDeliveryCarriersByCustomerId";
         const string GETDELIVERYMETHODSCUSTOMERID = "GetDeliveryMethodsCustomerId";
@@ -52,7 +52,7 @@ namespace OMS.Domain.Repository.Implementation
 
         public async Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDTO Carriers)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERSHPPINGDELIVERYCARRIERS, new
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERSHPPINGDELIVERYCARRIERSANDDELIVERYMETHODS, new
             {
                 Carriers.DeliveryAccountId,
                 Carriers.CustomerId,
