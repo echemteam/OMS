@@ -92,7 +92,7 @@ export const shippingFormData = {
     {
       id: "accountType",
       lable: "Account Type :",
-      Field_Name: "",
+      Field_Name: "Account Type",
       fieldType: FormFieldTypes.SELECT,
       dataField: "accountType",
       fieldSetting: {

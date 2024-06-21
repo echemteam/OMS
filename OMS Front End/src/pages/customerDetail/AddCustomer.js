@@ -71,17 +71,18 @@ const AddCustomer = () => {
       tab: TabEnum.Contact,
     },
     {
-      label: "Documents",
-      subLabel: "Add Customer Documents Details",
-      content: <CustomerDocumentDetails isEditablePage={false} />,
-      tab: TabEnum.Documents,
-    },
-    {
       label: "Setting",
       subLabel: "Shipping Method",
       content:  <SettingDetails/>,
       tab: TabEnum.Contact,
     },
+    {
+      label: "Documents",
+      subLabel: "Add Customer Documents Details",
+      content: <CustomerDocumentDetails isEditablePage={false} />,
+      tab: TabEnum.Documents,
+    },
+    
   ];
 
   const handleTabClick = (index) => {

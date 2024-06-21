@@ -29,6 +29,30 @@ const timelineItems = [
     message:
       "Added default payment terms and preferred payment method by Pankaj Chauhan at 10:45 AM on 05/09/2024.",
   },
+  {
+    icon: AppIcons.PlusIcon,
+    name: "Pankaj Chauhan",
+    dateTime: "2024-05-01 10:00",
+    typeName: "Customer Added",
+    message:
+      "Initial creation of the customer record by Pankaj Chauhan at 10:00 AM on 05/01/2024.",
+  },
+  {
+    icon: AppIcons.UpdateIcon,
+    name: "Kirtan Patel",
+    dateTime: "2024-05-02 14:30",
+    typeName: "Basic Details Updated",
+    message:
+      "Updated customer name and reference codes by Kirtan Patel at 2:30 PM on 05/02/2024.",
+  },
+  {
+    icon: AppIcons.TimelineIcon,
+    name: "Pankaj Chauhan",
+    dateTime: "2024-05-09 10:45",
+    typeName: "Financial Settings Added",
+    message:
+      "Added default payment terms and preferred payment method by Pankaj Chauhan at 10:45 AM on 05/09/2024.",
+  },
   // Add more timeline items here
 ];
 
@@ -46,29 +70,6 @@ const TimeLine = () => {
         </div>
         <div className="col-md-12">
           <div className="main-card mt-4">
-            {/* <div className="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
-              {events.map((event) => (
-                <div
-                  className="vertical-timeline-item vertical-timeline-element"
-                  key={event.id}
-                >
-                  <div>
-                    <span className="vertical-timeline-element-icon bounce-in">
-                      <i className="badge badge-dot badge-dot-xl badge-primary">
-                        {" "}
-                      </i>
-                    </span>
-                    <div className="vertical-timeline-element-content bounce-in">
-                      <h4 className="timeline-title">
-                        <span className="mr-1">{event.name}</span>
-                        <span className="mr-1 font-bold">{event.email}</span>
-                        <span>{event.action}</span>
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div> */}
 
             <div className="new-timeline-sec">
               <ol class="timeline">
@@ -81,7 +82,7 @@ const TimeLine = () => {
                       <div className="right-desc-sec">
                         <div className="d-flex align-items-center">
                           <div className="timeline-name">{item.name}</div>
-                          <div className="date-time ml-4"> {item.dateTime}</div>
+                          <div className="date-time"> {item.dateTime}</div>
                         </div>
                         <div className="type-name">{item.typeName}</div>
                       </div>
