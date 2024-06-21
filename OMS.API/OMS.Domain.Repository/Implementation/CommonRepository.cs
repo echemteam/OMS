@@ -24,6 +24,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLSUPPLIERTYPE = "GetAllSupplierType";
         const string GETALLDELIVERYCARRIERS = "GetAllDeliveryCarriers";
         const string GETALLDELIVERYMETHODS = "GetAllDeliveryMethods";
+        const string GETALLDELIVERYACCOUNTS = "GetAllDeliveryAccounts";
         const string GETALLPHONETYPES = "GetAllPhoneTypes";
         #endregion
 
@@ -104,6 +105,11 @@ namespace OMS.Domain.Repository.Implementation
         public async Task<List<GetAllDeliveryMethodsResponse>> GetAllDeliveryMethods()
         {
             return await _context.GetList<GetAllDeliveryMethodsResponse>(GETALLDELIVERYMETHODS, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllDeliveryAccountsResponse>> GetAllDeliveryAccounts()
+        {
+            return await _context.GetList<GetAllDeliveryAccountsResponse>(GETALLDELIVERYACCOUNTS, commandType: CommandType.StoredProcedure);
         }
         public async Task<List<GetAllPhoneTypesResponse>> GetAllPhoneTypes()
         {

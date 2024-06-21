@@ -88,7 +88,10 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllDeliveryMethods();
         }
-
+        public Task<List<GetAllDeliveryAccountsResponse>> GetAllDeliveryAccounts()
+        {
+            return repositoryManager.commonRepository.GetAllDeliveryAccounts();
+        }
         public Task<List<GetAllPhoneTypesResponse>> GetAllPhoneTypes()
         {
             return repositoryManager.commonRepository.GetAllPhoneTypes();
