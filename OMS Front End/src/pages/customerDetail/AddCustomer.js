@@ -76,7 +76,7 @@ const AddCustomer = () => {
       subLabel: "Shipping Method",
       content: (
         <>
-          <div className="mt-4">
+          <div className="mt-4 add-setting-detail">
             <ShippingSettings />
           </div>
         </>
@@ -151,7 +151,7 @@ const AddCustomer = () => {
                     <div className="row">
                       <div className="col-12 mx-auto">
                         {step.content}
-                        <div className="d-flex justify-content-end">
+                        <div className="d-flex justify-content-end mt-2">
                           {index > 0 && (
                             <button
                               type="button"

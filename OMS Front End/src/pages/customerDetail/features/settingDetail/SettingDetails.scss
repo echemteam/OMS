@@ -137,19 +137,8 @@
     }
   }
 }
-
 .main-customer-grid {
   &.setting-tab-sec {
-    .first-card {
-      border-bottom: 1px solid var(--textColor);
-      margin-bottom: 15px;
-      .card{
-        margin-bottom: 15px !important;
-      }
-    }
-
-    
-
     .card {
       padding-bottom: 0;
 
@@ -173,13 +162,17 @@
         }
       }
     }
-    .last-card {
-      .card {
-          margin-bottom: 10px !important;
-      }
-    }
-
-
   }
-
+}
+.first-card {
+  border-bottom: 1px solid var(--textColor);
+  margin-bottom: 15px;
+  .card{
+    margin-bottom: 15px !important;
+  }
+}
+.last-card {
+  .card {
+      margin-bottom: 10px !important;
+  }
 }
