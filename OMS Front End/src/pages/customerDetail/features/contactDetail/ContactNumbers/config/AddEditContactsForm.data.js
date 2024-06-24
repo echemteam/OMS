@@ -7,8 +7,9 @@ export const addEditContactsFormData = {
   initialState: {
     phoneCode: '',
     phoneNumber: '',
-    phoneTypeId: 0,
-    extension: 0
+    phoneTypeId: '',
+    extension: 0,
+    id: 0
   },
   formFields: [
     {
@@ -18,7 +19,7 @@ export const addEditContactsFormData = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "phoneTypeId",
       fieldSetting: {
-        placeholder: "",
+        placeholder: "Enter Phone Type",
         allowSpace: true,
       },
       validation: [{ type: "require" }],
