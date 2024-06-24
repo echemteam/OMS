@@ -4,27 +4,12 @@ import { GridColumnType } from "../../../../../../../data/gridColumnType";
 export const addEditDeliveryFormData = {
     name: "Shipping Form",
     initialState: {
-        charge: 0,
+        charge: '',
         chargeType: '',
-        isPrimary: false,
+        isDeliveryMethodPrimary: false,
     },
     formFields: [
-        // {
-        //     id: "zone",
-        //     lable: "Zone :",
-        //     Field_Name: "",
-        //     fieldType: FormFieldTypes.INPUT,
-        //     dataField: "zone",
-        //     fieldSetting: {
-        //         placeholder: "Zone",
-        //         allowSpace: true,
-        //         isDisable: true
-        //     },
-        //     validation: [{ type: "require" }],
-        //     style: {
-        //         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2",
-        //     },
-        // },
+
         {
             id: "chargeType",
             lable: "Charge Type :",
@@ -44,7 +29,7 @@ export const addEditDeliveryFormData = {
             id: "charge",
             lable: "Charge :",
             Field_Name: "Charge",
-            fieldType: FormFieldTypes.INPUT,
+            fieldType: FormFieldTypes.NUMERIC,
             dataField: "charge",
             fieldSetting: {
                 placeholder: "Enter Charge",
@@ -56,11 +41,11 @@ export const addEditDeliveryFormData = {
             },
         },
         {
-            id: "isPrimary",
+            id: "isDeliveryMethodPrimary",
             lable: "Is Primary",
             Field_Name: "Is Primary",
             fieldType: FormFieldTypes.CHECKBOX,
-            dataField: "isPrimary",
+            dataField: "isDeliveryMethodPrimary",
             fieldSetting: {
                 placeholder: "",
                 allowSpace: true,
@@ -80,28 +65,28 @@ export const OurAccountGridConfig = {
         {
             name: "Zone",
             fieldName: "zone",
-            width:"20%"
+            width: "20%"
         },
         {
             name: "Charge Type",
             fieldName: "name",
-            width:"20%"
+            width: "20%"
         },
         {
             name: "Charge",
             fieldName: "charge",
-            width:"20%"
+            width: "20%"
         },
         {
             name: "Is Primary",
             fieldName: "isPrimary",
-            width:"20%",
+            width: "20%",
             colType: GridColumnType.CHECKBOX
         },
 
         {
             name: "Action",
-            width:"20%",
+            width: "20%",
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowEdit: true,

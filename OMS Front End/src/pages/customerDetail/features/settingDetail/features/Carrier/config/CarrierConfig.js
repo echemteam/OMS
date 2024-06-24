@@ -6,7 +6,7 @@ export const addEditCarrierFormData = {
     initialState: {
         carrierId: 0,
         accountNumber: '',
-        isPrimary: false
+        isCarrierPrimary: false
     },
     formFields: [
         {
@@ -40,18 +40,18 @@ export const addEditCarrierFormData = {
             },
         },
         {
-            id: "isPrimary",
+            id: "isCarrierPrimary",
             lable: "Is Primary",
-            Field_Name: "isPrimary",
+            Field_Name: "Is Primary",
             fieldType: FormFieldTypes.CHECKBOX,
-            dataField: "isPrimary",
+            dataField: "isCarrierPrimary",
             fieldSetting: {
                 placeholder: "",
                 allowSpace: true,
             },
             // validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2 mt-5",
+                containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2",
             },
         },
 

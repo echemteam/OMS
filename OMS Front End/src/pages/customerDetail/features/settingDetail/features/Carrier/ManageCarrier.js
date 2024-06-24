@@ -1,12 +1,16 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import AddEditCarrier from "./feature/AddEditCarrier";
-import CarrierList from "./feature/CarrierList";
+import React, { useContext, useEffect, useRef, useState } from "react";
+//** Lib's */
 import { addEditCarrierFormData } from "./config/CarrierConfig";
-import { useGetAllDeliveryCarriersQuery } from "../../../../../../app/services/commonAPI";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+//** Service's */
 import SwalAlert from "../../../../../../services/swalService/SwalService";
-import { useDeleteCustomerDeliveryCarriersByIdMutation } from "../../../../../../app/services/customerSettingsAPI";
 import ToastService from "../../../../../../services/toastService/ToastService";
+import { useGetAllDeliveryCarriersQuery } from "../../../../../../app/services/commonAPI";
+import { useDeleteCustomerDeliveryCarriersByIdMutation } from "../../../../../../app/services/customerSettingsAPI";
+
+//** Component's */
+const CarrierList = React.lazy(() => import("./feature/CarrierList"));
+const AddEditCarrier = React.lazy(() => import("./feature/AddEditCarrier"));
 
 const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading }) => {
 

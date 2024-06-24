@@ -1,19 +1,24 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import FormCreator from "../../../../../../components/Forms/FormCreator";
-import ManageCarrier from "../Carrier/ManageCarrier";
-import ManageDevliveryMethod from "../DeliveryMethod/ManageDevliveryMethod";
+//** Lib's */
 import { shippingFormData } from "./config/ShippingConfig";
-import { useLazyGetAllDeliveryAccountsQuery } from "../../../../../../app/services/commonAPI";
+import FormCreator from "../../../../../../components/Forms/FormCreator";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+//** Service's */
 import SwalAlert from "../../../../../../services/swalService/SwalService";
-import { useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation, useLazyGetShppingDeliveryCarrierAndDeliveryMethodsByIdQuery } from "../../../../../../app/services/customerSettingsAPI";
 import ToastService from "../../../../../../services/toastService/ToastService";
+import { useLazyGetAllDeliveryAccountsQuery } from "../../../../../../app/services/commonAPI";
+import { useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation, useLazyGetShppingDeliveryCarrierAndDeliveryMethodsByIdQuery } from "../../../../../../app/services/customerSettingsAPI";
+
+//** Component's */
+const ManageCarrier = React.lazy(() => import("../Carrier/ManageCarrier"));
+const ManageDevliveryMethod = React.lazy(() => import("../DeliveryMethod/ManageDevliveryMethod"));
 
 const ShippingSettings = () => {
 
   const ref = useRef();
   const { confirm } = SwalAlert();
   const [accountTypeId, setAccountTypeId] = useState(0);
+  const [isDefaultValue, setIsDefaultValue] = useState(0);
   const [formData, setFormData] = useState(shippingFormData);
   const { customerId, setDeliveryMethodsList, setCarriersList } = useContext(BasicDetailContext);
 
@@ -39,7 +44,9 @@ const ShippingSettings = () => {
 
   useEffect(() => {
     if (isAddDefaultShippingsSuccess && isAddDefaultShippingsData) {
-      handleGetDefaultList();
+      if (isDefaultValue) {
+        handleGetDefaultList();
+      }
       ToastService.success(isAddDefaultShippingsData.errorMessage);
     }
   }, [isAddDefaultShippingsSuccess, isAddDefaultShippingsData]);
@@ -69,20 +76,37 @@ const ShippingSettings = () => {
 
   const handleChangeDropdown = (data, dataField) => {
     if (dataField === 'deliveryAccountId') {
-      confirm("Add Shipping?",
-        "Are you sure you want to Add Default Shipping?",
-        "Yes", "No"
-      ).then((confirmed) => {
-        if (confirmed) {
+      if (accountTypeId > 0) {
+        confirm("Change Shipping Methods?",
+          "Are you sure you want Change the Shipping Method?",
+          "Yes", "No", false
+        ).then((confirmed) => {
           let request = {
             customerId: customerId,
             deliveryAccountId: data.value
           }
-          addDefaultShippings(request);
-          setAccountTypeId(data.value);
-        }
-      });
-
+          if (confirmed) {
+            setIsDefaultValue(true);
+            addDefaultShippings(request);
+            setAccountTypeId(data.value);
+          }
+        });
+      } else {
+        confirm("Shipping Methods?",
+          "Are you sure you want to Add Default Shipping Method?",
+          "Yes", "No", false
+        ).then((confirmed) => {
+          let request = {
+            customerId: customerId,
+            deliveryAccountId: data.value
+          }
+          if (confirmed) {
+            setIsDefaultValue(true);
+            addDefaultShippings(request);
+            setAccountTypeId(data.value);
+          }
+        });
+      }
     }
   }
   const formActionHandler = {
@@ -90,7 +114,9 @@ const ShippingSettings = () => {
   };
 
   const handleGetDefaultList = () => {
-    getDefaultList(customerId);
+    if (customerId && customerId > 0) {
+      getDefaultList(customerId);
+    }
   }
 
 

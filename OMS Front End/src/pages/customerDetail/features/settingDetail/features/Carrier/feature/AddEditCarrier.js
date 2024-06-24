@@ -25,10 +25,10 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, editF
         if (data) {
             request = {
                 customerId: customerId,
-                isPrimary: data.isPrimary,
+                isPrimary: data.isCarrierPrimary,
                 accountNumber: data.accountNumber,
                 customerDeliveryCarrierId: data.customerDeliveryCarrierId ? data.customerDeliveryCarrierId : 0,
-                carrierId: data.carrier && typeof data.carrier === "object" ? data.carrier.value : data.carrier,
+                carrierId: data.carrier && typeof data.carrier === "object" ? data.carrier.value : data.carrierId,
             }
             if (data && !data.customerDeliveryCarrierId) {
                 addEdit(request)
@@ -64,7 +64,11 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, editF
     useEffect(() => {
         if (isEdit && editFormData) {
             let form = { ...addEditCarrierFormData };
-            form.initialState = editFormData;
+
+            form.initialState = {
+                ...editFormData,
+                isCarrierPrimary: editFormData.isPrimary
+            }
             setFormData(form);
         } else if (!isEdit) {
             onResetData();
@@ -83,18 +87,13 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, editF
         callChildFunction: onResetData,
     }));
 
-    const onFormDataChange = (data) => {
-        console.log(data);
-    }
-
     return (
         <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}
             modalTitle="Add/Edit Carrier" modelSizeClass="w-30" >
             <div className="row">
                 <div className="col-md-12">
                     <div className="row">
-                        <FormCreator config={formData} ref={ref} {...formData} onFormDataChange={onFormDataChange} />
-                        {/* <FormCreator config={formData} ref={ref} {...formData} /> */}
+                        <FormCreator config={formData} ref={ref} {...formData} />
                     </div>
                 </div>
                 <div className="col-md-12 mt-3">

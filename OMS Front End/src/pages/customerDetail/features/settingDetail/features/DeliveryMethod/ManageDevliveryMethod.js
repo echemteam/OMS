@@ -1,16 +1,19 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import DeliveryMethodList from "./feature/DeliveryMethodList";
-import AddEditDeliveryMethod from "./feature/AddEditDeliveryMethod";
+import React, { useContext, useEffect, useRef, useState } from "react";
+//** Lib's */
+import { addEditDeliveryFormData } from "./config/DevliveryConfig";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import { useDeleteCustomerDeliveryMethodsByIdMutation } from "../../../../../../app/services/customerSettingsAPI";
+//** Service's */
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useGetAllDeliveryMethodsQuery } from "../../../../../../app/services/commonAPI";
-import { addEditDeliveryFormData } from "./config/DevliveryConfig";
+import { useDeleteCustomerDeliveryMethodsByIdMutation } from "../../../../../../app/services/customerSettingsAPI";
+
+//** Component's */
+const DeliveryMethodList = React.lazy(() => import("./feature/DeliveryMethodList"));
+const AddEditDeliveryMethod = React.lazy(() => import("./feature/AddEditDeliveryMethod"));
 
 const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading }) => {
 
-    const childRef = useRef();
     const molGridRef = useRef();
     const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
@@ -43,9 +46,6 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading }) => {
     const handleToggleModal = () => {
         setShowModal(!showModal);
         setIsEdit(false);
-        if (childRef.current) {
-            childRef.current.callChildFunction();
-        }
     };
 
     //** Success */
@@ -85,7 +85,7 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading }) => {
                 isGetDataLoading={isGetDataLoading} />
             {showModal && (
                 <AddEditDeliveryMethod handleToggleModal={handleToggleModal} showModal={showModal} editFormData={editFormData} onSuccess={onSuccess}
-                    isEdit={isEdit} childRef={childRef} />
+                    isEdit={isEdit} />
             )}
         </>
     )

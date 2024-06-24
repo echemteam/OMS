@@ -25,7 +25,7 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
             request = {
                 charge: data.charge,
                 customerId: customerId,
-                isPrimary: data.isPrimary,
+                isPrimary: data.isDeliveryMethodPrimary,
                 customerDeliveryMethodId: data.customerDeliveryMethodId ? data.customerDeliveryMethodId : 0,
                 deliveryMethodId: data.chargeType && typeof data.chargeType === "object" ? data.chargeType.value : data.chargeType,
             }
@@ -65,9 +65,9 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
             let form = { ...addEditDeliveryFormData };
             form.initialState = {
                 ...editFormData,
-                chargeType: editFormData.name,
+                chargeType: editFormData.deliveryMethodId,
                 charge: editFormData.charge,
-                isPrimary: editFormData.isPrimary,
+                isDeliveryMethodPrimary: editFormData.isPrimary,
             }
             setFormData(form);
         } else if (!isEdit) {
@@ -85,7 +85,7 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
 
     return (
         <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}
-            modalTitle="Add/Edit Carrier" modelSizeClass="w-30" >
+            modalTitle="Add/Edit Delivery Method" modelSizeClass="w-30" >
             <div className="row">
                 <div className="col-md-12">
                     <div className="row">
