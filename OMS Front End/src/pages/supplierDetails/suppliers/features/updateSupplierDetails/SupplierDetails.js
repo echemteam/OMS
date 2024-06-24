@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../../../customerDetail/ViewCustomer.scss";
 import { useParams } from "react-router-dom";
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../../../app/services/supplierAPI";
@@ -12,6 +12,8 @@ import SupplierBasicDetail from "../../../addSupplier/features/supplierBasicDeta
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { useNavigate } from "react-router-dom/dist";
+import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuementDetail";
+ 
 import SupplierAddressDetail from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetail";
 
 const SupplierDetails = () => {
@@ -21,7 +23,7 @@ const SupplierDetails = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [supplierData, setSupplierData] = useState(null);
 
-  const { setSupplierId , supplierId } = useContext(AddSupplierContext);
+  const { setSupplierId, supplierId } = useContext(AddSupplierContext);
 
   const [
     getSupplierBasicInformationById,
@@ -84,6 +86,14 @@ const SupplierDetails = () => {
     {
       sMenuItemCaption: "Settings",
       component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
+    },
+    {
+      sMenuItemCaption: "Documents",
+      component: (
+        <div className="mt-2">
+          <SupplierDocumentDetail pageId={pageId}/>
+        </div>
+      ),
     },
   ];
 

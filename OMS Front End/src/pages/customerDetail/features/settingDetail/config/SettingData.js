@@ -28,6 +28,8 @@ export const SettingFormData = {
       fieldSetting: {
         placeholder: "Enter Credit Limit",
         allowSpace: true,
+        minLength: 0,
+        maxLength: 6,
       },
       validation: [{ type: "require" }],
       style: {
@@ -54,11 +56,15 @@ export const SettingFormData = {
       id: "billingCurrency",
       lable: "Billing Currency :",
       Field_Name: "Billing Currency",
-      fieldType: FormFieldTypes.INPUT,
+      fieldType: FormFieldTypes.SELECT,
       dataField: "billingCurrency",
       fieldSetting: {
         placeholder: "Billing Currency",
         allowSpace: true,
+        options: [
+          { value: "USD", label: "USD" },
+          { value: "IND", label: "IND" },
+        ],
       },
       validation: [{ type: "require" }],
       style: {

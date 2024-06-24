@@ -7,8 +7,6 @@ import { addEditContactsFormData } from './config/AddEditContactsForm.data';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
 import { addPhoneNumberData, updatePhoneNumberData } from '../Util/ContactPhoneNumberUtil';
 import BasicDetailContext from '../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
-//** Service's */
-import { useGetAllPhoneTypesQuery, useLazyGetAllPhoneTypesQuery } from '../../../../../app/services/phoneNumberAPI';
 
 const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess }) => {
 

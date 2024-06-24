@@ -44,8 +44,7 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
         const phoneCode = data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode
         const phoneTypeId = data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId
         const phoneType = data.phoneTypeId.label ? data.phoneTypeId.label : data.phoneType
-        const isDuplicate = listData && listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === phoneCode && item.phoneCode === phoneCode
-            && item.id !== data.id);
+        const isDuplicate = listData && listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === phoneCode && item.id !== data.id);
         if (!isDuplicate) {
             const updatedData = [...listData];
             updatedData[data.id - 1] = {
@@ -54,7 +53,7 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
                 phoneTypeId: phoneTypeId,
                 phoneType: phoneType,
                 phoneNumber: data.phoneNumber,
-                extension: data.extension
+                extension: data.extension ? data.extension : 0
             };
             setListData(updatedData);
             ToastService.success(successMessage);

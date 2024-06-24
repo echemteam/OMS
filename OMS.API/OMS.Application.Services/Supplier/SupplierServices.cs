@@ -61,6 +61,11 @@ namespace OMS.Application.Services.Supplier
             supplierDTO.UpdatedBy = CurrentUserId;
             return await repositoryManager.supplier.UpdateSupplierStatus(supplierDTO);
         }
+        public async Task<AddEntityDTO<int>> CheckSupplierNameExist(CheckSupplierNameExistRequest requestData)
+        {
+            SupplierDTO supplierDTO = requestData.ToMapp<CheckSupplierNameExistRequest, SupplierDTO>();
+            return await repositoryManager.supplier.CheckSupplierNameExist(supplierDTO);
+        }
         #endregion
 
     }

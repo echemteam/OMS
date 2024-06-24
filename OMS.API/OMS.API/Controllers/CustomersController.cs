@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Prisitance.Entities.Entities;
@@ -89,6 +90,12 @@ namespace OMS.API.Controllers
         {
             var updateItem = await _serviceManager.customersServices.UpdateCustomerStatus(requestData, CurrentUserId);
             return APISucessResponce(updateItem);
+        }
+        [HttpGet("GetCustomerAuditHistory")]
+        public async Task<IActionResult> GetCustomerAuditHistory()
+        {
+            List<GetCustomerAuditHistoryResponse> responseData = await _serviceManager.customersServices.GetCustomerAuditHistory().ConfigureAwait(true);
+            return APISucessResponce(responseData);
         }
         #endregion
     }

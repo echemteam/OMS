@@ -87,6 +87,7 @@ const FinancialSettings = (props) => {
         customerId: customerId,
         paymentTermId: settingFormData.paymentTermId.value,
         paymentMethodId: settingFormData.paymentMethodId.value,
+        billingCurrency: settingFormData.billingCurrency.value,
       };
       addEditCustomerSettings(request);
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
@@ -100,6 +101,9 @@ const FinancialSettings = (props) => {
         paymentMethodId: settingFormData.paymentMethodId && typeof settingFormData.paymentMethodId === "object"
           ? settingFormData.paymentMethodId.value
           : settingFormData.paymentMethodId,
+        billingCurrency: settingFormData.billingCurrency && typeof settingFormData.billingCurrency === "object"
+        ? settingFormData.billingCurrency.value
+        : settingFormData.billingCurrency,
       };
       addEditCustomerSettings(updaterequest);
     }
