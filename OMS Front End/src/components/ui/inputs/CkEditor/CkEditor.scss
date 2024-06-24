@@ -21,6 +21,10 @@
     border-bottom-right-radius: 6px !important;
     overflow: hidden;
   }
+  .ck .ck-placeholder, .ck.ck-placeholder {
+    position: relative;
+    font-size: 80%;
+}
 }
 
 .ck-content {
