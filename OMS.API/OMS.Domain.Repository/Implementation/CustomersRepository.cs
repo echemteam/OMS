@@ -24,6 +24,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATECUSTOMERSTATUS = "UpdateCustomerStatus";
         const string ADDADDRESSFORCUSTOMER = "AddAddressForCustomer";
         const string UPDATEADDRESSFORCUSTOMER = "UpdateAddressForCustomer";
+        const string GETCUSTOMERAUDITHISTORY = "GetCustomerAuditHistory";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -150,6 +151,10 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.IsPreferredShipping,
                 updatedBy
             }, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetCustomerAuditHistoryResponse>> GetCustomerAuditHistory()
+        {
+            return await _context.GetList<GetCustomerAuditHistoryResponse>(GETCUSTOMERAUDITHISTORY, commandType: CommandType.StoredProcedure);
         }
         #endregion
     }

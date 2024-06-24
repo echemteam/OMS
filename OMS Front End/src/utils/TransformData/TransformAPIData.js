@@ -61,3 +61,28 @@ export const documentTransformData = (data) => {
         return acc;
     }, {});
 };
+
+export const supplierDocumentTransformData = (data) => {
+    return data.reduce((acc, item) => {
+        const { type, attachment, supplierDocumentId, supplierId, documentTypeId, name } = item;
+
+        // Extract the file type and get the file icon basde on the file type  
+        const documentIcon = getFileTypeIcon(attachment);
+
+        const transformedItem = {
+            attachment,
+            supplierDocumentId,
+            supplierId,
+            documentTypeId,
+            name,
+            documentIcon
+        };
+
+        if (!acc[type]) {
+            acc[type] = [];
+        }
+
+        acc[type].push(transformedItem);
+        return acc;
+    }, {});
+};

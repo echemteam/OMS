@@ -21,6 +21,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDADDRESSFORSUPPLIER = "AddAddressForSupplier";
         const string UPDATEADDRESSFORSUPPLIER = "UpdateAddressForSupplier";
         const string UPDATESUPPLIERSTATUS = "UpdateSupplierStatus";
+        const string CHECKSUPPLIERNAMEEXIST = "CheckSupplierNameExist";
         #endregion
 
         public SupplierRepository(DapperContext dapperContext) : base(dapperContext)
@@ -118,6 +119,13 @@ namespace OMS.Domain.Repository.Implementation
                 supplier.SupplierId,
                 supplier.StatusId,
                 supplier.UpdatedBy,
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDTO<int>> CheckSupplierNameExist(SupplierDTO supplier)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(CHECKSUPPLIERNAMEEXIST, new
+            {
+                supplier.Name,
             }, CommandType.StoredProcedure);
         }
 

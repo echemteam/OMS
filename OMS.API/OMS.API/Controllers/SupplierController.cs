@@ -71,6 +71,13 @@ namespace OMS.API.Controllers
             var updateItem = await _serviceManager.supplierServices.UpdateSupplierStatus(requestData, CurrentUserId);
             return APISucessResponce(updateItem);
         }
+
+        [HttpPost("CheckSupplierNameExist")]
+        public async Task<IActionResult> CheckSupplierNameExist(CheckSupplierNameExistRequest requestData)
+        {
+            var checkItem = await _serviceManager.supplierServices.CheckSupplierNameExist(requestData);
+            return APISucessResponce(checkItem);
+        }
         #endregion
     }
 }

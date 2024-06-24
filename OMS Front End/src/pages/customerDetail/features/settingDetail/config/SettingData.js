@@ -29,6 +29,8 @@ export const SettingFormData = {
       fieldSetting: {
         placeholder: "Enter Credit Limit",
         allowSpace: true,
+        minLength: 0,
+        maxLength: 6,
       },
       validation: [{ type: "require" }],
       style: {
@@ -49,17 +51,21 @@ export const SettingFormData = {
       style: {
         containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
       },
-      
+
     },
-      {
+    {
       id: "billingCurrency",
       lable: "Billing Currency :",
       Field_Name: "Billing Currency",
-      fieldType: FormFieldTypes.INPUT,
+      fieldType: FormFieldTypes.SELECT,
       dataField: "billingCurrency",
       fieldSetting: {
         placeholder: "Billing Currency",
         allowSpace: true,
+        options: [
+          { value: "USD", label: "USD" },
+          { value: "IND", label: "IND" },
+        ],
       },
       validation: [{ type: "require" }],
       style: {
@@ -81,7 +87,7 @@ export const SettingFormData = {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
-    
+
   ],
 };
 
@@ -104,14 +110,14 @@ export const shippingFormData = {
         containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
       },
     },
-    
-    
+
+
   ],
 };
 
 export const AccountGridConfig = {
   columns: [
-    
+
     {
       name: "Carrier",
       fieldName: "carrier",
@@ -139,7 +145,7 @@ export const AccountGridConfig = {
         },
       },
     },
-    
+
     {
       name: "Action",
       colType: GridColumnType.ACTION,
@@ -204,14 +210,14 @@ export const addEditCarrierFormData = {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2",
       },
     },
-    
-    
+
+
   ],
 };
 
 export const OurAccountGridConfig = {
   columns: [
-    
+
     {
       name: "Zone",
       fieldName: "zone",
@@ -243,7 +249,7 @@ export const OurAccountGridConfig = {
         },
       },
     },
-    
+
     {
       name: "Action",
       colType: GridColumnType.ACTION,
@@ -276,7 +282,7 @@ export const ourAccountData = [
     chargeType:"International Property",
     charge:"$94",
   },
-  
+
 ];
 export const addEditDeliveryFormData = {
   name: "Shipping Form",
@@ -327,8 +333,8 @@ export const addEditDeliveryFormData = {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2",
       },
     },
-    
-    
+
+
   ],
 };
 

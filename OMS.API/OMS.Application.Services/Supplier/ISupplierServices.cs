@@ -14,5 +14,6 @@ namespace OMS.Application.Services.Supplier
         Task<AddEntityDTO<int>> UpdateSupplierInActiveStatus(UpdateSupplierInActiveStatusRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> UpdateSupplierApproveStatus(UpdateSupplierApproveStatusRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> UpdateSupplierStatus(UpdateSupplierStatusRequest requestData, short CurrentUserId);
+        Task<AddEntityDTO<int>> CheckSupplierNameExist(CheckSupplierNameExistRequest requestData);
     }
 }
