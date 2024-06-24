@@ -4,6 +4,15 @@ export const contactTransformData = (data) => {
     return data.reduce((acc, item) => {
         const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit } = item;
 
+        const modifyPhoneNumberList = phoneNumberLsit.map((item, index) => ({
+            ...item,
+            id: index + 1
+        }));
+        const modifyEmailAddressLst = emailAddressLst.map((item, index) => ({
+            ...item,
+            id: index + 1
+        }));
+
         const emailAddress = emailAddressLst.map(item => item.emailAddress).join(',');
         const phoneNumber = phoneNumberLsit.map(item => item.phoneNumber).join(',');
         const transformedItem = {
@@ -16,8 +25,8 @@ export const contactTransformData = (data) => {
                 emailAddress,
                 phoneNumber
             },
-            emailAddressLst,
-            phoneNumberLsit
+            emailAddressLst: modifyEmailAddressLst,
+            phoneNumberLsit: modifyPhoneNumberList
         };
 
         if (!acc[type]) {

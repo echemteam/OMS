@@ -57,7 +57,11 @@ const ManageContactNumbers = ({ onGetContactList }) => {
             setShowModal(!showModal);
             setIsEdit(false);
         } else {
-            ToastService.warning("You have reached the maximum number of contacts. Please remove an existing contact before adding a new one.")
+            if (showModal) {
+                setShowModal(!showModal);
+            } else {
+                ToastService.warning("You have reached the maximum number of contacts. Please remove an existing contact before adding a new one.")
+            }
         }
     };
 

@@ -57,7 +57,7 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
 
 export const updateData = (data, listData, setListData, successMessage, duplicateMessage, inValidDate, onResetData, onSuccess) => {
     if (listData && data.id > 0) {
-        const isDuplicate = listData.some((item) => item.emailAddress === data.emailAddress);
+        const isDuplicate = listData.some((item) => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase() && item.id !== data.id);
         if (!isDuplicate) {
             const updatedData = [...listData];
             updatedData[data.id - 1] = {

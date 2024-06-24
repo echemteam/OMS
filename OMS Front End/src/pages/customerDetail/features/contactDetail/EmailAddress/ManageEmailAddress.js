@@ -39,7 +39,11 @@ const ManageEmailAddress = ({ onGetContactList }) => {
             setShowModal(!showModal);
             setIsEdit(false);
         } else {
-            ToastService.warning("You have reached the maximum number of Email Address. Please remove an existing email address before adding a new one.")
+            if (showModal) {
+                setShowModal(!showModal);
+            } else {
+                ToastService.warning("You have reached the maximum number of Email Address. Please remove an existing email address before adding a new one.")
+            }
         }
     };
 
