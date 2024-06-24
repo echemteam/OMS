@@ -25,11 +25,11 @@ const ManagePermission = forwardRef((props, ref) => {
 
     //** API Call's */
     const [addSecurityPermissions, { isSuccess: isPermissionsAdded, data: isAddPermissionsData }] = useAddSecurityPermissionsMutation();
-    const [getAllPagesByRoleId, { isLoading: isGetByIdLoading, isSuccess: isPermissionSuccess, data: permissionData }] = useLazyGetAllPagesByRoleIdQuery();
+    const [getAllPagesByRoleId, { isFetching: isGetByIdLoading, isSuccess: isPermissionSuccess, data: permissionData }] = useLazyGetAllPagesByRoleIdQuery();
 
 
     //** Check Permission */
-    const hasAddPermission = hasFunctionalPermission(securityKey.ADDPERMISSIONS);
+    const hasAddPermission = hasFunctionalPermission(securityKey.SAVEPERMISSIONS);
 
     //** Handle Change's */
     const onUpdatePermission = (data) => {

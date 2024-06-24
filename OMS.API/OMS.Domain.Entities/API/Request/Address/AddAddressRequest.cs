@@ -5,6 +5,7 @@ namespace OMS.Domain.Entities.API.Request.Address
     public class AddAddressRequest
     {
         public int? CustomerId { get; set; }
+        public int? SupplierId { get; set; }
         public short? AddressTypeId { get; set; }
         public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }
@@ -15,6 +16,9 @@ namespace OMS.Domain.Entities.API.Request.Address
         public int? StateId { get; set; }
         public int? CityId { get; set; }
         public int? ZipCode { get; set; }
+        public bool? IsPreferredShipping { get; set; }
+        public bool? IsPreferredBilling { get; set; }
+        public bool? IsShippingAndBilling { get; set; }
 
     }
 }

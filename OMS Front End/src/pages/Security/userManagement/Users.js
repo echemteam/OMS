@@ -2,15 +2,15 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import MolGrid from "../../../components/Grid/MolGrid";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
-import { UserGridConfig, securityKeys, userFormData } from "./features/config/UserForm.data";
+import { UserGridConfig, userFormData } from "./features/config/UserForm.data";
 import { encryptUrlData } from '../../../services/CryptoService'
 import { useDeleteUserMutation, useGetUsersMutation } from '../../../app/services/userAPI'
 import SwalAlert from "../../../services/swalService/SwalService";
 import ToastService from "../../../services/toastService/ToastService";
 import { useNavigate } from "react-router-dom";
 import useDebounce from "../../../app/customHooks/useDebouce";
-import usePermissions from "../../../utils/CustomHook/UsePermissions";
-import { PagePermissionsContext } from "../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
+import { securityKey } from "../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 const Users = () => {
 
@@ -22,9 +22,14 @@ const Users = () => {
   const debouncedSearch = useDebounce(search, 300);
   const { confirm } = SwalAlert();
   const navigate = useNavigate();
+  const [buttonVisible, setButtonVisible] = useState(false);
 
-  const { isShowAddButton } = useContext(PagePermissionsContext);
-  usePermissions(undefined, securityKeys, userFormData, UserGridConfig);
+  const hasAddPermission = hasFunctionalPermission(securityKey.ADDUSER);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITUSER);
+  const hasDeletePermission = hasFunctionalPermission(securityKey.DELETEUSER);
+
+  const { formSetting } = userFormData;
+  const actionColumn = UserGridConfig.columns.find(column => column.name === "Action");
 
   const [
     getUsers,
@@ -54,6 +59,37 @@ const Users = () => {
     getLists(page);
   };
 
+
+  //** Check grid Action Permission */
+  useEffect(() => {
+    if (hasEditPermission.isViewOnly === true) {
+      actionColumn.defaultAction.allowEdit = true;
+    }
+    else if (hasEditPermission.isEditable === true) {
+      actionColumn.defaultAction.allowEdit = true;
+    }
+    else {
+      actionColumn.defaultAction.allowEdit = false;
+    }
+  }, [hasEditPermission, actionColumn.defaultAction.allowEdit])
+
+  //** Check grid Action Permission */
+  useEffect(() => {
+    if (hasDeletePermission.hasAccess === true) {
+      actionColumn.defaultAction.allowDelete = true;
+    }
+    else if (hasDeletePermission.hasAccess === false) {
+      actionColumn.defaultAction.allowDelete = false;
+    }
+  }, [hasDeletePermission, actionColumn.defaultAction.allowDelete]);
+
+  // ** Check Form fields Permission */
+  useEffect(() => {
+    if (hasAddPermission.hasAccess === true) {
+      formSetting.isViewOnly = false;
+      setButtonVisible(false);
+    }
+  }, [hasEditPermission, hasAddPermission, formSetting.isViewOnly])
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
@@ -116,7 +152,7 @@ const Users = () => {
         searchInputName="Search By User Name"
         titleButtonClick={AddUser}
         buttonClassName="btn theme-button"
-        rightButton={isShowAddButton ? true : false}
+        rightButton={buttonVisible ? true : false}
         buttonText="Add User"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}

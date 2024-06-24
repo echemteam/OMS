@@ -1,58 +1,29 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 //** Lib's */
+import { Message } from '../Util/ContactMessages';
 import Buttons from '../../../../../components/ui/button/Buttons';
 import { addEditEmailFormData } from './config/AddEditEmailForm.data';
+import { addData, updateData } from '../Util/ContactEmailAddressUtil';
 import FormCreator from '../../../../../components/Forms/FormCreator';
-import ToastService from '../../../../../services/toastService/ToastService';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
 import BasicDetailContext from '../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
-//** Service's */
-import { useAddContactEmailMutation, useUpdateContactEmailMutation } from '../../../../../app/services/emailAddressAPI';
 
 const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess }) => {
 
     //** State */
     const ref = useRef();
-    const { contactId } = useContext(BasicDetailContext);
     const [formData, setFormData] = useState(addEditEmailFormData);
-
-    //** API Call's */
-    const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddContactEmailMutation();
-    const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateContactEmailMutation();
+    const { contactId, emailAddressData, setEmailAddressData } = useContext(BasicDetailContext);
 
     //** Handle Changes */
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
-        if (data && !data.emailId) {
-            let request = {
-                ...data,
-                contactId: contactId
-            }
-            add(request);
-        } else if (data && data.emailId) {
-            update(data);
+        if (data && !data.id) {
+            addData(data, contactId, emailAddressData, setEmailAddressData, Message.EmailAdded, Message.EmailMaxLength, Message.DuplicateEmail, onResetData, onSuccess);
+        } else if (data && data.id) {
+            updateData(data, emailAddressData, setEmailAddressData, Message.EmailUpdated, Message.DuplicateEmail, Message.InvalidData, onResetData, onSuccess);
         }
     };
-
-    useEffect(() => {
-        if (isAddSuccess && isAddData) {
-            if (isAddData.keyValue === 0) {
-                ToastService.warning(isAddData.errorMessage);
-            } else {
-                ToastService.success(isAddData.errorMessage);
-            }
-            onResetData();
-            onSuccess();
-        }
-    }, [isAddSuccess, isAddData]);
-
-    useEffect(() => {
-        if (isUpdateSuccess && isUpdateData) {
-            ToastService.success(isUpdateData.errorMessage);
-            onResetData();
-            onSuccess();
-        }
-    }, [isUpdateSuccess, isUpdateData]);
 
     useEffect(() => {
         if (isEdit && editFormData) {
@@ -90,7 +61,6 @@ const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit,
                             buttonTypeClassName="theme-button"
                             buttonText={`${isEdit ? "Update" : "Add"}`}
                             onClick={handleAddEdit}
-                            isLoading={isAddLoading || isUpdateLoading}
                         />
                         <Buttons
                             buttonTypeClassName="dark-btn ml-5"

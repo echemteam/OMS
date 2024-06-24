@@ -10,8 +10,11 @@ using OMS.Application.Services.PhoneNumber;
 using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
+using OMS.Application.Services.Supplier;
+using OMS.Application.Services.SupplierNotes;
 using OMS.Application.Services.Test;
 using OMS.Application.Services.User;
+using OMS.Application.Services.SupplierDocuements;
 
 namespace OMS.Application.Services
 {
@@ -32,5 +35,9 @@ namespace OMS.Application.Services
         IEmailAddressService emailAddressService { get; }
         IPhoneNumberService phoneNumberService { get; }
         ICustomerDocumentsService customerDocumentsService { get; }
+        ISupplierServices supplierServices { get; }
+        ISupplierDocuementsService supplierDocuementsService { get; }
+        
+        ISupplierNotesService supplierNotesService { get; }
     }
 }

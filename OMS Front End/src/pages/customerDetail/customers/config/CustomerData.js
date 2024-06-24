@@ -25,43 +25,48 @@ export const reasonData = {
 export const AllCustomerGridConfig = {
   columns: [
     {
-      name: "Customer Name",
+      name: "Customer Name", 
       fieldName: "name",
+      width:"25%",
     },
     {
       name: "Tax Id",
       fieldName: "taxId",
+      width: "25%", 
     },
     {
       name: "Status",
       fieldName: "status",
       allowShort: false,
       colType: GridColumnType.LABLE,
+      width: "25%",
       colSettings: {
         valueField: "status",
         getLableClass: (value) => {
           switch (value) {
             case "Active":
-              return "badge-gradient-success";
+              return "status-btn badge-gradient-success";
             case "Open":
-              return "badge-gradient-info";
+              return "status-btn badge-gradient-info";
             case "In Active":
-              return "badge-gradient-danger";
+              return "status-btn badge-gradient-danger";
             case "Pending":
-              return "badge-gradient-Pending";
+              return "status-btn badge-gradient-Pending";
             case "In progress":
-              return "badge-gradient-theme";
+              return "status-btn badge-gradient-theme";
             case "Submitted":
-              return "badge-gradient-Submitted";
+              return "status-btn badge-gradient-Submitted";
             case "Approved":
-              return "badge-gradient-Approved";
+              return "status-btn badge-gradient-Approved";
             case "Freeze":
-              return "badge-gradient-Frozen";
+              return "status-btn badge-gradient-Frozen";
             case "Block":
-              return "badge-gradient-Blocked";
+              return "status-btn badge-gradient-Blocked";
+            case "Disable":
+              return "status-btn badge-gradient-disabled";
 
             default:
-              return "badge-gradient-info";
+              return "status-btn badge-gradient-info";
           }
         },
       },
@@ -75,6 +80,7 @@ export const AllCustomerGridConfig = {
     {
       name: "Action",
       colType: GridColumnType.ACTION,
+      width: "25%",
       defaultAction: {
         allowEdit: true,
         allowDisable: true,
@@ -96,16 +102,19 @@ export const PendingCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
+      width:"25%",
       // allowShort: true,
     },
     {
       name: "Tax Id",
       fieldName: "taxId",
+      width:"25%",
       // allowShort: true,
     },
     {
       name: "Web Site",
       fieldName: "website",
+      width:"25%",
       // allowShort: true,
     },
     // {
@@ -116,6 +125,7 @@ export const PendingCustomerGridConfig = {
     // },
     {
       name: "Action",
+      width:"25%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
@@ -130,20 +140,24 @@ export const SubmittedCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
+      width:"20%",
       // allowShort: true,
     },
     {
       name: "Tax Id",
       fieldName: "taxId",
+      width:"20%",
       // allowShort: true,
     },
     {
       name: "Web Site",
       fieldName: "website",
+      width:"20%",
       // allowShort: true,
     },
     {
       name: "Approve",
+      width:"20%",
       allowShort: false,
       colType: GridColumnType.CHECKBOX,
       // colSettings: {
@@ -152,6 +166,7 @@ export const SubmittedCustomerGridConfig = {
     },
     {
       name: "Action",
+      width:"20%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
@@ -167,15 +182,18 @@ export const ApprovedCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
+      width:"35%",
       // allowShort: true,
     },
     {
       name: "Tax Id",
+      width:"35%",
       fieldName: "taxId",
       // allowShort: true,
     },
     {
       name: "Action",
+      width:"30%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
@@ -193,19 +211,23 @@ export const AllInActiveCustomerGridConfig = {
       name: "Customer Name",
       fieldName: "name",
       // allowShort: true,
+      width:"25%",
     },
     {
       name: "Reason",
       fieldName: "taxId",
+      width:"25%",
       // allowShort: true,
     },
     {
       name: "Date",
       fieldName: "taxId",
+      width:"25%",
       // allowShort: true,
     },
     {
       name: "Status",
+      width:"25%",
       fieldName: "status",
       allowShort: false,
       colType: GridColumnType.LABLE,
@@ -214,26 +236,28 @@ export const AllInActiveCustomerGridConfig = {
         getLableClass: (value) => {
           switch (value) {
             case "Active":
-              return "badge-gradient-success";
+              return "status-btn badge-gradient-success";
             case "Open":
-              return "badge-gradient-info";
+              return "status-btn badge-gradient-info";
             case "In Active":
-              return "badge-gradient-danger";
+              return "status-btn badge-gradient-danger";
             case "Pending":
-              return "badge-gradient-Pending";
+              return "status-btn badge-gradient-Pending";
             case "In progress":
-              return "badge-gradient-theme";
+              return "status-btn badge-gradient-theme";
             case "Submitted":
-              return "badge-gradient-Submitted";
+              return "status-btn badge-gradient-Submitted";
             case "Approved":
-              return "badge-gradient-Approved";
+              return "status-btn badge-gradient-Approved";
             case "Freeze":
-              return "badge-gradient-Frozen";
+              return "status-btn badge-gradient-Frozen";
             case "Block":
-              return "badge-gradient-Blocked";
+              return "status-btn badge-gradient-Blocked";
+            case "Disable":
+              return "status-btn badge-gradient-disabled";
 
             default:
-              return "badge-gradient-info";
+              return "status-btn badge-gradient-info";
           }
         },
       },
@@ -246,13 +270,16 @@ export const FreezedInActiveCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
+      width:"25%",
     },
     {
       name: "Reason",
       fieldName: "inActiveReason",
+      width:"25%",
     },
     {
       name: "Date",
+      width:"25%",
       fieldName: "updatedAt",
       colType: GridColumnType.DATE,
       colSettings: {
@@ -262,6 +289,7 @@ export const FreezedInActiveCustomerGridConfig = {
     },
     {
       name: "Action",
+      width:"25%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: false,
@@ -277,13 +305,16 @@ export const BlockedInActiveCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
+      width:"25%",
     },
     {
       name: "Reason",
+      width:"25%",
       fieldName: "inActiveReason",
     },
     {
       name: "Date",
+      width:"25%",
       fieldName: "updatedAt",
       colType: GridColumnType.DATE,
       colSettings: {
@@ -293,6 +324,7 @@ export const BlockedInActiveCustomerGridConfig = {
     },
     {
       name: "Action",
+      width:"25%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: false,
@@ -309,13 +341,16 @@ export const DisabledInActiveCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
+      width:"35%",
     },
     {
       name: "Reason",
+      width:"35%",
       fieldName: "inActiveReason",
     },
     {
       name: "Date",
+      width:"30%",
       fieldName: "updatedAt",
       colType: GridColumnType.DATE,
       colSettings: {
@@ -323,16 +358,17 @@ export const DisabledInActiveCustomerGridConfig = {
         format: "DD/MM/YYYY hh:mm A ",
       },
     },
-    {
-      name: "Action",
-      colType: GridColumnType.ACTION,
-      defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
-        allowUnfreeze: false,
-        allowUnblocked: false,
-        allowActiveCustomer: true,
-      },
-    },
+    // {
+    //   name: "Action",
+    //   width:"25%",
+    //   colType: GridColumnType.ACTION,
+    //   defaultAction: {
+    //     allowEdit: false,
+    //     allowDelete: false,
+    //     allowUnfreeze: false,
+    //     allowUnblocked: false,
+    //     allowActiveCustomer: true,
+    //   },
+    // },
   ],
 };

@@ -4,6 +4,7 @@ import DemoGrid from "../../pages/demoGrid/DemoGrid";
 import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
+import SupplierDetails from "../../pages/supplierDetails/suppliers/ManageSupplier";
 
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
@@ -24,6 +25,9 @@ const Customers = React.lazy(() => import('../../pages/customerDetail/customers/
 const ViewCustomer = React.lazy(() => import('../../pages/customerDetail/ManageViewCustomer'));
 const ManageAddCustomer = React.lazy(() => import('../../pages/customerDetail/ManageAddCustomer'));
 const AddEditContact = React.lazy(() => import('../../pages/customerDetail/features/contactDetail/Contact/AddEditContact'));
+
+const Suppliers = React.lazy(() => import('../../pages/supplierDetails/suppliers/Suppliers'));
+const ManageAddSupplier = React.lazy(() => import('../../pages/supplierDetails/addSupplier/ManageAddSupplier'));
 
 
 export const ComponentNavigation = [
@@ -141,16 +145,16 @@ export const ComponentNavigation = [
     //   }
     // ]
   },
-  {
-    id: 'roleManagement',
-    path: '/usersRole',
-    exact: true,
-    title: 'Role Management',
-    component: UsersRole,
-    hasParams: false,
-    text: 'RoleManagement',
-    securityKey: securityKey.ROLEMANAGEMENT
-  },
+  // {
+  //   id: 'roleManagement',
+  //   path: '/usersRole',
+  //   exact: true,
+  //   title: 'Role Management',
+  //   component: UsersRole,
+  //   hasParams: false,
+  //   text: 'RoleManagement',
+  //   securityKey:""
+  // },
   {
     id: 'widgets',
     path: '/themeComponent/widgets',
@@ -201,7 +205,7 @@ export const ComponentNavigation = [
     component: ManageAddCustomer,
     hasParams: false,
     text: 'Add Customer',
-    securityKey: ""
+    securityKey: securityKey.ADDCUSTOMER
   },
   {
     id: 'viewCustomer',
@@ -211,7 +215,7 @@ export const ComponentNavigation = [
     component: ViewCustomer,
     hasParams: false,
     text: 'Customer Detail',
-    securityKey: ""
+    securityKey: securityKey.CUSTOMER
   },
   {
     id: 'Customers',
@@ -234,16 +238,16 @@ export const ComponentNavigation = [
     text: '',
     securityKey: ""
   },
-  {
-    id: 'permissions',
-    path: '/permissions',
-    exact: true,
-    title: 'Permissions',
-    component: Permissions,
-    hasParams: false,
-    text: 'Permissions',
-    securityKey: securityKey.PERMISSIONMANAGEMENT
-  },
+  // {
+  //   id: 'permissions',
+  //   path: '/permissions',
+  //   exact: true,
+  //   title: 'Permissions',
+  //   component: Permissions,
+  //   hasParams: false,
+  //   text: 'Permissions',
+  //   securityKey: securityKey.PERMISSIONMANAGEMENT
+  // },
   {
     id: 'EditPermissions',
     path: '/EditPermissions/:id',
@@ -253,5 +257,35 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'Edit Permissions',
     securityKey: securityKey.PERMISSIONMANAGEMENT
-  }
+  },
+  {
+    id: 'addSupplier',
+    path: '/addSupplier',
+    exact: true,
+    title: 'Add Supplier',
+    component: ManageAddSupplier,
+    hasParams: false,
+    text: 'Add Supplier',
+    securityKey: ""
+  },
+  {
+    id: 'Suppliers',
+    path: '/Suppliers',
+    exact: true,
+    title: 'Suppliers',
+    component: Suppliers,
+    hasParams: false,
+    text: 'Suppliers',
+    securityKey: ""
+  },
+  {
+    id: 'SupplierDetails',
+    path: '/SupplierDetails/:id',
+    exact: true,
+    title: 'Supplier Details',
+    component: SupplierDetails,
+    hasParams: false,
+    text: 'Supplier Detail',
+    securityKey: ""
+  },
 ];

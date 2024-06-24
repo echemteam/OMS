@@ -12,6 +12,9 @@ import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import { StatusEnums, StatusFeild } from '../../../../common/features/Enums/StatusEnums';
 import SwalAlert from '../../../../services/swalService/SwalService';
+import { securityKey } from '../../../../data/SecurityKey';
+import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
+
 
 export const CustomersList = ({ statusId, configFile }) => {
   const navigate = useNavigate();
@@ -27,14 +30,42 @@ export const CustomersList = ({ statusId, configFile }) => {
   const [statusFeild, setStatusFeild] = useState()
   const { listRef } = useContext(CustomerContext);
 
-  const [
-    getCustomers,
-    { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
-  ] = useGetCustomersMutation();
 
+  const [getCustomers, { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },] = useGetCustomersMutation();
   const [updateCustomerApproveStatus, { isSuccess: isSuccessUpdateCustomer, data: updateCustomerData }] = useUpdateCustomerApproveStatusMutation();
-
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
+
+
+  useEffect(() => {
+    const actionColumn = configFile?.columns.find(column => column.name === "Action");
+    if (actionColumn) {
+
+      const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
+      const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
+      const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
+      const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
+      const hasDisable = hasFunctionalPermission(securityKey.DISABLECUSTOMER);
+      const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
+      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+
+
+      if (actionColumn.defaultAction.allowEdit) {
+        actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
+      } else if (actionColumn.defaultAction.allowBlocked) {
+        actionColumn.defaultAction.allowBlocked = hasBlock?.hasAccess;
+      } else if (actionColumn.defaultAction.allowFreeze) {
+        actionColumn.defaultAction.allowFreeze = hasFreeze?.hasAccess;
+      } else if (actionColumn.defaultAction.allowActiveCustomer) {
+        actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+      } else if (actionColumn.defaultAction.allowDisable) {
+        actionColumn.defaultAction.allowDisable = hasDisable?.hasAccess;
+      } else if (actionColumn.defaultAction.allowUnblocked) {
+        actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
+      } else if (actionColumn.defaultAction.allowUnfreeze) {
+        actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+      }
+    }
+  }, [configFile]);
 
   const handlePageChange = (page) => {
     const request = {
@@ -51,7 +82,7 @@ export const CustomersList = ({ statusId, configFile }) => {
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
-        setDataSource(isListeData.dataSource);
+        setDataSource(isListeData.dataSource)
       }
       if (isListeData.totalRecord) {
         setTotalRowCount(isListeData.totalRecord);
@@ -128,15 +159,15 @@ export const CustomersList = ({ statusId, configFile }) => {
   const handleDiseble = (data) => {
     setShowModal(true);
     setcustomerId(data.customerId)
-    setStaticId(StatusEnums.Disabled)
-    setStatusFeild(StatusFeild.Disabled)
+    setStaticId(StatusEnums.Disable)
+    setStatusFeild(StatusFeild.Disable)
   }
 
   const handleBlock = (data) => {
     setShowModal(true);
     setcustomerId(data.customerId)
-    setStaticId(StatusEnums.Blocked)
-    setStatusFeild(StatusFeild.Blocked)
+    setStaticId(StatusEnums.Block)
+    setStatusFeild(StatusFeild.Block)
   }
 
   const onReset = () => {
@@ -172,58 +203,60 @@ export const CustomersList = ({ statusId, configFile }) => {
           >
             <div className="row">
               <div className="col-md-12 table-striped">
-                <MolGrid
-                  ref={molGridRef}
-                  configuration={configFile}
-                  dataSource={dataSource}
-                  isLoading={isListLoading}
-                  pagination={{
-                    totalCount: totalRowCount,
-                    pageSize: 25,
-                    currentPage: 1,
-                  }}
-                  onPageChange={handlePageChange}
-                  onActionChange={actionHandler}
-                  allowPagination={true}
-                  onCellDataChange={handleGridCheckBoxChange}
-                />
+              <div className='customer-list'>
+                  <MolGrid
+                    ref={molGridRef}
+                    configuration={configFile}
+                    dataSource={dataSource}
+                    isLoading={isListLoading}
+                    pagination={{
+                      totalCount: totalRowCount,
+                      pageSize: 25,
+                      currentPage: 1,
+                    }}
+                    onPageChange={handlePageChange}
+                    onActionChange={actionHandler}
+                    allowPagination={true}
+                    onCellDataChange={handleGridCheckBoxChange}
+                  />
+              </div>
               </div>
             </div>
           </CardSection>
-          {showModal && (
-            <CenterModel
-              showModal={showModal}
-              handleToggleModal={handleToggleModal}
-              modalTitle={statusFeild + " " + "Reason"}
-              modelSizeClass="w-50s"
-            >
-              <div className="row horizontal-form">
-                <FormCreator
-                  config={formData}
-                  ref={reasonRef}
-                  {...formData}
 
-                />
-                <div className="col-md-12 mt-2">
-                  <div className="d-flex align-item-end justify-content-end">
-                    <div className="d-flex align-item-end">
-                      <Buttons
-                        buttonTypeClassName="theme-button"
-                        buttonText="Update"
-                        isLoading={updateCustomerInActiveStatusCustomerLoading}
-                        onClick={handleUpdate}
-                      />
-                      <Buttons
-                        buttonTypeClassName="dark-btn ml-5"
-                        buttonText="Cancel"
-                        onClick={handleToggleModal}
-                      />
-                    </div>
+          <CenterModel
+            showModal={showModal}
+            handleToggleModal={handleToggleModal}
+            modalTitle={statusFeild + " " + "Reason"}
+            modelSizeClass="w-50s"
+          >
+            <div className="row horizontal-form">
+              <FormCreator
+                config={formData}
+                ref={reasonRef}
+                {...formData}
+
+              />
+              <div className="col-md-12 mt-2">
+                <div className="d-flex align-item-end justify-content-end">
+                  <div className="d-flex align-item-end">
+                    <Buttons
+                      buttonTypeClassName="theme-button"
+                      buttonText="Update"
+                      isLoading={updateCustomerInActiveStatusCustomerLoading}
+                      onClick={handleUpdate}
+                    />
+                    <Buttons
+                      buttonTypeClassName="dark-btn ml-5"
+                      buttonText="Cancel"
+                      onClick={handleToggleModal}
+                    />
                   </div>
                 </div>
               </div>
-            </CenterModel>
-          )}
+            </div>
+          </CenterModel>
+
         </div>
       </div>
     </div>

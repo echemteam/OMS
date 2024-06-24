@@ -7,37 +7,53 @@ import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel
 import { contactTransformData } from "../../../../../utils/TransformData/TransformAPIData";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
-import { useLazyGetAllContactTypesQuery, useLazyGetContactByCustomerIdQuery } from "../../../../../app/services/contactAPI";
+import { useLazyGetAllContactTypesQuery } from "../../../../../app/services/contactAPI";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Component's */
 const AddEditContact = React.lazy(() => import("./AddEditContact"));
 const ManageContactList = React.lazy(() => import("./ManageContactList"));
 
-const ContactDetail = () => {
+const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, isSupplier, isEditablePage, SecurityKey }) => {
 
   //** State */
-  const childRef = useRef();
   const editRef = useRef();
-  const addRef = useRef();
+  const childRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
+  const [editFormData, setEditFormData] = useState();
   const [isModelOpen, setisModelOpen] = useState(false);
-  const [isAddModelOpen, setIsAddModelOpen] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true);
   const [modifyContactData, setModifyContactData] = useState([]);
-  const { customerId, setEmailAddressData, setContactMainModal, setContactId, setPhoneNumberData } = useContext(BasicDetailContext);
+  const { setEmailAddressData, setContactMainModal, setContactId, setPhoneNumberData } = useContext(BasicDetailContext);
 
   //** API Call's */
-  const [GetContactList, { isLoading,isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetContactByCustomerIdQuery();
+  const [GetContactList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = getContactByIdQuery();
   const [getAllContactTypes, { isFetching: isGetAllContactTypesFetching, isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
 
   //** UseEffect */
   useEffect(() => {
     getAllContactTypes();
-    customerId && GetContactList(customerId);
-  }, [customerId]);
+    onGetContactList();
+  }, [mainId]);
+
+  useEffect(() => {
+    if (isEditablePage && SecurityKey) {
+      const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+
+      if (hasAddPermission) {
+        if (hasAddPermission.hasAccess === true) {
+          setButtonVisible(true);
+        }
+        else {
+          setButtonVisible(false);
+        }
+      }
+    }
+  }, [isEditablePage, isSupplier, SecurityKey]);
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetContactData) {
       const modifyData = contactTransformData(isGetContactData);
-      setModifyContactData(modifyData)
+      setModifyContactData(modifyData);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetContactData])
 
@@ -60,23 +76,21 @@ const ContactDetail = () => {
     setPhoneNumberData('');
     setEmailAddressData('');
     setContactMainModal(true);
-    setIsAddModelOpen(true);
+    setEditFormData('');
     if (childRef.current) {
       childRef.current.callChildFunction();
     }
-    if (addRef.current) {
-      addRef.current.callOpenModalFunction();
-    }
   };
 
-  const handleEdit = (data) => {
-    setIsAddModelOpen(false);
+  const handleEdit = (data, emailAddressList, phoneNumberLsit) => {
     setIsEdit(true);
-    // setEditFormData(data);
+    setEditFormData(data);
     setisModelOpen(!isModelOpen);
     if (editRef.current) {
       editRef.current.callEditFunction(data);
     }
+    setPhoneNumberData(phoneNumberLsit);
+    setEmailAddressData(emailAddressList);
   };
 
   const onSidebarClose = () => {
@@ -88,12 +102,13 @@ const ContactDetail = () => {
 
   //** Success */
   const onSuccess = () => {
-    customerId && GetContactList(customerId);
+    onGetContactList();
+    setisModelOpen(!isModelOpen);
   };
 
   //** Get Contact List */
   const onGetContactList = () => {
-    customerId && GetContactList(customerId);
+    mainId && GetContactList(mainId);
   };
 
   return (
@@ -103,20 +118,20 @@ const ContactDetail = () => {
         buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
-        rightButton={true}
+        rightButton={buttonVisible ? true : false}
         buttonText="Add"
         titleButtonClick={handleToggleModal}>
-        <ManageContactList handleEdit={handleEdit} modifyContactData={modifyContactData} isLoading={isLoading} />
+        <ManageContactList handleEdit={handleEdit} modifyContactData={modifyContactData} isLoading={isGetContactFetching} />
       </CardSection>
       <div className="sidebar-contact-model">
         <SidebarModel
           modalTitle="Add/Edit Contact"
-          contentClass="content-55"
+          contentClass="content-45"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}>
-          <AddEditContact onSidebarClose={onSidebarClose} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} addRef={addRef}
-            isAddModelOpen={isAddModelOpen} onGetContactList={onGetContactList} />
+          <AddEditContact onSidebarClose={onSidebarClose} editFormData={editFormData} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} SecurityKey={SecurityKey}
+            onGetContactList={onGetContactList} addEditContactMutation={addEditContactMutation} mainId={mainId} isEditablePage={isEditablePage} />
         </SidebarModel>
       </div>
     </>

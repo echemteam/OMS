@@ -5,13 +5,12 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import { contactDetailFormData } from "./config/ContactDetailForm.data";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-//** Service's */
-import { useAddEditContactMutation } from "../../../../../app/services/contactAPI";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onSuccess, childRef, isEdit, editRef, onGetContactList }) => {
+const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey, isEditablePage }) => {
 
   //** State */
   const ref = useRef();
@@ -19,10 +18,10 @@ const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onS
   const [formData, setFormData] = useState(contactDetailFormData);
   const [customerContactId, setCustomerContactId] = useState(0);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const { customerId, contactId, setContactId } = useContext(BasicDetailContext);
+  const { contactId, setContactId, emailAddressData, phoneNumberData } = useContext(BasicDetailContext);
 
   //** API Call's */
-  const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = useAddEditContactMutation();
+  const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
 
   //** Handle Changes */
   const handleAddEdit = () => {
@@ -31,9 +30,11 @@ const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onS
       let request = {
         ...data,
         contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
-        customerId: customerId,
+        customerId: mainId,
         contactId: contactId,
-        customerContactId: customerContactId
+        customerContactId: customerContactId,
+        emailList: emailAddressData.length > 0 ? emailAddressData : null,
+        phoneList: phoneNumberData.length > 0 ? phoneNumberData : null
       }
       addEdit(request);
     }
@@ -45,10 +46,6 @@ const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onS
     if (isAddEditSuccess && isAddEditData) {
       if (onSuccess) {
         setContactId(isAddEditData?.keyValue);
-        if (isAddModelOpen) {
-          formSetting.isViewOnly = true;
-          setIsButtonDisable(true);
-        }
         onSuccess();
       }
       ToastService.success(isAddEditData.errorMessage);
@@ -60,18 +57,32 @@ const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onS
     callEditFunction: handleEditMode,
   }));
 
-  useImperativeHandle(addRef, () => ({
-    callOpenModalFunction: handleOpenModal,
-  }));
-
-  const handleOpenModal = () => {
-    formSetting.isViewOnly = false;
-    setIsButtonDisable(false);
-  }
+  useEffect(() => {
+    if (isEditablePage && SecurityKey) {
+      const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
+      const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+      if (hasEditPermission && formSetting) {
+        if (editFormData) {
+          if (hasEditPermission.isViewOnly === true) {
+            formSetting.isViewOnly = true;
+            setIsButtonDisable(true);
+          }
+          else {
+            formSetting.isViewOnly = false;
+            setIsButtonDisable(false);
+          }
+        }
+        else if (!editFormData) {
+          if (hasAddPermission.hasAccess === true) {
+            formSetting.isViewOnly = false;
+            setIsButtonDisable(false);
+          }
+        }
+      }
+    }
+  }, [editRef, editFormData, SecurityKey])
 
   const handleEditMode = (data) => {
-    formSetting.isViewOnly = false;
-    setIsButtonDisable(false);
     if (data) {
       let form = { ...contactDetailFormData };
       form.initialState = {
@@ -102,28 +113,28 @@ const AddEditContact = forwardRef(({ isAddModelOpen, addRef, onSidebarClose, onS
     <div>
       <div className="row horizontal-form mt-4">
         <FormCreator config={formData} ref={ref} {...formData} />
-        <div className="col-md-12 mt-3">
-          <div className="d-flex align-item-end justify-content-end">
-            <div className="d-flex align-item-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText='Save'
-                isLoading={isAddEditLoading}
-                onClick={handleAddEdit}
-                isDisable={isButtonDisable}
-              />
-              <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-                onClick={onSidebarClose}
-              />
-            </div>
-          </div>
-        </div>
       </div>
       <div className="row">
         <ManageEmailAddress onGetContactList={onGetContactList} />
         <ManageContactNumbers onGetContactList={onGetContactList} />
+      </div>
+      <div className="col-md-12 mt-5">
+        <div className="d-flex align-item-end justify-content-end">
+          <div className="d-flex align-item-end">
+            <Buttons
+              buttonTypeClassName="theme-button"
+              buttonText='Save'
+              isLoading={isAddEditLoading}
+              onClick={handleAddEdit}
+              isDisable={isButtonDisable}
+            />
+            <Buttons
+              buttonTypeClassName="dark-btn ml-5"
+              buttonText="Cancel"
+              onClick={onSidebarClose}
+            />
+          </div>
+        </div>
       </div>
     </div >
   );

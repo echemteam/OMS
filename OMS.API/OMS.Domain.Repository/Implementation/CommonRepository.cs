@@ -2,7 +2,6 @@
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using System.Collections.Generic;
 using System.Data;
 
 namespace OMS.Domain.Repository.Implementation
@@ -22,6 +21,11 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLDOCUMENTTYPES = "GetAllDocumentTypes";
         const string GETALLDEFAULTPAYMENTTEMPLETE = "GetDefaultPaymentTemplete";
         const string GETALLPAYMENTMETHOD = "GetAllPaymentMethod";
+        const string GETALLSUPPLIERTYPE = "GetAllSupplierType";
+        const string GETALLDELIVERYCARRIERS = "GetAllDeliveryCarriers";
+        const string GETALLDELIVERYMETHODS = "GetAllDeliveryMethods";
+        const string GETALLDELIVERYACCOUNTS = "GetAllDeliveryAccounts";
+        const string GETALLPHONETYPES = "GetAllPhoneTypes";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -35,7 +39,7 @@ namespace OMS.Domain.Repository.Implementation
 
         public async Task<List<GetUnAssignedUserByRoleIdResponse>> GetUnAssignedUserByRoleId(byte roleId)
         {
-            List<GetUnAssignedUserByRoleIdResponse> getAllUsersResponse =await _context.GetList<GetUnAssignedUserByRoleIdResponse>(GETUNASSIGNEDUSERBYROLEID, new
+            List<GetUnAssignedUserByRoleIdResponse> getAllUsersResponse = await _context.GetList<GetUnAssignedUserByRoleIdResponse>(GETUNASSIGNEDUSERBYROLEID, new
             {
                 roleId
             }, commandType: CommandType.StoredProcedure);
@@ -89,6 +93,27 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetList<GetAllPaymentMethodResponse>(GETALLPAYMENTMETHOD, commandType: CommandType.StoredProcedure);
         }
 
+        public async Task<List<GetAllSupplierTypeResponse>> GetAllSupplierType()
+        {
+            return await _context.GetList<GetAllSupplierTypeResponse>(GETALLSUPPLIERTYPE, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllDeliveryCarriersResponse>> GetAllDeliveryCarriers()
+        {
+            return await _context.GetList<GetAllDeliveryCarriersResponse>(GETALLDELIVERYCARRIERS, commandType: CommandType.StoredProcedure);
+        }
 
+        public async Task<List<GetAllDeliveryMethodsResponse>> GetAllDeliveryMethods()
+        {
+            return await _context.GetList<GetAllDeliveryMethodsResponse>(GETALLDELIVERYMETHODS, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllDeliveryAccountsResponse>> GetAllDeliveryAccounts()
+        {
+            return await _context.GetList<GetAllDeliveryAccountsResponse>(GETALLDELIVERYACCOUNTS, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllPhoneTypesResponse>> GetAllPhoneTypes()
+        {
+            return await _context.GetList<GetAllPhoneTypesResponse>(GETALLPHONETYPES, commandType: CommandType.StoredProcedure);
+        }
     }
 }

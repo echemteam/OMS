@@ -14,6 +14,7 @@
         public bool? IsCompany { get; set; }
         public string? TaxId { get; set; }
         public bool? IsBuyingForThirdParty {  get; set; }
-
+        public short? StatusId { get; set; }
+        public string? Status { get; set; }
     }
 }

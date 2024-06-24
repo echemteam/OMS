@@ -41,18 +41,18 @@ const InActiveCustomer = ({statusId}) => {
       ),
     },
     {
-      sMenuItemCaption: "Blocked",
+      sMenuItemCaption: "Block",
       component: (
         <div className="mt-2">
-          <InActiveCustomers statusId={StatusEnums.Blocked} configFile={BlockedInActiveCustomerGridConfig}/>
+          <InActiveCustomers statusId={StatusEnums.Block} configFile={BlockedInActiveCustomerGridConfig}/>
         </div>
       ),
     },
     {
-      sMenuItemCaption: "Disabled",
+      sMenuItemCaption: "Disable",
       component: (
         <div className="mt-2">
-          <InActiveCustomers statusId={StatusEnums.Disabled} configFile={DisabledInActiveCustomerGridConfig} />
+          <InActiveCustomers statusId={StatusEnums.Disable} configFile={DisabledInActiveCustomerGridConfig} />
         </div>
       ),
     },

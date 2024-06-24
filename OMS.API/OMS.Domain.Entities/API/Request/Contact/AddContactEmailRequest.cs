@@ -2,7 +2,7 @@
 {
     public class AddContactEmailRequest
     {
+        public int? EmailId { get; set; }
         public string? EmailAddress { get; set; }
-        public int? ContactId { get; set; }
     }
 }

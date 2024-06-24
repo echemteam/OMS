@@ -11,17 +11,17 @@ const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler }) => {
     const { emailAddressData } = useContext(BasicDetailContext);
 
     return (
-        <div className="col-xl-6 col-lg-6 col-md-6 col-12 mt-4 card-email-sec">
+        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2 card-email-sec">
             <CardSection
                 cardTitle="Email Address"
-                buttonClassName="danger-btn"
+                buttonClassName="theme-button"
                 textWithIcon={true}
                 iconImg={AppIcons.PlusIcon}
                 rightButton={true}
                 buttonText="Add"
                 titleButtonClick={handleToggleModal}>
                 <div className="row">
-                    <div className="col-md-12 table-striped pt-1">
+                    <div className="col-md-12 table-striped">
                         <MolGrid
                             ref={molGridRef}
                             configuration={emailConfig}

@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+//** Lib's */
+import { Message } from "../Util/ContactMessages";
+import { deleteData } from "../Util/ContactEmailAddressUtil";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
-import ToastService from "../../../../../services/toastService/ToastService";
-import { useDeleteContactEmailMutation, useLazyGetEmailByContactIdQuery } from "../../../../../app/services/emailAddressAPI";
 import SwalAlert from "../../../../../services/swalService/SwalService";
+import ToastService from "../../../../../services/toastService/ToastService";
+import { useDeleteContactEmailMutation } from "../../../../../app/services/emailAddressAPI";
 //** Component's */
 const EmailAddressList = React.lazy(() => import("./EmailAddressList"));
 const AddEditEmailModal = React.lazy(() => import("./AddEditEmailAddress"));
@@ -16,38 +19,31 @@ const ManageEmailAddress = ({ onGetContactList }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
-    const { contactId, setEmailAddressData } = useContext(BasicDetailContext);
+    const { setEmailAddressData, emailAddressData } = useContext(BasicDetailContext);
 
     //** API Call's */
-    const [getEmailList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetEmailByContactIdQuery();
     const [deleteContactEmail, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactEmailMutation();
 
     //** UseEffect */
-    useEffect(() => {
-        contactId && getEmailList(contactId);
-    }, [contactId])
-
-    useEffect(() => {
-        if (isGetContactSucess && isGetContactData && !isGetContactFetching) {
-            setEmailAddressData(isGetContactData);
-        }
-    }, [isGetContactSucess, isGetContactData, isGetContactFetching]);
 
     useEffect(() => {
         if (isDeleteSucess && isDeleteData && !isDeleteFetching) {
             ToastService.success(isDeleteData.errorMessage);
-            contactId && getEmailList(contactId);
             onGetContactList();
         }
     }, [isDeleteSucess, isDeleteData, isDeleteFetching]);
 
     //** Handle Changes */
     const handleToggleModal = () => {
-        if (contactId > 0) {
+        if (emailAddressData?.length < 2) {
             setShowModal(!showModal);
             setIsEdit(false);
         } else {
-            ToastService.warning("Please save the first contact details fields before proceeding.");
+            if (showModal) {
+                setShowModal(!showModal);
+            } else {
+                ToastService.warning("You have reached the maximum number of Email Address. Please remove an existing email address before adding a new one.")
+            }
         }
     };
 
@@ -55,7 +51,6 @@ const ManageEmailAddress = ({ onGetContactList }) => {
     const onSuccess = () => {
         setShowModal(!showModal);
         setIsEdit(false);
-        contactId && getEmailList(contactId);
         onGetContactList();
     };
 
@@ -71,7 +66,7 @@ const ManageEmailAddress = ({ onGetContactList }) => {
             "Delete", "Cancel"
         ).then((confirmed) => {
             if (confirmed) {
-                deleteContactEmail(data.emailId);
+                deleteData(data.emailId, data.id, deleteContactEmail, emailAddressData, setEmailAddressData, Message.EmailDelete, true)
             }
         });
     }

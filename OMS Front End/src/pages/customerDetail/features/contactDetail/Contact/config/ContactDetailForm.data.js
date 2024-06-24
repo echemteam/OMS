@@ -53,52 +53,21 @@ export const contactDetailFormData = {
         containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2",
       },
     },
-
-    // {
-    //   id: "gender",
-    //   label: "Gender :",
-    //   fieldName: "Instrument Type",
-    //   fieldType: FormFieldTypes.RADIOBUTTON,
-    //   dataField: "gender",
-    //   fieldSetting: {
-    //     options: [
-    //       {
-    //         label: "Male",
-    //         value: "Male",
-    //         isDisable: false,
-    //         optionClass: "",
-    //       },
-    //       {
-    //         label: "Female",
-    //         value: "Female",
-    //         isDisable: false,
-    //         optionClass: "second-radio",
-    //       },
-
-    //       // Add more options if needed
-    //     ],
-    //   },
-    //   validation: [{ type: "require" }],
-    //   style: {
-    //     containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12",
-    //   },
-    // },
-    // {
-    //   id: "isInternational",
-    //   lable: "Is International",
-    //   Field_Name: "Is International",
-    //   fieldType: FormFieldTypes.CHECKBOX,
-    //   dataField: "Is International",
-    //   fieldSetting: {
-    //     placeholder: "",
-    //     allowSpace: true,
-    //   },
-    //   validation: [{ type: "require" }],
-    //   style: {
-    //     containerCss:
-    //       "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 pt-1 margin-left0-checkbox",
-    //   },
-    // },
+    {
+      id: "isPrimary",
+      lable: "Is Primary",
+      Field_Name: "Is Primary",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isPrimary",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      style: {
+        containerCss:
+          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+      },
+    },
   ],
   formSetting: {
     isViewOnly: false

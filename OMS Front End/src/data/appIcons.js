@@ -7,6 +7,8 @@ import edit from "../assets/images/editIcon.png";
 import editTheme from "../assets/images/editIcon-theme.png";
 import deleted from "../assets/images/deleteIcon.png";
 import deleteTheme from "../assets/images/deleteIcon-theme.png";
+import update from "../assets/images/update.png";
+import timeline from "../assets/images/timeline.png";
 
 import copy from "../assets/images/copy.png";
 import downloadIcon from "../assets/images/download.png";
@@ -67,6 +69,8 @@ export const AppIcons = {
   editThemeIcon: editTheme,
   deleteIcon: deleted,
   deleteThemeIcon: deleteTheme,
+  UpdateIcon:update,
+  TimelineIcon:timeline,
   copyIcon: copy,
   DownloadIcon: downloadIcon,
   permissionIcon: permissionIcon,

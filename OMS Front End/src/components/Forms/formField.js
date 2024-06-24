@@ -3,6 +3,7 @@ import { FormFieldTypes } from "../../data/formFieldType";
 import { TextInputType } from "../../data/formControlTypes";
 import Line from "../ui/separator/Line";
 import FormMainTitle from "../ui/formTitle/FormMainTitle";
+import CKEditorField from "./formField/FormCkEditorField";
 
 const FormInputFields = React.lazy(() => import("./formField/FormInputFields"));
 const FormSelectField = React.lazy(() => import("./formField/FormSelectField"));
@@ -24,7 +25,8 @@ const FormFields = ({
   onActionChange,
   onFormFieldChange,
   handleInputGroupButton,
-  onInputChange
+  onInputChange,
+  onCheckBoxChange
 }) => {
 
   const [overRideProps, setOverRideProps] = useState({});
@@ -148,6 +150,7 @@ const FormFields = ({
               name={field.id}
               onChange={handleInputChange}
               onValidation={onUpdateValidation}
+              fieldActions={onCheckBoxChange}
               formSetting={formSetting}
               formData={formData}
               error={validState.error[field.dataField] || ""}
@@ -291,6 +294,26 @@ const FormFields = ({
           <FormMainTitle {...field.fieldSetting} containerCss={containerCss} />
         );
       // Add similar cases for other field types (FileUpload, Radio, Date, DateTime)
+      case FormFieldTypes.CKEDITOR:
+        return (
+          <div className={containerCss}>
+            <CKEditorField
+              key={field.dataField}
+              labelName={field.lable}
+              dataField={field.dataField}
+              name={field.id}
+              onValidation={onUpdateValidation}
+              value={formData?.[field.dataField] || ""}
+              onChange={handleInputChange}
+              error={validState.error[field.dataField] || ""}
+              formSetting={formSetting}
+              formData={formData}
+              changeAction={field.changeAction}
+              overRideProps={overRideProps?.[field.dataField]}
+              {...field.fieldSetting}
+            />
+          </div>
+        );
       default:
         return null;
     }
@@ -316,6 +339,8 @@ const fieldTypeToInputType = (fieldtype) => {
     case FormFieldTypes.TEXTEDITOR:
       return TextInputType.TEXT;
     case FormFieldTypes.TINYEDITOR:
+      return TextInputType.TEXT;
+    case FormFieldTypes.CKEDITOR:
       return TextInputType.TEXT;
     case FormFieldTypes.FILE:
       return TextInputType.FILE;

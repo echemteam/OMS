@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
+import { Message } from "../Util/ContactMessages";
+import { deleteData } from "../Util/ContactEmailAddressUtil";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
-import ToastService from "../../../../../services/toastService/ToastService";
-import { useDeleteContactPhoneMutation, useLazyGetPhoneByContactIdQuery } from "../../../../../app/services/phoneNumberAPI";
 import SwalAlert from "../../../../../services/swalService/SwalService";
+import ToastService from "../../../../../services/toastService/ToastService";
+import { useDeleteContactPhoneMutation, useGetAllPhoneTypesQuery, useLazyGetPhoneByContactIdQuery } from "../../../../../app/services/phoneNumberAPI";
+import { addEditContactsFormData } from "./config/AddEditContactsForm.data";
 //** Component's */
 const ContactNumberList = React.lazy(() => import("./ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./AddEditContactNumber"));
@@ -17,22 +20,28 @@ const ManageContactNumbers = ({ onGetContactList }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
-    const { contactId, setPhoneNumberData } = useContext(BasicDetailContext);
+    const { contactId, setPhoneNumberData, phoneNumberData } = useContext(BasicDetailContext);
 
     //** API Call's */
     const [getList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetPhoneByContactIdQuery();
     const [deletePhoneNumber, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactPhoneMutation();
+    const { data, isFetching, isSuccess, isError } = useGetAllPhoneTypesQuery();
 
     //** UseEffect */
     useEffect(() => {
         contactId && getList(contactId);
-    }, [contactId])
+    }, [contactId]);
 
     useEffect(() => {
-        if (isGetContactSucess && isGetContactData && !isGetContactFetching) {
-            setPhoneNumberData(isGetContactData);
+        if (isSuccess && data) {
+            const getData = data.map(item => ({
+                value: item.phoneTypeId,
+                label: item.type
+            }))
+            const dropdownField = addEditContactsFormData.formFields.find(item => item.dataField === "phoneTypeId");
+            dropdownField.fieldSetting.options = getData;
         }
-    }, [isGetContactSucess, isGetContactData, isGetContactFetching]);
+    }, [isSuccess, data])
 
     useEffect(() => {
         if (isDeleteSucess && isDeleteData && !isDeleteFetching) {
@@ -44,11 +53,15 @@ const ManageContactNumbers = ({ onGetContactList }) => {
 
     //** Handle Changes */
     const handleToggleModal = () => {
-        if (contactId > 0) {
+        if (phoneNumberData?.length < 5) {
             setShowModal(!showModal);
             setIsEdit(false);
         } else {
-            ToastService.warning("Please save the first contact details fields before proceeding");
+            if (showModal) {
+                setShowModal(!showModal);
+            } else {
+                ToastService.warning("You have reached the maximum number of contacts. Please remove an existing contact before adding a new one.")
+            }
         }
     };
 
@@ -56,8 +69,6 @@ const ManageContactNumbers = ({ onGetContactList }) => {
     const onSuccess = () => {
         setShowModal(!showModal);
         setIsEdit(false);
-        contactId && getList(contactId);
-        onGetContactList();
     };
 
     //** Action Handler */
@@ -72,7 +83,7 @@ const ManageContactNumbers = ({ onGetContactList }) => {
             "Delete", "Cancel"
         ).then((confirmed) => {
             if (confirmed) {
-                deletePhoneNumber(data.phoneId);
+                deleteData(data.phoneId, data.id, deletePhoneNumber, phoneNumberData, setPhoneNumberData, Message.ContactNumberDelete, false)
             }
         });
     }
@@ -83,7 +94,7 @@ const ManageContactNumbers = ({ onGetContactList }) => {
 
     return (
         <React.Fragment>
-            <ContactNumberList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} />
+            <ContactNumberList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} isLoading={isGetContactFetching} />
             {showModal && (
                 <AddEditContactNumber handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} editFormData={editFormData} isEdit={isEdit} />
             )}

@@ -9,5 +9,6 @@ namespace OMS.Application.Services.Address
         Task<AddEntityDTO<int>> AddAddress(AddAddressRequest requestData, short CurrentUserId);
         Task<List<GetAddresssByCustomerIdResponse>> GetAddresssByCustomerId(int customerId);
         Task<AddEntityDTO<int>> UpdateAddAddress(UpdateAddressRequest requestData, short CurrentUserId);
+        Task<List<GetAddresssBySupplierIdResponse>> GetAddresssBySupplierId(int supplierId);
     }
 }

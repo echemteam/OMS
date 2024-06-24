@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const SettingFormData = {
   name: "Setting Form",
-  initialState: { paymentTermId: "" ,creditLimit:"",paymentMethodId:"",billingCurrency:"",invoiceSubmissionInstruction:""},
+  initialState: { paymentTermId: "", creditLimit: "", paymentMethodId: "", billingCurrency: "", invoiceSubmissionInstruction: "" },
   formFields: [
     {
       id: "paymentTermId",
@@ -48,9 +48,9 @@ export const SettingFormData = {
       style: {
         containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
       },
-      
+
     },
-      {
+    {
       id: "billingCurrency",
       lable: "Billing Currency :",
       Field_Name: "Billing Currency",
@@ -69,7 +69,7 @@ export const SettingFormData = {
       id: "invoiceSubmissionInstruction",
       lable: "Invoice Submission Instruction :",
       Field_Name: "Invoice Submission Instruction",
-      fieldType: FormFieldTypes.TINYEDITOR,
+      fieldType: FormFieldTypes.CKEDITOR,
       dataField: "invoiceSubmissionInstruction",
       fieldSetting: {
         placeholder: "",
@@ -80,6 +80,6 @@ export const SettingFormData = {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
       },
     },
-    
+
   ],
 };

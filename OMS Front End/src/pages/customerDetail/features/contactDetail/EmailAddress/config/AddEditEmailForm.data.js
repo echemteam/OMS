@@ -4,7 +4,10 @@ import { GridColumnType } from "../../../../../../data/gridColumnType";
 
 export const addEditEmailFormData = {
   name: "Add Edit Role Form",
-  initialState: { emailAddress: "" },
+  initialState: {
+    emailAddress: "",
+    id: ''
+  },
   formFields: [
     {
       id: "emailAddress",
@@ -14,7 +17,7 @@ export const addEditEmailFormData = {
       dataField: "emailAddress",
       fieldSetting: {
         placeholder: "Enter Email Address",
-        allowSpace: true,
+        allowSpace: false,
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
@@ -29,10 +32,12 @@ export const emailConfig = {
   columns: [
     {
       name: "Email Address",
-      fieldName: "emailAddress"
+      fieldName: "emailAddress",
+      width: "60%",
     },
     {
       name: "Action",
+      width: "40%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

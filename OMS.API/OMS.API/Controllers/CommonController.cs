@@ -106,6 +106,39 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
+        [HttpGet("GetAllSupplierType")]
+        public async Task<IActionResult> GetAllSupplierType()
+        {
+            List<GetAllSupplierTypeResponse> responseData = await _serviceManager.commonServices.GetAllSupplierType().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
 
+        [HttpGet("GetAllDeliveryCarriers")]
+        public async Task<IActionResult> GetAllDeliveryCarriers()
+        {
+            List<GetAllDeliveryCarriersResponse> responseData = await _serviceManager.commonServices.GetAllDeliveryCarriers().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllDeliveryMethods")]
+        public async Task<IActionResult> GetAllDeliveryMethods()
+        {
+            List<GetAllDeliveryMethodsResponse> responseData = await _serviceManager.commonServices.GetAllDeliveryMethods().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllDeliveryAccounts")]
+        public async Task<IActionResult> GetAllDeliveryAccounts()
+        {
+            List<GetAllDeliveryAccountsResponse> responseData = await _serviceManager.commonServices.GetAllDeliveryAccounts().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllPhoneTypes")]
+        public async Task<IActionResult> GetAllPhoneTypes()
+        {
+            List<GetAllPhoneTypesResponse> responseData = await _serviceManager.commonServices.GetAllPhoneTypes().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

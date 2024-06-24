@@ -1,20 +1,20 @@
-import React, { forwardRef, useContext, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { useNavigate, useParams } from "react-router-dom";
 import Buttons from "../../../../components/ui/button/Buttons";
-import { UserGridConfig, securityKeys, userFormData } from "./config/UserForm.data";
+import { userFormData } from "./config/UserForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import { decryptUrlData } from "../../../../services/CryptoService";
 //** Services's */
 import ChangePassword from "./ChangePassword";
-import changePasswordInfo from "./config/ChangePassword.data";
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddUserMutation, useLazyGetUserByUserIdQuery, useUpdateUserMutation } from "../../../../app/services/userAPI";
 //** Context */
-import { PagePermissionsContext } from "../../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
 //** Custom Hook */
-import usePermissions from "../../../../utils/CustomHook/UsePermissions";
+import { securityKey } from "../../../../data/SecurityKey";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 const AddEditUser = forwardRef(() => {
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const AddEditUser = forwardRef(() => {
   const userFormRef = useRef();
 
   const [userForm, setUserForm] = useState(userFormData);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
 
   const [
     addUser,
@@ -45,9 +46,28 @@ const AddEditUser = forwardRef(() => {
     },
   ] = useLazyGetUserByUserIdQuery();
 
-  const { isButtonDisable } = useContext(PagePermissionsContext);
-  usePermissions(descrypteId, securityKeys, userFormData, UserGridConfig);
-  usePermissions(descrypteId, securityKeys, changePasswordInfo);
+  const { formSetting } = userFormData;
+  const hasAddPermission = hasFunctionalPermission(securityKey.ADDUSER);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITUSER);
+
+  useEffect(() => {
+    if (descrypteId) {
+      if (hasEditPermission.isViewOnly === true) {
+        formSetting.isViewOnly = true;
+        setIsButtonDisable(true);
+      }
+      else {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+      }
+    }
+    else if (!descrypteId) {
+      if (hasAddPermission.hasAccess === true) {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+      }
+    }
+  }, [descrypteId, hasEditPermission, hasAddPermission, formSetting.isViewOnly])
 
   const handleUser = () => {
     let userData = userFormRef.current.getFormData(); // Get form data from the FormCreator component.
@@ -116,11 +136,14 @@ const AddEditUser = forwardRef(() => {
         <div className="row">
           <div className="col-md-12 horizontal-form">
             <div className="row vertical-form">
-              <FormCreator
-                config={userForm}
-                ref={userFormRef}
-                {...userForm}
-              />
+              {!isGetByIdFetching ?
+                < FormCreator
+                  config={userForm}
+                  ref={userFormRef}
+                  {...userForm}
+                  isLoading={isGetByIdFetching}
+                />
+                : <DataLoader />}
             </div>
           </div>
           <div className="col-md-12 mt-2">

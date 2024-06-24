@@ -97,4 +97,26 @@ export const Menu = [
       },
     ],
   },
+  {
+    id: "supplier",
+    name: "Supplier Details",
+    iconClass: "bi bi-people-fill",
+    subMenu: true,
+    to: "#",
+    securityKey: "",
+    children: [
+      {
+        id: "addSupplier",
+        submenuName: "Add Supplier",
+        to: "/addSupplier",
+        securityKey: "",
+      },
+      {
+        id: "Suppliers",
+        submenuName: "Supplier",
+        to: "/Suppliers",
+        securityKey: "",
+      },
+    ],
+  },
 ];

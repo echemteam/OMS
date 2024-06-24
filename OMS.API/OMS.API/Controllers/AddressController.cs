@@ -30,7 +30,6 @@ namespace OMS.API.Controllers
         [HttpPost("AddAddress")]
         public async Task<IActionResult> AddAddress(AddAddressRequest requestData)
         {
-
             var addItem = await _serviceManager.addressServices.AddAddress(requestData, CurrentUserId);
             return APISucessResponce(addItem);
         }
@@ -51,6 +50,13 @@ namespace OMS.API.Controllers
                 responseData = await _serviceManager.addressServices.UpdateAddAddress(requestData, CurrentUserId);
                 return APISucessResponce(responseData);
             }
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAddresssBySupplierId")]
+        public async Task<IActionResult> GetAddresssBySupplierId(int supplierId)
+        {
+            List<GetAddresssBySupplierIdResponse> responseData = await _serviceManager.addressServices.GetAddresssBySupplierId(supplierId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
         #endregion

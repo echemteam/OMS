@@ -6,7 +6,7 @@
   height: 35px;
   //box-shadow: none !important;
   padding: 0 8px;
-  font-size: 90%;
+  font-size: 80%;
   transition: 0.5s all;
 
   &:focus-visible,
@@ -78,23 +78,30 @@ form {
   }
 }
 
+// .label-name-small {
+//   .input-label-part {
+//     .input-label-title {
+//       min-width: 70px;
+//       max-width: 70px;
+//     }
+//   }
+//   .validation-text{
+//     margin-left: 87px !important;
+//     margin-top: -18px !important;
+//   }
+// }
 @media only screen and (max-width: 1560px) {
   .validation-text {
     margin-left: 120px;
     font-size: 10px;
   }
 
-  .input-field {
-    height: 30px;
-    padding: 0 5px;
-    margin-top: 1px;
-  }
+  
 
   .input-group-append {
     .input-button {
-      height: 30px;
+      height: 35px;
       padding: 0 5px;
-      margin-top: 1px;
     }
   }
 }

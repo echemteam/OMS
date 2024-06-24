@@ -19,5 +19,8 @@ namespace OMS.Domain.Repository
         IEmailAddressRepository emailAddress { get; }
         IPhoneNumberRepository phoneNumber { get; }
         ICustomerDocumentsRepository customerDocuments { get; }
+        ISupplierRepository supplier { get; }
+        ISupplierdocuementsRepositery supplierdocuements { get; }
+        ISupplierNotesRepository supplierNotes { get; }
     }
 }

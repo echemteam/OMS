@@ -1,17 +1,14 @@
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
-import { basicDetailFormDataHalf } from "./config/BasicDetailForm.data";
+import { basicDetailFormDataHalf, securityKeys } from "./config/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
-// import {AllCustomerGridConfig} from "../../customers/config/CustomerData"
-// import { decryptUrlData } from "../../../../services/CryptoService";
-// import { useParams } from "react-router-dom";
-// import { PagePermissionsContext } from "../../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
-// import usePermissions from "../../../../utils/CustomHook/UsePermissions";
+import { securityKey } from "../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
@@ -20,6 +17,23 @@ const BasicDetail = (props) => {
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
   const { nextRef, setCustomerId, moveNextPage, setAllCountries } = useContext(BasicDetailContext);
+
+  const { formSetting } = basicDetailFormDataHalf;
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
+
+  useEffect(() => {
+    if (props.isOpen) {
+      if (hasEditPermission.isViewOnly === true) {
+        formSetting.isViewOnly = true;
+        setIsButtonDisable(true);
+      }
+      else {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+      }
+    }
+  }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
 
   const [
     getAllGroupTypes,
@@ -67,14 +81,20 @@ const BasicDetail = (props) => {
 
   const [CheckCustomerNameExist, { isLoading: isCustomerNameExistLoading, isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
 
-  // const { isButtonDisable } = useContext(PagePermissionsContext);
-  // usePermissions(descrypteId, securityKeys, basicDetailFormDataHalf, AllCustomerGridConfig);
 
   useEffect(() => {
     getAllGroupTypes();
     getAllCountries();
     getAllTerritories();
+    manageFilteredForm();
   }, []);
+
+  const manageFilteredForm = () => {
+    const manageData = { ...formData }
+    const filteredFormFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input");
+    manageData.formFields = filteredFormFields;
+    setFormData(manageData)
+  };
 
   useEffect(() => {
     if (
@@ -174,10 +194,15 @@ const BasicDetail = (props) => {
 
   useEffect(() => {
     if (props.isOpen) {
-      const removeFields = ['note']
       let data = { ...basicDetailFormDataHalf };
       data.initialState = { ...props.customerData };
-      data.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
+      if (data.initialState.countryId > 0) {
+        let det = {
+          value: data.initialState.countryId
+        }
+        handleValidateTextId(det, "countryId");
+      }
+      data.formFields = basicDetailFormDataHalf.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
       setFormData(data);
     }
   }, [props.isOpen])
@@ -221,16 +246,19 @@ const BasicDetail = (props) => {
 
   const handleValidateTextId = (data, dataField) => {
     if (dataField === 'countryId') {
-      const removeFields = ['note']
       const modifyFormFields = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
       const updatedForm = { ...formData };
       updatedForm.formFields = modifyFormFields;
       if (props.isOpen) {
-        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => !removeFields.includes(field.id));
+        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
+      }else{
+        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input");
       }
       setFormData(updatedForm);
     }
   }
+
+
   const formActionHandler = {
     DDL_CHANGED: handleValidateTextId
   };
@@ -252,8 +280,6 @@ const BasicDetail = (props) => {
         name: customerName
       }
       CheckCustomerNameExist(request);
-    } else {
-      ToastService.warning('Username required. Please enter username.');
     }
   }
 
@@ -285,16 +311,16 @@ const BasicDetail = (props) => {
           <div className="col-md-12">
             <div className="d-flex align-item-end justify-content-end">
               <Buttons
-                buttonTypeClassName="dark-btn"
-                buttonText="Cancel"
-                onClick={props.onSidebarClose}
-              />
-              <Buttons
-                buttonTypeClassName="theme-button ml-5"
+                buttonTypeClassName="theme-button"
                 buttonText="Update"
                 onClick={handleUpdate}
                 isLoading={isLoading}
-              // isDisable={isButtonDisable}
+                isDisable={isButtonDisable}
+              />
+              <Buttons
+                buttonTypeClassName="dark-btn ml-5"
+                buttonText="Cancel"
+                onClick={props.onSidebarClose}
               />
             </div>
           </div>

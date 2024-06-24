@@ -52,15 +52,15 @@ const MolGrid = forwardRef((props, ref) => {
     };
   };
 
-    // Get the current page object
-    const getDefulatPageObject = () => {
-      setCurrentPage(1);
-      return {
-        pageNumber: 1,
-        pageSize: pageSize,
-        // Add other pagination-related properties here
-      };
+  // Get the current page object
+  const getDefulatPageObject = () => {
+    setCurrentPage(1);
+    return {
+      pageNumber: 1,
+      pageSize: pageSize,
+      // Add other pagination-related properties here
     };
+  };
 
   const getSortingString = (data) => {
     return data.map(item => {
@@ -119,10 +119,8 @@ const MolGrid = forwardRef((props, ref) => {
     return (
       <>
         {prop.isLoading ? (
-          <tr>
-            <td colSpan={100}>
-              <DataLoader />
-            </td>
+          <tr className="no-address">
+            <DataLoader />
           </tr>
         ) : isRenderRow ? (
           <MolGridDataRows
@@ -132,10 +130,8 @@ const MolGrid = forwardRef((props, ref) => {
             {...prop}
           />
         ) : (
-          <tr>
-            <td colSpan={100}>
-              <NoRecordFound />
-            </td>
+          <tr className="no-address">
+            <NoRecordFound />
           </tr>
         )}
       </>
@@ -143,10 +139,11 @@ const MolGrid = forwardRef((props, ref) => {
   };
 
   return (
-    <div>
+    <div className="">
+      {/* <div className="dynamic-grid"> */}
       <table className="border-table-simple">
         <thead>
-          <MolGridHeader columns={props.configuration.columns} 
+          <MolGridHeader columns={props.configuration.columns}
             onSortingUpdate={handleSortingUpdate}
             selectedSorting={sorting}
           />
