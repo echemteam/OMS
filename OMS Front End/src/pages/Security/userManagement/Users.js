@@ -87,7 +87,7 @@ const Users = () => {
   useEffect(() => {
     if (hasAddPermission.hasAccess === true) {
       formSetting.isViewOnly = false;
-      setButtonVisible(false);
+      setButtonVisible(true);
     }
   }, [hasEditPermission, hasAddPermission, formSetting.isViewOnly])
 
