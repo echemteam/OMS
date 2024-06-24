@@ -1692,7 +1692,7 @@ a {
     }
   }
 
-  
+
   &.badge-gradient-Approved {
     background: transparent;
 
@@ -1807,24 +1807,17 @@ input[type=checkbox]:checked:after {
   border-width: 0 2px 2px 0;
   transform: translate(-50%, -50%) rotate(45deg);
   position: absolute;
-  top: 70%;
+  top: 50%;
   left: 80%;
 }
 
-.add-setting-detail{
-  .first-card{
+.add-setting-detail {
+  .first-card {
     margin-bottom: 10px !important;
     border-color: var(--linkMenu);
   }
 }
 
-@media only screen and (max-width: 1560px) {
-  .status-dropdown {
-    .css-13cymwt-control {
-      padding: 0 !important;
-    }
-  }
-}
 
 .inactive-scroll-bar {
   table {
@@ -1903,16 +1896,43 @@ input[type=checkbox]:checked:after {
     }
   }
 }
-@media only screen and (max-width: 1560px) {
-.address-model{
-  .sidebar-model{
-    .side-model-section{
-      .model-content{
-        &.content-40{
-          width: 50%;
+
+// Checklist Section Start
+.checklist-section {
+  border-bottom: 1px solid var(--inputBorder);
+  padding-bottom: 15px;
+
+  .sub-checklist {
+    padding-left: 30px;
+
+    .checkbox-part {
+      .input-label-title {
+        .input-label {
+          font-weight: normal;
         }
       }
     }
   }
 }
+
+// Checklist Section End
+
+@media only screen and (max-width: 1560px) {
+  .status-dropdown {
+    .css-13cymwt-control {
+      padding: 0 !important;
+    }
+  }
+
+  .address-model {
+    .sidebar-model {
+      .side-model-section {
+        .model-content {
+          &.content-40 {
+            width: 50%;
+          }
+        }
+      }
+    }
+  }
 }
