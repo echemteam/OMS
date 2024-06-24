@@ -50,16 +50,22 @@ namespace OMS.Application.Services.CustomerAccountingSettings
         public async Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId)
         {
             GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse shppingDetails = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarrierAndDeliveryMethodsById(customerId);
-            if (shppingDetails.DeliveryAccountId == 1)
+            if (shppingDetails != null)
             {
-                shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
+                if (shppingDetails.DeliveryAccountId != null)
+                {
+                    if (shppingDetails.DeliveryAccountId == 1)
+                    {
+                        shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
+                    }
+                    else if (shppingDetails.DeliveryAccountId == 2)
+                    {
+                        shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
+                        shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
+                    }
+                }
             }
-            else if (shppingDetails.DeliveryAccountId == 2)
-            {
-                shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
-                shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
-            }
-            return shppingDetails;
+            return shppingDetails!;
         }
 
         public async Task<AddEntityDTO<int>> UpdateDeliveryMethods(UpdateDeliveryMethodsRequest requestData, short CurrentUserId)

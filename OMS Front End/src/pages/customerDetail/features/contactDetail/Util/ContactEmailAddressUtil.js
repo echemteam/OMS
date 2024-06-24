@@ -34,7 +34,7 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
         onSuccess();
         return;
     }
-    const isDuplicate = listData && listData.some(item => item.emailAddress === data.emailAddress);
+    const isDuplicate = listData && listData.some(item => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase());
     if (!isDuplicate) {
         if (listData) {
             addData = [...listData, request];

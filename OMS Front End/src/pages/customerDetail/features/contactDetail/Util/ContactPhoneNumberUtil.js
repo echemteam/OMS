@@ -8,6 +8,7 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
         phoneCode: data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode,
         phoneTypeId: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId,
         phoneType: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.label : data.phoneTypeId
+        // extension: data.extension > 0 ? data.extension : ''
     }
     let addData;
     if (listData && listData.length === 5) {
@@ -42,7 +43,7 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
     if (listData && data.id > 0) {
         const phoneCode = data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode
         const phoneTypeId = data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId
-        const phoneType = data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.label : data.phoneTypeId
+        const phoneType = data.phoneTypeId.label ? data.phoneTypeId.label : data.phoneType
         const isDuplicate = listData && listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === phoneCode && item.phoneCode === phoneCode
             && item.id !== data.id);
         if (!isDuplicate) {
@@ -52,7 +53,8 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
                 phoneCode: phoneCode,
                 phoneTypeId: phoneTypeId,
                 phoneType: phoneType,
-                phoneNumber: data.phoneNumber
+                phoneNumber: data.phoneNumber,
+                extension: data.extension
             };
             setListData(updatedData);
             ToastService.success(successMessage);
