@@ -9,6 +9,7 @@ export const FormFieldTypes = {
     TINYEDITOR: 9,
     FILE: 10,
     RADIOBUTTON: 11,
+    CKEDITOR: 12,
     // DECIMAL :4
     // NUMERIC: 4,
     // PASSWORD: 7,
