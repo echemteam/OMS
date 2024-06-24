@@ -1,0 +1,28 @@
+.ckeditor-sec {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+
+  .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content {
+    // border: 1px solid var(--inputBorder) !important;
+    // border-top-right-radius: 6px;
+    // border-top-left-radius: 6px;
+    // border-bottom: 0;
+  }
+  .ck-editor__main {
+    // border: 1px solid var(--inputBorder) !important;
+    // border-bottom-right-radius: 6px !important;
+    // border-bottom-left-radius: 6px !important;
+    // &:focus-visible,
+    // &:focus {
+    //   border-color: var(--themeColor) !important;
+    // }
+  }
+  .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable){
+    box-shadow: 0;
+  }
+}
+
+.ck-content {
+  height: 250px !important;
+}

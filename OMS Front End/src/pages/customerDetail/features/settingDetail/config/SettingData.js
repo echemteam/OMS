@@ -69,7 +69,7 @@ export const SettingFormData = {
       id: "invoiceSubmissionInstruction",
       lable: "Invoice Submission Instruction :",
       Field_Name: "Invoice Submission Instruction",
-      fieldType: FormFieldTypes.TINYEDITOR,
+      fieldType: FormFieldTypes.CKEDITOR,
       dataField: "invoiceSubmissionInstruction",
       fieldSetting: {
         placeholder: "",

@@ -18,8 +18,16 @@ const FinancialSettings = (props) => {
   const [addEditCustomerSettings, { isLoading: isAddEditCustomerSettingsLoading, isSuccess: isAddEditCustomerSettingsSuccess, data: isAddEditCustomerSettingsData, },] = useAddEditCustomerSettingsMutation();
 
   useEffect(() => {
-    if (customerId > 0) GetDetailsbyCustomerID(customerId);
+    getAllPaymentTerms();
+    getAllPaymentMethod();
+  }, []);
+
+  useEffect(() => {
+    if (customerId > 0) {
+      GetDetailsbyCustomerID(customerId)
+    };
   }, [customerId]);
+
   useEffect(() => {
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
       const getData = isGetAllPaymentTermsData.map((item) => ({
@@ -97,10 +105,6 @@ const FinancialSettings = (props) => {
     }
   };
 
-  useEffect(() => {
-    getAllPaymentTerms();
-    getAllPaymentMethod();
-  }, []);
   return (
     <>
       <div className="row horizontal-form">
@@ -123,10 +127,10 @@ const FinancialSettings = (props) => {
                 onClick={onhandleEdit}
                 isLoading={isAddEditCustomerSettingsLoading}
               />
-              <Buttons
+              {/* <Buttons
                 buttonTypeClassName="dark-btn ml-5"
                 buttonText="Cancel"
-              />
+              /> */}
             </div>
           </div>
         </div>
