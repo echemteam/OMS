@@ -6,7 +6,7 @@ import { AppIcons } from '../../../../../../data/appIcons';
 import DataLoader from '../../../../../../components/ui/dataLoader/DataLoader';
 
 const SupplierAddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLoading }) => {
-console.log("addressData" , addressData)
+    
     const [activeKey, setActiveKey] = useState("0");
 
     const handleToggle = (eventKey) => {

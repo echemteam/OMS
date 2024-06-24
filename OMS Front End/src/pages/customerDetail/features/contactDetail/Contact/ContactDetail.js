@@ -126,7 +126,7 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
       <div className="sidebar-contact-model">
         <SidebarModel
           modalTitle="Add/Edit Contact"
-          contentClass="content-65"
+          contentClass="content-45"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}>
