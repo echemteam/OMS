@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../../../customerDetail/ViewCustomer.scss";
 import { useParams } from "react-router-dom";
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../../../app/services/supplierAPI";
@@ -21,7 +21,7 @@ const SupplierDetails = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [supplierData, setSupplierData] = useState(null);
 
-  const { setSupplierId , supplierId } = useContext(AddSupplierContext);
+  const { setSupplierId, supplierId } = useContext(AddSupplierContext);
 
   const [
     getSupplierBasicInformationById,
