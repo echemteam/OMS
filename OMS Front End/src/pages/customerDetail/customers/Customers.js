@@ -148,7 +148,7 @@ const Customers = () => {
           </div>
         </div>
       </CustomerContext.Provider>
-      <Buttons
+      {/* <Buttons
         buttonText="Approval Check List"
         buttonTypeClassName="theme-button"
         onClick={handleToggleModal}
@@ -156,7 +156,7 @@ const Customers = () => {
       <ApprovalCheckList
         onSidebarClose={onSidebarClose}
         isModelOpen={isModelOpen}
-      />
+      /> */}
     </>
   );
 };
