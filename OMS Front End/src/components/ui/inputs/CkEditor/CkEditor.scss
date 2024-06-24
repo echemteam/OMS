@@ -9,6 +9,18 @@
       border-color: var(--themeColor) !important;
     }
   }
+  .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content,
+  .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content.ck-rounded-corners {
+    border-top-right-radius: 6px !important;
+    border-top-left-radius: 6px !important;
+    overflow: hidden;
+  }
+  .ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
+  .ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+    border-bottom-left-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+    overflow: hidden;
+  }
 }
 
 .ck-content {
