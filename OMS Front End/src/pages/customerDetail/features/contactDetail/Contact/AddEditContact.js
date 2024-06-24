@@ -33,8 +33,8 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         customerId: mainId,
         contactId: contactId,
         customerContactId: customerContactId,
-        emailList: emailAddressData,
-        phoneList: phoneNumberData
+        emailList: emailAddressData.length > 0 ? emailAddressData : null,
+        phoneList: phoneNumberData.length > 0 ? phoneNumberData : null
       }
       addEdit(request);
     }

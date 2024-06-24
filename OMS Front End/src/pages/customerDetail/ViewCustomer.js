@@ -33,7 +33,7 @@ const ViewCustomer = () => {
   const [customerData, setCustomerData] = useState(null);
 
   const { setCustomerId, customerId } = useContext(BasicDetailContext);
-  
+
   const [
     getCustomersBasicInformationById,
     {

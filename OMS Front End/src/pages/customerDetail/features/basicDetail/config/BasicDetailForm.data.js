@@ -145,7 +145,7 @@ export const basicDetailFormDataHalf = {
       id: "note",
       lable: "Notes :",
       Field_Name: "Notes",
-      fieldType: FormFieldTypes.TINYEDITOR,
+      fieldType: FormFieldTypes.CKEDITOR,
       dataField: "note",
       fieldSetting: {
         placeholder: "Enter Notes",

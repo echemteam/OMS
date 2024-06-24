@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+//** Lib's */
+import "./SettingDetails.scss"
+import ShippingSettings from "./features/ShippingSetting/ShippingSettings";
+import FinancialSettings from "./FinancialSettings";
 import CardSection from "../../../../components/ui/card/CardSection";
-// import { AppIcons } from "../../../../data/appIcons";
-import FinancialSettings from "./features/FinancialSettings";
-import ShippingSettings from "./features/ShippingSettings";
-import "./SettingDetails.scss";
 
 const SettingDetails = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -65,7 +65,7 @@ const SettingDetails = () => {
           </div>
         </CardSection>
       </div>
-      
+
     </>
   );
 };

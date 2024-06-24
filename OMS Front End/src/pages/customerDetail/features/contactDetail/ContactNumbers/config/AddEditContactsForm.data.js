@@ -7,8 +7,9 @@ export const addEditContactsFormData = {
   initialState: {
     phoneCode: '',
     phoneNumber: '',
-    phoneTypeId: 0,
-    extension: 0
+    phoneTypeId: '',
+    extension: 0,
+    id: 0
   },
   formFields: [
     {
@@ -18,12 +19,42 @@ export const addEditContactsFormData = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "phoneTypeId",
       fieldSetting: {
+        placeholder: "Enter Phone Type",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-8 col-xl-8 col-md-12 mb-1 pr-0",
+      },
+    },
+    {
+      id: "phoneCode",
+      lable: "Contact Number :",
+      Field_Name: "Phone Code",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "phoneCode",
+      fieldSetting: {
         placeholder: "",
         allowSpace: true,
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-12 mb-2 pr-0",
+        containerCss: "col-xxl-5 col-xl-5 col-md-4 mb-1 pr-0 border-right-0",
+      },
+    },
+    {
+      id: "phoneNumber",
+      lable: "",
+      Field_Name: "Phone Number",
+      fieldType: FormFieldTypes.NUMERIC,
+      dataField: "phoneNumber",
+      fieldSetting: {
+        placeholder: "Enter Phone Number",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-5 col-xl-5 col-md-7 mb-1 pl-0 border-left-r-0",
       },
     },
     {
@@ -39,37 +70,7 @@ export const addEditContactsFormData = {
         maxLength: 6,
       },
       style: {
-        containerCss: "col-xxl-5 col-xl-5 col-md-4 mb-2 pr-0 ",
-      },
-    },
-    {
-      id: "phoneCode",
-      lable: "Contact Number :",
-      Field_Name: "Phone Code",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "phoneCode",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-5 col-xl-5 col-md-4 mb-2 pr-0 border-right-0",
-      },
-    },
-    {
-      id: "phoneNumber",
-      lable: "",
-      Field_Name: "Phone Number",
-      fieldType: FormFieldTypes.NUMERIC,
-      dataField: "phoneNumber",
-      fieldSetting: {
-        placeholder: "Enter Phone Number",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-5 col-xl-5 col-md-7 mb-2 pl-0 border-left-r-0",
+        containerCss: "col-xxl-8 col-xl-8 col-md-8 mb-1 pr-0 ",
       },
     },
 

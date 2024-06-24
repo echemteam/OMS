@@ -46,7 +46,7 @@ const supplierAPI = createApi({
         }),
         updateSupplierStatus: builder.mutation({
             query: (Details) => ({
-                url: '/Customers/UpdateSupplierStatus',
+                url: '/Supplier/UpdateSupplierStatus',
                 method: 'POST',
                 body: transformRequest(Details)
             }),

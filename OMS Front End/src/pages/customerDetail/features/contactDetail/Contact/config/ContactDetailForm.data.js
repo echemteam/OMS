@@ -65,7 +65,7 @@ export const contactDetailFormData = {
       },
       style: {
         containerCss:
-          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 pt-1 margin-left0-checkbox",
+          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
       },
     },
   ],
