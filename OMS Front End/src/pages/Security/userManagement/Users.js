@@ -2,24 +2,15 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import MolGrid from "../../../components/Grid/MolGrid";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
-import { UserGridConfig, securityKeys, userFormData } from "./features/config/UserForm.data";
+import { UserGridConfig, userFormData } from "./features/config/UserForm.data";
 import { encryptUrlData } from '../../../services/CryptoService'
 import { useDeleteUserMutation, useGetUsersMutation } from '../../../app/services/userAPI'
 import SwalAlert from "../../../services/swalService/SwalService";
 import ToastService from "../../../services/toastService/ToastService";
 import { useNavigate } from "react-router-dom";
 import useDebounce from "../../../app/customHooks/useDebouce";
-import usePermissions from "../../../utils/CustomHook/UsePermissions";
-import { PagePermissionsContext } from "../../../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
 import { securityKey } from "../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
-import usePermissionHandling from "../../../utils/CustomHook/usePermissionHandling";
-
-
-const gridSecurityKeys = [
-  { type: 'EDIT', keyName: securityKey.EDITUSER },
-  { type: 'DELETE', keyName: securityKey.DELETEUSER }
-];
 
 const Users = () => {
 

@@ -107,7 +107,7 @@ export const addressFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2 label-name-small",
       },
     },
     {
@@ -123,7 +123,7 @@ export const addressFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2 label-name-small",
       },
     },
     {
@@ -139,7 +139,7 @@ export const addressFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2 label-name-small",
       },
     },
     {
@@ -154,7 +154,7 @@ export const addressFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-8 col-md-8 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-8 col-md-8 col-12 mb-2 label-name-small",
       },
     },
     {
@@ -174,7 +174,7 @@ export const addressFormData = {
     },
     {
       id: "isPreferredBilling",
-      lable: "Is PreferredBilling",
+      lable: "Is Preferred Billing",
       Field_Name: "Is PreferredBilling",
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isPreferredBilling",
@@ -189,7 +189,7 @@ export const addressFormData = {
     },
     {
       id: "isPreferredShipping",
-      lable: "Is PreferredShipping",
+      lable: "Is Preferred Shipping",
       Field_Name: "Is PreferredShipping",
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isPreferredShipping",

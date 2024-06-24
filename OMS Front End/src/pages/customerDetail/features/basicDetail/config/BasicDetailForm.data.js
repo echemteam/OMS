@@ -35,6 +35,21 @@ export const basicDetailFormDataHalf = {
       }
     },
     {
+      id: "name-input",
+      lable: "Customer Name :",
+      Field_Name: "Customer Name",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "name",
+      fieldSetting: {
+        placeholder: "Enter Customer Name",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }, { type: "uniqueName" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+      },
+    },
+    {
       id: "groupTypeId",
       lable: "Group Type :",
       Field_Name: "Group Type",
@@ -130,7 +145,7 @@ export const basicDetailFormDataHalf = {
       id: "note",
       lable: "Notes :",
       Field_Name: "Notes",
-      fieldType: FormFieldTypes.TINYEDITOR,
+      fieldType: FormFieldTypes.CKEDITOR,
       dataField: "note",
       fieldSetting: {
         placeholder: "Enter Notes",

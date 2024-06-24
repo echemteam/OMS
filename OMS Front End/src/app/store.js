@@ -19,6 +19,8 @@ import emailAddressAPI from './services/emailAddressAPI';
 import customerSettingsAPI from './services/customerSettingsAPI';
 import supplierAPI from './services/supplierAPI';
 import supplierDocuementsAPI from './services/supplierDocuementsAPI'
+import supplierAddressAPI from './services/supplierAddressAPI';
+import commonAPI from './services/commonAPI';
 
 export const store = configureStore({
   reducer: {
@@ -38,7 +40,9 @@ export const store = configureStore({
     [customerSettingsAPI.reducerPath]:customerSettingsAPI.reducer,
     [supplierAPI.reducerPath]:supplierAPI.reducer,
     [supplierDocuementsAPI.reducerPath]:supplierDocuementsAPI.reducer,
-    
+    [commonAPI.reducerPath]: commonAPI.reducer,
+    [supplierAddressAPI.reducerPath]: supplierAddressAPI.reducer,
+
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
     authapi.middleware,
@@ -56,6 +60,8 @@ export const store = configureStore({
     customerSettingsAPI.middleware,
     supplierAPI.middleware,
     supplierDocuementsAPI.middleware,
+    commonAPI.middleware,
+    supplierAddressAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);

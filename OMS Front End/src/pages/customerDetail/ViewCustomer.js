@@ -144,6 +144,7 @@ const ViewCustomer = () => {
                 customerData={customerData}
                 isLoading={isGetCustomersBasicInformationByIdFetching}
                 customerId={customerId}
+                onhandleRepeatCall={handleRepeatCall}
               />
             </CardSection>
           </div>

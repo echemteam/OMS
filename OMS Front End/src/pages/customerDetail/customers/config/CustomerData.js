@@ -62,6 +62,8 @@ export const AllCustomerGridConfig = {
               return "status-btn badge-gradient-Frozen";
             case "Block":
               return "status-btn badge-gradient-Blocked";
+            case "Disable":
+              return "status-btn badge-gradient-disabled";
 
             default:
               return "status-btn badge-gradient-info";
@@ -251,6 +253,8 @@ export const AllInActiveCustomerGridConfig = {
               return "status-btn badge-gradient-Frozen";
             case "Block":
               return "status-btn badge-gradient-Blocked";
+            case "Disable":
+              return "status-btn badge-gradient-disabled";
 
             default:
               return "status-btn badge-gradient-info";
@@ -337,16 +341,16 @@ export const DisabledInActiveCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
-      width:"25%",
+      width:"35%",
     },
     {
       name: "Reason",
-      width:"25%",
+      width:"35%",
       fieldName: "inActiveReason",
     },
     {
       name: "Date",
-      width:"25%",
+      width:"30%",
       fieldName: "updatedAt",
       colType: GridColumnType.DATE,
       colSettings: {
@@ -354,17 +358,17 @@ export const DisabledInActiveCustomerGridConfig = {
         format: "DD/MM/YYYY hh:mm A ",
       },
     },
-    {
-      name: "Action",
-      width:"25%",
-      colType: GridColumnType.ACTION,
-      defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
-        allowUnfreeze: false,
-        allowUnblocked: false,
-        allowActiveCustomer: true,
-      },
-    },
+    // {
+    //   name: "Action",
+    //   width:"25%",
+    //   colType: GridColumnType.ACTION,
+    //   defaultAction: {
+    //     allowEdit: false,
+    //     allowDelete: false,
+    //     allowUnfreeze: false,
+    //     allowUnblocked: false,
+    //     allowActiveCustomer: true,
+    //   },
+    // },
   ],
 };

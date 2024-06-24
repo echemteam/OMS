@@ -68,7 +68,15 @@ const SupplierBasicDetail = (props) => {
     getAllCountries();
     getAllTerritories();
     getAllSupplierType();
+    manageFilteredForm();
   }, []);
+
+  const manageFilteredForm = () => {
+    const manageData = { ...formData }
+    const filteredFormFields = supplierBasicData.formFields.filter(field => field.id !== "name-input");
+    manageData.formFields = filteredFormFields;
+    setFormData(manageData)
+  };
 
   useEffect(() => {
     if (
@@ -186,10 +194,9 @@ const SupplierBasicDetail = (props) => {
 
   useEffect(() => {
     if (props.isOpen) {
-      const removeFields = ['note']
       let data = { ...supplierBasicData };
       data.initialState = { ...props.supplierData };
-      data.formFields = supplierBasicData.formFields.filter(field => !removeFields.includes(field.id));
+      data.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
       setFormData(data);
     }
   }, [props.isOpen])
@@ -233,12 +240,13 @@ const SupplierBasicDetail = (props) => {
 
   const handleValidateTextId = (data, dataField) => {
     if (dataField === 'countryId') {
-      const removeFields = ['note']
       const modifyFormFields = getTaxIdMinMaxLength(data.value, supplierBasicData.formFields, 'taxId');
       const updatedForm = { ...formData };
       updatedForm.formFields = modifyFormFields;
       if (props.isOpen) {
-        updatedForm.formFields = supplierBasicData.formFields.filter(field => !removeFields.includes(field.id));
+        updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
+      }else{
+        updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name-input");
       }
       setFormData(updatedForm);
     }

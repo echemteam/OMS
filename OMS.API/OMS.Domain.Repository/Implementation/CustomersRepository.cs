@@ -135,7 +135,6 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.AddressTypeId,
                 requestData.IsPreferredBilling,
                 requestData.IsPreferredShipping,
-                requestData.IsShippingAndBilling,
                 createdBy
             }, CommandType.StoredProcedure);
         }

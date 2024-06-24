@@ -42,7 +42,7 @@ const AccordionCollapse = ({ accordionList, contentTypeId, handleEdit }) => {
                         <div className="row">
                             {items.map((childData, childIndex) => (
                                 <div className={customCardDetails?.cardClassName} key={childIndex}>
-                                    {AccordtionCardDetails(contentTypeId, childData.cardInformation, customCardDetails)}
+                                    {AccordtionCardDetails(contentTypeId, childData, customCardDetails)}
                                 </div>
                             ))}
                         </div>

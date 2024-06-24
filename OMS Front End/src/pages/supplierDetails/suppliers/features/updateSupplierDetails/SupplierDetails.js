@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../../../customerDetail/ViewCustomer.scss";
 import { useParams } from "react-router-dom";
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../../../app/services/supplierAPI";
@@ -6,7 +6,7 @@ import { decryptUrlData } from "../../../../../services/CryptoService";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
 import { AppIcons } from "../../../../../data/appIcons";
-import SupplierData from "./features/SupplierData";
+import SupplierViewDetail from "./features/SupplierViewDetail";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import SupplierBasicDetail from "../../../addSupplier/features/supplierBasicDetail/SupplierBasicDetail";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
@@ -14,6 +14,7 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import { useNavigate } from "react-router-dom/dist";
 import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuementDetail";
  
+import SupplierAddressDetail from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetail";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const SupplierDetails = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [supplierData, setSupplierData] = useState(null);
 
-  const { nextStepRef } = useContext(AddSupplierContext);
+  const { setSupplierId, supplierId } = useContext(AddSupplierContext);
 
   const [
     getSupplierBasicInformationById,
@@ -49,7 +50,7 @@ const SupplierDetails = () => {
 
   useEffect(() => {
     if (pageId) {
-      // setSupplierId(pageId);
+      setSupplierId(pageId);
       getSupplierBasicInformationById(pageId);
     }
   }, []);
@@ -70,7 +71,9 @@ const SupplierDetails = () => {
   const tabs = [
     {
       sMenuItemCaption: "Address",
-      component: <div className="mt-2">{/* <AddressDetail /> */}</div>,
+      component: <div className="mt-2">
+        <SupplierAddressDetail />
+      </div>,
     },
     // {
     //   sMenuItemCaption: "Contact",
@@ -100,11 +103,12 @@ const SupplierDetails = () => {
         <div className="row">
           <div className="col-xxl-4 col-xl-4 col-md-5 col-12 basic-left-part customer-desc-left-sec">
             <CardSection>
-              <SupplierData
+              <SupplierViewDetail
                 editClick={handleToggleModal}
                 supplierData={supplierData}
                 isLoading={isGetSupplierBasicInformationByIdFetching}
-                supplierId={pageId}
+                supplierId={supplierId}
+                onhandleRepeatCall={handleRepeatCall}
               />
             </CardSection>
           </div>

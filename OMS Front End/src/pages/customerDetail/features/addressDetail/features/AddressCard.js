@@ -19,7 +19,6 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLo
     }
   }
 
-
   const groupedAddresses = Array.isArray(addressData)
     ? addressData.reduce((acc, address) => {
       if (!acc[address.addressTypeId]) {
@@ -56,9 +55,16 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLo
             <Accordion.Body className="add-desc-part">
               <div className="row">
                 {groupedAddresses[addressTypeId].map((address, addrIndex) => (
-                  <div className="col-xxl-4 col-xl-6 col-md-12 col-12" key={addrIndex}>
+                  <div className="col-xxl-6 col-xl-6 col-md-12 col-12" key={addrIndex}>
                     <div className="address-card">
-                      <div className="add-line">
+                      {(address.isPreferredBilling || address.isPreferredShipping) && (
+                        <div className="status-desc">
+                          <span className="field-info active-green-color">
+                            {address.isPreferredBilling ? "Preferred Billing" : "Preferred Shipping"}
+                          </span>
+                        </div>
+                      )}
+                      <div className={`add-line ${address.isPreferredBilling || address.isPreferredShipping ? "mt-3" : ""}`}>
                         <span className="label-txt">{address.addressLine1}</span>
                         <span className="label-txt">{address.addressLine2}</span>
                         <span className="label-txt">{address.cityName}</span>

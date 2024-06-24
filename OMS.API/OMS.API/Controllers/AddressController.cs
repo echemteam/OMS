@@ -30,7 +30,6 @@ namespace OMS.API.Controllers
         [HttpPost("AddAddress")]
         public async Task<IActionResult> AddAddress(AddAddressRequest requestData)
         {
-
             var addItem = await _serviceManager.addressServices.AddAddress(requestData, CurrentUserId);
             return APISucessResponce(addItem);
         }

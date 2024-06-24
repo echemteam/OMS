@@ -2,53 +2,53 @@
 
 :root {
   --themeColor: #696cff;
-  --themeColorLight:#696cff29;
-  --themeColorLightGridRow:#696cff08;
+  --themeColorLight: #696cff29;
+  --themeColorLightGridRow: #696cff08;
   --whiteColor: #ffffff;
-  --textColor:#566a7f;
-  --textColorLight:#6c7b8e;
-  --iconCOlor:#bba8bff5;
-  --bg-main-content:#f5f5f9;
-  --bg-light-content:#e7f6fe;
-  --primaryColor:#5563ff;
-  --dangerColor:#fe7096;
-  --warningColor:#ffd500;
-  --infoColor:#0056d7;
+  --textColor: #566a7f;
+  --textColorLight: #6c7b8e;
+  --iconCOlor: #bba8bff5;
+  --bg-main-content: #f5f5f9;
+  --bg-light-content: #e7f6fe;
+  --primaryColor: #5563ff;
+  --dangerColor: #fe7096;
+  --warningColor: #ffd500;
+  --infoColor: #0056d7;
   --successColor: #07cdae;
-  --inputBorder:#c2c4cb;
-  --linkMenu:#ebecef;
-  --light-menuDot:#cbcdd0;
-  --cardTitleBg:#e7f6febd;
-  --lightDarkblack:#00000026;
-  --blackColor:#000;
-  
+  --inputBorder: #c2c4cb;
+  --linkMenu: #ebecef;
+  --light-menuDot: #cbcdd0;
+  --cardTitleBg: #e7f6febd;
+  --lightDarkblack: #00000026;
+  --blackColor: #000;
 
   // Stiky Background Start
 
-  --lightBlue:#e2f1ff;
-  --lightGreen:#e4f9e0;
-  --lightYellow:#fff7d1;
-  --lightPink:#ffe4f1;
-  --lightPurple:#f2e6ff;
-  --lightGray:#f3f2f1;
-  --lightOrange:#f3c79b;
+  --lightBlue: #e2f1ff;
+  --lightGreen: #e4f9e0;
+  --lightYellow: #fff7d1;
+  --lightPink: #ffe4f1;
+  --lightPurple: #f2e6ff;
+  --lightGray: #f3f2f1;
+  --lightOrange: #f3c79b;
 
   // Stiky Background End
 
   // Bg-Gradient Color Start
-  --gradient-theme : linear-gradient(to right, #9d9ee7, var(--themeColor));
+  --gradient-theme: linear-gradient(to right, #9d9ee7, var(--themeColor));
   --gradient-danger: linear-gradient(to right, #ffbf96, var(--dangerColor));
-  --gradient-warning : linear-gradient(to right, #f6e384, var(--warningColor));
-  --gradient-info:linear-gradient(to right, #90caf9, var(--infoColor));
-  --gradient-success:linear-gradient(to right, #a0efe8, var(--successColor));
+  --gradient-warning: linear-gradient(to right, #f6e384, var(--warningColor));
+  --gradient-info: linear-gradient(to right, #90caf9, var(--infoColor));
+  --gradient-success: linear-gradient(to right, #a0efe8, var(--successColor));
 
-  --white-card-shadow:0px 0px 24px rgba(27, 46, 94, 0.05);
-  --card-shadow:0px 8px 24px rgba(27, 46, 94, 0.12);
-  --pending-theme : #F1C40F ;
-  --blocked-theme : #DC3545 ;
-  --frozen-theme : #FF5F1F;
-  --approved-theme : #32CD32 ;
-  --submitted-theme : #007BFF ;
+  --white-card-shadow: 0px 0px 24px rgba(27, 46, 94, 0.05);
+  --card-shadow: 0px 8px 24px rgba(27, 46, 94, 0.12);
+  --pending-theme: #f1c40f;
+  --blocked-theme: #000000;
+  --frozen-theme: #ff5f1f;
+  --approved-theme: #32cd32;
+  --submitted-theme: #007bff;
+  --disabled-theme: #808080;
   // Bg-Gradient Color End
 }
 

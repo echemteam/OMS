@@ -34,7 +34,7 @@ namespace OMS.Application.Services.Customers
         public async Task<AddEntityDTO<int>> UpdateCustomersBasicInformation(UpdateCustomersBasicInformationRequest requestData, short CurrentUserId)
         {
             CustomersDTO customersDTO = requestData.ToMapp<UpdateCustomersBasicInformationRequest, CustomersDTO>();
-            customersDTO.CreatedBy = CurrentUserId;
+            customersDTO.UpdatedBy = CurrentUserId;
             return await repositoryManager.customers.UpdateCustomersBasicInformation(customersDTO);
         }
 
