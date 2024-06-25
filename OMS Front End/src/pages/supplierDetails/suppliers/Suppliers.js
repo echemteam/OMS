@@ -3,7 +3,7 @@ import CardSection from "../../../components/ui/card/CardSection";
 import { StatusEnums } from "../../../common/features/Enums/StatusEnums";
 import SupplierList from "./features/SupplierList";
 import InActiveSupplier from "./features/InActiveSupplier";
-import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../pages/customerDetail/customers/config/CustomerData";
+import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../pages/customerDetail/customers/config/CustomerData";
 import SupplierListContext from '../../../utils/ContextAPIs/Supplier/SupplierListContext'
 
 const Suppliers = () => {
@@ -62,6 +62,14 @@ const Suppliers = () => {
       component: (
         <div className="mt-2">
           <InActiveSupplier statusId={[StatusEnums.Freeze, StatusEnums.Block, StatusEnums.Disable]} />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "REJECTED",
+      component: (
+        <div className="mt-2">
+          <SupplierList statusId={StatusEnums.Reject} configFile={RejectedCustomerGridConfig} />
         </div>
       ),
     },

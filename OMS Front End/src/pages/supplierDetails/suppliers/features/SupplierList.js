@@ -138,6 +138,12 @@ const SupplierList = ({ statusId, configFile }) => {
     setStaticId(StatusEnums.Block)
     setStatusFeild(StatusFeild.Block)
   }
+  const handleReject = (data) => {
+    setShowModal(true);
+    setSupplierId(data.supplierId)
+    setStaticId(StatusEnums.Reject)
+    setStatusFeild(StatusFeild.Reject)
+  }
 
   const onReset = () => {
     let restData = { ...reasonData };
@@ -161,7 +167,8 @@ const SupplierList = ({ statusId, configFile }) => {
     EDIT: handleEditClick,
     FREEZE: handlefreeze,
     DISABLE: handleDiseble,
-    BLOCKED: handleBlock
+    BLOCKED: handleBlock,
+    REJECT:handleReject,
   };
 
   return (

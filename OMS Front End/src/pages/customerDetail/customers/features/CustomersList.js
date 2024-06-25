@@ -47,6 +47,7 @@ export const CustomersList = ({ statusId, configFile }) => {
       const hasDisable = hasFunctionalPermission(securityKey.DISABLECUSTOMER);
       const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
       const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+      
 
 
       if (actionColumn.defaultAction.allowEdit) {
@@ -169,7 +170,12 @@ export const CustomersList = ({ statusId, configFile }) => {
     setStaticId(StatusEnums.Block)
     setStatusFeild(StatusFeild.Block)
   }
-
+  const handleReject = (data) => {
+    setShowModal(true);
+    setcustomerId(data.customerId)
+    setStaticId(StatusEnums.Reject)
+    setStatusFeild(StatusFeild.Reject)
+  }
   const onReset = () => {
     let restData = { ...reasonData };
     restData.initialState = { ...formData };
@@ -192,7 +198,8 @@ export const CustomersList = ({ statusId, configFile }) => {
     EDIT: handleEditClick,
     FREEZE: handlefreeze,
     DISABLE: handleDiseble,
-    BLOCKED: handleBlock
+    BLOCKED: handleBlock,
+    REJECT:handleReject,
   };
 
   return (
