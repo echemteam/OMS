@@ -40,6 +40,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
   useEffect(() => {
+  
     if (customerData) {
       const statusId = customerData.statusId;
       switch (statusId) {
@@ -53,8 +54,12 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;
+        case 7 : 
+        setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+        break;
+        
         default:
-          setOptions([]);
+          setOptions([]); 
       }
       // setSelectedStatus(StatusValue[statusId - 1].label);
     }
@@ -67,12 +72,13 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
   }, [customerData]);
 
   const handleStatusChange = (selectedOption) => {
+   
     setStaticId(selectedOption.value)
     setStatusFeild(selectedOption.label)
     if (selectedOption.label === customerData.status) {
       ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
-      if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "3") {
+      if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "3"  || selectedOption.value === "7" ) {
         confirm(
           "Warning?",
           `Are you sure you want to change the customer status to ${selectedOption.label}?`,
@@ -102,6 +108,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
   }
 
   const handleUpdate = () => {
+
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
@@ -121,6 +128,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
   };
 
   const getStatusClass = () => {
+
     switch (selectedStatus) {
       case "Pending":
         return "badge-gradient-Pending";
@@ -132,6 +140,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
         return "badge-gradient-Frozen";
       case "Block":
         return "badge-gradient-Blocked";
+        case "Reject":
+          return "badge-gradient-Blocked";
       case "Disable":
         return "badge-gradient-disabled";
       default:

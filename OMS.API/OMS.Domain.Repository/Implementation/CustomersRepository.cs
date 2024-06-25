@@ -1,6 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Customers;
-using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
@@ -24,7 +23,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATECUSTOMERSTATUS = "UpdateCustomerStatus";
         const string ADDADDRESSFORCUSTOMER = "AddAddressForCustomer";
         const string UPDATEADDRESSFORCUSTOMER = "UpdateAddressForCustomer";
-        const string GETCUSTOMERAUDITHISTORY = "GetCustomerAuditHistory";
+        const string GETCUSTOMERAUDITHISTORYBYCUSTOMERID = "GetCustomerAuditHistoryByCustomerId";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -151,10 +150,16 @@ namespace OMS.Domain.Repository.Implementation
                 updatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetCustomerAuditHistoryResponse>> GetCustomerAuditHistory()
+        public async Task<List<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(int customerId)
         {
-            return await _context.GetList<GetCustomerAuditHistoryResponse>(GETCUSTOMERAUDITHISTORY, commandType: CommandType.StoredProcedure);
+            List<GetCustomerAuditHistoryByCustomerIdResponse> getCustomerAuditHistoryResponse = await _context.GetList<GetCustomerAuditHistoryByCustomerIdResponse>(GETCUSTOMERAUDITHISTORYBYCUSTOMERID, new
+            {
+                customerId
+            }, commandType: CommandType.StoredProcedure);
+            return getCustomerAuditHistoryResponse;
         }
+
+
         #endregion
     }
 }

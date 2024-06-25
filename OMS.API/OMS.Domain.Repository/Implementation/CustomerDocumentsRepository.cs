@@ -11,6 +11,7 @@ namespace OMS.Domain.Repository.Implementation
     internal class CustomerDocumentsRepository : BaseRepository<CustomerDocuments>, ICustomerDocumentsRepository
     {
         #region SP Name
+        const string CHECKDOCUMENTSEXISTORNOT = "CheckDocumentsExistOrNot";
         const string ADDCUSTOMERDOCUMENTS = "AddCustomerDocuments";
         const string GETCUSTOMERDOCUMENTSBYID = "GetCustomerDocumentsById";
         const string DELETECUSTOMERDOCUMENTSBYID = "DeleteCustomerDocumentsById";
@@ -21,6 +22,15 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Customer Documents Repository 
+        public async Task<AddEntityDTO<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? customerId)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(CHECKDOCUMENTSEXISTORNOT, new
+            {
+                documentTypeId,
+                name,
+                customerId
+            }, CommandType.StoredProcedure);
+        }
         public async Task<AddEntityDTO<int>> AddCustomerDocuments(CustomerDocumentsDTO customerDocuments)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERDOCUMENTS, new

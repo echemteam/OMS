@@ -62,6 +62,8 @@ export const AllCustomerGridConfig = {
               return "status-btn badge-gradient-Frozen";
             case "Block":
               return "status-btn badge-gradient-Blocked";
+            case "Reject":
+              return "status-btn badge-gradient-Blocked";
             case "Disable":
               return "status-btn badge-gradient-disabled";
 
@@ -86,7 +88,9 @@ export const AllCustomerGridConfig = {
         allowDisable: true,
         allowFreeze: true,
         allowBlocked: true,
+        allowReject:true,
       },
+      
       // customDropdownActions: [
       //   { name: "EDIT" },
       //   { name: "DISABLE" },
@@ -200,10 +204,38 @@ export const ApprovedCustomerGridConfig = {
         allowDisable: true,
         allowFreeze: true,
         allowBlocked: true,
+        allowReject:true,
       },
     },
   ],
 };
+
+export const RejectedCustomerGridConfig = {
+  columns: [
+    {
+      name: "Customer Name",
+      fieldName: "name",
+      width:"35%",
+      // allowShort: true,
+    },
+    {
+      name: "Reason",
+      fieldName: "inActiveReason",
+      width:"35%",
+      // allowShort: true,
+    },
+    {
+      name: "Action",
+      width:"30%",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: true,
+       
+      },
+    },
+  ],
+};
+
 
 export const AllInActiveCustomerGridConfig = {
   columns: [
@@ -215,15 +247,19 @@ export const AllInActiveCustomerGridConfig = {
     },
     {
       name: "Reason",
-      fieldName: "taxId",
+      fieldName: "inActiveReason",
       width:"25%",
       // allowShort: true,
     },
     {
       name: "Date",
-      fieldName: "taxId",
       width:"25%",
-      // allowShort: true,
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
     {
       name: "Status",

@@ -29,30 +29,9 @@ const NotesDetail = (props) => {
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isEditModeData, setIsEditModeData] = useState();
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const [
-    addCustomerNotes,
-    {
-      isLoading: isAddNotesLoading,
-      isSuccess: isAddNotesSuccess,
-      data: isAddNotesData,
-    },
-  ] = useAddCustomerNotesMutation();
-  const [
-    updateCustomerNotes,
-    {
-      isLoading: isUpdateNotesLoading,
-      isSuccess: isUpdateNotesSuccess,
-      data: isUpdateNotesData,
-    },
-  ] = useUpdateCustomerNotesMutation();
-  const [
-    getCustomerNoteByCustomerId,
-    {
-      isFetching: isGetNotesFetching,
-      isSuccess: isGetNotesSuccess,
-      data: isGetNotesData,
-    },
-  ] = useLazyGetCustomerNoteByCustomerIdQuery();
+  const [addCustomerNotes,{ isLoading: isAddNotesLoading, isSuccess: isAddNotesSuccess, data: isAddNotesData, },] = useAddCustomerNotesMutation();
+  const [ updateCustomerNotes,{isLoading: isUpdateNotesLoading,isSuccess: isUpdateNotesSuccess,data: isUpdateNotesData, },] = useUpdateCustomerNotesMutation();
+  const [getCustomerNoteByCustomerId,{ isFetching: isGetNotesFetching,isSuccess: isGetNotesSuccess,data: isGetNotesData,},] = useLazyGetCustomerNoteByCustomerIdQuery();
 
   useEffect(() => {
     const hasAddPermission = hasFunctionalPermission(
@@ -89,6 +68,7 @@ const NotesDetail = (props) => {
         props.onSuccess();
       }
       ToastService.success(isAddNotesData.errorMessage);
+      ongetNote();
       setShowModal(!showModal);
     }
   }, [isAddNotesSuccess, isAddNotesData]);
@@ -107,6 +87,7 @@ const NotesDetail = (props) => {
         props.onSuccess();
       }
       ToastService.success(isUpdateNotesData.errorMessage);
+      ongetNote();
       setShowModal(false);
     }
   }, [isUpdateNotesSuccess, isUpdateNotesData]);
@@ -130,13 +111,14 @@ const NotesDetail = (props) => {
     };
     if (notesData && !notesData.customerNoteId) {
       addCustomerNotes(request);
+
     } else if (notesData && notesData.customerNoteId) {
       const updateRequest = {
         ...request,
         customerNoteId: notesData.customerNoteId,
       };
       updateCustomerNotes(updateRequest);
-      ongetNote();
+
     }
   };
   const ongetNote = () => {

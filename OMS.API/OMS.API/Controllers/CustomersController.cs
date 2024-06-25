@@ -91,11 +91,15 @@ namespace OMS.API.Controllers
             var updateItem = await _serviceManager.customersServices.UpdateCustomerStatus(requestData, CurrentUserId);
             return APISucessResponce(updateItem);
         }
-        [HttpGet("GetCustomerAuditHistory")]
-        public async Task<IActionResult> GetCustomerAuditHistory()
+        [HttpGet("GetCustomerAuditHistoryByCustomerId")]
+        public async Task<IActionResult> GetCustomerAuditHistoryByCustomerId(int customerId)
         {
-            List<GetCustomerAuditHistoryResponse> responseData = await _serviceManager.customersServices.GetCustomerAuditHistory().ConfigureAwait(true);
-            return APISucessResponce(responseData);
+            if (customerId > 0)
+            {
+                List<GetCustomerAuditHistoryByCustomerIdResponse> responseData = await _serviceManager.customersServices.GetCustomerAuditHistoryByCustomerId(customerId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(customerId);
         }
         #endregion
     }
