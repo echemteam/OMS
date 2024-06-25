@@ -1,6 +1,11 @@
-﻿using OMS.Application.Services.Implementation;
+﻿using Common.Helper.Extension;
+using OMS.Application.Services.Implementation;
+using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Response.Approval;
+using OMS.Domain.Entities.Entity.Approval;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 using System;
 using System.Collections.Generic;
@@ -12,10 +17,16 @@ namespace OMS.Application.Services.Approval
 {
     public class ApprovalService : BaseServices, IApprovalService
     {
+        #region Variable
         public readonly ICommonSettingService _commonSettingService;
+        #endregion
+
+        #region Constructor
         public ApprovalService(IRepositoryManager _repoManager, ICommonSettingService commonSettingServices) : base(_repoManager, commonSettingServices)
         {
         }
+        #endregion
+
         public async Task<List<GetUserCheckListByEventIdResponse>> GetUserCheckList(int eventId)
         {
             List<GetUserCheckListByEventIdResponse> checkList = await repositoryManager.approval.GetUserCheckList(eventId);
@@ -28,6 +39,12 @@ namespace OMS.Application.Services.Approval
             }
             return checkList;
         }
-
+        public async Task<AddEntityDTO<int>> AddUserCheckList(AddUserCheckListRequest requestData, int CurrentUserId)
+        {
+            UserCheckListDTO userCheckListDTO = requestData.ToMapp<AddUserCheckListRequest, UserCheckListDTO>();
+            userCheckListDTO.UserId = CurrentUserId;
+            return await repositoryManager.approval.AddUserCheckList(userCheckListDTO);
+        }
     }
+
 }

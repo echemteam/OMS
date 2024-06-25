@@ -1,4 +1,6 @@
 ﻿using OMS.Domain.Entities.API.Response.Approval;
+using OMS.Domain.Entities.Entity.Approval;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
@@ -13,8 +15,12 @@ namespace OMS.Domain.Repository.Implementation
 {
     internal class ApprovalRepository : BaseRepository<Approval>, IApprovalRepository
     {
-        const string GETUSERCHECKLISTBYEVENTBYID = "GetUserCheckListBtEventId";
+        #region SP
+        const string GETUSERCHECKLISTBYEVENTBYID = "GetUserCheckListByEventId";
         const string GETCHECKLISTITEMBYLISTID = "GetCheckListItemByListId";
+        const string ADDUSERCHECKLISTRESPONSE = "AddUserCheckListResponse";
+        #endregion
+
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
         {
         }
@@ -35,6 +41,15 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getEmailByContactIdResponse;
 
+        }
+        public async Task<AddEntityDTO<int>> AddUserCheckList(UserCheckListDTO addUserCheckList)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, new
+            {
+                addUserCheckList.UserId,
+                addUserCheckList.IsApproved,
+                addUserCheckList.ChecklistItemId,
+            }, CommandType.StoredProcedure);
         }
     }
 }
