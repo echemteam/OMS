@@ -1,17 +1,18 @@
-import { AppIcons } from "../../../../../data/appIcons";
-import Buttons from "../../../../../components/ui/button/Buttons";
-import { getRandomColor } from "../../../../../utils/RandomColors/RandomColors";
+import { AppIcons } from "../../../../../../../../data/appIcons";
+import Buttons from "../../../../../../../../components/ui/button/Buttons";
+import { getRandomColor } from "../../../../../../../../utils/RandomColors/RandomColors";
 
 import { useEffect } from "react";
 
-const NotesCard = ({isAddEditModal,onHandleNote,ongetcustomerNote,notesFormData,}) => {
+const SupplierNotesCard = ({isAddEditModal, onHandleNote,ongetSupplierNote,notesFormData,}) => {
  
   useEffect(() => {
-    ongetcustomerNote();
+    ongetSupplierNote();
   }, []);
 
   const handleEditClick = (note) => {
     isAddEditModal(true);
+
     if (onHandleNote) {
       onHandleNote(note);
     }
@@ -63,4 +64,4 @@ const NotesCard = ({isAddEditModal,onHandleNote,ongetcustomerNote,notesFormData,
     </>
   );
 };
-export default NotesCard;
+export default SupplierNotesCard;

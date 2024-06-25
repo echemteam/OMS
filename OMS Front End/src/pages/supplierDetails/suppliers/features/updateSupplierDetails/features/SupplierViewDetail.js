@@ -53,6 +53,9 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId }) 
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;
+          case 7:
+            setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+            break;
         default:
           setOptions([]);
       }
@@ -73,7 +76,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId }) 
     if (selectedOption.label === supplierData.status) {
       ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
-      if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "3") {
+      if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "3"|| selectedOption.value === "7"  ) {
         confirm(
           "Warning?",
           `Are you sure you want to change the supplier status to ${selectedOption.label}?`,
@@ -131,6 +134,8 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId }) 
         return "badge-gradient-Frozen";
       case "Block":
         return "badge-gradient-Blocked";
+        case "Reject":
+          return "badge-gradient-Blocked";
       default:
         return "badge-gradient-info";
     }

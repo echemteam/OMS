@@ -12,6 +12,7 @@ import SupplierBasicDetail from "../../../addSupplier/features/supplierBasicDeta
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { useNavigate } from "react-router-dom/dist";
+import SupplierNotesDetail from "./features/notesDetails/SupplierNotesDetails";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -81,6 +82,10 @@ const SupplierDetails = () => {
     {
       sMenuItemCaption: "Settings",
       component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
+    },
+    {
+      sMenuItemCaption: "Notes",
+      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId}/>}</div>,
     },
   ];
 

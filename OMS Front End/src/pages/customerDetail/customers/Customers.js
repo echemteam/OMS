@@ -7,6 +7,7 @@ import {
   AllCustomerGridConfig,
   ApprovedCustomerGridConfig,
   PendingCustomerGridConfig,
+  RejectedCustomerGridConfig,
   SubmittedCustomerGridConfig,
 } from "./config/CustomerData";
 import InActiveCustomer from "./features/InActiveCustomer";
@@ -84,6 +85,17 @@ const Customers = () => {
               StatusEnums.Block,
               StatusEnums.Disable,
             ]}
+          />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "REJECTED",
+      component: (
+        <div className="mt-2">
+          <CustomersList
+            statusId={StatusEnums.Reject}
+            configFile={RejectedCustomerGridConfig}
           />
         </div>
       ),
