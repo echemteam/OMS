@@ -55,16 +55,17 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLo
             <Accordion.Body className="add-desc-part">
               <div className="row">
                 {groupedAddresses[addressTypeId].map((address, addrIndex) => (
-                  <div className="col-xxl-4 col-xl-6 col-md-12 col-12" key={addrIndex}>
+                  <div className="col-xxl-6 col-xl-6 col-md-12 col-12" key={addrIndex}>
                     <div className="address-card">
-                      {(address.isPreferredBilling || address.isPreferredShipping) && (
+                      {((address.isPreferredBilling && address.addressTypeId === 1) || (address.isPreferredShipping && address.addressTypeId === 2)) && (
                         <div className="status-desc">
                           <span className="field-info active-green-color">
-                            {address.isPreferredBilling ? "Preferred Billing" : "Preferred Shipping"}
+                            {(address.isPreferredBilling && address.addressTypeId === 1) ? "Preferred Billing" :
+                              (address.isPreferredShipping && address.addressTypeId === 2) ? "Preferred Shipping" : ""}
                           </span>
                         </div>
                       )}
-                      <div className={`add-line ${address.isPreferredBilling || address.isPreferredShipping ? "mt-3" : ""}`}>
+                      <div className={`add-line ${(address.isPreferredBilling && address.addressTypeId === 1) || (address.isPreferredShipping && address.addressTypeId === 2) ? "mt-3" : ""}`}>
                         <span className="label-txt">{address.addressLine1}</span>
                         <span className="label-txt">{address.addressLine2}</span>
                         <span className="label-txt">{address.cityName}</span>

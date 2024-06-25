@@ -648,16 +648,8 @@ a {
 .card-email-sec {
   .card {
     margin-bottom: 0;
+    padding: 15px;
     box-shadow: 0px 0px 17px -10px var(--textColorLight);
-
-    .card-top-title-btn {
-      padding: 10px;
-    }
-
-    .border-table-simple {
-      width: 96%;
-      margin: 0 auto 10px;
-    }
   }
 }
 
@@ -708,6 +700,11 @@ a {
 
 .badge-gradient-Pending {
   background: var(--pending-theme);
+  color: #ffffff;
+}
+
+.badge-gradient-disabled {
+  background: var(--disabled-theme);
   color: #ffffff;
 }
 
@@ -1518,26 +1515,28 @@ a {
 .card {
   .card-body-sec {
     .note-card-sec {
-      max-height:calc(100vh - 296px) ;
+      max-height: calc(100vh - 296px);
       overflow: hidden;
       overflow-y: auto;
     }
   }
 }
-.setting-tab-sec{
-  .tab-sub-section{
-    .tab-sub-content{
-      .grid-section{
-        max-height:calc(100vh - 362px) ;
+
+.setting-tab-sec {
+  .tab-sub-section {
+    .tab-sub-content {
+      .grid-section {
+        max-height: calc(100vh - 362px);
         overflow: hidden;
         overflow-y: auto;
       }
     }
   }
+
   .card {
     .card-body-sec {
       .note-card-sec {
-        max-height:calc(100vh - 296px) ;
+        max-height: calc(100vh - 296px);
         overflow: hidden;
         overflow-y: auto;
       }
@@ -1689,8 +1688,10 @@ a {
 
     .css-qbdosj-Input {
       margin: 0 !important;
+      padding: 0 !important;
     }
   }
+
 
   &.badge-gradient-Approved {
     background: transparent;
@@ -1746,6 +1747,15 @@ a {
     }
   }
 
+  &.badge-gradient-disabled {
+    background: transparent;
+
+    .css-1dimb5e-singleValue {
+      color: var(--disabled-theme);
+      font-weight: 600;
+    }
+  }
+
   .css-1nmdiq5-menu {
 
     .css-10wo9uf-option,
@@ -1797,14 +1807,26 @@ input[type=checkbox]:checked:after {
   border-width: 0 2px 2px 0;
   transform: translate(-50%, -50%) rotate(45deg);
   position: absolute;
-  top: 70%;
+  top: 50%;
   left: 80%;
 }
 
-@media only screen and (max-width: 1560px) {
-  .status-dropdown {
-    .css-13cymwt-control {
-      padding: 0 !important;
+.add-setting-detail {
+  .first-card {
+    margin-bottom: 10px !important;
+    border-color: var(--linkMenu);
+  }
+}
+
+
+.inactive-scroll-bar {
+  table {
+    tbody {
+      display: block;
+      max-height: calc(100vh - 450px);
+      overflow-y: auto;
+      width: 100%;
+      overflow-x: hidden;
     }
   }
 }
@@ -1817,6 +1839,100 @@ input[type=checkbox]:checked:after {
       overflow-y: auto;
       width: 100%;
       overflow-x: hidden;
+    }
+  }
+}
+
+.customer-list {
+  table {
+    thead {
+      tr {
+        th {
+          &:nth-child(3) {
+            display: flex;
+            justify-content: center;
+          }
+
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          &:nth-child(3) {
+            display: flex;
+            justify-content: center;
+          }
+
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+.status-desc {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  .field-info {
+    padding: 4px 12px;
+    border-top-left-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.active-green-color {
+      background: green;
+      color: #fff !important;
+    }
+  }
+}
+
+// Checklist Section Start
+.checklist-section {
+  border-bottom: 1px solid var(--inputBorder);
+  padding-bottom: 15px;
+
+  .sub-checklist {
+    padding-left: 30px;
+
+    .checkbox-part {
+      .input-label-title {
+        .input-label {
+          font-weight: normal;
+        }
+      }
+    }
+  }
+}
+
+// Checklist Section End
+
+@media only screen and (max-width: 1560px) {
+  .status-dropdown {
+    .css-13cymwt-control {
+      padding: 0 !important;
+    }
+  }
+
+  .address-model {
+    .sidebar-model {
+      .side-model-section {
+        .model-content {
+          &.content-40 {
+            width: 50%;
+          }
+        }
+      }
     }
   }
 }

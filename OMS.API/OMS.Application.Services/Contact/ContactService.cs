@@ -34,17 +34,23 @@ namespace OMS.Application.Services.Contact
 
             if (responceData.KeyValue > 0)
             {
+
                 List<AddContactEmailRequest> emailDT = requestData.EmailList!;
                 List<AddContactPhoneRequest> PhoneDT = requestData.PhoneList!;
 
                 int contactId = responceData.KeyValue;
 
-                DataTable emailDataTable = ExportHelper.ListToDataTable(emailDT);
-                DataTable phoneDataTable = ExportHelper.ListToDataTable(PhoneDT);
+                if (requestData.EmailList != null && requestData.EmailList.Count > 0)
+                {
+                    DataTable emailDataTable = ExportHelper.ListToDataTable(emailDT);
+                    _ = await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);
 
-                _ = await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);
-
-                _ = await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
+                }
+                if (requestData.PhoneList != null && requestData.PhoneList.Count > 0)
+                {
+                    DataTable phoneDataTable = ExportHelper.ListToDataTable(PhoneDT);
+                    _ = await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
+                }
             }
             return responceData;
         }
@@ -52,12 +58,15 @@ namespace OMS.Application.Services.Contact
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId)
         {
             List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId);
-            foreach (var contact in contactList)
+            if (contactList !=null && contactList.Count > 0)
             {
-                contact.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId);
-                contact.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+                foreach (var contact in contactList)
+                {
+                    contact.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId);
+                    contact.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+                }
             }
-            return contactList;
+            return contactList!;
         }
         #endregion
 

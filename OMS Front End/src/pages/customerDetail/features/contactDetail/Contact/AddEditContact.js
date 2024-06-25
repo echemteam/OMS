@@ -18,7 +18,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   const [formData, setFormData] = useState(contactDetailFormData);
   const [customerContactId, setCustomerContactId] = useState(0);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const { contactId, setContactId } = useContext(BasicDetailContext);
+  const { contactId, setContactId, emailAddressData, phoneNumberData } = useContext(BasicDetailContext);
 
   //** API Call's */
   const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
@@ -32,7 +32,9 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
         customerId: mainId,
         contactId: contactId,
-        customerContactId: customerContactId
+        customerContactId: customerContactId,
+        emailList: emailAddressData.length > 0 ? emailAddressData : null,
+        phoneList: phoneNumberData.length > 0 ? phoneNumberData : null
       }
       addEdit(request);
     }
@@ -56,7 +58,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   }));
 
   useEffect(() => {
-    if (isEditablePage) {
+    if (isEditablePage && SecurityKey) {
       const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
       const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
       if (hasEditPermission && formSetting) {
@@ -78,7 +80,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         }
       }
     }
-  }, [editRef, editFormData])
+  }, [editRef, editFormData, SecurityKey])
 
   const handleEditMode = (data) => {
     if (data) {
@@ -111,28 +113,28 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     <div>
       <div className="row horizontal-form mt-4">
         <FormCreator config={formData} ref={ref} {...formData} />
-        <div className="col-md-12 mt-3">
-          <div className="d-flex align-item-end justify-content-end">
-            <div className="d-flex align-item-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText='Save'
-                isLoading={isAddEditLoading}
-                onClick={handleAddEdit}
-                isDisable={isButtonDisable}
-              />
-              <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-                onClick={onSidebarClose}
-              />
-            </div>
-          </div>
-        </div>
       </div>
       <div className="row">
         <ManageEmailAddress onGetContactList={onGetContactList} />
         <ManageContactNumbers onGetContactList={onGetContactList} />
+      </div>
+      <div className="col-md-12 mt-5">
+        <div className="d-flex align-item-end justify-content-end">
+          <div className="d-flex align-item-end">
+            <Buttons
+              buttonTypeClassName="theme-button"
+              buttonText='Save'
+              isLoading={isAddEditLoading}
+              onClick={handleAddEdit}
+              isDisable={isButtonDisable}
+            />
+            <Buttons
+              buttonTypeClassName="dark-btn ml-5"
+              buttonText="Cancel"
+              onClick={onSidebarClose}
+            />
+          </div>
+        </div>
       </div>
     </div >
   );

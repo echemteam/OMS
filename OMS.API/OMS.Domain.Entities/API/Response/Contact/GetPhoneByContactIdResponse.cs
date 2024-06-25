@@ -7,5 +7,6 @@
         public string? PhoneCode { get; set; }
         public short? PhoneTypeId { get; set; }
         public int? Extension { get; set; }
+        public string? PhoneType { get; set; }
     }
 }

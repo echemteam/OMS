@@ -9,9 +9,8 @@ import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicD
 const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler,isLoading }) => {
 
     const { phoneNumberData } = useContext(BasicDetailContext);
-
     return (
-        <div className="col-xl-6 col-lg-6 col-md-6 col-12 mt-4 card-email-sec">
+        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2 card-email-sec">
             <CardSection
                 cardTitle="Phone Numbers"
                 buttonClassName="theme-button"
@@ -21,7 +20,7 @@ const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler,isLoad
                 buttonText="Add"
                 titleButtonClick={handleToggleModal}>
                 <div className="row">
-                    <div className="col-md-12 table-striped pt-1">
+                    <div className="col-md-12 table-striped">
                         <MolGrid
                             ref={molGridRef}
                             configuration={phoneNumberConfig}

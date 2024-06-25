@@ -63,10 +63,10 @@ namespace OMS.API.Controllers
         {
 
             byte[] decryptedBytes = await _serviceManager.customerDocumentsService.DownloadCustomerDocument(folderName, fileName, customerId);
-            if (decryptedBytes == null)
-            {
-                return APISucessResponce("File not found.");
-            }
+            //if (decryptedBytes == null)
+            //{
+            //    return APISucessResponce("File not found");
+            //}
             var memory = new MemoryStream(decryptedBytes)
             {
                 Position = 0

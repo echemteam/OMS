@@ -1,8 +1,15 @@
 import ToastService from "../../../../../services/toastService/ToastService";
 
-export const deleteData = (mainId, index, deleteAPICall, listData, setListData, messages) => {
+export const deleteData = (mainId, index, deleteAPICall, listData, setListData, messages, isEmailDelete) => {
     if (mainId) {
         deleteAPICall(mainId);
+        let filteredData;
+        if (isEmailDelete) {
+            filteredData = listData.filter(item => item.emailId !== mainId);
+        } else {
+            filteredData = listData.filter(item => item.phoneId !== mainId);
+        }
+        setListData(filteredData);
     } else {
         const filteredData = listData.filter(item => item.id !== index);
         const reindexedData = filteredData.map((item, index) => ({
@@ -27,7 +34,7 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
         onSuccess();
         return;
     }
-    const isDuplicate = listData && listData.some(item => item.emailAddress === data.emailAddress);
+    const isDuplicate = listData && listData.some(item => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase());
     if (!isDuplicate) {
         if (listData) {
             addData = [...listData, request];
@@ -50,7 +57,7 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
 
 export const updateData = (data, listData, setListData, successMessage, duplicateMessage, inValidDate, onResetData, onSuccess) => {
     if (listData && data.id > 0) {
-        const isDuplicate = listData.some((item, idx) => item.emailAddress === data.emailAddress && idx !== data.id);
+        const isDuplicate = listData.some((item) => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase() && item.id !== data.id);
         if (!isDuplicate) {
             const updatedData = [...listData];
             updatedData[data.id - 1] = {

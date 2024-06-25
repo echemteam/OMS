@@ -142,6 +142,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
         return "badge-gradient-Blocked";
         case "Reject":
           return "badge-gradient-Blocked";
+      case "Disable":
+        return "badge-gradient-disabled";
       default:
         return "badge-gradient-info";
     }

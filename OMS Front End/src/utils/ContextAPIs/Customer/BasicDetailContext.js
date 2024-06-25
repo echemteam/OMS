@@ -16,6 +16,11 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [customerId, setCustomerId] = useState(0);
     //** */
 
+    //** Shipping Method's */
+    const [deliveryMethodsList, setDeliveryMethodsList] = useState([]);
+    const [carriersList, setCarriersList] = useState([]);
+    //** */
+
     //** Using for Contact  */
     const [contactId, setContactId] = useState(0);
     const [contactNumbers, setContactNumbers] = useState();
@@ -56,7 +61,7 @@ export const BasicDetailContextProvider = ({ children }) => {
         <BasicDetailContext.Provider value={{
             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, contactMainModal, setPhoneNumberData,
             phoneNumberData, setAllCountries, allCountries, setMainId, mainId, contactId, setContactId, contactNumbers, setContactNumbers, setContactMainModal,
-            emailAddressData, setEmailAddressData, molGridRef
+            emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList
         }}>
             {children}
         </BasicDetailContext.Provider>

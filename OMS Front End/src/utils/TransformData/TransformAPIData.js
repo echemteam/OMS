@@ -2,18 +2,31 @@ import { FileTypeIcons } from "../../pages/customerDetail/features/documentsDeta
 
 export const contactTransformData = (data) => {
     return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddress, contactId, contactTypeId, customerContactId,phoneNumber } = item;
+        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit } = item;
 
+        const modifyPhoneNumberList = phoneNumberLsit.map((item, index) => ({
+            ...item,
+            id: index + 1
+        }));
+        const modifyEmailAddressLst = emailAddressLst.map((item, index) => ({
+            ...item,
+            id: index + 1
+        }));
+
+        const emailAddress = emailAddressLst.map(item => item.emailAddress).join(',');
+        const phoneNumber = phoneNumberLsit.map(item => item.phoneNumber).join(',');
         const transformedItem = {
             cardInformation: {
                 firstName,
                 lastName,
-                emailAddress,
                 contactId,
                 contactTypeId,
                 customerContactId,
+                emailAddress,
                 phoneNumber
             },
+            emailAddressLst: modifyEmailAddressLst,
+            phoneNumberLsit: modifyPhoneNumberList
         };
 
         if (!acc[type]) {
@@ -48,6 +61,31 @@ export const documentTransformData = (data) => {
             attachment,
             customerDocumentId,
             customerId,
+            documentTypeId,
+            name,
+            documentIcon
+        };
+
+        if (!acc[type]) {
+            acc[type] = [];
+        }
+
+        acc[type].push(transformedItem);
+        return acc;
+    }, {});
+};
+
+export const supplierDocumentTransformData = (data) => {
+    return data.reduce((acc, item) => {
+        const { type, attachment, supplierDocumentId, supplierId, documentTypeId, name } = item;
+
+        // Extract the file type and get the file icon basde on the file type  
+        const documentIcon = getFileTypeIcon(attachment);
+
+        const transformedItem = {
+            attachment,
+            supplierDocumentId,
+            supplierId,
             documentTypeId,
             name,
             documentIcon

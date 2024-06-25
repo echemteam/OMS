@@ -11,15 +11,24 @@ import {
   SubmittedCustomerGridConfig,
 } from "./config/CustomerData";
 import InActiveCustomer from "./features/InActiveCustomer";
+import ApprovalCheckList from "../features/approvalCheckList/ApprovalCheckList";
+import Buttons from "../../../components/ui/button/Buttons";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
   const listRef = useRef();
+  const [isModelOpen, setisModelOpen] = useState(false);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
   };
 
+  const onSidebarClose = () => {
+    setisModelOpen(false);
+  };
+  const handleToggleModal = () => {
+    setisModelOpen(true);
+  };
   const getListApi = () => {
     if (listRef.current) {
       listRef.current.getListApi();
@@ -151,6 +160,15 @@ const Customers = () => {
           </div>
         </div>
       </CustomerContext.Provider>
+      <Buttons
+        buttonText="Approval Check List"
+        buttonTypeClassName="theme-button"
+        onClick={handleToggleModal}
+      />
+      <ApprovalCheckList
+        onSidebarClose={onSidebarClose}
+        isModelOpen={isModelOpen}
+      />
     </>
   );
 };

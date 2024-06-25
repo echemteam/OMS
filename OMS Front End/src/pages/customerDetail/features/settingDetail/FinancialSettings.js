@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import FormCreator from "../../../../../components/Forms/FormCreator";
-import { SettingFormData } from "../config/SettingData";
-import Buttons from "../../../../../components/ui/button/Buttons";
-import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../../app/services/customerSettingsAPI";
-import ToastService from "../../../../../services/toastService/ToastService";
-import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
+import FormCreator from "../../../../components/Forms/FormCreator";
+import { SettingFormData } from "./config/SettingData";
+import Buttons from "../../../../components/ui/button/Buttons";
+import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
+import ToastService from "../../../../services/toastService/ToastService";
+import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
 const FinancialSettings = (props) => {
   const settingFormRef = useRef();
@@ -18,8 +18,16 @@ const FinancialSettings = (props) => {
   const [addEditCustomerSettings, { isLoading: isAddEditCustomerSettingsLoading, isSuccess: isAddEditCustomerSettingsSuccess, data: isAddEditCustomerSettingsData, },] = useAddEditCustomerSettingsMutation();
 
   useEffect(() => {
-    if (customerId > 0) GetDetailsbyCustomerID(customerId);
+    getAllPaymentTerms();
+    getAllPaymentMethod();
+  }, []);
+
+  useEffect(() => {
+    if (customerId > 0) {
+      GetDetailsbyCustomerID(customerId)
+    };
   }, [customerId]);
+
   useEffect(() => {
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
       const getData = isGetAllPaymentTermsData.map((item) => ({
@@ -79,6 +87,7 @@ const FinancialSettings = (props) => {
         customerId: customerId,
         paymentTermId: settingFormData.paymentTermId.value,
         paymentMethodId: settingFormData.paymentMethodId.value,
+        billingCurrency: settingFormData.billingCurrency.value,
       };
       addEditCustomerSettings(request);
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
@@ -92,15 +101,14 @@ const FinancialSettings = (props) => {
         paymentMethodId: settingFormData.paymentMethodId && typeof settingFormData.paymentMethodId === "object"
           ? settingFormData.paymentMethodId.value
           : settingFormData.paymentMethodId,
+        billingCurrency: settingFormData.billingCurrency && typeof settingFormData.billingCurrency === "object"
+        ? settingFormData.billingCurrency.value
+        : settingFormData.billingCurrency,
       };
       addEditCustomerSettings(updaterequest);
     }
   };
 
-  useEffect(() => {
-    getAllPaymentTerms();
-    getAllPaymentMethod();
-  }, []);
   return (
     <>
       <div className="row horizontal-form">
@@ -123,10 +131,10 @@ const FinancialSettings = (props) => {
                 onClick={onhandleEdit}
                 isLoading={isAddEditCustomerSettingsLoading}
               />
-              <Buttons
+              {/* <Buttons
                 buttonTypeClassName="dark-btn ml-5"
                 buttonText="Cancel"
-              />
+              /> */}
             </div>
           </div>
         </div>
