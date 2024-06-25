@@ -1,4 +1,5 @@
 ﻿using OMS.Application.Services.Address;
+using OMS.Application.Services.Approval;
 using OMS.Application.Services.Authentication;
 using OMS.Application.Services.Common;
 using OMS.Application.Services.Contact;
@@ -50,6 +51,7 @@ namespace OMS.Application.Services
         ISupplierServices _supplierServices;
         ISupplierDocuementsService _supplierDocuementsService;
         ISupplierNotesService _supplierNotesService;
+        IApprovalService _approvalService;
 
         public ITestService testService
         {
@@ -273,6 +275,18 @@ namespace OMS.Application.Services
                     _supplierNotesService = new SupplierNotesService(_repositoryManager, _commonSettingService);
                 }
                 return _supplierNotesService;
+
+            }
+        }
+        public IApprovalService approvalService
+        {
+            get
+            {
+                if (_approvalService == null)
+                {
+                    _approvalService = new ApprovalService(_repositoryManager, _commonSettingService);
+                }
+                return _approvalService;
 
             }
         }

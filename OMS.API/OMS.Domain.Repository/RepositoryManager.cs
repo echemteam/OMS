@@ -31,6 +31,8 @@ namespace OMS.Domain.Repository
         ISupplierRepository _supplierRepository;
         ISupplierdocuementsRepositery _supplierdocuementsRepositery;
         ISupplierNotesRepository _supplierNotesRepository;
+        IApprovalRepository _approvalRepository;
+        
         public ITestRepository test
         {
             get
@@ -238,6 +240,17 @@ namespace OMS.Domain.Repository
                     _supplierNotesRepository = new SupplierNotesRepository(_context);
                 }
                 return _supplierNotesRepository;
+            }
+        }
+        public IApprovalRepository approval
+        {
+            get
+            {
+                if (_approvalRepository == null)
+                {
+                    _approvalRepository = new ApprovalRepository(_context);
+                }
+                return _approvalRepository;
             }
         }
     }
