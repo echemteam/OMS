@@ -15,5 +15,6 @@ namespace OMS.Domain.Entities.API.Response.Customers
         public DateTime? ChangedAt {  get; set; }
         public string? Description {  get; set; }
         public string? Name { get; set; }
+        public string? EventStatus { get; set; }
     }
 }
