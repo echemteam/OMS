@@ -12,6 +12,6 @@ namespace OMS.Application.Services.Approval
     public interface IApprovalService
     {
         Task<List<GetUserCheckListByEventIdResponse>> GetUserCheckList(int eventId);
-        Task<AddEntityDTO<int>> AddUserCheckList(AddUserCheckListRequest requestData,int CurrentUserId);
+        Task<AddEntityDTO<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData,int CurrentUserId);
     }
 }

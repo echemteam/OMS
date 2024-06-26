@@ -160,15 +160,6 @@ const Customers = () => {
           </div>
         </div>
       </CustomerContext.Provider>
-      <Buttons
-        buttonText="Approval Check List"
-        buttonTypeClassName="theme-button"
-        onClick={handleToggleModal}
-      />
-      <ApprovalCheckList
-        onSidebarClose={onSidebarClose}
-        isModelOpen={isModelOpen}
-      />
     </>
   );
 };

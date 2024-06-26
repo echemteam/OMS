@@ -14,6 +14,7 @@ import { StatusEnums, StatusFeild } from '../../../../common/features/Enums/Stat
 import SwalAlert from '../../../../services/swalService/SwalService';
 import { securityKey } from '../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import ApprovalCheckList from '../../features/approvalCheckList/ApprovalCheckList';
 
 
 export const CustomersList = ({ statusId, configFile }) => {
@@ -29,6 +30,7 @@ export const CustomersList = ({ statusId, configFile }) => {
   const [staticId, setStaticId] = useState()
   const [statusFeild, setStatusFeild] = useState()
   const { listRef } = useContext(CustomerContext);
+  const [showApprovalList, setShowApprovalList] = useState(false);
 
 
   const [getCustomers, { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },] = useGetCustomersMutation();
@@ -47,7 +49,7 @@ export const CustomersList = ({ statusId, configFile }) => {
       const hasDisable = hasFunctionalPermission(securityKey.DISABLECUSTOMER);
       const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
       const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
-      
+
 
 
       if (actionColumn.defaultAction.allowEdit) {
@@ -128,21 +130,26 @@ export const CustomersList = ({ statusId, configFile }) => {
   };
 
   const handleGridCheckBoxChange = (rowData, datafield, rowindex, updatedValue, parentData) => {
-    confirm(
-      "Warning?",
-      "Are you sure you want to approve the customer?",
-      "Yes",
-      "Cancel"
-    ).then((confirmed) => {
-      if (confirmed) {
-        let req = {
-          customerId: rowData.customerId
-        }
-        updateCustomerApproveStatus(req)
-      } else {
-        getListApi()
-      }
-    });
+    handleShowApprovalList();
+    setcustomerId(rowData.customerId);
+  }
+
+  const handleShowApprovalList = () => {
+    setShowApprovalList(!showApprovalList);
+  };
+  const onSidebarApprovalClose = () => {
+    setShowApprovalList(!showApprovalList);
+  };
+  const onSuccessApprovalClose = () => {
+    setShowApprovalList(!showApprovalList);
+    updateCustomerApproval();
+  };
+
+  const updateCustomerApproval = () => {
+    let req = {
+      customerId: customerID
+    }
+    updateCustomerApproveStatus(req)
   }
 
   const handleToggleModal = () => {
@@ -199,7 +206,7 @@ export const CustomersList = ({ statusId, configFile }) => {
     FREEZE: handlefreeze,
     DISABLE: handleDiseble,
     BLOCKED: handleBlock,
-    REJECT:handleReject,
+    REJECT: handleReject,
   };
 
   return (
@@ -210,7 +217,7 @@ export const CustomersList = ({ statusId, configFile }) => {
           >
             <div className="row">
               <div className="col-md-12 table-striped">
-              <div className='customer-list'>
+                <div className='customer-list'>
                   <MolGrid
                     ref={molGridRef}
                     configuration={configFile}
@@ -226,7 +233,7 @@ export const CustomersList = ({ statusId, configFile }) => {
                     allowPagination={true}
                     onCellDataChange={handleGridCheckBoxChange}
                   />
-              </div>
+                </div>
               </div>
             </div>
           </CardSection>
@@ -263,9 +270,9 @@ export const CustomersList = ({ statusId, configFile }) => {
               </div>
             </div>
           </CenterModel>
-
         </div>
       </div>
+      <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={showApprovalList} onSuccessApprovalClose={onSuccessApprovalClose} />
     </div>
   )
 }

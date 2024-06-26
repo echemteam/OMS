@@ -1,15 +1,10 @@
-﻿using OMS.Domain.Entities.API.Response.Approval;
-using OMS.Domain.Entities.Entity.Approval;
+﻿using Dapper;
+using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Implementation
 {
@@ -42,14 +37,21 @@ namespace OMS.Domain.Repository.Implementation
             return getEmailByContactIdResponse;
 
         }
-        public async Task<AddEntityDTO<int>> AddUserCheckList(UserCheckListDTO addUserCheckList)
+        public async Task<AddEntityDTO<int>> AddUserChecklistResponse(DataTable CheckListDataTable)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, new
+            var parameters = new
             {
-                addUserCheckList.UserId,
-                addUserCheckList.IsApproved,
-                addUserCheckList.ChecklistItemId,
-            }, CommandType.StoredProcedure);
+                CheckListResponse = CheckListDataTable.AsTableValuedParameter("[dbo].[CheckListResponseTypeTable]")
+            };
+            AddEntityDTO<int> responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, parameters, CommandType.StoredProcedure);
+            return responceData;
+
+            //return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, new
+            //{
+            //    addUserCheckList.UserId,
+            //    addUserCheckList.IsApproved,
+            //    addUserCheckList.ChecklistItemId,
+            //}, CommandType.StoredProcedure);
         }
     }
 }

@@ -1811,6 +1811,11 @@ input[type=checkbox]:checked:after {
   left: 80%;
 }
 
+input[type=checkbox]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .add-setting-detail {
   .first-card {
     margin-bottom: 10px !important;
