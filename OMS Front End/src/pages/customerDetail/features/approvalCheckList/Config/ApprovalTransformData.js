@@ -11,14 +11,3 @@ export const transformData = (data) => {
         }))
     })) : []
 };
-
-
-// export const transFormUserResponseData = (data) => {
-//     return data ? data.map((item) => ({
-//         checkListRequest: item.checkListItem && item.checkListItem.map((childItem) => ({
-//             checklistItemId: childItem.checklistItemId,
-//             isApproved: false
-//         }))
-//     })) : []
-
-// }

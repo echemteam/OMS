@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
+//** Lib's */
 import { AppIcons } from "../../../../data/appIcons";
-import Buttons from "../../../../components/ui/button/Buttons";
 import CheckListItem from "./CheckListItem";
-import { useAddUserChecklistResponseMutation, useLazyGetUserCheckListQuery } from "../../../../app/services/ApprovalAPI";
-import { ApprovalEnum } from "../../../../common/features/Enums/ApprovalEnums";
 import { transformData } from "./Config/ApprovalTransformData";
+import Buttons from "../../../../components/ui/button/Buttons";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { ApprovalEnum } from "../../../../common/features/Enums/ApprovalEnums";
+import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
+//** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
+import { useAddUserChecklistResponseMutation, useLazyGetUserCheckListQuery } from "../../../../app/services/ApprovalAPI";
 
 const ApprovalCheckList = ({ isModelOpen, onSidebarClose, onSuccessApprovalClose }) => {
 
