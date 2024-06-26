@@ -105,6 +105,20 @@ namespace OMS.Application.Services.Contact
             }
             return contactList!;
         }
+
+        public async Task<List<GetContactBySupplierIdResponse>> GetContactBySupplierId(int supplierId)
+        {
+            List<GetContactBySupplierIdResponse> contactList = await repositoryManager.contact.GetContactBySupplierId(supplierId);
+            if (contactList != null && contactList.Count > 0)
+            {
+                foreach (var contact in contactList)
+                {
+                    contact.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId);
+                    contact.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+                }
+            }
+            return contactList!;
+        }
         #endregion
 
     }
