@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AddSupplierContext from '../../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
  
 const DocumentDetails = React.lazy(() => import("./DocuementDetails"));
 
-const SupplierDocumentDetail = ({ pageId }) => {
+const SupplierDocumentDetail = () => {
+    const { supplierId } = useContext(AddSupplierContext);
     return (
-        <DocumentDetails pageId={pageId}  />
+        <DocumentDetails mainId={supplierId ? supplierId : 0}  />
     )
 }
 

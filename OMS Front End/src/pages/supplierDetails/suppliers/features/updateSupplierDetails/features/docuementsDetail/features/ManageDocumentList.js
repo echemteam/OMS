@@ -13,7 +13,7 @@ import { useDeleteSupplierDocumentsByIdMutation, useLazyGetSupplierDocumentsById
 import { useLazyDownloadCustomerDocumentQuery } from "../../../../../../../../app/services/documentAPI";
 
 
-const ManageDocumentList = forwardRef(({ pageId, childRef}) => {
+const ManageDocumentList = forwardRef(({ mainId, childRef}) => {
  
     //** State */
     const { confirm } = SwalAlert();
@@ -28,12 +28,10 @@ const ManageDocumentList = forwardRef(({ pageId, childRef}) => {
 
     //** UseEffect */
     useEffect(() => {
-        debugger
-        pageId && getList(pageId);
+        mainId && getList(mainId);
     }, []);
 
     useEffect(() => {
-        debugger
         if (isListSucess && isListData && !isListFetching) {
             const modifyData = supplierDocumentTransformData(isListData);
             setDocumentListData(modifyData);
@@ -41,7 +39,6 @@ const ManageDocumentList = forwardRef(({ pageId, childRef}) => {
     }, [isListSucess, isListData, isListFetching]);
 
     useEffect(() => {
-        debugger
         if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
             var file = new Blob([isDownalodData.fileData], {
                 type: isDownalodData?.fileData.type,
@@ -62,7 +59,7 @@ const ManageDocumentList = forwardRef(({ pageId, childRef}) => {
     const handleDownload = (name) => {
         let request = {
             folderName: 'SupplierDocuements',
-            customerId: pageId,
+            customerId: mainId,
             fileName: name
         }
         Downalod(request);
@@ -79,7 +76,7 @@ const ManageDocumentList = forwardRef(({ pageId, childRef}) => {
     };
 
     const onGetData = () => {
-        pageId && getList(pageId);
+        mainId && getList(mainId);
     };
 
     //** Use Imperative Handle  */
