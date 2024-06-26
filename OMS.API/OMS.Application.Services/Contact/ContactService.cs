@@ -43,12 +43,22 @@ namespace OMS.Application.Services.Contact
                 if (requestData.EmailList != null && requestData.EmailList.Count > 0)
                 {
                     DataTable emailDataTable = ExportHelper.ListToDataTable(emailDT);
+                    emailDataTable.Columns.Add("CreatedBy", typeof(short)); 
+                    foreach (DataRow row in emailDataTable.Rows)
+                    {
+                        row["CreatedBy"] = CurrentUserId;
+                    }
                     _ = await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);
 
                 }
                 if (requestData.PhoneList != null && requestData.PhoneList.Count > 0)
                 {
                     DataTable phoneDataTable = ExportHelper.ListToDataTable(PhoneDT);
+                    phoneDataTable.Columns.Add("CreatedBy", typeof(short)); 
+                    foreach (DataRow row in phoneDataTable.Rows)
+                    {
+                        row["CreatedBy"] = CurrentUserId;
+                    }
                     _ = await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
                 }
             }
