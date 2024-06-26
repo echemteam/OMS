@@ -32,10 +32,10 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
-        [HttpPost("AddUserCheckList")]
-        public async Task<IActionResult> AddUserCheckList(AddUserCheckListRequest requestData)
+        [HttpPost("AddUserChecklistResponse")]
+        public async Task<IActionResult> AddUserChecklistResponse(AddUserChecklistRequest requestData)
         {
-            var addCheckList = await _serviceManager.approvalService.AddUserCheckList(requestData, CurrentUserId);
+            var addCheckList = await _serviceManager.approvalService.AddUserChecklistResponse(requestData, CurrentUserId);
             return APISucessResponce(addCheckList);
         }
         #endregion
