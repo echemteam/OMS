@@ -59,7 +59,7 @@ const ManageDocumentList = forwardRef(({ mainId, childRef}) => {
     const handleDownload = (name) => {
         let request = {
             folderName: 'SupplierDocuements',
-            customerId: mainId,
+            mainId: mainId,
             fileName: name
         }
         Downalod(request);
