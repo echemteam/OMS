@@ -94,8 +94,6 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SupplierId,
                 requestData.AddressId,
                 requestData.AddressTypeId,
-                requestData.IsPreferredBilling,
-                requestData.IsPreferredShipping,
                 createdBy
             }, CommandType.StoredProcedure);
         }
@@ -107,8 +105,6 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SupplierId,
                 requestData.AddressId,
                 requestData.AddressTypeId,
-                requestData.IsPreferredBilling,
-                requestData.IsPreferredShipping,
                 updatedBy
             }, CommandType.StoredProcedure);
         }
