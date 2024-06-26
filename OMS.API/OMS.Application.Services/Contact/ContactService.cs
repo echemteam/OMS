@@ -2,6 +2,7 @@
 using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Contact;
+using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Contact;
@@ -43,7 +44,7 @@ namespace OMS.Application.Services.Contact
                 if (requestData.EmailList != null && requestData.EmailList.Count > 0)
                 {
                     DataTable emailDataTable = ExportHelper.ListToDataTable(emailDT);
-                    emailDataTable.Columns.Add("CreatedBy", typeof(short)); 
+                    emailDataTable.Columns.Add("CreatedBy", typeof(short));
                     foreach (DataRow row in emailDataTable.Rows)
                     {
                         row["CreatedBy"] = CurrentUserId;
@@ -54,7 +55,7 @@ namespace OMS.Application.Services.Contact
                 if (requestData.PhoneList != null && requestData.PhoneList.Count > 0)
                 {
                     DataTable phoneDataTable = ExportHelper.ListToDataTable(PhoneDT);
-                    phoneDataTable.Columns.Add("CreatedBy", typeof(short)); 
+                    phoneDataTable.Columns.Add("CreatedBy", typeof(short));
                     foreach (DataRow row in phoneDataTable.Rows)
                     {
                         row["CreatedBy"] = CurrentUserId;
@@ -62,13 +63,39 @@ namespace OMS.Application.Services.Contact
                     _ = await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
                 }
             }
+
+            if (requestData.CustomerId > 0)
+            {
+                AddEditContactForCustomerRequest addEditContactForCustomerRequest = new()
+                {
+                    CustomerContactId = requestData.CustomerContactId,
+                    CustomerId = requestData.CustomerId,
+                    ContactId = responceData.KeyValue,
+                    ContactTypeId = requestData.ContactTypeId,
+                    IsPrimary = requestData.IsPrimary
+                };
+
+                _ = await repositoryManager.customers.AddEditContactForCustomer(addEditContactForCustomerRequest, CurrentUserId);
+            }
+            else if (requestData.SupplierId > 0)
+            {
+                AddEditContactForSupplierRequest addEditContactForSupplierRequest = new()
+                {
+                    SupplierContactId = requestData.SupplierContactId,
+                    SupplierId = requestData.SupplierId,
+                    ContactId = responceData.KeyValue,
+                    ContactTypeId = requestData.ContactTypeId,
+                    IsPrimary = requestData.IsPrimary
+                };
+                _ = await repositoryManager.supplier.AddEditContactForSupplier(addEditContactForSupplierRequest, CurrentUserId);
+            }
             return responceData;
         }
 
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId)
         {
             List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId);
-            if (contactList !=null && contactList.Count > 0)
+            if (contactList != null && contactList.Count > 0)
             {
                 foreach (var contact in contactList)
                 {
