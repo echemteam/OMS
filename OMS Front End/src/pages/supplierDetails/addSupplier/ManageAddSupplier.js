@@ -1,14 +1,14 @@
 import React from 'react'
 import { AddSupplierContextProvider } from '../../../utils/ContextAPIs/Supplier/AddSupplierContext'
 import AddSupplier from './AddSupplier'
-import { BasicDetailContextProvider } from '../../../utils/ContextAPIs/Customer/BasicDetailContext'
+// import { BasicDetailContextProvider } from '../../../utils/ContextAPIs/Customer/BasicDetailContext'
 
 const ManageAddSupplier = () => {
     return (
         <AddSupplierContextProvider>
-            <BasicDetailContextProvider>
+            {/* <BasicDetailContextProvider> */}
                 <AddSupplier />
-            </BasicDetailContextProvider >
+            {/* </BasicDetailContextProvider> */}
         </AddSupplierContextProvider>
     )
 }

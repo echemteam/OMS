@@ -1876,7 +1876,7 @@ input[type=checkbox]:disabled {
 
           &:nth-child(4) {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
           }
         }
       }

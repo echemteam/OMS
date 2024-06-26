@@ -2,7 +2,7 @@ import React from "react";
 import Image from "../../../../../components/image/Image";
 import { AppIcons } from "../../../../../data/appIcons";
 
-const ContactCard = ({ childData, handleEdit }) => {
+const ContactCard = ({ childData, handleEdit}) => {
 
   const cardInfoData = childData.cardInformation;
   const phoneNumberLsit = childData.phoneNumberLsit;
