@@ -46,9 +46,9 @@ namespace OMS.Application.Services.Approval
             }
             return await repositoryManager.approval.AddUserChecklistResponse(CheckListDataTable);
         }
-        public async Task<List<GetAutomatedApprovalCheckListResponse>> GetAutomatedApprovalCheckList(ValidateRequest validaterequest)
+        public async Task<List<GetValidateCheckListResponse>> GetValidateCheckList(ValidateRequest validaterequest)
         {
-            List<GetAutomatedApprovalCheckListResponse> responses = new();
+            List<GetValidateCheckListResponse> responses = new();
             if (validaterequest.CustomerId > 0)
             {
                 responses = await repositoryManager.approval.getValidateCustomer(validaterequest.CustomerId);
