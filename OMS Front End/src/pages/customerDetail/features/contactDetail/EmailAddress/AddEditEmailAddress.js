@@ -7,13 +7,14 @@ import { addData, updateData } from '../Util/ContactEmailAddressUtil';
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
 import BasicDetailContext from '../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
+import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
 
-const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess }) => {
+const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess , isSupplier}) => {
 
     //** State */
     const ref = useRef();
     const [formData, setFormData] = useState(addEditEmailFormData);
-    const { contactId, emailAddressData, setEmailAddressData } = useContext(BasicDetailContext);
+    const { contactId, emailAddressData, setEmailAddressData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     //** Handle Changes */
     const handleAddEdit = () => {

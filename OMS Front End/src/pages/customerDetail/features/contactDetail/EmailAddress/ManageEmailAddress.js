@@ -7,11 +7,12 @@ import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicD
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useDeleteContactEmailMutation } from "../../../../../app/services/emailAddressAPI";
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Component's */
 const EmailAddressList = React.lazy(() => import("./EmailAddressList"));
 const AddEditEmailModal = React.lazy(() => import("./AddEditEmailAddress"));
 
-const ManageEmailAddress = ({ onGetContactList }) => {
+const ManageEmailAddress = ({ onGetContactList ,isSupplier }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -19,7 +20,7 @@ const ManageEmailAddress = ({ onGetContactList }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
-    const { setEmailAddressData, emailAddressData } = useContext(BasicDetailContext);
+    const { setEmailAddressData, emailAddressData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     //** API Call's */
     const [deleteContactEmail, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactEmailMutation();
@@ -77,9 +78,9 @@ const ManageEmailAddress = ({ onGetContactList }) => {
 
     return (
         <React.Fragment>
-            <EmailAddressList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} />
+            <EmailAddressList isSupplier={isSupplier} molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} />
             {showModal && (
-                <AddEditEmailModal handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} editFormData={editFormData} isEdit={isEdit} />
+                <AddEditEmailModal isSupplier={isSupplier} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} editFormData={editFormData} isEdit={isEdit} />
             )}
         </React.Fragment>
     )

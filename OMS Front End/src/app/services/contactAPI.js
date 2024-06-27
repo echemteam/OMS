@@ -24,6 +24,14 @@ const contactAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getContactBySupplierId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Contact/GetContactBySupplierId/?supplierId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
         addEditContact: builder.mutation({
             query: (requestData) => ({
                 url: '/Contact/AddEditContact',
@@ -38,7 +46,7 @@ const contactAPI = createApi({
 })
 
 export const {
-    useLazyGetAllContactTypesQuery, useLazyGetContactByCustomerIdQuery, useAddEditContactMutation
+    useLazyGetAllContactTypesQuery, useLazyGetContactByCustomerIdQuery, useAddEditContactMutation , useLazyGetContactBySupplierIdQuery
 } = contactAPI
 
 export default contactAPI;

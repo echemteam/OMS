@@ -18,6 +18,8 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDTO<int>> UpdateAddressForSupplier(UpdateAddressForSupplierRequest requestData, short updatedBy);
         Task<AddEntityDTO<int>> UpdateSupplierStatus(SupplierDTO supplier);
         Task<AddEntityDTO<int>> CheckSupplierNameExist(SupplierDTO supplierDTO);
-         
+        Task<AddEntityDTO<int>> AddEditContactForSupplier(AddEditContactForSupplierRequest requestData, short createdBy);
+
+
     }
 }

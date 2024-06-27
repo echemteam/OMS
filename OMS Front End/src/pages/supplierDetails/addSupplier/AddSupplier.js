@@ -1,19 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CardSection from "../../../components/ui/card/CardSection";
 import Image from "../../../components/image/Image";
 import { AppIcons } from "../../../data/appIcons";
 import AddSupplierContext from "../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import SupplierBasicDetail from "./features/supplierBasicDetail/SupplierBasicDetail";
-import SupplierAddressDetail from "./features/supplierAddressDetail/SupplierAddressDetail";
 import SupplierContactDetail from "./features/supplierContactDetail/SupplierContactDetail";
 import SupplierDocumentDetail from "./features/supplierDocumentDetail/SupplierDocumentDetail";
 import { TabEnum } from "../../../common/features/Enums/TabsEnums";
+import SuplierAddressDetails from "./features/supplierAddressDetail/SupplierAddressDetails";
+import { useUpdateSupplierStatusMutation } from "../../../app/services/supplierAPI";
+import ToastService from "../../../services/toastService/ToastService";
+import { StatusEnums } from "../../../common/features/Enums/StatusEnums";
 
 
 const AddSupplier = () => {
   const navigate = useNavigate();
   const { activeTab, setActiveTab, movePreviewPage, addSupplier, supplierId } = useContext(AddSupplierContext);
+
+  const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -29,30 +34,50 @@ const AddSupplier = () => {
     {
       label: "Address",
       subLabel: "Enter Supplier Address Details",
-      content: <SupplierAddressDetail />,
+      content: <SuplierAddressDetails isEditablePage={false}/>,
       tab: TabEnum.Address
     },
     {
       label: "Contact",
       subLabel: "Enter Supplier Contact Details",
-      content: <SupplierContactDetail isEditablePage={false}/>,
+      content: <SupplierContactDetail isEditablePage={false} />,
       tab: TabEnum.Contact
     },
     {
       label: "Documents",
       subLabel: "Add Supplier Documents Details",
-      content: <SupplierDocumentDetail />,
+      content: <SupplierDocumentDetail isEditablePage={false} />,
       tab: TabEnum.Documents
     },
   ];
+
+  useEffect(() => {
+    if (isSuccessUpdateSupplierStatus && updateSupplierStatusData) {
+        ToastService.success(updateSupplierStatusData.errorMessage);
+        navigate("/Suppliers");
+    }
+}, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
 
   const handleTabClick = (index) => {
     setActiveTab(index);
   };
 
   const handleSubmit = () => {
-    navigate('/Suppliers');
+    let req = {
+      supplierId: supplierId,
+      statusId: StatusEnums.Submitted,
+    };
+    updateSupplierStatus(req);
   };
+
+  const handleDraft = () => {
+    let req = {
+      supplierId: supplierId,
+      statusId: StatusEnums.Pending,
+    };
+    updateSupplierStatus(req);
+  };
+
 
   return (
     <>
@@ -109,11 +134,23 @@ const AddSupplier = () => {
                               Next
                             </button>
                           ) : (
-                            <button type="submit" className="btn theme-button"
-                              onClick={handleSubmit}
-                            >
-                              Submit
-                            </button>
+                            <>
+                              <button
+                                type="submit"
+                                className="btn theme-button"
+                                onClick={handleDraft}
+                              >
+                                Save as Draft
+                              </button>
+
+                              <button
+                                type="submit"
+                                className="btn theme-button ml-3"
+                                onClick={handleSubmit}
+                              >
+                                Save as Submit
+                              </button>
+                            </>
                           )}
                         </div>
                       </div>

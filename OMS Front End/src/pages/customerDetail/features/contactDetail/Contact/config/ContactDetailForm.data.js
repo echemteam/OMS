@@ -6,6 +6,7 @@ export const contactDetailFormData = {
     firstName: "",
     lastName: "",
     contactTypeId: 0,
+    isPrimary:false
   },
   formFields: [
     {

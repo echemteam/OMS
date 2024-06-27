@@ -13,15 +13,10 @@ import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailCont
 import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
 import CustomerDocumentDetails from "./features/documentsDetail/CustomerDocumentDetails";
 import ShippingSettings from "./features/settingDetail/features/ShippingSetting/ShippingSettings";
+import CustomerAddressDetails from "./features/addressDetail/CustomerAddressDetails";
 //** Component's */
 const BasicDetail = React.lazy(() =>
   import("./features/basicDetail/BasicDetail")
-);
-const AddressDetail = React.lazy(() =>
-  import("./features/addressDetail/AddressDetail")
-);
-const DocumentDetails = React.lazy(() =>
-  import("./features/documentsDetail/DocumentDetails")
 );
 const CustomerContactDetails = React.lazy(() =>
   import("./features/contactDetail/Contact/CustomerContactDetails")
@@ -29,12 +24,11 @@ const CustomerContactDetails = React.lazy(() =>
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage, addCustomer, customerId } =
-    useContext(BasicDetailContext);
+  const { activeTab, setActiveTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
+
   const [
     updateCustomerStatus,
     {
-      isLoading: updateCustomerStatusLoading,
       isSuccess: isSuccessUpdateCustomerStatus,
       data: updateCustomerStatusData,
     },
@@ -61,7 +55,7 @@ const AddCustomer = () => {
     {
       label: "Address",
       subLabel: "Enter Customer Address Details",
-      content: <AddressDetail isEditablePage={false} />,
+      content: <CustomerAddressDetails isEditablePage={false} />,
       tab: TabEnum.Address,
     },
     {
