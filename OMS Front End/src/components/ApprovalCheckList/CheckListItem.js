@@ -1,6 +1,6 @@
 import React from "react";
-import "../../../../components/ui/inputs/checkBox/Checkbox.scss";
-import Label from "../../../../components/ui/label/Label";
+import Label from "../ui/label/Label";
+import "../ui/inputs/checkBox/Checkbox.scss";
 
 const CheckListItem = ({ itemList, handleCheckChange, checkItemListId }) => {
     return (

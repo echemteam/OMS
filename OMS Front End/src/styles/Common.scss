@@ -1920,46 +1920,6 @@ input[type=checkbox]:disabled {
   }
 }
 
-// Checklist Section End
-
-// Customer Data Validation Start
-
-.customer-data-sec {
-  .validation-list {
-    ul {
-      padding-left: 0;
-
-      li {
-        list-style-type: none;
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 15px;
-        width: 100%;
-
-        .tick-untick-img {
-          width: 25px;
-
-          img {
-            min-width: 25px;
-            max-width: 25px;
-          }
-        }
-
-        .validation-msg {
-          margin-left: 10px;
-          padding-top: 2px;
-        }
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-    }
-  }
-}
-
-// Customer Data Validation End
-
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
     .css-13cymwt-control {
