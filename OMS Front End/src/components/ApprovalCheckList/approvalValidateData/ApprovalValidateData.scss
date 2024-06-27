@@ -4,39 +4,44 @@
 //     height: 400px;
 //     overflow-y: scroll;
 // }
+.validation-center-model {
+    .modal-dialog{
+        top: 45%;
+    }
+    .customer-data-sec {
+        .validation-list {
+            max-height: 450px;
+            overflow: hidden;
+            overflow-y: auto;
 
-.customer-data-sec {
-    .validation-list {
-        max-height: 400px;
-        overflow: hidden;
-        overflow-y: auto;
-        ul {
-            padding-left: 0;
+            ul {
+                padding-left: 0;
 
-            li {
-                list-style-type: none;
-                display: flex;
-                align-items: flex-start;
-                margin-bottom: 15px;
-                width: 100%;
-                gap: 12px;
+                li {
+                    list-style-type: none;
+                    display: flex;
+                    align-items: flex-start;
+                    margin-bottom: 15px;
+                    width: 100%;
+                    gap: 12px;
 
-                .tick-untick-img {
-                    width: 25px;
+                    .tick-untick-img {
+                        width: 25px;
 
-                    img {
-                        min-width: 25px;
-                        max-width: 25px;
+                        img {
+                            min-width: 25px;
+                            max-width: 25px;
+                        }
                     }
-                }
 
-                .validation-msg {
-                    margin-left: 10px;
-                    padding-top: 2px;
-                }
+                    .validation-msg {
+                        margin-left: 10px;
+                        padding-top: 2px;
+                    }
 
-                &:last-child {
-                    margin-bottom: 0;
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
                 }
             }
         }
