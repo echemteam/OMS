@@ -25,12 +25,22 @@ const approvalAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getValidateCheckList: builder.mutation({
+            query: (requestData) => ({
+                url: '/Approval/GetValidateCheckList',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
 export const {
     useLazyGetUserCheckListQuery,
-    useAddUserChecklistResponseMutation
+    useAddUserChecklistResponseMutation,
+    useGetValidateCheckListMutation
 } = approvalAPI;
 
 export default approvalAPI;

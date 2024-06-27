@@ -4,7 +4,11 @@ import { AppIcons } from "../../../../../data/appIcons";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { contactDetailFormData } from "./config/ContactDetailForm.data";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
-import { contactCustomerTransformData, contactSupplierTransformData, contactTransformData } from "../../../../../utils/TransformData/TransformAPIData";
+import {
+  contactCustomerTransformData,
+  contactSupplierTransformData,
+  contactTransformData,
+} from "../../../../../utils/TransformData/TransformAPIData";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import { useLazyGetAllContactTypesQuery } from "../../../../../app/services/contactAPI";
@@ -14,8 +18,14 @@ import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSup
 const AddEditContact = React.lazy(() => import("./AddEditContact"));
 const ManageContactList = React.lazy(() => import("./ManageContactList"));
 
-const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, isSupplier, isEditablePage, SecurityKey }) => {
-
+const ContactDetail = ({
+  mainId,
+  getContactByIdQuery,
+  addEditContactMutation,
+  isSupplier,
+  isEditablePage,
+  SecurityKey,
+}) => {
   //** State */
   const editRef = useRef();
   const childRef = useRef();
@@ -25,11 +35,30 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
   const [buttonVisible, setButtonVisible] = useState(true);
   const [modifyContactData, setModifyContactData] = useState([]);
 
-  const { setEmailAddressData, setContactMainModal, setContactId, setPhoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
+  const {
+    setEmailAddressData,
+    setContactMainModal,
+    setContactId,
+    setPhoneNumberData,
+  } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
   //** API Call's */
-  const [GetContactList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = getContactByIdQuery();
-  const [getAllContactTypes, { isFetching: isGetAllContactTypesFetching, isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData }] = useLazyGetAllContactTypesQuery();
+  const [
+    GetContactList,
+    {
+      isFetching: isGetContactFetching,
+      isSuccess: isGetContactSucess,
+      data: isGetContactData,
+    },
+  ] = getContactByIdQuery();
+  const [
+    getAllContactTypes,
+    {
+      isFetching: isGetAllContactTypesFetching,
+      isSuccess: isGetAllContactTypesSucess,
+      data: allGetAllContactTypesData,
+    },
+  ] = useLazyGetAllContactTypesQuery();
 
   //** UseEffect */
   useEffect(() => {
@@ -44,8 +73,7 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
       if (hasAddPermission) {
         if (hasAddPermission.hasAccess === true) {
           setButtonVisible(true);
-        }
-        else {
+        } else {
           setButtonVisible(false);
         }
       }
@@ -54,31 +82,43 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetContactData) {
-      const modifyData = isSupplier ? contactSupplierTransformData(isGetContactData) : contactCustomerTransformData(isGetContactData);
+      const modifyData = isSupplier
+        ? contactSupplierTransformData(isGetContactData)
+        : contactCustomerTransformData(isGetContactData);
       setModifyContactData(modifyData);
     }
-  }, [isGetContactFetching, isGetContactSucess, isGetContactData])
+  }, [isGetContactFetching, isGetContactSucess, isGetContactData]);
 
   useEffect(() => {
-    if (!isGetAllContactTypesFetching && isGetAllContactTypesSucess && allGetAllContactTypesData) {
-      const getData = allGetAllContactTypesData.map(item => ({
+    if (
+      !isGetAllContactTypesFetching &&
+      isGetAllContactTypesSucess &&
+      allGetAllContactTypesData
+    ) {
+      const getData = allGetAllContactTypesData.map((item) => ({
         value: item.contactTypeId,
-        label: item.type
-      }))
-      const dropdownField = contactDetailFormData.formFields.find(item => item.dataField === "contactTypeId");
+        label: item.type,
+      }));
+      const dropdownField = contactDetailFormData.formFields.find(
+        (item) => item.dataField === "contactTypeId"
+      );
       dropdownField.fieldSetting.options = getData;
     }
-  }, [isGetAllContactTypesFetching, isGetAllContactTypesSucess, allGetAllContactTypesData])
+  }, [
+    isGetAllContactTypesFetching,
+    isGetAllContactTypesSucess,
+    allGetAllContactTypesData,
+  ]);
 
   //** Handle Change's */
   const handleToggleModal = () => {
     setContactId(0);
     setIsEdit(false);
     setisModelOpen(true);
-    setPhoneNumberData('');
-    setEmailAddressData('');
+    setPhoneNumberData("");
+    setEmailAddressData("");
     setContactMainModal(true);
-    setEditFormData('');
+    setEditFormData("");
     if (childRef.current) {
       childRef.current.callChildFunction();
     }
@@ -122,8 +162,13 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
         iconImg={AppIcons.PlusIcon}
         rightButton={buttonVisible ? true : false}
         buttonText="Add"
-        titleButtonClick={handleToggleModal}>
-        <ManageContactList handleEdit={handleEdit} modifyContactData={modifyContactData} isLoading={isGetContactFetching} />
+        titleButtonClick={handleToggleModal}
+      >
+        <ManageContactList
+          handleEdit={handleEdit}
+          modifyContactData={modifyContactData}
+          isLoading={isGetContactFetching}
+        />
       </CardSection>
       <div className="sidebar-contact-model">
         <SidebarModel
@@ -131,9 +176,22 @@ const ContactDetail = ({ mainId, getContactByIdQuery, addEditContactMutation, is
           contentClass="content-45"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
-          isOpen={isModelOpen}>
-          <AddEditContact isSupplier={isSupplier} onSidebarClose={onSidebarClose} editFormData={editFormData} childRef={childRef} onSuccess={onSuccess} isEdit={isEdit} editRef={editRef} SecurityKey={SecurityKey}
-            onGetContactList={onGetContactList} addEditContactMutation={addEditContactMutation} mainId={mainId} isEditablePage={isEditablePage} />
+          isOpen={isModelOpen}
+        >
+          <AddEditContact
+            isSupplier={isSupplier}
+            onSidebarClose={onSidebarClose}
+            editFormData={editFormData}
+            childRef={childRef}
+            onSuccess={onSuccess}
+            isEdit={isEdit}
+            editRef={editRef}
+            SecurityKey={SecurityKey}
+            onGetContactList={onGetContactList}
+            addEditContactMutation={addEditContactMutation}
+            mainId={mainId}
+            isEditablePage={isEditablePage}
+          />
         </SidebarModel>
       </div>
     </>

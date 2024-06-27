@@ -1,5 +1,6 @@
 ﻿using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Response.Common;
+using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Repository;
 using OMS.Shared.Services.Contract;
 
@@ -96,5 +97,10 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllPhoneTypes();
         }
+        public Task<List<GetAllUserResponse>> GetAllUser()
+        {
+            return repositoryManager.commonRepository.GetAllUser();
+        }
+
     }
 }
