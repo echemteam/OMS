@@ -25,6 +25,7 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
     let request = {
         ...data,
         contactId: contactId,
+        isPrimary : data.isEmailPrimary,
         id: listData ? listData?.length + 1 : 1
     }
     let addData;
@@ -62,7 +63,8 @@ export const updateData = (data, listData, setListData, successMessage, duplicat
             const updatedData = [...listData];
             updatedData[data.id - 1] = {
                 ...updatedData[data.id - 1],
-                emailAddress: data.emailAddress
+                emailAddress: data.emailAddress,
+                isPrimary : data.isEmailPrimary,
             };
             setListData(updatedData);
             ToastService.success(successMessage);

@@ -20,16 +20,29 @@ const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit,
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
         if (data && !data.id) {
-            addData(data, contactId, emailAddressData, setEmailAddressData, Message.EmailAdded, Message.EmailMaxLength, Message.DuplicateEmail, onResetData, onSuccess);
+            let req = {
+                ...data,
+                isPrimary : data.isEmailPrimary
+            }
+            addData(req, contactId, emailAddressData, setEmailAddressData, Message.EmailAdded, Message.EmailMaxLength, Message.DuplicateEmail, onResetData, onSuccess);
         } else if (data && data.id) {
-            updateData(data, emailAddressData, setEmailAddressData, Message.EmailUpdated, Message.DuplicateEmail, Message.InvalidData, onResetData, onSuccess);
+            let req = {
+                ...data,
+                isPrimary : data.isEmailPrimary
+            }
+            updateData(req, emailAddressData, setEmailAddressData, Message.EmailUpdated, Message.DuplicateEmail, Message.InvalidData, onResetData, onSuccess);
         }
     };
 
     useEffect(() => {
         if (isEdit && editFormData) {
             let form = { ...addEditEmailFormData };
-            form.initialState = editFormData;
+            form.initialState = {
+                emailAddress: editFormData.emailAddress,
+                emailId: editFormData.emailId,
+                id: editFormData.id,
+                isEmailPrimary: editFormData.isPrimary
+              }
             setFormData(form);
         }
     }, [isEdit, editFormData])
