@@ -61,5 +61,7 @@ namespace OMS.Domain.Entities.Entity.Customers
         public DateTime? DeletedAt { get; set; }
         [Column("DeletedBy")]
         public short? DeletedBy { get; set; }
+        [Column("ResponsibleUserId")]
+        public short? ResponsibleUserId { get; set; }
     }
 }
