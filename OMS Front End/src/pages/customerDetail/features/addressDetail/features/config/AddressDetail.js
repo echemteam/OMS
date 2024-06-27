@@ -14,10 +14,10 @@ import {
 import { useLazyGetAllCountriesQuery } from "../../../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { securityKey } from "../../../../../../data/SecurityKey";
 
-const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMutation, getAddresssByCustomerId, mainId, isSupplier }) => {
+const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMutation, getAddresssByCustomerId, mainId, isSupplier, SecurityKey }) => {
   const userFormRef = useRef();
+  const { formSetting } = addressFormData;
   const [isModelOpen, setisModelOpen] = useState(false);
   const [formData, setFormData] = useState(addressFormData);
   const [addressData, setAddressData] = useState();
@@ -28,19 +28,14 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [buttonVisible, setButtonVisible] = useState(true);
 
   useEffect(() => {
-    if (isEditablePage) {
-      const { formSetting } = addressFormData;
-      const hasAddPermission = hasFunctionalPermission(
-        securityKey.ADDCUSTOMERADDRESS
-      );
-      const hasEditPermission = hasFunctionalPermission(
-        securityKey.EDITCUSTOMERADDRESS
-      );
-
+    if (isEditablePage && SecurityKey) {
+      const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+      const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
       if (hasAddPermission) {
         if (hasAddPermission.hasAccess === true) {
           setButtonVisible(true);
-        } else {
+        }
+        else {
           setButtonVisible(false);
         }
       }
@@ -61,7 +56,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
         }
       }
     }
-  }, [updateSetData, isEditablePage]);
+  }, [isEditablePage, isSupplier, SecurityKey , updateSetData]);
 
   const [
     getAllAddressTypes,

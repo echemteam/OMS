@@ -25,7 +25,7 @@ const CustomerContactDetails = React.lazy(() =>
 const AddCustomer = () => {
   const navigate = useNavigate();
   const { activeTab, setActiveTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
-  
+
   const [
     updateCustomerStatus,
     {

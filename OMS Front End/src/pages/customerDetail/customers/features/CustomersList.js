@@ -50,21 +50,25 @@ export const CustomersList = ({ statusId, configFile }) => {
       const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
       const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
 
-
-
       if (actionColumn.defaultAction.allowEdit) {
         actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
-      } else if (actionColumn.defaultAction.allowBlocked) {
+      }
+      if (actionColumn.defaultAction.allowBlocked) {
         actionColumn.defaultAction.allowBlocked = hasBlock?.hasAccess;
-      } else if (actionColumn.defaultAction.allowFreeze) {
+      }
+      if (actionColumn.defaultAction.allowFreeze) {
         actionColumn.defaultAction.allowFreeze = hasFreeze?.hasAccess;
-      } else if (actionColumn.defaultAction.allowActiveCustomer) {
+      }
+      if (actionColumn.defaultAction.allowActiveCustomer) {
         actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
-      } else if (actionColumn.defaultAction.allowDisable) {
+      }
+      if (actionColumn.defaultAction.allowDisable) {
         actionColumn.defaultAction.allowDisable = hasDisable?.hasAccess;
-      } else if (actionColumn.defaultAction.allowUnblocked) {
+      }
+      if (actionColumn.defaultAction.allowUnblocked) {
         actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
-      } else if (actionColumn.defaultAction.allowUnfreeze) {
+      }
+      if (actionColumn.defaultAction.allowUnfreeze) {
         actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
       }
     }

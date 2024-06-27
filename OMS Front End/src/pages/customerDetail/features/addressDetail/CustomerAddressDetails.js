@@ -3,7 +3,13 @@ import React, { useContext } from 'react';
 import AddressDetail from './features/config/AddressDetail';
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
 import { useAddAddressMutation, useLazyGetAddresssByCustomerIdQuery, useUpdateAddAddressMutation } from '../../../../app/services/addressAPI';
+import { securityKey } from '../../../../data/SecurityKey';
 //** Component's */
+
+const customerSecurityKey = {
+    ADD: securityKey.ADDCUSTOMERADDRESS,
+    EDIT: securityKey.EDITCUSTOMERADDRESS,
+}
 
 const CustomerAddressDetails = ({ isEditablePage }) => {
 
@@ -13,7 +19,7 @@ const CustomerAddressDetails = ({ isEditablePage }) => {
         <AddressDetail isSupplier={false}
             isEditablePage={isEditablePage}
             mainId={customerId ? customerId : 0}
-            // SecurityKey={customerSecurityKey}
+            SecurityKey={customerSecurityKey}
             getAddresssByCustomerId={useLazyGetAddresssByCustomerIdQuery}
             addAddressMutation={useAddAddressMutation}
             updateAddAddressMutation={useUpdateAddAddressMutation}

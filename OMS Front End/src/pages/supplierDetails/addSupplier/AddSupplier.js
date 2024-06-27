@@ -28,7 +28,7 @@ const AddSupplier = () => {
     {
       label: "Basic Information",
       subLabel: "Enter Supplier Basic information",
-      content: <SupplierBasicDetail isEditablePage={false} />,
+      content: <SupplierBasicDetail />,
       tab: TabEnum.BasicInformation
     },
     {
@@ -46,7 +46,7 @@ const AddSupplier = () => {
     {
       label: "Documents",
       subLabel: "Add Supplier Documents Details",
-      content: <SupplierDocumentDetail />,
+      content: <SupplierDocumentDetail isEditablePage={false} />,
       tab: TabEnum.Documents
     },
   ];
