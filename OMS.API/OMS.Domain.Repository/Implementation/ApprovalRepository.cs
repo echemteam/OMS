@@ -55,18 +55,18 @@ namespace OMS.Domain.Repository.Implementation
             //    addUserCheckList.ChecklistItemId,
             //}, CommandType.StoredProcedure);
         }
-        public async Task<List<GetAutomatedApprovalCheckListResponse>> getValidateCustomer(int CustomerId)
+        public async Task<List<GetValidateCheckListResponse>> getValidateCustomer(int CustomerId)
         {
-            List<GetAutomatedApprovalCheckListResponse> getApprovalCheckList = await _context.GetList<GetAutomatedApprovalCheckListResponse>(VALIDATECUSTOMERDATA, new
+            List<GetValidateCheckListResponse> getApprovalCheckList = await _context.GetList<GetValidateCheckListResponse>(VALIDATECUSTOMERDATA, new
             {
                 CustomerId
             }, commandType: CommandType.StoredProcedure);
             return getApprovalCheckList;
 
         }
-        public async Task<List<GetAutomatedApprovalCheckListResponse>> getValidateSupplier(int SupplierId)
+        public async Task<List<GetValidateCheckListResponse>> getValidateSupplier(int SupplierId)
         {
-            List<GetAutomatedApprovalCheckListResponse> getApprovalCheckList = await _context.GetList<GetAutomatedApprovalCheckListResponse>(VALIDATESUPPLIERDATA, new
+            List<GetValidateCheckListResponse> getApprovalCheckList = await _context.GetList<GetValidateCheckListResponse>(VALIDATESUPPLIERDATA, new
             {
                 SupplierId
             }, commandType: CommandType.StoredProcedure);

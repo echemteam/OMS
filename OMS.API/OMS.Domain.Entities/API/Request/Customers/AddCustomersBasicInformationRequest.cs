@@ -12,5 +12,6 @@
         public bool? IsCompany { get; set; }
         public string? TaxId { get; set; }
         public bool? IsBuyingForThirdParty {  get; set; }
+        public short? ResponsibleUserId {  get; set; }
     }
 }

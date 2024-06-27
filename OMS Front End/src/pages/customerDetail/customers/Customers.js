@@ -11,9 +11,6 @@ import {
   SubmittedCustomerGridConfig,
 } from "./config/CustomerData";
 import InActiveCustomer from "./features/InActiveCustomer";
-import ApprovalCheckList from "../features/approvalCheckList/ApprovalCheckList";
-import Buttons from "../../../components/ui/button/Buttons";
-import ValidateCustomerData from "../features/validateCustomerData/ValidateCustomerData";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -105,9 +102,7 @@ const Customers = () => {
       ),
     },
   ];
-  const handleToggleModal = () => {
-    setShowModal(!showModal);
-  };
+
 
   return (
     <>
@@ -158,15 +153,6 @@ const Customers = () => {
           </div>
         </div>
       </CustomerContext.Provider>
-      <Buttons
-        buttonText="Validation Customer Info"
-        buttonTypeClassName="theme-button"
-        onClick={handleToggleModal}
-      />
-      <ValidateCustomerData
-        showModal={showModal}
-        handleToggleModal={handleToggleModal}
-      />
     </>
   );
 };

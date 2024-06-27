@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { basicDetailFormDataHalf, securityKeys } from "./config/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
-import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetAllUserQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -63,6 +63,15 @@ const BasicDetail = (props) => {
   ] = useLazyGetAllTerritoriesQuery();
 
   const [
+    getAllUser,
+    {
+      isFetching: isGetAllUserFetching,
+      isSuccess: isGetAllUserSucess,
+      data: allGetAlluserData,
+    },
+  ] = useLazyGetAllUserQuery();
+
+  const [
     addCustomersBasicInformation,
     {
       isSuccess: isAddCustomersBasicInformationSuccess,
@@ -87,11 +96,12 @@ const BasicDetail = (props) => {
     getAllCountries();
     getAllTerritories();
     manageFilteredForm();
+    getAllUser();
   }, []);
 
   const manageFilteredForm = () => {
     const manageData = { ...formData }
-    const filteredFormFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input");
+    const filteredFormFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
     manageData.formFields = filteredFormFields;
     setFormData(manageData)
   };
@@ -158,6 +168,28 @@ const BasicDetail = (props) => {
     isGetAllTerritoriesFetching,
     isGetAllTerritoriesSucess,
     allGetAllTerritoriesData,
+  ]);
+
+  useEffect(() => {
+   
+    if (
+      !isGetAllUserFetching &&
+      isGetAllUserSucess &&
+      allGetAlluserData
+    ) {
+      const getData = allGetAlluserData.map((item) => ({
+        value: item.userId,
+        label: item.fullName,
+      }));
+      const dropdownField = basicDetailFormDataHalf.formFields.find(
+        (item) => item.dataField === "responsibleUserId"
+      );
+      dropdownField.fieldSetting.options = getData;
+    }
+  }, [
+    isGetAllUserFetching,
+    isGetAllUserSucess,
+    allGetAlluserData,
   ]);
 
   useEffect(() => {
@@ -238,6 +270,9 @@ const BasicDetail = (props) => {
         countryId: data.countryId && typeof data.countryId === "object"
           ? data.countryId.value
           : data.countryId,
+        responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
+          ? data.responsibleUserId.value
+          : data.responsibleUserId,
         customerId: props.pageId
       }
       updateCustomersBasicInformation(req);

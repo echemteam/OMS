@@ -1,4 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Response.Common;
+using OMS.Domain.Entities.API.Response.User;
 
 namespace OMS.Application.Services.Common
 {
@@ -21,6 +22,7 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllDeliveryMethodsResponse>> GetAllDeliveryMethods();
         Task<List<GetAllDeliveryAccountsResponse>> GetAllDeliveryAccounts();
         Task<List<GetAllPhoneTypesResponse>> GetAllPhoneTypes();
+        Task<List<GetAllUserResponse>> GetAllUser();
 
     }
 }

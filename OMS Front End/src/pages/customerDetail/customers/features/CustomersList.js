@@ -27,13 +27,15 @@ import {
 import SwalAlert from "../../../../services/swalService/SwalService";
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import ApprovalCheckList from "../../features/approvalCheckList/ApprovalCheckList";
+import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
+import CustomerApproval from "../../features/cutomerApproval/CustomerApproval";
 
 export const CustomersList = ({ statusId, configFile }) => {
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
   const molGridRef = useRef();
   const reasonRef = useRef();
+  const childRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [dataSource, setDataSource] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -167,19 +169,10 @@ export const CustomersList = ({ statusId, configFile }) => {
     updatedValue,
     parentData
   ) => {
-    handleShowApprovalList();
+    if (childRef.current) {
+      childRef.current.callChildFunction(rowData.customerId);
+    }
     setcustomerId(rowData.customerId);
-  };
-
-  const handleShowApprovalList = () => {
-    setShowApprovalList(!showApprovalList);
-  };
-  const onSidebarApprovalClose = () => {
-    setShowApprovalList(!showApprovalList);
-  };
-  const onSuccessApprovalClose = () => {
-    setShowApprovalList(!showApprovalList);
-    updateCustomerApproval();
   };
 
   const updateCustomerApproval = () => {
@@ -303,11 +296,7 @@ export const CustomersList = ({ statusId, configFile }) => {
           </CenterModel>
         </div>
       </div>
-      <ApprovalCheckList
-        onSidebarClose={onSidebarApprovalClose}
-        isModelOpen={showApprovalList}
-        onSuccessApprovalClose={onSuccessApprovalClose}
-      />
+      <CustomerApproval childRef={childRef} getListApi={getListApi} updateCustomerApproval={updateCustomerApproval} />
     </div>
   );
 };

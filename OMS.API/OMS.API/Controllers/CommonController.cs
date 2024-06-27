@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Response.Common;
+using OMS.Domain.Entities.API.Response.User;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -138,6 +139,12 @@ namespace OMS.API.Controllers
         public async Task<IActionResult> GetAllPhoneTypes()
         {
             List<GetAllPhoneTypesResponse> responseData = await _serviceManager.commonServices.GetAllPhoneTypes().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+        [HttpGet("GetAllUser")]
+        public async Task<IActionResult> GetAllUser()
+        {
+            List<GetAllUserResponse> responseData = await _serviceManager.commonServices.GetAllUser().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
     }

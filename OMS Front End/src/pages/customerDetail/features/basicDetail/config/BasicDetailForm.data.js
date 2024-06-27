@@ -142,6 +142,21 @@ export const basicDetailFormDataHalf = {
       },
     },
     {
+      id: "responsibleUserId",
+      lable: "Responsible User :",
+      Field_Name: "Responsible User",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "responsibleUserId",
+      fieldSetting: {
+        placeholder: "Select Responsible User",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+      },
+    },
+    {
       id: "note",
       lable: "Notes :",
       Field_Name: "Notes",
