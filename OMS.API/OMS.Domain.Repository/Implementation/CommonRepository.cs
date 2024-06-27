@@ -1,4 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Response.Common;
+using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
@@ -26,6 +27,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLDELIVERYMETHODS = "GetAllDeliveryMethods";
         const string GETALLDELIVERYACCOUNTS = "GetAllDeliveryAccounts";
         const string GETALLPHONETYPES = "GetAllPhoneTypes";
+        const string GETALLUSER = "GetAllUser";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -114,6 +116,10 @@ namespace OMS.Domain.Repository.Implementation
         public async Task<List<GetAllPhoneTypesResponse>> GetAllPhoneTypes()
         {
             return await _context.GetList<GetAllPhoneTypesResponse>(GETALLPHONETYPES, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllUserResponse>> GetAllUser()
+        {
+            return await _context.GetList<GetAllUserResponse>(GETALLUSER, commandType: CommandType.StoredProcedure);
         }
     }
 }
