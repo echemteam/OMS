@@ -39,7 +39,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         emailList: emailAddressData.length > 0 ? emailAddressData : null,
         phoneList: phoneNumberData.length > 0 ? phoneNumberData : null,
         supplierId: isSupplier === true ? mainId : 0,
-        supplierContactId: supplierContactId
+        supplierContactId: supplierContactId,
       }
       addEdit(request);
     }
@@ -93,7 +93,8 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       form.initialState = {
         firstName: data.firstName,
         lastName: data.lastName,
-        contactTypeId: data.contactTypeId
+        contactTypeId: data.contactTypeId,
+        isPrimary: data.isPrimary
       }
       setFormData(form);
       setContactId(data?.contactId);

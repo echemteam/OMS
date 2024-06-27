@@ -260,4 +260,9 @@
 
 }
 
+.infinite-scroll{
+    display: flex;
+flex-direction: column-reverse;
+}  
+
 // New Timeline Sec End

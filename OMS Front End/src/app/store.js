@@ -22,6 +22,8 @@ import supplierNotesAPI from './services/supplierNotesAPI';
 import supplierDocuementsAPI from './services/supplierDocuementsAPI'
 import supplierAddressAPI from './services/supplierAddressAPI';
 import commonAPI from './services/commonAPI';
+import customerHistoryAPI from './services/customerHistoryAPI';
+import supplierHistoryAPI from './services/supplierHistoryAPI';
 import approvalAPI from './services/ApprovalAPI';
 
 export const store = configureStore({
@@ -45,6 +47,8 @@ export const store = configureStore({
     [supplierDocuementsAPI.reducerPath]:supplierDocuementsAPI.reducer,
     [commonAPI.reducerPath]: commonAPI.reducer,
     [supplierAddressAPI.reducerPath]: supplierAddressAPI.reducer,
+    [customerHistoryAPI.reducerPath]:customerHistoryAPI.reducer,
+    [supplierHistoryAPI.reducerPath]:supplierHistoryAPI.reducer,
     [approvalAPI.reducerPath]: approvalAPI.reducer,
 
   },
@@ -67,6 +71,8 @@ export const store = configureStore({
     supplierDocuementsAPI.middleware,
     commonAPI.middleware,
     supplierAddressAPI.middleware,
+    customerHistoryAPI.middleware,
+    supplierHistoryAPI.middleware,
     approvalAPI.middleware,
   ),
 })

@@ -22,7 +22,7 @@ namespace OMS.API.Controllers
             _serviceManager = serviceManager;
         }
         #endregion
-
+            
         #region Suppliers API
         [HttpPost("AddEditSupplierBasicInformation")]
         public async Task<IActionResult> AddEditSupplierBasicInformation(AddEditSupplierBasicInformationRequest requestData)
@@ -77,6 +77,14 @@ namespace OMS.API.Controllers
         {
             var checkItem = await _serviceManager.supplierServices.CheckSupplierNameExist(requestData);
             return APISucessResponce(checkItem);
+        }
+
+ 
+        [HttpPost("GetSupplierAuditHistoryBySupplierId")]
+        public async Task<IActionResult> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest)
+        {
+            var supplierAuditHistory = await _serviceManager.supplierServices.GetSupplierAuditHistoryBySupplierId(queryRequest);
+            return APISucessResponce<object>(supplierAuditHistory);
         }
         #endregion
     }

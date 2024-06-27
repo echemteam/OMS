@@ -16,6 +16,7 @@ import SupplierNotesDetail from "./features/notesDetails/SupplierNotesDetails";
 import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuementDetail";
 import SupplierContactDetail from "../../../addSupplier/features/supplierContactDetail/SupplierContactDetail";
 import SuplierAddressDetails from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetails";
+import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -76,18 +77,18 @@ const SupplierDetails = () => {
         <SuplierAddressDetails isEditablePage={true}/>
       </div>,
     },
-    {
-      sMenuItemCaption: "Contact",
-      component: (
-        <div className="mt-2">
-          <SupplierContactDetail isEditablePage={true}/>
-        </div>
-      ),
-    },
     // {
-    //   sMenuItemCaption: "Settings",
-    //   component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
+    //   sMenuItemCaption: "Contact",
+    //   component: (
+    //     <div className="mt-2">
+    //       {/* <ContactDetail /> */}
+    //     </div>
+    //   ),
     // },
+    {
+      sMenuItemCaption: "Settings",
+      component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
+    },
     {
       sMenuItemCaption: "Notes",
       component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId}/>}</div>,
@@ -99,6 +100,14 @@ const SupplierDetails = () => {
           <SupplierDocumentDetail pageId={pageId}/>
         </div>
       ),
+    },  
+    {
+      sMenuItemCaption: "Notes",
+      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId}/>}</div>,
+    },
+    {
+      sMenuItemCaption: "History",
+      component: <div className="mt-2">{<SupplierHistoryDetail/>}</div>,
     },
   ];
 

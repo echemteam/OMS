@@ -74,9 +74,11 @@ namespace OMS.Application.Services.Customers
             customersDTO.UpdatedBy = CurrentUserId;
             return await repositoryManager.customers.UpdateCustomerStatus(customersDTO);
         }
-        public Task<List<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(int customerId)
+    
+        public async Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest)
         {
-            return repositoryManager.customers.GetCustomerAuditHistoryByCustomerId(customerId);
+            var customersHistoryDetails = await repositoryManager.customers.GetCustomerAuditHistoryByCustomerId(queryRequest);
+            return customersHistoryDetails!;
         }
         #endregion
     }

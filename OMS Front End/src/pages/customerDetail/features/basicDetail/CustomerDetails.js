@@ -81,7 +81,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
     if (selectedOption.label === customerData.status) {
       ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
-      if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "7") {
+      if (selectedOption.value === "1" || selectedOption.value === "2") {
         confirm(
           "Warning?",
           `Are you sure you want to change the customer status to ${selectedOption.label}?`,
@@ -97,7 +97,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
             setSelectedStatus(selectedOption.value);
           }
         });
-      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6") {
+      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6" || selectedOption.value === "7" ) {
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
       } else if (selectedOption.value === "3") {

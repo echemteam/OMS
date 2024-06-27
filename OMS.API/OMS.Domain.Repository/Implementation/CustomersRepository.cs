@@ -151,13 +151,16 @@ namespace OMS.Domain.Repository.Implementation
                 updatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(int customerId)
+  
+        public async Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest)
         {
-            List<GetCustomerAuditHistoryByCustomerIdResponse> getCustomerAuditHistoryResponse = await _context.GetList<GetCustomerAuditHistoryByCustomerIdResponse>(GETCUSTOMERAUDITHISTORYBYCUSTOMERID, new
+            return await _context.GetListSP<GetCustomerAuditHistoryByCustomerIdResponse>(GETCUSTOMERAUDITHISTORYBYCUSTOMERID, new
             {
-                customerId
-            }, commandType: CommandType.StoredProcedure);
-            return getCustomerAuditHistoryResponse;
+                queryRequest.CustomerId,
+                queryRequest.Pagination!.PageNumber,
+                queryRequest.Pagination.PageSize,
+           
+            }, true);
         }
 
         public async Task<AddEntityDTO<int>> AddEditContactForCustomer(AddEditContactForCustomerRequest requestData, short createdBy)
