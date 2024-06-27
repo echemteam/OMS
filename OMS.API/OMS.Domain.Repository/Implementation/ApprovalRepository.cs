@@ -14,6 +14,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETUSERCHECKLISTBYEVENTBYID = "GetUserCheckListByEventId";
         const string GETCHECKLISTITEMBYLISTID = "GetCheckListItemByListId";
         const string ADDUSERCHECKLISTRESPONSE = "AddUserCheckListResponse";
+        const string VALIDATECUSTOMERDATA = "ValidateCustomerData";
+        const string VALIDATESUPPLIERDATA = "ValidateSupplierData";
         #endregion
 
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
@@ -52,6 +54,24 @@ namespace OMS.Domain.Repository.Implementation
             //    addUserCheckList.IsApproved,
             //    addUserCheckList.ChecklistItemId,
             //}, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAutomatedApprovalCheckListResponse>> getValidateCustomer(int CustomerId)
+        {
+            List<GetAutomatedApprovalCheckListResponse> getApprovalCheckList = await _context.GetList<GetAutomatedApprovalCheckListResponse>(VALIDATECUSTOMERDATA, new
+            {
+                CustomerId
+            }, commandType: CommandType.StoredProcedure);
+            return getApprovalCheckList;
+
+        }
+        public async Task<List<GetAutomatedApprovalCheckListResponse>> getValidateSupplier(int SupplierId)
+        {
+            List<GetAutomatedApprovalCheckListResponse> getApprovalCheckList = await _context.GetList<GetAutomatedApprovalCheckListResponse>(VALIDATESUPPLIERDATA, new
+            {
+                SupplierId
+            }, commandType: CommandType.StoredProcedure);
+            return getApprovalCheckList;
+
         }
     }
 }

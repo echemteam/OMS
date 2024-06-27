@@ -1,20 +1,12 @@
 ﻿using Common.Helper.Export;
-using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Appproval;
+using OMS.Domain.Entities.API.Request.Approval;
 using OMS.Domain.Entities.API.Response.Approval;
-using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.Contact;
 using OMS.Domain.Repository;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Application.Services.Approval
 {
@@ -53,6 +45,21 @@ namespace OMS.Application.Services.Approval
                 row["UserId"] = CurrentUserId;
             }
             return await repositoryManager.approval.AddUserChecklistResponse(CheckListDataTable);
+        }
+        public async Task<List<GetAutomatedApprovalCheckListResponse>> GetAutomatedApprovalCheckList(ValidateRequest validaterequest)
+        {
+            List<GetAutomatedApprovalCheckListResponse> responses = new();
+            if (validaterequest.CustomerId > 0)
+            {
+                responses = await repositoryManager.approval.getValidateCustomer(validaterequest.CustomerId);
+
+            }
+            else if (validaterequest.SupplierId > 0)
+            {
+                responses = await repositoryManager.approval.getValidateSupplier(validaterequest.SupplierId);
+
+            }
+            return responses;
         }
     }
 
