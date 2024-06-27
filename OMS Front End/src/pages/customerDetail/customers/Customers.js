@@ -13,22 +13,17 @@ import {
 import InActiveCustomer from "./features/InActiveCustomer";
 import ApprovalCheckList from "../features/approvalCheckList/ApprovalCheckList";
 import Buttons from "../../../components/ui/button/Buttons";
+import ValidateCustomerData from "../features/validateCustomerData/ValidateCustomerData";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
+  const [showModal, setShowModal] = useState(false);
   const listRef = useRef();
-  const [isModelOpen, setisModelOpen] = useState(false);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
   };
 
-  const onSidebarClose = () => {
-    setisModelOpen(false);
-  };
-  const handleToggleModal = () => {
-    setisModelOpen(true);
-  };
   const getListApi = () => {
     if (listRef.current) {
       listRef.current.getListApi();
@@ -110,6 +105,9 @@ const Customers = () => {
       ),
     },
   ];
+  const handleToggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   return (
     <>
@@ -161,13 +159,13 @@ const Customers = () => {
         </div>
       </CustomerContext.Provider>
       <Buttons
-        buttonText="Approval Check List"
+        buttonText="Validation Customer Info"
         buttonTypeClassName="theme-button"
         onClick={handleToggleModal}
       />
-      <ApprovalCheckList
-        onSidebarClose={onSidebarClose}
-        isModelOpen={isModelOpen}
+      <ValidateCustomerData
+        showModal={showModal}
+        handleToggleModal={handleToggleModal}
       />
     </>
   );

@@ -9,7 +9,7 @@ export  const NotesFormData = {
             id: "notes",
             lable: "Add Notes :",
             Field_Name: "Add Notes :",
-            fieldType: FormFieldTypes.TINYEDITOR,
+            fieldType: FormFieldTypes.CKEDITOR,
             dataField: "type",
             fieldSetting: {
               placeholder: "",

@@ -1,7 +1,8 @@
 ﻿using OMS.Domain.Entities.API.Response.Approval;
-using OMS.Domain.Entities.API.Response.Contact;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,5 +13,8 @@ namespace OMS.Domain.Repository.Contract
     {
          Task<List<GetUserCheckListByEventIdResponse>> GetUserCheckList(int eventId);
          Task<List<GetCheckListItemResponse>> GetCheckListItemByListId(int ChecklistId);
+         Task<AddEntityDTO<int>> AddUserChecklistResponse(DataTable CheckListDataTable);
+         Task<List<GetAutomatedApprovalCheckListResponse>> getValidateCustomer(int mainId);
+         Task<List<GetAutomatedApprovalCheckListResponse>> getValidateSupplier(int mainId);
     }
 }

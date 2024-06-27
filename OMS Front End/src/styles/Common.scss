@@ -1811,6 +1811,11 @@ input[type=checkbox]:checked:after {
   left: 80%;
 }
 
+input[type=checkbox]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .add-setting-detail {
   .first-card {
     margin-bottom: 10px !important;
@@ -1871,7 +1876,7 @@ input[type=checkbox]:checked:after {
 
           &:nth-child(4) {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
           }
         }
       }
@@ -1916,6 +1921,44 @@ input[type=checkbox]:checked:after {
 }
 
 // Checklist Section End
+
+// Customer Data Validation Start
+
+.customer-data-sec {
+  .validation-list {
+    ul {
+      padding-left: 0;
+
+      li {
+        list-style-type: none;
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+        width: 100%;
+
+        .tick-untick-img {
+          width: 25px;
+
+          img {
+            min-width: 25px;
+            max-width: 25px;
+          }
+        }
+
+        .validation-msg {
+          margin-left: 10px;
+          padding-top: 2px;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+// Customer Data Validation End
 
 @media only screen and (max-width: 1560px) {
   .status-dropdown {

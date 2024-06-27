@@ -12,8 +12,9 @@ import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import { reasonData } from "../../customers/config/CustomerData";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
+import ApprovalCheckList from "../approvalCheckList/ApprovalCheckList";
 
-const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onhandleRepeatCall}) => {
+const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -22,6 +23,9 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
   const [staticId, setStaticId] = useState("")
   const [statusFeild, setStatusFeild] = useState("")
   const [options, setOptions] = useState([]);
+  const [customerID, setcustomerId] = useState();
+  const [statusId, setStatusId] = useState();
+  const [showApprovalList, setShowApprovalList] = useState(false);
 
   const [updateCustomerStatus, { isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
@@ -40,7 +44,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
   useEffect(() => {
-  
+
     if (customerData) {
       const statusId = customerData.statusId;
       switch (statusId) {
@@ -54,12 +58,12 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;
-        case 7 : 
-        setOptions(StaticStatus[StatusValue[statusId - 1].label]);
-        break;
-        
+        case 7:
+          setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+          break;
+
         default:
-          setOptions([]); 
+          setOptions([]);
       }
       // setSelectedStatus(StatusValue[statusId - 1].label);
     }
@@ -72,13 +76,12 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
   }, [customerData]);
 
   const handleStatusChange = (selectedOption) => {
-   
     setStaticId(selectedOption.value)
     setStatusFeild(selectedOption.label)
     if (selectedOption.label === customerData.status) {
       ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
-      if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "3"   ) {
+      if (selectedOption.value === "1" || selectedOption.value === "2") {
         confirm(
           "Warning?",
           `Are you sure you want to change the customer status to ${selectedOption.label}?`,
@@ -97,9 +100,33 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
       } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6" || selectedOption.value === "7" ) {
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
+      } else if (selectedOption.value === "3") {
+        handleShowApprovalList();
+        setcustomerId(customerId);
+        setStatusId(selectedOption.value);
       }
     }
   };
+
+  const handleShowApprovalList = () => {
+    setShowApprovalList(!showApprovalList);
+  };
+  const onSidebarApprovalClose = () => {
+    setShowApprovalList(!showApprovalList);
+  };
+  const onSuccessApprovalClose = () => {
+    setShowApprovalList(!showApprovalList);
+    setSelectedStatus(statusId);
+    updateCustomerApproval();
+  };
+
+  const updateCustomerApproval = () => {
+    let req = {
+      customerId: customerID,
+      statusId: statusId
+    }
+    updateCustomerStatus(req)
+  }
 
   const onReset = () => {
     let restData = { ...reasonData };
@@ -140,8 +167,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
         return "badge-gradient-Frozen";
       case "Block":
         return "badge-gradient-Blocked";
-        case "Reject":
-          return "badge-gradient-Blocked";
+      case "Reject":
+        return "badge-gradient-Blocked";
       case "Disable":
         return "badge-gradient-disabled";
       default:
@@ -237,8 +264,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
             <div className="inf-label">Is Buying for Third Party</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">
-            {customerData?.isBuyingForThirdParty}
-            {customerData && customerData.isBuyingForThirdParty ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
+              {customerData?.isBuyingForThirdParty}
+              {customerData && customerData.isBuyingForThirdParty ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
             </div>
           </div>
         </div>
@@ -276,6 +303,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
             </div>
           </CenterModel>
         )}
+        <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={showApprovalList} onSuccessApprovalClose={onSuccessApprovalClose} />
       </div >
       : <DataLoader />
   );

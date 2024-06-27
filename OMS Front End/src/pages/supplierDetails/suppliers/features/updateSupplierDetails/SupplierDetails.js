@@ -14,8 +14,8 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import { useNavigate } from "react-router-dom/dist";
 import SupplierNotesDetail from "./features/notesDetails/SupplierNotesDetails";
 import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuementDetail";
- 
-import SupplierAddressDetail from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetail";
+import SupplierContactDetail from "../../../addSupplier/features/supplierContactDetail/SupplierContactDetail";
+import SuplierAddressDetails from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetails";
 import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
 
 const SupplierDetails = () => {
@@ -74,7 +74,7 @@ const SupplierDetails = () => {
     {
       sMenuItemCaption: "Address",
       component: <div className="mt-2">
-        <SupplierAddressDetail />
+        <SuplierAddressDetails isEditablePage={true}/>
       </div>,
     },
     // {
@@ -89,7 +89,10 @@ const SupplierDetails = () => {
       sMenuItemCaption: "Settings",
       component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
     },
-  
+    {
+      sMenuItemCaption: "Notes",
+      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId}/>}</div>,
+    },
     {
       sMenuItemCaption: "Documents",
       component: (

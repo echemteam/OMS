@@ -27,7 +27,7 @@ export const AllCustomerGridConfig = {
     {
       name: "Customer Name", 
       fieldName: "name",
-      width:"25%",
+      width:"35%",
     },
     {
       name: "Tax Id",
@@ -82,7 +82,7 @@ export const AllCustomerGridConfig = {
     {
       name: "Action",
       colType: GridColumnType.ACTION,
-      width: "25%",
+      width: "15%",
       defaultAction: {
         allowEdit: true,
         allowDisable: true,
@@ -90,13 +90,6 @@ export const AllCustomerGridConfig = {
         allowBlocked: true,
         allowReject:true,
       },
-      
-      // customDropdownActions: [
-      //   { name: "EDIT" },
-      //   { name: "DISABLE" },
-      //   { name: "FREEZE" },
-      //   { name: "BLOCKED" },
-      // ],
     },
   ],
 };

@@ -11,7 +11,7 @@ import { useAddSupplierDocumentsMutation } from "../../../../../../../app/servic
  
 const ManageDocumentList = React.lazy(() => import("./features/ManageDocumentList"));
 
-const DocumentDetails = ({ pageId}) => {
+const DocumentDetails = ({ mainId}) => {
 
   //** State */
   const documentFormRef = useRef();
@@ -28,7 +28,6 @@ const DocumentDetails = ({ pageId}) => {
   }, []);
 
   useEffect(() => {
-  
     if (!isGetAllDocumentTypesFetching && isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
       const getData = allGetAllDocumentTypesData.map(item => ({
         value: item.documentTypeId,
@@ -62,7 +61,6 @@ const DocumentDetails = ({ pageId}) => {
   };
 
   const handleSave = () => {
-    debugger
     const data = documentFormRef.current.getFormData();
     if (data) {
       const requestData = {
@@ -70,7 +68,7 @@ const DocumentDetails = ({ pageId}) => {
         base64File: data.attachment.base64Data,
         attachment: data.attachment.fileName,
         storagePath: "SupplierDocuements",
-        supplierId: pageId,
+        supplierId: mainId,
         documentTypeId: data.documentTypeId && typeof data.documentTypeId === "object" ? data.documentTypeId.value : data.documentTypeId,
       };
       add(requestData);
@@ -90,7 +88,7 @@ const DocumentDetails = ({ pageId}) => {
           buttonText="Add"
           titleButtonClick={handleToggleModal}>
           <div className="">
-            <ManageDocumentList childRef={childRef} pageId={pageId}
+            <ManageDocumentList childRef={childRef} mainId={mainId}
                />
           </div>
         </CardSection>

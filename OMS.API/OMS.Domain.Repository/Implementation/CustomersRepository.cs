@@ -24,6 +24,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDADDRESSFORCUSTOMER = "AddAddressForCustomer";
         const string UPDATEADDRESSFORCUSTOMER = "UpdateAddressForCustomer";
         const string GETCUSTOMERAUDITHISTORYBYCUSTOMERID = "GetCustomerAuditHistoryByCustomerId";
+        const string ADDEDITCONTACTFORCUSTOMER = "AddEditContactForCustomer";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -160,6 +161,19 @@ namespace OMS.Domain.Repository.Implementation
                 queryRequest.Pagination.PageSize,
            
             }, true);
+        }
+
+        public async Task<AddEntityDTO<int>> AddEditContactForCustomer(AddEditContactForCustomerRequest requestData, short createdBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTFORCUSTOMER, new
+            {
+                requestData.CustomerContactId,
+                requestData.CustomerId,
+                requestData.ContactId,
+                requestData.ContactTypeId,
+                requestData.IsPrimary,
+                createdBy
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }

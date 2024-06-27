@@ -13,6 +13,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string ADDEDITCONTACT = "AddEditContact";
         const string GETCONTACTBYCUSTOMERID = "GetContactByCustomerId";
+        const string GETCONTACTBYSUPPLIERID = "GetContactBySupplierId";
         const string ADDEDITCONTACTWITHDATATABLE = "AddEditContactWithDataTable";
 
         #endregion
@@ -42,6 +43,16 @@ namespace OMS.Domain.Repository.Implementation
             List<GetContactByCustomerIdResponse> getContactByContactIdResponse = await _context.GetList<GetContactByCustomerIdResponse>(GETCONTACTBYCUSTOMERID, new
             {
                 customerId
+            }, commandType: CommandType.StoredProcedure);
+            return getContactByContactIdResponse;
+
+        }
+
+        public async Task<List<GetContactBySupplierIdResponse>> GetContactBySupplierId(int supplierId)
+        {
+            List<GetContactBySupplierIdResponse> getContactByContactIdResponse = await _context.GetList<GetContactBySupplierIdResponse>(GETCONTACTBYSUPPLIERID, new
+            {
+                supplierId
             }, commandType: CommandType.StoredProcedure);
             return getContactByContactIdResponse;
 

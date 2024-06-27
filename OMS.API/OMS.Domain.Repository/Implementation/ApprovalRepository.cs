@@ -1,20 +1,23 @@
-﻿using OMS.Domain.Entities.API.Response.Approval;
+﻿using Dapper;
+using OMS.Domain.Entities.API.Response.Approval;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Implementation
 {
     internal class ApprovalRepository : BaseRepository<Approval>, IApprovalRepository
     {
-        const string GETUSERCHECKLISTBYEVENTBYID = "GetUserCheckListBtEventId";
+        #region SP
+        const string GETUSERCHECKLISTBYEVENTBYID = "GetUserCheckListByEventId";
         const string GETCHECKLISTITEMBYLISTID = "GetCheckListItemByListId";
+        const string ADDUSERCHECKLISTRESPONSE = "AddUserCheckListResponse";
+        const string VALIDATECUSTOMERDATA = "ValidateCustomerData";
+        const string VALIDATESUPPLIERDATA = "ValidateSupplierData";
+        #endregion
+
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
         {
         }
@@ -34,6 +37,40 @@ namespace OMS.Domain.Repository.Implementation
                 ChecklistId
             }, commandType: CommandType.StoredProcedure);
             return getEmailByContactIdResponse;
+
+        }
+        public async Task<AddEntityDTO<int>> AddUserChecklistResponse(DataTable CheckListDataTable)
+        {
+            var parameters = new
+            {
+                CheckListResponse = CheckListDataTable.AsTableValuedParameter("[dbo].[CheckListResponseTypeTable]")
+            };
+            AddEntityDTO<int> responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, parameters, CommandType.StoredProcedure);
+            return responceData;
+
+            //return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, new
+            //{
+            //    addUserCheckList.UserId,
+            //    addUserCheckList.IsApproved,
+            //    addUserCheckList.ChecklistItemId,
+            //}, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAutomatedApprovalCheckListResponse>> getValidateCustomer(int CustomerId)
+        {
+            List<GetAutomatedApprovalCheckListResponse> getApprovalCheckList = await _context.GetList<GetAutomatedApprovalCheckListResponse>(VALIDATECUSTOMERDATA, new
+            {
+                CustomerId
+            }, commandType: CommandType.StoredProcedure);
+            return getApprovalCheckList;
+
+        }
+        public async Task<List<GetAutomatedApprovalCheckListResponse>> getValidateSupplier(int SupplierId)
+        {
+            List<GetAutomatedApprovalCheckListResponse> getApprovalCheckList = await _context.GetList<GetAutomatedApprovalCheckListResponse>(VALIDATESUPPLIERDATA, new
+            {
+                SupplierId
+            }, commandType: CommandType.StoredProcedure);
+            return getApprovalCheckList;
 
         }
     }
