@@ -253,7 +253,7 @@ export const CustomersList = ({ statusId, configFile }) => {
           <CardSection>
             <div className="row">
               <div className="col-md-12 table-striped">
-                <div className="customer-list">
+                {/* <div className="customer-list"> */}
                   <MolGrid
                     ref={molGridRef}
                     configuration={configFile}
@@ -269,7 +269,7 @@ export const CustomersList = ({ statusId, configFile }) => {
                     allowPagination={true}
                     onCellDataChange={handleGridCheckBoxChange}
                   />
-                </div>
+                {/* </div> */}
               </div>
             </div>
           </CardSection>

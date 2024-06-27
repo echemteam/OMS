@@ -27,7 +27,7 @@ export const AllCustomerGridConfig = {
     {
       name: "Customer Name", 
       fieldName: "name",
-      width:"35%",
+      width:"32%",
     },
     {
       name: "Tax Id",
@@ -99,7 +99,7 @@ export const PendingCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
-      width:"25%",
+      width:"35%",
       // allowShort: true,
     },
     {
@@ -122,7 +122,7 @@ export const PendingCustomerGridConfig = {
     // },
     {
       name: "Action",
-      width:"25%",
+      width:"15%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

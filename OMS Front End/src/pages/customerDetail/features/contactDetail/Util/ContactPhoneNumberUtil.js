@@ -11,7 +11,6 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
         isPrimary : data.isPrimaryPhoneNumber
         // extension: data.extension > 0 ? data.extension : ''
     }
-    let addData;
     if (listData && listData.length === 5) {
         ToastService.warning(maxLengthMessage);
         onResetData();
@@ -21,8 +20,13 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
     const isDuplicate = listData && listData.some(item => item.phoneNumber === request.phoneNumber && item.phoneCode === request.phoneCode);
 
     if (!isDuplicate) {
+    let addData;
         if (listData) {
-            addData = [...listData, request];
+            addData = [...listData];
+            if (data.isPrimaryPhoneNumber) {
+                addData = addData.map(item => ({ ...item, isPrimary: false }));
+            }
+            addData.push(request);
         } else {
             addData = [request];
         }
@@ -48,16 +52,20 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
         const isPrimary = data.isPrimaryPhoneNumber
         const isDuplicate = listData && listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === phoneCode && item.id !== data.id);
         if (!isDuplicate) {
-            const updatedData = [...listData];
-            updatedData[data.id - 1] = {
-                ...updatedData[data.id - 1],
-                phoneCode: phoneCode,
-                phoneTypeId: phoneTypeId,
-                phoneType: phoneType,
-                phoneNumber: data.phoneNumber,
-                extension: data.extension ? data.extension : 0,
-                isPrimary:isPrimary
-            };
+            let updatedData = [...listData];
+            if (data.isPrimaryPhoneNumber) {
+                updatedData = updatedData.map(item => ({ ...item, isPrimary: item.id === data.id ? true : false }));
+            } else {
+                updatedData[data.id - 1] = {
+                    ...updatedData[data.id - 1],
+                    phoneCode: phoneCode,
+                    phoneTypeId: phoneTypeId,
+                    phoneType: phoneType,
+                    phoneNumber: data.phoneNumber,
+                    extension: data.extension ? data.extension : 0,
+                    isPrimary:isPrimary
+                };
+            }
             setListData(updatedData);
             ToastService.success(successMessage);
             onResetData();

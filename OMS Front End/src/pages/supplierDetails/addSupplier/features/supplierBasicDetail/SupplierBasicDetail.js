@@ -8,6 +8,8 @@ import { getTaxIdMinMaxLength } from '../../../../customerDetail/features/basicD
 import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
 import Buttons from '../../../../../components/ui/button/Buttons';
 import { useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery } from '../../../../../app/services/basicdetailAPI';
+import { securityKey } from '../../../../../data/SecurityKey';
+import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 
 const SupplierBasicDetail = (props) => {
 
@@ -17,6 +19,23 @@ const SupplierBasicDetail = (props) => {
   // const [supplierName, setSupplierName] = useState('');
 
   const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId } = useContext(AddSupplierContext);
+
+  const { formSetting } = supplierBasicData;
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
+
+  useEffect(() => {
+    if (props.isOpen) {
+      if (hasEditPermission.isViewOnly === true) {
+        formSetting.isViewOnly = true;
+        setIsButtonDisable(true);
+      }
+      else {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+      }
+    }
+  }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
 
   const [
     addEditSupplierBasicInformation,
@@ -245,7 +264,7 @@ const SupplierBasicDetail = (props) => {
       updatedForm.formFields = modifyFormFields;
       if (props.isOpen) {
         updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
-      }else{
+      } else {
         updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name-input");
       }
       setFormData(updatedForm);
@@ -292,7 +311,7 @@ const SupplierBasicDetail = (props) => {
                 buttonText="Update"
                 onClick={handleUpdate}
                 isLoading={isAddEditSupplierBasicInformationLoading}
-              // isDisable={isButtonDisable}
+                isDisable={isButtonDisable}
               />
             </div>
           </div>

@@ -9,98 +9,132 @@ import CardSection from "../../../../../../../components/ui/card/CardSection";
 import NotesFormData from "./features/config/Notes.data";
 import CenterModel from "../../../../../../../components/ui/centerModel/CenterModel";
 import AddSupplierContext from "../../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { securityKey } from "../../../../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 
-const SupplierNotesDetail=(props)=>{
-    const notesFormRef = useRef();
-    const [isButtonDisable, setIsButtonDisable] = useState(false);
-    const [formData, setFormData] = useState(NotesFormData);
-    const [showModal, setShowModal] = useState(false);
-       const { supplierId } = useContext(AddSupplierContext)
-    const [buttonVisible, setButtonVisible] = useState(true);
-    const [notesFormData, setNotesFormData] = useState([]);
-    const [isEditMode, setIsEditMode] = useState(false);
-    const [addSupplierNotes, { isLoading: isAddSupplierNotesLoading, isSuccess: isAddSupplierNotesSuccess, data: isAddSupplierNotesData, },] = useAddSupplierNotesMutation();
-    const [ getSupplierNotesBySupplierId, {isFetching: isGetSupplierNotesFetching,isSuccess: isGetSupplierNotesSuccess,data: isGetSupplierNotesData, },] = useLazyGetSupplierNotesBySupplierIdQuery();
-    const [ updateSupplierNotes,{isLoading: isUpdateSupplierNotesLoading,isSuccess: isUpdateSupplierNotesSuccess,data: isUpdateSupplierNotesData,},] = useUpdateSupplierNotesMutation();
-   
-    const handleToggleModal = () => {
-         setIsEditMode(false);
-        resetForm()
-        setShowModal(!showModal);
+const SupplierNotesDetail = (props) => {
+  const notesFormRef = useRef();
+  const { formSetting } = NotesFormData;
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [formData, setFormData] = useState(NotesFormData);
+  const [showModal, setShowModal] = useState(false);
+  const { supplierId } = useContext(AddSupplierContext)
+  const [buttonVisible, setButtonVisible] = useState(true);
+  const [notesFormData, setNotesFormData] = useState([]);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditModeData, setIsEditModeData] = useState();
+  const [addSupplierNotes, { isLoading: isAddSupplierNotesLoading, isSuccess: isAddSupplierNotesSuccess, data: isAddSupplierNotesData, },] = useAddSupplierNotesMutation();
+  const [getSupplierNotesBySupplierId, { isFetching: isGetSupplierNotesFetching, isSuccess: isGetSupplierNotesSuccess, data: isGetSupplierNotesData, },] = useLazyGetSupplierNotesBySupplierIdQuery();
+  const [updateSupplierNotes, { isLoading: isUpdateSupplierNotesLoading, isSuccess: isUpdateSupplierNotesSuccess, data: isUpdateSupplierNotesData, },] = useUpdateSupplierNotesMutation();
+
+  useEffect(() => {
+    const hasAddPermission = hasFunctionalPermission(
+      securityKey.ADDSUPPLIERNOTE
+    );
+    const hasEditPermission = hasFunctionalPermission(
+      securityKey.EDITSUPPLIERNOTE
+    );
+    if (hasEditPermission && formSetting) {
+      if (isEditModeData) {
+        if (hasEditPermission.isViewOnly === true) {
+          formSetting.isViewOnly = true;
+          setIsButtonDisable(true);
+        } else {
+          formSetting.isViewOnly = false;
+          setIsButtonDisable(false);
+        }
+      } else if (!isEditModeData) {
+        if (hasAddPermission.hasAccess === true) {
+          formSetting.isViewOnly = false;
+          setIsButtonDisable(false);
+          setButtonVisible(true);
+        } else {
+          formSetting.isViewOnly = true;
+          setButtonVisible(false);
+        }
       }
+    }
+  }, [showModal, isEditMode]);
+  
+  const handleToggleModal = () => {
+    setIsEditMode(false);
+    resetForm()
+    setShowModal(!showModal);
+    setIsEditModeData("");
+  }
 
-      const ongetNote = () => {
-        getSupplierNotesBySupplierId(supplierId);
-      };
+  const ongetNote = () => {
+    getSupplierNotesBySupplierId(supplierId);
+  };
 
-      useEffect(() => {
-        if (isUpdateSupplierNotesSuccess && isUpdateSupplierNotesData) {
-          if (props.onSuccess) {
-            props.onSuccess();
-          }
-          ToastService.success(isUpdateSupplierNotesData.errorMessage);
-          ongetNote();
-          setShowModal(false);
-        }
-      }, [isUpdateSupplierNotesSuccess, isUpdateSupplierNotesData]);
+  useEffect(() => {
+    if (isUpdateSupplierNotesSuccess && isUpdateSupplierNotesData) {
+      if (props.onSuccess) {
+        props.onSuccess();
+      }
+      ToastService.success(isUpdateSupplierNotesData.errorMessage);
+      ongetNote();
+      setShowModal(false);
+    }
+  }, [isUpdateSupplierNotesSuccess, isUpdateSupplierNotesData]);
 
-      useEffect(() => {
-        if (isAddSupplierNotesSuccess && isAddSupplierNotesData) {
-          if (props.onSuccess) {
-            props.onSuccess();
-          }
-          ToastService.success(isAddSupplierNotesData.errorMessage);
-          ongetNote();
-          setShowModal(!showModal);
-        }
-      }, [isAddSupplierNotesSuccess, isAddSupplierNotesData]);
-    
-      useEffect(() => {
-        if (!isGetSupplierNotesFetching && isGetSupplierNotesSuccess && isGetSupplierNotesData) {
-          if (Array.isArray(isGetSupplierNotesData)) {
-            setNotesFormData(isGetSupplierNotesData);
-          }
-        }
-      }, [isGetSupplierNotesFetching, isGetSupplierNotesSuccess, isGetSupplierNotesData]);
+  useEffect(() => {
+    if (isAddSupplierNotesSuccess && isAddSupplierNotesData) {
+      if (props.onSuccess) {
+        props.onSuccess();
+      }
+      ToastService.success(isAddSupplierNotesData.errorMessage);
+      ongetNote();
+      setShowModal(!showModal);
+    }
+  }, [isAddSupplierNotesSuccess, isAddSupplierNotesData]);
 
-      const resetForm = () => {
-        let form = { ...NotesFormData };
-        setFormData(form);
+  useEffect(() => {
+    if (!isGetSupplierNotesFetching && isGetSupplierNotesSuccess && isGetSupplierNotesData) {
+      if (Array.isArray(isGetSupplierNotesData)) {
+        setNotesFormData(isGetSupplierNotesData);
+      }
+    }
+  }, [isGetSupplierNotesFetching, isGetSupplierNotesSuccess, isGetSupplierNotesData]);
+
+  const resetForm = () => {
+    let form = { ...NotesFormData };
+    setFormData(form);
+  };
+  const handleEditNoteData = (data) => {
+
+    setIsEditMode(true);
+    setIsEditModeData(data)
+    const newformData = { ...formData };
+    newformData.initialState = {
+      ...newformData,
+      type: data.note,
+      supplierNoteId: data.supplierNoteId,
+    };
+    setFormData(newformData);
+  };
+  const handleSupplierNotes = () => {
+    let supplierNotesData = notesFormRef.current.getFormData();
+    let request = {
+      supplierId: supplierId,
+      note: supplierNotesData.type,
+    };
+    if (supplierNotesData && !supplierNotesData.supplierNoteId) {
+      addSupplierNotes(request);
+
+    } else if (supplierNotesData && supplierNotesData.supplierNoteId) {
+      const updateRequest = {
+        ...request,
+        supplierNoteId: supplierNotesData.supplierNoteId,
       };
-      const handleEditNoteData = (data) => {
-    
-        setIsEditMode(true);
-        const newformData = { ...formData };
-        newformData.initialState = {
-          ...newformData,
-          type: data.note,
-          supplierNoteId: data.supplierNoteId,
-        };
-        setFormData(newformData);
-      };
-      const handleSupplierNotes = () => {
-        debugger
-        let supplierNotesData = notesFormRef.current.getFormData();
-        let request = {
-          supplierId:supplierId,
-          note: supplierNotesData.type,
-        };
-        if (supplierNotesData && !supplierNotesData.supplierNoteId) {
-            addSupplierNotes(request);
-          
-        } else if (supplierNotesData && supplierNotesData.supplierNoteId) {
-          const updateRequest = {
-            ...request,
-            supplierNoteId: supplierNotesData.supplierNoteId,
-          };
-          updateSupplierNotes(updateRequest)
-        }
-      };
-    
-    return (
-        <>
-     <CardSection
+      updateSupplierNotes(updateRequest)
+    }
+  };
+
+  return (
+    <>
+      <CardSection
         cardTitle="Notes"
         buttonClassName="theme-button"
         textWithIcon={true}
@@ -134,7 +168,7 @@ const SupplierNotesDetail=(props)=>{
                   buttonTypeClassName="theme-button"
                   buttonText={isEditMode ? "Update" : "Add"}
                   onClick={handleSupplierNotes}
-                  isLoading={isAddSupplierNotesLoading || isUpdateSupplierNotesLoading }
+                  isLoading={isAddSupplierNotesLoading || isUpdateSupplierNotesLoading}
                   isDisable={isButtonDisable}
                 />
                 <Buttons
@@ -147,8 +181,8 @@ const SupplierNotesDetail=(props)=>{
           </div>
         </div>
       </CenterModel>
-    
-        </>
-      );
+
+    </>
+  );
 }
 export default SupplierNotesDetail;

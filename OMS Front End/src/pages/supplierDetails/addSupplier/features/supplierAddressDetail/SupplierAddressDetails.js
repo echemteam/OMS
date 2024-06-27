@@ -4,7 +4,13 @@ import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSup
 import { useLazyGetAddresssBySupplierIdQuery } from '../../../../../app/services/supplierAddressAPI'
 import AddressDetail from '../../../../customerDetail/features/addressDetail/features/config/AddressDetail';
 import { useAddAddressMutation, useUpdateAddAddressMutation } from '../../../../../app/services/addressAPI';
+import { securityKey } from '../../../../../data/SecurityKey';
 //** Component's */
+
+const supplierSecurityKey = {
+    ADD: securityKey.ADDSUPPLIERADDRESS,
+    EDIT: securityKey.EDITSUPPLIERADDRESS,
+}
 
 const SuplierAddressDetails = ({ isEditablePage }) => {
 
@@ -15,7 +21,7 @@ const SuplierAddressDetails = ({ isEditablePage }) => {
         <AddressDetail isSupplier={true}
             isEditablePage={isEditablePage}
             mainId={supplierId ? supplierId : 0}
-            // SecurityKey={customerSecurityKey}
+            SecurityKey={supplierSecurityKey}
             getAddresssByCustomerId={useLazyGetAddresssBySupplierIdQuery}
             addAddressMutation={useAddAddressMutation}
             updateAddAddressMutation={useUpdateAddAddressMutation}

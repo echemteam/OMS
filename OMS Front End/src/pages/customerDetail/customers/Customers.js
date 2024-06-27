@@ -38,7 +38,7 @@ const Customers = () => {
     {
       sMenuItemCaption: "ALL",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 customer-list-all">
           <CustomersList
             statusId={StatusEnums.ALL}
             configFile={AllCustomerGridConfig}
