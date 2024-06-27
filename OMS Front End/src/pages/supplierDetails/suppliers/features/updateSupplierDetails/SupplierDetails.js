@@ -16,6 +16,7 @@ import SupplierNotesDetail from "./features/notesDetails/SupplierNotesDetails";
 import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuementDetail";
  
 import SupplierAddressDetail from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetail";
+import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -88,10 +89,7 @@ const SupplierDetails = () => {
       sMenuItemCaption: "Settings",
       component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
     },
-    {
-      sMenuItemCaption: "Notes",
-      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId}/>}</div>,
-    },
+  
     {
       sMenuItemCaption: "Documents",
       component: (
@@ -99,6 +97,14 @@ const SupplierDetails = () => {
           <SupplierDocumentDetail pageId={pageId}/>
         </div>
       ),
+    },  
+    {
+      sMenuItemCaption: "Notes",
+      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId}/>}</div>,
+    },
+    {
+      sMenuItemCaption: "History",
+      component: <div className="mt-2">{<SupplierHistoryDetail/>}</div>,
     },
   ];
 

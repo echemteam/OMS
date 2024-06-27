@@ -76,7 +76,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
     if (selectedOption.label === supplierData.status) {
       ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
-      if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "3"|| selectedOption.value === "7"  ) {
+      if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "3" ) {
         confirm(
           "Warning?",
           `Are you sure you want to change the supplier status to ${selectedOption.label}?`,
@@ -92,7 +92,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
             setSelectedStatus(selectedOption.value);
           }
         });
-      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6") {
+      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6" || selectedOption.value === "7" ) {
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
       }

@@ -1,5 +1,6 @@
 ﻿using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Supplier;
@@ -18,6 +19,7 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDTO<int>> UpdateAddressForSupplier(UpdateAddressForSupplierRequest requestData, short updatedBy);
         Task<AddEntityDTO<int>> UpdateSupplierStatus(SupplierDTO supplier);
         Task<AddEntityDTO<int>> CheckSupplierNameExist(SupplierDTO supplierDTO);
-         
+        Task<EntityList<GetSupplierAuditHistoryBySupplierIdResponse>> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest);
+
     }
 }

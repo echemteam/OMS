@@ -1,59 +1,53 @@
+import React, { useContext, useEffect, useState } from "react";
+import "./../../../../../../../customerDetail/features/HistoryDetail/TimeLine.scss";
+import Buttons from "../../../../../../../../components/ui/button/Buttons";
 
-import React, { useContext, useEffect, useRef, useState } from "react";
-import "./../../HistoryDetail/TimeLine.scss";
-import Buttons from "../../../../../components/ui/button/Buttons";
-import { AppIcons } from "../../../../../data/appIcons";
+import { useGetSupplierAuditHistoryBySupplierIdMutation } from "../../../../../../../../app/services/supplierHistoryAPI";
+import AddSupplierContext from "../../../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 
-import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-
-import formatDate from "../../../../../lib/formatDate";
+import { AppIcons } from "../../../../../../../../data/appIcons";
+import formatDate from "../../../../../../../../lib/formatDate";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Image from "../../../../../components/image/Image";
-import { useGetCustomerAuditHistoryByCustomerIdMutation } from "../../../../../app/services/customerHistoryAPI";
+import DataLoader from "../../../../../../../../components/ui/dataLoader/DataLoader";
 
-const TimeLine = () => {
-
+const SupplierTimeLine = () => {
   const [historyData, setHistoryData] = useState([]);
-  const { customerId } = useContext(BasicDetailContext);
+
+  const { supplierId } = useContext(AddSupplierContext);
   const [pageNumber, setPageNumber] = useState(1);
-  const [refreshData, setRefreshData] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [
-    getCustomerAuditHistoryByCustomerId,
-    {
-      isLoading: isGetHistoryLoading,
-      isSuccess: isGetHistorySuccess,
-      data: isGetHistoryData,
-    },
-  ] = useGetCustomerAuditHistoryByCustomerIdMutation();
+  const [refreshData, setRefreshData] = useState(false);
 
-useEffect(()=>{
-  getListApi(pageNumber)
-},[pageNumber])
-  const getListApi = (page) => {
-
-    const request = {
-      pagination: {
-        pageNumber:page,
-        pageSize: 25
-      },
-    
-      customerId: customerId
-    };
-    getCustomerAuditHistoryByCustomerId(request);
-  };
-  const handleChange=()=>{
-    setRefreshData(true);
-  
-    setHasMore(true);
-    setHistoryData([]);
-    getListApi(1)
-  }
+  const [ getSupplierAuditHistoryBySupplierId, { isLoading: isGetHistoryLoading,isSuccess: isGetHistorySuccess,data: isGetHistoryData, },] = useGetSupplierAuditHistoryBySupplierIdMutation();
 
   useEffect(() => {
+    
+    getListApi(pageNumber);
+  }, [pageNumber]);
 
+  const getListApi = (page) => {
+   
+    const request = {
+      pagination: {
+        pageNumber: page,
+        pageSize: 25,
+      },
+      supplierId: supplierId,
+    };
+    getSupplierAuditHistoryBySupplierId(request);
+  };
+  const handleChange = () => {
+
+    setRefreshData(true);
+    setHasMore(true);
+    setHistoryData([]);
+    getListApi(1);
+  };
+
+  useEffect(() => {
+   
     if (isGetHistorySuccess && isGetHistoryData) {
-      if (isGetHistoryData.dataSource && isGetHistoryData.dataSource.length > 0) {
+      if (isGetHistoryData.dataSource && isGetHistoryData.dataSource.length > 0  ) {
         if (refreshData) {
        
           setHistoryData(isGetHistoryData.dataSource);
@@ -68,8 +62,7 @@ useEffect(()=>{
   }, [isGetHistorySuccess, isGetHistoryData]);
 
   const fetchMoreData = () => {
-      setPageNumber((prevPageNumber) => prevPageNumber + 1);
- 
+    setPageNumber((prevPageNumber) => prevPageNumber + 1);
   };
 
   return (
@@ -79,7 +72,7 @@ useEffect(()=>{
           <Buttons
             buttonTypeClassName="theme-button"
             buttonText="Refresh"
-           onClick={handleChange}
+            onClick={handleChange}
             imagePath={AppIcons.refreshIcone}
             textWithIcon={true}
           ></Buttons>
@@ -94,30 +87,31 @@ useEffect(()=>{
               scrollableTarget="scrollableDiv"
             >
               <div className="new-timeline-sec">
-                <ol className="timeline">
-
-                {
-                  historyData.map((item) => (
+                <ol class="timeline">
+                  {historyData.map((item) => (
                     <li
                       className="timeline-item"
                       key={item.customerAuditHistoryId}
                     >
                       <span className="timeline-item-icon">
-                        {item.eventStatus === "Insert" ?   (<>
-                          {" "}
-                          <img src={AppIcons.PlusIcon} alt="Insert Icon" />
-                        </>) : (
-                        <>
-                          {" "}
-                          <img src={AppIcons.UpdateIcon} alt="Update Icon" />
-                        </>
-                      )}
+                        {item.eventStatus === "Insert" ? (
+                          <>
+                            {" "}
+                            <img src={AppIcons.PlusIcon} alt="Insert Icon" />
+                          </>
+                        ) : (
+                          <>
+                            {" "}
+                            <img src={AppIcons.UpdateIcon} alt="Update Icon" />
+                          </>
+                        )}
                       </span>
                       <div className="timeline-item-description">
                         <div className="right-desc-sec">
                           <div className="d-flex align-items-center">
                             <div className="timeline-name">{item.name}</div>
                             <div className="date-time">
+                              {" "}
                               {formatDate(
                                 item.changedAt,
                                 "DD/MM/YYYY hh:mm A "
@@ -131,8 +125,7 @@ useEffect(()=>{
                         </div>
                       </div>
                     </li>
-                  ))
-                }
+                  ))}
                 </ol>
               </div>
             </InfiniteScroll>
@@ -143,5 +136,4 @@ useEffect(()=>{
   );
 };
 
-export default TimeLine;
-
+export default SupplierTimeLine;

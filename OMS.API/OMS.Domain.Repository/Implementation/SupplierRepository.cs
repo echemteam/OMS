@@ -1,4 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Request.Supplier;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Supplier;
@@ -22,6 +23,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATEADDRESSFORSUPPLIER = "UpdateAddressForSupplier";
         const string UPDATESUPPLIERSTATUS = "UpdateSupplierStatus";
         const string CHECKSUPPLIERNAMEEXIST = "CheckSupplierNameExist";
+        const string GETSUPPLIERAUDITHISTORYBYSUPPLIERID = "GetSupplierAuditHistoryBySupplierId";
         #endregion
 
         public SupplierRepository(DapperContext dapperContext) : base(dapperContext)
@@ -128,7 +130,17 @@ namespace OMS.Domain.Repository.Implementation
                 supplier.Name,
             }, CommandType.StoredProcedure);
         }
-
+    
+        public async Task<EntityList<GetSupplierAuditHistoryBySupplierIdResponse>> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest)
+        {
+            return await _context.GetListSP<GetSupplierAuditHistoryBySupplierIdResponse>(GETSUPPLIERAUDITHISTORYBYSUPPLIERID, new
+            {
+                queryRequest.SupplierId,
+                queryRequest.Pagination!.PageNumber,
+                queryRequest.Pagination.PageSize,
+               
+            }, true);
+        }
         #endregion
     }
 }

@@ -22,6 +22,8 @@ import supplierNotesAPI from './services/supplierNotesAPI';
 import supplierDocuementsAPI from './services/supplierDocuementsAPI'
 import supplierAddressAPI from './services/supplierAddressAPI';
 import commonAPI from './services/commonAPI';
+import customerHistoryAPI from './services/customerHistoryAPI';
+import supplierHistoryAPI from './services/supplierHistoryAPI';
 
 export const store = configureStore({
   reducer: {
@@ -45,6 +47,8 @@ export const store = configureStore({
     [supplierDocuementsAPI.reducerPath]:supplierDocuementsAPI.reducer,
     [commonAPI.reducerPath]: commonAPI.reducer,
     [supplierAddressAPI.reducerPath]: supplierAddressAPI.reducer,
+    [customerHistoryAPI.reducerPath]:customerHistoryAPI.reducer,
+    [supplierHistoryAPI.reducerPath]:supplierHistoryAPI.reducer,
 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
@@ -66,6 +70,8 @@ export const store = configureStore({
     supplierDocuementsAPI.middleware,
     commonAPI.middleware,
     supplierAddressAPI.middleware,
+    customerHistoryAPI.middleware,
+    supplierHistoryAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);
