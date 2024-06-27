@@ -34,7 +34,7 @@ const ApprovalValidateData = ({ validateCheckList, handleDone, showModal, handle
       handleToggleModal={handleToggleModal} modelSizeClass="w-40">
       {!isGetCheckListLoading ?
         <div className="Validate-card row">
-          <div className="col-12 mt-3">
+          <div className="col-12">
             <div className="customer-data-sec">
               <div className="validation-list">
                 <ul>

@@ -7,6 +7,9 @@
 
 .customer-data-sec {
     .validation-list {
+        max-height: 400px;
+        overflow: hidden;
+        overflow-y: auto;
         ul {
             padding-left: 0;
 
