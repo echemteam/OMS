@@ -6,19 +6,22 @@ import { contactDetailFormData } from "./config/ContactDetailForm.data";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey, isEditablePage }) => {
+const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey, isEditablePage, isSupplier }) => {
 
   //** State */
   const ref = useRef();
   const { formSetting } = contactDetailFormData;
   const [formData, setFormData] = useState(contactDetailFormData);
   const [customerContactId, setCustomerContactId] = useState(0);
+  const [supplierContactId, setSupplierContactId] = useState(0);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const { contactId, setContactId, emailAddressData, phoneNumberData } = useContext(BasicDetailContext);
+
+  const { contactId, setContactId, emailAddressData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
   //** API Call's */
   const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
@@ -30,11 +33,13 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       let request = {
         ...data,
         contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
-        customerId: mainId,
+        customerId: isSupplier === false ? mainId : 0,
         contactId: contactId,
         customerContactId: customerContactId,
         emailList: emailAddressData.length > 0 ? emailAddressData : null,
-        phoneList: phoneNumberData.length > 0 ? phoneNumberData : null
+        phoneList: phoneNumberData.length > 0 ? phoneNumberData : null,
+        supplierId: isSupplier === true ? mainId : 0,
+        supplierContactId: supplierContactId
       }
       addEdit(request);
     }
@@ -93,6 +98,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       setFormData(form);
       setContactId(data?.contactId);
       setCustomerContactId(data?.customerContactId);
+      setSupplierContactId(data?.supplierContactId);
     }
   }
 
@@ -115,8 +121,8 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         <FormCreator config={formData} ref={ref} {...formData} />
       </div>
       <div className="row">
-        <ManageEmailAddress onGetContactList={onGetContactList} />
-        <ManageContactNumbers onGetContactList={onGetContactList} />
+        <ManageEmailAddress isSupplier={isSupplier} onGetContactList={onGetContactList} />
+        <ManageContactNumbers isSupplier={isSupplier} onGetContactList={onGetContactList} />
       </div>
       <div className="col-md-12 mt-5">
         <div className="d-flex align-item-end justify-content-end">
@@ -136,7 +142,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 });
 

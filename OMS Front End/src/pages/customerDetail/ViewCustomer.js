@@ -1,29 +1,23 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./ViewCustomer.scss";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import BasicDetail from "./features/basicDetail/BasicDetail";
-import ContactDetail from "./features/contactDetail/Contact/ContactDetail";
-import AddressDetail from "./features/addressDetail/AddressDetail";
 import CardSection from "../../components/ui/card/CardSection";
 import CustomerDetails from "./features/basicDetail/CustomerDetails";
 import { AppIcons } from "../../data/appIcons";
 import SidebarModel from "../../components/ui/sidebarModel/SidebarModel";
 import SettingDetails from "./features/settingDetail/SettingDetails";
-import DocumentDetails from "./features/documentsDetail/DocumentDetails";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 import NotesDetail from "./features/NotesDetail/NotesDetail";
 import { useLazyGetCustomersBasicInformationByIdQuery } from "../../app/services/basicdetailAPI";
 import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../services/CryptoService";
 import { HistoryDetail } from "./features/HistoryDetail/HistoryDetail";
-import {
-  useAddEditContactMutation,
-  useLazyGetContactByCustomerIdQuery,
-} from "../../app/services/contactAPI";
 import { useNavigate } from "react-router-dom/dist";
 import Button from "../../components/ui/button/Buttons";
 import CustomerContactDetails from "./features/contactDetail/Contact/CustomerContactDetails";
 import CustomerDocumentDetails from "./features/documentsDetail/CustomerDocumentDetails";
+import CustomerAddressDetails from "./features/addressDetail/CustomerAddressDetails";
 
 const ViewCustomer = () => {
   const navigate = useNavigate();
@@ -87,7 +81,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Address",
       component: (
         <div className="mt-2">
-          <AddressDetail isEditablePage={true} />
+          <CustomerAddressDetails isEditablePage={true} />
         </div>
       ),
     },
