@@ -2,7 +2,7 @@ import { FileTypeIcons } from "../../pages/customerDetail/features/documentsDeta
 
 export const contactCustomerTransformData = (data) => {
     return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit } = item;
+        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit, isPrimary } = item;
 
         const modifyPhoneNumberList = phoneNumberLsit.map((item, index) => ({
             ...item,
@@ -12,7 +12,6 @@ export const contactCustomerTransformData = (data) => {
             ...item,
             id: index + 1
         }));
-
         const emailAddress = emailAddressLst.map(item => item.emailAddress).join(',');
         const phoneNumber = phoneNumberLsit.map(item => item.phoneNumber).join(',');
         const transformedItem = {
@@ -23,7 +22,8 @@ export const contactCustomerTransformData = (data) => {
                 contactTypeId,
                 customerContactId,
                 emailAddress,
-                phoneNumber
+                phoneNumber,
+                isPrimary
             },
             emailAddressLst: modifyEmailAddressLst,
             phoneNumberLsit: modifyPhoneNumberList
@@ -40,7 +40,7 @@ export const contactCustomerTransformData = (data) => {
 
 export const contactSupplierTransformData = (data) => {
     return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, supplierContactId, phoneNumberLsit } = item;
+        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, supplierContactId, phoneNumberLsit, isPrimary } = item;
 
         const modifyPhoneNumberList = phoneNumberLsit.map((item, index) => ({
             ...item,
@@ -61,7 +61,8 @@ export const contactSupplierTransformData = (data) => {
                 contactTypeId,
                 supplierContactId,
                 emailAddress,
-                phoneNumber
+                phoneNumber,
+                isPrimary
             },
             emailAddressLst: modifyEmailAddressLst,
             phoneNumberLsit: modifyPhoneNumberList
