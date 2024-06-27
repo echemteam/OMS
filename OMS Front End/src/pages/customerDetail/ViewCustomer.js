@@ -8,7 +8,7 @@ import { AppIcons } from "../../data/appIcons";
 import SidebarModel from "../../components/ui/sidebarModel/SidebarModel";
 import SettingDetails from "./features/settingDetail/SettingDetails";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
-import NotesDetail from "./features/NotesDetail/NotesDetail";
+import NotesDetail from "./features/notesDetail/NotesDetail";
 import { useLazyGetCustomersBasicInformationByIdQuery } from "../../app/services/basicdetailAPI";
 import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../services/CryptoService";
