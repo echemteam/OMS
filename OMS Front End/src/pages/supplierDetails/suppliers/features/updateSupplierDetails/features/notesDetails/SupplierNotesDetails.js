@@ -8,6 +8,7 @@ import Buttons from "../../../../../../../components/ui/button/Buttons";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
 import NotesFormData from "./features/config/Notes.data";
 import CenterModel from "../../../../../../../components/ui/centerModel/CenterModel";
+import AddSupplierContext from "../../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 
 
 const SupplierNotesDetail=(props)=>{
@@ -15,6 +16,7 @@ const SupplierNotesDetail=(props)=>{
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const [formData, setFormData] = useState(NotesFormData);
     const [showModal, setShowModal] = useState(false);
+       const { supplierId } = useContext(AddSupplierContext)
     const [buttonVisible, setButtonVisible] = useState(true);
     const [notesFormData, setNotesFormData] = useState([]);
     const [isEditMode, setIsEditMode] = useState(false);
@@ -29,7 +31,7 @@ const SupplierNotesDetail=(props)=>{
       }
 
       const ongetNote = () => {
-        getSupplierNotesBySupplierId(props.pageId);
+        getSupplierNotesBySupplierId(supplierId);
       };
 
       useEffect(() => {
@@ -81,7 +83,7 @@ const SupplierNotesDetail=(props)=>{
         debugger
         let supplierNotesData = notesFormRef.current.getFormData();
         let request = {
-          supplierId:props.pageId,
+          supplierId:supplierId,
           note: supplierNotesData.type,
         };
         if (supplierNotesData && !supplierNotesData.supplierNoteId) {
