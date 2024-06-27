@@ -1,21 +1,33 @@
-import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import CardSection from '../../../../components/ui/card/CardSection'
-import MolGrid from '../../../../components/Grid/MolGrid';
-import { useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from '../../../../app/services/basicdetailAPI';
-import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext"
-import { useNavigate } from 'react-router-dom';
-import { encryptUrlData } from '../../../../services/CryptoService';
-import ToastService from '../../../../services/toastService/ToastService';
-import { reasonData } from '../config/CustomerData';
-import CenterModel from '../../../../components/ui/centerModel/CenterModel';
-import FormCreator from '../../../../components/Forms/FormCreator';
-import Buttons from '../../../../components/ui/button/Buttons';
-import { StatusEnums, StatusFeild } from '../../../../common/features/Enums/StatusEnums';
-import SwalAlert from '../../../../services/swalService/SwalService';
-import { securityKey } from '../../../../data/SecurityKey';
-import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
-import ApprovalCheckList from '../../features/approvalCheckList/ApprovalCheckList';
-
+import React, {
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import CardSection from "../../../../components/ui/card/CardSection";
+import MolGrid from "../../../../components/Grid/MolGrid";
+import {
+  useGetCustomersMutation,
+  useUpdateCustomerApproveStatusMutation,
+  useUpdateCustomerInActiveStatusMutation,
+} from "../../../../app/services/basicdetailAPI";
+import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext";
+import { useNavigate } from "react-router-dom";
+import { encryptUrlData } from "../../../../services/CryptoService";
+import ToastService from "../../../../services/toastService/ToastService";
+import { reasonData } from "../config/CustomerData";
+import CenterModel from "../../../../components/ui/centerModel/CenterModel";
+import FormCreator from "../../../../components/Forms/FormCreator";
+import Buttons from "../../../../components/ui/button/Buttons";
+import {
+  StatusEnums,
+  StatusFeild,
+} from "../../../../common/features/Enums/StatusEnums";
+import SwalAlert from "../../../../services/swalService/SwalService";
+import { securityKey } from "../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import ApprovalCheckList from "../../features/approvalCheckList/ApprovalCheckList";
 
 export const CustomersList = ({ statusId, configFile }) => {
   const navigate = useNavigate();
@@ -27,21 +39,33 @@ export const CustomersList = ({ statusId, configFile }) => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(reasonData);
   const [customerID, setcustomerId] = useState();
-  const [staticId, setStaticId] = useState()
-  const [statusFeild, setStatusFeild] = useState()
+  const [staticId, setStaticId] = useState();
+  const [statusFeild, setStatusFeild] = useState();
   const { listRef } = useContext(CustomerContext);
   const [showApprovalList, setShowApprovalList] = useState(false);
 
-
-  const [getCustomers, { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },] = useGetCustomersMutation();
-  const [updateCustomerApproveStatus, { isSuccess: isSuccessUpdateCustomer, data: updateCustomerData }] = useUpdateCustomerApproveStatusMutation();
-  const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
-
+  const [
+    getCustomers,
+    { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
+  ] = useGetCustomersMutation();
+  const [
+    updateCustomerApproveStatus,
+    { isSuccess: isSuccessUpdateCustomer, data: updateCustomerData },
+  ] = useUpdateCustomerApproveStatusMutation();
+  const [
+    updateCustomerInActiveStatus,
+    {
+      isLoading: updateCustomerInActiveStatusCustomerLoading,
+      isSuccess: isSuccessUpdateCustomerInActiveStatus,
+      data: updateCustomerInActiveStatusData,
+    },
+  ] = useUpdateCustomerInActiveStatusMutation();
 
   useEffect(() => {
-    const actionColumn = configFile?.columns.find(column => column.name === "Action");
+    const actionColumn = configFile?.columns.find(
+      (column) => column.name === "Action"
+    );
     if (actionColumn) {
-
       const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
       const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
       const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
@@ -81,7 +105,7 @@ export const CustomersList = ({ statusId, configFile }) => {
         pageSize: page.pageSize,
       },
       filters: { searchText: "" },
-      statusId: statusId
+      statusId: statusId,
     };
     getCustomers(request);
   };
@@ -89,7 +113,7 @@ export const CustomersList = ({ statusId, configFile }) => {
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
-        setDataSource(isListeData.dataSource)
+        setDataSource(isListeData.dataSource);
       }
       if (isListeData.totalRecord) {
         setTotalRowCount(isListeData.totalRecord);
@@ -100,15 +124,18 @@ export const CustomersList = ({ statusId, configFile }) => {
   useEffect(() => {
     if (isSuccessUpdateCustomer && updateCustomerData) {
       ToastService.success(updateCustomerData.errorMessage);
-      getListApi()
+      getListApi();
     }
   }, [isSuccessUpdateCustomer, updateCustomerData]);
 
   useEffect(() => {
-    if (isSuccessUpdateCustomerInActiveStatus && updateCustomerInActiveStatusData) {
+    if (
+      isSuccessUpdateCustomerInActiveStatus &&
+      updateCustomerInActiveStatusData
+    ) {
       ToastService.success(updateCustomerInActiveStatusData.errorMessage);
-      getListApi()
-      handleToggleModal()
+      getListApi();
+      handleToggleModal();
     }
   }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
 
@@ -124,7 +151,7 @@ export const CustomersList = ({ statusId, configFile }) => {
         pageSize: currentPageObject.pageSize,
       },
       filters: { searchText: "" },
-      statusId: statusId
+      statusId: statusId,
     };
     getCustomers(request);
   };
@@ -133,10 +160,16 @@ export const CustomersList = ({ statusId, configFile }) => {
     navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
   };
 
-  const handleGridCheckBoxChange = (rowData, datafield, rowindex, updatedValue, parentData) => {
+  const handleGridCheckBoxChange = (
+    rowData,
+    datafield,
+    rowindex,
+    updatedValue,
+    parentData
+  ) => {
     handleShowApprovalList();
     setcustomerId(rowData.customerId);
-  }
+  };
 
   const handleShowApprovalList = () => {
     setShowApprovalList(!showApprovalList);
@@ -151,47 +184,47 @@ export const CustomersList = ({ statusId, configFile }) => {
 
   const updateCustomerApproval = () => {
     let req = {
-      customerId: customerID
-    }
-    updateCustomerApproveStatus(req)
-  }
+      customerId: customerID,
+    };
+    updateCustomerApproveStatus(req);
+  };
 
   const handleToggleModal = () => {
     setShowModal(false);
-    onReset()
+    onReset();
   };
 
   const handlefreeze = (data) => {
     setShowModal(true);
-    setcustomerId(data.customerId)
-    setStaticId(StatusEnums.Freeze)
-    setStatusFeild(StatusFeild.Freeze)
-  }
+    setcustomerId(data.customerId);
+    setStaticId(StatusEnums.Freeze);
+    setStatusFeild(StatusFeild.Freeze);
+  };
 
   const handleDiseble = (data) => {
     setShowModal(true);
-    setcustomerId(data.customerId)
-    setStaticId(StatusEnums.Disable)
-    setStatusFeild(StatusFeild.Disable)
-  }
+    setcustomerId(data.customerId);
+    setStaticId(StatusEnums.Disable);
+    setStatusFeild(StatusFeild.Disable);
+  };
 
   const handleBlock = (data) => {
     setShowModal(true);
-    setcustomerId(data.customerId)
-    setStaticId(StatusEnums.Block)
-    setStatusFeild(StatusFeild.Block)
-  }
+    setcustomerId(data.customerId);
+    setStaticId(StatusEnums.Block);
+    setStatusFeild(StatusFeild.Block);
+  };
   const handleReject = (data) => {
     setShowModal(true);
-    setcustomerId(data.customerId)
-    setStaticId(StatusEnums.Reject)
-    setStatusFeild(StatusFeild.Reject)
-  }
+    setcustomerId(data.customerId);
+    setStaticId(StatusEnums.Reject);
+    setStatusFeild(StatusFeild.Reject);
+  };
   const onReset = () => {
     let restData = { ...reasonData };
     restData.initialState = { ...formData };
     setFormData(restData);
-  }
+  };
 
   const handleUpdate = () => {
     let custData = reasonRef.current.getFormData();
@@ -199,11 +232,11 @@ export const CustomersList = ({ statusId, configFile }) => {
       let req = {
         ...custData,
         customerId: customerID,
-        statusId: staticId
-      }
-      updateCustomerInActiveStatus(req)
+        statusId: staticId,
+      };
+      updateCustomerInActiveStatus(req);
     }
-  }
+  };
 
   const actionHandler = {
     EDIT: handleEditClick,
@@ -217,11 +250,10 @@ export const CustomersList = ({ statusId, configFile }) => {
     <div>
       <div className="row">
         <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
-          <CardSection
-          >
+          <CardSection>
             <div className="row">
               <div className="col-md-12 table-striped">
-                <div className='customer-list'>
+                <div className="customer-list">
                   <MolGrid
                     ref={molGridRef}
                     configuration={configFile}
@@ -249,12 +281,7 @@ export const CustomersList = ({ statusId, configFile }) => {
             modelSizeClass="w-50s"
           >
             <div className="row horizontal-form">
-              <FormCreator
-                config={formData}
-                ref={reasonRef}
-                {...formData}
-
-              />
+              <FormCreator config={formData} ref={reasonRef} {...formData} />
               <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                   <div className="d-flex align-item-end">
@@ -276,7 +303,11 @@ export const CustomersList = ({ statusId, configFile }) => {
           </CenterModel>
         </div>
       </div>
-      <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={showApprovalList} onSuccessApprovalClose={onSuccessApprovalClose} />
+      <ApprovalCheckList
+        onSidebarClose={onSidebarApprovalClose}
+        isModelOpen={showApprovalList}
+        onSuccessApprovalClose={onSuccessApprovalClose}
+      />
     </div>
-  )
-}
+  );
+};

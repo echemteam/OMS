@@ -40,14 +40,27 @@ namespace OMS.Application.Services.Contact
                 List<AddContactPhoneRequest> PhoneDT = requestData.PhoneList!;
 
                 int contactId = responceData.KeyValue;
+                short onerTypeId = 0;
+                if (requestData.CustomerId > 0 && responceData.KeyValue > 0)
+                {
+                    onerTypeId = 3;
+                }
+                else if (requestData.SupplierId > 0 && responceData.KeyValue > 0)
+                {
+                    onerTypeId = 4;
+                }
 
                 if (requestData.EmailList != null && requestData.EmailList.Count > 0)
                 {
                     DataTable emailDataTable = ExportHelper.ListToDataTable(emailDT);
+                    emailDataTable.Columns.Add("OwnerTypeId", typeof(short));
                     emailDataTable.Columns.Add("CreatedBy", typeof(short));
+               
                     foreach (DataRow row in emailDataTable.Rows)
                     {
+                        row["OwnerTypeId"] = onerTypeId;
                         row["CreatedBy"] = CurrentUserId;
+                       
                     }
                     _ = await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);
 
@@ -55,16 +68,19 @@ namespace OMS.Application.Services.Contact
                 if (requestData.PhoneList != null && requestData.PhoneList.Count > 0)
                 {
                     DataTable phoneDataTable = ExportHelper.ListToDataTable(PhoneDT);
+                    phoneDataTable.Columns.Add("OwnerTypeId", typeof(short));
                     phoneDataTable.Columns.Add("CreatedBy", typeof(short));
+                 
                     foreach (DataRow row in phoneDataTable.Rows)
                     {
-                        row["CreatedBy"] = CurrentUserId;
+                        row["OwnerTypeId"] = onerTypeId;
+                        row["CreatedBy"] = CurrentUserId;  
                     }
                     _ = await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
                 }
             }
 
-            if (requestData.CustomerId > 0)
+            if (requestData.CustomerId > 0 && responceData.KeyValue >0)
             {
                 AddEditContactForCustomerRequest addEditContactForCustomerRequest = new()
                 {
@@ -91,7 +107,6 @@ namespace OMS.Application.Services.Contact
             }
             return responceData;
         }
-
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId)
         {
             List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId);
