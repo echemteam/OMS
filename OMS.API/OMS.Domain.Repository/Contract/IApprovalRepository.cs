@@ -14,7 +14,7 @@ namespace OMS.Domain.Repository.Contract
          Task<List<GetUserCheckListByEventIdResponse>> GetUserCheckList(int eventId);
          Task<List<GetCheckListItemResponse>> GetCheckListItemByListId(int ChecklistId);
          Task<AddEntityDTO<int>> AddUserChecklistResponse(DataTable CheckListDataTable);
-         Task<List<GetAutomatedApprovalCheckListResponse>> getValidateCustomer(int mainId);
-         Task<List<GetAutomatedApprovalCheckListResponse>> getValidateSupplier(int mainId);
+         Task<List<GetValidateCheckListResponse>> getValidateCustomer(int mainId);
+         Task<List<GetValidateCheckListResponse>> getValidateSupplier(int mainId);
     }
 }

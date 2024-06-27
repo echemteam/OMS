@@ -202,5 +202,7 @@ export const supplierBasicData = {
       },
     },
   ],
-
+  formSetting: {
+    isViewOnly: false
+  }
 };

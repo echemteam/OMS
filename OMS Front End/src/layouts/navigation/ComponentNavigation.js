@@ -266,7 +266,7 @@ export const ComponentNavigation = [
     component: ManageAddSupplier,
     hasParams: false,
     text: 'Add Supplier',
-    securityKey: ""
+    securityKey: securityKey.ADDSUPPLIER
   },
   {
     id: 'Suppliers',
@@ -286,6 +286,6 @@ export const ComponentNavigation = [
     component: SupplierDetails,
     hasParams: false,
     text: 'Supplier Detail',
-    securityKey: ""
+    securityKey:securityKey.SUPPLIER
   },
 ];

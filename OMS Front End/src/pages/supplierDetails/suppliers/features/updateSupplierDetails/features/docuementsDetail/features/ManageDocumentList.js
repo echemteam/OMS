@@ -11,9 +11,10 @@ import { supplierDocumentTransformData } from "../../../../../../../../utils/Tra
 import SwalAlert from "../../../../../../../../services/swalService/SwalService";
 import { useDeleteSupplierDocumentsByIdMutation, useLazyGetSupplierDocumentsByIdQuery } from "../../../../../../../../app/services/supplierDocuementsAPI";
 import { useLazyDownloadCustomerDocumentQuery } from "../../../../../../../../app/services/documentAPI";
+import { hasFunctionalPermission } from "../../../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 
-const ManageDocumentList = forwardRef(({ mainId, childRef}) => {
+const ManageDocumentList = forwardRef(({ mainId, childRef, SecurityKey, isEditablePage}) => {
  
     //** State */
     const { confirm } = SwalAlert();
@@ -30,6 +31,29 @@ const ManageDocumentList = forwardRef(({ mainId, childRef}) => {
     useEffect(() => {
         mainId && getList(mainId);
     }, []);
+
+    useEffect(() => {
+        if (isEditablePage && SecurityKey) {
+            const hasDeletePermission = hasFunctionalPermission(SecurityKey.DELETE);
+            const hasDownalodPermission = hasFunctionalPermission(SecurityKey.DOWNALOD);
+            if (hasDeletePermission) {
+                if (hasDeletePermission.hasAccess === true) {
+                    setShowDeleteButton(true);
+                }
+                else {
+                    setShowDeleteButton(false);
+                }
+            }
+            if (hasDownalodPermission) {
+                if (hasDownalodPermission.hasAccess === true) {
+                    setShowDownalodButton(true);
+                }
+                else {
+                    setShowDownalodButton(false);
+                }
+            }
+        }
+    }, [isEditablePage, SecurityKey]);
 
     useEffect(() => {
         if (isListSucess && isListData && !isListFetching) {

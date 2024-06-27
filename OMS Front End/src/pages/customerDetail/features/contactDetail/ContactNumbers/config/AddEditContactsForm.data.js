@@ -99,7 +99,7 @@ export const phoneNumberConfig = {
     {
       name: "Type",
       fieldName: "phoneType",
-      width: "25%",
+      width: "15%",
       renderCustomCol: (rowData) => {
         return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
       },
@@ -115,21 +115,18 @@ export const phoneNumberConfig = {
     },
     {
       name: "Extension",
-      width: "25%",
+      width: "20%",
       fieldName: "extension"
     },
-    // {
-    //   name: "Extension",
-    //   width: "60%",
-    //   fieldName: "extension",
-    //   colType: GridColumnType.CUSTOM,
-    //   renderCustomCol: (rowData) => {
-    //     return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
-    //   },
-    // },
+    {
+      name: "Is Primary",
+      fieldName: "isPrimary",
+      width: "15%",
+      colType: GridColumnType.CHECKBOX,
+    },
     {
       name: "Action",
-      width: "20%",
+      width: "15%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

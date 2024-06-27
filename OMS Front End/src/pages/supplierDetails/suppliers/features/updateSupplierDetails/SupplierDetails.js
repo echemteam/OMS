@@ -74,40 +74,40 @@ const SupplierDetails = () => {
     {
       sMenuItemCaption: "Address",
       component: <div className="mt-2">
-        <SuplierAddressDetails isEditablePage={true}/>
+        <SuplierAddressDetails isEditablePage={true} />
       </div>,
     },
+    {
+      sMenuItemCaption: "Contact",
+      component: (
+        <div className="mt-2">
+          <SupplierContactDetail isEditablePage={true} />
+        </div>
+      ),
+    },
     // {
-    //   sMenuItemCaption: "Contact",
-    //   component: (
-    //     <div className="mt-2">
-    //       {/* <ContactDetail /> */}
-    //     </div>
-    //   ),
+    //   sMenuItemCaption: "Settings",
+    //   component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
     // },
     {
-      sMenuItemCaption: "Settings",
-      component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
-    },
-    {
       sMenuItemCaption: "Notes",
-      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId}/>}</div>,
+      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>,
     },
     {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          <SupplierDocumentDetail pageId={pageId}/>
+          <SupplierDocumentDetail pageId={pageId} isEditablePage={true}  />
         </div>
       ),
-    },  
+    },
     {
       sMenuItemCaption: "Notes",
-      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId}/>}</div>,
+      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>,
     },
     {
       sMenuItemCaption: "History",
-      component: <div className="mt-2">{<SupplierHistoryDetail/>}</div>,
+      component: <div className="mt-2">{<SupplierHistoryDetail />}</div>,
     },
   ];
 

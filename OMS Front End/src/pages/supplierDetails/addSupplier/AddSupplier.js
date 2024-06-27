@@ -6,12 +6,12 @@ import { AppIcons } from "../../../data/appIcons";
 import AddSupplierContext from "../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import SupplierBasicDetail from "./features/supplierBasicDetail/SupplierBasicDetail";
 import SupplierContactDetail from "./features/supplierContactDetail/SupplierContactDetail";
-import SupplierDocumentDetail from "./features/supplierDocumentDetail/SupplierDocumentDetail";
 import { TabEnum } from "../../../common/features/Enums/TabsEnums";
 import SuplierAddressDetails from "./features/supplierAddressDetail/SupplierAddressDetails";
 import { useUpdateSupplierStatusMutation } from "../../../app/services/supplierAPI";
 import ToastService from "../../../services/toastService/ToastService";
 import { StatusEnums } from "../../../common/features/Enums/StatusEnums";
+import SupplierDocumentDetail from "../suppliers/features/updateSupplierDetails/features/docuementsDetail/SupplierDocuementDetail";
 
 
 const AddSupplier = () => {

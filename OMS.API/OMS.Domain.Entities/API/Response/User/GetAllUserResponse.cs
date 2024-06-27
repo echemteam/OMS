@@ -8,7 +8,7 @@ namespace OMS.Domain.Entities.API.Response.User
 {
     public class GetAllUserResponse
     {   
-        public int UserId { get; set; }
+        public short? UserId { get; set; }
         public string? FullName { get; set; }
     }
 }

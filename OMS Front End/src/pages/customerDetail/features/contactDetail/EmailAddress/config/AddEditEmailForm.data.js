@@ -47,7 +47,13 @@ export const emailConfig = {
     {
       name: "Email Address",
       fieldName: "emailAddress",
-      width: "60%",
+      width: "40%",
+    },
+    {
+      name: "Is Primary",
+      fieldName: "isPrimary",
+      width: "20%",
+      colType: GridColumnType.CHECKBOX,
     },
     {
       name: "Action",

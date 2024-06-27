@@ -12,8 +12,7 @@ import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import { reasonData } from "../../customers/config/CustomerData";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
-import ApprovalCheckList from "../approvalCheckList/ApprovalCheckList";
-
+import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
