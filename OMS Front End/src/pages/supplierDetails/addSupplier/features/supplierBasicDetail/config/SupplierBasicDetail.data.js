@@ -13,7 +13,7 @@ import { FormFieldTypes } from "../../../../../../data/formFieldType";
 
 
 export const supplierBasicData = {
-  initialState: { name: "", groupTypeId: "", supplierTypeId:"", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", taxId: "", dbaName:"" },
+  initialState: { name: "", groupTypeId: "", supplierTypeId:"", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", taxId: "", dbaName:"" ,responsibleUserId:""},
   formFields: [
     {
       id: "name",
@@ -184,6 +184,21 @@ export const supplierBasicData = {
       validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-7 col-xl-6 col-md-12 col-12 mb-2",
+      },
+    },
+    {
+      id: "responsibleUserId",
+      lable: "Responsible User :",
+      Field_Name: "Responsible User ",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "responsibleUserId",
+      fieldSetting: {
+        placeholder: "Select Responsible USer",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
   ],

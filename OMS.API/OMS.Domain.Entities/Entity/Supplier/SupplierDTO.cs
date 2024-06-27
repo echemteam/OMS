@@ -76,5 +76,7 @@ namespace OMS.Domain.Entities.Entity.Supplier
         public DateTime? ApprovedAt { get; set; }
         [Column("ApprovedBy")]
         public short? ApprovedBy { get; set; }
+        [Column("ResponsibleUserId")]
+        public short ResponsibleUserId { get; set; }
     }
 }

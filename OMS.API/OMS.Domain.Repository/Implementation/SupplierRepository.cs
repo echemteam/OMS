@@ -49,7 +49,8 @@ namespace OMS.Domain.Repository.Implementation
                 supplier.TaxId,
                 supplier.Note,
                 supplier.EmailAddress,
-                supplier.CreatedBy
+                supplier.CreatedBy,
+                supplier.ResponsibleUserId,
             }, CommandType.StoredProcedure);
         }
 

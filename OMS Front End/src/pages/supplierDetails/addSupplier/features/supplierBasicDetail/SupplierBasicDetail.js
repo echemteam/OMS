@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import CardSection from '../../../../../components/ui/card/CardSection';
 import { supplierBasicData } from '../supplierBasicDetail/config/SupplierBasicDetail.data';
-import { useAddEditSupplierBasicInformationMutation, useLazyGetAllSupplierTypeQuery } from '../../../../../app/services/supplierAPI'
+import { useAddEditSupplierBasicInformationMutation, useLazyGetAllSupplierTypeQuery, useLazyGetAllUserQuery } from '../../../../../app/services/supplierAPI'
 import ToastService from '../../../../../services/toastService/ToastService';
 import { getTaxIdMinMaxLength } from '../../../../customerDetail/features/basicDetail/config/TaxIdValidator';
 import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
@@ -37,6 +37,15 @@ const SupplierBasicDetail = (props) => {
   ] = useLazyGetAllGroupTypesQuery();
 
   const [
+    getAllUser,
+    {
+      isFetching: isGetAllUserFetching,
+      isSuccess: isGetAllUserSucess,
+      data: allGetAllUserData,
+    },
+  ] = useLazyGetAllUserQuery();
+
+  const [
     getAllCountries,
     {
       isFetching: isGetAllCountriesFetching,
@@ -69,11 +78,12 @@ const SupplierBasicDetail = (props) => {
     getAllTerritories();
     getAllSupplierType();
     manageFilteredForm();
+    getAllUser();
   }, []);
 
   const manageFilteredForm = () => {
     const manageData = { ...formData }
-    const filteredFormFields = supplierBasicData.formFields.filter(field => field.id !== "name-input");
+    const filteredFormFields = supplierBasicData.formFields.filter(field => field.id !== "name-input" &&  field.dataField !== "responsibleUserId");
     manageData.formFields = filteredFormFields;
     setFormData(manageData)
   };
@@ -98,7 +108,20 @@ const SupplierBasicDetail = (props) => {
     isGetAllGroupTypesSucess,
     allGetAllGroupTypesData,
   ]);
-
+  useEffect(() => {
+    if (!isGetAllUserFetching && isGetAllUserSucess && allGetAllUserData) {
+      const getData = allGetAllUserData.map((item) => ({
+        value: item.userId,
+        label: item.fullName,
+      }));
+      const dropdownField = supplierBasicData.formFields.find(
+        (item) => item.dataField === "responsibleUserId"
+      );
+      dropdownField.fieldSetting.options = getData;
+    }
+   
+  }, [isGetAllUserFetching,isGetAllUserSucess,allGetAllUserData,]);
+  
   useEffect(() => {
     if (
       !isGetAllCountriesFetching &&
@@ -197,6 +220,7 @@ const SupplierBasicDetail = (props) => {
       let data = { ...supplierBasicData };
       data.initialState = { ...props.supplierData };
       data.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
+
       setFormData(data);
     }
   }, [props.isOpen])
@@ -232,6 +256,9 @@ const SupplierBasicDetail = (props) => {
         countryId: data.countryId && typeof data.countryId === "object"
           ? data.countryId.value
           : data.countryId,
+          responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
+          ? data.responsibleUserId.value
+          : data.responsibleUserId,
         supplierId: props.pageId
       }
       addEditSupplierBasicInformation(req);
