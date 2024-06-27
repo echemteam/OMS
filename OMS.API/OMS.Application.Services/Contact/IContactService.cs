@@ -8,5 +8,6 @@ namespace OMS.Application.Services.Contact
     {
         Task<AddEntityDTO<int>> AddEditContact(AddEditContactRequest requestData, short CurrentUserId);
         Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId);
+        Task<List<GetContactBySupplierIdResponse>> GetContactBySupplierId(int supplierId);
     }
 }

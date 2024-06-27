@@ -7,13 +7,14 @@ import { addEditContactsFormData } from './config/AddEditContactsForm.data';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
 import { addPhoneNumberData, updatePhoneNumberData } from '../Util/ContactPhoneNumberUtil';
 import BasicDetailContext from '../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
+import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
 
-const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess }) => {
+const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess , isSupplier}) => {
 
     //** State */
     const ref = useRef();
     const [formData, setFormData] = useState(addEditContactsFormData);
-    const { contactId, allCountries, setPhoneNumberData, phoneNumberData } = useContext(BasicDetailContext);
+    const { contactId, allCountries, setPhoneNumberData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext :BasicDetailContext);
 
     //** Handle Changes */
     const handleAddEdit = () => {

@@ -9,7 +9,8 @@ export const addEditContactsFormData = {
     phoneNumber: '',
     phoneTypeId: '',
     extension: 0,
-    id: 0
+    id: 0,
+    // isPrimary: false
   },
   formFields: [
     {
@@ -73,7 +74,21 @@ export const addEditContactsFormData = {
         containerCss: "col-xxl-8 col-xl-8 col-md-8 mb-1 pr-0 ",
       },
     },
-
+    // {
+    //   id: "isPrimary",
+    //   lable: "Is Primary",
+    //   Field_Name: "Is Primary",
+    //   fieldType: FormFieldTypes.CHECKBOX,
+    //   dataField: "isPrimary",
+    //   fieldSetting: {
+    //     placeholder: "",
+    //     allowSpace: true,
+    //   },
+    //   style: {
+    //     containerCss:
+    //       "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+    //   },
+    // },
 
   ],
 };

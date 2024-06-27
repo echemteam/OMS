@@ -2,6 +2,7 @@
 {
     public class GetAddresssBySupplierIdResponse
     {
+        public int? SupplierAddressId { get; set; }
         public int? AddressId { get; set; }
         public short? AddressTypeId { get; set; }
         public string? Type { get; set; }

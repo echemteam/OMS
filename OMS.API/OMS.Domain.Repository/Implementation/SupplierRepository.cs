@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Request.Supplier;
+﻿using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Supplier;
@@ -22,6 +23,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATEADDRESSFORSUPPLIER = "UpdateAddressForSupplier";
         const string UPDATESUPPLIERSTATUS = "UpdateSupplierStatus";
         const string CHECKSUPPLIERNAMEEXIST = "CheckSupplierNameExist";
+        const string ADDEDITCONTACTFORSUPPLIER = "AddEditContactForSupplier";
         #endregion
 
         public SupplierRepository(DapperContext dapperContext) : base(dapperContext)
@@ -94,8 +96,6 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SupplierId,
                 requestData.AddressId,
                 requestData.AddressTypeId,
-                requestData.IsPreferredBilling,
-                requestData.IsPreferredShipping,
                 createdBy
             }, CommandType.StoredProcedure);
         }
@@ -107,8 +107,6 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SupplierId,
                 requestData.AddressId,
                 requestData.AddressTypeId,
-                requestData.IsPreferredBilling,
-                requestData.IsPreferredShipping,
                 updatedBy
             }, CommandType.StoredProcedure);
         }
@@ -129,6 +127,18 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
+        public async Task<AddEntityDTO<int>> AddEditContactForSupplier(AddEditContactForSupplierRequest requestData, short createdBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTFORSUPPLIER, new
+            {
+                requestData.SupplierContactId,
+                requestData.SupplierId,
+                requestData.ContactId,
+                requestData.ContactTypeId,
+                requestData.IsPrimary,
+                createdBy
+            }, CommandType.StoredProcedure);
+        }
         #endregion
     }
 }

@@ -5,10 +5,11 @@ import MolGrid from "../../../../../components/Grid/MolGrid";
 import { phoneNumberConfig } from "./config/AddEditContactsForm.data";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 
-const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler,isLoading }) => {
+const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler,isLoading , isSupplier}) => {
 
-    const { phoneNumberData } = useContext(BasicDetailContext);
+    const { phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
     return (
         <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2 card-email-sec">
             <CardSection
