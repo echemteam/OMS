@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './CkEditor.scss';
@@ -10,13 +10,11 @@ const CKEditorComponent = ({
   ...editorProps
 }) => {
 
-  const initialData = data !== undefined ? data : editorProps.value;
-  
   return (
     <div className="ckeditor-sec">
       <CKEditor
         editor={ClassicEditor}
-        data={initialData}
+        data={editorProps?.value}
         onChange={(event, editor) => {
           const data = editor.getData();
           onCKEditorChange(data, editor);
