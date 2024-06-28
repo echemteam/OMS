@@ -6,14 +6,14 @@ export const StatusEnums = {
     Freeze: "4",
     Block: "5",
     Disable: "6",
-    Reject:"7",
+    Reject: "7",
 }
 
 export const StatusFeild = {
     Freeze: "Freeze",
     Block: "Block",
     Disable: "Disable",
-    Reject:"Reject",
+    Reject: "Reject",
 }
 
 export const StaticStatus = {
@@ -23,11 +23,9 @@ export const StaticStatus = {
         { value: "3", label: "Approved" }, { value: "4", label: "Freeze" },
         { value: "5", label: "Block" },
         { value: "6", label: "Disable" },
-        {
-            value:"7",label:"Reject"
-        }
+        { value: "7", label: "Reject" }
     ],
-    Reject:[{ value: "7", label: "Reject" },{ value: "1", label: "Pending" }]
+    Reject: [{ value: "7", label: "Reject" }, { value: "1", label: "Pending" }],
 }
 
 export const StatusValue = [
@@ -37,8 +35,5 @@ export const StatusValue = [
     { value: 4, label: "Freeze" },
     { value: 5, label: "Block" },
     { value: 6, label: "Disable" },
-    {
-        value:7,label:"Reject"
-    },
-    
+    { value: 7, label: "Reject" },
 ];
