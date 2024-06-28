@@ -5,9 +5,21 @@
 //     overflow-y: scroll;
 // }
 .validation-center-model {
-    .modal-dialog{
-        top: 45%;
+    .modal-dialog {
+        top: 50%;
+        margin: 0 auto !important;
+
+        .modal-content {
+            .modal-body {
+                .Validate-card {
+                    .validation-list {
+                        min-height: 350px;
+                    }
+                }
+            }
+        }
     }
+
     .customer-data-sec {
         .validation-list {
             max-height: 450px;

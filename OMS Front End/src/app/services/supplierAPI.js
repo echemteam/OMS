@@ -69,15 +69,7 @@ const supplierAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
-
-        getAllUser: builder.query({
-            query: () => ({
-                url: encryptQueryString('/Common/GetAllUser'),
-                method: 'GET',
-            }),
-            transformResponse: transformSucessResponse,
-            transformErrorResponse: transformErrorResponse,
-        }),
+        
         checkSupplierNameExist: builder.mutation({
             query: (Details) => ({
                 url: '/Supplier/checkSupplierNameExist',
@@ -87,6 +79,7 @@ const supplierAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         })
+      
     })
 })
 
@@ -98,8 +91,8 @@ export const {
     useGetSuppliersMutation,
     useLazyGetSupplierBasicInformationByIdQuery,
     useLazyGetAllSupplierTypeQuery,
-    useLazyGetAllUserQuery,
     useCheckSupplierNameExistMutation,
+  
 } = supplierAPI
 
 export default supplierAPI;
