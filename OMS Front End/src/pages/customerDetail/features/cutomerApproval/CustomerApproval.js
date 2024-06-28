@@ -7,6 +7,7 @@ import { useGetValidateCheckListMutation } from "../../../../app/services/Approv
 const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval }) => {
 
     const [isShowApproval, setIsShowApproval] = useState(false);
+    const [customerId, setCustomerId] = useState(false);
     const [validateCheckList, setValidateCheckList] = useState([]);
     const [isShowValidateModal, setIsShowValidateModal] = useState(false);
 
@@ -27,18 +28,27 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     };
 
     //** Validate check list Modal */
-    const handleToggleModal = (customerId) => {
+    const handleShowValidateModal = (customerId) => {
         setIsShowValidateModal(!isShowValidateModal);
         let request = {
-            customerId: 1113,
+            customerId: customerId,
             supplierId: 0
         }
         getValidateCheckList(request);
+        setCustomerId(customerId);
     };
+
+    const handleValidateModalClose = () => {
+        setIsShowValidateModal(!isShowValidateModal);
+        getListApi();
+    };
+    const handleModalClose = () => {
+        setIsShowValidateModal(!isShowValidateModal);
+    }
 
     const handleDone = () => {
         handleShowApprovalList();
-        handleToggleModal();
+        handleModalClose();
     }
 
     useEffect(() => {
@@ -49,13 +59,13 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
 
     //** Use Imperative Handle */
     useImperativeHandle(childRef, () => ({
-        callChildFunction: handleToggleModal
+        callChildFunction: handleShowValidateModal
     }))
 
     return (
         <React.Fragment>
-            <ApprovalValidateData showModal={isShowValidateModal} isGetCheckListLoading={isGetCheckListLoading}
-                handleToggleModal={handleToggleModal} handleDone={handleDone} validateCheckList={validateCheckList} />
+            <ApprovalValidateData showModal={isShowValidateModal} isGetCheckListLoading={isGetCheckListLoading} customerId={customerId}
+                handleShowValidateModal={handleShowValidateModal} handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList} />
 
             <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval}
                 ApprovalData={ApprovalEnum.APPROVECUSTOMER} onSuccessApprovalClose={onSuccessApprovalClose} />

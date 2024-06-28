@@ -1,23 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./ViewCustomer.scss";
-import RenderTabs from "../../components/ui/tabs/RenderTabs";
-import BasicDetail from "./features/basicDetail/BasicDetail";
 import CardSection from "../../components/ui/card/CardSection";
-import CustomerDetails from "./features/basicDetail/CustomerDetails";
 import { AppIcons } from "../../data/appIcons";
 import SidebarModel from "../../components/ui/sidebarModel/SidebarModel";
-import SettingDetails from "./features/settingDetail/SettingDetails";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
-import NotesDetail from "./features/notesDetail/NotesDetail";
 import { useLazyGetCustomersBasicInformationByIdQuery } from "../../app/services/basicdetailAPI";
 import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../services/CryptoService";
 import { HistoryDetail } from "./features/HistoryDetail/HistoryDetail";
 import { useNavigate } from "react-router-dom/dist";
 import Button from "../../components/ui/button/Buttons";
-import CustomerContactDetails from "./features/contactDetail/Contact/CustomerContactDetails";
-import CustomerDocumentDetails from "./features/documentsDetail/CustomerDocumentDetails";
-import CustomerAddressDetails from "./features/addressDetail/CustomerAddressDetails";
+import { getAuthProps } from "../../lib/authenticationLibrary";
+
+
+const NotesDetail = React.lazy(() => import("./features/notesDetail/NotesDetail"));
+const RenderTabs = React.lazy(() => import("../../components/ui/tabs/RenderTabs"));
+const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
+const CustomerDetails = React.lazy(() => import("./features/basicDetail/CustomerDetails"));
+const SettingDetails = React.lazy(() => import("./features/settingDetail/SettingDetails"));
+const CustomerAddressDetails = React.lazy(() => import("./features/addressDetail/CustomerAddressDetails"));
+const CustomerDocumentDetails = React.lazy(() => import("./features/documentsDetail/CustomerDocumentDetails"));
+const CustomerContactDetails = React.lazy(() => import("./features/contactDetail/Contact/CustomerContactDetails"));
 
 const ViewCustomer = () => {
   const navigate = useNavigate();
@@ -26,41 +29,26 @@ const ViewCustomer = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
-  const { setCustomerId, customerId } = useContext(BasicDetailContext);
+  const { setCustomerId, customerId, setIsResponsibleUser, isResponsibleUser } = useContext(BasicDetailContext);
 
-  const [
-    getCustomersBasicInformationById,
-    {
-      isFetching: isGetCustomersBasicInformationByIdFetching,
-      isSuccess: isGetCustomersBasicInformationById,
-      data: GetCustomersBasicInformationByIdData,
-    },
-  ] = useLazyGetCustomersBasicInformationByIdQuery();
+  const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById, data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
 
   useEffect(() => {
-    if (
-      isGetCustomersBasicInformationById &&
-      GetCustomersBasicInformationByIdData &&
-      !isGetCustomersBasicInformationByIdFetching
-    ) {
+    if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
+      const authData = getAuthProps();
+      if (authData.user.userID === GetCustomersBasicInformationByIdData.responsibleUserId) {
+        setIsResponsibleUser(true);
+      }
       setCustomerData(GetCustomersBasicInformationByIdData);
-      console.log(
-        "isGetCustomersBasicInformationByIdFetching",
-        isGetCustomersBasicInformationByIdFetching
-      );
     }
-  }, [
-    isGetCustomersBasicInformationById,
-    GetCustomersBasicInformationByIdData,
-    isGetCustomersBasicInformationByIdFetching,
-  ]);
+  }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
 
   useEffect(() => {
     if (pageId) {
       setCustomerId(pageId);
       getCustomersBasicInformationById(pageId);
     }
-  }, []);
+  }, [pageId]);
 
   const handleRepeatCall = () => {
     getCustomersBasicInformationById(pageId);
@@ -150,7 +138,7 @@ const ViewCustomer = () => {
               buttonText="Back"
               imagePath={AppIcons.BackArrowIcon}
             ></Button>
-            <RenderTabs tabs={tabs} />
+            <RenderTabs tabs={customerId ? tabs : null} />
           </div>
         </div>
       </div>

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 //** Service */
-import AddressDetail from './features/config/AddressDetail';
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
 import { useAddAddressMutation, useLazyGetAddresssByCustomerIdQuery, useUpdateAddAddressMutation } from '../../../../app/services/addressAPI';
 import { securityKey } from '../../../../data/SecurityKey';
 //** Component's */
+const AddressDetail = React.lazy(() => import("./features/config/AddressDetail"));
 
 const customerSecurityKey = {
     ADD: securityKey.ADDCUSTOMERADDRESS,
