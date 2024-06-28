@@ -44,7 +44,7 @@ export const CustomersList = ({ statusId, configFile }) => {
   const [staticId, setStaticId] = useState();
   const [statusFeild, setStatusFeild] = useState();
   const { listRef } = useContext(CustomerContext);
-  const { setIsResponsibleUser } = useContext(BasicDetailContext);
+  const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [
     getCustomers,
@@ -102,32 +102,43 @@ export const CustomersList = ({ statusId, configFile }) => {
         }
       }
     }
+    if (isResponsibleUser) {
+      if (approvalAction) {
+        if (approvalAction.colSettings.allowCheckbox) {
+          approvalAction.colSettings.allowCheckbox = true;
+        }
+      }
+    }
   }, [configFile]);
 
   const hasResponsibleUserhasAccess = () => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
-    if (actionColumn.defaultAction.hasOwnProperty('allowEdit')) {
-      actionColumn.defaultAction.allowEdit = true;
-    }
-    if (actionColumn.defaultAction.hasOwnProperty("allowBlocked")) {
-      actionColumn.defaultAction.allowBlocked = true;
-    }
-    if (actionColumn.defaultAction.hasOwnProperty('allowFreeze')) {
-      actionColumn.defaultAction.allowFreeze = true;
-    }
-    if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
-      actionColumn.defaultAction.allowActiveCustomer = true;
-    }
-    if (actionColumn.defaultAction.hasOwnProperty('allowDisable')) {
-      actionColumn.defaultAction.allowDisable = true;
-    }
-    if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
-      actionColumn.defaultAction.allowUnblocked = true;
-    }
-    if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
-      actionColumn.defaultAction.allowUnblocked = true;
+    if (actionColumn) {
+      if (actionColumn.defaultAction.hasOwnProperty('allowEdit')) {
+        actionColumn.defaultAction.allowEdit = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty("allowBlocked")) {
+        actionColumn.defaultAction.allowBlocked = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowFreeze')) {
+        actionColumn.defaultAction.allowFreeze = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
+        actionColumn.defaultAction.allowActiveCustomer = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowDisable')) {
+        actionColumn.defaultAction.allowDisable = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
+        actionColumn.defaultAction.allowUnblocked = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
+        actionColumn.defaultAction.allowUnblocked = true;
+      }
     }
   }
+
+
 
   const handlePageChange = (page) => {
     const request = {

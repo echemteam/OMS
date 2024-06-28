@@ -1,11 +1,12 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { ApprovalEnum } from "../../../../common/features/Enums/ApprovalEnums";
+import { useGetValidateCheckListMutation } from "../../../../app/services/ApprovalAPI";
 import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
 import ApprovalValidateData from "../../../../components/ApprovalCheckList/approvalValidateData/ApprovalValidateData";
-import { useGetValidateCheckListMutation } from "../../../../app/services/ApprovalAPI";
 
 const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval, isDetailPage }) => {
 
+    const parentRef = useRef();
     const [isShowApproval, setIsShowApproval] = useState(false);
     const [customerId, setCustomerId] = useState(false);
     const [validateCheckList, setValidateCheckList] = useState([]);
@@ -51,6 +52,12 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     }
 
     const handleDone = () => {
+        if (parentRef.current) {
+            parentRef.current.validateApprovalCheckList();
+        }
+    }
+
+    const handleValidateSuccess = () => {
         handleShowApprovalList();
         handleModalClose();
     }
@@ -68,7 +75,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
 
     return (
         <React.Fragment>
-            <ApprovalValidateData showModal={isShowValidateModal} isGetCheckListLoading={isGetCheckListLoading} customerId={customerId} isDetailPage={isDetailPage}
+            <ApprovalValidateData parentRef={parentRef} handleValidateSuccess={handleValidateSuccess} showModal={isShowValidateModal} isGetCheckListLoading={isGetCheckListLoading} customerId={customerId} isDetailPage={isDetailPage}
                 handleShowValidateModal={handleShowValidateModal} handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList} />
 
             <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval}
