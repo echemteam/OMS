@@ -46,6 +46,31 @@ export const securityKey = {
      EDITCUSTOMERSETTING: "Edit Customer Setting",
 
 
+      //** Supplier */
+      SUPPLIER: "Supplier",
+      ADDSUPPLIER: "Add Supplier",
+      EDITSUPPLIER: "Edit Supplier",
+      BLOCKSUPPLIER: "Block Supplier",
+      UNBLOCKSUPPLIER: "UnBlock Supplier",
+      DISABLESUPPLIER: "Disable Supplier",
+      FREEZESUPPLIER: "Freeze Supplier",
+      UNFREEZESUPPLIER: "UnFreeze Supplier",
+      ACTIVESUPPLIER: "Active Supplier",
+      EDITBASICSUPPLIERDETAILS: "Edit Basic Supplier Details",
+      ADDSUPPLIERADDRESS: "Add Supplier Address",
+      EDITSUPPLIERADDRESS: "Edit Supplier Address",
+      ADDSUPPLIERCONTACT: "Add Supplier Contact",
+      EDITSUPPLIERCONTACT: "Edit Supplier Contact",
+      ADDSUPPLIERDOCUMENT: "Add Supplier Document",
+      DELETESUPPLIERDOCUMENT: "Delete Supplier Document",
+      DOWNALODSUPPLIERDOCUMENT: "Downalod Supplier Document",
+      ADDSUPPLIERNOTE: "Add Supplier Note",
+      EDITSUPPLIERNOTE: "Edit Supplier Note",
+      //** Wating for the generate keys */
+     //  ADDCUSTOMERSETTING: "Add Customer Setting",
+     //  EDITCUSTOMERSETTING: "Edit Customer Setting",
+
+
 
      //** Permissions Management */ -- Pending 
      PERMISSIONMANAGEMENT: "Permissions Management",

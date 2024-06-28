@@ -32,6 +32,7 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+      
         addCustomersBasicInformation: builder.mutation({
             query: (Details) => ({
                 url: '/Customers/AddCustomersBasicInformation',

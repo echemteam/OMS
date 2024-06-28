@@ -22,5 +22,6 @@ namespace OMS.Domain.Repository
         ISupplierRepository supplier { get; }
         ISupplierdocuementsRepositery supplierdocuements { get; }
         ISupplierNotesRepository supplierNotes { get; }
+        IApprovalRepository approval { get; }
     }
 }

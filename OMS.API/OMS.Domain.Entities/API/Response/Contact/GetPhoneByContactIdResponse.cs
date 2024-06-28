@@ -8,5 +8,6 @@
         public short? PhoneTypeId { get; set; }
         public int? Extension { get; set; }
         public string? PhoneType { get; set; }
+        public bool? IsPrimary { get; set; }
     }
 }

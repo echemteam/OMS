@@ -1,8 +1,7 @@
 import React, { useRef } from "react";
 import MolGrid from "../../components/Grid/MolGrid";
 import { GridColumnType } from "../../data/gridColumnType";
-import { useNavigate } from "react-router-dom";
-import { AppIcons } from "../../data/appIcons";
+
 const GridConfig = {
   columns: [
     {
@@ -54,14 +53,6 @@ const GridConfig = {
         { name: "Duplicate", path: "/" },
         { name: "Approve", path: "/" },
       ],
-      // actionHandler: {
-      //   onEditAction: (data) => {
-      //     alert("Edit called"); // Check navigate
-      //   },
-      //   onDeleteAction: (data) => {
-      //     alert("delete called");
-      //   },
-      // },
     },
   ],
 };
@@ -123,15 +114,6 @@ const GridConfig2 = {
     {
       name: "Action",
       colType: GridColumnType.ACTION,
-      // customAction: [
-      //   {
-      //     name: "View",
-      //     iconName: AppIcons.userIcon,
-      //     onViewAction: (data) => {
-      //       alert("called view");
-      //     },
-      //   },
-      // ],
       actionHandler: {
         onEditAction: (data) => {
           alert("Edit called"); // Check navigate
@@ -222,16 +204,6 @@ const tableData2 = [
 
 const DemoGrid = () => {
   const molGridRef = useRef();
-  const navigate = useNavigate();
-  const getCurrentPageObject = () => {
-    if (molGridRef.current) {
-      // Access the current page object through the ref
-      const currentPageObject = molGridRef.current.getCurrentPageObject();
-    }
-  };
-  const handleAddEditCampaign = () => {
-    navigate("/AddEditCampaign"); // Replace '/dashboard' with your actual dashboard route
-  };
   const actionHandler = {};
   return (
     <div className="grid-section">
@@ -257,7 +229,6 @@ const DemoGrid = () => {
                     totalCount: 0,
                   }}
                   onActionHandler={actionHandler}
-                  // onPageChange={handlePageChange}
                 />
               </div>
             </div>
@@ -284,7 +255,6 @@ const DemoGrid = () => {
                     totalCount: 0,
                   }}
                   onActionHandler={actionHandler}
-                  // onPageChange={handlePageChange}
                 />
               </div>
             </div>
@@ -311,7 +281,6 @@ const DemoGrid = () => {
                     totalCount: 0,
                   }}
                   onActionHandler={actionHandler}
-                  // onPageChange={handlePageChange}
                 />
               </div>
             </div>
@@ -338,7 +307,6 @@ const DemoGrid = () => {
                     totalCount: 0,
                   }}
                   onActionHandler={actionHandler}
-                  // onPageChange={handlePageChange}
                 />
               </div>
             </div>

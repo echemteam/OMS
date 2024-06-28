@@ -5,11 +5,12 @@ import { GridColumnType } from "../../../../../../data/gridColumnType";
 export const addEditContactsFormData = {
   name: "Add Edit Role Form",
   initialState: {
-    phoneCode: '',
+    phoneCode: '1',
     phoneNumber: '',
     phoneTypeId: '',
     extension: 0,
-    id: 0
+    id: 0,
+    isPrimaryPhoneNumber: false
   },
   formFields: [
     {
@@ -73,7 +74,21 @@ export const addEditContactsFormData = {
         containerCss: "col-xxl-8 col-xl-8 col-md-8 mb-1 pr-0 ",
       },
     },
-
+    {
+      id: "isPrimaryPhoneNumber",
+      lable: "Is Primary",
+      Field_Name: "isPrimaryPhoneNumber",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isPrimaryPhoneNumber",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      style: {
+        containerCss:
+          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+      },
+    },
 
   ],
 };
@@ -84,7 +99,7 @@ export const phoneNumberConfig = {
     {
       name: "Type",
       fieldName: "phoneType",
-      width: "25%",
+      width: "15%",
       renderCustomCol: (rowData) => {
         return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
       },
@@ -100,21 +115,22 @@ export const phoneNumberConfig = {
     },
     {
       name: "Extension",
-      width: "25%",
+      width: "20%",
       fieldName: "extension"
     },
-    // {
-    //   name: "Extension",
-    //   width: "60%",
-    //   fieldName: "extension",
-    //   colType: GridColumnType.CUSTOM,
-    //   renderCustomCol: (rowData) => {
-    //     return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
-    //   },
-    // },
+    {
+      name: "Is Primary",
+      fieldName: "isPrimary",
+      width: "15%",
+      colType: GridColumnType.CHECKBOX,
+      colSettings: {
+        allowCheckbox: true,
+        allowDisable: true
+      },
+    },
     {
       name: "Action",
-      width: "20%",
+      width: "15%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

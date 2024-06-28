@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import Header from "./components/header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Breadcome from "../components/ui/breadcome/Breadcome";
 import Footer from "./components/footer/Footer";
 import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation";
 import { PagePermissionsProvider } from "../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
 import Image from "../components/image/Image";
 import { AppIcons } from "../data/appIcons";
+import Unauthorize from "../pages/unauthorize/Unauthorize";
 
 const Layout = (props) => {
   // Get the current location using React Router's useLocation hook
+  const navigate = useNavigate();
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -30,9 +32,7 @@ const Layout = (props) => {
     : "";
 
   // Check if the user is authorized to access the current route
-  const isAuthorize = renderComponent?.securityKey
-    ? hasPermission(renderComponent.securityKey)
-    : false;
+  const isAuthorize = renderComponent?.securityKey ? hasPermission(renderComponent.securityKey) : false;
 
 
   // Handler to toggle the collapse state
@@ -60,18 +60,18 @@ const Layout = (props) => {
             <div className={`middle-page-section`}>
               <Header />
 
-              {/* {isAuthorize ? */}
-              <div className="center-content-part">
-                <div className="content-desc-section">
-                  <Breadcome componentRoutes={props.componentRoutes} />
-                  <div className="center-container container-fluid">
-                    <Outlet />
+              {isAuthorize ?
+                <div className="center-content-part">
+                  <div className="content-desc-section">
+                    <Breadcome componentRoutes={props.componentRoutes} />
+                    <div className="center-container container-fluid">
+                      <Outlet />
+                    </div>
+                    <Footer />
                   </div>
-                  <Footer />
                 </div>
-              </div>
-              {/* : <Unauthorize />
-              } */}
+                : <Unauthorize />
+              }
             </div>
           </div>
         </div>

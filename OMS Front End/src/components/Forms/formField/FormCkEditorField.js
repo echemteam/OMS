@@ -1,9 +1,8 @@
 // CKEditorField.js
 import React from "react";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Label from "../../ui/label/Label";
 import ValidationText from "../../ui/inputs/validation/ValidationText";
-import CKEditorComponent from "../../ui/inputs/CkEditor/CkEditor";
+import CKEditorComponent from "../../ui/inputs/ckEditor/CkEditor";
 
 const CKEditorField = ({
     name,

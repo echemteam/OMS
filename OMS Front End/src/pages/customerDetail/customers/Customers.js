@@ -7,27 +7,21 @@ import {
   AllCustomerGridConfig,
   ApprovedCustomerGridConfig,
   PendingCustomerGridConfig,
+  RejectedCustomerGridConfig,
   SubmittedCustomerGridConfig,
 } from "./config/CustomerData";
 import InActiveCustomer from "./features/InActiveCustomer";
-import ApprovalCheckList from "../features/approvalCheckList/ApprovalCheckList";
-import Buttons from "../../../components/ui/button/Buttons";
+import { BasicDetailContextProvider } from "../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
+  const [showModal, setShowModal] = useState(false);
   const listRef = useRef();
-  const [isModelOpen, setisModelOpen] = useState(false);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
   };
 
-  const onSidebarClose = () => {
-    setisModelOpen(false);
-  };
-  const handleToggleModal = () => {
-    setisModelOpen(true);
-  };
   const getListApi = () => {
     if (listRef.current) {
       listRef.current.getListApi();
@@ -42,7 +36,7 @@ const Customers = () => {
     {
       sMenuItemCaption: "ALL",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 customer-list-all">
           <CustomersList
             statusId={StatusEnums.ALL}
             configFile={AllCustomerGridConfig}
@@ -64,7 +58,7 @@ const Customers = () => {
     {
       sMenuItemCaption: "SUBMITTED",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 customer-list-submitted">
           <CustomersList
             statusId={StatusEnums.Submitted}
             configFile={SubmittedCustomerGridConfig}
@@ -97,10 +91,22 @@ const Customers = () => {
         </div>
       ),
     },
+    {
+      sMenuItemCaption: "REJECTED",
+      component: (
+        <div className="mt-2">
+          <CustomersList
+            statusId={StatusEnums.Reject}
+            configFile={RejectedCustomerGridConfig}
+          />
+        </div>
+      ),
+    },
   ];
 
+
   return (
-    <>
+    <BasicDetailContextProvider>
       <CustomerContext.Provider value={{ listRef }}>
         <div className="main-customer-grid">
           <div className="row">
@@ -148,16 +154,7 @@ const Customers = () => {
           </div>
         </div>
       </CustomerContext.Provider>
-      {/* <Buttons
-        buttonText="Approval Check List"
-        buttonTypeClassName="theme-button"
-        onClick={handleToggleModal}
-      />
-      <ApprovalCheckList
-        onSidebarClose={onSidebarClose}
-        isModelOpen={isModelOpen}
-      /> */}
-    </>
+    </BasicDetailContextProvider>
   );
 };
 

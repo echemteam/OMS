@@ -1,36 +1,38 @@
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import { basicDetailFormDataHalf, securityKeys } from "./config/BasicDetailForm.data";
-import CardSection from "../../../../components/ui/card/CardSection";
-import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
-import ToastService from "../../../../services/toastService/ToastService";
-import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+//** Libs's */
+import { securityKey } from "../../../../data/SecurityKey";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
-import { securityKey } from "../../../../data/SecurityKey";
+import FormCreator from "../../../../components/Forms/FormCreator";
+import CardSection from "../../../../components/ui/card/CardSection";
+import { basicDetailFormDataHalf } from "./config/BasicDetailForm.data";
+import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+//** Service's */
+import ToastService from "../../../../services/toastService/ToastService";
+import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
+import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
-  // const { id } = useParams();
-  // const descrypteId = id ? decryptUrlData(id) : 0;
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
-  const { nextRef, setCustomerId, moveNextPage, setAllCountries } = useContext(BasicDetailContext);
-
+  const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
   const { formSetting } = basicDetailFormDataHalf;
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
 
   useEffect(() => {
     if (props.isOpen) {
-      if (hasEditPermission.isViewOnly === true) {
-        formSetting.isViewOnly = true;
-        setIsButtonDisable(true);
-      }
-      else {
-        formSetting.isViewOnly = false;
-        setIsButtonDisable(false);
+      if (!isResponsibleUser) {
+        if (hasEditPermission.isViewOnly === true) {
+          formSetting.isViewOnly = true;
+          setIsButtonDisable(true);
+        }
+        else {
+          formSetting.isViewOnly = false;
+          setIsButtonDisable(false);
+        }
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
@@ -63,6 +65,15 @@ const BasicDetail = (props) => {
   ] = useLazyGetAllTerritoriesQuery();
 
   const [
+    getAllUser,
+    {
+      isFetching: isGetAllUserFetching,
+      isSuccess: isGetAllUserSucess,
+      data: allGetAlluserData,
+    },
+  ] = useLazyGetAllUserQuery();
+
+  const [
     addCustomersBasicInformation,
     {
       isSuccess: isAddCustomersBasicInformationSuccess,
@@ -87,11 +98,12 @@ const BasicDetail = (props) => {
     getAllCountries();
     getAllTerritories();
     manageFilteredForm();
+    getAllUser();
   }, []);
 
   const manageFilteredForm = () => {
     const manageData = { ...formData }
-    const filteredFormFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input");
+    const filteredFormFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
     manageData.formFields = filteredFormFields;
     setFormData(manageData)
   };
@@ -161,6 +173,28 @@ const BasicDetail = (props) => {
   ]);
 
   useEffect(() => {
+
+    if (
+      !isGetAllUserFetching &&
+      isGetAllUserSucess &&
+      allGetAlluserData
+    ) {
+      const getData = allGetAlluserData.map((item) => ({
+        value: item.userId,
+        label: item.fullName,
+      }));
+      const dropdownField = basicDetailFormDataHalf.formFields.find(
+        (item) => item.dataField === "responsibleUserId"
+      );
+      dropdownField.fieldSetting.options = getData;
+    }
+  }, [
+    isGetAllUserFetching,
+    isGetAllUserSucess,
+    allGetAlluserData,
+  ]);
+
+  useEffect(() => {
     if (isAddCustomersBasicInformationSuccess && isAddCustomersBasicInformationData) {
       if (isAddCustomersBasicInformationData.errorMessage.includes('exists')) {
         ToastService.warning(isAddCustomersBasicInformationData.errorMessage);
@@ -219,6 +253,7 @@ const BasicDetail = (props) => {
         groupTypeId: data.groupTypeId.value,
         territoryId: data.territoryId.value,
         countryId: data.countryId.value,
+        responsibleUserId: 0
       }
       addCustomersBasicInformation(req);
     }
@@ -238,6 +273,9 @@ const BasicDetail = (props) => {
         countryId: data.countryId && typeof data.countryId === "object"
           ? data.countryId.value
           : data.countryId,
+        responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
+          ? data.responsibleUserId.value
+          : data.responsibleUserId,
         customerId: props.pageId
       }
       updateCustomersBasicInformation(req);
@@ -251,8 +289,8 @@ const BasicDetail = (props) => {
       updatedForm.formFields = modifyFormFields;
       if (props.isOpen) {
         updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
-      }else{
-        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input");
+      } else {
+        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
       }
       setFormData(updatedForm);
     }

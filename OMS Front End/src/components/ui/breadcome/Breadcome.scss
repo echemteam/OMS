@@ -1,6 +1,6 @@
 // Header Top Start
 .main-top-title {
-  padding: 20px 15px;
+  padding: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -21,7 +21,7 @@
       }
 
       h3 {
-        font-size: 120%;
+        font-size: var(--commonFont-extraLarge);;
         font-weight: 600;
         color: var(--textColor);
         margin-bottom: 0;
@@ -38,20 +38,12 @@
       position: relative;
       background: var(--whiteColor);
       border-radius: 10px;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      -ms-border-radius: 10px;
-      -o-border-radius: 10px;
 
       .search-btn {
         position: absolute;
         left: 12px;
         top: 50%;
         transform: translateY(-50%);
-        -webkit-transform: translateY(-50%);
-        -moz-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        -o-transform: translateY(-50%);
 
         img {
           width: 17px;

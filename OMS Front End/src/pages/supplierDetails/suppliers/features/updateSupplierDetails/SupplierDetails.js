@@ -12,9 +12,12 @@ import SupplierBasicDetail from "../../../addSupplier/features/supplierBasicDeta
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { useNavigate } from "react-router-dom/dist";
+import SupplierNotesDetail from "./features/notesDetails/SupplierNotesDetails";
 import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuementDetail";
- 
-import SupplierAddressDetail from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetail";
+import SupplierContactDetail from "../../../addSupplier/features/supplierContactDetail/SupplierContactDetail";
+import SuplierAddressDetails from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetails";
+import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
+import { getAuthProps } from "../../../../../lib/authenticationLibrary";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -23,7 +26,7 @@ const SupplierDetails = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [supplierData, setSupplierData] = useState(null);
 
-  const { setSupplierId, supplierId } = useContext(AddSupplierContext);
+  const { setSupplierId, supplierId, setIsResponsibleUser } = useContext(AddSupplierContext);
 
   const [
     getSupplierBasicInformationById,
@@ -41,6 +44,10 @@ const SupplierDetails = () => {
       !isGetSupplierBasicInformationByIdFetching
     ) {
       setSupplierData(GetSupplierBasicInformationByIdData);
+      const authData = getAuthProps();
+      if (authData.user.userID !== GetSupplierBasicInformationByIdData.responsibleUserId) {
+        setIsResponsibleUser(false);
+      }
     }
   }, [
     isGetSupplierBasicInformationById,
@@ -72,28 +79,40 @@ const SupplierDetails = () => {
     {
       sMenuItemCaption: "Address",
       component: <div className="mt-2">
-        <SupplierAddressDetail />
+        <SuplierAddressDetails isEditablePage={true} />
       </div>,
     },
-    // {
-    //   sMenuItemCaption: "Contact",
-    //   component: (
-    //     <div className="mt-2">
-    //       {/* <ContactDetail /> */}
-    //     </div>
-    //   ),
-    // },
     {
-      sMenuItemCaption: "Settings",
-      component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
+      sMenuItemCaption: "Contact",
+      component: (
+        <div className="mt-2">
+          <SupplierContactDetail isEditablePage={true} />
+        </div>
+      ),
     },
+    // {
+    //   sMenuItemCaption: "Settings",
+    //   component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
+    // },
+    // {
+    //   sMenuItemCaption: "Notes",
+    //   component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>,
+    // },
     {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          <SupplierDocumentDetail pageId={pageId}/>
+          <SupplierDocumentDetail pageId={pageId} isEditablePage={true} />
         </div>
       ),
+    },
+    {
+      sMenuItemCaption: "Notes",
+      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>,
+    },
+    {
+      sMenuItemCaption: "History",
+      component: <div className="mt-2">{<SupplierHistoryDetail />}</div>,
     },
   ];
 

@@ -74,7 +74,11 @@ export const AccountGridConfig = {
             name: "Is Primary",
             fieldName: "isPrimary",
             width: "25%",
-            colType: GridColumnType.CHECKBOX
+            colType: GridColumnType.CHECKBOX,
+            colSettings: {
+                allowCheckbox: true,
+                allowDisable: true
+            },
         },
 
         {

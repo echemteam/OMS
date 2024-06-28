@@ -12,6 +12,8 @@ import CenterModel from '../../../../components/ui/centerModel/CenterModel';
 import FormCreator from '../../../../components/Forms/FormCreator';
 import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../app/services/supplierAPI';
 import { encryptUrlData } from '../../../../services/CryptoService';
+import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import { securityKey } from '../../../../data/SecurityKey';
 
 const SupplierList = ({ statusId, configFile }) => {
   const navigate = useNavigate();
@@ -35,6 +37,43 @@ const SupplierList = ({ statusId, configFile }) => {
   const [updateSupplierApproveStatus, { isSuccess: isSuccessUpdateSupplier, data: updateSupplierData }] = useUpdateSupplierApproveStatusMutation();
 
   const [updateSupplierInActiveStatus, { isLoading: updateInActiveStatusSupplierLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
+
+  useEffect(() => {
+    const actionColumn = configFile?.columns.find(
+      (column) => column.name === "Action"
+    );
+    if (actionColumn) {
+      const hasEdit = hasFunctionalPermission(securityKey.EDITSUPPLIER);
+      const hasBlock = hasFunctionalPermission(securityKey.BLOCKSUPPLIER);
+      const hasFreeze = hasFunctionalPermission(securityKey.FREEZESUPPLIER);
+      const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
+      const hasDisable = hasFunctionalPermission(securityKey.DISABLESUPPLIER);
+      const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
+      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
+
+      if (actionColumn.defaultAction.allowEdit) {
+        actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
+      }
+      if (actionColumn.defaultAction.allowBlocked) {
+        actionColumn.defaultAction.allowBlocked = hasBlock?.hasAccess;
+      }
+      if (actionColumn.defaultAction.allowFreeze) {
+        actionColumn.defaultAction.allowFreeze = hasFreeze?.hasAccess;
+      }
+      if (actionColumn.defaultAction.allowActiveCustomer) {
+        actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+      }
+      if (actionColumn.defaultAction.allowDisable) {
+        actionColumn.defaultAction.allowDisable = hasDisable?.hasAccess;
+      }
+      if (actionColumn.defaultAction.allowUnblocked) {
+        actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
+      }
+      if (actionColumn.defaultAction.allowUnfreeze) {
+        actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+      }
+    }
+  }, [configFile]);
 
   const handlePageChange = (page) => {
     const request = {
@@ -138,6 +177,12 @@ const SupplierList = ({ statusId, configFile }) => {
     setStaticId(StatusEnums.Block)
     setStatusFeild(StatusFeild.Block)
   }
+  const handleReject = (data) => {
+    setShowModal(true);
+    setSupplierId(data.supplierId)
+    setStaticId(StatusEnums.Reject)
+    setStatusFeild(StatusFeild.Reject)
+  }
 
   const onReset = () => {
     let restData = { ...reasonData };
@@ -161,7 +206,8 @@ const SupplierList = ({ statusId, configFile }) => {
     EDIT: handleEditClick,
     FREEZE: handlefreeze,
     DISABLE: handleDiseble,
-    BLOCKED: handleBlock
+    BLOCKED: handleBlock,
+    REJECT: handleReject,
   };
 
   return (
@@ -172,7 +218,7 @@ const SupplierList = ({ statusId, configFile }) => {
           >
             <div className="row">
               <div className="col-md-12 table-striped">
-                <div className='customer-list'>
+                {/* <div className='customer-list'> */}
                   <MolGrid
                     ref={molGridRef}
                     configuration={configFile}
@@ -188,7 +234,7 @@ const SupplierList = ({ statusId, configFile }) => {
                     allowPagination={true}
                     onCellDataChange={handleGridCheckBoxChange}
                   />
-                </div>
+                {/* </div>/ */}
               </div>
             </div>
           </CardSection>

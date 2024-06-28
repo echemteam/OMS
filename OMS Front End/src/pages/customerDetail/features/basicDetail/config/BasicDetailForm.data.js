@@ -31,7 +31,7 @@ export const basicDetailFormDataHalf = {
       },
       inputButtonGroup: {
         isInputButton: true,
-        buttonText: 'Verify'
+        buttonText: 'Verify',
       }
     },
     {
@@ -137,6 +137,21 @@ export const basicDetailFormDataHalf = {
         maxLength: 10,
       },
       validation: [{ type: "require" }, { type: "taxId", minLength: 0, maxLength: 10 }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+      },
+    },
+    {
+      id: "responsibleUserId",
+      lable: "Responsible User :",
+      Field_Name: "Responsible User",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "responsibleUserId",
+      fieldSetting: {
+        placeholder: "Select Responsible User",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },

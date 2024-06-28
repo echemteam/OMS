@@ -12,8 +12,10 @@ import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import { reasonData } from "../../customers/config/CustomerData";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
+import CustomerApproval from "../cutomerApproval/CustomerApproval";
 
-const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onhandleRepeatCall}) => {
+const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
+  const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -22,6 +24,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
   const [staticId, setStaticId] = useState("")
   const [statusFeild, setStatusFeild] = useState("")
   const [options, setOptions] = useState([]);
+  const [customerID, setcustomerId] = useState();
+  const [statusId, setStatusId] = useState();
 
   const [updateCustomerStatus, { isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
@@ -36,6 +40,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
   useEffect(() => {
     if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
       ToastService.success(updateCustomerStatusData.errorMessage);
+      handleToggleModal()
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
@@ -48,11 +53,25 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
         case 3:
           setOptions(StaticStatus[StatusValue[statusId - 1].label]);
           break;
-        case 4:
-        case 5:
+          case 4:
+            setOptions([
+              { value: "4", label: "Freeze" },
+              { value: "3", label: "Approved" },
+            ]);
+            break;
+          case 5:
+            setOptions([
+              { value: "5", label: "Block" },
+              { value: "3", label: "Approved" },
+            ]);
+            break;
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;
+        case 7:
+          setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+          break;
+
         default:
           setOptions([]);
       }
@@ -72,7 +91,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
     if (selectedOption.label === customerData.status) {
       ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
-      if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "3") {
+      if (selectedOption.value === "1" || selectedOption.value === "2") {
         confirm(
           "Warning?",
           `Are you sure you want to change the customer status to ${selectedOption.label}?`,
@@ -88,12 +107,27 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
             setSelectedStatus(selectedOption.value);
           }
         });
-      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6") {
+      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6" || selectedOption.value === "7") {
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
+      } else if (selectedOption.value === "3") {
+        if (childRef.current) {
+          childRef.current.callChildFunction(customerId);
+        }
+        setcustomerId(customerId);
+        setStatusId(selectedOption.value);
       }
     }
   };
+
+  const updateCustomerApproval = () => {
+    setSelectedStatus(statusId);
+    let req = {
+      customerId: customerID,
+      statusId: statusId
+    }
+    updateCustomerStatus(req)
+  }
 
   const onReset = () => {
     let restData = { ...reasonData };
@@ -102,6 +136,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
   }
 
   const handleUpdate = () => {
+
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
@@ -132,6 +167,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
         return "badge-gradient-Frozen";
       case "Block":
         return "badge-gradient-Blocked";
+      case "Reject":
+        return "badge-gradient-Blocked";
       case "Disable":
         return "badge-gradient-disabled";
       default:
@@ -141,7 +178,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
 
   return (
     !isLoading ?
-      < div className="basic-customer-detail" >
+      <div className="basic-customer-detail" >
         <div className="col-xl-12 col-lg-12 col-md-12 col-12">
           <div className="profile-info">
             <div className="profile-icon-desc">
@@ -227,8 +264,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
             <div className="inf-label">Is Buying for Third Party</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">
-            {customerData?.isBuyingForThirdParty}
-            {customerData && customerData.isBuyingForThirdParty ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
+              {customerData?.isBuyingForThirdParty}
+              {customerData && customerData.isBuyingForThirdParty ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
             </div>
           </div>
         </div>
@@ -266,7 +303,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId , onha
             </div>
           </CenterModel>
         )}
-      </div >
+        <CustomerApproval isDetailPage={true} childRef={childRef} updateCustomerApproval={updateCustomerApproval} />
+      </div>
       : <DataLoader />
   );
 };

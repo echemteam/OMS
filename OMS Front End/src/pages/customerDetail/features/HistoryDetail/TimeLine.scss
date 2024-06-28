@@ -216,18 +216,18 @@
                     margin-bottom: 1px;
                     .timeline-name {
                         font-weight: bold;
-                        font-size: 77%;
+                        font-size: var(--commonFont);
                     }
 
                     .date-time {
-                        font-size: 80%;
+                        font-size: var(--commonFont-extraSmall);
                         color: var(--themeColor);
                         position: absolute;
                         top: -17px;
                         left: 5px;
                     }
                     .type-name {
-                        font-size: 80%;
+                        font-size: var(--commonFont-small);
                         font-weight: 600;
                         color: var(--whiteColor);
                         background: var(--themeColor);
@@ -239,6 +239,7 @@
                     margin-top: 0;
                     p {
                         margin-bottom: 0;
+                        font-size: var(--commonFont-small);
                     }
                 }
 
@@ -259,5 +260,10 @@
     }
 
 }
+
+.infinite-scroll{
+    display: flex;
+flex-direction: column-reverse;
+}  
 
 // New Timeline Sec End

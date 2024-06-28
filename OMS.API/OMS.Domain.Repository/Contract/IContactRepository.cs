@@ -8,6 +8,6 @@ namespace OMS.Domain.Repository.Contract
     {
         Task<AddEntityDTO<int>> AddEditContact(ContactDTO contact);
         Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId);
-
+        Task<List<GetContactBySupplierIdResponse>> GetContactBySupplierId(int supplierId);
     }
 }

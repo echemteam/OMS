@@ -1,0 +1,75 @@
+// Customer Data Validation Start
+
+// .Validate-card {
+//     height: 400px;
+//     overflow-y: scroll;
+// }
+.validation-center-model {
+    .modal-dialog {
+        top: 50%;
+        margin: 0 auto !important;
+
+        .modal-content {
+            .modal-body {
+                .Validate-card {
+                    .validation-list {
+                        min-height: 350px;
+                    }
+                }
+            }
+        }
+    }
+
+    .customer-data-sec {
+        .validation-list {
+            max-height: 450px;
+            overflow: hidden;
+            overflow-y: auto;
+
+            ul {
+                padding-left: 0;
+
+                li {
+                    list-style-type: none;
+                    display: flex;
+                    align-items: flex-start;
+                    margin-bottom: 15px;
+                    width: 100%;
+                    gap: 12px;
+
+                    .tick-untick-img {
+                        width: 25px;
+
+                        img {
+                            min-width: 25px;
+                            max-width: 25px;
+                        }
+                    }
+
+                    .validation-msg {
+                        margin-left: 10px;
+                        padding-top: 2px;
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Customer Data Validation End
+
+.success {
+    .validate-title {
+        color: #05c300;
+    }
+}
+
+.error {
+    .validate-title {
+        color: #c30000;
+    }
+}

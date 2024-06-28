@@ -56,12 +56,12 @@ namespace OMS.API.Controllers
             return APISucessResponce(emailId);
         }
 
-        [HttpGet("GetEmailByContactId")]
-        public async Task<IActionResult> GetEmailByContactId(int contactId)
-        {
-            List<GetEmailByContactIdResponse> responseData = await _serviceManager.emailAddressService.GetEmailByContactId(contactId).ConfigureAwait(true);
-            return APISucessResponce(responseData);
-        }
+        //[HttpGet("GetEmailByContactId")]
+        //public async Task<IActionResult> GetEmailByContactId(int contactId)
+        //{
+        //    List<GetEmailByContactIdResponse> responseData = await _serviceManager.emailAddressService.GetEmailByContactId(contactId).ConfigureAwait(true);
+        //    return APISucessResponce(responseData);
+        //}
 
     }
 }

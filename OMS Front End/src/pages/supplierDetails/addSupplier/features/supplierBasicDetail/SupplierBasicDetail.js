@@ -2,21 +2,41 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import CardSection from '../../../../../components/ui/card/CardSection';
 import { supplierBasicData } from '../supplierBasicDetail/config/SupplierBasicDetail.data';
-import { useAddEditSupplierBasicInformationMutation, useLazyGetAllSupplierTypeQuery } from '../../../../../app/services/supplierAPI'
+import { useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery } from '../../../../../app/services/supplierAPI'
 import ToastService from '../../../../../services/toastService/ToastService';
 import { getTaxIdMinMaxLength } from '../../../../customerDetail/features/basicDetail/config/TaxIdValidator';
 import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
 import Buttons from '../../../../../components/ui/button/Buttons';
 import { useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery } from '../../../../../app/services/basicdetailAPI';
+import { securityKey } from '../../../../../data/SecurityKey';
+import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import { useLazyGetAllUserQuery } from '../../../../../app/services/commonAPI';
 
 const SupplierBasicDetail = (props) => {
 
   const basicDetailRef = useRef();
 
   const [formData, setFormData] = useState(supplierBasicData);
-  // const [supplierName, setSupplierName] = useState('');
+   const [supplierName, setSupplierName] = useState('');
 
   const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId } = useContext(AddSupplierContext);
+
+  const { formSetting } = supplierBasicData;
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
+
+  useEffect(() => {
+    if (props.isOpen) {
+      if (hasEditPermission.isViewOnly === true) {
+        formSetting.isViewOnly = true;
+        setIsButtonDisable(true);
+      }
+      else {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+      }
+    }
+  }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
 
   const [
     addEditSupplierBasicInformation,
@@ -35,6 +55,15 @@ const SupplierBasicDetail = (props) => {
       data: allGetAllGroupTypesData,
     },
   ] = useLazyGetAllGroupTypesQuery();
+
+  const [
+    getAllUser,
+    {
+      isFetching: isGetAllUserFetching,
+      isSuccess: isGetAllUserSucess,
+      data: allGetAllUserData,
+    },
+  ] = useLazyGetAllUserQuery();
 
   const [
     getAllCountries,
@@ -63,17 +92,21 @@ const SupplierBasicDetail = (props) => {
     },
   ] = useLazyGetAllSupplierTypeQuery();
 
+  const [CheckSupplierNameExist, {isSuccess: isSupplierNameExistSucess, data: isSupplierNameExistData, }] = useCheckSupplierNameExistMutation();
+
+
   useEffect(() => {
     getAllGroupTypes();
     getAllCountries();
     getAllTerritories();
     getAllSupplierType();
     manageFilteredForm();
+    getAllUser();
   }, []);
 
   const manageFilteredForm = () => {
     const manageData = { ...formData }
-    const filteredFormFields = supplierBasicData.formFields.filter(field => field.id !== "name-input");
+    const filteredFormFields = supplierBasicData.formFields.filter(field => field.id !== "name-input" &&  field.dataField !== "responsibleUserId");
     manageData.formFields = filteredFormFields;
     setFormData(manageData)
   };
@@ -98,7 +131,20 @@ const SupplierBasicDetail = (props) => {
     isGetAllGroupTypesSucess,
     allGetAllGroupTypesData,
   ]);
-
+  useEffect(() => {
+    if (!isGetAllUserFetching && isGetAllUserSucess && allGetAllUserData) {
+      const getData = allGetAllUserData.map((item) => ({
+        value: item.userId,
+        label: item.fullName,
+      }));
+      const dropdownField = supplierBasicData.formFields.find(
+        (item) => item.dataField === "responsibleUserId"
+      );
+      dropdownField.fieldSetting.options = getData;
+    }
+   
+  }, [isGetAllUserFetching,isGetAllUserSucess,allGetAllUserData,]);
+  
   useEffect(() => {
     if (
       !isGetAllCountriesFetching &&
@@ -197,6 +243,7 @@ const SupplierBasicDetail = (props) => {
       let data = { ...supplierBasicData };
       data.initialState = { ...props.supplierData };
       data.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
+
       setFormData(data);
     }
   }, [props.isOpen])
@@ -210,6 +257,7 @@ const SupplierBasicDetail = (props) => {
         groupTypeId: data.groupTypeId.value,
         territoryId: data.territoryId.value,
         countryId: data.countryId.value,
+        responsibleUserId:0
       }
       addEditSupplierBasicInformation(req);
     }
@@ -232,6 +280,9 @@ const SupplierBasicDetail = (props) => {
         countryId: data.countryId && typeof data.countryId === "object"
           ? data.countryId.value
           : data.countryId,
+          responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
+          ? data.responsibleUserId.value
+          : data.responsibleUserId,
         supplierId: props.pageId
       }
       addEditSupplierBasicInformation(req);
@@ -245,8 +296,8 @@ const SupplierBasicDetail = (props) => {
       updatedForm.formFields = modifyFormFields;
       if (props.isOpen) {
         updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
-      }else{
-        updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name-input");
+      } else {
+        updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
       }
       setFormData(updatedForm);
     }
@@ -254,16 +305,35 @@ const SupplierBasicDetail = (props) => {
   const formActionHandler = {
     DDL_CHANGED: handleValidateTextId
   };
+ 
+  useEffect(() => {
+    if (isSupplierNameExistSucess && isSupplierNameExistData) {
+      if (isSupplierNameExistData.errorMessage.includes('exists')) {
+        ToastService.warning(isSupplierNameExistData.errorMessage);
+        return;
+      }
+      ToastService.success(isSupplierNameExistData.errorMessage);
+    }
+  }, [isSupplierNameExistSucess, isSupplierNameExistData]);
 
-  // const handleInputFields = (data, dataField) => {
-  //   if (dataField === 'name') {
-  //     const trimCustomerName = data.replace(/\s+/g, '');
-  //     setSupplierName(trimCustomerName);
-  //   }
-  // }
-  // const formInputHandler = {
-  //   INPUT_CHANGED: handleInputFields
-  // }
+  const handleInputGroupButton = () => {
+    if (supplierName !== '') {
+      let request = {
+        name: supplierName
+      }
+      CheckSupplierNameExist(request);
+    }
+  }
+
+  const handleInputFields = (data, dataField) => {
+    if (dataField === 'name') {
+      const trimCustomerName = data.replace(/\s+/g, '');
+      setSupplierName(trimCustomerName);
+    }
+  }
+  const formInputHandler = {
+    INPUT_CHANGED: handleInputFields
+  }
 
   return (
     <div className="basic-info-sec half-sec">
@@ -274,8 +344,8 @@ const SupplierBasicDetail = (props) => {
             ref={basicDetailRef}
             {...formData}
             onActionChange={formActionHandler}
-          // onInputChange={formInputHandler}
-          // handleInputGroupButton={handleInputGroupButton}
+            onInputChange={formInputHandler}
+            handleInputGroupButton={handleInputGroupButton}
           />
         </div>
 
@@ -292,7 +362,7 @@ const SupplierBasicDetail = (props) => {
                 buttonText="Update"
                 onClick={handleUpdate}
                 isLoading={isAddEditSupplierBasicInformationLoading}
-              // isDisable={isButtonDisable}
+                isDisable={isButtonDisable}
               />
             </div>
           </div>

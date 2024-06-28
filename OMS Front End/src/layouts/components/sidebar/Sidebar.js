@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Sidebar.scss";
 import { Link } from "react-router-dom";
 import { Menu } from "../menu/Menu";
+import { hasPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 const Sidebar = (props) => {
   const [selectedMenu, setSelectedMenu] = useState(null);
@@ -37,32 +38,32 @@ const Sidebar = (props) => {
             <ul className="sidebar-menu-list">
               {Menu.map((menuItem, index) => (
                 <>
-                  {/* {hasPermission(menuItem.securityKey) ? */}
-                  <li key={index} className={selectedMenu === menuItem.id ? "menu-item active-menu" : "menu-item"} onClick={() => handleClick(menuItem.id)} >
-                    <Link to={menuItem.to} className={menuItem.subMenu ? "menu-arrow" : ""}>
-                      <i className={menuItem.iconClass}></i>
-                      <span>{menuItem.name}</span>
-                    </Link>
-                    {menuItem.subMenu ? (
-                      <>
-                        <ul className="sidebar-dropdown">
-                          {menuItem.children.map((subMenu, index) => (
-                            <>
-                              {/* {hasPermission(subMenu.securityKey) ? */}
-                              <li className="dropdown-menus">
-                                <Link to={subMenu.to} className={clickedValueSubMenu === subMenu.id ? "active-submenu" : ""} onClick={(e) => handleChildClick(e, subMenu.id)}>
-                                  {subMenu.submenuName}
-                                </Link>
-                              </li>
-                              {/* : null} */}
-                            </>
+                  {hasPermission(menuItem.securityKey) ?
+                    <li key={index} className={selectedMenu === menuItem.id ? "menu-item active-menu" : "menu-item"} onClick={() => handleClick(menuItem.id)} >
+                      <Link to={menuItem.to} className={menuItem.subMenu ? "menu-arrow" : ""}>
+                        <i className={menuItem.iconClass}></i>
+                        <span>{menuItem.name}</span>
+                      </Link>
+                      {menuItem.subMenu ? (
+                        <>
+                          <ul className="sidebar-dropdown">
+                            {menuItem.children.map((subMenu, index) => (
+                              <>
+                                {hasPermission(subMenu.securityKey) ?
+                                  <li className="dropdown-menus">
+                                    <Link to={subMenu.to} className={clickedValueSubMenu === subMenu.id ? "active-submenu" : ""} onClick={(e) => handleChildClick(e, subMenu.id)}>
+                                      {subMenu.submenuName}
+                                    </Link>
+                                  </li>
+                                  : null}
+                              </>
 
-                          ))}
-                        </ul>
-                      </>
-                    ) : null}
-                  </li>
-                  {/* : null} */}
+                            ))}
+                          </ul>
+                        </>
+                      ) : null}
+                    </li>
+                    : null}
                 </>
               ))}
             </ul>

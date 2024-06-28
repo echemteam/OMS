@@ -1,8 +1,46 @@
 import { FileTypeIcons } from "../../pages/customerDetail/features/documentsDetail/config/DocumentsData";
 
-export const contactTransformData = (data) => {
+export const contactCustomerTransformData = (data) => {
     return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit } = item;
+        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit, isPrimary } = item;
+
+        const modifyPhoneNumberList = phoneNumberLsit.map((item, index) => ({
+            ...item,
+            id: index + 1
+        }));
+        const modifyEmailAddressLst = emailAddressLst.map((item, index) => ({
+            ...item,
+            id: index + 1
+        }));
+        const emailAddress = emailAddressLst.map(item => item.emailAddress).join(',');
+        const phoneNumber = phoneNumberLsit.map(item => item.phoneNumber).join(',');
+        const transformedItem = {
+            cardInformation: {
+                firstName,
+                lastName,
+                contactId,
+                contactTypeId,
+                customerContactId,
+                emailAddress,
+                phoneNumber,
+                isPrimary
+            },
+            emailAddressLst: modifyEmailAddressLst,
+            phoneNumberLsit: modifyPhoneNumberList
+        };
+
+        if (!acc[type]) {
+            acc[type] = [];
+        }
+
+        acc[type].push(transformedItem);
+        return acc;
+    }, {});
+};
+
+export const contactSupplierTransformData = (data) => {
+    return data.reduce((acc, item) => {
+        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, supplierContactId, phoneNumberLsit, isPrimary } = item;
 
         const modifyPhoneNumberList = phoneNumberLsit.map((item, index) => ({
             ...item,
@@ -21,9 +59,10 @@ export const contactTransformData = (data) => {
                 lastName,
                 contactId,
                 contactTypeId,
-                customerContactId,
+                supplierContactId,
                 emailAddress,
-                phoneNumber
+                phoneNumber,
+                isPrimary
             },
             emailAddressLst: modifyEmailAddressLst,
             phoneNumberLsit: modifyPhoneNumberList
@@ -37,6 +76,7 @@ export const contactTransformData = (data) => {
         return acc;
     }, {});
 };
+
 
 
 const getFileTypeIcon = (filename) => {

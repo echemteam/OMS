@@ -6,7 +6,7 @@ export const addEditEmailFormData = {
   name: "Add Edit Role Form",
   initialState: {
     emailAddress: "",
-    id: ''
+    isEmailPrimary: false
   },
   formFields: [
     {
@@ -24,7 +24,21 @@ export const addEditEmailFormData = {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
       },
     },
-
+    {
+      id: "isEmailPrimary",
+      lable: "Is Primary",
+      Field_Name: "IsEmailPrimary",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isEmailPrimary",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      style: {
+        containerCss:
+          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+      },
+    },
   ],
 };
 
@@ -33,7 +47,17 @@ export const emailConfig = {
     {
       name: "Email Address",
       fieldName: "emailAddress",
-      width: "60%",
+      width: "40%",
+    },
+    {
+      name: "Is Primary",
+      fieldName: "isPrimary",
+      width: "20%",
+      colType: GridColumnType.CHECKBOX,
+      colSettings: {
+        allowCheckbox: true,
+        allowDisable: true
+      },
     },
     {
       name: "Action",

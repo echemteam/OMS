@@ -1,17 +1,12 @@
 import React, { useRef } from "react";
 import "./DemoForm.scss";
-import { useNavigate } from "react-router-dom";
 import FormCreator from "../../components/Forms/FormCreator";
 import { testFormData } from "./features/formData/TestForm.data";
 import Buttons from "../../components/ui/button/Buttons";
 
 const DemoForm = () => {
 
-  // const handleAddEditCampaign = () => {
-  //   navigate("/AddEditCampaign"); // Replace '/dashboard' with your actual dashboard route
-  // };
   const testFromRef = useRef();
-  // const handleFormDataChange = (formData) => {};
 
   return (
     <>
@@ -34,7 +29,6 @@ const DemoForm = () => {
                           config={testFormData}
                           ref={testFromRef}
                           {...testFormData}
-                        // onFormDataUpdate={handleFormDataChange}
                         />
                       </div>
                     </div>
@@ -43,13 +37,10 @@ const DemoForm = () => {
                         <Buttons
                           buttonTypeClassName="theme-button"
                           buttonText="Save"
-                        // onClick={onHandleUser}
-                        // isLoading={EmailLoading || updateUserLoading}
                         />
                         <Buttons
                           buttonTypeClassName="dark-btn ml-5"
                           buttonText="Cancel"
-                        // onClick={backToUserList}
                         />
                       </div>
                     </div>
@@ -71,7 +62,6 @@ const DemoForm = () => {
                           config={testFormData}
                           ref={testFromRef}
                           {...testFormData}
-                        // onFormDataUpdate={handleFormDataChange}
                         />
                       </div>
                     </div>
@@ -80,13 +70,10 @@ const DemoForm = () => {
                         <Buttons
                           buttonTypeClassName="theme-button"
                           buttonText="Save"
-                        // onClick={onHandleUser}
-                        // isLoading={EmailLoading || updateUserLoading}
                         />
                         <Buttons
                           buttonTypeClassName="dark-btn ml-5"
                           buttonText="Cancel"
-                        // onClick={backToUserList}
                         />
                       </div>
                     </div>

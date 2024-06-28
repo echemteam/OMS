@@ -7,28 +7,42 @@ import { addData, updateData } from '../Util/ContactEmailAddressUtil';
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
 import BasicDetailContext from '../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
+import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
 
-const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess }) => {
+const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess , isSupplier}) => {
 
     //** State */
     const ref = useRef();
     const [formData, setFormData] = useState(addEditEmailFormData);
-    const { contactId, emailAddressData, setEmailAddressData } = useContext(BasicDetailContext);
+    const { contactId, emailAddressData, setEmailAddressData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     //** Handle Changes */
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
         if (data && !data.id) {
-            addData(data, contactId, emailAddressData, setEmailAddressData, Message.EmailAdded, Message.EmailMaxLength, Message.DuplicateEmail, onResetData, onSuccess);
+            let req = {
+                ...data,
+                isPrimary : data.isEmailPrimary
+            }
+            addData(req, contactId, emailAddressData, setEmailAddressData, Message.EmailAdded, Message.EmailMaxLength, Message.DuplicateEmail, onResetData, onSuccess);
         } else if (data && data.id) {
-            updateData(data, emailAddressData, setEmailAddressData, Message.EmailUpdated, Message.DuplicateEmail, Message.InvalidData, onResetData, onSuccess);
+            let req = {
+                ...data,
+                isPrimary : data.isEmailPrimary
+            }
+            updateData(req, emailAddressData, setEmailAddressData, Message.EmailUpdated, Message.DuplicateEmail, Message.InvalidData, onResetData, onSuccess);
         }
     };
 
     useEffect(() => {
         if (isEdit && editFormData) {
             let form = { ...addEditEmailFormData };
-            form.initialState = editFormData;
+            form.initialState = {
+                emailAddress: editFormData.emailAddress,
+                emailId: editFormData.emailId,
+                id: editFormData.id,
+                isEmailPrimary: editFormData.isPrimary
+              }
             setFormData(form);
         }
     }, [isEdit, editFormData])

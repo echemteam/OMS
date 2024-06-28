@@ -78,9 +78,7 @@ namespace OMS.Application.Services.Address
                 {
                     SupplierId = requestData.SupplierId,
                     AddressId = addressId,
-                    AddressTypeId = requestData.AddressTypeId,
-                    IsPreferredShipping = requestData.IsPreferredShipping,
-                    IsPreferredBilling = requestData.IsPreferredBilling
+                    AddressTypeId = requestData.AddressTypeId
                 };
                 _ = await repositoryManager.supplier.AddAddressForSupplier(addAddressForCustomerRequest, CurrentUserId);
             }
@@ -117,9 +115,7 @@ namespace OMS.Application.Services.Address
                 {
                     SupplierId = requestData.SupplierId,
                     AddressId = requestData.AddressId,
-                    AddressTypeId = addressDTO.AddressTypeId,
-                    IsPreferredShipping = requestData.IsPreferredShipping,
-                    IsPreferredBilling = requestData.IsPreferredBilling
+                    AddressTypeId = addressDTO.AddressTypeId
                 };
                 _ = await repositoryManager.supplier.UpdateAddressForSupplier(updateAddressForCustomerRequest, CurrentUserId);
             }

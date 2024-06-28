@@ -25,9 +25,9 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
     let request = {
         ...data,
         contactId: contactId,
+        isPrimary: data.isEmailPrimary,
         id: listData ? listData?.length + 1 : 1
     }
-    let addData;
     if (listData && listData.length === 2) {
         ToastService.warning(maxLengthMessage);
         onResetData();
@@ -36,8 +36,13 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
     }
     const isDuplicate = listData && listData.some(item => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase());
     if (!isDuplicate) {
+        let addData;
         if (listData) {
-            addData = [...listData, request];
+            addData = [...listData];
+            if (data.isEmailPrimary) {
+                addData = addData.map(item => ({ ...item, isPrimary: false }));
+            }
+            addData.push(request);
         } else {
             addData = [request];
         }
@@ -59,11 +64,23 @@ export const updateData = (data, listData, setListData, successMessage, duplicat
     if (listData && data.id > 0) {
         const isDuplicate = listData.some((item) => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase() && item.id !== data.id);
         if (!isDuplicate) {
-            const updatedData = [...listData];
-            updatedData[data.id - 1] = {
-                ...updatedData[data.id - 1],
-                emailAddress: data.emailAddress
-            };
+            let updatedData = listData.map(item => {
+                if (item.id === data.id) {
+                    return {
+                        ...item,
+                        emailAddress: data.emailAddress,
+                        isPrimary: data.isEmailPrimary,
+                    };
+                } else if (data.isEmailPrimary) {
+                    return {
+                        ...item,
+                        isPrimary: false,
+                    };
+                } else {
+                    return item;
+                }
+            });
+
             setListData(updatedData);
             ToastService.success(successMessage);
             onResetData();

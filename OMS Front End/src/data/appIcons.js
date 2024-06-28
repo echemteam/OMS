@@ -25,6 +25,8 @@ import plusIcon from "../assets/images/PlusIcon.png";
 import setting from "../assets/images/setting.png";
 import logout from "../assets/images/logout.png";
 import shortingArrowIcon from "../assets/images/shortingArrow.png";
+import rightTickIcon from "../assets/images/tickIcon.png";
+import unTickIcon from "../assets/images/unTickIcon.png";
 
 // footer icon
 import mail from "../assets/images/email.png";
@@ -57,7 +59,7 @@ import blockIcone from "../assets/images/blocked.png";
 import blockredIcone from "../assets/images/block-red.png";
 import disablethemeIcone from "../assets/images/disable-theme.png";
 import freezeblueIcone from "../assets/images/freeze-blue.png";
-
+import RejectedIcon from "../assets/images/reject.png";
 
 export const AppIcons = {
   // Menus & Header Images
@@ -69,8 +71,8 @@ export const AppIcons = {
   editThemeIcon: editTheme,
   deleteIcon: deleted,
   deleteThemeIcon: deleteTheme,
-  UpdateIcon:update,
-  TimelineIcon:timeline,
+  UpdateIcon: update,
+  TimelineIcon: timeline,
   copyIcon: copy,
   DownloadIcon: downloadIcon,
   permissionIcon: permissionIcon,
@@ -83,6 +85,8 @@ export const AppIcons = {
   settingIcon: setting,
   logoutIcon: logout,
 
+  RightTickIcon: rightTickIcon,
+  UnTickIcon: unTickIcon,
   // footer icon set
 
   Mail: mail,
@@ -95,7 +99,6 @@ export const AppIcons = {
   folderIcon: folder,
   subFolderIcon: subFolder,
   subFolder1Icon: subFolder1,
-
   PdfIcon: pdfIcon,
   DocIcon: DocIcon,
   XlsIcon: xlsIcon,
@@ -103,7 +106,6 @@ export const AppIcons = {
   ZipIcon: zipIcon,
   PptIcon: pptIcon,
   CsvIcon: csvIcon,
-
   UploadIcon: uploadIcon,
   unfreezeIcone: unfreezeIcone,
   aciveCustomerIcone: aciveCustomerIcone,
@@ -112,8 +114,8 @@ export const AppIcons = {
   blockIcone: blockIcone,
   freezeIcone: freezeIcone,
   disableIcone: disableIcone,
-
-  freezeblueIcone : freezeblueIcone,
-  disablethemeIcone : disablethemeIcone,
-  blockredIcone : blockredIcone
+  freezeblueIcone: freezeblueIcone,
+  disablethemeIcone: disablethemeIcone,
+  blockredIcone: blockredIcone,
+  RejectedIcon: RejectedIcon,
 };

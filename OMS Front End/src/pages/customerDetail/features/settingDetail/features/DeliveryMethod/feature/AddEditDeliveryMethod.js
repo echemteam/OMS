@@ -10,6 +10,7 @@ import ToastService from "../../../../../../../services/toastService/ToastServic
 const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit, editFormData, childRef, onSuccess }) => {
     //** State */
     const ref = useRef();
+    const { formFields } = addEditDeliveryFormData;
     const { customerId } = useContext(BasicDetailContext);
     const [formData, setFormData] = useState(addEditDeliveryFormData);
 
@@ -62,6 +63,7 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
 
     useEffect(() => {
         if (isEdit && editFormData) {
+            formFieldsDisabled(true);
             let form = { ...addEditDeliveryFormData };
             form.initialState = {
                 ...editFormData,
@@ -72,8 +74,20 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
             setFormData(form);
         } else if (!isEdit) {
             onResetData();
+            formFieldsDisabled(false);
         }
     }, [isEdit, editFormData])
+
+
+    const formFieldsDisabled = (isDisable) => {
+        if (formFields) {
+            let chargeTypeData = formFields.find(data => data.id === 'chargeType');
+            if (chargeTypeData && chargeTypeData.fieldSetting) {
+                chargeTypeData.fieldSetting.isDisabled = isDisable;
+            }
+        }
+    }
+
     //** Reset Data */
     const onResetData = () => {
         let form = { ...addEditDeliveryFormData };

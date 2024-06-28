@@ -1,6 +1,8 @@
+import React from "react";
+
 // Function for rendering the checkbox column
-export const renderGridCheckboxColumn = (rowData, col, rowIndex,parentRowData, onCellDataChange) => {
-  const isDisabled = col.colSettings ? !col.colSettings.allowEdit : false;
+export const renderGridCheckboxColumn = (rowData, col, rowIndex, parentRowData, onCellDataChange) => {
+  const isDisabled = col.colSettings ? col.colSettings.allowDisable : false;
   const isChecked = rowData[col.fieldName];
 
   const handleCheckboxChange = (e) => {
@@ -14,11 +16,15 @@ export const renderGridCheckboxColumn = (rowData, col, rowIndex,parentRowData, o
   };
 
   return (
-    <input
-      type="checkbox"
-      checked={isChecked}
-      disabled={isDisabled}
-      onChange={(handleCheckboxChange)}
-    />
+    <React.Fragment>
+      {col?.colSettings && col.colSettings.allowCheckbox && (
+        <input
+          type="checkbox"
+          checked={isChecked}
+          disabled={isDisabled}
+          onChange={(handleCheckboxChange)}
+        />
+      )}
+    </React.Fragment>
   );
 };

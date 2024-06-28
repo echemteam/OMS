@@ -7,13 +7,19 @@ import ToastService from '../../../../services/toastService/ToastService';
 import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
 import { securityKey } from '../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import CustomerApproval from '../../features/cutomerApproval/CustomerApproval';
+import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
+import { getAuthProps } from '../../../../lib/authenticationLibrary';
 
 export const InActiveCustomers = ({ statusId, configFile }) => {
 
+  const childRef = useRef();
   const molGridRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [dataSource, setDataSource] = useState();
+  const [customerId, setCustomerId] = useState();
   const { DataRef } = useContext(CustomerListContext);
+  const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [
     getCustomers,
@@ -36,28 +42,52 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
 
 
   useEffect(() => {
-    const actionColumn = configFile?.columns.find(column => column.name === "Action");
-    if (actionColumn) {
+    if (!isResponsibleUser) {
+      const actionColumn = configFile?.columns.find(column => column.name === "Action");
+      if (actionColumn) {
 
-      const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
-      const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
-      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+        const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
+        const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
+        const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
 
-      if (actionColumn.defaultAction.allowActiveCustomer) {
-        actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
-      } else if (actionColumn.defaultAction.allowUnblocked) {
-        actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
-      } else if (actionColumn.defaultAction.allowUnfreeze) {
-        actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+        if (actionColumn.defaultAction.allowActiveCustomer) {
+          actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+        } else if (actionColumn.defaultAction.allowUnblocked) {
+          actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
+        } else if (actionColumn.defaultAction.allowUnfreeze) {
+          actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+        }
       }
     }
   }, [configFile]);
 
+  const hasResponsibleUserhasAccess = () => {
+    const actionColumn = configFile?.columns.find((column) => column.name === "Action");
+    if (actionColumn) {
+      if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
+        actionColumn.defaultAction.allowActiveCustomer = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty("allowUnblocked")) {
+        actionColumn.defaultAction.allowUnblocked = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowUnfreeze')) {
+        actionColumn.defaultAction.allowUnfreeze = true;
+      }
+    }
+  }
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
         setDataSource(isListeData.dataSource);
+        const authData = getAuthProps();
+        const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authData.user.userID);
+        if (isResponsibleId) {
+          setIsResponsibleUser(true);
+          hasResponsibleUserhasAccess();
+        } else {
+          setIsResponsibleUser(false);
+        }
       }
       if (isListeData.totalRecord) {
         setTotalRowCount(isListeData.totalRecord);
@@ -89,8 +119,15 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     getCustomers(request);
   };
 
+  const approvalCheckList = (data) => {
+    if (childRef.current) {
+      childRef.current.callChildFunction(data.customerId);
+    }
+    setCustomerId(data.customerId);
+  }
+
   const handleUnfreeze = (data) => {
-    handleUpdate(data)
+    approvalCheckList(data);
   }
 
   const handleActiveCustomer = (data) => {
@@ -98,12 +135,12 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
   }
 
   const handleUnBlock = (data) => {
-    handleUpdate(data)
+    approvalCheckList(data);
   }
 
-  const handleUpdate = (data) => {
+  const handleUpdate = () => {
     let req = {
-      customerId: data.customerId,
+      customerId: customerId,
       statusId: StatusEnums.Approved
     }
     updateCustomerStatus(req)
@@ -144,6 +181,7 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
           </CardSection>
         </div>
       </div>
+      <CustomerApproval childRef={childRef} getListApi={getListApi} updateCustomerApproval={handleUpdate} />
     </div>
   )
 }

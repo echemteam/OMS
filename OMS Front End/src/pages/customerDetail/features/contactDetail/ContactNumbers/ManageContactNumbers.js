@@ -8,11 +8,12 @@ import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useDeleteContactPhoneMutation, useGetAllPhoneTypesQuery, useLazyGetPhoneByContactIdQuery } from "../../../../../app/services/phoneNumberAPI";
 import { addEditContactsFormData } from "./config/AddEditContactsForm.data";
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Component's */
 const ContactNumberList = React.lazy(() => import("./ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./AddEditContactNumber"));
 
-const ManageContactNumbers = ({ onGetContactList }) => {
+const ManageContactNumbers = ({ onGetContactList , isSupplier }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -20,7 +21,7 @@ const ManageContactNumbers = ({ onGetContactList }) => {
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
-    const { contactId, setPhoneNumberData, phoneNumberData } = useContext(BasicDetailContext);
+    const { contactId, setPhoneNumberData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     //** API Call's */
     const [getList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetPhoneByContactIdQuery();
@@ -94,9 +95,9 @@ const ManageContactNumbers = ({ onGetContactList }) => {
 
     return (
         <React.Fragment>
-            <ContactNumberList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} isLoading={isGetContactFetching} />
+            <ContactNumberList isSupplier={isSupplier} molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} isLoading={isGetContactFetching} />
             {showModal && (
-                <AddEditContactNumber handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} editFormData={editFormData} isEdit={isEdit} />
+                <AddEditContactNumber isSupplier={isSupplier} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} editFormData={editFormData} isEdit={isEdit} />
             )}
         </React.Fragment>
     )

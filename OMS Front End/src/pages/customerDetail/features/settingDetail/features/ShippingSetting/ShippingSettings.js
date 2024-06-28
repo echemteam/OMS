@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { shippingFormData } from "./config/ShippingConfig";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
+import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import SwalAlert from "../../../../../../services/swalService/SwalService";
@@ -23,7 +24,7 @@ const ShippingSettings = () => {
   const { customerId, setDeliveryMethodsList, setCarriersList } = useContext(BasicDetailContext);
 
   const [getAllAccountType, { isFetching: isAccountTypeFetching, isSuccess: isAccountTypeSuccess, data: isAccountTypeData, },] = useLazyGetAllDeliveryAccountsQuery();
-  const [addDefaultShippings, { isLoading: isAddDefaultShippingsLoading, isSuccess: isAddDefaultShippingsSuccess, data: isAddDefaultShippingsData, },] = useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation();
+  const [addDefaultShippings, { isSuccess: isAddDefaultShippingsSuccess, data: isAddDefaultShippingsData, },] = useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation();
   const [getDefaultList, { isFetching: isGetDefaultValueFetching, isSuccess: isGetDefaultValueSuccess, data: isGetDefaultValueData }] = useLazyGetShppingDeliveryCarrierAndDeliveryMethodsByIdQuery();
 
   useEffect(() => {
@@ -79,14 +80,24 @@ const ShippingSettings = () => {
       if (accountTypeId > 0) {
         confirm("Change Shipping Methods?",
           "Are you sure you want Change the Shipping Method?",
-          "Yes", "No", false
+          "Yes", "No"
         ).then((confirmed) => {
           let request = {
             customerId: customerId,
-            deliveryAccountId: data.value
+            deliveryAccountId: data.value,
+            isByDefault: true
           }
           if (confirmed) {
             setIsDefaultValue(true);
+            addDefaultShippings(request);
+            setAccountTypeId(data.value);
+          } else if (!confirmed) {
+            let request = {
+              customerId: customerId,
+              deliveryAccountId: data.value,
+              isByDefault: false
+            }
+            setIsDefaultValue(false);
             addDefaultShippings(request);
             setAccountTypeId(data.value);
           }
@@ -94,14 +105,24 @@ const ShippingSettings = () => {
       } else {
         confirm("Shipping Methods?",
           "Are you sure you want to Add Default Shipping Method?",
-          "Yes", "No", false
+          "Yes", "No"
         ).then((confirmed) => {
           let request = {
             customerId: customerId,
-            deliveryAccountId: data.value
+            deliveryAccountId: data.value,
+            isByDefault: true
           }
           if (confirmed) {
             setIsDefaultValue(true);
+            addDefaultShippings(request);
+            setAccountTypeId(data.value);
+          } else if (!confirmed) {
+            let request = {
+              customerId: customerId,
+              deliveryAccountId: data.value,
+              isByDefault: false
+            }
+            setIsDefaultValue(false);
             addDefaultShippings(request);
             setAccountTypeId(data.value);
           }
@@ -121,9 +142,9 @@ const ShippingSettings = () => {
 
 
   return (
-    <>
-      <div className="row horizontal-form">
-        <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler} />
+    <div className="row horizontal-form">
+      <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler} />
+      {!isGetDefaultValueFetching ?
         <div className="grid-section">
           {accountTypeId === 1 ?
             <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
@@ -134,8 +155,8 @@ const ShippingSettings = () => {
               </> : null
           }
         </div>
-      </div>
-    </>
+        : <DataLoader />}
+    </div>
   );
 };
 

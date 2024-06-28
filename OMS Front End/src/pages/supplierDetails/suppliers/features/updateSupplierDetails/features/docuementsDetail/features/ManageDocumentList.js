@@ -11,9 +11,10 @@ import { supplierDocumentTransformData } from "../../../../../../../../utils/Tra
 import SwalAlert from "../../../../../../../../services/swalService/SwalService";
 import { useDeleteSupplierDocumentsByIdMutation, useLazyGetSupplierDocumentsByIdQuery } from "../../../../../../../../app/services/supplierDocuementsAPI";
 import { useLazyDownloadCustomerDocumentQuery } from "../../../../../../../../app/services/documentAPI";
+import { hasFunctionalPermission } from "../../../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 
-const ManageDocumentList = forwardRef(({ pageId, childRef}) => {
+const ManageDocumentList = forwardRef(({ mainId, childRef, SecurityKey, isEditablePage}) => {
  
     //** State */
     const { confirm } = SwalAlert();
@@ -28,12 +29,33 @@ const ManageDocumentList = forwardRef(({ pageId, childRef}) => {
 
     //** UseEffect */
     useEffect(() => {
-        debugger
-        pageId && getList(pageId);
+        mainId && getList(mainId);
     }, []);
 
     useEffect(() => {
-        debugger
+        if (isEditablePage && SecurityKey) {
+            const hasDeletePermission = hasFunctionalPermission(SecurityKey.DELETE);
+            const hasDownalodPermission = hasFunctionalPermission(SecurityKey.DOWNALOD);
+            if (hasDeletePermission) {
+                if (hasDeletePermission.hasAccess === true) {
+                    setShowDeleteButton(true);
+                }
+                else {
+                    setShowDeleteButton(false);
+                }
+            }
+            if (hasDownalodPermission) {
+                if (hasDownalodPermission.hasAccess === true) {
+                    setShowDownalodButton(true);
+                }
+                else {
+                    setShowDownalodButton(false);
+                }
+            }
+        }
+    }, [isEditablePage, SecurityKey]);
+
+    useEffect(() => {
         if (isListSucess && isListData && !isListFetching) {
             const modifyData = supplierDocumentTransformData(isListData);
             setDocumentListData(modifyData);
@@ -41,7 +63,6 @@ const ManageDocumentList = forwardRef(({ pageId, childRef}) => {
     }, [isListSucess, isListData, isListFetching]);
 
     useEffect(() => {
-        debugger
         if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
             var file = new Blob([isDownalodData.fileData], {
                 type: isDownalodData?.fileData.type,
@@ -62,7 +83,7 @@ const ManageDocumentList = forwardRef(({ pageId, childRef}) => {
     const handleDownload = (name) => {
         let request = {
             folderName: 'SupplierDocuements',
-            customerId: pageId,
+            mainId: mainId,
             fileName: name
         }
         Downalod(request);
@@ -79,7 +100,7 @@ const ManageDocumentList = forwardRef(({ pageId, childRef}) => {
     };
 
     const onGetData = () => {
-        pageId && getList(pageId);
+        mainId && getList(mainId);
     };
 
     //** Use Imperative Handle  */

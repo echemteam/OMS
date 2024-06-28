@@ -7,45 +7,9 @@ export const Menu = [
     to: "/",
     iconClass: "bi bi-file-earmark-medical",
     subMenu: false,
-    securityKey: securityKey.DASHBOARD,
+    securityKey: "",
     children: []
   },
-  // {
-  //   name: "Form",
-  //   id: "form",
-  //   to: "/themeComponent/demoForm",
-  //   iconClass: "bi bi-file-earmark-medical",
-  //   subMenu: false,
-  //   securityKey: '',
-  //   children: []
-  // },
-  // {
-  //   name: "Grid",
-  //   id: "gridPage",
-  //   to: "/themeComponent/demoGrid",
-  //   iconClass: "bi bi-table",
-  //   subMenu: false,
-  //   securityKey: '',
-  //   children: []
-  // },
-  // {
-  //   name: "Stepper",
-  //   id: "Stepper",
-  //   to: "/themeComponent/stepper",
-  //   iconClass: "bi bi-table",
-  //   subMenu: false,
-  //   securityKey: '',
-  //   children: []
-  // },
-  // {
-  //   name: "widgets",
-  //   id: "widgets",
-  //   to: "/themeComponent/widgets",
-  //   iconClass: "bi bi-clipboard-data",
-  //   subMenu: false,
-  //   securityKey: '',
-  //   children: []
-  // },
   {
     id: "Security",
     name: "Security",
@@ -60,18 +24,12 @@ export const Menu = [
         to: "/Users",
         securityKey: securityKey.USERMANAGEMENT
       },
-      // {
-      //   id: "roleManagement",
-      //   submenuName: "Role Management",
-      //   to: "/usersRole",
-      //   securityKey: securityKey.ROLEMANAGEMENT
-      // },
       {
         id: "SecurityRoleManagement",
         submenuName: "Security Roles Management",
         to: "/SecurityRoleManagement",
         securityKey: securityKey.SECURITYROLEMANAGEMENT
-      }, 
+      },
     ],
 
   },
@@ -81,42 +39,42 @@ export const Menu = [
     iconClass: "bi bi-people-fill",
     subMenu: true,
     to: "#",
-    securityKey: "",
+    securityKey: securityKey.CUSTOMER,
     children: [
       {
         id: "addCustomer",
         submenuName: "Add Customer",
         to: "/addCustomer",
-        securityKey: "",
+        securityKey: securityKey.ADDCUSTOMER,
       },
       {
         id: "Customers",
         submenuName: "Customer",
         to: "/Customers",
-        securityKey: "",
+        securityKey: securityKey.CUSTOMER,
       },
     ],
   },
-  // {
-  //   id: "supplier",
-  //   name: "Supplier Details",
-  //   iconClass: "bi bi-people-fill",
-  //   subMenu: true,
-  //   to: "#",
-  //   securityKey: "",
-  //   children: [
-  //     {
-  //       id: "addSupplier",
-  //       submenuName: "Add Supplier",
-  //       to: "/addSupplier",
-  //       securityKey: "",
-  //     },
-  //     {
-  //       id: "Suppliers",
-  //       submenuName: "Supplier",
-  //       to: "/Suppliers",
-  //       securityKey: "",
-  //     },
-  //   ],
-  // },
+  {
+    id: "supplier",
+    name: "Supplier Details",
+    iconClass: "bi bi-people-fill",
+    subMenu: true,
+    to: "#",
+    securityKey: securityKey.SUPPLIER,
+    children: [
+      {
+        id: "addSupplier",
+        submenuName: "Add Supplier",
+        to: "/addSupplier",
+        securityKey: securityKey.ADDSUPPLIER,
+      },
+      {
+        id: "Suppliers",
+        submenuName: "Supplier",
+        to: "/Suppliers",
+        securityKey: securityKey.SUPPLIER,
+      },
+    ],
+  },
 ];

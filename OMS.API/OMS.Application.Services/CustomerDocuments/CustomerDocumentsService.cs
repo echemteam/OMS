@@ -28,17 +28,22 @@ namespace OMS.Application.Services.CustomerDocuments
         {
             AddEntityDTO<int> responseData = new();
 
-            CustomerDocumentsDTO customerDocumentsDTO = requestData.ToMapp<AddCustomerDocumentsRequest, CustomerDocumentsDTO>();
-            customerDocumentsDTO.CreatedBy = CurrentUserId;
-            responseData = await repositoryManager.customerDocuments.AddCustomerDocuments(customerDocumentsDTO);
+            responseData = await repositoryManager.customerDocuments.CheckDocumentsExistOrNot(requestData.DocumentTypeId, requestData.Name, requestData.CustomerId);
 
             if (responseData.KeyValue > 0)
             {
-                string AESKey = commonSettingService.EncryptionSettings.AESKey!;
-                string AESIV = commonSettingService.EncryptionSettings.AESIV!;
-                requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File!, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.CustomerId, requestData.Attachment!, AESKey, AESIV);
+                if (requestData.Base64File != null && requestData.Name != null)
+                {
+                    string AESKey = commonSettingService.EncryptionSettings.AESKey!;
+                    string AESIV = commonSettingService.EncryptionSettings.AESIV!;
+                    requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File!, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.CustomerId, requestData.Attachment!, AESKey, AESIV);
+
+                }
+                CustomerDocumentsDTO customerDocumentsDTO = requestData.ToMapp<AddCustomerDocumentsRequest, CustomerDocumentsDTO>();
+                customerDocumentsDTO.CreatedBy = CurrentUserId;
+                responseData = await repositoryManager.customerDocuments.AddCustomerDocuments(customerDocumentsDTO);
             }
-            return responseData;
+            return responseData!;
         }
 
         public async Task<List<GetCustomerDocumentsByIdResponse>> GetCustomerDocumentsById(int customerId)
@@ -52,13 +57,13 @@ namespace OMS.Application.Services.CustomerDocuments
             return await repositoryManager.customerDocuments.DeleteCustomerDocumentsById(customerDocumentId, deletedBy);
         }
 
-        public async Task<byte[]> DownloadCustomerDocument(string folderName, string fileName, int customerId)
+        public async Task<byte[]> DownloadCustomerDocument(string folderName, string fileName, int mainId)
         {
             byte[] decryptedBytes = null!;
             string AESKey = commonSettingService.EncryptionSettings.AESKey!;
             string AESIV = commonSettingService.EncryptionSettings.AESIV!;
             var contentPath = commonSettingService.ApplicationSettings.SaveFilePath;
-            string filePath = Path.Combine(contentPath!, folderName, customerId.ToString(), fileName);
+            string filePath = Path.Combine(contentPath!, folderName, mainId.ToString(), fileName);
 
             if (File.Exists(filePath))
             {

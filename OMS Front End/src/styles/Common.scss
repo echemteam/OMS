@@ -8,7 +8,7 @@ body {
   margin: 0;
   background-color: #0004430d;
   font-family: "Inter", sans-serif;
-  font-size: 14px;
+  font-size: var(--commonFont);
   color: var(--textColor);
   overflow: hidden;
 }
@@ -35,10 +35,10 @@ a {
   line-height: inherit;
   display: inline-block;
   margin-bottom: 0;
-  font-size: 87%;
+  font-size: var(--commonFont-medium);
   color: var(--textColor);
   font-weight: 600;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   min-height: 35px;
   display: flex;
   align-items: center;
@@ -47,7 +47,6 @@ a {
 .checkbox-part {
   .input-label {
     text-transform: capitalize !important;
-    font-size: inherit !important;
   }
 }
 
@@ -284,8 +283,8 @@ a {
   }
 
   .middle-page-section {
-    width: calc(100% - 190px);
-    padding: 10px 30px 0;
+    width: calc(100% - 60px);
+    padding: 5px 10px 0;
     margin: 0 auto;
     transition: 0.5s all;
 
@@ -317,7 +316,7 @@ a {
         .sidebar {
           .main-menus {
             .sidebar-brand {
-              font-size: 160%;
+              font-size: var(--commonFont-extraLarge);
               min-height: unset;
 
               .small-sidebar {
@@ -332,6 +331,7 @@ a {
                     &.menu-item {
                       a {
                         justify-content: center;
+                        padding: 10px;
 
                         &.menu-arrow {
                           &::before {
@@ -359,7 +359,7 @@ a {
         }
 
         .collapse-btn {
-          opacity: 0;
+          opacity: 1;
 
           .click-btn {
             img {
@@ -368,64 +368,7 @@ a {
           }
         }
 
-        &:hover {
-          width: 260px;
 
-          .sidebar {
-            .main-menus {
-              .sidebar-brand {
-                font-size: 28px;
-                min-height: 60px;
-
-                .small-sidebar {
-                  display: block;
-                  opacity: 1;
-                }
-              }
-
-              .sidebar-menu {
-                ul {
-                  &.sidebar-menu-list {
-                    li {
-                      &.menu-item {
-                        a {
-                          justify-content: flex-start;
-
-                          &.menu-arrow {
-                            &::before {
-                              display: block;
-                              opacity: 1;
-                            }
-                          }
-
-                          span {
-                            opacity: 1;
-                            display: block;
-                          }
-                        }
-
-                        .sidebar-dropdown {
-                          opacity: 1;
-                          display: block;
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          .collapse-btn {
-            opacity: 1;
-
-            .click-btn {
-              img {
-                // transform: rotate(90deg);
-              }
-            }
-          }
-        }
       }
 
       .middle-page-section {}
@@ -435,7 +378,7 @@ a {
 
 .page-title {
   h2 {
-    font-size: 24px;
+    font-size: var(--commonFont-2extraLarge);
     font-weight: bold;
     color: var(--themeColor);
   }
@@ -511,7 +454,7 @@ a {
 }
 
 .card {
-  padding: 22px;
+  padding: 12px;
   background: var(--whiteColor);
   border-radius: 12px;
   margin-bottom: 20px;
@@ -526,6 +469,7 @@ a {
     box-shadow: none;
     border: none;
     padding: 0;
+    margin-bottom: 0;
   }
 
   .card-top-title-btn {
@@ -534,6 +478,7 @@ a {
     align-items: center;
     justify-content: space-between;
     position: relative;
+    min-height: 44px;
 
     &::before {
       position: absolute;
@@ -554,21 +499,20 @@ a {
 
   .card-title,
   .section-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--themeColor);
+
     margin-bottom: 0;
 
     h4 {
       color: var(--textColor);
+      color: var(--themeColor);
       margin-bottom: 0;
       text-transform: capitalize;
-      font-size: 80%;
+      font-size: var(--commonFont-large);
       font-weight: 600;
     }
 
     p {
-      font-size: 70%;
+      font-size: var(--commonFont);
       margin-bottom: 0;
       font-weight: normal;
       color: var(--textColorLight);
@@ -648,7 +592,7 @@ a {
 .card-email-sec {
   .card {
     margin-bottom: 0;
-    padding: 15px;
+    padding: 9px;
     box-shadow: 0px 0px 17px -10px var(--textColorLight);
   }
 }
@@ -738,7 +682,7 @@ a {
       background: #dcdde0;
       border-radius: 0px;
       font-weight: 600;
-      font-size: 95%;
+      font-size: var(--commonFont-small);
       border: none;
       border-right: 1px solid var(--whiteColor);
       margin-right: 0;
@@ -834,7 +778,7 @@ a {
         background: var(--whiteColor);
         border-radius: 0px;
         font-weight: 600;
-        font-size: 14px;
+        font-size: var(--commonFont);
         border: none;
         border-right: 1px solid var(--whiteColor);
         margin-right: 0;
@@ -842,10 +786,10 @@ a {
 
         &.active {
           margin-bottom: 0;
-          color: #000;
+          color: var(--themeColor);
           position: relative;
           padding-bottom: 16px;
-          font-size: 16px;
+          font-size: var(--commonFont);
 
           &::before {
             content: "";
@@ -944,7 +888,7 @@ a {
           background: var(--whiteColor);
           border-radius: 0px;
           font-weight: 600;
-          font-size: 100%;
+          font-size: var(--commonFont);
           border: none;
           border-right: 1px solid var(--whiteColor);
           margin-right: 0;
@@ -952,7 +896,7 @@ a {
 
           &.active {
             margin-bottom: 0;
-            color: #000;
+            color: var(--themeColor);
             position: relative;
             padding-bottom: 15px;
             border-bottom: 2px solid var(--themeColor);
@@ -1040,7 +984,7 @@ a {
 .address-card-section {
   .accordion-item {
     border: 1px solid #eaf1f9;
-    border-radius: 5px !important;
+    border-radius: 7px !important;
     margin-bottom: 15px;
     overflow: hidden;
 
@@ -1050,7 +994,7 @@ a {
           background: var(--linkMenu);
           padding: 7px 10px;
           color: var(--textColor);
-          font-size: 15px;
+          font-size: var(--commonFont);
           font-weight: 600;
           outline: none;
           box-shadow: none;
@@ -1133,7 +1077,7 @@ a {
     p {
       font-weight: 600;
       color: var(--textColor);
-      font-size: 115%;
+      font-size: var(--commonFont);
       margin: 0;
     }
   }
@@ -1185,11 +1129,11 @@ a {
         }
 
         span {
-          font-size: 90%;
+          font-size: var(--commonFont-small);
           color: #2d3641db;
 
           &.user-name {
-            font-size: 105%;
+            font-size: var(--commonFont);
             color: var(--themeColor);
             margin-bottom: 5px;
             margin-left: 31px;
@@ -1238,7 +1182,7 @@ a {
     .side-model-section {
       .model-content {
         .model-body {
-          height: calc(100vh - 65px);
+          height: calc(100vh - 52spx);
           overflow: hidden;
           overflow-y: auto;
         }
@@ -1300,17 +1244,17 @@ a {
           .document-name {
             font-weight: 600;
             color: var(--textColorLight);
-            font-size: 94%;
+            font-size: var(--commonFont-small);
           }
 
           .document-type {
             color: var(--textColorLight);
-            font-size: 80%;
+            font-size: var(--commonFont-extraSmall);
           }
 
           .document-typename {
             color: var(--themeColor);
-            font-size: 90%;
+            font-size: var(--commonFont);
             font-weight: 600;
           }
         }
@@ -1348,7 +1292,7 @@ a {
   display: flex;
   justify-content: center;
   font-weight: 600;
-  font-size: 18px;
+  font-size: var(--commonFont-extraLarge);
   color: var(--textColor);
 }
 
@@ -1365,30 +1309,30 @@ a {
 
   @media only screen and (max-width: 1600px) {
     .input-label {
-      font-size: 84%;
+      font-size: var(--commonFont-small);
     }
 
     .checkbox-label-part {
       .input-label {
-        font-size: 84%;
+        font-size: var(--commonFont-small);
       }
     }
 
     .basic-customer-detail {
       .profile-info {
         h5 {
-          font-size: 100% !important;
+          font-size: var(--commonFont) !important;
         }
 
         .input-label-part {
           span {
-            font-size: 89%;
+            font-size: var(--commonFont-small);
           }
         }
       }
 
       .field-desc {
-        font-size: 87%;
+        font-size: var(--commonFont-medium);
       }
     }
 
@@ -1452,10 +1396,8 @@ a {
     height: 100%;
   }
 
-
-
   .note-label {
-    font-size: 110%;
+    font-size: var(--commonFont-large);
     color: var(--textColor);
     margin-bottom: 5px;
   }
@@ -1469,7 +1411,7 @@ a {
   }
 
   .note-date {
-    font-size: 85%;
+    font-size: var(--commonFont-small);
     color: var(--textColor);
   }
 
@@ -1546,7 +1488,7 @@ a {
 
 .editor-section {
   p {
-    font-size: 12px;
+    font-size: var(--commonFont-small);
     color: var(--blackColor);
     margin-bottom: 5px;
     font-weight: 600;
@@ -1577,7 +1519,6 @@ a {
     }
   }
 }
-
 
 .randomColor {
   &.lightOrange {
@@ -1613,15 +1554,19 @@ a {
   cursor: pointer !important;
 }
 
+.view-reject-icon {
+  cursor: auto;
+}
+
 .green-color {
   color: #71dd37;
-  font-size: 20px;
+  font-size: var(--commonFont-2extraLarge);
   font-weight: lighter;
 }
 
 .red-color {
   color: red;
-  font-size: 20px;
+  font-size: var(--commonFont-2extraLarge);
   font-weight: lighter;
 }
 
@@ -1661,7 +1606,7 @@ a {
 
   .css-1dimb5e-singleValue {
     margin-left: 0 !important;
-    font-size: 94%;
+    font-size: var(--commonFont-small);
   }
 
   .css-13cymwt-control {
@@ -1691,7 +1636,6 @@ a {
       padding: 0 !important;
     }
   }
-
 
   &.badge-gradient-Approved {
     background: transparent;
@@ -1765,17 +1709,17 @@ a {
   }
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   position: relative;
   cursor: pointer;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   position: relative;
   cursor: pointer;
 }
 
-input[type=checkbox]:before {
+input[type="checkbox"]:before {
   content: "";
   display: block;
   position: absolute;
@@ -1787,7 +1731,7 @@ input[type=checkbox]:before {
   border: 1px solid var(--inputBorder);
 }
 
-input[type=checkbox]:checked:before {
+input[type="checkbox"]:checked:before {
   content: "";
   display: block;
   position: absolute;
@@ -1798,7 +1742,7 @@ input[type=checkbox]:checked:before {
   background-color: var(--themeColor);
 }
 
-input[type=checkbox]:checked:after {
+input[type="checkbox"]:checked:after {
   content: "";
   display: block;
   width: 5px;
@@ -1807,8 +1751,13 @@ input[type=checkbox]:checked:after {
   border-width: 0 2px 2px 0;
   transform: translate(-50%, -50%) rotate(45deg);
   position: absolute;
-  top: 50%;
+  top: 62%;
   left: 80%;
+}
+
+input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .add-setting-detail {
@@ -1818,7 +1767,6 @@ input[type=checkbox]:checked:after {
   }
 }
 
-
 .inactive-scroll-bar {
   table {
     tbody {
@@ -1843,7 +1791,7 @@ input[type=checkbox]:checked:after {
   }
 }
 
-.customer-list {
+.customer-list-all {
   table {
     thead {
       tr {
@@ -1879,6 +1827,36 @@ input[type=checkbox]:checked:after {
   }
 }
 
+.w-20p {
+  width: 20px;
+}
+
+.customer-list-submitted {
+  table {
+    thead {
+      tr {
+        th {
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}
+
 .status-desc {
   position: absolute;
   left: 0;
@@ -1887,7 +1865,7 @@ input[type=checkbox]:checked:after {
   .field-info {
     padding: 4px 12px;
     border-top-left-radius: 10px;
-    font-size: 12px;
+    font-size: var(--commonFont-small);
     font-weight: 600;
 
     &.active-green-color {
@@ -1915,7 +1893,9 @@ input[type=checkbox]:checked:after {
   }
 }
 
-// Checklist Section End
+.cursor-disable {
+  cursor: not-allowed !important;
+}
 
 @media only screen and (max-width: 1560px) {
   .status-dropdown {

@@ -18,7 +18,8 @@
         public string? Status { get; set; }
         public string? Territory { get; set; }
         public string? EmailAddress { get; set; }
-
+        public short? ResponsibleUserId { get; set; }
+         public string? ResponsibleUserName { get; set; }   
 
     }
 }

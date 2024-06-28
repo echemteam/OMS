@@ -10,6 +10,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
     };
   }
 
+
   if (col.renderCustomAction) {
     col?.renderCustomAction(rowData, col);
   }
@@ -192,6 +193,23 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             imagePath={AppIcons.userIcon}
             altText="DISABLE Icon" />
         </Link>
+      )}
+      {rowData.status === "Approved" && col.defaultAction.allowReject && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("REJECT", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="Reject"
+        >
+          <Image
+            imagePath={AppIcons.RejectedIcon}
+            altText="Reject Icon" />
+        </Link>
+      )}
+      {rowData.status !== "Approved" && col.defaultAction.allowReject && (
+        <div className="view-reject-icon w-20p"></div>
       )}
 
     </div>

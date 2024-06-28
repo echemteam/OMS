@@ -49,7 +49,7 @@ export const ComponentNavigation = [
     component: Dashboard,
     hasParams: false,
     text: 'Dashboard Page',
-    securityKey: securityKey.DASHBOARD
+    securityKey:""
   },
   {
     id: 'demoForm',
@@ -225,7 +225,7 @@ export const ComponentNavigation = [
     component: Customers,
     hasParams: false,
     text: 'Customers',
-    securityKey: ""
+    securityKey: securityKey.CUSTOMER
   },
 
   {
@@ -266,7 +266,7 @@ export const ComponentNavigation = [
     component: ManageAddSupplier,
     hasParams: false,
     text: 'Add Supplier',
-    securityKey: ""
+    securityKey: securityKey.ADDSUPPLIER
   },
   {
     id: 'Suppliers',
@@ -276,7 +276,7 @@ export const ComponentNavigation = [
     component: Suppliers,
     hasParams: false,
     text: 'Suppliers',
-    securityKey: ""
+    securityKey: securityKey.SUPPLIER
   },
   {
     id: 'SupplierDetails',
@@ -286,6 +286,6 @@ export const ComponentNavigation = [
     component: SupplierDetails,
     hasParams: false,
     text: 'Supplier Detail',
-    securityKey: ""
+    securityKey: securityKey.SUPPLIER
   },
 ];

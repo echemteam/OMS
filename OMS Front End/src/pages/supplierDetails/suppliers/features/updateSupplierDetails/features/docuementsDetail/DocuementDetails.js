@@ -8,15 +8,17 @@ import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import ToastService from "../../../../../../../services/toastService/ToastService";
 import { useAddSupplierDocumentsMutation } from "../../../../../../../app/services/supplierDocuementsAPI";
+import { hasFunctionalPermission } from "../../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
  
 const ManageDocumentList = React.lazy(() => import("./features/ManageDocumentList"));
 
-const DocumentDetails = ({ pageId}) => {
+const DocumentDetails = ({ mainId, isEditablePage, SecurityKey}) => {
 
   //** State */
   const documentFormRef = useRef();
   const childRef = useRef();
   const [showModal, setShowModal] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true);
 
   //** API Call's */
   const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddSupplierDocumentsMutation();
@@ -28,7 +30,21 @@ const DocumentDetails = ({ pageId}) => {
   }, []);
 
   useEffect(() => {
-  
+    if (isEditablePage && SecurityKey) {
+      const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+
+      if (hasAddPermission) {
+        if (hasAddPermission.hasAccess === true) {
+          setButtonVisible(true);
+        }
+        else {
+          setButtonVisible(false);
+        }
+      }
+    }
+  }, [isEditablePage, SecurityKey]);
+
+  useEffect(() => {
     if (!isGetAllDocumentTypesFetching && isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
       const getData = allGetAllDocumentTypesData.map(item => ({
         value: item.documentTypeId,
@@ -62,7 +78,6 @@ const DocumentDetails = ({ pageId}) => {
   };
 
   const handleSave = () => {
-    debugger
     const data = documentFormRef.current.getFormData();
     if (data) {
       const requestData = {
@@ -70,7 +85,7 @@ const DocumentDetails = ({ pageId}) => {
         base64File: data.attachment.base64Data,
         attachment: data.attachment.fileName,
         storagePath: "SupplierDocuements",
-        supplierId: pageId,
+        supplierId: mainId,
         documentTypeId: data.documentTypeId && typeof data.documentTypeId === "object" ? data.documentTypeId.value : data.documentTypeId,
       };
       add(requestData);
@@ -85,12 +100,11 @@ const DocumentDetails = ({ pageId}) => {
           buttonClassName="theme-button"
           textWithIcon={true}
           iconImg={AppIcons.PlusIcon}
-          // rightButton={buttonVisible ? true : false}
-          rightButton={true}
+          rightButton={buttonVisible ? true : false}
           buttonText="Add"
           titleButtonClick={handleToggleModal}>
           <div className="">
-            <ManageDocumentList childRef={childRef} pageId={pageId}
+            <ManageDocumentList childRef={childRef} mainId={mainId} isEditablePage={isEditablePage} SecurityKey={SecurityKey}
                />
           </div>
         </CardSection>

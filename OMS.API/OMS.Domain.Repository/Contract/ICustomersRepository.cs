@@ -18,6 +18,8 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDTO<int>> UpdateCustomerStatus(CustomersDTO customers);
         Task<AddEntityDTO<int>> AddAddressForCustomer(AddAddressForCustomerRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> UpdateAddressForCustomer(UpdateAddressForCustomerRequest requestData, short updatedBy);
-        Task<List<GetCustomerAuditHistoryResponse>> GetCustomerAuditHistory();
+        Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest);
+       
+        Task<AddEntityDTO<int>> AddEditContactForCustomer(AddEditContactForCustomerRequest requestData, short createdBy);
     }
 }

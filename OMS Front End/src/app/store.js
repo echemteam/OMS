@@ -18,9 +18,13 @@ import phoneNumberAPI from './services/phoneNumberAPI';
 import emailAddressAPI from './services/emailAddressAPI';
 import customerSettingsAPI from './services/customerSettingsAPI';
 import supplierAPI from './services/supplierAPI';
+import supplierNotesAPI from './services/supplierNotesAPI';
 import supplierDocuementsAPI from './services/supplierDocuementsAPI'
 import supplierAddressAPI from './services/supplierAddressAPI';
 import commonAPI from './services/commonAPI';
+import customerHistoryAPI from './services/customerHistoryAPI';
+import supplierHistoryAPI from './services/supplierHistoryAPI';
+import approvalAPI from './services/ApprovalAPI';
 
 export const store = configureStore({
   reducer: {
@@ -39,9 +43,13 @@ export const store = configureStore({
     [emailAddressAPI.reducerPath]: emailAddressAPI.reducer, 
     [customerSettingsAPI.reducerPath]:customerSettingsAPI.reducer,
     [supplierAPI.reducerPath]:supplierAPI.reducer,
+    [supplierNotesAPI.reducerPath]:supplierNotesAPI.reducer,
     [supplierDocuementsAPI.reducerPath]:supplierDocuementsAPI.reducer,
     [commonAPI.reducerPath]: commonAPI.reducer,
     [supplierAddressAPI.reducerPath]: supplierAddressAPI.reducer,
+    [customerHistoryAPI.reducerPath]:customerHistoryAPI.reducer,
+    [supplierHistoryAPI.reducerPath]:supplierHistoryAPI.reducer,
+    [approvalAPI.reducerPath]: approvalAPI.reducer,
 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
@@ -59,9 +67,13 @@ export const store = configureStore({
     emailAddressAPI.middleware,
     customerSettingsAPI.middleware,
     supplierAPI.middleware,
+    supplierNotesAPI.middleware,
     supplierDocuementsAPI.middleware,
     commonAPI.middleware,
     supplierAddressAPI.middleware,
+    customerHistoryAPI.middleware,
+    supplierHistoryAPI.middleware,
+    approvalAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);

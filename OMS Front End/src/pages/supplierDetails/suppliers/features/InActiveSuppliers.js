@@ -5,6 +5,8 @@ import SupplierContext from "../../../../utils/ContextAPIs/Supplier/SupplierList
 import ToastService from '../../../../services/toastService/ToastService';
 import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
 import { useGetSuppliersMutation, useUpdateSupplierStatusMutation } from '../../../../app/services/supplierAPI';
+import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import { securityKey } from '../../../../data/SecurityKey';
 
 export const InActiveSuppliers = ({ statusId, configFile }) => {
 
@@ -31,6 +33,24 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
         };
         getSuppliers(request);
     };
+
+    useEffect(() => {
+        const actionColumn = configFile?.columns.find(column => column.name === "Action");
+        if (actionColumn) {
+    
+          const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
+          const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
+          const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
+    
+          if (actionColumn.defaultAction.allowActiveCustomer) {
+            actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+          } else if (actionColumn.defaultAction.allowUnblocked) {
+            actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
+          } else if (actionColumn.defaultAction.allowUnfreeze) {
+            actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+          }
+        }
+      }, [configFile]);
 
     useEffect(() => {
         if (isListSuccess && isListeData) {

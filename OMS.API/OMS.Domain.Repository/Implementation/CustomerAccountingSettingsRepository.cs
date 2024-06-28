@@ -59,6 +59,7 @@ namespace OMS.Domain.Repository.Implementation
             {
                 carriers.DeliveryAccountId,
                 carriers.CustomerId,
+                carriers.IsByDefault,
                 carriers.CreatedBy,
             }, CommandType.StoredProcedure);
         }

@@ -5,7 +5,8 @@ export const contactDetailFormData = {
   initialState: {
     firstName: "",
     lastName: "",
-    contactTypeId: 0,
+    contactTypeId: "",
+    isPrimary:false
   },
   formFields: [
     {
@@ -47,6 +48,7 @@ export const contactDetailFormData = {
       fieldSetting: {
         placeholder: "Select Contact Type",
         allowSpace: true,
+        isMultiSelect: true,
       },
       validation: [{ type: "require" }],
       style: {

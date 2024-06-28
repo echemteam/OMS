@@ -99,29 +99,33 @@ export const UserGridConfig = {
     {
       name: "User Name",
       fieldName: "userName",
-      width:"20%",
+      width: "20%",
       // allowShort: true,
     },
     {
       name: "First Name",
       fieldName: "firstName",
       // allowShort: true,
-      width:"20%",
+      width: "20%",
     },
     {
       name: "Last Name",
       fieldName: "lastName",
-      width:"20%",
+      width: "20%",
     },
     {
       name: "IsActive",
       fieldName: "isActive",
-      width:"20%",
+      width: "20%",
       colType: GridColumnType.CHECKBOX,
+      colSettings: {
+        allowCheckbox: true,
+        allowDisable: true
+      },
     },
     {
       name: "Action",
-      width:"20%",
+      width: "20%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

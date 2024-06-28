@@ -16,7 +16,7 @@ const AccordionCollapse = ({ accordionList, contentTypeId, handleEdit }) => {
     const AccordtionCardDetails = useCallback((cardId, childData, cardDetails) => {
         switch (cardId) {
             case 1:
-                return <ContactCard childData={childData} handleEdit={handleEdit} cardDetails={cardDetails} />
+                return <ContactCard childData={childData} handleEdit={handleEdit} cardDetails={cardDetails}/>
             default:
                 return null;
         }

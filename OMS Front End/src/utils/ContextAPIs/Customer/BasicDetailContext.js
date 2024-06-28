@@ -33,6 +33,8 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [allCountries, setAllCountries] = useState(false);
     //** */
 
+    const [isResponsibleUser, setIsResponsibleUser] = useState(true);
+
     //** Use for Tab's */
     const nextRef = useRef(null);
     const [activeTab, setActiveTab] = useState(0);
@@ -61,7 +63,8 @@ export const BasicDetailContextProvider = ({ children }) => {
         <BasicDetailContext.Provider value={{
             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, contactMainModal, setPhoneNumberData,
             phoneNumberData, setAllCountries, allCountries, setMainId, mainId, contactId, setContactId, contactNumbers, setContactNumbers, setContactMainModal,
-            emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList
+            emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList,
+            setIsResponsibleUser, isResponsibleUser
         }}>
             {children}
         </BasicDetailContext.Provider>

@@ -80,7 +80,7 @@ const ManageDocumentList = forwardRef(({ mainId, downloadDocument, deleteDocumen
     const handleDownload = (name) => {
         let request = {
             folderName: 'Customer',
-            customerId: mainId,
+            mainId: mainId,
             fileName: name
         }
         Downalod(request);

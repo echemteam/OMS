@@ -10,5 +10,8 @@
         public DateTime? UpdatedAt { get; set; }
         public short? StatusId { get; set; }
         public string? Status { get; set; }
+
+        public short? ResponsibleUserId { get; set; }
+        public string? ResponsibleUserName { get; set; }
     }
 }

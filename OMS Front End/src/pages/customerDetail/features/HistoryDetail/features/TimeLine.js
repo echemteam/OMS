@@ -1,62 +1,78 @@
-import React from "react";
+
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./../../HistoryDetail/TimeLine.scss";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { AppIcons } from "../../../../../data/appIcons";
 
+import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
-const timelineItems = [
-  {
-    icon: AppIcons.PlusIcon,
-    name: "Pankaj Chauhan",
-    dateTime: "2024-05-01 10:00",
-    typeName: "Customer Added",
-    message:
-      "Initial creation of the customer record by Pankaj Chauhan at 10:00 AM on 05/01/2024.",
-  },
-  {
-    icon: AppIcons.UpdateIcon,
-    name: "Kirtan Patel",
-    dateTime: "2024-05-02 14:30",
-    typeName: "Basic Details Updated",
-    message:
-      "Updated customer name and reference codes by Kirtan Patel at 2:30 PM on 05/02/2024.",
-  },
-  {
-    icon: AppIcons.TimelineIcon,
-    name: "Pankaj Chauhan",
-    dateTime: "2024-05-09 10:45",
-    typeName: "Financial Settings Added",
-    message:
-      "Added default payment terms and preferred payment method by Pankaj Chauhan at 10:45 AM on 05/09/2024.",
-  },
-  {
-    icon: AppIcons.PlusIcon,
-    name: "Pankaj Chauhan",
-    dateTime: "2024-05-01 10:00",
-    typeName: "Customer Added",
-    message:
-      "Initial creation of the customer record by Pankaj Chauhan at 10:00 AM on 05/01/2024.",
-  },
-  {
-    icon: AppIcons.UpdateIcon,
-    name: "Kirtan Patel",
-    dateTime: "2024-05-02 14:30",
-    typeName: "Basic Details Updated",
-    message:
-      "Updated customer name and reference codes by Kirtan Patel at 2:30 PM on 05/02/2024.",
-  },
-  {
-    icon: AppIcons.TimelineIcon,
-    name: "Pankaj Chauhan",
-    dateTime: "2024-05-09 10:45",
-    typeName: "Financial Settings Added",
-    message:
-      "Added default payment terms and preferred payment method by Pankaj Chauhan at 10:45 AM on 05/09/2024.",
-  },
-  // Add more timeline items here
-];
+import formatDate from "../../../../../lib/formatDate";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Image from "../../../../../components/image/Image";
+import { useGetCustomerAuditHistoryByCustomerIdMutation } from "../../../../../app/services/customerHistoryAPI";
+import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
 const TimeLine = () => {
+
+  const [historyData, setHistoryData] = useState([]);
+  const { customerId } = useContext(BasicDetailContext);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [refreshData, setRefreshData] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [
+    getCustomerAuditHistoryByCustomerId,
+    {
+      isLoading: isGetHistoryLoading,
+      isSuccess: isGetHistorySuccess,
+      data: isGetHistoryData,
+    },
+  ] = useGetCustomerAuditHistoryByCustomerIdMutation();
+
+  useEffect(()=>{
+    getListApi(pageNumber)
+  },[pageNumber])
+  const getListApi = (page) => {
+
+    const request = {
+      pagination: {
+        pageNumber:page,
+        pageSize: 25
+      },
+
+      customerId: customerId
+    };
+    getCustomerAuditHistoryByCustomerId(request);
+  };
+  const handleChange=()=>{
+    setRefreshData(true);
+
+    setHasMore(true);
+    setHistoryData([]);
+    getListApi(1)
+  }
+
+  useEffect(() => {
+    if (isGetHistorySuccess && isGetHistoryData) {
+      if (isGetHistoryData.dataSource && isGetHistoryData.dataSource.length > 0) {
+        if (refreshData) {
+
+          setHistoryData(isGetHistoryData.dataSource);
+          setRefreshData(false);
+        } else {
+          setHistoryData((prevData) => [...prevData,...isGetHistoryData.dataSource,]);
+        }
+      } else {
+        setHasMore(false);
+      }
+    }
+  }, [isGetHistorySuccess, isGetHistoryData]);
+
+  const fetchMoreData = () => {
+    setPageNumber((prevPageNumber) => prevPageNumber + 1);
+
+  };
+
   return (
     <>
       <div className="row">
@@ -64,36 +80,65 @@ const TimeLine = () => {
           <Buttons
             buttonTypeClassName="theme-button"
             buttonText="Refresh"
+            onClick={handleChange}
             imagePath={AppIcons.refreshIcone}
             textWithIcon={true}
           ></Buttons>
         </div>
         <div className="col-md-12">
-          <div className="main-card mt-4">
-
-            <div className="new-timeline-sec">
-              <ol class="timeline">
-                {timelineItems.map((item) => (
-                  <li className="timeline-item" key={item.id}>
-                    <span className="timeline-item-icon">
-                      <img src={item.icon} alt="Timeline Icon" />
-                    </span>
-                    <div className="timeline-item-description">
-                      <div className="right-desc-sec">
-                        <div className="d-flex align-items-center">
-                          <div className="timeline-name">{item.name}</div>
-                          <div className="date-time"> {item.dateTime}</div>
-                        </div>
-                        <div className="type-name">{item.typeName}</div>
-                      </div>
-                      <div className="msg-section">
-                        <p>{item.message}</p>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
+          <div className="main-card mt-4" id="scrollableDiv">
+            <InfiniteScroll
+              dataLength={historyData.length}
+              next={fetchMoreData}
+              hasMore={hasMore}
+              loader={isGetHistoryLoading ? <DataLoader/>:null}
+              scrollableTarget="scrollableDiv"
+            >
+              <div className="new-timeline-sec">
+                <ol className="timeline">
+                  { 
+                    historyData.length > 0 ? (
+                      historyData.map((item) => (
+                        <li
+                          className="timeline-item"
+                          key={item.customerAuditHistoryId}
+                        >
+                          <span className="timeline-item-icon">
+                            {item.eventStatus === "Insert" ?   (<>
+                              {" "}
+                              <img src={AppIcons.PlusIcon} alt="Insert Icon" />
+                            </>) : (
+                              <>
+                                {" "}
+                                <img src={AppIcons.UpdateIcon} alt="Update Icon" />
+                              </>
+                            )}
+                          </span>
+                          <div className="timeline-item-description">
+                            <div className="right-desc-sec">
+                              <div className="d-flex align-items-center">
+                                <div className="timeline-name">{item.name}</div>
+                                <div className="date-time">
+                                  {formatDate(
+                                    item.changedAt,
+                                    "DD/MM/YYYY hh:mm A "
+                                  )}
+                                </div>
+                              </div>
+                              <div className="type-name">{item.eventName}</div>
+                            </div>
+                            <div className="msg-section">
+                              <p>{item.description}</p>
+                            </div>
+                          </div>
+                        </li>
+                      ))
+                    )  : !isGetHistoryLoading ? (
+                      <NoRecordFound />
+                    ) : null}
+                </ol>
+              </div>
+            </InfiniteScroll>
           </div>
         </div>
       </div>
@@ -102,3 +147,4 @@ const TimeLine = () => {
 };
 
 export default TimeLine;
+

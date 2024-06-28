@@ -27,7 +27,7 @@ export const AllCustomerGridConfig = {
     {
       name: "Customer Name", 
       fieldName: "name",
-      width:"25%",
+      width:"32%",
     },
     {
       name: "Tax Id",
@@ -62,6 +62,8 @@ export const AllCustomerGridConfig = {
               return "status-btn badge-gradient-Frozen";
             case "Block":
               return "status-btn badge-gradient-Blocked";
+            case "Reject":
+              return "status-btn badge-gradient-Blocked";
             case "Disable":
               return "status-btn badge-gradient-disabled";
 
@@ -80,19 +82,14 @@ export const AllCustomerGridConfig = {
     {
       name: "Action",
       colType: GridColumnType.ACTION,
-      width: "25%",
+      width: "15%",
       defaultAction: {
         allowEdit: true,
         allowDisable: true,
         allowFreeze: true,
         allowBlocked: true,
+        allowReject:true,
       },
-      // customDropdownActions: [
-      //   { name: "EDIT" },
-      //   { name: "DISABLE" },
-      //   { name: "FREEZE" },
-      //   { name: "BLOCKED" },
-      // ],
     },
   ],
 };
@@ -102,19 +99,19 @@ export const PendingCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
-      width:"25%",
+      width:"35%",
       // allowShort: true,
     },
     {
       name: "Tax Id",
       fieldName: "taxId",
-      width:"25%",
+      width:"20%",
       // allowShort: true,
     },
     {
       name: "Web Site",
       fieldName: "website",
-      width:"25%",
+      width:"35%",
       // allowShort: true,
     },
     // {
@@ -125,7 +122,7 @@ export const PendingCustomerGridConfig = {
     // },
     {
       name: "Action",
-      width:"25%",
+      width:"10%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
@@ -140,7 +137,7 @@ export const SubmittedCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
-      width:"20%",
+      width:"25%",
       // allowShort: true,
     },
     {
@@ -152,21 +149,22 @@ export const SubmittedCustomerGridConfig = {
     {
       name: "Web Site",
       fieldName: "website",
-      width:"20%",
+      width:"35%",
       // allowShort: true,
     },
     {
       name: "Approve",
-      width:"20%",
+      width:"10%",
       allowShort: false,
       colType: GridColumnType.CHECKBOX,
-      // colSettings: {
-      //   allowEdit: true,
-      // },
+      colSettings: {
+        allowCheckbox: true,
+        allowDisable: false,
+      },
     },
     {
       name: "Action",
-      width:"20%",
+      width:"10%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
@@ -200,10 +198,38 @@ export const ApprovedCustomerGridConfig = {
         allowDisable: true,
         allowFreeze: true,
         allowBlocked: true,
+        allowReject:true,
       },
     },
   ],
 };
+
+export const RejectedCustomerGridConfig = {
+  columns: [
+    {
+      name: "Customer Name",
+      fieldName: "name",
+      width:"35%",
+      // allowShort: true,
+    },
+    {
+      name: "Reason",
+      fieldName: "inActiveReason",
+      width:"35%",
+      // allowShort: true,
+    },
+    {
+      name: "Action",
+      width:"30%",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: true,
+       
+      },
+    },
+  ],
+};
+
 
 export const AllInActiveCustomerGridConfig = {
   columns: [
@@ -215,15 +241,19 @@ export const AllInActiveCustomerGridConfig = {
     },
     {
       name: "Reason",
-      fieldName: "taxId",
+      fieldName: "inActiveReason",
       width:"25%",
       // allowShort: true,
     },
     {
       name: "Date",
-      fieldName: "taxId",
       width:"25%",
-      // allowShort: true,
+      fieldName: "updatedAt",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        isUTC: true,
+        format: "DD/MM/YYYY hh:mm A ",
+      },
     },
     {
       name: "Status",

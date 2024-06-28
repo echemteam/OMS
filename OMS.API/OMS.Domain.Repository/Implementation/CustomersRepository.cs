@@ -1,6 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Customers;
-using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
@@ -24,7 +23,8 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATECUSTOMERSTATUS = "UpdateCustomerStatus";
         const string ADDADDRESSFORCUSTOMER = "AddAddressForCustomer";
         const string UPDATEADDRESSFORCUSTOMER = "UpdateAddressForCustomer";
-        const string GETCUSTOMERAUDITHISTORY = "GetCustomerAuditHistory";
+        const string GETCUSTOMERAUDITHISTORYBYCUSTOMERID = "GetCustomerAuditHistoryByCustomerId";
+        const string ADDEDITCONTACTFORCUSTOMER = "AddEditContactForCustomer";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -47,6 +47,7 @@ namespace OMS.Domain.Repository.Implementation
                 customers.TaxId,
                 customers.CreatedBy,
                 customers.IsBuyingForThirdParty,
+                customers.ResponsibleUserId
             }, CommandType.StoredProcedure);
         }
 
@@ -66,6 +67,7 @@ namespace OMS.Domain.Repository.Implementation
                 customers.TaxId,
                 customers.UpdatedBy,
                 customers.IsBuyingForThirdParty,
+                customers.ResponsibleUserId,
             }, CommandType.StoredProcedure);
         }
 
@@ -151,9 +153,29 @@ namespace OMS.Domain.Repository.Implementation
                 updatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetCustomerAuditHistoryResponse>> GetCustomerAuditHistory()
+  
+        public async Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest)
         {
-            return await _context.GetList<GetCustomerAuditHistoryResponse>(GETCUSTOMERAUDITHISTORY, commandType: CommandType.StoredProcedure);
+            return await _context.GetListSP<GetCustomerAuditHistoryByCustomerIdResponse>(GETCUSTOMERAUDITHISTORYBYCUSTOMERID, new
+            {
+                queryRequest.CustomerId,
+                queryRequest.Pagination!.PageNumber,
+                queryRequest.Pagination.PageSize,
+           
+            }, true);
+        }
+
+        public async Task<AddEntityDTO<int>> AddEditContactForCustomer(AddEditContactForCustomerRequest requestData, short createdBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTFORCUSTOMER, new
+            {
+                requestData.CustomerContactId,
+                requestData.CustomerId,
+                requestData.ContactId,
+                requestData.ContactTypeId,
+                requestData.IsPrimary,
+                createdBy
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }

@@ -66,6 +66,12 @@ namespace OMS.Application.Services.Supplier
             SupplierDTO supplierDTO = requestData.ToMapp<CheckSupplierNameExistRequest, SupplierDTO>();
             return await repositoryManager.supplier.CheckSupplierNameExist(supplierDTO);
         }
+   
+        public async Task<EntityList<GetSupplierAuditHistoryBySupplierIdResponse>> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest)
+        {
+            var supplierAuditList = await repositoryManager.supplier.GetSupplierAuditHistoryBySupplierId(queryRequest);
+            return supplierAuditList!;
+        }
         #endregion
 
     }

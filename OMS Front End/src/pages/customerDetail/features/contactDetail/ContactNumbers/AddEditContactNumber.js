@@ -7,22 +7,31 @@ import { addEditContactsFormData } from './config/AddEditContactsForm.data';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
 import { addPhoneNumberData, updatePhoneNumberData } from '../Util/ContactPhoneNumberUtil';
 import BasicDetailContext from '../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
+import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
 
-const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess }) => {
+const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess, isSupplier }) => {
 
     //** State */
     const ref = useRef();
     const [formData, setFormData] = useState(addEditContactsFormData);
-    const { contactId, allCountries, setPhoneNumberData, phoneNumberData } = useContext(BasicDetailContext);
+    const { contactId, allCountries, setPhoneNumberData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     //** Handle Changes */
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
         if (data) {
             if (!data.id) {
-                addPhoneNumberData(data, contactId, phoneNumberData, setPhoneNumberData, Message.ContactNumberAdded, Message.ContactNumberMaxLength, Message.ContactNumberDuplicate, onResetData, onSuccess);
+                let req = {
+                    ...data,
+                    isPrimary: data.isPrimaryPhoneNumber
+                }
+                addPhoneNumberData(req, contactId, phoneNumberData, setPhoneNumberData, Message.ContactNumberAdded, Message.ContactNumberMaxLength, Message.ContactNumberDuplicate, onResetData, onSuccess);
             } else if (data.id) {
-                updatePhoneNumberData(data, phoneNumberData, setPhoneNumberData, Message.ContactNumberUpdated, Message.ContactNumberDuplicate, Message.InvalidData, onResetData, onSuccess);
+                let req = {
+                    ...data,
+                    isPrimary: data.isPrimaryPhoneNumber
+                }
+                updatePhoneNumberData(req, phoneNumberData, setPhoneNumberData, Message.ContactNumberUpdated, Message.ContactNumberDuplicate, Message.InvalidData, onResetData, onSuccess);
             }
         }
     };
@@ -44,7 +53,16 @@ const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEd
     useEffect(() => {
         if (isEdit && editFormData) {
             let form = { ...addEditContactsFormData };
-            form.initialState = editFormData;
+            form.initialState = {
+                extension: editFormData.extension,
+                id: editFormData.id,
+                isPrimaryPhoneNumber: editFormData.isPrimary,
+                phoneCode: editFormData.phoneCode,
+                phoneId: editFormData.phoneId,
+                phoneNumber: editFormData.phoneNumber,
+                phoneType: editFormData.phoneType,
+                phoneTypeId: editFormData.phoneTypeId,
+            }
             setFormData(form);
         }
     }, [isEdit, editFormData])

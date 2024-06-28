@@ -44,7 +44,7 @@ const documentAPI = createApi({
         }),
         downloadCustomerDocument: builder.query({
             query: (requestData) => ({
-                url: encryptQueryString(`/CustomerDocuments/DownloadCustomerDocument/?folderName=${requestData.folderName}&fileName=${requestData.fileName}&customerId=${requestData.customerId}`),
+                url: encryptQueryString(`/CustomerDocuments/DownloadCustomerDocument/?folderName=${requestData.folderName}&fileName=${requestData.fileName}&mainId=${requestData.mainId}`),
                 Method: 'GET',
                 responseHandler: (response) => response.blob()
             }),
