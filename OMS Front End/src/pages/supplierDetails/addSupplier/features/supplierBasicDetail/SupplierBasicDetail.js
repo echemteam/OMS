@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import CardSection from '../../../../../components/ui/card/CardSection';
 import { supplierBasicData } from '../supplierBasicDetail/config/SupplierBasicDetail.data';
-import { useAddEditSupplierBasicInformationMutation, useLazyGetAllSupplierTypeQuery } from '../../../../../app/services/supplierAPI'
+import { useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery } from '../../../../../app/services/supplierAPI'
 import ToastService from '../../../../../services/toastService/ToastService';
 import { getTaxIdMinMaxLength } from '../../../../customerDetail/features/basicDetail/config/TaxIdValidator';
 import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
@@ -17,7 +17,7 @@ const SupplierBasicDetail = (props) => {
   const basicDetailRef = useRef();
 
   const [formData, setFormData] = useState(supplierBasicData);
-  // const [supplierName, setSupplierName] = useState('');
+   const [supplierName, setSupplierName] = useState('');
 
   const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId } = useContext(AddSupplierContext);
 
@@ -91,6 +91,9 @@ const SupplierBasicDetail = (props) => {
       data: allGetAllSupplierTypeData,
     },
   ] = useLazyGetAllSupplierTypeQuery();
+
+  const [CheckSupplierNameExist, {isSuccess: isSupplierNameExistSucess, data: isSupplierNameExistData, }] = useCheckSupplierNameExistMutation();
+
 
   useEffect(() => {
     getAllGroupTypes();
@@ -302,16 +305,35 @@ const SupplierBasicDetail = (props) => {
   const formActionHandler = {
     DDL_CHANGED: handleValidateTextId
   };
+ 
+  useEffect(() => {
+    if (isSupplierNameExistSucess && isSupplierNameExistData) {
+      if (isSupplierNameExistData.errorMessage.includes('exists')) {
+        ToastService.warning(isSupplierNameExistData.errorMessage);
+        return;
+      }
+      ToastService.success(isSupplierNameExistData.errorMessage);
+    }
+  }, [isSupplierNameExistSucess, isSupplierNameExistData]);
 
-  // const handleInputFields = (data, dataField) => {
-  //   if (dataField === 'name') {
-  //     const trimCustomerName = data.replace(/\s+/g, '');
-  //     setSupplierName(trimCustomerName);
-  //   }
-  // }
-  // const formInputHandler = {
-  //   INPUT_CHANGED: handleInputFields
-  // }
+  const handleInputGroupButton = () => {
+    if (supplierName !== '') {
+      let request = {
+        name: supplierName
+      }
+      CheckSupplierNameExist(request);
+    }
+  }
+
+  const handleInputFields = (data, dataField) => {
+    if (dataField === 'name') {
+      const trimCustomerName = data.replace(/\s+/g, '');
+      setSupplierName(trimCustomerName);
+    }
+  }
+  const formInputHandler = {
+    INPUT_CHANGED: handleInputFields
+  }
 
   return (
     <div className="basic-info-sec half-sec">
@@ -322,8 +344,8 @@ const SupplierBasicDetail = (props) => {
             ref={basicDetailRef}
             {...formData}
             onActionChange={formActionHandler}
-          // onInputChange={formInputHandler}
-          // handleInputGroupButton={handleInputGroupButton}
+            onInputChange={formInputHandler}
+            handleInputGroupButton={handleInputGroupButton}
           />
         </div>
 

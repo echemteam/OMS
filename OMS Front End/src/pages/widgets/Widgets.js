@@ -1,7 +1,6 @@
 import React from "react";
 import BarChart from "../../components/ui/widgets/charts/BarChart";
 import BubbleChart from "../../components/ui/widgets/charts/BubbleChart";
-import RealtimeDoughnutChart from "../../components/ui/widgets/charts/DoughnutChart";
 import LineChart from "../../components/ui/widgets/charts/LineChart";
 import PieChart from "../../components/ui/widgets/charts/PieChart";
 import RadarChart from "../../components/ui/widgets/charts/RadarChart";

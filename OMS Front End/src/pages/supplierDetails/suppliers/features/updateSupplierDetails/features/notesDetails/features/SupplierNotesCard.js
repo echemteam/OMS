@@ -1,7 +1,6 @@
 import { AppIcons } from "../../../../../../../../data/appIcons";
 import Buttons from "../../../../../../../../components/ui/button/Buttons";
 import { getRandomColor } from "../../../../../../../../utils/RandomColors/RandomColors";
-
 import { useEffect } from "react";
 
 const SupplierNotesCard = ({isAddEditModal, onHandleNote,ongetSupplierNote,notesFormData,}) => {
