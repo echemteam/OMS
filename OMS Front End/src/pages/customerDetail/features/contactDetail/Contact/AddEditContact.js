@@ -125,7 +125,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         <ManageEmailAddress isSupplier={isSupplier} onGetContactList={onGetContactList} />
         <ManageContactNumbers isSupplier={isSupplier} onGetContactList={onGetContactList} />
       </div>
-      <div className="col-md-12 mt-5">
+      <div className="col-md-12 mt-3">
         <div className="d-flex align-item-end justify-content-end">
           <div className="d-flex align-item-end">
             <Buttons

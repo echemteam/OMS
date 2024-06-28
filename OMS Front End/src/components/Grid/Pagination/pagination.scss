@@ -3,17 +3,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 25px;
+  padding-top: 12px;
 
   p {
     margin: 0;
     font-weight: bold;
-    font-size: 100%;
+    font-size: var(--commonFont);
   }
 
   .display-per-page {
     font-weight: bold;
-    font-size: 100%;
+    font-size: var(--commonFont);
 
     select {
       cursor: pointer;
@@ -70,7 +70,7 @@
     &.active-button {
       background-color: var(--themeColor);
       color: var(--whiteColor);
-      font-size: 100%;
+      font-size: var(--commonFont);
       font-weight: 600;
       border: unset;
     }

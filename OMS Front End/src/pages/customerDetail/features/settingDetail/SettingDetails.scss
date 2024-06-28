@@ -158,7 +158,7 @@
       .section-title {
         h4 {
           color: var(--themeColor);
-          font-size: 75%;
+          font-size: var(--commonFont-extraSmall);
         }
       }
     }

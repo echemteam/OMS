@@ -13,13 +13,15 @@ export const AddSupplierContextProvider = ({ children }) => {
     const [supplierId, setSupplierId] = useState(0);
     const [allCountries, setAllCountries] = useState(false);
 
-     //** Using for Contact  */
-     const [contactId, setContactId] = useState(0);
-     const [contactNumbers, setContactNumbers] = useState();
-     const [phoneNumberData, setPhoneNumberData] = useState();
-     const [emailAddressData, setEmailAddressData] = useState();
-     const [contactMainModal, setContactMainModal] = useState(false);
-     //** */
+    //** Using for Contact  */
+    const [contactId, setContactId] = useState(0);
+    const [contactNumbers, setContactNumbers] = useState();
+    const [phoneNumberData, setPhoneNumberData] = useState();
+    const [emailAddressData, setEmailAddressData] = useState();
+    const [contactMainModal, setContactMainModal] = useState(false);
+    //** */
+
+    const [isResponsibleUser, setIsResponsibleUser] = useState(false);
 
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
@@ -42,8 +44,8 @@ export const AddSupplierContextProvider = ({ children }) => {
 
     return (
         <AddSupplierContext.Provider value={{
-            nextStepRef, supplierId, setSupplierId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addSupplier , setAllCountries,allCountries,setMainId, mainId ,
-            contactId, setContactId, contactMainModal, contactNumbers, setContactNumbers,  setPhoneNumberData,
+            nextStepRef, supplierId, setSupplierId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addSupplier, setAllCountries, allCountries, setMainId, mainId,
+            contactId, setContactId, contactMainModal, contactNumbers, setContactNumbers, setPhoneNumberData, setIsResponsibleUser, isResponsibleUser,
             phoneNumberData, emailAddressData, setEmailAddressData, setContactMainModal
         }}>
             {children}

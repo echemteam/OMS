@@ -27,8 +27,8 @@
   .ck .ck-placeholder,
   .ck.ck-placeholder {
     position: relative;
-    font-size: 80% !important;
-  }
+    font-size: var(--commonFont-extraSmall) !important;
+}
 }
 
 .ck-content {

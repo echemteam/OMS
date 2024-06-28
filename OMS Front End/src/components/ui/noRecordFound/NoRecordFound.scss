@@ -1,15 +1,17 @@
-.record-not-found{
+.record-not-found {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   padding: 20px 0 0px;
   position: relative;
-  img{
+
+  img {
     width: 100px;
   }
-  h5{
+
+  h5 {
     margin-top: 15px;
-    font-size: 120%;
+    font-size: var(--commonFont-large);
   }
 }
