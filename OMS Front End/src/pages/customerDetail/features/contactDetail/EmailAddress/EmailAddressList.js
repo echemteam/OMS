@@ -12,7 +12,7 @@ const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler , isSup
     const { emailAddressData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     return (
-        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2 card-email-sec">
+        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-0 card-email-sec">
             <CardSection
                 cardTitle="Email Address"
                 buttonClassName="theme-button"

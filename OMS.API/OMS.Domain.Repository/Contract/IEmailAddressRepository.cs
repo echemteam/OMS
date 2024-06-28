@@ -10,7 +10,7 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDTO<int>> AddContactEmail(EmailDTO email);
         Task<AddEntityDTO<int>> UpdateContactEmail(EmailDTO email);
         Task<AddEntityDTO<int>> DeleteContactEmail(int emailId, int deletedBy);
-        Task<List<GetEmailByContactIdResponse>> GetEmailByContactId(int contactId);
+        Task<List<GetEmailByContactIdResponse>> GetEmailByContactId(int contactId, short ownerTypeId);
         Task<AddEntityDTO<int>> AddEditContactEmail(DataTable emailList, int contactId);
     }
 }

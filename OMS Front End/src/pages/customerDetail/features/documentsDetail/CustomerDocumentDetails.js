@@ -14,11 +14,11 @@ const customerSecurityKey = {
 
 const CustomerDocumentDetails = ({ isEditablePage }) => {
 
-    const { customerId } = useContext(BasicDetailContext);
+    const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
 
     return (
         //** Also, We replace the API Name and mainId based on the customer and supplier module*/
-        <DocumentDetails mainId={customerId ? customerId : 0} isEditablePage={isEditablePage} SecurityKey={customerSecurityKey} addDocuments={useAddCustomerDocumentsMutation} downloadDocument={useLazyDownloadCustomerDocumentQuery}
+        <DocumentDetails mainId={customerId ? customerId : 0} isEditablePage={isEditablePage} SecurityKey={!isResponsibleUser ? customerSecurityKey : null} addDocuments={useAddCustomerDocumentsMutation} downloadDocument={useLazyDownloadCustomerDocumentQuery}
             deleteDocumentsById={useDeleteCustomerDocumentsByIdMutation} getDocumentsById={useLazyGetCustomerDocumentsByIdQuery} />
     )
 }

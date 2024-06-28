@@ -29,15 +29,15 @@ const ViewCustomer = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
-  const { setCustomerId, customerId, setIsResponsibleUser, isResponsibleUser } = useContext(BasicDetailContext);
+  const { setCustomerId, customerId, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById, data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
 
   useEffect(() => {
     if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
       const authData = getAuthProps();
-      if (authData.user.userID === GetCustomersBasicInformationByIdData.responsibleUserId) {
-        setIsResponsibleUser(true);
+      if (authData.user.userID !== GetCustomersBasicInformationByIdData.responsibleUserId) {
+        setIsResponsibleUser(false);
       }
       setCustomerData(GetCustomersBasicInformationByIdData);
     }

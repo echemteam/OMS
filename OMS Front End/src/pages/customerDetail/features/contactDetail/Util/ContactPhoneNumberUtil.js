@@ -8,7 +8,7 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
         phoneCode: data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode,
         phoneTypeId: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId,
         phoneType: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.label : data.phoneTypeId,
-        isPrimary : data.isPrimaryPhoneNumber
+        isPrimary: data.isPrimaryPhoneNumber
         // extension: data.extension > 0 ? data.extension : ''
     }
     if (listData && listData.length === 5) {
@@ -20,7 +20,7 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
     const isDuplicate = listData && listData.some(item => item.phoneNumber === request.phoneNumber && item.phoneCode === request.phoneCode);
 
     if (!isDuplicate) {
-    let addData;
+        let addData;
         if (listData) {
             addData = [...listData];
             if (data.isPrimaryPhoneNumber) {
@@ -52,20 +52,27 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
         const isPrimary = data.isPrimaryPhoneNumber
         const isDuplicate = listData && listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === phoneCode && item.id !== data.id);
         if (!isDuplicate) {
-            let updatedData = [...listData];
-            if (data.isPrimaryPhoneNumber) {
-                updatedData = updatedData.map(item => ({ ...item, isPrimary: item.id === data.id ? true : false }));
-            } else {
-                updatedData[data.id - 1] = {
-                    ...updatedData[data.id - 1],
-                    phoneCode: phoneCode,
-                    phoneTypeId: phoneTypeId,
-                    phoneType: phoneType,
-                    phoneNumber: data.phoneNumber,
-                    extension: data.extension ? data.extension : 0,
-                    isPrimary:isPrimary
-                };
-            }
+            let updatedData = listData.map(item => {
+                if (item.id === data.id) {
+                    return {
+                        ...item,
+                        phoneCode: phoneCode,
+                        phoneTypeId: phoneTypeId,
+                        phoneType: phoneType,
+                        phoneNumber: data.phoneNumber,
+                        extension: data.extension ? data.extension : 0,
+                        isPrimary: isPrimary
+                    };
+                } else if (isPrimary) {
+                    return {
+                        ...item,
+                        isPrimary: false
+                    };
+                } else {
+                    return item;
+                }
+            });
+
             setListData(updatedData);
             ToastService.success(successMessage);
             onResetData();

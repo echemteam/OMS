@@ -28,6 +28,7 @@ import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import CustomerApproval from "../../features/cutomerApproval/CustomerApproval";
 import { getAuthProps } from "../../../../lib/authenticationLibrary";
+import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 export const CustomersList = ({ statusId, configFile }) => {
 
@@ -43,6 +44,7 @@ export const CustomersList = ({ statusId, configFile }) => {
   const [staticId, setStaticId] = useState();
   const [statusFeild, setStatusFeild] = useState();
   const { listRef } = useContext(CustomerContext);
+  const { setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [
     getCustomers,
@@ -63,6 +65,7 @@ export const CustomersList = ({ statusId, configFile }) => {
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
+    const approvalAction = configFile?.columns.find((column) => column.name === "Approve");
     if (actionColumn) {
       const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
       const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
@@ -93,8 +96,38 @@ export const CustomersList = ({ statusId, configFile }) => {
       if (actionColumn.defaultAction.allowUnfreeze) {
         actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
       }
+      if (approvalAction) {
+        if (approvalAction.colSettings.allowCheckbox) {
+          approvalAction.colSettings.allowCheckbox = true;
+        }
+      }
     }
   }, [configFile]);
+
+  const hasResponsibleUserhasAccess = () => {
+    const actionColumn = configFile?.columns.find((column) => column.name === "Action");
+    if (actionColumn.defaultAction.hasOwnProperty('allowEdit')) {
+      actionColumn.defaultAction.allowEdit = true;
+    }
+    if (actionColumn.defaultAction.hasOwnProperty("allowBlocked")) {
+      actionColumn.defaultAction.allowBlocked = true;
+    }
+    if (actionColumn.defaultAction.hasOwnProperty('allowFreeze')) {
+      actionColumn.defaultAction.allowFreeze = true;
+    }
+    if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
+      actionColumn.defaultAction.allowActiveCustomer = true;
+    }
+    if (actionColumn.defaultAction.hasOwnProperty('allowDisable')) {
+      actionColumn.defaultAction.allowDisable = true;
+    }
+    if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
+      actionColumn.defaultAction.allowUnblocked = true;
+    }
+    if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
+      actionColumn.defaultAction.allowUnblocked = true;
+    }
+  }
 
   const handlePageChange = (page) => {
     const request = {
@@ -112,8 +145,13 @@ export const CustomersList = ({ statusId, configFile }) => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
         const authData = getAuthProps();
-        // const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authData.user.userID);
-        
+        const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authData.user.userID);
+        if (isResponsibleId) {
+          setIsResponsibleUser(true);
+          hasResponsibleUserhasAccess();
+        } else {
+          setIsResponsibleUser(false);
+        }
         setDataSource(isListeData.dataSource);
       }
       if (isListeData.totalRecord) {

@@ -122,8 +122,7 @@ function Header({ handleChange }) {
                   <div key={row.rowId} className="row m-0 manus-items">
                     {row.items.map((item) => (
                       <div key={item.id} className="col-6 p-0 shortcut-menus">
-                        <span onClick={item.navigationLink}>
-                          <div className="shortcuts">
+                          <div className="shortcuts" onClick={item.navigationLink}>
                             <div className="shortcut-icon">
                               <Image imagePath={item.iconPath} altText="Icon" />
                             </div>
@@ -132,7 +131,6 @@ function Header({ handleChange }) {
                               <p>{item.description}</p>
                             </div>
                           </div>
-                        </span>
                       </div>
                     ))}
                   </div>

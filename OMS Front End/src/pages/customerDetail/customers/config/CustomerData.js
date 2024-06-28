@@ -105,13 +105,13 @@ export const PendingCustomerGridConfig = {
     {
       name: "Tax Id",
       fieldName: "taxId",
-      width:"25%",
+      width:"20%",
       // allowShort: true,
     },
     {
       name: "Web Site",
       fieldName: "website",
-      width:"25%",
+      width:"35%",
       // allowShort: true,
     },
     // {
@@ -122,7 +122,7 @@ export const PendingCustomerGridConfig = {
     // },
     {
       name: "Action",
-      width:"15%",
+      width:"10%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
@@ -137,7 +137,7 @@ export const SubmittedCustomerGridConfig = {
     {
       name: "Customer Name",
       fieldName: "name",
-      width:"20%",
+      width:"25%",
       // allowShort: true,
     },
     {
@@ -149,21 +149,22 @@ export const SubmittedCustomerGridConfig = {
     {
       name: "Web Site",
       fieldName: "website",
-      width:"20%",
+      width:"35%",
       // allowShort: true,
     },
     {
       name: "Approve",
-      width:"20%",
+      width:"10%",
       allowShort: false,
       colType: GridColumnType.CHECKBOX,
-      // colSettings: {
-      //   allowEdit: true,
-      // },
+      colSettings: {
+        allowCheckbox: true,
+        allowDisable: false,
+      },
     },
     {
       name: "Action",
-      width:"20%",
+      width:"10%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
