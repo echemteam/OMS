@@ -24,18 +24,12 @@ export const Menu = [
         to: "/Users",
         securityKey: securityKey.USERMANAGEMENT
       },
-      // {
-      //   id: "roleManagement",
-      //   submenuName: "Role Management",
-      //   to: "/usersRole",
-      //   securityKey: securityKey.ROLEMANAGEMENT
-      // },
       {
         id: "SecurityRoleManagement",
         submenuName: "Security Roles Management",
         to: "/SecurityRoleManagement",
         securityKey: securityKey.SECURITYROLEMANAGEMENT
-      }, 
+      },
     ],
 
   },
@@ -45,19 +39,19 @@ export const Menu = [
     iconClass: "bi bi-people-fill",
     subMenu: true,
     to: "#",
-    securityKey: "",
+    securityKey: securityKey.CUSTOMER,
     children: [
       {
         id: "addCustomer",
         submenuName: "Add Customer",
         to: "/addCustomer",
-        securityKey: "",
+        securityKey: securityKey.ADDCUSTOMER,
       },
       {
         id: "Customers",
         submenuName: "Customer",
         to: "/Customers",
-        securityKey: "",
+        securityKey: securityKey.CUSTOMER,
       },
     ],
   },
@@ -67,19 +61,19 @@ export const Menu = [
     iconClass: "bi bi-people-fill",
     subMenu: true,
     to: "#",
-    securityKey: "",
+    securityKey: securityKey.SUPPLIER,
     children: [
       {
         id: "addSupplier",
         submenuName: "Add Supplier",
         to: "/addSupplier",
-        securityKey: "",
+        securityKey: securityKey.ADDSUPPLIER,
       },
       {
         id: "Suppliers",
         submenuName: "Supplier",
         to: "/Suppliers",
-        securityKey: "",
+        securityKey: securityKey.SUPPLIER,
       },
     ],
   },

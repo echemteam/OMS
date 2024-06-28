@@ -17,6 +17,7 @@ import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuemen
 import SupplierContactDetail from "../../../addSupplier/features/supplierContactDetail/SupplierContactDetail";
 import SuplierAddressDetails from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetails";
 import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
+import { getAuthProps } from "../../../../../lib/authenticationLibrary";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const SupplierDetails = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [supplierData, setSupplierData] = useState(null);
 
-  const { setSupplierId, supplierId } = useContext(AddSupplierContext);
+  const { setSupplierId, supplierId, setIsResponsibleUser } = useContext(AddSupplierContext);
 
   const [
     getSupplierBasicInformationById,
@@ -43,6 +44,10 @@ const SupplierDetails = () => {
       !isGetSupplierBasicInformationByIdFetching
     ) {
       setSupplierData(GetSupplierBasicInformationByIdData);
+      const authData = getAuthProps();
+      if (authData.user.userID !== GetSupplierBasicInformationByIdData.responsibleUserId) {
+        setIsResponsibleUser(false);
+      }
     }
   }, [
     isGetSupplierBasicInformationById,

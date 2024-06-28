@@ -225,7 +225,7 @@ export const ComponentNavigation = [
     component: Customers,
     hasParams: false,
     text: 'Customers',
-    securityKey: ""
+    securityKey: securityKey.CUSTOMER
   },
 
   {
@@ -276,7 +276,7 @@ export const ComponentNavigation = [
     component: Suppliers,
     hasParams: false,
     text: 'Suppliers',
-    securityKey: ""
+    securityKey: securityKey.SUPPLIER
   },
   {
     id: 'SupplierDetails',
@@ -286,6 +286,6 @@ export const ComponentNavigation = [
     component: SupplierDetails,
     hasParams: false,
     text: 'Supplier Detail',
-    securityKey:securityKey.SUPPLIER
+    securityKey: securityKey.SUPPLIER
   },
 ];
