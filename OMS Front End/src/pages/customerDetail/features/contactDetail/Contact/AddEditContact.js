@@ -11,7 +11,7 @@ import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSup
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey, isEditablePage, isSupplier }) => {
+const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey, isEditablePage, isSupplier, isEdit }) => {
 
   //** State */
   const ref = useRef();
@@ -32,10 +32,11 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     if (data) {
       let request = {
         ...data,
-        // contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
-        contactTypeId: data.contactTypeId
-          ? data.contactTypeId.map(String).join(",")
-          : null,
+        contactTypeId: isEdit === true
+          ?
+          (data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : data.contactTypeId)
+          :
+          data.contactTypeId ? data.contactTypeId.map(String).join(",") : null,
         customerId: isSupplier === false ? mainId : 0,
         contactId: contactId,
         customerContactId: customerContactId,
@@ -109,6 +110,17 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       setSupplierContactId(data?.supplierContactId);
     }
   }
+
+  useEffect(() => {
+    if (isEdit === false) {
+      let form = { ...contactDetailFormData };
+      const dropdownFieldIndex = form.formFields.findIndex(
+        (item) => item.dataField === "contactTypeId"
+      );
+      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = true;
+      setFormData(form);
+    }
+  }, [isEdit])
 
   //** Reset Data */
   const onResetData = () => {
