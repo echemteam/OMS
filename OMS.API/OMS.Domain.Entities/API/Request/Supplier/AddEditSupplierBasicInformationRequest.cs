@@ -15,6 +15,6 @@ namespace OMS.Domain.Entities.API.Request.Supplier
         public string? TaxId { get; set; }
         public string? Note { get; set; }
         public string? EmailAddress { get; set; }
-         public short ResponsibleUserId { get; set; }
+         public short? ResponsibleUserId { get; set; }
     }
 }

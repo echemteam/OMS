@@ -254,6 +254,7 @@ const SupplierBasicDetail = (props) => {
         groupTypeId: data.groupTypeId.value,
         territoryId: data.territoryId.value,
         countryId: data.countryId.value,
+        responsibleUserId:0
       }
       addEditSupplierBasicInformation(req);
     }
@@ -293,7 +294,7 @@ const SupplierBasicDetail = (props) => {
       if (props.isOpen) {
         updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
       } else {
-        updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name-input");
+        updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
       }
       setFormData(updatedForm);
     }
