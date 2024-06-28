@@ -3,6 +3,7 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import { getRandomColor } from "../../../../../utils/RandomColors/RandomColors";
 
 import { useEffect } from "react";
+import formatDate from "../../../../../lib/formatDate";
 
 const NotesCard = ({isAddEditModal,onHandleNote,ongetcustomerNote,notesFormData,}) => {
  
@@ -41,7 +42,7 @@ const NotesCard = ({isAddEditModal,onHandleNote,ongetcustomerNote,notesFormData,
                       ></div>
                     </div>
                     <div className="card-notes ">
-                      <div className="note-date ">{notes.noteDate}</div>
+                      <div className="note-date ">{formatDate(notes.noteDate,"DD/MM/YYYY hh:mm")}</div>
                       <div className="edit-button ">
                         <Buttons
                           buttonTypeClassName="edit-btn"
