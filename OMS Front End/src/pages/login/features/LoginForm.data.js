@@ -16,7 +16,7 @@ const LoginFormData = {
             },
             validation: [{ type: "require" },{ type: "email" }],
             style: {
-                containerCss: "col-md-12"
+                containerCss: "col-md-12 mb-3"
             }
         },
         {
