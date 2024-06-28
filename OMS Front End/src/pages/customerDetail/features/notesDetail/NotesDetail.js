@@ -18,6 +18,7 @@ import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDeta
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { securityKey } from "../../../../data/SecurityKey";
 
+
 const NotesDetail = (props) => {
   const notesFormRef = useRef();
   const { formSetting } = NotesData;
@@ -105,16 +106,18 @@ const NotesDetail = (props) => {
   };
   const handleNotes = () => {
     let notesData = notesFormRef.current.getFormData();
-    let request = {
-      customerId: customerId,
-      note: notesData.type,
-    };
+  
     if (notesData && !notesData.customerNoteId) {
+      let request = {
+        customerId: customerId,
+        note: notesData.note,
+      };
       addCustomerNotes(request);
 
     } else if (notesData && notesData.customerNoteId) {
       const updateRequest = {
-        ...request,
+        customerId: customerId,
+        note: notesData.note,
         customerNoteId: notesData.customerNoteId,
       };
       updateCustomerNotes(updateRequest);
@@ -124,6 +127,7 @@ const NotesDetail = (props) => {
   const ongetNote = () => {
     getCustomerNoteByCustomerId(customerId);
   };
+
   const handleNoteData = (data) => {
     resetForm();
     setIsEditMode(true);
@@ -131,10 +135,12 @@ const NotesDetail = (props) => {
     const newformData = { ...formData };
     newformData.initialState = {
       ...newformData,
-      type: data.note,
+      note: data.note,
       customerNoteId: data.customerNoteId,
     };
     setFormData(newformData);
+
+
   };
 
   return (
