@@ -130,7 +130,10 @@ const Input = ({
                 max={max}
                 {...inputAttributes} />
               <div class="input-group-append">
-                <button class="input-button btn theme-button" type="button" onClick={handleInputGroupButton}>{inputButtonGroup?.buttonText}</button>
+                <button className="input-button btn theme-button"
+                  disabled={value ? false : true}
+                  type="button" onClick={handleInputGroupButton}>{inputButtonGroup?.buttonText}
+                </button>
               </div>
             </div>
             :

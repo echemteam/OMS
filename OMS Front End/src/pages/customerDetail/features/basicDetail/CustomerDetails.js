@@ -14,6 +14,7 @@ import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
 import CustomerApproval from "../cutomerApproval/CustomerApproval";
+
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const childRef = useRef();
   const reasonRef = useRef();
@@ -41,6 +42,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   useEffect(() => {
     if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
       ToastService.success(updateCustomerStatusData.errorMessage);
+      handleToggleModal()
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 

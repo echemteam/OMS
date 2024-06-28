@@ -64,16 +64,23 @@ export const updateData = (data, listData, setListData, successMessage, duplicat
     if (listData && data.id > 0) {
         const isDuplicate = listData.some((item) => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase() && item.id !== data.id);
         if (!isDuplicate) {
-            let updatedData = [...listData];
-            if (data.isEmailPrimary) {
-                updatedData = updatedData.map(item => ({ ...item, isPrimary: item.id === data.id ? true : false }));
-            } else {
-                updatedData[data.id - 1] = {
-                    ...updatedData[data.id - 1],
-                    emailAddress: data.emailAddress,
-                    isPrimary: data.isEmailPrimary,
-                };
-            }
+            let updatedData = listData.map(item => {
+                if (item.id === data.id) {
+                    return {
+                        ...item,
+                        emailAddress: data.emailAddress,
+                        isPrimary: data.isEmailPrimary,
+                    };
+                } else if (data.isEmailPrimary) {
+                    return {
+                        ...item,
+                        isPrimary: false,
+                    };
+                } else {
+                    return item;
+                }
+            });
+
             setListData(updatedData);
             ToastService.success(successMessage);
             onResetData();

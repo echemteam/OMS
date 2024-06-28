@@ -429,7 +429,8 @@ a {
         }
       }
 
-      .middle-page-section {}
+      .middle-page-section {
+      }
     }
   }
 }
@@ -756,7 +757,8 @@ a {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {}
+    .tab-body-section {
+    }
   }
 
   &.vertical-tab {
@@ -866,7 +868,8 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {}
+      .tab-body-section {
+      }
     }
 
     &.vertical-tab {
@@ -964,7 +967,8 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {}
+        .tab-sub-body-section {
+        }
       }
     }
   }
@@ -1453,8 +1457,6 @@ a {
     height: 100%;
   }
 
-
-
   .note-label {
     font-size: 110%;
     color: var(--textColor);
@@ -1579,7 +1581,6 @@ a {
   }
 }
 
-
 .randomColor {
   &.lightOrange {
     background: var(--lightOrange);
@@ -1693,7 +1694,6 @@ a {
     }
   }
 
-
   &.badge-gradient-Approved {
     background: transparent;
 
@@ -1758,7 +1758,6 @@ a {
   }
 
   .css-1nmdiq5-menu {
-
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -1766,17 +1765,17 @@ a {
   }
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   position: relative;
   cursor: pointer;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   position: relative;
   cursor: pointer;
 }
 
-input[type=checkbox]:before {
+input[type="checkbox"]:before {
   content: "";
   display: block;
   position: absolute;
@@ -1788,7 +1787,7 @@ input[type=checkbox]:before {
   border: 1px solid var(--inputBorder);
 }
 
-input[type=checkbox]:checked:before {
+input[type="checkbox"]:checked:before {
   content: "";
   display: block;
   position: absolute;
@@ -1799,7 +1798,7 @@ input[type=checkbox]:checked:before {
   background-color: var(--themeColor);
 }
 
-input[type=checkbox]:checked:after {
+input[type="checkbox"]:checked:after {
   content: "";
   display: block;
   width: 5px;
@@ -1812,7 +1811,7 @@ input[type=checkbox]:checked:after {
   left: 80%;
 }
 
-input[type=checkbox]:disabled {
+input[type="checkbox"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -1823,7 +1822,6 @@ input[type=checkbox]:disabled {
     border-color: var(--linkMenu);
   }
 }
-
 
 .inactive-scroll-bar {
   table {
@@ -1947,6 +1945,9 @@ input[type=checkbox]:disabled {
   }
 }
 
+.cursor-disable {
+  cursor: not-allowed !important;
+}
 
 @media only screen and (max-width: 1560px) {
   .status-dropdown {

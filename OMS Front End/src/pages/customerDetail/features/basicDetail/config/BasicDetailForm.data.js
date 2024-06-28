@@ -31,7 +31,7 @@ export const basicDetailFormDataHalf = {
       },
       inputButtonGroup: {
         isInputButton: true,
-        buttonText: 'Verify'
+        buttonText: 'Verify',
       }
     },
     {
