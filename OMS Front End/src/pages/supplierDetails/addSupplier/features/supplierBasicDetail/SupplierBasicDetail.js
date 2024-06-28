@@ -3,7 +3,6 @@ import FormCreator from '../../../../../components/Forms/FormCreator';
 import CardSection from '../../../../../components/ui/card/CardSection';
 import { supplierBasicData } from '../supplierBasicDetail/config/SupplierBasicDetail.data';
 import { useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery } from '../../../../../app/services/supplierAPI'
-import { useAddEditSupplierBasicInformationMutation, useLazyGetAllSupplierTypeQuery } from '../../../../../app/services/supplierAPI'
 import ToastService from '../../../../../services/toastService/ToastService';
 import { getTaxIdMinMaxLength } from '../../../../customerDetail/features/basicDetail/config/TaxIdValidator';
 import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
