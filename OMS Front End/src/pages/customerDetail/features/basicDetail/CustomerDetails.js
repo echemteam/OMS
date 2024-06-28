@@ -12,7 +12,6 @@ import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import { reasonData } from "../../customers/config/CustomerData";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
-import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
 import CustomerApproval from "../cutomerApproval/CustomerApproval";
 
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
@@ -27,7 +26,6 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   const [options, setOptions] = useState([]);
   const [customerID, setcustomerId] = useState();
   const [statusId, setStatusId] = useState();
-  const [showApprovalList, setShowApprovalList] = useState(false);
 
   const [updateCustomerStatus, { isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
@@ -47,7 +45,6 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
   useEffect(() => {
-
     if (customerData) {
       const statusId = customerData.statusId;
       switch (statusId) {
@@ -56,8 +53,18 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
         case 3:
           setOptions(StaticStatus[StatusValue[statusId - 1].label]);
           break;
-        case 4:
-        case 5:
+          case 4:
+            setOptions([
+              { value: "4", label: "Freeze" },
+              { value: "3", label: "Approved" },
+            ]);
+            break;
+          case 5:
+            setOptions([
+              { value: "5", label: "Block" },
+              { value: "3", label: "Approved" },
+            ]);
+            break;
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;
@@ -149,7 +156,6 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   };
 
   const getStatusClass = () => {
-
     switch (selectedStatus) {
       case "Pending":
         return "badge-gradient-Pending";
@@ -172,7 +178,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
 
   return (
     !isLoading ?
-      < div className="basic-customer-detail" >
+      <div className="basic-customer-detail" >
         <div className="col-xl-12 col-lg-12 col-md-12 col-12">
           <div className="profile-info">
             <div className="profile-icon-desc">
@@ -297,9 +303,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
             </div>
           </CenterModel>
         )}
-        {/* <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={showApprovalList} onSuccessApprovalClose={onSuccessApprovalClose} /> */}
         <CustomerApproval isDetailPage={true} childRef={childRef} updateCustomerApproval={updateCustomerApproval} />
-      </div >
+      </div>
       : <DataLoader />
   );
 };
