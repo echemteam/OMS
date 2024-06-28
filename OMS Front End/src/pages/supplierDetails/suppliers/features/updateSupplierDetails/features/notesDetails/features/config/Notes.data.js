@@ -3,19 +3,19 @@ import { FormFieldTypes } from "../../../../../../../../../data/formFieldType";
 
 export  const NotesFormData = {
     name: "Notes From",
-    initialState: { type: ""},
+    initialState: { note: ""},
     formFields: [
         {
-            id: "notes",
+            id: "note",
             lable: "Add Notes :",
             Field_Name: "Add Notes :",
             fieldType: FormFieldTypes.CKEDITOR,
-            dataField: "type",
+            dataField: "note",
             fieldSetting: {
               placeholder: "",
               allowSpace: true,
             },
-            // validation: [{ type: "require" }],
+             validation: [{ type: "require" }],
             style: {
               containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
             },
