@@ -13,7 +13,9 @@ import { reasonData } from "../../customers/config/CustomerData";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
+import CustomerApproval from "../cutomerApproval/CustomerApproval";
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
+  const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -96,30 +98,21 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
             setSelectedStatus(selectedOption.value);
           }
         });
-      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6" || selectedOption.value === "7" ) {
+      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6" || selectedOption.value === "7") {
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
       } else if (selectedOption.value === "3") {
-        handleShowApprovalList();
+        if (childRef.current) {
+          childRef.current.callChildFunction(customerId);
+        }
         setcustomerId(customerId);
         setStatusId(selectedOption.value);
       }
     }
   };
 
-  const handleShowApprovalList = () => {
-    setShowApprovalList(!showApprovalList);
-  };
-  const onSidebarApprovalClose = () => {
-    setShowApprovalList(!showApprovalList);
-  };
-  const onSuccessApprovalClose = () => {
-    setShowApprovalList(!showApprovalList);
-    setSelectedStatus(statusId);
-    updateCustomerApproval();
-  };
-
   const updateCustomerApproval = () => {
+    setSelectedStatus(statusId);
     let req = {
       customerId: customerID,
       statusId: statusId
@@ -302,7 +295,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
             </div>
           </CenterModel>
         )}
-        <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={showApprovalList} onSuccessApprovalClose={onSuccessApprovalClose} />
+        {/* <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={showApprovalList} onSuccessApprovalClose={onSuccessApprovalClose} /> */}
+        <CustomerApproval isDetailPage={true} childRef={childRef} updateCustomerApproval={updateCustomerApproval} />
       </div >
       : <DataLoader />
   );

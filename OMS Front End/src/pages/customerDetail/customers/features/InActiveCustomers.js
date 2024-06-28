@@ -7,12 +7,15 @@ import ToastService from '../../../../services/toastService/ToastService';
 import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
 import { securityKey } from '../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import CustomerApproval from '../../features/cutomerApproval/CustomerApproval';
 
 export const InActiveCustomers = ({ statusId, configFile }) => {
 
+  const childRef = useRef();
   const molGridRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [dataSource, setDataSource] = useState();
+  const [customerId, setCustomerId] = useState();
   const { DataRef } = useContext(CustomerListContext);
 
   const [
@@ -89,8 +92,15 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     getCustomers(request);
   };
 
+  const approvalCheckList = (data) => {
+    if (childRef.current) {
+      childRef.current.callChildFunction(data.customerId);
+    }
+    setCustomerId(data.customerId);
+  }
+
   const handleUnfreeze = (data) => {
-    handleUpdate(data)
+    approvalCheckList(data);
   }
 
   const handleActiveCustomer = (data) => {
@@ -98,12 +108,12 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
   }
 
   const handleUnBlock = (data) => {
-    handleUpdate(data)
+    approvalCheckList(data);
   }
 
-  const handleUpdate = (data) => {
+  const handleUpdate = () => {
     let req = {
-      customerId: data.customerId,
+      customerId: customerId,
       statusId: StatusEnums.Approved
     }
     updateCustomerStatus(req)
@@ -144,6 +154,7 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
           </CardSection>
         </div>
       </div>
+      <CustomerApproval childRef={childRef} getListApi={getListApi} updateCustomerApproval={handleUpdate} />
     </div>
   )
 }

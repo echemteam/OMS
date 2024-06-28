@@ -4,7 +4,7 @@ import ApprovalCheckList from "../../../../components/ApprovalCheckList/Approval
 import ApprovalValidateData from "../../../../components/ApprovalCheckList/approvalValidateData/ApprovalValidateData";
 import { useGetValidateCheckListMutation } from "../../../../app/services/ApprovalAPI";
 
-const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval }) => {
+const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval, isDetailPage }) => {
 
     const [isShowApproval, setIsShowApproval] = useState(false);
     const [customerId, setCustomerId] = useState(false);
@@ -19,7 +19,9 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     };
 
     const onSidebarApprovalClose = () => {
-        getListApi();
+        if (!isDetailPage) {
+            getListApi();
+        }
         setIsShowApproval(!isShowApproval);
     };
     const onSuccessApprovalClose = () => {
@@ -40,7 +42,9 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
 
     const handleValidateModalClose = () => {
         setIsShowValidateModal(!isShowValidateModal);
-        getListApi();
+        if (!isDetailPage) {
+            getListApi();
+        }
     };
     const handleModalClose = () => {
         setIsShowValidateModal(!isShowValidateModal);
@@ -64,7 +68,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
 
     return (
         <React.Fragment>
-            <ApprovalValidateData showModal={isShowValidateModal} isGetCheckListLoading={isGetCheckListLoading} customerId={customerId}
+            <ApprovalValidateData showModal={isShowValidateModal} isGetCheckListLoading={isGetCheckListLoading} customerId={customerId} isDetailPage={isDetailPage}
                 handleShowValidateModal={handleShowValidateModal} handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList} />
 
             <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval}
