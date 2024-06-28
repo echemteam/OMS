@@ -27,6 +27,7 @@ import {
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import CustomerApproval from "../../features/cutomerApproval/CustomerApproval";
+import { getAuthProps } from "../../../../lib/authenticationLibrary";
 
 export const CustomersList = ({ statusId, configFile }) => {
 
@@ -110,6 +111,9 @@ export const CustomersList = ({ statusId, configFile }) => {
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
+        const authData = getAuthProps();
+        // const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authData.user.userID);
+        
         setDataSource(isListeData.dataSource);
       }
       if (isListeData.totalRecord) {
