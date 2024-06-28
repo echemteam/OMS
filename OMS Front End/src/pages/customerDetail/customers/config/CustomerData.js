@@ -157,9 +157,10 @@ export const SubmittedCustomerGridConfig = {
       width:"10%",
       allowShort: false,
       colType: GridColumnType.CHECKBOX,
-      // colSettings: {
-      //   allowEdit: true,
-      // },
+      colSettings: {
+        allowCheckbox: true,
+        allowDisable: false,
+      },
     },
     {
       name: "Action",

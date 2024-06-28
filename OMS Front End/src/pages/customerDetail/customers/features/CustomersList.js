@@ -65,6 +65,7 @@ export const CustomersList = ({ statusId, configFile }) => {
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
+    const approvalAction = configFile?.columns.find((column) => column.name === "Approve");
     if (actionColumn) {
       const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
       const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
@@ -94,6 +95,11 @@ export const CustomersList = ({ statusId, configFile }) => {
       }
       if (actionColumn.defaultAction.allowUnfreeze) {
         actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+      }
+      if (approvalAction) {
+        if (approvalAction.colSettings.allowCheckbox) {
+          approvalAction.colSettings.allowCheckbox = true;
+        }
       }
     }
   }, [configFile]);
