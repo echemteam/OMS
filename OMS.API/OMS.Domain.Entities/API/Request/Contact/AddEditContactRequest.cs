@@ -7,7 +7,7 @@ namespace OMS.Domain.Entities.API.Request.Contact
         public int? CustomerContactId { get; set; }
         public int? ContactId { get; set; }
         public int? CustomerId { get; set; }
-        public short? ContactTypeId { get; set; }
+        public string? ContactTypeId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public bool? IsPrimary { get; set; }

@@ -109,23 +109,25 @@ const SupplierNotesDetail = (props) => {
     const newformData = { ...formData };
     newformData.initialState = {
       ...newformData,
-      type: data.note,
+      note: data.note,
       supplierNoteId: data.supplierNoteId,
     };
     setFormData(newformData);
   };
   const handleSupplierNotes = () => {
     let supplierNotesData = notesFormRef.current.getFormData();
-    let request = {
-      supplierId: supplierId,
-      note: supplierNotesData.type,
-    };
+   
     if (supplierNotesData && !supplierNotesData.supplierNoteId) {
+      let request = {
+        supplierId: supplierId,
+        note: supplierNotesData.note,
+      };
       addSupplierNotes(request);
 
     } else if (supplierNotesData && supplierNotesData.supplierNoteId) {
       const updateRequest = {
-        ...request,
+        supplierId: supplierId,
+        note: supplierNotesData.note,
         supplierNoteId: supplierNotesData.supplierNoteId,
       };
       updateSupplierNotes(updateRequest)
