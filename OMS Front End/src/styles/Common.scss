@@ -788,7 +788,7 @@ a {
 
         &.active {
           margin-bottom: 0;
-          color: #000;
+          color: var(--themeColor);
           position: relative;
           padding-bottom: 16px;
           font-size: var(--commonFont);
@@ -899,7 +899,7 @@ a {
 
           &.active {
             margin-bottom: 0;
-            color: #000;
+            color: var(--themeColor);
             position: relative;
             padding-bottom: 15px;
             border-bottom: 2px solid var(--themeColor);

@@ -14,6 +14,7 @@
 
     .security-key {
       width: 70%;
+      font-size: var(--commonFont);
     }
 
     .permission-dropdown {
@@ -69,6 +70,7 @@
 
           .security-key {
             width: 70%;
+            font-size: var(--commonFont-small);
 
             p {
               font-size: var(--commonFont);

@@ -10,7 +10,7 @@
     }
   }
   .ck.ck-editor__editable_inline p {
-    font-size: 80%;
+    font-size: var(--commonFont-small) !important;
   }
   .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content,
   .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content.ck-rounded-corners {
