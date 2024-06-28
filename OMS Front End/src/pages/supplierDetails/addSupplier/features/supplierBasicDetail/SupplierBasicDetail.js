@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import CardSection from '../../../../../components/ui/card/CardSection';
 import { supplierBasicData } from '../supplierBasicDetail/config/SupplierBasicDetail.data';
-import { useAddEditSupplierBasicInformationMutation, useLazyGetAllSupplierTypeQuery, useLazyGetAllUserQuery } from '../../../../../app/services/supplierAPI'
+import { useAddEditSupplierBasicInformationMutation, useLazyGetAllSupplierTypeQuery } from '../../../../../app/services/supplierAPI'
 import ToastService from '../../../../../services/toastService/ToastService';
 import { getTaxIdMinMaxLength } from '../../../../customerDetail/features/basicDetail/config/TaxIdValidator';
 import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
@@ -10,6 +10,7 @@ import Buttons from '../../../../../components/ui/button/Buttons';
 import { useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery } from '../../../../../app/services/basicdetailAPI';
 import { securityKey } from '../../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import { useLazyGetAllUserQuery } from '../../../../../app/services/commonAPI';
 
 const SupplierBasicDetail = (props) => {
 

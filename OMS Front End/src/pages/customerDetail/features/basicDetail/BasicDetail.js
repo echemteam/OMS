@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { basicDetailFormDataHalf, securityKeys } from "./config/BasicDetailForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
-import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetAllUserQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();

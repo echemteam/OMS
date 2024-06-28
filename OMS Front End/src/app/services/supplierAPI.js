@@ -70,14 +70,7 @@ const supplierAPI = createApi({
             transformErrorResponse: transformErrorResponse,
         }),
 
-        getAllUser: builder.query({
-            query: () => ({
-                url: encryptQueryString('/Common/GetAllUser'),
-                method: 'GET',
-            }),
-            transformResponse: transformSucessResponse,
-            transformErrorResponse: transformErrorResponse,
-        }),
+      
     })
 })
 
@@ -89,7 +82,7 @@ export const {
     useGetSuppliersMutation,
     useLazyGetSupplierBasicInformationByIdQuery,
     useLazyGetAllSupplierTypeQuery,
-    useLazyGetAllUserQuery,
+  
 } = supplierAPI
 
 export default supplierAPI;

@@ -31,12 +31,20 @@ const commonAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
-        })
+        }),
+        getAllUser: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Common/GetAllUser'),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
     })
 })
 
 export const {
-    useGetAllDeliveryCarriersQuery, useGetAllDeliveryMethodsQuery, useLazyGetAllDeliveryAccountsQuery
+    useGetAllDeliveryCarriersQuery, useGetAllDeliveryMethodsQuery, useLazyGetAllDeliveryAccountsQuery,  useLazyGetAllUserQuery,
 } = commonAPI
 
 export default commonAPI;
