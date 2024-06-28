@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useRef } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 //** Lib's */
 import "./ApprovalValidateData.scss";
 import Image from "../../image/Image";
@@ -6,37 +7,33 @@ import Buttons from "../../ui/button/Buttons";
 import { AppIcons } from "../../../data/appIcons";
 import DataLoader from "../../ui/dataLoader/DataLoader";
 import CenterModel from "../../ui/centerModel/CenterModel";
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { encryptUrlData } from "../../../services/CryptoService";
+import ToastService from "../../../services/toastService/ToastService";
 
-const ApprovalValidateData = ({
-  validateCheckList,
-  handleDone,
-  showModal,
-  handleShowValidateModal,
-  handleValidateModalClose,
-  isGetCheckListLoading,
-  customerId,
-  isDetailPage
-}) => {
+const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckList, handleDone, showModal, handleShowValidateModal, handleValidateModalClose, isGetCheckListLoading, customerId, isDetailPage }) => {
 
-  const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleItems, setVisibleItems] = useState([]);
+  const [showDoneButton, setShowDoneButton] = useState(false);
+  const [showViewButton, setShowViewButton] = useState(false);
 
   useEffect(() => {
-    if (currentIndex < validateCheckList.length) {
-      const timer = setTimeout(() => {
-        setVisibleItems((prevItems) => [
-          ...prevItems,
-          validateCheckList[currentIndex],
-        ]);
-        setCurrentIndex((prevIndex) => prevIndex + 1);
-      }, 500);
+    if (validateCheckList) {
+      if (currentIndex < validateCheckList.length) {
+        const timer = setTimeout(() => {
+          setVisibleItems((prevItems) => [
+            ...prevItems,
+            validateCheckList[currentIndex],
+          ]);
+          setCurrentIndex((prevIndex) => prevIndex + 1);
+        }, 500);
 
-      return () => clearTimeout(timer);
+        if (currentIndex === (validateCheckList.length - 1)) {
+          showButtons();
+        }
+        return () => clearTimeout(timer);
+      }
     }
   }, [currentIndex, validateCheckList]);
 
@@ -44,6 +41,8 @@ const ApprovalValidateData = ({
     if (showModal) {
       setCurrentIndex(0);
       setVisibleItems([]);
+      setShowDoneButton(false);
+      setShowViewButton(false);
     }
   }, [showModal])
 
@@ -56,6 +55,17 @@ const ApprovalValidateData = ({
     );
   };
 
+  const showButtons = () => {
+    const allDone = visibleItems.some(data => data.isValid === false);
+    if (!allDone) {
+      setShowDoneButton(true);
+      setShowViewButton(false);
+    } else {
+      setShowDoneButton(false);
+      setShowViewButton(true);
+    }
+  }
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -65,8 +75,20 @@ const ApprovalValidateData = ({
   const handleRedirectToDetails = () => {
     const url = `/viewCustomer/${encryptUrlData(customerId)}`;
     window.open(url, "_blank");
-    // handleValidateModalClose();
   }
+
+  const validateApprovalCheckList = () => {
+    const allDone = visibleItems.some(data => data.isValid === false)
+    if (allDone) {
+      ToastService.warning("Please fill the ")
+    } else {
+      handleValidateSuccess();
+    }
+  }
+
+  useImperativeHandle(parentRef, () => ({
+    validateApprovalCheckList,
+  }));
 
   return (
     <>
@@ -84,7 +106,6 @@ const ApprovalValidateData = ({
                           <Image imagePath={item.isValid ? AppIcons.RightTickIcon : AppIcons.UnTickIcon} />
                         </span>
                         <span className="validation-msg" dangerouslySetInnerHTML={{ __html: boldSpecificWords(item.messages), }} />
-                        {/* <span className="validation-msg">{item.messages}</span> */}
                       </li>
                     ))}
                   </ul>
@@ -94,9 +115,11 @@ const ApprovalValidateData = ({
             <div className="col-md-12 mt-lg-4">
               <div className="d-flex align-item-center justify-content-center">
                 <div className="d-flex align-item-center">
-                  <Buttons buttonTypeClassName="theme-button" buttonText="Done" onClick={handleDone} />
-                  {!isDetailPage && visibleItems.some(data => data.isValid === false) ?
-                    <Buttons buttonTypeClassName="theme-button ml-5" buttonText="Redirect to Detail" onClick={handleRedirectToDetails} /> :
+                  {showDoneButton ?
+                    <Buttons buttonTypeClassName="theme-button" buttonText="Done" onClick={handleDone} />
+                    : null}
+                  {showViewButton ?
+                    <Buttons buttonTypeClassName="theme-button ml-5" buttonText="View Customer Details" onClick={handleRedirectToDetails} /> :
                     null}
                   <Buttons buttonTypeClassName="dark-btn ml-5" buttonText="Cancel" onClick={handleValidateModalClose} />
                 </div>
