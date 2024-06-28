@@ -31,10 +31,6 @@ const Layout = (props) => {
     )
     : "";
 
-  if (routhPath === '') {
-    navigate("/Users")
-  }
-
   // Check if the user is authorized to access the current route
   const isAuthorize = renderComponent?.securityKey ? hasPermission(renderComponent.securityKey) : false;
 
