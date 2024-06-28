@@ -55,14 +55,14 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           break;
           case 4:
             setOptions([
+              { value: "4", label: "Freeze" },
               { value: "3", label: "Approved" },
-              { value: "4", label: "Freeze" }
             ]);
             break;
           case 5:
             setOptions([
+              { value: "5", label: "Block" },
               { value: "3", label: "Approved" },
-              { value: "5", label: "Block" }
             ]);
             break;
         case 6:
