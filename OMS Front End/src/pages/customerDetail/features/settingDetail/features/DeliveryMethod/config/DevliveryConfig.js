@@ -19,6 +19,7 @@ export const addEditDeliveryFormData = {
             fieldSetting: {
                 placeholder: "Select Charge Type",
                 allowSpace: true,
+                isDisabled: false,
             },
             validation: [{ type: "require" }],
             style: {
@@ -81,7 +82,11 @@ export const OurAccountGridConfig = {
             name: "Is Primary",
             fieldName: "isPrimary",
             width: "20%",
-            colType: GridColumnType.CHECKBOX
+            colType: GridColumnType.CHECKBOX,
+            colSettings: {
+                allowCheckbox: true,
+                allowDisable: true
+            }
         },
 
         {

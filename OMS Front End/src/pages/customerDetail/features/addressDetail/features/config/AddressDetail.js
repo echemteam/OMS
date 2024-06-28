@@ -1,19 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import FormCreator from "../../../../../../components/Forms/FormCreator";
-import Buttons from "../../../../../../components/ui/button/Buttons";
-import { addressFormData } from "./AddressForm.data";
-import CardSection from "../../../../../../components/ui/card/CardSection";
-import { AppIcons } from "../../../../../../data/appIcons";
-import SidebarModel from "../../../../../../components/ui/sidebarModel/SidebarModel";
+//** Libs's */
 import AddressCard from "../AddressCard";
-import {
-  useLazyGetAllAddressTypesQuery,
-  useLazyGetAllCitiesQuery,
-  useLazyGetAllStatesQuery,
-} from "../../../../../../app/services/addressAPI";
-import { useLazyGetAllCountriesQuery } from "../../../../../../app/services/basicdetailAPI";
-import ToastService from "../../../../../../services/toastService/ToastService";
+import { addressFormData } from "./AddressForm.data";
+import { AppIcons } from "../../../../../../data/appIcons";
+import Buttons from "../../../../../../components/ui/button/Buttons";
+import FormCreator from "../../../../../../components/Forms/FormCreator";
+import CardSection from "../../../../../../components/ui/card/CardSection";
+import SidebarModel from "../../../../../../components/ui/sidebarModel/SidebarModel";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+//** Service's */
+import ToastService from "../../../../../../services/toastService/ToastService";
+import { useLazyGetAllCountriesQuery } from "../../../../../../app/services/basicdetailAPI";
+import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../../app/services/addressAPI";
 
 const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMutation, getAddresssByCustomerId, mainId, isSupplier, SecurityKey }) => {
   const userFormRef = useRef();

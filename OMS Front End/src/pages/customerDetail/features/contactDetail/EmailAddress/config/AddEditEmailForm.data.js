@@ -54,6 +54,10 @@ export const emailConfig = {
       fieldName: "isPrimary",
       width: "20%",
       colType: GridColumnType.CHECKBOX,
+      colSettings: {
+        allowCheckbox: true,
+        allowDisable: true
+      },
     },
     {
       name: "Action",

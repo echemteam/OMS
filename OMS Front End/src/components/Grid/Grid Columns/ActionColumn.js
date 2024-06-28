@@ -194,7 +194,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             altText="DISABLE Icon" />
         </Link>
       )}
-        {rowData.status === "Approved" && col.defaultAction.allowReject && (
+      {rowData.status === "Approved" && col.defaultAction.allowReject && (
         <Link
           onClick={(e) => {
             e.preventDefault();
@@ -209,16 +209,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
         </Link>
       )}
       {rowData.status !== "Approved" && col.defaultAction.allowReject && (
-        <Link
-          onClick={(e) => {
-            e.preventDefault();
-            handleAction("REJECT", rowData);
-          }}
-          className="mr-4 view-icon w-20p"
-          title="Reject"
-        >
-
-        </Link>
+        <div className="view-reject-icon w-20p"></div>
       )}
 
     </div>

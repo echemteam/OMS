@@ -9,15 +9,16 @@ import ToastService from "../../services/toastService/ToastService";
 import { StatusEnums } from "../../common/features/Enums/StatusEnums";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
-const CustomerAddressDetails = React.lazy(() => import("./features/addressDetail/CustomerAddressDetails"));
-const ShippingSettings = React.lazy(() => import("./features/settingDetail/features/ShippingSetting/ShippingSettings"));
-const CustomerDocumentDetails = React.lazy(() => import("./features/documentsDetail/CustomerDocumentDetails"));
+//** Compoent's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
+const CustomerAddressDetails = React.lazy(() => import("./features/addressDetail/CustomerAddressDetails"));
+const CustomerDocumentDetails = React.lazy(() => import("./features/documentsDetail/CustomerDocumentDetails"));
 const CustomerContactDetails = React.lazy(() => import("./features/contactDetail/Contact/CustomerContactDetails"));
+const ShippingSettings = React.lazy(() => import("./features/settingDetail/features/ShippingSetting/ShippingSettings"));
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
+  const { activeTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
 
   const [
     updateCustomerStatus,
@@ -110,7 +111,7 @@ const AddCustomer = () => {
                   >
                     <button
                       className="step-button"
-                      // onClick={() => handleTabClick(index)}
+                    // onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">

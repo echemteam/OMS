@@ -1,24 +1,23 @@
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import { basicDetailFormDataHalf, securityKeys } from "./config/BasicDetailForm.data";
-import CardSection from "../../../../components/ui/card/CardSection";
-import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
-import ToastService from "../../../../services/toastService/ToastService";
-import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+//** Libs's */
+import { securityKey } from "../../../../data/SecurityKey";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
-import { securityKey } from "../../../../data/SecurityKey";
+import FormCreator from "../../../../components/Forms/FormCreator";
+import CardSection from "../../../../components/ui/card/CardSection";
+import { basicDetailFormDataHalf } from "./config/BasicDetailForm.data";
+import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+//** Service's */
+import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
+import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
-  // const { id } = useParams();
-  // const descrypteId = id ? decryptUrlData(id) : 0;
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
   const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
-
   const { formSetting } = basicDetailFormDataHalf;
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);

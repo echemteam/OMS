@@ -11,6 +11,7 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, editF
 
     //** State */
     const ref = useRef();
+    const { formFields } = addEditCarrierFormData;
     const { customerId } = useContext(BasicDetailContext);
     const [formData, setFormData] = useState(addEditCarrierFormData);
 
@@ -63,8 +64,8 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, editF
 
     useEffect(() => {
         if (isEdit && editFormData) {
+            formFieldsDisabled(true);
             let form = { ...addEditCarrierFormData };
-
             form.initialState = {
                 ...editFormData,
                 isCarrierPrimary: editFormData.isPrimary
@@ -72,8 +73,18 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, editF
             setFormData(form);
         } else if (!isEdit) {
             onResetData();
+            formFieldsDisabled(false);
         }
-    }, [isEdit, editFormData])
+    }, [isEdit, editFormData]);
+
+    const formFieldsDisabled = (isDisable) => {
+        if (formFields) {
+            let chargeTypeData = formFields.find(data => data.id === 'carrier');
+            if (chargeTypeData && chargeTypeData.fieldSetting) {
+                chargeTypeData.fieldSetting.isDisabled = isDisable;
+            }
+        }
+    }
 
     //** Reset Data */
     const onResetData = () => {

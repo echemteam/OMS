@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { shippingFormData } from "./config/ShippingConfig";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
+import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useLazyGetAllDeliveryAccountsQuery } from "../../../../../../app/services/commonAPI";
 import { useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation, useLazyGetShppingDeliveryCarrierAndDeliveryMethodsByIdQuery } from "../../../../../../app/services/customerSettingsAPI";
-import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
 
 //** Component's */
 const ManageCarrier = React.lazy(() => import("../Carrier/ManageCarrier"));
@@ -142,23 +142,21 @@ const ShippingSettings = () => {
 
 
   return (
-    <>
-      <div className="row horizontal-form">
-        <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler} />
-        {!isGetDefaultValueFetching ?
-          <div className="grid-section">
-            {accountTypeId === 1 ?
-              <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
-              accountTypeId === 2 ?
-                <>
-                  <ManageCarrier handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
-                  <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
-                </> : null
-            }
-          </div>
-          : <DataLoader />}
-      </div>
-    </>
+    <div className="row horizontal-form">
+      <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler} />
+      {!isGetDefaultValueFetching ?
+        <div className="grid-section">
+          {accountTypeId === 1 ?
+            <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
+            accountTypeId === 2 ?
+              <>
+                <ManageCarrier handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
+                <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
+              </> : null
+          }
+        </div>
+        : <DataLoader />}
+    </div>
   );
 };
 

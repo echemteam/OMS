@@ -16,16 +16,14 @@ const CustomerAddressDetails = ({ isEditablePage }) => {
     const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
 
     return (
-        <>{console.log(isResponsibleUser)}
-            <AddressDetail isSupplier={false}
-                isEditablePage={isEditablePage}
-                mainId={customerId ? customerId : 0}
-                SecurityKey={!isResponsibleUser ? customerSecurityKey : null}
-                getAddresssByCustomerId={useLazyGetAddresssByCustomerIdQuery}
-                addAddressMutation={useAddAddressMutation}
-                updateAddAddressMutation={useUpdateAddAddressMutation}
-            />
-        </>
+        <AddressDetail isSupplier={false}
+            isEditablePage={isEditablePage}
+            mainId={customerId ? customerId : 0}
+            SecurityKey={!isResponsibleUser ? customerSecurityKey : null}
+            getAddresssByCustomerId={useLazyGetAddresssByCustomerIdQuery}
+            addAddressMutation={useAddAddressMutation}
+            updateAddAddressMutation={useUpdateAddAddressMutation}
+        />
     )
 }
 

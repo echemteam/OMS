@@ -6,8 +6,7 @@ import { contactDetailFormData } from "./config/ContactDetailForm.data";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import {
   contactCustomerTransformData,
-  contactSupplierTransformData,
-  contactTransformData,
+  contactSupplierTransformData
 } from "../../../../../utils/TransformData/TransformAPIData";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */

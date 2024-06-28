@@ -123,6 +123,10 @@ export const phoneNumberConfig = {
       fieldName: "isPrimary",
       width: "15%",
       colType: GridColumnType.CHECKBOX,
+      colSettings: {
+        allowCheckbox: true,
+        allowDisable: true
+      },
     },
     {
       name: "Action",
