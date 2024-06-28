@@ -38,7 +38,6 @@ a {
   font-size: 87%;
   color: var(--textColor);
   font-weight: 600;
-  text-transform: uppercase;
   min-height: 35px;
   display: flex;
   align-items: center;
@@ -46,8 +45,10 @@ a {
 
 .checkbox-part {
   .input-label {
-    text-transform: capitalize !important;
-    font-size: inherit !important;
+    // text-transform: capitalize !important;
+    // font-size: inherit !important;
+    font-size: 87%;
+    font-weight: 600;
   }
 }
 
@@ -1877,6 +1878,32 @@ input[type=checkbox]:disabled {
           &:nth-child(4) {
             display: flex;
             justify-content: flex-start;
+          }
+        }
+      }
+    }
+  }
+}
+
+.customer-list-submitted {
+  table {
+    thead {
+      tr {
+        th {
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
           }
         }
       }
