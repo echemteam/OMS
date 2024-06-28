@@ -6,6 +6,7 @@
 .css-b62m3t-container {
   width: 100%;
 }
+
 .css-16xfy0z-control,
 .css-13cymwt-control {
   box-shadow: none !important;
@@ -18,6 +19,7 @@
   overflow-y: auto !important;
   transition: 0.5s all !important;
 }
+
 .css-16xfy0z-control,
 .css-12zf3ro-control {
   &:hover {
@@ -31,6 +33,7 @@
     transition: 0.5s all !important;
   }
 }
+
 .css-t3ipsp-control {
   height: 35px;
   box-shadow: none !important;
@@ -51,20 +54,13 @@
   }
 }
 
-// .css-1jqq78o-placeholder {
-//   font-size: 90% !important;
-// }
-
 .css-1nmdiqs-menu {
-  font-size: 90% !important;
+  font-size: var(--commonFont-small) !important;
   z-index: 99;
-  // .css-1n6sfyn-MenuList{
-  //   width: 25px;
-  // }
 }
 
 .css-1jqq78o-placeholder {
-  font-size: 75% !important;
+  font-size: var(--commonFont-small) !important;
   line-height: normal !important;
 }
 
@@ -101,9 +97,10 @@
 // .css-1dimb5e-singleValue{
 //   width: 50px !important
 // }
-.css-1dimb5e-singleValue{
-  font-size: 80%;
+.css-1dimb5e-singleValue {
+  font-size: var(--commonFont-small);
 }
+
 @media only screen and (max-width: 1366px) {
   .css-1hb7zxy-IndicatorsContainer {
     .css-1xc3v61-indicatorContainer {

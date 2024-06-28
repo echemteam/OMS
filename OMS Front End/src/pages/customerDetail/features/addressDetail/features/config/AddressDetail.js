@@ -28,35 +28,37 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [buttonVisible, setButtonVisible] = useState(true);
 
   useEffect(() => {
-    if (isEditablePage && SecurityKey) {
-      const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
-      const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
-      if (hasAddPermission) {
-        if (hasAddPermission.hasAccess === true) {
-          setButtonVisible(true);
-        }
-        else {
-          setButtonVisible(false);
-        }
-      }
-      if (hasEditPermission && formSetting) {
-        if (updateSetData) {
-          if (hasEditPermission.isViewOnly === true) {
-            formSetting.isViewOnly = true;
-            setIsButtonDisable(true);
-          } else {
-            formSetting.isViewOnly = false;
-            setIsButtonDisable(false);
-          }
-        } else if (!updateSetData) {
+    if (isEditablePage) {
+      if (SecurityKey) {
+        const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+        const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
+        if (hasAddPermission) {
           if (hasAddPermission.hasAccess === true) {
-            formSetting.isViewOnly = false;
-            setIsButtonDisable(false);
+            setButtonVisible(true);
+          }
+          else {
+            setButtonVisible(false);
+          }
+        }
+        if (hasEditPermission && formSetting) {
+          if (updateSetData) {
+            if (hasEditPermission.isViewOnly === true) {
+              formSetting.isViewOnly = true;
+              setIsButtonDisable(true);
+            } else {
+              formSetting.isViewOnly = false;
+              setIsButtonDisable(false);
+            }
+          } else if (!updateSetData) {
+            if (hasAddPermission.hasAccess === true) {
+              formSetting.isViewOnly = false;
+              setIsButtonDisable(false);
+            }
           }
         }
       }
     }
-  }, [isEditablePage, isSupplier, SecurityKey , updateSetData]);
+  }, [isEditablePage, isSupplier, SecurityKey, updateSetData]);
 
   const [
     getAllAddressTypes,

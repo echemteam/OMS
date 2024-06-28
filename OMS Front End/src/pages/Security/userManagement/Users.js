@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import useDebounce from "../../../app/customHooks/useDebouce";
 import { securityKey } from "../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
-
+import "./Users.scss"
 const Users = () => {
 
   const molGridRef = useRef();
@@ -87,7 +87,7 @@ const Users = () => {
   useEffect(() => {
     if (hasAddPermission.hasAccess === true) {
       formSetting.isViewOnly = false;
-      setButtonVisible(false);
+      setButtonVisible(true);
     }
   }, [hasEditPermission, hasAddPermission, formSetting.isViewOnly])
 
@@ -148,7 +148,7 @@ const Users = () => {
     <div>
       <CardSection
         cardTitle="View All Users"
-        cardSubTitle="Sub title add hear"
+        // cardSubTitle="Sub title add hear"
         searchInputName="Search By User Name"
         titleButtonClick={AddUser}
         buttonClassName="btn theme-button"
