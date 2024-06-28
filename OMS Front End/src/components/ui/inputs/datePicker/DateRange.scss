@@ -6,7 +6,7 @@
   transition: 0.5s all;
   box-shadow: none !important;
   padding: 0 8px;
-  font-size: 90%;
+  font-size:  var(--commonFont-extra);
   outline: none !important;
   &:focus-visible,
   &:focus {
@@ -144,7 +144,7 @@
         box-shadow: none !important;
         padding: 0 8px;
         outline: none !important;
-        font-size: 90%;
+        font-size:  var(--commonFont-small);
         &:focus-visible,
         &:focus {
           box-shadow: none !important;

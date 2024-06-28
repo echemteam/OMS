@@ -11,7 +11,7 @@ const changePasswordInfo = {
     formFields: [
         {
             id: "password",
-            lable: "Password",
+            lable: "Password :",
             Field_Name: "Password",
             fieldType: FormFieldTypes.PASSWORD,
             dataField: "password",
@@ -25,7 +25,7 @@ const changePasswordInfo = {
         },
         {
             id: "confirmPassword",
-            lable: "Confirm Password",
+            lable: "Confirm Password :",
             Field_Name: "Confirm Password",
             fieldType: FormFieldTypes.PASSWORD,
             dataField: "confirmPassword",

@@ -41,13 +41,13 @@
             background: var(--gradient-theme);
             border-radius: 100%;
             color: var(--whiteColor);
-            font-size: 110%;
+            font-size: var(--commonFont-large);
             box-shadow: var(--card-shadow);
           }
         }
 
         h5 {
-          font-size: 122%;
+          font-size: var(--commonFont-extraLarge);
           font-weight: 600;
           color: var(--themeColor);
           margin-bottom: 0px;
@@ -112,12 +112,12 @@
           max-width: 120px;
           font-weight: bold;
           color: var(--textColor);
-          font-size: 94%;
+          font-size: var(--commonFont-small);
           padding-top: 2px;
         }
         .info-desc{
           padding-top: 2px;
-          font-size: 94%;
+          font-size: var(--commonFont-small);
           color: var(--textColor);
           word-break: break-all;
         }

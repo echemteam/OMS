@@ -25,12 +25,15 @@
 .search-part {
   position: relative;
   width: 100%;
+  border: 1px solid var(--inputBorder);
+  border-radius: 5px;
+  overflow: hidden;
 
   input {
     border-radius: 2px !important;    
     padding-left: 40px;
     border: none !important;
-    font-size: 115%;
+    font-size: var(--commonFont);
     &:focus{
       border: none !important;
       padding-left: 45px !important;
@@ -54,7 +57,7 @@
       padding: 0;
       color: var(--textColor);
       font-weight: bolder;
-      font-size: 115%;
+      font-size: var(--commonFont);
       img {
         width: 30px;
         filter: unset;
@@ -93,7 +96,7 @@
   }
   .search-part{
     input{
-      font-size: 100%;
+      font-size: var(--commonFont);
     }
   }
 }

@@ -71,7 +71,7 @@
       margin-right: 15px;
       height: 17px;
       width: 17px;
-      font-size: 10px;
+      font-size:  var(--commonFont-extraSmall);
       background: var(--gradient-theme);
       color: var(--whiteColor);
       border-radius: 100%;
@@ -167,11 +167,11 @@
           opacity: 1;
           font-weight: 600;
           margin-bottom: 0;
-          font-size: 115%;
+          font-size:  var(--commonFont-large);
         }
 
         .small-txt {
-          font-size: 90%;
+          font-size:  var(--commonFont-small);
           color: var(--textColorLight);
         }
       }
@@ -215,7 +215,7 @@
           width: auto;
           padding: 7px 10px !important;
           border-radius: 3px;
-          font-size: 90%;
+          font-size:  var(--commonFont-small);
           background: linear-gradient(to right, #2d3641db, #000000db);
 
           &:hover {
