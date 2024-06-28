@@ -7,7 +7,7 @@ export const Menu = [
     to: "/",
     iconClass: "bi bi-file-earmark-medical",
     subMenu: false,
-    securityKey: securityKey.DASHBOARD,
+    securityKey: "",
     children: []
   },
   {

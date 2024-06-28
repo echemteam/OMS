@@ -49,7 +49,7 @@ export const ComponentNavigation = [
     component: Dashboard,
     hasParams: false,
     text: 'Dashboard Page',
-    securityKey: securityKey.DASHBOARD
+    securityKey:""
   },
   {
     id: 'demoForm',
