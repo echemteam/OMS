@@ -53,22 +53,24 @@ const FinancialSettings = (props) => {
   }, [isGetAllPaymentMethodFetching, isGetAllPaymentMethodSuccess, isGetAllPaymentMethodData,]);
 
   useEffect(() => {
-    if (isGetDetailByCustomerIDSuccess && !isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDData) {
+
+    if (!isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDSuccess  && isGetDetailByCustomerIDData) {
       if (isGetDetailByCustomerIDData) {
         let formData = { ...customerSettingFormData };
         formData.initialState = {
           ...customerSettingFormData.initialState,
           customerAccountingSettingId: isGetDetailByCustomerIDData.customerAccountingSettingId,
-          paymentTermId: isGetDetailByCustomerIDData.paymentTermId,
+          paymentTermId: isGetDetailByCustomerIDData.paymentTermId  ,
           creditLimit: isGetDetailByCustomerIDData.creditLimit,
           paymentMethodId: isGetDetailByCustomerIDData.paymentMethodId,
           billingCurrency: isGetDetailByCustomerIDData.billingCurrency,
           invoiceSubmissionInstruction: isGetDetailByCustomerIDData.invoiceSubmissionInstruction,
         };
         setCustomerSettingFormData(formData);
+        setShouldRerenderFormCreator((prevState) => !prevState);
       }
     }
-  }, [isGetDetailByCustomerIDSuccess, isGetDetailByCustomerIDFetching, isGetDetailByCustomerIDData,]);
+  }, [isGetDetailByCustomerIDFetching, isGetDetailByCustomerIDSuccess,  isGetDetailByCustomerIDData,]);
 
   useEffect(() => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
@@ -80,6 +82,7 @@ const FinancialSettings = (props) => {
   }, [isAddEditCustomerSettingsSuccess, isAddEditCustomerSettingsData]);
 
   const onhandleEdit = () => {
+
     const settingFormData = settingFormRef.current.getFormData();
     if (settingFormData && !settingFormData.customerAccountingSettingId) {
       const request = {
@@ -90,6 +93,7 @@ const FinancialSettings = (props) => {
         billingCurrency: settingFormData.billingCurrency.value,
       };
       addEditCustomerSettings(request);
+      
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
       const updaterequest = {
         ...settingFormData,
