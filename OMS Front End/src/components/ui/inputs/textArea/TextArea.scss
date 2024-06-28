@@ -10,7 +10,7 @@
     outline: none;
     width: 100%;
     min-height: 120px;
-    font-size: 90%;
+    font-size: var(--commonFont-small);
     transition: 0.5s all !important;
 
     &:focus-visible,

@@ -17,7 +17,8 @@ const ApprovalValidateData = ({
   handleShowValidateModal,
   handleValidateModalClose,
   isGetCheckListLoading,
-  customerId
+  customerId,
+  isDetailPage
 }) => {
 
   const navigate = useNavigate();
@@ -94,7 +95,7 @@ const ApprovalValidateData = ({
               <div className="d-flex align-item-center justify-content-center">
                 <div className="d-flex align-item-center">
                   <Buttons buttonTypeClassName="theme-button" buttonText="Done" onClick={handleDone} />
-                  {visibleItems.some(data => data.isValid === false) ?
+                  {!isDetailPage && visibleItems.some(data => data.isValid === false) ?
                     <Buttons buttonTypeClassName="theme-button ml-5" buttonText="Redirect to Detail" onClick={handleRedirectToDetails} /> :
                     null}
                   <Buttons buttonTypeClassName="dark-btn ml-5" buttonText="Cancel" onClick={handleValidateModalClose} />

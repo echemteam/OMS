@@ -14,14 +14,14 @@ const supplierSecurityKey = {
 
 const SuplierAddressDetails = ({ isEditablePage }) => {
 
-    const { supplierId } = useContext(AddSupplierContext);
+    const { supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
     return (
         //** Also, We replace the API Name and mainId based on the customer and supplier module*/
         <AddressDetail isSupplier={true}
             isEditablePage={isEditablePage}
             mainId={supplierId ? supplierId : 0}
-            SecurityKey={supplierSecurityKey}
+            SecurityKey={!isResponsibleUser ? supplierSecurityKey : null}
             getAddresssByCustomerId={useLazyGetAddresssBySupplierIdQuery}
             addAddressMutation={useAddAddressMutation}
             updateAddAddressMutation={useUpdateAddAddressMutation}

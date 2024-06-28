@@ -11,6 +11,7 @@ import {
   SubmittedCustomerGridConfig,
 } from "./config/CustomerData";
 import InActiveCustomer from "./features/InActiveCustomer";
+import { BasicDetailContextProvider } from "../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -105,7 +106,7 @@ const Customers = () => {
 
 
   return (
-    <>
+    <BasicDetailContextProvider>
       <CustomerContext.Provider value={{ listRef }}>
         <div className="main-customer-grid">
           <div className="row">
@@ -153,7 +154,7 @@ const Customers = () => {
           </div>
         </div>
       </CustomerContext.Provider>
-    </>
+    </BasicDetailContextProvider>
   );
 };
 

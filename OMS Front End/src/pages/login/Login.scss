@@ -90,6 +90,9 @@
 
       .input-label-part {
         margin-bottom: 0;
+        .input-label{
+          min-height: unset;
+        }
 
         input {
           border-top: none !important;

@@ -1,10 +1,10 @@
 .header-section {
   height: 62px;
-  width: 98%;
+  width: 98.5%;
   background: var(--whiteColor);
   display: flex;
   align-items: center;
-  padding: 0 15px;
+  padding: 0px 15px 0 10px;
   margin: 0 auto;
   border-radius: 10px;
   box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.12);
@@ -34,7 +34,7 @@
 
       .shortcuts-list {
         position: absolute;
-        height: 420px;
+        height: 396px;
         width: 300px;
         overflow: hidden;
         overflow-y: auto;
@@ -56,19 +56,21 @@
 
           .title {
             opacity: 0.5;
-            font-size: 115%;
+            font-size: var(--commonFont-large);
           }
 
           .add-short-cut {
             transition: 0.5s all;
             color: var(--themeColor);
-            &:hover{
+
+            &:hover {
               color: var(--textColor);
             }
+
             cursor: pointer;
 
             i {
-              font-size: 130%;
+              font-size: var(--commonFont-extraLarge);
               margin: 0;
             }
           }
@@ -78,11 +80,13 @@
           .manus-items {
             border-top: 1px solid var(--inputBorder);
             border-bottom: 1px solid var(--inputBorder);
-            &:first-child{
+
+            &:first-child {
               border-top: none;
               border-bottom: 0;
             }
-            &:last-child{
+
+            &:last-child {
               border-top: none;
               border-bottom: 0;
             }
@@ -90,10 +94,12 @@
             .shortcut-menus {
               border-right: 1px solid var(--inputBorder);
               padding: 15px;
-              &:nth-child(even){
+
+              &:nth-child(even) {
                 border: none;
               }
-              .shortcuts{
+
+              .shortcuts {
                 padding: 15px;
                 display: flex;
                 align-items: center;
@@ -101,7 +107,9 @@
                 flex-direction: column;
                 cursor: pointer;
                 transition: 0.4s all;
-                .shortcut-icon{
+                height: 100%;
+
+                .shortcut-icon {
                   background: var(--linkMenu);
                   height: 40px;
                   width: 40px;
@@ -110,26 +118,31 @@
                   align-items: center;
                   justify-content: center;
                   color: var(--textColor);
-                  img{
+
+                  img {
                     width: 20px;
                     height: 20px;
 
                   }
                 }
-                .shortcut-desc{
+
+                .shortcut-desc {
                   text-align: center;
                   margin-top: 10px;
-                  h6{
-                    font-size: 105%;
+
+                  h6 {
+                    font-size: var(--commonFont);
                     margin: 0;
                     font-weight: 600;
                   }
-                  p{
+
+                  p {
                     margin: 0;
-                    font-size: 90%;
+                    font-size: var(--commonFont-small);
                   }
                 }
-                &:hover{
+
+                &:hover {
                   background: #4359710a;
                 }
               }
@@ -187,7 +200,7 @@
             -o-border-radius: 100%;
             top: 0px;
             right: -4px;
-            font-size: 8px;
+            font-size:  var(--commonFont-extraSmall);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -221,7 +234,7 @@
 
             .title {
               opacity: 0.5;
-              font-size: 115%;
+              font-size:  var(--commonFont-large);
             }
 
             .clear-all {
@@ -229,7 +242,8 @@
               cursor: pointer;
               font-weight: 600;
               transition: 0.5s all;
-              &:hover{
+
+              &:hover {
                 color: var(--textColor);
               }
             }
@@ -287,10 +301,6 @@
                   align-items: center;
                   justify-content: center;
                   border-radius: 100%;
-                  -webkit-border-radius: 100%;
-                  -moz-border-radius: 100%;
-                  -ms-border-radius: 100%;
-                  -o-border-radius: 100%;
                   min-width: 40px;
                   max-width: 40px;
                   height: 40px;
@@ -298,14 +308,14 @@
                   opacity: 0.7;
 
                   i {
-                    font-size: 21px;
+                    font-size: var(--commonFont-2extraLarge);
                     line-height: 21px;
                   }
                 }
 
                 .notification-time {
                   a {
-                    font-size: 12px;
+                    font-size: var(--commonFont-small);
                     line-height: normal;
                     color: var(--blackColor) !important;
 
@@ -316,7 +326,7 @@
 
                   .time-sec {
                     color: var(--blackColor);
-                    font-size: 10px;
+                    font-size: var(--commonFont-extraSmall);
                     opacity: 0.6;
                   }
                 }
@@ -331,13 +341,17 @@
             align-items: center;
             justify-content: center;
             padding: 10px;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
 
             a {
               cursor: pointer;
               font-weight: 600;
               color: var(--themeColor);
               transition: 0.5s all;
-              &:hover{
+
+              &:hover {
                 color: var(--textColor);
               }
             }
@@ -368,7 +382,7 @@
           background: var(--textColor);
           color: var(--whiteColor);
           border-radius: 100%;
-          font-size: 18px;
+          font-size: var(--commonFont-extraLarge);
           height: 35px;
           width: 35px;
           display: flex;
@@ -444,14 +458,14 @@
 
                 &.bi {
                   padding-top: 2px;
-                  font-size: 100%;
+                  font-size: var(--commonFont);
                   margin-bottom: 0 !important;
                 }
 
                 &::before {
                   line-height: inherit;
                   margin-right: 7px;
-                  font-size: 115%;
+                  font-size: var(--commonFont);
                 }
 
                 &.name-title {
