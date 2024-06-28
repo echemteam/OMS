@@ -213,7 +213,7 @@ const SecurityRoleManagement = () => {
       <CardSection
         cardTitle="Security Roles"
         // cardSubTitle="Sub title add hear"
-        buttonClassName="btn dark-btn"
+        buttonClassName="btn theme-button"
         rightButton={buttonVisible ? true : false}
         buttonText="Add"
         textWithIcon={true}
