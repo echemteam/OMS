@@ -50,11 +50,12 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<List<GetEmailByContactIdResponse>> GetEmailByContactId(int contactId)
+        public async Task<List<GetEmailByContactIdResponse>> GetEmailByContactId(int contactId, short ownerTypeId)
         {
             List<GetEmailByContactIdResponse> getEmailByContactIdResponse = await _context.GetList<GetEmailByContactIdResponse>(GETEMAILBYCONTACTID, new
             {
-                contactId
+                contactId,
+                ownerTypeId
             }, commandType: CommandType.StoredProcedure);
             return getEmailByContactIdResponse;
 

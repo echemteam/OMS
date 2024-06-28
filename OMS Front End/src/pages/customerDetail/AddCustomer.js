@@ -66,7 +66,7 @@ const AddCustomer = () => {
     },
     {
       label: "Setting",
-      subLabel: "Shipping Method",
+      subLabel: "Enter Customer Shipping Method",
       content: (
         <>
           <div className="mt-4 mb-5">
@@ -117,7 +117,7 @@ const AddCustomer = () => {
                   >
                     <button
                       className="step-button"
-                    // onClick={() => handleTabClick(index)}
+                      // onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">

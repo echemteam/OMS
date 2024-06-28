@@ -9,6 +9,6 @@ namespace OMS.Application.Services.EmailAddress
         Task<AddEntityDTO<int>> AddContactEmail(AddContactEmailRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> UpdateContactEmail(UpdateContactEmailRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> DeleteContactEmail(int emailId, int deletedBy);
-        Task<List<GetEmailByContactIdResponse>> GetEmailByContactId(int contactId);
+        //Task<List<GetEmailByContactIdResponse>> GetEmailByContactId(int contactId);
     }
 }

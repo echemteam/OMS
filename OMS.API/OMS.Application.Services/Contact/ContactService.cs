@@ -40,14 +40,14 @@ namespace OMS.Application.Services.Contact
                 List<AddContactPhoneRequest> PhoneDT = requestData.PhoneList!;
 
                 int contactId = responceData.KeyValue;
-                short onerTypeId = 0;
+                short ownerTypeId = 0;
                 if (requestData.CustomerId > 0 && responceData.KeyValue > 0)
                 {
-                    onerTypeId = 3;
+                    ownerTypeId = 3;
                 }
                 else if (requestData.SupplierId > 0 && responceData.KeyValue > 0)
                 {
-                    onerTypeId = 4;
+                    ownerTypeId = 4;
                 }
 
                 if (requestData.EmailList != null && requestData.EmailList.Count > 0)
@@ -58,7 +58,7 @@ namespace OMS.Application.Services.Contact
                
                     foreach (DataRow row in emailDataTable.Rows)
                     {
-                        row["OwnerTypeId"] = onerTypeId;
+                        row["OwnerTypeId"] = ownerTypeId;
                         row["CreatedBy"] = CurrentUserId;
                        
                     }
@@ -73,7 +73,7 @@ namespace OMS.Application.Services.Contact
                  
                     foreach (DataRow row in phoneDataTable.Rows)
                     {
-                        row["OwnerTypeId"] = onerTypeId;
+                        row["OwnerTypeId"] = ownerTypeId;
                         row["CreatedBy"] = CurrentUserId;  
                     }
                     _ = await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
@@ -110,11 +110,13 @@ namespace OMS.Application.Services.Contact
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId)
         {
             List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId);
+            short ownerTypeId = 3;
+
             if (contactList != null && contactList.Count > 0)
             {
                 foreach (var contact in contactList)
                 {
-                    contact.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId);
+                    contact.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
                     contact.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
                 }
             }
@@ -124,11 +126,13 @@ namespace OMS.Application.Services.Contact
         public async Task<List<GetContactBySupplierIdResponse>> GetContactBySupplierId(int supplierId)
         {
             List<GetContactBySupplierIdResponse> contactList = await repositoryManager.contact.GetContactBySupplierId(supplierId);
+            short ownerTypeId = 4;
+
             if (contactList != null && contactList.Count > 0)
             {
                 foreach (var contact in contactList)
                 {
-                    contact.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId);
+                    contact.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
                     contact.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
                 }
             }
