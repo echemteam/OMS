@@ -32,7 +32,10 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     if (data) {
       let request = {
         ...data,
-        contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
+        // contactTypeId: data.contactTypeId && typeof data.contactTypeId === "object" ? data.contactTypeId.value : data.contactTypeId,
+        contactTypeId: data.contactTypeId
+          ? data.contactTypeId.map(String).join(",")
+          : null,
         customerId: isSupplier === false ? mainId : 0,
         contactId: contactId,
         customerContactId: customerContactId,
@@ -96,6 +99,10 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         contactTypeId: data.contactTypeId,
         isPrimary: data.isPrimary
       }
+      const dropdownFieldIndex = form.formFields.findIndex(
+        (item) => item.dataField === "contactTypeId"
+      );
+      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = false;
       setFormData(form);
       setContactId(data?.contactId);
       setCustomerContactId(data?.customerContactId);

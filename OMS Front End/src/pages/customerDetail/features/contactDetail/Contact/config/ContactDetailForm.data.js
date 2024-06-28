@@ -48,6 +48,7 @@ export const contactDetailFormData = {
       fieldSetting: {
         placeholder: "Select Contact Type",
         allowSpace: true,
+        isMultiSelect: true,
       },
       validation: [{ type: "require" }],
       style: {
