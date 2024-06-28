@@ -80,14 +80,24 @@ const ShippingSettings = () => {
       if (accountTypeId > 0) {
         confirm("Change Shipping Methods?",
           "Are you sure you want Change the Shipping Method?",
-          "Yes", "No", false
+          "Yes", "No"
         ).then((confirmed) => {
           let request = {
             customerId: customerId,
-            deliveryAccountId: data.value
+            deliveryAccountId: data.value,
+            isByDefault: true
           }
           if (confirmed) {
             setIsDefaultValue(true);
+            addDefaultShippings(request);
+            setAccountTypeId(data.value);
+          } else if (!confirmed) {
+            let request = {
+              customerId: customerId,
+              deliveryAccountId: data.value,
+              isByDefault: false
+            }
+            setIsDefaultValue(false);
             addDefaultShippings(request);
             setAccountTypeId(data.value);
           }
@@ -95,14 +105,24 @@ const ShippingSettings = () => {
       } else {
         confirm("Shipping Methods?",
           "Are you sure you want to Add Default Shipping Method?",
-          "Yes", "No", false
+          "Yes", "No"
         ).then((confirmed) => {
           let request = {
             customerId: customerId,
-            deliveryAccountId: data.value
+            deliveryAccountId: data.value,
+            isByDefault: true
           }
           if (confirmed) {
             setIsDefaultValue(true);
+            addDefaultShippings(request);
+            setAccountTypeId(data.value);
+          } else if (!confirmed) {
+            let request = {
+              customerId: customerId,
+              deliveryAccountId: data.value,
+              isByDefault: false
+            }
+            setIsDefaultValue(false);
             addDefaultShippings(request);
             setAccountTypeId(data.value);
           }
