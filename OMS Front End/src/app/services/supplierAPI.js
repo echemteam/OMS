@@ -69,7 +69,16 @@ const supplierAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
-
+        
+        checkSupplierNameExist: builder.mutation({
+            query: (Details) => ({
+                url: '/Supplier/checkSupplierNameExist',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        })
       
     })
 })
@@ -82,6 +91,7 @@ export const {
     useGetSuppliersMutation,
     useLazyGetSupplierBasicInformationByIdQuery,
     useLazyGetAllSupplierTypeQuery,
+    useCheckSupplierNameExistMutation,
   
 } = supplierAPI
 

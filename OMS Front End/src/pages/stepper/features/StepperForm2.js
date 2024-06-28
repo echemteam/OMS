@@ -1,16 +1,10 @@
 import React, { useRef } from "react";
 import FormCreator from "../../../components/Forms/FormCreator";
-import { useNavigate } from "react-router-dom";
 import { Stepper2FormData } from "./formData/Stepper2.data";
 
 const StepperForm2 = () => {
-  const navigate = useNavigate();
 
-  // const handleAddEditCampaign = () => {
-  //   navigate("/AddEditCampaign"); // Replace '/dashboard' with your actual dashboard route
-  // };
   const testFromRef = useRef();
-  // c
   return (
     <>
       <div className="row">
@@ -26,7 +20,6 @@ const StepperForm2 = () => {
               config={Stepper2FormData}
               ref={testFromRef}
               {...Stepper2FormData}
-            // onFormDataUpdate={handleFormDataChange}
             />
           </div>
         </div>

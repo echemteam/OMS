@@ -44,7 +44,7 @@ const Suppliers = () => {
     {
       sMenuItemCaption: "SUBMITTED",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 customer-list-submitted">
           <SupplierList statusId={StatusEnums.Submitted} configFile={SubmittedCustomerGridConfig} />
         </div>
       ),

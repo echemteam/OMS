@@ -77,6 +77,6 @@ namespace OMS.Domain.Entities.Entity.Supplier
         [Column("ApprovedBy")]
         public short? ApprovedBy { get; set; }
         [Column("ResponsibleUserId")]
-        public short ResponsibleUserId { get; set; }
+        public short? ResponsibleUserId { get; set; }
     }
 }

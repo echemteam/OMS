@@ -10,7 +10,7 @@
         public string? Status { get; set; }
         public string? InActiveReason { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public int? ResponsibleUserId { get; set; }
+        public short? ResponsibleUserId { get; set; }
         public string? ResponsibleUserName { get; set; }
     }
 }

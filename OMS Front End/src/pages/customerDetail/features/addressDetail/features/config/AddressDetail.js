@@ -14,6 +14,8 @@ import {
 import { useLazyGetAllCountriesQuery } from "../../../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { useContext } from "react";
 
 const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMutation, getAddresssByCustomerId, mainId, isSupplier, SecurityKey }) => {
   const userFormRef = useRef();
@@ -26,37 +28,44 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
 
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
+  const { isResponsibleUser } = useContext(BasicDetailContext);
 
   useEffect(() => {
-    if (isEditablePage && SecurityKey) {
-      const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
-      const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
-      if (hasAddPermission) {
-        if (hasAddPermission.hasAccess === true) {
-          setButtonVisible(true);
-        }
-        else {
-          setButtonVisible(false);
-        }
-      }
-      if (hasEditPermission && formSetting) {
-        if (updateSetData) {
-          if (hasEditPermission.isViewOnly === true) {
-            formSetting.isViewOnly = true;
-            setIsButtonDisable(true);
-          } else {
-            formSetting.isViewOnly = false;
-            setIsButtonDisable(false);
+    if (isEditablePage) {
+      if (!isResponsibleUser) {
+        if (SecurityKey) {
+          const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+          const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
+          if (hasAddPermission) {
+            if (hasAddPermission.hasAccess === true) {
+              setButtonVisible(true);
+            }
+            else {
+              setButtonVisible(false);
+            }
           }
-        } else if (!updateSetData) {
-          if (hasAddPermission.hasAccess === true) {
-            formSetting.isViewOnly = false;
-            setIsButtonDisable(false);
+          if (hasEditPermission && formSetting) {
+            if (updateSetData) {
+              if (hasEditPermission.isViewOnly === true) {
+                formSetting.isViewOnly = true;
+                setIsButtonDisable(true);
+              } else {
+                formSetting.isViewOnly = false;
+                setIsButtonDisable(false);
+              }
+            } else if (!updateSetData) {
+              if (hasAddPermission.hasAccess === true) {
+                formSetting.isViewOnly = false;
+                setIsButtonDisable(false);
+              }
+            }
           }
         }
+      } else if (isResponsibleUser) {
+        console.log(isResponsibleUser);
       }
     }
-  }, [isEditablePage, isSupplier, SecurityKey , updateSetData]);
+  }, [isEditablePage, isSupplier, SecurityKey, updateSetData, isResponsibleUser]);
 
   const [
     getAllAddressTypes,

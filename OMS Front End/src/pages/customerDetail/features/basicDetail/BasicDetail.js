@@ -252,6 +252,7 @@ const BasicDetail = (props) => {
         groupTypeId: data.groupTypeId.value,
         territoryId: data.territoryId.value,
         countryId: data.countryId.value,
+        responsibleUserId: 0
       }
       addCustomersBasicInformation(req);
     }
@@ -288,7 +289,7 @@ const BasicDetail = (props) => {
       if (props.isOpen) {
         updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
       }else{
-        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input");
+        updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
       }
       setFormData(updatedForm);
     }

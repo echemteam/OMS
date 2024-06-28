@@ -1831,6 +1831,31 @@ input[type=checkbox]:disabled {
 .w-20p {
   width: 20px;
 }
+.customer-list-submitted {
+  table {
+    thead {
+      tr {
+        th {
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          &:nth-child(4) {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}
 
 .status-desc {
   position: absolute;

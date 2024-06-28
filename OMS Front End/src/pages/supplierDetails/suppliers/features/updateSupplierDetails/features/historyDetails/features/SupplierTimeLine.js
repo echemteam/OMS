@@ -8,7 +8,6 @@ import AddSupplierContext from "../../../../../../../../utils/ContextAPIs/Suppli
 import { AppIcons } from "../../../../../../../../data/appIcons";
 import formatDate from "../../../../../../../../lib/formatDate";
 import InfiniteScroll from "react-infinite-scroll-component";
-import DataLoader from "../../../../../../../../components/ui/dataLoader/DataLoader";
 
 const SupplierTimeLine = () => {
   const [historyData, setHistoryData] = useState([]);
@@ -21,7 +20,6 @@ const SupplierTimeLine = () => {
   const [ getSupplierAuditHistoryBySupplierId, { isLoading: isGetHistoryLoading,isSuccess: isGetHistorySuccess,data: isGetHistoryData, },] = useGetSupplierAuditHistoryBySupplierIdMutation();
 
   useEffect(() => {
-    
     getListApi(pageNumber);
   }, [pageNumber]);
 

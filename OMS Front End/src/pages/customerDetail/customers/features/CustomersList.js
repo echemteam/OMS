@@ -24,15 +24,14 @@ import {
   StatusEnums,
   StatusFeild,
 } from "../../../../common/features/Enums/StatusEnums";
-import SwalAlert from "../../../../services/swalService/SwalService";
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
 import CustomerApproval from "../../features/cutomerApproval/CustomerApproval";
+import { getAuthProps } from "../../../../lib/authenticationLibrary";
 
 export const CustomersList = ({ statusId, configFile }) => {
+
   const navigate = useNavigate();
-  const { confirm } = SwalAlert();
   const molGridRef = useRef();
   const reasonRef = useRef();
   const childRef = useRef();
@@ -44,7 +43,6 @@ export const CustomersList = ({ statusId, configFile }) => {
   const [staticId, setStaticId] = useState();
   const [statusFeild, setStatusFeild] = useState();
   const { listRef } = useContext(CustomerContext);
-  const [showApprovalList, setShowApprovalList] = useState(false);
 
   const [
     getCustomers,
@@ -64,9 +62,7 @@ export const CustomersList = ({ statusId, configFile }) => {
   ] = useUpdateCustomerInActiveStatusMutation();
 
   useEffect(() => {
-    const actionColumn = configFile?.columns.find(
-      (column) => column.name === "Action"
-    );
+    const actionColumn = configFile?.columns.find((column) => column.name === "Action");
     if (actionColumn) {
       const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
       const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
@@ -115,6 +111,9 @@ export const CustomersList = ({ statusId, configFile }) => {
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
+        const authData = getAuthProps();
+        // const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authData.user.userID);
+        
         setDataSource(isListeData.dataSource);
       }
       if (isListeData.totalRecord) {
@@ -247,21 +246,21 @@ export const CustomersList = ({ statusId, configFile }) => {
             <div className="row">
               <div className="col-md-12 table-striped">
                 {/* <div className="customer-list"> */}
-                  <MolGrid
-                    ref={molGridRef}
-                    configuration={configFile}
-                    dataSource={dataSource}
-                    isLoading={isListLoading}
-                    pagination={{
-                      totalCount: totalRowCount,
-                      pageSize: 25,
-                      currentPage: 1,
-                    }}
-                    onPageChange={handlePageChange}
-                    onActionChange={actionHandler}
-                    allowPagination={true}
-                    onCellDataChange={handleGridCheckBoxChange}
-                  />
+                <MolGrid
+                  ref={molGridRef}
+                  configuration={configFile}
+                  dataSource={dataSource}
+                  isLoading={isListLoading}
+                  pagination={{
+                    totalCount: totalRowCount,
+                    pageSize: 25,
+                    currentPage: 1,
+                  }}
+                  onPageChange={handlePageChange}
+                  onActionChange={actionHandler}
+                  allowPagination={true}
+                  onCellDataChange={handleGridCheckBoxChange}
+                />
                 {/* </div> */}
               </div>
             </div>

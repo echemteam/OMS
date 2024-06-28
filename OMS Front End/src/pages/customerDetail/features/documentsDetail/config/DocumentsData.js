@@ -106,15 +106,15 @@ export const FileTypeIcons = [
     icon: AppIcons.PdfIcon
   },
   {
-    type: 'doc',
+    type: 'docx',
     icon: AppIcons.DocIcon
   },
   {
-    type: 'xls',
+    type: 'xlsx',
     icon: AppIcons.XlsIcon
   },
   {
-    type: 'ppt',
+    type: 'pptx',
     icon: AppIcons.PptIcon
   },
   {

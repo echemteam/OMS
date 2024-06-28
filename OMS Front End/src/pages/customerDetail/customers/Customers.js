@@ -57,7 +57,7 @@ const Customers = () => {
     {
       sMenuItemCaption: "SUBMITTED",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 customer-list-submitted">
           <CustomersList
             statusId={StatusEnums.Submitted}
             configFile={SubmittedCustomerGridConfig}
