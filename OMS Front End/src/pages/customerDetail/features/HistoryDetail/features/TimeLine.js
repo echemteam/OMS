@@ -10,6 +10,8 @@ import formatDate from "../../../../../lib/formatDate";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Image from "../../../../../components/image/Image";
 import { useGetCustomerAuditHistoryByCustomerIdMutation } from "../../../../../app/services/customerHistoryAPI";
+import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
 const TimeLine = () => {
 
@@ -27,9 +29,9 @@ const TimeLine = () => {
     },
   ] = useGetCustomerAuditHistoryByCustomerIdMutation();
 
-useEffect(()=>{
-  getListApi(pageNumber)
-},[pageNumber])
+  useEffect(()=>{
+    getListApi(pageNumber)
+  },[pageNumber])
   const getListApi = (page) => {
 
     const request = {
@@ -37,25 +39,24 @@ useEffect(()=>{
         pageNumber:page,
         pageSize: 25
       },
-    
+
       customerId: customerId
     };
     getCustomerAuditHistoryByCustomerId(request);
   };
   const handleChange=()=>{
     setRefreshData(true);
-  
+
     setHasMore(true);
     setHistoryData([]);
     getListApi(1)
   }
 
   useEffect(() => {
-
     if (isGetHistorySuccess && isGetHistoryData) {
       if (isGetHistoryData.dataSource && isGetHistoryData.dataSource.length > 0) {
         if (refreshData) {
-       
+
           setHistoryData(isGetHistoryData.dataSource);
           setRefreshData(false);
         } else {
@@ -68,8 +69,8 @@ useEffect(()=>{
   }, [isGetHistorySuccess, isGetHistoryData]);
 
   const fetchMoreData = () => {
-      setPageNumber((prevPageNumber) => prevPageNumber + 1);
- 
+    setPageNumber((prevPageNumber) => prevPageNumber + 1);
+
   };
 
   return (
@@ -79,7 +80,7 @@ useEffect(()=>{
           <Buttons
             buttonTypeClassName="theme-button"
             buttonText="Refresh"
-           onClick={handleChange}
+            onClick={handleChange}
             imagePath={AppIcons.refreshIcone}
             textWithIcon={true}
           ></Buttons>
@@ -90,49 +91,51 @@ useEffect(()=>{
               dataLength={historyData.length}
               next={fetchMoreData}
               hasMore={hasMore}
-              loader={isGetHistoryLoading}
+              loader={isGetHistoryLoading ? <DataLoader/>:null}
               scrollableTarget="scrollableDiv"
             >
               <div className="new-timeline-sec">
                 <ol className="timeline">
-
-                {
-                  historyData.map((item) => (
-                    <li
-                      className="timeline-item"
-                      key={item.customerAuditHistoryId}
-                    >
-                      <span className="timeline-item-icon">
-                        {item.eventStatus === "Insert" ?   (<>
-                          {" "}
-                          <img src={AppIcons.PlusIcon} alt="Insert Icon" />
-                        </>) : (
-                        <>
-                          {" "}
-                          <img src={AppIcons.UpdateIcon} alt="Update Icon" />
-                        </>
-                      )}
-                      </span>
-                      <div className="timeline-item-description">
-                        <div className="right-desc-sec">
-                          <div className="d-flex align-items-center">
-                            <div className="timeline-name">{item.name}</div>
-                            <div className="date-time">
-                              {formatDate(
-                                item.changedAt,
-                                "DD/MM/YYYY hh:mm A "
-                              )}
+                  { 
+                    historyData.length > 0 ? (
+                      historyData.map((item) => (
+                        <li
+                          className="timeline-item"
+                          key={item.customerAuditHistoryId}
+                        >
+                          <span className="timeline-item-icon">
+                            {item.eventStatus === "Insert" ?   (<>
+                              {" "}
+                              <img src={AppIcons.PlusIcon} alt="Insert Icon" />
+                            </>) : (
+                              <>
+                                {" "}
+                                <img src={AppIcons.UpdateIcon} alt="Update Icon" />
+                              </>
+                            )}
+                          </span>
+                          <div className="timeline-item-description">
+                            <div className="right-desc-sec">
+                              <div className="d-flex align-items-center">
+                                <div className="timeline-name">{item.name}</div>
+                                <div className="date-time">
+                                  {formatDate(
+                                    item.changedAt,
+                                    "DD/MM/YYYY hh:mm A "
+                                  )}
+                                </div>
+                              </div>
+                              <div className="type-name">{item.eventName}</div>
+                            </div>
+                            <div className="msg-section">
+                              <p>{item.description}</p>
                             </div>
                           </div>
-                          <div className="type-name">{item.eventName}</div>
-                        </div>
-                        <div className="msg-section">
-                          <p>{item.description}</p>
-                        </div>
-                      </div>
-                    </li>
-                  ))
-                }
+                        </li>
+                      ))
+                    )  : !isGetHistoryLoading ? (
+                      <NoRecordFound />
+                    ) : null}
                 </ol>
               </div>
             </InfiniteScroll>
