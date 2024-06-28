@@ -8,6 +8,7 @@ import SwalAlert from "../../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useLazyGetAllDeliveryAccountsQuery } from "../../../../../../app/services/commonAPI";
 import { useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation, useLazyGetShppingDeliveryCarrierAndDeliveryMethodsByIdQuery } from "../../../../../../app/services/customerSettingsAPI";
+import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
 
 //** Component's */
 const ManageCarrier = React.lazy(() => import("../Carrier/ManageCarrier"));
@@ -79,14 +80,24 @@ const ShippingSettings = () => {
       if (accountTypeId > 0) {
         confirm("Change Shipping Methods?",
           "Are you sure you want Change the Shipping Method?",
-          "Yes", "No", false
+          "Yes", "No"
         ).then((confirmed) => {
           let request = {
             customerId: customerId,
-            deliveryAccountId: data.value
+            deliveryAccountId: data.value,
+            isByDefault: true
           }
           if (confirmed) {
             setIsDefaultValue(true);
+            addDefaultShippings(request);
+            setAccountTypeId(data.value);
+          } else if (!confirmed) {
+            let request = {
+              customerId: customerId,
+              deliveryAccountId: data.value,
+              isByDefault: false
+            }
+            setIsDefaultValue(false);
             addDefaultShippings(request);
             setAccountTypeId(data.value);
           }
@@ -94,14 +105,24 @@ const ShippingSettings = () => {
       } else {
         confirm("Shipping Methods?",
           "Are you sure you want to Add Default Shipping Method?",
-          "Yes", "No", false
+          "Yes", "No"
         ).then((confirmed) => {
           let request = {
             customerId: customerId,
-            deliveryAccountId: data.value
+            deliveryAccountId: data.value,
+            isByDefault: true
           }
           if (confirmed) {
             setIsDefaultValue(true);
+            addDefaultShippings(request);
+            setAccountTypeId(data.value);
+          } else if (!confirmed) {
+            let request = {
+              customerId: customerId,
+              deliveryAccountId: data.value,
+              isByDefault: false
+            }
+            setIsDefaultValue(false);
             addDefaultShippings(request);
             setAccountTypeId(data.value);
           }
@@ -124,16 +145,18 @@ const ShippingSettings = () => {
     <>
       <div className="row horizontal-form">
         <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler} />
-        <div className="grid-section">
-          {accountTypeId === 1 ?
-            <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
-            accountTypeId === 2 ?
-              <>
-                <ManageCarrier handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
-                <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
-              </> : null
-          }
-        </div>
+        {!isGetDefaultValueFetching ?
+          <div className="grid-section">
+            {accountTypeId === 1 ?
+              <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
+              accountTypeId === 2 ?
+                <>
+                  <ManageCarrier handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
+                  <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
+                </> : null
+            }
+          </div>
+          : <DataLoader />}
       </div>
     </>
   );

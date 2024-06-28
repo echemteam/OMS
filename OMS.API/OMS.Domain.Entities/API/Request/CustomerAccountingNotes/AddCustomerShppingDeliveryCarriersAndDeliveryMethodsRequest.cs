@@ -4,5 +4,6 @@
     {
         public int? CustomerId { get; set; }
         public int? DeliveryAccountId { get; set; }
+        public bool IsByDefault { get; set; }
     }
 }

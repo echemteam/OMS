@@ -17,7 +17,7 @@ const BasicDetail = (props) => {
   // const descrypteId = id ? decryptUrlData(id) : 0;
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
-  const { nextRef, setCustomerId, moveNextPage, setAllCountries } = useContext(BasicDetailContext);
+  const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
 
   const { formSetting } = basicDetailFormDataHalf;
   const [isButtonDisable, setIsButtonDisable] = useState(false);
@@ -25,13 +25,15 @@ const BasicDetail = (props) => {
 
   useEffect(() => {
     if (props.isOpen) {
-      if (hasEditPermission.isViewOnly === true) {
-        formSetting.isViewOnly = true;
-        setIsButtonDisable(true);
-      }
-      else {
-        formSetting.isViewOnly = false;
-        setIsButtonDisable(false);
+      if (!isResponsibleUser) {
+        if (hasEditPermission.isViewOnly === true) {
+          formSetting.isViewOnly = true;
+          setIsButtonDisable(true);
+        }
+        else {
+          formSetting.isViewOnly = false;
+          setIsButtonDisable(false);
+        }
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
@@ -172,7 +174,7 @@ const BasicDetail = (props) => {
   ]);
 
   useEffect(() => {
-   
+
     if (
       !isGetAllUserFetching &&
       isGetAllUserSucess &&
@@ -288,7 +290,7 @@ const BasicDetail = (props) => {
       updatedForm.formFields = modifyFormFields;
       if (props.isOpen) {
         updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
-      }else{
+      } else {
         updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
       }
       setFormData(updatedForm);

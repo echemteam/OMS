@@ -16,5 +16,6 @@
         public short? UpdatedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
         public short? DeletedBy { get; set; }
+        public bool? IsByDefault { get; set; }
     }
 }
