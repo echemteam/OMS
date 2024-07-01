@@ -34,7 +34,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         ...data,
         contactTypeId: isEdit === true
           ?
-          (data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : data.contactTypeId)
+          (data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId))
           :
           data.contactTypeId ? data.contactTypeId.map(String).join(",") : null,
         customerId: isSupplier === false ? mainId : 0,
