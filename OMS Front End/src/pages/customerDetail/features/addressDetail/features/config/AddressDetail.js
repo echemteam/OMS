@@ -161,14 +161,25 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       isGetAllAddressTypesSucess &&
       allGetAllAddressTypesData
     ) {
-      const getData = allGetAllAddressTypesData.map((item) => ({
-        value: item.addressTypeId,
-        label: item.type,
-      }));
-      const dropdownField = addressFormData.formFields.find(
-        (item) => item.dataField === "addressTypeId"
-      );
-      dropdownField.fieldSetting.options = getData;
+      if (isSupplier === true) {
+        const getData = allGetAllAddressTypesData.filter(x => x.isForSuppliers).map((item) => ({
+          value: item.addressTypeId,
+          label: item.type,
+        }));
+        const dropdownField = addressFormData.formFields.find(
+          (item) => item.dataField === "addressTypeId"
+        );
+        dropdownField.fieldSetting.options = getData;
+      } else {
+        const getData = allGetAllAddressTypesData.filter(x => x.isForCustomers).map((item) => ({
+          value: item.addressTypeId,
+          label: item.type,
+        }));
+        const dropdownField = addressFormData.formFields.find(
+          (item) => item.dataField === "addressTypeId"
+        );
+        dropdownField.fieldSetting.options = getData;
+      }
     }
   }, [
     isGetAllAddressTypesSucess,
@@ -210,7 +221,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       // setSelectedState(allGetAllStatesData)
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [ isGetAllStatesSucess, allGetAllStatesData]);
+  }, [isGetAllStatesSucess, allGetAllStatesData]);
 
   useEffect(() => {
     if (

@@ -48,7 +48,7 @@ const DocumentDetails = ({ mainId, addDocuments, downloadDocument, deleteDocumen
 
   useEffect(() => {
     if ( isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
-      const getData = allGetAllDocumentTypesData.map(item => ({
+      const getData = allGetAllDocumentTypesData.filter(x => x.isForCustomers).map(item => ({
         value: item.documentTypeId,
         label: item.type
       }))

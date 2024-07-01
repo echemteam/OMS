@@ -122,6 +122,17 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     }
   }, [isEdit])
 
+  useEffect(() => {
+    if (isSupplier === true) {
+      let form = { ...contactDetailFormData };
+      const dropdownFieldIndex = form.formFields.findIndex(
+        (item) => item.dataField === "contactTypeId"
+      );
+      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = false;
+      setFormData(form);
+    }
+  }, [isSupplier])
+
   //** Reset Data */
   const onResetData = () => {
     let form = { ...contactDetailFormData };

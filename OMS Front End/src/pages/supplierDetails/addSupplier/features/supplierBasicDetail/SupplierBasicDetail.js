@@ -17,7 +17,7 @@ const SupplierBasicDetail = (props) => {
   const basicDetailRef = useRef();
 
   const [formData, setFormData] = useState(supplierBasicData);
-   const [supplierName, setSupplierName] = useState('');
+  const [supplierName, setSupplierName] = useState('');
 
   const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId } = useContext(AddSupplierContext);
 
@@ -87,7 +87,7 @@ const SupplierBasicDetail = (props) => {
     },
   ] = useLazyGetAllSupplierTypeQuery();
 
-  const [CheckSupplierNameExist, {isSuccess: isSupplierNameExistSucess, data: isSupplierNameExistData, }] = useCheckSupplierNameExistMutation();
+  const [CheckSupplierNameExist, { isSuccess: isSupplierNameExistSucess, data: isSupplierNameExistData, }] = useCheckSupplierNameExistMutation();
 
 
   useEffect(() => {
@@ -101,17 +101,14 @@ const SupplierBasicDetail = (props) => {
 
   const manageFilteredForm = () => {
     const manageData = { ...formData }
-    const filteredFormFields = supplierBasicData.formFields.filter(field => field.id !== "name-input" &&  field.dataField !== "responsibleUserId");
+    const filteredFormFields = supplierBasicData.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
     manageData.formFields = filteredFormFields;
     setFormData(manageData)
   };
 
   useEffect(() => {
-    if (
-      isGetAllGroupTypesSucess &&
-      allGetAllGroupTypesData
-    ) {
-      const getData = allGetAllGroupTypesData.map((item) => ({
+    if (isGetAllGroupTypesSucess && allGetAllGroupTypesData) {
+      const getData = allGetAllGroupTypesData.filter(x => x.isForSuppliers).map((item) => ({
         value: item.groupTypeId,
         label: item.type,
       }));
@@ -135,9 +132,9 @@ const SupplierBasicDetail = (props) => {
       );
       dropdownField.fieldSetting.options = getData;
     }
-   
-  }, [isGetAllUserSucess,allGetAllUserData,]);
-  
+
+  }, [isGetAllUserSucess, allGetAllUserData,]);
+
   useEffect(() => {
     if (
       isGetAllCountriesSucess &&
@@ -244,7 +241,7 @@ const SupplierBasicDetail = (props) => {
         groupTypeId: data.groupTypeId.value,
         territoryId: data.territoryId.value,
         countryId: data.countryId.value,
-        responsibleUserId:0
+        responsibleUserId: 0
       }
       addEditSupplierBasicInformation(req);
     }
@@ -267,7 +264,7 @@ const SupplierBasicDetail = (props) => {
         countryId: data.countryId && typeof data.countryId === "object"
           ? data.countryId.value
           : data.countryId,
-          responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
+        responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
           ? data.responsibleUserId.value
           : data.responsibleUserId,
         supplierId: props.pageId
@@ -292,7 +289,7 @@ const SupplierBasicDetail = (props) => {
   const formActionHandler = {
     DDL_CHANGED: handleValidateTextId
   };
- 
+
   useEffect(() => {
     if (isSupplierNameExistSucess && isSupplierNameExistData) {
       if (isSupplierNameExistData.errorMessage.includes('exists')) {

@@ -109,7 +109,7 @@ const BasicDetail = (props) => {
       isGetAllGroupTypesSucess &&
       allGetAllGroupTypesData
     ) {
-      const getData = allGetAllGroupTypesData.map((item) => ({
+      const getData = allGetAllGroupTypesData.filter(x => x.isForCustomers).map((item) => ({
         value: item.groupTypeId,
         label: item.type,
       }));
