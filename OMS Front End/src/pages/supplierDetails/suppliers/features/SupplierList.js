@@ -14,12 +14,15 @@ import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpd
 import { encryptUrlData } from '../../../../services/CryptoService';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { securityKey } from '../../../../data/SecurityKey';
+import SupplierApproval from './supplierApproval/SupplierApproval';
 
 const SupplierList = ({ statusId, configFile }) => {
+
+  const childRef = useRef();
+  const reasonRef = useRef();
+  const molGridRef = useRef();
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
-  const molGridRef = useRef();
-  const reasonRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [dataSource, setDataSource] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -134,23 +137,19 @@ const SupplierList = ({ statusId, configFile }) => {
     navigate(`/SupplierDetails/${encryptUrlData(data.supplierId)}`, "_blank");
   };
 
-  const handleGridCheckBoxChange = (rowData, datafield, rowindex, updatedValue, parentData) => {
-    confirm(
-      "Warning?",
-      "Are you sure you want to approve the supplier?",
-      "Yes",
-      "Cancel"
-    ).then((confirmed) => {
-      if (confirmed) {
-        let req = {
-          supplierId: rowData.supplierId
-        }
-        updateSupplierApproveStatus(req)
-      } else {
-        getListApi()
-      }
-    });
+  const handleGridCheckBoxChange = (rowData) => {
+    if (childRef.current) {
+      childRef.current.callChildFunction(rowData.supplierId);
+    }
+    setSupplierId(rowData.supplierId);
   }
+
+  const updateSupplierApprovel = () => {
+    let req = {
+      supplierId: supplierID
+    };
+    updateSupplierApproveStatus(req);
+  };
 
   const handleToggleModal = () => {
     setShowModal(false);
@@ -219,21 +218,21 @@ const SupplierList = ({ statusId, configFile }) => {
             <div className="row">
               <div className="col-md-12 table-striped">
                 {/* <div className='customer-list'> */}
-                  <MolGrid
-                    ref={molGridRef}
-                    configuration={configFile}
-                    dataSource={dataSource}
-                    isLoading={isListLoading}
-                    pagination={{
-                      totalCount: totalRowCount,
-                      pageSize: 25,
-                      currentPage: 1,
-                    }}
-                    onPageChange={handlePageChange}
-                    onActionChange={actionHandler}
-                    allowPagination={true}
-                    onCellDataChange={handleGridCheckBoxChange}
-                  />
+                <MolGrid
+                  ref={molGridRef}
+                  configuration={configFile}
+                  dataSource={dataSource}
+                  isLoading={isListLoading}
+                  pagination={{
+                    totalCount: totalRowCount,
+                    pageSize: 25,
+                    currentPage: 1,
+                  }}
+                  onPageChange={handlePageChange}
+                  onActionChange={actionHandler}
+                  allowPagination={true}
+                  onCellDataChange={handleGridCheckBoxChange}
+                />
                 {/* </div>/ */}
               </div>
             </div>
@@ -273,6 +272,7 @@ const SupplierList = ({ statusId, configFile }) => {
             </CenterModel>
           )}
         </div>
+        <SupplierApproval childRef={childRef} getListApi={getListApi} updateApproval={updateSupplierApprovel} />
       </div>
     </div>
   )

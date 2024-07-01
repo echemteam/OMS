@@ -10,7 +10,8 @@ import CenterModel from "../../ui/centerModel/CenterModel";
 import { encryptUrlData } from "../../../services/CryptoService";
 import ToastService from "../../../services/toastService/ToastService";
 
-const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckList, handleDone, showModal, handleShowValidateModal, handleValidateModalClose, isGetCheckListLoading, customerId, isDetailPage }) => {
+const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckList, handleDone, showModal, handleShowValidateModal, handleValidateModalClose,
+  isGetCheckListLoading, mainId, isDetailPage, isSupplierApproval }) => {
 
   const scrollRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -73,7 +74,12 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }, [visibleItems]);
 
   const handleRedirectToDetails = () => {
-    const url = `/viewCustomer/${encryptUrlData(customerId)}`;
+    let url;
+    if (isSupplierApproval) {
+      url = `/SupplierDetails/${encryptUrlData(mainId)}`;
+    } else {
+      url = `/viewCustomer/${encryptUrlData(mainId)}`;
+    }
     window.open(url, "_blank");
   }
 
@@ -118,8 +124,9 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
                   {showDoneButton ?
                     <Buttons buttonTypeClassName="theme-button" buttonText="Done" onClick={handleDone} />
                     : null}
-                  {showViewButton ?
-                    <Buttons buttonTypeClassName="theme-button ml-5" buttonText="View Customer Details" onClick={handleRedirectToDetails} /> :
+                  {!isDetailPage && showViewButton ?
+                    <Buttons buttonTypeClassName="theme-button ml-5" buttonText={isSupplierApproval ? 'View Supplier Details' : 'View Customer Details'}
+                      onClick={handleRedirectToDetails} /> :
                     null}
                   <Buttons buttonTypeClassName="dark-btn ml-5" buttonText="Cancel" onClick={handleValidateModalClose} />
                 </div>

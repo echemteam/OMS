@@ -1,13 +1,13 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { ApprovalEnum } from "../../../../common/features/Enums/ApprovalEnums";
-import { useGetValidateCheckListMutation } from "../../../../app/services/ApprovalAPI";
-import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
-import ApprovalValidateData from "../../../../components/ApprovalCheckList/approvalValidateData/ApprovalValidateData";
+import { useGetValidateCheckListMutation } from "../../../../../app/services/ApprovalAPI";
+import ApprovalValidateData from "../../../../../components/ApprovalCheckList/approvalValidateData/ApprovalValidateData";
+import ApprovalCheckList from "../../../../../components/ApprovalCheckList/ApprovalCheckList";
+import { ApprovalEnum } from "../../../../../common/features/Enums/ApprovalEnums";
 
-const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval, isDetailPage }) => {
+const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isDetailPage }) => {
 
     const parentRef = useRef();
-    const [customerId, setCustomerId] = useState(false);
+    const [supplierId, setSupplierId] = useState(false);
     const [isShowApproval, setIsShowApproval] = useState(false);
     const [validateCheckList, setValidateCheckList] = useState([]);
     const [isShowValidateModal, setIsShowValidateModal] = useState(false);
@@ -27,18 +27,18 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     };
     const onSuccessApprovalClose = () => {
         setIsShowApproval(!isShowApproval);
-        updateCustomerApproval();
+        updateApproval();
     };
 
     //** Validate check list Modal */
-    const handleShowValidateModal = (customerId) => {
+    const handleShowValidateModal = (supplierId) => {
         setIsShowValidateModal(!isShowValidateModal);
         let request = {
-            customerId: customerId,
-            supplierId: 0
+            customerId: 0,
+            supplierId: supplierId
         }
         getValidateCheckList(request);
-        setCustomerId(customerId);
+        setSupplierId(supplierId);
     };
 
     const handleValidateModalClose = () => {
@@ -75,14 +75,14 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
 
     return (
         <React.Fragment>
-            <ApprovalValidateData parentRef={parentRef} handleValidateSuccess={handleValidateSuccess} showModal={isShowValidateModal} isSupplierApproval={false}
-                isGetCheckListLoading={isGetCheckListLoading} mainId={customerId} isDetailPage={isDetailPage} handleShowValidateModal={handleShowValidateModal}
+            <ApprovalValidateData parentRef={parentRef} handleValidateSuccess={handleValidateSuccess} showModal={isShowValidateModal} isSupplierApproval={true}
+                isGetCheckListLoading={isGetCheckListLoading} mainId={supplierId} isDetailPage={isDetailPage} handleShowValidateModal={handleShowValidateModal}
                 handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList} />
 
             <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval}
-                ApprovalData={ApprovalEnum.APPROVECUSTOMER} onSuccessApprovalClose={onSuccessApprovalClose} />
+                ApprovalData={ApprovalEnum.APPROVESUPPLIER} onSuccessApprovalClose={onSuccessApprovalClose} />
         </React.Fragment>
     )
 });
 
-export default CustomerApproval;
+export default SupplierApproval;

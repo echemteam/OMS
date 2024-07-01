@@ -210,13 +210,7 @@ export const CustomersList = ({ statusId, configFile }) => {
     navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
   };
 
-  const handleGridCheckBoxChange = (
-    rowData,
-    datafield,
-    rowindex,
-    updatedValue,
-    parentData
-  ) => {
+  const handleGridCheckBoxChange = (rowData) => {
     if (childRef.current) {
       childRef.current.callChildFunction(rowData.customerId);
     }
