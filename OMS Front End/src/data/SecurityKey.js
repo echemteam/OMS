@@ -43,10 +43,12 @@ export const securityKey = {
      ADDCUSTOMERCONTACT: "Add Customer Contact",
      EDITCUSTOMERCONTACT: "Edit Customer Contact",
      //** Customer Document */
+     CUSTOMERDOCUMENT: "Customer Document",
      ADDCUSTOMERDOCUMENT: "Add Customer Document",
      DELETECUSTOMERDOCUMENT: "Delete Customer Document",
      DOWNALODCUSTOMERDOCUMENT: "Downalod Customer Document",
      //** Customer Setting */
+     CUSTOMERSETTING: "Customer Setting",
      CUSTOMERFINANCIALSETTING: "Customer Financial Setting",
      ADDEDITCUSTOMERFINANCIAL: "AddEdit Customer Financial",
      CUSTOMERSHIPPINGSETTING: "Customer Shipping Setting",
