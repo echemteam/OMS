@@ -12,7 +12,7 @@ import { useDeleteCustomerDeliveryMethodsByIdMutation } from "../../../../../../
 const DeliveryMethodList = React.lazy(() => import("./feature/DeliveryMethodList"));
 const AddEditDeliveryMethod = React.lazy(() => import("./feature/AddEditDeliveryMethod"));
 
-const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading }) => {
+const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowButton }) => {
 
     const molGridRef = useRef();
     const { confirm } = SwalAlert();
@@ -82,7 +82,7 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading }) => {
     return (
         <>
             <DeliveryMethodList molGridRef={molGridRef} ourAccountData={deliveryMethodsList} actionHandler={actionHandler} handleToggleModal={handleToggleModal}
-                isGetDataLoading={isGetDataLoading} />
+                isGetDataLoading={isGetDataLoading} isShowButton={isShowButton}/>
             {showModal && (
                 <AddEditDeliveryMethod handleToggleModal={handleToggleModal} showModal={showModal} editFormData={editFormData} onSuccess={onSuccess}
                     isEdit={isEdit} />

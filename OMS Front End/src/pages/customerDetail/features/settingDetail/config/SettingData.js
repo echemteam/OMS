@@ -88,4 +88,7 @@ export const SettingFormData = {
     },
 
   ],
+  formSetting: {
+    isViewOnly: false
+  }
 };

@@ -3,13 +3,13 @@ import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import { AccountGridConfig } from "../config/CarrierConfig";
 
-const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading }) => {
+const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton }) => {
 
     return (
         <div className="first-card">
             <CardSection
                 cardTitle="Carrier Details"
-                rightButton={true}
+                rightButton={isShowButton ? true : false}
                 buttonClassName="theme-button "
                 buttonText="Add"
                 textWithIcon={true}

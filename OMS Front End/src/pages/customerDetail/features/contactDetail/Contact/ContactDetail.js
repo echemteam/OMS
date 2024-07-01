@@ -53,7 +53,6 @@ const ContactDetail = ({
   const [
     getAllContactTypes,
     {
-      isFetching: isGetAllContactTypesFetching,
       isSuccess: isGetAllContactTypesSucess,
       data: allGetAllContactTypesData,
     },
@@ -90,7 +89,6 @@ const ContactDetail = ({
 
   useEffect(() => {
     if (
-      !isGetAllContactTypesFetching &&
       isGetAllContactTypesSucess &&
       allGetAllContactTypesData
     ) {
@@ -104,7 +102,6 @@ const ContactDetail = ({
       dropdownField.fieldSetting.options = getData;
     }
   }, [
-    isGetAllContactTypesFetching,
     isGetAllContactTypesSucess,
     allGetAllContactTypesData,
   ]);

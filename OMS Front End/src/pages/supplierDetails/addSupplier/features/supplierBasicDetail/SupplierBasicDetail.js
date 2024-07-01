@@ -50,7 +50,6 @@ const SupplierBasicDetail = (props) => {
   const [
     getAllGroupTypes,
     {
-      isFetching: isGetAllGroupTypesFetching,
       isSuccess: isGetAllGroupTypesSucess,
       data: allGetAllGroupTypesData,
     },
@@ -59,7 +58,6 @@ const SupplierBasicDetail = (props) => {
   const [
     getAllUser,
     {
-      isFetching: isGetAllUserFetching,
       isSuccess: isGetAllUserSucess,
       data: allGetAllUserData,
     },
@@ -68,7 +66,6 @@ const SupplierBasicDetail = (props) => {
   const [
     getAllCountries,
     {
-      isFetching: isGetAllCountriesFetching,
       isSuccess: isGetAllCountriesSucess,
       data: allGetAllCountriesData,
     },
@@ -77,7 +74,6 @@ const SupplierBasicDetail = (props) => {
   const [
     getAllTerritories,
     {
-      isFetching: isGetAllTerritoriesFetching,
       isSuccess: isGetAllTerritoriesSucess,
       data: allGetAllTerritoriesData,
     },
@@ -86,7 +82,6 @@ const SupplierBasicDetail = (props) => {
   const [
     getAllSupplierType,
     {
-      isFetching: isGetAllSupplierTypeFetching,
       isSuccess: isGetAllSupplierTypeSucess,
       data: allGetAllSupplierTypeData,
     },
@@ -113,7 +108,6 @@ const SupplierBasicDetail = (props) => {
 
   useEffect(() => {
     if (
-      !isGetAllGroupTypesFetching &&
       isGetAllGroupTypesSucess &&
       allGetAllGroupTypesData
     ) {
@@ -127,12 +121,11 @@ const SupplierBasicDetail = (props) => {
       dropdownField.fieldSetting.options = getData;
     }
   }, [
-    isGetAllGroupTypesFetching,
     isGetAllGroupTypesSucess,
     allGetAllGroupTypesData,
   ]);
   useEffect(() => {
-    if (!isGetAllUserFetching && isGetAllUserSucess && allGetAllUserData) {
+    if (isGetAllUserSucess && allGetAllUserData) {
       const getData = allGetAllUserData.map((item) => ({
         value: item.userId,
         label: item.fullName,
@@ -143,11 +136,10 @@ const SupplierBasicDetail = (props) => {
       dropdownField.fieldSetting.options = getData;
     }
    
-  }, [isGetAllUserFetching,isGetAllUserSucess,allGetAllUserData,]);
+  }, [isGetAllUserSucess,allGetAllUserData,]);
   
   useEffect(() => {
     if (
-      !isGetAllCountriesFetching &&
       isGetAllCountriesSucess &&
       allGetAllCountriesData
     ) {
@@ -162,14 +154,12 @@ const SupplierBasicDetail = (props) => {
       setAllCountries(allGetAllCountriesData);
     }
   }, [
-    isGetAllCountriesFetching,
     isGetAllCountriesSucess,
     allGetAllCountriesData,
   ]);
 
   useEffect(() => {
     if (
-      !isGetAllTerritoriesFetching &&
       isGetAllTerritoriesSucess &&
       allGetAllTerritoriesData
     ) {
@@ -183,14 +173,12 @@ const SupplierBasicDetail = (props) => {
       dropdownField.fieldSetting.options = getData;
     }
   }, [
-    isGetAllTerritoriesFetching,
     isGetAllTerritoriesSucess,
     allGetAllTerritoriesData,
   ]);
 
   useEffect(() => {
     if (
-      !isGetAllSupplierTypeFetching &&
       isGetAllSupplierTypeSucess &&
       allGetAllSupplierTypeData
     ) {
@@ -204,7 +192,6 @@ const SupplierBasicDetail = (props) => {
       dropdownField.fieldSetting.options = getData;
     }
   }, [
-    isGetAllSupplierTypeFetching,
     isGetAllSupplierTypeSucess,
     allGetAllSupplierTypeData,
   ]);

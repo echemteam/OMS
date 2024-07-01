@@ -20,4 +20,7 @@ export const shippingFormData = {
             },
         }
     ],
+    formSetting: {
+        isViewOnly: false
+    }
 };

@@ -12,8 +12,10 @@ import FormCreator from '../../../../../../components/Forms/FormCreator';
 import Buttons from '../../../../../../components/ui/button/Buttons';
 import DataLoader from '../../../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../../../components/ui/centerModel/CenterModel';
+import SupplierApproval from '../../supplierApproval/SupplierApproval';
 
-const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , onhandleRepeatCall}) => {
+const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
+  const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -22,6 +24,8 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
   const [staticId, setStaticId] = useState("")
   const [statusFeild, setStatusFeild] = useState("")
   const [options, setOptions] = useState([]);
+  const [statusId, setStatusId] = useState();
+  // const [supplierId, setSupplierId] = useState();
 
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
   const [updateSupplierInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
@@ -36,6 +40,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
   useEffect(() => {
     if (isSuccessUpdateSupplierStatus && updateSupplierStatusData) {
       ToastService.success(updateSupplierStatusData.errorMessage);
+      handleToggleModal()
     }
   }, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
 
@@ -48,14 +53,24 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
         case 3:
           setOptions(StaticStatus[StatusValue[statusId - 1].label]);
           break;
-        case 4:
-        case 5:
+          case 4:
+            setOptions([
+              { value: "4", label: "Freeze" },
+              { value: "3", label: "Approved" },
+            ]);
+            break;
+          case 5:
+            setOptions([
+              { value: "5", label: "Block" },
+              { value: "3", label: "Approved" },
+            ]);
+            break;
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;
-          case 7:
-            setOptions(StaticStatus[StatusValue[statusId - 1].label]);
-            break;
+        case 7:
+          setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+          break;
         default:
           setOptions([]);
       }
@@ -76,7 +91,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
     if (selectedOption.label === supplierData.status) {
       ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
-      if (selectedOption.value === "1" || selectedOption.value === "2" || selectedOption.value === "3" ) {
+      if (selectedOption.value === "1" || selectedOption.value === "2") {
         confirm(
           "Warning?",
           `Are you sure you want to change the supplier status to ${selectedOption.label}?`,
@@ -92,12 +107,26 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
             setSelectedStatus(selectedOption.value);
           }
         });
-      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6" || selectedOption.value === "7" ) {
+      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6" || selectedOption.value === "7") {
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
+      } else if (selectedOption.value === "3") {
+        if (childRef.current) {
+          childRef.current.callChildFunction(supplierId);
+        }
+        setStatusId(selectedOption.value);
       }
     }
   };
+
+  const updateCustomerApproval = () => {
+    setSelectedStatus(statusId);
+    let req = {
+      supplierId: supplierId,
+      statusId: statusId
+    }
+    updateSupplierStatus(req)
+  }
 
   const onReset = () => {
     let restData = { ...reasonData };
@@ -136,8 +165,8 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
         return "badge-gradient-Frozen";
       case "Block":
         return "badge-gradient-Blocked";
-        case "Reject":
-          return "badge-gradient-Blocked";
+      case "Reject":
+        return "badge-gradient-Blocked";
       case "Disable":
         return "badge-gradient-disabled";
       default:
@@ -146,7 +175,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
   };
 
   return (
-    !isLoading ?
+    <>{!isLoading ?
       <div className="basic-customer-detail" >
         <div className="col-xl-12 col-lg-12 col-md-12 col-12">
           <div className="profile-info">
@@ -270,7 +299,9 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
           </CenterModel>
         )}
       </div>
-      : <DataLoader />
+      : <DataLoader />}
+      <SupplierApproval childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} />
+    </>
   );
 }
 

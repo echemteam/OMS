@@ -11,6 +11,8 @@ import { HistoryDetail } from "./features/HistoryDetail/HistoryDetail";
 import { useNavigate } from "react-router-dom/dist";
 import Button from "../../components/ui/button/Buttons";
 import { getAuthProps } from "../../lib/authenticationLibrary";
+import { securityKey } from "../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../utils/AuthorizeNavigation/authorizeNavigation";
 
 
 const NotesDetail = React.lazy(() => import("./features/notesDetail/NotesDetail"));
@@ -32,6 +34,13 @@ const ViewCustomer = () => {
   const { setCustomerId, customerId, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById, data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
+
+  const hasNotePermission = hasFunctionalPermission(securityKey.CUSTOMERNOTES);
+  const hasAddressPermission = hasFunctionalPermission(securityKey.CUSTOMERADDRESS);
+  const hasContactPermission = hasFunctionalPermission(securityKey.CUSTOMERCONTACT);
+  const hasSettingPermission = hasFunctionalPermission(securityKey.CUSTOMERSETTING);
+  const hasHistoryPermission = hasFunctionalPermission(securityKey.CUSTOMERHISTORY);
+  const hasDocumentPermission = hasFunctionalPermission(securityKey.CUSTOMERDOCUMENT);
 
   useEffect(() => {
     if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
@@ -69,51 +78,71 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Address",
       component: (
         <div className="mt-2">
-          <CustomerAddressDetails isEditablePage={true} />
+          {hasAddressPermission.hasAccess ?
+            <CustomerAddressDetails isEditablePage={true} />
+            : null}
         </div>
       ),
+      isVisible: hasAddressPermission.hasAccess
     },
     {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2">
-          <CustomerContactDetails isEditablePage={true} />
+          {hasContactPermission.hasAccess ?
+            <CustomerContactDetails isEditablePage={true} />
+            : null}
         </div>
       ),
+      isVisible: hasContactPermission.hasAccess
     },
     {
       sMenuItemCaption: "Settings",
       component: (
         <div className="mt-2">
-          <SettingDetails />
+          {hasSettingPermission.hasAccess ?
+            <SettingDetails />
+            : null}
         </div>
       ),
+      isVisible: hasSettingPermission.hasAccess
     },
     {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          <CustomerDocumentDetails isEditablePage={true} />
+          {hasDocumentPermission.hasAccess ?
+            <CustomerDocumentDetails isEditablePage={true} />
+            : null}
         </div>
       ),
+      isVisible: hasDocumentPermission.hasAccess
     },
     {
       sMenuItemCaption: "Notes",
       component: (
         <div className="mt-2">
-          <NotesDetail />
+          {hasNotePermission.hasAccess ?
+            <NotesDetail />
+            : null}
         </div>
       ),
+      isVisible: hasNotePermission.hasAccess
     },
     {
       sMenuItemCaption: "History",
       component: (
         <div className="">
-          <HistoryDetail />
+          {hasHistoryPermission.hasAccess ?
+            <HistoryDetail />
+            : null}
         </div>
       ),
+      isVisible: hasHistoryPermission.hasAccess
     },
   ];
+
+  const visibleTabs = tabs.filter(tab => tab.isVisible);
 
   return (
     <>
@@ -138,7 +167,7 @@ const ViewCustomer = () => {
               buttonText="Back"
               imagePath={AppIcons.BackArrowIcon}
             ></Button>
-            <RenderTabs tabs={customerId ? tabs : null} />
+            <RenderTabs tabs={customerId ? visibleTabs : null} />
           </div>
         </div>
       </div>
