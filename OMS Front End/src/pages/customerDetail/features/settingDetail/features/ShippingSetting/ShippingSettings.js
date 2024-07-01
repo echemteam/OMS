@@ -9,6 +9,10 @@ import SwalAlert from "../../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useLazyGetAllDeliveryAccountsQuery } from "../../../../../../app/services/commonAPI";
 import { useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation, useLazyGetShppingDeliveryCarrierAndDeliveryMethodsByIdQuery } from "../../../../../../app/services/customerSettingsAPI";
+import { securityKey } from "../../../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { OurAccountGridConfig } from "../DeliveryMethod/config/DevliveryConfig";
+import { AccountGridConfig } from "../Carrier/config/CarrierConfig";
 
 //** Component's */
 const ManageCarrier = React.lazy(() => import("../Carrier/ManageCarrier"));
@@ -18,6 +22,7 @@ const ShippingSettings = () => {
 
   const ref = useRef();
   const { confirm } = SwalAlert();
+  const [isShowButton, setIsShowButton] = useState(false);
   const [accountTypeId, setAccountTypeId] = useState(0);
   const [isDefaultValue, setIsDefaultValue] = useState(0);
   const [formData, setFormData] = useState(shippingFormData);
@@ -26,6 +31,25 @@ const ShippingSettings = () => {
   const [getAllAccountType, { isFetching: isAccountTypeFetching, isSuccess: isAccountTypeSuccess, data: isAccountTypeData, },] = useLazyGetAllDeliveryAccountsQuery();
   const [addDefaultShippings, { isSuccess: isAddDefaultShippingsSuccess, data: isAddDefaultShippingsData, },] = useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation();
   const [getDefaultList, { isFetching: isGetDefaultValueFetching, isSuccess: isGetDefaultValueSuccess, data: isGetDefaultValueData }] = useLazyGetShppingDeliveryCarrierAndDeliveryMethodsByIdQuery();
+
+  const { formSetting } = shippingFormData;
+  const DeliveryActionColumn = OurAccountGridConfig.columns.find(column => column.name === "Action");
+  const CarrierActionColumn = AccountGridConfig.columns.find(column => column.name === "Action");
+  const hasAddEditPermission = hasFunctionalPermission(securityKey.ADDEDITCUSTOMERSHIPPINGSETTING);
+
+  useEffect(() => {
+    if (hasAddEditPermission.hasAccess === true) {
+      setIsShowButton(true);
+      formSetting.isViewOnly = false;
+    } else {
+      setIsShowButton(false);
+      formSetting.isViewOnly = true;
+      DeliveryActionColumn.defaultAction.allowEdit = false;
+      DeliveryActionColumn.defaultAction.allowDelete = false;
+      CarrierActionColumn.defaultAction.allowEdit = false;
+      CarrierActionColumn.defaultAction.allowDelete = false;
+    }
+  }, [hasAddEditPermission]);
 
   useEffect(() => {
     getAllAccountType();
@@ -147,11 +171,11 @@ const ShippingSettings = () => {
       {!isGetDefaultValueFetching ?
         <div className="grid-section">
           {accountTypeId === 1 ?
-            <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
+            <ManageDevliveryMethod isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
             accountTypeId === 2 ?
               <>
-                <ManageCarrier handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
-                <ManageDevliveryMethod handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
+                <ManageCarrier isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
+                <ManageDevliveryMethod isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
               </> : null
           }
         </div>

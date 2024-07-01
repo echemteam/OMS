@@ -3,13 +3,13 @@ import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import { OurAccountGridConfig } from "../config/DevliveryConfig";
 
-const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading }) => {
+const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton }) => {
 
     return (
         <div className="first-card">
             <CardSection
                 cardTitle="Delivery Method Details"
-                rightButton={true}
+                rightButton={isShowButton ? true : false}
                 buttonClassName="theme-button "
                 buttonText="Add"
                 textWithIcon={true}

@@ -35,6 +35,7 @@ export const addEditDeliveryFormData = {
             fieldSetting: {
                 placeholder: "Enter Charge",
                 allowSpace: true,
+                maxLength: 8,
             },
             validation: [{ type: "require" }],
             style: {
