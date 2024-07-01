@@ -12,7 +12,6 @@
       }
     }
   }
-
 }
 
 .customer-desc-left-sec {
@@ -58,7 +57,6 @@
           padding-left: 5px;
           margin-top: 10px;
 
-
           .input-label-part {
             margin-bottom: 0px;
             padding-bottom: 0;
@@ -77,7 +75,6 @@
               span {
                 img {
                   margin-left: 5px;
-
                 }
               }
 
@@ -85,12 +82,9 @@
                 margin-bottom: 5px;
                 margin-top: 7px;
               }
-
-
             }
           }
         }
-
 
         .edit-icons {
           cursor: pointer;
@@ -99,8 +93,6 @@
           }
         }
       }
-
-
 
       .field-desc {
         display: flex;
@@ -115,49 +107,52 @@
           font-size: var(--commonFont-small);
           padding-top: 2px;
         }
-        .info-desc{
+        .info-desc {
           padding-top: 2px;
           font-size: var(--commonFont-small);
           color: var(--textColor);
           word-break: break-all;
         }
-        .email-link{
+        .email-link {
           color: var(--textColor);
           text-decoration: underline;
-          &:hover{
+          &:hover {
             color: var(--themeColor);
           }
         }
-        .copy-icon{
+        .copy-icon {
           margin-left: 5px;
           cursor: pointer;
-          img{
+          img {
             width: 17px;
             height: 17px;
           }
         }
-
       }
     }
   }
-  .css-1xc3v61-indicatorContainer{
-    color: #fff !important;
-  }
-  .css-1xc3v61-indicatorContainer:hover{
-    color: #fff !important;
+  .css-b62m3t-container {
+    .css-13cymwt-control {
+      .css-1xc3v61-indicatorContainer {
+        color: #fff !important;
+      }
+      .css-1xc3v61-indicatorContainer:hover {
+        color: #fff !important;
+      }
+    }
   }
 }
 
-.basic-info-model{
+.basic-info-model {
   .card {
     box-shadow: none;
     padding: 10px 0 0;
   }
 }
 
-.back-button{
-    position: absolute;
-    right: 43px;
+.back-button {
+  position: absolute;
+  right: 43px;
 }
 
 @media only screen and (max-width: 1566px) {
@@ -165,7 +160,7 @@
     .card-body-sec {
       .basic-customer-detail {
         .field-desc {
-          .inf-label{
+          .inf-label {
             min-width: 95px;
             max-width: 95px;
           }
@@ -173,5 +168,4 @@
       }
     }
   }
-
 }
