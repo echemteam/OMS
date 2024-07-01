@@ -12,7 +12,7 @@ import { useDeleteCustomerDeliveryCarriersByIdMutation } from "../../../../../..
 const CarrierList = React.lazy(() => import("./feature/CarrierList"));
 const AddEditCarrier = React.lazy(() => import("./feature/AddEditCarrier"));
 
-const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading }) => {
+const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton }) => {
 
     const childRef = useRef();
     const molGridRef = useRef();
@@ -84,7 +84,7 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading }) => {
     return (
         <>
             <CarrierList molGridRef={molGridRef} collectAccountData={carriersList} actionHandler={actionHandler}
-                handleToggleModal={handleToggleModal} isGetDataLoading={isGetDataLoading} />
+                handleToggleModal={handleToggleModal} isGetDataLoading={isGetDataLoading} isShowButton={isShowButton}/>
             {showModal && (
                 <AddEditCarrier handleToggleModal={handleToggleModal} showModal={showModal} editFormData={editFormData} onSuccess={onSuccess}
                     isEdit={isEdit} childRef={childRef} />

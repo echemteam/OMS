@@ -4,18 +4,48 @@ import "./SettingDetails.scss"
 import ShippingSettings from "./features/ShippingSetting/ShippingSettings";
 import FinancialSettings from "./FinancialSettings";
 import CardSection from "../../../../components/ui/card/CardSection";
+import { securityKey } from "../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { useEffect } from "react";
+import Unauthorize from "../../../unauthorize/Unauthorize";
 
 const SettingDetails = () => {
   const [activeTab, setActiveTab] = useState("0");
+  const [showFinacialTab, setShowFinacialTab] = useState(false);
+  const [showShippingTab, setShowShippingTab] = useState(false);
+
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
   };
+
+  const hasShippingPermission = hasFunctionalPermission(securityKey.CUSTOMERSHIPPINGSETTING);
+  const hasFinacialPermission = hasFunctionalPermission(securityKey.CUSTOMERFINANCIALSETTING);
+
+  useEffect(() => {
+    if (hasShippingPermission.hasAccess === true) {
+      setShowShippingTab(true);
+    } else {
+      setShowShippingTab(false);
+    }
+  }, [hasShippingPermission]);
+
+  useEffect(() => {
+    if (hasFinacialPermission.hasAccess === true) {
+      setShowFinacialTab(true);
+    } else {
+      setShowFinacialTab(false);
+    }
+  }, [hasFinacialPermission]);
+
   const tabs = [
     {
       sMenuItemCaption: "Financial",
       component: (
         <div className="mt-4 financial-sec">
-          <FinancialSettings />
+          {showFinacialTab ?
+            <FinancialSettings /> :
+            <Unauthorize />
+          }
         </div>
       ),
     },
@@ -23,7 +53,10 @@ const SettingDetails = () => {
       sMenuItemCaption: "Shipping",
       component: (
         <div className="mt-4 financial-sec">
-          <ShippingSettings />
+          {showShippingTab ?
+            <ShippingSettings />
+            : <Unauthorize />
+          }
         </div>
       ),
     },

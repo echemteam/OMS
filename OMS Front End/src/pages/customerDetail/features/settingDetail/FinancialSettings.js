@@ -6,16 +6,32 @@ import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, us
 import ToastService from "../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { securityKey } from "../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 const FinancialSettings = (props) => {
   const settingFormRef = useRef();
   const { customerId } = useContext(BasicDetailContext);
+  const [showButton, setShowButton] = useState(false);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
-  const [getAllPaymentTerms, {  isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
-  const [getAllPaymentMethod, {  isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData, },] = useLazyGetAllPaymentMethodQuery();
+  const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
+  const [getAllPaymentMethod, { isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData, },] = useLazyGetAllPaymentMethodQuery();
   const [GetDetailsbyCustomerID, { isFetching: isGetDetailByCustomerIDFetching, isSuccess: isGetDetailByCustomerIDSuccess, data: isGetDetailByCustomerIDData, },] = useLazyGetDetailsbyCustomerIDQuery();
   const [addEditCustomerSettings, { isLoading: isAddEditCustomerSettingsLoading, isSuccess: isAddEditCustomerSettingsSuccess, data: isAddEditCustomerSettingsData, },] = useAddEditCustomerSettingsMutation();
+
+  const { formSetting } = SettingFormData;
+  const hasAddEditPermission = hasFunctionalPermission(securityKey.ADDEDITCUSTOMERFINANCIAL);
+
+  useEffect(() => {
+    if (hasAddEditPermission.hasAccess === true) {
+      setShowButton(true);
+      formSetting.isViewOnly = false;
+    } else {
+      setShowButton(false);
+      formSetting.isViewOnly = true;
+    }
+  }, [hasAddEditPermission]);
 
   useEffect(() => {
     getAllPaymentTerms();
@@ -41,7 +57,7 @@ const FinancialSettings = (props) => {
   }, [isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData,]);
 
   useEffect(() => {
-    if ( isGetAllPaymentMethodSuccess && isGetAllPaymentMethodData) {
+    if (isGetAllPaymentMethodSuccess && isGetAllPaymentMethodData) {
       const getData = isGetAllPaymentMethodData.map((item) => ({
         value: item.paymentMethodId,
         label: item.method,
@@ -54,13 +70,13 @@ const FinancialSettings = (props) => {
 
   useEffect(() => {
 
-    if (!isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDSuccess  && isGetDetailByCustomerIDData) {
+    if (!isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDSuccess && isGetDetailByCustomerIDData) {
       if (isGetDetailByCustomerIDData) {
         let formData = { ...customerSettingFormData };
         formData.initialState = {
           ...customerSettingFormData.initialState,
           customerAccountingSettingId: isGetDetailByCustomerIDData.customerAccountingSettingId,
-          paymentTermId: isGetDetailByCustomerIDData.paymentTermId  ,
+          paymentTermId: isGetDetailByCustomerIDData.paymentTermId,
           creditLimit: isGetDetailByCustomerIDData.creditLimit,
           paymentMethodId: isGetDetailByCustomerIDData.paymentMethodId,
           billingCurrency: isGetDetailByCustomerIDData.billingCurrency,
@@ -70,7 +86,7 @@ const FinancialSettings = (props) => {
         setShouldRerenderFormCreator((prevState) => !prevState);
       }
     }
-  }, [isGetDetailByCustomerIDFetching, isGetDetailByCustomerIDSuccess,  isGetDetailByCustomerIDData,]);
+  }, [isGetDetailByCustomerIDFetching, isGetDetailByCustomerIDSuccess, isGetDetailByCustomerIDData,]);
 
   useEffect(() => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
@@ -93,7 +109,7 @@ const FinancialSettings = (props) => {
         billingCurrency: settingFormData.billingCurrency.value,
       };
       addEditCustomerSettings(request);
-      
+
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
       const updaterequest = {
         ...settingFormData,
@@ -106,8 +122,8 @@ const FinancialSettings = (props) => {
           ? settingFormData.paymentMethodId.value
           : settingFormData.paymentMethodId,
         billingCurrency: settingFormData.billingCurrency && typeof settingFormData.billingCurrency === "object"
-        ? settingFormData.billingCurrency.value
-        : settingFormData.billingCurrency,
+          ? settingFormData.billingCurrency.value
+          : settingFormData.billingCurrency,
       };
       addEditCustomerSettings(updaterequest);
     }
@@ -129,12 +145,14 @@ const FinancialSettings = (props) => {
         <div className="col-md-12 mt-2">
           <div className="d-flex align-item-end justify-content-end">
             <div className="d-flex align-item-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText="Save"
-                onClick={onhandleEdit}
-                isLoading={isAddEditCustomerSettingsLoading}
-              />
+              {showButton ?
+                <Buttons
+                  buttonTypeClassName="theme-button"
+                  buttonText="Save"
+                  onClick={onhandleEdit}
+                  isLoading={isAddEditCustomerSettingsLoading}
+                />
+                : null}
               {/* <Buttons
                 buttonTypeClassName="dark-btn ml-5"
                 buttonText="Cancel"
