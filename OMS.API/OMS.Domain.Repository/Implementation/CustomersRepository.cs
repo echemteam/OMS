@@ -62,7 +62,6 @@ namespace OMS.Domain.Repository.Implementation
                 customers.CountryId,
                 customers.EmailAddress,
                 customers.Website,
-                customers.Note,
                 customers.IsCompany,
                 customers.TaxId,
                 customers.UpdatedBy,
