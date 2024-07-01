@@ -22,7 +22,7 @@ const DocumentDetails = ({ mainId, isEditablePage, SecurityKey}) => {
 
   //** API Call's */
   const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddSupplierDocumentsMutation();
-  const [getAllDocumentTypes, { isFetching: isGetAllDocumentTypesFetching, isSuccess: isGetAllDocumentTypesSucess, data: allGetAllDocumentTypesData }] = useLazyGetAllDocumentTypesQuery();
+  const [getAllDocumentTypes, {  isSuccess: isGetAllDocumentTypesSucess, data: allGetAllDocumentTypesData }] = useLazyGetAllDocumentTypesQuery();
 
   //** UseEffect */
   useEffect(() => {
@@ -45,7 +45,7 @@ const DocumentDetails = ({ mainId, isEditablePage, SecurityKey}) => {
   }, [isEditablePage, SecurityKey]);
 
   useEffect(() => {
-    if (!isGetAllDocumentTypesFetching && isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
+    if (isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
       const getData = allGetAllDocumentTypesData.map(item => ({
         value: item.documentTypeId,
         label: item.type
@@ -53,7 +53,7 @@ const DocumentDetails = ({ mainId, isEditablePage, SecurityKey}) => {
       const dropdownField = DocumentFormData.formFields.find(item => item.dataField === "documentTypeId");
       dropdownField.fieldSetting.options = getData;
     }
-  }, [isGetAllDocumentTypesFetching, isGetAllDocumentTypesSucess, allGetAllDocumentTypesData]);
+  }, [isGetAllDocumentTypesSucess, allGetAllDocumentTypesData]);
 
   useEffect(() => {
     if (isAddSuccess && isAddData) {

@@ -61,7 +61,6 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [
     getAllAddressTypes,
     {
-      isFetching: isGetAllAddressTypesFetching,
       isSuccess: isGetAllAddressTypesSucess,
       data: allGetAllAddressTypesData,
     },
@@ -70,7 +69,6 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [
     getAllCountries,
     {
-      isFetching: isGetAllCountriesFetching,
       isSuccess: isGetAllCountriesSucess,
       data: allGetAllCountriesData,
     },
@@ -79,7 +77,6 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [
     getAllStates,
     {
-      isFetching: isGetAllStatesFetching,
       isSuccess: isGetAllStatesSucess,
       data: allGetAllStatesData,
     },
@@ -88,7 +85,6 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [
     getAllCities,
     {
-      isFetching: isGetAllCitiesFetching,
       isSuccess: isGetAllCitiesSucess,
       data: allGetAllCitiesData,
     },
@@ -162,7 +158,6 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
 
   useEffect(() => {
     if (
-      !isGetAllAddressTypesFetching &&
       isGetAllAddressTypesSucess &&
       allGetAllAddressTypesData
     ) {
@@ -176,14 +171,12 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       dropdownField.fieldSetting.options = getData;
     }
   }, [
-    isGetAllAddressTypesFetching,
     isGetAllAddressTypesSucess,
     allGetAllAddressTypesData,
   ]);
 
   useEffect(() => {
     if (
-      !isGetAllCountriesFetching &&
       isGetAllCountriesSucess &&
       allGetAllCountriesData
     ) {
@@ -197,14 +190,12 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       dropdownField.fieldSetting.options = getData;
     }
   }, [
-    isGetAllCountriesFetching,
     isGetAllCountriesSucess,
     allGetAllCountriesData,
   ]);
 
   useEffect(() => {
     if (
-      !isGetAllStatesFetching &&
       isGetAllStatesSucess &&
       allGetAllStatesData
     ) {
@@ -219,11 +210,10 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       // setSelectedState(allGetAllStatesData)
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetAllStatesFetching, isGetAllStatesSucess, allGetAllStatesData]);
+  }, [ isGetAllStatesSucess, allGetAllStatesData]);
 
   useEffect(() => {
     if (
-      !isGetAllCitiesFetching &&
       isGetAllCitiesSucess &&
       allGetAllCitiesData
     ) {
@@ -238,7 +228,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       // setSelectedCity(allGetAllCitiesData)
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetAllCitiesFetching, isGetAllCitiesSucess, allGetAllCitiesData]);
+  }, [isGetAllCitiesSucess, allGetAllCitiesData]);
 
   const handleToggleModal = () => {
     setisModelOpen(true);

@@ -60,6 +60,11 @@ import blockredIcone from "../assets/images/block-red.png";
 import disablethemeIcone from "../assets/images/disable-theme.png";
 import freezeblueIcone from "../assets/images/freeze-blue.png";
 import RejectedIcon from "../assets/images/reject.png";
+import supplierIcon from "../assets/images/supplier.png";
+import customerDetailsIcone from "../assets/images/customerDetails.png";
+import securityIcon from "../assets/images/securityIcon.png";
+import security from "../assets/images/security.png";
+
 
 export const AppIcons = {
   // Menus & Header Images
@@ -118,4 +123,9 @@ export const AppIcons = {
   disablethemeIcone: disablethemeIcone,
   blockredIcone: blockredIcone,
   RejectedIcon: RejectedIcon,
+
+  supplierIcon:supplierIcon,
+  customerDetailsIcone:customerDetailsIcone,
+  securityIcon:securityIcon,
+  security:security,
 };

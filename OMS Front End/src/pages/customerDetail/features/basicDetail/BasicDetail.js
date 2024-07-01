@@ -40,7 +40,6 @@ const BasicDetail = (props) => {
   const [
     getAllGroupTypes,
     {
-      isFetching: isGetAllGroupTypesFetching,
       isSuccess: isGetAllGroupTypesSucess,
       data: allGetAllGroupTypesData,
     },
@@ -49,7 +48,6 @@ const BasicDetail = (props) => {
   const [
     getAllCountries,
     {
-      isFetching: isGetAllCountriesFetching,
       isSuccess: isGetAllCountriesSucess,
       data: allGetAllCountriesData,
     },
@@ -58,7 +56,6 @@ const BasicDetail = (props) => {
   const [
     getAllTerritories,
     {
-      isFetching: isGetAllTerritoriesFetching,
       isSuccess: isGetAllTerritoriesSucess,
       data: allGetAllTerritoriesData,
     },
@@ -67,7 +64,6 @@ const BasicDetail = (props) => {
   const [
     getAllUser,
     {
-      isFetching: isGetAllUserFetching,
       isSuccess: isGetAllUserSucess,
       data: allGetAlluserData,
     },
@@ -110,7 +106,6 @@ const BasicDetail = (props) => {
 
   useEffect(() => {
     if (
-      !isGetAllGroupTypesFetching &&
       isGetAllGroupTypesSucess &&
       allGetAllGroupTypesData
     ) {
@@ -124,14 +119,12 @@ const BasicDetail = (props) => {
       dropdownField.fieldSetting.options = getData;
     }
   }, [
-    isGetAllGroupTypesFetching,
     isGetAllGroupTypesSucess,
     allGetAllGroupTypesData,
   ]);
 
   useEffect(() => {
     if (
-      !isGetAllCountriesFetching &&
       isGetAllCountriesSucess &&
       allGetAllCountriesData
     ) {
@@ -146,14 +139,12 @@ const BasicDetail = (props) => {
       setAllCountries(allGetAllCountriesData);
     }
   }, [
-    isGetAllCountriesFetching,
     isGetAllCountriesSucess,
     allGetAllCountriesData,
   ]);
 
   useEffect(() => {
     if (
-      !isGetAllTerritoriesFetching &&
       isGetAllTerritoriesSucess &&
       allGetAllTerritoriesData
     ) {
@@ -167,7 +158,6 @@ const BasicDetail = (props) => {
       dropdownField.fieldSetting.options = getData;
     }
   }, [
-    isGetAllTerritoriesFetching,
     isGetAllTerritoriesSucess,
     allGetAllTerritoriesData,
   ]);
@@ -175,7 +165,6 @@ const BasicDetail = (props) => {
   useEffect(() => {
 
     if (
-      !isGetAllUserFetching &&
       isGetAllUserSucess &&
       allGetAlluserData
     ) {
@@ -189,7 +178,6 @@ const BasicDetail = (props) => {
       dropdownField.fieldSetting.options = getData;
     }
   }, [
-    isGetAllUserFetching,
     isGetAllUserSucess,
     allGetAlluserData,
   ]);

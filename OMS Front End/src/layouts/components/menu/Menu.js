@@ -58,7 +58,7 @@ export const Menu = [
   {
     id: "supplier",
     name: "Supplier Details",
-    iconClass: "bi bi-people-fill",
+    iconClass: "fa fa-truck",
     subMenu: true,
     to: "#",
     securityKey: securityKey.SUPPLIER,
