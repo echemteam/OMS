@@ -36,6 +36,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
   useEffect(() => {
     if (isSuccessUpdateSupplierStatus && updateSupplierStatusData) {
       ToastService.success(updateSupplierStatusData.errorMessage);
+      handleToggleModal()
     }
   }, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
 
@@ -48,8 +49,18 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId , o
         case 3:
           setOptions(StaticStatus[StatusValue[statusId - 1].label]);
           break;
-        case 4:
-        case 5:
+          case 4:
+            setOptions([
+              { value: "4", label: "Freeze" },
+              { value: "3", label: "Approved" },
+            ]);
+            break;
+          case 5:
+            setOptions([
+              { value: "5", label: "Block" },
+              { value: "3", label: "Approved" },
+            ]);
+            break;
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;

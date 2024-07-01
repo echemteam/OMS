@@ -12,8 +12,8 @@ const FinancialSettings = (props) => {
   const { customerId } = useContext(BasicDetailContext);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
-  const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
-  const [getAllPaymentMethod, { isFetching: isGetAllPaymentMethodFetching, isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData, },] = useLazyGetAllPaymentMethodQuery();
+  const [getAllPaymentTerms, {  isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
+  const [getAllPaymentMethod, {  isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData, },] = useLazyGetAllPaymentMethodQuery();
   const [GetDetailsbyCustomerID, { isFetching: isGetDetailByCustomerIDFetching, isSuccess: isGetDetailByCustomerIDSuccess, data: isGetDetailByCustomerIDData, },] = useLazyGetDetailsbyCustomerIDQuery();
   const [addEditCustomerSettings, { isLoading: isAddEditCustomerSettingsLoading, isSuccess: isAddEditCustomerSettingsSuccess, data: isAddEditCustomerSettingsData, },] = useAddEditCustomerSettingsMutation();
 
@@ -29,7 +29,7 @@ const FinancialSettings = (props) => {
   }, [customerId]);
 
   useEffect(() => {
-    if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
+    if (isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
       const getData = isGetAllPaymentTermsData.map((item) => ({
         value: item.paymentTermId,
         label: item.paymentTerm,
@@ -38,10 +38,10 @@ const FinancialSettings = (props) => {
       dropdownField.fieldSetting.options = getData;
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData,]);
+  }, [isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData,]);
 
   useEffect(() => {
-    if (!isGetAllPaymentMethodFetching && isGetAllPaymentMethodSuccess && isGetAllPaymentMethodData) {
+    if ( isGetAllPaymentMethodSuccess && isGetAllPaymentMethodData) {
       const getData = isGetAllPaymentMethodData.map((item) => ({
         value: item.paymentMethodId,
         label: item.method,
@@ -50,7 +50,7 @@ const FinancialSettings = (props) => {
       dropdownField.fieldSetting.options = getData;
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetAllPaymentMethodFetching, isGetAllPaymentMethodSuccess, isGetAllPaymentMethodData,]);
+  }, [isGetAllPaymentMethodSuccess, isGetAllPaymentMethodData,]);
 
   useEffect(() => {
 

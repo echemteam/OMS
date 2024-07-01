@@ -113,13 +113,13 @@ export const supplierBasicData = {
       id: "dbaName",
       lable: "Doing Business As Name :",
       Field_Name: "Doing Business As Name",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "dbaName",
       fieldSetting: {
         placeholder: "Doing Business As Name",
         allowSpace: true,
       },
-      validation: [{ type: "require" } , { type: "number "}],
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
