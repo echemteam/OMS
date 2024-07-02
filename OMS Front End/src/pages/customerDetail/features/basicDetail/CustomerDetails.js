@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import CopyText from "../../../../utils/CopyText/CopyText";
@@ -13,6 +13,9 @@ import { reasonData } from "../../customers/config/CustomerData";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import CustomerApproval from "../cutomerApproval/CustomerApproval";
+import { securityKey } from "../../../../data/SecurityKey";
+import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const childRef = useRef();
@@ -29,6 +32,21 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
 
   const [updateCustomerStatus, { isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
+
+  const { isResponsibleUser } = useContext(BasicDetailContext);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
+
+  useEffect(() => {
+    if (!isResponsibleUser) {
+      if (hasEditPermission.isViewOnly === true) {
+        setIsButtonDisable(true);
+      }
+      else {
+        setIsButtonDisable(false);
+      }
+    }
+  }, [hasEditPermission])
 
   useEffect(() => {
     if (isSuccessUpdateCustomerInActiveStatus && updateCustomerInActiveStatusData) {
@@ -53,18 +71,18 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
         case 3:
           setOptions(StaticStatus[StatusValue[statusId - 1].label]);
           break;
-          case 4:
-            setOptions([
-              { value: "4", label: "Freeze" },
-              { value: "3", label: "Approved" },
-            ]);
-            break;
-          case 5:
-            setOptions([
-              { value: "5", label: "Block" },
-              { value: "3", label: "Approved" },
-            ]);
-            break;
+        case 4:
+          setOptions([
+            { value: "4", label: "Freeze" },
+            { value: "3", label: "Approved" },
+          ]);
+          break;
+        case 5:
+          setOptions([
+            { value: "5", label: "Block" },
+            { value: "3", label: "Approved" },
+          ]);
+          break;
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;
@@ -203,6 +221,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
                 value={selectedStatus}
                 onChange={handleStatusChange}
                 placeholder="Select Status"
+                isDisabled={isButtonDisable}
               />
             </div>
 

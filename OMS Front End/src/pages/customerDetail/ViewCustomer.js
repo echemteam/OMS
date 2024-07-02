@@ -31,7 +31,7 @@ const ViewCustomer = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
-  const { setCustomerId, customerId, setIsResponsibleUser } = useContext(BasicDetailContext);
+  const { setCustomerId, customerId, isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById, data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
 
@@ -78,9 +78,9 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Address",
       component: (
         <div className="mt-2">
-          {hasAddressPermission.hasAccess ?
-            <CustomerAddressDetails isEditablePage={true} />
-            : null}
+          {/* {hasAddressPermission.hasAccess ? */}
+          <CustomerAddressDetails isEditablePage={true} />
+          {/* : null} */}
         </div>
       ),
       isVisible: hasAddressPermission.hasAccess
@@ -89,9 +89,9 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2">
-          {hasContactPermission.hasAccess ?
-            <CustomerContactDetails isEditablePage={true} />
-            : null}
+          {/* {hasContactPermission.hasAccess ? */}
+          <CustomerContactDetails isEditablePage={true} />
+          {/* : null} */}
         </div>
       ),
       isVisible: hasContactPermission.hasAccess
@@ -100,9 +100,9 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Settings",
       component: (
         <div className="mt-2">
-          {hasSettingPermission.hasAccess ?
-            <SettingDetails />
-            : null}
+          {/* {hasSettingPermission.hasAccess ? */}
+          <SettingDetails />
+          {/* : null} */}
         </div>
       ),
       isVisible: hasSettingPermission.hasAccess
@@ -111,9 +111,9 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          {hasDocumentPermission.hasAccess ?
-            <CustomerDocumentDetails isEditablePage={true} />
-            : null}
+          {/* {hasDocumentPermission.hasAccess ? */}
+          <CustomerDocumentDetails isEditablePage={true} />
+          {/* : null} */}
         </div>
       ),
       isVisible: hasDocumentPermission.hasAccess
@@ -122,9 +122,9 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Notes",
       component: (
         <div className="mt-2">
-          {hasNotePermission.hasAccess ?
-            <NotesDetail />
-            : null}
+          {/* {hasNotePermission.hasAccess ? */}
+          <NotesDetail />
+          {/* : null} */}
         </div>
       ),
       isVisible: hasNotePermission.hasAccess
@@ -133,16 +133,16 @@ const ViewCustomer = () => {
       sMenuItemCaption: "History",
       component: (
         <div className="">
-          {hasHistoryPermission.hasAccess ?
-            <HistoryDetail />
-            : null}
+          {/* {hasHistoryPermission.hasAccess ? */}
+          <HistoryDetail />
+          {/* : null} */}
         </div>
       ),
       isVisible: hasHistoryPermission.hasAccess
     },
   ];
 
-  const visibleTabs = tabs.filter(tab => tab.isVisible);
+  const visibleTabs = !isResponsibleUser ? tabs.filter(tab => tab.isVisible) : tabs
 
   return (
     <>

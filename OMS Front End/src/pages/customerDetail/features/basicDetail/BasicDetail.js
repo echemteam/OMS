@@ -28,14 +28,32 @@ const BasicDetail = (props) => {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
+          responsibleUserDisbled(true)
         }
         else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
+          responsibleUserDisbled(false);
         }
+      }
+      if (isResponsibleUser) {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+        responsibleUserDisbled(true);
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
+
+  const responsibleUserDisbled = (disabled) => {
+    let responsibleUser = basicDetailFormDataHalf.formFields.find(data => data.id === 'responsibleUserId');
+    if (responsibleUser) {
+      responsibleUser.fieldSetting = { ...responsibleUser.fieldSetting, isDisabled: disabled };
+      let request = {
+        ...formData
+      }
+      setFormData(request);
+    }
+  }
 
   const [
     getAllGroupTypes,

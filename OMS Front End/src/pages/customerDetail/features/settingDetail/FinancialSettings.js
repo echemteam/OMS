@@ -11,7 +11,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 
 const FinancialSettings = (props) => {
   const settingFormRef = useRef();
-  const { customerId } = useContext(BasicDetailContext);
+  const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
   const [showButton, setShowButton] = useState(false);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
@@ -24,12 +24,14 @@ const FinancialSettings = (props) => {
   const hasAddEditPermission = hasFunctionalPermission(securityKey.ADDEDITCUSTOMERFINANCIAL);
 
   useEffect(() => {
-    if (hasAddEditPermission.hasAccess === true) {
-      setShowButton(true);
-      formSetting.isViewOnly = false;
-    } else {
-      setShowButton(false);
-      formSetting.isViewOnly = true;
+    if (!isResponsibleUser) {
+      if (hasAddEditPermission.hasAccess === true) {
+        setShowButton(true);
+        formSetting.isViewOnly = false;
+      } else {
+        setShowButton(false);
+        formSetting.isViewOnly = true;
+      }
     }
   }, [hasAddEditPermission]);
 
