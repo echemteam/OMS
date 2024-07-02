@@ -131,6 +131,9 @@
       }
     }
   }
+  .css-1nmdiq5-menu{
+    width: 120% !important;
+  }
   .css-b62m3t-container {
     .css-13cymwt-control {
       .css-1xc3v61-indicatorContainer {
@@ -142,8 +145,10 @@
       .css-15lsz6c-indicatorContainer{
         color: #fff !important;
       }
-      .css-15lsz6c-indicatorContainer:hover {
+      .css-15lsz6c-indicatorContainer {
         color: #fff !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
       }
     }
   }

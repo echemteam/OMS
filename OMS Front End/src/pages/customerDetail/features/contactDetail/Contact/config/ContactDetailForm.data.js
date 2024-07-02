@@ -52,7 +52,7 @@ export const contactDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2",
+        containerCss: "col-xxl-8 col-xl-8 col-md-12 col-12 col-12 mb-2",
       },
     },
     {
@@ -67,7 +67,7 @@ export const contactDetailFormData = {
       },
       style: {
         containerCss:
-          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+          "col-xxl-4 col-xl-4 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
       },
     },
   ],
