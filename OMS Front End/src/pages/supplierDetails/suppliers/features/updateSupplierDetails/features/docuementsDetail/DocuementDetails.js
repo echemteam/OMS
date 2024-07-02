@@ -9,10 +9,10 @@ import { AppIcons } from "../../../../../../../data/appIcons";
 import ToastService from "../../../../../../../services/toastService/ToastService";
 import { useAddSupplierDocumentsMutation } from "../../../../../../../app/services/supplierDocuementsAPI";
 import { hasFunctionalPermission } from "../../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
- 
+
 const ManageDocumentList = React.lazy(() => import("./features/ManageDocumentList"));
 
-const DocumentDetails = ({ mainId, isEditablePage, SecurityKey}) => {
+const DocumentDetails = ({ mainId, isEditablePage, SecurityKey }) => {
 
   //** State */
   const documentFormRef = useRef();
@@ -22,7 +22,7 @@ const DocumentDetails = ({ mainId, isEditablePage, SecurityKey}) => {
 
   //** API Call's */
   const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddSupplierDocumentsMutation();
-  const [getAllDocumentTypes, {  isSuccess: isGetAllDocumentTypesSucess, data: allGetAllDocumentTypesData }] = useLazyGetAllDocumentTypesQuery();
+  const [getAllDocumentTypes, { isSuccess: isGetAllDocumentTypesSucess, data: allGetAllDocumentTypesData }] = useLazyGetAllDocumentTypesQuery();
 
   //** UseEffect */
   useEffect(() => {
@@ -46,7 +46,7 @@ const DocumentDetails = ({ mainId, isEditablePage, SecurityKey}) => {
 
   useEffect(() => {
     if (isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
-      const getData = allGetAllDocumentTypesData.map(item => ({
+      const getData = allGetAllDocumentTypesData.filter(x => x.isForSuppliers).map(item => ({
         value: item.documentTypeId,
         label: item.type
       }))
@@ -105,7 +105,7 @@ const DocumentDetails = ({ mainId, isEditablePage, SecurityKey}) => {
           titleButtonClick={handleToggleModal}>
           <div className="">
             <ManageDocumentList childRef={childRef} mainId={mainId} isEditablePage={isEditablePage} SecurityKey={SecurityKey}
-               />
+            />
           </div>
         </CardSection>
       </div>

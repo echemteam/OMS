@@ -92,14 +92,25 @@ const ContactDetail = ({
       isGetAllContactTypesSucess &&
       allGetAllContactTypesData
     ) {
-      const getData = allGetAllContactTypesData.map((item) => ({
-        value: item.contactTypeId,
-        label: item.type,
-      }));
-      const dropdownField = contactDetailFormData.formFields.find(
-        (item) => item.dataField === "contactTypeId"
-      );
-      dropdownField.fieldSetting.options = getData;
+      if (isSupplier === true) {
+        const getData = allGetAllContactTypesData.filter(x => x.isForSuppliers).map((item) => ({
+          value: item.contactTypeId,
+          label: item.type,
+        }));
+        const dropdownField = contactDetailFormData.formFields.find(
+          (item) => item.dataField === "contactTypeId"
+        );
+        dropdownField.fieldSetting.options = getData;
+      } else {
+        const getData = allGetAllContactTypesData.filter(x => x.isForCustomers).map((item) => ({
+          value: item.contactTypeId,
+          label: item.type,
+        }));
+        const dropdownField = contactDetailFormData.formFields.find(
+          (item) => item.dataField === "contactTypeId"
+        );
+        dropdownField.fieldSetting.options = getData;
+      }
     }
   }, [
     isGetAllContactTypesSucess,
