@@ -85,6 +85,12 @@ const getValidationRule = (element, validation) => {
                 maxLength: validation.maxLength
             }
             break;
+        case "onlyText":
+            valObj = {
+                type: validation.type,
+                message: ErrorMessage.InvalidField.replace("{0}", "Number")
+            }
+            break;
         default:
             break;
     }

@@ -24,6 +24,7 @@ export const basicDetailFormDataHalf = {
       fieldSetting: {
         placeholder: "Enter Customer Name",
         allowSpace: true,
+        maxLength: 50,
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
@@ -43,6 +44,7 @@ export const basicDetailFormDataHalf = {
       fieldSetting: {
         placeholder: "Enter Customer Name",
         allowSpace: true,
+        maxLength: 50,
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
@@ -103,6 +105,7 @@ export const basicDetailFormDataHalf = {
       fieldSetting: {
         placeholder: "Enter Email",
         allowSpace: true,
+        maxLength: 50,
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
@@ -118,6 +121,7 @@ export const basicDetailFormDataHalf = {
       fieldSetting: {
         placeholder: "https://www.xyz.com/",
         allowSpace: true,
+        maxLength: 100,
       },
       validation: [{ type: "require" }, { type: "website" }],
       style: {

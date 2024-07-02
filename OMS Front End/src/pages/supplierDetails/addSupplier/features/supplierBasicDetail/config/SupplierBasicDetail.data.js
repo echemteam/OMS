@@ -24,6 +24,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "Enter Supplier Name",
         allowSpace: true,
+        maxLength: 50,
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
@@ -43,6 +44,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "Enter Customer Name",
         allowSpace: true,
+        maxLength: 50,
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
@@ -118,6 +120,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "Doing Business As Name",
         allowSpace: true,
+        maxLength: 50,
       },
       validation: [{ type: "require" }],
       style: {
@@ -133,6 +136,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "Enter Email",
         allowSpace: true,
+        maxLength: 50,
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
@@ -148,6 +152,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "https://www.xyz.com/",
         allowSpace: true,
+        maxLength: 100,
       },
       validation: [{ type: "require" }, { type: "website" }],
       style: {

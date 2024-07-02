@@ -6,7 +6,7 @@ export const contactDetailFormData = {
     firstName: "",
     lastName: "",
     contactTypeId: "",
-    isPrimary:false
+    isPrimary: false
   },
   formFields: [
     {
@@ -18,8 +18,9 @@ export const contactDetailFormData = {
       fieldSetting: {
         placeholder: "Enter First Name",
         allowSpace: true,
+        maxLength: 50,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" } , { type: "onlyText"}],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-2",
       },
@@ -33,8 +34,9 @@ export const contactDetailFormData = {
       fieldSetting: {
         placeholder: "Enter Last Name",
         allowSpace: true,
+        maxLength: 50,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" } , { type: "onlyText"}],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-2",
       },

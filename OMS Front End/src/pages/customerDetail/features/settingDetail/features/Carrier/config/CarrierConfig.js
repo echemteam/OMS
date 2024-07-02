@@ -33,6 +33,7 @@ export const addEditCarrierFormData = {
             fieldSetting: {
                 placeholder: "Enter Account Number",
                 allowSpace: true,
+                maxLength: 25,
             },
             validation: [{ type: "require" }],
             style: {

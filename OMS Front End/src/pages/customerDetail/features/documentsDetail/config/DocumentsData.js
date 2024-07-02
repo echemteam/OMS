@@ -38,6 +38,7 @@ export const DocumentFormData = {
       fieldSetting: {
         placeholder: "Enter Document Name",
         allowSpace: true,
+        maxLength: 50,
       },
       validation: [{ type: "require" }],
       style: {

@@ -48,11 +48,17 @@ export const isValidFax = (value) => {
 }
 
 export const isUnique = (value) => {
-    const invalidChars = /[^a-zA-Z0-9\-&]/;
+    // const invalidChars = /[^a-zA-Z0-9\-&]/;
+    const invalidChars = /[^a-zA-Z\-&]/; 
     return !invalidChars.test(value);
 }
 
 export const isTaxId = (value, minLengthValue = 0, maxLengthValue = 0) => {
     const taxIdRegex = new RegExp(`^[0-9]{${minLengthValue},${maxLengthValue}}$`);
     return taxIdRegex.test(value);
+}
+
+export const isOnlyText = (value) => {
+    const invalidChars = /^\D*$/;
+    return invalidChars.test(value);
 }

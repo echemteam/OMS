@@ -29,6 +29,7 @@ export const addressFormData = {
       fieldSetting: {
         placeholder: "Enter Address Line 1",
         allowSpace: true,
+        maxLength: 100,
       },
       validation: [{ type: "require" }],
       style: {
@@ -44,6 +45,7 @@ export const addressFormData = {
       fieldSetting: {
         placeholder: "Enter Address Line 2",
         allowSpace: true,
+        maxLength: 100,
       },
       // validation: [{ type: "require" }],
       style: {
@@ -59,6 +61,7 @@ export const addressFormData = {
       fieldSetting: {
         placeholder: "Enter Address Line 3",
         allowSpace: true,
+        maxLength: 100,
       },
       // validation: [{ type: "require" }],
       style: {
@@ -74,6 +77,7 @@ export const addressFormData = {
       fieldSetting: {
         placeholder: "Enter Address Line 4",
         allowSpace: true,
+        maxLength: 100,
       },
       // validation: [{ type: "require" }],
       style: {
@@ -89,6 +93,7 @@ export const addressFormData = {
       fieldSetting: {
         placeholder: "Enter Address Line 5",
         allowSpace: true,
+        maxLength: 100,
       },
       // validation: [{ type: "require" }],
       style: {
@@ -151,6 +156,7 @@ export const addressFormData = {
       fieldSetting: {
         placeholder: "Enter Zip Code",
         allowSpace: true,
+        maxLength: 10,
       },
       validation: [{ type: "require" }],
       style: {

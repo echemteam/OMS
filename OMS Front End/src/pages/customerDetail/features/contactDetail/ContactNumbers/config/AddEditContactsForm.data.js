@@ -52,6 +52,7 @@ export const addEditContactsFormData = {
       fieldSetting: {
         placeholder: "Enter Phone Number",
         allowSpace: true,
+        maxLength: 15,
       },
       validation: [{ type: "require" }],
       style: {
