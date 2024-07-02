@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 //** Lib's */
 import "./SettingDetails.scss"
 import ShippingSettings from "./features/ShippingSetting/ShippingSettings";
@@ -8,6 +8,7 @@ import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { useEffect } from "react";
 import Unauthorize from "../../../unauthorize/Unauthorize";
+import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 const SettingDetails = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -17,23 +18,33 @@ const SettingDetails = () => {
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
   };
+  const { isResponsibleUser } = useContext(BasicDetailContext);
 
   const hasShippingPermission = hasFunctionalPermission(securityKey.CUSTOMERSHIPPINGSETTING);
   const hasFinacialPermission = hasFunctionalPermission(securityKey.CUSTOMERFINANCIALSETTING);
 
   useEffect(() => {
-    if (hasShippingPermission.hasAccess === true) {
-      setShowShippingTab(true);
+    if (!isResponsibleUser) {
+      if (hasShippingPermission.hasAccess === true) {
+        setShowShippingTab(true);
+      } else {
+        setShowShippingTab(false);
+      }
     } else {
-      setShowShippingTab(false);
+      setShowShippingTab(true);
     }
   }, [hasShippingPermission]);
 
   useEffect(() => {
-    if (hasFinacialPermission.hasAccess === true) {
+    if (!isResponsibleUser) {
+      if (hasFinacialPermission.hasAccess === true) {
+        setShowFinacialTab(true);
+      } else {
+        setShowFinacialTab(false);
+      }
+    }
+    else {
       setShowFinacialTab(true);
-    } else {
-      setShowFinacialTab(false);
     }
   }, [hasFinacialPermission]);
 

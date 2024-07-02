@@ -26,7 +26,7 @@ const ShippingSettings = () => {
   const [accountTypeId, setAccountTypeId] = useState(0);
   const [isDefaultValue, setIsDefaultValue] = useState(0);
   const [formData, setFormData] = useState(shippingFormData);
-  const { customerId, setDeliveryMethodsList, setCarriersList } = useContext(BasicDetailContext);
+  const { customerId, setDeliveryMethodsList, setCarriersList, isResponsibleUser } = useContext(BasicDetailContext);
 
   const [getAllAccountType, { isFetching: isAccountTypeFetching, isSuccess: isAccountTypeSuccess, data: isAccountTypeData, },] = useLazyGetAllDeliveryAccountsQuery();
   const [addDefaultShippings, { isSuccess: isAddDefaultShippingsSuccess, data: isAddDefaultShippingsData, },] = useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation();
@@ -38,16 +38,18 @@ const ShippingSettings = () => {
   const hasAddEditPermission = hasFunctionalPermission(securityKey.ADDEDITCUSTOMERSHIPPINGSETTING);
 
   useEffect(() => {
-    if (hasAddEditPermission.hasAccess === true) {
-      setIsShowButton(true);
-      formSetting.isViewOnly = false;
-    } else {
-      setIsShowButton(false);
-      formSetting.isViewOnly = true;
-      DeliveryActionColumn.defaultAction.allowEdit = false;
-      DeliveryActionColumn.defaultAction.allowDelete = false;
-      CarrierActionColumn.defaultAction.allowEdit = false;
-      CarrierActionColumn.defaultAction.allowDelete = false;
+    if (!isResponsibleUser) {
+      if (hasAddEditPermission.hasAccess === true) {
+        setIsShowButton(true);
+        formSetting.isViewOnly = false;
+      } else {
+        setIsShowButton(false);
+        formSetting.isViewOnly = true;
+        DeliveryActionColumn.defaultAction.allowEdit = false;
+        DeliveryActionColumn.defaultAction.allowDelete = false;
+        CarrierActionColumn.defaultAction.allowEdit = false;
+        CarrierActionColumn.defaultAction.allowDelete = false;
+      }
     }
   }, [hasAddEditPermission]);
 

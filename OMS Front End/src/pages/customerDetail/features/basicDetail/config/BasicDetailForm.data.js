@@ -150,6 +150,7 @@ export const basicDetailFormDataHalf = {
       fieldSetting: {
         placeholder: "Select Responsible User",
         allowSpace: true,
+        isDisabled: false,
       },
       validation: [{ type: "require" }],
       style: {
