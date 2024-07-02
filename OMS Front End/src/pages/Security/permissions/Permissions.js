@@ -46,7 +46,8 @@ const Permissions = () => {
   //** Use Effect's */
   useEffect(() => {
     getAllRoles();
-  });
+  },[roleId]);
+
   useEffect(() => {
     if (isSuccessAllRoles && isAllRolesData && !isFetchingAllRoles) {
       const roleList = isAllRolesData.map((item) => ({

@@ -7,13 +7,16 @@ import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
 import { useGetSuppliersMutation, useUpdateSupplierStatusMutation } from '../../../../app/services/supplierAPI';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { securityKey } from '../../../../data/SecurityKey';
+import SupplierApproval from './supplierApproval/SupplierApproval';
 
 export const InActiveSuppliers = ({ statusId, configFile }) => {
 
+    const childRef = useRef();
     const molGridRef = useRef();
     const [totalRowCount, setTotalRowCount] = useState(0);
     const [dataSource, setDataSource] = useState();
     const { DataRef } = useContext(SupplierContext);
+    const [supplierId, setSupplierId] = useState();
 
     const [
         getSuppliers,
@@ -37,20 +40,20 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
     useEffect(() => {
         const actionColumn = configFile?.columns.find(column => column.name === "Action");
         if (actionColumn) {
-    
-          const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
-          const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
-          const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
-    
-          if (actionColumn.defaultAction.allowActiveCustomer) {
-            actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
-          } else if (actionColumn.defaultAction.allowUnblocked) {
-            actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
-          } else if (actionColumn.defaultAction.allowUnfreeze) {
-            actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
-          }
+
+            const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
+            const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
+            const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
+
+            if (actionColumn.defaultAction.allowActiveCustomer) {
+                actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+            } else if (actionColumn.defaultAction.allowUnblocked) {
+                actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
+            } else if (actionColumn.defaultAction.allowUnfreeze) {
+                actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+            }
         }
-      }, [configFile]);
+    }, [configFile]);
 
     useEffect(() => {
         if (isListSuccess && isListeData) {
@@ -87,21 +90,28 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
         getSuppliers(request);
     };
 
+    const approvalCheckList = (data) => {
+        if (childRef.current) {
+            childRef.current.callChildFunction(data.supplierId);
+        }
+        setSupplierId(data.supplierId);
+    }
+
     const handleUnfreeze = (data) => {
-        handleUpdate(data)
+        approvalCheckList(data)
     }
 
     const handleActiveSupplier = (data) => {
-        handleUpdate(data)
+        approvalCheckList(data)
     }
 
     const handleUnBlock = (data) => {
-        handleUpdate(data)
+        approvalCheckList(data)
     }
 
-    const handleUpdate = (data) => {
+    const handleUpdate = () => {
         let req = {
-            supplierId: data.supplierId,
+            supplierId: supplierId,
             statusId: StatusEnums.Approved
         }
         updateSupplierStatus(req)
@@ -142,6 +152,7 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
                     </CardSection>
                 </div>
             </div>
+            <SupplierApproval childRef={childRef} getListApi={getListApi} updateApproval={handleUpdate} />
         </div>
     )
 }

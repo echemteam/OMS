@@ -6,13 +6,13 @@ import { encryptAES } from "../../services/CryptoService";
 const isEncryptionEnabled = false;
 
 export const transformRequest = (data) => {
-    if (isEncryptionEnabled) {
-        return encryptAES(data)
-    }
-    return data;
+  if (isEncryptionEnabled) {
+    return encryptAES(data)
+  }
+  return data;
 }
 
-export const encryptQueryString=(url) =>{
+export const encryptQueryString = (url) => {
 
   if (isEncryptionEnabled) {
     const urlParts = url.split("?");
@@ -22,7 +22,6 @@ export const encryptQueryString=(url) =>{
       return `${urlParts[0]}?${encryptedQueryString}`;
     }
   }
-    // If the URL doesn't contain query parameters or is in an invalid format, return the original URL.
-    return url;
-  }
-  
+  // If the URL doesn't contain query parameters or is in an invalid format, return the original URL.
+  return url;
+}

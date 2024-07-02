@@ -16,7 +16,7 @@ export const Menu = [
     iconClass: "bi bi-shield-fill-check",
     subMenu: true,
     to: "#",
-    securityKey: securityKey.SECURITYROLEMANAGEMENT,
+    securityKey: securityKey.SECURITY,
     children: [
       {
         id: "User Management",
@@ -51,7 +51,7 @@ export const Menu = [
         id: "Customers",
         submenuName: "Customer",
         to: "/Customers",
-        securityKey: securityKey.CUSTOMER,
+        securityKey: securityKey.CUSTOMERLIST,
       },
     ],
   },
