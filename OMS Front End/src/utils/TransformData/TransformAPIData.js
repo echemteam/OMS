@@ -12,8 +12,8 @@ export const contactCustomerTransformData = (data) => {
             ...item,
             id: index + 1
         }));
-        const emailAddress = emailAddressLst.map(item => item.emailAddress).join(',');
-        const phoneNumber = phoneNumberLsit.map(item => item.phoneNumber).join(',');
+        const emailAddress = emailAddressLst.map(item => item.emailAddress);
+        const phoneNumber = phoneNumberLsit.map(item => item.phoneNumber);
         const transformedItem = {
             cardInformation: {
                 firstName,

@@ -1031,6 +1031,7 @@ a {
 
         span {
           color: #2d3641db;
+          font-size: var(--commonFont-medium);
 
           &:first-child {
             font-weight: 600;
@@ -1100,7 +1101,7 @@ a {
         .user-icon-name {
           display: flex;
           align-items: center;
-          margin-bottom: 5px;
+          margin-bottom: 15px;
 
           span {
             &.icon {
@@ -1121,7 +1122,7 @@ a {
               left: -5px;
 
               img {
-                max-width: 20px;
+                max-width: 35px;
                 // filter: brightness(100)
               }
             }
@@ -1576,10 +1577,16 @@ a {
   }
 
   .fix-data {
-    word-break: break-all;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    .card-value{
+      font-size: var(--commonFont-medium);
+    }
+      .copy-icon{
+        img{
+          width: 17px;
+          height: 17px;
+          margin-left: 7px;
+        }
+      }
   }
 }
 
@@ -1895,6 +1902,11 @@ input[type="checkbox"]:disabled {
 
 .cursor-disable {
   cursor: not-allowed !important;
+}
+
+.contact-icon-img{
+  width: 20px;
+  margin-right: 10px;
 }
 
 @media only screen and (max-width: 1560px) {
