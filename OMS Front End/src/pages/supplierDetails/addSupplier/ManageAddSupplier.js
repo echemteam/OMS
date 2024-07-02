@@ -1,6 +1,6 @@
 import React from 'react'
 import { AddSupplierContextProvider } from '../../../utils/ContextAPIs/Supplier/AddSupplierContext'
-import AddSupplier from './AddSupplier'
+import AddSupplier from '../addSupplier/features/AddSupplier'
 
 const ManageAddSupplier = () => {
     return (

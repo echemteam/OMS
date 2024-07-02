@@ -1,17 +1,17 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import CardSection from "../../../components/ui/card/CardSection";
-import Image from "../../../components/image/Image";
-import { AppIcons } from "../../../data/appIcons";
-import AddSupplierContext from "../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import SupplierBasicDetail from "./features/supplierBasicDetail/SupplierBasicDetail";
-import SupplierContactDetail from "./features/supplierContactDetail/SupplierContactDetail";
-import { TabEnum } from "../../../common/features/Enums/TabsEnums";
-import SuplierAddressDetails from "./features/supplierAddressDetail/SupplierAddressDetails";
-import { useUpdateSupplierStatusMutation } from "../../../app/services/supplierAPI";
-import ToastService from "../../../services/toastService/ToastService";
-import { StatusEnums } from "../../../common/features/Enums/StatusEnums";
-import SupplierDocumentDetail from "../suppliers/features/updateSupplierDetails/features/docuementsDetail/SupplierDocuementDetail";
+import CardSection from "../../../../components/ui/card/CardSection";
+import Image from "../../../../components/image/Image";
+import { AppIcons } from "../../../../data/appIcons";
+import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import SupplierBasicDetail from "./supplierBasicDetail/SupplierBasicDetail";
+import SupplierContactDetail from "./supplierContactDetail/SupplierContactDetail";
+import { TabEnum } from "../../../../common/features/Enums/TabsEnums";
+import SuplierAddressDetails from "./supplierAddressDetail/SupplierAddressDetails";
+import { useUpdateSupplierStatusMutation } from "../../../../app/services/supplierAPI";
+import ToastService from "../../../../services/toastService/ToastService";
+import { StatusEnums } from "../../../../common/features/Enums/StatusEnums";
+import SupplierDocumentDetail from "../../suppliers/features/updateSupplierDetails/features/docuementsDetail/SupplierDocuementDetail";
 
 
 const AddSupplier = () => {

@@ -3,7 +3,7 @@ import CardSection from "../../../components/ui/card/CardSection";
 import { StatusEnums } from "../../../common/features/Enums/StatusEnums";
 import SupplierList from "./features/SupplierList";
 import InActiveSupplier from "./features/InActiveSupplier";
-import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../pages/customerDetail/customers/config/CustomerData";
+import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../customerDetail/customers/config/CustomerData";
 import SupplierListContext from '../../../utils/ContextAPIs/Supplier/SupplierListContext'
 
 const Suppliers = () => {

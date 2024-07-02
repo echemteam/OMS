@@ -4,7 +4,6 @@ import DemoGrid from "../../pages/demoGrid/DemoGrid";
 import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
-import SupplierDetails from "../../pages/supplierDetails/suppliers/ManageSupplier";
 
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
@@ -13,7 +12,7 @@ const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
 //** User */
 const Users = React.lazy(() => import('../../pages/Security/userManagement/Users'));
 const AddEditUser = React.lazy(() => import('../../pages/Security/userManagement/features/AddEditUser'));
-const UsersRole = React.lazy(() => import('../../pages/Security/roleManagement/UsersRole'));
+// const UsersRole = React.lazy(() => import('../../pages/Security/roleManagement/UsersRole'));
 
 //** Permissions */
 const Permissions = React.lazy(() => import('../../pages/Security/permissions/Permissions'));
@@ -29,6 +28,7 @@ const AddEditContact = React.lazy(() => import('../../pages/customerDetail/featu
 const Suppliers = React.lazy(() => import('../../pages/supplierDetails/suppliers/Suppliers'));
 const ManageAddSupplier = React.lazy(() => import('../../pages/supplierDetails/addSupplier/ManageAddSupplier'));
 
+const SupplierDetails = React.lazy(() => import("../../pages/supplierDetails/suppliers/features/ManageSupplier"));
 
 export const ComponentNavigation = [
   {
