@@ -240,13 +240,17 @@ const SupplierBasicDetail = (props) => {
         ...data,
         supplierTypeId: data.supplierTypeId.value,
         groupTypeId: data.groupTypeId.value,
-        territoryId: data.territoryId.value,
-        countryId: data.countryId.value,
+        territoryId: data.territoryId && typeof data.territoryId === "object"
+          ? data.territoryId.value
+          : data.territoryId,
+        countryId: data.countryId && typeof data.countryId === "object"
+          ? data.countryId.value
+          : data.countryId,
         responsibleUserId: 0
       }
       addEditSupplierBasicInformation(req);
-    }else {
-      warning('Please fill supplier basic information');
+    } else {
+      warning('Please enter supplier basic information');
     }
   };
 
@@ -273,8 +277,8 @@ const SupplierBasicDetail = (props) => {
         supplierId: props.pageId
       }
       addEditSupplierBasicInformation(req);
-    }else {
-      warning('Please fill supplier basic information');
+    } else {
+      warning('Please enter supplier basic information');
     }
   };
 
