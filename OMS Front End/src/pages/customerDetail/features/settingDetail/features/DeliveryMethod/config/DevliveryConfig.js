@@ -12,7 +12,7 @@ export const addEditDeliveryFormData = {
 
         {
             id: "chargeType",
-            lable: "Charge Type :",
+            lable: "Charge Type ",
             Field_Name: "Charge Type",
             fieldType: FormFieldTypes.SELECT,
             dataField: "chargeType",
@@ -28,7 +28,7 @@ export const addEditDeliveryFormData = {
         },
         {
             id: "charge",
-            lable: "Charge :",
+            lable: "Charge ",
             Field_Name: "Charge",
             fieldType: FormFieldTypes.NUMERIC,
             dataField: "charge",

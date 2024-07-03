@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import { Accordion } from "react-bootstrap";
@@ -7,10 +7,21 @@ import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
 const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLoading }) => {
 
-  const [activeKey, setActiveKey] = useState("0");
+  const [activeKeys, setActiveKeys] = useState([]);
+
+  useEffect(() => {
+    if (Array.isArray(addressData)) {
+      const keys = addressData.map((_, index) => index.toString());
+      setActiveKeys(keys);
+    }
+  }, [addressData]);
 
   const handleToggle = (eventKey) => {
-    setActiveKey(eventKey === activeKey ? null : eventKey);
+    setActiveKeys((prevActiveKeys) =>
+      prevActiveKeys.includes(eventKey)
+        ? prevActiveKeys.filter(key => key !== eventKey)
+        : [...prevActiveKeys, eventKey]
+    );
   };
 
   if (!isGetByIdLoading) {
@@ -29,20 +40,18 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLo
     }, {})
     : {};
 
-
   const handleEdit = (data) => {
-    isAddEditModal()
-    onHandleSetData(data)
-  }
+    isAddEditModal();
+    onHandleSetData(data);
+  };
 
   return (
     !isGetByIdLoading ?
-      <Accordion className="address-card-section" activeKey={activeKey} onSelect={handleToggle}>
+      <Accordion className="address-card-section" activeKey={activeKeys} onSelect={handleToggle}>
         {Object.keys(groupedAddresses).map((addressTypeId, index) => (
           <Accordion.Item
-            eventKey={index.toString()} className={activeKey === index.toString() ? "active" : ""}
-            // eventKey={addressTypeId}
-            // className={activeKey === addressTypeId ? "active" : ""}
+            eventKey={index.toString()}
+            className={activeKeys.includes(index.toString()) ? "active" : ""}
             key={addressTypeId}
           >
             <div className="header-title-btn">
@@ -90,9 +99,5 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLo
       : <DataLoader />
   );
 };
-
-{/* <button onClick="" className="edit-btn ml-1 mr-1">
-                          <Image imagePath={AppIcons.deleteThemeIcon} />
-                        </button> */}
 
 export default AddressCard;

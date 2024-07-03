@@ -7,7 +7,7 @@ export const NotesData = {
         {
             id: "note",
             lable: "Add Notes :",
-            Field_Name: "Add Notes :",
+            Field_Name: "Add Notes ",
             fieldType: FormFieldTypes.CKEDITOR,
             dataField: "note",
             fieldSetting: {

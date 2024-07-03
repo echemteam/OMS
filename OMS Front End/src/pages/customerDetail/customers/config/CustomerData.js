@@ -322,7 +322,7 @@ export const FreezedInActiveCustomerGridConfig = {
       width:"25%",
       colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
+        allowEdit: true,
         allowDelete: false,
         allowUnfreeze: true,
       },
@@ -357,7 +357,7 @@ export const BlockedInActiveCustomerGridConfig = {
       width:"25%",
       colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
+        allowEdit: true,
         allowDelete: false,
         allowUnfreeze: false,
         allowUnblocked: true,

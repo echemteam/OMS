@@ -11,7 +11,7 @@ export const addEditCarrierFormData = {
     formFields: [
         {
             id: "carrier",
-            lable: "Carrier :",
+            lable: "Carrier ",
             Field_Name: "Carrier",
             fieldType: FormFieldTypes.SELECT,
             dataField: "carrier",
@@ -26,7 +26,7 @@ export const addEditCarrierFormData = {
         },
         {
             id: "accountNumber",
-            lable: "Account Number :",
+            lable: "Account Number ",
             Field_Name: "Account Number",
             fieldType: FormFieldTypes.INPUT,
             dataField: "accountNumber",

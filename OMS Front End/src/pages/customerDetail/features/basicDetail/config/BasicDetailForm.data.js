@@ -13,11 +13,11 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 
 export const basicDetailFormDataHalf = {
-  initialState: { name: "", groupTypeId: "", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false },
+  initialState: { name: "", groupTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false },
   formFields: [
     {
       id: "name",
-      lable: "Customer Name :",
+      lable: "Customer Name ",
       Field_Name: "Customer Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "name",
@@ -37,7 +37,7 @@ export const basicDetailFormDataHalf = {
     },
     {
       id: "name-input",
-      lable: "Customer Name :",
+      lable: "Customer Name ",
       Field_Name: "Customer Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "name",
@@ -53,7 +53,7 @@ export const basicDetailFormDataHalf = {
     },
     {
       id: "groupTypeId",
-      lable: "Group Type :",
+      lable: "Group Type ",
       Field_Name: "Group Type",
       fieldType: FormFieldTypes.SELECT,
       dataField: "groupTypeId",
@@ -68,7 +68,7 @@ export const basicDetailFormDataHalf = {
     },
     {
       id: "countryId",
-      lable: "Country :",
+      lable: "Country ",
       Field_Name: "Country",
       fieldType: FormFieldTypes.SELECT,
       dataField: "countryId",
@@ -83,7 +83,7 @@ export const basicDetailFormDataHalf = {
     },
     {
       id: "territoryId",
-      lable: "Territory :",
+      lable: "Territory ",
       Field_Name: "Territory",
       fieldType: FormFieldTypes.SELECT,
       dataField: "territoryId",
@@ -98,7 +98,7 @@ export const basicDetailFormDataHalf = {
     },
     {
       id: "emailAddress",
-      lable: "Email :",
+      lable: "Email ",
       Field_Name: "Email",
       fieldType: FormFieldTypes.INPUT,
       dataField: "emailAddress",
@@ -114,7 +114,7 @@ export const basicDetailFormDataHalf = {
     },
     {
       id: "website",
-      lable: "Website :",
+      lable: "Website ",
       Field_Name: "Website",
       fieldType: FormFieldTypes.INPUT,
       dataField: "website",
@@ -130,7 +130,7 @@ export const basicDetailFormDataHalf = {
     },
     {
       id: "taxId",
-      lable: "Tax Id :",
+      lable: "Tax Id ",
       Field_Name: "Tax Id",
       fieldType: FormFieldTypes.INPUT,
       dataField: "taxId",
@@ -140,6 +140,11 @@ export const basicDetailFormDataHalf = {
         minLength: 0,
         maxLength: 10,
       },
+      inputIcon: {
+        isIconShow: true,
+        faIcon: "fa-info-circle",
+        message: "Please enter a minimum of 10 and a maximum of 10 characters"
+      },
       validation: [{ type: "require" }, { type: "taxId", minLength: 0, maxLength: 10 }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
@@ -147,7 +152,7 @@ export const basicDetailFormDataHalf = {
     },
     {
       id: "responsibleUserId",
-      lable: "Responsible User :",
+      lable: "Responsible User ",
       Field_Name: "Responsible User",
       fieldType: FormFieldTypes.SELECT,
       dataField: "responsibleUserId",
@@ -163,7 +168,7 @@ export const basicDetailFormDataHalf = {
     },
     {
       id: "note",
-      lable: "Notes :",
+      lable: "Notes ",
       Field_Name: "Notes",
       fieldType: FormFieldTypes.CKEDITOR,
       dataField: "note",

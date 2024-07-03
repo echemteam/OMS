@@ -20,6 +20,7 @@ const FormSelectField = ({
   fieldSetting,
   fieldActions,
   overRideProps,
+  isRequired,
   ...selectFormFieldProps
 }) => {
 
@@ -50,7 +51,7 @@ const FormSelectField = ({
     <>
       <div className='input-label-part'>
         {labelName && labelName !== "" && (
-          <Label labelName={labelName} />
+          <Label labelName={labelName} isRequired={isRequired} />
         )}
         {selectFormFieldProps.hasMainTitle ?
           <div className="section-title">

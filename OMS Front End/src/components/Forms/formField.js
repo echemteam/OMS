@@ -26,7 +26,8 @@ const FormFields = ({
   onFormFieldChange,
   handleInputGroupButton,
   onInputChange,
-  onCheckBoxChange
+  onCheckBoxChange,
+  fieldValiadtionRules
 }) => {
 
   const [overRideProps, setOverRideProps] = useState({});
@@ -88,6 +89,7 @@ const FormFields = ({
 
   const renderField = (field, index) => {
     const { containerCss } = field.style || { containerCss: "col-md-6" };
+    const isRequired = fieldValiadtionRules && fieldValiadtionRules[field.dataField]?.length > 0;
 
     switch (field.fieldType) {
       case FormFieldTypes.INPUT:
@@ -110,8 +112,10 @@ const FormFields = ({
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
               inputButtonGroup={field.inputButtonGroup}
+              inputIcon={field.inputIcon}
               handleInputGroupButton={handleInputGroupButton}
               inputField={onInputChange}
+              isRequired={isRequired}
               {...field.fieldSetting}
             />
           </div>
@@ -134,6 +138,7 @@ const FormFields = ({
               formData={formData}
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
+              isRequired={isRequired}
               {...field.fieldSetting}
             />
           </div>
@@ -156,6 +161,7 @@ const FormFields = ({
               error={validState.error[field.dataField] || ""}
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
+              isRequired={isRequired}
               {...field.fieldSetting}
             />
           </div>
@@ -197,6 +203,7 @@ const FormFields = ({
               formData={formData}
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
+              isRequired={isRequired}
               {...field.fieldSetting}
             />
           </div>
@@ -219,6 +226,7 @@ const FormFields = ({
               formData={formData}
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
+              isRequired={isRequired}
               {...field.fieldSetting}
             />
           </div>
@@ -239,6 +247,7 @@ const FormFields = ({
               formData={formData}
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
+              isRequired={isRequired}
               {...field.fieldSetting}
             />
           </div>
@@ -260,6 +269,8 @@ const FormFields = ({
               formData={formData}
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
+              isRequired={isRequired}
+              fileFormate={field.fileFormate}
               {...field.fieldSetting}
             // isModelOpen={formData.isModelOpen}
             />
@@ -310,6 +321,7 @@ const FormFields = ({
               formData={formData}
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
+              isRequired={isRequired}
               {...field.fieldSetting}
             />
           </div>

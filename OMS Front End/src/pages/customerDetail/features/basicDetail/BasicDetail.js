@@ -12,8 +12,10 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import SwalAlert from "../../../../services/swalService/SwalService";
 
 const BasicDetail = (props) => {
+  const { warning } = SwalAlert();
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
@@ -262,6 +264,8 @@ const BasicDetail = (props) => {
         responsibleUserId: 0
       }
       addCustomersBasicInformation(req);
+    } else {
+      warning('Please fill basic information');
     }
   };
 
@@ -301,7 +305,6 @@ const BasicDetail = (props) => {
       setFormData(updatedForm);
     }
   }
-
 
   const formActionHandler = {
     DDL_CHANGED: handleValidateTextId

@@ -138,6 +138,7 @@ useImperativeHandle(
           onUpdateValidation={handleOnValidateField}
           handleInputGroupButton={props.handleInputGroupButton}
           formSetting={props.config.formSetting}
+          fieldValiadtionRules={validationRules}
         />
       ) : (
         <div>No fields configured</div>

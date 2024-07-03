@@ -6,7 +6,7 @@ export const shippingFormData = {
     formFields: [
         {
             id: "deliveryAccountId",
-            lable: "Account Type :",
+            lable: "Account Type ",
             Field_Name: "Account Type",
             fieldType: FormFieldTypes.SELECT,
             dataField: "deliveryAccountId",

@@ -11,8 +11,8 @@ const Checkbox = ({
   isDisable,
   dataField,
   cssClass = "checkbox-field",
+  ...checkboxProps
 }) => {
-
 
   const handleCheckboxChange = (e) => {
     const newValue = e.target.checked;
@@ -37,7 +37,7 @@ const Checkbox = ({
         />
         <label htmlFor={name} className="checkbox-label"></label>
       </div>
-      {label && label !== "" && <Label labelName={label} for={name} />}
+      {label && label !== "" && <Label labelName={label} for={name} isRequired={checkboxProps.isRequired}/>}
     </div>
   );
 };

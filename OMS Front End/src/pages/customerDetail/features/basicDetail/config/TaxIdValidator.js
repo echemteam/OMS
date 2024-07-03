@@ -26,6 +26,7 @@ export const getTaxIdMinMaxLength = (countryId, formFields, formFieldsId) => {
             const validation = formField.validation?.find((data) => data.type === formFieldsId);
             formField.fieldSetting.minLength = minLength;
             formField.fieldSetting.maxLength = maxLength;
+            formField.inputIcon.message = `Please enter a minimum of ${minLength} and a maximum of ${maxLength} characters`;
             validation.minLength = minLength;
             validation.maxLength = maxLength;
         }

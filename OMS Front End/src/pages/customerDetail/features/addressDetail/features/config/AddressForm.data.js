@@ -6,7 +6,7 @@ export const addressFormData = {
   formFields: [
     {
       id: "addressTypeId",
-      lable: "Address Type :",
+      lable: "Address Type ",
       Field_Name: "Address Type",
       fieldType: FormFieldTypes.SELECT,
       dataField: "addressTypeId",
@@ -22,7 +22,7 @@ export const addressFormData = {
     
     {
       id: "addressLine1",
-      lable: "Address Line 1 :",
+      lable: "Address Line 1 ",
       Field_Name: "Address Line 1",
       fieldType: FormFieldTypes.INPUT,
       dataField: "addressLine1",
@@ -38,7 +38,7 @@ export const addressFormData = {
     },
     {
       id: "addressLine2",
-      lable: "Address Line 2 :",
+      lable: "Address Line 2 ",
       Field_Name: "Address Line 2",
       fieldType: FormFieldTypes.INPUT,
       dataField: "addressLine2",
@@ -54,7 +54,7 @@ export const addressFormData = {
     },
     {
       id: "addressLine3",
-      lable: "Address Line 3 :",
+      lable: "Address Line 3 ",
       Field_Name: "Address Line 3",
       fieldType: FormFieldTypes.INPUT,
       dataField: "addressLine3",
@@ -70,7 +70,7 @@ export const addressFormData = {
     },
     {
       id: "addressLine4",
-      lable: "Address Line 4 :",
+      lable: "Address Line 4 ",
       Field_Name: "Address Line 4",
       fieldType: FormFieldTypes.INPUT,
       dataField: "addressLine4",
@@ -86,7 +86,7 @@ export const addressFormData = {
     },
     {
       id: "addressLine5",
-      lable: "Address Line 5 :",
+      lable: "Address Line 5 ",
       Field_Name: "Address Line 5",
       fieldType: FormFieldTypes.INPUT,
       dataField: "addressLine5",
@@ -102,7 +102,7 @@ export const addressFormData = {
     },
     {
       id: "countryId",
-      lable: "Country :",
+      lable: "Country ",
       Field_Name: "Country",
       fieldType: FormFieldTypes.SELECT,
       dataField: "countryId",
@@ -117,7 +117,7 @@ export const addressFormData = {
     },
     {
       id: "stateId",
-      lable: "State :",
+      lable: "State ",
       Field_Name: "State",
       fieldType: FormFieldTypes.SELECT,
       dataField: "stateId",
@@ -133,7 +133,7 @@ export const addressFormData = {
     },
     {
       id: "cityId",
-      lable: "City :",
+      lable: "City ",
       Field_Name: "City",
       fieldType: FormFieldTypes.SELECT,
       dataField: "cityId",
@@ -149,7 +149,7 @@ export const addressFormData = {
     },
     {
       id: "zipCode",
-      lable: "Zip Code :",
+      lable: "Zip Code ",
       Field_Name: "Zip Code",
       fieldType: FormFieldTypes.NUMERIC,
       dataField: "zipCode",
@@ -165,7 +165,7 @@ export const addressFormData = {
     },
     {
       id: "isShippingAndBilling",
-      lable: "Is Billing and Shipping",
+      lable: "Is Billing And Shipping are same",
       Field_Name: "Is Billing and Shipping",
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isShippingAndBilling",

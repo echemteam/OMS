@@ -17,6 +17,7 @@ const FormDatePickerFields = ({
     error,
     formSetting,
     overRideProps,
+    isRequired,
     ...datePickerProps
 }) => {
     const handleDateChange = (date) => {
@@ -46,7 +47,7 @@ const FormDatePickerFields = ({
                 <div className="">
                     <div className="input-label-part">
                         {labelName && labelName !== "" && (
-                            <Label labelName={labelName} />
+                            <Label labelName={labelName} isRequired={isRequired}  />
                         )}
                     </div>
                     {datePickerProps.hasMainTitle ?

@@ -30,7 +30,7 @@ export const addEditContactsFormData = {
     },
     {
       id: "phoneCode",
-      lable: "Contact Number :",
+      lable: "Contact Number ",
       Field_Name: "Phone Code",
       fieldType: FormFieldTypes.SELECT,
       dataField: "phoneCode",

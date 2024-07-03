@@ -16,6 +16,8 @@ const FormFileUploadField = ({
   formSetting,
   overRideProps,
   fieldActions,
+  isRequired,
+  fileFormate,
   ...inputProps
 }) => {
   const [buttonVisible, setButtonVisible] = useState(false);
@@ -92,7 +94,7 @@ const FormFileUploadField = ({
     <>
       <div className="input-label-part">
         {labelName && labelName !== "" && (
-          <Label labelName={labelName} for={name} />
+          <Label labelName={labelName} for={name} isRequired={isRequired} />
         )}
         <FileUpload
           onClear={handleClearFile}
@@ -109,6 +111,7 @@ const FormFileUploadField = ({
           }
           isDownloadButton={inputProps.isDownloadable}
           acceptedFiles={inputProps.acceptedFiles}
+          fileFormate={fileFormate}
           {...inputProps}
         />
       </div>
