@@ -36,7 +36,7 @@ const Suppliers = () => {
     {
       sMenuItemCaption: "PENDING",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 customer-list-all">
           <SupplierList statusId={StatusEnums.Pending} configFile={PendingCustomerGridConfig} />
         </div>
       ),
@@ -44,7 +44,7 @@ const Suppliers = () => {
     {
       sMenuItemCaption: "SUBMITTED",
       component: (
-        <div className="mt-2 customer-list-submitted">
+        <div className="mt-2 customer-list-submitted customer-list-all">
           <SupplierList statusId={StatusEnums.Submitted} configFile={SubmittedCustomerGridConfig} />
         </div>
       ),
@@ -52,7 +52,7 @@ const Suppliers = () => {
     {
       sMenuItemCaption: "APPROVED",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 customer-list-all">
           <SupplierList statusId={StatusEnums.Approved} configFile={ApprovedCustomerGridConfig} />
         </div>
       ),
@@ -60,7 +60,7 @@ const Suppliers = () => {
     {
       sMenuItemCaption: "INACTIVE",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 inactive-list-sec">
           <InActiveSupplier statusId={[StatusEnums.Freeze, StatusEnums.Block, StatusEnums.Disable]} />
         </div>
       ),
@@ -68,7 +68,7 @@ const Suppliers = () => {
     {
       sMenuItemCaption: "REJECTED",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 customer-list-all">
           <SupplierList statusId={StatusEnums.Reject} configFile={RejectedCustomerGridConfig} />
         </div>
       ),

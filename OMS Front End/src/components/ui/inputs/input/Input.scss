@@ -103,6 +103,7 @@ form {
   }
 
   .tooltip-text {
+    font-size: var(--commonFont-small);
     visibility: hidden;
     width: 220px;
     background-color: #555;
