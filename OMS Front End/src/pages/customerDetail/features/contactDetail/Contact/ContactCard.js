@@ -82,7 +82,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                       <div className="d-flex align-items-center">
                         <div className="card-value" key={index}>
                           &nbsp;
-                          {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}`}
+                          {`(+${phoneData.phoneCode}) ${phoneData.phoneNumber}`}
                         </div>
                         {/* <span className="title">Ext.</span> */}
                         {/* { */}
@@ -92,7 +92,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                         <span
                           className="copy-icon"
                           onClick={() =>
-                            CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber}`, "phone")
+                            CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${phoneData.extension}`, "phone")
                           }
                         >
                           <Image
