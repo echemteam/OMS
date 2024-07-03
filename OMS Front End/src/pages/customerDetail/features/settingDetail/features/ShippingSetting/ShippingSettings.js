@@ -18,11 +18,11 @@ import { AccountGridConfig } from "../Carrier/config/CarrierConfig";
 const ManageCarrier = React.lazy(() => import("../Carrier/ManageCarrier"));
 const ManageDevliveryMethod = React.lazy(() => import("../DeliveryMethod/ManageDevliveryMethod"));
 
-const ShippingSettings = () => {
+const ShippingSettings = ({ isEditablePage }) => {
 
   const ref = useRef();
   const { confirm } = SwalAlert();
-  const [isShowButton, setIsShowButton] = useState(false);
+  const [isShowButton, setIsShowButton] = useState(true);
   const [accountTypeId, setAccountTypeId] = useState(0);
   const [isDefaultValue, setIsDefaultValue] = useState(0);
   const [formData, setFormData] = useState(shippingFormData);
@@ -38,17 +38,18 @@ const ShippingSettings = () => {
   const hasAddEditPermission = hasFunctionalPermission(securityKey.ADDEDITCUSTOMERSHIPPINGSETTING);
 
   useEffect(() => {
-    if (!isResponsibleUser) {
-      if (hasAddEditPermission.hasAccess === true) {
-        setIsShowButton(true);
-        formSetting.isViewOnly = false;
-      } else {
-        setIsShowButton(false);
-        formSetting.isViewOnly = true;
-        DeliveryActionColumn.defaultAction.allowEdit = false;
-        DeliveryActionColumn.defaultAction.allowDelete = false;
-        CarrierActionColumn.defaultAction.allowEdit = false;
-        CarrierActionColumn.defaultAction.allowDelete = false;
+    if (isEditablePage) {
+      if (!isResponsibleUser) {
+        if (hasAddEditPermission.hasAccess === true) {
+          formSetting.isViewOnly = false;
+        } else {
+          setIsShowButton(false);
+          formSetting.isViewOnly = true;
+          DeliveryActionColumn.defaultAction.allowEdit = false;
+          DeliveryActionColumn.defaultAction.allowDelete = false;
+          CarrierActionColumn.defaultAction.allowEdit = false;
+          CarrierActionColumn.defaultAction.allowDelete = false;
+        }
       }
     }
   }, [hasAddEditPermission]);

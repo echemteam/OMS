@@ -101,7 +101,7 @@ const ViewCustomer = () => {
       component: (
         <div className="mt-2">
           {/* {hasSettingPermission.hasAccess ? */}
-          <SettingDetails />
+          <SettingDetails isEditablePage={true} />
           {/* : null} */}
         </div>
       ),

@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import Unauthorize from "../../../unauthorize/Unauthorize";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
-const SettingDetails = () => {
+const SettingDetails = ({ isEditablePage }) => {
   const [activeTab, setActiveTab] = useState("0");
   const [showFinacialTab, setShowFinacialTab] = useState(false);
   const [showShippingTab, setShowShippingTab] = useState(false);
@@ -65,7 +65,7 @@ const SettingDetails = () => {
       component: (
         <div className="mt-4 financial-sec">
           {showShippingTab ?
-            <ShippingSettings />
+            <ShippingSettings isEditablePage={isEditablePage} />
             : <Unauthorize />
           }
         </div>
