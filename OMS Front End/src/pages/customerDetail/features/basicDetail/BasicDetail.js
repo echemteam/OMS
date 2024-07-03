@@ -265,7 +265,7 @@ const BasicDetail = (props) => {
         countryId: data.countryId && typeof data.countryId === "object"
           ? data.countryId.value
           : data.countryId,
-        responsibleUserId: 0
+        responsibleUserId: data.responsibleUserId ? data.responsibleUserId : null,
       }
       addCustomersBasicInformation(req);
     } else {
