@@ -25,11 +25,7 @@ const Layout = (props) => {
   }
 
   // Find the matching component route based on the routhPath
-  const renderComponent = routhPath
-    ? props.componentRoutes.find(
-      (x) => x.id.toLowerCase() === routhPath.toLowerCase()
-    )
-    : "";
+  const renderComponent = props.componentRoutes.find((x) => x.id.toLowerCase() === routhPath.toLowerCase());
 
   // Check if the user is authorized to access the current route
   const isAuthorize = renderComponent?.securityKey ? hasPermission(renderComponent.securityKey) : false;
