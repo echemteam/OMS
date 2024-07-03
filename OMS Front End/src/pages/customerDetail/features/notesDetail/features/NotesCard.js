@@ -5,8 +5,8 @@ import { getRandomColor } from "../../../../../utils/RandomColors/RandomColors";
 import { useEffect } from "react";
 import formatDate from "../../../../../lib/formatDate";
 
-const NotesCard = ({isAddEditModal,onHandleNote,ongetcustomerNote,notesFormData,}) => {
- 
+const NotesCard = ({ isAddEditModal, onHandleNote, ongetcustomerNote, notesFormData, }) => {
+
   useEffect(() => {
     ongetcustomerNote();
   }, []);
@@ -32,7 +32,17 @@ const NotesCard = ({isAddEditModal,onHandleNote,ongetcustomerNote,notesFormData,
                 )}`}
               >
                 <div className="card-content">
-                  <div className="note-label  ">Created on {formatDate(notes.noteDate,"DD/MM/YYYY hh:mm")} by {notes.fullName}</div>
+                  <div className="card-notes ">
+                    <div className="note-label  ">Created on {formatDate(notes.noteDate, "DD/MM/YYYY hh:mm")} by {notes.fullName}</div>
+                    <div className="edit-button ">
+                      <Buttons
+                        buttonTypeClassName="edit-btn"
+                        onClick={() => handleEditClick(notes)}
+                        textWithIcon={true}
+                        imagePath={AppIcons.editThemeIcon}
+                      ></Buttons>
+                    </div>
+                  </div>
                   <div className="bottom-info">
                     <div className="note-text editor-section">
                       <div
@@ -41,7 +51,7 @@ const NotesCard = ({isAddEditModal,onHandleNote,ongetcustomerNote,notesFormData,
                         }}
                       ></div>
                     </div>
-                    <div className="card-notes ">
+                    {/* <div className="card-notes ">
                       <div className="note-date "></div>
                       <div className="edit-button ">
                         <Buttons
@@ -51,7 +61,7 @@ const NotesCard = ({isAddEditModal,onHandleNote,ongetcustomerNote,notesFormData,
                           imagePath={AppIcons.editThemeIcon}
                         ></Buttons>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

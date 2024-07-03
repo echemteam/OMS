@@ -8,7 +8,7 @@ export const addEditRoleFormData = {
   formFields: [
     {
       id: "roleName",
-      lable: "Role Name :",
+      lable: "Role Name ",
       Field_Name: "Role Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "roleName",

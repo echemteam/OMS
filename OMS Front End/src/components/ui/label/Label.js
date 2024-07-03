@@ -7,7 +7,6 @@ const Label = (props) => {
       {props.labelName && props.labelName !== "" ? (
         <label className="input-label">{props.labelName} 
         {props.labelName.length > 0 && props.isRequired && <span className="validation-star">*</span>} 
-        {!props.showColomns && <>&nbsp; :</>} 
         </label>
       ) : null}
       {/* <span className="validation-star">*</span> */}
