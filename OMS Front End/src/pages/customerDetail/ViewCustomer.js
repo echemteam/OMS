@@ -167,7 +167,7 @@ const ViewCustomer = () => {
       component: (
         <div className="mt-2">
           {/* {hasNotePermission.hasAccess ? */}
-          <NotesDetail />
+          <NotesDetail isEditablePage={true} />
           {/* : null} */}
         </div>
       ),
