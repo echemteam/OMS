@@ -265,7 +265,7 @@ const BasicDetail = (props) => {
       }
       addCustomersBasicInformation(req);
     } else {
-      warning('Please fill basic information');
+      warning('Please fill customer basic information');
     }
   };
 
@@ -289,6 +289,8 @@ const BasicDetail = (props) => {
         customerId: props.pageId
       }
       updateCustomersBasicInformation(req);
+    }else {
+      warning('Please fill customer basic information');
     }
   };
 

@@ -8,11 +8,16 @@ import { useGetSuppliersMutation, useUpdateSupplierStatusMutation } from '../../
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { securityKey } from '../../../../data/SecurityKey';
 import SupplierApproval from './supplierApproval/SupplierApproval';
+import { encryptUrlData } from '../../../../services/CryptoService';
+import { useNavigate } from 'react-router-dom';
+import SwalAlert from '../../../../services/swalService/SwalService';
 
 export const InActiveSuppliers = ({ statusId, configFile }) => {
 
     const childRef = useRef();
     const molGridRef = useRef();
+    const navigate = useNavigate();
+    const { confirm } = SwalAlert();
     const [totalRowCount, setTotalRowCount] = useState(0);
     const [dataSource, setDataSource] = useState();
     const { DataRef } = useContext(SupplierContext);
@@ -98,7 +103,17 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
     }
 
     const handleUnfreeze = (data) => {
-        approvalCheckList(data)
+        // approvalCheckList(data)
+        confirm(
+            "Warning?",
+            `Are you sure you want to change the supplier status to Approved?`,
+            "Yes",
+            "Cancel"
+        ).then((confirmed) => {
+            if (confirmed) {
+                handleUpdate(data)
+            }
+        });
     }
 
     const handleActiveSupplier = (data) => {
@@ -106,7 +121,17 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
     }
 
     const handleUnBlock = (data) => {
-        approvalCheckList(data)
+        // approvalCheckList(data)
+        confirm(
+            "Warning?",
+            `Are you sure you want to change the supplier status to Approved?`,
+            "Yes",
+            "Cancel"
+        ).then((confirmed) => {
+            if (confirmed) {
+                handleUpdate(data)
+            }
+        });
     }
 
     const handleUpdate = () => {
@@ -117,10 +142,16 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
         updateSupplierStatus(req)
     }
 
+
+    const handleEditClick = (data) => {
+        navigate(`/SupplierDetails/${encryptUrlData(data.supplierId)}`, "_blank");
+    }
+
     const actionHandler = {
         UNFREEZE: handleUnfreeze,
         ACTIVECUSTOMER: handleActiveSupplier,
-        UNBLOCKED: handleUnBlock
+        UNBLOCKED: handleUnBlock,
+        EDIT: handleEditClick,
     };
 
     return (

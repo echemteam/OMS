@@ -9,11 +9,15 @@ const ContactCard = React.lazy(() =>
 );
 
 const AccordionCollapse = ({ accordionList, contentTypeId, handleEdit }) => {
-  const [activeKey, setActiveKey] = useState("0");
+  const [activeKey, setActiveKey] = useState([]);
   const [customCardDetails, setCustomCardDetails] = useState();
 
   const handleToggle = (eventKey) => {
-    setActiveKey(activeKey === eventKey ? null : eventKey);
+    if (activeKey.includes(eventKey)) {
+      setActiveKey(activeKey.filter((key) => key !== eventKey));
+    } else {
+      setActiveKey([...activeKey, eventKey]);
+    }
   };
 
   const AccordtionCardDetails = useCallback(
@@ -82,6 +86,10 @@ const AccordionCollapse = ({ accordionList, contentTypeId, handleEdit }) => {
     customCardDetails,
     contentTypeId,
   ]);
+
+  useEffect(() => {
+    setActiveKey(Object.keys(accordionList).map((_, index) => index.toString()));
+  }, [accordionList]);
 
   return (
     <Accordion

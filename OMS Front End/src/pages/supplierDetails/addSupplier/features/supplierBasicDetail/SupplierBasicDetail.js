@@ -11,11 +11,12 @@ import { useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAl
 import { securityKey } from '../../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { useLazyGetAllUserQuery } from '../../../../../app/services/commonAPI';
+import SwalAlert from '../../../../../services/swalService/SwalService';
 
 const SupplierBasicDetail = (props) => {
 
   const basicDetailRef = useRef();
-
+  const { warning } = SwalAlert();
   const [formData, setFormData] = useState(supplierBasicData);
   const [supplierName, setSupplierName] = useState('');
 
@@ -244,6 +245,8 @@ const SupplierBasicDetail = (props) => {
         responsibleUserId: 0
       }
       addEditSupplierBasicInformation(req);
+    }else {
+      warning('Please fill supplier basic information');
     }
   };
 
@@ -270,6 +273,8 @@ const SupplierBasicDetail = (props) => {
         supplierId: props.pageId
       }
       addEditSupplierBasicInformation(req);
+    }else {
+      warning('Please fill supplier basic information');
     }
   };
 
