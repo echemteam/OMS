@@ -250,7 +250,7 @@ const SupplierBasicDetail = (props) => {
       }
       addEditSupplierBasicInformation(req);
     } else {
-      warning('Please enter supplier basic information');
+      ToastService.warning('Please enter supplier basic information');
     }
   };
 
@@ -278,7 +278,7 @@ const SupplierBasicDetail = (props) => {
       }
       addEditSupplierBasicInformation(req);
     } else {
-      warning('Please enter supplier basic information');
+      ToastService.warning('Please enter supplier basic information');
     }
   };
 

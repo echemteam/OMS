@@ -11,6 +11,7 @@ import Image from "../../../../../components/image/Image";
 import { useGetCustomerAuditHistoryByCustomerIdMutation } from "../../../../../app/services/customerHistoryAPI";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
+import { modifyTimeLineData } from "../../../../../utils/TransformData/TransformAPIData";
 
 const TimeLine = () => {
   const [historyData, setHistoryData] = useState([]);
@@ -51,17 +52,15 @@ const TimeLine = () => {
 
   useEffect(() => {
     if (isGetHistorySuccess && isGetHistoryData) {
-      if (
-        isGetHistoryData.dataSource &&
-        isGetHistoryData.dataSource.length > 0
-      ) {
+      if (isGetHistoryData.dataSource && isGetHistoryData.dataSource.length > 0) {
         if (refreshData) {
           setHistoryData(isGetHistoryData.dataSource);
           setRefreshData(false);
         } else {
+          const modifyData = modifyTimeLineData(isGetHistoryData.dataSource)
           setHistoryData((prevData) => [
             ...prevData,
-            ...isGetHistoryData.dataSource,
+            ...modifyData,
           ]);
         }
       } else {
@@ -121,15 +120,6 @@ const TimeLine = () => {
                         </span>
                         <div className="timeline-item-description">
                           <div className="right-desc-sec">
-                            {/* <div className="d-flex align-items-center">
-                                <div className="timeline-name">{item.name}</div>
-                                <div className="date-time">
-                                  {formatDate(
-                                    item.changedAt,
-                                    "DD/MM/YYYY hh:mm A "
-                                  )}
-                                </div>
-                              </div> */}
                             <div className="msg-section ">
                               <p>{item.description}</p>
                             </div>

@@ -265,11 +265,11 @@ const BasicDetail = (props) => {
         countryId: data.countryId && typeof data.countryId === "object"
           ? data.countryId.value
           : data.countryId,
-        responsibleUserId: 0
+        responsibleUserId: data.responsibleUserId ? data.responsibleUserId : null,
       }
       addCustomersBasicInformation(req);
     } else {
-      warning('Please enter customer basic information');
+      ToastService.warning('Please enter customer basic information');
     }
   };
 
@@ -294,7 +294,7 @@ const BasicDetail = (props) => {
       }
       updateCustomersBasicInformation(req);
     } else {
-      warning('Please enter customer basic information');
+      ToastService.warning('Please enter customer basic information');
     }
   };
 

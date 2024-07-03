@@ -14,7 +14,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 
 export const basicDetailFormDataHalf = {
-  initialState: { name: "", groupTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false },
+  initialState: { name: "", groupTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false , responsibleUserId:""},
   formFields: [
     {
       id: "name",
