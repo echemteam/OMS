@@ -25,12 +25,12 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-8 col-xl-8 col-md-12 mb-1 pr-0",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-1",
       },
     },
     {
       id: "phoneCode",
-      lable: "Contact Number :",
+      lable: "Contact Number ",
       Field_Name: "Phone Code",
       fieldType: FormFieldTypes.SELECT,
       dataField: "phoneCode",
@@ -56,23 +56,23 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-5 col-xl-5 col-md-7 mb-1 pl-0 border-left-r-0",
+        containerCss: "col-xxl-5 col-xl-5 col-md-5 mb-1 pl-0 border-left-r-0",
       },
     },
     {
       id: "extension",
-      lable: "Extension",
+      lable: "",
       Field_Name: "Extension",
       fieldType: FormFieldTypes.NUMERIC,
       dataField: "extension",
       fieldSetting: {
-        placeholder: "Enter Extension",
+        placeholder: "Extension",
         allowSpace: true,
         minLength: 0,
         maxLength: 6,
       },
       style: {
-        containerCss: "col-xxl-8 col-xl-8 col-md-8 mb-1 pr-0 ",
+        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-md-2 mb-1 pl-0 ",
       },
     },
     {

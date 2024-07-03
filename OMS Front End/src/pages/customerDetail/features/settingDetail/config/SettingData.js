@@ -6,7 +6,7 @@ export const SettingFormData = {
   formFields: [
     {
       id: "paymentTermId",
-      lable: "Default Payment Terms Template :",
+      lable: "Default Payment Terms Template ",
       Field_Name: "Default Payment Terms Template",
       fieldType: FormFieldTypes.SELECT,
       dataField: "paymentTermId",
@@ -21,7 +21,7 @@ export const SettingFormData = {
     },
     {
       id: "creditLimit",
-      lable: "Credit Limit :",
+      lable: "Credit Limit ",
       Field_Name: "Credit Limit",
       fieldType: FormFieldTypes.NUMERIC,
       dataField: "creditLimit",
@@ -38,7 +38,7 @@ export const SettingFormData = {
     },
     {
       id: "paymentMethodId",
-      lable: "Payment Method :",
+      lable: "Payment Method ",
       Field_Name: "Payment Method",
       fieldType: FormFieldTypes.SELECT,
       dataField: "paymentMethodId",
@@ -54,7 +54,7 @@ export const SettingFormData = {
     },
     {
       id: "billingCurrency",
-      lable: "Billing Currency :",
+      lable: "Billing Currency ",
       Field_Name: "Billing Currency",
       fieldType: FormFieldTypes.SELECT,
       dataField: "billingCurrency",
@@ -73,7 +73,7 @@ export const SettingFormData = {
     },
     {
       id: "invoiceSubmissionInstruction",
-      lable: "Invoice Submission Instruction :",
+      lable: "Invoice Submission Instruction ",
       Field_Name: "Invoice Submission Instruction",
       fieldType: FormFieldTypes.CKEDITOR,
       dataField: "invoiceSubmissionInstruction",

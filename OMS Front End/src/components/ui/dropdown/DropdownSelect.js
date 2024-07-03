@@ -14,6 +14,7 @@ function DropdownSelect(props) {
         isMulti={props.isMultiSelect}
         placeholder={props.placeholder}
         isDisabled={props.isDropdownDisabled}
+        closeMenuOnSelect={props.isMultiSelect ? false : true}
       />
     </span>
   );

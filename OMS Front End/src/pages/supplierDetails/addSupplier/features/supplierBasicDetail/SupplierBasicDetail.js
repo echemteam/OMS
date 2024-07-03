@@ -11,11 +11,12 @@ import { useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAl
 import { securityKey } from '../../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { useLazyGetAllUserQuery } from '../../../../../app/services/commonAPI';
+import SwalAlert from '../../../../../services/swalService/SwalService';
 
 const SupplierBasicDetail = (props) => {
 
   const basicDetailRef = useRef();
-
+  const { warning } = SwalAlert();
   const [formData, setFormData] = useState(supplierBasicData);
   const [supplierName, setSupplierName] = useState('');
 
@@ -239,11 +240,17 @@ const SupplierBasicDetail = (props) => {
         ...data,
         supplierTypeId: data.supplierTypeId.value,
         groupTypeId: data.groupTypeId.value,
-        territoryId: data.territoryId.value,
-        countryId: data.countryId.value,
+        territoryId: data.territoryId && typeof data.territoryId === "object"
+          ? data.territoryId.value
+          : data.territoryId,
+        countryId: data.countryId && typeof data.countryId === "object"
+          ? data.countryId.value
+          : data.countryId,
         responsibleUserId: 0
       }
       addEditSupplierBasicInformation(req);
+    } else {
+      warning('Please enter supplier basic information');
     }
   };
 
@@ -270,6 +277,8 @@ const SupplierBasicDetail = (props) => {
         supplierId: props.pageId
       }
       addEditSupplierBasicInformation(req);
+    } else {
+      warning('Please enter supplier basic information');
     }
   };
 

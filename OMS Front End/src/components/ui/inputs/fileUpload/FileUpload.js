@@ -22,6 +22,7 @@ const FileUpload = ({
   acceptedFiles,
   isCustomButtonVisible,
 }) => {
+
   const [fileValue, setFileValue] = useState(null);
 
   const fileRef = useRef();
@@ -55,9 +56,8 @@ const FileUpload = ({
   return (
     <>
       <div
-        className={`form-field custom-file-uploader ${
-          isDisable ? "field-disabled" : ""
-        }`}
+        className={`form-field custom-file-uploader ${isDisable ? "field-disabled" : ""
+          }`}
       >
         <input
           ref={fileRef}
@@ -84,7 +84,14 @@ const FileUpload = ({
             <>
               <div className="drag-drop-txt">
                 <p>Drag & Drop Your File</p>
-                <span className="small-txt">All File Formats we support</span>
+                {acceptedFiles === "" ?
+                  <span className="small-txt">All File Formats we support</span>
+                  :
+                  <span className="small-txt">
+                    {acceptedFiles}
+                    Formats we support
+                  </span>
+                }
               </div>
             </>
           )}

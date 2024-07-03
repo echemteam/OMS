@@ -14,6 +14,7 @@ const CKEditorField = ({
     error,
     formSetting,
     overRideProps,
+    isRequired,
     ...editorProps
 }) => {
 
@@ -32,7 +33,7 @@ const CKEditorField = ({
     return (
         <>
             <div className="input-label-part">
-                {labelName && labelName !== "" && <Label labelName={labelName} for={name} />}
+                {labelName && labelName !== "" && <Label labelName={labelName} for={name} isRequired={isRequired} />}
                 <CKEditorComponent
                     {...editorProps}
                     placeholder={placeholder}

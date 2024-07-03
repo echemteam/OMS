@@ -11,7 +11,7 @@ export const contactDetailFormData = {
   formFields: [
     {
       id: "firstName",
-      lable: "First Name :",
+      lable: "First Name ",
       Field_Name: "First Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "firstName",
@@ -27,7 +27,7 @@ export const contactDetailFormData = {
     },
     {
       id: "lastName",
-      lable: "Last Name :",
+      lable: "Last Name ",
       Field_Name: "Last Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "lastName",
@@ -43,7 +43,7 @@ export const contactDetailFormData = {
     },
     {
       id: "contactTypeId",
-      lable: "Contact Type :",
+      lable: "Contact Type ",
       Field_Name: "Contact Type",
       fieldType: FormFieldTypes.SELECT,
       dataField: "contactTypeId",

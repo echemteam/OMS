@@ -4,8 +4,8 @@ export const ErrorMessage = {
 	NOTVALIDPATTERN: '{0} must contain at least 8 alphanumeric, one special, one lower and upper case characters',
 	FieldRequired: 'Please enter {0}',
 	InvalidField: '{0} is invalid',
-	UniqueName:'Only letters, digits, hyphens, and ampersands are allowed',
-	Website:'Please enter valid {0}',
+	UniqueName: 'Only letters, digits, hyphens, and ampersands are allowed',
+	Website: 'Please enter valid {0}',
 	PasswordNotValid: 'Invalid Password',
 	ConfirmPasswordRequired: 'Please re-enter password',
 	ComparePassword: 'Password does not match',
@@ -54,5 +54,7 @@ export const SuccessMessage = {
 	Confirm_SubmitMap: 'Map?',
 	Map_Alert: '{0} mapped successfully',
 	Alret_Warning: 'Warning !',
+	TaxId: 'Please enter between {0} and {1} characters.',
+	DefaultUSATaxId: 'Please enter between 10 and 10 characters.'
 };
 

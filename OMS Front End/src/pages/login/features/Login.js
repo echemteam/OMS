@@ -50,7 +50,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (isLogedin) {
-      navigate("/Users")
+      navigate("/")
     }
   }, [isLogedin])
 

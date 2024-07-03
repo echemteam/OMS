@@ -4,8 +4,8 @@ import { getRandomColor } from "../../../../../../../../utils/RandomColors/Rando
 import { useEffect } from "react";
 import formatDate from "../../../../../../../../lib/formatDate";
 
-const SupplierNotesCard = ({isAddEditModal, onHandleNote,ongetSupplierNote,notesFormData,}) => {
- 
+const SupplierNotesCard = ({ isAddEditModal, onHandleNote, ongetSupplierNote, notesFormData, }) => {
+
   useEffect(() => {
     ongetSupplierNote();
   }, []);
@@ -32,7 +32,17 @@ const SupplierNotesCard = ({isAddEditModal, onHandleNote,ongetSupplierNote,notes
                 )}`}
               >
                 <div className="card-content">
-                  <div className="note-label  ">{notes.fullName}</div>
+                  <div className="card-notes ">
+                    <div className="note-label  ">Created on {formatDate(notes.noteDate, "DD/MM/YYYY hh:mm")} by {notes.fullName}</div>
+                    <div className="edit-button ">
+                      <Buttons
+                        buttonTypeClassName="edit-btn"
+                        onClick={() => handleEditClick(notes)}
+                        textWithIcon={true}
+                        imagePath={AppIcons.editThemeIcon}
+                      ></Buttons>
+                    </div>
+                  </div>
                   <div className="bottom-info">
                     <div className="note-text editor-section">
                       <div
@@ -40,17 +50,6 @@ const SupplierNotesCard = ({isAddEditModal, onHandleNote,ongetSupplierNote,notes
                           __html: notes.note,
                         }}
                       ></div>
-                    </div>
-                    <div className="card-notes ">
-                      <div className="note-date ">{formatDate(notes.noteDate,"DD/MM/YYYY hh:mm")}</div>
-                      <div className="edit-button ">
-                        <Buttons
-                          buttonTypeClassName="edit-btn"
-                          onClick={() => handleEditClick(notes)}
-                          textWithIcon={true}
-                          imagePath={AppIcons.editThemeIcon}
-                        ></Buttons>
-                      </div>
                     </div>
                   </div>
                 </div>

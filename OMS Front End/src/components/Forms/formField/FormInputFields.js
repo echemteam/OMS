@@ -20,6 +20,7 @@ const FormInputFields = ({
   inputButtonGroup,
   handleInputGroupButton,
   inputField,
+  inputIcon,
   ...inputProps
 }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -52,7 +53,7 @@ const FormInputFields = ({
     <>
       <div className="input-label-part">
         {labelName && labelName !== "" && (
-          <Label labelName={labelName} for={name} {...inputProps} />
+          <Label labelName={labelName} for={name} isRequired={inputProps.isRequired} {...inputProps} />
         )}
 
         {inputProps.formSaparateTitle ? (
@@ -65,6 +66,7 @@ const FormInputFields = ({
                 onChange={handleInputChange}
                 onBlur={handleOnBlur}
                 inputButtonGroup={inputButtonGroup}
+                inputIcon={inputIcon}
                 handleInputGroupButton={handleInputGroupButton}
                 isDisable={
                   formSetting?.isViewOnly ||
@@ -83,6 +85,7 @@ const FormInputFields = ({
               onChange={handleInputChange}
               onBlur={handleOnBlur}
               inputButtonGroup={inputButtonGroup}
+              inputIcon={inputIcon}
               handleInputGroupButton={handleInputGroupButton}
               isDisable={
                 formSetting?.isViewOnly ||

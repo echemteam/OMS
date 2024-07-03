@@ -11,7 +11,7 @@ export const addEditEmailFormData = {
   formFields: [
     {
       id: "emailAddress",
-      lable: "Email Address :",
+      lable: "Email Address ",
       Field_Name: "Email Address",
       fieldType: FormFieldTypes.INPUT,
       dataField: "emailAddress",

@@ -12,8 +12,10 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import SwalAlert from "../../../../services/swalService/SwalService";
 
 const BasicDetail = (props) => {
+  const { warning } = SwalAlert();
   const basicDetailRef = useRef();
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
@@ -39,7 +41,7 @@ const BasicDetail = (props) => {
       if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
-        responsibleUserDisbled(true);
+        responsibleUserDisbled(false);
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
@@ -257,11 +259,17 @@ const BasicDetail = (props) => {
       let req = {
         ...data,
         groupTypeId: data.groupTypeId.value,
-        territoryId: data.territoryId.value,
-        countryId: data.countryId.value,
+        territoryId: data.territoryId && typeof data.territoryId === "object"
+          ? data.territoryId.value
+          : data.territoryId,
+        countryId: data.countryId && typeof data.countryId === "object"
+          ? data.countryId.value
+          : data.countryId,
         responsibleUserId: 0
       }
       addCustomersBasicInformation(req);
+    } else {
+      warning('Please enter customer basic information');
     }
   };
 
@@ -285,6 +293,8 @@ const BasicDetail = (props) => {
         customerId: props.pageId
       }
       updateCustomersBasicInformation(req);
+    } else {
+      warning('Please enter customer basic information');
     }
   };
 
@@ -301,7 +311,6 @@ const BasicDetail = (props) => {
       setFormData(updatedForm);
     }
   }
-
 
   const formActionHandler = {
     DDL_CHANGED: handleValidateTextId

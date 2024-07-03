@@ -299,10 +299,11 @@ a {
 
       .content-desc-section {
         .center-container {
-          height: calc(100vh - 140px);
+          height: calc(100vh - 116px);
           overflow: hidden;
           overflow-y: auto;
           margin-bottom: 0;
+          padding-bottom: 6px;
         }
       }
     }
@@ -1031,6 +1032,7 @@ a {
 
         span {
           color: #2d3641db;
+          font-size: var(--commonFont-medium);
 
           &:first-child {
             font-weight: 600;
@@ -1100,7 +1102,7 @@ a {
         .user-icon-name {
           display: flex;
           align-items: center;
-          margin-bottom: 5px;
+          margin-bottom: 15px;
 
           span {
             &.icon {
@@ -1121,7 +1123,7 @@ a {
               left: -5px;
 
               img {
-                max-width: 20px;
+                max-width: 35px;
                 // filter: brightness(100)
               }
             }
@@ -1397,7 +1399,7 @@ a {
   }
 
   .note-label {
-    font-size: var(--commonFont-large);
+    font-size: var(--commonFont-medium);
     color: var(--textColor);
     margin-bottom: 5px;
   }
@@ -1420,7 +1422,7 @@ a {
     justify-content: space-between;
     width: 100%;
     align-items: center;
-    margin-top: -10px;
+    // margin-top: -10px;
 
     .edit-button {
       display: flex;
@@ -1559,13 +1561,13 @@ a {
 }
 
 .green-color {
-  color: #71dd37;
+  color: var(--PrimaryColor);
   font-size: var(--commonFont-2extraLarge);
   font-weight: lighter;
 }
 
 .red-color {
-  color: red;
+  color: var(--dangerColor);
   font-size: var(--commonFont-2extraLarge);
   font-weight: lighter;
 }
@@ -1576,10 +1578,17 @@ a {
   }
 
   .fix-data {
-    word-break: break-all;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    .card-value {
+      font-size: var(--commonFont-medium);
+    }
+
+    .copy-icon {
+      img {
+        width: 17px;
+        height: 17px;
+        margin-left: 7px;
+      }
+    }
   }
 }
 
@@ -1869,7 +1878,7 @@ input[type="checkbox"]:disabled {
     font-weight: 600;
 
     &.active-green-color {
-      background: green;
+      background: var(--PrimaryColor);
       color: #fff !important;
     }
   }
@@ -1897,6 +1906,62 @@ input[type="checkbox"]:disabled {
   cursor: not-allowed !important;
 }
 
+.contact-icon-img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.primary-icon {
+  margin-left: 5px;
+  background: var(--PrimaryColor);
+  border-radius: 100%;
+  padding: 3px;
+  min-width: 13px;
+  min-height: 13px;
+  max-width: 13px;
+  max-height: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    filter: brightness(100);
+  }
+}
+
+.primary-text-title {
+  font-size: var(--commonFont-extraSmall) !important;
+  color: var(--inputBorder) !important;
+
+}
+
+.right-contact-ext-type {
+  .contact-type {
+    span {
+      height: 20px;
+      width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      i {
+
+        font-size: var(--commonFont-large) !important;
+        color: var(--inputBorder) !important;
+
+        &.fa-mobile {
+          font-size: var(--commonFont-2extraLarge) !important;
+        }
+
+        &.fa-home {
+          font-size: var(--commonFont-extraLarge) !important;
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
     .css-13cymwt-control {
@@ -1915,4 +1980,59 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+
+
+  .contact-card-section {
+    .add-desc-part {
+      .contact-card {
+        .edit-delete-button {
+          .edit-btn {
+            img {
+              width: 15px;
+            }
+          }
+        }
+
+        .add-line {
+          span {
+            b {
+              text-transform: uppercase;
+            }
+          }
+
+          .contact-icon-img {
+            width: 13px;
+            margin-right: 7px;
+            padding-top: 2px;
+          }
+        }
+      }
+    }
+
+  }
+
+  .address-card-section {
+    .add-desc-part {
+      .address-card {
+        .edit-delete-button {
+          .edit-btn {
+            img {
+              width: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  input[type="checkbox"]:checked:before {
+    width: 17px;
+    height: 17px;
+  }
+
+  input[type=checkbox]:checked:after {
+    top: 57%;
+    left: 65%;
+  }
+
 }

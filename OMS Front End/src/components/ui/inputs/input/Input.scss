@@ -71,24 +71,91 @@ form {
   width: 100%;
 }
 
+.input-group {
+  position: relative;
+
+  .icon-fix {
+    position: absolute;
+    right: 6px;
+    top: 58%;
+    transform: translateY(-50%);
+  }
+}
+
 .input-group-append {
   .input-button {
     height: 35px;
   }
 }
+
+.input-icon {
+  &:hover {
+    .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  i {
+    font-size: var(--commonFont-extraLarge);
+    color: #696cff;
+    cursor: pointer !important;
+  }
+
+  .tooltip-text {
+    font-size: var(--commonFont-small);
+    visibility: hidden;
+    width: 220px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    /* Position above the icon */
+    left: 50%;
+    margin-left: -110px;
+    /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    &::after {
+
+      content: "";
+      position: absolute;
+      top: 99%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+  }
+}
+
+.validation-star {
+  color: #e30000;
+  margin-left: 3px;
+}
+
 @media only screen and (max-width: 1560px) {
   .validation-text {
     margin-left: 120px;
-    font-size:  var(--commonFont-extraSmall);
+    font-size: var(--commonFont-extraSmall);
   }
-
-  
 
   .input-group-append {
     .input-button {
-      height: 35px;
+      height: 28px;
       padding: 0 5px;
+      color: var(--whiteColor);
     }
+  }
+
+  .input-field {
+    height: 28px;
   }
 }
 

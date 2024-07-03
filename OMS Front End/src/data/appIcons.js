@@ -15,6 +15,8 @@ import downloadIcon from "../assets/images/download.png";
 
 import permissionIcon from "../assets/images/permission.png";
 import userIcon from "../assets/images/user.png";
+import user3DIcon from "../assets/images/user3d.png";
+
 import notification from "../assets/images/notification.png";
 import shortcutIcon from "../assets/images/shortcut.png";
 
@@ -30,6 +32,8 @@ import unTickIcon from "../assets/images/unTickIcon.png";
 
 // footer icon
 import mail from "../assets/images/email.png";
+import contactNo from "../assets/images/contactNo.png";
+
 import website from "../assets/images/web.png";
 import uploaddocumenticon from "../assets/images/uploadDocsIcon.png";
 import cardBgShape from "../assets/images/circle.svg";
@@ -64,6 +68,9 @@ import supplierIcon from "../assets/images/supplier.png";
 import customerDetailsIcone from "../assets/images/customerDetails.png";
 import securityIcon from "../assets/images/securityIcon.png";
 import security from "../assets/images/security.png";
+import primaryTick from "../assets/images/primaryTick.png";
+
+
 
 
 export const AppIcons = {
@@ -82,6 +89,7 @@ export const AppIcons = {
   DownloadIcon: downloadIcon,
   permissionIcon: permissionIcon,
   userIcon: userIcon,
+  User3DIcon:user3DIcon,
   notificationIcon: notification,
   ShortcutIcon: shortcutIcon,
   arrowIcon: arrow,
@@ -95,6 +103,7 @@ export const AppIcons = {
   // footer icon set
 
   Mail: mail,
+  ContactNo: contactNo,
   Bebsite: website,
   shortingArrowIcon: shortingArrowIcon,
   Uploaddocumenticon: uploaddocumenticon,
@@ -128,4 +137,6 @@ export const AppIcons = {
   customerDetailsIcone:customerDetailsIcone,
   securityIcon:securityIcon,
   security:security,
+
+  PrimaryTick:primaryTick,
 };

@@ -30,7 +30,8 @@ const Input = ({
   extendedFormat,
   minValueLength,
   inputButtonGroup,
-  handleInputGroupButton
+  handleInputGroupButton,
+  inputIcon
 }) => {
 
   const [inputAttributes, setInputAttributes] = useState({});
@@ -145,21 +146,37 @@ const Input = ({
               </div>
             </div>
             :
-            <input
-              id={name}
-              value={value}
-              name={name}
-              type={type}
-              className={cssClass}
-              placeholder={placeholder}
-              onChange={handleInputChange}
-              onKeyUp={onKeyup}
-              onKeyDown={handleKeyDown}
-              onBlur={onBlur}
-              disabled={isDisable}
-              min={min}
-              max={max}
-              {...inputAttributes} />}
+            <>
+              <div class="input-group">
+                <input
+                  id={name}
+                  value={value}
+                  name={name}
+                  type={type}
+                  className={cssClass}
+                  placeholder={placeholder}
+                  onChange={handleInputChange}
+                  onKeyUp={onKeyup}
+                  onKeyDown={handleKeyDown}
+                  onBlur={onBlur}
+                  disabled={isDisable}
+                  min={min}
+                  max={max}
+                  {...inputAttributes} />
+
+                {inputIcon?.isIconShow &&
+                  <div className="icon-fix">
+                    <div className="input-icon">
+                      <i className={`fa ${inputIcon.faIcon}`} />
+                      <span className="tooltip-text">
+                       {inputIcon.message}
+                      </span>
+                    </div>
+                  </div>
+                }
+              </div>
+            </>
+          }
         </>
       }
 

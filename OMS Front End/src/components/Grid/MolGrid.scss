@@ -347,3 +347,38 @@ table {
 }
 
 // }
+.customer-list-all {
+  table {
+    tbody {
+      max-height: calc(100vh - 300px);
+    }
+  }
+}
+.inactive-list-sec{
+  table {
+    tbody {
+      max-height: calc(100vh - 343px);
+    }
+  }
+}
+
+@media only screen and (max-width: 1560px) {
+  table {
+    tbody {
+      tr {
+        td {
+          &:last-child {
+            a {
+              img {
+                min-height: 16px;
+                min-width: 16px;
+                max-height: 16px;
+                max-width: 16px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

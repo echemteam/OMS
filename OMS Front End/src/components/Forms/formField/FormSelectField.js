@@ -20,6 +20,7 @@ const FormSelectField = ({
   fieldSetting,
   fieldActions,
   overRideProps,
+  isRequired,
   ...selectFormFieldProps
 }) => {
 
@@ -30,6 +31,9 @@ const FormSelectField = ({
       if (isMultiSelect) {
         const selectedValues = selectedOption.map((option) => option.value);
         onChange(dataField, selectedValues)
+        if (fieldActions) {
+          fieldActions('DDL_CHANGED', dataField, selectedOption);
+        }
       }
       else {
         onChange(dataField, selectedOption);
@@ -50,7 +54,7 @@ const FormSelectField = ({
     <>
       <div className='input-label-part'>
         {labelName && labelName !== "" && (
-          <Label labelName={labelName} />
+          <Label labelName={labelName} isRequired={isRequired} />
         )}
         {selectFormFieldProps.hasMainTitle ?
           <div className="section-title">

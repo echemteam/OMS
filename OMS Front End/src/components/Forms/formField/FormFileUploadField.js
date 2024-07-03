@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import SwalAlert from "../../../services/swalService/SwalService";
 import FileUpload from "../../ui/inputs/fileUpload/FileUpload";
 const Label = React.lazy(() => import("../../ui/label/Label"));
 const ValidationText = React.lazy(() =>
@@ -16,10 +17,22 @@ const FormFileUploadField = ({
   formSetting,
   overRideProps,
   fieldActions,
+  isRequired,
+  fileFormate,
   ...inputProps
 }) => {
   const [buttonVisible, setButtonVisible] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const { info } = SwalAlert();
+
+  const isValidFileType = (fileName, acceptedFileType) => {
+    if (acceptedFileType.length === 0) {
+      return true;
+    }
+    const fileExt = fileName.split(".").pop().toLowerCase();
+    return acceptedFileType.includes(`.${fileExt}`);
+  };
 
   const handleInputChange = (e) => {
     if (onChange) {
@@ -29,6 +42,21 @@ const FormFileUploadField = ({
       } else if (e.target.files[0]) {
         const fileObj = e.target.files[0];
         setSelectedFile(fileObj);
+
+        const acceptedExtensions = inputProps.acceptedFiles
+          ? inputProps.acceptedFiles.split(",").map((ext) => ext.trim())
+          : [];
+
+      if (!isValidFileType(fileObj.name, acceptedExtensions)) {
+        info(
+          "File Type doesn't match",
+          `Please select file with extension ${acceptedExtensions}`
+        );
+        setSelectedFile(null);
+        inputProps.value = null;
+        handleClearFile();
+        return;
+      }
 
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -92,7 +120,7 @@ const FormFileUploadField = ({
     <>
       <div className="input-label-part">
         {labelName && labelName !== "" && (
-          <Label labelName={labelName} for={name} />
+          <Label labelName={labelName} for={name} isRequired={isRequired} />
         )}
         <FileUpload
           onClear={handleClearFile}
@@ -109,6 +137,7 @@ const FormFileUploadField = ({
           }
           isDownloadButton={inputProps.isDownloadable}
           acceptedFiles={inputProps.acceptedFiles}
+          fileFormate={fileFormate}
           {...inputProps}
         />
       </div>

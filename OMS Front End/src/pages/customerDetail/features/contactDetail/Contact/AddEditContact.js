@@ -7,6 +7,7 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
@@ -30,18 +31,36 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   const handleAddEdit = () => {
     let data = ref.current.getFormData();
     if (data) {
+      let contactTypeId = null;
+      
+      if (isSupplier === true) {
+        if (isEdit) {
+          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object"
+          ? String(data.contactTypeId.value)
+          : String(data.contactTypeId);
+        } else {
+          contactTypeId = String(data.contactTypeId.value);
+        }
+      } else {
+        if (isEdit) {
+          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object"
+            ? String(data.contactTypeId.value)
+            : String(data.contactTypeId);
+        } else {
+          contactTypeId = Array.isArray(data.contactTypeId)
+            ? data.contactTypeId.map(String).join(",")
+            : data.contactTypeId;
+        }
+      }
+
       let request = {
         ...data,
-        contactTypeId: isEdit === true
-          ?
-          (data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId))
-          :
-          data.contactTypeId ? data.contactTypeId.map(String).join(",") : null,
+        contactTypeId: contactTypeId,
         customerId: isSupplier === false ? mainId : 0,
         contactId: contactId,
         customerContactId: customerContactId,
         emailList: emailAddressData.length > 0 ? emailAddressData : null,
-        phoneList: phoneNumberData.length > 0 ? phoneNumberData : null,
+        phoneList: phoneNumberData.length > 0 ? modifyPhoneNumberData(phoneNumberData) : null,
         supplierId: isSupplier === true ? mainId : 0,
         supplierContactId: supplierContactId,
       }
@@ -53,11 +72,15 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   //** UseEffect */
   useEffect(() => {
     if (isAddEditSuccess && isAddEditData) {
+      if (isAddEditData.errorMessage.includes('EXISTS')) {
+        ToastService.warning(isAddEditData.errorMessage);
+        return;
+      }
       if (onSuccess) {
         setContactId(isAddEditData?.keyValue);
         onSuccess();
+        ToastService.success(isAddEditData.errorMessage);
       }
-      ToastService.success(isAddEditData.errorMessage);
     }
   }, [isAddEditSuccess, isAddEditData]);
 
@@ -138,6 +161,8 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     let form = { ...contactDetailFormData };
     form.initialState = { ...contactDetailFormData.initialState };
     setFormData(form);
+    setCustomerContactId(0);
+    setSupplierContactId(0);
   };
 
   //** Use Imperative Handle  */
