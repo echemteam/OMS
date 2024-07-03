@@ -11,6 +11,7 @@ const Checkbox = ({
   isDisable,
   dataField,
   cssClass = "checkbox-field",
+  showColomns,
   ...checkboxProps
 }) => {
 
@@ -37,7 +38,7 @@ const Checkbox = ({
         />
         <label htmlFor={name} className="checkbox-label"></label>
       </div>
-      {label && label !== "" && <Label labelName={label} for={name} isRequired={checkboxProps.isRequired}/>}
+      {label && label !== "" && <Label labelName={label} for={name} isRequired={checkboxProps.isRequired} showColomns={showColomns}/>}
     </div>
   );
 };

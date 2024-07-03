@@ -259,13 +259,17 @@ const BasicDetail = (props) => {
       let req = {
         ...data,
         groupTypeId: data.groupTypeId.value,
-        territoryId: data.territoryId.value,
-        countryId: data.countryId.value,
+        territoryId: data.territoryId && typeof data.territoryId === "object"
+          ? data.territoryId.value
+          : data.territoryId,
+        countryId: data.countryId && typeof data.countryId === "object"
+          ? data.countryId.value
+          : data.countryId,
         responsibleUserId: 0
       }
       addCustomersBasicInformation(req);
     } else {
-      warning('Please fill customer basic information');
+      warning('Please enter customer basic information');
     }
   };
 
@@ -289,8 +293,8 @@ const BasicDetail = (props) => {
         customerId: props.pageId
       }
       updateCustomersBasicInformation(req);
-    }else {
-      warning('Please fill customer basic information');
+    } else {
+      warning('Please enter customer basic information');
     }
   };
 
