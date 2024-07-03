@@ -156,7 +156,7 @@ export const addressFormData = {
       fieldSetting: {
         placeholder: "Enter Zip Code",
         allowSpace: true,
-        maxLength: 10,
+        maxLength: 9,
       },
       validation: [{ type: "require" }],
       style: {

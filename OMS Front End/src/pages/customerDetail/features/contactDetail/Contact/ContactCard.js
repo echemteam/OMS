@@ -47,7 +47,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                       </div>
                       <span
                         className="copy-icon"
-                        // onClick={() => CopyText(customerData?.emailAddress, "email") }
+                      // onClick={() => CopyText(customerData?.emailAddress, "email") }
                       >
                         <Image
                           imagePath={AppIcons.copyIcon}
@@ -83,15 +83,16 @@ const ContactCard = ({ childData, handleEdit }) => {
                           &nbsp;
                           {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}`}
                         </div>
-                        ,{/* <span className="title">Ext.</span> */}
+                        {/* <span className="title">Ext.</span> */}
+                        {/* { */}
                         <div className="card-value">
-                          &nbsp;{`${phoneData.extension}`}
+                          &nbsp;{`${phoneData.extension > 0 ? ',' + phoneData.extension : ''}`}
                         </div>
                         <span
                           className="copy-icon"
-                          // onClick={() =>
-                          //   CopyText(customerData?.emailAddress, "email")
-                          // }
+                        // onClick={() =>
+                        //   CopyText(customerData?.emailAddress, "email")
+                        // }
                         >
                           <Image
                             imagePath={AppIcons.copyIcon}

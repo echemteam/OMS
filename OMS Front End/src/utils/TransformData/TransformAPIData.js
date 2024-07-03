@@ -3,12 +3,13 @@ import { FileTypeIcons } from "../../pages/customerDetail/features/documentsDeta
 export const contactCustomerTransformData = (data) => {
     return data.reduce((acc, item) => {
         const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit, isPrimary } = item;
-
         const modifyPhoneNumberList = phoneNumberLsit.map((item, index) => ({
             ...item,
-            id: index + 1
+            id: index + 1,
+            extension: item.extension === 0 ? '-' : item.extension
         }));
         const modifyEmailAddressLst = emailAddressLst.map((item, index) => ({
+            
             ...item,
             id: index + 1
         }));
@@ -94,6 +95,13 @@ export const contactSupplierTransformData = (data) => {
     }, {});
 };
 
+export const modifyPhoneNumberData = (phoneDataArray) => {
+    const newArray = phoneDataArray.map(phoneData => ({
+        ...phoneData,
+        extension: phoneData.extension === '-' ? 0 : phoneData.extension
+    }));
+    return newArray;
+};
 
 
 const getFileTypeIcon = (filename) => {
