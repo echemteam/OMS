@@ -41,7 +41,7 @@ const BasicDetail = (props) => {
       if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
-        responsibleUserDisbled(true);
+        responsibleUserDisbled(false);
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
