@@ -347,3 +347,24 @@ table {
 }
 
 // }
+
+@media only screen and (max-width: 1560px) {
+  table {
+    tbody {
+      tr {
+        td{
+          &:last-child {
+            a {
+              img{
+                min-height: 16px;
+                min-width: 16px;
+                max-height: 16px;
+                max-width: 16px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

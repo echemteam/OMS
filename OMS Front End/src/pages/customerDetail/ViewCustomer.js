@@ -14,15 +14,30 @@ import { getAuthProps } from "../../lib/authenticationLibrary";
 import { securityKey } from "../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../utils/AuthorizeNavigation/authorizeNavigation";
 
-
-const NotesDetail = React.lazy(() => import("./features/notesDetail/NotesDetail"));
-const RenderTabs = React.lazy(() => import("../../components/ui/tabs/RenderTabs"));
-const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
-const CustomerDetails = React.lazy(() => import("./features/basicDetail/CustomerDetails"));
-const SettingDetails = React.lazy(() => import("./features/settingDetail/SettingDetails"));
-const CustomerAddressDetails = React.lazy(() => import("./features/addressDetail/CustomerAddressDetails"));
-const CustomerDocumentDetails = React.lazy(() => import("./features/documentsDetail/CustomerDocumentDetails"));
-const CustomerContactDetails = React.lazy(() => import("./features/contactDetail/Contact/CustomerContactDetails"));
+const NotesDetail = React.lazy(() =>
+  import("./features/notesDetail/NotesDetail")
+);
+const RenderTabs = React.lazy(() =>
+  import("../../components/ui/tabs/RenderTabs")
+);
+const BasicDetail = React.lazy(() =>
+  import("./features/basicDetail/BasicDetail")
+);
+const CustomerDetails = React.lazy(() =>
+  import("./features/basicDetail/CustomerDetails")
+);
+const SettingDetails = React.lazy(() =>
+  import("./features/settingDetail/SettingDetails")
+);
+const CustomerAddressDetails = React.lazy(() =>
+  import("./features/addressDetail/CustomerAddressDetails")
+);
+const CustomerDocumentDetails = React.lazy(() =>
+  import("./features/documentsDetail/CustomerDocumentDetails")
+);
+const CustomerContactDetails = React.lazy(() =>
+  import("./features/contactDetail/Contact/CustomerContactDetails")
+);
 
 const ViewCustomer = () => {
   const navigate = useNavigate();
@@ -31,26 +46,55 @@ const ViewCustomer = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
-  const { setCustomerId, customerId, isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
+  const { setCustomerId, customerId, isResponsibleUser, setIsResponsibleUser } =
+    useContext(BasicDetailContext);
 
-  const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById, data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
+  const [
+    getCustomersBasicInformationById,
+    {
+      isFetching: isGetCustomersBasicInformationByIdFetching,
+      isSuccess: isGetCustomersBasicInformationById,
+      data: GetCustomersBasicInformationByIdData,
+    },
+  ] = useLazyGetCustomersBasicInformationByIdQuery();
 
   const hasNotePermission = hasFunctionalPermission(securityKey.CUSTOMERNOTES);
-  const hasAddressPermission = hasFunctionalPermission(securityKey.CUSTOMERADDRESS);
-  const hasContactPermission = hasFunctionalPermission(securityKey.CUSTOMERCONTACT);
-  const hasSettingPermission = hasFunctionalPermission(securityKey.CUSTOMERSETTING);
-  const hasHistoryPermission = hasFunctionalPermission(securityKey.CUSTOMERHISTORY);
-  const hasDocumentPermission = hasFunctionalPermission(securityKey.CUSTOMERDOCUMENT);
+  const hasAddressPermission = hasFunctionalPermission(
+    securityKey.CUSTOMERADDRESS
+  );
+  const hasContactPermission = hasFunctionalPermission(
+    securityKey.CUSTOMERCONTACT
+  );
+  const hasSettingPermission = hasFunctionalPermission(
+    securityKey.CUSTOMERSETTING
+  );
+  const hasHistoryPermission = hasFunctionalPermission(
+    securityKey.CUSTOMERHISTORY
+  );
+  const hasDocumentPermission = hasFunctionalPermission(
+    securityKey.CUSTOMERDOCUMENT
+  );
 
   useEffect(() => {
-    if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
+    if (
+      isGetCustomersBasicInformationById &&
+      GetCustomersBasicInformationByIdData &&
+      !isGetCustomersBasicInformationByIdFetching
+    ) {
       const authData = getAuthProps();
-      if (authData.user.userID !== GetCustomersBasicInformationByIdData.responsibleUserId) {
+      if (
+        authData.user.userID !==
+        GetCustomersBasicInformationByIdData.responsibleUserId
+      ) {
         setIsResponsibleUser(false);
       }
       setCustomerData(GetCustomersBasicInformationByIdData);
     }
-  }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
+  }, [
+    isGetCustomersBasicInformationById,
+    GetCustomersBasicInformationByIdData,
+    isGetCustomersBasicInformationByIdFetching,
+  ]);
 
   useEffect(() => {
     if (pageId) {
@@ -83,7 +127,7 @@ const ViewCustomer = () => {
           {/* : null} */}
         </div>
       ),
-      isVisible: hasAddressPermission.hasAccess
+      isVisible: hasAddressPermission.hasAccess,
     },
     {
       sMenuItemCaption: "Contact",
@@ -94,7 +138,7 @@ const ViewCustomer = () => {
           {/* : null} */}
         </div>
       ),
-      isVisible: hasContactPermission.hasAccess
+      isVisible: hasContactPermission.hasAccess,
     },
     {
       sMenuItemCaption: "Settings",
@@ -105,7 +149,7 @@ const ViewCustomer = () => {
           {/* : null} */}
         </div>
       ),
-      isVisible: hasSettingPermission.hasAccess
+      isVisible: hasSettingPermission.hasAccess,
     },
     {
       sMenuItemCaption: "Documents",
@@ -116,7 +160,7 @@ const ViewCustomer = () => {
           {/* : null} */}
         </div>
       ),
-      isVisible: hasDocumentPermission.hasAccess
+      isVisible: hasDocumentPermission.hasAccess,
     },
     {
       sMenuItemCaption: "Notes",
@@ -127,7 +171,7 @@ const ViewCustomer = () => {
           {/* : null} */}
         </div>
       ),
-      isVisible: hasNotePermission.hasAccess
+      isVisible: hasNotePermission.hasAccess,
     },
     {
       sMenuItemCaption: "History",
@@ -138,11 +182,13 @@ const ViewCustomer = () => {
           {/* : null} */}
         </div>
       ),
-      isVisible: hasHistoryPermission.hasAccess
+      isVisible: hasHistoryPermission.hasAccess,
     },
   ];
 
-  const visibleTabs = !isResponsibleUser ? tabs.filter(tab => tab.isVisible) : tabs
+  const visibleTabs = !isResponsibleUser
+    ? tabs.filter((tab) => tab.isVisible)
+    : tabs;
 
   return (
     <>
@@ -167,7 +213,9 @@ const ViewCustomer = () => {
               buttonText="Back"
               imagePath={AppIcons.BackArrowIcon}
             ></Button>
-            <RenderTabs tabs={customerId ? visibleTabs : null} />
+            <div className="customer-detail-tab-sec">
+              <RenderTabs tabs={customerId ? visibleTabs : null} />
+            </div>
           </div>
         </div>
       </div>

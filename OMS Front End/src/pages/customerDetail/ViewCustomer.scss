@@ -175,6 +175,11 @@
   position: absolute;
   right: 43px;
 }
+.customer-detail-tab-sec{
+  .card-body-sec{
+    
+  }
+}
 
 @media only screen and (max-width: 1566px) {
   .customer-desc-left-sec {
@@ -184,6 +189,20 @@
           .inf-label {
             min-width: 95px;
             max-width: 95px;
+          }
+        }
+      }
+    }
+  }
+  
+  .customer-desc-left-sec {
+    .card-body-sec {
+      .basic-customer-detail {
+        .profile-info {
+          .edit-icons {
+            img {
+              width: 15px;
+            }
           }
         }
       }

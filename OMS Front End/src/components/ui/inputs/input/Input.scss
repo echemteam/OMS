@@ -73,11 +73,12 @@ form {
 
 .input-group {
   position: relative;
+
   .icon-fix {
     position: absolute;
-    right: 10px;
-    top: -4px;
-    transform: translateY(50%);
+    right: 6px;
+    top: 58%;
+    transform: translateY(-50%);
   }
 }
 
@@ -94,11 +95,13 @@ form {
       opacity: 1;
     }
   }
+
   i {
-    font-size: 20px;
+    font-size: var(--commonFont-extraLarge);
     color: #696cff;
     cursor: pointer !important;
   }
+
   .tooltip-text {
     visibility: hidden;
     width: 220px;
@@ -109,19 +112,22 @@ form {
     padding: 5px;
     position: absolute;
     z-index: 1;
-    bottom: 125%; /* Position above the icon */
+    bottom: 125%;
+    /* Position above the icon */
     left: 50%;
-    margin-left: -110px; /* Center the tooltip */
+    margin-left: -110px;
+    /* Center the tooltip */
     opacity: 0;
     transition: opacity 0.3s;
 
     &::after {
+
       content: "";
       position: absolute;
-      top: 100%; /* Arrow below the tooltip */
+      top: 99%;
       left: 50%;
       margin-left: -5px;
-      border-width: 5px;
+      border-width: 6px;
       border-style: solid;
       border-color: #555 transparent transparent transparent;
     }
@@ -141,9 +147,14 @@ form {
 
   .input-group-append {
     .input-button {
-      height: 35px;
+      height: 28px;
       padding: 0 5px;
+      color: var(--whiteColor);
     }
+  }
+
+  .input-field {
+    height: 28px;
   }
 }
 

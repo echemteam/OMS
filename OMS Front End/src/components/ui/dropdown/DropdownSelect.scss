@@ -96,9 +96,8 @@
   z-index: 99999 !important;
 }
 
-.css-t3ipsp-control{
+.css-t3ipsp-control {}
 
-}
 // .css-1dimb5e-singleValue{
 //   width: 50px !important
 // }
@@ -106,14 +105,67 @@
   font-size: var(--commonFont-small);
 }
 
-.css-wsp0cs-MultiValueGeneric{
+.css-wsp0cs-MultiValueGeneric {
   font-size: 11px !important;
 }
 
-@media only screen and (max-width: 1366px) {
-  .css-1hb7zxy-IndicatorsContainer {
-    .css-1xc3v61-indicatorContainer {
-      padding: 0 5px !important;
+@media only screen and (max-width: 1560px) {
+
+  .css-16xfy0z-control,
+  .css-13cymwt-control {
+    height: 28px !important;
+    min-height: 28px !important;
+  }
+
+  .css-t3ipsp-control,
+  .css-16xfy0z-control,
+  .css-12zf3ro-control {
+    &:hover {
+      height: 28px;
     }
   }
+  .css-1hb7zxy-IndicatorsContainer {
+    height: 23px !important;
+    padding: 0 5px !important;
+  
+    .css-1xc3v61-indicatorContainer {
+      padding: 5px !important;
+    }
+  }
+  
+  
+  //Dropdown Select End
+  .css-t3ipsp-control,
+  .css-13cymwt-control {
+    min-height: 28px !important;
+    height: 28px !important;
+  }
+  
+  .css-12zf3ro-control {
+    &:hover {
+      min-height: 28px !important;
+      height: 28px !important;
+    }
+  }
+  
+  .css-1xc3v61-indicatorContainer {
+    padding: 5px !important;
+  }
+  
+  .css-1fdsijx-ValueContainer {
+    padding: 0 5px !important;
+  }
+  
+  .css-15lsz6c-indicatorContainer {
+    padding: 5px !important;
+  }
+  
 }
+
+  @media only screen and (max-width: 1366px) {
+    .css-1hb7zxy-IndicatorsContainer {
+      .css-1xc3v61-indicatorContainer {
+        padding: 0 5px !important;
+      }
+    }
+  }
