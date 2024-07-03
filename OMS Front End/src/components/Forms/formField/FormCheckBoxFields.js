@@ -48,6 +48,7 @@ const FormCheckboxField = ({
             isDisable={formSetting?.isViewOnly || checkboxProps?.isDisable || overRideProps?.isDisable}
             dataField={dataField}
             {...checkboxProps}
+            showColomns={true}
           />
         </div>
         <ValidationText error={error || ""} />
