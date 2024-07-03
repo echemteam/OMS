@@ -58,9 +58,9 @@ const AddSupplier = () => {
     }
 }, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
 
-  const handleTabClick = (index) => {
-    setActiveTab(index);
-  };
+  // const handleTabClick = (index) => {
+  //   setActiveTab(index);
+  // };
 
   const handleSubmit = () => {
     let req = {
@@ -91,7 +91,7 @@ const AddSupplier = () => {
                     className={`step ${activeTab === index ? 'active' : ''}`}
                   >
                     <button className="step-button"
-                      onClick={() => handleTabClick(index)}
+                      // onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">

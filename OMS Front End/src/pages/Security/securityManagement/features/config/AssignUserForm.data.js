@@ -9,7 +9,7 @@ export const assignUserFormData = {
   formFields: [
     {
       id: "userId",
-      lable: "Users :",
+      lable: "Users",
       Field_Name: "Users",
       fieldType: FormFieldTypes.SELECT,
       dataField: "userName",

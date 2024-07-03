@@ -38,7 +38,7 @@ export const ComponentNavigation = [
     title: "",
     component: NotFound,
     text: "Page not found",
-    securityKey: "",
+    securityKey: ""
   },
 
   {
@@ -49,7 +49,7 @@ export const ComponentNavigation = [
     component: Dashboard,
     hasParams: false,
     text: 'Dashboard Page',
-    securityKey:""
+    securityKey: securityKey.DASHBOARD
   },
   {
     id: 'demoForm',

@@ -69,8 +69,7 @@ import customerDetailsIcone from "../assets/images/customerDetails.png";
 import securityIcon from "../assets/images/securityIcon.png";
 import security from "../assets/images/security.png";
 import primaryTick from "../assets/images/primaryTick.png";
-
-
+import unauthorizedImg from "../assets/images/unauthorized.png";
 
 
 export const AppIcons = {
@@ -139,4 +138,5 @@ export const AppIcons = {
   security:security,
 
   PrimaryTick:primaryTick,
+  unauthorizedImg :unauthorizedImg
 };
