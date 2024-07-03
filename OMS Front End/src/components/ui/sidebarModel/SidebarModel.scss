@@ -87,7 +87,7 @@
         background: var(--gradient-theme);
 
         .model-title {
-          font-size:  var(--commonFont-large);
+          font-size:  var(--commonFont-medium);
           font-weight: 600;
           padding: 10px;
           color: var(--whiteColor);
@@ -134,6 +134,26 @@
     .side-model-section {
       right: 0;
       opacity: 1;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 1560px) {
+  .sidebar-model{
+    .side-model-section{
+      .model-content{
+        .model-header{
+          .model-title{
+            padding: 6px 10px;
+          }
+          .close-btn {
+            img{
+              width: 19px;
+            }
+          }
+        }
+      }
     }
   }
 }

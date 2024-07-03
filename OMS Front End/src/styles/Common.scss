@@ -675,7 +675,7 @@ a {
 
     // background: var(--whiteColor);
     @media only screen and (max-width: 1366px) {
-      width: 80%;
+      width: 86%;
     }
 
     button {
@@ -2078,6 +2078,27 @@ input[type="checkbox"]:disabled {
       .tab-sub-content {
         .grid-section {
           max-height: calc(100vh - 270px);
+        }
+      }
+    }
+  }
+  .main-customer-grid{
+    .card{
+      padding: 10px 12px 12px;
+    }
+    .tab-section{
+      .tab-header{
+        button{
+          padding: 2px 15px 7px;
+          &.active{
+            padding-bottom: 10px;
+            padding: 2px 15px 10px;
+            &:before{
+              border-left: 7px solid transparent;
+              border-right: 7px solid transparent;
+              border-top: 7px solid var(--themeColor);
+            }
+          }
         }
       }
     }
