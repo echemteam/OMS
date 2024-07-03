@@ -17,18 +17,22 @@ const ContactCard = ({ childData, handleEdit }) => {
     <>
       {cardInfoData && (
         <div className="contact-card">
-          <span className="field-info active-green-color">
-            {cardInfoData.isPrimary ? "Primary Contact" : null}
-          </span>
           <div className="add-line">
             <div className="user-icon-name">
               <span className="icon">
                 <Image imagePath={AppIcons.User3DIcon}></Image>
               </span>
-              <span className="label-txt user-name">
-                <b>{cardInfoData.firstName + " " + cardInfoData.lastName}</b>
-              </span>
+              <div className="d-fle">
+                <span className="label-txt user-name">
+                  <b>{cardInfoData.firstName + " " + cardInfoData.lastName}</b>
+                </span>
+
+                <span className="field-info primary-text-title">
+                  {cardInfoData.isPrimary ? " (Primary Contact)" : null}
+                </span>
+              </div>
             </div>
+
             <div className="label-txt d-flex align-items-start">
               <Image
                 imgCustomClassName="contact-icon-img"
@@ -39,19 +43,27 @@ const ContactCard = ({ childData, handleEdit }) => {
               <div className="fix-data">
                 {emailAddresses &&
                   emailAddresses.map((emaildata, index) => (
-                    <div className="d-flex">
-                      <div className="card-value" key={index}>&nbsp;{emaildata.emailAddres.trim()}</div>
+                    <div className="d-flex align-items-center mb-1">
                       <div className="card-value" key={index}>
-                        {emaildata.isPrimary ?
-                          <Image imagePath={AppIcons.RightTickIcon} altText="Website Icon" />
-                          : null
-                        }
+                        &nbsp;{emaildata.emailAddres.trim()}
                       </div>
-                      <span className="copy-icon"
-                      // onClick={() => CopyText(customerData?.emailAddress, "email") }
+                      <span
+                        className="copy-icon"
+                        // onClick={() => CopyText(customerData?.emailAddress, "email") }
                       >
-                        <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+                        <Image
+                          imagePath={AppIcons.copyIcon}
+                          altText="Website Icon"
+                        />
                       </span>
+                      {emaildata.isPrimary ? (
+                        <div className="primary-icon">
+                          <Image
+                            imagePath={AppIcons.PrimaryTick}
+                            altText="Website Icon"
+                          />
+                        </div>
+                      ) : null}
                     </div>
                   ))}
                 {/* {cardInfoData.emailAddress} */}
@@ -64,29 +76,58 @@ const ContactCard = ({ childData, handleEdit }) => {
                 altText="contact icon"
               />
               <strong>:</strong>
-              <div className="fix-data">
+              <div className="fix-data w-100">
                 {phoneNumbers &&
                   phoneNumbers.map((phoneData, index) => (
-                    <div className="d-flex">
-                      <div className="card-value" key={index}>&nbsp;{`(${phoneData.phoneCode}) ${phoneData.phoneNumber}`}</div>
-                      <div className="card-value" key={index}>&nbsp;{`ext.${phoneData.extension}`}</div>
-                      <div className="card-value" key={index}>&nbsp;{phoneData.isPrimary}</div>
-                      <div className="card-value" key={index}>&nbsp;{phoneData.phoneType}</div>
-                      {phoneData.isPrimary ?
-                        <Image imagePath={AppIcons.RightTickIcon} altText="Website Icon" />
-                        : null
-                      }
-                      <span
-                        className="copy-icon"
-                      // onClick={() =>
-                      //   CopyText(customerData?.emailAddress, "email")
-                      // }
-                      >
-                        <Image
-                          imagePath={AppIcons.copyIcon}
-                          altText="Website Icon"
-                        />
-                      </span>
+                    <div className="d-flex justify-content-between w-100 mb-1">
+                      <div className="d-flex align-items-center">
+                        <div className="card-value" key={index}>
+                          &nbsp;
+                          {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}`}
+                        </div>
+                        ,{/* <span className="title">Ext.</span> */}
+                        <div className="card-value">
+                          &nbsp;{`${phoneData.extension}`}
+                        </div>
+                        <span
+                          className="copy-icon"
+                          // onClick={() =>
+                          //   CopyText(customerData?.emailAddress, "email")
+                          // }
+                        >
+                          <Image
+                            imagePath={AppIcons.copyIcon}
+                            altText="Website Icon"
+                          />
+                        </span>
+                        {phoneData.isPrimary ? (
+                          <div className="primary-icon" title="Is Primary">
+                            <Image
+                              imagePath={AppIcons.PrimaryTick}
+                              altText="Website Icon"
+                            />
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="d-flex justify-content-between right-contact-ext-type">
+                        <div className="card-value contact-type" key={index}>
+                          <span>
+                            {phoneData.phoneTypeId === 1 ? (
+                              <span title="Home">
+                                <i className="fa fa-home"></i>
+                              </span>
+                            ) : phoneData.phoneTypeId === 2 ? (
+                              <span title="Work">
+                                <i className="fa fa-briefcase"></i>
+                              </span>
+                            ) : phoneData.phoneTypeId === 3 ? (
+                              <span title="Mobile">
+                                <i className="fa fa-mobile"></i>
+                              </span>
+                            ) : null}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 {/* {cardInfoData.phoneNumber} */}

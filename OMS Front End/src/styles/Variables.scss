@@ -49,17 +49,33 @@
   --approved-theme: #32cd32;
   --submitted-theme: #007bff;
   --disabled-theme: #808080;
+  --PrimaryColor: #00b100;
   // Bg-Gradient Color End
 
 
   // Font-styling
-  --commonFont-2extraLarge:21px;
-  --commonFont-extraLarge:18px;
-  --commonFont-large:16px;
-  --commonFont:14px;
-  --commonFont-medium:13px;
-  --commonFont-small:12px;
-  --commonFont-extraSmall:10px;
+  --commonFont-2extraLarge: 21px;
+  --commonFont-extraLarge: 18px;
+  --commonFont-large: 16px;
+  --commonFont: 14px;
+  --commonFont-medium: 13px;
+  --commonFont-small: 12px;
+  --commonFont-extraSmall: 10px;
 }
 
 // Variable Styling End
+
+
+// Media Query Start
+@media only screen and (max-width: 1560px) {
+  :root {
+    // Font-styling
+    --commonFont-2extraLarge: 19px;
+    --commonFont-extraLarge: 16px;
+    --commonFont-large: 14px;
+    --commonFont: 12px;
+    --commonFont-medium: 11px;
+    --commonFont-small: 10px;
+    --commonFont-extraSmall: 8px;
+  }
+}

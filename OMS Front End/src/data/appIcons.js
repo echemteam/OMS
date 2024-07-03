@@ -68,6 +68,9 @@ import supplierIcon from "../assets/images/supplier.png";
 import customerDetailsIcone from "../assets/images/customerDetails.png";
 import securityIcon from "../assets/images/securityIcon.png";
 import security from "../assets/images/security.png";
+import primaryTick from "../assets/images/primaryTick.png";
+
+
 
 
 export const AppIcons = {
@@ -134,4 +137,6 @@ export const AppIcons = {
   customerDetailsIcone:customerDetailsIcone,
   securityIcon:securityIcon,
   security:security,
+
+  PrimaryTick:primaryTick,
 };

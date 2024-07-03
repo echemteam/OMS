@@ -17,7 +17,7 @@ export const contactCustomerTransformData = (data) => {
             isPrimary: item.isPrimary
         }));
         const phoneNumber = phoneNumberLsit.map(item => ({
-            phoneType: item.phoneType,
+            phoneTypeId: item.phoneTypeId,
             isPrimary: item.isPrimary,
             phoneCode: item.phoneCode,
             extension: item.extension,
