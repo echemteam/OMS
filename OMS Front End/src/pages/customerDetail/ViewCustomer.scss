@@ -232,4 +232,9 @@
       }
     }
   }
+  .contact-accrodiaon-scroll {
+    .card-body-sec{
+      max-height: calc(100vh - 224px);
+    }
+  }
 }

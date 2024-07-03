@@ -115,10 +115,17 @@
   }
 }
 
-@media only screen and (max-width: 1600px) {
+@media only screen and (max-width: 1560px) {
   .stepper-card {
+    .card{
+      padding: 0px 5px 5px;
+      .card{
+        padding: 0;
+      }
+    }
     .stepper-section {
       .stepper-header {
+        padding-bottom: 9px;
         .step {
           .step-button {
             .stepper-box {
@@ -149,11 +156,11 @@
 }
  
 @media only screen and (max-width: 1366px) {
-  .stepper-card {
-    .stepper-section {
-      .stepper-content {
-        max-height: calc(100vh - 300px);
-      }
-    }
-  }
+  // .stepper-card {
+  //   .stepper-section {
+  //     .stepper-content {
+  //       max-height: calc(100vh - 300px);
+  //     }
+  //   }
+  // }
 }
