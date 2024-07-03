@@ -17,6 +17,9 @@ const ContactCard = ({ childData, handleEdit }) => {
     <>
       {cardInfoData && (
         <div className="contact-card">
+          <span className="field-info active-green-color">
+            {cardInfoData.isPrimary ? "Primary Contact" : null}
+          </span>
           <div className="add-line">
             <div className="user-icon-name">
               <span className="icon">
@@ -35,19 +38,19 @@ const ContactCard = ({ childData, handleEdit }) => {
               <strong>:</strong>
               <div className="fix-data">
                 {emailAddresses &&
-                  emailAddresses.map((email, index) => (
+                  emailAddresses.map((emaildata, index) => (
                     <div className="d-flex">
-                      <div className="card-value" key={index}>&nbsp;{email.trim()}</div>
-                      <span
-                        className="copy-icon"
-                        // onClick={() =>
-                        //   CopyText(customerData?.emailAddress, "email")
-                        // }
+                      <div className="card-value" key={index}>&nbsp;{emaildata.emailAddres.trim()}</div>
+                      <div className="card-value" key={index}>
+                        {emaildata.isPrimary ?
+                          <Image imagePath={AppIcons.RightTickIcon} altText="Website Icon" />
+                          : null
+                        }
+                      </div>
+                      <span className="copy-icon"
+                      // onClick={() => CopyText(customerData?.emailAddress, "email") }
                       >
-                        <Image
-                          imagePath={AppIcons.copyIcon}
-                          altText="Website Icon"
-                        />
+                        <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
                       </span>
                     </div>
                   ))}
@@ -63,14 +66,21 @@ const ContactCard = ({ childData, handleEdit }) => {
               <strong>:</strong>
               <div className="fix-data">
                 {phoneNumbers &&
-                  phoneNumbers.map((pair, index) => (
+                  phoneNumbers.map((phoneData, index) => (
                     <div className="d-flex">
-                      <div className="card-value" key={index}>&nbsp;{pair.trim()}</div>
+                      <div className="card-value" key={index}>&nbsp;{`(${phoneData.phoneCode}) ${phoneData.phoneNumber}`}</div>
+                      <div className="card-value" key={index}>&nbsp;{`ext.${phoneData.extension}`}</div>
+                      <div className="card-value" key={index}>&nbsp;{phoneData.isPrimary}</div>
+                      <div className="card-value" key={index}>&nbsp;{phoneData.phoneType}</div>
+                      {phoneData.isPrimary ?
+                        <Image imagePath={AppIcons.RightTickIcon} altText="Website Icon" />
+                        : null
+                      }
                       <span
                         className="copy-icon"
-                        // onClick={() =>
-                        //   CopyText(customerData?.emailAddress, "email")
-                        // }
+                      // onClick={() =>
+                      //   CopyText(customerData?.emailAddress, "email")
+                      // }
                       >
                         <Image
                           imagePath={AppIcons.copyIcon}
