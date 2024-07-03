@@ -12,10 +12,12 @@ import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDeta
 import { getAuthProps } from '../../../../lib/authenticationLibrary';
 import { encryptUrlData } from '../../../../services/CryptoService';
 import { useNavigate } from "react-router-dom";
+import SwalAlert from '../../../../services/swalService/SwalService';
 
 export const InActiveCustomers = ({ statusId, configFile }) => {
 
   const navigate = useNavigate();
+  const { confirm } = SwalAlert();
   const childRef = useRef();
   const molGridRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
@@ -130,7 +132,17 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
   }
 
   const handleUnfreeze = (data) => {
-    approvalCheckList(data);
+    // approvalCheckList(data);
+    confirm(
+      "Warning?",
+      `Are you sure you want to change the customer status to Approved?`,
+      "Yes",
+      "Cancel"
+    ).then((confirmed) => {
+      if (confirmed) {
+        handleUpdate(data)
+      }
+    });
   }
 
   const handleActiveCustomer = (data) => {
@@ -138,12 +150,22 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
   }
 
   const handleUnBlock = (data) => {
-    approvalCheckList(data);
+    // approvalCheckList(data);
+    confirm(
+      "Warning?",
+      `Are you sure you want to change the customer status to Approved?`,
+      "Yes",
+      "Cancel"
+    ).then((confirmed) => {
+      if (confirmed) {
+        handleUpdate(data)
+      }
+    });
   }
 
-  const handleUpdate = () => {
+  const handleUpdate = (data) => {
     let req = {
-      customerId: customerId,
+      customerId: data.customerId,
       statusId: StatusEnums.Approved
     }
     updateCustomerStatus(req)

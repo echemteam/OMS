@@ -15,7 +15,7 @@ export const DocumentFormData = {
   formFields: [
     {
       id: "documentTypeId",
-      lable: "Document Type :",
+      lable: "Document Type ",
       Field_Name: "Document Type",
       fieldType: FormFieldTypes.SELECT,
       dataField: "documentTypeId",
@@ -31,7 +31,7 @@ export const DocumentFormData = {
     },
     {
       id: "name",
-      lable: "Document Name :",
+      lable: "Document Name ",
       Field_Name: "Document Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "name",
@@ -47,7 +47,7 @@ export const DocumentFormData = {
     },
     {
       id: "attachment",
-      lable: "Attachment :",
+      lable: "Attachment ",
       Field_Name: "Attachment",
       fieldType: FormFieldTypes.FILE,
       dataField: "attachment",
@@ -56,6 +56,10 @@ export const DocumentFormData = {
         allowSpace: true,
         isButtonVisible: false,
         isCustomButtonVisible: true,
+      },
+      fileFormate: {
+        isAllFileFormate: true,
+        // isRequireFile: [".pdf" , ".csv" , ".xlsx"]
       },
       validation: [{ type: "require" }],
       style: {

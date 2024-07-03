@@ -13,11 +13,11 @@ import { FormFieldTypes } from "../../../../../../data/formFieldType";
 
 
 export const supplierBasicData = {
-  initialState: { name: "", groupTypeId: "", supplierTypeId:"", countryId: "", territoryId: "", emailAddress: "", website: "", note: "", taxId: "", dbaName:"" ,responsibleUserId:""},
+  initialState: { name: "", groupTypeId: "", supplierTypeId:"", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName:"" ,responsibleUserId:""},
   formFields: [
     {
       id: "name",
-      lable: "Supplier Name :",
+      lable: "Supplier Name ",
       Field_Name: "Supplier Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "name",
@@ -37,7 +37,7 @@ export const supplierBasicData = {
     },
     {
       id: "name-input",
-      lable: "Customer Name :",
+      lable: "Customer Name ",
       Field_Name: "Customer Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "name",
@@ -53,7 +53,7 @@ export const supplierBasicData = {
     },
     {
       id: "groupTypeId",
-      lable: "Group Type :",
+      lable: "Group Type ",
       Field_Name: "Group Type",
       fieldType: FormFieldTypes.SELECT,
       dataField: "groupTypeId",
@@ -68,7 +68,7 @@ export const supplierBasicData = {
     },
     {
       id: "countryId",
-      lable: "Country :",
+      lable: "Country ",
       Field_Name: "Country",
       fieldType: FormFieldTypes.SELECT,
       dataField: "countryId",
@@ -83,7 +83,7 @@ export const supplierBasicData = {
     },
     {
       id: "territoryId",
-      lable: "Territory :",
+      lable: "Territory ",
       Field_Name: "Territory",
       fieldType: FormFieldTypes.SELECT,
       dataField: "territoryId",
@@ -98,7 +98,7 @@ export const supplierBasicData = {
     },
     {
       id: "supplierTypeId",
-      lable: "Supplier Type :",
+      lable: "Supplier Type ",
       Field_Name: "Supplier Type",
       fieldType: FormFieldTypes.SELECT,
       dataField: "supplierTypeId",
@@ -113,7 +113,7 @@ export const supplierBasicData = {
     },
     {
       id: "dbaName",
-      lable: "Doing Business As Name :",
+      lable: "Doing Business As Name ",
       Field_Name: "Doing Business As Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "dbaName",
@@ -129,7 +129,7 @@ export const supplierBasicData = {
     },
     {
       id: "emailAddress",
-      lable: "Email :",
+      lable: "Email ",
       Field_Name: "Email",
       fieldType: FormFieldTypes.INPUT,
       dataField: "emailAddress",
@@ -145,7 +145,7 @@ export const supplierBasicData = {
     },
     {
       id: "website",
-      lable: "Website :",
+      lable: "Website ",
       Field_Name: "Website",
       fieldType: FormFieldTypes.INPUT,
       dataField: "website",
@@ -161,7 +161,7 @@ export const supplierBasicData = {
     },
     {
       id: "taxId",
-      lable: "Tax Id :",
+      lable: "Tax Id ",
       Field_Name: "Tax Id",
       fieldType: FormFieldTypes.INPUT,
       dataField: "taxId",
@@ -171,6 +171,11 @@ export const supplierBasicData = {
         minLength: 0,
         maxLength: 10,
       },
+      inputIcon: {
+        isIconShow: true,
+        faIcon: "fa-info-circle",
+        message: "Please enter a minimum of 10 and a maximum of 10 characters"
+      },
       validation: [{ type: "require" }, { type: "taxId", minLength: 0, maxLength: 10 }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
@@ -178,7 +183,7 @@ export const supplierBasicData = {
     },
     {
       id: "note",
-      lable: "Notes :",
+      lable: "Notes ",
       Field_Name: "Notes",
       fieldType: FormFieldTypes.CKEDITOR,
       dataField: "note",
@@ -193,7 +198,7 @@ export const supplierBasicData = {
     },
     {
       id: "responsibleUserId",
-      lable: "Responsible User :",
+      lable: "Responsible User ",
       Field_Name: "Responsible User ",
       fieldType: FormFieldTypes.SELECT,
       dataField: "responsibleUserId",
