@@ -161,7 +161,11 @@
         visibility: hidden !important;
       }
     }
+    .css-1u9des2-indicatorSeparator{
+      display: none !important;
+    }
   }
+  
 }
 
 .basic-info-model {
@@ -226,6 +230,11 @@
           }
         }
       }
+    }
+  }
+  .contact-accrodiaon-scroll {
+    .card-body-sec{
+      max-height: calc(100vh - 224px);
     }
   }
 }
