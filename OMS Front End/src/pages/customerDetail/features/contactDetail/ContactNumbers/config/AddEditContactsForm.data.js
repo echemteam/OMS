@@ -40,7 +40,7 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-1 pr-0 border-right-0",
+        containerCss: "col-xxl-5 col-xl-5 col-md-4 mb-1 pr-0 border-right-0",
       },
     },
     {
@@ -66,13 +66,13 @@ export const addEditContactsFormData = {
       fieldType: FormFieldTypes.NUMERIC,
       dataField: "extension",
       fieldSetting: {
-        placeholder: "Enter Extension",
+        placeholder: "Extension",
         allowSpace: true,
         minLength: 0,
         maxLength: 6,
       },
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-md-2 mb-1 pl-0 ",
+        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-md-2 mb-1 pl-0 ",
       },
     },
     {

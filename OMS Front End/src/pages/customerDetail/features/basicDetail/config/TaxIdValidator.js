@@ -1,3 +1,5 @@
+import { SuccessMessage } from "../../../../../data/appMessages";
+
 export const getTaxIdMinMaxLength = (countryId, formFields, formFieldsId) => {
     let minLength, maxLength;
 
@@ -14,9 +16,9 @@ export const getTaxIdMinMaxLength = (countryId, formFields, formFieldsId) => {
             minLength = 10;
             maxLength = 10;
             break;
-        default:
-            minLength = 0;
-            maxLength = 10;
+        default: //** Default for INDIA
+            minLength = 13;
+            maxLength = 15;
             break;
     }
 
@@ -26,7 +28,7 @@ export const getTaxIdMinMaxLength = (countryId, formFields, formFieldsId) => {
             const validation = formField.validation?.find((data) => data.type === formFieldsId);
             formField.fieldSetting.minLength = minLength;
             formField.fieldSetting.maxLength = maxLength;
-            formField.inputIcon.message = `Please enter a minimum of ${minLength} and a maximum of ${maxLength} characters`;
+            formField.inputIcon.message = SuccessMessage.TaxId.replace("{0}", minLength).replace("{1}", maxLength);
             validation.minLength = minLength;
             validation.maxLength = maxLength;
         }

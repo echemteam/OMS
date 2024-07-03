@@ -1,3 +1,4 @@
+import { SuccessMessage } from "../../../../../data/appMessages";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 // export const securityKeys = {
@@ -137,15 +138,15 @@ export const basicDetailFormDataHalf = {
       fieldSetting: {
         placeholder: "Tax Id",
         allowSpace: true,
-        minLength: 0,
+        minLength: 10,
         maxLength: 10,
       },
       inputIcon: {
         isIconShow: true,
         faIcon: "fa-info-circle",
-        message: "Please enter a minimum of 10 and a maximum of 10 characters"
+        message: SuccessMessage.DefaultUSATaxId
       },
-      validation: [{ type: "require" }, { type: "taxId", minLength: 0, maxLength: 10 }],
+      validation: [{ type: "require" }, { type: "taxId", minLength: 10, maxLength: 10 }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
