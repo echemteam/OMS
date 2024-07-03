@@ -141,19 +141,19 @@
           }
         }
       }
-      .stepper-content {
-        max-height: calc(100vh - 226px);
-      }
+      // .stepper-content {
+      //   max-height: calc(100vh - 226px);
+      // }
     }
   }
 }
  
 @media only screen and (max-width: 1366px) {
-  .stepper-card {
-    .stepper-section {
-      .stepper-content {
-        max-height: calc(100vh - 300px);
-      }
-    }
-  }
+  // .stepper-card {
+  //   .stepper-section {
+  //     .stepper-content {
+  //       max-height: calc(100vh - 300px);
+  //     }
+  //   }
+  // }
 }

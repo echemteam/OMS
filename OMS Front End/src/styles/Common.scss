@@ -1401,7 +1401,7 @@ a {
 
   .note-label {
     font-size: var(--commonFont-medium);
-    color: var(--textColor);
+    color: #00000073;
     margin-bottom: 5px;
   }
 
@@ -2036,4 +2036,50 @@ input[type="checkbox"]:disabled {
     left: 65%;
   }
 
+  .card {
+    .card-top-title-btn {
+      min-height: unset;
+      padding-bottom: 6px;
+    }
+  }
+
+  .card-section-leftcard-button-only {
+    padding: 6px 12px 10px;
+  }
+
+  .main-customer-grid.setting-tab-sec {
+    .card {
+      padding: 0px 12px 0;
+    }
+  }
+
+  .main-customer-grid {
+    .tab-section {
+      margin-bottom: 0;
+    }
+
+    &.setting-tab-sec {
+      .tab-2-section {
+        .main-inactive-grid {
+          .tab-sub-section {
+            .tab-sub-header button {
+              &.active {
+                padding-bottom: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .setting-tab-sec {
+    .tab-sub-section {
+      .tab-sub-content {
+        .grid-section {
+          max-height: calc(100vh - 270px);
+        }
+      }
+    }
+  }
 }
