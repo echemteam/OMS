@@ -135,7 +135,7 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     // approvalCheckList(data);
     confirm(
       "Warning?",
-      `Are you sure you want to change the customer status to Approved?`,
+      `Are you sure you want to unfreeze and change the status to approved?`,
       "Yes",
       "Cancel"
     ).then((confirmed) => {
@@ -153,7 +153,7 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     // approvalCheckList(data);
     confirm(
       "Warning?",
-      `Are you sure you want to change the customer status to Approved?`,
+      `Are you sure you want to unblock and change the status to approved?`,
       "Yes",
       "Cancel"
     ).then((confirmed) => {
