@@ -59,9 +59,17 @@ export const contactSupplierTransformData = (data) => {
             ...item,
             id: index + 1
         }));
-
-        const emailAddress = emailAddressLst.map(item => item.emailAddress).join(',');
-        const phoneNumber = phoneNumberLsit.map(item => item.phoneNumber).join(',');
+        const emailAddress = emailAddressLst.map((item) => ({
+            emailAddres: item.emailAddress,
+            isPrimary: item.isPrimary
+        }));
+        const phoneNumber = phoneNumberLsit.map(item => ({
+            phoneTypeId: item.phoneTypeId,
+            isPrimary: item.isPrimary,
+            phoneCode: item.phoneCode,
+            extension: item.extension,
+            phoneNumber: item.phoneNumber
+        }));
         const transformedItem = {
             cardInformation: {
                 firstName,

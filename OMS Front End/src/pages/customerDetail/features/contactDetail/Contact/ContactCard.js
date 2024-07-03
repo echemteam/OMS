@@ -7,8 +7,6 @@ const ContactCard = ({ childData, handleEdit }) => {
   const phoneNumberLsit = childData.phoneNumberLsit;
   const emailAddressList = childData.emailAddressLst;
 
-  console.log("childData", childData);
-
   // Split the email addresses and phone numbers into arrays
   const emailAddresses = cardInfoData.emailAddress;
   const phoneNumbers = cardInfoData.phoneNumber;

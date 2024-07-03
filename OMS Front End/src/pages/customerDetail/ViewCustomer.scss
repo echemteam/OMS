@@ -176,6 +176,26 @@
   right: 43px;
 }
 
+.contact-accrodiaon-scroll {
+  overflow: hidden;
+  width: 100%;
+  caption-side: bottom;
+  border-collapse: collapse;
+  .card-top-title-btn {
+    display: flex;
+    width: 100%;
+  }
+  .card-body-sec {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 270px);
+    overflow: hidden;
+    overflow-y: auto;
+    width: 100%;
+    padding: 10px;
+  }
+}
+
 @media only screen and (max-width: 1566px) {
   .customer-desc-left-sec {
     .card-body-sec {

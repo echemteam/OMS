@@ -56,11 +56,9 @@ export const DocumentFormData = {
         allowSpace: true,
         isButtonVisible: false,
         isCustomButtonVisible: true,
+        acceptedFiles: '',
       },
-      fileFormate: {
-        isAllFileFormate: true,
-        // isRequireFile: [".pdf" , ".csv" , ".xlsx"]
-      },
+     
       validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 custom-file-upload-section",

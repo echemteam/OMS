@@ -77,7 +77,7 @@ const ViewCustomer = () => {
     {
       sMenuItemCaption: "Address",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 contact-accrodiaon-scroll">
           {/* {hasAddressPermission.hasAccess ? */}
           <CustomerAddressDetails isEditablePage={true} />
           {/* : null} */}
@@ -88,7 +88,7 @@ const ViewCustomer = () => {
     {
       sMenuItemCaption: "Contact",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 contact-accrodiaon-scroll">
           {/* {hasContactPermission.hasAccess ? */}
           <CustomerContactDetails isEditablePage={true} />
           {/* : null} */}

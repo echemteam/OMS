@@ -21,7 +21,6 @@ const FileUpload = ({
   isButtonVisible,
   acceptedFiles,
   isCustomButtonVisible,
-  fileFormate
 }) => {
 
   const [fileValue, setFileValue] = useState(null);
@@ -85,14 +84,14 @@ const FileUpload = ({
             <>
               <div className="drag-drop-txt">
                 <p>Drag & Drop Your File</p>
-                {fileFormate.isAllFileFormate &&
+                {acceptedFiles === "" ?
                   <span className="small-txt">All File Formats we support</span>
-                }
-                {fileFormate.isRequireFile && (
+                  :
                   <span className="small-txt">
-                    {fileFormate.isRequireFile.join(', ')} Formats we support
+                    {acceptedFiles}
+                    Formats we support
                   </span>
-                )}
+                }
               </div>
             </>
           )}
