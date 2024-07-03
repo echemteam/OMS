@@ -144,7 +144,7 @@ const FinancialSettings = (props) => {
           />
           : <DataLoader />
         }
-        <div className="col-md-12 mt-2">
+        <div className="col-md-12 mt-2 mb-3">
           <div className="d-flex align-item-end justify-content-end">
             <div className="d-flex align-item-end">
               {showButton ?

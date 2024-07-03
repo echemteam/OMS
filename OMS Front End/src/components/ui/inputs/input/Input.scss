@@ -145,6 +145,11 @@ form {
     margin-left: 120px;
     font-size: var(--commonFont-extraSmall);
   }
+  .horizontal-form {
+    .input-label-part{
+      min-height: 40px;
+    }
+  }
 
   .input-group-append {
     .input-button {
