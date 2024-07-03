@@ -30,13 +30,31 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   const handleAddEdit = () => {
     let data = ref.current.getFormData();
     if (data) {
+      let contactTypeId = null;
+      
+      if (isSupplier === true) {
+        if (isEdit) {
+          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object"
+          ? String(data.contactTypeId.value)
+          : String(data.contactTypeId);
+        } else {
+          contactTypeId = String(data.contactTypeId.value);
+        }
+      } else {
+        if (isEdit) {
+          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object"
+            ? String(data.contactTypeId.value)
+            : String(data.contactTypeId);
+        } else {
+          contactTypeId = Array.isArray(data.contactTypeId)
+            ? data.contactTypeId.map(String).join(",")
+            : data.contactTypeId;
+        }
+      }
+
       let request = {
         ...data,
-        contactTypeId: isEdit === true
-          ?
-          (data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId))
-          :
-          data.contactTypeId ? data.contactTypeId.map(String).join(",") : null,
+        contactTypeId: contactTypeId,
         customerId: isSupplier === false ? mainId : 0,
         contactId: contactId,
         customerContactId: customerContactId,

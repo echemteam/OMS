@@ -31,6 +31,9 @@ const FormSelectField = ({
       if (isMultiSelect) {
         const selectedValues = selectedOption.map((option) => option.value);
         onChange(dataField, selectedValues)
+        if (fieldActions) {
+          fieldActions('DDL_CHANGED', dataField, selectedOption);
+        }
       }
       else {
         onChange(dataField, selectedOption);
