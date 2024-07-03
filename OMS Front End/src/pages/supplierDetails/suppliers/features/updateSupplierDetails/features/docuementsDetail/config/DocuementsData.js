@@ -56,7 +56,7 @@ export const DocumentFormData = {
         allowSpace: true,
         isButtonVisible: false,
         isCustomButtonVisible: true,
-        acceptedFiles: '',
+        acceptedFiles: '.pdf , .doc , .docx ',
       },
       validation: [{ type: "require" }],
       style: {

@@ -33,7 +33,6 @@ const SupplierNotesCard = ({isAddEditModal, onHandleNote,ongetSupplierNote,notes
               >
                 <div className="card-content">
                 <div className="note-label  ">Created on {formatDate(notes.noteDate,"DD/MM/YYYY hh:mm")} by {notes.fullName}</div>
-                  <div className="note-label  ">{notes.fullName}</div>
                   <div className="bottom-info">
                     <div className="note-text editor-section">
                       <div
