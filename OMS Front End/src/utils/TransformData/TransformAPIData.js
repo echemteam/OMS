@@ -1,3 +1,4 @@
+import formatDate from "../../lib/formatDate";
 import { FileTypeIcons } from "../../pages/customerDetail/features/documentsDetail/config/DocumentsData";
 
 export const contactCustomerTransformData = (data) => {
@@ -9,7 +10,7 @@ export const contactCustomerTransformData = (data) => {
             extension: item.extension === 0 ? '-' : item.extension
         }));
         const modifyEmailAddressLst = emailAddressLst.map((item, index) => ({
-            
+
             ...item,
             id: index + 1
         }));
@@ -102,6 +103,15 @@ export const modifyPhoneNumberData = (phoneDataArray) => {
     }));
     return newArray;
 };
+
+export const modifyTimeLineData = (timelineData) => {
+    const newArray = timelineData.map(data => ({
+        ...data,
+        description: data.description + ' by ' + data.name + ' on ' + formatDate(data.changedAt,'DD/MM/YYYY hh:mm A')
+    }));
+    return newArray;
+};
+
 
 
 const getFileTypeIcon = (filename) => {
