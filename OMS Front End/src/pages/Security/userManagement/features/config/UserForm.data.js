@@ -15,7 +15,7 @@ export const userFormData = {
   formFields: [
     {
       id: "userName",
-      lable: "User Name :",
+      lable: "User Name",
       Field_Name: "User Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "userName",
@@ -30,7 +30,7 @@ export const userFormData = {
     },
     {
       id: "firstName",
-      lable: "First Name :",
+      lable: "First Name",
       Field_Name: "First Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "firstName",
@@ -45,7 +45,7 @@ export const userFormData = {
     },
     {
       id: "lastName",
-      lable: "Last Name :",
+      lable: "Last Name",
       Field_Name: "Last Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "lastName",
