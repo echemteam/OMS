@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "../../../../../components/image/Image";
 import { AppIcons } from "../../../../../data/appIcons";
+import CopyText from "../../../../../utils/CopyText/CopyText";
 
 const ContactCard = ({ childData, handleEdit }) => {
   const cardInfoData = childData.cardInformation;
@@ -47,7 +48,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                       </div>
                       <span
                         className="copy-icon"
-                      // onClick={() => CopyText(customerData?.emailAddress, "email") }
+                        onClick={() => CopyText(emaildata?.emailAddres, "email")}
                       >
                         <Image
                           imagePath={AppIcons.copyIcon}
@@ -90,9 +91,9 @@ const ContactCard = ({ childData, handleEdit }) => {
                         </div>
                         <span
                           className="copy-icon"
-                        // onClick={() =>
-                        //   CopyText(customerData?.emailAddress, "email")
-                        // }
+                          onClick={() =>
+                            CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber}`, "phone")
+                          }
                         >
                           <Image
                             imagePath={AppIcons.copyIcon}

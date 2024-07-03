@@ -269,7 +269,7 @@ const BasicDetail = (props) => {
       }
       addCustomersBasicInformation(req);
     } else {
-      warning('Please enter customer basic information');
+      ToastService.warning('Please enter customer basic information');
     }
   };
 
@@ -294,7 +294,7 @@ const BasicDetail = (props) => {
       }
       updateCustomersBasicInformation(req);
     } else {
-      warning('Please enter customer basic information');
+      ToastService.warning('Please enter customer basic information');
     }
   };
 
