@@ -10,9 +10,12 @@ import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/a
 import CustomerApproval from '../../features/cutomerApproval/CustomerApproval';
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
 import { getAuthProps } from '../../../../lib/authenticationLibrary';
+import { encryptUrlData } from '../../../../services/CryptoService';
+import { useNavigate } from "react-router-dom";
 
 export const InActiveCustomers = ({ statusId, configFile }) => {
 
+  const navigate = useNavigate();
   const childRef = useRef();
   const molGridRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
@@ -146,10 +149,15 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     updateCustomerStatus(req)
   }
 
+  const handleEditClick = (data) => {
+    navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
+  };
+
   const actionHandler = {
     UNFREEZE: handleUnfreeze,
     ACTIVECUSTOMER: handleActiveCustomer,
-    UNBLOCKED: handleUnBlock
+    UNBLOCKED: handleUnBlock,
+    EDIT: handleEditClick,
   };
 
   return (
