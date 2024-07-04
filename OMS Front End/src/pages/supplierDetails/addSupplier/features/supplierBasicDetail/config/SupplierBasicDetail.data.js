@@ -206,7 +206,6 @@ export const supplierBasicData = {
         placeholder: "Select Responsible USer",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
