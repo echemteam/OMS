@@ -101,13 +101,15 @@
 
         .inf-label {
           font-weight: 600;
-          min-width: 120px;
-          max-width: 120px;
+          min-width: 85px;
+          max-width: 85px;
           color: var(--textColor);
           font-size: var(--commonFont-small);
           padding-top: 2px;
         }
         .info-desc {
+          max-width: 240px;
+          min-width: 240px;
           padding-top: 2px;
           font-size: var(--commonFont-small);
           color: var(--textColor);
@@ -205,14 +207,29 @@
   }
 }
 
+@media only screen and (max-width: 1750px) {
+  .customer-desc-left-sec {
+    .card-body-sec {
+      .basic-customer-detail {
+        .field-desc {
+          .info-desc {
+            max-width: 180px;
+            min-width: 180px;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1566px) {
   .customer-desc-left-sec {
     .card-body-sec {
       .basic-customer-detail {
         .field-desc {
-          .inf-label {
-            min-width: 95px;
-            max-width: 95px;
+          .info-desc {
+            max-width: 150px;
+            min-width: 150px;
           }
         }
       }

@@ -16,5 +16,6 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDTO<int>> AddSupplierDocuments(SupplierDocumentsDTO supplierDocuments);
         Task<List<GetSupplierDocumentsByIdResponse>> GetSupplierDocumentsById(int supplierId);
         Task<AddEntityDTO<int>> DeleteSupplierDocumentsById(int supplierDocumentId, int deletedBy);
+        Task<AddEntityDTO<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? supplierId);
     }
 }

@@ -198,6 +198,7 @@ const ContactDetail = ({
             addEditContactMutation={addEditContactMutation}
             mainId={mainId}
             isEditablePage={isEditablePage}
+            isOpen={isModelOpen}
           />
         </SidebarModel>
       </div>

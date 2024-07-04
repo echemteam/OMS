@@ -7,7 +7,7 @@ using OMS.Domain.Entities.Entity.SupplierDocuements;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
 using OMS.Shared.Services.Contract;
- 
+
 
 namespace OMS.Application.Services.SupplierDocuements
 {
@@ -28,15 +28,19 @@ namespace OMS.Application.Services.SupplierDocuements
         {
             AddEntityDTO<int> responseData = new();
 
-            SupplierDocumentsDTO supplierDocumentsDTO = requestData.ToMapp<AddSupplierDocumentsRequest, SupplierDocumentsDTO>();
-            supplierDocumentsDTO.CreatedBy = CurrentUserId;
-            responseData = await repositoryManager.supplierdocuements.AddSupplierDocuments(supplierDocumentsDTO);
+            responseData = await repositoryManager.supplierdocuements.CheckDocumentsExistOrNot(requestData.DocumentTypeId, requestData.Name, requestData.SupplierId);
 
             if (responseData.KeyValue > 0)
             {
-                string AESKey = commonSettingService.EncryptionSettings.AESKey!;
-                string AESIV = commonSettingService.EncryptionSettings.AESIV!;
-                requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File!, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.SupplierId, requestData.Attachment!, AESKey, AESIV);
+                if (requestData.Base64File != null && requestData.Name != null)
+                {
+                    string AESKey = commonSettingService.EncryptionSettings.AESKey!;
+                    string AESIV = commonSettingService.EncryptionSettings.AESIV!;
+                    requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File!, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.SupplierId, requestData.Attachment!, AESKey, AESIV);
+                }
+                SupplierDocumentsDTO supplierDocumentsDTO = requestData.ToMapp<AddSupplierDocumentsRequest, SupplierDocumentsDTO>();
+                supplierDocumentsDTO.CreatedBy = CurrentUserId;
+                responseData = await repositoryManager.supplierdocuements.AddSupplierDocuments(supplierDocumentsDTO);
             }
             return responseData;
         }
