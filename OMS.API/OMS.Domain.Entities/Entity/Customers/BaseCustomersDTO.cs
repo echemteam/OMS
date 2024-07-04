@@ -9,8 +9,6 @@
         public short? CountryId { get; set; }
         public string? EmailAddress { get; set; }
         public string? Website { get; set; }
-      
-        public bool? IsCompany { get; set; }
         public string? TaxId { get; set; }
         public bool? IsBuyingForThirdParty {  get; set; }
     }
