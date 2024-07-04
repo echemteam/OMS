@@ -39,7 +39,8 @@ a {
   color: var(--textColor);
   font-weight: 600;
   // text-transform: uppercase;
-  min-height: 35px;
+  // min-height: 35px;
+  padding-top: 5px;
   display: flex;
   align-items: center;
 }
@@ -2132,10 +2133,24 @@ input[type="checkbox"]:disabled {
         }
       }
     }
-      .card-body-sec{
-        margin-top: 0;
-        padding-left: 0;
-        padding-right: 0;
-      }
+
+    .card-body-sec {
+      margin-top: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  input[type=checkbox]:before,
+  input[type=checkbox]:checked{
+    &:before {
+      height: 17px;
+      width: 17px;
+    }
+  }
+  .status-dropdown {
+    .css-t3ipsp-control{
+      padding-top: 0;
+    }
   }
 }
