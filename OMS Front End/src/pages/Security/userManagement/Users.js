@@ -145,7 +145,7 @@ const Users = () => {
   };
 
   return (
-    <div>
+    <div className="user-lists">
       <CardSection
         cardTitle="View All Users"
         // cardSubTitle="Sub title add hear"
@@ -159,7 +159,7 @@ const Users = () => {
         handleChange={handleChange}
         searchInput={true}>
         <div className="row">
-          <div className="col-md-12 table-striped">
+          <div className="col-md-12 table-striped ">
             <MolGrid
               ref={molGridRef}
               configuration={UserGridConfig}
