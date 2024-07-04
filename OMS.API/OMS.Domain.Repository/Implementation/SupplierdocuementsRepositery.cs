@@ -15,6 +15,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDSUPPLIERDOCUMENTS = "AddSupplierDocuments";
         const string GETSUPPLIERDOCUMENTSBYID = "GetSupplierDocuementById";
         const string DELETESUPPLIERDOCUMENTSBYID = "DeleteSupplierDocuementById";
+        const string CHECKDOCUMENTSEXISTORNOTFORSUPPLIER = "CheckDocumentsExistOrNotForSupplier";
         #endregion
 
         public SupplierdocuementsRepositery(DapperContext dapperContext) : base(dapperContext)
@@ -22,6 +23,16 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Repositery
+
+        public async Task<AddEntityDTO<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? supplierId)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(CHECKDOCUMENTSEXISTORNOTFORSUPPLIER, new
+            {
+                documentTypeId,
+                name,
+                supplierId
+            }, CommandType.StoredProcedure);
+        }
         public async Task<AddEntityDTO<int>> AddSupplierDocuments(SupplierDocumentsDTO supplierDocuements)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDSUPPLIERDOCUMENTS, new
