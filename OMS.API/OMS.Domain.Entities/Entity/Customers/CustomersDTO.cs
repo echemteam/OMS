@@ -15,8 +15,6 @@ namespace OMS.Domain.Entities.Entity.Customers
         [Column("TerritoryId")]
         public short? TerritoryId { get; set; }
 
-        [Column("IsCompany")]
-        public bool? IsCompany { get; set; }
         [Column("RefCode")]
         public string? RefCode { get; set; }
 
@@ -36,7 +34,6 @@ namespace OMS.Domain.Entities.Entity.Customers
         public string? EmailAddress { get; set; }
         [Column("Note")]
         public string? Note { get; set; }
-
         [Column("ApprovedAt")]
         public DateTime? ApprovedAt { get; set; }
         [Column("ApprovedBy")]

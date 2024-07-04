@@ -15,9 +15,6 @@ namespace OMS.Prisitance.Entities.Entities
         public string? Name { get; set; }
         [Column("TerritoryId")]
         public short? TerritoryId { get; set; }
-
-        [Column("IsCompany")]
-        public bool? IsCompany { get; set; }
         [Column("RefCode")]
         public string? RefCode { get; set; }
 
