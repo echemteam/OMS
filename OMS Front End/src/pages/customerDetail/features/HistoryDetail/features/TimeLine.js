@@ -53,11 +53,11 @@ const TimeLine = () => {
   useEffect(() => {
     if (isGetHistorySuccess && isGetHistoryData) {
       if (isGetHistoryData.dataSource && isGetHistoryData.dataSource.length > 0) {
+        const modifyData = modifyTimeLineData(isGetHistoryData.dataSource);
         if (refreshData) {
-          setHistoryData(isGetHistoryData.dataSource);
+          setHistoryData(modifyData);
           setRefreshData(false);
         } else {
-          const modifyData = modifyTimeLineData(isGetHistoryData.dataSource)
           setHistoryData((prevData) => [
             ...prevData,
             ...modifyData,
