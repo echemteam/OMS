@@ -46,8 +46,7 @@ const ViewCustomer = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
-  const { setCustomerId, customerId, isResponsibleUser, setIsResponsibleUser } =
-    useContext(BasicDetailContext);
+  const { setCustomerId, customerId, isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [
     getCustomersBasicInformationById,

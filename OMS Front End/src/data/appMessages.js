@@ -55,6 +55,6 @@ export const SuccessMessage = {
 	Map_Alert: '{0} mapped successfully',
 	Alret_Warning: 'Warning !',
 	TaxId: 'Please enter between {0} and {1} characters.',
-	DefaultUSATaxId: 'Please enter between 10 and 10 characters.'
+	DefaultUSATaxId: 'Please enter 10 characters.'
 };
 

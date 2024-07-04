@@ -8,6 +8,7 @@ import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicD
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
+import { setFieldDisabled } from "../../../../../utils/FieldDisabled/setFieldDisabled";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
@@ -32,12 +33,12 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     let data = ref.current.getFormData();
     if (data) {
       let contactTypeId = null;
-      
+
       if (isSupplier === true) {
         if (isEdit) {
           contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object"
-          ? String(data.contactTypeId.value)
-          : String(data.contactTypeId);
+            ? String(data.contactTypeId.value)
+            : String(data.contactTypeId);
         } else {
           contactTypeId = String(data.contactTypeId.value);
         }
@@ -116,6 +117,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
 
   const handleEditMode = (data) => {
     if (data) {
+      setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', true);
       let form = { ...contactDetailFormData };
       form.initialState = {
         firstName: data.firstName,
@@ -163,6 +165,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     setFormData(form);
     setCustomerContactId(0);
     setSupplierContactId(0);
+    setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', false);
   };
 
   //** Use Imperative Handle  */
