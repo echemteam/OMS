@@ -17,6 +17,7 @@
     border-top-right-radius: 6px !important;
     border-top-left-radius: 6px !important;
     overflow: hidden;
+    border: 1px solid var(--inputBorder);
   }
   .ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
   .ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {

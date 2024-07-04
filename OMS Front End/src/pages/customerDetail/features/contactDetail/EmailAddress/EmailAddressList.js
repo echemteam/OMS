@@ -22,7 +22,7 @@ const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler , isSup
                 buttonText="Add"
                 titleButtonClick={handleToggleModal}>
                 <div className="row">
-                    <div className="col-md-12 table-striped">
+                    <div className="col-md-12 table-striped p-0">
                         <MolGrid
                             ref={molGridRef}
                             configuration={emailConfig}

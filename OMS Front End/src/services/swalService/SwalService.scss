@@ -6,7 +6,7 @@
   -webkit-transition: all .4s ease-in-out !important;
   -moz-transition: all .4s ease-in-out !important;
   -ms-transition: all .4s ease-in-out !important;
-  min-width: 120px !important;
+  min-width: 100px !important;
 
   &:hover {
     background-image: unset !important;
@@ -38,4 +38,10 @@
 div:where(.swal2-icon).swal2-question{
   border-color: var(--warningColor) !important;
   color: var(--warningColor) !important;
+}
+
+@media only screen and (max-width: 1560px) {
+  .swal2-styled{
+    height: 37px;
+  }
 }
