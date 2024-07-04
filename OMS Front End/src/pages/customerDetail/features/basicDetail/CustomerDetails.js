@@ -75,12 +75,14 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           setOptions([
             { value: "4", label: "Freeze" },
             { value: "3", label: "Approved" },
+            { value: "1", label: "Pending" },
           ]);
           break;
         case 5:
           setOptions([
             { value: "5", label: "Block" },
             { value: "3", label: "Approved" },
+            { value: "1", label: "Pending" },
           ]);
           break;
         case 6:
@@ -211,6 +213,11 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
                 />
               </div>
             </div>
+          </div>
+          <div className="field-desc">
+            <div className="inf-label">Responsible User</div>
+            <b>&nbsp;:&nbsp;</b>
+            <div className="info-desc">{customerData?.responsibleUserName}</div>
           </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">Status</div>

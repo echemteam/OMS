@@ -57,12 +57,14 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
             setOptions([
               { value: "4", label: "Freeze" },
               { value: "3", label: "Approved" },
+              { value: "1", label: "Pending" },
             ]);
             break;
           case 5:
             setOptions([
               { value: "5", label: "Block" },
               { value: "3", label: "Approved" },
+              { value: "1", label: "Pending" },
             ]);
             break;
         case 6:
@@ -191,6 +193,11 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
                 />
               </div>
             </div>
+          </div>
+          <div className="field-desc">
+            <div className="inf-label">Responsible User</div>
+            <b>&nbsp;:&nbsp;</b>
+            <div className="info-desc">{supplierData?.responsibleUserName}</div>
           </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">Status</div>

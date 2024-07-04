@@ -258,7 +258,9 @@ const BasicDetail = (props) => {
     if (data) {
       let req = {
         ...data,
-        groupTypeId: data.groupTypeId.value,
+        groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object"
+        ? data.groupTypeId.value
+        : data.groupTypeId,
         territoryId: data.territoryId && typeof data.territoryId === "object"
           ? data.territoryId.value
           : data.territoryId,

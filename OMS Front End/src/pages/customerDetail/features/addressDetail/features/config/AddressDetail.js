@@ -13,6 +13,11 @@ import ToastService from "../../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../../app/services/basicdetailAPI";
 import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../../app/services/addressAPI";
 
+const fixData = {
+  label: "United States",
+  value: 233
+}
+
 const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMutation, getAddresssByCustomerId, mainId, isSupplier, SecurityKey }) => {
   const userFormRef = useRef();
   const { formSetting } = addressFormData;
@@ -131,6 +136,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   }, [mainId]);
 
   const manageFilteredForm = () => {
+    onreset()
     const manageData = { ...formData };
     const filteredFormFields = addressFormData.formFields.filter(
       (field) =>
@@ -141,13 +147,10 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     manageData.formFields = filteredFormFields;
 
     if (updateSetData === null) {
-      const dropdownFieldIndex = manageData.formFields.findIndex(
-        (item) => item.dataField === "stateId"
-      );
+      handleChangeDropdownList(fixData, "countryId")
       const dropdownFieldIndexs = manageData.formFields.findIndex(
         (item) => item.dataField === "cityId"
       );
-      manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = true;
       manageData.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = true;
     }
     setFormData(manageData);
@@ -251,6 +254,12 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetAllCitiesSucess, allGetAllCitiesData]);
+
+  useEffect(() => {
+    if (allGetAllStatesData) {
+      handleChangeDropdownList(fixData, "countryId")
+    }
+  }, [allGetAllStatesData])
 
 
   const handleToggleModal = () => {
@@ -530,8 +539,19 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     }
   };
 
+  const handleCheckboxChanges = (data, dataField) => {
+    if (dataField === "isShippingAndBilling" && data) {
+      const manageData = { ...formData };
+      let filteredFormFields;
+      filteredFormFields = addressFormData.formFields
+      manageData.formFields = filteredFormFields;
+      setFormData(manageData)
+    }
+  }
+
   const formActionHandler = {
     DDL_CHANGED: handleChangeDropdownList,
+    CHECK_CHANGE: handleCheckboxChanges
   };
 
   return (
@@ -566,6 +586,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
               ref={userFormRef}
               {...formData}
               onActionChange={formActionHandler}
+              onCheckBoxChange={formActionHandler}
               key={shouldRerenderFormCreator}
             />
             <div className="col-md-12 mt-2">

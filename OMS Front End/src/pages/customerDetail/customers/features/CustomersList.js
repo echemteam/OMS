@@ -29,6 +29,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import CustomerApproval from "../../features/cutomerApproval/CustomerApproval";
 import { getAuthProps } from "../../../../lib/authenticationLibrary";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
 
 export const CustomersList = ({ statusId, configFile }) => {
 
@@ -62,6 +63,8 @@ export const CustomersList = ({ statusId, configFile }) => {
       data: updateCustomerInActiveStatusData,
     },
   ] = useUpdateCustomerInActiveStatusMutation();
+
+  const [addCustomerNotes,{ isLoading: isAddNotesLoading, isSuccess: isAddNotesSuccess, data: isAddNotesData, },] = useAddCustomerNotesMutation();
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
@@ -268,8 +271,10 @@ export const CustomersList = ({ statusId, configFile }) => {
         ...custData,
         customerId: customerID,
         statusId: staticId,
+        note: custData.inActiveReason,
       };
       updateCustomerInActiveStatus(req);
+      addCustomerNotes(req);
     }
   };
 

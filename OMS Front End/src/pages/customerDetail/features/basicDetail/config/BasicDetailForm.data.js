@@ -14,7 +14,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 
 export const basicDetailFormDataHalf = {
-  initialState: { name: "", groupTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false , responsibleUserId:""},
+  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false , responsibleUserId:""},
   formFields: [
     {
       id: "name",
@@ -146,7 +146,7 @@ export const basicDetailFormDataHalf = {
         faIcon: "fa-info-circle",
         message: SuccessMessage.DefaultUSATaxId
       },
-      validation: [{ type: "require" }, { type: "taxId", minLength: 10, maxLength: 10 }],
+      validation: [{ type: "taxId", minLength: 10, maxLength: 10 }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -177,24 +177,9 @@ export const basicDetailFormDataHalf = {
         placeholder: "Enter Notes",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-7 col-xl-6 col-md-12 col-12 mb-2",
-      },
-    },
-    {
-      id: "isCompany",
-      lable: "Is Company",
-      Field_Name: "Is Company",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isCompany",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-0 margin-left0-checkbox mt-0",
       },
     },
     {
