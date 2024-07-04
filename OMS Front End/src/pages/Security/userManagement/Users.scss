@@ -1,0 +1,10 @@
+.user-lists{
+  .card{
+    margin-bottom: 0;
+  }
+  table {
+    tbody{
+      max-height: calc(100vh - 280px);
+    }
+  }
+}

@@ -369,11 +369,10 @@ a {
             }
           }
         }
-
-
       }
 
-      .middle-page-section {}
+      .middle-page-section {
+      }
     }
   }
 }
@@ -501,7 +500,6 @@ a {
 
   .card-title,
   .section-title {
-
     margin-bottom: 0;
 
     h4 {
@@ -654,6 +652,11 @@ a {
   color: #ffffff;
 }
 
+.badge-gradient-reject {
+  background: var(--reject-color);
+  color: #ffffff;
+}
+
 .status-btn {
   color: #ffffff;
   display: inline-block;
@@ -701,7 +704,8 @@ a {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {}
+    .tab-body-section {
+    }
   }
 
   &.vertical-tab {
@@ -811,7 +815,8 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {}
+      .tab-body-section {
+      }
     }
 
     &.vertical-tab {
@@ -909,7 +914,8 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {}
+        .tab-sub-body-section {
+        }
       }
     }
   }
@@ -1020,7 +1026,7 @@ a {
       border-radius: 12px;
       margin-bottom: 10px !important;
       position: relative;
-      min-height: 125px;
+      // min-height: 125px;
 
       &:last-child {
         margin-bottom: 0;
@@ -1711,8 +1717,16 @@ a {
     }
   }
 
-  .css-1nmdiq5-menu {
+  &.badge-gradient-reject {
+    background: transparent;
 
+    .css-1dimb5e-singleValue {
+      color: var(--reject-color);
+      font-weight: 600;
+    }
+  }
+
+  .css-1nmdiq5-menu {
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -1870,12 +1884,15 @@ input[type="checkbox"]:disabled {
 
 .status-desc {
   position: absolute;
-  left: 0;
-  top: 0;
+  // left: 0;
+  // top: 0;
+  right: 0;
+  bottom: 0;
 
   .field-info {
-    padding: 4px 12px;
-    border-top-left-radius: 10px;
+    padding: 3px 5px;
+    // border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     font-size: var(--commonFont-small);
     font-weight: 600;
 
@@ -1934,7 +1951,6 @@ input[type="checkbox"]:disabled {
 .primary-text-title {
   font-size: var(--commonFont-extraSmall) !important;
   color: var(--inputBorder) !important;
-
 }
 
 .right-contact-ext-type {
@@ -1948,7 +1964,6 @@ input[type="checkbox"]:disabled {
       cursor: pointer;
 
       i {
-
         font-size: var(--commonFont-large) !important;
         color: var(--inputBorder) !important;
 
@@ -1964,11 +1979,18 @@ input[type="checkbox"]:disabled {
   }
 }
 
+.btn-right-sec {
+  display: flex;
+  align-items: center;
+}
+
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
+    .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
     }
+    
   }
 
   .address-model {
@@ -1982,7 +2004,6 @@ input[type="checkbox"]:disabled {
       }
     }
   }
-
 
   .contact-card-section {
     .add-desc-part {
@@ -2010,7 +2031,6 @@ input[type="checkbox"]:disabled {
         }
       }
     }
-
   }
 
   .address-card-section {
@@ -2032,7 +2052,7 @@ input[type="checkbox"]:disabled {
     height: 17px;
   }
 
-  input[type=checkbox]:checked:after {
+  input[type="checkbox"]:checked:after {
     top: 57%;
     left: 65%;
   }
@@ -2040,17 +2060,17 @@ input[type="checkbox"]:disabled {
   .card {
     .card-top-title-btn {
       min-height: unset;
-      padding-bottom: 6px;
+      padding-bottom: 8px;
     }
   }
 
   .card-section-leftcard-button-only {
-    padding: 6px 12px 10px;
+    padding: 8px 12px;
   }
 
   .main-customer-grid.setting-tab-sec {
     .card {
-      padding: 0px 12px 0;
+      padding: 3px 10px 0;
     }
   }
 
@@ -2083,18 +2103,22 @@ input[type="checkbox"]:disabled {
       }
     }
   }
-  .main-customer-grid{
-    .card{
+
+  .main-customer-grid {
+    .card {
       padding: 10px 12px 12px;
     }
-    .tab-section{
-      .tab-header{
-        button{
+
+    .tab-section {
+      .tab-header {
+        button {
           padding: 2px 15px 7px;
-          &.active{
+
+          &.active {
             padding-bottom: 10px;
             padding: 2px 15px 10px;
-            &:before{
+
+            &:before {
               border-left: 7px solid transparent;
               border-right: 7px solid transparent;
               border-top: 7px solid var(--themeColor);
@@ -2102,6 +2126,31 @@ input[type="checkbox"]:disabled {
           }
         }
       }
+    }
+  }
+
+  .card {
+    padding: 8px;
+  }
+
+  .card-email-sec {
+    .card {
+      padding: 8px;
+    }
+  }
+
+  .sidebar-contact-model {
+    .no-address {
+      .record-not-found {
+        img {
+          width: 75px;
+        }
+      }
+    }
+    .card-body-sec {
+      margin-top: 0;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }
