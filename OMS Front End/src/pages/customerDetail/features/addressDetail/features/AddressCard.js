@@ -74,7 +74,7 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLo
                           </span>
                         </div>
                       )}
-                      <div className={`add-line ${(address.isPreferredBilling && address.addressTypeId === 1) || (address.isPreferredShipping && address.addressTypeId === 2) ? "mt-3" : ""}`}>
+                      <div className={`add-line ${(address.isPreferredBilling && address.addressTypeId === 1) || (address.isPreferredShipping && address.addressTypeId === 2) ? "" : ""}`}>
                         <span className="label-txt">{address.addressLine1}</span>
                         <span className="label-txt">{address.addressLine2}</span>
                         <span className="label-txt">{address.cityName}</span>
