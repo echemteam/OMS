@@ -364,9 +364,17 @@ table {
 
 @media only screen and (max-width: 1560px) {
   table {
+    thead{
+      tr{
+        th{
+          padding: 8px 10px 8px 15px;
+        }
+      }
+    }
     tbody {
       tr {
         td {
+          padding: 7px 10px 7px 15px;
           &:last-child {
             a {
               img {

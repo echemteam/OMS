@@ -140,20 +140,27 @@
 
 
 @media only screen and (max-width: 1560px) {
-  .sidebar-model{
-    .side-model-section{
-      .model-content{
-        .model-header{
-          .model-title{
-            padding: 6px 10px;
-          }
-          .close-btn {
-            img{
-              width: 19px;
+  .sidebar-contact-model {
+    .sidebar-model {
+      .side-model-section {
+        .model-content {
+          .model-header{
+            .model-title{
+              padding: 6px 10px;
             }
+            .close-btn {
+              img{
+                width: 19px;
+              }
+            }
+          }
+          .model-body {
+            height: calc(100vh - 45px);
+            padding: 0px 13px 0;
           }
         }
       }
     }
   }
 }
+

@@ -119,6 +119,7 @@
   .stepper-card {
     .card{
       padding: 0px 5px 5px;
+      margin-bottom: 0;
       .card{
         padding: 0;
       }
@@ -149,7 +150,7 @@
         }
       }
       .stepper-content {
-        max-height: calc(100vh - 226px);
+        max-height: calc(100vh - 185px);
       }
     }
   }
