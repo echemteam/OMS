@@ -166,7 +166,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
       case "Block":
         return "badge-gradient-Blocked";
       case "Reject":
-        return "badge-gradient-Blocked";
+        return "badge-gradient-reject";
       case "Disable":
         return "badge-gradient-disabled";
       default:

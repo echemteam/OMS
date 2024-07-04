@@ -139,6 +139,17 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
         field.dataField !== "isPreferredBilling"
     );
     manageData.formFields = filteredFormFields;
+
+    if (updateSetData === null) {
+      const dropdownFieldIndex = manageData.formFields.findIndex(
+        (item) => item.dataField === "stateId"
+      );
+      const dropdownFieldIndexs = manageData.formFields.findIndex(
+        (item) => item.dataField === "cityId"
+      );
+      manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = true;
+      manageData.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = true;
+    }
     setFormData(manageData);
   };
 
@@ -241,6 +252,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     }
   }, [isGetAllCitiesSucess, allGetAllCitiesData]);
 
+
   const handleToggleModal = () => {
     setisModelOpen(true);
     manageFilteredForm();
@@ -249,6 +261,16 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const handleSetData = (data) => {
     setUpdateSetData(data);
     let form = { ...formData };
+    if (data) {
+      const dropdownFieldIndex = form.formFields.findIndex(
+        (item) => item.dataField === "stateId"
+      );
+      const dropdownFieldIndexs = form.formFields.findIndex(
+        (item) => item.dataField === "cityId"
+      );
+      form.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
+      form.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = false;
+    }
     if (data.countryId) {
       const dataValue = allGetAllStatesData
         ?.filter((item) => item.countryId === data.countryId)

@@ -51,6 +51,7 @@ export const contactDetailFormData = {
         placeholder: "Select Contact Type",
         allowSpace: true,
         isMultiSelect: true,
+        isDisabled: false
       },
       validation: [{ type: "require" }],
       style: {
