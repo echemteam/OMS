@@ -106,7 +106,7 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
         // approvalCheckList(data)
         confirm(
             "Warning?",
-            `Are you sure you want to change the supplier status to Approved?`,
+            `Are you sure you want to unfreeze and change the status to approved?`,
             "Yes",
             "Cancel"
         ).then((confirmed) => {
@@ -124,7 +124,7 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
         // approvalCheckList(data)
         confirm(
             "Warning?",
-            `Are you sure you want to change the supplier status to Approved?`,
+            `Are you sure you want to unfreeze and change the status to approved?`,
             "Yes",
             "Cancel"
         ).then((confirmed) => {
