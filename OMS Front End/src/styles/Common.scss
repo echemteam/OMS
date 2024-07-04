@@ -1986,9 +1986,11 @@ input[type="checkbox"]:disabled {
 
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
+    .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
     }
+    
   }
 
   .address-model {
