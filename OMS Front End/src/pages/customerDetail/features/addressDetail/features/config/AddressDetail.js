@@ -61,6 +61,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
             if (hasAddPermission.hasAccess === true) {
               formSetting.isViewOnly = false;
               setIsButtonDisable(false);
+              setShowEditIcon(true);
             }
             if (hasEditPermission.isViewOnly === true) {
               setShowEditIcon(true);
@@ -144,9 +145,6 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   }, [mainId]);
 
   const manageFilteredForm = () => {
-    // if(isSupplier){
-    //   onresetManege()
-    // }
     const manageData = { ...formData };
     const filteredFormFields = addressFormData.formFields.filter(
       (field) =>
@@ -164,6 +162,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       manageData.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = true;
     }
     setFormData(manageData);
+    // onreset();
   };
 
   useEffect(() => {
@@ -274,12 +273,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
 
   const handleToggleModal = () => {
     setisModelOpen(true);
-    manageFilteredForm();
+    // manageFilteredForm();
+    onResetSupplier();
   };
-
-  // useEffect(() => {
-
-  // },[isModelOpen])
 
   const handleSetData = (data) => {
     setUpdateSetData(data);
@@ -393,31 +389,31 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     onreset();
   };
 
-  // const onresetManege = () => {
-  //   debugger
-  //   let reset = { ...addressFormData };
-  //   reset.initialState = {
-  //     addressTypeId: "",
-  //     addressLine1: "",
-  //     addressLine2: "",
-  //     addressLine3: "",
-  //     addressLine4: "",
-  //     addressLine5: "",
-  //     countryId: 233,
-  //     stateId: "",
-  //     zipCode: "",
-  //     cityId: "",
-  //     supplierId: 0,
-  //   };
-  //   setFormData(reset);
-  // }
+  const onResetSupplier = () => {
+    // const manageData = { ...formData };
+
+    // manageData.formFields = filteredFormFields;
+    let restData = { ...addressFormData };
+    restData.initialState = { ...addressFormData.initialState };
+    const filteredFormFields = restData.formFields.filter(
+      (field) =>
+        field.dataField !== "isPreferredShipping" &&
+        field.dataField !== "isShippingAndBilling" &&
+        field.dataField !== "isPreferredBilling"
+    );
+    restData.formFields = filteredFormFields;
+    setFormData(restData);
+    setUpdateSetData(null);
+    setUpdateSetDataSupplier(null);
+  };
 
   const onreset = () => {
+
     let restData = { ...addressFormData };
     restData.initialState = { ...addressFormData.initialState };
     setFormData(restData);
     setUpdateSetData(null);
-    setUpdateSetDataSupplier(null)
+    setUpdateSetDataSupplier(null);
   };
 
   const handleChangeDropdownList = (data, dataField) => {

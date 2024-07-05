@@ -277,7 +277,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           <div className="field-desc">
             <div className="inf-label">Tax Id</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.taxId}</div>
+            <div className="info-desc">{customerData?.taxId ? customerData?.taxId : ErrorMessage.NotAvailabe}</div>
           </div>
           {/* <div className="field-desc">
             <div className="inf-label">Is Company</div>

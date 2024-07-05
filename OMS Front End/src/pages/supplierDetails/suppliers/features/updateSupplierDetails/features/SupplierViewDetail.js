@@ -196,6 +196,8 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
     }
   };
 
+  console.log("first" , supplierData)
+
   return (
     <>{!isLoading ?
       <div className="basic-customer-detail" >
@@ -276,7 +278,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
           <div className="field-desc">
             <div className="inf-label">Tax Id</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.taxId}</div>
+            <div className="info-desc">{supplierData?.taxId ? supplierData?.taxId : ErrorMessage.NotAvailabe}</div>
           </div>
           <div className="field-desc">
             <div className="inf-label">Supplier Type</div>
