@@ -30,7 +30,7 @@ const SupplierDetails = () => {
   const [supplierData, setSupplierData] = useState(null);
   const authState = useSelector((state) => state.auth);
 
-  const { setSupplierId, supplierId, isResponsibleUser , setIsResponsibleUser } = useContext(AddSupplierContext);
+  const { setSupplierId, supplierId, isResponsibleUser, setIsResponsibleUser } = useContext(AddSupplierContext);
 
   const [
     getSupplierBasicInformationById,
@@ -123,7 +123,7 @@ const SupplierDetails = () => {
     {
       sMenuItemCaption: "Notes",
       component: (
-        <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>
+        <div className="mt-2">{<SupplierNotesDetail pageId={pageId} isEditablePage={true} />}</div>
       ),
       isVisible: hasNotePermission.hasAccess,
     },

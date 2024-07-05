@@ -27,11 +27,12 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [updateSetData, setUpdateSetData] = useState();
   const [updateSetDataSupplier, setUpdateSetDataSupplier] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true);
+  const [showEditIcon, setShowEditIcon] = useState(false);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [lebel, setlebel] = useState(null);
   const [checkbox, setCheckbox] = useState(null);
   const [checkboxFeild, setCheckboxFeild] = useState(null);
-  const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const [buttonVisible, setButtonVisible] = useState(true);
 
   useEffect(() => {
     if (isEditablePage) {
@@ -59,6 +60,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
             if (hasAddPermission.hasAccess === true) {
               formSetting.isViewOnly = false;
               setIsButtonDisable(false);
+            }
+            if (hasEditPermission.isViewOnly === true) {
+              setShowEditIcon(true);
             }
           }
         }
@@ -625,6 +629,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
           addressData={addressData}
           onHandleSetData={handleSetData}
           isGetByIdLoading={isGetAddresssByCustomerIdFetching}
+          showEditIcon={showEditIcon}
         />
       </CardSection>
       <div className="address-model">

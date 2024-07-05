@@ -32,6 +32,7 @@ const ContactDetail = ({
   const [editFormData, setEditFormData] = useState();
   const [isModelOpen, setisModelOpen] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
+  const [showEditIcon, setShowEditIcon] = useState(false);
   const [modifyContactData, setModifyContactData] = useState([]);
 
   const {
@@ -67,6 +68,7 @@ const ContactDetail = ({
   useEffect(() => {
     if (isEditablePage && SecurityKey) {
       const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+      const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
 
       if (hasAddPermission) {
         if (hasAddPermission.hasAccess === true) {
@@ -74,6 +76,9 @@ const ContactDetail = ({
         } else {
           setButtonVisible(false);
         }
+      }
+      if (hasEditPermission && hasEditPermission.isViewOnly === true) {
+        setShowEditIcon(true);
       }
     }
   }, [isEditablePage, isSupplier, SecurityKey]);
@@ -177,6 +182,7 @@ const ContactDetail = ({
           handleEdit={handleEdit}
           modifyContactData={modifyContactData}
           isLoading={isGetContactFetching}
+          showEditIcon={showEditIcon}
         />
       </CardSection>
       <div className="sidebar-contact-model">

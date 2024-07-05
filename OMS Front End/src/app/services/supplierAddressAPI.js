@@ -1,7 +1,7 @@
 
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { customFetchBase } from '../../utils/API/fetchBaseQuery';
-import { encryptQueryString, transformRequest } from "../../utils/API/requestMiddleware";
+import { encryptQueryString } from "../../utils/API/requestMiddleware";
 import { transformErrorResponse, transformSucessResponse } from "../../utils/API/responseMiddleware";
 
 const supplierAddressAPI = createApi({
