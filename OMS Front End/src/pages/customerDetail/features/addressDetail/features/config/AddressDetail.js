@@ -27,7 +27,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [updateSetData, setUpdateSetData] = useState();
   const [updateSetDataSupplier, setUpdateSetDataSupplier] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-
+  const [lebel, setlebel] = useState(null);
+  const [checkbox, setCheckbox] = useState(null);
+  const [checkboxFeild, setCheckboxFeild] = useState(null);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
 
@@ -137,6 +139,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   }, [mainId]);
 
   const manageFilteredForm = () => {
+    // if(isSupplier){
+    //   onresetManege()
+    // }
     const manageData = { ...formData };
     const filteredFormFields = addressFormData.formFields.filter(
       (field) =>
@@ -267,6 +272,10 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     manageFilteredForm();
   };
 
+  // useEffect(() => {
+
+  // },[isModelOpen])
+
   const handleSetData = (data) => {
     setUpdateSetData(data);
     if (isSupplier) {
@@ -379,6 +388,25 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     onreset();
   };
 
+  // const onresetManege = () => {
+  //   debugger
+  //   let reset = { ...addressFormData };
+  //   reset.initialState = {
+  //     addressTypeId: "",
+  //     addressLine1: "",
+  //     addressLine2: "",
+  //     addressLine3: "",
+  //     addressLine4: "",
+  //     addressLine5: "",
+  //     countryId: 233,
+  //     stateId: "",
+  //     zipCode: "",
+  //     cityId: "",
+  //     supplierId: 0,
+  //   };
+  //   setFormData(reset);
+  // }
+
   const onreset = () => {
     let restData = { ...addressFormData };
     restData.initialState = { ...addressFormData.initialState };
@@ -388,6 +416,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   };
 
   const handleChangeDropdownList = (data, dataField) => {
+    setlebel(data)
     const manageData = { ...formData };
     if (dataField === "countryId") {
       const dataValue = allGetAllStatesData
@@ -544,7 +573,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   };
 
   const handleCheckboxChanges = (data, dataField) => {
-    if (dataField === "isShippingAndBilling" && data) {
+    setCheckbox(data)
+    setCheckboxFeild(dataField)
+    if (dataField === "isShippingAndBilling" && data && lebel) {
       const manageData = { ...formData };
       let filteredFormFields;
       filteredFormFields = addressFormData.formFields
@@ -552,6 +583,26 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       setFormData(manageData)
     }
   }
+
+  useEffect(() => {
+    if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 1) {
+      const manageData = { ...formData };
+      let filteredFormFields;
+      filteredFormFields = addressFormData.formFields.filter(
+        (field) => field.dataField !== "isPreferredShipping"
+      );
+      manageData.formFields = filteredFormFields
+      setFormData(manageData)
+    } else if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 2) {
+      const manageData = { ...formData };
+      let filteredFormFields;
+      filteredFormFields = addressFormData.formFields.filter(
+        (field) => field.dataField !== "isPreferredBilling"
+      );
+      manageData.formFields = filteredFormFields
+      setFormData(manageData)
+    }
+  }, [checkbox, checkboxFeild])
 
   const formActionHandler = {
     DDL_CHANGED: handleChangeDropdownList,
