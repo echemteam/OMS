@@ -57,7 +57,7 @@ const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSucces
     const handleAddResponse = () => {
         const allChildChecked = checkListData.every((item) => item.isMainChecked);
         if (allChildChecked) {
-            checkListData.map((data) => {
+            checkListData.forEach((data) => {
                 let childRequest = {
                     checkListRequest: data.checkListRequest
                 }
