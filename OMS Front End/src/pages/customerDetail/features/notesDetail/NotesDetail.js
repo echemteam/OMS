@@ -62,7 +62,7 @@ const NotesDetail = ({ isEditablePage }) => {
   useEffect(() => {
     if (isAddNotesSuccess && isAddNotesData) {
       ToastService.success(isAddNotesData.errorMessage);
-      onGetNote();
+      getCustomerNoteByCustomerId(customerId);
       setShowModal(!showModal);
     }
   }, [isAddNotesSuccess, isAddNotesData]);
@@ -78,7 +78,7 @@ const NotesDetail = ({ isEditablePage }) => {
   useEffect(() => {
     if (isUpdateNotesSuccess && isUpdateNotesData) {
       ToastService.success(isUpdateNotesData.errorMessage);
-      onGetNote();
+      getCustomerNoteByCustomerId(customerId);
       setShowModal(false);
     }
   }, [isUpdateNotesSuccess, isUpdateNotesData]);

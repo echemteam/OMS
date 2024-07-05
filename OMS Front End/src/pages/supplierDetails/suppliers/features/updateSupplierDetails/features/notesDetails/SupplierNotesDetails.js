@@ -74,7 +74,7 @@ const SupplierNotesDetail = (props) => {
         props.onSuccess();
       }
       ToastService.success(isUpdateSupplierNotesData.errorMessage);
-      ongetNote();
+      getSupplierNotesBySupplierId(supplierId);
       setShowModal(false);
     }
   }, [isUpdateSupplierNotesSuccess, isUpdateSupplierNotesData]);
@@ -85,7 +85,7 @@ const SupplierNotesDetail = (props) => {
         props.onSuccess();
       }
       ToastService.success(isAddSupplierNotesData.errorMessage);
-      ongetNote();
+      getSupplierNotesBySupplierId(supplierId);
       setShowModal(!showModal);
     }
   }, [isAddSupplierNotesSuccess, isAddSupplierNotesData]);
