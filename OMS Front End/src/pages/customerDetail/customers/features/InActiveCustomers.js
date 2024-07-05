@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import CardSection from '../../../../components/ui/card/CardSection';
 import MolGrid from '../../../../components/Grid/MolGrid';
@@ -9,7 +10,6 @@ import { securityKey } from '../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import CustomerApproval from '../../features/cutomerApproval/CustomerApproval';
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
-import { getAuthProps } from '../../../../lib/authenticationLibrary';
 import { encryptUrlData } from '../../../../services/CryptoService';
 import { useNavigate } from "react-router-dom";
 import SwalAlert from '../../../../services/swalService/SwalService';
