@@ -11,6 +11,7 @@ const authSlice = createSlice({
     isAuthenticated: (authData != null),
     user: (authData?.user), //Set user data from cookie.
     token: (authData?.token), //Set token data from cookie.
+    roles: (authData?.roles),
     authData,
     isLogedin: false
   },
@@ -29,8 +30,9 @@ const authSlice = createSlice({
       //Use to create cookie.
       const { securityPermissions, ...newAuthProps } = action.payload;
       setAuthProps(newAuthProps);
-      const { isAuthenticated, message, token, user, sessionTimeout,fullname, ...permissionList } = action.payload;
+      const { isAuthenticated, message, token, user, sessionTimeout, fullname, roles, ...permissionList } = action.payload;
       state.user = user;
+      state.roles = roles;
       state.userPermissions = permissionList;
       saveData('SecurityPermission', permissionList);
       state.isLogedin = true;

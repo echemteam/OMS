@@ -12,16 +12,18 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
-import SwalAlert from "../../../../services/swalService/SwalService";
+import { setFieldDisabled } from "../../../../utils/FieldDisabled/setFieldDisabled";
+import { useSelector } from "react-redux";
 
 const BasicDetail = (props) => {
-  const { warning } = SwalAlert();
   const basicDetailRef = useRef();
-  const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
-  const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
-  const { formSetting } = basicDetailFormDataHalf;
+  const authState = useSelector((state) => state.auth);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [formData, setFormData] = useState(basicDetailFormDataHalf);
+  const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
+
+  const { formSetting } = basicDetailFormDataHalf;
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
 
   useEffect(() => {
@@ -30,32 +32,21 @@ const BasicDetail = (props) => {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
-          responsibleUserDisbled(true)
+          setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
         }
         else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
-          responsibleUserDisbled(false);
+          setFieldDisabled(formData, setFormData, 'responsibleUserId', false);
         }
       }
       if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
-        responsibleUserDisbled(false);
+        setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
-
-  const responsibleUserDisbled = (disabled) => {
-    let responsibleUser = basicDetailFormDataHalf.formFields.find(data => data.id === 'responsibleUserId');
-    if (responsibleUser) {
-      responsibleUser.fieldSetting = { ...responsibleUser.fieldSetting, isDisabled: disabled };
-      let request = {
-        ...formData
-      }
-      setFormData(request);
-    }
-  }
 
   const [
     getAllGroupTypes,
@@ -183,12 +174,10 @@ const BasicDetail = (props) => {
   ]);
 
   useEffect(() => {
-
-    if (
-      isGetAllUserSucess &&
-      allGetAlluserData
-    ) {
-      const getData = allGetAlluserData.map((item) => ({
+    if (isGetAllUserSucess && allGetAlluserData) {
+      const roleName = 'Admin';
+      const filterData = allGetAlluserData.filter((item) => item.roleName === null || item.roleName.toLowerCase() !== roleName.toLocaleLowerCase());
+      const getData = filterData.map((item) => ({
         value: item.userId,
         label: item.fullName,
       }));
@@ -197,10 +186,7 @@ const BasicDetail = (props) => {
       );
       dropdownField.fieldSetting.options = getData;
     }
-  }, [
-    isGetAllUserSucess,
-    allGetAlluserData,
-  ]);
+  }, [isGetAllUserSucess, allGetAlluserData,]);
 
   useEffect(() => {
     if (isAddCustomersBasicInformationSuccess && isAddCustomersBasicInformationData) {

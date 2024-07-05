@@ -18,6 +18,7 @@ import SupplierContactDetail from "../../../addSupplier/features/supplierContact
 import SuplierAddressDetails from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetails";
 import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
 import { getAuthProps } from "../../../../../lib/authenticationLibrary";
+import { useSelector } from "react-redux";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const SupplierDetails = () => {
   const pageId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setisModelOpen] = useState(false);
   const [supplierData, setSupplierData] = useState(null);
+  const authState = useSelector((state) => state.auth);
 
   const { setSupplierId, supplierId, setIsResponsibleUser } = useContext(AddSupplierContext);
 
@@ -44,8 +46,7 @@ const SupplierDetails = () => {
       !isGetSupplierBasicInformationByIdFetching
     ) {
       setSupplierData(GetSupplierBasicInformationByIdData);
-      const authData = getAuthProps();
-      if (authData.user.userID !== GetSupplierBasicInformationByIdData.responsibleUserId) {
+      if (authState?.user?.userID !== GetSupplierBasicInformationByIdData.responsibleUserId) {
         setIsResponsibleUser(false);
       }
     }

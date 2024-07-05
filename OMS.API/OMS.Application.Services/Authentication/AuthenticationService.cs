@@ -6,6 +6,7 @@ using OMS.Domain.Entities.API.Request.Authentication;
 using OMS.Domain.Entities.API.Response.Authentication;
 using OMS.Domain.Entities.API.Response.SecuritySetting;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.Roles;
 using OMS.Domain.Entities.Entity.User;
 using OMS.Domain.Repository;
 using OMS.Shared.Services.Contract;
@@ -49,6 +50,7 @@ namespace OMS.Application.Services.Authentication
                 authResponce.Message = "Invalid credentials !!";
                 return authResponce;
             }
+            BaseRolesDTO role = await repositoryManager.authentication.GetUserRoles(user.UserId);
             List<GetSecurityPermissionByUserIdResponse> response = await repositoryManager.securityPermission.GetSecurityPermissionByUserId(user.UserId);
             //List<SecurityPermissions> res = response.ToMapp<List<GetSecurityPermissionByUserIdResponse>, List<SecurityPermissions>>();
             authResponce.securityPermissions = response.Select(a => new SecurityPermissionsDetails()
@@ -62,6 +64,7 @@ namespace OMS.Application.Services.Authentication
 
             UserDetails userDetails = user.ToMapp<UserDTO, UserDetails>();
             authResponce.User = userDetails;
+            authResponce.Roles = role;
             //authResponce.securityPermissions = response.ToList();
             authResponce.SessionTimeout = Convert.ToInt32((commonSettingService.ApplicationSettings.SessionTimeOut != null) ? Convert.ToInt32(commonSettingService.ApplicationSettings.SessionTimeOut) : 60);
             authResponce.Token = GenerateToken(user.UserId, Convert.ToDouble((commonSettingService.ApplicationSettings.SessionTimeOut != null) ? Convert.ToInt32(commonSettingService.ApplicationSettings.SessionTimeOut) : 60));
