@@ -16,6 +16,7 @@ import CustomerApproval from "../cutomerApproval/CustomerApproval";
 import { securityKey } from "../../../../data/SecurityKey";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { ErrorMessage } from "../../../../data/appMessages";
 
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const childRef = useRef();
@@ -215,9 +216,9 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
             </div>
           </div>
           <div className="field-desc">
-            <div className="inf-label">Responsible User</div>
+            <div className="inf-label">R-User</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.responsibleUserName}</div>
+            <div className="info-desc">{customerData?.responsibleUserName ? customerData.responsibleUserName : ErrorMessage.NotAvailabe }</div>
           </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">Status</div>
@@ -278,14 +279,14 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">{customerData?.taxId}</div>
           </div>
-          <div className="field-desc">
+          {/* <div className="field-desc">
             <div className="inf-label">Is Company</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">
               {customerData?.isCompany}
               {customerData && customerData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
             </div>
-          </div>
+          </div> */}
           <div className="field-desc">
             <div className="inf-label">Is Buying for Third Party</div>
             <b>&nbsp;:&nbsp;</b>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { SettingFormData } from "./config/SettingData";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -9,9 +9,9 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
-const FinancialSettings = (props) => {
+const FinancialSettings = ({ isEditablePage }) => {
   const settingFormRef = useRef();
-  const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
+  const { customerId, isResponsibleUser, settingRef } = useContext(BasicDetailContext);
   const [showButton, setShowButton] = useState(false);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
@@ -42,9 +42,17 @@ const FinancialSettings = (props) => {
 
   useEffect(() => {
     if (customerId > 0) {
-      GetDetailsbyCustomerID(customerId)
+      if (isEditablePage) {
+        GetDetailsbyCustomerID(customerId)
+      }
     };
   }, [customerId]);
+
+  // useEffect(() => {
+  //   if (isEditablePage) {
+
+  //   }
+  // }, [isEditablePage])
 
   useEffect(() => {
     if (isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
@@ -92,15 +100,15 @@ const FinancialSettings = (props) => {
 
   useEffect(() => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
-      if (props.onSuccess) {
-        props.onSuccess();
-      }
       ToastService.success(isAddEditCustomerSettingsData.errorMessage);
     }
   }, [isAddEditCustomerSettingsSuccess, isAddEditCustomerSettingsData]);
 
-  const onhandleEdit = () => {
+  useImperativeHandle(settingRef, () => ({
+    onhandleEdit,
+  }));
 
+  const onhandleEdit = () => {
     const settingFormData = settingFormRef.current.getFormData();
     if (settingFormData && !settingFormData.customerAccountingSettingId) {
       const request = {
@@ -144,24 +152,20 @@ const FinancialSettings = (props) => {
           />
           : <DataLoader />
         }
-        <div className="col-md-12 mt-2 mb-3">
-          <div className="d-flex align-item-end justify-content-end">
-            <div className="d-flex align-item-end">
-              {showButton ?
+        {showButton ?
+          <div className="col-md-12 mt-2 mb-3">
+            <div className="d-flex align-item-end justify-content-end">
+              <div className="d-flex align-item-end">
                 <Buttons
                   buttonTypeClassName="theme-button"
                   buttonText="Save"
                   onClick={onhandleEdit}
                   isLoading={isAddEditCustomerSettingsLoading}
                 />
-                : null}
-              {/* <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-              /> */}
+              </div>
             </div>
           </div>
-        </div>
+          : null}
       </div>
     </>
   );

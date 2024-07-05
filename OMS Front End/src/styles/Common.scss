@@ -771,7 +771,7 @@ a {
   }
 
   .tab-section {
-    margin-bottom: 30px;
+    margin-bottom: 0;
 
     .tab-header {
       border-bottom: 1px solid var(--linkMenu);
@@ -1984,13 +1984,18 @@ input[type="checkbox"]:disabled {
   align-items: center;
 }
 
+.stepper-content {
+  .tab-sub-content {
+    margin-bottom: 0 !important;
+  }
+}
+
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
     }
-    
   }
 
   .address-model {
