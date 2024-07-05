@@ -5,9 +5,6 @@ namespace OMS.Domain.Entities.Entity.Supplier
 {
     public class SupplierDTO : BaseSuppliersDTO, ISupplier, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int? SupplierId { get; set; }
 
         [Column("GroupTypeId")]
         public short? GroupTypeId { get; set; }
