@@ -240,25 +240,30 @@ const BasicDetail = (props) => {
   }));
 
   const handleAddBasicDetails = () => {
+    // debugger
     let data = basicDetailRef.current.getFormData();
-    if (data) {
-      let req = {
-        ...data,
-        groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object"
-          ? data.groupTypeId.value
-          : data.groupTypeId,
-        territoryId: data.territoryId && typeof data.territoryId === "object"
-          ? data.territoryId.value
-          : data.territoryId,
-        countryId: data.countryId && typeof data.countryId === "object"
-          ? data.countryId.value
-          : data.countryId,
-        responsibleUserId: data.responsibleUserId ? data.responsibleUserId : null,
+    // if (data.taxId) {
+    //   ToastService.warning('Please enter valid tax id');
+    // } else {
+      if (data) {
+        let req = {
+          ...data,
+          groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object"
+            ? data.groupTypeId.value
+            : data.groupTypeId,
+          territoryId: data.territoryId && typeof data.territoryId === "object"
+            ? data.territoryId.value
+            : data.territoryId,
+          countryId: data.countryId && typeof data.countryId === "object"
+            ? data.countryId.value
+            : data.countryId,
+          responsibleUserId: data.responsibleUserId ? data.responsibleUserId : null,
+        }
+        addCustomersBasicInformation(req);
+      } else {
+        ToastService.warning('Please enter customer basic information');
       }
-      addCustomersBasicInformation(req);
-    } else {
-      ToastService.warning('Please enter customer basic information');
-    }
+    // }
   };
 
   const handleUpdate = () => {
