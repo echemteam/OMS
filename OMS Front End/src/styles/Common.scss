@@ -1401,7 +1401,8 @@ a {
   box-shadow: 0 4px 8px var(--card-shadow);
   margin: 10px 0;
   // background: #fec971;
-  height: 100%;
+  height: 100px;
+  overflow: auto;
 
   .card-content {
     display: flex;

@@ -23,7 +23,7 @@ const SupplierNotesCard = ({ isAddEditModal, onHandleNote, ongetSupplierNote, no
         {notesFormData.length > 0 ? (
           notesFormData.map((notes, noteIndex) => (
             <div
-              className="col-xxl-6 col-xl-6 col-md-6 col-12 pb-2"
+              className="col-xxl-6 col-xl-6 col-md-6 col-12"
               key={noteIndex}
             >
               <div
