@@ -12,7 +12,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 const FinancialSettings = ({ isEditablePage }) => {
   const settingFormRef = useRef();
   const { customerId, isResponsibleUser, settingRef } = useContext(BasicDetailContext);
-  const [showButton, setShowButton] = useState(false);
+  const [showButton, setShowButton] = useState(true);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
   const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
@@ -24,13 +24,15 @@ const FinancialSettings = ({ isEditablePage }) => {
   const hasAddEditPermission = hasFunctionalPermission(securityKey.ADDEDITCUSTOMERFINANCIAL);
 
   useEffect(() => {
-    if (!isResponsibleUser) {
-      if (hasAddEditPermission.hasAccess === true) {
-        setShowButton(true);
-        formSetting.isViewOnly = false;
-      } else {
-        setShowButton(false);
-        formSetting.isViewOnly = true;
+    if (isEditablePage) {
+      if (!isResponsibleUser) {
+        if (hasAddEditPermission.hasAccess === true) {
+          setShowButton(true);
+          formSetting.isViewOnly = false;
+        } else {
+          setShowButton(false);
+          formSetting.isViewOnly = true;
+        }
       }
     }
   }, [hasAddEditPermission]);
