@@ -19,6 +19,7 @@ import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNaviga
 import { securityKey } from '../../../../../../data/SecurityKey';
 
 const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
+
   const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();

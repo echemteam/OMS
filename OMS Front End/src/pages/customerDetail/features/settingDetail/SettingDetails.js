@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState } from "react";
 //** Lib's */
 import "./SettingDetails.scss"

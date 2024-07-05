@@ -1,18 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./../../HistoryDetail/TimeLine.scss";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { AppIcons } from "../../../../../data/appIcons";
 
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
-import formatDate from "../../../../../lib/formatDate";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Image from "../../../../../components/image/Image";
 import { useGetCustomerAuditHistoryByCustomerIdMutation } from "../../../../../app/services/customerHistoryAPI";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { modifyTimeLineData } from "../../../../../utils/TransformData/TransformAPIData";
-import Filter from "../../../../../components/filter/Filter";
 
 const TimeLine = () => {
   const [historyData, setHistoryData] = useState([]);
