@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState , useContext} from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../../../app/services/supplierAPI';
 import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
 import SwalAlert from '../../../../../../services/swalService/SwalService';
@@ -48,7 +48,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
         setIsButtonDisable(false);
       }
     }
-  }, [hasEditPermission])
+  }, [hasEditPermission, isResponsibleUser])
 
   useEffect(() => {
     if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
@@ -73,20 +73,20 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
         case 3:
           setOptions(StaticStatus[StatusValue[statusId - 1].label]);
           break;
-          case 4:
-            setOptions([
-              { value: "4", label: "Freeze" },
-              { value: "3", label: "Approved" },
-              { value: "1", label: "Pending" },
-            ]);
-            break;
-          case 5:
-            setOptions([
-              { value: "5", label: "Block" },
-              { value: "3", label: "Approved" },
-              { value: "1", label: "Pending" },
-            ]);
-            break;
+        case 4:
+          setOptions([
+            { value: "4", label: "Freeze" },
+            { value: "3", label: "Approved" },
+            { value: "1", label: "Pending" },
+          ]);
+          break;
+        case 5:
+          setOptions([
+            { value: "5", label: "Block" },
+            { value: "3", label: "Approved" },
+            { value: "1", label: "Pending" },
+          ]);
+          break;
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;
@@ -196,7 +196,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
     }
   };
 
-  console.log("first" , supplierData)
+  console.log("first", supplierData)
 
   return (
     <>{!isLoading ?

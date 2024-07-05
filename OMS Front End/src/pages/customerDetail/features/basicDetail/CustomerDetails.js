@@ -48,7 +48,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
         setIsButtonDisable(false);
       }
     }
-  }, [hasEditPermission])
+  }, [hasEditPermission, isResponsibleUser])
 
   useEffect(() => {
     if (isSuccessUpdateCustomerInActiveStatus && updateCustomerInActiveStatusData) {
@@ -219,7 +219,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           <div className="field-desc">
             <div className="inf-label">R-User</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.responsibleUserName ? customerData.responsibleUserName : ErrorMessage.NotAvailabe }</div>
+            <div className="info-desc">{customerData?.responsibleUserName ? customerData.responsibleUserName : ErrorMessage.NotAvailabe}</div>
           </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">Status</div>
