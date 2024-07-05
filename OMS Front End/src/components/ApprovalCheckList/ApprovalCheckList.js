@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 //** Lib's */
 import Buttons from "../ui/button/Buttons";
