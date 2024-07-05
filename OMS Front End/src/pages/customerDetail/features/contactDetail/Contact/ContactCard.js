@@ -16,7 +16,7 @@ const ContactCard = ({ childData, handleEdit, showEditIcon }) => {
     <>
       {cardInfoData && (
         <>
-          <div className="contact-card d-none">
+          <div className="contact-card">
             <div className="add-line">
               <div className="user-icon-name">
                 <span className="icon">
