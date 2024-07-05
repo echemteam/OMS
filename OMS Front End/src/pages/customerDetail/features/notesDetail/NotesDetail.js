@@ -165,7 +165,7 @@ const NotesDetail = ({ isEditablePage }) => {
         modalTitle="Add/Edit Notes"
         modelSizeClass="w-60"
       >
-        <div className="row horizontal-form custom-height-tiny">
+        <div className="row horizontal-form custom-height-tiny add-edit-notesForm">
           <FormCreator config={formData} ref={notesFormRef} {...formData} />
           <div className="col-md-12 mt-2">
             <div className="d-flex align-item-end justify-content-end">

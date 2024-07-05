@@ -1,19 +1,17 @@
 .filter-section {
   position: relative;
-  z-index: 99999;
+  z-index: 111;
 
   .button-sec {
     cursor: pointer;
     border-radius: 5px;
-    padding: 3px 10px;
-    height: 37px;
     display: flex;
     align-items: center;
     justify-content: center;
 
     .filter-icon-img {
       margin-right: 7px;
-      width: 17px;
+      width: 15px;
       filter: brightness(100);
     }
 
@@ -94,6 +92,10 @@
 
         .add-filter-btn {
           margin-right: 45px;
+          button{
+            margin-left: 0;
+            background: var(--primaryColorLight);
+          }
         }
 
         .filter-value-delete-icon {
@@ -144,9 +146,40 @@
     }
   }
 
-  &.active-filter{
-    .filter-body-sec{
+  &.active-filter {
+    .filter-body-sec {
       display: block;
     }
   }
+}
+
+@media only screen and (max-width: 1560px) {
+  .filter-section {
+    .filter-body-sec {
+      width: 650px;
+      .body-desc-part {
+        .filter-Heading {
+          padding: 7px 10px;
+        }
+
+        .filter-content {
+          .filter-value-delete-icon {
+            .delete-icon {
+              .delete-btn {
+                min-width: 27px;
+                min-height: 27px;
+                max-width: 27px;
+                max-height: 27px;
+
+                img {
+                  width: 17px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
 }

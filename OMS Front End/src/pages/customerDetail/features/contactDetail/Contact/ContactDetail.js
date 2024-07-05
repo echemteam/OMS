@@ -170,6 +170,8 @@ const ContactDetail = ({
         rightButton={buttonVisible ? true : false}
         buttonText="Add"
         titleButtonClick={handleToggleModal}
+        isFilter={true}
+        filterHeaderTitle="Contact Filter"
       >
         <ManageContactList
           handleEdit={handleEdit}

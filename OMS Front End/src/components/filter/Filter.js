@@ -8,12 +8,28 @@ import Buttons from "../ui/button/Buttons";
 
 const Filter = (props) => {
   const [isFilterActive, setIsFilterActive] = useState(false);
+  const [filters, setFilters] = useState([{ id: Date.now() }]);
   const filterSectionRef = useRef(null);
 
   const handleClickOutside = (event) => {
-    if (filterSectionRef.current && !filterSectionRef.current.contains(event.target)) {
+    if (
+      filterSectionRef.current &&
+      !filterSectionRef.current.contains(event.target)
+    ) {
       setIsFilterActive(false);
     }
+  };
+
+  const addFilter = () => {
+    setFilters([...filters, { id: Date.now() }]);
+  };
+
+  const removeFilter = (id) => {
+    setFilters(filters.filter((filter) => filter.id !== id));
+  };
+
+  const clearAllFilters = () => {
+    setFilters([]);
   };
 
   useEffect(() => {
@@ -43,10 +59,10 @@ const Filter = (props) => {
         <div className="body-desc-part">
           <div className="filter-Heading">
             <div className="left-title">
-              <h4>{props.headerTitle}</h4>
+              <h4>{props.headerTitle ?? "Filters"}</h4>
             </div>
             <div className="right-action">
-              <a href="#." title="Clear All Filters">
+              <a href="#." title="Clear All Filters" onClick={clearAllFilters}>
                 Clear All
                 <Image
                   imagePath={AppIcons.ClearAllIcon}
@@ -56,65 +72,69 @@ const Filter = (props) => {
             </div>
           </div>
           <div className="filter-content">
-            <div className="bg-filter">
-              <div className="row">
-                <div className="col-xxl-5 col-xl-5 col-md-5 col-12 pr-0">
-                  <div className="input-section">
-                    <DropdownSelect placeholder={props.placeholder} />
-                  </div>
+            <div className="row">
+              <div className="col-xxl-5 col-xl-5 col-md-5 col-12 pr-0">
+                <div className="input-section">
+                  <DropdownSelect placeholder={props.placeholder} />
                 </div>
-                <div className="col-xxl-7 col-xl-7 col-md-7 col-12">
-                  <div className="filter-value-delete-icon">
-                    <div className="input-section">
-                      <Input placeholder="Enter filter Values" />
-                    </div>
-                    <div className="delete-icon">
-                      <div className="delete-btn" title="Delete Filter">
-                        <Image
-                          imagePath={AppIcons.deleteIcon}
-                          altText="Delete"
-                        />
-                      </div>
+              </div>
+              <div className="col-xxl-7 col-xl-7 col-md-7 col-12">
+                <div className="filter-value-delete-icon">
+                  <div className="input-section">
+                    <Input placeholder="Enter filter Values" />
+                  </div>
+                  <div className="delete-icon">
+                    <div className="delete-btn" title="Delete Filter">
+                      <Image imagePath={AppIcons.deleteIcon} altText="Delete" />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="mt-2 bg-filter">
-              <div className="row ">
-                <div className="col-xxl-2 col-xl-2 col-md-2 col-12 pr-0">
-                  <div className="input-section">
-                    <DropdownSelect placeholder="And / Or" />
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-xl-3 col-md-3 col-12 pr-0">
-                  <div className="input-section">
-                    <DropdownSelect placeholder={props.placeholder} />
-                  </div>
-                </div>
-                <div className="col-xxl-7 col-xl-7 col-md-7 col-12">
-                  <div className="filter-value-delete-icon">
+            {filters.map((filter) => (
+              <div key={filter.id} className="mt-2 bg-filter">
+                <div className="row">
+                  <div className="col-xxl-2 col-xl-2 col-md-2 col-12 pr-0">
                     <div className="input-section">
-                      <Input placeholder="Enter filter Values" />
+                      <DropdownSelect placeholder="And / Or" />
                     </div>
-                    <div className="delete-icon">
-                      <div className="delete-btn" title="Delete Filter">
-                        <Image
-                          imagePath={AppIcons.deleteIcon}
-                          altText="Delete"
-                        />
+                  </div>
+                  <div className="col-xxl-3 col-xl-3 col-md-3 col-12 pr-0">
+                    <div className="input-section">
+                      <DropdownSelect placeholder={props.placeholder} />
+                    </div>
+                  </div>
+                  <div className="col-xxl-7 col-xl-7 col-md-7 col-12">
+                    <div className="filter-value-delete-icon">
+                      <div className="input-section">
+                        <Input placeholder="Enter filter Values" />
+                      </div>
+                      <div className="delete-icon">
+                        <div
+                          className="delete-btn"
+                          title="Delete Filter"
+                          onClick={() => removeFilter(filter.id)}
+                        >
+                          <Image
+                            imagePath={AppIcons.deleteIcon}
+                            altText="Delete"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ))}
             <div className="row mt-2">
-              <div className="col-xxl-12 col-xl-12 col-md-12 col-12 d-flex justify-content-end">
-                <div className="add-filter-btn" title="Add More Filter">
+              <div className="col-xxl-12 col-xl-12 col-md-12 col-12 d-flex justify-content-start">
+                <div
+                  className="add-filter-btn"
+                  title="Add More Filter"
+                  onClick={addFilter}
+                >
                   <Buttons
                     buttonTypeClassName="outline-dark-btn"
-                    onClick=""
                     textWithIcon={true}
                     imagePath={AppIcons.PlusIcon}
                     buttonText="Add Filter"

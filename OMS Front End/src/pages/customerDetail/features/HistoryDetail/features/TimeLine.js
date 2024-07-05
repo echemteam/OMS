@@ -78,12 +78,6 @@ const TimeLine = () => {
     <>
       <div className="row">
         <div className="d-flex justify-content-end mt-2">
-          <div className="mr-3">
-            <Filter
-              headerTitle="History Filters"
-              placeholder="Select Filter"
-            />
-          </div>
           <Buttons
             buttonTypeClassName="theme-button"
             buttonText="Refresh"
