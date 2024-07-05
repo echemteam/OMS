@@ -19,6 +19,8 @@ import SuplierAddressDetails from "../../../addSupplier/features/supplierAddress
 import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
 import { getAuthProps } from "../../../../../lib/authenticationLibrary";
 import { useSelector } from "react-redux";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { securityKey } from "../../../../../data/SecurityKey";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ const SupplierDetails = () => {
   const [supplierData, setSupplierData] = useState(null);
   const authState = useSelector((state) => state.auth);
 
-  const { setSupplierId, supplierId, setIsResponsibleUser } = useContext(AddSupplierContext);
+  const { setSupplierId, supplierId, isResponsibleUser , setIsResponsibleUser } = useContext(AddSupplierContext);
 
   const [
     getSupplierBasicInformationById,
@@ -38,6 +40,20 @@ const SupplierDetails = () => {
       data: GetSupplierBasicInformationByIdData,
     },
   ] = useLazyGetSupplierBasicInformationByIdQuery();
+
+  const hasNotePermission = hasFunctionalPermission(securityKey.SUPPLIERNOTES);
+  const hasAddressPermission = hasFunctionalPermission(
+    securityKey.SUPPLIERADDRESS
+  );
+  const hasContactPermission = hasFunctionalPermission(
+    securityKey.SUPPLIERCONTACT
+  );
+  const hasHistoryPermission = hasFunctionalPermission(
+    securityKey.SUPPLIERHISTORY
+  );
+  const hasDocumentPermission = hasFunctionalPermission(
+    securityKey.SUPPLIERDOCUMENT
+  );
 
   useEffect(() => {
     if (
@@ -79,9 +95,12 @@ const SupplierDetails = () => {
   const tabs = [
     {
       sMenuItemCaption: "Address",
-      component: <div className="mt-2">
-        <SuplierAddressDetails isEditablePage={true} />
-      </div>,
+      component: (
+        <div className="mt-2">
+          <SuplierAddressDetails isEditablePage={true} />
+        </div>
+      ),
+      isVisible: hasAddressPermission.hasAccess,
     },
     {
       sMenuItemCaption: "Contact",
@@ -90,15 +109,8 @@ const SupplierDetails = () => {
           <SupplierContactDetail isEditablePage={true} />
         </div>
       ),
+      isVisible: hasContactPermission.hasAccess,
     },
-    // {
-    //   sMenuItemCaption: "Settings",
-    //   component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
-    // },
-    // {
-    //   sMenuItemCaption: "Notes",
-    //   component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>,
-    // },
     {
       sMenuItemCaption: "Documents",
       component: (
@@ -106,16 +118,27 @@ const SupplierDetails = () => {
           <SupplierDocumentDetail pageId={pageId} isEditablePage={true} />
         </div>
       ),
+      isVisible: hasDocumentPermission.hasAccess,
     },
     {
       sMenuItemCaption: "Notes",
-      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>,
+      component: (
+        <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>
+      ),
+      isVisible: hasNotePermission.hasAccess,
     },
     {
       sMenuItemCaption: "History",
-      component: <div className="mt-2">{<SupplierHistoryDetail />}</div>,
+      component: (
+        <div className="mt-2">{<SupplierHistoryDetail />}</div>
+      ),
+      isVisible: hasHistoryPermission.hasAccess,
     },
   ];
+
+  const visibleTabs = !isResponsibleUser
+    ? tabs.filter((tab) => tab.isVisible)
+    : tabs;
 
   return (
     <>
@@ -140,7 +163,7 @@ const SupplierDetails = () => {
               buttonText="Back"
               imagePath={AppIcons.BackArrowIcon}
             ></Buttons>
-            <RenderTabs tabs={tabs} />
+            <RenderTabs tabs={supplierId ? visibleTabs : null} />
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ import { securityKey } from '../../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { useLazyGetAllUserQuery } from '../../../../../app/services/commonAPI';
 import { excludingRoles } from '../../../../customerDetail/features/basicDetail/config/BasicDetailForm.data';
+import { setFieldDisabled } from '../../../../../utils/FieldDisabled/setFieldDisabled';
 
 const SupplierBasicDetail = (props) => {
 
@@ -19,7 +20,7 @@ const SupplierBasicDetail = (props) => {
   const [formData, setFormData] = useState(supplierBasicData);
   const [supplierName, setSupplierName] = useState('');
 
-  const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId } = useContext(AddSupplierContext);
+  const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId , isResponsibleUser} = useContext(AddSupplierContext);
 
   const { formSetting } = supplierBasicData;
   const [isButtonDisable, setIsButtonDisable] = useState(false);
@@ -27,13 +28,22 @@ const SupplierBasicDetail = (props) => {
 
   useEffect(() => {
     if (props.isOpen) {
-      if (hasEditPermission.isViewOnly === true) {
-        formSetting.isViewOnly = true;
-        setIsButtonDisable(true);
+      if (!isResponsibleUser) {
+        if (hasEditPermission.isViewOnly === true) {
+          formSetting.isViewOnly = true;
+          setIsButtonDisable(true);
+          setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
+        }
+        else {
+          formSetting.isViewOnly = false;
+          setIsButtonDisable(false);
+          setFieldDisabled(formData, setFormData, 'responsibleUserId', false);
+        }
       }
-      else {
+      if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
+        setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])

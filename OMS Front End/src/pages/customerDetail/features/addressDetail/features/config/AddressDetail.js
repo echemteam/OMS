@@ -25,6 +25,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [formData, setFormData] = useState(addressFormData);
   const [addressData, setAddressData] = useState();
   const [updateSetData, setUpdateSetData] = useState();
+  const [updateSetDataSupplier, setUpdateSetDataSupplier] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const [isButtonDisable, setIsButtonDisable] = useState(false);
@@ -136,7 +137,6 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   }, [mainId]);
 
   const manageFilteredForm = () => {
-    onreset()
     const manageData = { ...formData };
     const filteredFormFields = addressFormData.formFields.filter(
       (field) =>
@@ -269,6 +269,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
 
   const handleSetData = (data) => {
     setUpdateSetData(data);
+    if (isSupplier) {
+      setUpdateSetDataSupplier(data)
+    }
     let form = { ...formData };
     if (data) {
       const dropdownFieldIndex = form.formFields.findIndex(
@@ -381,6 +384,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     restData.initialState = { ...addressFormData.initialState };
     setFormData(restData);
     setUpdateSetData(null);
+    setUpdateSetDataSupplier(null)
   };
 
   const handleChangeDropdownList = (data, dataField) => {
@@ -524,12 +528,12 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
             ? data.cityId.value
             : data.cityId,
       };
-      if (updateSetData) {
+      if (updateSetData || updateSetDataSupplier) {
         let setReq = {
           ...req,
-          addressId: updateSetData.addressId,
-          customerAddressId: isSupplier === false ? updateSetData.customerAddressId : 0,
-          supplierAddressId: isSupplier === true ? updateSetData.supplierAddressId : 0,
+          addressId: updateSetData ? updateSetData.addressId : updateSetDataSupplier.addressId,
+          customerAddressId: isSupplier === false ? (updateSetData ? updateSetData.customerAddressId : updateSetDataSupplier.customerAddressId) : 0,
+          supplierAddressId: isSupplier === true ? (updateSetData ? updateSetData.supplierAddressId : updateSetDataSupplier.supplierAddressId) : 0,
         };
         updateAddAddress(setReq);
         setAddressData(setReq);

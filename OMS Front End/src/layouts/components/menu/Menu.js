@@ -73,7 +73,7 @@ export const Menu = [
         id: "Suppliers",
         submenuName: "Supplier",
         to: "/Suppliers",
-        securityKey: securityKey.SUPPLIER,
+        securityKey: securityKey.SUPPLIERLIST,
       },
     ],
   },

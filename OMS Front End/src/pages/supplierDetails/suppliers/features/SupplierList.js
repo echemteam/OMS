@@ -16,6 +16,8 @@ import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/a
 import { securityKey } from '../../../../data/SecurityKey';
 import SupplierApproval from './supplierApproval/SupplierApproval';
 import { useAddSupplierNotesMutation } from '../../../../app/services/supplierNotesAPI';
+import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { useSelector } from 'react-redux';
 
 const SupplierList = ({ statusId, configFile }) => {
 
@@ -31,7 +33,9 @@ const SupplierList = ({ statusId, configFile }) => {
   const [supplierID, setSupplierId] = useState();
   const [staticId, setStaticId] = useState()
   const [statusFeild, setStatusFeild] = useState()
+  const authState = useSelector((state) => state.auth);
   const { supplierListRef } = useContext(SupplierContext);
+  const { isResponsibleUser, setIsResponsibleUser } = useContext(AddSupplierContext);
 
   const [
     getSuppliers,
@@ -45,9 +49,8 @@ const SupplierList = ({ statusId, configFile }) => {
   const [addSupplierNotes, { isLoading: isAddSupplierNotesLoading, isSuccess: isAddSupplierNotesSuccess, data: isAddSupplierNotesData, },] = useAddSupplierNotesMutation();
 
   useEffect(() => {
-    const actionColumn = configFile?.columns.find(
-      (column) => column.name === "Action"
-    );
+    const actionColumn = configFile?.columns.find((column) => column.name === "Action");
+    const approvalAction = configFile?.columns.find((column) => column.name === "Approve");
     if (actionColumn) {
       const hasEdit = hasFunctionalPermission(securityKey.EDITSUPPLIER);
       const hasBlock = hasFunctionalPermission(securityKey.BLOCKSUPPLIER);
@@ -66,8 +69,8 @@ const SupplierList = ({ statusId, configFile }) => {
       if (actionColumn.defaultAction.allowFreeze) {
         actionColumn.defaultAction.allowFreeze = hasFreeze?.hasAccess;
       }
-      if (actionColumn.defaultAction.allowActiveCustomer) {
-        actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+      if (actionColumn.defaultAction.allowActiveSupplier) {
+        actionColumn.defaultAction.allowActiveSupplier = hasActive?.hasAccess;
       }
       if (actionColumn.defaultAction.allowDisable) {
         actionColumn.defaultAction.allowDisable = hasDisable?.hasAccess;
@@ -79,7 +82,41 @@ const SupplierList = ({ statusId, configFile }) => {
         actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
       }
     }
+    if (isResponsibleUser) {
+      if (approvalAction) {
+        if (approvalAction.colSettings.allowCheckbox) {
+          approvalAction.colSettings.allowCheckbox = true;
+        }
+      }
+    }
   }, [configFile]);
+
+  const hasResponsibleUserhasAccess = () => {
+    const actionColumn = configFile?.columns.find((column) => column.name === "Action");
+    if (actionColumn) {
+      if (actionColumn.defaultAction.hasOwnProperty('allowEdit')) {
+        actionColumn.defaultAction.allowEdit = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty("allowBlocked")) {
+        actionColumn.defaultAction.allowBlocked = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowFreeze')) {
+        actionColumn.defaultAction.allowFreeze = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowActiveSupplier')) {
+        actionColumn.defaultAction.allowActiveSupplier = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowDisable')) {
+        actionColumn.defaultAction.allowDisable = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
+        actionColumn.defaultAction.allowUnblocked = true;
+      }
+      if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
+        actionColumn.defaultAction.allowUnblocked = true;
+      }
+    }
+  }
 
   const handlePageChange = (page) => {
     const request = {
@@ -96,6 +133,13 @@ const SupplierList = ({ statusId, configFile }) => {
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
+        const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authState?.user?.userID);
+        if (isResponsibleId) {
+          setIsResponsibleUser(true);
+          hasResponsibleUserhasAccess();
+        } else {
+          setIsResponsibleUser(false);
+        }
         setDataSource(isListeData.dataSource);
       }
       if (isListeData.totalRecord) {

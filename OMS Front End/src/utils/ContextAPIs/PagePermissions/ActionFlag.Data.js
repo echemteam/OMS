@@ -12,5 +12,6 @@ export const ActionFlag = {
     Disable: 'DISABLE',
     Unfreeze: 'UNFREEZE',
     UnBlock: 'UNBLOCK',
-    ActiveCustomer: 'ACTIVECUSTOMER'
+    ActiveCustomer: 'ACTIVECUSTOMER',
+    ActiveSupplier: 'ACTIVESUPPLIER'
 };

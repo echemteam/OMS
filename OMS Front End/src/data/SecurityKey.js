@@ -63,10 +63,12 @@ export const securityKey = {
      CUSTOMERHISTORY: "Customer History",
 
 
-     //** Supplier */
+     //** SUPPLIER */
      SUPPLIER: "Supplier",
      ADDSUPPLIER: "Add Supplier",
-     EDITSUPPLIER: "Edit Supplier",
+     SUPPLIERLIST: "Supplier List",
+     //** EDITSUPPLIER */
+     EDITSUPPLIER : "Edit Supplier",
      BLOCKSUPPLIER: "Block Supplier",
      UNBLOCKSUPPLIER: "UnBlock Supplier",
      DISABLESUPPLIER: "Disable Supplier",
@@ -74,15 +76,30 @@ export const securityKey = {
      UNFREEZESUPPLIER: "UnFreeze Supplier",
      ACTIVESUPPLIER: "Active Supplier",
      EDITBASICSUPPLIERDETAILS: "Edit Basic Supplier Details",
+     //** Supplier Address */
+     SUPPLIERADDRESS: "Supplier Address",
      ADDSUPPLIERADDRESS: "Add Supplier Address",
      EDITSUPPLIERADDRESS: "Edit Supplier Address",
+     //** Supplier Contact */
+     SUPPLIERCONTACT: "Supplier Contact",
      ADDSUPPLIERCONTACT: "Add Supplier Contact",
      EDITSUPPLIERCONTACT: "Edit Supplier Contact",
+     //** Supplier Document */
+     SUPPLIERDOCUMENT: "Supplier Document",
      ADDSUPPLIERDOCUMENT: "Add Supplier Document",
      DELETESUPPLIERDOCUMENT: "Delete Supplier Document",
      DOWNALODSUPPLIERDOCUMENT: "Downalod Supplier Document",
+     //** Supplier Note */
+     SUPPLIERNOTES: "Supplier Notes",
      ADDSUPPLIERNOTE: "Add Supplier Note",
      EDITSUPPLIERNOTE: "Edit Supplier Note",
+     //** Supplier History */
+     SUPPLIERHISTORY: "Supplier History",
+
+
+
+
+
      //** Wating for the generate keys */
      //  ADDCUSTOMERSETTING: "Add Customer Setting",
      //  EDITCUSTOMERSETTING: "Edit Customer Setting",

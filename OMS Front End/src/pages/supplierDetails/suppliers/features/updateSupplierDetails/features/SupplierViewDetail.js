@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState , useContext} from 'react'
 import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../../../app/services/supplierAPI';
 import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
 import SwalAlert from '../../../../../../services/swalService/SwalService';
@@ -14,6 +14,9 @@ import DataLoader from '../../../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../../../components/ui/centerModel/CenterModel';
 import SupplierApproval from '../../supplierApproval/SupplierApproval';
 import { ErrorMessage } from '../../../../../../data/appMessages';
+import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import { securityKey } from '../../../../../../data/SecurityKey';
 
 const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
   const childRef = useRef();
@@ -30,6 +33,21 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
 
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
   const [updateSupplierInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
+
+  const { isResponsibleUser } = useContext(AddSupplierContext);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
+
+  useEffect(() => {
+    if (!isResponsibleUser) {
+      if (hasEditPermission.isViewOnly === true) {
+        setIsButtonDisable(true);
+      }
+      else {
+        setIsButtonDisable(false);
+      }
+    }
+  }, [hasEditPermission])
 
   useEffect(() => {
     if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
@@ -209,6 +227,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
                 value={selectedStatus}
                 onChange={handleStatusChange}
                 placeholder="Select Status"
+                isDisabled={isButtonDisable}
               />
             </div>
 
