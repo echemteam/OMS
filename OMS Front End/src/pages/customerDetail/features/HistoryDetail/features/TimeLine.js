@@ -12,6 +12,7 @@ import { useGetCustomerAuditHistoryByCustomerIdMutation } from "../../../../../a
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { modifyTimeLineData } from "../../../../../utils/TransformData/TransformAPIData";
+import Filter from "../../../../../components/filter/Filter";
 
 const TimeLine = () => {
   const [historyData, setHistoryData] = useState([]);
@@ -52,16 +53,16 @@ const TimeLine = () => {
 
   useEffect(() => {
     if (isGetHistorySuccess && isGetHistoryData) {
-      if (isGetHistoryData.dataSource && isGetHistoryData.dataSource.length > 0) {
+      if (
+        isGetHistoryData.dataSource &&
+        isGetHistoryData.dataSource.length > 0
+      ) {
         const modifyData = modifyTimeLineData(isGetHistoryData.dataSource);
         if (refreshData) {
           setHistoryData(modifyData);
           setRefreshData(false);
         } else {
-          setHistoryData((prevData) => [
-            ...prevData,
-            ...modifyData,
-          ]);
+          setHistoryData((prevData) => [...prevData, ...modifyData]);
         }
       } else {
         setHasMore(false);

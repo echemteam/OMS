@@ -165,7 +165,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
 
   return (
     <div>
-      <div className="row horizontal-form mt-4">
+      <div className="row horizontal-form mt-4 addEditContact-form">
         <FormCreator config={formData} ref={ref} {...formData} />
       </div>
       <div className="row">
