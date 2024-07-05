@@ -63,7 +63,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     }
 
     useEffect(() => {
-        if (isGetCheckListSuccess, isGetCheckListData) {
+        if (isGetCheckListSuccess && isGetCheckListData) {
             setValidateCheckList(isGetCheckListData);
         }
     }, [isGetCheckListSuccess, isGetCheckListData])
