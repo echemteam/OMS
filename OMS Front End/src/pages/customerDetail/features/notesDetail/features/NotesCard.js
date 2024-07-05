@@ -1,15 +1,9 @@
 import { AppIcons } from "../../../../../data/appIcons";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { getRandomColor } from "../../../../../utils/RandomColors/RandomColors";
-
-import { useEffect } from "react";
 import formatDate from "../../../../../lib/formatDate";
 
-const NotesCard = ({ isAddEditModal, onHandleNote, ongetcustomerNote, notesFormData, }) => {
-
-  useEffect(() => {
-    ongetcustomerNote();
-  }, []);
+const NotesCard = ({ isAddEditModal, onHandleNote, notesFormData }) => {
 
   const handleEditClick = (note) => {
     isAddEditModal(true);
@@ -51,17 +45,6 @@ const NotesCard = ({ isAddEditModal, onHandleNote, ongetcustomerNote, notesFormD
                         }}
                       ></div>
                     </div>
-                    {/* <div className="card-notes ">
-                      <div className="note-date "></div>
-                      <div className="edit-button ">
-                        <Buttons
-                          buttonTypeClassName="edit-btn"
-                          onClick={() => handleEditClick(notes)}
-                          textWithIcon={true}
-                          imagePath={AppIcons.editThemeIcon}
-                        ></Buttons>
-                      </div>
-                    </div> */}
                   </div>
                 </div>
               </div>

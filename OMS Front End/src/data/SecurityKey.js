@@ -57,8 +57,8 @@ export const securityKey = {
      ADDEDITCUSTOMERSHIPPINGSETTING: "AddEdit Customer Shipping Setting",
      //** Customer Note */
      CUSTOMERNOTES: "Customer Notes",
-     ADDCUSTOMERNOTE: "Add Customer Note",
-     EDITCUSTOMERNOTE: "Edit Customer Note",
+     ADDCUSTOMERNOTE: "Add Customer Notes",
+     EDITCUSTOMERNOTE: "Edit Customer Notes",
      //** Customer History */
      CUSTOMERHISTORY: "Customer History",
 
