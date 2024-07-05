@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { SettingFormData } from "./config/SettingData";
@@ -49,12 +50,6 @@ const FinancialSettings = ({ isEditablePage }) => {
       }
     };
   }, [customerId]);
-
-  // useEffect(() => {
-  //   if (isEditablePage) {
-
-  //   }
-  // }, [isEditablePage])
 
   useEffect(() => {
     if (isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
