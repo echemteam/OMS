@@ -37,6 +37,7 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     //** Use for Tab's */
     const nextRef = useRef(null);
+    const settingRef = useRef(null);
     const [activeTab, setActiveTab] = useState(0);
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
@@ -47,13 +48,18 @@ export const BasicDetailContextProvider = ({ children }) => {
     //** */
 
     //** Use for Move next step */
-    const addCustomer = () => {
+    const addCustomer = (data) => {
         if (customerId > 0) {
             setActiveTab((prev) => prev + 1);
         }
         else {
             if (nextRef.current) {
                 nextRef.current.handleAddBasicDetails();
+            }
+        }
+        if (data === 5) {
+            if (settingRef.current) {
+                settingRef.current.onhandleEdit();
             }
         }
     }
@@ -63,7 +69,7 @@ export const BasicDetailContextProvider = ({ children }) => {
         <BasicDetailContext.Provider value={{
             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, contactMainModal, setPhoneNumberData,
             phoneNumberData, setAllCountries, allCountries, setMainId, mainId, contactId, setContactId, contactNumbers, setContactNumbers, setContactMainModal,
-            emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList,
+            emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
             setIsResponsibleUser, isResponsibleUser
         }}>
             {children}

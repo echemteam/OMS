@@ -53,10 +53,10 @@ const SettingDetails = ({ isEditablePage }) => {
       sMenuItemCaption: "Financial",
       component: (
         <div className="mt-4 financial-sec">
-          {showFinacialTab ?
-            <FinancialSettings /> :
-            <Unauthorize />
-          }
+          {/* {showFinacialTab ? */}
+            <FinancialSettings isEditablePage={isEditablePage}/> :
+            {/* <Unauthorize /> */}
+          {/* } */}
         </div>
       ),
     },
@@ -64,10 +64,10 @@ const SettingDetails = ({ isEditablePage }) => {
       sMenuItemCaption: "Shipping",
       component: (
         <div className="mt-4 financial-sec">
-          {showShippingTab ?
+          {/* {showShippingTab ? */}
             <ShippingSettings isEditablePage={isEditablePage} />
-            : <Unauthorize />
-          }
+            {/* {/* : <Unauthorize /> */}
+          {/* } */} 
         </div>
       ),
     },

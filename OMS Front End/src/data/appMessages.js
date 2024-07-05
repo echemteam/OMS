@@ -36,6 +36,7 @@ export const ErrorMessage = {
 	Already_Exist: '{0} already exist',
 	validateQuantty: 'Please select at least one size',
 	CompareEmail: 'Email address already exist',
+	NotAvailabe : "N/A"
 };
 
 export const SuccessMessage = {

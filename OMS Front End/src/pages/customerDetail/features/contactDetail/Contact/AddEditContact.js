@@ -137,24 +137,24 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   }
 
   useEffect(() => {
-    if (isEdit === false) {
+    if (!isEdit) {
       let form = { ...contactDetailFormData };
       const dropdownFieldIndex = form.formFields.findIndex(
         (item) => item.dataField === "contactTypeId"
       );
-      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = false;
+      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = isSupplier ? false : true;
       setFormData(form);
     }
-  }, [isEdit])
+  }, [isOpen])
 
   //** Reset Data */
   const onResetData = () => {
+    setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', false);
     let form = { ...contactDetailFormData };
     form.initialState = { ...contactDetailFormData.initialState };
     setFormData(form);
     setCustomerContactId(0);
     setSupplierContactId(0);
-    setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', false);
   };
 
   //** Use Imperative Handle  */

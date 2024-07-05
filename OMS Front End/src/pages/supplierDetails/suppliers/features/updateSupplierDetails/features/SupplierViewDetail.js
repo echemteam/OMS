@@ -13,6 +13,7 @@ import Buttons from '../../../../../../components/ui/button/Buttons';
 import DataLoader from '../../../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../../../components/ui/centerModel/CenterModel';
 import SupplierApproval from '../../supplierApproval/SupplierApproval';
+import { ErrorMessage } from '../../../../../../data/appMessages';
 
 const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
   const childRef = useRef();
@@ -195,9 +196,9 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
             </div>
           </div>
           <div className="field-desc">
-            <div className="inf-label">Responsible User</div>
+            <div className="inf-label">R-User</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.responsibleUserName}</div>
+            <div className="info-desc">{supplierData?.responsibleUserName ? supplierData?.responsibleUserName : ErrorMessage.NotAvailabe}</div>
           </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">Status</div>
