@@ -21,7 +21,7 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDTO<int>> CheckSupplierNameExist(SupplierDTO supplierDTO);
         Task<EntityList<GetSupplierAuditHistoryBySupplierIdResponse>> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest);
         Task<AddEntityDTO<int>> AddEditContactForSupplier(AddEditContactForSupplierRequest requestData, short createdBy);
-
+        Task<List<GetSupplierDetailsBySupplierNameResponse>> GetSupplierDetailsBySupplierName(string supplierName);
 
     }
 }

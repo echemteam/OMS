@@ -5,23 +5,23 @@ import Buttons from "../../../../components/ui/button/Buttons";
 import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import CardSection from "../../../../components/ui/card/CardSection";
-import { basicDetailFormDataHalf } from "./config/BasicDetailForm.data";
+import { basicDetailFormDataHalf, excludingRoles } from "./config/BasicDetailForm.data";
+import { setFieldDisabled } from "../../../../utils/FieldDisabled/setFieldDisabled";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
-import SwalAlert from "../../../../services/swalService/SwalService";
 
 const BasicDetail = (props) => {
-  const { warning } = SwalAlert();
   const basicDetailRef = useRef();
-  const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const [customerName, setCustomerName] = useState('');
-  const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
-  const { formSetting } = basicDetailFormDataHalf;
   const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [formData, setFormData] = useState(basicDetailFormDataHalf);
+  const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
+
+  const { formSetting } = basicDetailFormDataHalf;
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
 
   useEffect(() => {
@@ -30,32 +30,21 @@ const BasicDetail = (props) => {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
-          responsibleUserDisbled(true)
+          setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
         }
         else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
-          responsibleUserDisbled(false);
+          setFieldDisabled(formData, setFormData, 'responsibleUserId', false);
         }
       }
       if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
-        responsibleUserDisbled(false);
+        setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
-
-  const responsibleUserDisbled = (disabled) => {
-    let responsibleUser = basicDetailFormDataHalf.formFields.find(data => data.id === 'responsibleUserId');
-    if (responsibleUser) {
-      responsibleUser.fieldSetting = { ...responsibleUser.fieldSetting, isDisabled: disabled };
-      let request = {
-        ...formData
-      }
-      setFormData(request);
-    }
-  }
 
   const [
     getAllGroupTypes,
@@ -106,7 +95,7 @@ const BasicDetail = (props) => {
     },
   ] = useUpdateCustomersBasicInformationMutation();
 
-  const [CheckCustomerNameExist, { isLoading: isCustomerNameExistLoading, isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
+  const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
 
 
   useEffect(() => {
@@ -183,12 +172,12 @@ const BasicDetail = (props) => {
   ]);
 
   useEffect(() => {
+    if (isGetAllUserSucess && allGetAlluserData) {
+      const filterData = allGetAlluserData.filter((item) => {
+        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
+      });
 
-    if (
-      isGetAllUserSucess &&
-      allGetAlluserData
-    ) {
-      const getData = allGetAlluserData.map((item) => ({
+      const getData = filterData.map((item) => ({
         value: item.userId,
         label: item.fullName,
       }));
@@ -197,10 +186,7 @@ const BasicDetail = (props) => {
       );
       dropdownField.fieldSetting.options = getData;
     }
-  }, [
-    isGetAllUserSucess,
-    allGetAlluserData,
-  ]);
+  }, [isGetAllUserSucess, allGetAlluserData,]);
 
   useEffect(() => {
     if (isAddCustomersBasicInformationSuccess && isAddCustomersBasicInformationData) {
@@ -258,7 +244,9 @@ const BasicDetail = (props) => {
     if (data) {
       let req = {
         ...data,
-        groupTypeId: data.groupTypeId.value,
+        groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object"
+          ? data.groupTypeId.value
+          : data.groupTypeId,
         territoryId: data.territoryId && typeof data.territoryId === "object"
           ? data.territoryId.value
           : data.territoryId,

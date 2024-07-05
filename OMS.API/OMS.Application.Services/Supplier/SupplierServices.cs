@@ -1,6 +1,7 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Supplier;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Supplier;
@@ -71,6 +72,10 @@ namespace OMS.Application.Services.Supplier
         {
             var supplierAuditList = await repositoryManager.supplier.GetSupplierAuditHistoryBySupplierId(queryRequest);
             return supplierAuditList!;
+        }
+        public async Task<List<GetSupplierDetailsBySupplierNameResponse>> GetSupplierDetailsBySupplierName(string supplierName)
+        {
+            return await repositoryManager.supplier.GetSupplierDetailsBySupplierName(supplierName);
         }
         #endregion
 

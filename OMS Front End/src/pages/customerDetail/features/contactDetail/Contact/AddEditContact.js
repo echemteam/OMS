@@ -13,7 +13,7 @@ import { setFieldDisabled } from "../../../../../utils/FieldDisabled/setFieldDis
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey, isEditablePage, isSupplier, isEdit , isOpen }) => {
+const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey, isEditablePage, isSupplier, isEdit, isOpen }) => {
 
   //** State */
   const ref = useRef();
@@ -137,35 +137,24 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   }
 
   useEffect(() => {
-    if (isEdit === false) {
+    if (!isEdit) {
       let form = { ...contactDetailFormData };
       const dropdownFieldIndex = form.formFields.findIndex(
         (item) => item.dataField === "contactTypeId"
       );
-      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = true;
-      setFormData(form);
-    }
-  }, [isEdit])
-
-  useEffect(() => {
-    if (isSupplier === true) {
-      let form = { ...contactDetailFormData };
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "contactTypeId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = false;
+      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = isSupplier ? false : true;
       setFormData(form);
     }
   }, [isOpen])
 
   //** Reset Data */
   const onResetData = () => {
+    setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', false);
     let form = { ...contactDetailFormData };
     form.initialState = { ...contactDetailFormData.initialState };
     setFormData(form);
     setCustomerContactId(0);
     setSupplierContactId(0);
-    setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', false);
   };
 
   //** Use Imperative Handle  */

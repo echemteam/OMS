@@ -11,12 +11,11 @@ import { useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAl
 import { securityKey } from '../../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { useLazyGetAllUserQuery } from '../../../../../app/services/commonAPI';
-import SwalAlert from '../../../../../services/swalService/SwalService';
+import { excludingRoles } from '../../../../customerDetail/features/basicDetail/config/BasicDetailForm.data';
 
 const SupplierBasicDetail = (props) => {
 
   const basicDetailRef = useRef();
-  const { warning } = SwalAlert();
   const [formData, setFormData] = useState(supplierBasicData);
   const [supplierName, setSupplierName] = useState('');
 
@@ -124,7 +123,10 @@ const SupplierBasicDetail = (props) => {
   ]);
   useEffect(() => {
     if (isGetAllUserSucess && allGetAllUserData) {
-      const getData = allGetAllUserData.map((item) => ({
+      const filterData = allGetAllUserData.filter((item) => {
+        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
+      });
+      const getData = filterData.map((item) => ({
         value: item.userId,
         label: item.fullName,
       }));
@@ -346,16 +348,16 @@ const SupplierBasicDetail = (props) => {
           <div className="col-md-12">
             <div className="d-flex align-item-end justify-content-end">
               <Buttons
-                buttonTypeClassName="dark-btn"
-                buttonText="Cancel"
-                onClick={props.onSidebarClose}
-              />
-              <Buttons
-                buttonTypeClassName="theme-button ml-5"
+                buttonTypeClassName="theme-button"
                 buttonText="Update"
                 onClick={handleUpdate}
                 isLoading={isAddEditSupplierBasicInformationLoading}
                 isDisable={isButtonDisable}
+              />
+              <Buttons
+                buttonTypeClassName="dark-btn ml-5"
+                buttonText="Cancel"
+                onClick={props.onSidebarClose}
               />
             </div>
           </div>

@@ -25,6 +25,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATEADDRESSFORCUSTOMER = "UpdateAddressForCustomer";
         const string GETCUSTOMERAUDITHISTORYBYCUSTOMERID = "GetCustomerAuditHistoryByCustomerId";
         const string ADDEDITCONTACTFORCUSTOMER = "AddEditContactForCustomer";
+        const string GETCUSTOMERSDETAILSBYCUTOMERNAME = "GetCustomersDetailsByCutomerName";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -43,7 +44,6 @@ namespace OMS.Domain.Repository.Implementation
                 customers.EmailAddress,
                 customers.Website,
                 customers.Note,
-                customers.IsCompany,
                 customers.TaxId,
                 customers.CreatedBy,
                 customers.IsBuyingForThirdParty,
@@ -62,7 +62,6 @@ namespace OMS.Domain.Repository.Implementation
                 customers.CountryId,
                 customers.EmailAddress,
                 customers.Website,
-                customers.IsCompany,
                 customers.TaxId,
                 customers.UpdatedBy,
                 customers.IsBuyingForThirdParty,
@@ -175,6 +174,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.IsPrimary,
                 createdBy
             }, CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetCustomersDetailsByCutomerNameResponse>> GetCustomersDetailsByCutomerName(string customerName)
+        {
+            List<GetCustomersDetailsByCutomerNameResponse> customerDetails = await _context.GetList<GetCustomersDetailsByCutomerNameResponse>(GETCUSTOMERSDETAILSBYCUTOMERNAME, new
+            {
+                customerName
+            }, CommandType.StoredProcedure);
+            return customerDetails;
         }
         #endregion
     }

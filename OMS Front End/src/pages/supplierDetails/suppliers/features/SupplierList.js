@@ -15,6 +15,7 @@ import { encryptUrlData } from '../../../../services/CryptoService';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { securityKey } from '../../../../data/SecurityKey';
 import SupplierApproval from './supplierApproval/SupplierApproval';
+import { useAddSupplierNotesMutation } from '../../../../app/services/supplierNotesAPI';
 
 const SupplierList = ({ statusId, configFile }) => {
 
@@ -40,6 +41,8 @@ const SupplierList = ({ statusId, configFile }) => {
   const [updateSupplierApproveStatus, { isSuccess: isSuccessUpdateSupplier, data: updateSupplierData }] = useUpdateSupplierApproveStatusMutation();
 
   const [updateSupplierInActiveStatus, { isLoading: updateInActiveStatusSupplierLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
+
+  const [addSupplierNotes, { isLoading: isAddSupplierNotesLoading, isSuccess: isAddSupplierNotesSuccess, data: isAddSupplierNotesData, },] = useAddSupplierNotesMutation();
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find(
@@ -195,9 +198,11 @@ const SupplierList = ({ statusId, configFile }) => {
       let req = {
         ...custData,
         supplierId: supplierID,
-        statusId: staticId
+        statusId: staticId,
+        note: custData.inActiveReason,
       }
       updateSupplierInActiveStatus(req)
+      addSupplierNotes(req);
     }
   }
 

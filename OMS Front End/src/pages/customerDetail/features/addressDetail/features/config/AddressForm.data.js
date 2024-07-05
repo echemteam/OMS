@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../../data/formFieldType";
 
 export const addressFormData = {
   // name: "Email From",
-  initialState: { addressTypeId: ""  , addressLine1:"" , addressLine2:"" , addressLine3:"" , addressLine4:"" , addressLine5 :"" , countryId:"" , stateId:"" ,zipCode:"", cityId:"" , supplierId : 0 , isPreferredBilling:false , isShippingAndBilling:false , isPreferredShipping:false},
+  initialState: { addressTypeId: ""  , addressLine1:"" , addressLine2:"" , addressLine3:"" , addressLine4:"" , addressLine5 :"" , countryId:233 , stateId:"" ,zipCode:"", cityId:"" , supplierId : 0 , isPreferredBilling:false , isShippingAndBilling:false , isPreferredShipping:false},
   formFields: [
     {
       id: "addressTypeId",

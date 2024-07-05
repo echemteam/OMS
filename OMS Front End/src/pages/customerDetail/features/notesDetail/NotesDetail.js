@@ -17,9 +17,10 @@ import {
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { securityKey } from "../../../../data/SecurityKey";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
 
-const NotesDetail = (props) => {
+const NotesDetail = ({ isEditablePage }) => {
   const notesFormRef = useRef();
   const { formSetting } = NotesData;
   const [showModal, setShowModal] = useState(false);
@@ -28,21 +29,17 @@ const NotesDetail = (props) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [notesFormData, setNotesFormData] = useState([]);
   const [buttonVisible, setButtonVisible] = useState(true);
-  const [isEditModeData, setIsEditModeData] = useState();
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const [addCustomerNotes,{ isLoading: isAddNotesLoading, isSuccess: isAddNotesSuccess, data: isAddNotesData, },] = useAddCustomerNotesMutation();
-  const [ updateCustomerNotes,{isLoading: isUpdateNotesLoading,isSuccess: isUpdateNotesSuccess,data: isUpdateNotesData, },] = useUpdateCustomerNotesMutation();
-  const [getCustomerNoteByCustomerId,{ isFetching: isGetNotesFetching,isSuccess: isGetNotesSuccess,data: isGetNotesData,},] = useLazyGetCustomerNoteByCustomerIdQuery();
+  const [addCustomerNotes, { isLoading: isAddNotesLoading, isSuccess: isAddNotesSuccess, data: isAddNotesData, },] = useAddCustomerNotesMutation();
+  const [updateCustomerNotes, { isLoading: isUpdateNotesLoading, isSuccess: isUpdateNotesSuccess, data: isUpdateNotesData, },] = useUpdateCustomerNotesMutation();
+  const [getCustomerNoteByCustomerId, { isFetching: isGetNotesFetching, isSuccess: isGetNotesSuccess, data: isGetNotesData, },] = useLazyGetCustomerNoteByCustomerIdQuery();
+
+  const hasAddPermission = hasFunctionalPermission(securityKey.ADDCUSTOMERNOTE);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITCUSTOMERNOTE);
 
   useEffect(() => {
-    const hasAddPermission = hasFunctionalPermission(
-      securityKey.ADDCUSTOMERNOTE
-    );
-    const hasEditPermission = hasFunctionalPermission(
-      securityKey.EDITCUSTOMERNOTE
-    );
-    if (hasEditPermission && formSetting) {
-      if (isEditModeData) {
+    if (hasEditPermission && hasAddPermission) {
+      if (isEditablePage) {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
@@ -50,26 +47,22 @@ const NotesDetail = (props) => {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
         }
-      } else if (!isEditModeData) {
-        if (hasAddPermission.hasAccess === true) {
-          formSetting.isViewOnly = false;
-          setIsButtonDisable(false);
-          setButtonVisible(true);
-        } else {
-          formSetting.isViewOnly = true;
-          setButtonVisible(false);
-        }
+      }
+      if (hasAddPermission.hasAccess === true) {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+        setButtonVisible(true);
+      } else {
+        formSetting.isViewOnly = true;
+        setButtonVisible(false);
       }
     }
-  }, [showModal, isEditMode]);
+  }, [hasEditPermission, hasAddPermission]);
 
   useEffect(() => {
     if (isAddNotesSuccess && isAddNotesData) {
-      if (props.onSuccess) {
-        props.onSuccess();
-      }
       ToastService.success(isAddNotesData.errorMessage);
-      ongetNote();
+      getCustomerNoteByCustomerId(customerId);
       setShowModal(!showModal);
     }
   }, [isAddNotesSuccess, isAddNotesData]);
@@ -84,29 +77,30 @@ const NotesDetail = (props) => {
 
   useEffect(() => {
     if (isUpdateNotesSuccess && isUpdateNotesData) {
-      if (props.onSuccess) {
-        props.onSuccess();
-      }
       ToastService.success(isUpdateNotesData.errorMessage);
-      ongetNote();
+      getCustomerNoteByCustomerId(customerId);
       setShowModal(false);
     }
   }, [isUpdateNotesSuccess, isUpdateNotesData]);
+
+  useEffect(() => {
+    customerId && onGetNote(customerId);
+  }, [customerId])
 
   const handleToggleModal = () => {
     setIsEditMode(false);
     resetForm();
     setShowModal(!showModal);
-    setIsEditModeData("");
   };
 
   const resetForm = () => {
     let form = { ...NotesData };
     setFormData(form);
   };
+
   const handleNotes = () => {
     let notesData = notesFormRef.current.getFormData();
-  
+
     if (notesData && !notesData.customerNoteId) {
       let request = {
         customerId: customerId,
@@ -124,14 +118,13 @@ const NotesDetail = (props) => {
 
     }
   };
-  const ongetNote = () => {
+  const onGetNote = (customerId) => {
     getCustomerNoteByCustomerId(customerId);
   };
 
   const handleNoteData = (data) => {
     resetForm();
     setIsEditMode(true);
-    setIsEditModeData(data);
     const newformData = { ...formData };
     newformData.initialState = {
       ...newformData,
@@ -155,12 +148,14 @@ const NotesDetail = (props) => {
         titleButtonClick={handleToggleModal}
       >
         <div className="note-card-sec">
-          <NotesCard
-            isAddEditModal={handleToggleModal}
-            onHandleNote={handleNoteData}
-            ongetcustomerNote={ongetNote}
-            notesFormData={notesFormData}
-          />
+          {!isGetNotesFetching ?
+            <NotesCard
+              isAddEditModal={handleToggleModal}
+              onHandleNote={handleNoteData}
+              notesFormData={notesFormData}
+            />
+            : <DataLoader />
+          }
         </div>
       </CardSection>
 

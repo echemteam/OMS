@@ -13,6 +13,7 @@ import { getAuthProps } from '../../../../lib/authenticationLibrary';
 import { encryptUrlData } from '../../../../services/CryptoService';
 import { useNavigate } from "react-router-dom";
 import SwalAlert from '../../../../services/swalService/SwalService';
+import { useSelector } from 'react-redux';
 
 export const InActiveCustomers = ({ statusId, configFile }) => {
 
@@ -24,6 +25,7 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
   const [dataSource, setDataSource] = useState();
   const [customerId, setCustomerId] = useState();
   const { DataRef } = useContext(CustomerListContext);
+  const authState = useSelector((state) => state.auth);
   const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [
@@ -85,8 +87,7 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
         setDataSource(isListeData.dataSource);
-        const authData = getAuthProps();
-        const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authData.user.userID);
+        const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authState?.user?.userID);
         if (isResponsibleId) {
           setIsResponsibleUser(true);
           hasResponsibleUserhasAccess();

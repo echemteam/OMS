@@ -13,6 +13,7 @@ import Button from "../../components/ui/button/Buttons";
 import { getAuthProps } from "../../lib/authenticationLibrary";
 import { securityKey } from "../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../utils/AuthorizeNavigation/authorizeNavigation";
+import { useSelector } from "react-redux";
 
 const NotesDetail = React.lazy(() =>
   import("./features/notesDetail/NotesDetail")
@@ -42,6 +43,7 @@ const CustomerContactDetails = React.lazy(() =>
 const ViewCustomer = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const authState = useSelector((state) => state.auth);
   const pageId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
@@ -80,9 +82,8 @@ const ViewCustomer = () => {
       GetCustomersBasicInformationByIdData &&
       !isGetCustomersBasicInformationByIdFetching
     ) {
-      const authData = getAuthProps();
       if (
-        authData.user.userID !==
+        authState?.user?.userID !==
         GetCustomersBasicInformationByIdData.responsibleUserId
       ) {
         setIsResponsibleUser(false);
@@ -121,9 +122,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Address",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
-          {/* {hasAddressPermission.hasAccess ? */}
           <CustomerAddressDetails isEditablePage={true} />
-          {/* : null} */}
         </div>
       ),
       isVisible: hasAddressPermission.hasAccess,
@@ -132,9 +131,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
-          {/* {hasContactPermission.hasAccess ? */}
           <CustomerContactDetails isEditablePage={true} />
-          {/* : null} */}
         </div>
       ),
       isVisible: hasContactPermission.hasAccess,
@@ -143,9 +140,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Settings",
       component: (
         <div className="mt-2">
-          {/* {hasSettingPermission.hasAccess ? */}
           <SettingDetails isEditablePage={true} />
-          {/* : null} */}
         </div>
       ),
       isVisible: hasSettingPermission.hasAccess,
@@ -154,9 +149,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          {/* {hasDocumentPermission.hasAccess ? */}
           <CustomerDocumentDetails isEditablePage={true} />
-          {/* : null} */}
         </div>
       ),
       isVisible: hasDocumentPermission.hasAccess,
@@ -165,9 +158,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Notes",
       component: (
         <div className="mt-2">
-          {/* {hasNotePermission.hasAccess ? */}
-          <NotesDetail />
-          {/* : null} */}
+          <NotesDetail isEditablePage={true} />
         </div>
       ),
       isVisible: hasNotePermission.hasAccess,
@@ -176,9 +167,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "History",
       component: (
         <div className="">
-          {/* {hasHistoryPermission.hasAccess ? */}
           <HistoryDetail />
-          {/* : null} */}
         </div>
       ),
       isVisible: hasHistoryPermission.hasAccess,
