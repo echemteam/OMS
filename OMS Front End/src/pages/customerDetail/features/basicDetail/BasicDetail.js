@@ -5,20 +5,18 @@ import Buttons from "../../../../components/ui/button/Buttons";
 import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import CardSection from "../../../../components/ui/card/CardSection";
-import { basicDetailFormDataHalf } from "./config/BasicDetailForm.data";
+import { basicDetailFormDataHalf, excludingRoles } from "./config/BasicDetailForm.data";
+import { setFieldDisabled } from "../../../../utils/FieldDisabled/setFieldDisabled";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
-import { setFieldDisabled } from "../../../../utils/FieldDisabled/setFieldDisabled";
-import { useSelector } from "react-redux";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [customerName, setCustomerName] = useState('');
-  const authState = useSelector((state) => state.auth);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
@@ -97,7 +95,7 @@ const BasicDetail = (props) => {
     },
   ] = useUpdateCustomersBasicInformationMutation();
 
-  const [CheckCustomerNameExist, { isLoading: isCustomerNameExistLoading, isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
+  const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
 
 
   useEffect(() => {
@@ -175,8 +173,10 @@ const BasicDetail = (props) => {
 
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
-      const roleName = 'Admin';
-      const filterData = allGetAlluserData.filter((item) => item.roleName === null || item.roleName.toLowerCase() !== roleName.toLocaleLowerCase());
+      const filterData = allGetAlluserData.filter((item) => {
+        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
+      });
+
       const getData = filterData.map((item) => ({
         value: item.userId,
         label: item.fullName,
@@ -245,8 +245,8 @@ const BasicDetail = (props) => {
       let req = {
         ...data,
         groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object"
-        ? data.groupTypeId.value
-        : data.groupTypeId,
+          ? data.groupTypeId.value
+          : data.groupTypeId,
         territoryId: data.territoryId && typeof data.territoryId === "object"
           ? data.territoryId.value
           : data.territoryId,

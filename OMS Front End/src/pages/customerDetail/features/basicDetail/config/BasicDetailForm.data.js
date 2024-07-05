@@ -1,20 +1,10 @@
 import { SuccessMessage } from "../../../../../data/appMessages";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
-// export const securityKeys = {
-//   ADD: securityKey.ADDCUSTOMER,
-//   EDIT: securityKey.EDITCUSTOMER,
-//   // DELETE: securityKey.DELETECUSTOMER
-//   // BLOCK: securityKey.BLOCKCUSTOMER
-//   // FREEZE: securityKey.FREEZECUSTOMER
-//   // UNFREEZE: securityKey.DISABLECUSTOMER
-//   // UNBLOCK: securityKey.DISABLECUSTOMER
-//   // ACTIVE: securityKey.ACTIVECUSTOMER
-// };
-
+export const excludingRoles = ['Admin', 'manager']
 
 export const basicDetailFormDataHalf = {
-  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false , responsibleUserId:""},
+  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false, responsibleUserId: "" },
   formFields: [
     {
       id: "name",
