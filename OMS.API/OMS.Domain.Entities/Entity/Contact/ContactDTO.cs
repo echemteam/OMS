@@ -1,8 +1,6 @@
-﻿using OMS.Domain.Entities.Entity.RoleMapping;
-
-namespace OMS.Domain.Entities.Entity.Contact
+﻿namespace OMS.Domain.Entities.Entity.Contact
 {
-    public class ContactDTO :BaseContactDTO, IContact, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class ContactDTO : IContact, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? CustomerId { get; set; }
         public int? ContactId { get; set; }

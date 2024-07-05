@@ -7,10 +7,6 @@ namespace OMS.Domain.Entities.Entity.RoleMapping
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("RoleId")]
-        public byte? RoleId { get; set; }
-        [Column("UserId")]
-        public short? UserId { get; set; }
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]
