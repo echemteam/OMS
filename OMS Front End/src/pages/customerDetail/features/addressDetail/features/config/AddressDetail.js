@@ -390,9 +390,6 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   };
 
   const onResetSupplier = () => {
-    // const manageData = { ...formData };
-
-    // manageData.formFields = filteredFormFields;
     let restData = { ...addressFormData };
     restData.initialState = { ...addressFormData.initialState };
     const filteredFormFields = restData.formFields.filter(
