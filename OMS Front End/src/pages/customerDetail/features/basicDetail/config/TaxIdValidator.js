@@ -1,7 +1,7 @@
 import { SuccessMessage } from "../../../../../data/appMessages";
 
 export const getTaxIdMinMaxLength = (countryId, formFields, formFieldsId) => {
-    let minLength, maxLength;
+    let minLength, maxLength, message, formField;
 
     switch (countryId) {
         case 1:
@@ -23,9 +23,10 @@ export const getTaxIdMinMaxLength = (countryId, formFields, formFieldsId) => {
     }
 
     if (minLength !== undefined && maxLength !== undefined) {
-        const formField = formFields.find((data) => data.id === formFieldsId);
+        message = SuccessMessage.TaxId.replace("{0}", minLength).replace("{1}", maxLength);
+        formField = formFields.find((data) => data.id === formFieldsId);
         if (formField) {
-            const validation = formField.validation?.find((data) => data.type === formFieldsId);
+            const validation = formField.validation;
             formField.fieldSetting.minLength = minLength;
             formField.fieldSetting.maxLength = maxLength;
             formField.inputIcon.message = SuccessMessage.TaxId.replace("{0}", minLength).replace("{1}", maxLength);
@@ -33,5 +34,5 @@ export const getTaxIdMinMaxLength = (countryId, formFields, formFieldsId) => {
             validation.maxLength = maxLength;
         }
     }
-    return formFields;
+    return { message, maxLength, minLength, formField };
 }

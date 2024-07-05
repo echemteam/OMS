@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
 import { addEditRoleFormData } from './config/AddEditRoleForm.data';
 import FormCreator from '../../../../components/Forms/FormCreator';

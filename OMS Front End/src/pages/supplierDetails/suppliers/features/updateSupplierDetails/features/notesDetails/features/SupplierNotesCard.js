@@ -32,7 +32,15 @@ const SupplierNotesCard = ({ isAddEditModal, onHandleNote, ongetSupplierNote, no
                 )}`}
               >
                 <div className="card-content">
-                  <div className="card-notes ">
+                  <div className="bottom-info">
+                    <div className="note-text editor-section">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: notes.note,
+                        }}
+                      ></div>
+                    </div>
+                    <div className="card-notes ">
                     <div className="note-label  ">Created on {formatDate(notes.noteDate, "DD/MM/YYYY hh:mm")} by {notes.fullName}</div>
                     <div className="edit-button ">
                       <Buttons
@@ -43,14 +51,6 @@ const SupplierNotesCard = ({ isAddEditModal, onHandleNote, ongetSupplierNote, no
                       ></Buttons>
                     </div>
                   </div>
-                  <div className="bottom-info">
-                    <div className="note-text editor-section">
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: notes.note,
-                        }}
-                      ></div>
-                    </div>
                   </div>
                 </div>
               </div>

@@ -5,6 +5,7 @@ import SupplierList from "./features/SupplierList";
 import InActiveSupplier from "./features/InActiveSupplier";
 import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../customerDetail/customers/config/CustomerData";
 import SupplierListContext from '../../../utils/ContextAPIs/Supplier/SupplierListContext'
+import { AddSupplierContextProvider } from "../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 
 const Suppliers = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -76,46 +77,48 @@ const Suppliers = () => {
   ];
   return (
     <>
-      <SupplierListContext.Provider value={{ supplierListRef }}>
-        <div className="main-customer-grid">
-          <div className="row">
-            <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
-              <CardSection
-              // cardTitle="Other Information"
-              >
-                <>
-                  {tabs && tabs.length > 0 &&
-                    <div className="row">
-                      <div className="col-12">
-                        <div className="tab-section mb-0">
-                          <div className="tab-header">
-                            {tabs && tabs.map((tab, index) => (
-                              <button
-                                key={index}
-                                className={activeTab === index.toString() ? "active" : ""}
-                                onClick={() => handleTabClick(index, tab.sPage)}
-                              >
-                                {tab.sMenuItemCaption}
-                              </button>
-                            ))}
-                          </div>
-                          {activeTab !== -1 && tabs[activeTab].component && (
-                            <div className="tab-content">
-                              <div className="tab-body-section">
-                                {tabs[activeTab].component}
-                              </div>
+      <AddSupplierContextProvider>
+        <SupplierListContext.Provider value={{ supplierListRef }}>
+          <div className="main-customer-grid">
+            <div className="row">
+              <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
+                <CardSection
+                // cardTitle="Other Information"
+                >
+                  <>
+                    {tabs && tabs.length > 0 &&
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="tab-section mb-0">
+                            <div className="tab-header">
+                              {tabs && tabs.map((tab, index) => (
+                                <button
+                                  key={index}
+                                  className={activeTab === index.toString() ? "active" : ""}
+                                  onClick={() => handleTabClick(index, tab.sPage)}
+                                >
+                                  {tab.sMenuItemCaption}
+                                </button>
+                              ))}
                             </div>
-                          )}
+                            {activeTab !== -1 && tabs[activeTab].component && (
+                              <div className="tab-content">
+                                <div className="tab-body-section">
+                                  {tabs[activeTab].component}
+                                </div>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  }
-                </>
-              </CardSection>
+                    }
+                  </>
+                </CardSection>
+              </div>
             </div>
           </div>
-        </div>
-      </SupplierListContext.Provider>
+        </SupplierListContext.Provider>
+      </AddSupplierContextProvider>
     </>
   );
 };

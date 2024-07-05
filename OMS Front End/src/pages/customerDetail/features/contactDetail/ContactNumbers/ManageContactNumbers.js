@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { Message } from "../Util/ContactMessages";
@@ -13,7 +14,7 @@ import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSup
 const ContactNumberList = React.lazy(() => import("./ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./AddEditContactNumber"));
 
-const ManageContactNumbers = ({ onGetContactList , isSupplier }) => {
+const ManageContactNumbers = ({ onGetContactList, isSupplier }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -24,9 +25,9 @@ const ManageContactNumbers = ({ onGetContactList , isSupplier }) => {
     const { contactId, setPhoneNumberData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     //** API Call's */
-    const [getList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetPhoneByContactIdQuery();
+    const [getList, { isFetching: isGetContactFetching }] = useLazyGetPhoneByContactIdQuery();
     const [deletePhoneNumber, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactPhoneMutation();
-    const { data, isFetching, isSuccess, isError } = useGetAllPhoneTypesQuery();
+    const { data, isSuccess } = useGetAllPhoneTypesQuery();
 
     //** UseEffect */
     useEffect(() => {

@@ -70,6 +70,8 @@ import securityIcon from "../assets/images/securityIcon.png";
 import security from "../assets/images/security.png";
 import primaryTick from "../assets/images/primaryTick.png";
 import unauthorizedImg from "../assets/images/unauthorized.png";
+import filterIcon from "../assets/images/filter.png";
+import clearAllIcon from "../assets/images/clearAll.png";
 
 
 export const AppIcons = {
@@ -138,5 +140,7 @@ export const AppIcons = {
   security:security,
 
   PrimaryTick:primaryTick,
-  unauthorizedImg :unauthorizedImg
+  unauthorizedImg :unauthorizedImg,
+  FilterIcon:filterIcon,
+  ClearAllIcon:clearAllIcon,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext, useRef } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
@@ -32,6 +33,7 @@ const ContactDetail = ({
   const [editFormData, setEditFormData] = useState();
   const [isModelOpen, setisModelOpen] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
+  const [showEditIcon, setShowEditIcon] = useState(false);
   const [modifyContactData, setModifyContactData] = useState([]);
 
   const {
@@ -67,6 +69,7 @@ const ContactDetail = ({
   useEffect(() => {
     if (isEditablePage && SecurityKey) {
       const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+      const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
 
       if (hasAddPermission) {
         if (hasAddPermission.hasAccess === true) {
@@ -74,6 +77,9 @@ const ContactDetail = ({
         } else {
           setButtonVisible(false);
         }
+      }
+      if (hasEditPermission && hasEditPermission.isViewOnly === true) {
+        setShowEditIcon(true);
       }
     }
   }, [isEditablePage, isSupplier, SecurityKey]);
@@ -170,11 +176,14 @@ const ContactDetail = ({
         rightButton={buttonVisible ? true : false}
         buttonText="Add"
         titleButtonClick={handleToggleModal}
+        isFilter={true}
+        filterHeaderTitle="Contact Filter"
       >
         <ManageContactList
           handleEdit={handleEdit}
           modifyContactData={modifyContactData}
           isLoading={isGetContactFetching}
+          showEditIcon={showEditIcon}
         />
       </CardSection>
       <div className="sidebar-contact-model">

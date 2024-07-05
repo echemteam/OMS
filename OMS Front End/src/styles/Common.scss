@@ -44,6 +44,16 @@ a {
   align-items: center;
 }
 
+.label-h-0 {
+  .input-label-part {
+    .input-label-title {
+      .input-label {
+        min-height: unset;
+      }
+    }
+  }
+}
+
 .checkbox-part {
   .input-label {
     text-transform: capitalize !important;
@@ -300,7 +310,7 @@ a {
 
       .content-desc-section {
         .center-container {
-          height: calc(100vh - 110px);
+          height: calc(100vh - 106px);
           overflow: hidden;
           overflow-y: auto;
           margin-bottom: 0;
@@ -371,8 +381,7 @@ a {
         }
       }
 
-      .middle-page-section {
-      }
+      .middle-page-section {}
     }
   }
 }
@@ -687,7 +696,7 @@ a {
       background: #dcdde0;
       border-radius: 0px;
       font-weight: 600;
-      font-size: var(--commonFont-small);
+      font-size: var(--commonFont-medium);
       border: none;
       border-right: 1px solid var(--whiteColor);
       margin-right: 0;
@@ -704,8 +713,7 @@ a {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {
-    }
+    .tab-body-section {}
   }
 
   &.vertical-tab {
@@ -815,8 +823,7 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {
-      }
+      .tab-body-section {}
     }
 
     &.vertical-tab {
@@ -914,8 +921,7 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {
-        }
+        .tab-sub-body-section {}
       }
     }
   }
@@ -1098,9 +1104,9 @@ a {
       box-shadow: 0px 0px 17px -10px var(--textColorLight);
       padding: 10px;
       border-radius: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       position: relative;
-      min-height: 125px;
+      // min-height: 125px;
 
       .add-line {
         display: flex;
@@ -1125,9 +1131,9 @@ a {
               display: flex;
               align-items: center;
               justify-content: center;
-              position: absolute;
-              top: -5px;
-              left: -5px;
+              // position: absolute;
+              // top: -5px;
+              // left: -5px;
 
               img {
                 max-width: 35px;
@@ -1145,7 +1151,7 @@ a {
             font-size: var(--commonFont);
             color: var(--themeColor);
             margin-bottom: 5px;
-            margin-left: 31px;
+            // margin-left: 31px;
             margin-top: -4px;
           }
 
@@ -1727,6 +1733,7 @@ a {
   }
 
   .css-1nmdiq5-menu {
+
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -1992,6 +1999,7 @@ input[type="checkbox"]:disabled {
 
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
+
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
@@ -2063,9 +2071,17 @@ input[type="checkbox"]:disabled {
   }
 
   .card {
+    padding: 8px;
+
     .card-top-title-btn {
       min-height: unset;
       padding-bottom: 8px;
+    }
+  }
+
+  .card-email-sec {
+    .card {
+      padding: 8px;
     }
   }
 
@@ -2134,16 +2150,6 @@ input[type="checkbox"]:disabled {
     }
   }
 
-  .card {
-    padding: 8px;
-  }
-
-  .card-email-sec {
-    .card {
-      padding: 8px;
-    }
-  }
-
   .sidebar-contact-model {
     .no-address {
       .record-not-found {
@@ -2152,10 +2158,74 @@ input[type="checkbox"]:disabled {
         }
       }
     }
+
     .card-body-sec {
       margin-top: 0;
       padding-left: 0;
       padding-right: 0;
+    }
+  }
+
+  
+
+  .add-address-form {
+    &.horizontal-form {
+      .input-label-part {
+        .input-label-title {
+          min-width: 95px;
+          max-width: 95px;
+        }
+      }
+    }
+  }
+  .addEditContact-form {
+    &.horizontal-form {
+      .input-label-part {
+        .input-label-title {
+          min-width: 95px;
+          max-width: 95px;
+        }
+      }
+    }
+  }
+  .add-edit-emailAddressForm{
+    &.horizontal-form {
+      .input-label-part {
+        .input-label-title {
+          min-width: 95px;
+          max-width: 95px;
+        }
+      }
+    }
+  }
+  .add-edit-phoneForm{
+    &.horizontal-form {
+      .input-label-part {
+        .input-label-title {
+          min-width: 110px;
+          max-width: 110px;
+        }
+      }
+    }
+  }
+  .add-documentForm{
+    &.horizontal-form {
+      .input-label-part {
+        .input-label-title {
+          min-width: 110px;
+          max-width: 110px;
+        }
+      }
+    }
+  }
+  .add-edit-notesForm{
+    &.horizontal-form {
+      .input-label-part {
+        .input-label-title {
+          min-width: 90px;
+          max-width: 90px;
+        }
+      }
     }
   }
 }

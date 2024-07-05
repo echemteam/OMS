@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from "react";
 import "./../../HistoryDetail/TimeLine.scss";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { AppIcons } from "../../../../../data/appIcons";
 
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
-import formatDate from "../../../../../lib/formatDate";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Image from "../../../../../components/image/Image";
 import { useGetCustomerAuditHistoryByCustomerIdMutation } from "../../../../../app/services/customerHistoryAPI";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
@@ -52,16 +51,16 @@ const TimeLine = () => {
 
   useEffect(() => {
     if (isGetHistorySuccess && isGetHistoryData) {
-      if (isGetHistoryData.dataSource && isGetHistoryData.dataSource.length > 0) {
+      if (
+        isGetHistoryData.dataSource &&
+        isGetHistoryData.dataSource.length > 0
+      ) {
         const modifyData = modifyTimeLineData(isGetHistoryData.dataSource);
         if (refreshData) {
           setHistoryData(modifyData);
           setRefreshData(false);
         } else {
-          setHistoryData((prevData) => [
-            ...prevData,
-            ...modifyData,
-          ]);
+          setHistoryData((prevData) => [...prevData, ...modifyData]);
         }
       } else {
         setHasMore(false);

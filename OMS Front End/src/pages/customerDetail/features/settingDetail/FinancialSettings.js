@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { SettingFormData } from "./config/SettingData";
@@ -12,7 +13,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 const FinancialSettings = ({ isEditablePage }) => {
   const settingFormRef = useRef();
   const { customerId, isResponsibleUser, settingRef } = useContext(BasicDetailContext);
-  const [showButton, setShowButton] = useState(false);
+  const [showButton, setShowButton] = useState(true);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
   const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
@@ -24,13 +25,15 @@ const FinancialSettings = ({ isEditablePage }) => {
   const hasAddEditPermission = hasFunctionalPermission(securityKey.ADDEDITCUSTOMERFINANCIAL);
 
   useEffect(() => {
-    if (!isResponsibleUser) {
-      if (hasAddEditPermission.hasAccess === true) {
-        setShowButton(true);
-        formSetting.isViewOnly = false;
-      } else {
-        setShowButton(false);
-        formSetting.isViewOnly = true;
+    if (isEditablePage) {
+      if (!isResponsibleUser) {
+        if (hasAddEditPermission.hasAccess === true) {
+          setShowButton(true);
+          formSetting.isViewOnly = false;
+        } else {
+          setShowButton(false);
+          formSetting.isViewOnly = true;
+        }
       }
     }
   }, [hasAddEditPermission]);
@@ -47,12 +50,6 @@ const FinancialSettings = ({ isEditablePage }) => {
       }
     };
   }, [customerId]);
-
-  // useEffect(() => {
-  //   if (isEditablePage) {
-
-  //   }
-  // }, [isEditablePage])
 
   useEffect(() => {
     if (isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {

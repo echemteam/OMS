@@ -13,6 +13,7 @@ export const NotesData = {
             fieldSetting: {
               placeholder: "Enter Notes",
               allowSpace: true,
+              maxLength: 1000,
             },
             validation: [{ type: "require" }],
             style: {

@@ -152,7 +152,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "https://www.xyz.com/",
         allowSpace: true,
-        maxLength: 100,
+        maxLength: 250,
       },
       validation: [{ type: "require" }, { type: "website" }],
       style: {
@@ -190,6 +190,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "Enter Notes",
         allowSpace: true,
+        maxLength: 1000,
       },
       validation: [{ type: "require" }],
       style: {

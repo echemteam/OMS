@@ -11,7 +11,9 @@
   --bg-main-content: #f5f5f9;
   --bg-light-content: #e7f6fe;
   --primaryColor: #5563ff;
+  --primaryColorLight: #5765ff1d;
   --dangerColor: #fe7096;
+  --dangerColorLight: #fe70963b;
   --warningColor: #ffd500;
   --infoColor: #0056d7;
   --successColor: #07cdae;
@@ -71,12 +73,12 @@
 @media only screen and (max-width: 1560px) {
   :root {
     // Font-styling
-    --commonFont-2extraLarge: 18px;
-    --commonFont-extraLarge: 15px;
-    --commonFont-large: 13px;
-    --commonFont: 11px;
-    --commonFont-medium: 10px;
-    --commonFont-small: 9px;
-    --commonFont-extraSmall: 8px;
+    --commonFont-2extraLarge: 19px;
+    --commonFont-extraLarge: 16px;
+    --commonFont-large: 14px;
+    --commonFont: 12px;
+    --commonFont-medium: 11px;
+    --commonFont-small: 10px;
+    --commonFont-extraSmall: 9px;
   }
 }

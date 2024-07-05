@@ -104,6 +104,20 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             altText="ACTIVECUSTOMER Icon" />
         </Link>
       )}
+      {col.defaultAction.allowActiveSupplier && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("ACTIVESUPPLIER", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="Active Supplier"
+        >
+          <Image
+            imagePath={AppIcons.aciveCustomerIcone}
+            altText="ACTIVESUPPLIER Icon" />
+        </Link>
+      )}
 
       {col.defaultAction.allowUnblocked && (
         <Link

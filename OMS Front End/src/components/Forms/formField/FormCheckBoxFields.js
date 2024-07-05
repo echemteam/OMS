@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import Checkbox from "../../ui/inputs/checkBox/CheckBox";
 import ValidationText from "../../ui/inputs/validation/ValidationText";

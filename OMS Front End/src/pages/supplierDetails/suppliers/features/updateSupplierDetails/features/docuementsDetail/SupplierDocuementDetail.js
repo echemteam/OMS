@@ -11,10 +11,10 @@ const supplierSecurityKey = {
 }
 
 const SupplierDocumentDetail = ({ isEditablePage }) => {
-    const { supplierId } = useContext(AddSupplierContext);
+    const { supplierId , isResponsibleUser } = useContext(AddSupplierContext);
     return (
         <DocumentDetails mainId={supplierId ? supplierId : 0}
-            isEditablePage={isEditablePage} SecurityKey={supplierSecurityKey}
+            isEditablePage={isEditablePage} SecurityKey={!isResponsibleUser ? supplierSecurityKey : null}
         />
     )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 //** Libs's */
 import AddressCard from "../AddressCard";
@@ -25,10 +26,14 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [formData, setFormData] = useState(addressFormData);
   const [addressData, setAddressData] = useState();
   const [updateSetData, setUpdateSetData] = useState();
+  const [updateSetDataSupplier, setUpdateSetDataSupplier] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-
-  const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
+  const [showEditIcon, setShowEditIcon] = useState(false);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [lebel, setlebel] = useState(null);
+  const [checkbox, setCheckbox] = useState(null);
+  const [checkboxFeild, setCheckboxFeild] = useState(null);
 
   useEffect(() => {
     if (isEditablePage) {
@@ -56,6 +61,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
             if (hasAddPermission.hasAccess === true) {
               formSetting.isViewOnly = false;
               setIsButtonDisable(false);
+            }
+            if (hasEditPermission.isViewOnly === true) {
+              setShowEditIcon(true);
             }
           }
         }
@@ -136,7 +144,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   }, [mainId]);
 
   const manageFilteredForm = () => {
-    onreset()
+    // if(isSupplier){
+    //   onresetManege()
+    // }
     const manageData = { ...formData };
     const filteredFormFields = addressFormData.formFields.filter(
       (field) =>
@@ -267,8 +277,15 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     manageFilteredForm();
   };
 
+  // useEffect(() => {
+
+  // },[isModelOpen])
+
   const handleSetData = (data) => {
     setUpdateSetData(data);
+    if (isSupplier) {
+      setUpdateSetDataSupplier(data)
+    }
     let form = { ...formData };
     if (data) {
       const dropdownFieldIndex = form.formFields.findIndex(
@@ -376,14 +393,35 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     onreset();
   };
 
+  // const onresetManege = () => {
+  //   debugger
+  //   let reset = { ...addressFormData };
+  //   reset.initialState = {
+  //     addressTypeId: "",
+  //     addressLine1: "",
+  //     addressLine2: "",
+  //     addressLine3: "",
+  //     addressLine4: "",
+  //     addressLine5: "",
+  //     countryId: 233,
+  //     stateId: "",
+  //     zipCode: "",
+  //     cityId: "",
+  //     supplierId: 0,
+  //   };
+  //   setFormData(reset);
+  // }
+
   const onreset = () => {
     let restData = { ...addressFormData };
     restData.initialState = { ...addressFormData.initialState };
     setFormData(restData);
     setUpdateSetData(null);
+    setUpdateSetDataSupplier(null)
   };
 
   const handleChangeDropdownList = (data, dataField) => {
+    setlebel(data)
     const manageData = { ...formData };
     if (dataField === "countryId") {
       const dataValue = allGetAllStatesData
@@ -524,12 +562,12 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
             ? data.cityId.value
             : data.cityId,
       };
-      if (updateSetData) {
+      if (updateSetData || updateSetDataSupplier) {
         let setReq = {
           ...req,
-          addressId: updateSetData.addressId,
-          customerAddressId: isSupplier === false ? updateSetData.customerAddressId : 0,
-          supplierAddressId: isSupplier === true ? updateSetData.supplierAddressId : 0,
+          addressId: updateSetData ? updateSetData.addressId : updateSetDataSupplier.addressId,
+          customerAddressId: isSupplier === false ? (updateSetData ? updateSetData.customerAddressId : updateSetDataSupplier.customerAddressId) : 0,
+          supplierAddressId: isSupplier === true ? (updateSetData ? updateSetData.supplierAddressId : updateSetDataSupplier.supplierAddressId) : 0,
         };
         updateAddAddress(setReq);
         setAddressData(setReq);
@@ -540,7 +578,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   };
 
   const handleCheckboxChanges = (data, dataField) => {
-    if (dataField === "isShippingAndBilling" && data) {
+    setCheckbox(data)
+    setCheckboxFeild(dataField)
+    if (dataField === "isShippingAndBilling" && data && lebel) {
       const manageData = { ...formData };
       let filteredFormFields;
       filteredFormFields = addressFormData.formFields
@@ -548,6 +588,26 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       setFormData(manageData)
     }
   }
+
+  useEffect(() => {
+    if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 1) {
+      const manageData = { ...formData };
+      let filteredFormFields;
+      filteredFormFields = addressFormData.formFields.filter(
+        (field) => field.dataField !== "isPreferredShipping"
+      );
+      manageData.formFields = filteredFormFields
+      setFormData(manageData)
+    } else if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 2) {
+      const manageData = { ...formData };
+      let filteredFormFields;
+      filteredFormFields = addressFormData.formFields.filter(
+        (field) => field.dataField !== "isPreferredBilling"
+      );
+      manageData.formFields = filteredFormFields
+      setFormData(manageData)
+    }
+  }, [checkbox, checkboxFeild])
 
   const formActionHandler = {
     DDL_CHANGED: handleChangeDropdownList,
@@ -570,6 +630,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
           addressData={addressData}
           onHandleSetData={handleSetData}
           isGetByIdLoading={isGetAddresssByCustomerIdFetching}
+          showEditIcon={showEditIcon}
         />
       </CardSection>
       <div className="address-model">
@@ -580,7 +641,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}
         >
-          <div className="row horizontal-form mt-3 ">
+          <div className="row horizontal-form mt-3 add-address-form">
             <FormCreator
               config={formData}
               ref={userFormRef}
