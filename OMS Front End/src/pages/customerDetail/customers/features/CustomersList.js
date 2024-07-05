@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
   useContext,
   useEffect,
@@ -65,7 +66,7 @@ export const CustomersList = ({ statusId, configFile }) => {
     },
   ] = useUpdateCustomerInActiveStatusMutation();
 
-  const [addCustomerNotes,{ isLoading: isAddNotesLoading, isSuccess: isAddNotesSuccess, data: isAddNotesData, },] = useAddCustomerNotesMutation();
+  const [addCustomerNotes] = useAddCustomerNotesMutation();
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
@@ -317,7 +318,7 @@ export const CustomersList = ({ statusId, configFile }) => {
           <CenterModel
             showModal={showModal}
             handleToggleModal={handleToggleModal}
-            modalTitle={statusFeild + " " + "Reason"}
+            modalTitle={`${statusFeild} Reason`}
             modelSizeClass="w-50s"
           >
             <div className="row horizontal-form">
