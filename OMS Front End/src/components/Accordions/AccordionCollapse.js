@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Accordion } from "react-bootstrap";
 import { CardSectionDetails } from "./AccordionCollapse.Data";
