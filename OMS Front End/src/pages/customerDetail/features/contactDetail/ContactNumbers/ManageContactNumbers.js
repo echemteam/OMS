@@ -25,7 +25,7 @@ const ManageContactNumbers = ({ onGetContactList, isSupplier }) => {
     const { contactId, setPhoneNumberData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     //** API Call's */
-    const [getList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetPhoneByContactIdQuery();
+    const [getList, { isFetching: isGetContactFetching }] = useLazyGetPhoneByContactIdQuery();
     const [deletePhoneNumber, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactPhoneMutation();
     const { data, isSuccess } = useGetAllPhoneTypesQuery();
 
