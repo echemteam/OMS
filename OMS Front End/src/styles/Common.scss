@@ -1098,11 +1098,12 @@ a {
   }
 
   .add-desc-part {
-    padding: 0px 10px 0px;
+    padding: 0 5px;
+    margin-top: 10px !important;
 
     .contact-card {
       box-shadow: 0px 0px 17px -10px var(--textColorLight);
-      padding: 10px;
+      padding: 5px;
       border-radius: 12px;
       margin-bottom: 10px;
       position: relative;
@@ -1110,19 +1111,19 @@ a {
 
       .add-line {
         display: flex;
-        flex-direction: column;
+        // flex-direction: column;
 
         .user-icon-name {
           display: flex;
           align-items: center;
-          margin-bottom: 15px;
+          margin-bottom: 0;
 
           span {
             &.icon {
-              min-height: 40px;
-              min-width: 40px;
-              max-height: 40px;
-              max-width: 40px;
+              min-height: 30px;
+              min-width: 30px;
+              max-height: 30px;
+              max-width: 30px;
               border-radius: 100%;
               // background: var(--gradient-theme);
               box-shadow: 0px 0px 17px -10px var(--themeColor);
@@ -1136,11 +1137,36 @@ a {
               // left: -5px;
 
               img {
-                max-width: 35px;
+                max-width: 25px;
                 // filter: brightness(100)
               }
             }
           }
+
+          .contact-name-title {
+            min-width: 105px;
+            padding-right: 5px;
+          }
+        }
+
+        .contact-right-info {
+          margin-left: 10px;
+          display: flex;
+          align-items: center;
+
+          .email-sec {
+            min-width: 205px;
+          }
+
+          .contact-sec {
+            min-width: 200px;
+            margin-left: 10px;
+          }
+
+        }
+
+        .contact-type {
+          margin: 0 2px;
         }
 
         span {
@@ -1150,9 +1176,9 @@ a {
           &.user-name {
             font-size: var(--commonFont);
             color: var(--themeColor);
-            margin-bottom: 5px;
+            margin-bottom: 0;
             // margin-left: 31px;
-            margin-top: -4px;
+            // margin-top: -4px;
           }
 
           b {
@@ -2039,7 +2065,7 @@ input[type="checkbox"]:disabled {
           .contact-icon-img {
             width: 13px;
             margin-right: 7px;
-            padding-top: 2px;
+            padding-top: 0;
           }
         }
       }
@@ -2166,7 +2192,7 @@ input[type="checkbox"]:disabled {
     }
   }
 
-  
+
 
   .add-address-form {
     &.horizontal-form {
@@ -2178,6 +2204,7 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+
   .addEditContact-form {
     &.horizontal-form {
       .input-label-part {
@@ -2188,7 +2215,8 @@ input[type="checkbox"]:disabled {
       }
     }
   }
-  .add-edit-emailAddressForm{
+
+  .add-edit-emailAddressForm {
     &.horizontal-form {
       .input-label-part {
         .input-label-title {
@@ -2198,7 +2226,8 @@ input[type="checkbox"]:disabled {
       }
     }
   }
-  .add-edit-phoneForm{
+
+  .add-edit-phoneForm {
     &.horizontal-form {
       .input-label-part {
         .input-label-title {
@@ -2208,7 +2237,8 @@ input[type="checkbox"]:disabled {
       }
     }
   }
-  .add-documentForm{
+
+  .add-documentForm {
     &.horizontal-form {
       .input-label-part {
         .input-label-title {
@@ -2218,7 +2248,8 @@ input[type="checkbox"]:disabled {
       }
     }
   }
-  .add-edit-notesForm{
+
+  .add-edit-notesForm {
     &.horizontal-form {
       .input-label-part {
         .input-label-title {
