@@ -28,14 +28,14 @@ const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSucces
     }, [isModelOpen]);
 
     useEffect(() => {
-        if (!isGetCheckListFetching, isGetCheckListSuccess, isGetCheckListData) {
+        if (!isGetCheckListFetching && isGetCheckListSuccess && isGetCheckListData) {
             const modifyCheckListData = transformData(isGetCheckListData);
             setCheckListData(modifyCheckListData);
         }
     }, [isGetCheckListFetching, isGetCheckListSuccess, isGetCheckListData]);
 
     useEffect(() => {
-        if (isAddUserCheckResponseSuccess, isAddUserCheckResponseData) {
+        if (isAddUserCheckResponseSuccess && isAddUserCheckResponseData) {
             ToastService.success(isAddUserCheckResponseData.errorMessage);
             onSuccessApprovalClose();
         }
