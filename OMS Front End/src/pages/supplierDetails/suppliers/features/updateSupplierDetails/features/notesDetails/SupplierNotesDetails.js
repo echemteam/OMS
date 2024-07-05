@@ -13,30 +13,26 @@ import { securityKey } from "../../../../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 
-const SupplierNotesDetail = (props) => {
+const SupplierNotesDetail = ({ isEditablePage }) => {
   const notesFormRef = useRef();
   const { formSetting } = NotesFormData;
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [formData, setFormData] = useState(NotesFormData);
   const [showModal, setShowModal] = useState(false);
-  const { supplierId } = useContext(AddSupplierContext)
+  const { supplierId, isResponsibleUser } = useContext(AddSupplierContext)
   const [buttonVisible, setButtonVisible] = useState(true);
   const [notesFormData, setNotesFormData] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isEditModeData, setIsEditModeData] = useState();
   const [addSupplierNotes, { isLoading: isAddSupplierNotesLoading, isSuccess: isAddSupplierNotesSuccess, data: isAddSupplierNotesData, },] = useAddSupplierNotesMutation();
   const [getSupplierNotesBySupplierId, { isFetching: isGetSupplierNotesFetching, isSuccess: isGetSupplierNotesSuccess, data: isGetSupplierNotesData, },] = useLazyGetSupplierNotesBySupplierIdQuery();
   const [updateSupplierNotes, { isLoading: isUpdateSupplierNotesLoading, isSuccess: isUpdateSupplierNotesSuccess, data: isUpdateSupplierNotesData, },] = useUpdateSupplierNotesMutation();
 
+  const hasAddPermission = hasFunctionalPermission(securityKey.ADDSUPPLIERNOTE);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITSUPPLIERNOTE);
+
   useEffect(() => {
-    const hasAddPermission = hasFunctionalPermission(
-      securityKey.ADDSUPPLIERNOTE
-    );
-    const hasEditPermission = hasFunctionalPermission(
-      securityKey.EDITSUPPLIERNOTE
-    );
-    if (hasEditPermission && formSetting) {
-      if (isEditModeData) {
+    if (!isResponsibleUser) {
+      if (hasEditPermission && hasAddPermission && isEditablePage) {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
@@ -44,7 +40,6 @@ const SupplierNotesDetail = (props) => {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
         }
-      } else if (!isEditModeData) {
         if (hasAddPermission.hasAccess === true) {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
@@ -55,13 +50,12 @@ const SupplierNotesDetail = (props) => {
         }
       }
     }
-  }, [showModal, isEditMode]);
-  
+  }, [hasEditPermission, hasAddPermission]);
+
   const handleToggleModal = () => {
     setIsEditMode(false);
     resetForm()
     setShowModal(!showModal);
-    setIsEditModeData("");
   }
 
   const ongetNote = () => {
@@ -70,9 +64,7 @@ const SupplierNotesDetail = (props) => {
 
   useEffect(() => {
     if (isUpdateSupplierNotesSuccess && isUpdateSupplierNotesData) {
-      if (props.onSuccess) {
-        props.onSuccess();
-      }
+
       ToastService.success(isUpdateSupplierNotesData.errorMessage);
       getSupplierNotesBySupplierId(supplierId);
       setShowModal(false);
@@ -81,9 +73,7 @@ const SupplierNotesDetail = (props) => {
 
   useEffect(() => {
     if (isAddSupplierNotesSuccess && isAddSupplierNotesData) {
-      if (props.onSuccess) {
-        props.onSuccess();
-      }
+
       ToastService.success(isAddSupplierNotesData.errorMessage);
       getSupplierNotesBySupplierId(supplierId);
       setShowModal(!showModal);
@@ -103,9 +93,7 @@ const SupplierNotesDetail = (props) => {
     setFormData(form);
   };
   const handleEditNoteData = (data) => {
-
     setIsEditMode(true);
-    setIsEditModeData(data)
     const newformData = { ...formData };
     newformData.initialState = {
       ...newformData,
@@ -116,7 +104,7 @@ const SupplierNotesDetail = (props) => {
   };
   const handleSupplierNotes = () => {
     let supplierNotesData = notesFormRef.current.getFormData();
-   
+
     if (supplierNotesData && !supplierNotesData.supplierNoteId) {
       let request = {
         supplierId: supplierId,
@@ -151,6 +139,7 @@ const SupplierNotesDetail = (props) => {
             onHandleNote={handleEditNoteData}
             ongetSupplierNote={ongetNote}
             notesFormData={notesFormData}
+            isEditablePage={isEditablePage}
           />
         </div>
       </CardSection>

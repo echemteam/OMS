@@ -91,8 +91,8 @@ export const securityKey = {
      DOWNALODSUPPLIERDOCUMENT: "Downalod Supplier Document",
      //** Supplier Note */
      SUPPLIERNOTES: "Supplier Notes",
-     ADDSUPPLIERNOTE: "Add Supplier Note",
-     EDITSUPPLIERNOTE: "Edit Supplier Note",
+     ADDSUPPLIERNOTE: "Add Supplier Notes",
+     EDITSUPPLIERNOTE: "Edit Supplier Notes",
      //** Supplier History */
      SUPPLIERHISTORY: "Supplier History",
 

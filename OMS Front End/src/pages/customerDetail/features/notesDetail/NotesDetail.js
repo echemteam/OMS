@@ -25,7 +25,7 @@ const NotesDetail = ({ isEditablePage }) => {
   const { formSetting } = NotesData;
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(NotesData);
-  const { customerId } = useContext(BasicDetailContext);
+  const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [notesFormData, setNotesFormData] = useState([]);
   const [buttonVisible, setButtonVisible] = useState(true);
@@ -38,23 +38,25 @@ const NotesDetail = ({ isEditablePage }) => {
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITCUSTOMERNOTE);
 
   useEffect(() => {
-    if (hasEditPermission && hasAddPermission) {
-      if (isEditablePage) {
-        if (hasEditPermission.isViewOnly === true) {
-          formSetting.isViewOnly = true;
-          setIsButtonDisable(true);
-        } else {
+    if (!isResponsibleUser) {
+      if (hasEditPermission && hasAddPermission) {
+        if (isEditablePage) {
+          if (hasEditPermission.isViewOnly === true) {
+            formSetting.isViewOnly = true;
+            setIsButtonDisable(true);
+          } else {
+            formSetting.isViewOnly = false;
+            setIsButtonDisable(false);
+          }
+        }
+        if (hasAddPermission.hasAccess === true) {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
+          setButtonVisible(true);
+        } else {
+          formSetting.isViewOnly = true;
+          setButtonVisible(false);
         }
-      }
-      if (hasAddPermission.hasAccess === true) {
-        formSetting.isViewOnly = false;
-        setIsButtonDisable(false);
-        setButtonVisible(true);
-      } else {
-        formSetting.isViewOnly = true;
-        setButtonVisible(false);
       }
     }
   }, [hasEditPermission, hasAddPermission]);
