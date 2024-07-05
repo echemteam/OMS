@@ -31,6 +31,7 @@
     top: 122%;
     box-shadow: 0px 6px 24px #1e357054;
     border-radius: 5px;
+    display: none;
 
     .body-desc-part {
       position: relative;
@@ -46,24 +47,27 @@
         transform: translateX(-50%) rotate(180deg);
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
-        border-top: 10px solid var(--whiteColor);
+        border-top: 10px solid #000000db;
 
       }
 
       .filter-Heading {
         border-bottom: 1px solid var(--inputBorder);
         padding: 10px 10px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        background: linear-gradient(to right, #2d3641db, #000000db);
 
         .left-title {
           h4 {
             font-size: var(--commonFont-large);
             margin: 0;
             font-weight: bold;
-            color: var(--themeColor);
+            color: var(--whiteColor);
           }
         }
 
@@ -72,13 +76,14 @@
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            // color: var(--themeColor);
+            color: var(--whiteColor);
             font-weight: 600;
 
             img {
               width: 18px;
-              margin-left: 3px;
+              margin-left: 5px;
               margin-top: 2px;
+              filter: brightness(100);
             }
           }
         }
@@ -87,7 +92,9 @@
       .filter-content {
         padding: 10px;
 
-        .input-section {}
+        .add-filter-btn {
+          margin-right: 45px;
+        }
 
         .filter-value-delete-icon {
           width: 100%;
@@ -133,15 +140,13 @@
           }
         }
 
-        .add-filter-btn {}
-
-        .bg-filter {
-          background: var(--bg-main-content);
-          padding: 10px;
-          border-radius: 5px;
-        }
       }
     }
   }
 
+  &.active-filter{
+    .filter-body-sec{
+      display: block;
+    }
+  }
 }

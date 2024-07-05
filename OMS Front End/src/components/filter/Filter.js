@@ -7,9 +7,31 @@ import Input from "../ui/inputs/input/Input";
 import Buttons from "../ui/button/Buttons";
 
 const Filter = (props) => {
+  const [isFilterActive, setIsFilterActive] = useState(false);
+  const filterSectionRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (filterSectionRef.current && !filterSectionRef.current.contains(event.target)) {
+      setIsFilterActive(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
+
   return (
-    <div className="filter-section">
-      <div className="button-sec btn dark-btn">
+    <div
+      className={`filter-section ${isFilterActive ? "active-filter" : ""}`}
+      ref={filterSectionRef}
+    >
+      <div
+        className="button-sec btn dark-btn filter-click"
+        onClick={() => setIsFilterActive(!isFilterActive)}
+      >
         <Image
           imgCustomClassName="filter-icon-img"
           imagePath={AppIcons.FilterIcon}
@@ -88,10 +110,10 @@ const Filter = (props) => {
               </div>
             </div>
             <div className="row mt-2">
-              <div className="col-xxl-5 col-xl-5 col-md-5 col-12 pr-0">
-                <div className="add-filter-btn">
+              <div className="col-xxl-12 col-xl-12 col-md-12 col-12 d-flex justify-content-end">
+                <div className="add-filter-btn" title="Add More Filter">
                   <Buttons
-                    buttonTypeClassName="theme-button"
+                    buttonTypeClassName="outline-dark-btn"
                     onClick=""
                     textWithIcon={true}
                     imagePath={AppIcons.PlusIcon}
