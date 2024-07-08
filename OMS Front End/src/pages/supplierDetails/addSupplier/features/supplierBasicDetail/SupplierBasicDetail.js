@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import CardSection from '../../../../../components/ui/card/CardSection';
 import { supplierBasicData } from '../supplierBasicDetail/config/SupplierBasicDetail.data';
-import { useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery } from '../../../../../app/services/supplierAPI'
+import { useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery } from '../../../../../app/services/supplierAPI'
 import ToastService from '../../../../../services/toastService/ToastService';
 import { getTaxIdMinMaxLength } from '../../../../customerDetail/features/basicDetail/config/TaxIdValidator';
 import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
@@ -20,11 +20,20 @@ const SupplierBasicDetail = (props) => {
   const [formData, setFormData] = useState(supplierBasicData);
   const [supplierName, setSupplierName] = useState('');
 
-  const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId , isResponsibleUser} = useContext(AddSupplierContext);
+  const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
   const { formSetting } = supplierBasicData;
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
+
+  const [
+    getSupplierBasicInformationById,
+    {
+      isFetching: isGetSupplierBasicInformationByIdFetching,
+      isSuccess: isGetSupplierBasicInformationById,
+      data: GetSupplierBasicInformationByIdData,
+    },
+  ] = useLazyGetSupplierBasicInformationByIdQuery();
 
   useEffect(() => {
     if (props.isOpen) {
@@ -236,12 +245,19 @@ const SupplierBasicDetail = (props) => {
   }
 
   useEffect(() => {
-    if (props.isOpen) {
-      let data = { ...supplierBasicData };
-      data.initialState = { ...props.supplierData };
-      data.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
+    if (isGetSupplierBasicInformationById && GetSupplierBasicInformationByIdData && !isGetSupplierBasicInformationByIdFetching) {
+      const newFrom = { ...supplierBasicData };
+      const { formFields } = getTaxIdMinMaxLength(GetSupplierBasicInformationByIdData.countryId, supplierBasicData.formFields, 'taxId');
+      newFrom.formFields = formFields;
+      newFrom.initialState = { ...GetSupplierBasicInformationByIdData };
+      newFrom.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
+      setFormData(newFrom);
+    }
+  }, [isGetSupplierBasicInformationById, GetSupplierBasicInformationByIdData, isGetSupplierBasicInformationByIdFetching]);
 
-      setFormData(data);
+  useEffect(() => {
+    if (props.isOpen) {
+      supplierId && getSupplierBasicInformationById(supplierId);
     }
   }, [props.isOpen])
 
