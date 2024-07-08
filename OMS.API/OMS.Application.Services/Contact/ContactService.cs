@@ -116,6 +116,16 @@ namespace OMS.Application.Services.Contact
             return responceData;
         }
 
+        public async Task<GetCustomerContactByContactIdResponse> GetCustomerContactByContactId(int contactId)
+        {
+            GetCustomerContactByContactIdResponse contactDetail = await repositoryManager.contact.GetCustomerContactByContactId(contactId);
+            short ownerTypeId = 3;
+
+            contactDetail.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contactId, ownerTypeId);
+            contactDetail.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
+            return contactDetail!;
+        }
+
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId)
         {
             List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId);
@@ -147,6 +157,17 @@ namespace OMS.Application.Services.Contact
             }
             return contactList!;
         }
+
+        public async Task<GetSupllierContactByContactIdResponse> GetSupllierContactByContactId(int contactId)
+        {
+            GetSupllierContactByContactIdResponse contactDetail = await repositoryManager.contact.GetSupllierContactByContactId(contactId);
+            short ownerTypeId = 4;
+
+            contactDetail.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contactId, ownerTypeId);
+            contactDetail.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
+            return contactDetail!;
+        }
+
         #endregion
 
     }

@@ -12,22 +12,28 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
-import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersDetailsByCutomerNameQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
-import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
+import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import { BasicInformation } from "./BasicInformation";
+import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [customerName, setCustomerName] = useState('');
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const [isModelOpen, setisModelOpen] = useState(false);
+  const [isModelOpen, setIsModelOpen] = useState(false);
+  const [customerInfoData, setCustomerInfoData] = useState(false);
+  
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
-  const [customerInfoData, setCustomerInfoData] = useState(null)
-  const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
+  const { nextRef, customerId, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
 
   const { formSetting } = basicDetailFormDataHalf;
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
 
+  const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById,
+    data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
+  const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
+  const [getCustomersDetailsByCutomerName, { isFetching: isuseGetCustomersDetailsByCutomerNameMutationFetching, isSuccess: isuseGetCustomersDetailsByCutomerNameMutationSucess, data: isuseGetCustomersDetailsByCutomerNameMutationData, }] = useLazyGetCustomersDetailsByCutomerNameQuery();
+ 
   useEffect(() => {
     if (props.isOpen) {
       if (!isResponsibleUser) {
@@ -48,7 +54,7 @@ const BasicDetail = (props) => {
         setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
       }
     }
-  }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
+  }, [props.isOpen, hasEditPermission, formSetting.isViewOnly, isResponsibleUser])
 
   const [
     getAllGroupTypes,
@@ -98,9 +104,6 @@ const BasicDetail = (props) => {
       data: isUpdateCustomersBasicInformationData,
     },
   ] = useUpdateCustomersBasicInformationMutation();
-
-  const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
-  const [getCustomersDetailsByCutomerName, { isFetching: isuseGetCustomersDetailsByCutomerNameMutationFetching, isSuccess: isuseGetCustomersDetailsByCutomerNameMutationSucess, data: isuseGetCustomersDetailsByCutomerNameMutationData, }] = useLazyGetCustomersDetailsByCutomerNameQuery();
 
   useEffect(() => {
     getAllGroupTypes();
@@ -225,17 +228,19 @@ const BasicDetail = (props) => {
   }
 
   useEffect(() => {
+    if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
+      const newFrom = { ...basicDetailFormDataHalf };
+      const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, basicDetailFormDataHalf.formFields, 'taxId');
+      newFrom.formFields = formFields;
+      newFrom.initialState = { ...GetCustomersBasicInformationByIdData };
+      newFrom.formFields = basicDetailFormDataHalf.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
+      setFormData(newFrom);
+    }
+  }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
+
+  useEffect(() => {
     if (props.isOpen) {
-      let data = { ...basicDetailFormDataHalf };
-      data.initialState = { ...props.customerData };
-      if (data.initialState.countryId > 0) {
-        let det = {
-          value: data.initialState.countryId
-        }
-        handleValidateTextId(det, "countryId");
-      }
-      data.formFields = basicDetailFormDataHalf.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
-      setFormData(data);
+      customerId && getCustomersBasicInformationById(customerId);
     }
   }, [props.isOpen])
 
@@ -306,9 +311,9 @@ const BasicDetail = (props) => {
 
   const handleValidateTextId = (data, dataField) => {
     if (dataField === 'countryId') {
-      const { formField } = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
+      const { formFields } = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
       const updatedForm = { ...formData };
-      updatedForm.formFields = formField;
+      updatedForm.formFields = formFields;
       if (props.isOpen) {
         updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
       } else {
@@ -345,14 +350,14 @@ const BasicDetail = (props) => {
   const handleInputShowInfo = () => {
     if (customerName !== '' && customerName.trim().length >= 3) {
       getCustomersDetailsByCutomerName(customerName);
-      setisModelOpen(true)
+      setIsModelOpen(true)
     } else {
       ToastService.warning('Please enter at least three characters.');
     }
   }
 
   const onSidebarClose = () => {
-    setisModelOpen(false)
+    setIsModelOpen(false)
   }
 
   useEffect(() => {

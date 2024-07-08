@@ -23,6 +23,8 @@ namespace OMS.Domain.Repository.Implementation
         const string DELETECUSTOMERDELIVERYMETHODSBYID = "DeleteCustomerDeliveryMethodsById";
         const string ADDSHPPINGDELIVERYCARRIERS = "AddShppingDeliveryCarriers";
         const string ADDDELIVERYMETHODS = "AddDeliveryMethods";
+        const string GETCUSTOMERDELIVERYCARRIERSBYCUSTOMERDELIVERYCARRIERID = "GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId";
+        const string GETCUSTOMERDELIVERYMETHODBYCUSTOMERDELIVERYMETHODID = "GetCustomerDeliveryMethodByCustomerDeliveryMethodId";
         #endregion
 
         public CustomerAccountingSettingsRepository(DapperContext dapperContext) : base(dapperContext)
@@ -156,6 +158,24 @@ namespace OMS.Domain.Repository.Implementation
                 deliveryMethods.CreatedBy,
             }, CommandType.StoredProcedure);
         }
+        public async Task<GetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse> GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(int customerDeliveryCarrierId)
+        {
+            GetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse getCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse = await _context.GetFrist<GetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse>(GETCUSTOMERDELIVERYCARRIERSBYCUSTOMERDELIVERYCARRIERID, new
+            {
+                customerDeliveryCarrierId
+            }, commandType: CommandType.StoredProcedure);
+            return getCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse;
+        }
+
+        public async Task<GetCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse> GetCustomerDeliveryMethodByCustomerDeliveryMethodId(int customerDeliveryMethodId)
+        {
+            GetCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse getCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse = await _context.GetFrist<GetCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse>(GETCUSTOMERDELIVERYMETHODBYCUSTOMERDELIVERYMETHODID, new
+            {
+                customerDeliveryMethodId
+            }, commandType: CommandType.StoredProcedure);
+            return getCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse;
+        }
+
         #endregion
     }
 }

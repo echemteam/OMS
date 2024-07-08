@@ -34,5 +34,5 @@ export const getTaxIdMinMaxLength = (countryId, formFields, formFieldsId) => {
             validation.maxLength = maxLength;
         }
     }
-    return { message, maxLength, minLength, formField };
+    return { message, maxLength, minLength, formFields };
 }
