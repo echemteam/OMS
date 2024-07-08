@@ -50,14 +50,8 @@ const ViewCustomer = () => {
 
   const { setCustomerId, customerId, isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
-  const [
-    getCustomersBasicInformationById,
-    {
-      isFetching: isGetCustomersBasicInformationByIdFetching,
-      isSuccess: isGetCustomersBasicInformationById,
-      data: GetCustomersBasicInformationByIdData,
-    },
-  ] = useLazyGetCustomersBasicInformationByIdQuery();
+  const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById,
+    data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
 
   const hasNotePermission = hasFunctionalPermission(securityKey.CUSTOMERNOTES);
   const hasAddressPermission = hasFunctionalPermission(
