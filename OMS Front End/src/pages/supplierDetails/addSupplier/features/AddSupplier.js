@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CardSection from "../../../../components/ui/card/CardSection";
@@ -16,7 +17,7 @@ import SupplierDocumentDetail from "../../suppliers/features/updateSupplierDetai
 
 const AddSupplier = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage, addSupplier, supplierId } = useContext(AddSupplierContext);
+  const { activeTab, movePreviewPage, addSupplier, supplierId } = useContext(AddSupplierContext);
 
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
 
