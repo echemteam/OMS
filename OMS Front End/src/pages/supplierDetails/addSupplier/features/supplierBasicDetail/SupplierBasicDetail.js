@@ -17,9 +17,9 @@ import { setFieldDisabled } from '../../../../../utils/FieldDisabled/setFieldDis
 const SupplierBasicDetail = (props) => {
 
   const basicDetailRef = useRef();
-  const [formData, setFormData] = useState(supplierBasicData);
   const [supplierName, setSupplierName] = useState('');
-
+  const [formData, setFormData] = useState(supplierBasicData);
+  const { isOpen, onhandleRepeatCall, onSidebarClose, pageId } = props;
   const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
   const { formSetting } = supplierBasicData;
@@ -36,7 +36,7 @@ const SupplierBasicDetail = (props) => {
   ] = useLazyGetSupplierBasicInformationByIdQuery();
 
   useEffect(() => {
-    if (props.isOpen) {
+    if (isOpen) {
       if (!isResponsibleUser) {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
@@ -55,7 +55,7 @@ const SupplierBasicDetail = (props) => {
         setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
       }
     }
-  }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
+  }, [isOpen, hasEditPermission, formSetting, formData, isResponsibleUser])
 
   const [
     addEditSupplierBasicInformation,
@@ -175,6 +175,7 @@ const SupplierBasicDetail = (props) => {
   }, [
     isGetAllCountriesSucess,
     allGetAllCountriesData,
+    setAllCountries
   ]);
 
   useEffect(() => {
@@ -226,7 +227,7 @@ const SupplierBasicDetail = (props) => {
         ToastService.success(isAddEditSupplierBasicInformationData.errorMessage);
         moveNextPage();
       } else {
-        props.onhandleRepeatCall()
+        onhandleRepeatCall()
         ToastService.success(isAddEditSupplierBasicInformationData.errorMessage);
         onreset()
       }
@@ -238,7 +239,7 @@ const SupplierBasicDetail = (props) => {
   }));
 
   const onreset = () => {
-    props.onSidebarClose()
+    onSidebarClose()
     let restData = { ...supplierBasicData };
     restData.initialState = { ...formData };
     setFormData(restData);
@@ -256,10 +257,12 @@ const SupplierBasicDetail = (props) => {
   }, [isGetSupplierBasicInformationById, GetSupplierBasicInformationByIdData, isGetSupplierBasicInformationByIdFetching]);
 
   useEffect(() => {
-    if (props.isOpen) {
-      supplierId && getSupplierBasicInformationById(supplierId);
+    if (isOpen) {
+      if (supplierId > 0) {
+        getSupplierBasicInformationById(supplierId);
+      }
     }
-  }, [props.isOpen])
+  }, [isOpen, supplierId, getSupplierBasicInformationById])
 
   const handleAddSupplierBasicDetails = () => {
     let data = basicDetailRef.current.getFormData();
@@ -302,7 +305,7 @@ const SupplierBasicDetail = (props) => {
         responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
           ? data.responsibleUserId.value
           : data.responsibleUserId,
-        supplierId: props.pageId
+        supplierId: pageId
       }
       addEditSupplierBasicInformation(req);
     } else {
@@ -315,7 +318,7 @@ const SupplierBasicDetail = (props) => {
       const modifyFormFields = getTaxIdMinMaxLength(data.value, supplierBasicData.formFields, 'taxId');
       const updatedForm = { ...formData };
       updatedForm.formFields = modifyFormFields;
-      if (props.isOpen) {
+      if (isOpen) {
         updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
       } else {
         updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
@@ -370,7 +373,7 @@ const SupplierBasicDetail = (props) => {
           />
         </div>
 
-        {props.isOpen &&
+        {isOpen &&
           <div className="col-md-12">
             <div className="d-flex align-item-end justify-content-end">
               <Buttons
@@ -383,7 +386,7 @@ const SupplierBasicDetail = (props) => {
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"
                 buttonText="Cancel"
-                onClick={props.onSidebarClose}
+                onClick={onSidebarClose}
               />
             </div>
           </div>
