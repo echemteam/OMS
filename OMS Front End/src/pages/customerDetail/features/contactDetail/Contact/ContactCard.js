@@ -1,16 +1,44 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "../../../../../components/image/Image";
 import { AppIcons } from "../../../../../data/appIcons";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 
 const ContactCard = ({ childData, handleEdit }) => {
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
   const cardInfoData = childData.cardInformation;
   const phoneNumberLsit = childData.phoneNumberLsit;
   const emailAddressList = childData.emailAddressLst;
 
+  // Static data for phone numbers in dropdown
+  const staticPhoneNumbers = [
+    "abcdefghi@gmail.com",
+    "pqrstuvwxy@gmail.com",
+    "qwwerty@gmail.com"
+  ];
+
   // Split the email addresses and phone numbers into arrays
   const emailAddresses = cardInfoData.emailAddress;
   const phoneNumbers = cardInfoData.phoneNumber;
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -174,6 +202,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                     {cardInfoData.isPrimary ? " (Primary Contact)" : null}
                   </span>
                 </div>
+                
                 <span>|</span>
               </div>
               <div className="contact-right-info">
@@ -214,6 +243,16 @@ const ContactCard = ({ childData, handleEdit }) => {
                       ))}
                     {/* {cardInfoData.emailAddress} */}
                   </div>
+                </div>
+                <div className="drop-down" ref={dropdownRef} onClick={toggleDropdown}>
+                  <i className={`fa fa-sort-desc ${showDropdown ? 'rotated' : ''}`} aria-hidden="true"></i>
+                  {showDropdown && (
+                    <div className="dropdown-content show">
+                      {staticPhoneNumbers.map((phoneNumber, index) => (
+                        <p key={index}>{phoneNumber}</p>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <span>|</span>
                 <div className="label-txt d-flex align-items-center contact-sec">
