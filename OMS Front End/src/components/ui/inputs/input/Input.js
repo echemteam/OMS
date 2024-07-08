@@ -31,6 +31,7 @@ const Input = ({
   minValueLength,
   inputButtonGroup,
   handleInputGroupButton,
+  handleInputShowInfo,
   inputIcon
 }) => {
 
@@ -139,10 +140,28 @@ const Input = ({
                 max={max}
                 {...inputAttributes} />
               <div class="input-group-append">
-                <button className="input-button btn theme-button"
-                  disabled={value ? false : true}
-                  type="button" onClick={handleInputGroupButton}>{inputButtonGroup?.buttonText}
-                </button>
+                <div>
+                  <button className="input-button btn theme-button"
+                    disabled={value ? false : true}
+                    type="button" onClick={handleInputGroupButton}>{inputButtonGroup?.buttonText}
+                  </button>
+                </div>
+                <div className="input-seprate-btn">
+                  {inputButtonGroup.isMultiButton && (
+                    <button
+                      className="input-button btn theme-button list-btn-width ml-1 border-fix"
+                      disabled={value ? false : true}
+                      type="button"
+                      onClick={handleInputShowInfo}
+                    // tittle={inputButtonGroup.showInformation.title}
+                    >
+                      <i className={`fa ${inputButtonGroup.showInformation.faIcon}`} />
+                      <span className="tooltip-text">
+                        {inputButtonGroup.showInformation.title}
+                      </span>
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
             :
@@ -169,7 +188,7 @@ const Input = ({
                     <div className="input-icon">
                       <i className={`fa ${inputIcon.faIcon}`} />
                       <span className="tooltip-text">
-                       {inputIcon.message}
+                        {inputIcon.message}
                       </span>
                     </div>
                   </div>

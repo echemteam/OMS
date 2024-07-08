@@ -197,8 +197,6 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
     }
   };
 
-  console.log("first", supplierData)
-
   return (
     <>{!isLoading ?
       <div className="basic-customer-detail" >

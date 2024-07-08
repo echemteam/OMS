@@ -12,13 +12,17 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
-import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersDetailsByCutomerNameQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
+import { BasicInformation } from "./BasicInformation";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [customerName, setCustomerName] = useState('');
   const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [isModelOpen, setisModelOpen] = useState(false);
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
+  const [customerInfoData, setCustomerInfoData] = useState(null)
   const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
 
   const { formSetting } = basicDetailFormDataHalf;
@@ -96,7 +100,7 @@ const BasicDetail = (props) => {
   ] = useUpdateCustomersBasicInformationMutation();
 
   const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
-
+  const [getCustomersDetailsByCutomerName, { isFetching: isuseGetCustomersDetailsByCutomerNameMutationFetching, isSuccess: isuseGetCustomersDetailsByCutomerNameMutationSucess, data: isuseGetCustomersDetailsByCutomerNameMutationData, }] = useLazyGetCustomersDetailsByCutomerNameQuery();
 
   useEffect(() => {
     getAllGroupTypes();
@@ -255,7 +259,7 @@ const BasicDetail = (props) => {
         addCustomersBasicInformation(req);
       } else {
         if (data.taxId) {
-          const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0 , basicDetailFormDataHalf.formFields , 'taxId');
+          const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, basicDetailFormDataHalf.formFields, 'taxId');
           if (data.taxId.length === minLength && data.taxId.length >= maxLength) {
             addCustomersBasicInformation(req);
           } else {
@@ -325,7 +329,7 @@ const BasicDetail = (props) => {
     }
   }
   const formInputHandler = {
-    INPUT_CHANGED: handleInputFields
+    INPUT_CHANGED: handleInputFields,
   }
 
 
@@ -338,6 +342,19 @@ const BasicDetail = (props) => {
     }
   }
 
+  const handleInputShowInfo = () => {
+    if (customerName !== '' && customerName.trim().length >= 3) {
+      getCustomersDetailsByCutomerName(customerName);
+      setisModelOpen(true)
+    } else {
+      ToastService.warning('Please enter at least three characters.');
+    }
+  }
+
+  const onSidebarClose = () => {
+    setisModelOpen(false)
+  }
+
   useEffect(() => {
     if (isCustomerNameExistSucess && isCustomerNameExistData) {
       if (isCustomerNameExistData.errorMessage.includes('exists')) {
@@ -347,6 +364,12 @@ const BasicDetail = (props) => {
       ToastService.success(isCustomerNameExistData.errorMessage);
     }
   }, [isCustomerNameExistSucess, isCustomerNameExistData]);
+
+  useEffect(() => {
+    if (!isuseGetCustomersDetailsByCutomerNameMutationFetching && isuseGetCustomersDetailsByCutomerNameMutationSucess && isuseGetCustomersDetailsByCutomerNameMutationData) {
+      setCustomerInfoData(isuseGetCustomersDetailsByCutomerNameMutationData)
+    }
+  }, [isuseGetCustomersDetailsByCutomerNameMutationFetching, isuseGetCustomersDetailsByCutomerNameMutationSucess, isuseGetCustomersDetailsByCutomerNameMutationData]);
 
   return (
     <div className="basic-info-sec half-sec">
@@ -359,6 +382,7 @@ const BasicDetail = (props) => {
             onActionChange={formActionHandler}
             onInputChange={formInputHandler}
             handleInputGroupButton={handleInputGroupButton}
+            handleInputShowInfo={handleInputShowInfo}
           />
         </div>
 
@@ -382,6 +406,19 @@ const BasicDetail = (props) => {
         }
 
       </CardSection>
+      <SidebarModel
+        modalTitle="Customer Information"
+        contentClass="content-50 basic-info-model"
+        onClose={onSidebarClose}
+        isOpen={isModelOpen}
+        onClick={handleInputShowInfo}
+      >
+        <BasicInformation
+          onSidebarClose={onSidebarClose}
+          isOpen={isModelOpen}
+          infoData={customerInfoData}
+        />
+      </SidebarModel>
     </div>
   );
 };
