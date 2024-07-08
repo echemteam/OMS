@@ -4,7 +4,6 @@ import { AppIcons } from "../../../../../data/appIcons";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 
 const ContactCard = ({ childData, handleEdit }) => {
-
   const [showEmailDropdown, setShowEmailDropdown] = useState(false);
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
   const emailDropdownRef = useRef(null);
@@ -66,7 +65,7 @@ const ContactCard = ({ childData, handleEdit }) => {
     <>
       {cardInfoData && (
         <>
-          <div className="contact-card d-none">
+          <div className={`contact-card d-none ${showEmailDropdown || showPhoneDropdown ? 'dropdown-open' : ''}`}>
             <div className="add-line">
               <div className="user-icon-name">
                 <span className="icon">
@@ -90,7 +89,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                   imagePath={AppIcons.Mail}
                   altText="contact icon"
                 />
-                <strong>:</strong>
+                {/* <strong>:</strong> */}
                 <div className="fix-data">
                   {emailAddresses &&
                     emailAddresses.map((emaildata, index) => (
@@ -107,12 +106,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                           <Image imagePath={AppIcons.copyIcon} altText="Icon" />
                         </span>
                         {emaildata.isPrimary ? (
-                          <div className="primary-icon">
-                            <Image
-                              imagePath={AppIcons.PrimaryTick}
-                              altText="Icon"
-                            />
-                          </div>
+                          <div className="primary-icon"></div>
                         ) : null}
                       </div>
                     ))}
@@ -125,7 +119,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                   imagePath={AppIcons.ContactNo}
                   altText="contact icon"
                 />
-                <strong>:</strong>
+                {/* <strong>:</strong> */}
                 <div className="fix-data w-100">
                   {phoneNumbers &&
                     phoneNumbers.map((phoneData, index) => (
@@ -160,12 +154,10 @@ const ContactCard = ({ childData, handleEdit }) => {
                             />
                           </span>
                           {phoneData.isPrimary ? (
-                            <div className="primary-icon" title="Is Primary">
-                              <Image
-                                imagePath={AppIcons.PrimaryTick}
-                                altText="Website Icon"
-                              />
-                            </div>
+                            <div
+                              className="primary-icon"
+                              title="Is Primary"
+                            ></div>
                           ) : null}
                         </div>
                         <div className="d-flex justify-content-between right-contact-ext-type">
@@ -204,7 +196,7 @@ const ContactCard = ({ childData, handleEdit }) => {
               </button>
             </div>
           </div>
-          <div className="contact-card">
+          <div className={`contact-card ${showEmailDropdown || showPhoneDropdown ? 'dropdown-open' : ''}`}>
             <div className="add-line">
               <div className="user-icon-name">
                 <span className="icon">
@@ -216,10 +208,12 @@ const ContactCard = ({ childData, handleEdit }) => {
                       {cardInfoData.firstName + " " + cardInfoData.lastName}
                     </b>
                   </span>
-
-                  <span className="field-info primary-text-title">
+                  {cardInfoData.isPrimary && (
+                    <span className="primary-label"> ( Primary ) </span>
+                  )}
+                  {/* <span className="field-info primary-text-title">
                     {cardInfoData.isPrimary ? " (Primary Contact)" : null}
-                  </span>
+                  </span> */}
                 </div>
 
                 <span>|</span>
@@ -231,19 +225,14 @@ const ContactCard = ({ childData, handleEdit }) => {
                     imagePath={AppIcons.Mail}
                     altText="contact icon"
                   />
-                  <strong>:</strong>
+                  {/* <strong>:</strong> */}
                   <div className="fix-data">
                     <div className="d-flex align-items-center mb-0">
                       <div className="card-value">
                         {/* &nbsp;{emaildata.emailAddres.trim()} */}
-                        testemail@gmail.com
+                        testOMSLite123@gmail.com
                       </div>
-                      <div className="primary-icon">
-                        <Image
-                          imagePath={AppIcons.PrimaryTick}
-                          altText="Icon"
-                        />
-                      </div>
+                      <div className="primary-icon"></div>
                     </div>
                     {/* {cardInfoData.emailAddress} */}
                   </div>
@@ -263,15 +252,16 @@ const ContactCard = ({ childData, handleEdit }) => {
                     <div className="dropdown-content show">
                       {staticEmailIds.map((emailID, index) => (
                         <>
-                          <span className="contact-list d-flex flex-row" key={index}>
-                            <span>
-                              {emailID}
-                            </span>
+                          <span
+                            className="contact-list d-flex flex-row"
+                            key={index}
+                          >
+                            <span>{emailID}</span>
                             <span className="copy-icon" title="Copy">
-                                <Image
-                                  imagePath={AppIcons.copyIcon}
-                                  altText="Website Icon"
-                                />
+                              <Image
+                                imagePath={AppIcons.copyIcon}
+                                altText="Website Icon"
+                              />
                             </span>
                           </span>
                         </>
@@ -286,7 +276,8 @@ const ContactCard = ({ childData, handleEdit }) => {
                     imagePath={AppIcons.ContactNo}
                     altText="contact icon"
                   />
-                  <strong>:</strong>
+                  {/* <strong>:</strong> */}
+
                   <div className="fix-data w-100">
                     {phoneNumbers &&
                       phoneNumbers.map((phoneData, index) => (
@@ -314,13 +305,24 @@ const ContactCard = ({ childData, handleEdit }) => {
                                 </span>
                               </div>
                             </div>
-                            <div className="card-value ml-0" key={index}>
+
+                            <div
+                              className={`card-value ml-0 ${
+                                phoneData.isPrimary ? "primary-phone" : ""
+                              }`}
+                            >
                               &nbsp;
-                              {`(+${phoneData.phoneCode}) ${phoneData.phoneNumber}`}
+                              {/* {`(+${phoneData.phoneCode}) ${phoneData.phoneNumber}`} */}
+                              +91 9173010672
+
                             </div>
                             {/* <span className="title">Ext.</span> */}
                             {/* { */}
-                            <div className="card-value">
+                            <div
+                              className={`card-value ${
+                                phoneData.isPrimary ? "primary-phone" : ""
+                              }`}
+                            >
                               &nbsp;
                               {`${
                                 phoneData.extension > 0
@@ -343,12 +345,10 @@ const ContactCard = ({ childData, handleEdit }) => {
                               />
                             </span> */}
                             {phoneData.isPrimary ? (
-                              <div className="primary-icon" title="Is Primary">
-                                <Image
-                                  imagePath={AppIcons.PrimaryTick}
-                                  altText="Icon"
-                                />
-                              </div>
+                              <div
+                                className="primary-icon"
+                                title="Is Primary"
+                              ></div>
                             ) : null}
                           </div>
                         </div>
@@ -357,7 +357,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                   </div>
                 </div>
                 <div
-                  className="drop-down"
+                  className="drop-down mobilenumber"
                   ref={phoneDropdownRef}
                   onClick={togglePhoneDropdown}
                 >
@@ -368,18 +368,27 @@ const ContactCard = ({ childData, handleEdit }) => {
                     aria-hidden="true"
                   ></i>
                   {showPhoneDropdown && (
-                    <div className="dropdown-content show">
+                    <div className="dropdown-content mobilenumber show ">
                       {staticPhoneNumbers.map((phoneData, index) => (
                         <>
-                          <span className="contact-list d-flex flex-row" key={index}>
+                          <span
+                            className="contact-list d-flex flex-row"
+                            key={index}
+                          >
                             <span>
-                              {`(+${phoneData.phoneCode}) ${phoneData.phoneNumber}${phoneData.extension ? `, ${phoneData.extension}` : ""}`}
+                              {`(+${phoneData.phoneCode}) ${
+                                phoneData.phoneNumber
+                              }${
+                                phoneData.extension
+                                  ? `, ${phoneData.extension}`
+                                  : ""
+                              }`}
                             </span>
                             <span className="copy-icon" title="Copy">
-                                <Image
-                                  imagePath={AppIcons.copyIcon}
-                                  altText="Website Icon"
-                                />
+                              <Image
+                                imagePath={AppIcons.copyIcon}
+                                altText="Website Icon"
+                              />
                             </span>
                           </span>
                         </>
@@ -391,9 +400,9 @@ const ContactCard = ({ childData, handleEdit }) => {
             </div>
             <div className="edit-delete-button">
               <button
-                // onClick={() =>
-                //   handleEdit(cardInfoData, emailAddressList, phoneNumberLsit)
-                // }
+                onClick={() =>
+                  handleEdit(cardInfoData, emailAddressList, phoneNumberLsit)
+                }
                 className="edit-btn"
               >
                 <Image imagePath={AppIcons.editThemeIcon} />
