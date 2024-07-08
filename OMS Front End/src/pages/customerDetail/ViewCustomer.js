@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "./ViewCustomer.scss";
 import CardSection from "../../components/ui/card/CardSection";
@@ -14,9 +15,6 @@ import { hasFunctionalPermission } from "../../utils/AuthorizeNavigation/authori
 import { useSelector } from "react-redux";
 import { CustomerHistoryDetail } from "./features/HistoryDetail/CustomerHistoryDetail";
 
-const NotesDetail = React.lazy(() =>
-  import("./features/notesDetail/features/NotesDetail")
-);
 const RenderTabs = React.lazy(() =>
   import("../../components/ui/tabs/RenderTabs")
 );

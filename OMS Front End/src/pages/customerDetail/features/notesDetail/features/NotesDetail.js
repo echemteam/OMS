@@ -100,40 +100,26 @@ const NotesDetail = ({ keyId, isSupplier, isEditablePage, SecurityKey, onAddNote
 
   const handleNotes = () => {
     let notesData = notesFormRef.current.getFormData();
+    let request = {
+      note: notesData.note,
+    };
+
     if (isSupplier) {
-      if (notesData && !notesData.supplierNoteId) {
-        let request = {
-          supplierId: keyId,
-          note: notesData.note,
-        };
-        addNotes(request);
-
-      } else if (notesData && notesData.supplierNoteId) {
-        const updateRequest = {
-          supplierId: keyId,
-          note: notesData.note,
-          supplierNoteId: notesData.supplierNoteId,
-        };
-        updateNotes(updateRequest);
-
+      request.supplierId = keyId;
+      if (notesData && notesData.supplierNoteId) {
+        request.supplierNoteId = notesData.supplierNoteId;
       }
     } else {
-      if (notesData && !notesData.customerNoteId) {
-        let request = {
-          customerId: keyId,
-          note: notesData.note,
-        };
-        addNotes(request);
-
-      } else if (notesData && notesData.customerNoteId) {
-        const updateRequest = {
-          customerId: keyId,
-          note: notesData.note,
-          customerNoteId: notesData.customerNoteId,
-        };
-        updateNotes(updateRequest);
-
+      request.customerId = keyId;
+      if (notesData && notesData.customerNoteId) {
+        request.customerNoteId = notesData.customerNoteId;
       }
+    }
+
+    if (notesData && (notesData.supplierNoteId || notesData.customerNoteId)) {
+      updateNotes(request);
+    } else {
+      addNotes(request);
     }
   };
 
