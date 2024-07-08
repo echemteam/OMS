@@ -12,17 +12,21 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
-import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [customerName, setCustomerName] = useState('');
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
-  const { nextRef, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
+  const { nextRef, customerId, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
 
   const { formSetting } = basicDetailFormDataHalf;
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
+
+  const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById,
+    data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
+  const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
 
   useEffect(() => {
     if (props.isOpen) {
@@ -44,7 +48,7 @@ const BasicDetail = (props) => {
         setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
       }
     }
-  }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
+  }, [props.isOpen, hasEditPermission, formSetting.isViewOnly, isResponsibleUser])
 
   const [
     getAllGroupTypes,
@@ -94,9 +98,6 @@ const BasicDetail = (props) => {
       data: isUpdateCustomersBasicInformationData,
     },
   ] = useUpdateCustomersBasicInformationMutation();
-
-  const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
-
 
   useEffect(() => {
     getAllGroupTypes();
@@ -221,17 +222,19 @@ const BasicDetail = (props) => {
   }
 
   useEffect(() => {
+    if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
+      const newFrom = { ...basicDetailFormDataHalf };
+      const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, basicDetailFormDataHalf.formFields, 'taxId');
+      newFrom.formFields = formFields;
+      newFrom.initialState = { ...GetCustomersBasicInformationByIdData };
+      newFrom.formFields = basicDetailFormDataHalf.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
+      setFormData(newFrom);
+    }
+  }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
+
+  useEffect(() => {
     if (props.isOpen) {
-      let data = { ...basicDetailFormDataHalf };
-      data.initialState = { ...props.customerData };
-      if (data.initialState.countryId > 0) {
-        let det = {
-          value: data.initialState.countryId
-        }
-        handleValidateTextId(det, "countryId");
-      }
-      data.formFields = basicDetailFormDataHalf.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
-      setFormData(data);
+      customerId && getCustomersBasicInformationById(customerId);
     }
   }, [props.isOpen])
 
@@ -255,7 +258,7 @@ const BasicDetail = (props) => {
         addCustomersBasicInformation(req);
       } else {
         if (data.taxId) {
-          const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0 , basicDetailFormDataHalf.formFields , 'taxId');
+          const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, basicDetailFormDataHalf.formFields, 'taxId');
           if (data.taxId.length === minLength && data.taxId.length >= maxLength) {
             addCustomersBasicInformation(req);
           } else {
@@ -302,9 +305,9 @@ const BasicDetail = (props) => {
 
   const handleValidateTextId = (data, dataField) => {
     if (dataField === 'countryId') {
-      const { formField } = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
+      const { formFields } = getTaxIdMinMaxLength(data.value, basicDetailFormDataHalf.formFields, 'taxId');
       const updatedForm = { ...formData };
-      updatedForm.formFields = formField;
+      updatedForm.formFields = formFields;
       if (props.isOpen) {
         updatedForm.formFields = basicDetailFormDataHalf.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
       } else {
