@@ -18,7 +18,6 @@ import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuemen
 import SupplierContactDetail from "../../../addSupplier/features/supplierContactDetail/SupplierContactDetail";
 import SuplierAddressDetails from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetails";
 import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
-import { getAuthProps } from "../../../../../lib/authenticationLibrary";
 import { useSelector } from "react-redux";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { securityKey } from "../../../../../data/SecurityKey";
