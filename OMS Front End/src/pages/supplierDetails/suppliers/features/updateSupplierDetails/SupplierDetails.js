@@ -21,6 +21,7 @@ import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistory
 import { useSelector } from "react-redux";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { securityKey } from "../../../../../data/SecurityKey";
+import ManageSupplierNotes from "./features/notesDetails/ManageSupplierNotes";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -123,7 +124,7 @@ const SupplierDetails = () => {
     {
       sMenuItemCaption: "Notes",
       component: (
-        <div className="mt-2">{<SupplierNotesDetail pageId={pageId} isEditablePage={true} />}</div>
+        <div className="mt-2">{<ManageSupplierNotes isEditablePage={true} />}</div>
       ),
       isVisible: hasNotePermission.hasAccess,
     },
