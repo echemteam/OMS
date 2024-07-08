@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
@@ -31,7 +32,7 @@ const ManageDocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, de
     //** UseEffect */
     useEffect(() => {
         onGetData();
-    }, []);
+    }, [keyId]);
 
     useEffect(() => {
         if (isEditablePage && SecurityKey) {
