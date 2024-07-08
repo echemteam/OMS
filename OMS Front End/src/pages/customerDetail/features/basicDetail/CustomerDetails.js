@@ -301,7 +301,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           <CenterModel
             showModal={showModal}
             handleToggleModal={handleToggleModal}
-            modalTitle={statusFeild + " " + "Reason"}
+            modalTitle={`${statusFeild} Reason`}
             modelSizeClass="w-50s"
           >
             <div className="row horizontal-form">

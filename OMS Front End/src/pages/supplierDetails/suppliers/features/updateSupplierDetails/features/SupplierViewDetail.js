@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../../../app/services/supplierAPI';
 import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
@@ -298,7 +299,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
           <CenterModel
             showModal={showModal}
             handleToggleModal={handleToggleModal}
-            modalTitle={statusFeild + " " + "Reason"}
+            modalTitle={`${statusFeild} Reason`}
             modelSizeClass="w-50s"
           >
             <div className="row horizontal-form">

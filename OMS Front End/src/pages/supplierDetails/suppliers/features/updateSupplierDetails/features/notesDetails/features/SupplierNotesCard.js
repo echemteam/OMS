@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { AppIcons } from "../../../../../../../../data/appIcons";
 import Buttons from "../../../../../../../../components/ui/button/Buttons";
 import { getRandomColor } from "../../../../../../../../utils/RandomColors/RandomColors";
