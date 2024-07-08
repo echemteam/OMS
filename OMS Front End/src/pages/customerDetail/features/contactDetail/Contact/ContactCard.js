@@ -4,31 +4,54 @@ import { AppIcons } from "../../../../../data/appIcons";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 
 const ContactCard = ({ childData, handleEdit }) => {
-  const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null);
+
+  const [showEmailDropdown, setShowEmailDropdown] = useState(false);
+  const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
+  const emailDropdownRef = useRef(null);
+  const phoneDropdownRef = useRef(null);
 
   const cardInfoData = childData.cardInformation;
   const phoneNumberLsit = childData.phoneNumberLsit;
   const emailAddressList = childData.emailAddressLst;
 
   // Static data for phone numbers in dropdown
-  const staticPhoneNumbers = [
+  const staticEmailIds = [
     "abcdefghi@gmail.com",
     "pqrstuvwxy@gmail.com",
     "qwwerty@gmail.com",
+  ];
+
+  // Static data for phone numbers in dropdown
+  const staticPhoneNumbers = [
+    { phoneCode: "1", phoneNumber: "1234567890", extension: "101" },
+    { phoneCode: "44", phoneNumber: "9876543210", extension: "" },
+    { phoneCode: "91", phoneNumber: "1122334455", extension: "102" },
   ];
 
   // Split the email addresses and phone numbers into arrays
   const emailAddresses = cardInfoData.emailAddress;
   const phoneNumbers = cardInfoData.phoneNumber;
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+  const toggleEmailDropdown = () => {
+    setShowEmailDropdown(!showEmailDropdown);
+  };
+
+  const togglePhoneDropdown = () => {
+    setShowPhoneDropdown(!showPhoneDropdown);
   };
 
   const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setShowDropdown(false);
+    if (
+      emailDropdownRef.current &&
+      !emailDropdownRef.current.contains(event.target)
+    ) {
+      setShowEmailDropdown(false);
+    }
+    if (
+      phoneDropdownRef.current &&
+      !phoneDropdownRef.current.contains(event.target)
+    ) {
+      setShowPhoneDropdown(false);
     }
   };
 
@@ -227,28 +250,28 @@ const ContactCard = ({ childData, handleEdit }) => {
                 </div>
                 <div
                   className="drop-down"
-                  ref={dropdownRef}
-                  onClick={toggleDropdown}
+                  ref={emailDropdownRef}
+                  onClick={toggleEmailDropdown}
                 >
                   <i
-                    className={`fa fa-sort-desc ${
-                      showDropdown ? "rotated" : ""
+                    className={`fa fa-caret-down ${
+                      showEmailDropdown ? "rotated" : ""
                     }`}
                     aria-hidden="true"
                   ></i>
-                  {showDropdown && (
+                  {showEmailDropdown && (
                     <div className="dropdown-content show">
-                      {staticPhoneNumbers.map((phoneNumber, index) => (
+                      {staticEmailIds.map((emailID, index) => (
                         <>
-                          <span className="contact-list d-flex flex-column" key={index}>
+                          <span className="contact-list d-flex flex-row" key={index}>
                             <span>
-                              {phoneNumber}
-                              <span className="copy-icon" title="Copy">
+                              {emailID}
+                            </span>
+                            <span className="copy-icon" title="Copy">
                                 <Image
                                   imagePath={AppIcons.copyIcon}
                                   altText="Website Icon"
                                 />
-                              </span>
                             </span>
                           </span>
                         </>
@@ -332,6 +355,37 @@ const ContactCard = ({ childData, handleEdit }) => {
                       ))}
                     {/* {cardInfoData.phoneNumber} */}
                   </div>
+                </div>
+                <div
+                  className="drop-down"
+                  ref={phoneDropdownRef}
+                  onClick={togglePhoneDropdown}
+                >
+                  <i
+                    className={`fa fa-caret-down ${
+                      showPhoneDropdown ? "rotated" : ""
+                    }`}
+                    aria-hidden="true"
+                  ></i>
+                  {showPhoneDropdown && (
+                    <div className="dropdown-content show">
+                      {staticPhoneNumbers.map((phoneData, index) => (
+                        <>
+                          <span className="contact-list d-flex flex-row" key={index}>
+                            <span>
+                              {`(+${phoneData.phoneCode}) ${phoneData.phoneNumber}${phoneData.extension ? `, ${phoneData.extension}` : ""}`}
+                            </span>
+                            <span className="copy-icon" title="Copy">
+                                <Image
+                                  imagePath={AppIcons.copyIcon}
+                                  altText="Website Icon"
+                                />
+                            </span>
+                          </span>
+                        </>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

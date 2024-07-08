@@ -2267,7 +2267,13 @@ input[type="checkbox"]:disabled {
   position: relative;
   display: inline-block;
   padding: 0 20px 0 0;
+  margin-left: 20px;
   cursor: pointer;
+
+  .rotated {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+  }
 }
 
 .dropdown-content {
@@ -2275,7 +2281,7 @@ input[type="checkbox"]:disabled {
   display: none;
   position: fixed;
   background-color: var(--whiteColor);
-  min-width: 155px;
+  min-width: 185px;
   max-height: 170px;
   box-shadow: var(--card-shadow);
   z-index: 999;
@@ -2295,6 +2301,7 @@ input[type="checkbox"]:disabled {
     text-decoration: none;
     display: block;
     border-bottom: 1px solid rgb(240, 240, 240);
+    justify-content: space-between;
 
     &:last-child {
       padding-bottom: 7px;
