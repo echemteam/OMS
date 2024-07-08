@@ -4,7 +4,6 @@ import { AppIcons } from "../../../../../data/appIcons";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 
 const ContactCard = ({ childData, handleEdit }) => {
-
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -16,7 +15,7 @@ const ContactCard = ({ childData, handleEdit }) => {
   const staticPhoneNumbers = [
     "abcdefghi@gmail.com",
     "pqrstuvwxy@gmail.com",
-    "qwwerty@gmail.com"
+    "qwwerty@gmail.com",
   ];
 
   // Split the email addresses and phone numbers into arrays
@@ -82,16 +81,13 @@ const ContactCard = ({ childData, handleEdit }) => {
                             CopyText(emaildata?.emailAddres, "email")
                           }
                         >
-                          <Image
-                            imagePath={AppIcons.copyIcon}
-                            altText="Website Icon"
-                          />
+                          <Image imagePath={AppIcons.copyIcon} altText="Icon" />
                         </span>
                         {emaildata.isPrimary ? (
                           <div className="primary-icon">
                             <Image
                               imagePath={AppIcons.PrimaryTick}
-                              altText="Website Icon"
+                              altText="Icon"
                             />
                           </div>
                         ) : null}
@@ -202,7 +198,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                     {cardInfoData.isPrimary ? " (Primary Contact)" : null}
                   </span>
                 </div>
-                
+
                 <span>|</span>
               </div>
               <div className="contact-right-info">
@@ -214,42 +210,48 @@ const ContactCard = ({ childData, handleEdit }) => {
                   />
                   <strong>:</strong>
                   <div className="fix-data">
-                    {emailAddresses &&
-                      emailAddresses.map((emaildata, index) => (
-                        <div className="d-flex align-items-center mb-0">
-                          <div className="card-value" key={index}>
-                            &nbsp;{emaildata.emailAddres.trim()}
-                          </div>
-                          {/* <span
-                            className="copy-icon"
-                            onClick={() =>
-                              CopyText(emaildata?.emailAddres, "email")
-                            }
-                          >
-                            <Image
-                              imagePath={AppIcons.copyIcon}
-                              altText="Website Icon"
-                            />
-                          </span> */}
-                          {emaildata.isPrimary ? (
-                            <div className="primary-icon">
-                              <Image
-                                imagePath={AppIcons.PrimaryTick}
-                                altText="Website Icon"
-                              />
-                            </div>
-                          ) : null}
-                        </div>
-                      ))}
+                    <div className="d-flex align-items-center mb-0">
+                      <div className="card-value">
+                        {/* &nbsp;{emaildata.emailAddres.trim()} */}
+                        testemail@gmail.com
+                      </div>
+                      <div className="primary-icon">
+                        <Image
+                          imagePath={AppIcons.PrimaryTick}
+                          altText="Icon"
+                        />
+                      </div>
+                    </div>
                     {/* {cardInfoData.emailAddress} */}
                   </div>
                 </div>
-                <div className="drop-down" ref={dropdownRef} onClick={toggleDropdown}>
-                  <i className={`fa fa-sort-desc ${showDropdown ? 'rotated' : ''}`} aria-hidden="true"></i>
+                <div
+                  className="drop-down"
+                  ref={dropdownRef}
+                  onClick={toggleDropdown}
+                >
+                  <i
+                    className={`fa fa-sort-desc ${
+                      showDropdown ? "rotated" : ""
+                    }`}
+                    aria-hidden="true"
+                  ></i>
                   {showDropdown && (
                     <div className="dropdown-content show">
                       {staticPhoneNumbers.map((phoneNumber, index) => (
-                        <p key={index}>{phoneNumber}</p>
+                        <>
+                          <span className="contact-list d-flex flex-column" key={index}>
+                            <span>
+                              {phoneNumber}
+                              <span className="copy-icon" title="Copy">
+                                <Image
+                                  imagePath={AppIcons.copyIcon}
+                                  altText="Website Icon"
+                                />
+                              </span>
+                            </span>
+                          </span>
+                        </>
                       ))}
                     </div>
                   )}
