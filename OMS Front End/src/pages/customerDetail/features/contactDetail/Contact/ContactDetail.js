@@ -25,6 +25,7 @@ const ContactDetail = ({
   isSupplier,
   isEditablePage,
   SecurityKey,
+  getContactById
 }) => {
   //** State */
   const editRef = useRef();
@@ -137,15 +138,16 @@ const ContactDetail = ({
     }
   };
 
-  const handleEdit = (data, emailAddressList, phoneNumberLsit) => {
+  const handleEdit = (contactId) => {
+    // contactId && getById(contactId);
     setIsEdit(true);
-    setEditFormData(data);
+    // setEditFormData(data);
     setisModelOpen(!isModelOpen);
     if (editRef.current) {
-      editRef.current.callEditFunction(data);
+      editRef.current.callEditFunction(contactId);
     }
-    setPhoneNumberData(phoneNumberLsit);
-    setEmailAddressData(emailAddressList);
+    // setPhoneNumberData(phoneNumberLsit);
+    // setEmailAddressData(emailAddressList);
   };
 
   const onSidebarClose = () => {
@@ -208,6 +210,7 @@ const ContactDetail = ({
             mainId={mainId}
             isEditablePage={isEditablePage}
             isOpen={isModelOpen}
+            getContactById={getContactById}
           />
         </SidebarModel>
       </div>

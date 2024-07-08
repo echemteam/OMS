@@ -9,11 +9,13 @@ import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigatio
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
 import { setFieldDisabled } from "../../../../../utils/FieldDisabled/setFieldDisabled";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey, isEditablePage, isSupplier, isEdit, isOpen }) => {
+const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey,
+  isEditablePage, isSupplier, isEdit, isOpen, getContactById }) => {
 
   //** State */
   const ref = useRef();
@@ -23,10 +25,11 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   const [supplierContactId, setSupplierContactId] = useState(0);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
 
-  const { contactId, setContactId, emailAddressData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
+  const { contactId, setContactId, emailAddressData, setEmailAddressData, phoneNumberData, setPhoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
   //** API Call's */
   const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
+  const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSucess, data: isGetByIdData }] = getContactById();
 
   //** Handle Changes */
   const handleAddEdit = () => {
@@ -69,7 +72,6 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     }
   };
 
-
   //** UseEffect */
   useEffect(() => {
     if (isAddEditSuccess && isAddEditData) {
@@ -84,6 +86,40 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       }
     }
   }, [isAddEditSuccess, isAddEditData]);
+
+  useEffect(() => {
+    if (!isGetByIdFetching && isGetByIdSucess && isGetByIdData) {
+      let data = isGetByIdData;
+      let form = { ...contactDetailFormData };
+      form.initialState = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        contactTypeId: data.contactTypeId,
+        isPrimary: data.isPrimary
+      }
+      const dropdownFieldIndex = form.formFields.findIndex(
+        (item) => item.dataField === "contactTypeId"
+      );
+      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = false;
+
+      setFormData(form);
+      setCustomerContactId(data?.customerContactId);
+      setSupplierContactId(data?.supplierContactId);
+
+      const modifyPhoneNumberList = isGetByIdData.phoneNumberLsit.map((item, index) => ({
+        ...item,
+        id: index + 1,
+        extension: item.extension === 0 ? '-' : item.extension
+      }));
+      const modifyEmailAddressLst = isGetByIdData.emailAddressLst.map((item, index) => ({
+        ...item,
+        id: index + 1
+      }));
+
+      setPhoneNumberData(modifyPhoneNumberList);
+      setEmailAddressData(modifyEmailAddressLst);
+    }
+  }, [isGetByIdFetching, isGetByIdSucess, isGetByIdData]);
 
   //** Use Imperative Handle  */
   useImperativeHandle(editRef, () => ({
@@ -115,25 +151,9 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     }
   }, [editRef, editFormData, SecurityKey])
 
-  const handleEditMode = (data) => {
-    if (data) {
-      setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', true);
-      let form = { ...contactDetailFormData };
-      form.initialState = {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        contactTypeId: data.contactTypeId,
-        isPrimary: data.isPrimary
-      }
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "contactTypeId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = false;
-      setFormData(form);
-      setContactId(data?.contactId);
-      setCustomerContactId(data?.customerContactId);
-      setSupplierContactId(data?.supplierContactId);
-    }
+  const handleEditMode = (contactId) => {
+    contactId && getById(contactId);
+    setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', true);
   }
 
   useEffect(() => {
@@ -169,8 +189,13 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         <FormCreator config={formData} ref={ref} {...formData} />
       </div>
       <div className="row">
-        <ManageEmailAddress isSupplier={isSupplier} onGetContactList={onGetContactList} />
-        <ManageContactNumbers isSupplier={isSupplier} onGetContactList={onGetContactList} />
+        {!isGetByIdFetching ?
+          <React.Fragment>
+            <ManageEmailAddress isSupplier={isSupplier} onGetContactList={onGetContactList} />
+            <ManageContactNumbers isSupplier={isSupplier} onGetContactList={onGetContactList} />
+          </React.Fragment>
+          : <DataLoader />
+        }
       </div>
       <div className="col-md-12 mt-3">
         <div className="d-flex align-item-end justify-content-end">

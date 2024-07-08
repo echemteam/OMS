@@ -94,8 +94,8 @@ const ContactCard = ({ childData, handleEdit, showEditIcon }) => {
                           <div className="card-value">
                             &nbsp;
                             {`${phoneData.extension > 0
-                                ? "," + phoneData.extension
-                                : ""
+                              ? "," + phoneData.extension
+                              : ""
                               }`}
                           </div>
                           <span
@@ -149,7 +149,7 @@ const ContactCard = ({ childData, handleEdit, showEditIcon }) => {
             <div className="edit-delete-button">
               <button
                 onClick={() =>
-                  handleEdit(cardInfoData, emailAddressList, phoneNumberLsit)
+                  handleEdit(cardInfoData?.contactId)
                 }
                 className="edit-btn"
               >
