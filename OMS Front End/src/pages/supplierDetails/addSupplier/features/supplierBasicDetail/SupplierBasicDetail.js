@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import CardSection from '../../../../../components/ui/card/CardSection';
@@ -174,8 +175,7 @@ const SupplierBasicDetail = (props) => {
     }
   }, [
     isGetAllCountriesSucess,
-    allGetAllCountriesData,
-    setAllCountries
+    allGetAllCountriesData
   ]);
 
   useEffect(() => {
