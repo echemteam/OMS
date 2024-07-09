@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../components/ui/card/CardSection";
 import { CustomersList } from "./features/CustomersList";
 import CustomerContext from "../../../utils/ContextAPIs/Customer/CustomerListContext";
-import { StatusEnums } from "../../../common/features/Enums/StatusEnums";
+import { StatusEnums, StatusValue } from "../../../common/features/Enums/StatusEnums";
 import {
   AllCustomerGridConfig,
   ApprovedCustomerGridConfig,
@@ -13,15 +13,22 @@ import {
 import InActiveCustomer from "./features/InActiveCustomer";
 import { BasicDetailContextProvider } from "../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { ListSupplier } from "../../../common/features/Enums/ListEnums";
+import useDebounce from "../../../app/customHooks/useDebouce"
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
   const listRef = useRef();
+  const [search, setSearch] = useState("");
+  const [statusOptions, setStatusOptions] = useState([]);
+  const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState("");
   const [allManageData, setAllManageData] = useState(AllCustomerGridConfig);
   const [pendingManageData, setPendingManageData] = useState(PendingCustomerGridConfig);
   const [submittedManageData, setSubmittedManageData] = useState(SubmittedCustomerGridConfig);
   const [approvedManageData, setApprovedManageData] = useState(ApprovedCustomerGridConfig);
   const [rejectedCManageData, setRejectedCManageData] = useState(RejectedCustomerGridConfig);
+
+  const debouncedSearch = useDebounce(search, 300);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
@@ -80,14 +87,44 @@ const Customers = () => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
+  const handleChange = (event) => {
+    const value = event.target.value;
+    // if (value.length >= 3) {
+      setSearch(value.trim());
+    // }
+  }
+
+  useEffect(() => {
+    if (StatusValue) {
+      const statusListData = StatusValue.map((item) => ({
+        value: item.value,
+        label: item.label,
+      }));
+      setStatusOptions(statusListData);
+    }
+  }, [StatusValue]);
+
+  const handleChangeDropdown = (selectedOptions) => {
+    const selectedValues = selectedOptions.map(option => option.value);
+    setSelectedDrpvalues(selectedValues);
+    setSelectedStatusOptions(selectedValues);
+  };
+
+
   const tabs = [
     {
       sMenuItemCaption: "ALL",
       component: (
         <div className="mt-2 customer-list-all">
           <CustomersList
-            statusId={StatusEnums.ALL}
+            statusId={selectedDrpvalues}
             configFile={allManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
           />
         </div>
       ),
@@ -99,6 +136,12 @@ const Customers = () => {
           <CustomersList
             statusId={StatusEnums.Pending}
             configFile={pendingManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
           />
         </div>
       ),
@@ -110,6 +153,12 @@ const Customers = () => {
           <CustomersList
             statusId={StatusEnums.Submitted}
             configFile={submittedManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
           />
         </div>
       ),
@@ -121,6 +170,12 @@ const Customers = () => {
           <CustomersList
             statusId={StatusEnums.Approved}
             configFile={approvedManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
           />
         </div>
       ),
@@ -146,6 +201,12 @@ const Customers = () => {
           <CustomersList
             statusId={StatusEnums.Reject}
             configFile={rejectedCManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
           />
         </div>
       ),

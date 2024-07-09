@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import SwalAlert from '../../../../services/swalService/SwalService';
 import { useSelector } from 'react-redux';
 
-export const InActiveCustomers = ({ statusId, configFile }) => {
+export const InActiveCustomers = ({ statusId, configFile , handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions }) => {
 
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
@@ -41,8 +41,8 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
         pageNumber: page.pageNumber,
         pageSize: page.pageSize,
       },
-      filters: { searchText: "" },
-      statusId: Array.isArray(statusId) ? statusId.join(",") : statusId
+      filters: { searchText: search },
+      statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId)
     };
     getCustomers(request);
   };
@@ -119,11 +119,18 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
         pageNumber: currentPageObject.pageNumber,
         pageSize: currentPageObject.pageSize,
       },
-      filters: { searchText: "" },
-      statusId: Array.isArray(statusId) ? statusId.join(",") : statusId
+      filters: { searchText: search },
+      statusId: selectedDrpvalues.length === 0 ? (Array.isArray(statusId) ? statusId.join(",") : String(statusId)) : (Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues))
     };
     getCustomers(request);
   };
+
+  useEffect(() => {
+    if (molGridRef.current) {
+      const currentPageObject = molGridRef.current.getCurrentPageObject();
+      getListApi(currentPageObject);
+    }
+  }, [search , selectedStatusOptions]);
 
   const approvalCheckList = (data) => {
     if (childRef.current) {
@@ -188,6 +195,17 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
       <div className="row">
         <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
           <CardSection
+            searchInput={true}
+            handleChange={handleChange}
+            searchInputName="Search By Customer Name, Tax Id , Email Address"
+            searchFilter={true}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedOptions={selectedDrpvalues}
+            optionsValue={statusOptions}
+            isMultiSelect={true}
+            placeholder="Search by Status"
+            isCardSection={true}
+            isdropdownOpen={true}
           >
             <div className="row">
               <div className="col-md-12 table-striped">
