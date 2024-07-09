@@ -12,11 +12,14 @@ export const CommonContextProvider = ({ children }) => {
     const settingRef = useRef(null);
     const [customerId, setCustomerId] = useState(0);
     const [supplierId, setSupplierId] = useState(0);
-    const [supplierContactId, setSupplierContactId] = useState(0);
-    const [customerContactId, setCustomerContactId] = useState(0);
+
     const [isResponsibleCustomerUser, setIsResponsibleCustomerUser] = useState(true);
     const [isResponsibleSupplierUser, setIsResponsibleSupplierUser] = useState(true);
 
+    //** Using for Contact  */
+    const [phoneNumberData, setPhoneNumberData] = useState();
+    const [emailAddressData, setEmailAddressData] = useState();
+    //** */
 
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);

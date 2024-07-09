@@ -1,24 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { forwardRef, useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { addEditDeliveryFormData } from "../config/DevliveryConfig";
 import Buttons from "../../../../../../../components/ui/button/Buttons";
+import { settingTypeEnums } from "../../../../../../../utils/Enums/enums";
 import FormCreator from "../../../../../../../components/Forms/FormCreator";
 import CenterModel from "../../../../../../../components/ui/centerModel/CenterModel";
+import { setFieldSetting } from "../../../../../../../utils/FieldsSetting/SetFieldSetting";
 import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import ToastService from "../../../../../../../services/toastService/ToastService";
-import { useAddDeliveryMethodsMutation, useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
+import { useAddDeliveryMethodsMutation, useLazyGetCustomerDeliveryMethodByCustomerDeliveryMethodIdQuery, useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
 
-const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit, editFormData, childRef, onSuccess }) => {
+const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit, deliveryMethodId, onSuccess }) => {
     //** State */
     const ref = useRef();
-    const { formFields } = addEditDeliveryFormData;
     const { customerId } = useContext(BasicDetailContext);
     const [formData, setFormData] = useState(addEditDeliveryFormData);
 
     //** API Call's */
-    const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = useAddDeliveryMethodsMutation();
     const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateDeliveryMethodsMutation();
+    const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = useAddDeliveryMethodsMutation();
+    const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSuccess, data: isGetByIdData }] = useLazyGetCustomerDeliveryMethodByCustomerDeliveryMethodIdQuery();
 
     //** Handle Changes */
     const handleAddEdit = () => {
@@ -64,31 +67,27 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
     }, [isUpdateSuccess, isUpdateData]);
 
     useEffect(() => {
-        if (isEdit && editFormData) {
-            formFieldsDisabled(true);
+        if (!isGetByIdFetching && isGetByIdSuccess && isGetByIdData) {
             let form = { ...addEditDeliveryFormData };
             form.initialState = {
-                ...editFormData,
-                chargeType: editFormData.deliveryMethodId,
-                charge: editFormData.charge,
-                isDeliveryMethodPrimary: editFormData.isPrimary,
+                ...isGetByIdData,
+                charge: isGetByIdData.charge,
+                chargeType: isGetByIdData.deliveryMethodId,
+                isDeliveryMethodPrimary: isGetByIdData.isPrimary
             }
             setFormData(form);
+        }
+    }, [isGetByIdFetching, isGetByIdSuccess, isGetByIdData]);
+
+    useEffect(() => {
+        if (isEdit && deliveryMethodId) {
+            getById(deliveryMethodId);
+            setFieldSetting(formData, 'chargeType', settingTypeEnums.isDisabled, true);
         } else if (!isEdit) {
             onResetData();
-            formFieldsDisabled(false);
+            setFieldSetting(formData, 'chargeType', settingTypeEnums.isDisabled);
         }
-    }, [isEdit, editFormData])
-
-
-    const formFieldsDisabled = (isDisable) => {
-        if (formFields) {
-            let chargeTypeData = formFields.find(data => data.id === 'chargeType');
-            if (chargeTypeData && chargeTypeData.fieldSetting) {
-                chargeTypeData.fieldSetting.isDisabled = isDisable;
-            }
-        }
-    }
+    }, [isEdit, deliveryMethodId])
 
     //** Reset Data */
     const onResetData = () => {
