@@ -1000,7 +1000,6 @@ a {
     border: 1px solid #eaf1f9;
     border-radius: 7px !important;
     margin-bottom: 15px;
-    overflow: hidden;
 
     .header-title-btn {
       .accordion-header {
@@ -2308,7 +2307,7 @@ input[type="checkbox"]:disabled {
 .dropdown-content {
   transform: translateX(-92%);
   display: none;
-  position: fixed;
+  position: absolute;
   background-color: var(--whiteColor);
   min-width: 185px;
   max-height: 170px;
