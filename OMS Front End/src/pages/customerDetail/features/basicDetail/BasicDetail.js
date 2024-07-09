@@ -367,7 +367,7 @@ const BasicDetail = (props) => {
         ToastService.warning(isCustomerNameExistData.errorMessage);
         return;
       }
-      ToastService.success(isCustomerNameExistData.errorMessage);
+      ToastService.info(isCustomerNameExistData.errorMessage);
     }
   }, [isCustomerNameExistSucess, isCustomerNameExistData]);
 
