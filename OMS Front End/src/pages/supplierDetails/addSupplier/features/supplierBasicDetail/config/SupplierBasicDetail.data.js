@@ -37,12 +37,12 @@ export const supplierBasicData = {
     },
     {
       id: "name-input",
-      lable: "Customer Name ",
-      Field_Name: "Customer Name",
+      lable: "Supplier Name ",
+      Field_Name: "Supplier Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "name",
       fieldSetting: {
-        placeholder: "Enter Customer Name",
+        placeholder: "Enter Supplier Name",
         allowSpace: true,
         maxLength: 50,
       },

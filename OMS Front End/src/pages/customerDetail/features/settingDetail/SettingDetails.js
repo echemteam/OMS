@@ -53,7 +53,7 @@ const SettingDetails = ({ isEditablePage }) => {
     {
       sMenuItemCaption: "Financial",
       component: (
-        <div className="mt-4 financial-sec">
+        <div className="mt-2 financial-sec">
           {showFinacialTab ?
             <FinancialSettings isEditablePage={isEditablePage} /> :
             <Unauthorize />

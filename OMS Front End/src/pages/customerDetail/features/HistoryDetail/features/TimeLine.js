@@ -9,7 +9,7 @@ import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import { modifyTimeLineData } from "../../../../../utils/TransformData/TransformAPIData";
 
-const TimeLine = ({ keyId, getAuditHistory }) => {
+const TimeLine = ({ keyId, isSupplier, getAuditHistory }) => {
 
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
@@ -33,7 +33,7 @@ const TimeLine = ({ keyId, getAuditHistory }) => {
         pageNumber: page,
         pageSize: 25,
       },
-      supplierId: keyId
+      [isSupplier ? 'supplierId' : 'customerId']: keyId,
     };
     getAuditHistoryByCustomerId(request);
   };
@@ -87,10 +87,10 @@ const TimeLine = ({ keyId, getAuditHistory }) => {
             <div className="new-timeline-sec">
               <ol className="timeline">
                 {historyData.length > 0 ? (
-                  historyData.map((item) => (
+                  historyData.map((item, index) => (
                     <li
                       className="timeline-item"
-                      key={item.customerAuditHistoryId}
+                      key={index}
                     >
                       <span className="timeline-item-icon">
                         {item.eventStatus === "Insert" ? (
