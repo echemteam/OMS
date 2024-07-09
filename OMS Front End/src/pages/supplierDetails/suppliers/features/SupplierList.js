@@ -19,7 +19,7 @@ import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSuppli
 import { useSelector } from 'react-redux';
 import { StatusEnums, StatusFeild } from '../../../../utils/Enums/StatusEnums';
 
-const SupplierList = ({ statusId, configFile }) => {
+const SupplierList = ({ statusId, configFile ,handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter}) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
@@ -124,8 +124,8 @@ const SupplierList = ({ statusId, configFile }) => {
         pageNumber: page.pageNumber,
         pageSize: page.pageSize,
       },
-      filters: { searchText: "" },
-      statusId: statusId
+      filters: { searchText: search },
+      statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
     };
     getSuppliers(request);
   };
@@ -156,6 +156,13 @@ const SupplierList = ({ statusId, configFile }) => {
   }, [isSuccessUpdateSupplier, updateSupplierData]);
 
   useEffect(() => {
+    if (molGridRef.current) {
+      const currentPageObject = molGridRef.current.getCurrentPageObject();
+      getListApi(currentPageObject);
+    }
+  }, [search , selectedStatusOptions]);
+
+  useEffect(() => {
     if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
       ToastService.success(updateSupplierInActiveStatusData.errorMessage);
       getListApi()
@@ -174,8 +181,8 @@ const SupplierList = ({ statusId, configFile }) => {
         pageNumber: currentPageObject.pageNumber,
         pageSize: currentPageObject.pageSize,
       },
-      filters: { searchText: "" },
-      statusId: statusId
+      filters: { searchText: search },
+      statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
     };
     getSuppliers(request);
   };
@@ -263,6 +270,17 @@ const SupplierList = ({ statusId, configFile }) => {
       <div className="row">
         <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
           <CardSection
+         searchInput={true}
+         handleChange={handleChange}
+         searchInputName="Search By Supplier Name, Tax Id , Email Address"
+         searchFilter={searchStatusFilter ? true : false}
+         handleChangeDropdown={handleChangeDropdown}
+         selectedOptions={selectedDrpvalues}
+         optionsValue={statusOptions}
+         isMultiSelect={true}
+         placeholder="Search by Status"
+         isCardSection={true}
+         isdropdownOpen={true}
           >
             <div className="row">
               <div className="col-md-12 table-striped">

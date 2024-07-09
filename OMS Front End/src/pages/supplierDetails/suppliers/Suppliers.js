@@ -6,18 +6,23 @@ import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridC
 import SupplierListContext from '../../../utils/ContextAPIs/Supplier/SupplierListContext'
 import { AddSupplierContextProvider } from "../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { ListShowCustomer } from "../../../utils/Enums/enums";
-import { StatusEnums } from "../../../utils/Enums/StatusEnums";
+import { StatusEnums, StatusValue } from "../../../utils/Enums/StatusEnums";
+import useDebounce from "../../../app/customHooks/useDebouce";
 
 const Suppliers = () => {
   const [activeTab, setActiveTab] = useState("0");
   const supplierListRef = useRef();
+  const [search, setSearch] = useState("");
   const [allManageData, setAllManageData] = useState(AllCustomerGridConfig);
   const [pendingManageData, setPendingManageData] = useState(PendingCustomerGridConfig);
   const [submittedManageData, setSubmittedManageData] = useState(SubmittedCustomerGridConfig);
   const [approvedManageData, setApprovedManageData] = useState(ApprovedCustomerGridConfig);
   const [rejectedCManageData, setRejectedCManageData] = useState(RejectedCustomerGridConfig);
+  const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState("");
+  const [statusOptions, setStatusOptions] = useState([]);
 
-
+  const debouncedSearch = useDebounce(search, 300);
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
   };
@@ -75,12 +80,41 @@ const Suppliers = () => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
+  useEffect(() => {
+    if (StatusValue) {
+      const statusListData = StatusValue.map((item) => ({
+        value: item.value,
+        label: item.label,
+      }));
+      setStatusOptions(statusListData);
+    }
+  }, [StatusValue]);
+  
+  const handleChangeDropdown = (selectedOptions) => {
+    const selectedValues = selectedOptions.map(option => option.value);
+    setSelectedDrpvalues(selectedValues);
+    setSelectedStatusOptions(selectedValues);
+  };
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    // if (value.length >= 3) {
+      setSearch(value.trim());
+    // }
+  }
   const tabs = [
     {
       sMenuItemCaption: "ALL",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={StatusEnums.ALL} configFile={allManageData} />
+          <SupplierList statusId={selectedDrpvalues} configFile={allManageData} 
+             search={debouncedSearch}
+             handleChange={handleChange}
+             statusOptions={statusOptions}
+             selectedStatusOptions={selectedStatusOptions}
+             handleChangeDropdown={handleChangeDropdown}
+             selectedDrpvalues={selectedDrpvalues}
+             searchStatusFilter={true}/>
         </div>
       ),
     },
@@ -88,7 +122,14 @@ const Suppliers = () => {
       sMenuItemCaption: "PENDING",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={StatusEnums.Pending} configFile={pendingManageData} />
+          <SupplierList statusId={StatusEnums.Pending} configFile={pendingManageData}  
+                  search={debouncedSearch}
+                  handleChange={handleChange}
+                  statusOptions={statusOptions}
+                  selectedStatusOptions={selectedStatusOptions}
+                  handleChangeDropdown={handleChangeDropdown}
+                  selectedDrpvalues={selectedDrpvalues}
+                  searchStatusFilter={false} />
         </div>
       ),
     },
@@ -96,7 +137,14 @@ const Suppliers = () => {
       sMenuItemCaption: "SUBMITTED",
       component: (
         <div className="mt-2 customer-list-submitted customer-list-all">
-          <SupplierList statusId={StatusEnums.Submitted} configFile={submittedManageData} />
+          <SupplierList statusId={StatusEnums.Submitted} configFile={submittedManageData} 
+                  search={debouncedSearch}
+                  handleChange={handleChange}
+                  statusOptions={statusOptions}
+                  selectedStatusOptions={selectedStatusOptions}
+                  handleChangeDropdown={handleChangeDropdown}
+                  selectedDrpvalues={selectedDrpvalues}
+                  searchStatusFilter={false}/>
         </div>
       ),
     },
@@ -104,7 +152,14 @@ const Suppliers = () => {
       sMenuItemCaption: "APPROVED",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={StatusEnums.Approved} configFile={approvedManageData} />
+          <SupplierList statusId={StatusEnums.Approved} configFile={approvedManageData} 
+                  search={debouncedSearch}
+                  handleChange={handleChange}
+                  statusOptions={statusOptions}
+                  selectedStatusOptions={selectedStatusOptions}
+                  handleChangeDropdown={handleChangeDropdown}
+                  selectedDrpvalues={selectedDrpvalues}
+                  searchStatusFilter={false}/>
         </div>
       ),
     },
@@ -120,7 +175,14 @@ const Suppliers = () => {
       sMenuItemCaption: "REJECTED",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={StatusEnums.Reject} configFile={rejectedCManageData} />
+          <SupplierList statusId={StatusEnums.Reject} configFile={rejectedCManageData}
+                  search={debouncedSearch}
+                  handleChange={handleChange}
+                  statusOptions={statusOptions}
+                  selectedStatusOptions={selectedStatusOptions}
+                  handleChangeDropdown={handleChangeDropdown}
+                  selectedDrpvalues={selectedDrpvalues}
+                  searchStatusFilter={false} />
         </div>
       ),
     },
