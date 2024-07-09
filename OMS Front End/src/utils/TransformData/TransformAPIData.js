@@ -107,12 +107,10 @@ export const modifyPhoneNumberData = (phoneDataArray) => {
 export const modifyTimeLineData = (timelineData) => {
     const newArray = timelineData.map(data => ({
         ...data,
-        description: data.description + ' by ' + data.name + ' on ' + formatDate(data.changedAt,'DD/MM/YYYY hh:mm A')
+        description: data.description + ' by ' + data.name + ' on ' + formatDate(data.changedAt, 'DD/MM/YYYY hh:mm A')
     }));
     return newArray;
 };
-
-
 
 const getFileTypeIcon = (filename) => {
     const parts = filename.split('.');

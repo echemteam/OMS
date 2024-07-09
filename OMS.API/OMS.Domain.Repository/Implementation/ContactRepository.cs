@@ -15,6 +15,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETCONTACTBYCUSTOMERID = "GetContactByCustomerId";
         const string GETCONTACTBYSUPPLIERID = "GetContactBySupplierId";
         const string ADDEDITCONTACTWITHDATATABLE = "AddEditContactWithDataTable";
+        const string GETCUSTOMERCONTACTBYCONTACTID = "GetCustomerContactByContactId";
+        const string GETSUPLLIERCONTACTBYCONTACTID = "GetSupllierContactByContactId";
 
         #endregion
 
@@ -27,8 +29,8 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACT, new
             {
-                contact.CustomerContactId,
                 contact.ContactId,
+                contact.CustomerContactId,
                 contact.CustomerId,
                 contact.ContactTypeId,
                 contact.FirstName,
@@ -38,6 +40,15 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
+        public async Task<GetCustomerContactByContactIdResponse> GetCustomerContactByContactId(int contactId)
+        {
+            GetCustomerContactByContactIdResponse getCustomerContactByCustomerIdResponse = await _context.GetFrist<GetCustomerContactByContactIdResponse>(GETCUSTOMERCONTACTBYCONTACTID, new
+            {
+                contactId
+            }, commandType: CommandType.StoredProcedure);
+            return getCustomerContactByCustomerIdResponse;
+
+        }
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId)
         {
             List<GetContactByCustomerIdResponse> getContactByContactIdResponse = await _context.GetList<GetContactByCustomerIdResponse>(GETCONTACTBYCUSTOMERID, new
@@ -57,6 +68,18 @@ namespace OMS.Domain.Repository.Implementation
             return getContactByContactIdResponse;
 
         }
+
+        public async Task<GetSupllierContactByContactIdResponse> GetSupllierContactByContactId(int contactId)
+        {
+            GetSupllierContactByContactIdResponse getSupllierContactByContactIdResponse = await _context.GetFrist<GetSupllierContactByContactIdResponse>(GETSUPLLIERCONTACTBYCONTACTID, new
+            {
+                contactId
+            }, commandType: CommandType.StoredProcedure);
+            return getSupllierContactByContactIdResponse;
+
+        }
+
+
         #endregion
     }
 }

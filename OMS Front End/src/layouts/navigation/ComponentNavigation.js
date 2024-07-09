@@ -28,7 +28,7 @@ const AddEditContact = React.lazy(() => import('../../pages/customerDetail/featu
 const Suppliers = React.lazy(() => import('../../pages/supplierDetails/suppliers/Suppliers'));
 const ManageAddSupplier = React.lazy(() => import('../../pages/supplierDetails/addSupplier/ManageAddSupplier'));
 
-const SupplierDetails = React.lazy(() => import("../../pages/supplierDetails/suppliers/features/ManageSupplier"));
+const SupplierDetails = React.lazy(() => import("../../pages/supplierDetails/suppliers/ManageSupplier"));
 
 export const ComponentNavigation = [
   {

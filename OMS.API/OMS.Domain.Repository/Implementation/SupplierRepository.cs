@@ -137,7 +137,10 @@ namespace OMS.Domain.Repository.Implementation
                 queryRequest.SupplierId,
                 queryRequest.Pagination!.PageNumber,
                 queryRequest.Pagination.PageSize,
-
+                queryRequest.EventName,
+                queryRequest.UserId,
+                queryRequest.ToDate,
+                queryRequest.FromDate
             }, true);
         }
 

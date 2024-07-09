@@ -6,21 +6,21 @@ import { transformRequest } from "../../utils/API/requestMiddleware";
 const customerHistoryAPI = createApi({
     reducerPath: 'customerHistoryAPI',
     baseQuery: customFetchBase,
-    endpoints: (builder) => ({ 
-        
+    endpoints: (builder) => ({
+
         getCustomerAuditHistoryByCustomerId: builder.mutation({
-                query: (userQuery) => ({
-                    url: '/Customers/GetCustomerAuditHistoryByCustomerId',
-                    method: 'POST',
-                    body: transformRequest(userQuery)
-                }),
-     
+            query: (userQuery) => ({
+                url: '/Customers/GetCustomerAuditHistoryByCustomerId',
+                method: 'POST',
+                body: transformRequest(userQuery)
+            }),
+
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
     })
 })
 
-export const {   useGetCustomerAuditHistoryByCustomerIdMutation,} = customerHistoryAPI;
+export const { useGetCustomerAuditHistoryByCustomerIdMutation } = customerHistoryAPI;
 
 export default customerHistoryAPI;

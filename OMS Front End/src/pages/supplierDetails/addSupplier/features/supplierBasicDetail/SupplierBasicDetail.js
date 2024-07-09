@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import CardSection from '../../../../../components/ui/card/CardSection';
 import { supplierBasicData } from '../supplierBasicDetail/config/SupplierBasicDetail.data';
-import { useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery } from '../../../../../app/services/supplierAPI'
+import { useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery } from '../../../../../app/services/supplierAPI'
 import ToastService from '../../../../../services/toastService/ToastService';
 import { getTaxIdMinMaxLength } from '../../../../customerDetail/features/basicDetail/config/TaxIdValidator';
 import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
@@ -17,17 +18,26 @@ import { setFieldDisabled } from '../../../../../utils/FieldDisabled/setFieldDis
 const SupplierBasicDetail = (props) => {
 
   const basicDetailRef = useRef();
-  const [formData, setFormData] = useState(supplierBasicData);
   const [supplierName, setSupplierName] = useState('');
-
-  const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId , isResponsibleUser} = useContext(AddSupplierContext);
+  const [formData, setFormData] = useState(supplierBasicData);
+  const { isOpen, onhandleRepeatCall, onSidebarClose, pageId } = props;
+  const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
   const { formSetting } = supplierBasicData;
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
 
+  const [
+    getSupplierBasicInformationById,
+    {
+      isFetching: isGetSupplierBasicInformationByIdFetching,
+      isSuccess: isGetSupplierBasicInformationById,
+      data: GetSupplierBasicInformationByIdData,
+    },
+  ] = useLazyGetSupplierBasicInformationByIdQuery();
+
   useEffect(() => {
-    if (props.isOpen) {
+    if (isOpen) {
       if (!isResponsibleUser) {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
@@ -46,7 +56,7 @@ const SupplierBasicDetail = (props) => {
         setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
       }
     }
-  }, [props.isOpen, hasEditPermission, formSetting.isViewOnly])
+  }, [isOpen, hasEditPermission, formSetting, formData, isResponsibleUser])
 
   const [
     addEditSupplierBasicInformation,
@@ -165,7 +175,7 @@ const SupplierBasicDetail = (props) => {
     }
   }, [
     isGetAllCountriesSucess,
-    allGetAllCountriesData,
+    allGetAllCountriesData
   ]);
 
   useEffect(() => {
@@ -217,7 +227,7 @@ const SupplierBasicDetail = (props) => {
         ToastService.success(isAddEditSupplierBasicInformationData.errorMessage);
         moveNextPage();
       } else {
-        props.onhandleRepeatCall()
+        onhandleRepeatCall()
         ToastService.success(isAddEditSupplierBasicInformationData.errorMessage);
         onreset()
       }
@@ -229,21 +239,30 @@ const SupplierBasicDetail = (props) => {
   }));
 
   const onreset = () => {
-    props.onSidebarClose()
+    onSidebarClose()
     let restData = { ...supplierBasicData };
     restData.initialState = { ...formData };
     setFormData(restData);
   }
 
   useEffect(() => {
-    if (props.isOpen) {
-      let data = { ...supplierBasicData };
-      data.initialState = { ...props.supplierData };
-      data.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
-
-      setFormData(data);
+    if (isGetSupplierBasicInformationById && GetSupplierBasicInformationByIdData && !isGetSupplierBasicInformationByIdFetching) {
+      const newFrom = { ...supplierBasicData };
+      const { formFields } = getTaxIdMinMaxLength(GetSupplierBasicInformationByIdData.countryId, supplierBasicData.formFields, 'taxId');
+      newFrom.formFields = formFields;
+      newFrom.initialState = { ...GetSupplierBasicInformationByIdData };
+      newFrom.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
+      setFormData(newFrom);
     }
-  }, [props.isOpen])
+  }, [isGetSupplierBasicInformationById, GetSupplierBasicInformationByIdData, isGetSupplierBasicInformationByIdFetching]);
+
+  useEffect(() => {
+    if (isOpen) {
+      if (supplierId > 0) {
+        getSupplierBasicInformationById(supplierId);
+      }
+    }
+  }, [isOpen, supplierId, getSupplierBasicInformationById])
 
   const handleAddSupplierBasicDetails = () => {
     let data = basicDetailRef.current.getFormData();
@@ -286,7 +305,7 @@ const SupplierBasicDetail = (props) => {
         responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
           ? data.responsibleUserId.value
           : data.responsibleUserId,
-        supplierId: props.pageId
+        supplierId: pageId
       }
       addEditSupplierBasicInformation(req);
     } else {
@@ -299,7 +318,7 @@ const SupplierBasicDetail = (props) => {
       const modifyFormFields = getTaxIdMinMaxLength(data.value, supplierBasicData.formFields, 'taxId');
       const updatedForm = { ...formData };
       updatedForm.formFields = modifyFormFields;
-      if (props.isOpen) {
+      if (isOpen) {
         updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
       } else {
         updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
@@ -354,7 +373,7 @@ const SupplierBasicDetail = (props) => {
           />
         </div>
 
-        {props.isOpen &&
+        {isOpen &&
           <div className="col-md-12">
             <div className="d-flex align-item-end justify-content-end">
               <Buttons
@@ -367,7 +386,7 @@ const SupplierBasicDetail = (props) => {
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"
                 buttonText="Cancel"
-                onClick={props.onSidebarClose}
+                onClick={onSidebarClose}
               />
             </div>
           </div>

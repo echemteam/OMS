@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 //** Libs's */
 import AddressCard from "../AddressCard";
@@ -27,9 +28,12 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [updateSetData, setUpdateSetData] = useState();
   const [updateSetDataSupplier, setUpdateSetDataSupplier] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-
-  const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
+  const [showEditIcon, setShowEditIcon] = useState(false);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [lebel, setlebel] = useState(null);
+  const [checkbox, setCheckbox] = useState(null);
+  const [checkboxFeild, setCheckboxFeild] = useState(null);
 
   useEffect(() => {
     if (isEditablePage) {
@@ -57,6 +61,10 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
             if (hasAddPermission.hasAccess === true) {
               formSetting.isViewOnly = false;
               setIsButtonDisable(false);
+              setShowEditIcon(true);
+            }
+            if (hasEditPermission.isViewOnly === true) {
+              setShowEditIcon(true);
             }
           }
         }
@@ -154,6 +162,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       manageData.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = true;
     }
     setFormData(manageData);
+    // onreset();
   };
 
   useEffect(() => {
@@ -264,7 +273,8 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
 
   const handleToggleModal = () => {
     setisModelOpen(true);
-    manageFilteredForm();
+    // manageFilteredForm();
+    onResetSupplier();
   };
 
   const handleSetData = (data) => {
@@ -379,15 +389,32 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     onreset();
   };
 
+  const onResetSupplier = () => {
+    let restData = { ...addressFormData };
+    restData.initialState = { ...addressFormData.initialState };
+    const filteredFormFields = restData.formFields.filter(
+      (field) =>
+        field.dataField !== "isPreferredShipping" &&
+        field.dataField !== "isShippingAndBilling" &&
+        field.dataField !== "isPreferredBilling"
+    );
+    restData.formFields = filteredFormFields;
+    setFormData(restData);
+    setUpdateSetData(null);
+    setUpdateSetDataSupplier(null);
+  };
+
   const onreset = () => {
+
     let restData = { ...addressFormData };
     restData.initialState = { ...addressFormData.initialState };
     setFormData(restData);
     setUpdateSetData(null);
-    setUpdateSetDataSupplier(null)
+    setUpdateSetDataSupplier(null);
   };
 
   const handleChangeDropdownList = (data, dataField) => {
+    setlebel(data)
     const manageData = { ...formData };
     if (dataField === "countryId") {
       const dataValue = allGetAllStatesData
@@ -544,7 +571,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   };
 
   const handleCheckboxChanges = (data, dataField) => {
-    if (dataField === "isShippingAndBilling" && data) {
+    setCheckbox(data)
+    setCheckboxFeild(dataField)
+    if (dataField === "isShippingAndBilling" && data && lebel) {
       const manageData = { ...formData };
       let filteredFormFields;
       filteredFormFields = addressFormData.formFields
@@ -552,6 +581,26 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       setFormData(manageData)
     }
   }
+
+  useEffect(() => {
+    if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 1) {
+      const manageData = { ...formData };
+      let filteredFormFields;
+      filteredFormFields = addressFormData.formFields.filter(
+        (field) => field.dataField !== "isPreferredShipping"
+      );
+      manageData.formFields = filteredFormFields
+      setFormData(manageData)
+    } else if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 2) {
+      const manageData = { ...formData };
+      let filteredFormFields;
+      filteredFormFields = addressFormData.formFields.filter(
+        (field) => field.dataField !== "isPreferredBilling"
+      );
+      manageData.formFields = filteredFormFields
+      setFormData(manageData)
+    }
+  }, [checkbox, checkboxFeild])
 
   const formActionHandler = {
     DDL_CHANGED: handleChangeDropdownList,
@@ -574,6 +623,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
           addressData={addressData}
           onHandleSetData={handleSetData}
           isGetByIdLoading={isGetAddresssByCustomerIdFetching}
+          showEditIcon={showEditIcon}
         />
       </CardSection>
       <div className="address-model">

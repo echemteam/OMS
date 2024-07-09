@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
@@ -47,7 +48,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
         setIsButtonDisable(false);
       }
     }
-  }, [hasEditPermission])
+  }, [hasEditPermission, isResponsibleUser])
 
   useEffect(() => {
     if (isSuccessUpdateCustomerInActiveStatus && updateCustomerInActiveStatusData) {
@@ -218,7 +219,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           <div className="field-desc">
             <div className="inf-label">R-User</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.responsibleUserName ? customerData.responsibleUserName : ErrorMessage.NotAvailabe }</div>
+            <div className="info-desc">{customerData?.responsibleUserName ? customerData.responsibleUserName : ErrorMessage.NotAvailabe}</div>
           </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">Status</div>
@@ -277,7 +278,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           <div className="field-desc">
             <div className="inf-label">Tax Id</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.taxId}</div>
+            <div className="info-desc">{customerData?.taxId ? customerData?.taxId : ErrorMessage.NotAvailabe}</div>
           </div>
           {/* <div className="field-desc">
             <div className="inf-label">Is Company</div>
@@ -300,7 +301,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           <CenterModel
             showModal={showModal}
             handleToggleModal={handleToggleModal}
-            modalTitle={statusFeild + " " + "Reason"}
+            modalTitle={`${statusFeild} Reason`}
             modelSizeClass="w-50s"
           >
             <div className="row horizontal-form">

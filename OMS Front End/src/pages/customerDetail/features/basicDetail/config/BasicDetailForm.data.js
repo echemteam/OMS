@@ -1,5 +1,7 @@
 import { SuccessMessage } from "../../../../../data/appMessages";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../data/gridColumnType";
+import { getLabelClass } from "../../../../../utils/StatusColors/StatusColors";
 
 export const excludingRoles = ['Admin', 'manager']
 
@@ -24,7 +26,14 @@ export const basicDetailFormDataHalf = {
       inputButtonGroup: {
         isInputButton: true,
         buttonText: 'Verify',
-      }
+        isMultiButton: true,
+        showInformation: {
+          showInputButton: true,
+          faIcon: "fa-list",
+          title : "Customer Information"
+        }
+      },
+
     },
     {
       id: "name-input",
@@ -136,7 +145,7 @@ export const basicDetailFormDataHalf = {
         faIcon: "fa-info-circle",
         message: SuccessMessage.DefaultUSATaxId
       },
-      validation: [{ type: "taxId", minLength: 10, maxLength: 10 }],
+      validation: [{ minLength: 10, maxLength: 10 }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -193,3 +202,60 @@ export const basicDetailFormDataHalf = {
     isViewOnly: false
   }
 };
+
+export const basicInfoData = {
+  columns: [
+    {
+      name: "Customer",
+      fieldName: "name",
+      width:"15%",
+      // allowShort: true,
+    },
+    {
+      name: "Tax Id",
+      fieldName: "taxId",
+      width:"15%",
+      // allowShort: true,
+    },
+    {
+      name: "Country",
+      fieldName: "countryName",
+      width:"15%",
+      // allowShort: true,
+    },
+  
+    {
+      name: "Email",
+      fieldName: "emailAddress",
+      width:"15%",
+      // allowShort: true,
+    },
+    {
+      name: "Group Type",
+      fieldName: "groupType",
+      width:"15%",
+      // allowShort: true,
+    },
+    {
+      name: "Status",
+      fieldName: "status",
+      allowShort: false,
+      colType: GridColumnType.LABLE,
+      width: "15%",
+      colSettings: {
+        valueField: "status",
+        getLableClass: getLabelClass,
+      },
+    },
+    {
+      name: "Action",
+      width:"10%",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: true,
+        allowDisable: false,
+      },
+    },
+  ],
+};
+

@@ -1,6 +1,7 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
+using OMS.Domain.Entities.API.Response.Address;
 using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerAccountingSettings;
@@ -98,6 +99,15 @@ namespace OMS.Application.Services.CustomerAccountingSettings
             CustomerDeliveryMethodsDTO customerDeliveryMethodsDTO = requestData.ToMapp<AddDeliveryMethodsRequest, CustomerDeliveryMethodsDTO>();
             customerDeliveryMethodsDTO.CreatedBy = CurrentUserId;
             return await repositoryManager.customerAccountingSettings.AddDeliveryMethods(customerDeliveryMethodsDTO);
+        }
+        public Task<GetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse> GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(int customerDeliveryCarrierId)
+        {
+            return repositoryManager.customerAccountingSettings.GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(customerDeliveryCarrierId);
+        }
+
+        public Task<GetCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse> GetCustomerDeliveryMethodByCustomerDeliveryMethodId(int customerDeliveryMethodId)
+        {
+            return repositoryManager.customerAccountingSettings.GetCustomerDeliveryMethodByCustomerDeliveryMethodId(customerDeliveryMethodId);
         }
         #endregion
     }

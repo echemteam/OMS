@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState , useContext} from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../../../app/services/supplierAPI';
 import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
 import SwalAlert from '../../../../../../services/swalService/SwalService';
@@ -19,6 +20,7 @@ import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNaviga
 import { securityKey } from '../../../../../../data/SecurityKey';
 
 const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
+
   const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
@@ -47,7 +49,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
         setIsButtonDisable(false);
       }
     }
-  }, [hasEditPermission])
+  }, [hasEditPermission, isResponsibleUser])
 
   useEffect(() => {
     if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
@@ -72,20 +74,20 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
         case 3:
           setOptions(StaticStatus[StatusValue[statusId - 1].label]);
           break;
-          case 4:
-            setOptions([
-              { value: "4", label: "Freeze" },
-              { value: "3", label: "Approved" },
-              { value: "1", label: "Pending" },
-            ]);
-            break;
-          case 5:
-            setOptions([
-              { value: "5", label: "Block" },
-              { value: "3", label: "Approved" },
-              { value: "1", label: "Pending" },
-            ]);
-            break;
+        case 4:
+          setOptions([
+            { value: "4", label: "Freeze" },
+            { value: "3", label: "Approved" },
+            { value: "1", label: "Pending" },
+          ]);
+          break;
+        case 5:
+          setOptions([
+            { value: "5", label: "Block" },
+            { value: "3", label: "Approved" },
+            { value: "1", label: "Pending" },
+          ]);
+          break;
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;
@@ -275,7 +277,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
           <div className="field-desc">
             <div className="inf-label">Tax Id</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.taxId}</div>
+            <div className="info-desc">{supplierData?.taxId ? supplierData?.taxId : ErrorMessage.NotAvailabe}</div>
           </div>
           <div className="field-desc">
             <div className="inf-label">Supplier Type</div>
@@ -295,7 +297,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
           <CenterModel
             showModal={showModal}
             handleToggleModal={handleToggleModal}
-            modalTitle={statusFeild + " " + "Reason"}
+            modalTitle={`${statusFeild} Reason`}
             modelSizeClass="w-50s"
           >
             <div className="row horizontal-form">

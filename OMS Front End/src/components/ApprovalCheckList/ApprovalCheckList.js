@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 //** Lib's */
 import Buttons from "../ui/button/Buttons";
@@ -27,14 +28,14 @@ const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSucces
     }, [isModelOpen]);
 
     useEffect(() => {
-        if (!isGetCheckListFetching, isGetCheckListSuccess, isGetCheckListData) {
+        if (!isGetCheckListFetching && isGetCheckListSuccess && isGetCheckListData) {
             const modifyCheckListData = transformData(isGetCheckListData);
             setCheckListData(modifyCheckListData);
         }
     }, [isGetCheckListFetching, isGetCheckListSuccess, isGetCheckListData]);
 
     useEffect(() => {
-        if (isAddUserCheckResponseSuccess, isAddUserCheckResponseData) {
+        if (isAddUserCheckResponseSuccess && isAddUserCheckResponseData) {
             ToastService.success(isAddUserCheckResponseData.errorMessage);
             onSuccessApprovalClose();
         }
@@ -56,7 +57,7 @@ const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSucces
     const handleAddResponse = () => {
         const allChildChecked = checkListData.every((item) => item.isMainChecked);
         if (allChildChecked) {
-            checkListData.map((data) => {
+            checkListData.forEach((data) => {
                 let childRequest = {
                     checkListRequest: data.checkListRequest
                 }

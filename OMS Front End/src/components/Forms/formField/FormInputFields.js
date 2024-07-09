@@ -19,10 +19,13 @@ const FormInputFields = ({
   overRideProps,
   inputButtonGroup,
   handleInputGroupButton,
+  handleInputShowInfo,
   inputField,
   inputIcon,
+  inputshowField,
   ...inputProps
 }) => {
+
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleInputChange = (e) => {
@@ -68,6 +71,7 @@ const FormInputFields = ({
                 inputButtonGroup={inputButtonGroup}
                 inputIcon={inputIcon}
                 handleInputGroupButton={handleInputGroupButton}
+                handleInputShowInfo={handleInputShowInfo}
                 isDisable={
                   formSetting?.isViewOnly ||
                   inputProps?.isDisable ||
@@ -87,6 +91,7 @@ const FormInputFields = ({
               inputButtonGroup={inputButtonGroup}
               inputIcon={inputIcon}
               handleInputGroupButton={handleInputGroupButton}
+              handleInputShowInfo={handleInputShowInfo}
               isDisable={
                 formSetting?.isViewOnly ||
                 inputProps?.isDisable ||

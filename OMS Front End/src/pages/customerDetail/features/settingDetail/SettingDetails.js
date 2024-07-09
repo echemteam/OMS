@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState } from "react";
 //** Lib's */
 import "./SettingDetails.scss"
@@ -52,7 +53,7 @@ const SettingDetails = ({ isEditablePage }) => {
     {
       sMenuItemCaption: "Financial",
       component: (
-        <div className="mt-4 financial-sec">
+        <div className="mt-2 financial-sec">
           {showFinacialTab ?
             <FinancialSettings isEditablePage={isEditablePage} /> :
             <Unauthorize />
@@ -63,7 +64,7 @@ const SettingDetails = ({ isEditablePage }) => {
     {
       sMenuItemCaption: "Shipping",
       component: (
-        <div className="mt-4 financial-sec">
+        <div className="mt-4 shipping-sec">
           {showShippingTab ?
             <ShippingSettings isEditablePage={isEditablePage} />
             : <Unauthorize />

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "../../../../customerDetail/ViewCustomer.scss";
 import { useParams } from "react-router-dom";
@@ -12,15 +13,14 @@ import SupplierBasicDetail from "../../../addSupplier/features/supplierBasicDeta
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { useNavigate } from "react-router-dom/dist";
-import SupplierNotesDetail from "./features/notesDetails/SupplierNotesDetails";
 import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuementDetail";
 import SupplierContactDetail from "../../../addSupplier/features/supplierContactDetail/SupplierContactDetail";
 import SuplierAddressDetails from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetails";
 import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
-import { getAuthProps } from "../../../../../lib/authenticationLibrary";
 import { useSelector } from "react-redux";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { securityKey } from "../../../../../data/SecurityKey";
+import ManageSupplierNotes from "./features/notesDetails/ManageSupplierNotes";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const SupplierDetails = () => {
   const [supplierData, setSupplierData] = useState(null);
   const authState = useSelector((state) => state.auth);
 
-  const { setSupplierId, supplierId, isResponsibleUser , setIsResponsibleUser } = useContext(AddSupplierContext);
+  const { setSupplierId, supplierId, isResponsibleUser, setIsResponsibleUser } = useContext(AddSupplierContext);
 
   const [
     getSupplierBasicInformationById,
@@ -123,7 +123,7 @@ const SupplierDetails = () => {
     {
       sMenuItemCaption: "Notes",
       component: (
-        <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>
+        <div className="mt-2">{<ManageSupplierNotes isEditablePage={true} />}</div>
       ),
       isVisible: hasNotePermission.hasAccess,
     },

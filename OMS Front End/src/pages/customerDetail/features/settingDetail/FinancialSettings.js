@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { SettingFormData } from "./config/SettingData";
@@ -49,12 +50,6 @@ const FinancialSettings = ({ isEditablePage }) => {
       }
     };
   }, [customerId]);
-
-  // useEffect(() => {
-  //   if (isEditablePage) {
-
-  //   }
-  // }, [isEditablePage])
 
   useEffect(() => {
     if (isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
@@ -144,6 +139,20 @@ const FinancialSettings = ({ isEditablePage }) => {
   return (
     <>
       <div className="row horizontal-form">
+        {!isEditablePage &&
+          <div className="col-md-12 mb-2">
+            <div className="d-flex align-item-end justify-content-end">
+              <div className="d-flex align-item-end">
+                <Buttons
+                  buttonTypeClassName="theme-button"
+                  buttonText="Save Financial Settings"
+                  onClick={onhandleEdit}
+                  isLoading={isAddEditCustomerSettingsLoading}
+                />
+              </div>
+            </div>
+          </div>
+        }
         {!isGetDetailByCustomerIDFetching ?
           <FormCreator
             config={customerSettingFormData}
@@ -154,7 +163,8 @@ const FinancialSettings = ({ isEditablePage }) => {
           />
           : <DataLoader />
         }
-        {showButton ?
+        {isEditablePage &&
+          showButton ?
           <div className="col-md-12 mt-2 mb-3">
             <div className="d-flex align-item-end justify-content-end">
               <div className="d-flex align-item-end">
@@ -167,7 +177,8 @@ const FinancialSettings = ({ isEditablePage }) => {
               </div>
             </div>
           </div>
-          : null}
+          : null
+        }
       </div>
     </>
   );

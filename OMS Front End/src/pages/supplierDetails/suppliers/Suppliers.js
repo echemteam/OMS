@@ -6,10 +6,17 @@ import InActiveSupplier from "./features/InActiveSupplier";
 import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../customerDetail/customers/config/CustomerData";
 import SupplierListContext from '../../../utils/ContextAPIs/Supplier/SupplierListContext'
 import { AddSupplierContextProvider } from "../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { ListShowCustomer } from "../../../common/features/Enums/ListEnums";
 
 const Suppliers = () => {
   const [activeTab, setActiveTab] = useState("0");
   const supplierListRef = useRef();
+  const [allManageData, setAllManageData] = useState(AllCustomerGridConfig);
+  const [pendingManageData, setPendingManageData] = useState(PendingCustomerGridConfig);
+  const [submittedManageData, setSubmittedManageData] = useState(SubmittedCustomerGridConfig);
+  const [approvedManageData, setApprovedManageData] = useState(ApprovedCustomerGridConfig);
+  const [rejectedCManageData, setRejectedCManageData] = useState(RejectedCustomerGridConfig);
+
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
@@ -22,7 +29,50 @@ const Suppliers = () => {
   };
 
   useEffect(() => {
-    getListApi();
+    const updateManageData = () => {
+      switch (activeTab) {
+        case "0":
+          setAllManageData({
+            ...AllCustomerGridConfig,
+            columns: AllCustomerGridConfig.columns.filter(column => column.id !== ListShowCustomer.value)
+          });
+          break;
+        case "1":
+          setPendingManageData({
+            ...PendingCustomerGridConfig,
+            columns: PendingCustomerGridConfig.columns.filter(column => column.id !== ListShowCustomer.value)
+          });
+          break;
+        case "2":
+          setSubmittedManageData({
+            ...SubmittedCustomerGridConfig,
+            columns: SubmittedCustomerGridConfig.columns.filter(column => column.id !== ListShowCustomer.value)
+          });
+          break;
+        case "3":
+          setApprovedManageData({
+            ...ApprovedCustomerGridConfig,
+            columns: ApprovedCustomerGridConfig.columns.filter(column => column.id !== ListShowCustomer.value)
+          });
+          break;
+        case "4":
+          setAllManageData({
+            columns: []
+          });
+          break;
+        case "5":
+          setRejectedCManageData({
+            ...RejectedCustomerGridConfig,
+            columns: RejectedCustomerGridConfig.columns.filter(column => column.id !== ListShowCustomer.value)
+          });
+          break;
+        default:
+          setAllManageData(AllCustomerGridConfig);
+      }
+    };
+
+    updateManageData(); // Initial update based on activeTab
+    getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
   const tabs = [
@@ -30,7 +80,7 @@ const Suppliers = () => {
       sMenuItemCaption: "ALL",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={StatusEnums.ALL} configFile={AllCustomerGridConfig} />
+          <SupplierList statusId={StatusEnums.ALL} configFile={allManageData} />
         </div>
       ),
     },
@@ -38,7 +88,7 @@ const Suppliers = () => {
       sMenuItemCaption: "PENDING",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={StatusEnums.Pending} configFile={PendingCustomerGridConfig} />
+          <SupplierList statusId={StatusEnums.Pending} configFile={pendingManageData} />
         </div>
       ),
     },
@@ -46,7 +96,7 @@ const Suppliers = () => {
       sMenuItemCaption: "SUBMITTED",
       component: (
         <div className="mt-2 customer-list-submitted customer-list-all">
-          <SupplierList statusId={StatusEnums.Submitted} configFile={SubmittedCustomerGridConfig} />
+          <SupplierList statusId={StatusEnums.Submitted} configFile={submittedManageData} />
         </div>
       ),
     },
@@ -54,7 +104,7 @@ const Suppliers = () => {
       sMenuItemCaption: "APPROVED",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={StatusEnums.Approved} configFile={ApprovedCustomerGridConfig} />
+          <SupplierList statusId={StatusEnums.Approved} configFile={approvedManageData} />
         </div>
       ),
     },
@@ -70,7 +120,7 @@ const Suppliers = () => {
       sMenuItemCaption: "REJECTED",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={StatusEnums.Reject} configFile={RejectedCustomerGridConfig} />
+          <SupplierList statusId={StatusEnums.Reject} configFile={rejectedCManageData} />
         </div>
       ),
     },

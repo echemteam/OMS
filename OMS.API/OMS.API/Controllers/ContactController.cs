@@ -40,11 +40,33 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
+        [HttpGet("GetCustomerContactByContactId")]
+        public async Task<IActionResult> GetCustomerContactByContactId(int contactId)
+        {
+            if (contactId > 0)
+            {
+                GetCustomerContactByContactIdResponse responseData = await _serviceManager.contactService.GetCustomerContactByContactId(contactId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(contactId);
+        }
+
         [HttpGet("GetContactBySupplierId")]
         public async Task<IActionResult> GetContactBySupplierId(int supplierId)
         {
             List<GetContactBySupplierIdResponse> responseData = await _serviceManager.contactService.GetContactBySupplierId(supplierId).ConfigureAwait(true);
             return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetSupllierContactByContact")]
+        public async Task<IActionResult> GetSupllierContactByContactId(int contactId)
+        {
+            if (contactId > 0)
+            {
+                GetSupllierContactByContactIdResponse responseData = await _serviceManager.contactService.GetSupllierContactByContactId(contactId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(contactId);
         }
         #endregion
 

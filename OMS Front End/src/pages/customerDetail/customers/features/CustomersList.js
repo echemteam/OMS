@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
   useContext,
   useEffect,
@@ -31,7 +32,7 @@ import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDeta
 import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
 import { useSelector } from "react-redux";
 
-export const CustomersList = ({ statusId, configFile }) => {
+export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter}) => {
 
   const navigate = useNavigate();
   const molGridRef = useRef();
@@ -65,7 +66,7 @@ export const CustomersList = ({ statusId, configFile }) => {
     },
   ] = useUpdateCustomerInActiveStatusMutation();
 
-  const [addCustomerNotes,{ isLoading: isAddNotesLoading, isSuccess: isAddNotesSuccess, data: isAddNotesData, },] = useAddCustomerNotesMutation();
+  const [addCustomerNotes] = useAddCustomerNotesMutation();
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
@@ -142,16 +143,14 @@ export const CustomersList = ({ statusId, configFile }) => {
     }
   }
 
-
-
   const handlePageChange = (page) => {
     const request = {
       pagination: {
         pageNumber: page.pageNumber,
         pageSize: page.pageSize,
       },
-      filters: { searchText: "" },
-      statusId: statusId,
+      filters: { searchText: search },
+      statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
     };
     getCustomers(request);
   };
@@ -203,11 +202,18 @@ export const CustomersList = ({ statusId, configFile }) => {
         pageNumber: currentPageObject.pageNumber,
         pageSize: currentPageObject.pageSize,
       },
-      filters: { searchText: "" },
-      statusId: statusId,
+      filters: { searchText: search },
+      statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
     };
     getCustomers(request);
   };
+
+  useEffect(() => {
+    if (molGridRef.current) {
+      const currentPageObject = molGridRef.current.getCurrentPageObject();
+      getListApi(currentPageObject);
+    }
+  }, [search , selectedStatusOptions]);
 
   const handleEditClick = (data) => {
     navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
@@ -285,12 +291,24 @@ export const CustomersList = ({ statusId, configFile }) => {
     BLOCKED: handleBlock,
     REJECT: handleReject,
   };
-
+  
   return (
     <div>
       <div className="row">
         <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
-          <CardSection>
+          <CardSection
+            searchInput={true}
+            handleChange={handleChange}
+            searchInputName="Search By Customer Name, Tax Id , Email Address"
+            searchFilter={searchStatusFilter ? true : false}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedOptions={selectedDrpvalues}
+            optionsValue={statusOptions}
+            isMultiSelect={true}
+            placeholder="Search by Status"
+            isCardSection={true}
+            isdropdownOpen={true}
+          >
             <div className="row">
               <div className="col-md-12 table-striped">
                 {/* <div className="customer-list"> */}
@@ -317,7 +335,7 @@ export const CustomersList = ({ statusId, configFile }) => {
           <CenterModel
             showModal={showModal}
             handleToggleModal={handleToggleModal}
-            modalTitle={statusFeild + " " + "Reason"}
+            modalTitle={`${statusFeild} Reason`}
             modelSizeClass="w-50s"
           >
             <div className="row horizontal-form">

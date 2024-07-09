@@ -16,6 +16,8 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATEADDADDRESS = "UpdateAddAddress";
         const string ADDADDRESSFORCUSTOMER = "AddAddressForCustomer";
         const string GETADDRESSSBYSUPPLIERID = "GetAddresssBySupplierId";
+        const string GETCUSTOMERADDRESSSBYADDRESSID = "GetCustomerAddresssByAddressId";
+        const string GETSUPPLIERADDRESSSBYADDRESSID = "GetSupplierAddresssByAddressId";
         #endregion
 
         public AddressRepository(DapperContext dapperContext) : base(dapperContext)
@@ -51,6 +53,16 @@ namespace OMS.Domain.Repository.Implementation
             return getAddresssByCustomerIdResponse;
 
         }
+
+        public async Task<GetCustomerAddresssByAddressIdResponse> GetCustomerAddresssByAddressId(int addressId)
+        {
+            GetCustomerAddresssByAddressIdResponse getCustomerAddresssByAddressIdResponse = await _context.GetFrist<GetCustomerAddresssByAddressIdResponse>(GETCUSTOMERADDRESSSBYADDRESSID, new
+            {
+                addressId
+            }, commandType: CommandType.StoredProcedure);
+            return getCustomerAddresssByAddressIdResponse;
+
+        }
         public async Task<AddEntityDTO<int>> UpdateAddAddress(AddressDTO address)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEADDADDRESS, new
@@ -78,6 +90,16 @@ namespace OMS.Domain.Repository.Implementation
                 supplierId
             }, commandType: CommandType.StoredProcedure);
             return getAddresssBySupplierIdResponse;
+
+        }
+
+        public async Task<GetSupplierAddresssByAddressIdResponse> GetSupplierAddresssByAddressId(int addressId)
+        {
+            GetSupplierAddresssByAddressIdResponse getSupplierAddresssByAddressIdResponse = await _context.GetFrist<GetSupplierAddresssByAddressIdResponse>(GETSUPPLIERADDRESSSBYADDRESSID, new
+            {
+                addressId
+            }, commandType: CommandType.StoredProcedure);
+            return getSupplierAddresssByAddressIdResponse;
 
         }
         #endregion
