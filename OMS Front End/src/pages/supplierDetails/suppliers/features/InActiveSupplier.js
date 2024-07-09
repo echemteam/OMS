@@ -4,10 +4,15 @@ import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, Disab
 import { StatusEnums } from "../../../../common/features/Enums/StatusEnums";
 import SupplierListContext from "../../../../utils/ContextAPIs/Supplier/SupplierListContext";
 import { InActiveSuppliers } from "./InActiveSuppliers";
+import { ListShowCustomer } from "../../../../common/features/Enums/ListEnums";
 
 const InActiveSupplier = ({ statusId }) => {
   const [activeTab, setActiveTab] = useState("0");
   const DataRef = useRef();
+  const [allManageData, setAllManageData] = useState(AllInActiveCustomerGridConfig);
+  const [freezeManageData, setFrezzeManageData] = useState(FreezedInActiveCustomerGridConfig);
+  const [blockManageData, setBlockManageData] = useState(BlockedInActiveCustomerGridConfig);
+  const [disableManageData, setDisableManageData] = useState(DisabledInActiveCustomerGridConfig);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
@@ -20,7 +25,39 @@ const InActiveSupplier = ({ statusId }) => {
   };
 
   useEffect(() => {
-    getListApi();
+    const updateManageData = () => {
+      switch (activeTab) {
+        case "0":
+          setAllManageData({
+            ...AllInActiveCustomerGridConfig,
+            columns: AllInActiveCustomerGridConfig.columns.filter(column => column.id !== ListShowCustomer.value)
+          });
+          break;
+        case "1":
+          setFrezzeManageData({
+            ...FreezedInActiveCustomerGridConfig,
+            columns: FreezedInActiveCustomerGridConfig.columns.filter(column => column.id !== ListShowCustomer.value)
+          });
+          break;
+        case "2":
+          setBlockManageData({
+            ...BlockedInActiveCustomerGridConfig,
+            columns: BlockedInActiveCustomerGridConfig.columns.filter(column => column.id !== ListShowCustomer.value)
+          });
+          break;
+        case "3":
+          setDisableManageData({
+            ...BlockedInActiveCustomerGridConfig,
+            columns: BlockedInActiveCustomerGridConfig.columns.filter(column => column.id !== ListShowCustomer.value)
+          });
+          break;
+        default:
+          setAllManageData(AllInActiveCustomerGridConfig);
+      }
+    };
+
+    updateManageData(); // Initial update based on activeTab
+    getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
   const tabs = [
@@ -28,7 +65,7 @@ const InActiveSupplier = ({ statusId }) => {
       sMenuItemCaption: "All",
       component: (
         <div className="mt-2">
-          <InActiveSuppliers statusId={statusId} configFile={AllInActiveCustomerGridConfig} />
+          <InActiveSuppliers statusId={statusId} configFile={allManageData} />
         </div>
       ),
     },
@@ -36,7 +73,7 @@ const InActiveSupplier = ({ statusId }) => {
       sMenuItemCaption: "Freezed",
       component: (
         <div className="mt-2">
-          <InActiveSuppliers statusId={StatusEnums.Freeze} configFile={FreezedInActiveCustomerGridConfig} />
+          <InActiveSuppliers statusId={StatusEnums.Freeze} configFile={freezeManageData} />
         </div>
       ),
     },
@@ -44,7 +81,7 @@ const InActiveSupplier = ({ statusId }) => {
       sMenuItemCaption: "Block",
       component: (
         <div className="mt-2">
-          <InActiveSuppliers statusId={StatusEnums.Block} configFile={BlockedInActiveCustomerGridConfig} />
+          <InActiveSuppliers statusId={StatusEnums.Block} configFile={blockManageData} />
         </div>
       ),
     },
@@ -52,7 +89,7 @@ const InActiveSupplier = ({ statusId }) => {
       sMenuItemCaption: "Disable",
       component: (
         <div className="mt-2">
-          <InActiveSuppliers statusId={StatusEnums.Disable} configFile={DisabledInActiveCustomerGridConfig} />
+          <InActiveSuppliers statusId={StatusEnums.Disable} configFile={disableManageData} />
         </div>
       ),
     },
