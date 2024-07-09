@@ -28,6 +28,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLDELIVERYACCOUNTS = "GetAllDeliveryAccounts";
         const string GETALLPHONETYPES = "GetAllPhoneTypes";
         const string GETALLUSER = "GetAllUser";
+        const string GETEVENTNAMEANDUSERNAMEBYCUSTOMERID = "GetEventNameAndUserNameByCustomerId";
+        const string GETEVENTNAMEANDUSERNAMEBYSUPPLIERID = "GetEventNameAndUserNameBySupplierId";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -120,6 +122,23 @@ namespace OMS.Domain.Repository.Implementation
         public async Task<List<GetAllUserResponse>> GetAllUser()
         {
             return await _context.GetList<GetAllUserResponse>(GETALLUSER, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetEventNameAndUserNameByCustomerIdResponse>> GetEventNameAndUserNameByCustomerId(int customerId)
+        {
+            List<GetEventNameAndUserNameByCustomerIdResponse> getEventNameAndUserNameByCustomerIdResponse = await _context.GetList<GetEventNameAndUserNameByCustomerIdResponse>(GETEVENTNAMEANDUSERNAMEBYCUSTOMERID, new
+            {
+                customerId
+            }, commandType: CommandType.StoredProcedure);
+            return getEventNameAndUserNameByCustomerIdResponse;
+        }
+
+        public async Task<List<GetEventNameAndUserNameBySupplierIdResponse>> GetEventNameAndUserNameBySupplierId(int supplierId)
+        {
+            List<GetEventNameAndUserNameBySupplierIdResponse> getEventNameAndUserNameBySupplierIdResponse = await _context.GetList<GetEventNameAndUserNameBySupplierIdResponse>(GETEVENTNAMEANDUSERNAMEBYSUPPLIERID, new
+            {
+                supplierId
+            }, commandType: CommandType.StoredProcedure);
+            return getEventNameAndUserNameBySupplierIdResponse;
         }
     }
 }
