@@ -45,9 +45,9 @@ const FinancialSettings = ({ isEditablePage }) => {
 
   useEffect(() => {
     if (customerId > 0) {
-      if (isEditablePage) {
-        GetDetailsbyCustomerID(customerId)
-      }
+      // if (isEditablePage) {
+      GetDetailsbyCustomerID(customerId)
+      // }
     };
   }, [customerId]);
 
@@ -113,7 +113,7 @@ const FinancialSettings = ({ isEditablePage }) => {
         customerId: customerId,
         paymentTermId: settingFormData.paymentTermId.value,
         paymentMethodId: settingFormData.paymentMethodId.value,
-        billingCurrency: settingFormData.billingCurrency.value,
+        billingCurrency: !settingFormData.billingCurrency?.value ? settingFormData.billingCurrency : settingFormData.billingCurrency.value,
       };
       addEditCustomerSettings(request);
 

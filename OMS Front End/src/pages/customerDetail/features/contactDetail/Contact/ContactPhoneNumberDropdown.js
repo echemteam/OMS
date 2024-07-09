@@ -53,7 +53,7 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
 
                                 <div className={`card-value ml-0 ${primaryPhoneNumber?.isPrimary ? "primary-phone" : ""}`} >
                                     &nbsp;
-                                    {`(+${primaryPhoneNumber?.phoneCode}) ${primaryPhoneNumber?.phoneNumber}`}
+                                    {`(${primaryPhoneNumber?.phoneCode}) ${primaryPhoneNumber?.phoneNumber}`}
                                 </div>
                                 {/* <span className="title">Ext.</span> */}
                                 {/* { */}
@@ -79,7 +79,7 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
                             <span className="contact-list d-flex flex-row" key={index}>
                                 {phoneTypesIcon(phoneData?.phoneTypeId)}
                                 <span>
-                                    {`(+${phoneData.phoneCode}) ${phoneData.phoneNumber}${phoneData.extension ? `, ${phoneData.extension}` : ""}`}
+                                    {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}${phoneData.extension ? `, ${phoneData.extension}` : ""}`}
                                 </span>
                                 <span className="copy-icon" onClick={() => CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${phoneData.extension > 0 ? phoneData.extension : ''}`, "phone")}>
                                     <Image imagePath={AppIcons.copyIcon} altText="Icon" />
