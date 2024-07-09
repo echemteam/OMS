@@ -1,3 +1,4 @@
+import { ListShowCustomer, ListSupplier } from "../../../../common/features/Enums/ListEnums";
 import { FormFieldTypes } from "../../../../data/formFieldType";
 import { GridColumnType } from "../../../../data/gridColumnType";
 import { getLabelClass } from "../../../../utils/StatusColors/StatusColors";
@@ -26,7 +27,14 @@ export const reasonData = {
 export const AllCustomerGridConfig = {
   columns: [
     {
+      id: ListShowCustomer.value,
       name: "Customer Name",
+      fieldName: "name",
+      width: "32%",
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
       fieldName: "name",
       width: "32%",
     },
@@ -70,10 +78,17 @@ export const AllCustomerGridConfig = {
 export const PendingCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
       width: "35%",
       // allowShort: true,
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "35%",
     },
     {
       name: "Tax Id",
@@ -108,10 +123,17 @@ export const PendingCustomerGridConfig = {
 export const SubmittedCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
       width: "25%",
       // allowShort: true,
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "25%",
     },
     {
       name: "Tax Id",
@@ -151,10 +173,17 @@ export const SubmittedCustomerGridConfig = {
 export const ApprovedCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
       width: "35%",
       // allowShort: true,
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "35%",
     },
     {
       name: "Tax Id",
@@ -180,10 +209,17 @@ export const ApprovedCustomerGridConfig = {
 export const RejectedCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
       width: "35%",
       // allowShort: true,
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "35%",
     },
     {
       name: "Reason",
@@ -207,9 +243,16 @@ export const RejectedCustomerGridConfig = {
 export const AllInActiveCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
       // allowShort: true,
+      width: "25%",
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
       width: "25%",
     },
     {
@@ -245,7 +288,14 @@ export const AllInActiveCustomerGridConfig = {
 export const FreezedInActiveCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
+      fieldName: "name",
+      width: "25%",
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
       fieldName: "name",
       width: "25%",
     },
@@ -280,7 +330,14 @@ export const FreezedInActiveCustomerGridConfig = {
 export const BlockedInActiveCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
+      fieldName: "name",
+      width: "25%",
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
       fieldName: "name",
       width: "25%",
     },
@@ -316,7 +373,14 @@ export const BlockedInActiveCustomerGridConfig = {
 export const DisabledInActiveCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
+      fieldName: "name",
+      width: "35%",
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
       fieldName: "name",
       width: "35%",
     },
