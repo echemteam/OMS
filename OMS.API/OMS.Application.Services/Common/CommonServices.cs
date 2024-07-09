@@ -102,5 +102,14 @@ namespace OMS.Application.Services.Common
             return repositoryManager.commonRepository.GetAllUser();
         }
 
+        public Task<List<GetEventNameAndUserNameByCustomerIdResponse>> GetEventNameAndUserNameByCustomerId(int customerId)
+        {
+            return repositoryManager.commonRepository.GetEventNameAndUserNameByCustomerId(customerId);
+        }
+        public Task<List<GetEventNameAndUserNameBySupplierIdResponse>> GetEventNameAndUserNameBySupplierId(int supplierId)
+        {
+            return repositoryManager.commonRepository.GetEventNameAndUserNameBySupplierId(supplierId);
+        }
+
     }
 }

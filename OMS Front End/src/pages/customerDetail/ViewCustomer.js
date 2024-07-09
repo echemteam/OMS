@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "./ViewCustomer.scss";
 import CardSection from "../../components/ui/card/CardSection";
@@ -7,17 +8,13 @@ import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailCont
 import { useLazyGetCustomersBasicInformationByIdQuery } from "../../app/services/basicdetailAPI";
 import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../services/CryptoService";
-import { HistoryDetail } from "./features/HistoryDetail/HistoryDetail";
 import { useNavigate } from "react-router-dom/dist";
 import Button from "../../components/ui/button/Buttons";
-import { getAuthProps } from "../../lib/authenticationLibrary";
 import { securityKey } from "../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../utils/AuthorizeNavigation/authorizeNavigation";
 import { useSelector } from "react-redux";
+import { CustomerHistoryDetail } from "./features/HistoryDetail/CustomerHistoryDetail";
 
-const NotesDetail = React.lazy(() =>
-  import("./features/notesDetail/NotesDetail")
-);
 const RenderTabs = React.lazy(() =>
   import("../../components/ui/tabs/RenderTabs")
 );
@@ -39,6 +36,10 @@ const CustomerDocumentDetails = React.lazy(() =>
 const CustomerContactDetails = React.lazy(() =>
   import("./features/contactDetail/Contact/CustomerContactDetails")
 );
+const ManageCustomerNotes = React.lazy(() =>
+  import("./features/notesDetail/ManageCustomerNotes")
+);
+
 
 const ViewCustomer = () => {
   const navigate = useNavigate();
@@ -152,7 +153,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Notes",
       component: (
         <div className="mt-2">
-          <NotesDetail isEditablePage={true} />
+          <ManageCustomerNotes isEditablePage={true} />
         </div>
       ),
       isVisible: hasNotePermission.hasAccess,
@@ -161,7 +162,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "History",
       component: (
         <div className="">
-          <HistoryDetail />
+          <CustomerHistoryDetail isEditablePage={true} />
         </div>
       ),
       isVisible: hasHistoryPermission.hasAccess,
