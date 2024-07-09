@@ -3,9 +3,9 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import { InActiveCustomers } from "./InActiveCustomers";
 import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext"
 import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../config/CustomerData";
-import { StatusEnums, StatusValue } from "../../../../common/features/Enums/StatusEnums";
-import { ListSupplier } from "../../../../common/features/Enums/ListEnums";
 import useDebounce from "../../../../app/customHooks/useDebouce";
+import { ListSupplier } from "../../../../utils/Enums/enums";
+import { StatusEnums, StatusValue } from "../../../../utils/Enums/StatusEnums";
 
 const InActiveCustomer = ({ statusId }) => {
   const [activeTab, setActiveTab] = useState("0");
@@ -14,7 +14,7 @@ const InActiveCustomer = ({ statusId }) => {
   const [statusOptions, setStatusOptions] = useState([]);
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
   const [selectedStatusOptions, setSelectedStatusOptions] = useState("");
-  
+
   const [allManageData, setAllManageData] = useState(AllInActiveCustomerGridConfig);
   const [freezeManageData, setFrezzeManageData] = useState(FreezedInActiveCustomerGridConfig);
   const [blockManageData, setBlockManageData] = useState(BlockedInActiveCustomerGridConfig);
@@ -70,7 +70,7 @@ const InActiveCustomer = ({ statusId }) => {
   const handleChange = (event) => {
     const value = event.target.value;
     // if (value.length >= 3) {
-      setSearch(value.trim());
+    setSearch(value.trim());
     // }
   }
 

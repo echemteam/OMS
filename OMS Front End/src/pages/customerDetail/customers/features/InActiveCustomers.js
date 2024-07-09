@@ -5,7 +5,6 @@ import MolGrid from '../../../../components/Grid/MolGrid';
 import CustomerListContext from '../../../../utils/ContextAPIs/Customer/CustomerListContext';
 import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../app/services/basicdetailAPI';
 import ToastService from '../../../../services/toastService/ToastService';
-import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
 import { securityKey } from '../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import CustomerApproval from '../../features/cutomerApproval/CustomerApproval';
@@ -14,6 +13,7 @@ import { encryptUrlData } from '../../../../services/CryptoService';
 import { useNavigate } from "react-router-dom";
 import SwalAlert from '../../../../services/swalService/SwalService';
 import { useSelector } from 'react-redux';
+import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
 
 export const InActiveCustomers = ({ statusId, configFile , handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter }) => {
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { Message } from "../Util/ContactMessages";
@@ -12,7 +13,7 @@ import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSup
 const EmailAddressList = React.lazy(() => import("./EmailAddressList"));
 const AddEditEmailModal = React.lazy(() => import("./AddEditEmailAddress"));
 
-const ManageEmailAddress = ({ onGetContactList ,isSupplier }) => {
+const ManageEmailAddress = ({ onGetContactList, isSupplier }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -52,7 +53,6 @@ const ManageEmailAddress = ({ onGetContactList ,isSupplier }) => {
     const onSuccess = () => {
         setShowModal(!showModal);
         setIsEdit(false);
-        onGetContactList();
     };
 
     //** Action Handler */
