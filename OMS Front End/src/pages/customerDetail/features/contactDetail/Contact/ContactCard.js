@@ -4,7 +4,7 @@ import { AppIcons } from "../../../../../data/appIcons";
 import ContactEmailsDropdown from "./ContactEmailsDropdown";
 import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
 
-const ContactCard = ({ childData, handleEdit }) => {
+const ContactCard = ({ childData, handleEdit, showEditIcon }) => {
   const [showEmailDropdown, setShowEmailDropdown] = useState(false);
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
   const emailDropdownRef = useRef(null);
@@ -70,14 +70,11 @@ const ContactCard = ({ childData, handleEdit }) => {
               </div>
             </div>
             <div className="edit-delete-button">
-              <button
-                onClick={() =>
-                  handleEdit(cardInfoData?.contactId)
-                }
-                className="edit-btn"
-              >
-                <Image imagePath={AppIcons.editThemeIcon} />
-              </button>
+              {showEditIcon ?
+                <button onClick={() => handleEdit(cardInfoData?.contactId)} className="edit-btn">
+                  <Image imagePath={AppIcons.editThemeIcon} />
+                </button>
+                : null}
             </div>
           </div>
         </>

@@ -27,9 +27,9 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   const [selectedUserId, setSelectedUserId] = useState("");
   const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: moment().startOf('day'),
-    endDate: moment().endOf('day')    
+    endDate: moment().endOf('day')
   });
-  const [totalRecord, setTotalRecord] = useState("")
+  const [noRecordFound, setNoRecordFound] = useState(false);
 
   /* NOTE:- 
     API Call
@@ -80,8 +80,6 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
 
   useEffect(() => {
     if (isGetHistorySuccess && isGetHistoryData) {
-      debugger
-      setTotalRecord(isGetHistoryData)
       if (isGetHistoryData.dataSource && isGetHistoryData.dataSource.length > 0) {
         const modifyData = modifyTimeLineData(isGetHistoryData.dataSource);
         if (refreshData) {
@@ -94,9 +92,11 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
             setHistoryData((prevData) => [...prevData, ...modifyData]);
           }
         }
+        setNoRecordFound(false);
+      } else if (isGetHistoryData.dataSource.length === 0) {
+        setNoRecordFound(true);
       } else {
         setHasMore(false);
-        setTotalRecord("")
         ToastService.warning("No Data Found")
       }
     }
@@ -206,59 +206,56 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
           ></Buttons>
         </div>
       </div>
-      {totalRecord &&
-        <div className="col-md-12">
-          <div className="main-card mt-2" id="scrollableDiv">
-            <InfiniteScroll
-              dataLength={historyData.length}
-              next={fetchMoreData}
-              hasMore={hasMore}
-              loader={isGetHistoryLoading ? <DataLoader /> : null}
-              scrollableTarget="scrollableDiv"
-            >
-              <div className="new-timeline-sec">
-                <ol className="timeline">
-                  {historyData.length > 0 ? (
-                    historyData.map((item, index) => (
-                      <li
-                        className="timeline-item"
-                        key={index}
-                      >
-                        <span className="timeline-item-icon">
-                          {item.eventStatus === "Insert" ? (
-                            <>
-                              {" "}
-                              <img src={AppIcons.PlusIcon} alt="Insert Icon" />
-                            </>
-                          ) : (
-                            <>
-                              {" "}
-                              <img
-                                src={AppIcons.UpdateIcon}
-                                alt="Update Icon"
-                              />
-                            </>
-                          )}
-                        </span>
-                        <div className="timeline-item-description">
-                          <div className="right-desc-sec">
-                            <div className="msg-section ">
-                              <p>{item.description}</p>
-                            </div>
-                            <div className="type-name">{item.eventName}</div>
+      <div className="col-md-12">
+        <div className="main-card mt-2" id="scrollableDiv">
+          <InfiniteScroll
+            dataLength={historyData.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={isGetHistoryLoading ? <DataLoader /> : null}
+            scrollableTarget="scrollableDiv"
+          >
+            <div className="new-timeline-sec">
+              <ol className="timeline">
+                {!noRecordFound && historyData.length > 0 ? (
+                  historyData.map((item, index) => (
+                    <li
+                      className="timeline-item"
+                      key={index}
+                    >
+                      <span className="timeline-item-icon">
+                        {item.eventStatus === "Insert" ? (
+                          <>
+                            {" "}
+                            <img src={AppIcons.PlusIcon} alt="Insert Icon" />
+                          </>
+                        ) : (
+                          <>
+                            {" "}
+                            <img
+                              src={AppIcons.UpdateIcon}
+                              alt="Update Icon"
+                            />
+                          </>
+                        )}
+                      </span>
+                      <div className="timeline-item-description">
+                        <div className="right-desc-sec">
+                          <div className="msg-section ">
+                            <p>{item.description}</p>
                           </div>
                         </div>
-                      </li>
-                    ))
-                  ) : !isGetHistoryLoading ? (
-                    <NoRecordFound />
-                  ) : null}
-                </ol>
-              </div>
-            </InfiniteScroll>
-          </div>
+                      </div>
+                    </li>
+                  ))
+                ) : !isGetHistoryLoading ? (
+                  <NoRecordFound />
+                ) : null}
+              </ol>
+            </div>
+          </InfiniteScroll>
         </div>
-      }
+      </div>
     </div>
   );
 };
