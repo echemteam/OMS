@@ -23,7 +23,7 @@ const BasicDetail = (props) => {
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [customerInfoData, setCustomerInfoData] = useState(false);
-  
+
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const { nextRef, customerId, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -34,7 +34,7 @@ const BasicDetail = (props) => {
     data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
   const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
   const [getCustomersDetailsByCutomerName, { isFetching: isuseGetCustomersDetailsByCutomerNameMutationFetching, isSuccess: isuseGetCustomersDetailsByCutomerNameMutationSucess, data: isuseGetCustomersDetailsByCutomerNameMutationData, }] = useLazyGetCustomersDetailsByCutomerNameQuery();
- 
+
   useEffect(() => {
     if (props.isOpen) {
       if (!isResponsibleUser) {
@@ -351,7 +351,7 @@ const BasicDetail = (props) => {
   const handleInputShowInfo = () => {
     if (customerName !== '' && customerName.trim().length >= 3) {
       getCustomersDetailsByCutomerName(customerName);
-      setIsModelOpen(true)
+
     } else {
       ToastService.warning('Please enter at least three characters.');
     }
@@ -373,7 +373,13 @@ const BasicDetail = (props) => {
 
   useEffect(() => {
     if (!isuseGetCustomersDetailsByCutomerNameMutationFetching && isuseGetCustomersDetailsByCutomerNameMutationSucess && isuseGetCustomersDetailsByCutomerNameMutationData) {
-      setCustomerInfoData(isuseGetCustomersDetailsByCutomerNameMutationData)
+      if (isuseGetCustomersDetailsByCutomerNameMutationData.length > 0) {
+        setIsModelOpen(true)
+        setCustomerInfoData(isuseGetCustomersDetailsByCutomerNameMutationData)
+      }
+      else {
+        ToastService.warning("No record found");
+      }
     }
   }, [isuseGetCustomersDetailsByCutomerNameMutationFetching, isuseGetCustomersDetailsByCutomerNameMutationSucess, isuseGetCustomersDetailsByCutomerNameMutationData]);
 
