@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
 import CardSection from "../../../../../components/ui/card/CardSection";
@@ -9,11 +9,9 @@ import {
   contactCustomerTransformData,
   contactSupplierTransformData
 } from "../../../../../utils/TransformData/TransformAPIData";
-import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import { useLazyGetAllContactTypesQuery } from "../../../../../app/services/contactAPI";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Component's */
 const AddEditContact = React.lazy(() => import("./AddEditContact"));
 const ManageContactList = React.lazy(() => import("./ManageContactList"));
