@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import CardSection from '../../../../../components/ui/card/CardSection';
 import { supplierBasicData } from '../supplierBasicDetail/config/SupplierBasicDetail.data';
-import { useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery } from '../../../../../app/services/supplierAPI'
+import { useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery, useLazyGetSupplierDetailsBySupplierNameQuery } from '../../../../../app/services/supplierAPI'
 import ToastService from '../../../../../services/toastService/ToastService';
 import { getTaxIdMinMaxLength } from '../../../../customerDetail/features/basicDetail/config/TaxIdValidator';
 import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
@@ -14,6 +14,8 @@ import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigatio
 import { useLazyGetAllUserQuery } from '../../../../../app/services/commonAPI';
 import { excludingRoles } from '../../../../customerDetail/features/basicDetail/config/BasicDetailForm.data';
 import { setFieldDisabled } from '../../../../../utils/FieldDisabled/setFieldDisabled';
+import { BasicInformation } from '../../../../customerDetail/features/basicDetail/BasicInformation';
+import SidebarModel from '../../../../../components/ui/sidebarModel/SidebarModel';
 
 const SupplierBasicDetail = (props) => {
 
@@ -23,9 +25,11 @@ const SupplierBasicDetail = (props) => {
   const { isOpen, onhandleRepeatCall, onSidebarClose, pageId } = props;
   const { nextStepRef, setSupplierId, moveNextPage, setAllCountries, supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
+  const [isShowModel, setIsShowModel] = useState(false);
   const { formSetting } = supplierBasicData;
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
+  const [supplierInfoData, setSupplierInfoData] = useState(false);
 
   const [
     getSupplierBasicInformationById,
@@ -35,6 +39,7 @@ const SupplierBasicDetail = (props) => {
       data: GetSupplierBasicInformationByIdData,
     },
   ] = useLazyGetSupplierBasicInformationByIdQuery();
+  const [getSupplierDetailsBySupplierName, { isFetching: isGetSupplierDetailsBySupplierNameFetching, isSuccess: isGetSupplierDetailsBySupplierNameSucess, data: isGetSupplierDetailsBySupplierNameData, }] = useLazyGetSupplierDetailsBySupplierNameQuery();
 
   useEffect(() => {
     if (isOpen) {
@@ -336,7 +341,7 @@ const SupplierBasicDetail = (props) => {
         ToastService.warning(isSupplierNameExistData.errorMessage);
         return;
       }
-      ToastService.success(isSupplierNameExistData.errorMessage);
+      ToastService.info(isSupplierNameExistData.errorMessage);
     }
   }, [isSupplierNameExistSucess, isSupplierNameExistData]);
 
@@ -355,6 +360,32 @@ const SupplierBasicDetail = (props) => {
       setSupplierName(trimCustomerName);
     }
   }
+  useEffect(() => {
+
+    if (!isGetSupplierDetailsBySupplierNameFetching && isGetSupplierDetailsBySupplierNameSucess && isGetSupplierDetailsBySupplierNameData) {
+      if(isGetSupplierDetailsBySupplierNameData.length > 0){
+      setIsShowModel(true)
+      setSupplierInfoData(isGetSupplierDetailsBySupplierNameData)
+      }else{
+        ToastService.warning("No record found");
+      }
+    }
+  }, [isGetSupplierDetailsBySupplierNameFetching, isGetSupplierDetailsBySupplierNameSucess, isGetSupplierDetailsBySupplierNameData]);
+
+  const sidebarClose = () => {
+    setIsShowModel(false)
+  }
+
+  const handleInputShowInfo = () => {
+
+    if (supplierName !== '' && supplierName.trim().length >= 3) {
+      getSupplierDetailsBySupplierName(supplierName);
+      
+    } else {
+      ToastService.warning('Please enter at least three characters.');
+    }
+  }
+
   const formInputHandler = {
     INPUT_CHANGED: handleInputFields
   }
@@ -370,6 +401,7 @@ const SupplierBasicDetail = (props) => {
             onActionChange={formActionHandler}
             onInputChange={formInputHandler}
             handleInputGroupButton={handleInputGroupButton}
+            handleInputShowInfo={handleInputShowInfo}
           />
         </div>
 
@@ -393,6 +425,22 @@ const SupplierBasicDetail = (props) => {
         }
 
       </CardSection>
+  {isShowModel &&
+    <SidebarModel
+    modalTitle="Supplier Information"
+    contentClass="content-50 basic-info-model"
+    onClose={sidebarClose}
+    isOpen={isShowModel}
+    onClick={handleInputShowInfo}
+  >
+    <BasicInformation
+      onSidebarClose={sidebarClose}
+      infoData={supplierInfoData}
+    />
+  </SidebarModel>
+}
+      
+    
     </div>
   );
 }

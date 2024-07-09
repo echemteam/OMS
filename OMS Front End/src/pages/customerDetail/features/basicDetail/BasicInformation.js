@@ -10,7 +10,11 @@ export const BasicInformation = (props) => {
     const navigate = useNavigate();
 
     const handleEditClick = (data) => {
+        if(data.customerId){
         navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
+        }else{
+            navigate(`/SupplierDetails/${encryptUrlData(data.supplierId)}`, "_blank");
+        }
     };
 
     const actionHandler = {
@@ -19,6 +23,7 @@ export const BasicInformation = (props) => {
 
     return (
         <div className='pop-up-input-btn mt-3'>
+            
             <CardSection>
                 <div className="row input-list-button">
                     <div className="col-lg-12 table-striped">

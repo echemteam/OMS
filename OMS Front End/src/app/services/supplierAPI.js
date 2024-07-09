@@ -78,7 +78,16 @@ const supplierAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
-        })
+        }),
+
+        getSupplierDetailsBySupplierName: builder.query({
+            query: (userName) => ({
+                url: encryptQueryString(`/Supplier/GetSupplierDetailsBySupplierName/?supplierName=${String(userName)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
       
     })
 })
@@ -92,6 +101,7 @@ export const {
     useLazyGetSupplierBasicInformationByIdQuery,
     useLazyGetAllSupplierTypeQuery,
     useCheckSupplierNameExistMutation,
+    useLazyGetSupplierDetailsBySupplierNameQuery
   
 } = supplierAPI
 

@@ -206,7 +206,7 @@ export const basicDetailFormDataHalf = {
 export const basicInfoData = {
   columns: [
     {
-      name: "Customer",
+      name: "Name",
       fieldName: "name",
       width:"15%",
       // allowShort: true,

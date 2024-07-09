@@ -418,7 +418,8 @@ const BasicDetail = (props) => {
         }
 
       </CardSection>
-      <SidebarModel
+      {isModelOpen &&
+        <SidebarModel
         modalTitle="Customer Information"
         contentClass="content-50 basic-info-model"
         onClose={onSidebarClose}
@@ -427,10 +428,11 @@ const BasicDetail = (props) => {
       >
         <BasicInformation
           onSidebarClose={onSidebarClose}
-          isOpen={isModelOpen}
           infoData={customerInfoData}
         />
       </SidebarModel>
+      }
+      
     </div>
   );
 };
