@@ -11,7 +11,7 @@ const supplierSecurityKey = {
   EDIT: securityKey.EDITSUPPLIERCONTACT,
 }
 
-const SupplierContactDetail = (isEditSupplierPage) => {
+const SupplierContactDetail = ({ isEditSupplierPage }) => {
 
   const { supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
