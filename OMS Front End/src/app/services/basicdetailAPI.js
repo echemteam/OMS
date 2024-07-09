@@ -103,7 +103,24 @@ const basicdetailAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
-        })
+        }),
+        // getCustomersDetailsByCutomerName: builder.mutation({
+        //     query: (Details) => ({
+        //         url: '/Customers/GetCustomersDetailsByCutomerName',
+        //         method: 'POST',
+        //         body: transformRequest(Details)
+        //     }),
+        //     transformResponse: transformSucessResponse,
+        //     transformErrorResponse: transformErrorResponse
+        // }),
+        getCustomersDetailsByCutomerName: builder.query({
+            query: (userName) => ({
+                url: encryptQueryString(`/Customers/GetCustomersDetailsByCutomerName/?customerName=${String(userName)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -119,6 +136,7 @@ export const {
     useAddCustomersBasicInformationMutation,
     useUpdateCustomersBasicInformationMutation,
     useCheckCustomerNameExistMutation,
+    useLazyGetCustomersDetailsByCutomerNameQuery
 } = basicdetailAPI
 
 export default basicdetailAPI;

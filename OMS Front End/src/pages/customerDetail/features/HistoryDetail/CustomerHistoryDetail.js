@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
-import TimeLine from '../HistoryDetail/features/TimeLine'
+import React, { useContext } from 'react';
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
 //** Service's */
 import { useGetCustomerAuditHistoryByCustomerIdMutation } from '../../../../app/services/customerHistoryAPI';
+//** Component's */
+const TimeLine = React.lazy(() => import("../HistoryDetail/features/TimeLine"));
 
-export const HistoryDetail = ({ isEditablePage }) => {
+export const CustomerHistoryDetail = ({ isEditablePage }) => {
 
     const { customerId } = useContext(BasicDetailContext);
 

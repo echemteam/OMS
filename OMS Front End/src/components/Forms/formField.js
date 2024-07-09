@@ -25,7 +25,9 @@ const FormFields = ({
   onActionChange,
   onFormFieldChange,
   handleInputGroupButton,
+  handleInputShowInfo,
   onInputChange,
+  // onInputShowInfo,
   onCheckBoxChange,
   fieldValiadtionRules
 }) => {
@@ -114,7 +116,9 @@ const FormFields = ({
               inputButtonGroup={field.inputButtonGroup}
               inputIcon={field.inputIcon}
               handleInputGroupButton={handleInputGroupButton}
+              handleInputShowInfo={handleInputShowInfo}
               inputField={onInputChange}
+              // inputshowField={onInputShowInfo}
               isRequired={isRequired}
               {...field.fieldSetting}
             />

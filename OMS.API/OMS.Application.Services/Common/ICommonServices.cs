@@ -23,6 +23,8 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllDeliveryAccountsResponse>> GetAllDeliveryAccounts();
         Task<List<GetAllPhoneTypesResponse>> GetAllPhoneTypes();
         Task<List<GetAllUserResponse>> GetAllUser();
+        Task<List<GetEventNameAndUserNameByCustomerIdResponse>> GetEventNameAndUserNameByCustomerId(int customerId);
+        Task<List<GetEventNameAndUserNameBySupplierIdResponse>> GetEventNameAndUserNameBySupplierId(int supplierId);
 
     }
 }

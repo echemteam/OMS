@@ -1,71 +1,68 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useRef, useState } from "react";
-import CardSection from "../../../../components/ui/card/CardSection";
-import { AppIcons } from "../../../../data/appIcons";
-import NotesCard from "./features/NotesCard";
-import Buttons from "../../../../components/ui/button/Buttons";
+import React, { useEffect, useRef, useState } from "react";
+//** Lib's */
+import { NotesData } from "./config/Notes.data";
+import { AppIcons } from "../../../../../data/appIcons";
+import Buttons from "../../../../../components/ui/button/Buttons";
+import FormCreator from "../../../../../components/Forms/FormCreator";
+import CardSection from "../../../../../components/ui/card/CardSection";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
+import ToastService from "../../../../../services/toastService/ToastService";
+import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
-import FormCreator from "../../../../components/Forms/FormCreator";
-import { NotesData } from "./features/config/Notes.data";
-import CenterModel from "../../../../components/ui/centerModel/CenterModel";
+//** Component's */
+const NotesCard = React.lazy(() => import("./NotesCard"));
 
-import ToastService from "../../../../services/toastService/ToastService";
-import {
-  useAddCustomerNotesMutation,
-  useLazyGetCustomerNoteByCustomerIdQuery,
-  useUpdateCustomerNotesMutation,
-} from "../../../../app/services/notesAPI";
-import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { securityKey } from "../../../../data/SecurityKey";
-import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+const NotesDetail = ({ keyId, isSupplier, isEditablePage, SecurityKey, onAddNotes, onUpdateNotes, onGetByIdNotes }) => {
 
-
-const NotesDetail = ({ isEditablePage }) => {
   const notesFormRef = useRef();
   const { formSetting } = NotesData;
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(NotesData);
-  const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [notesFormData, setNotesFormData] = useState([]);
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const [addCustomerNotes, { isLoading: isAddNotesLoading, isSuccess: isAddNotesSuccess, data: isAddNotesData, },] = useAddCustomerNotesMutation();
-  const [updateCustomerNotes, { isLoading: isUpdateNotesLoading, isSuccess: isUpdateNotesSuccess, data: isUpdateNotesData, },] = useUpdateCustomerNotesMutation();
-  const [getCustomerNoteByCustomerId, { isFetching: isGetNotesFetching, isSuccess: isGetNotesSuccess, data: isGetNotesData, },] = useLazyGetCustomerNoteByCustomerIdQuery();
 
-  const hasAddPermission = hasFunctionalPermission(securityKey.ADDCUSTOMERNOTE);
-  const hasEditPermission = hasFunctionalPermission(securityKey.EDITCUSTOMERNOTE);
+  /* NOTE:- 
+      API Call
+      The "onAddNotes","onUpdateNotes","onGetByIdNotes" function is passed dynamically as a prop.
+      This allows the NoteDetails component to be reused with different API call functions.
+  */
+  const [addNotes, { isLoading: isAddNotesLoading, isSuccess: isAddNotesSuccess, data: isAddNotesData, },] = onAddNotes();
+  const [getNoteById, { isFetching: isGetNotesFetching, isSuccess: isGetNotesSuccess, data: isGetNotesData, },] = onGetByIdNotes();
+  const [updateNotes, { isLoading: isUpdateNotesLoading, isSuccess: isUpdateNotesSuccess, data: isUpdateNotesData, },] = onUpdateNotes();
+
+  const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+  const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
 
   useEffect(() => {
-    if (!isResponsibleUser) {
-      if (hasEditPermission && hasAddPermission) {
-        if (isEditablePage) {
-          if (hasEditPermission.isViewOnly === true) {
-            formSetting.isViewOnly = true;
-            setIsButtonDisable(true);
-          } else {
-            formSetting.isViewOnly = false;
-            setIsButtonDisable(false);
-          }
-        }
-        if (hasAddPermission.hasAccess === true) {
+    if (hasEditPermission && hasAddPermission) {
+      if (isEditablePage) {
+        if (hasEditPermission.isViewOnly === true) {
+          formSetting.isViewOnly = true;
+          setIsButtonDisable(true);
+        } else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
-          setButtonVisible(true);
-        } else {
-          formSetting.isViewOnly = true;
-          setButtonVisible(false);
         }
       }
+      if (hasAddPermission.hasAccess === true) {
+        formSetting.isViewOnly = false;
+        setIsButtonDisable(false);
+        setButtonVisible(true);
+      } else {
+        formSetting.isViewOnly = true;
+        setButtonVisible(false);
+      }
     }
-  }, [hasEditPermission, hasAddPermission]);
+  }, [hasEditPermission, hasAddPermission, isEditablePage, formSetting]);
 
   useEffect(() => {
     if (isAddNotesSuccess && isAddNotesData) {
       ToastService.success(isAddNotesData.errorMessage);
-      getCustomerNoteByCustomerId(customerId);
+      onGetNote(keyId);
       setShowModal(!showModal);
     }
   }, [isAddNotesSuccess, isAddNotesData]);
@@ -81,14 +78,14 @@ const NotesDetail = ({ isEditablePage }) => {
   useEffect(() => {
     if (isUpdateNotesSuccess && isUpdateNotesData) {
       ToastService.success(isUpdateNotesData.errorMessage);
-      getCustomerNoteByCustomerId(customerId);
+      onGetNote(keyId);
       setShowModal(false);
     }
   }, [isUpdateNotesSuccess, isUpdateNotesData]);
 
   useEffect(() => {
-    customerId && onGetNote(customerId);
-  }, [customerId])
+    keyId && onGetNote(keyId);
+  }, [keyId])
 
   const handleToggleModal = () => {
     setIsEditMode(false);
@@ -103,40 +100,52 @@ const NotesDetail = ({ isEditablePage }) => {
 
   const handleNotes = () => {
     let notesData = notesFormRef.current.getFormData();
+    let request = {
+      note: notesData.note,
+    };
 
-    if (notesData && !notesData.customerNoteId) {
-      let request = {
-        customerId: customerId,
-        note: notesData.note,
-      };
-      addCustomerNotes(request);
+    if (isSupplier) {
+      request.supplierId = keyId;
+      if (notesData && notesData.supplierNoteId) {
+        request.supplierNoteId = notesData.supplierNoteId;
+      }
+    } else {
+      request.customerId = keyId;
+      if (notesData && notesData.customerNoteId) {
+        request.customerNoteId = notesData.customerNoteId;
+      }
+    }
 
-    } else if (notesData && notesData.customerNoteId) {
-      const updateRequest = {
-        customerId: customerId,
-        note: notesData.note,
-        customerNoteId: notesData.customerNoteId,
-      };
-      updateCustomerNotes(updateRequest);
-
+    if (notesData && (notesData.supplierNoteId || notesData.customerNoteId)) {
+      updateNotes(request);
+    } else {
+      addNotes(request);
     }
   };
-  const onGetNote = (customerId) => {
-    getCustomerNoteByCustomerId(customerId);
+
+  const onGetNote = (keyId) => {
+    getNoteById(keyId);
   };
 
   const handleNoteData = (data) => {
     resetForm();
     setIsEditMode(true);
     const newformData = { ...formData };
-    newformData.initialState = {
-      ...newformData,
-      note: data.note,
-      customerNoteId: data.customerNoteId,
-    };
+    if (isSupplier) {
+      newformData.initialState = {
+        ...newformData,
+        note: data.note,
+        supplierNoteId: data.supplierNoteId,
+      };
+    } else {
+      newformData.initialState = {
+        ...newformData,
+        note: data.note,
+        customerNoteId: data.customerNoteId,
+      };
+    }
+
     setFormData(newformData);
-
-
   };
 
   return (

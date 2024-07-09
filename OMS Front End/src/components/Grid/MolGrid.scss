@@ -390,3 +390,9 @@ table {
     }
   }
 }
+
+.input-list-button{
+  .table-pagination{
+    display: none !important;
+  }
+}

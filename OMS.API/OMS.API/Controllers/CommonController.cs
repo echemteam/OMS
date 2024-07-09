@@ -4,6 +4,7 @@ using OMS.Application.Services;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
 using OMS.Framework;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.API.Controllers
@@ -145,6 +146,20 @@ namespace OMS.API.Controllers
         public async Task<IActionResult> GetAllUser()
         {
             List<GetAllUserResponse> responseData = await _serviceManager.commonServices.GetAllUser().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetEventNameAndUserNameByCustomerId")]
+        public async Task<IActionResult> GetEventNameAndUserNameByCustomerId(int customerId)
+        {
+            List<GetEventNameAndUserNameByCustomerIdResponse> responseData = await _serviceManager.commonServices.GetEventNameAndUserNameByCustomerId(customerId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetEventNameAndUserNameBySupplierId")]
+        public async Task<IActionResult> GetEventNameAndUserNameBySupplierId(int supplierId)
+        {
+            List<GetEventNameAndUserNameBySupplierIdResponse> responseData = await _serviceManager.commonServices.GetEventNameAndUserNameBySupplierId(supplierId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
     }

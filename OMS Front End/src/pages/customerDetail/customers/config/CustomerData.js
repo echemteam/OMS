@@ -1,5 +1,7 @@
+import { ListShowCustomer, ListSupplier } from "../../../../common/features/Enums/ListEnums";
 import { FormFieldTypes } from "../../../../data/formFieldType";
 import { GridColumnType } from "../../../../data/gridColumnType";
+import { getLabelClass } from "../../../../utils/StatusColors/StatusColors";
 
 export const reasonData = {
   name: "",
@@ -25,52 +27,31 @@ export const reasonData = {
 export const AllCustomerGridConfig = {
   columns: [
     {
-      name: "Customer Name", 
+      id: ListShowCustomer.value,
+      name: "Customer Name",
       fieldName: "name",
-      width:"32%",
+      width: "32%",
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "32%",
     },
     {
       name: "Tax Id",
       fieldName: "taxId",
-      width: "25%", 
+      width: "25%",
     },
     {
       name: "Status",
+      width: "25%",
       fieldName: "status",
       allowShort: false,
       colType: GridColumnType.LABLE,
-      width: "25%",
       colSettings: {
         valueField: "status",
-        getLableClass: (value) => {
-          switch (value) {
-            case "Active":
-              return "status-btn badge-gradient-success";
-            case "Open":
-              return "status-btn badge-gradient-info";
-            case "In Active":
-              return "status-btn badge-gradient-danger";
-            case "Pending":
-              return "status-btn badge-gradient-Pending";
-            case "In progress":
-              return "status-btn badge-gradient-theme";
-            case "Submitted":
-              return "status-btn badge-gradient-Submitted";
-            case "Approved":
-              return "status-btn badge-gradient-Approved";
-            case "Freeze":
-              return "status-btn badge-gradient-Frozen";
-            case "Block":
-              return "status-btn badge-gradient-Blocked";
-            case "Reject":
-              return "status-btn badge-gradient-reject";
-            case "Disable":
-              return "status-btn badge-gradient-disabled";
-
-            default:
-              return "status-btn badge-gradient-info";
-          }
-        },
+        getLableClass: getLabelClass,
       },
     },
     // {
@@ -88,7 +69,7 @@ export const AllCustomerGridConfig = {
         allowDisable: true,
         allowFreeze: true,
         allowBlocked: true,
-        allowReject:true,
+        allowReject: true,
       },
     },
   ],
@@ -97,21 +78,28 @@ export const AllCustomerGridConfig = {
 export const PendingCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
-      width:"35%",
+      width: "35%",
       // allowShort: true,
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "35%",
     },
     {
       name: "Tax Id",
       fieldName: "taxId",
-      width:"20%",
+      width: "20%",
       // allowShort: true,
     },
     {
       name: "Web Site",
       fieldName: "website",
-      width:"35%",
+      width: "35%",
       // allowShort: true,
     },
     // {
@@ -122,7 +110,7 @@ export const PendingCustomerGridConfig = {
     // },
     {
       name: "Action",
-      width:"10%",
+      width: "10%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
@@ -135,26 +123,33 @@ export const PendingCustomerGridConfig = {
 export const SubmittedCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
-      width:"25%",
+      width: "25%",
       // allowShort: true,
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "25%",
     },
     {
       name: "Tax Id",
       fieldName: "taxId",
-      width:"20%",
+      width: "20%",
       // allowShort: true,
     },
     {
       name: "Web Site",
       fieldName: "website",
-      width:"35%",
+      width: "35%",
       // allowShort: true,
     },
     {
       name: "Approve",
-      width:"10%",
+      width: "10%",
       allowShort: false,
       colType: GridColumnType.CHECKBOX,
       colSettings: {
@@ -164,7 +159,7 @@ export const SubmittedCustomerGridConfig = {
     },
     {
       name: "Action",
-      width:"10%",
+      width: "10%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
@@ -178,27 +173,34 @@ export const SubmittedCustomerGridConfig = {
 export const ApprovedCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
-      width:"35%",
+      width: "35%",
       // allowShort: true,
     },
     {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "35%",
+    },
+    {
       name: "Tax Id",
-      width:"35%",
+      width: "35%",
       fieldName: "taxId",
       // allowShort: true,
     },
     {
       name: "Action",
-      width:"30%",
+      width: "30%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
         allowDisable: true,
         allowFreeze: true,
         allowBlocked: true,
-        allowReject:true,
+        allowReject: true,
       },
     },
   ],
@@ -207,24 +209,31 @@ export const ApprovedCustomerGridConfig = {
 export const RejectedCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
-      width:"35%",
+      width: "35%",
       // allowShort: true,
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "35%",
     },
     {
       name: "Reason",
       fieldName: "inActiveReason",
-      width:"35%",
+      width: "35%",
       // allowShort: true,
     },
     {
       name: "Action",
-      width:"30%",
+      width: "30%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
-       
+
       },
     },
   ],
@@ -234,20 +243,27 @@ export const RejectedCustomerGridConfig = {
 export const AllInActiveCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
       // allowShort: true,
-      width:"25%",
+      width: "25%",
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "25%",
     },
     {
       name: "Reason",
       fieldName: "inActiveReason",
-      width:"25%",
+      width: "25%",
       // allowShort: true,
     },
     {
       name: "Date",
-      width:"25%",
+      width: "25%",
       fieldName: "updatedAt",
       colType: GridColumnType.DATE,
       colSettings: {
@@ -257,41 +273,13 @@ export const AllInActiveCustomerGridConfig = {
     },
     {
       name: "Status",
-      width:"25%",
+      width: "25%",
       fieldName: "status",
       allowShort: false,
       colType: GridColumnType.LABLE,
       colSettings: {
         valueField: "status",
-        getLableClass: (value) => {
-          switch (value) {
-            case "Active":
-              return "status-btn badge-gradient-success";
-            case "Open":
-              return "status-btn badge-gradient-info";
-            case "In Active":
-              return "status-btn badge-gradient-danger";
-            case "Pending":
-              return "status-btn badge-gradient-Pending";
-            case "In progress":
-              return "status-btn badge-gradient-theme";
-            case "Submitted":
-              return "status-btn badge-gradient-Submitted";
-            case "Approved":
-              return "status-btn badge-gradient-Approved";
-            case "Freeze":
-              return "status-btn badge-gradient-Frozen";
-            case "Block":
-              return "status-btn badge-gradient-Blocked";
-            case "Reject":
-              return "status-btn badge-gradient-reject";
-            case "Disable":
-              return "status-btn badge-gradient-disabled";
-
-            default:
-              return "status-btn badge-gradient-info";
-          }
-        },
+        getLableClass: getLabelClass,
       },
     },
   ],
@@ -300,18 +288,25 @@ export const AllInActiveCustomerGridConfig = {
 export const FreezedInActiveCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
-      width:"25%",
+      width: "25%",
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "25%",
     },
     {
       name: "Reason",
       fieldName: "inActiveReason",
-      width:"25%",
+      width: "25%",
     },
     {
       name: "Date",
-      width:"25%",
+      width: "25%",
       fieldName: "updatedAt",
       colType: GridColumnType.DATE,
       colSettings: {
@@ -321,7 +316,7 @@ export const FreezedInActiveCustomerGridConfig = {
     },
     {
       name: "Action",
-      width:"25%",
+      width: "25%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
@@ -335,18 +330,25 @@ export const FreezedInActiveCustomerGridConfig = {
 export const BlockedInActiveCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
-      width:"25%",
+      width: "25%",
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "25%",
     },
     {
       name: "Reason",
-      width:"25%",
+      width: "25%",
       fieldName: "inActiveReason",
     },
     {
       name: "Date",
-      width:"25%",
+      width: "25%",
       fieldName: "updatedAt",
       colType: GridColumnType.DATE,
       colSettings: {
@@ -356,7 +358,7 @@ export const BlockedInActiveCustomerGridConfig = {
     },
     {
       name: "Action",
-      width:"25%",
+      width: "25%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
@@ -371,18 +373,25 @@ export const BlockedInActiveCustomerGridConfig = {
 export const DisabledInActiveCustomerGridConfig = {
   columns: [
     {
+      id:ListShowCustomer.value,
       name: "Customer Name",
       fieldName: "name",
-      width:"35%",
+      width: "35%",
+    },
+    {
+      id:ListSupplier.value,
+      name: "Supplier Name",
+      fieldName: "name",
+      width: "35%",
     },
     {
       name: "Reason",
-      width:"35%",
+      width: "35%",
       fieldName: "inActiveReason",
     },
     {
       name: "Date",
-      width:"30%",
+      width: "30%",
       fieldName: "updatedAt",
       colType: GridColumnType.DATE,
       colSettings: {

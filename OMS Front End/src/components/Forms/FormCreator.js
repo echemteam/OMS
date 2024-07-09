@@ -117,6 +117,18 @@ useImperativeHandle(
     }
   }
 
+  // const onInputShowInfo = (action, dataField, data) => {
+  //   if (props.onInputShowInfo && props.onInputShowInfo[action]) {
+  //     props.onInputShowInfo[action](data, dataField);
+  //   }
+  // }
+
+  // const onInputChange = (action, dataField, data) => {
+  //   if (props.onInputChange && props.onInputChange[action]) {
+  //     props.onInputChange[action](data, dataField);
+  //   }
+  // }
+
   const onCheckBoxHandle = (action, dataField, data) => {
     if (props.onCheckBoxChange && props.onCheckBoxChange[action]) {
       props.onCheckBoxChange[action](data, dataField);
@@ -133,10 +145,12 @@ useImperativeHandle(
           onActionChange={onActionHandle}
           onCheckBoxChange={onCheckBoxHandle}
           onInputChange={onInputChange}
+          // onInputShowInfo={onInputShowInfo}
           onFormStateChange={handleStateChange}
           // onFormFieldChange={handleFormFieldChange}
           onUpdateValidation={handleOnValidateField}
           handleInputGroupButton={props.handleInputGroupButton}
+          handleInputShowInfo={props.handleInputShowInfo}
           formSetting={props.config.formSetting}
           fieldValiadtionRules={validationRules}
         />

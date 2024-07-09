@@ -3,11 +3,23 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import { InActiveCustomers } from "./InActiveCustomers";
 import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext"
 import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../config/CustomerData";
-import { StatusEnums } from "../../../../common/features/Enums/StatusEnums";
+import { StatusEnums, StatusValue } from "../../../../common/features/Enums/StatusEnums";
+import { ListSupplier } from "../../../../common/features/Enums/ListEnums";
+import useDebounce from "../../../../app/customHooks/useDebouce";
 
-const InActiveCustomer = ({statusId}) => {
+const InActiveCustomer = ({ statusId }) => {
   const [activeTab, setActiveTab] = useState("0");
   const DataRef = useRef();
+  const [search, setSearch] = useState("");
+  const [statusOptions, setStatusOptions] = useState([]);
+  const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState("");
+  
+  const [allManageData, setAllManageData] = useState(AllInActiveCustomerGridConfig);
+  const [freezeManageData, setFrezzeManageData] = useState(FreezedInActiveCustomerGridConfig);
+  const [blockManageData, setBlockManageData] = useState(BlockedInActiveCustomerGridConfig);
+  const [disableManageData, setDisableManageData] = useState(DisabledInActiveCustomerGridConfig);
+  const debouncedSearch = useDebounce(search, 300);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
@@ -20,15 +32,80 @@ const InActiveCustomer = ({statusId}) => {
   };
 
   useEffect(() => {
-    getListApi();
+    const updateManageData = () => {
+      switch (activeTab) {
+        case "0":
+          setAllManageData({
+            ...AllInActiveCustomerGridConfig,
+            columns: AllInActiveCustomerGridConfig.columns.filter(column => column.id !== ListSupplier.value)
+          });
+          break;
+        case "1":
+          setFrezzeManageData({
+            ...FreezedInActiveCustomerGridConfig,
+            columns: FreezedInActiveCustomerGridConfig.columns.filter(column => column.id !== ListSupplier.value)
+          });
+          break;
+        case "2":
+          setBlockManageData({
+            ...BlockedInActiveCustomerGridConfig,
+            columns: BlockedInActiveCustomerGridConfig.columns.filter(column => column.id !== ListSupplier.value)
+          });
+          break;
+        case "3":
+          setDisableManageData({
+            ...BlockedInActiveCustomerGridConfig,
+            columns: BlockedInActiveCustomerGridConfig.columns.filter(column => column.id !== ListSupplier.value)
+          });
+          break;
+        default:
+          setAllManageData(AllInActiveCustomerGridConfig);
+      }
+    };
+
+    updateManageData(); // Initial update based on activeTab
+    getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    // if (value.length >= 3) {
+      setSearch(value.trim());
+    // }
+  }
+
+  useEffect(() => {
+    if (StatusValue) {
+      const statusListData = StatusValue.filter((data) => data.value !== 1 && data.value !== 2 && data.value !== 3 && data.value !== 7).map((item) => ({
+        value: item.value,
+        label: item.label,
+      }));
+      setStatusOptions(statusListData);
+    }
+  }, []);
+
+  const handleChangeDropdown = (selectedOptions) => {
+    const selectedValues = selectedOptions.map(option => option.value);
+    setSelectedDrpvalues(selectedValues);
+    setSelectedStatusOptions(selectedValues);
+  };
 
   const tabs = [
     {
       sMenuItemCaption: "All",
       component: (
         <div className="mt-2">
-          <InActiveCustomers statusId={statusId} configFile={AllInActiveCustomerGridConfig}/>
+          <InActiveCustomers
+            statusId={statusId}
+            configFile={allManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={true}
+          />
         </div>
       ),
     },
@@ -36,7 +113,17 @@ const InActiveCustomer = ({statusId}) => {
       sMenuItemCaption: "Freezed",
       component: (
         <div className="mt-2">
-          <InActiveCustomers statusId={StatusEnums.Freeze} configFile={FreezedInActiveCustomerGridConfig}/>
+          <InActiveCustomers
+            statusId={StatusEnums.Freeze}
+            configFile={freezeManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
+          />
         </div>
       ),
     },
@@ -44,7 +131,17 @@ const InActiveCustomer = ({statusId}) => {
       sMenuItemCaption: "Block",
       component: (
         <div className="mt-2">
-          <InActiveCustomers statusId={StatusEnums.Block} configFile={BlockedInActiveCustomerGridConfig}/>
+          <InActiveCustomers
+            statusId={StatusEnums.Block}
+            configFile={blockManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
+          />
         </div>
       ),
     },
@@ -52,7 +149,17 @@ const InActiveCustomer = ({statusId}) => {
       sMenuItemCaption: "Disable",
       component: (
         <div className="mt-2">
-          <InActiveCustomers statusId={StatusEnums.Disable} configFile={DisabledInActiveCustomerGridConfig} />
+          <InActiveCustomers
+            statusId={StatusEnums.Disable}
+            configFile={disableManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
+          />
         </div>
       ),
     },

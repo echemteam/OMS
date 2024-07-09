@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Libs's */
 import { securityKey } from "../../../../data/SecurityKey";
@@ -12,12 +13,17 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
-import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import { BasicInformation } from "./BasicInformation";
+import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
   const [customerName, setCustomerName] = useState('');
   const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [isModelOpen, setIsModelOpen] = useState(false);
+  const [customerInfoData, setCustomerInfoData] = useState(false);
+
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const { nextRef, customerId, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -27,6 +33,7 @@ const BasicDetail = (props) => {
   const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById,
     data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
   const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
+  const [getCustomersDetailsByCutomerName, { isFetching: isuseGetCustomersDetailsByCutomerNameMutationFetching, isSuccess: isuseGetCustomersDetailsByCutomerNameMutationSucess, data: isuseGetCustomersDetailsByCutomerNameMutationData, }] = useLazyGetCustomersDetailsByCutomerNameQuery();
 
   useEffect(() => {
     if (props.isOpen) {
@@ -328,7 +335,7 @@ const BasicDetail = (props) => {
     }
   }
   const formInputHandler = {
-    INPUT_CHANGED: handleInputFields
+    INPUT_CHANGED: handleInputFields,
   }
 
 
@@ -341,15 +348,40 @@ const BasicDetail = (props) => {
     }
   }
 
+  const handleInputShowInfo = () => {
+    if (customerName !== '' && customerName.trim().length >= 3) {
+      getCustomersDetailsByCutomerName(customerName);
+
+    } else {
+      ToastService.warning('Please enter at least three characters.');
+    }
+  }
+
+  const onSidebarClose = () => {
+    setIsModelOpen(false)
+  }
+
   useEffect(() => {
     if (isCustomerNameExistSucess && isCustomerNameExistData) {
       if (isCustomerNameExistData.errorMessage.includes('exists')) {
         ToastService.warning(isCustomerNameExistData.errorMessage);
         return;
       }
-      ToastService.success(isCustomerNameExistData.errorMessage);
+      ToastService.info(isCustomerNameExistData.errorMessage);
     }
   }, [isCustomerNameExistSucess, isCustomerNameExistData]);
+
+  useEffect(() => {
+    if (!isuseGetCustomersDetailsByCutomerNameMutationFetching && isuseGetCustomersDetailsByCutomerNameMutationSucess && isuseGetCustomersDetailsByCutomerNameMutationData) {
+      if (isuseGetCustomersDetailsByCutomerNameMutationData.length > 0) {
+        setIsModelOpen(true)
+        setCustomerInfoData(isuseGetCustomersDetailsByCutomerNameMutationData)
+      }
+      else {
+        ToastService.warning("No record found");
+      }
+    }
+  }, [isuseGetCustomersDetailsByCutomerNameMutationFetching, isuseGetCustomersDetailsByCutomerNameMutationSucess, isuseGetCustomersDetailsByCutomerNameMutationData]);
 
   return (
     <div className="basic-info-sec half-sec">
@@ -362,6 +394,7 @@ const BasicDetail = (props) => {
             onActionChange={formActionHandler}
             onInputChange={formInputHandler}
             handleInputGroupButton={handleInputGroupButton}
+            handleInputShowInfo={handleInputShowInfo}
           />
         </div>
 
@@ -385,6 +418,19 @@ const BasicDetail = (props) => {
         }
 
       </CardSection>
+      <SidebarModel
+        modalTitle="Customer Information"
+        contentClass="content-50 basic-info-model"
+        onClose={onSidebarClose}
+        isOpen={isModelOpen}
+        onClick={handleInputShowInfo}
+      >
+        <BasicInformation
+          onSidebarClose={onSidebarClose}
+          isOpen={isModelOpen}
+          infoData={customerInfoData}
+        />
+      </SidebarModel>
     </div>
   );
 };
