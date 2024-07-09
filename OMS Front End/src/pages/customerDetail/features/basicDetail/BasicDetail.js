@@ -15,7 +15,8 @@ import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import { BasicInformation } from "./BasicInformation";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
-import { setDisabledFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
+import { setFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
+import { settingTypeEnums } from "../../../../utils/Enums/enums";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
@@ -41,18 +42,18 @@ const BasicDetail = (props) => {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
-          setDisabledFieldSetting(formData, setFormData, 'responsibleUserId', true);
+          setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, true);
         }
         else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
-          setDisabledFieldSetting(formData, setFormData, 'responsibleUserId', false);
+          setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, false);
         }
       }
       if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
-        setDisabledFieldSetting(formData, setFormData, 'responsibleUserId', true);
+        setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, true);
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly, isResponsibleUser])

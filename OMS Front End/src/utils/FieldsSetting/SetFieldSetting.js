@@ -10,20 +10,18 @@ export const setOptionFieldSetting = (apiResponseData, valueField, labelField, f
     }
 };
 
-export const setMultiSelectFieldSetting = (formFieldsData, fieldId, isMultiSelectValue = false) => {
-    const multiSelectField = formFieldsData.formFields.find((item) => item.dataField === fieldId);
-    if (multiSelectField) {
-        multiSelectField.fieldSetting.isMultiSelect = isMultiSelectValue;
+export const setFieldSetting = (formFieldsData, fieldId, settingType, value = false) => {
+    const selectField = formFieldsData.formFields.find((item) => item.dataField === fieldId);
+    if (selectField) {
+        switch (settingType) {
+            case 'isMultiSelect':
+                selectField.fieldSetting.isMultiSelect = value;
+                break;
+            case 'isDisabled':
+                selectField.fieldSetting.isDisabled = value;
+                break;
+            default:
+                break;
+        }
     }
 };
-
-export const setDisabledFieldSetting = (formFields, setState, fieldId, disabled) => {
-    let field = formFields.formFields.find(data => data.id === fieldId);
-    if (field) {
-        field.fieldSetting = { ...field.fieldSetting, isDisabled: disabled };
-        let request = {
-            ...formFields
-        }
-        setState(request);
-    }
-}

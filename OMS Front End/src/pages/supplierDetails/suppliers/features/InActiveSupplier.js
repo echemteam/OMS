@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../pages/customerDetail/customers/config/CustomerData";
-import { StatusEnums } from "../../../../common/features/Enums/StatusEnums";
 import SupplierListContext from "../../../../utils/ContextAPIs/Supplier/SupplierListContext";
 import { InActiveSuppliers } from "./InActiveSuppliers";
-import { ListShowCustomer } from "../../../../common/features/Enums/ListEnums";
+import { ListShowCustomer } from "../../../../utils/Enums/enums";
+import { StatusEnums } from "../../../../utils/Enums/StatusEnums";
+
 
 const InActiveSupplier = ({ statusId }) => {
   const [activeTab, setActiveTab] = useState("0");
