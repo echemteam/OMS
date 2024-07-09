@@ -351,7 +351,7 @@ const BasicDetail = (props) => {
   const handleInputShowInfo = () => {
     if (customerName !== '' && customerName.trim().length >= 3) {
       getCustomersDetailsByCutomerName(customerName);
-      setIsModelOpen(true)
+
     } else {
       ToastService.warning('Please enter at least three characters.');
     }
@@ -367,13 +367,19 @@ const BasicDetail = (props) => {
         ToastService.warning(isCustomerNameExistData.errorMessage);
         return;
       }
-      ToastService.success(isCustomerNameExistData.errorMessage);
+      ToastService.info(isCustomerNameExistData.errorMessage);
     }
   }, [isCustomerNameExistSucess, isCustomerNameExistData]);
 
   useEffect(() => {
     if (!isuseGetCustomersDetailsByCutomerNameMutationFetching && isuseGetCustomersDetailsByCutomerNameMutationSucess && isuseGetCustomersDetailsByCutomerNameMutationData) {
-      setCustomerInfoData(isuseGetCustomersDetailsByCutomerNameMutationData)
+      if (isuseGetCustomersDetailsByCutomerNameMutationData.length > 0) {
+        setIsModelOpen(true)
+        setCustomerInfoData(isuseGetCustomersDetailsByCutomerNameMutationData)
+      }
+      else {
+        ToastService.warning("No record found");
+      }
     }
   }, [isuseGetCustomersDetailsByCutomerNameMutationFetching, isuseGetCustomersDetailsByCutomerNameMutationSucess, isuseGetCustomersDetailsByCutomerNameMutationData]);
 
