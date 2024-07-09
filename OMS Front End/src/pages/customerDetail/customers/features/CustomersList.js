@@ -32,7 +32,7 @@ import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDeta
 import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
 import { useSelector } from "react-redux";
 
-export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions}) => {
+export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter}) => {
 
   const navigate = useNavigate();
   const molGridRef = useRef();
@@ -291,7 +291,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
     BLOCKED: handleBlock,
     REJECT: handleReject,
   };
-
+  
   return (
     <div>
       <div className="row">
@@ -300,7 +300,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
             searchInput={true}
             handleChange={handleChange}
             searchInputName="Search By Customer Name, Tax Id , Email Address"
-            searchFilter={true}
+            searchFilter={searchStatusFilter ? true : false}
             handleChangeDropdown={handleChangeDropdown}
             selectedOptions={selectedDrpvalues}
             optionsValue={statusOptions}

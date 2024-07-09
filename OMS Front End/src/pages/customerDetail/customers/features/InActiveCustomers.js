@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import SwalAlert from '../../../../services/swalService/SwalService';
 import { useSelector } from 'react-redux';
 
-export const InActiveCustomers = ({ statusId, configFile , handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions }) => {
+export const InActiveCustomers = ({ statusId, configFile , handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter }) => {
 
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
@@ -198,7 +198,7 @@ export const InActiveCustomers = ({ statusId, configFile , handleChange, search,
             searchInput={true}
             handleChange={handleChange}
             searchInputName="Search By Customer Name, Tax Id , Email Address"
-            searchFilter={true}
+            searchFilter={searchStatusFilter ? true : false}
             handleChangeDropdown={handleChangeDropdown}
             selectedOptions={selectedDrpvalues}
             optionsValue={statusOptions}

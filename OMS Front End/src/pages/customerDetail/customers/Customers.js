@@ -125,6 +125,7 @@ const Customers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={true}
           />
         </div>
       ),
@@ -142,6 +143,7 @@ const Customers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
           />
         </div>
       ),
@@ -159,6 +161,7 @@ const Customers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
           />
         </div>
       ),
@@ -176,6 +179,7 @@ const Customers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
           />
         </div>
       ),
@@ -207,6 +211,7 @@ const Customers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
           />
         </div>
       ),

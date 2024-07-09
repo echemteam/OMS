@@ -14,6 +14,7 @@ const InActiveCustomer = ({ statusId }) => {
   const [statusOptions, setStatusOptions] = useState([]);
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
   const [selectedStatusOptions, setSelectedStatusOptions] = useState("");
+  
   const [allManageData, setAllManageData] = useState(AllInActiveCustomerGridConfig);
   const [freezeManageData, setFrezzeManageData] = useState(FreezedInActiveCustomerGridConfig);
   const [blockManageData, setBlockManageData] = useState(BlockedInActiveCustomerGridConfig);
@@ -103,6 +104,7 @@ const InActiveCustomer = ({ statusId }) => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={true}
           />
         </div>
       ),
@@ -120,6 +122,7 @@ const InActiveCustomer = ({ statusId }) => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
           />
         </div>
       ),
@@ -137,6 +140,7 @@ const InActiveCustomer = ({ statusId }) => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
           />
         </div>
       ),
@@ -154,6 +158,7 @@ const InActiveCustomer = ({ statusId }) => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
           />
         </div>
       ),
