@@ -18,10 +18,9 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   const [refreshData, setRefreshData] = useState(false);
   const [eventNameOptions, setEventNameOptions] = useState([]);
   const [userNameOptions, setUserNameOptions] = useState([]);
-  const [selectedEventName, setSelectedEventName] = useState(null);
-  const [selectedUserName, setSelectedUserName] = useState(null);
+  const [selectedEventName, setSelectedEventName] = useState("");
+  const [selectedUserName, setSelectedUserName] = useState("");
   const [selectedUserId, setSelectedUserId] = useState("");
-  // const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   /* NOTE:- 
     API Call
@@ -37,9 +36,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   }, [keyId]);
 
   useEffect(() => {
-    if (selectedEventName || selectedUserId ) {
       getListApi(pageNumber);
-    }
   }, [selectedEventName, selectedUserId]);
 
   const getListApi = (page) => {
@@ -92,14 +89,14 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   }, [isGetHistorySuccess, isGetHistoryData]);
 
   useEffect(() => {
+    // Update filter options when search filter data updates
     if (isGetSearchFilterSuccess && isGetSearchFilterData) {
-      const uniqueEventNames = Array.from(new Set(isGetSearchFilterData.map(item => item.eventName)));
-      const uniqueUserNames = Array.from(new Set(isGetSearchFilterData.map(item => item.userName)));
+      const uniqueEventNames = [...new Set(isGetSearchFilterData.map(item => item.eventName))];
+      const uniqueUserNames = [...new Set(isGetSearchFilterData.map(item => item.userName))];
       const eventOptions = uniqueEventNames.map(eventName => ({ label: eventName, value: eventName }));
       const userOptions = uniqueUserNames.map(userName => ({ label: userName, value: userName }));
       setEventNameOptions(eventOptions);
       setUserNameOptions(userOptions);
-      // setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetSearchFilterSuccess, isGetSearchFilterData]);
 
@@ -110,7 +107,9 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
       (item) => item.eventName === selectedValues[0]
     );
     if (selectedEvent) {
-      setSelectedUserName(selectedEvent.userName);
+      if(!selectedEvent.userName){
+        setSelectedUserName(selectedEvent.userName);
+      }
     }
   };
 
@@ -131,7 +130,6 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   return (
     <div className="row">
       <div className="serach-bar-history"
-      // key={shouldRerenderFormCreator}
       >
         <div className="col-md-4">
           <DropDown
