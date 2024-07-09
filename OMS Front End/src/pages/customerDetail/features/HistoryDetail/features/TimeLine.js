@@ -40,7 +40,6 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   }, [selectedEventName, selectedUserId]);
 
   const getListApi = (page) => {
-    debugger
     const eventNameParam = Array.isArray(selectedEventName) ? selectedEventName.join(',') : (selectedEventName || '');
     const userIdParam = Array.isArray(selectedUserId) ? selectedUserId.join(',') : (selectedUserId || '');
 
