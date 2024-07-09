@@ -206,6 +206,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
           ></Buttons>
         </div>
       </div>
+      {!noRecordFound ?
       <div className="col-md-12">
         <div className="main-card mt-2" id="scrollableDiv">
           <InfiniteScroll
@@ -217,7 +218,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
           >
             <div className="new-timeline-sec">
               <ol className="timeline">
-                {!noRecordFound && historyData.length > 0 ? (
+                { historyData.length > 0 ? (
                   historyData.map((item, index) => (
                     <li
                       className="timeline-item"
@@ -256,6 +257,9 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
           </InfiniteScroll>
         </div>
       </div>
+      :
+      <NoRecordFound/>
+      }
     </div>
   );
 };
