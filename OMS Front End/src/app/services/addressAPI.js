@@ -59,6 +59,15 @@ const addressAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getCustomerAddresssByAddressId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Address/GetCustomerAddresssByAddressId/?addressId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+
+        }),
 
     })
 })
@@ -69,6 +78,7 @@ export const {
     useLazyGetAllCitiesQuery,
     useAddAddressMutation,
     useLazyGetAddresssByCustomerIdQuery,
+    useLazyGetCustomerAddresssByAddressIdQuery,
     useUpdateAddAddressMutation,
 
 } = addressAPI

@@ -34,7 +34,7 @@ function findKeyByKeyName(obj, targetSecurityKeyName) {
     }
 
     // Find the security permission with the specified key.
-    const foundItem = obj.securityPermissions.find(item =>
+    const foundItem = obj.securityPermissions?.find(item =>
         item.securityKeyName === targetSecurityKeyName
     );
 
@@ -91,7 +91,7 @@ function checkPermissionAtFunctional(obj, targetSecurityKeyName) {
         return null;
     };
 
-    const foundItem = obj.securityPermissions.find(item =>
+    const foundItem = obj.securityPermissions?.find(item =>
         item.securityKeyName === targetSecurityKeyName
     );
 

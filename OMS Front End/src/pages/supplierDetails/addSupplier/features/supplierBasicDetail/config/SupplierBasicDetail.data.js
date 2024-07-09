@@ -32,8 +32,14 @@ export const supplierBasicData = {
       },
       inputButtonGroup: {
         isInputButton: true,
-        buttonText: 'Verify'
-      }
+        buttonText: 'Verify',
+        isMultiButton: true,
+        showInformation: {
+          showInputButton: true,
+          faIcon: "fa-list",
+          title : "Supplier Information"
+        }
+      },
     },
     {
       id: "name-input",

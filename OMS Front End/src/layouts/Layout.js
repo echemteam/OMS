@@ -12,7 +12,6 @@ import Unauthorize from "../pages/unauthorize/Unauthorize";
 
 const Layout = (props) => {
   // Get the current location using React Router's useLocation hook
-  const navigate = useNavigate();
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -25,7 +24,7 @@ const Layout = (props) => {
   }
 
   // Find the matching component route based on the routhPath
-  const renderComponent = props.componentRoutes.find((x) => x.id.toLowerCase() === routhPath.toLowerCase());
+  const renderComponent = props.componentRoutes?.find((x) => x.id.toLowerCase() === routhPath.toLowerCase());
 
   // Check if the user is authorized to access the current route
   const isAuthorize = renderComponent?.securityKey ? hasPermission(renderComponent.securityKey) : false;

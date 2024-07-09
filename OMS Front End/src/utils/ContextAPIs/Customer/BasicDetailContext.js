@@ -17,20 +17,14 @@ export const BasicDetailContextProvider = ({ children }) => {
     //** */
 
     //** Shipping Method's */
-    const [deliveryMethodsList, setDeliveryMethodsList] = useState([]);
     const [carriersList, setCarriersList] = useState([]);
+    const [deliveryMethodsList, setDeliveryMethodsList] = useState([]);
     //** */
 
     //** Using for Contact  */
-    const [contactId, setContactId] = useState(0);
-    const [contactNumbers, setContactNumbers] = useState();
+    // const [contactId, setContactId] = useState(0);
     const [phoneNumberData, setPhoneNumberData] = useState();
     const [emailAddressData, setEmailAddressData] = useState();
-    const [contactMainModal, setContactMainModal] = useState(false);
-    //** */
-
-    //** Set Cuntries Data */
-    const [allCountries, setAllCountries] = useState(false);
     //** */
 
     const [isResponsibleUser, setIsResponsibleUser] = useState(true);
@@ -67,8 +61,8 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     return (
         <BasicDetailContext.Provider value={{
-            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, contactMainModal, setPhoneNumberData,
-            phoneNumberData, setAllCountries, allCountries, setMainId, mainId, contactId, setContactId, contactNumbers, setContactNumbers, setContactMainModal,
+            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData,
+            phoneNumberData, setMainId, mainId,
             emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
             setIsResponsibleUser, isResponsibleUser
         }}>

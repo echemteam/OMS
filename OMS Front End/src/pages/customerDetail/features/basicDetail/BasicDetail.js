@@ -7,7 +7,6 @@ import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { basicDetailFormDataHalf, excludingRoles } from "./config/BasicDetailForm.data";
-import { setFieldDisabled } from "../../../../utils/FieldDisabled/setFieldDisabled";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Service's */
@@ -16,6 +15,8 @@ import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import { BasicInformation } from "./BasicInformation";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
+import { setFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
+import { settingTypeEnums } from "../../../../utils/Enums/enums";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
@@ -23,9 +24,9 @@ const BasicDetail = (props) => {
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [customerInfoData, setCustomerInfoData] = useState(false);
-  
+
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
-  const { nextRef, customerId, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
+  const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser } = useContext(BasicDetailContext);
 
   const { formSetting } = basicDetailFormDataHalf;
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
@@ -34,25 +35,25 @@ const BasicDetail = (props) => {
     data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
   const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
   const [getCustomersDetailsByCutomerName, { isFetching: isuseGetCustomersDetailsByCutomerNameMutationFetching, isSuccess: isuseGetCustomersDetailsByCutomerNameMutationSucess, data: isuseGetCustomersDetailsByCutomerNameMutationData, }] = useLazyGetCustomersDetailsByCutomerNameQuery();
- 
+
   useEffect(() => {
     if (props.isOpen) {
       if (!isResponsibleUser) {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
-          setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
+          setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, true);
         }
         else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
-          setFieldDisabled(formData, setFormData, 'responsibleUserId', false);
+          setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, false);
         }
       }
       if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
-        setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
+        setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, true);
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly, isResponsibleUser])
@@ -153,7 +154,6 @@ const BasicDetail = (props) => {
         (item) => item.dataField === "countryId"
       );
       dropdownField.fieldSetting.options = getData;
-      setAllCountries(allGetAllCountriesData);
     }
   }, [
     isGetAllCountriesSucess,
@@ -351,7 +351,7 @@ const BasicDetail = (props) => {
   const handleInputShowInfo = () => {
     if (customerName !== '' && customerName.trim().length >= 3) {
       getCustomersDetailsByCutomerName(customerName);
-      setIsModelOpen(true)
+
     } else {
       ToastService.warning('Please enter at least three characters.');
     }
@@ -367,13 +367,19 @@ const BasicDetail = (props) => {
         ToastService.warning(isCustomerNameExistData.errorMessage);
         return;
       }
-      ToastService.success(isCustomerNameExistData.errorMessage);
+      ToastService.info(isCustomerNameExistData.errorMessage);
     }
   }, [isCustomerNameExistSucess, isCustomerNameExistData]);
 
   useEffect(() => {
     if (!isuseGetCustomersDetailsByCutomerNameMutationFetching && isuseGetCustomersDetailsByCutomerNameMutationSucess && isuseGetCustomersDetailsByCutomerNameMutationData) {
-      setCustomerInfoData(isuseGetCustomersDetailsByCutomerNameMutationData)
+      if (isuseGetCustomersDetailsByCutomerNameMutationData.length > 0) {
+        setIsModelOpen(true)
+        setCustomerInfoData(isuseGetCustomersDetailsByCutomerNameMutationData)
+      }
+      else {
+        ToastService.warning("No record found");
+      }
     }
   }, [isuseGetCustomersDetailsByCutomerNameMutationFetching, isuseGetCustomersDetailsByCutomerNameMutationSucess, isuseGetCustomersDetailsByCutomerNameMutationData]);
 
@@ -412,7 +418,8 @@ const BasicDetail = (props) => {
         }
 
       </CardSection>
-      <SidebarModel
+      {isModelOpen &&
+        <SidebarModel
         modalTitle="Customer Information"
         contentClass="content-50 basic-info-model"
         onClose={onSidebarClose}
@@ -421,10 +428,11 @@ const BasicDetail = (props) => {
       >
         <BasicInformation
           onSidebarClose={onSidebarClose}
-          isOpen={isModelOpen}
           infoData={customerInfoData}
         />
       </SidebarModel>
+      }
+      
     </div>
   );
 };

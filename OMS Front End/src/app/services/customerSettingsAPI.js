@@ -100,6 +100,14 @@ const customerSettingsAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getCustomerDeliveryCarriersByCustomerDeliveryCarrierId: builder.query({
+            query: (id) => ({
+                url: `/CustomerAccoutingSettings/GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId?customerDeliveryCarrierId=${(id)}`,
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
 
         //** Delivery Methods */
         addDeliveryMethods: builder.mutation({
@@ -129,6 +137,15 @@ const customerSettingsAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getCustomerDeliveryMethodByCustomerDeliveryMethodId: builder.query({
+            query: (id) => ({
+                url: `/CustomerAccoutingSettings/GetCustomerDeliveryMethodByCustomerDeliveryMethodId?customerDeliveryMethodId=${(id)}`,
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
     })
 })
 
@@ -136,6 +153,7 @@ export const { useAddEditCustomerSettingsMutation, useLazyGetDetailsbyCustomerID
     useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation, useLazyGetShppingDeliveryCarrierAndDeliveryMethodsByIdQuery,
     useAddShppingDeliveryCarriersMutation, useDeleteCustomerDeliveryCarriersByIdMutation, useDeleteCustomerDeliveryMethodsByIdMutation,
     useAddDeliveryMethodsMutation, useUpdateShppingDeliveryCarriersMutation, useUpdateDeliveryMethodsMutation,
+    useLazyGetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdQuery, useLazyGetCustomerDeliveryMethodByCustomerDeliveryMethodIdQuery,
 } = customerSettingsAPI;
 
 export default customerSettingsAPI;
