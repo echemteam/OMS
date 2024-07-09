@@ -5,7 +5,6 @@ import { reasonData } from '../../../customerDetail/customers/config/CustomerDat
 import SupplierContext from "../../../../utils/ContextAPIs/Supplier/SupplierListContext"
 import Buttons from '../../../../components/ui/button/Buttons';
 import ToastService from '../../../../services/toastService/ToastService';
-import { StatusEnums, StatusFeild } from '../../../../common/features/Enums/StatusEnums';
 import CardSection from '../../../../components/ui/card/CardSection';
 import MolGrid from '../../../../components/Grid/MolGrid';
 import CenterModel from '../../../../components/ui/centerModel/CenterModel';
@@ -18,6 +17,7 @@ import SupplierApproval from './supplierApproval/SupplierApproval';
 import { useAddSupplierNotesMutation } from '../../../../app/services/supplierNotesAPI';
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { useSelector } from 'react-redux';
+import { StatusEnums, StatusFeild } from '../../../../utils/Enums/StatusEnums';
 
 const SupplierList = ({ statusId, configFile }) => {
 

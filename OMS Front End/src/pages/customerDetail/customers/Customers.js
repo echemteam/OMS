@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../components/ui/card/CardSection";
 import { CustomersList } from "./features/CustomersList";
 import CustomerContext from "../../../utils/ContextAPIs/Customer/CustomerListContext";
-import { StatusEnums, StatusValue } from "../../../common/features/Enums/StatusEnums";
 import {
   AllCustomerGridConfig,
   ApprovedCustomerGridConfig,
@@ -13,8 +12,9 @@ import {
 } from "./config/CustomerData";
 import InActiveCustomer from "./features/InActiveCustomer";
 import { BasicDetailContextProvider } from "../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import { ListSupplier } from "../../../common/features/Enums/ListEnums";
 import useDebounce from "../../../app/customHooks/useDebouce"
+import { ListSupplier } from "../../../utils/Enums/enums";
+import { StatusEnums, StatusValue } from "../../../utils/Enums/StatusEnums";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");

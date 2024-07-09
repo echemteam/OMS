@@ -127,10 +127,8 @@ const ContactCard = ({ childData, handleEdit }) => {
                         <div className="d-flex align-items-center">
                           <div className="card-value" key={index}>
                             &nbsp;
-                            {`(+${phoneData.phoneCode}) ${phoneData.phoneNumber}`}
+                            {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}`}
                           </div>
-                          {/* <span className="title">Ext.</span> */}
-                          {/* { */}
                           <div className="card-value">
                             &nbsp;
                             {`${
@@ -138,6 +136,7 @@ const ContactCard = ({ childData, handleEdit }) => {
                                 ? "," + phoneData.extension
                                 : ""
                             }`}
+
                           </div>
                           <span
                             className="copy-icon"
@@ -188,7 +187,7 @@ const ContactCard = ({ childData, handleEdit }) => {
             <div className="edit-delete-button">
               <button
                 onClick={() =>
-                  handleEdit(cardInfoData, emailAddressList, phoneNumberLsit)
+                  handleEdit(cardInfoData?.contactId)
                 }
                 className="edit-btn"
               >

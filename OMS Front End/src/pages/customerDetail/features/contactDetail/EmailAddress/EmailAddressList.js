@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";

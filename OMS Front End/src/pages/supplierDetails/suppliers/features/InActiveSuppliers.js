@@ -3,7 +3,6 @@ import CardSection from '../../../../components/ui/card/CardSection';
 import MolGrid from '../../../../components/Grid/MolGrid';
 import SupplierContext from "../../../../utils/ContextAPIs/Supplier/SupplierListContext"
 import ToastService from '../../../../services/toastService/ToastService';
-import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
 import { useGetSuppliersMutation, useUpdateSupplierStatusMutation } from '../../../../app/services/supplierAPI';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { securityKey } from '../../../../data/SecurityKey';
@@ -13,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import SwalAlert from '../../../../services/swalService/SwalService';
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { useSelector } from 'react-redux';
+import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
 
 export const InActiveSuppliers = ({ statusId, configFile }) => {
 

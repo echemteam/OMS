@@ -19,7 +19,7 @@ const fixData = {
   value: 233
 }
 
-const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMutation, getAddresssByCustomerId, mainId, isSupplier, SecurityKey }) => {
+const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMutation, getAddresssByCustomerId, mainId, isSupplier, SecurityKey, getAddresssById }) => {
   const userFormRef = useRef();
   const { formSetting } = addressFormData;
   const [isModelOpen, setisModelOpen] = useState(false);
@@ -130,6 +130,8 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       data: GetAddresssByCustomerIdData,
     },
   ] = getAddresssByCustomerId();
+
+  const [getAddresssByAddressId, { isFetching: isGetAddresssByIdFetching, isSuccess: isGetAddresssByIdSuccess, data: isGetAddresssByIdData, }] = getAddresssById();
 
   useEffect(() => {
     getAllAddressTypes();
@@ -277,70 +279,77 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     onResetSupplier();
   };
 
-  const handleSetData = (data) => {
-    setUpdateSetData(data);
-    if (isSupplier) {
-      setUpdateSetDataSupplier(data)
-    }
-    let form = { ...formData };
-    if (data) {
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "stateId"
-      );
-      const dropdownFieldIndexs = form.formFields.findIndex(
-        (item) => item.dataField === "cityId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
-      form.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = false;
-    }
-    if (data.countryId) {
-      const dataValue = allGetAllStatesData
-        ?.filter((item) => item.countryId === data.countryId)
-        .map((item) => ({
-          value: item.stateId,
-          label: item.name,
-        }));
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "stateId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
-    }
-    if (data.stateId) {
-      const dataValue = allGetAllCitiesData
-        ?.filter((item) => item.stateId === data.stateId)
-        .map((item) => ({
-          value: item.cityId,
-          label: item.name,
-        }));
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "cityId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
-    }
-    form.initialState = {
-      customerId: isSupplier === false ? mainId : 0,
-      supplierId: isSupplier === true ? mainId : 0,
-      addressTypeId: data.addressTypeId,
-      addressLine1: data.addressLine1,
-      addressLine2: data.addressLine2,
-      addressLine3: data.addressLine3,
-      addressLine4: data.addressLine4,
-      addressLine5: data.addressLine5,
-      countryId: data.countryId,
-      stateId: data.stateId,
-      cityId: data.cityId,
-      zipCode: data.zipCode,
-      isPreferredShipping: data.isPreferredShipping,
-      isPreferredBilling: data.isPreferredBilling,
-    };
-    if (isSupplier === false) {
-      const filteredFormFields = addressFormData.formFields.filter(
-        (field) => field.dataField !== "isShippingAndBilling"
-      );
-      form.formFields = filteredFormFields;
+  useEffect(() => {
+    if (!isGetAddresssByIdFetching && isGetAddresssByIdSuccess && isGetAddresssByIdData) {
+      let data = isGetAddresssByIdData;
+      setUpdateSetData(data);
+      if (isSupplier) {
+        setUpdateSetDataSupplier(data)
+      }
+      let form = { ...formData };
+      if (data) {
+        const dropdownFieldIndex = form.formFields.findIndex(
+          (item) => item.dataField === "stateId"
+        );
+        const dropdownFieldIndexs = form.formFields.findIndex(
+          (item) => item.dataField === "cityId"
+        );
+        form.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
+        form.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = false;
+      }
+      if (data.countryId) {
+        const dataValue = allGetAllStatesData
+          ?.filter((item) => item.countryId === data.countryId)
+          .map((item) => ({
+            value: item.stateId,
+            label: item.name,
+          }));
+        const dropdownFieldIndex = form.formFields.findIndex(
+          (item) => item.dataField === "stateId"
+        );
+        form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
+      }
+      if (data.stateId) {
+        const dataValue = allGetAllCitiesData
+          ?.filter((item) => item.stateId === data.stateId)
+          .map((item) => ({
+            value: item.cityId,
+            label: item.name,
+          }));
+        const dropdownFieldIndex = form.formFields.findIndex(
+          (item) => item.dataField === "cityId"
+        );
+        form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
+      }
+      form.initialState = {
+        customerId: isSupplier === false ? mainId : 0,
+        supplierId: isSupplier === true ? mainId : 0,
+        addressTypeId: data.addressTypeId,
+        addressLine1: data.addressLine1,
+        addressLine2: data.addressLine2,
+        addressLine3: data.addressLine3,
+        addressLine4: data.addressLine4,
+        addressLine5: data.addressLine5,
+        countryId: data.countryId,
+        stateId: data.stateId,
+        cityId: data.cityId,
+        zipCode: data.zipCode,
+        isPreferredShipping: data.isPreferredShipping,
+        isPreferredBilling: data.isPreferredBilling,
+      };
+      if (isSupplier === false) {
+        const filteredFormFields = addressFormData.formFields.filter(
+          (field) => field.dataField !== "isShippingAndBilling"
+        );
+        form.formFields = filteredFormFields;
+        // setFormData(form);
+      }
       setFormData(form);
     }
-    setFormData(form);
+  }, [isGetAddresssByIdFetching, isGetAddresssByIdSuccess, isGetAddresssByIdData]);
+
+  const handleSetData = (data) => {
+    data?.addressId && getAddresssByAddressId(data?.addressId);
   };
 
   useEffect(() => {

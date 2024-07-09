@@ -13,7 +13,8 @@ import { securityKey } from '../../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { useLazyGetAllUserQuery } from '../../../../../app/services/commonAPI';
 import { excludingRoles } from '../../../../customerDetail/features/basicDetail/config/BasicDetailForm.data';
-import { setFieldDisabled } from '../../../../../utils/FieldDisabled/setFieldDisabled';
+import { setFieldSetting } from '../../../../../utils/FieldsSetting/SetFieldSetting';
+import { settingTypeEnums } from '../../../../../utils/Enums/enums';
 
 const SupplierBasicDetail = (props) => {
 
@@ -42,18 +43,18 @@ const SupplierBasicDetail = (props) => {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
-          setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
+          setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, true);
         }
         else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
-          setFieldDisabled(formData, setFormData, 'responsibleUserId', false);
+          setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, false);
         }
       }
       if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
-        setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
+        setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, true);
       }
     }
   }, [isOpen, hasEditPermission, formSetting, formData, isResponsibleUser])
