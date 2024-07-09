@@ -1,32 +1,38 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Lib's */
 import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { contactDetailFormData } from "./config/ContactDetailForm.data";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import ToastService from "../../../../../services/toastService/ToastService";
+import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
-import { setFieldDisabled } from "../../../../../utils/FieldDisabled/setFieldDisabled";
+import { setFieldSetting } from "../../../../../utils/FieldsSetting/SetFieldSetting";
+import { settingTypeEnums } from "../../../../../utils/Enums/enums";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey, isEditablePage, isSupplier, isEdit, isOpen }) => {
+const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey,
+  isEditablePage, isSupplier, isEdit, isOpen, getContactById }) => {
 
   //** State */
   const ref = useRef();
   const { formSetting } = contactDetailFormData;
+  const [contactId, setContactId] = useState(0);
   const [formData, setFormData] = useState(contactDetailFormData);
   const [customerContactId, setCustomerContactId] = useState(0);
   const [supplierContactId, setSupplierContactId] = useState(0);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
 
-  const { contactId, setContactId, emailAddressData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
+  const { emailAddressData, setEmailAddressData, phoneNumberData, setPhoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
   //** API Call's */
   const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
+  const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSucess, data: isGetByIdData }] = getContactById();
 
   //** Handle Changes */
   const handleAddEdit = () => {
@@ -36,21 +42,15 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
 
       if (isSupplier === true) {
         if (isEdit) {
-          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object"
-            ? String(data.contactTypeId.value)
-            : String(data.contactTypeId);
+          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
         } else {
           contactTypeId = String(data.contactTypeId.value);
         }
       } else {
         if (isEdit) {
-          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object"
-            ? String(data.contactTypeId.value)
-            : String(data.contactTypeId);
+          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
         } else {
-          contactTypeId = Array.isArray(data.contactTypeId)
-            ? data.contactTypeId.map(String).join(",")
-            : data.contactTypeId;
+          contactTypeId = Array.isArray(data.contactTypeId) ? data.contactTypeId.map(String).join(",") : data.contactTypeId;
         }
       }
 
@@ -69,7 +69,6 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     }
   };
 
-
   //** UseEffect */
   useEffect(() => {
     if (isAddEditSuccess && isAddEditData) {
@@ -84,6 +83,37 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       }
     }
   }, [isAddEditSuccess, isAddEditData]);
+
+  useEffect(() => {
+    if (!isGetByIdFetching && isGetByIdSucess && isGetByIdData) {
+      let data = isGetByIdData;
+      let form = { ...contactDetailFormData };
+      form.initialState = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        contactTypeId: data.contactTypeId,
+        isPrimary: data.isPrimary
+      }
+      setFormData(form);
+      setContactId(data.contactId);
+      setCustomerContactId(data?.customerContactId);
+      setSupplierContactId(data?.supplierContactId);
+      setFieldSetting(form, 'contactTypeId', settingTypeEnums.isMultiSelect);
+
+      const modifyPhoneNumberList = isGetByIdData.phoneNumberLsit.map((item, index) => ({
+        ...item,
+        id: index + 1,
+        extension: item.extension === 0 ? '-' : item.extension
+      }));
+      const modifyEmailAddressLst = isGetByIdData.emailAddressLst.map((item, index) => ({
+        ...item,
+        id: index + 1
+      }));
+
+      setPhoneNumberData(modifyPhoneNumberList);
+      setEmailAddressData(modifyEmailAddressLst);
+    }
+  }, [isGetByIdFetching, isGetByIdSucess]);
 
   //** Use Imperative Handle  */
   useImperativeHandle(editRef, () => ({
@@ -115,41 +145,27 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
     }
   }, [editRef, editFormData, SecurityKey])
 
-  const handleEditMode = (data) => {
-    if (data) {
-      setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', true);
-      let form = { ...contactDetailFormData };
-      form.initialState = {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        contactTypeId: data.contactTypeId,
-        isPrimary: data.isPrimary
-      }
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "contactTypeId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = false;
-      setFormData(form);
-      setContactId(data?.contactId);
-      setCustomerContactId(data?.customerContactId);
-      setSupplierContactId(data?.supplierContactId);
-    }
+  const handleEditMode = (contactId) => {
+    contactId && getById(contactId);
+    setFieldSetting(contactDetailFormData, 'contactTypeId', settingTypeEnums.isDisabled, true);
   }
 
   useEffect(() => {
     if (!isEdit) {
       let form = { ...contactDetailFormData };
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "contactTypeId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = isSupplier ? false : true;
+      setFieldSetting(form, 'contactTypeId', settingTypeEnums.isMultiSelect, isSupplier ? false : true);
       setFormData(form);
+      if (isOpen) {
+        setContactId(0);
+        setPhoneNumberData("");
+        setEmailAddressData("");
+      }
     }
   }, [isOpen])
 
   //** Reset Data */
   const onResetData = () => {
-    setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', false);
+    setFieldSetting(contactDetailFormData, 'contactTypeId', settingTypeEnums.isDisabled, false);
     let form = { ...contactDetailFormData };
     form.initialState = { ...contactDetailFormData.initialState };
     setFormData(form);
@@ -169,8 +185,13 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         <FormCreator config={formData} ref={ref} {...formData} />
       </div>
       <div className="row">
-        <ManageEmailAddress isSupplier={isSupplier} onGetContactList={onGetContactList} />
-        <ManageContactNumbers isSupplier={isSupplier} onGetContactList={onGetContactList} />
+        {!isGetByIdFetching ?
+          <React.Fragment>
+            <ManageEmailAddress isSupplier={isSupplier} onGetContactList={onGetContactList} />
+            <ManageContactNumbers isSupplier={isSupplier} onGetContactList={onGetContactList} />
+          </React.Fragment>
+          : <DataLoader />
+        }
       </div>
       <div className="col-md-12 mt-3">
         <div className="d-flex align-item-end justify-content-end">

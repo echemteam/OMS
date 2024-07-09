@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 //** Service */
 import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
-import { useLazyGetAddresssBySupplierIdQuery } from '../../../../../app/services/supplierAddressAPI'
+import { useLazyGetAddresssBySupplierIdQuery, useLazyGetSupplierAddresssByAddressIdQuery } from '../../../../../app/services/supplierAddressAPI'
 import AddressDetail from '../../../../customerDetail/features/addressDetail/features/config/AddressDetail';
 import { useAddAddressMutation, useUpdateAddAddressMutation } from '../../../../../app/services/addressAPI';
 import { securityKey } from '../../../../../data/SecurityKey';
@@ -23,6 +23,7 @@ const SuplierAddressDetails = ({ isEditablePage }) => {
             mainId={supplierId ? supplierId : 0}
             SecurityKey={!isResponsibleUser ? supplierSecurityKey : null}
             getAddresssByCustomerId={useLazyGetAddresssBySupplierIdQuery}
+            getAddresssById={useLazyGetSupplierAddresssByAddressIdQuery}
             addAddressMutation={useAddAddressMutation}
             updateAddAddressMutation={useUpdateAddAddressMutation}
         />

@@ -1,25 +1,29 @@
-import { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { forwardRef, useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { addEditCarrierFormData } from "../config/CarrierConfig";
 import Buttons from "../../../../../../../components/ui/button/Buttons";
+import { settingTypeEnums } from "../../../../../../../utils/Enums/enums";
 import FormCreator from "../../../../../../../components/Forms/FormCreator";
+import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
 import CenterModel from "../../../../../../../components/ui/centerModel/CenterModel";
+import { setFieldSetting } from "../../../../../../../utils/FieldsSetting/SetFieldSetting";
 import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import ToastService from "../../../../../../../services/toastService/ToastService";
-import { useAddShppingDeliveryCarriersMutation, useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
+import { useAddShppingDeliveryCarriersMutation, useLazyGetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdQuery, useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
 
-const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, editFormData, childRef, onSuccess }) => {
+const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, deliveryCarrierId, onSuccess }) => {
 
     //** State */
     const ref = useRef();
-    const { formFields } = addEditCarrierFormData;
     const { customerId } = useContext(BasicDetailContext);
     const [formData, setFormData] = useState(addEditCarrierFormData);
 
     //** API Call's */
-    const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = useAddShppingDeliveryCarriersMutation();
     const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
+    const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = useAddShppingDeliveryCarriersMutation();
+    const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSuccess, data: isGetByIdData }] = useLazyGetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdQuery();
 
     //** Handle Changes */
     const handleAddEdit = () => {
@@ -65,28 +69,26 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, editF
     }, [isUpdateSuccess, isUpdateData]);
 
     useEffect(() => {
-        if (isEdit && editFormData) {
-            formFieldsDisabled(true);
+        if (!isGetByIdFetching && isGetByIdSuccess && isGetByIdData) {
             let form = { ...addEditCarrierFormData };
             form.initialState = {
-                ...editFormData,
-                isCarrierPrimary: editFormData.isPrimary
+                ...isGetByIdData,
+                isCarrierPrimary: isGetByIdData.isPrimary
             }
             setFormData(form);
+
+        }
+    }, [isGetByIdFetching, isGetByIdSuccess, isGetByIdData]);
+
+    useEffect(() => {
+        if (isEdit && deliveryCarrierId) {
+            getById(deliveryCarrierId);
+            setFieldSetting(formData, 'carrier', settingTypeEnums.isDisabled, true);
         } else if (!isEdit) {
             onResetData();
-            formFieldsDisabled(false);
+            setFieldSetting(formData, 'carrier', settingTypeEnums.isDisabled);
         }
-    }, [isEdit, editFormData]);
-
-    const formFieldsDisabled = (isDisable) => {
-        if (formFields) {
-            let chargeTypeData = formFields.find(data => data.id === 'carrier');
-            if (chargeTypeData && chargeTypeData.fieldSetting) {
-                chargeTypeData.fieldSetting.isDisabled = isDisable;
-            }
-        }
-    }
+    }, [isEdit, deliveryCarrierId]);
 
     //** Reset Data */
     const onResetData = () => {
@@ -95,18 +97,16 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, editF
         setFormData(form);
     };
 
-    //** Use Imperative Handle  */
-    useImperativeHandle(childRef, () => ({
-        callChildFunction: onResetData,
-    }));
-
     return (
         <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}
             modalTitle="Add/Edit Carrier" modelSizeClass="w-30" >
             <div className="row">
                 <div className="col-md-12">
                     <div className="row">
-                        <FormCreator config={formData} ref={ref} {...formData} />
+                        {!isGetByIdFetching ?
+                            <FormCreator config={formData} ref={ref} {...formData} />
+                            : <DataLoader />
+                        }
                     </div>
                 </div>
                 <div className="col-md-12 mt-3">

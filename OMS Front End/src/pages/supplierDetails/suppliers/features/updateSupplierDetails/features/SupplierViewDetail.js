@@ -4,7 +4,6 @@ import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutatio
 import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
 import SwalAlert from '../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../services/toastService/ToastService';
-import { StaticStatus, StatusValue } from '../../../../../../common/features/Enums/StatusEnums';
 import Image from '../../../../../../components/image/Image';
 import { AppIcons } from '../../../../../../data/appIcons';
 import DropDown from '../../../../../../components/ui/dropdown/DropDrown';
@@ -18,6 +17,7 @@ import { ErrorMessage } from '../../../../../../data/appMessages';
 import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { securityKey } from '../../../../../../data/SecurityKey';
+import { StaticStatus, StatusValue } from '../../../../../../utils/Enums/StatusEnums';
 
 const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
 
