@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Libs's */
 import { securityKey } from "../../../../data/SecurityKey";
@@ -6,7 +7,6 @@ import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { basicDetailFormDataHalf, excludingRoles } from "./config/BasicDetailForm.data";
-import { setFieldDisabled } from "../../../../utils/FieldDisabled/setFieldDisabled";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Service's */
@@ -15,6 +15,7 @@ import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
 import { BasicInformation } from "./BasicInformation";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
+import { setDisabledFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();
@@ -22,9 +23,9 @@ const BasicDetail = (props) => {
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [customerInfoData, setCustomerInfoData] = useState(false);
-  
+
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
-  const { nextRef, customerId, setCustomerId, moveNextPage, setAllCountries, isResponsibleUser } = useContext(BasicDetailContext);
+  const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser } = useContext(BasicDetailContext);
 
   const { formSetting } = basicDetailFormDataHalf;
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
@@ -33,25 +34,25 @@ const BasicDetail = (props) => {
     data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
   const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
   const [getCustomersDetailsByCutomerName, { isFetching: isuseGetCustomersDetailsByCutomerNameMutationFetching, isSuccess: isuseGetCustomersDetailsByCutomerNameMutationSucess, data: isuseGetCustomersDetailsByCutomerNameMutationData, }] = useLazyGetCustomersDetailsByCutomerNameQuery();
- 
+
   useEffect(() => {
     if (props.isOpen) {
       if (!isResponsibleUser) {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
-          setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
+          setDisabledFieldSetting(formData, setFormData, 'responsibleUserId', true);
         }
         else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
-          setFieldDisabled(formData, setFormData, 'responsibleUserId', false);
+          setDisabledFieldSetting(formData, setFormData, 'responsibleUserId', false);
         }
       }
       if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
-        setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
+        setDisabledFieldSetting(formData, setFormData, 'responsibleUserId', true);
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly, isResponsibleUser])
@@ -152,7 +153,6 @@ const BasicDetail = (props) => {
         (item) => item.dataField === "countryId"
       );
       dropdownField.fieldSetting.options = getData;
-      setAllCountries(allGetAllCountriesData);
     }
   }, [
     isGetAllCountriesSucess,

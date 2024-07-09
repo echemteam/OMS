@@ -19,7 +19,7 @@ const CustomerContactDetails = ({ isEditablePage }) => {
         //** Also, We replace the API Name and mainId based on the customer and supplier module*/
         <ContactDetail isSupplier={false} isEditablePage={isEditablePage} mainId={customerId ? customerId : 0}
             SecurityKey={!isResponsibleUser ? customerSecurityKey : null} getContactById={useLazyGetCustomerContactByContactIdQuery}
-            getContactByIdQuery={useLazyGetContactByCustomerIdQuery} addEditContactMutation={useAddEditContactMutation} />
+            getContactByKeyId={useLazyGetContactByCustomerIdQuery} addEditContactMutation={useAddEditContactMutation} />
     )
 }
 

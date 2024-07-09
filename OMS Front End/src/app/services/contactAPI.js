@@ -48,13 +48,21 @@ const contactAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
+        }),
+        getSupllierContactByContact: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Contact/GetSupllierContactByContact/?contactId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
         })
     })
 })
 
 export const {
     useLazyGetAllContactTypesQuery, useLazyGetContactByCustomerIdQuery, useAddEditContactMutation, useLazyGetContactBySupplierIdQuery,
-    useLazyGetCustomerContactByContactIdQuery
+    useLazyGetCustomerContactByContactIdQuery, useLazyGetSupllierContactByContactQuery
 } = contactAPI
 
 export default contactAPI;

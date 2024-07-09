@@ -13,7 +13,7 @@ import { securityKey } from '../../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { useLazyGetAllUserQuery } from '../../../../../app/services/commonAPI';
 import { excludingRoles } from '../../../../customerDetail/features/basicDetail/config/BasicDetailForm.data';
-import { setFieldDisabled } from '../../../../../utils/FieldDisabled/setFieldDisabled';
+import { setDisabledFieldSetting } from '../../../../../utils/FieldsSetting/SetFieldSetting';
 
 const SupplierBasicDetail = (props) => {
 
@@ -42,18 +42,18 @@ const SupplierBasicDetail = (props) => {
         if (hasEditPermission.isViewOnly === true) {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
-          setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
+          setDisabledFieldSetting(formData, setFormData, 'responsibleUserId', true);
         }
         else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
-          setFieldDisabled(formData, setFormData, 'responsibleUserId', false);
+          setDisabledFieldSetting(formData, setFormData, 'responsibleUserId', false);
         }
       }
       if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
-        setFieldDisabled(formData, setFormData, 'responsibleUserId', true);
+        setDisabledFieldSetting(formData, setFormData, 'responsibleUserId', true);
       }
     }
   }, [isOpen, hasEditPermission, formSetting, formData, isResponsibleUser])

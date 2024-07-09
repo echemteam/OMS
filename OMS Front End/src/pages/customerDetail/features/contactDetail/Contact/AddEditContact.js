@@ -1,15 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Lib's */
 import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { contactDetailFormData } from "./config/ContactDetailForm.data";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import ToastService from "../../../../../services/toastService/ToastService";
+import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
-import { setFieldDisabled } from "../../../../../utils/FieldDisabled/setFieldDisabled";
-import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
+import { setDisabledFieldSetting, setMultiSelectFieldSetting } from "../../../../../utils/FieldsSetting/SetFieldSetting";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
@@ -20,12 +21,13 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   //** State */
   const ref = useRef();
   const { formSetting } = contactDetailFormData;
+  const [contactId, setContactId] = useState(0);
   const [formData, setFormData] = useState(contactDetailFormData);
   const [customerContactId, setCustomerContactId] = useState(0);
   const [supplierContactId, setSupplierContactId] = useState(0);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
 
-  const { contactId, setContactId, emailAddressData, setEmailAddressData, phoneNumberData, setPhoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
+  const { emailAddressData, setEmailAddressData, phoneNumberData, setPhoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
   //** API Call's */
   const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
@@ -39,21 +41,15 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
 
       if (isSupplier === true) {
         if (isEdit) {
-          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object"
-            ? String(data.contactTypeId.value)
-            : String(data.contactTypeId);
+          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
         } else {
           contactTypeId = String(data.contactTypeId.value);
         }
       } else {
         if (isEdit) {
-          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object"
-            ? String(data.contactTypeId.value)
-            : String(data.contactTypeId);
+          contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
         } else {
-          contactTypeId = Array.isArray(data.contactTypeId)
-            ? data.contactTypeId.map(String).join(",")
-            : data.contactTypeId;
+          contactTypeId = Array.isArray(data.contactTypeId) ? data.contactTypeId.map(String).join(",") : data.contactTypeId;
         }
       }
 
@@ -97,14 +93,11 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         contactTypeId: data.contactTypeId,
         isPrimary: data.isPrimary
       }
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "contactTypeId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = false;
-
       setFormData(form);
+      setContactId(data.contactId);
       setCustomerContactId(data?.customerContactId);
       setSupplierContactId(data?.supplierContactId);
+      setMultiSelectFieldSetting(form, 'contactTypeId');
 
       const modifyPhoneNumberList = isGetByIdData.phoneNumberLsit.map((item, index) => ({
         ...item,
@@ -119,7 +112,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       setPhoneNumberData(modifyPhoneNumberList);
       setEmailAddressData(modifyEmailAddressLst);
     }
-  }, [isGetByIdFetching, isGetByIdSucess, isGetByIdData]);
+  }, [isGetByIdFetching, isGetByIdSucess]);
 
   //** Use Imperative Handle  */
   useImperativeHandle(editRef, () => ({
@@ -153,23 +146,25 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
 
   const handleEditMode = (contactId) => {
     contactId && getById(contactId);
-    setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', true);
+    setDisabledFieldSetting(contactDetailFormData, setFormData, 'contactTypeId', true);
   }
 
   useEffect(() => {
     if (!isEdit) {
       let form = { ...contactDetailFormData };
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "contactTypeId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.isMultiSelect = isSupplier ? false : true;
+      setMultiSelectFieldSetting(form, 'contactTypeId', isSupplier ? false : true);
       setFormData(form);
+      if (isOpen) {
+        setContactId(0);
+        setPhoneNumberData("");
+        setEmailAddressData("");
+      }
     }
   }, [isOpen])
 
   //** Reset Data */
   const onResetData = () => {
-    setFieldDisabled(contactDetailFormData, setFormData, 'contactTypeId', false);
+    setDisabledFieldSetting(contactDetailFormData, setFormData, 'contactTypeId', false);
     let form = { ...contactDetailFormData };
     form.initialState = { ...contactDetailFormData.initialState };
     setFormData(form);

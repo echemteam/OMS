@@ -20,7 +20,7 @@ const ManageContactList = React.lazy(() => import("./ManageContactList"));
 
 const ContactDetail = ({
   mainId,
-  getContactByIdQuery,
+  getContactByKeyId,
   addEditContactMutation,
   isSupplier,
   isEditablePage,
@@ -37,13 +37,6 @@ const ContactDetail = ({
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [modifyContactData, setModifyContactData] = useState([]);
 
-  const {
-    setEmailAddressData,
-    setContactMainModal,
-    setContactId,
-    setPhoneNumberData,
-  } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
-
   //** API Call's */
   const [
     GetContactList,
@@ -52,7 +45,7 @@ const ContactDetail = ({
       isSuccess: isGetContactSucess,
       data: isGetContactData,
     },
-  ] = getContactByIdQuery();
+  ] = getContactByKeyId();
   const [
     getAllContactTypes,
     {
@@ -126,12 +119,8 @@ const ContactDetail = ({
 
   //** Handle Change's */
   const handleToggleModal = () => {
-    setContactId(0);
     setIsEdit(false);
     setisModelOpen(true);
-    setPhoneNumberData("");
-    setEmailAddressData("");
-    setContactMainModal(true);
     setEditFormData("");
     if (childRef.current) {
       childRef.current.callChildFunction();
@@ -139,15 +128,11 @@ const ContactDetail = ({
   };
 
   const handleEdit = (contactId) => {
-    // contactId && getById(contactId);
     setIsEdit(true);
-    // setEditFormData(data);
     setisModelOpen(!isModelOpen);
     if (editRef.current) {
       editRef.current.callEditFunction(contactId);
     }
-    // setPhoneNumberData(phoneNumberLsit);
-    // setEmailAddressData(emailAddressList);
   };
 
   const onSidebarClose = () => {
@@ -155,6 +140,7 @@ const ContactDetail = ({
     if (childRef.current) {
       childRef.current.callChildFunction();
     }
+    onGetContactList();
   };
 
   //** Success */

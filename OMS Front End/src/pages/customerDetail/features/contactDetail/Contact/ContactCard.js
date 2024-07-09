@@ -87,10 +87,8 @@ const ContactCard = ({ childData, handleEdit, showEditIcon }) => {
                         <div className="d-flex align-items-center">
                           <div className="card-value" key={index}>
                             &nbsp;
-                            {`(+${phoneData.phoneCode}) ${phoneData.phoneNumber}`}
+                            {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}`}
                           </div>
-                          {/* <span className="title">Ext.</span> */}
-                          {/* { */}
                           <div className="card-value">
                             &nbsp;
                             {`${phoneData.extension > 0
