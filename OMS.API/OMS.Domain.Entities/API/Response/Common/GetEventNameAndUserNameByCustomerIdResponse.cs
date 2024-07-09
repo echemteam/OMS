@@ -3,6 +3,7 @@
     public class GetEventNameAndUserNameByCustomerIdResponse
     {
         public string? EventName { get; set; }
+        public short? UserId { get; set; }
         public string? UserName { get; set; }
     }
 }
