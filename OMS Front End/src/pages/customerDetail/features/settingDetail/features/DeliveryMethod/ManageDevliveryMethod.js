@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { addEditDeliveryFormData } from "./config/DevliveryConfig";
@@ -18,7 +19,7 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
     const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [editFormData, setEditFormData] = useState();
+    const [deliveryMethodId, setDeliveryMethodId] = useState();
     const { deliveryMethodsList } = useContext(BasicDetailContext);
 
     const { data, isFetching, isSuccess } = useGetAllDeliveryMethodsQuery();
@@ -58,7 +59,7 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
     const handleEditModal = (data) => {
         setShowModal(!showModal);
         setIsEdit(true);
-        setEditFormData(data)
+        setDeliveryMethodId(data.customerDeliveryMethodId)
     }
 
     const handleDeleteClick = (data) => {
@@ -82,9 +83,9 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
     return (
         <>
             <DeliveryMethodList molGridRef={molGridRef} ourAccountData={deliveryMethodsList} actionHandler={actionHandler} handleToggleModal={handleToggleModal}
-                isGetDataLoading={isGetDataLoading} isShowButton={isShowButton}/>
+                isGetDataLoading={isGetDataLoading} isShowButton={isShowButton} />
             {showModal && (
-                <AddEditDeliveryMethod handleToggleModal={handleToggleModal} showModal={showModal} editFormData={editFormData} onSuccess={onSuccess}
+                <AddEditDeliveryMethod handleToggleModal={handleToggleModal} showModal={showModal} deliveryMethodId={deliveryMethodId} onSuccess={onSuccess}
                     isEdit={isEdit} />
             )}
         </>

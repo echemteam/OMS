@@ -4,21 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
 import CardSection from "../../components/ui/card/CardSection";
-import { TabEnum } from "../../common/features/Enums/TabsEnums";
 import ToastService from "../../services/toastService/ToastService";
-import { StatusEnums } from "../../common/features/Enums/StatusEnums";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
+import { TabEnum } from "../../utils/Enums/enums";
+import { StatusEnums } from "../../utils/Enums/StatusEnums";
 //** Compoent's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
 const CustomerAddressDetails = React.lazy(() => import("./features/addressDetail/CustomerAddressDetails"));
 const CustomerDocumentDetails = React.lazy(() => import("./features/documentsDetail/CustomerDocumentDetails"));
 const CustomerContactDetails = React.lazy(() => import("./features/contactDetail/Contact/CustomerContactDetails"));
-const ShippingSettings = React.lazy(() => import("./features/settingDetail/features/ShippingSetting/ShippingSettings"));
+const SettingDetails = React.lazy(() => import("./features/settingDetail/SettingDetails"));
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, movePreviewPage, addCustomer, customerId ,setActiveTab} = useContext(BasicDetailContext);
+  const { activeTab, movePreviewPage, addCustomer, customerId, setActiveTab } = useContext(BasicDetailContext);
 
   const [
     updateCustomerStatus,
@@ -63,12 +63,12 @@ const AddCustomer = () => {
       subLabel: "Enter Customer Shipping Method",
       content: (
         <>
-          <div className="mt-4 mb-5">
-            <ShippingSettings />
+          <div className="mt-0">
+            <SettingDetails isEditablePage={false} />
           </div>
         </>
       ),
-      tab: TabEnum.Contact,
+      tab: TabEnum.Setting,
     },
     {
       label: "Documents",
@@ -78,9 +78,9 @@ const AddCustomer = () => {
     },
   ];
 
-  // const handleTabClick = (index) => {
-  //   setActiveTab(index);
-  // };
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
 
   const handleSubmit = () => {
     let req = {
@@ -111,7 +111,7 @@ const AddCustomer = () => {
                   >
                     <button
                       className="step-button"
-                    // onClick={() => handleTabClick(index)}
+                      onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">

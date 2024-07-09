@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 //** Lib's */
 import { Message } from '../Util/ContactMessages';
@@ -14,7 +15,8 @@ const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEd
     //** State */
     const ref = useRef();
     const [formData, setFormData] = useState(addEditContactsFormData);
-    const { contactId, allCountries, setPhoneNumberData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
+    const { contactId, setPhoneNumberData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
+
 
     //** Handle Changes */
     const handleAddEdit = () => {
@@ -37,19 +39,6 @@ const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEd
     };
 
     //** UseEffect */
-    useEffect(() => {
-        if (allCountries) {
-            const getData = allCountries.map((country) => ({
-                value: country.countryId,
-                label: country.phoneCode,
-            }));
-            const dropdownField = addEditContactsFormData.formFields.find(
-                (item) => item.dataField === "phoneCode"
-            );
-            dropdownField.fieldSetting.options = getData;
-        }
-    }, [allCountries]);
-
     useEffect(() => {
         if (isEdit && editFormData) {
             let form = { ...addEditContactsFormData };
@@ -79,7 +68,7 @@ const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEd
         <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}
             modalTitle="Add/Edit Contact" modelSizeClass="w-45">
             <div className="row  phone-numer-card">
-                <div className="col-md-12 horizontal-form">
+                <div className="col-md-12 horizontal-form add-edit-phoneForm">
                     <div className="row vertical-form">
                         <FormCreator config={formData} ref={ref} {...formData} />
                     </div>

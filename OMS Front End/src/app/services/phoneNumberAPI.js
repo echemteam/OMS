@@ -59,7 +59,7 @@ const phoneNumberAPI = createApi({
 })
 
 export const {
-    useAddContactPhoneMutation, useUpdateContactPhoneMutation, useDeleteContactPhoneMutation, useLazyGetPhoneByContactIdQuery, useGetAllPhoneTypesQuery
+    useAddContactPhoneMutation, useUpdateContactPhoneMutation, useDeleteContactPhoneMutation, useLazyGetPhoneByContactIdQuery, useLazyGetAllPhoneTypesQuery
 } = phoneNumberAPI
 
 export default phoneNumberAPI;

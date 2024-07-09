@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import CopyText from "../../../../utils/CopyText/CopyText";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import DropDown from "../../../../components/ui/dropdown/DropDrown";
-import { StaticStatus, StatusValue } from "../../../../common/features/Enums/StatusEnums";
 import { useUpdateCustomerInActiveStatusMutation, useUpdateCustomerStatusMutation } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../services/swalService/SwalService";
@@ -16,6 +16,8 @@ import CustomerApproval from "../cutomerApproval/CustomerApproval";
 import { securityKey } from "../../../../data/SecurityKey";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { ErrorMessage } from "../../../../data/appMessages";
+import { StaticStatus, StatusValue } from "../../../../utils/Enums/StatusEnums";
 
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const childRef = useRef();
@@ -46,7 +48,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
         setIsButtonDisable(false);
       }
     }
-  }, [hasEditPermission])
+  }, [hasEditPermission, isResponsibleUser])
 
   useEffect(() => {
     if (isSuccessUpdateCustomerInActiveStatus && updateCustomerInActiveStatusData) {
@@ -75,12 +77,14 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           setOptions([
             { value: "4", label: "Freeze" },
             { value: "3", label: "Approved" },
+            { value: "1", label: "Pending" },
           ]);
           break;
         case 5:
           setOptions([
             { value: "5", label: "Block" },
             { value: "3", label: "Approved" },
+            { value: "1", label: "Pending" },
           ]);
           break;
         case 6:
@@ -186,7 +190,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
       case "Block":
         return "badge-gradient-Blocked";
       case "Reject":
-        return "badge-gradient-Blocked";
+        return "badge-gradient-reject";
       case "Disable":
         return "badge-gradient-disabled";
       default:
@@ -211,6 +215,11 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
                 />
               </div>
             </div>
+          </div>
+          <div className="field-desc">
+            <div className="inf-label">R-User</div>
+            <b>&nbsp;:&nbsp;</b>
+            <div className="info-desc">{customerData?.responsibleUserName ? customerData.responsibleUserName : ErrorMessage.NotAvailabe}</div>
           </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">Status</div>
@@ -269,16 +278,16 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           <div className="field-desc">
             <div className="inf-label">Tax Id</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.taxId}</div>
+            <div className="info-desc">{customerData?.taxId ? customerData?.taxId : ErrorMessage.NotAvailabe}</div>
           </div>
-          <div className="field-desc">
+          {/* <div className="field-desc">
             <div className="inf-label">Is Company</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">
               {customerData?.isCompany}
               {customerData && customerData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
             </div>
-          </div>
+          </div> */}
           <div className="field-desc">
             <div className="inf-label">Is Buying for Third Party</div>
             <b>&nbsp;:&nbsp;</b>
@@ -292,7 +301,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
           <CenterModel
             showModal={showModal}
             handleToggleModal={handleToggleModal}
-            modalTitle={statusFeild + " " + "Reason"}
+            modalTitle={`${statusFeild} Reason`}
             modelSizeClass="w-50s"
           >
             <div className="row horizontal-form">

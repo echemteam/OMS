@@ -32,7 +32,7 @@ namespace OMS.Domain.Repository
         ISupplierdocuementsRepositery _supplierdocuementsRepositery;
         ISupplierNotesRepository _supplierNotesRepository;
         IApprovalRepository _approvalRepository;
-        
+
         public ITestRepository test
         {
             get
@@ -119,9 +119,9 @@ namespace OMS.Domain.Repository
         {
             get
             {
-                if (_customersRepository== null)
+                if (_customersRepository == null)
                 {
-                    _customersRepository= new CustomersRepository(_context);
+                    _customersRepository = new CustomersRepository(_context);
                 }
                 return _customersRepository;
             }
@@ -161,7 +161,7 @@ namespace OMS.Domain.Repository
                 return _customerNotesRepository;
             }
         }
-        public ICustomerAccountingSettingsRepository customerAccountingSettings 
+        public ICustomerAccountingSettingsRepository customerAccountingSettings
         {
             get
             {
@@ -182,8 +182,8 @@ namespace OMS.Domain.Repository
                 }
                 return _emailAddressRepository;
             }
-        } 
-        
+        }
+
         public IPhoneNumberRepository phoneNumber
         {
             get

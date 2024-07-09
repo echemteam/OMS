@@ -10,5 +10,7 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetAddresssByCustomerIdResponse>> GetAddresssByCustomerId(int customerId);
         Task<AddEntityDTO<int>> UpdateAddAddress(AddressDTO address);
         Task<List<GetAddresssBySupplierIdResponse>> GetAddresssBySupplierId(int supplierId);
+        Task<GetCustomerAddresssByAddressIdResponse> GetCustomerAddresssByAddressId(int addressId);
+        Task<GetSupplierAddresssByAddressIdResponse> GetSupplierAddresssByAddressId(int addressId);
     }
 }

@@ -88,6 +88,12 @@ namespace OMS.Application.Services.Address
             return repositoryManager.address.GetAddresssByCustomerId(customerId);
         }
 
+        public Task<GetCustomerAddresssByAddressIdResponse> GetCustomerAddresssByAddressId(int addressId)
+        {
+            return repositoryManager.address.GetCustomerAddresssByAddressId(addressId);
+        }
+
+
         public async Task<AddEntityDTO<int>> UpdateAddAddress(UpdateAddressRequest requestData, short CurrentUserId)
         {
             AddEntityDTO<int> responceData = new();
@@ -125,6 +131,11 @@ namespace OMS.Application.Services.Address
         public Task<List<GetAddresssBySupplierIdResponse>> GetAddresssBySupplierId(int supplierId)
         {
             return repositoryManager.address.GetAddresssBySupplierId(supplierId);
+        }
+
+        public Task<GetSupplierAddresssByAddressIdResponse> GetSupplierAddresssByAddressId(int addressId)
+        {
+            return repositoryManager.address.GetSupplierAddresssByAddressId(addressId);
         }
         #endregion
     }

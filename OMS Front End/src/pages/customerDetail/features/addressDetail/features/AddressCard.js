@@ -5,7 +5,7 @@ import { Accordion } from "react-bootstrap";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
-const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLoading }) => {
+const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLoading, showEditIcon }) => {
 
   const [activeKeys, setActiveKeys] = useState([]);
 
@@ -74,7 +74,7 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLo
                           </span>
                         </div>
                       )}
-                      <div className={`add-line ${(address.isPreferredBilling && address.addressTypeId === 1) || (address.isPreferredShipping && address.addressTypeId === 2) ? "mt-3" : ""}`}>
+                      <div className={`add-line ${(address.isPreferredBilling && address.addressTypeId === 1) || (address.isPreferredShipping && address.addressTypeId === 2) ? "" : ""}`}>
                         <span className="label-txt">{address.addressLine1}</span>
                         <span className="label-txt">{address.addressLine2}</span>
                         <span className="label-txt">{address.cityName}</span>
@@ -84,9 +84,11 @@ const AddressCard = ({ isAddEditModal, addressData, onHandleSetData, isGetByIdLo
                         </span>
                       </div>
                       <div className="edit-delete-button">
-                        <button onClick={() => handleEdit(address)} className="edit-btn">
-                          <Image imagePath={AppIcons.editThemeIcon} />
-                        </button>
+                        {showEditIcon ?
+                          <button onClick={() => handleEdit(address)} className="edit-btn">
+                            <Image imagePath={AppIcons.editThemeIcon} />
+                          </button>
+                          : null}
                       </div>
                     </div>
                   </div>

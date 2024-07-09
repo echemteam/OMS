@@ -32,17 +32,23 @@ export const supplierBasicData = {
       },
       inputButtonGroup: {
         isInputButton: true,
-        buttonText: 'Verify'
-      }
+        buttonText: 'Verify',
+        isMultiButton: true,
+        showInformation: {
+          showInputButton: true,
+          faIcon: "fa-list",
+          title : "Supplier Information"
+        }
+      },
     },
     {
       id: "name-input",
-      lable: "Customer Name ",
-      Field_Name: "Customer Name",
+      lable: "Supplier Name ",
+      Field_Name: "Supplier Name",
       fieldType: FormFieldTypes.INPUT,
       dataField: "name",
       fieldSetting: {
-        placeholder: "Enter Customer Name",
+        placeholder: "Enter Supplier Name",
         allowSpace: true,
         maxLength: 50,
       },
@@ -152,7 +158,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "https://www.xyz.com/",
         allowSpace: true,
-        maxLength: 100,
+        maxLength: 250,
       },
       validation: [{ type: "require" }, { type: "website" }],
       style: {
@@ -190,6 +196,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "Enter Notes",
         allowSpace: true,
+        maxLength: 1000,
       },
       validation: [{ type: "require" }],
       style: {
@@ -206,7 +213,6 @@ export const supplierBasicData = {
         placeholder: "Select Responsible USer",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },

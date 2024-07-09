@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useRef } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
 import CardSection from "../../../../../components/ui/card/CardSection";
@@ -8,22 +9,21 @@ import {
   contactCustomerTransformData,
   contactSupplierTransformData
 } from "../../../../../utils/TransformData/TransformAPIData";
-import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import { useLazyGetAllContactTypesQuery } from "../../../../../app/services/contactAPI";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Component's */
 const AddEditContact = React.lazy(() => import("./AddEditContact"));
 const ManageContactList = React.lazy(() => import("./ManageContactList"));
 
 const ContactDetail = ({
   mainId,
-  getContactByIdQuery,
+  getContactByKeyId,
   addEditContactMutation,
   isSupplier,
   isEditablePage,
   SecurityKey,
+  getContactById
 }) => {
   //** State */
   const editRef = useRef();
@@ -32,14 +32,8 @@ const ContactDetail = ({
   const [editFormData, setEditFormData] = useState();
   const [isModelOpen, setisModelOpen] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
+  const [showEditIcon, setShowEditIcon] = useState(false);
   const [modifyContactData, setModifyContactData] = useState([]);
-
-  const {
-    setEmailAddressData,
-    setContactMainModal,
-    setContactId,
-    setPhoneNumberData,
-  } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
   //** API Call's */
   const [
@@ -49,7 +43,7 @@ const ContactDetail = ({
       isSuccess: isGetContactSucess,
       data: isGetContactData,
     },
-  ] = getContactByIdQuery();
+  ] = getContactByKeyId();
   const [
     getAllContactTypes,
     {
@@ -67,6 +61,7 @@ const ContactDetail = ({
   useEffect(() => {
     if (isEditablePage && SecurityKey) {
       const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+      const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
 
       if (hasAddPermission) {
         if (hasAddPermission.hasAccess === true) {
@@ -74,6 +69,9 @@ const ContactDetail = ({
         } else {
           setButtonVisible(false);
         }
+      }
+      if (hasEditPermission && hasEditPermission.isViewOnly === true) {
+        setShowEditIcon(true);
       }
     }
   }, [isEditablePage, isSupplier, SecurityKey]);
@@ -119,27 +117,20 @@ const ContactDetail = ({
 
   //** Handle Change's */
   const handleToggleModal = () => {
-    setContactId(0);
     setIsEdit(false);
     setisModelOpen(true);
-    setPhoneNumberData("");
-    setEmailAddressData("");
-    setContactMainModal(true);
     setEditFormData("");
     if (childRef.current) {
       childRef.current.callChildFunction();
     }
   };
 
-  const handleEdit = (data, emailAddressList, phoneNumberLsit) => {
+  const handleEdit = (contactId) => {
     setIsEdit(true);
-    setEditFormData(data);
     setisModelOpen(!isModelOpen);
     if (editRef.current) {
-      editRef.current.callEditFunction(data);
+      editRef.current.callEditFunction(contactId);
     }
-    setPhoneNumberData(phoneNumberLsit);
-    setEmailAddressData(emailAddressList);
   };
 
   const onSidebarClose = () => {
@@ -147,6 +138,7 @@ const ContactDetail = ({
     if (childRef.current) {
       childRef.current.callChildFunction();
     }
+    onGetContactList();
   };
 
   //** Success */
@@ -170,11 +162,14 @@ const ContactDetail = ({
         rightButton={buttonVisible ? true : false}
         buttonText="Add"
         titleButtonClick={handleToggleModal}
+        isFilter={true}
+        filterHeaderTitle="Contact Filter"
       >
         <ManageContactList
           handleEdit={handleEdit}
           modifyContactData={modifyContactData}
           isLoading={isGetContactFetching}
+          showEditIcon={showEditIcon}
         />
       </CardSection>
       <div className="sidebar-contact-model">
@@ -198,6 +193,8 @@ const ContactDetail = ({
             addEditContactMutation={addEditContactMutation}
             mainId={mainId}
             isEditablePage={isEditablePage}
+            isOpen={isModelOpen}
+            getContactById={getContactById}
           />
         </SidebarModel>
       </div>

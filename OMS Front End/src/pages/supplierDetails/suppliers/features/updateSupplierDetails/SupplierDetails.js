@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "../../../../customerDetail/ViewCustomer.scss";
 import { useParams } from "react-router-dom";
@@ -12,12 +13,14 @@ import SupplierBasicDetail from "../../../addSupplier/features/supplierBasicDeta
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { useNavigate } from "react-router-dom/dist";
-import SupplierNotesDetail from "./features/notesDetails/SupplierNotesDetails";
 import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuementDetail";
 import SupplierContactDetail from "../../../addSupplier/features/supplierContactDetail/SupplierContactDetail";
 import SuplierAddressDetails from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetails";
 import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
-import { getAuthProps } from "../../../../../lib/authenticationLibrary";
+import { useSelector } from "react-redux";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { securityKey } from "../../../../../data/SecurityKey";
+import ManageSupplierNotes from "./features/notesDetails/ManageSupplierNotes";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -25,8 +28,9 @@ const SupplierDetails = () => {
   const pageId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setisModelOpen] = useState(false);
   const [supplierData, setSupplierData] = useState(null);
+  const authState = useSelector((state) => state.auth);
 
-  const { setSupplierId, supplierId, setIsResponsibleUser } = useContext(AddSupplierContext);
+  const { setSupplierId, supplierId, isResponsibleUser, setIsResponsibleUser } = useContext(AddSupplierContext);
 
   const [
     getSupplierBasicInformationById,
@@ -37,6 +41,20 @@ const SupplierDetails = () => {
     },
   ] = useLazyGetSupplierBasicInformationByIdQuery();
 
+  const hasNotePermission = hasFunctionalPermission(securityKey.SUPPLIERNOTES);
+  const hasAddressPermission = hasFunctionalPermission(
+    securityKey.SUPPLIERADDRESS
+  );
+  const hasContactPermission = hasFunctionalPermission(
+    securityKey.SUPPLIERCONTACT
+  );
+  const hasHistoryPermission = hasFunctionalPermission(
+    securityKey.SUPPLIERHISTORY
+  );
+  const hasDocumentPermission = hasFunctionalPermission(
+    securityKey.SUPPLIERDOCUMENT
+  );
+
   useEffect(() => {
     if (
       isGetSupplierBasicInformationById &&
@@ -44,8 +62,7 @@ const SupplierDetails = () => {
       !isGetSupplierBasicInformationByIdFetching
     ) {
       setSupplierData(GetSupplierBasicInformationByIdData);
-      const authData = getAuthProps();
-      if (authData.user.userID !== GetSupplierBasicInformationByIdData.responsibleUserId) {
+      if (authState?.user?.userID !== GetSupplierBasicInformationByIdData.responsibleUserId) {
         setIsResponsibleUser(false);
       }
     }
@@ -78,9 +95,12 @@ const SupplierDetails = () => {
   const tabs = [
     {
       sMenuItemCaption: "Address",
-      component: <div className="mt-2">
-        <SuplierAddressDetails isEditablePage={true} />
-      </div>,
+      component: (
+        <div className="mt-2">
+          <SuplierAddressDetails isEditablePage={true} />
+        </div>
+      ),
+      isVisible: hasAddressPermission.hasAccess,
     },
     {
       sMenuItemCaption: "Contact",
@@ -89,15 +109,8 @@ const SupplierDetails = () => {
           <SupplierContactDetail isEditablePage={true} />
         </div>
       ),
+      isVisible: hasContactPermission.hasAccess,
     },
-    // {
-    //   sMenuItemCaption: "Settings",
-    //   component: <div className="mt-2">{/* <SettingDetails /> */}</div>,
-    // },
-    // {
-    //   sMenuItemCaption: "Notes",
-    //   component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>,
-    // },
     {
       sMenuItemCaption: "Documents",
       component: (
@@ -105,22 +118,33 @@ const SupplierDetails = () => {
           <SupplierDocumentDetail pageId={pageId} isEditablePage={true} />
         </div>
       ),
+      isVisible: hasDocumentPermission.hasAccess,
     },
     {
       sMenuItemCaption: "Notes",
-      component: <div className="mt-2">{<SupplierNotesDetail pageId={pageId} />}</div>,
+      component: (
+        <div className="mt-2">{<ManageSupplierNotes isEditablePage={true} />}</div>
+      ),
+      isVisible: hasNotePermission.hasAccess,
     },
     {
       sMenuItemCaption: "History",
-      component: <div className="mt-2">{<SupplierHistoryDetail />}</div>,
+      component: (
+        <div className="mt-2">{<SupplierHistoryDetail />}</div>
+      ),
+      isVisible: hasHistoryPermission.hasAccess,
     },
   ];
+
+  const visibleTabs = !isResponsibleUser
+    ? tabs.filter((tab) => tab.isVisible)
+    : tabs;
 
   return (
     <>
       <div className="card-bottom-m-0">
         <div className="row">
-          <div className="col-xxl-4 col-xl-4 col-md-5 col-12 basic-left-part customer-desc-left-sec">
+          <div className="col-xxl-3 col-xl-3 col-md-4 col-12 basic-left-part customer-desc-left-sec">
             <CardSection>
               <SupplierViewDetail
                 editClick={handleToggleModal}
@@ -131,7 +155,7 @@ const SupplierDetails = () => {
               />
             </CardSection>
           </div>
-          <div className="col-xxl-8 col-xl-8 col-md-7 col-12 other-info-tab">
+          <div className="col-xxl-9 col-xl-9 col-md-5 col-12 other-info-tab">
             <Buttons
               buttonTypeClassName="back-button btn dark-btn"
               onClick={handleBackClick}
@@ -139,7 +163,7 @@ const SupplierDetails = () => {
               buttonText="Back"
               imagePath={AppIcons.BackArrowIcon}
             ></Buttons>
-            <RenderTabs tabs={tabs} />
+            <RenderTabs tabs={supplierId ? visibleTabs : null} />
           </div>
         </div>
       </div>

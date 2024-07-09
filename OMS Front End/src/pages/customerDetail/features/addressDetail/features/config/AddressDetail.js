@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 //** Libs's */
 import AddressCard from "../AddressCard";
@@ -13,17 +14,26 @@ import ToastService from "../../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../../app/services/basicdetailAPI";
 import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../../app/services/addressAPI";
 
-const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMutation, getAddresssByCustomerId, mainId, isSupplier, SecurityKey }) => {
+const fixData = {
+  label: "United States",
+  value: 233
+}
+
+const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMutation, getAddresssByCustomerId, mainId, isSupplier, SecurityKey, getAddresssById }) => {
   const userFormRef = useRef();
   const { formSetting } = addressFormData;
   const [isModelOpen, setisModelOpen] = useState(false);
   const [formData, setFormData] = useState(addressFormData);
   const [addressData, setAddressData] = useState();
   const [updateSetData, setUpdateSetData] = useState();
+  const [updateSetDataSupplier, setUpdateSetDataSupplier] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-
-  const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
+  const [showEditIcon, setShowEditIcon] = useState(false);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [lebel, setlebel] = useState(null);
+  const [checkbox, setCheckbox] = useState(null);
+  const [checkboxFeild, setCheckboxFeild] = useState(null);
 
   useEffect(() => {
     if (isEditablePage) {
@@ -51,6 +61,10 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
             if (hasAddPermission.hasAccess === true) {
               formSetting.isViewOnly = false;
               setIsButtonDisable(false);
+              setShowEditIcon(true);
+            }
+            if (hasEditPermission.isViewOnly === true) {
+              setShowEditIcon(true);
             }
           }
         }
@@ -117,6 +131,8 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     },
   ] = getAddresssByCustomerId();
 
+  const [getAddresssByAddressId, { isFetching: isGetAddresssByIdFetching, isSuccess: isGetAddresssByIdSuccess, data: isGetAddresssByIdData, }] = getAddresssById();
+
   useEffect(() => {
     getAllAddressTypes();
     getAllCountries();
@@ -139,7 +155,16 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
         field.dataField !== "isPreferredBilling"
     );
     manageData.formFields = filteredFormFields;
+
+    if (updateSetData === null) {
+      handleChangeDropdownList(fixData, "countryId")
+      const dropdownFieldIndexs = manageData.formFields.findIndex(
+        (item) => item.dataField === "cityId"
+      );
+      manageData.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = true;
+    }
     setFormData(manageData);
+    // onreset();
   };
 
   useEffect(() => {
@@ -241,62 +266,90 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     }
   }, [isGetAllCitiesSucess, allGetAllCitiesData]);
 
+  useEffect(() => {
+    if (allGetAllStatesData) {
+      handleChangeDropdownList(fixData, "countryId")
+    }
+  }, [allGetAllStatesData])
+
+
   const handleToggleModal = () => {
     setisModelOpen(true);
-    manageFilteredForm();
+    // manageFilteredForm();
+    onResetSupplier();
   };
 
-  const handleSetData = (data) => {
-    setUpdateSetData(data);
-    let form = { ...formData };
-    if (data.countryId) {
-      const dataValue = allGetAllStatesData
-        ?.filter((item) => item.countryId === data.countryId)
-        .map((item) => ({
-          value: item.stateId,
-          label: item.name,
-        }));
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "stateId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
-    }
-    if (data.stateId) {
-      const dataValue = allGetAllCitiesData
-        ?.filter((item) => item.stateId === data.stateId)
-        .map((item) => ({
-          value: item.cityId,
-          label: item.name,
-        }));
-      const dropdownFieldIndex = form.formFields.findIndex(
-        (item) => item.dataField === "cityId"
-      );
-      form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
-    }
-    form.initialState = {
-      customerId: isSupplier === false ? mainId : 0,
-      supplierId: isSupplier === true ? mainId : 0,
-      addressTypeId: data.addressTypeId,
-      addressLine1: data.addressLine1,
-      addressLine2: data.addressLine2,
-      addressLine3: data.addressLine3,
-      addressLine4: data.addressLine4,
-      addressLine5: data.addressLine5,
-      countryId: data.countryId,
-      stateId: data.stateId,
-      cityId: data.cityId,
-      zipCode: data.zipCode,
-      isPreferredShipping: data.isPreferredShipping,
-      isPreferredBilling: data.isPreferredBilling,
-    };
-    if (isSupplier === false) {
-      const filteredFormFields = addressFormData.formFields.filter(
-        (field) => field.dataField !== "isShippingAndBilling"
-      );
-      form.formFields = filteredFormFields;
+  useEffect(() => {
+    if (!isGetAddresssByIdFetching && isGetAddresssByIdSuccess && isGetAddresssByIdData) {
+      let data = isGetAddresssByIdData;
+      setUpdateSetData(data);
+      if (isSupplier) {
+        setUpdateSetDataSupplier(data)
+      }
+      let form = { ...formData };
+      if (data) {
+        const dropdownFieldIndex = form.formFields.findIndex(
+          (item) => item.dataField === "stateId"
+        );
+        const dropdownFieldIndexs = form.formFields.findIndex(
+          (item) => item.dataField === "cityId"
+        );
+        form.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
+        form.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = false;
+      }
+      if (data.countryId) {
+        const dataValue = allGetAllStatesData
+          ?.filter((item) => item.countryId === data.countryId)
+          .map((item) => ({
+            value: item.stateId,
+            label: item.name,
+          }));
+        const dropdownFieldIndex = form.formFields.findIndex(
+          (item) => item.dataField === "stateId"
+        );
+        form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
+      }
+      if (data.stateId) {
+        const dataValue = allGetAllCitiesData
+          ?.filter((item) => item.stateId === data.stateId)
+          .map((item) => ({
+            value: item.cityId,
+            label: item.name,
+          }));
+        const dropdownFieldIndex = form.formFields.findIndex(
+          (item) => item.dataField === "cityId"
+        );
+        form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
+      }
+      form.initialState = {
+        customerId: isSupplier === false ? mainId : 0,
+        supplierId: isSupplier === true ? mainId : 0,
+        addressTypeId: data.addressTypeId,
+        addressLine1: data.addressLine1,
+        addressLine2: data.addressLine2,
+        addressLine3: data.addressLine3,
+        addressLine4: data.addressLine4,
+        addressLine5: data.addressLine5,
+        countryId: data.countryId,
+        stateId: data.stateId,
+        cityId: data.cityId,
+        zipCode: data.zipCode,
+        isPreferredShipping: data.isPreferredShipping,
+        isPreferredBilling: data.isPreferredBilling,
+      };
+      if (isSupplier === false) {
+        const filteredFormFields = addressFormData.formFields.filter(
+          (field) => field.dataField !== "isShippingAndBilling"
+        );
+        form.formFields = filteredFormFields;
+        // setFormData(form);
+      }
       setFormData(form);
     }
-    setFormData(form);
+  }, [isGetAddresssByIdFetching, isGetAddresssByIdSuccess, isGetAddresssByIdData]);
+
+  const handleSetData = (data) => {
+    data?.addressId && getAddresssByAddressId(data?.addressId);
   };
 
   useEffect(() => {
@@ -345,14 +398,32 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     onreset();
   };
 
+  const onResetSupplier = () => {
+    let restData = { ...addressFormData };
+    restData.initialState = { ...addressFormData.initialState };
+    const filteredFormFields = restData.formFields.filter(
+      (field) =>
+        field.dataField !== "isPreferredShipping" &&
+        field.dataField !== "isShippingAndBilling" &&
+        field.dataField !== "isPreferredBilling"
+    );
+    restData.formFields = filteredFormFields;
+    setFormData(restData);
+    setUpdateSetData(null);
+    setUpdateSetDataSupplier(null);
+  };
+
   const onreset = () => {
+
     let restData = { ...addressFormData };
     restData.initialState = { ...addressFormData.initialState };
     setFormData(restData);
     setUpdateSetData(null);
+    setUpdateSetDataSupplier(null);
   };
 
   const handleChangeDropdownList = (data, dataField) => {
+    setlebel(data)
     const manageData = { ...formData };
     if (dataField === "countryId") {
       const dataValue = allGetAllStatesData
@@ -493,12 +564,12 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
             ? data.cityId.value
             : data.cityId,
       };
-      if (updateSetData) {
+      if (updateSetData || updateSetDataSupplier) {
         let setReq = {
           ...req,
-          addressId: updateSetData.addressId,
-          customerAddressId: isSupplier === false ? updateSetData.customerAddressId : 0,
-          supplierAddressId: isSupplier === true ? updateSetData.supplierAddressId : 0,
+          addressId: updateSetData ? updateSetData.addressId : updateSetDataSupplier.addressId,
+          customerAddressId: isSupplier === false ? (updateSetData ? updateSetData.customerAddressId : updateSetDataSupplier.customerAddressId) : 0,
+          supplierAddressId: isSupplier === true ? (updateSetData ? updateSetData.supplierAddressId : updateSetDataSupplier.supplierAddressId) : 0,
         };
         updateAddAddress(setReq);
         setAddressData(setReq);
@@ -508,8 +579,41 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     }
   };
 
+  const handleCheckboxChanges = (data, dataField) => {
+    setCheckbox(data)
+    setCheckboxFeild(dataField)
+    if (dataField === "isShippingAndBilling" && data && lebel) {
+      const manageData = { ...formData };
+      let filteredFormFields;
+      filteredFormFields = addressFormData.formFields
+      manageData.formFields = filteredFormFields;
+      setFormData(manageData)
+    }
+  }
+
+  useEffect(() => {
+    if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 1) {
+      const manageData = { ...formData };
+      let filteredFormFields;
+      filteredFormFields = addressFormData.formFields.filter(
+        (field) => field.dataField !== "isPreferredShipping"
+      );
+      manageData.formFields = filteredFormFields
+      setFormData(manageData)
+    } else if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 2) {
+      const manageData = { ...formData };
+      let filteredFormFields;
+      filteredFormFields = addressFormData.formFields.filter(
+        (field) => field.dataField !== "isPreferredBilling"
+      );
+      manageData.formFields = filteredFormFields
+      setFormData(manageData)
+    }
+  }, [checkbox, checkboxFeild])
+
   const formActionHandler = {
     DDL_CHANGED: handleChangeDropdownList,
+    CHECK_CHANGE: handleCheckboxChanges
   };
 
   return (
@@ -528,6 +632,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
           addressData={addressData}
           onHandleSetData={handleSetData}
           isGetByIdLoading={isGetAddresssByCustomerIdFetching}
+          showEditIcon={showEditIcon}
         />
       </CardSection>
       <div className="address-model">
@@ -538,12 +643,13 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}
         >
-          <div className="row horizontal-form mt-3 ">
+          <div className="row horizontal-form mt-3 add-address-form">
             <FormCreator
               config={formData}
               ref={userFormRef}
               {...formData}
               onActionChange={formActionHandler}
+              onCheckBoxChange={formActionHandler}
               key={shouldRerenderFormCreator}
             />
             <div className="col-md-12 mt-2">

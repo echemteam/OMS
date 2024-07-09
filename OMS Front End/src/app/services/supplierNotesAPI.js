@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { transformSucessResponse, transformErrorResponse } from "../../utils/API/responseMiddleware";
 import { encryptQueryString, transformRequest } from "../../utils/API/requestMiddleware"
-import { customFetchBase, defaultBaseQuery } from '../../utils/API/fetchBaseQuery';
+import { customFetchBase } from '../../utils/API/fetchBaseQuery';
 
 const supplierNotesAPI = createApi({
     reducerPath: 'supplierNotesAPI',
@@ -45,9 +45,9 @@ const supplierNotesAPI = createApi({
 })
 
 export const { useAddSupplierNotesMutation,
-    
-     useLazyGetSupplierNotesBySupplierIdQuery,
-      useUpdateSupplierNotesMutation
+
+    useLazyGetSupplierNotesBySupplierIdQuery,
+    useUpdateSupplierNotesMutation
 } = supplierNotesAPI;
 
 export default supplierNotesAPI;

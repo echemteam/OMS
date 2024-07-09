@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { SettingFormData } from "./config/SettingData";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -9,10 +10,10 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
-const FinancialSettings = (props) => {
+const FinancialSettings = ({ isEditablePage }) => {
   const settingFormRef = useRef();
-  const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
-  const [showButton, setShowButton] = useState(false);
+  const { customerId, isResponsibleUser, settingRef } = useContext(BasicDetailContext);
+  const [showButton, setShowButton] = useState(true);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
   const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
@@ -24,13 +25,15 @@ const FinancialSettings = (props) => {
   const hasAddEditPermission = hasFunctionalPermission(securityKey.ADDEDITCUSTOMERFINANCIAL);
 
   useEffect(() => {
-    if (!isResponsibleUser) {
-      if (hasAddEditPermission.hasAccess === true) {
-        setShowButton(true);
-        formSetting.isViewOnly = false;
-      } else {
-        setShowButton(false);
-        formSetting.isViewOnly = true;
+    if (isEditablePage) {
+      if (!isResponsibleUser) {
+        if (hasAddEditPermission.hasAccess === true) {
+          setShowButton(true);
+          formSetting.isViewOnly = false;
+        } else {
+          setShowButton(false);
+          formSetting.isViewOnly = true;
+        }
       }
     }
   }, [hasAddEditPermission]);
@@ -42,7 +45,9 @@ const FinancialSettings = (props) => {
 
   useEffect(() => {
     if (customerId > 0) {
-      GetDetailsbyCustomerID(customerId)
+      if (isEditablePage) {
+        GetDetailsbyCustomerID(customerId)
+      }
     };
   }, [customerId]);
 
@@ -92,15 +97,15 @@ const FinancialSettings = (props) => {
 
   useEffect(() => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
-      if (props.onSuccess) {
-        props.onSuccess();
-      }
       ToastService.success(isAddEditCustomerSettingsData.errorMessage);
     }
   }, [isAddEditCustomerSettingsSuccess, isAddEditCustomerSettingsData]);
 
-  const onhandleEdit = () => {
+  useImperativeHandle(settingRef, () => ({
+    onhandleEdit,
+  }));
 
+  const onhandleEdit = () => {
     const settingFormData = settingFormRef.current.getFormData();
     if (settingFormData && !settingFormData.customerAccountingSettingId) {
       const request = {
@@ -134,6 +139,20 @@ const FinancialSettings = (props) => {
   return (
     <>
       <div className="row horizontal-form">
+        {!isEditablePage &&
+          <div className="col-md-12 mb-2">
+            <div className="d-flex align-item-end justify-content-end">
+              <div className="d-flex align-item-end">
+                <Buttons
+                  buttonTypeClassName="theme-button"
+                  buttonText="Save Financial Settings"
+                  onClick={onhandleEdit}
+                  isLoading={isAddEditCustomerSettingsLoading}
+                />
+              </div>
+            </div>
+          </div>
+        }
         {!isGetDetailByCustomerIDFetching ?
           <FormCreator
             config={customerSettingFormData}
@@ -144,24 +163,22 @@ const FinancialSettings = (props) => {
           />
           : <DataLoader />
         }
-        <div className="col-md-12 mt-2 mb-3">
-          <div className="d-flex align-item-end justify-content-end">
-            <div className="d-flex align-item-end">
-              {showButton ?
+        {isEditablePage &&
+          showButton ?
+          <div className="col-md-12 mt-2 mb-3">
+            <div className="d-flex align-item-end justify-content-end">
+              <div className="d-flex align-item-end">
                 <Buttons
                   buttonTypeClassName="theme-button"
                   buttonText="Save"
                   onClick={onhandleEdit}
                   isLoading={isAddEditCustomerSettingsLoading}
                 />
-                : null}
-              {/* <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-              /> */}
+              </div>
             </div>
           </div>
-        </div>
+          : null
+        }
       </div>
     </>
   );

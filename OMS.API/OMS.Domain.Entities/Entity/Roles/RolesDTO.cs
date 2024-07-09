@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMS.Domain.Entities.Entity.Roles
 {
-    public class RolesDTO : BaseRolesDTO,IRoles, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class RolesDTO : IRoles, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

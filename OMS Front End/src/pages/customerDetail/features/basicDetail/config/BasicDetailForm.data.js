@@ -1,20 +1,12 @@
 import { SuccessMessage } from "../../../../../data/appMessages";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../data/gridColumnType";
+import { getLabelClass } from "../../../../../utils/StatusColors/StatusColors";
 
-// export const securityKeys = {
-//   ADD: securityKey.ADDCUSTOMER,
-//   EDIT: securityKey.EDITCUSTOMER,
-//   // DELETE: securityKey.DELETECUSTOMER
-//   // BLOCK: securityKey.BLOCKCUSTOMER
-//   // FREEZE: securityKey.FREEZECUSTOMER
-//   // UNFREEZE: securityKey.DISABLECUSTOMER
-//   // UNBLOCK: securityKey.DISABLECUSTOMER
-//   // ACTIVE: securityKey.ACTIVECUSTOMER
-// };
-
+export const excludingRoles = ['Admin', 'manager']
 
 export const basicDetailFormDataHalf = {
-  initialState: { name: "", groupTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false , responsibleUserId:""},
+  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false, responsibleUserId: "" },
   formFields: [
     {
       id: "name",
@@ -34,7 +26,14 @@ export const basicDetailFormDataHalf = {
       inputButtonGroup: {
         isInputButton: true,
         buttonText: 'Verify',
-      }
+        isMultiButton: true,
+        showInformation: {
+          showInputButton: true,
+          faIcon: "fa-list",
+          title : "Customer Information"
+        }
+      },
+
     },
     {
       id: "name-input",
@@ -122,7 +121,7 @@ export const basicDetailFormDataHalf = {
       fieldSetting: {
         placeholder: "https://www.xyz.com/",
         allowSpace: true,
-        maxLength: 100,
+        maxLength: 250,
       },
       validation: [{ type: "require" }, { type: "website" }],
       style: {
@@ -146,7 +145,7 @@ export const basicDetailFormDataHalf = {
         faIcon: "fa-info-circle",
         message: SuccessMessage.DefaultUSATaxId
       },
-      validation: [{ type: "require" }, { type: "taxId", minLength: 10, maxLength: 10 }],
+      validation: [{ minLength: 10, maxLength: 10 }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -162,7 +161,7 @@ export const basicDetailFormDataHalf = {
         allowSpace: true,
         isDisabled: false,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
@@ -176,25 +175,11 @@ export const basicDetailFormDataHalf = {
       fieldSetting: {
         placeholder: "Enter Notes",
         allowSpace: true,
+        maxLength: 1000,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-7 col-xl-6 col-md-12 col-12 mb-2",
-      },
-    },
-    {
-      id: "isCompany",
-      lable: "Is Company",
-      Field_Name: "Is Company",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isCompany",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-0 margin-left0-checkbox mt-0",
       },
     },
     {
@@ -217,3 +202,60 @@ export const basicDetailFormDataHalf = {
     isViewOnly: false
   }
 };
+
+export const basicInfoData = {
+  columns: [
+    {
+      name: "Name",
+      fieldName: "name",
+      width:"15%",
+      // allowShort: true,
+    },
+    {
+      name: "Tax Id",
+      fieldName: "taxId",
+      width:"15%",
+      // allowShort: true,
+    },
+    {
+      name: "Country",
+      fieldName: "countryName",
+      width:"15%",
+      // allowShort: true,
+    },
+  
+    {
+      name: "Email",
+      fieldName: "emailAddress",
+      width:"15%",
+      // allowShort: true,
+    },
+    {
+      name: "Group Type",
+      fieldName: "groupType",
+      width:"15%",
+      // allowShort: true,
+    },
+    {
+      name: "Status",
+      fieldName: "status",
+      allowShort: false,
+      colType: GridColumnType.LABLE,
+      width: "15%",
+      colSettings: {
+        valueField: "status",
+        getLableClass: getLabelClass,
+      },
+    },
+    {
+      name: "Action",
+      width:"10%",
+      colType: GridColumnType.ACTION,
+      defaultAction: {
+        allowEdit: true,
+        allowDisable: false,
+      },
+    },
+  ],
+};
+

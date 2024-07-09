@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
+using OMS.Domain.Entities.API.Response.Address;
+using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -124,6 +126,32 @@ namespace OMS.API.Controllers
             var addiItem = await _serviceManager.customerAccoutingSettingsService.AddDeliveryMethods(requestData, CurrentUserId);
             return APISucessResponce(addiItem);
         }
+
+
+        [HttpGet("GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId")]
+        public async Task<IActionResult> GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(int customerDeliveryCarrierId)
+        {
+            if (customerDeliveryCarrierId > 0)
+            {
+                GetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse responseData = await _serviceManager.customerAccoutingSettingsService.GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(customerDeliveryCarrierId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(customerDeliveryCarrierId);
+        }
+
+        [HttpGet("GetCustomerDeliveryMethodByCustomerDeliveryMethodId")]
+        public async Task<IActionResult> GetCustomerDeliveryMethodByCustomerDeliveryMethodId(int customerDeliveryMethodId)
+        {
+            if (customerDeliveryMethodId > 0)
+            {
+                GetCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse responseData = await _serviceManager.customerAccoutingSettingsService.GetCustomerDeliveryMethodByCustomerDeliveryMethodId(customerDeliveryMethodId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(customerDeliveryMethodId);
+        }
         #endregion
     }
 }
+
+
+

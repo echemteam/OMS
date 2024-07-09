@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../../../app/services/supplierAPI';
 import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
 import SwalAlert from '../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../services/toastService/ToastService';
-import { StaticStatus, StatusValue } from '../../../../../../common/features/Enums/StatusEnums';
 import Image from '../../../../../../components/image/Image';
 import { AppIcons } from '../../../../../../data/appIcons';
 import DropDown from '../../../../../../components/ui/dropdown/DropDrown';
@@ -13,8 +13,14 @@ import Buttons from '../../../../../../components/ui/button/Buttons';
 import DataLoader from '../../../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../../../components/ui/centerModel/CenterModel';
 import SupplierApproval from '../../supplierApproval/SupplierApproval';
+import { ErrorMessage } from '../../../../../../data/appMessages';
+import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import { securityKey } from '../../../../../../data/SecurityKey';
+import { StaticStatus, StatusValue } from '../../../../../../utils/Enums/StatusEnums';
 
 const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
+
   const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
@@ -29,6 +35,21 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
 
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
   const [updateSupplierInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
+
+  const { isResponsibleUser } = useContext(AddSupplierContext);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
+
+  useEffect(() => {
+    if (!isResponsibleUser) {
+      if (hasEditPermission.isViewOnly === true) {
+        setIsButtonDisable(true);
+      }
+      else {
+        setIsButtonDisable(false);
+      }
+    }
+  }, [hasEditPermission, isResponsibleUser])
 
   useEffect(() => {
     if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
@@ -53,18 +74,20 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
         case 3:
           setOptions(StaticStatus[StatusValue[statusId - 1].label]);
           break;
-          case 4:
-            setOptions([
-              { value: "4", label: "Freeze" },
-              { value: "3", label: "Approved" },
-            ]);
-            break;
-          case 5:
-            setOptions([
-              { value: "5", label: "Block" },
-              { value: "3", label: "Approved" },
-            ]);
-            break;
+        case 4:
+          setOptions([
+            { value: "4", label: "Freeze" },
+            { value: "3", label: "Approved" },
+            { value: "1", label: "Pending" },
+          ]);
+          break;
+        case 5:
+          setOptions([
+            { value: "5", label: "Block" },
+            { value: "3", label: "Approved" },
+            { value: "1", label: "Pending" },
+          ]);
+          break;
         case 6:
           setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
           break;
@@ -166,7 +189,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
       case "Block":
         return "badge-gradient-Blocked";
       case "Reject":
-        return "badge-gradient-Blocked";
+        return "badge-gradient-reject";
       case "Disable":
         return "badge-gradient-disabled";
       default:
@@ -192,6 +215,11 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
               </div>
             </div>
           </div>
+          <div className="field-desc">
+            <div className="inf-label">R-User</div>
+            <b>&nbsp;:&nbsp;</b>
+            <div className="info-desc">{supplierData?.responsibleUserName ? supplierData?.responsibleUserName : ErrorMessage.NotAvailabe}</div>
+          </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">Status</div>
             <b>&nbsp;:&nbsp;</b>
@@ -201,6 +229,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
                 value={selectedStatus}
                 onChange={handleStatusChange}
                 placeholder="Select Status"
+                isDisabled={isButtonDisable}
               />
             </div>
 
@@ -248,7 +277,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
           <div className="field-desc">
             <div className="inf-label">Tax Id</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.taxId}</div>
+            <div className="info-desc">{supplierData?.taxId ? supplierData?.taxId : ErrorMessage.NotAvailabe}</div>
           </div>
           <div className="field-desc">
             <div className="inf-label">Supplier Type</div>
@@ -268,7 +297,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
           <CenterModel
             showModal={showModal}
             handleToggleModal={handleToggleModal}
-            modalTitle={statusFeild + " " + "Reason"}
+            modalTitle={`${statusFeild} Reason`}
             modelSizeClass="w-50s"
           >
             <div className="row horizontal-form">

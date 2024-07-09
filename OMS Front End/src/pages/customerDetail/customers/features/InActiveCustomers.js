@@ -1,20 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import CardSection from '../../../../components/ui/card/CardSection';
 import MolGrid from '../../../../components/Grid/MolGrid';
 import CustomerListContext from '../../../../utils/ContextAPIs/Customer/CustomerListContext';
 import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../app/services/basicdetailAPI';
 import ToastService from '../../../../services/toastService/ToastService';
-import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
 import { securityKey } from '../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import CustomerApproval from '../../features/cutomerApproval/CustomerApproval';
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
-import { getAuthProps } from '../../../../lib/authenticationLibrary';
 import { encryptUrlData } from '../../../../services/CryptoService';
 import { useNavigate } from "react-router-dom";
 import SwalAlert from '../../../../services/swalService/SwalService';
+import { useSelector } from 'react-redux';
+import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
 
-export const InActiveCustomers = ({ statusId, configFile }) => {
+export const InActiveCustomers = ({ statusId, configFile , handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter }) => {
 
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
@@ -24,6 +25,7 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
   const [dataSource, setDataSource] = useState();
   const [customerId, setCustomerId] = useState();
   const { DataRef } = useContext(CustomerListContext);
+  const authState = useSelector((state) => state.auth);
   const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [
@@ -39,8 +41,8 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
         pageNumber: page.pageNumber,
         pageSize: page.pageSize,
       },
-      filters: { searchText: "" },
-      statusId: Array.isArray(statusId) ? statusId.join(",") : statusId
+      filters: { searchText: search },
+      statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId)
     };
     getCustomers(request);
   };
@@ -85,8 +87,7 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
         setDataSource(isListeData.dataSource);
-        const authData = getAuthProps();
-        const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authData.user.userID);
+        const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authState?.user?.userID);
         if (isResponsibleId) {
           setIsResponsibleUser(true);
           hasResponsibleUserhasAccess();
@@ -118,11 +119,18 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
         pageNumber: currentPageObject.pageNumber,
         pageSize: currentPageObject.pageSize,
       },
-      filters: { searchText: "" },
-      statusId: Array.isArray(statusId) ? statusId.join(",") : statusId
+      filters: { searchText: search },
+      statusId: selectedDrpvalues.length === 0 ? (Array.isArray(statusId) ? statusId.join(",") : String(statusId)) : (Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues))
     };
     getCustomers(request);
   };
+
+  useEffect(() => {
+    if (molGridRef.current) {
+      const currentPageObject = molGridRef.current.getCurrentPageObject();
+      getListApi(currentPageObject);
+    }
+  }, [search , selectedStatusOptions]);
 
   const approvalCheckList = (data) => {
     if (childRef.current) {
@@ -187,6 +195,17 @@ export const InActiveCustomers = ({ statusId, configFile }) => {
       <div className="row">
         <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
           <CardSection
+            searchInput={true}
+            handleChange={handleChange}
+            searchInputName="Search By Customer Name, Tax Id , Email Address"
+            searchFilter={searchStatusFilter ? true : false}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedOptions={selectedDrpvalues}
+            optionsValue={statusOptions}
+            isMultiSelect={true}
+            placeholder="Search by Status"
+            isCardSection={true}
+            isdropdownOpen={true}
           >
             <div className="row">
               <div className="col-md-12 table-striped">

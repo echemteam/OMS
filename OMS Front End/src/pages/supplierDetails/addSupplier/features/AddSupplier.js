@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CardSection from "../../../../components/ui/card/CardSection";
@@ -6,17 +7,17 @@ import { AppIcons } from "../../../../data/appIcons";
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import SupplierBasicDetail from "./supplierBasicDetail/SupplierBasicDetail";
 import SupplierContactDetail from "./supplierContactDetail/SupplierContactDetail";
-import { TabEnum } from "../../../../common/features/Enums/TabsEnums";
 import SuplierAddressDetails from "./supplierAddressDetail/SupplierAddressDetails";
 import { useUpdateSupplierStatusMutation } from "../../../../app/services/supplierAPI";
 import ToastService from "../../../../services/toastService/ToastService";
-import { StatusEnums } from "../../../../common/features/Enums/StatusEnums";
 import SupplierDocumentDetail from "../../suppliers/features/updateSupplierDetails/features/docuementsDetail/SupplierDocuementDetail";
+import { TabEnum } from "../../../../utils/Enums/enums";
+import { StatusEnums } from "../../../../utils/Enums/StatusEnums";
 
 
 const AddSupplier = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage, addSupplier, supplierId } = useContext(AddSupplierContext);
+  const { activeTab, movePreviewPage, addSupplier, supplierId } = useContext(AddSupplierContext);
 
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
 
@@ -34,7 +35,7 @@ const AddSupplier = () => {
     {
       label: "Address",
       subLabel: "Enter Supplier Address Details",
-      content: <SuplierAddressDetails isEditablePage={false}/>,
+      content: <SuplierAddressDetails isEditablePage={false} />,
       tab: TabEnum.Address
     },
     {
@@ -53,10 +54,10 @@ const AddSupplier = () => {
 
   useEffect(() => {
     if (isSuccessUpdateSupplierStatus && updateSupplierStatusData) {
-        ToastService.success(updateSupplierStatusData.errorMessage);
-        navigate("/Suppliers");
+      ToastService.success(updateSupplierStatusData.errorMessage);
+      navigate("/Suppliers");
     }
-}, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
+  }, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
 
   // const handleTabClick = (index) => {
   //   setActiveTab(index);
@@ -91,7 +92,7 @@ const AddSupplier = () => {
                     className={`step ${activeTab === index ? 'active' : ''}`}
                   >
                     <button className="step-button"
-                      // onClick={() => handleTabClick(index)}
+                    // onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">

@@ -7,36 +7,18 @@ namespace OMS.Domain.Entities.Entity.Customers
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int? CustomerId { get; set; }
-        public short? GroupTypeId { get; set; }
 
-        [Column("Name")]
-        public string? Name { get; set; }
-        [Column("TerritoryId")]
-        public short? TerritoryId { get; set; }
-
-        [Column("IsCompany")]
-        public bool? IsCompany { get; set; }
         [Column("RefCode")]
         public string? RefCode { get; set; }
 
         [Column("ListCode")]
         public string? ListCode { get; set; }
-        [Column("Website")]
-        public string? Website { get; set; }
         [Column("IndustryTypeId")]
         public short? IndustryTypeId { get; set; }
-        [Column("CountryId")]
-        public short? CountryId { get; set; }
-        [Column("TaxId")]
-        public string? TaxId { get; set; }
         [Column("StatusId")]
         public short? StatusId { get; set; }
-        [Column("EmailAddress")]
-        public string? EmailAddress { get; set; }
         [Column("Note")]
         public string? Note { get; set; }
-
         [Column("ApprovedAt")]
         public DateTime? ApprovedAt { get; set; }
         [Column("ApprovedBy")]
@@ -47,8 +29,6 @@ namespace OMS.Domain.Entities.Entity.Customers
         public bool? IsDeleted { get; set; }
         [Column("InActiveReason")]
         public string? InActiveReason { get; set; }
-        [Column("IsBuyingForThirdParty")]
-        public bool? IsBuyingForThirdParty { get; set; }
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]

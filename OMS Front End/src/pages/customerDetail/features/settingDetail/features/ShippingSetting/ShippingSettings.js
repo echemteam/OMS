@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { shippingFormData } from "./config/ShippingConfig";
@@ -13,6 +14,7 @@ import { securityKey } from "../../../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { OurAccountGridConfig } from "../DeliveryMethod/config/DevliveryConfig";
 import { AccountGridConfig } from "../Carrier/config/CarrierConfig";
+import { setOptionFieldSetting } from "../../../../../../utils/FieldsSetting/SetFieldSetting";
 
 //** Component's */
 const ManageCarrier = React.lazy(() => import("../Carrier/ManageCarrier"));
@@ -57,16 +59,11 @@ const ShippingSettings = ({ isEditablePage }) => {
   useEffect(() => {
     getAllAccountType();
     handleGetDefaultList();
-  }, []);
+  }, [customerId]);
 
   useEffect(() => {
     if (!isAccountTypeFetching && isAccountTypeSuccess && isAccountTypeData) {
-      const getData = isAccountTypeData.map((item) => ({
-        value: item.deliveryAccountId,
-        label: item.name,
-      }));
-      const dropdownField = shippingFormData.formFields.find((item) => item.dataField === "deliveryAccountId");
-      dropdownField.fieldSetting.options = getData;
+      setOptionFieldSetting(isAccountTypeData, 'deliveryAccountId', 'name', shippingFormData, 'deliveryAccountId');
     }
   }, [isAccountTypeFetching, isAccountTypeSuccess, isAccountTypeData]);
 
@@ -104,57 +101,33 @@ const ShippingSettings = ({ isEditablePage }) => {
 
   const handleChangeDropdown = (data, dataField) => {
     if (dataField === 'deliveryAccountId') {
-      if (accountTypeId > 0) {
-        confirm("Change Shipping Methods?",
-          "Are you sure you want Change the Shipping Method?",
-          "Yes", "No"
-        ).then((confirmed) => {
-          let request = {
-            customerId: customerId,
-            deliveryAccountId: data.value,
+      confirm(
+        accountTypeId > 0 ? "Change Shipping Methods?" : "Shipping Methods?",
+        accountTypeId > 0 ? "Are you sure you want to Change the Shipping Method?" : "Are you sure you want to Add Default Shipping Method?",
+        "Yes", "No"
+      ).then((confirmed) => {
+        let request = {
+          customerId: customerId,
+          deliveryAccountId: data.value
+        }
+        if (confirmed) {
+          let defaultRequest = {
+            ...request,
             isByDefault: true
           }
-          if (confirmed) {
-            setIsDefaultValue(true);
-            addDefaultShippings(request);
-            setAccountTypeId(data.value);
-          } else if (!confirmed) {
-            let request = {
-              customerId: customerId,
-              deliveryAccountId: data.value,
-              isByDefault: false
-            }
-            setIsDefaultValue(false);
-            addDefaultShippings(request);
-            setAccountTypeId(data.value);
+          setIsDefaultValue(true);
+          addDefaultShippings(defaultRequest);
+          setAccountTypeId(data.value);
+        } else if (!confirmed) {
+          let defaultRequest = {
+            ...request,
+            isByDefault: false
           }
-        });
-      } else {
-        confirm("Shipping Methods?",
-          "Are you sure you want to Add Default Shipping Method?",
-          "Yes", "No"
-        ).then((confirmed) => {
-          let request = {
-            customerId: customerId,
-            deliveryAccountId: data.value,
-            isByDefault: true
-          }
-          if (confirmed) {
-            setIsDefaultValue(true);
-            addDefaultShippings(request);
-            setAccountTypeId(data.value);
-          } else if (!confirmed) {
-            let request = {
-              customerId: customerId,
-              deliveryAccountId: data.value,
-              isByDefault: false
-            }
-            setIsDefaultValue(false);
-            addDefaultShippings(request);
-            setAccountTypeId(data.value);
-          }
-        });
-      }
+          setIsDefaultValue(false);
+          addDefaultShippings(defaultRequest);
+          setAccountTypeId(data.value);
+        }
+      });
     }
   }
   const formActionHandler = {

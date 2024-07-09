@@ -17,26 +17,21 @@ export const BasicDetailContextProvider = ({ children }) => {
     //** */
 
     //** Shipping Method's */
-    const [deliveryMethodsList, setDeliveryMethodsList] = useState([]);
     const [carriersList, setCarriersList] = useState([]);
+    const [deliveryMethodsList, setDeliveryMethodsList] = useState([]);
     //** */
 
     //** Using for Contact  */
-    const [contactId, setContactId] = useState(0);
-    const [contactNumbers, setContactNumbers] = useState();
+    // const [contactId, setContactId] = useState(0);
     const [phoneNumberData, setPhoneNumberData] = useState();
     const [emailAddressData, setEmailAddressData] = useState();
-    const [contactMainModal, setContactMainModal] = useState(false);
-    //** */
-
-    //** Set Cuntries Data */
-    const [allCountries, setAllCountries] = useState(false);
     //** */
 
     const [isResponsibleUser, setIsResponsibleUser] = useState(true);
 
     //** Use for Tab's */
     const nextRef = useRef(null);
+    const settingRef = useRef(null);
     const [activeTab, setActiveTab] = useState(0);
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
@@ -47,7 +42,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     //** */
 
     //** Use for Move next step */
-    const addCustomer = () => {
+    const addCustomer = (data) => {
         if (customerId > 0) {
             setActiveTab((prev) => prev + 1);
         }
@@ -56,14 +51,19 @@ export const BasicDetailContextProvider = ({ children }) => {
                 nextRef.current.handleAddBasicDetails();
             }
         }
+        if (data === 5) {
+            if (settingRef.current) {
+                settingRef.current.onhandleEdit();
+            }
+        }
     }
     //** */
 
     return (
         <BasicDetailContext.Provider value={{
-            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, contactMainModal, setPhoneNumberData,
-            phoneNumberData, setAllCountries, allCountries, setMainId, mainId, contactId, setContactId, contactNumbers, setContactNumbers, setContactMainModal,
-            emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList,
+            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData,
+            phoneNumberData, setMainId, mainId,
+            emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
             setIsResponsibleUser, isResponsibleUser
         }}>
             {children}

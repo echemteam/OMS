@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
@@ -5,13 +6,13 @@ import Image from "../../../../../components/image/Image";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import ToastService from "../../../../../services/toastService/ToastService";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
-import { documentTransformData } from "../../../../../utils/TransformData/TransformAPIData";
+import { documentTransformData, supplierDocumentTransformData } from "../../../../../utils/TransformData/TransformAPIData";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Service's */
 import SwalAlert from "../../../../../services/swalService/SwalService";
 
 
-const ManageDocumentList = forwardRef(({ mainId, downloadDocument, deleteDocumentsById, getDocumentsById, childRef, SecurityKey, isEditablePage }) => {
+const ManageDocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDocumentsById, getDocumentsById, childRef, SecurityKey, isEditablePage }) => {
 
     //** State */
     const { confirm } = SwalAlert();
@@ -19,15 +20,19 @@ const ManageDocumentList = forwardRef(({ mainId, downloadDocument, deleteDocumen
     const [showDeleteButton, setShowDeleteButton] = useState(true);
     const [showDownalodButton, setShowDownalodButton] = useState(true);
 
-    //** API Call's */
+    /* NOTE:- 
+      API Call
+      The "downloadDocument","deleteDocumentsById","getDocumentsById" function is passed dynamically as a prop.
+      This allows the DocumentDetails component to be reused with different API call functions.
+    */
     const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] = deleteDocumentsById();
     const [getList, { isFetching: isListFetching, isSuccess: isListSucess, data: isListData }] = getDocumentsById();
     const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = downloadDocument();
 
     //** UseEffect */
     useEffect(() => {
-        mainId && getList(mainId);
-    }, []);
+        onGetData();
+    }, [keyId]);
 
     useEffect(() => {
         if (isEditablePage && SecurityKey) {
@@ -54,7 +59,7 @@ const ManageDocumentList = forwardRef(({ mainId, downloadDocument, deleteDocumen
 
     useEffect(() => {
         if (isListSucess && isListData && !isListFetching) {
-            const modifyData = documentTransformData(isListData);
+            const modifyData = isSupplier ? supplierDocumentTransformData(isListData) : documentTransformData(isListData);
             setDocumentListData(modifyData);
         }
     }, [isListSucess, isListData, isListFetching]);
@@ -79,25 +84,25 @@ const ManageDocumentList = forwardRef(({ mainId, downloadDocument, deleteDocumen
     //** Handle Change's */
     const handleDownload = (name) => {
         let request = {
-            folderName: 'Customer',
-            mainId: mainId,
+            folderName: isSupplier ? 'SupplierDocuements' : 'Customer',
+            mainId: keyId,
             fileName: name
         }
         Downalod(request);
     };
-    const handleDelete = (customerDocumentId) => {
+    const handleDelete = (documentId) => {
         confirm("Delete?",
             "Are you sure you want to Delete?",
             "Delete", "Cancel"
         ).then((confirmed) => {
             if (confirmed) {
-                Delete(customerDocumentId);
+                Delete(documentId);
             }
         });
     };
 
     const onGetData = () => {
-        mainId && getList(mainId);
+        keyId && getList(keyId);
     };
 
     //** Use Imperative Handle  */
@@ -134,7 +139,7 @@ const ManageDocumentList = forwardRef(({ mainId, downloadDocument, deleteDocumen
                                                                     </span>
                                                                     : null}
                                                                 {showDownalodButton ?
-                                                                    <span className="action-icon" onClick={() => handleDelete(data.customerDocumentId)} >
+                                                                    <span className="action-icon" onClick={() => handleDelete(isSupplier ? data.supplierDocumentId : data.customerDocumentId)} >
                                                                         <Image imagePath={AppIcons.deleteIcon} alt="Delete Icon" />
                                                                     </span>
                                                                     : null}

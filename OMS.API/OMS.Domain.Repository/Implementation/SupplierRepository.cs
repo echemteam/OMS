@@ -1,5 +1,3 @@
-﻿using OMS.Domain.Entities.API.Request.Supplier;
-using OMS.Domain.Entities.API.Response.Customers;
 ﻿using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Domain.Entities.API.Response.Supplier;
@@ -27,6 +25,7 @@ namespace OMS.Domain.Repository.Implementation
         const string CHECKSUPPLIERNAMEEXIST = "CheckSupplierNameExist";
         const string GETSUPPLIERAUDITHISTORYBYSUPPLIERID = "GetSupplierAuditHistoryBySupplierId";
         const string ADDEDITCONTACTFORSUPPLIER = "AddEditContactForSupplier";
+        const string GETSUPPLIERDETAILSBYSUPPLIERNAME = "GetSupplierDetailsBySupplierName";
         #endregion
 
         public SupplierRepository(DapperContext dapperContext) : base(dapperContext)
@@ -130,7 +129,7 @@ namespace OMS.Domain.Repository.Implementation
                 supplier.Name,
             }, CommandType.StoredProcedure);
         }
-    
+
         public async Task<EntityList<GetSupplierAuditHistoryBySupplierIdResponse>> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest)
         {
             return await _context.GetListSP<GetSupplierAuditHistoryBySupplierIdResponse>(GETSUPPLIERAUDITHISTORYBYSUPPLIERID, new
@@ -138,7 +137,10 @@ namespace OMS.Domain.Repository.Implementation
                 queryRequest.SupplierId,
                 queryRequest.Pagination!.PageNumber,
                 queryRequest.Pagination.PageSize,
-               
+                queryRequest.EventName,
+                queryRequest.UserId,
+                queryRequest.ToDate,
+                queryRequest.FromDate
             }, true);
         }
 
@@ -153,6 +155,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.IsPrimary,
                 createdBy
             }, CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetSupplierDetailsBySupplierNameResponse>> GetSupplierDetailsBySupplierName(string supplierName)
+        {
+            List<GetSupplierDetailsBySupplierNameResponse> supplierDetails = await _context.GetList<GetSupplierDetailsBySupplierNameResponse>(GETSUPPLIERDETAILSBYSUPPLIERNAME, new
+            {
+                supplierName
+            }, CommandType.StoredProcedure);
+            return supplierDetails;
         }
         #endregion
     }

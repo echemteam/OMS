@@ -32,8 +32,6 @@ const UploadFiles = ({ uploadFilesTypeId, handleToggleModal }) => {
                 }, {}),
                 storagePath: uploadFilesInfo.storagePath || "Document"
             };
-
-            console.log("Request Data: ", requestData);
         }
     };
 

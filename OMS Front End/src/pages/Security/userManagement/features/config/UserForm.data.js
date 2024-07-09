@@ -1,4 +1,3 @@
-import { securityKey } from "../../../../../data/SecurityKey";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
@@ -13,21 +12,6 @@ export const userFormData = {
     password: "",
   },
   formFields: [
-    {
-      id: "userName",
-      lable: "User Name",
-      Field_Name: "User Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "userName",
-      fieldSetting: {
-        placeholder: "Enter User Name",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl- col-xl-6 col-md-6 mb-2",
-      },
-    },
     {
       id: "firstName",
       lable: "First Name",
@@ -56,6 +40,21 @@ export const userFormData = {
       validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
+      },
+    },
+    {
+      id: "userName",
+      lable: "User Name",
+      Field_Name: "User Name",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "userName",
+      fieldSetting: {
+        placeholder: "Enter User Name",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl- col-xl-6 col-md-6 mb-2",
       },
     },
     {

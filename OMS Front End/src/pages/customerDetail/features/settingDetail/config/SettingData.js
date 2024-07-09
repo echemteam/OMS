@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const SettingFormData = {
   name: "Setting Form",
-  initialState: { paymentTermId: "", creditLimit: "", paymentMethodId: "", billingCurrency: "", invoiceSubmissionInstruction: "" },
+  initialState: { paymentTermId: "", creditLimit: 10000, paymentMethodId: "", billingCurrency: "USD", invoiceSubmissionInstruction: "" },
   formFields: [
     {
       id: "paymentTermId",

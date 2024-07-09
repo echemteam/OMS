@@ -3,7 +3,6 @@ import CardSection from '../../../../components/ui/card/CardSection';
 import MolGrid from '../../../../components/Grid/MolGrid';
 import SupplierContext from "../../../../utils/ContextAPIs/Supplier/SupplierListContext"
 import ToastService from '../../../../services/toastService/ToastService';
-import { StatusEnums } from '../../../../common/features/Enums/StatusEnums';
 import { useGetSuppliersMutation, useUpdateSupplierStatusMutation } from '../../../../app/services/supplierAPI';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { securityKey } from '../../../../data/SecurityKey';
@@ -11,6 +10,9 @@ import SupplierApproval from './supplierApproval/SupplierApproval';
 import { encryptUrlData } from '../../../../services/CryptoService';
 import { useNavigate } from 'react-router-dom';
 import SwalAlert from '../../../../services/swalService/SwalService';
+import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { useSelector } from 'react-redux';
+import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
 
 export const InActiveSuppliers = ({ statusId, configFile }) => {
 
@@ -22,6 +24,8 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
     const [dataSource, setDataSource] = useState();
     const { DataRef } = useContext(SupplierContext);
     const [supplierId, setSupplierId] = useState();
+    const authState = useSelector((state) => state.auth);
+    const { isResponsibleUser, setIsResponsibleUser } = useContext(AddSupplierContext);
 
     const [
         getSuppliers,
@@ -43,6 +47,7 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
     };
 
     useEffect(() => {
+        if (!isResponsibleUser) {
         const actionColumn = configFile?.columns.find(column => column.name === "Action");
         if (actionColumn) {
 
@@ -50,20 +55,43 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
             const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
             const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
 
-            if (actionColumn.defaultAction.allowActiveCustomer) {
-                actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+            if (actionColumn.defaultAction.allowActiveSupplier) {
+                actionColumn.defaultAction.allowActiveSupplier = hasActive?.hasAccess;
             } else if (actionColumn.defaultAction.allowUnblocked) {
                 actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
             } else if (actionColumn.defaultAction.allowUnfreeze) {
                 actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
             }
         }
+    }
     }, [configFile]);
+
+    const hasResponsibleUserhasAccess = () => {
+        const actionColumn = configFile?.columns.find((column) => column.name === "Action");
+        if (actionColumn) {
+          if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
+            actionColumn.defaultAction.allowActiveCustomer = true;
+          }
+          if (actionColumn.defaultAction.hasOwnProperty("allowUnblocked")) {
+            actionColumn.defaultAction.allowUnblocked = true;
+          }
+          if (actionColumn.defaultAction.hasOwnProperty('allowUnfreeze')) {
+            actionColumn.defaultAction.allowUnfreeze = true;
+          }
+        }
+      }
 
     useEffect(() => {
         if (isListSuccess && isListeData) {
             if (isListeData) {
                 setDataSource(isListeData.dataSource);
+                const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authState?.user?.userID);
+                if (isResponsibleId) {
+                  setIsResponsibleUser(true);
+                  hasResponsibleUserhasAccess();
+                } else {
+                  setIsResponsibleUser(false);
+                }
             }
             if (isListeData.totalRecord) {
                 setTotalRowCount(isListeData.totalRecord);
@@ -106,7 +134,7 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
         // approvalCheckList(data)
         confirm(
             "Warning?",
-            `Are you sure you want to change the supplier status to Approved?`,
+            `Are you sure you want to unfreeze and change the status to approved?`,
             "Yes",
             "Cancel"
         ).then((confirmed) => {
@@ -124,7 +152,7 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
         // approvalCheckList(data)
         confirm(
             "Warning?",
-            `Are you sure you want to change the supplier status to Approved?`,
+            `Are you sure you want to unfreeze and change the status to approved?`,
             "Yes",
             "Cancel"
         ).then((confirmed) => {
@@ -149,7 +177,7 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
 
     const actionHandler = {
         UNFREEZE: handleUnfreeze,
-        ACTIVECUSTOMER: handleActiveSupplier,
+        ACTIVESUPPLIER: handleActiveSupplier,
         UNBLOCKED: handleUnBlock,
         EDIT: handleEditClick,
     };

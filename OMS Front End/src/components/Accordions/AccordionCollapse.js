@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Accordion } from "react-bootstrap";
 import { CardSectionDetails } from "./AccordionCollapse.Data";
@@ -8,7 +9,7 @@ const ContactCard = React.lazy(() =>
   )
 );
 
-const AccordionCollapse = ({ accordionList, contentTypeId, handleEdit }) => {
+const AccordionCollapse = ({ accordionList, contentTypeId, handleEdit, showEditIcon }) => {
   const [activeKey, setActiveKey] = useState([]);
   const [customCardDetails, setCustomCardDetails] = useState();
 
@@ -29,6 +30,7 @@ const AccordionCollapse = ({ accordionList, contentTypeId, handleEdit }) => {
               childData={childData}
               handleEdit={handleEdit}
               cardDetails={cardDetails}
+              showEditIcon={showEditIcon}
             />
           );
         default:

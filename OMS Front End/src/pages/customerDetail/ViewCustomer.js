@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "./ViewCustomer.scss";
 import CardSection from "../../components/ui/card/CardSection";
@@ -7,16 +8,13 @@ import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailCont
 import { useLazyGetCustomersBasicInformationByIdQuery } from "../../app/services/basicdetailAPI";
 import { useParams } from "react-router-dom";
 import { decryptUrlData } from "../../services/CryptoService";
-import { HistoryDetail } from "./features/HistoryDetail/HistoryDetail";
 import { useNavigate } from "react-router-dom/dist";
 import Button from "../../components/ui/button/Buttons";
-import { getAuthProps } from "../../lib/authenticationLibrary";
 import { securityKey } from "../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../utils/AuthorizeNavigation/authorizeNavigation";
+import { useSelector } from "react-redux";
+import { CustomerHistoryDetail } from "./features/HistoryDetail/CustomerHistoryDetail";
 
-const NotesDetail = React.lazy(() =>
-  import("./features/notesDetail/NotesDetail")
-);
 const RenderTabs = React.lazy(() =>
   import("../../components/ui/tabs/RenderTabs")
 );
@@ -38,25 +36,23 @@ const CustomerDocumentDetails = React.lazy(() =>
 const CustomerContactDetails = React.lazy(() =>
   import("./features/contactDetail/Contact/CustomerContactDetails")
 );
+const ManageCustomerNotes = React.lazy(() =>
+  import("./features/notesDetail/ManageCustomerNotes")
+);
+
 
 const ViewCustomer = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const authState = useSelector((state) => state.auth);
   const pageId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
-  const { setCustomerId, customerId, isResponsibleUser, setIsResponsibleUser } =
-    useContext(BasicDetailContext);
+  const { setCustomerId, customerId, isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
-  const [
-    getCustomersBasicInformationById,
-    {
-      isFetching: isGetCustomersBasicInformationByIdFetching,
-      isSuccess: isGetCustomersBasicInformationById,
-      data: GetCustomersBasicInformationByIdData,
-    },
-  ] = useLazyGetCustomersBasicInformationByIdQuery();
+  const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById,
+    data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
 
   const hasNotePermission = hasFunctionalPermission(securityKey.CUSTOMERNOTES);
   const hasAddressPermission = hasFunctionalPermission(
@@ -81,9 +77,8 @@ const ViewCustomer = () => {
       GetCustomersBasicInformationByIdData &&
       !isGetCustomersBasicInformationByIdFetching
     ) {
-      const authData = getAuthProps();
       if (
-        authData.user.userID !==
+        authState?.user?.userID !==
         GetCustomersBasicInformationByIdData.responsibleUserId
       ) {
         setIsResponsibleUser(false);
@@ -122,9 +117,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Address",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
-          {/* {hasAddressPermission.hasAccess ? */}
           <CustomerAddressDetails isEditablePage={true} />
-          {/* : null} */}
         </div>
       ),
       isVisible: hasAddressPermission.hasAccess,
@@ -133,9 +126,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
-          {/* {hasContactPermission.hasAccess ? */}
           <CustomerContactDetails isEditablePage={true} />
-          {/* : null} */}
         </div>
       ),
       isVisible: hasContactPermission.hasAccess,
@@ -144,9 +135,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Settings",
       component: (
         <div className="mt-2">
-          {/* {hasSettingPermission.hasAccess ? */}
           <SettingDetails isEditablePage={true} />
-          {/* : null} */}
         </div>
       ),
       isVisible: hasSettingPermission.hasAccess,
@@ -155,9 +144,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          {/* {hasDocumentPermission.hasAccess ? */}
           <CustomerDocumentDetails isEditablePage={true} />
-          {/* : null} */}
         </div>
       ),
       isVisible: hasDocumentPermission.hasAccess,
@@ -166,9 +153,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Notes",
       component: (
         <div className="mt-2">
-          {/* {hasNotePermission.hasAccess ? */}
-          <NotesDetail isEditablePage={true} />
-          {/* : null} */}
+          <ManageCustomerNotes isEditablePage={true} />
         </div>
       ),
       isVisible: hasNotePermission.hasAccess,
@@ -177,9 +162,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "History",
       component: (
         <div className="">
-          {/* {hasHistoryPermission.hasAccess ? */}
-          <HistoryDetail />
-          {/* : null} */}
+          <CustomerHistoryDetail isEditablePage={true} />
         </div>
       ),
       isVisible: hasHistoryPermission.hasAccess,
@@ -194,7 +177,7 @@ const ViewCustomer = () => {
     <>
       <div className="card-bottom-m-0">
         <div className="row">
-          <div className="col-xxl-4 col-xl-4 col-md-5 col-12 basic-left-part customer-desc-left-sec">
+          <div className="col-xxl-3 col-xl-3 col-md-4 col-12 basic-left-part customer-desc-left-sec">
             <CardSection>
               <CustomerDetails
                 editClick={handleToggleModal}
@@ -205,7 +188,7 @@ const ViewCustomer = () => {
               />
             </CardSection>
           </div>
-          <div className="col-xxl-8 col-xl-8 col-md-7 col-12 other-info-tab">
+          <div className="col-xxl-9 col-xl-9 col-md-8 col-12 other-info-tab">
             <Button
               buttonTypeClassName="back-button btn dark-btn"
               onClick={handleBackClick}

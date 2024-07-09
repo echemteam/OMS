@@ -21,7 +21,7 @@ export const addEditCarrierFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2",
+                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 label-h-0",
             },
         },
         {
@@ -37,7 +37,7 @@ export const addEditCarrierFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-3",
+                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-3 label-h-0",
             },
         },
         {

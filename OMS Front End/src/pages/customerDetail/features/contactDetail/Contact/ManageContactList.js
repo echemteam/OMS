@@ -10,7 +10,7 @@ const AccordionCollapse = React.lazy(() =>
   import("../../../../../components/Accordions/AccordionCollapse")
 );
 
-const ManageContactList = ({ handleEdit, modifyContactData, isLoading }) => {
+const ManageContactList = ({ handleEdit, modifyContactData, isLoading, showEditIcon }) => {
   const hasData =
     modifyContactData &&
     Object.values(modifyContactData).some(
@@ -26,6 +26,7 @@ const ManageContactList = ({ handleEdit, modifyContactData, isLoading }) => {
               accordionList={modifyContactData}
               contentTypeId={contentType.CONTACT}
               handleEdit={handleEdit}
+              showEditIcon={showEditIcon}
             />
           ) : (
             <NoRecordFound />

@@ -1,19 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { Message } from "../Util/ContactMessages";
 import { deleteData } from "../Util/ContactEmailAddressUtil";
+import { addEditContactsFormData } from "./config/AddEditContactsForm.data";
+import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Service's */
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
-import { useDeleteContactPhoneMutation, useGetAllPhoneTypesQuery, useLazyGetPhoneByContactIdQuery } from "../../../../../app/services/phoneNumberAPI";
-import { addEditContactsFormData } from "./config/AddEditContactsForm.data";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery, useLazyGetPhoneByContactIdQuery } from "../../../../../app/services/phoneNumberAPI";
+import { setOptionFieldSetting } from "../../../../../utils/FieldsSetting/SetFieldSetting";
 //** Component's */
 const ContactNumberList = React.lazy(() => import("./ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./AddEditContactNumber"));
 
-const ManageContactNumbers = ({ onGetContactList , isSupplier }) => {
+const ManageContactNumbers = ({ onGetContactList, isSupplier }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -24,25 +27,29 @@ const ManageContactNumbers = ({ onGetContactList , isSupplier }) => {
     const { contactId, setPhoneNumberData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     //** API Call's */
-    const [getList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetContactData }] = useLazyGetPhoneByContactIdQuery();
+    const [getList, { isFetching: isGetContactFetching }] = useLazyGetPhoneByContactIdQuery();
+    const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: isCountriesData }] = useLazyGetAllCountriesQuery();
+    const [getPhoneTypes, { isSuccess: isGetAllPhoneTypesSucess, data: isPhoneTypesData }] = useLazyGetAllPhoneTypesQuery();
     const [deletePhoneNumber, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactPhoneMutation();
-    const { data, isFetching, isSuccess, isError } = useGetAllPhoneTypesQuery();
 
     //** UseEffect */
     useEffect(() => {
         contactId && getList(contactId);
+        getPhoneTypes();
+        getAllCountries();
     }, [contactId]);
 
     useEffect(() => {
-        if (isSuccess && data) {
-            const getData = data.map(item => ({
-                value: item.phoneTypeId,
-                label: item.type
-            }))
-            const dropdownField = addEditContactsFormData.formFields.find(item => item.dataField === "phoneTypeId");
-            dropdownField.fieldSetting.options = getData;
+        if (isGetAllCountriesSucess && isCountriesData) {
+            setOptionFieldSetting(isCountriesData, 'countryId', 'phoneCode', addEditContactsFormData, 'phoneCode');
         }
-    }, [isSuccess, data])
+    }, [isGetAllCountriesSucess, isCountriesData]);
+
+    useEffect(() => {
+        if (isGetAllPhoneTypesSucess && isPhoneTypesData) {
+            setOptionFieldSetting(isPhoneTypesData, 'phoneTypeId', 'type', addEditContactsFormData, 'phoneTypeId');
+        }
+    }, [isGetAllPhoneTypesSucess, isPhoneTypesData])
 
     useEffect(() => {
         if (isDeleteSucess && isDeleteData && !isDeleteFetching) {
@@ -97,7 +104,8 @@ const ManageContactNumbers = ({ onGetContactList , isSupplier }) => {
         <React.Fragment>
             <ContactNumberList isSupplier={isSupplier} molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} isLoading={isGetContactFetching} />
             {showModal && (
-                <AddEditContactNumber isSupplier={isSupplier} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} editFormData={editFormData} isEdit={isEdit} />
+                <AddEditContactNumber isSupplier={isSupplier} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal}
+                    editFormData={editFormData} isEdit={isEdit} />
             )}
         </React.Fragment>
     )

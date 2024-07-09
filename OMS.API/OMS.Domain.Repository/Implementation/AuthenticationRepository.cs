@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.Entity.User;
+﻿using OMS.Domain.Entities.Entity.Roles;
+using OMS.Domain.Entities.Entity.User;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
@@ -10,6 +11,7 @@ namespace OMS.Domain.Repository.Implementation
     {
         #region SP
         const string GETUSERBYUSERNAME = "GetUserByUserName";
+        const string GETUSERROLES = "GetUserRoles";
         #endregion
 
         #region Constructor
@@ -24,6 +26,14 @@ namespace OMS.Domain.Repository.Implementation
             UserDTO userDTO = await _context.GetFrist<UserDTO>(GETUSERBYUSERNAME, new
             {
                 userName
+            }, CommandType.StoredProcedure);
+            return userDTO;
+        }
+        public async Task<BaseRolesDTO> GetUserRoles(short? UserId)
+        {
+            BaseRolesDTO userDTO = await _context.GetFrist<BaseRolesDTO>(GETUSERROLES, new
+            {
+                UserId
             }, CommandType.StoredProcedure);
             return userDTO;
         }

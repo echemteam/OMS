@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Supplier;
+using OMS.Domain.Entities.API.Response.Customers;
+using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -85,6 +87,17 @@ namespace OMS.API.Controllers
         {
             var supplierAuditHistory = await _serviceManager.supplierServices.GetSupplierAuditHistoryBySupplierId(queryRequest);
             return APISucessResponce<object>(supplierAuditHistory);
+        }
+
+        [HttpGet("GetSupplierDetailsBySupplierName")]
+        public async Task<IActionResult> GetSupplierDetailsBySupplierName(string supplierName)
+        {
+            if (supplierName != null)
+            {
+                List<GetSupplierDetailsBySupplierNameResponse> responseData = await _serviceManager.supplierServices.GetSupplierDetailsBySupplierName(supplierName).ConfigureAwait(true);
+                return APISucessResponce<object>(responseData);
+            }
+            return APISucessResponce(supplierName);
         }
         #endregion
     }
