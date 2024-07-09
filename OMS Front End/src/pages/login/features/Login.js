@@ -40,7 +40,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (loginSuccess && authData) {
       if (authData.isAuthenticated === false) {
-        ToastService.error("Invalid Credentials")
+        ToastService.error(authData.message)
       }
       else if (authData.isAuthenticated === true) {
         dispatch(authentication(authData));
