@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { addEditCarrierFormData } from "./config/CarrierConfig";
@@ -14,13 +15,12 @@ const AddEditCarrier = React.lazy(() => import("./feature/AddEditCarrier"));
 
 const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton }) => {
 
-    const childRef = useRef();
     const molGridRef = useRef();
     const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [editFormData, setEditFormData] = useState();
     const { carriersList } = useContext(BasicDetailContext);
+    const [deliveryCarrierId, setDeliveryCarrierId] = useState();
     const { data, isFetching, isSuccess } = useGetAllDeliveryCarriersQuery();
 
     const [deleteCarrier, { isSuccess: isDeleteSuccess, data: isDeletData }] = useDeleteCustomerDeliveryCarriersByIdMutation();
@@ -60,7 +60,7 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton })
     const handleEditModal = (data) => {
         setShowModal(!showModal);
         setIsEdit(true);
-        setEditFormData(data)
+        setDeliveryCarrierId(data.customerDeliveryCarrierId);
     }
 
     const handleDeleteClick = (data) => {
@@ -84,10 +84,10 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton })
     return (
         <>
             <CarrierList molGridRef={molGridRef} collectAccountData={carriersList} actionHandler={actionHandler}
-                handleToggleModal={handleToggleModal} isGetDataLoading={isGetDataLoading} isShowButton={isShowButton}/>
+                handleToggleModal={handleToggleModal} isGetDataLoading={isGetDataLoading} isShowButton={isShowButton} />
             {showModal && (
-                <AddEditCarrier handleToggleModal={handleToggleModal} showModal={showModal} editFormData={editFormData} onSuccess={onSuccess}
-                    isEdit={isEdit} childRef={childRef} />
+                <AddEditCarrier handleToggleModal={handleToggleModal} showModal={showModal} deliveryCarrierId={deliveryCarrierId} onSuccess={onSuccess}
+                    isEdit={isEdit} />
             )}
         </>
     )

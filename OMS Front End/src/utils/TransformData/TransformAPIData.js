@@ -4,16 +4,7 @@ import { FileTypeIcons } from "../../pages/customerDetail/features/documentsDeta
 export const contactCustomerTransformData = (data) => {
     return data.reduce((acc, item) => {
         const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit, isPrimary } = item;
-        const modifyPhoneNumberList = phoneNumberLsit.map((item, index) => ({
-            ...item,
-            id: index + 1,
-            extension: item.extension === 0 ? '-' : item.extension
-        }));
-        const modifyEmailAddressLst = emailAddressLst.map((item, index) => ({
 
-            ...item,
-            id: index + 1
-        }));
         const emailAddress = emailAddressLst.map((item) => ({
             emailAddres: item.emailAddress,
             isPrimary: item.isPrimary
@@ -35,9 +26,7 @@ export const contactCustomerTransformData = (data) => {
                 emailAddress,
                 phoneNumber,
                 isPrimary
-            },
-            emailAddressLst: modifyEmailAddressLst,
-            phoneNumberLsit: modifyPhoneNumberList
+            }
         };
 
         if (!acc[type]) {

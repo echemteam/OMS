@@ -1,8 +1,8 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { ApprovalEnum } from "../../../../common/features/Enums/ApprovalEnums";
 import { useGetValidateCheckListMutation } from "../../../../app/services/ApprovalAPI";
 import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
 import ApprovalValidateData from "../../../../components/ApprovalCheckList/approvalValidateData/ApprovalValidateData";
+import { ApprovalEnum } from "../../../../utils/Enums/enums";
 
 const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval, isDetailPage }) => {
 

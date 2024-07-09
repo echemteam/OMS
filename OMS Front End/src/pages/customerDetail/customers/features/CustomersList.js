@@ -21,16 +21,13 @@ import { reasonData } from "../config/CustomerData";
 import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
-import {
-  StatusEnums,
-  StatusFeild,
-} from "../../../../common/features/Enums/StatusEnums";
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import CustomerApproval from "../../features/cutomerApproval/CustomerApproval";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
 import { useSelector } from "react-redux";
+import { StatusEnums, StatusFeild } from "../../../../utils/Enums/StatusEnums";
 
 export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter}) => {
 

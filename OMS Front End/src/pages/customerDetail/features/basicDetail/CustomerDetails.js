@@ -5,7 +5,6 @@ import { AppIcons } from "../../../../data/appIcons";
 import CopyText from "../../../../utils/CopyText/CopyText";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import DropDown from "../../../../components/ui/dropdown/DropDrown";
-import { StaticStatus, StatusValue } from "../../../../common/features/Enums/StatusEnums";
 import { useUpdateCustomerInActiveStatusMutation, useUpdateCustomerStatusMutation } from "../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../services/swalService/SwalService";
@@ -18,6 +17,7 @@ import { securityKey } from "../../../../data/SecurityKey";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { ErrorMessage } from "../../../../data/appMessages";
+import { StaticStatus, StatusValue } from "../../../../utils/Enums/StatusEnums";
 
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const childRef = useRef();

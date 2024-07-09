@@ -15,14 +15,22 @@ const supplierAddressAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
-
         }),
+        getSupplierAddresssByAddressId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Address/GetSupplierAddresssByAddressId/?addressId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+
+        })
     })
 })
 
 export const {
     useLazyGetAddresssBySupplierIdQuery,
-
+    useLazyGetSupplierAddresssByAddressIdQuery
 } = supplierAddressAPI
 
 export default supplierAddressAPI;
