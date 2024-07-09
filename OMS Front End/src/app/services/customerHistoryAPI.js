@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { transformSucessResponse, transformErrorResponse } from "../../utils/API/responseMiddleware";
 import { customFetchBase } from '../../utils/API/fetchBaseQuery';
-import { transformRequest } from "../../utils/API/requestMiddleware";
+import { encryptQueryString, transformRequest } from "../../utils/API/requestMiddleware";
 
 const customerHistoryAPI = createApi({
     reducerPath: 'customerHistoryAPI',
@@ -18,9 +18,18 @@ const customerHistoryAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getEventNameAndUserNameByCustomerId: builder.query({
+            query: (userID) => ({
+                url: encryptQueryString(`/Common/GetEventNameAndUserNameByCustomerId/?customerId=${Number(userID)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+    
+        }),
     })
 })
 
-export const { useGetCustomerAuditHistoryByCustomerIdMutation } = customerHistoryAPI;
+export const { useGetCustomerAuditHistoryByCustomerIdMutation , useLazyGetEventNameAndUserNameByCustomerIdQuery } = customerHistoryAPI;
 
 export default customerHistoryAPI;

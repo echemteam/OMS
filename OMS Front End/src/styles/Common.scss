@@ -2061,6 +2061,17 @@ input[type="checkbox"]:disabled {
   width: 100%;
 }
 
+.serach-bar-history{
+  display: flex;
+  padding: 0 45px;
+}
+
+.refresh-btn-history{
+  display: flex;
+  justify-content: end;
+  margin-right: 15px;
+}
+
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
     .css-t3ipsp-control,

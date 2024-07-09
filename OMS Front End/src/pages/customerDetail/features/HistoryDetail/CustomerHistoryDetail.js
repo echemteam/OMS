@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
 //** Service's */
-import { useGetCustomerAuditHistoryByCustomerIdMutation } from '../../../../app/services/customerHistoryAPI';
+import { useGetCustomerAuditHistoryByCustomerIdMutation, useLazyGetEventNameAndUserNameByCustomerIdQuery } from '../../../../app/services/customerHistoryAPI';
 //** Component's */
 const TimeLine = React.lazy(() => import("../HistoryDetail/features/TimeLine"));
 
@@ -17,7 +17,9 @@ export const CustomerHistoryDetail = ({ isEditablePage }) => {
         */
         <div className="history-part">
             <TimeLine isSupplier={false} isEditablePage={isEditablePage} keyId={customerId ? customerId : 0}
-                getAuditHistory={useGetCustomerAuditHistoryByCustomerIdMutation} />
+                getAuditHistory={useGetCustomerAuditHistoryByCustomerIdMutation} 
+                getSearchFilterBindHistory={useLazyGetEventNameAndUserNameByCustomerIdQuery}
+                />
         </div>
     )
 }

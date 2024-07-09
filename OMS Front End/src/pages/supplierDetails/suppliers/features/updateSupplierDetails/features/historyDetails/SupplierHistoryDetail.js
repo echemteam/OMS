@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import TimeLine from '../../../../../../customerDetail/features/HistoryDetail/features/TimeLine'
 import AddSupplierContext from '../../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
 //** Service's */
-import { useGetSupplierAuditHistoryBySupplierIdMutation } from '../../../../../../../app/services/supplierHistoryAPI';
+import { useGetSupplierAuditHistoryBySupplierIdMutation, useLazyGetEventNameAndUserNameBySupplierIdQuery } from '../../../../../../../app/services/supplierHistoryAPI';
 
 export const SupplierHistoryDetail = ({ isEditablePage }) => {
 
@@ -17,7 +17,7 @@ export const SupplierHistoryDetail = ({ isEditablePage }) => {
         <div className="history-part">
             <TimeLine isSupplier={true} isEditablePage={isEditablePage} keyId={supplierId ? supplierId : 0}
                 getAuditHistory={useGetSupplierAuditHistoryBySupplierIdMutation} 
-                    get
+                getSearchFilterBindHistory={useLazyGetEventNameAndUserNameBySupplierIdQuery}
                 />
         </div>
     )
