@@ -946,6 +946,15 @@ a {
               }
             }
           }
+
+          .tab-sub-content {
+            height: calc(100vh - 220px);
+            overflow: hidden;
+            overflow-y: auto;
+            .card{
+              box-shadow: none;
+            }
+          }
         }
       }
     }
@@ -1107,8 +1116,9 @@ a {
       border-radius: 5px;
       margin-bottom: 10px;
       position: relative;
+
       // min-height: 125px;
-      &.dropdown-open{
+      &.dropdown-open {
         background-color: var(--bg-main-content);
       }
 
@@ -1520,7 +1530,7 @@ a {
 .card {
   .card-body-sec {
     .note-card-sec {
-      max-height: calc(100vh - 296px);
+      max-height: calc(100vh - 235px);
       overflow: hidden;
       overflow-y: auto;
     }
@@ -1531,7 +1541,7 @@ a {
   .tab-sub-section {
     .tab-sub-content {
       .grid-section {
-        max-height: calc(100vh - 362px);
+        max-height: calc(100vh - 235px);
         overflow: hidden;
         overflow-y: auto;
       }
@@ -1642,6 +1652,7 @@ a {
     .card-value {
       font-size: var(--commonFont-small);
     }
+
     .primary-phone {
       color: var(--themeColor);
       font-weight: bold;
@@ -2293,8 +2304,8 @@ input[type="checkbox"]:disabled {
   padding: 0 10px 0 0;
   margin-left: 20px;
   cursor: pointer;
-  
-  &.mobilenumber{
+
+  &.mobilenumber {
     margin-left: 10px;
   }
 
@@ -2337,7 +2348,7 @@ input[type="checkbox"]:disabled {
     }
   }
 
-  &.mobilenumber{
+  &.mobilenumber {
     min-width: 230px;
   }
 }

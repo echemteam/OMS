@@ -96,43 +96,50 @@ const TimeLine = () => {
               scrollableTarget="scrollableDiv"
             >
               <div className="new-timeline-sec">
-                <ol className="timeline">
-                  {historyData.length > 0 ? (
-                    historyData.map((item) => (
-                      <li
-                        className="timeline-item"
-                        key={item.customerAuditHistoryId}
-                      >
-                        <span className="timeline-item-icon">
-                          {item.eventStatus === "Insert" ? (
-                            <>
-                              {" "}
-                              <img src={AppIcons.PlusIcon} alt="Insert Icon" />
-                            </>
-                          ) : (
-                            <>
-                              {" "}
-                              <img
-                                src={AppIcons.UpdateIcon}
-                                alt="Update Icon"
-                              />
-                            </>
-                          )}
-                        </span>
-                        <div className="timeline-item-description">
-                          <div className="right-desc-sec">
-                            <div className="msg-section ">
-                              <p>{item.description}</p>
+                {historyData.length > 0 ? (
+                  <ol className="timeline">
+                    {historyData.length > 0
+                      ? historyData.map((item) => (
+                          <li
+                            className="timeline-item"
+                            key={item.customerAuditHistoryId}
+                          >
+                            <span className="timeline-item-icon">
+                              {item.eventStatus === "Insert" ? (
+                                <>
+                                  {" "}
+                                  <img
+                                    src={AppIcons.PlusIcon}
+                                    alt="Insert Icon"
+                                  />
+                                </>
+                              ) : (
+                                <>
+                                  {" "}
+                                  <img
+                                    src={AppIcons.UpdateIcon}
+                                    alt="Update Icon"
+                                  />
+                                </>
+                              )}
+                            </span>
+                            <div className="timeline-item-description">
+                              <div className="right-desc-sec">
+                                <div className="msg-section ">
+                                  <p>{item.description}</p>
+                                </div>
+                                <div className="type-name">
+                                  {item.eventName}
+                                </div>
+                              </div>
                             </div>
-                            <div className="type-name">{item.eventName}</div>
-                          </div>
-                        </div>
-                      </li>
-                    ))
-                  ) : !isGetHistoryLoading ? (
-                    <NoRecordFound />
-                  ) : null}
-                </ol>
+                          </li>
+                        ))
+                      : null}
+                  </ol>
+                ) : !isGetHistoryLoading ? (
+                  <NoRecordFound />
+                ) : null}
               </div>
             </InfiniteScroll>
           </div>
