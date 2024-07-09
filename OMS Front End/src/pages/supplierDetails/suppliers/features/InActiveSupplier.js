@@ -4,16 +4,22 @@ import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, Disab
 import SupplierListContext from "../../../../utils/ContextAPIs/Supplier/SupplierListContext";
 import { InActiveSuppliers } from "./InActiveSuppliers";
 import { ListShowCustomer } from "../../../../utils/Enums/enums";
-import { StatusEnums } from "../../../../utils/Enums/StatusEnums";
+import { StatusEnums, StatusValue } from "../../../../utils/Enums/StatusEnums";
+import useDebounce from "../../../../app/customHooks/useDebouce";
 
 
 const InActiveSupplier = ({ statusId }) => {
   const [activeTab, setActiveTab] = useState("0");
   const DataRef = useRef();
+  const [search, setSearch] = useState("");
+  const [statusOptions, setStatusOptions] = useState([]);
+  const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
+  const [selectedStatusOptions, setSelectedStatusOptions] = useState("");
   const [allManageData, setAllManageData] = useState(AllInActiveCustomerGridConfig);
   const [freezeManageData, setFrezzeManageData] = useState(FreezedInActiveCustomerGridConfig);
   const [blockManageData, setBlockManageData] = useState(BlockedInActiveCustomerGridConfig);
   const [disableManageData, setDisableManageData] = useState(DisabledInActiveCustomerGridConfig);
+  const debouncedSearch = useDebounce(search, 300);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
@@ -61,12 +67,43 @@ const InActiveSupplier = ({ statusId }) => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
+  const handleChange = (event) => {
+    const value = event.target.value;
+    // if (value.length >= 3) {
+    setSearch(value.trim());
+    // }
+  }
+
+  useEffect(() => {
+    if (StatusValue) {
+      const statusListData = StatusValue.filter((data) => data.value !== 1 && data.value !== 2 && data.value !== 3 && data.value !== 7).map((item) => ({
+        value: item.value,
+        label: item.label,
+      }));
+      setStatusOptions(statusListData);
+    }
+  }, []);
+
+  const handleChangeDropdown = (selectedOptions) => {
+    const selectedValues = selectedOptions.map(option => option.value);
+    setSelectedDrpvalues(selectedValues);
+    setSelectedStatusOptions(selectedValues);
+  };
+
   const tabs = [
     {
       sMenuItemCaption: "All",
       component: (
         <div className="mt-2">
-          <InActiveSuppliers statusId={statusId} configFile={allManageData} />
+          <InActiveSuppliers statusId={statusId} configFile={allManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={true}
+          />
         </div>
       ),
     },
@@ -74,7 +111,15 @@ const InActiveSupplier = ({ statusId }) => {
       sMenuItemCaption: "Freezed",
       component: (
         <div className="mt-2">
-          <InActiveSuppliers statusId={StatusEnums.Freeze} configFile={freezeManageData} />
+          <InActiveSuppliers statusId={StatusEnums.Freeze} configFile={freezeManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
+          />
         </div>
       ),
     },
@@ -82,7 +127,15 @@ const InActiveSupplier = ({ statusId }) => {
       sMenuItemCaption: "Block",
       component: (
         <div className="mt-2">
-          <InActiveSuppliers statusId={StatusEnums.Block} configFile={blockManageData} />
+          <InActiveSuppliers statusId={StatusEnums.Block} configFile={blockManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
+          />
         </div>
       ),
     },
@@ -90,7 +143,15 @@ const InActiveSupplier = ({ statusId }) => {
       sMenuItemCaption: "Disable",
       component: (
         <div className="mt-2">
-          <InActiveSuppliers statusId={StatusEnums.Disable} configFile={disableManageData} />
+          <InActiveSuppliers statusId={StatusEnums.Disable} configFile={disableManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false}
+          />
         </div>
       ),
     },

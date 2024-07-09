@@ -14,7 +14,7 @@ import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSuppli
 import { useSelector } from 'react-redux';
 import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
 
-export const InActiveSuppliers = ({ statusId, configFile }) => {
+export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
 
     const childRef = useRef();
     const molGridRef = useRef();
@@ -40,46 +40,46 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
                 pageNumber: page.pageNumber,
                 pageSize: page.pageSize,
             },
-            filters: { searchText: "" },
-            statusId: Array.isArray(statusId) ? statusId.join(",") : statusId
+            filters: { searchText: search },
+            statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId)
         };
         getSuppliers(request);
     };
 
     useEffect(() => {
         if (!isResponsibleUser) {
-        const actionColumn = configFile?.columns.find(column => column.name === "Action");
-        if (actionColumn) {
+            const actionColumn = configFile?.columns.find(column => column.name === "Action");
+            if (actionColumn) {
 
-            const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
-            const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
-            const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
+                const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
+                const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
+                const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
 
-            if (actionColumn.defaultAction.allowActiveSupplier) {
-                actionColumn.defaultAction.allowActiveSupplier = hasActive?.hasAccess;
-            } else if (actionColumn.defaultAction.allowUnblocked) {
-                actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
-            } else if (actionColumn.defaultAction.allowUnfreeze) {
-                actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+                if (actionColumn.defaultAction.allowActiveSupplier) {
+                    actionColumn.defaultAction.allowActiveSupplier = hasActive?.hasAccess;
+                } else if (actionColumn.defaultAction.allowUnblocked) {
+                    actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
+                } else if (actionColumn.defaultAction.allowUnfreeze) {
+                    actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+                }
             }
         }
-    }
     }, [configFile]);
 
     const hasResponsibleUserhasAccess = () => {
         const actionColumn = configFile?.columns.find((column) => column.name === "Action");
         if (actionColumn) {
-          if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
-            actionColumn.defaultAction.allowActiveCustomer = true;
-          }
-          if (actionColumn.defaultAction.hasOwnProperty("allowUnblocked")) {
-            actionColumn.defaultAction.allowUnblocked = true;
-          }
-          if (actionColumn.defaultAction.hasOwnProperty('allowUnfreeze')) {
-            actionColumn.defaultAction.allowUnfreeze = true;
-          }
+            if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
+                actionColumn.defaultAction.allowActiveCustomer = true;
+            }
+            if (actionColumn.defaultAction.hasOwnProperty("allowUnblocked")) {
+                actionColumn.defaultAction.allowUnblocked = true;
+            }
+            if (actionColumn.defaultAction.hasOwnProperty('allowUnfreeze')) {
+                actionColumn.defaultAction.allowUnfreeze = true;
+            }
         }
-      }
+    }
 
     useEffect(() => {
         if (isListSuccess && isListeData) {
@@ -87,10 +87,10 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
                 setDataSource(isListeData.dataSource);
                 const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authState?.user?.userID);
                 if (isResponsibleId) {
-                  setIsResponsibleUser(true);
-                  hasResponsibleUserhasAccess();
+                    setIsResponsibleUser(true);
+                    hasResponsibleUserhasAccess();
                 } else {
-                  setIsResponsibleUser(false);
+                    setIsResponsibleUser(false);
                 }
             }
             if (isListeData.totalRecord) {
@@ -110,6 +110,13 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
         getListApi,
     }));
 
+    useEffect(() => {
+        if (molGridRef.current) {
+          const currentPageObject = molGridRef.current.getCurrentPageObject();
+          getListApi(currentPageObject);
+        }
+      }, [search , selectedStatusOptions]);
+
     const getListApi = () => {
         const currentPageObject = molGridRef.current.getCurrentPageObject();
         const request = {
@@ -117,8 +124,8 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
                 pageNumber: currentPageObject.pageNumber,
                 pageSize: currentPageObject.pageSize,
             },
-            filters: { searchText: "" },
-            statusId: Array.isArray(statusId) ? statusId.join(",") : statusId
+            filters: { searchText: search },
+            statusId: selectedDrpvalues.length === 0 ? (Array.isArray(statusId) ? statusId.join(",") : String(statusId)) : (Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues))
         };
         getSuppliers(request);
     };
@@ -187,6 +194,17 @@ export const InActiveSuppliers = ({ statusId, configFile }) => {
             <div className="row">
                 <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
                     <CardSection
+                        searchInput={true}
+                        handleChange={handleChange}
+                        searchInputName="Search By Supplier Name, Tax Id , Email Address"
+                        searchFilter={searchStatusFilter ? true : false}
+                        handleChangeDropdown={handleChangeDropdown}
+                        selectedOptions={selectedDrpvalues}
+                        optionsValue={statusOptions}
+                        isMultiSelect={true}
+                        placeholder="Search by Status"
+                        isCardSection={true}
+                        isdropdownOpen={true}
                     >
                         <div className="row">
                             <div className="col-md-12 table-striped">

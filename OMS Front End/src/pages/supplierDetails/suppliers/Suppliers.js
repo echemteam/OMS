@@ -89,7 +89,7 @@ const Suppliers = () => {
       setStatusOptions(statusListData);
     }
   }, [StatusValue]);
-  
+
   const handleChangeDropdown = (selectedOptions) => {
     const selectedValues = selectedOptions.map(option => option.value);
     setSelectedDrpvalues(selectedValues);
@@ -99,7 +99,7 @@ const Suppliers = () => {
   const handleChange = (event) => {
     const value = event.target.value;
     // if (value.length >= 3) {
-      setSearch(value.trim());
+    setSearch(value.trim());
     // }
   }
   const tabs = [
@@ -107,14 +107,14 @@ const Suppliers = () => {
       sMenuItemCaption: "ALL",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={selectedDrpvalues} configFile={allManageData} 
-             search={debouncedSearch}
-             handleChange={handleChange}
-             statusOptions={statusOptions}
-             selectedStatusOptions={selectedStatusOptions}
-             handleChangeDropdown={handleChangeDropdown}
-             selectedDrpvalues={selectedDrpvalues}
-             searchStatusFilter={true}/>
+          <SupplierList statusId={selectedDrpvalues} configFile={allManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={true} />
         </div>
       ),
     },
@@ -122,14 +122,14 @@ const Suppliers = () => {
       sMenuItemCaption: "PENDING",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={StatusEnums.Pending} configFile={pendingManageData}  
-                  search={debouncedSearch}
-                  handleChange={handleChange}
-                  statusOptions={statusOptions}
-                  selectedStatusOptions={selectedStatusOptions}
-                  handleChangeDropdown={handleChangeDropdown}
-                  selectedDrpvalues={selectedDrpvalues}
-                  searchStatusFilter={false} />
+          <SupplierList statusId={StatusEnums.Pending} configFile={pendingManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false} />
         </div>
       ),
     },
@@ -137,14 +137,14 @@ const Suppliers = () => {
       sMenuItemCaption: "SUBMITTED",
       component: (
         <div className="mt-2 customer-list-submitted customer-list-all">
-          <SupplierList statusId={StatusEnums.Submitted} configFile={submittedManageData} 
-                  search={debouncedSearch}
-                  handleChange={handleChange}
-                  statusOptions={statusOptions}
-                  selectedStatusOptions={selectedStatusOptions}
-                  handleChangeDropdown={handleChangeDropdown}
-                  selectedDrpvalues={selectedDrpvalues}
-                  searchStatusFilter={false}/>
+          <SupplierList statusId={StatusEnums.Submitted} configFile={submittedManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false} />
         </div>
       ),
     },
@@ -152,14 +152,14 @@ const Suppliers = () => {
       sMenuItemCaption: "APPROVED",
       component: (
         <div className="mt-2 customer-list-all">
-          <SupplierList statusId={StatusEnums.Approved} configFile={approvedManageData} 
-                  search={debouncedSearch}
-                  handleChange={handleChange}
-                  statusOptions={statusOptions}
-                  selectedStatusOptions={selectedStatusOptions}
-                  handleChangeDropdown={handleChangeDropdown}
-                  selectedDrpvalues={selectedDrpvalues}
-                  searchStatusFilter={false}/>
+          <SupplierList statusId={StatusEnums.Approved} configFile={approvedManageData}
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false} />
         </div>
       ),
     },
@@ -176,13 +176,13 @@ const Suppliers = () => {
       component: (
         <div className="mt-2 customer-list-all">
           <SupplierList statusId={StatusEnums.Reject} configFile={rejectedCManageData}
-                  search={debouncedSearch}
-                  handleChange={handleChange}
-                  statusOptions={statusOptions}
-                  selectedStatusOptions={selectedStatusOptions}
-                  handleChangeDropdown={handleChangeDropdown}
-                  selectedDrpvalues={selectedDrpvalues}
-                  searchStatusFilter={false} />
+            search={debouncedSearch}
+            handleChange={handleChange}
+            statusOptions={statusOptions}
+            selectedStatusOptions={selectedStatusOptions}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedDrpvalues={selectedDrpvalues}
+            searchStatusFilter={false} />
         </div>
       ),
     },
