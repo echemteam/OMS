@@ -145,7 +145,7 @@ const FinancialSettings = ({ isEditablePage }) => {
               <div className="d-flex align-item-end">
                 <Buttons
                   buttonTypeClassName="theme-button"
-                  buttonText="Save Financial Information"
+                  buttonText="Save Financial Settings"
                   onClick={onhandleEdit}
                   isLoading={isAddEditCustomerSettingsLoading}
                 />

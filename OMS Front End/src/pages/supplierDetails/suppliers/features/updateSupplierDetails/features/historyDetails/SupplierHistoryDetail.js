@@ -16,7 +16,9 @@ export const SupplierHistoryDetail = ({ isEditablePage }) => {
         */
         <div className="history-part">
             <TimeLine isSupplier={true} isEditablePage={isEditablePage} keyId={supplierId ? supplierId : 0}
-                getAuditHistory={useGetSupplierAuditHistoryBySupplierIdMutation} />
+                getAuditHistory={useGetSupplierAuditHistoryBySupplierIdMutation} 
+                    get
+                />
         </div>
     )
 }

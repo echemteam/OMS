@@ -1,5 +1,5 @@
 export const StatusEnums = {
-    ALL: "0",
+    ALL: "",
     Pending: "1",
     Submitted: "2",
     Approved: "3",
