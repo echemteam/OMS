@@ -29,7 +29,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   const [updateSetDataSupplier, setUpdateSetDataSupplier] = useState();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
-  const [showEditIcon, setShowEditIcon] = useState(false);
+  const [showEditIcon, setShowEditIcon] = useState(true);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [lebel, setlebel] = useState(null);
   const [checkbox, setCheckbox] = useState(null);
@@ -61,10 +61,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
             if (hasAddPermission.hasAccess === true) {
               formSetting.isViewOnly = false;
               setIsButtonDisable(false);
-              setShowEditIcon(true);
             }
             if (hasEditPermission.isViewOnly === true) {
-              setShowEditIcon(true);
+              setShowEditIcon(false);
             }
           }
         }

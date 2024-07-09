@@ -9,6 +9,7 @@ import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import { modifyTimeLineData } from "../../../../../utils/TransformData/TransformAPIData";
 import DropDown from "../../../../../components/ui/dropdown/DropDrown";
+import ToastService from "../../../../../services/toastService/ToastService";
 
 const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHistory }) => {
 
@@ -21,6 +22,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   const [selectedEventName, setSelectedEventName] = useState("");
   const [selectedUserName, setSelectedUserName] = useState("");
   const [selectedUserId, setSelectedUserId] = useState("");
+  const [noRecordFound, setNoRecordFound] = useState(false);
 
   /* NOTE:- 
     API Call
@@ -36,7 +38,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   }, [keyId]);
 
   useEffect(() => {
-      getListApi(pageNumber);
+    getListApi(pageNumber);
   }, [selectedEventName, selectedUserId]);
 
   const getListApi = (page) => {
@@ -82,6 +84,9 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
             setHistoryData((prevData) => [...prevData, ...modifyData]);
           }
         }
+        setNoRecordFound(false);
+      } else if (isGetHistoryData.dataSource.length === 0) {
+        setNoRecordFound(true);
       } else {
         setHasMore(false);
       }
@@ -107,7 +112,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
       (item) => item.eventName === selectedValues[0]
     );
     if (selectedEvent) {
-      if(!selectedEvent.userName){
+      if (!selectedEvent.userName) {
         setSelectedUserName(selectedEvent.userName);
       }
     }
@@ -172,7 +177,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
           >
             <div className="new-timeline-sec">
               <ol className="timeline">
-                {historyData.length > 0 ? (
+                {!noRecordFound && historyData.length > 0 ? (
                   historyData.map((item, index) => (
                     <li
                       className="timeline-item"

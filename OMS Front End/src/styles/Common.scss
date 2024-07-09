@@ -381,8 +381,7 @@ a {
         }
       }
 
-      .middle-page-section {
-      }
+      .middle-page-section {}
     }
   }
 }
@@ -714,8 +713,7 @@ a {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {
-    }
+    .tab-body-section {}
   }
 
   &.vertical-tab {
@@ -825,8 +823,7 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {
-      }
+      .tab-body-section {}
     }
 
     &.vertical-tab {
@@ -924,8 +921,7 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {
-        }
+        .tab-sub-body-section {}
       }
     }
   }
@@ -1117,8 +1113,9 @@ a {
       border-radius: 5px;
       margin-bottom: 10px;
       position: relative;
+
       // min-height: 125px;
-      &.dropdown-open{
+      &.dropdown-open {
         background-color: var(--bg-main-content);
       }
 
@@ -1653,6 +1650,7 @@ a {
     .card-value {
       font-size: var(--commonFont-small);
     }
+
     .primary-phone {
       color: var(--themeColor);
       font-weight: bold;
@@ -1796,6 +1794,7 @@ a {
   }
 
   .css-1nmdiq5-menu {
+
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -2075,6 +2074,7 @@ input[type="checkbox"]:disabled {
             justify-content: flex-start;
             word-break: break-all;
           }
+
           &:nth-child(3) {
             display: flex;
             justify-content: flex-start !important;
@@ -2086,6 +2086,7 @@ input[type="checkbox"]:disabled {
             justify-content: flex-start;
             word-break: break-all;
           }
+
           &:nth-child(5) {
             display: flex;
             justify-content: flex-start;
@@ -2114,17 +2115,17 @@ input[type="checkbox"]:disabled {
   }
 }
 
-.manage-customer-dropdown{
+.manage-customer-dropdown {
   display: flex;
   width: 100%;
 }
 
-.serach-bar-history{
+.serach-bar-history {
   display: flex;
   padding: 0 45px;
 }
 
-.refresh-btn-history{
+.refresh-btn-history {
   display: flex;
   justify-content: end;
   margin-right: 15px;
@@ -2132,10 +2133,12 @@ input[type="checkbox"]:disabled {
 
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
+
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
     }
+
   }
 
   .address-model {
@@ -2306,8 +2309,15 @@ input[type="checkbox"]:disabled {
           max-width: 95px;
         }
       }
+
+      @media only screen and (max-width: 1560px) {
+        .validation-text {
+          margin-left: 110px !important;
+        }
+      }
     }
   }
+
   .addEditContact-form {
     &.horizontal-form {
       .input-label-part {
@@ -2318,6 +2328,7 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+
   .add-edit-emailAddressForm {
     &.horizontal-form {
       .input-label-part {
@@ -2328,6 +2339,7 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+
   .add-edit-phoneForm {
     &.horizontal-form {
       .input-label-part {
@@ -2338,6 +2350,7 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+
   .add-documentForm {
     &.horizontal-form {
       .input-label-part {
@@ -2348,6 +2361,7 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+
   .add-edit-notesForm {
     &.horizontal-form {
       .input-label-part {
@@ -2366,8 +2380,8 @@ input[type="checkbox"]:disabled {
   padding: 0 10px 0 0;
   margin-left: 20px;
   cursor: pointer;
-  
-  &.mobilenumber{
+
+  &.mobilenumber {
     margin-left: 10px;
   }
 
@@ -2410,7 +2424,7 @@ input[type="checkbox"]:disabled {
     }
   }
 
-  &.mobilenumber{
+  &.mobilenumber {
     min-width: 230px;
   }
 }
