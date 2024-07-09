@@ -1019,6 +1019,12 @@ a {
         }
       }
     }
+
+    .accordion-body{
+      max-height: 268px;
+      overflow: hidden;
+      overflow-y: auto;
+    }
   }
 
   .add-desc-part {
