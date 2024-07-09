@@ -40,6 +40,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   }, [selectedEventName, selectedUserId]);
 
   const getListApi = (page) => {
+    debugger
     const eventNameParam = Array.isArray(selectedEventName) ? selectedEventName.join(',') : (selectedEventName || '');
     const userIdParam = Array.isArray(selectedUserId) ? selectedUserId.join(',') : (selectedUserId || '');
 
@@ -89,14 +90,14 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   }, [isGetHistorySuccess, isGetHistoryData]);
 
   useEffect(() => {
-    // Update filter options when search filter data updates
     if (isGetSearchFilterSuccess && isGetSearchFilterData) {
-      const uniqueEventNames = [...new Set(isGetSearchFilterData.map(item => item.eventName))];
-      const uniqueUserNames = [...new Set(isGetSearchFilterData.map(item => item.userName))];
+      const uniqueEventNames = Array.from(new Set(isGetSearchFilterData.map(item => item.eventName)));
+      const uniqueUserNames = Array.from(new Set(isGetSearchFilterData.map(item => item.userName)));
       const eventOptions = uniqueEventNames.map(eventName => ({ label: eventName, value: eventName }));
       const userOptions = uniqueUserNames.map(userName => ({ label: userName, value: userName }));
       setEventNameOptions(eventOptions);
       setUserNameOptions(userOptions);
+      // setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetSearchFilterSuccess, isGetSearchFilterData]);
 
