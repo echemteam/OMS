@@ -9,6 +9,10 @@ import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import { modifyTimeLineData } from "../../../../../utils/TransformData/TransformAPIData";
 import DropDown from "../../../../../components/ui/dropdown/DropDrown";
+import { DateRangePicker } from 'react-bootstrap-daterangepicker';
+import ToastService from "../../../../../services/toastService/ToastService";
+import moment from "moment";
+import 'bootstrap-daterangepicker/daterangepicker.css';
 
 const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHistory }) => {
 
@@ -21,6 +25,11 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   const [selectedEventName, setSelectedEventName] = useState("");
   const [selectedUserName, setSelectedUserName] = useState("");
   const [selectedUserId, setSelectedUserId] = useState("");
+  const [selectedDateRange, setSelectedDateRange] = useState({
+    startDate: moment().startOf('day'),
+    endDate: moment().endOf('day')    
+  });
+  const [totalRecord, setTotalRecord] = useState("")
 
   /* NOTE:- 
     API Call
@@ -36,10 +45,11 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   }, [keyId]);
 
   useEffect(() => {
-      getListApi(pageNumber);
-  }, [selectedEventName, selectedUserId]);
+    getListApi(pageNumber);
+  }, [selectedEventName, selectedUserId, selectedDateRange]);
 
   const getListApi = (page) => {
+    debugger
     const eventNameParam = Array.isArray(selectedEventName) ? selectedEventName.join(',') : (selectedEventName || '');
     const userIdParam = Array.isArray(selectedUserId) ? selectedUserId.join(',') : (selectedUserId || '');
 
@@ -55,8 +65,8 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
       supplierId: keyId,
       eventName: eventNameParam,
       userId: userIdParam,
-      toDate: null,
-      fromDate: null
+      fromDate: selectedDateRange.startDate ? new Date(selectedDateRange.startDate) : null,
+      toDate: selectedDateRange.endDate ? new Date(selectedDateRange.endDate) : null
     };
     getAuditHistoryByCustomerId(request);
   };
@@ -70,13 +80,15 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
 
   useEffect(() => {
     if (isGetHistorySuccess && isGetHistoryData) {
+      debugger
+      setTotalRecord(isGetHistoryData)
       if (isGetHistoryData.dataSource && isGetHistoryData.dataSource.length > 0) {
         const modifyData = modifyTimeLineData(isGetHistoryData.dataSource);
         if (refreshData) {
           setRefreshData(false);
           setHistoryData(modifyData);
         } else {
-          if (selectedEventName || selectedUserName) {
+          if (selectedEventName || selectedUserName || selectedDateRange) {
             setHistoryData(modifyData);
           } else {
             setHistoryData((prevData) => [...prevData, ...modifyData]);
@@ -84,6 +96,8 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
         }
       } else {
         setHasMore(false);
+        setTotalRecord("")
+        ToastService.warning("No Data Found")
       }
     }
   }, [isGetHistorySuccess, isGetHistoryData]);
@@ -107,7 +121,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
       (item) => item.eventName === selectedValues[0]
     );
     if (selectedEvent) {
-      if(!selectedEvent.userName){
+      if (!selectedEvent.userName) {
         setSelectedUserName(selectedEvent.userName);
       }
     }
@@ -123,6 +137,14 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
     setSelectedUserId(selectedUserIds);
   };
 
+  const handleDateRangeChange = (event, picker) => {
+    debugger
+    setSelectedDateRange({
+      startDate: picker.startDate.toISOString(),
+      endDate: picker.endDate.toISOString()
+    });
+  };
+
   const fetchMoreData = () => {
     setPageNumber((prevPageNumber) => prevPageNumber + 1);
   };
@@ -131,7 +153,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
     <div className="row">
       <div className="serach-bar-history"
       >
-        <div className="col-md-4">
+        <div className="col-md-3">
           <DropDown
             placeholder="Search By Event Name"
             options={eventNameOptions}
@@ -141,7 +163,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
             closeMenuOnSelect={false}
           />
         </div>
-        <div className="col-md-4 ml-3">
+        <div className="col-md-3 ml-3">
           <DropDown
             placeholder="Search By User Name"
             options={userNameOptions}
@@ -151,7 +173,30 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
             closeMenuOnSelect={false}
           />
         </div>
-        <div className="col-md-4 refresh-btn-history">
+        <div className="col-md-3 ml-3 custom-datepicker">
+          {/* <DateRangePicker
+            ranges={[selectedDateRange]}
+            onChange={handleDateRangeChange}
+          /> */}
+          <DateRangePicker
+            initialSettings={{
+              startDate: selectedDateRange.startDate,
+              endDate: selectedDateRange.endDate,
+              ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+              }
+            }}
+            onApply={handleDateRangeChange}
+          >
+            <input type="text" className="form-control" />
+          </DateRangePicker>
+        </div>
+        <div className="col-md-3 refresh-btn-history">
           <Buttons
             buttonTypeClassName="theme-button"
             buttonText="Refresh"
@@ -161,57 +206,59 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
           ></Buttons>
         </div>
       </div>
-      <div className="col-md-12">
-        <div className="main-card mt-2" id="scrollableDiv">
-          <InfiniteScroll
-            dataLength={historyData.length}
-            next={fetchMoreData}
-            hasMore={hasMore}
-            loader={isGetHistoryLoading ? <DataLoader /> : null}
-            scrollableTarget="scrollableDiv"
-          >
-            <div className="new-timeline-sec">
-              <ol className="timeline">
-                {historyData.length > 0 ? (
-                  historyData.map((item, index) => (
-                    <li
-                      className="timeline-item"
-                      key={index}
-                    >
-                      <span className="timeline-item-icon">
-                        {item.eventStatus === "Insert" ? (
-                          <>
-                            {" "}
-                            <img src={AppIcons.PlusIcon} alt="Insert Icon" />
-                          </>
-                        ) : (
-                          <>
-                            {" "}
-                            <img
-                              src={AppIcons.UpdateIcon}
-                              alt="Update Icon"
-                            />
-                          </>
-                        )}
-                      </span>
-                      <div className="timeline-item-description">
-                        <div className="right-desc-sec">
-                          <div className="msg-section ">
-                            <p>{item.description}</p>
+      {totalRecord &&
+        <div className="col-md-12">
+          <div className="main-card mt-2" id="scrollableDiv">
+            <InfiniteScroll
+              dataLength={historyData.length}
+              next={fetchMoreData}
+              hasMore={hasMore}
+              loader={isGetHistoryLoading ? <DataLoader /> : null}
+              scrollableTarget="scrollableDiv"
+            >
+              <div className="new-timeline-sec">
+                <ol className="timeline">
+                  {historyData.length > 0 ? (
+                    historyData.map((item, index) => (
+                      <li
+                        className="timeline-item"
+                        key={index}
+                      >
+                        <span className="timeline-item-icon">
+                          {item.eventStatus === "Insert" ? (
+                            <>
+                              {" "}
+                              <img src={AppIcons.PlusIcon} alt="Insert Icon" />
+                            </>
+                          ) : (
+                            <>
+                              {" "}
+                              <img
+                                src={AppIcons.UpdateIcon}
+                                alt="Update Icon"
+                              />
+                            </>
+                          )}
+                        </span>
+                        <div className="timeline-item-description">
+                          <div className="right-desc-sec">
+                            <div className="msg-section ">
+                              <p>{item.description}</p>
+                            </div>
+                            <div className="type-name">{item.eventName}</div>
                           </div>
-                          <div className="type-name">{item.eventName}</div>
                         </div>
-                      </div>
-                    </li>
-                  ))
-                ) : !isGetHistoryLoading ? (
-                  <NoRecordFound />
-                ) : null}
-              </ol>
-            </div>
-          </InfiniteScroll>
+                      </li>
+                    ))
+                  ) : !isGetHistoryLoading ? (
+                    <NoRecordFound />
+                  ) : null}
+                </ol>
+              </div>
+            </InfiniteScroll>
+          </div>
         </div>
-      </div>
+      }
     </div>
   );
 };
