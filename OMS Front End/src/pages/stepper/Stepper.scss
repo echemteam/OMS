@@ -99,7 +99,7 @@
       padding: 10px;
       display: flex;
       flex-direction: column;
-      max-height: calc(100vh - 235px);
+      height: calc(100vh - 225px);
       overflow: hidden;
       overflow-y: auto;
       width: 100%;
@@ -121,7 +121,7 @@
       padding: 0px 5px 5px;
       margin-bottom: 0;
       .card{
-        padding: 0;
+        padding: 8px 12px;
       }
     }
     .stepper-section {
@@ -150,7 +150,7 @@
         }
       }
       .stepper-content {
-        max-height: calc(100vh - 185px);
+        height: calc(100vh - 180px);
       }
     }
   }
