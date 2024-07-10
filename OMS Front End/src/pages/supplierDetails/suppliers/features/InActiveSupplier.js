@@ -6,6 +6,8 @@ import { InActiveSuppliers } from "./InActiveSuppliers";
 import { ListShowCustomer } from "../../../../utils/Enums/enums";
 import { StatusEnums, StatusValue } from "../../../../utils/Enums/StatusEnums";
 import useDebounce from "../../../../app/customHooks/useDebouce";
+import { ErrorMessage } from "../../../../data/appMessages";
+import ToastService from "../../../../services/toastService/ToastService";
 
 
 const InActiveSupplier = ({ statusId }) => {
@@ -69,12 +71,22 @@ const InActiveSupplier = ({ statusId }) => {
   }, [activeTab]);
 
   const handleSearch = () => {
-    getListApi();
+    if (search.length >= 3 || selectedDrpvalues.length > 0) {
+      getListApi();
+    } else {
+      ToastService.warning(ErrorMessage.CommonErrorMessage)
+    }
   };
 
   const handleChange = (event) => {
-    setSearch(event.target.value.trim());
+    if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
+      setSearch(event.target.value.trim());
+    } else {
+      setSearch("");
+      setSelectedDrpvalues("");
+    }
   };
+
 
   useEffect(() => {
     if (StatusValue) {

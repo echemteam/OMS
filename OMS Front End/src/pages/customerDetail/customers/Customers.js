@@ -15,6 +15,8 @@ import { BasicDetailContextProvider } from "../../../utils/ContextAPIs/Customer/
 import useDebounce from "../../../app/customHooks/useDebouce"
 import { ListSupplier } from "../../../utils/Enums/enums";
 import { StatusEnums, StatusValue } from "../../../utils/Enums/StatusEnums";
+import ToastService from "../../../services/toastService/ToastService";
+import { ErrorMessage } from "../../../data/appMessages";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -90,11 +92,20 @@ const Customers = () => {
   }, [activeTab]);
 
   const handleSearch = () => {
-    getListApi();
+    if (search.length >= 3 || selectedDrpvalues.length > 0) {
+      getListApi();
+    } else {
+      ToastService.warning(ErrorMessage.CommonErrorMessage)
+    }
   };
 
   const handleChange = (event) => {
-    setSearch(event.target.value.trim());
+    if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
+      setSearch(event.target.value.trim());
+    } else {
+      setSearch("");
+      setSelectedDrpvalues("");
+    }
   };
 
   useEffect(() => {
@@ -124,7 +135,7 @@ const Customers = () => {
     if (debouncedSearch === "" && selectedDrpvalues === "") {
       getListApi();
     }
-  }, [debouncedSearch , selectedDrpvalues]);
+  }, [debouncedSearch, selectedDrpvalues]);
 
   const tabs = [
     {
