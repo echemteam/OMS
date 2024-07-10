@@ -11,13 +11,13 @@ const customerSecurityKey = {
     EDIT: securityKey.EDITCUSTOMERCONTACT,
 }
 
-const CustomerContactDetails = ({ isEditablePage }) => {
+const CustomerContactDetails = ({ isEditablePage , isSearchFilterShow}) => {
 
     const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
 
     return (
         //** Also, We replace the API Name and mainId based on the customer and supplier module*/
-        <ContactDetail isSupplier={false} isEditablePage={isEditablePage} mainId={customerId ? customerId : 0}
+        <ContactDetail isSupplier={false} isEditablePage={isEditablePage} mainId={customerId ? customerId : 0} isSearchFilterShow={isSearchFilterShow}
             SecurityKey={!isResponsibleUser ? customerSecurityKey : null} getContactById={useLazyGetCustomerContactByContactIdQuery}
             getContactByKeyId={useLazyGetContactByCustomerIdQuery} addEditContactMutation={useAddEditContactMutation} />
     )

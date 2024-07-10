@@ -126,7 +126,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
-          <CustomerContactDetails isEditablePage={true} />
+          <CustomerContactDetails isEditablePage={true} isSearchFilterShow={true}/>
         </div>
       ),
       isVisible: hasContactPermission.hasAccess,

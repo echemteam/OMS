@@ -19,6 +19,7 @@ const InActiveSupplier = ({ statusId }) => {
   const [freezeManageData, setFrezzeManageData] = useState(FreezedInActiveCustomerGridConfig);
   const [blockManageData, setBlockManageData] = useState(BlockedInActiveCustomerGridConfig);
   const [disableManageData, setDisableManageData] = useState(DisabledInActiveCustomerGridConfig);
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const debouncedSearch = useDebounce(search, 300);
 
   const handleTabClick = (tabIndex) => {
@@ -92,11 +93,17 @@ const InActiveSupplier = ({ statusId }) => {
   };
 
   const handleClear = () => {
-    // setSelectedDrpvalues("");
-    // setSelectedStatusOptions("");
-    // setSearch("");
-    // // getListApi();
+    setSelectedDrpvalues("");
+    setSelectedStatusOptions("");
+    setSearch("");
+    setShouldRerenderFormCreator((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    if (debouncedSearch === "") {
+      getListApi();
+    }
+  }, [debouncedSearch]);
 
   const tabs = [
     {
@@ -113,6 +120,7 @@ const InActiveSupplier = ({ statusId }) => {
             searchStatusFilter={true}
             handleSearch={handleSearch}
             handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
@@ -131,6 +139,7 @@ const InActiveSupplier = ({ statusId }) => {
             searchStatusFilter={false}
             handleSearch={handleSearch}
             handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
@@ -149,6 +158,7 @@ const InActiveSupplier = ({ statusId }) => {
             searchStatusFilter={false}
             handleSearch={handleSearch}
             handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
@@ -167,6 +177,7 @@ const InActiveSupplier = ({ statusId }) => {
             searchStatusFilter={false}
             handleSearch={handleSearch}
             handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
