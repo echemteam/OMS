@@ -1451,7 +1451,9 @@ a {
       border-radius: 10px;
       border: 1px solid var(--linkMenu);
       margin-top: 20px;
-
+      @media only screen and (max-width: 1560px) {
+        margin-top: 10px;
+      }
       .left-icons {
         width: 70px;
         display: flex;
@@ -1690,9 +1692,12 @@ a {
   .card-body-sec {
     .note-card-sec {
       // max-height: calc(100vh - 235px);
-      height: calc(100vh - 223px);
+      height: calc(100vh - 245px);
       overflow: hidden;
       overflow-y: auto;
+      @media only screen and (max-width: 1560px) {
+        height: calc(100vh - 223px);
+      }
     }
   }
 }
@@ -2420,7 +2425,7 @@ input[type="checkbox"]:disabled {
   }
 
   .card-section-leftcard-button-only {
-    padding: 8px 12px;
+    padding: 8px;
   }
 
   .main-customer-grid.setting-tab-sec {
