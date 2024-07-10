@@ -1339,6 +1339,9 @@ a {
               @media only screen and (max-width: 1560px) {
                 font-size: 9px;
               }
+              &.primary-email{
+                color: var(--themeColor);
+              }
             }
           }
         }
@@ -1397,6 +1400,9 @@ a {
               padding-left: 3px;
               @media only screen and (max-width: 1560px) {
                 font-size: 9px;
+              }
+              &.primary-phone{
+                color: var(--themeColor);
               }
             }
           }

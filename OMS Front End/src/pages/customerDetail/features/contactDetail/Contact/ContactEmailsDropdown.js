@@ -27,7 +27,7 @@ const ContactEmailsDropdown = ({ showEmailDropdown, setShowEmailDropdown, emailA
         <div className="desc-part">
           {primaryEmailAddress?.emailAddress ? (
             <>
-              <div className="values">
+              <div className={`values ${primaryEmailAddress?.isPrimary ? "primary-email" : ""}`}>
                 {primaryEmailAddress?.emailAddress}
               </div>
               <span className="copy-icon" onClick={() => CopyText(primaryEmailAddress?.emailAddress, "email")}>
