@@ -46,9 +46,10 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
 
   useEffect(() => {
     getListApi(pageNumber);
-  }, [selectedEventName, selectedUserId]);
+  }, [selectedEventName, selectedUserId, selectedDateRange]);
 
   const getListApi = (page) => {
+    debugger
     const eventNameParam = Array.isArray(selectedEventName) ? selectedEventName.join(',') : (selectedEventName || '');
     const userIdParam = Array.isArray(selectedUserId) ? selectedUserId.join(',') : (selectedUserId || '');
 
@@ -64,8 +65,8 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
       supplierId: keyId,
       eventName: eventNameParam,
       userId: userIdParam,
-      fromDate: null,
-      toDate: null
+      fromDate: selectedDateRange.startDate ? new Date(selectedDateRange.startDate) : null,
+      toDate: selectedDateRange.endDate ? new Date(selectedDateRange.endDate) : null
     };
     getAuditHistoryByCustomerId(request);
   };
@@ -172,7 +173,11 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
             closeMenuOnSelect={false}
           />
         </div>
-        {/* <div className="col-md-3 ml-3 custom-datepicker">
+        <div className="col-md-3 ml-3 custom-datepicker">
+          {/* <DateRangePicker
+            ranges={[selectedDateRange]}
+            onChange={handleDateRangeChange}
+          /> */}
           <DateRangePicker
             initialSettings={{
               startDate: selectedDateRange.startDate,
@@ -190,7 +195,7 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
           >
             <input type="text" className="form-control" />
           </DateRangePicker>
-        </div> */}
+        </div>
         <div className="col-md-3 refresh-btn-history">
           <Buttons
             buttonTypeClassName="theme-button"
@@ -202,58 +207,58 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
         </div>
       </div>
       {!noRecordFound ?
-        <div className="col-md-12">
-          <div className="main-card mt-2" id="scrollableDiv">
-            <InfiniteScroll
-              dataLength={historyData.length}
-              next={fetchMoreData}
-              hasMore={hasMore}
-              loader={isGetHistoryLoading ? <DataLoader /> : null}
-              scrollableTarget="scrollableDiv"
-            >
-              <div className="new-timeline-sec">
-                <ol className="timeline">
-                  {historyData.length > 0 ? (
-                    historyData.map((item, index) => (
-                      <li
-                        className="timeline-item"
-                        key={index}
-                      >
-                        <span className="timeline-item-icon">
-                          {item.eventStatus === "Insert" ? (
-                            <>
-                              {" "}
-                              <img src={AppIcons.PlusIcon} alt="Insert Icon" />
-                            </>
-                          ) : (
-                            <>
-                              {" "}
-                              <img
-                                src={AppIcons.UpdateIcon}
-                                alt="Update Icon"
-                              />
-                            </>
-                          )}
-                        </span>
-                        <div className="timeline-item-description">
-                          <div className="right-desc-sec">
-                            <div className="msg-section ">
-                              <p>{item.description}</p>
-                            </div>
+      <div className="col-md-12">
+        <div className="main-card mt-2" id="scrollableDiv">
+          <InfiniteScroll
+            dataLength={historyData.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={isGetHistoryLoading ? <DataLoader /> : null}
+            scrollableTarget="scrollableDiv"
+          >
+            <div className="new-timeline-sec">
+              <ol className="timeline">
+                { historyData.length > 0 ? (
+                  historyData.map((item, index) => (
+                    <li
+                      className="timeline-item"
+                      key={index}
+                    >
+                      <span className="timeline-item-icon">
+                        {item.eventStatus === "Insert" ? (
+                          <>
+                            {" "}
+                            <img src={AppIcons.PlusIcon} alt="Insert Icon" />
+                          </>
+                        ) : (
+                          <>
+                            {" "}
+                            <img
+                              src={AppIcons.UpdateIcon}
+                              alt="Update Icon"
+                            />
+                          </>
+                        )}
+                      </span>
+                      <div className="timeline-item-description">
+                        <div className="right-desc-sec">
+                          <div className="msg-section ">
+                            <p>{item.description}</p>
                           </div>
                         </div>
-                      </li>
-                    ))
-                  ) : !isGetHistoryLoading ? (
-                    <NoRecordFound />
-                  ) : null}
-                </ol>
-              </div>
-            </InfiniteScroll>
-          </div>
+                      </div>
+                    </li>
+                  ))
+                ) : !isGetHistoryLoading ? (
+                  <NoRecordFound />
+                ) : null}
+              </ol>
+            </div>
+          </InfiniteScroll>
         </div>
-        :
-        <NoRecordFound />
+      </div>
+      :
+      <NoRecordFound/>
       }
     </div>
   );
