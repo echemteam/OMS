@@ -49,21 +49,25 @@ namespace OMS.Domain.Repository.Implementation
             return getCustomerContactByCustomerIdResponse;
 
         }
-        public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId)
+        public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId, string searchText, string searchContactType)
         {
             List<GetContactByCustomerIdResponse> getContactByContactIdResponse = await _context.GetList<GetContactByCustomerIdResponse>(GETCONTACTBYCUSTOMERID, new
             {
-                customerId
+                customerId,
+                searchText,
+                searchContactType
             }, commandType: CommandType.StoredProcedure);
             return getContactByContactIdResponse;
 
         }
 
-        public async Task<List<GetContactBySupplierIdResponse>> GetContactBySupplierId(int supplierId)
+        public async Task<List<GetContactBySupplierIdResponse>> GetContactBySupplierId(int supplierId, string searchText, string searchContactType)
         {
             List<GetContactBySupplierIdResponse> getContactByContactIdResponse = await _context.GetList<GetContactBySupplierIdResponse>(GETCONTACTBYSUPPLIERID, new
             {
-                supplierId
+                supplierId,
+                searchText,
+                searchContactType
             }, commandType: CommandType.StoredProcedure);
             return getContactByContactIdResponse;
 

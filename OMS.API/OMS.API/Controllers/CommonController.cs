@@ -162,5 +162,19 @@ namespace OMS.API.Controllers
             List<GetEventNameAndUserNameBySupplierIdResponse> responseData = await _serviceManager.commonServices.GetEventNameAndUserNameBySupplierId(supplierId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+
+        [HttpGet("GetAllModules")]
+        public async Task<IActionResult> GetAllModules()
+        {
+            List<GetAllModulesResponse> responseData = await _serviceManager.commonServices.GetAllModules().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllFunctionalities")]
+        public async Task<IActionResult> GetAllFunctionalities(int moduleId)
+        {
+            List<GetAllFunctionalitiesResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalities(moduleId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

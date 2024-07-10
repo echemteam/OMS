@@ -381,7 +381,8 @@ a {
         }
       }
 
-      .middle-page-section {}
+      .middle-page-section {
+      }
     }
   }
 }
@@ -714,7 +715,8 @@ a {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {}
+    .tab-body-section {
+    }
   }
 
   &.vertical-tab {
@@ -824,7 +826,8 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {}
+      .tab-body-section {
+      }
     }
 
     &.vertical-tab {
@@ -922,7 +925,8 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {}
+        .tab-sub-body-section {
+        }
       }
     }
   }
@@ -1954,7 +1958,6 @@ a {
   }
 
   .css-1nmdiq5-menu {
-
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -2264,17 +2267,73 @@ input[type="checkbox"]:disabled {
 .refresh-btn-history {
   display: flex;
   justify-content: end;
-  margin-right: 15px;
+  margin-left: auto;
+}
+
+.custom-datepicker {
+  .react-daterange-picker {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 35px;
+    outline: 0 !important;
+    position: relative;
+    background-color: hsl(0, 0%, 100%);
+    border-color: hsl(0, 0%, 80%);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+  }
+  .react-daterange-picker__wrapper {
+    border: none;
+  }
+  .react-calendar__tile--active {
+    background-color: var(--themeColor) !important;
+  }
+  .react-daterange-picker__inputGroup {
+    min-width: 0;
+    flex-grow: 0;
+    font-size: var(--commonFont-small);
+    cursor: pointer !important;
+
+  }
+  .react-daterange-picker__inputGroup__input:invalid {
+    background: none !important;
+  }
+  .react-calendar__tile--now{
+    background: var(--themeColor) !important;
+    color: #fff !important;
+  }
+  .react-calendar {
+    width: 280px;
+    margin-top: 5px;
+  }
+  .react-daterange-picker__inputGroup__input{
+    outline: none;
+  }
+  .react-daterange-picker__clear-button{
+    margin-left: auto;
+    i {
+      color: hsl(0, 0%, 80%);
+      &:hover {
+        color: var(--themeColor) !important;
+      }
+    }
+  }
+  .react-daterange-picker__calendar-button__icon {
+    stroke: hsl(0, 0%, 80%);
+    &:hover {
+      stroke: var(--themeColor) !important;
+    }
+  }
 }
 
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
-
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
     }
-
   }
 
   .address-model {
@@ -2511,6 +2570,12 @@ input[type="checkbox"]:disabled {
 
   .input-label {
     min-height: 28px;
+  }
+  .custom-datepicker {
+    .react-daterange-picker {
+      width: 120% !important;
+      min-height: 29px !important;
+    }
   }
 }
 

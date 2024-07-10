@@ -110,6 +110,13 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetEventNameAndUserNameBySupplierId(supplierId);
         }
-
+        public Task<List<GetAllModulesResponse>> GetAllModules()
+        {
+            return repositoryManager.commonRepository.GetAllModules();
+        }
+        public Task<List<GetAllFunctionalitiesResponse>> GetAllFunctionalities(int moduleId)
+        {
+            return repositoryManager.commonRepository.GetAllFunctionalities(moduleId);
+        }
     }
 }
