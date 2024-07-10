@@ -946,6 +946,15 @@ a {
               }
             }
           }
+
+          .tab-sub-content {
+            height: calc(100vh - 220px);
+            overflow: hidden;
+            overflow-y: auto;
+            .card{
+              box-shadow: none;
+            }
+          }
         }
       }
     }
@@ -1528,7 +1537,7 @@ a {
 .card {
   .card-body-sec {
     .note-card-sec {
-      max-height: calc(100vh - 296px);
+      max-height: calc(100vh - 235px);
       overflow: hidden;
       overflow-y: auto;
     }
@@ -1539,7 +1548,7 @@ a {
   .tab-sub-section {
     .tab-sub-content {
       .grid-section {
-        max-height: calc(100vh - 362px);
+        max-height: calc(100vh - 235px);
         overflow: hidden;
         overflow-y: auto;
       }
