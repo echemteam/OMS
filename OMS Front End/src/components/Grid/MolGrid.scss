@@ -350,11 +350,16 @@ table {
 .customer-list-all {
   table {
     tbody {
-      max-height: calc(100vh - 315px);
+      max-height: calc(100vh - 345px);
+
+      @media only screen and (max-width: 1560px) {
+          max-height: calc(100vh - 324px);
+      }
     }
   }
 }
-.inactive-list-sec{
+
+.inactive-list-sec {
   table {
     tbody {
       max-height: calc(100vh - 400px);
@@ -364,17 +369,19 @@ table {
 
 @media only screen and (max-width: 1560px) {
   table {
-    thead{
-      tr{
-        th{
+    thead {
+      tr {
+        th {
           padding: 8px 10px 8px 15px;
         }
       }
     }
+
     tbody {
       tr {
         td {
           padding: 7px 10px 7px 15px;
+
           &:last-child {
             a {
               img {
@@ -391,8 +398,8 @@ table {
   }
 }
 
-.input-list-button{
-  .table-pagination{
+.input-list-button {
+  .table-pagination {
     display: none !important;
   }
 }
