@@ -41,7 +41,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   const [updateCustomerStatus, { isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
 
-  const { isResponsibleUser, isRCustomerUserDisble } = useContext(BasicDetailContext);
+  const { isResponsibleUser } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
 
@@ -273,7 +273,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
                 value={rUserValue}
                 onChange={handleRUserChange}
                 placeholder="Select Status"
-                isDisabled={isRCustomerUserDisble}
+                isDisabled={isButtonDisable}
               />
             </div>
           </div>
