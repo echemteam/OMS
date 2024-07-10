@@ -15,7 +15,7 @@ import SwalAlert from '../../../../services/swalService/SwalService';
 import { useSelector } from 'react-redux';
 import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
 
-export const InActiveCustomers = ({ statusId, configFile , handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter }) => {
+export const InActiveCustomers = ({ statusId, configFile, handleChange, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
 
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
@@ -23,7 +23,6 @@ export const InActiveCustomers = ({ statusId, configFile , handleChange, search,
   const molGridRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [dataSource, setDataSource] = useState();
-  const [customerId, setCustomerId] = useState();
   const { DataRef } = useContext(CustomerListContext);
   const authState = useSelector((state) => state.auth);
   const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
@@ -125,19 +124,18 @@ export const InActiveCustomers = ({ statusId, configFile , handleChange, search,
     getCustomers(request);
   };
 
-  useEffect(() => {
-    if (molGridRef.current) {
-      const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getListApi(currentPageObject);
-    }
-  }, [search , selectedStatusOptions]);
+  // useEffect(() => {
+  //   if (molGridRef.current) {
+  //     const currentPageObject = molGridRef.current.getCurrentPageObject();
+  //     getListApi(currentPageObject);
+  //   }
+  // }, [search , selectedStatusOptions]);
 
-  const approvalCheckList = (data) => {
-    if (childRef.current) {
-      childRef.current.callChildFunction(data.customerId);
-    }
-    setCustomerId(data.customerId);
-  }
+  // const approvalCheckList = (data) => {
+  //   if (childRef.current) {
+  //     childRef.current.callChildFunction(data.customerId);
+  //   }
+  // }
 
   const handleUnfreeze = (data) => {
     // approvalCheckList(data);
@@ -193,7 +191,7 @@ export const InActiveCustomers = ({ statusId, configFile , handleChange, search,
   return (
     <div>
       <div className="row">
-        <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
+        <div className="col-xxl-12 col-xl-12 col-md-12 col-12" key={shouldRerenderFormCreator}>
           <CardSection
             searchInput={true}
             handleChange={handleChange}
@@ -206,6 +204,13 @@ export const InActiveCustomers = ({ statusId, configFile , handleChange, search,
             placeholder="Search by Status"
             isCardSection={true}
             isdropdownOpen={true}
+            searchButton={true}
+            searchbuttonText="Search"
+            buttonClassName="theme-button"
+            searchTitleButtonClick={handleSearch}
+            clearButton={true}
+            clearTitleButtonClick={handleClear}
+            clearButtonText="Clear"
           >
             <div className="row">
               <div className="col-md-12 table-striped">

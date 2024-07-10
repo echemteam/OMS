@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import SwalAlert from '../../../../services/swalService/SwalService';
 import { reasonData } from '../../../customerDetail/customers/config/CustomerData';
 import SupplierContext from "../../../../utils/ContextAPIs/Supplier/SupplierListContext"
 import Buttons from '../../../../components/ui/button/Buttons';
@@ -19,13 +19,12 @@ import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSuppli
 import { useSelector } from 'react-redux';
 import { StatusEnums, StatusFeild } from '../../../../utils/Enums/StatusEnums';
 
-const SupplierList = ({ statusId, configFile ,handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter}) => {
+const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
   const molGridRef = useRef();
   const navigate = useNavigate();
-  const { confirm } = SwalAlert();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [dataSource, setDataSource] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -46,7 +45,7 @@ const SupplierList = ({ statusId, configFile ,handleChange, search, handleChange
 
   const [updateSupplierInActiveStatus, { isLoading: updateInActiveStatusSupplierLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
 
-  const [addSupplierNotes, { isLoading: isAddSupplierNotesLoading, isSuccess: isAddSupplierNotesSuccess, data: isAddSupplierNotesData, },] = useAddSupplierNotesMutation();
+  const [addSupplierNotes] = useAddSupplierNotesMutation();
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
@@ -160,7 +159,7 @@ const SupplierList = ({ statusId, configFile ,handleChange, search, handleChange
       const currentPageObject = molGridRef.current.getCurrentPageObject();
       getListApi(currentPageObject);
     }
-  }, [search , selectedStatusOptions]);
+  }, [search, selectedStatusOptions]);
 
   useEffect(() => {
     if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
@@ -270,17 +269,17 @@ const SupplierList = ({ statusId, configFile ,handleChange, search, handleChange
       <div className="row">
         <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
           <CardSection
-         searchInput={true}
-         handleChange={handleChange}
-         searchInputName="Search By Supplier Name, Tax Id , Email Address"
-         searchFilter={searchStatusFilter ? true : false}
-         handleChangeDropdown={handleChangeDropdown}
-         selectedOptions={selectedDrpvalues}
-         optionsValue={statusOptions}
-         isMultiSelect={true}
-         placeholder="Search by Status"
-         isCardSection={true}
-         isdropdownOpen={true}
+            searchInput={true}
+            handleChange={handleChange}
+            searchInputName="Search By Supplier Name, Tax Id , Email Address"
+            searchFilter={searchStatusFilter ? true : false}
+            handleChangeDropdown={handleChangeDropdown}
+            selectedOptions={selectedDrpvalues}
+            optionsValue={statusOptions}
+            isMultiSelect={true}
+            placeholder="Search by Status"
+            isCardSection={true}
+            isdropdownOpen={true}
           >
             <div className="row">
               <div className="col-md-12 table-striped">
@@ -308,7 +307,7 @@ const SupplierList = ({ statusId, configFile ,handleChange, search, handleChange
             <CenterModel
               showModal={showModal}
               handleToggleModal={handleToggleModal}
-              modalTitle={statusFeild + " " + "Reason"}
+              modalTitle={`${statusFeild + " "}Reason`}
               modelSizeClass="w-50s"
             >
               <div className="row horizontal-form">
