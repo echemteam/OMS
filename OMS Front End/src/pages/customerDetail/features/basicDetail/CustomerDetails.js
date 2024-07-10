@@ -20,7 +20,8 @@ import { ErrorMessage } from "../../../../data/appMessages";
 import { StaticStatus, StatusValue } from "../../../../utils/Enums/StatusEnums";
 import { excludingRoles } from "./config/BasicDetailForm.data";
 import { setOptionFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
-import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
+import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../app/services/commonAPI";
+import { ownerType } from "../../../../utils/Enums/enums";
 
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const childRef = useRef();
@@ -34,10 +35,10 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   const [options, setOptions] = useState([]);
   const [customerID, setcustomerId] = useState();
   const [statusId, setStatusId] = useState();
-  const [rUserOption, setRUserOption] = useState(false);
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
 
+  const [updateResponsibleUser, { isSuccess: isSuccessRUser, data: isUpdateRUserData }] = useUpdateResponsibleUserMutation();
   const [updateCustomerStatus, { isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
 
@@ -56,7 +57,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
         setIsButtonDisable(false);
       }
     }
-  }, [hasEditPermission, isResponsibleUser])
+  }, [hasEditPermission, isResponsibleUser]);
 
   useEffect(() => {
     if (isSuccessUpdateCustomerInActiveStatus && updateCustomerInActiveStatusData) {
@@ -127,15 +128,8 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
         label: item.fullName,
       }));
       setResponsibleUserOptions(modifyUserData);
-      setRUserOption(true);
     }
   }, [isGetAllUserSucess, allGetAlluserData]);
-
-  useEffect(() => {
-    if (rUserOption) {
-
-    }
-  }, [rUserOption]);
 
   const handleStatusChange = (selectedOption) => {
     setStaticId(selectedOption.value)
@@ -172,13 +166,30 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
     }
   };
 
+  //** Responsible User  */
   const handleRUserChange = (selectedValue) => {
-    let req = {
-      customerId: customerId,
-      statusId: selectedValue.value
-    }
-    updateCustomerStatus(req);
+    confirm("Warning?", `Are you sure you want to assign the responsible user?`,
+      "Yes", "Cancel"
+    ).then((confirmed) => {
+      if (confirmed) {
+        updateRUserData(selectedValue.value);
+      }
+    });
   }
+  const updateRUserData = (value) => {
+    let req = {
+      ownerId: customerId,
+      ownerType: ownerType.Customer,
+      responsibleUserId: value
+    }
+    updateResponsibleUser(req);
+    setRUserValue(value);
+  }
+  useEffect(() => {
+    if (isSuccessRUser && isUpdateRUserData) {
+      ToastService.success(isUpdateRUserData.errorMessage);
+    }
+  }, [isSuccessRUser, isUpdateRUserData]);
 
   const updateCustomerApproval = () => {
     setSelectedStatus(statusId);
@@ -253,11 +264,6 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
                 />
               </div>
             </div>
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">R-User</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.responsibleUserName ? customerData.responsibleUserName : ErrorMessage.NotAvailabe}</div>
           </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">R-User</div>

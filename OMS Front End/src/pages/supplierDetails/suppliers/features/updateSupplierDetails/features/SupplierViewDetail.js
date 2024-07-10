@@ -18,6 +18,9 @@ import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/Add
 import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 import { securityKey } from '../../../../../../data/SecurityKey';
 import { StaticStatus, StatusValue } from '../../../../../../utils/Enums/StatusEnums';
+import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../../../../../app/services/commonAPI';
+import { ownerType } from '../../../../../../utils/Enums/enums';
+import { excludingRoles } from '../../../../../customerDetail/features/basicDetail/config/BasicDetailForm.data';
 
 const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
 
@@ -33,6 +36,10 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
   const [statusId, setStatusId] = useState();
   // const [supplierId, setSupplierId] = useState();
 
+  const [rUserValue, setRUserValue] = useState([]);
+  const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
+  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
+  const [updateResponsibleUser, { isSuccess: isSuccessRUser, data: isUpdateRUserData }] = useUpdateResponsibleUserMutation();
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
   const [updateSupplierInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
 
@@ -105,8 +112,48 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
   useEffect(() => {
     if (supplierData) {
       setSelectedStatus(supplierData.status);
+      setRUserValue(supplierData.responsibleUserName);
+      getAllUser();
     }
   }, [supplierData]);
+
+  useEffect(() => {
+    if (isGetAllUserSucess && allGetAlluserData) {
+      const filterData = allGetAlluserData.filter((item) => {
+        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
+      });
+      const modifyUserData = filterData.map((item) => ({
+        value: item.userId,
+        label: item.fullName,
+      }));
+      setResponsibleUserOptions(modifyUserData);
+    }
+  }, [isGetAllUserSucess, allGetAlluserData]);
+
+  //** Responsible User  */
+  const handleRUserChange = (selectedValue) => {
+    confirm("Warning?", `Are you sure you want to assign the responsible user?`,
+      "Yes", "Cancel"
+    ).then((confirmed) => {
+      if (confirmed) {
+        updateRUserData(selectedValue.value);
+      }
+    });
+  }
+  const updateRUserData = (value) => {
+    let req = {
+      ownerId: supplierId,
+      ownerType: ownerType.Supplier,
+      responsibleUserId: value
+    }
+    updateResponsibleUser(req);
+    setRUserValue(value);
+  }
+  useEffect(() => {
+    if (isSuccessRUser && isUpdateRUserData) {
+      ToastService.success(isUpdateRUserData.errorMessage);
+    }
+  }, [isSuccessRUser, isUpdateRUserData]);
 
   const handleStatusChange = (selectedOption) => {
     setStaticId(selectedOption.value)
@@ -215,10 +262,18 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
               </div>
             </div>
           </div>
-          <div className="field-desc">
+          <div className="field-desc d-flex align-items-center">
             <div className="inf-label">R-User</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.responsibleUserName ? supplierData?.responsibleUserName : ErrorMessage.NotAvailabe}</div>
+            <div className='status-dropdown'>
+              <DropDown
+                options={responsibleUserOptions}
+                value={rUserValue}
+                onChange={handleRUserChange}
+                placeholder="Select Status"
+                isDisabled={isButtonDisable}
+              />
+            </div>
           </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">Status</div>
