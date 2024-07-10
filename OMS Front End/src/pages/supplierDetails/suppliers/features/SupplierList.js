@@ -19,7 +19,7 @@ import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSuppli
 import { useSelector } from 'react-redux';
 import { StatusEnums, StatusFeild } from '../../../../utils/Enums/StatusEnums';
 
-const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
+const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter , handleSearch , handleClear }) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
@@ -154,12 +154,12 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
     }
   }, [isSuccessUpdateSupplier, updateSupplierData]);
 
-  useEffect(() => {
-    if (molGridRef.current) {
-      const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getListApi(currentPageObject);
-    }
-  }, [search, selectedStatusOptions]);
+  // useEffect(() => {
+  //   if (molGridRef.current) {
+  //     const currentPageObject = molGridRef.current.getCurrentPageObject();
+  //     getListApi(currentPageObject);
+  //   }
+  // }, [search, selectedStatusOptions]);
 
   useEffect(() => {
     if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
@@ -280,6 +280,14 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
             placeholder="Search by Status"
             isCardSection={true}
             isdropdownOpen={true}
+            searchButton={true}
+            searchbuttonText="Search"
+            buttonClassName="theme-button"
+            searchTitleButtonClick={handleSearch}
+            clearButton={true}
+            clearTitleButtonClick={handleClear}
+            clearButtonText="Clear"
+            clearButtonClassName="dark-btn"
           >
             <div className="row">
               <div className="col-md-12 table-striped">

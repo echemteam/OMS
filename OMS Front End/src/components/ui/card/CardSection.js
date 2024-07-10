@@ -38,7 +38,9 @@ function CardSection({
   clearButtonText,
   searchTitleButtonClick,
   searchButton,
-  searchbuttonText
+  searchbuttonText,
+  clearButtonClassName,
+
 }) {
   return (
     <div
@@ -80,6 +82,30 @@ function CardSection({
               )}
             </div>
           </div>
+          {searchButton && (
+            <>
+              <div className="btn-right-sec">
+                {/* Button to open the Add Craft modal */}
+                <Buttons
+                  onClick={searchTitleButtonClick}
+                  buttonText={searchbuttonText}
+                  buttonTypeClassName={buttonClassName}
+                />
+              </div>
+            </>
+          )}
+          {clearButton && (
+            <>
+              <div className="btn-right-sec">
+                {/* Button to open the Add Craft modal */}
+                <Buttons
+                  onClick={clearTitleButtonClick}
+                  buttonText={clearButtonText}
+                  buttonTypeClassName={clearButtonClassName}
+                />
+              </div>
+            </>
+          )}
           {
             // isButtonVisible && (
 
@@ -116,31 +142,6 @@ function CardSection({
             )
 
           }
-          {searchButton && (
-                  <>
-                    <div className="btn-right-sec">
-                      {/* Button to open the Add Craft modal */}
-                      <Buttons
-                        onClick={searchTitleButtonClick}
-                        buttonText={searchbuttonText}
-                        buttonTypeClassName={buttonClassName}
-                      />
-                    </div>
-                  </>
-                )}
-                {clearButton && (
-                  <>
-                    <div className="btn-right-sec">
-                      {/* Button to open the Add Craft modal */}
-                      <Buttons
-                        onClick={clearTitleButtonClick}
-                        buttonText={clearButtonText}
-                        buttonTypeClassName={buttonClassName}
-                      />
-                    </div>
-                  </>
-                )}
-
         </div>
       )
       }

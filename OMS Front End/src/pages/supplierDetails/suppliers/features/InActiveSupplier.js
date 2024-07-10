@@ -67,12 +67,13 @@ const InActiveSupplier = ({ statusId }) => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
+  const handleSearch = () => {
+    getListApi();
+  };
+
   const handleChange = (event) => {
-    const value = event.target.value;
-    // if (value.length >= 3) {
-    setSearch(value.trim());
-    // }
-  }
+    setSearch(event.target.value.trim());
+  };
 
   useEffect(() => {
     if (StatusValue) {
@@ -90,6 +91,13 @@ const InActiveSupplier = ({ statusId }) => {
     setSelectedStatusOptions(selectedValues);
   };
 
+  const handleClear = () => {
+    // setSelectedDrpvalues("");
+    // setSelectedStatusOptions("");
+    // setSearch("");
+    // // getListApi();
+  };
+
   const tabs = [
     {
       sMenuItemCaption: "All",
@@ -103,6 +111,8 @@ const InActiveSupplier = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={true}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
           />
         </div>
       ),
@@ -119,6 +129,8 @@ const InActiveSupplier = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
           />
         </div>
       ),
@@ -135,6 +147,8 @@ const InActiveSupplier = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
           />
         </div>
       ),
@@ -151,6 +165,8 @@ const InActiveSupplier = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
           />
         </div>
       ),

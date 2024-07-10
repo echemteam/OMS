@@ -15,7 +15,7 @@ import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSuppli
 import { useSelector } from 'react-redux';
 import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
 
-export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
+export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear }) => {
 
     const childRef = useRef();
     const molGridRef = useRef();
@@ -111,13 +111,6 @@ export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, 
         getListApi,
     }));
 
-    useEffect(() => {
-        if (molGridRef.current) {
-          const currentPageObject = molGridRef.current.getCurrentPageObject();
-          getListApi(currentPageObject);
-        }
-      }, [search , selectedStatusOptions]);
-
     const getListApi = () => {
         const currentPageObject = molGridRef.current.getCurrentPageObject();
         const request = {
@@ -206,6 +199,14 @@ export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, 
                         placeholder="Search by Status"
                         isCardSection={true}
                         isdropdownOpen={true}
+                        searchButton={true}
+                        searchbuttonText="Search"
+                        buttonClassName="theme-button"
+                        searchTitleButtonClick={handleSearch}
+                        clearButton={true}
+                        clearTitleButtonClick={handleClear}
+                        clearButtonText="Clear"
+                        clearButtonClassName="dark-btn"
                     >
                         <div className="row">
                             <div className="col-md-12 table-striped">

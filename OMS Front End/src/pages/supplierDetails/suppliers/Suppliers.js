@@ -81,6 +81,15 @@ const Suppliers = () => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
+  const handleSearch = () => {
+    getListApi();
+  };
+
+  const handleChange = (event) => {
+    // if (value.length >= 3) {
+    setSearch(event.target.value.trim());
+  };
+
   useEffect(() => {
     if (StatusValue) {
       const statusListData = StatusValue.map((item) => ({
@@ -97,12 +106,13 @@ const Suppliers = () => {
     setSelectedStatusOptions(selectedValues);
   };
 
-  const handleChange = (event) => {
-    const value = event.target.value;
-    // if (value.length >= 3) {
-    setSearch(value.trim());
-    // }
-  }
+  const handleClear = () => {
+    setSelectedDrpvalues("");
+    setSelectedStatusOptions("");
+    setSearch("");
+    getListApi();
+  };
+
   const tabs = [
     {
       sMenuItemCaption: "ALL",
@@ -115,7 +125,10 @@ const Suppliers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={true} />
+            searchStatusFilter={true}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+          />
         </div>
       ),
     },
@@ -130,7 +143,9 @@ const Suppliers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false} />
+            searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear} />
         </div>
       ),
     },
@@ -145,7 +160,10 @@ const Suppliers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false} />
+            searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+          />
         </div>
       ),
     },
@@ -160,7 +178,10 @@ const Suppliers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false} />
+            searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+          />
         </div>
       ),
     },
@@ -183,7 +204,9 @@ const Suppliers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false} />
+            searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear} />
         </div>
       ),
     },

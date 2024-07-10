@@ -114,12 +114,10 @@ const Customers = () => {
   };
 
   const handleClear = () => {
-    setShouldRerenderFormCreator((prevState) => !prevState);
     setSelectedDrpvalues("");
     setSelectedStatusOptions("");
     setSearch("");
-    // getListApi();
-    console.log("search)" , search)
+    getListApi();
   };
 
   const tabs = [

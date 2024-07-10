@@ -93,12 +93,10 @@ const InActiveCustomer = ({ statusId }) => {
   };
 
   const handleClear = () => {
-    // setShouldRerenderFormCreator((prevState) => !prevState);
     // setSelectedDrpvalues("");
     // setSelectedStatusOptions("");
     // setSearch("");
     // // getListApi();
-    // console.log("search)" , search)
   };
 
   const tabs = [

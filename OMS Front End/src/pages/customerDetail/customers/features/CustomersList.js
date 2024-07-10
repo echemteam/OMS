@@ -29,7 +29,7 @@ import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
 import { useSelector } from "react-redux";
 import { StatusEnums, StatusFeild } from "../../../../utils/Enums/StatusEnums";
 
-export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter , handleSearch , handleClear , shouldRerenderFormCreator}) => {
+export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues  , searchStatusFilter , handleSearch , handleClear , shouldRerenderFormCreator}) => {
 
   const navigate = useNavigate();
   const molGridRef = useRef();
@@ -312,6 +312,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
             clearButton={true}
             clearTitleButtonClick={handleClear}
             clearButtonText="Clear"
+            clearButtonClassName="dark-btn"
           >
             <div className="row">
               <div className="col-md-12 table-striped">

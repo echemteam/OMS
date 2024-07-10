@@ -211,6 +211,7 @@ export const InActiveCustomers = ({ statusId, configFile, handleChange, search, 
             clearButton={true}
             clearTitleButtonClick={handleClear}
             clearButtonText="Clear"
+            clearButtonClassName="dark-btn"
           >
             <div className="row">
               <div className="col-md-12 table-striped">
