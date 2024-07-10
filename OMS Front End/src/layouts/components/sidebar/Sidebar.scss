@@ -119,6 +119,12 @@
                       transform: translateY(-50%) rotate(0deg);
                       transition: 0.5s all;
                       filter: brightness(0);
+
+                      @media only screen and (max-width: 1560px) {
+                        height: 12px;
+                        width: 12px;
+                        right: 10px;
+                      }
                     }
                   }
                 }
