@@ -1,21 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
-import FormCreator from "../../../../components/Forms/FormCreator";
+//** Libs's */
 import { SettingFormData } from "./config/SettingData";
-import Buttons from "../../../../components/ui/button/Buttons";
-import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
-import ToastService from "../../../../services/toastService/ToastService";
-import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { securityKey } from "../../../../data/SecurityKey";
+import { settingEnum } from "../../../../utils/Enums/enums";
+import Buttons from "../../../../components/ui/button/Buttons";
+import FormCreator from "../../../../components/Forms/FormCreator";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+//** Service's */
+import ToastService from "../../../../services/toastService/ToastService";
+import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
 
 const FinancialSettings = ({ isEditablePage }) => {
+
   const settingFormRef = useRef();
-  const { customerId, isResponsibleUser, settingRef } = useContext(BasicDetailContext);
   const [showButton, setShowButton] = useState(true);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
+  const { customerId, isResponsibleUser, settingRef, handleActiveSubTabClick } = useContext(BasicDetailContext);
+
+  //** API Call's */
   const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
   const [getAllPaymentMethod, { isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData, },] = useLazyGetAllPaymentMethodQuery();
   const [GetDetailsbyCustomerID, { isFetching: isGetDetailByCustomerIDFetching, isSuccess: isGetDetailByCustomerIDSuccess, data: isGetDetailByCustomerIDData, },] = useLazyGetDetailsbyCustomerIDQuery();
@@ -45,9 +51,7 @@ const FinancialSettings = ({ isEditablePage }) => {
 
   useEffect(() => {
     if (customerId > 0) {
-      // if (isEditablePage) {
       GetDetailsbyCustomerID(customerId)
-      // }
     };
   }, [customerId]);
 
@@ -76,7 +80,6 @@ const FinancialSettings = ({ isEditablePage }) => {
   }, [isGetAllPaymentMethodSuccess, isGetAllPaymentMethodData,]);
 
   useEffect(() => {
-
     if (!isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDSuccess && isGetDetailByCustomerIDData) {
       if (isGetDetailByCustomerIDData) {
         let formData = { ...customerSettingFormData };
@@ -98,6 +101,7 @@ const FinancialSettings = ({ isEditablePage }) => {
   useEffect(() => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
       ToastService.success(isAddEditCustomerSettingsData.errorMessage);
+      handleActiveSubTabClick(settingEnum.ShippingSettings);
     }
   }, [isAddEditCustomerSettingsSuccess, isAddEditCustomerSettingsData]);
 
@@ -137,50 +141,32 @@ const FinancialSettings = ({ isEditablePage }) => {
   };
 
   return (
-    <>
-      <div className="row horizontal-form">
-        {!isEditablePage &&
-          <div className="col-md-12 mb-2">
-            <div className="d-flex align-item-end justify-content-end">
-              <div className="d-flex align-item-end">
-                <Buttons
-                  buttonTypeClassName="theme-button"
-                  buttonText="Save Financial Settings"
-                  onClick={onhandleEdit}
-                  isLoading={isAddEditCustomerSettingsLoading}
-                />
-              </div>
+    <div className="row horizontal-form">
+      {!isGetDetailByCustomerIDFetching ?
+        <FormCreator
+          config={customerSettingFormData}
+          ref={settingFormRef}
+          key={shouldRerenderFormCreator}
+          {...customerSettingFormData} />
+        : <DataLoader />
+      }
+      {isEditablePage &&
+        showButton ?
+        <div className="col-md-12 mt-2 mb-3">
+          <div className="d-flex align-item-end justify-content-end">
+            <div className="d-flex align-item-end">
+              <Buttons
+                buttonTypeClassName="theme-button"
+                buttonText="Save"
+                onClick={onhandleEdit}
+                isLoading={isAddEditCustomerSettingsLoading}
+              />
             </div>
           </div>
-        }
-        {!isGetDetailByCustomerIDFetching ?
-          <FormCreator
-            config={customerSettingFormData}
-            ref={settingFormRef}
-            key={shouldRerenderFormCreator}
-            {...customerSettingFormData}
-          // onFormDataUpdate={handleFormDataChange}
-          />
-          : <DataLoader />
-        }
-        {isEditablePage &&
-          showButton ?
-          <div className="col-md-12 mt-2 mb-3">
-            <div className="d-flex align-item-end justify-content-end">
-              <div className="d-flex align-item-end">
-                <Buttons
-                  buttonTypeClassName="theme-button"
-                  buttonText="Save"
-                  onClick={onhandleEdit}
-                  isLoading={isAddEditCustomerSettingsLoading}
-                />
-              </div>
-            </div>
-          </div>
-          : null
-        }
-      </div>
-    </>
+        </div>
+        : null
+      }
+    </div>
   );
 };
 

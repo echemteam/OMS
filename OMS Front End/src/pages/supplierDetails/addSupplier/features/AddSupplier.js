@@ -41,7 +41,7 @@ const AddSupplier = () => {
     {
       label: "Contact",
       subLabel: "Enter Supplier Contact Details",
-      content: <SupplierContactDetail isEditablePage={false} />,
+      content: <SupplierContactDetail isEditablePage={false} isSearchFilterShow={false}/>,
       tab: TabEnum.Contact
     },
     {

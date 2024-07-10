@@ -10,7 +10,7 @@
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public bool? IsPrimary { get; set; }
-        public List<GetEmailByContactIdResponse>? EmailAddressLst { get; set; } 
-        public List<GetPhoneByContactIdResponse>? PhoneNumberLsit { get; set; } 
+        public List<GetEmailByContactIdResponse>? EmailAddressList { get; set; } 
+        public List<GetPhoneByContactIdResponse>? PhoneNumberList { get; set; } 
     }
 }

@@ -18,6 +18,7 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     //** Shipping Method's */
     const [carriersList, setCarriersList] = useState([]);
+    const [showSubBackButton, setShowSubBackButton] = useState(false);
     const [deliveryMethodsList, setDeliveryMethodsList] = useState([]);
     //** */
 
@@ -28,11 +29,23 @@ export const BasicDetailContextProvider = ({ children }) => {
     //** */
 
     const [isResponsibleUser, setIsResponsibleUser] = useState(true);
+    const [isRCustomerUserDisble, setIsRCustomerUserDisble] = useState(false);
+    const [isRSupplierUserDisble, setIsRSupplierUserDisble] = useState(false);
 
     //** Use for Tab's */
     const nextRef = useRef(null);
     const settingRef = useRef(null);
     const [activeTab, setActiveTab] = useState(0);
+    const [activeSubTab, setActiveSubTab] = useState(0);
+
+    const handleActiveSubTabClick = (tabIndex) => {
+        setActiveSubTab(tabIndex);
+        setShowSubBackButton(false);
+        if (tabIndex === 1) {
+            setShowSubBackButton(true);
+        }
+    }
+
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
     };
@@ -52,17 +65,22 @@ export const BasicDetailContextProvider = ({ children }) => {
             }
         }
         if (data === 5) {
-            if (settingRef.current) {
-                settingRef.current.onhandleEdit();
-            }
+            setShowSubBackButton(false);
+        }
+    }
+
+    const saveFinacialSetting = () => {
+        if (settingRef.current) {
+            settingRef.current.onhandleEdit();
         }
     }
     //** */
 
     return (
         <BasicDetailContext.Provider value={{
-            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData,
-            phoneNumberData, setMainId, mainId,
+            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setIsRCustomerUserDisble,
+            isRCustomerUserDisble, isRSupplierUserDisble, setIsRSupplierUserDisble,
+            phoneNumberData, setMainId, mainId, setShowSubBackButton, showSubBackButton, setActiveSubTab, activeSubTab, handleActiveSubTabClick, saveFinacialSetting,
             emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
             setIsResponsibleUser, isResponsibleUser
         }}>

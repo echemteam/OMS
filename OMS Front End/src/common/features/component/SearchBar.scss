@@ -30,11 +30,12 @@
   overflow: hidden;
 
   input {
-    border-radius: 2px !important;    
+    border-radius: 2px !important;
     padding-left: 40px;
     border: none !important;
     font-size: var(--commonFont);
-    &:focus{
+
+    &:focus {
       border: none !important;
       padding-left: 45px !important;
       box-shadow: none !important;
@@ -58,6 +59,7 @@
       color: var(--textColor);
       font-weight: bolder;
       font-size: var(--commonFont);
+
       img {
         width: 30px;
         filter: unset;
@@ -65,7 +67,7 @@
         margin-right: 0;
       }
     }
-    
+
 
   }
 }
@@ -80,24 +82,26 @@
 
 
 // Card Searchbar
-.card-top-title-btn{
-  
-}
+.card-top-title-btn {}
 
-@media only screen and (max-width: 1366px) {
+@media only screen and (max-width: 1560px) {
   .search-input {
     width: 312px;
-  .search-section {
-    .right-search-section {
-      .btn {
-        min-width: 115px;
+
+    .search-section {
+      .right-search-section {
+        .btn {
+          min-width: 115px;
+        }
       }
     }
+
   }
-  .search-part{
-    input{
+
+  .search-part {
+    input {
       font-size: var(--commonFont);
+      height: 26px;
     }
   }
-}
 }

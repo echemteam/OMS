@@ -18,6 +18,9 @@ import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDeta
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { ErrorMessage } from "../../../../data/appMessages";
 import { StaticStatus, StatusValue } from "../../../../utils/Enums/StatusEnums";
+import { excludingRoles } from "./config/BasicDetailForm.data";
+import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../app/services/commonAPI";
+import { ownerType } from "../../../../utils/Enums/enums";
 
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const childRef = useRef();
@@ -31,13 +34,18 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   const [options, setOptions] = useState([]);
   const [customerID, setcustomerId] = useState();
   const [statusId, setStatusId] = useState();
+  const [rUserValue, setRUserValue] = useState([]);
+  const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
 
+  const [updateResponsibleUser, { isSuccess: isSuccessRUser, data: isUpdateRUserData }] = useUpdateResponsibleUserMutation();
   const [updateCustomerStatus, { isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
 
-  const { isResponsibleUser } = useContext(BasicDetailContext);
+  const { isResponsibleUser, isRCustomerUserDisble } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
+
+  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
 
   useEffect(() => {
     if (!isResponsibleUser) {
@@ -48,7 +56,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
         setIsButtonDisable(false);
       }
     }
-  }, [hasEditPermission, isResponsibleUser])
+  }, [hasEditPermission, isResponsibleUser]);
 
   useEffect(() => {
     if (isSuccessUpdateCustomerInActiveStatus && updateCustomerInActiveStatusData) {
@@ -104,8 +112,23 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   useEffect(() => {
     if (customerData) {
       setSelectedStatus(customerData.status);
+      setRUserValue(customerData.responsibleUserName);
+      getAllUser();
     }
   }, [customerData]);
+
+  useEffect(() => {
+    if (isGetAllUserSucess && allGetAlluserData) {
+      const filterData = allGetAlluserData.filter((item) => {
+        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
+      });
+      const modifyUserData = filterData.map((item) => ({
+        value: item.userId,
+        label: item.fullName,
+      }));
+      setResponsibleUserOptions(modifyUserData);
+    }
+  }, [isGetAllUserSucess, allGetAlluserData]);
 
   const handleStatusChange = (selectedOption) => {
     setStaticId(selectedOption.value)
@@ -125,7 +148,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
               customerId: customerId,
               statusId: selectedOption.value
             }
-            updateCustomerStatus(req)
+            updateCustomerStatus(req);
             setSelectedStatus(selectedOption.value);
           }
         });
@@ -141,6 +164,31 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
       }
     }
   };
+
+  //** Responsible User  */
+  const handleRUserChange = (selectedValue) => {
+    confirm("Warning?", `Are you sure you want to assign the responsible user?`,
+      "Yes", "Cancel"
+    ).then((confirmed) => {
+      if (confirmed) {
+        updateRUserData(selectedValue.value);
+      }
+    });
+  }
+  const updateRUserData = (value) => {
+    let req = {
+      ownerId: customerId,
+      ownerType: ownerType.Customer,
+      responsibleUserId: value
+    }
+    updateResponsibleUser(req);
+    setRUserValue(value);
+  }
+  useEffect(() => {
+    if (isSuccessRUser && isUpdateRUserData) {
+      ToastService.success(isUpdateRUserData.errorMessage);
+    }
+  }, [isSuccessRUser, isUpdateRUserData]);
 
   const updateCustomerApproval = () => {
     setSelectedStatus(statusId);
@@ -216,10 +264,18 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
               </div>
             </div>
           </div>
-          <div className="field-desc">
+          <div className="field-desc d-flex align-items-center">
             <div className="inf-label">R-User</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.responsibleUserName ? customerData.responsibleUserName : ErrorMessage.NotAvailabe}</div>
+            <div className='status-dropdown'>
+              <DropDown
+                options={responsibleUserOptions}
+                value={rUserValue}
+                onChange={handleRUserChange}
+                placeholder="Select Status"
+                isDisabled={isRCustomerUserDisble}
+              />
+            </div>
           </div>
           <div className="field-desc d-flex align-items-center">
             <div className="inf-label">Status</div>
@@ -233,7 +289,6 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
                 isDisabled={isButtonDisable}
               />
             </div>
-
           </div>
           <div className="field-desc">
             <div className="inf-label">Email</div>
@@ -289,7 +344,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
             </div>
           </div> */}
           <div className="field-desc">
-            <div className="inf-label">Is Buying for Third Party</div>
+            <div className="inf-label inf-label-width ">Is Buying for Third Party</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">
               {customerData?.isBuyingForThirdParty}

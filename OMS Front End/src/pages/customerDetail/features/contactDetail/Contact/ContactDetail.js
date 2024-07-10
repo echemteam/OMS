@@ -23,7 +23,8 @@ const ContactDetail = ({
   isSupplier,
   isEditablePage,
   SecurityKey,
-  getContactById
+  getContactById,
+  isSearchFilterShow
 }) => {
   //** State */
   const editRef = useRef();
@@ -34,6 +35,10 @@ const ContactDetail = ({
   const [buttonVisible, setButtonVisible] = useState(true);
   const [showEditIcon, setShowEditIcon] = useState(true);
   const [modifyContactData, setModifyContactData] = useState([]);
+  const [contactType, setContactType] = useState("")
+  const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
+  const [search, setSearch] = useState("");
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   //** API Call's */
   const [
@@ -82,10 +87,7 @@ const ContactDetail = ({
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetContactData) {
-      const modifyData = isSupplier
-        ? contactSupplierTransformData(isGetContactData)
-        : contactCustomerTransformData(isGetContactData);
-      setModifyContactData(modifyData);
+      setModifyContactData(isGetContactData);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetContactData]);
 
@@ -103,6 +105,7 @@ const ContactDetail = ({
           (item) => item.dataField === "contactTypeId"
         );
         dropdownField.fieldSetting.options = getData;
+        setContactType(getData)
       } else {
         const getData = allGetAllContactTypesData.filter(x => x.isForCustomers).map((item) => ({
           value: item.contactTypeId,
@@ -112,6 +115,7 @@ const ContactDetail = ({
           (item) => item.dataField === "contactTypeId"
         );
         dropdownField.fieldSetting.options = getData;
+        setContactType(getData)
       }
     }
   }, [
@@ -152,29 +156,85 @@ const ContactDetail = ({
 
   //** Get Contact List */
   const onGetContactList = () => {
-    mainId && GetContactList(mainId);
+    let req = {
+      id: mainId,
+      searchText: search,
+      contactType: contactType
+    }
+    mainId && GetContactList(req);
+  };
+
+  const onhandleSearch = () => {
+    let req = {
+      id: mainId,
+      searchText: search,
+      contactType: Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues)
+    }
+    GetContactList(req)
+  }
+
+  const handleChange = (event) => {
+    setSearch(event.target.value.trim());
+  }
+
+  const onhandleClear = () => {
+    setSelectedDrpvalues("");
+    setSearch("");
+    setContactType("")
+    setShouldRerenderFormCreator((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    if (search === "" && selectedDrpvalues === "") {
+      onGetContactList();
+    }
+  }, [search , selectedDrpvalues]);
+
+  const handleChangeDropdown = (selectedOptions) => {
+    const selectedValues = selectedOptions.map(option => option.value);
+    setSelectedDrpvalues(selectedValues);
   };
 
   return (
     <>
-      <CardSection
-        cardTitle="Contact"
-        buttonClassName="theme-button"
-        textWithIcon={true}
-        iconImg={AppIcons.PlusIcon}
-        rightButton={buttonVisible ? true : false}
-        buttonText="Add"
-        titleButtonClick={handleToggleModal}
-        isFilter={true}
-        filterHeaderTitle="Contact Filter"
-      >
-        <ManageContactList
-          handleEdit={handleEdit}
-          modifyContactData={modifyContactData}
-          isLoading={isGetContactFetching}
-          showEditIcon={showEditIcon}
-        />
-      </CardSection>
+      <div key={shouldRerenderFormCreator}>
+        <CardSection
+          cardTitle={isSearchFilterShow ? "" : "Contact"}
+          handleChange={handleChange}
+          searchInputName="Search By Name and Email"
+          searchInput={isSearchFilterShow ? true : false}
+          buttonClassName="theme-button"
+          textWithIcon={true}
+          iconImg={AppIcons.PlusIcon}
+          rightButton={buttonVisible ? true : false}
+          buttonText="Add"
+          titleButtonClick={handleToggleModal}
+          // isFilter={true}
+          // filterHeaderTitle="Contact Filter"
+          clearButton={isSearchFilterShow ? true : false}
+          clearTitleButtonClick={onhandleClear}
+          clearButtonText="Clear"
+          searchButton={isSearchFilterShow ? true : false}
+          searchbuttonText="Search"
+          searchTitleButtonClick={onhandleSearch}
+          searchFilter={isSearchFilterShow ? true : false}
+          handleChangeDropdown={handleChangeDropdown}
+          selectedOptions={selectedDrpvalues}
+          optionsValue={contactType}
+          isMultiSelect={true}
+          placeholder="Search by Contact Type"
+          isCardSection={true}
+          isdropdownOpen={true}
+          clearButtonClassName="dark-btn"
+        >
+          <ManageContactList
+            handleEdit={handleEdit}
+            modifyContactData={modifyContactData}
+            isLoading={isGetContactFetching}
+            showEditIcon={showEditIcon}
+          />
+        </CardSection>
+      </div>
       <div className="sidebar-contact-model">
         <SidebarModel
           modalTitle="Add/Edit Contact"

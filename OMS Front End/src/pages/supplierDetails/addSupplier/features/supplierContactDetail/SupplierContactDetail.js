@@ -11,13 +11,13 @@ const supplierSecurityKey = {
   EDIT: securityKey.EDITSUPPLIERCONTACT,
 }
 
-const SupplierContactDetail = ({ isEditSupplierPage }) => {
+const SupplierContactDetail = ({ isEditSupplierPage , isSearchFilterShow }) => {
 
   const { supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
   return (
     //** Also, We replace the API Name and mainId based on the customer and supplier module*/
-    <ContactDetail isSupplier={true} isEditablePage={isEditSupplierPage} mainId={supplierId ? supplierId : 0}
+    <ContactDetail isSupplier={true} isEditablePage={isEditSupplierPage} mainId={supplierId ? supplierId : 0} isSearchFilterShow={isSearchFilterShow}
       getContactByKeyId={useLazyGetContactBySupplierIdQuery} addEditContactMutation={useAddEditContactMutation}
       SecurityKey={!isResponsibleUser ? supplierSecurityKey : null} getContactById={useLazyGetSupllierContactByContactQuery}
     />

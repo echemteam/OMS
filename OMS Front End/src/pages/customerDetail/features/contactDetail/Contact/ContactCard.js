@@ -4,19 +4,11 @@ import { AppIcons } from "../../../../../data/appIcons";
 import ContactEmailsDropdown from "./ContactEmailsDropdown";
 import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
 
-const ContactCard = ({ childData, handleEdit, showEditIcon }) => {
-  const [showEmailDropdown, setShowEmailDropdown] = useState(false);
-  const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
+const ContactCard = ({ childData, handleEdit, showEditIcon, type }) => {
   const emailDropdownRef = useRef(null);
   const phoneDropdownRef = useRef(null);
-
-  const cardInfoData = childData.cardInformation;
-
-  // Split the email addresses and phone numbers into arrays
-  const emailAddresses = cardInfoData.emailAddress.filter(data => data.isPrimary === false);
-  const primaryEmailAddres = cardInfoData.emailAddress.find(data => data.isPrimary === true);
-  const primaryPhoneNumber = cardInfoData.phoneNumber.find(data => data.isPrimary === true);
-  const phoneNumbers = cardInfoData.phoneNumber.filter(data => data.isPrimary === false);
+  const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
+  const [showEmailDropdown, setShowEmailDropdown] = useState(false);
 
   const handleClickOutside = (event) => {
     if (
@@ -42,39 +34,58 @@ const ContactCard = ({ childData, handleEdit, showEditIcon }) => {
 
   return (
     <>
-      {cardInfoData && (
+      {childData && (
         <>
-          <div className={`contact-card ${showEmailDropdown || showPhoneDropdown ? 'dropdown-open' : ''}`}>
-            <div className="add-line">
-              <div className="user-icon-name">
-                <span className="icon">
-                  <Image imagePath={AppIcons.User3DIcon}></Image>
+          <div
+            className={`contact-card ${
+              showEmailDropdown || showPhoneDropdown ? "dropdown-open" : ""
+            }`}
+          >
+            <div className="contact-card-desc">
+              <div className="contact-info">
+                <span className="user-icon">
+                  <i className="fa fa-user"></i>
                 </span>
-                <div className="d-flex flex-column ml-1 contact-name-title">
-                  <span className="label-txt user-name">
-                    <b>
-                      {cardInfoData.firstName + " " + cardInfoData.lastName}
-                    </b>
+                <div className="contact-name">
+                  <span className="contact-title">
+                    <b>{childData.firstName + " " + childData.lastName}</b>
                   </span>
-                  {cardInfoData.isPrimary && (
+                  {childData.isPrimary && (
                     <span className="primary-label"> ( Primary ) </span>
                   )}
                 </div>
-
-                <span>|</span>
               </div>
-              <div className="contact-right-info">
-                <ContactEmailsDropdown showEmailDropdown={showEmailDropdown} setShowEmailDropdown={setShowEmailDropdown} primaryEmailAddres={primaryEmailAddres} emailAddresses={emailAddresses} />
-                <span>|</span>
-                <ContactPhoneNumberDropdown showPhoneDropdown={showPhoneDropdown} setShowPhoneDropdown={setShowPhoneDropdown} primaryPhoneNumber={primaryPhoneNumber} phoneNumbers={phoneNumbers} />
+              <div className="contact-details">
+                <div className="dropdown-sec">
+                  {childData.emailAddressList?.length > 0 ? (
+                    <ContactEmailsDropdown
+                      showEmailDropdown={showEmailDropdown}
+                      setShowEmailDropdown={setShowEmailDropdown}
+                      emailAddressesList={childData.emailAddressList}
+                    />
+                  ) : null}
+                </div>
+                <div className="dropdown-sec">
+                  {childData.phoneNumberList?.length > 0 ? (
+                    <ContactPhoneNumberDropdown
+                      showPhoneDropdown={showPhoneDropdown}
+                      setShowPhoneDropdown={setShowPhoneDropdown}
+                      phoneNumberList={childData.phoneNumberList}
+                    />
+                  ) : null}
+                </div>
               </div>
             </div>
+            <div className="contact-type-badge">{type}</div>
             <div className="edit-delete-button">
-              {showEditIcon ?
-                <button onClick={() => handleEdit(cardInfoData?.contactId)} className="edit-btn">
+              {showEditIcon ? (
+                <button
+                  onClick={() => handleEdit(childData?.contactId)}
+                  className="edit-btn"
+                >
                   <Image imagePath={AppIcons.editThemeIcon} />
                 </button>
-                : null}
+              ) : null}
             </div>
           </div>
         </>
