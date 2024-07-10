@@ -9,10 +9,10 @@ import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import { modifyTimeLineData } from "../../../../../utils/TransformData/TransformAPIData";
 import DropDown from "../../../../../components/ui/dropdown/DropDrown";
-import { DateRangePicker } from 'react-bootstrap-daterangepicker';
 import ToastService from "../../../../../services/toastService/ToastService";
-import moment from "moment";
-import 'bootstrap-daterangepicker/daterangepicker.css';
+import { DateRangePicker } from '@wojtekmaj/react-daterange-picker';
+import '@wojtekmaj/react-daterange-picker/dist/DateRangePicker.css';
+import 'react-calendar/dist/Calendar.css';
 
 const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHistory }) => {
 
@@ -26,8 +26,8 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   const [selectedUserName, setSelectedUserName] = useState("");
   const [selectedUserId, setSelectedUserId] = useState("");
   const [selectedDateRange, setSelectedDateRange] = useState({
-    startDate: moment().startOf('day'),
-    endDate: moment().endOf('day')
+    startDate: null,
+    endDate: null
   });
   const [noRecordFound, setNoRecordFound] = useState(false);
 
@@ -49,7 +49,6 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
   }, [selectedEventName, selectedUserId, selectedDateRange]);
 
   const getListApi = (page) => {
-    debugger
     const eventNameParam = Array.isArray(selectedEventName) ? selectedEventName.join(',') : (selectedEventName || '');
     const userIdParam = Array.isArray(selectedUserId) ? selectedUserId.join(',') : (selectedUserId || '');
 
@@ -137,11 +136,21 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
     setSelectedUserId(selectedUserIds);
   };
 
-  const handleDateRangeChange = (event, picker) => {
-    debugger
+  const handleDateRangeChange = (ranges) => {
+    if (ranges && ranges.length === 2) {
+      const startDate = ranges[0];
+      const endDate = ranges[1];
+      setSelectedDateRange({
+        startDate: startDate,
+        endDate: endDate
+      });
+    }
+  };
+
+  const clearDateRange = () => {
     setSelectedDateRange({
-      startDate: picker.startDate.toISOString(),
-      endDate: picker.endDate.toISOString()
+      startDate: null,
+      endDate: null
     });
   };
 
@@ -174,27 +183,14 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
           />
         </div>
         <div className="col-md-3 ml-3 custom-datepicker">
-          {/* <DateRangePicker
-            ranges={[selectedDateRange]}
-            onChange={handleDateRangeChange}
-          /> */}
           <DateRangePicker
-            initialSettings={{
-              startDate: selectedDateRange.startDate,
-              endDate: selectedDateRange.endDate,
-              ranges: {
-                'Today': [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-              }
-            }}
-            onApply={handleDateRangeChange}
-          >
-            <input type="text" className="form-control" />
-          </DateRangePicker>
+            onChange={handleDateRangeChange}
+            value={[selectedDateRange.startDate, selectedDateRange.endDate]}
+            clearIcon={<i className="fa fa-times" onClick={clearDateRange}></i>}
+            dayPlaceholder="DD"
+            monthPlaceholder="MM"
+            yearPlaceholder="YYYY"
+          />
         </div>
         <div className="col-md-3 refresh-btn-history">
           <Buttons
@@ -207,58 +203,59 @@ const TimeLine = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHisto
         </div>
       </div>
       {!noRecordFound ?
-      <div className="col-md-12">
-        <div className="main-card mt-2" id="scrollableDiv">
-          <InfiniteScroll
-            dataLength={historyData.length}
-            next={fetchMoreData}
-            hasMore={hasMore}
-            loader={isGetHistoryLoading ? <DataLoader /> : null}
-            scrollableTarget="scrollableDiv"
-          >
-            <div className="new-timeline-sec">
-              <ol className="timeline">
-                { historyData.length > 0 ? (
-                  historyData.map((item, index) => (
-                    <li
-                      className="timeline-item"
-                      key={index}
-                    >
-                      <span className="timeline-item-icon">
-                        {item.eventStatus === "Insert" ? (
-                          <>
-                            {" "}
-                            <img src={AppIcons.PlusIcon} alt="Insert Icon" />
-                          </>
-                        ) : (
-                          <>
-                            {" "}
-                            <img
-                              src={AppIcons.UpdateIcon}
-                              alt="Update Icon"
-                            />
-                          </>
-                        )}
-                      </span>
-                      <div className="timeline-item-description">
-                        <div className="right-desc-sec">
-                          <div className="msg-section ">
-                            <p>{item.description}</p>
+        <div className="col-md-12">
+          <div className="main-card mt-2" id="scrollableDiv">
+            <InfiniteScroll
+              dataLength={historyData.length}
+              next={fetchMoreData}
+              hasMore={hasMore}
+              loader={isGetHistoryLoading ? <DataLoader /> : null}
+              scrollableTarget="scrollableDiv"
+            >
+              <div className="new-timeline-sec">
+                <ol className="timeline">
+                  {historyData.length > 0 ? (
+                    historyData.map((item, index) => (
+                      <li
+                        className="timeline-item"
+                        key={index}
+                      >
+                        <span className="timeline-item-icon">
+                          {item.eventStatus === "Insert" ? (
+                            <>
+                              {" "}
+                              <img src={AppIcons.PlusIcon} alt="Insert Icon" />
+                            </>
+                          ) : (
+                            <>
+                              {" "}
+                              <img
+                                src={AppIcons.UpdateIcon}
+                                alt="Update Icon"
+                              />
+                            </>
+                          )}
+                        </span>
+                        <div className="timeline-item-description">
+                          <div className="right-desc-sec">
+                            <div className="msg-section ">
+                              <p>{item.description}</p>
+                            </div>
+                            <div className="type-name">{item.eventName}</div>
                           </div>
                         </div>
-                      </div>
-                    </li>
-                  ))
-                ) : !isGetHistoryLoading ? (
-                  <NoRecordFound />
-                ) : null}
-              </ol>
-            </div>
-          </InfiniteScroll>
+                      </li>
+                    ))
+                  ) : !isGetHistoryLoading ? (
+                    <NoRecordFound />
+                  ) : null}
+                </ol>
+              </div>
+            </InfiniteScroll>
+          </div>
         </div>
-      </div>
-      :
-      <NoRecordFound/>
+        :
+        <NoRecordFound />
       }
     </div>
   );
