@@ -8,7 +8,7 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 
-const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler , isSupplier}) => {
+const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler, isSupplier, isButtonDisable }) => {
 
     const { emailAddressData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
@@ -19,7 +19,7 @@ const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler , isSup
                 buttonClassName="theme-button"
                 textWithIcon={true}
                 iconImg={AppIcons.PlusIcon}
-                rightButton={true}
+                rightButton={isButtonDisable ? false : true}
                 buttonText="Add"
                 titleButtonClick={handleToggleModal}>
                 <div className="row">

@@ -8,7 +8,7 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 
-const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler,isLoading , isSupplier}) => {
+const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler, isLoading, isSupplier, isButtonDisable }) => {
 
     const { phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
     return (
@@ -18,7 +18,7 @@ const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler,isLoad
                 buttonClassName="theme-button"
                 textWithIcon={true}
                 iconImg={AppIcons.PlusIcon}
-                rightButton={true}
+                rightButton={isButtonDisable ? false : true}
                 buttonText="Add"
                 titleButtonClick={handleToggleModal}>
                 <div className="row">
