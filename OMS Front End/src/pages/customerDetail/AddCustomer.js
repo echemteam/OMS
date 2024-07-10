@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext } from "react";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +19,7 @@ const CustomerContactDetails = React.lazy(() => import("./features/contactDetail
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, movePreviewPage, addCustomer, customerId, setActiveTab } = useContext(BasicDetailContext);
+  const { activeTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
 
   const [
     updateCustomerStatus,
@@ -111,7 +112,7 @@ const AddCustomer = () => {
                   >
                     <button
                       className="step-button"
-                      // onClick={() => handleTabClick(index)}
+                    // onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">
