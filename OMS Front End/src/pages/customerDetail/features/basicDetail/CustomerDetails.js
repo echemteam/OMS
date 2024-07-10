@@ -19,7 +19,6 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import { ErrorMessage } from "../../../../data/appMessages";
 import { StaticStatus, StatusValue } from "../../../../utils/Enums/StatusEnums";
 import { excludingRoles } from "./config/BasicDetailForm.data";
-import { setOptionFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
 import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../app/services/commonAPI";
 import { ownerType } from "../../../../utils/Enums/enums";
 
@@ -42,7 +41,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   const [updateCustomerStatus, { isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
 
-  const { isResponsibleUser } = useContext(BasicDetailContext);
+  const { isResponsibleUser, isRCustomerUserDisble } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
 
@@ -274,7 +273,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
                 value={rUserValue}
                 onChange={handleRUserChange}
                 placeholder="Select Status"
-                isDisabled={isButtonDisable}
+                isDisabled={isRCustomerUserDisble}
               />
             </div>
           </div>

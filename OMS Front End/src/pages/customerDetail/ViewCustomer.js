@@ -125,7 +125,7 @@ const ViewCustomer = () => {
     {
       sMenuItemCaption: "Contact",
       component: (
-        <div className="mt-2 contact-accrodiaon-scroll">
+        <div className="mt-2 contact-accrodiaon-scroll contact-card-section-new">
           <CustomerContactDetails isEditablePage={true} isSearchFilterShow={true}/>
         </div>
       ),
