@@ -13,7 +13,7 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import { DateRangePicker } from "@wojtekmaj/react-daterange-picker";
 import "@wojtekmaj/react-daterange-picker/dist/DateRangePicker.css";
 import "react-calendar/dist/Calendar.css";
-
+ 
 const TimeLine = ({
   keyId,
   isSupplier,
@@ -34,8 +34,8 @@ const TimeLine = ({
     endDate: null,
   });
   const [noRecordFound, setNoRecordFound] = useState(false);
-
-  /* NOTE:- 
+ 
+  /* NOTE:-
     API Call
     The "getAuditHistory" function is passed dynamically as a prop.
     This allows the TimeLine component to be reused with different API call functions.
@@ -52,12 +52,12 @@ const TimeLine = ({
     getSearchFilter,
     { isSuccess: isGetSearchFilterSuccess, data: isGetSearchFilterData },
   ] = getSearchFilterBindHistory();
-
+ 
   useEffect(() => {
     getListApi(pageNumber);
     getSearchFilter(keyId);
   }, [keyId]);
-
+ 
   const getListApi = (page) => {
     const eventNameParam = Array.isArray(selectedEventName)
       ? selectedEventName.join(",")
@@ -65,7 +65,7 @@ const TimeLine = ({
     const userIdParam = Array.isArray(selectedUserId)
       ? selectedUserId.join(",")
       : selectedUserId || "";
-
+ 
     const request = {
       pagination: {
         pageNumber: page,
@@ -87,7 +87,7 @@ const TimeLine = ({
     };
     getAuditHistoryByCustomerId(request);
   };
-
+ 
   useEffect(() => {
     if (isGetHistorySuccess && isGetHistoryData) {
       if (
@@ -114,7 +114,7 @@ const TimeLine = ({
       }
     }
   }, [isGetHistorySuccess, isGetHistoryData]);
-
+ 
   useEffect(() => {
     if (isGetSearchFilterSuccess && isGetSearchFilterData) {
       const uniqueEventNames = Array.from(
@@ -136,7 +136,7 @@ const TimeLine = ({
       // setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetSearchFilterSuccess, isGetSearchFilterData]);
-
+ 
   const handleEventNameChange = (selectedOptions) => {
     const selectedValues = selectedOptions.map((option) => option.value);
     setSelectedEventName(selectedValues);
@@ -149,7 +149,7 @@ const TimeLine = ({
       }
     }
   };
-
+ 
   const handleUserNameChange = (selectedOptions) => {
     const selectedValues = selectedOptions.map((option) => option.value);
     setSelectedUserName(selectedValues);
@@ -159,7 +159,7 @@ const TimeLine = ({
       .join(",");
     setSelectedUserId(selectedUserIds);
   };
-
+ 
   const handleDateRangeChange = (ranges) => {
     if (ranges && ranges.length === 2) {
       const startDate = ranges[0];
@@ -170,22 +170,22 @@ const TimeLine = ({
       });
     }
   };
-
+ 
   const clearDateRange = () => {
     setSelectedDateRange({
       startDate: null,
       endDate: null,
     });
   };
-
+ 
   const fetchMoreData = () => {
     setPageNumber((prevPageNumber) => prevPageNumber + 1);
   };
-
+ 
   const handleSearch = () => {
     getListApi(pageNumber)
   }
-
+ 
   const handleClear = () => {
     setSelectedEventName("")
     setSelectedUserId("")
@@ -195,7 +195,7 @@ const TimeLine = ({
       endDate: null
     });
   }
-
+ 
   useEffect(() => {
     if (
       selectedDateRange.startDate === null &&
@@ -207,8 +207,8 @@ const TimeLine = ({
       getListApi(1);
     }
   }, [selectedDateRange, selectedUserName, selectedEventName, selectedUserId]);
-
-
+ 
+ 
   return (
     <div className="row">
       <div className="serach-bar-history">
@@ -316,5 +316,5 @@ const TimeLine = ({
     </div>
   );
 };
-
+ 
 export default TimeLine;
