@@ -117,8 +117,13 @@ const Customers = () => {
     setSelectedDrpvalues("");
     setSelectedStatusOptions("");
     setSearch("");
-    getListApi();
   };
+
+  useEffect(() => {
+    if (debouncedSearch === "") {
+      getListApi();
+    }
+  }, [debouncedSearch]);
 
   const tabs = [
     {
