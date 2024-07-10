@@ -58,10 +58,6 @@ const TimeLine = ({
     getSearchFilter(keyId);
   }, [keyId]);
 
-  useEffect(() => {
-    getListApi(pageNumber);
-  }, [selectedEventName, selectedUserId, selectedDateRange]);
-
   const getListApi = (page) => {
     const eventNameParam = Array.isArray(selectedEventName)
       ? selectedEventName.join(",")
@@ -90,13 +86,6 @@ const TimeLine = ({
         : null,
     };
     getAuditHistoryByCustomerId(request);
-  };
-
-  const handleChange = () => {
-    getListApi(1);
-    setHasMore(true);
-    setRefreshData(true);
-    setHistoryData([]);
   };
 
   useEffect(() => {
@@ -193,6 +182,33 @@ const TimeLine = ({
     setPageNumber((prevPageNumber) => prevPageNumber + 1);
   };
 
+  const handleSearch = () => {
+    getListApi(pageNumber)
+  }
+
+  const handleClear = () => {
+    setSelectedEventName("")
+    setSelectedUserId("")
+    setSelectedUserName("")
+    setSelectedDateRange({
+      startDate: null,
+      endDate: null
+    });
+  }
+
+  useEffect(() => {
+    if (
+      selectedDateRange.startDate === null &&
+      selectedDateRange.endDate === null &&
+      selectedUserName === "" &&
+      selectedEventName === "" &&
+      selectedUserId === ""
+    ) {
+      getListApi(1);
+    }
+  }, [selectedDateRange, selectedUserName, selectedEventName, selectedUserId]);
+
+
   return (
     <div className="row">
       <div className="serach-bar-history">
@@ -234,14 +250,12 @@ const TimeLine = ({
               <Buttons
                 buttonTypeClassName="theme-button"
                 buttonText="Search"
-                onClick={handleChange}
+                onClick={handleSearch}
               ></Buttons>
               <Buttons
                 buttonTypeClassName="dark-btn ml-2"
                 buttonText="Clear"
-                onClick={handleChange}
-                // imagePath={AppIcons.refreshIcone}
-                // textWithIcon={true}
+                onClick={handleClear}
               ></Buttons>
             </div>
           </div>

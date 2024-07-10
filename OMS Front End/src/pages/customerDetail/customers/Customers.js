@@ -121,10 +121,10 @@ const Customers = () => {
   };
 
   useEffect(() => {
-    if (debouncedSearch === "") {
+    if (debouncedSearch === "" && selectedDrpvalues === "") {
       getListApi();
     }
-  }, [debouncedSearch]);
+  }, [debouncedSearch , selectedDrpvalues]);
 
   const tabs = [
     {

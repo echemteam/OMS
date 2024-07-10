@@ -188,10 +188,10 @@ const ContactDetail = ({
   };
 
   useEffect(() => {
-    if (search === "") {
+    if (search === "" && selectedDrpvalues === "") {
       onGetContactList();
     }
-  }, [search]);
+  }, [search , selectedDrpvalues]);
 
   const handleChangeDropdown = (selectedOptions) => {
     const selectedValues = selectedOptions.map(option => option.value);
