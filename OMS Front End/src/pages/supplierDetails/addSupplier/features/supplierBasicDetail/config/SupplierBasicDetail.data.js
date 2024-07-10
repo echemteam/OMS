@@ -36,7 +36,7 @@ export const supplierBasicData = {
         isMultiButton: true,
         showInformation: {
           showInputButton: true,
-          faIcon: "fa-list",
+          faIcon: "fa-search",
           title : "Supplier Information"
         }
       },
