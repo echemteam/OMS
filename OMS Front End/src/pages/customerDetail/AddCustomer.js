@@ -3,18 +3,18 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
-import CardSection from "../../components/ui/card/CardSection";
-import ToastService from "../../services/toastService/ToastService";
-import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
-import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
 import { TabEnum } from "../../utils/Enums/enums";
 import { StatusEnums } from "../../utils/Enums/StatusEnums";
+import CardSection from "../../components/ui/card/CardSection";
+import ToastService from "../../services/toastService/ToastService";
+import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
+import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Compoent's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
+const SettingDetails = React.lazy(() => import("./features/settingDetail/SettingDetails"));
 const CustomerAddressDetails = React.lazy(() => import("./features/addressDetail/CustomerAddressDetails"));
 const CustomerDocumentDetails = React.lazy(() => import("./features/documentsDetail/CustomerDocumentDetails"));
 const CustomerContactDetails = React.lazy(() => import("./features/contactDetail/Contact/CustomerContactDetails"));
-const SettingDetails = React.lazy(() => import("./features/settingDetail/SettingDetails"));
 
 const AddCustomer = () => {
   const navigate = useNavigate();
