@@ -6,6 +6,8 @@ import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, Disab
 import useDebounce from "../../../../app/customHooks/useDebouce";
 import { ListSupplier } from "../../../../utils/Enums/enums";
 import { StatusEnums, StatusValue } from "../../../../utils/Enums/StatusEnums";
+import { ErrorMessage } from "../../../../data/appMessages";
+import ToastService from "../../../../services/toastService/ToastService";
 
 const InActiveCustomer = ({ statusId }) => {
   const [activeTab, setActiveTab] = useState("0");
@@ -69,11 +71,20 @@ const InActiveCustomer = ({ statusId }) => {
   }, [activeTab]);
 
   const handleSearch = () => {
-    getListApi();
+    if (search.length >= 3 || selectedDrpvalues.length > 0) {
+      getListApi();
+    } else {
+      ToastService.warning(ErrorMessage.CommonErrorMessage)
+    }
   };
 
   const handleChange = (event) => {
-    setSearch(event.target.value.trim());
+    if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
+      setSearch(event.target.value.trim());
+    } else {
+      setSearch("");
+      setSelectedDrpvalues("");
+    }
   };
 
   useEffect(() => {
