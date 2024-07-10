@@ -16,12 +16,13 @@ import { settingTypeEnums } from "../../../../../utils/Enums/enums";
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
-const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, editFormData, SecurityKey,
+const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, SecurityKey,
   isEditablePage, isSupplier, isEdit, isOpen, getContactById }) => {
 
   //** State */
   const ref = useRef();
   const { formSetting } = contactDetailFormData;
+  const [editMode, setEditMode] = useState(false);
   const [contactId, setContactId] = useState(0);
   const [formData, setFormData] = useState(contactDetailFormData);
   const [customerContactId, setCustomerContactId] = useState(0);
@@ -125,7 +126,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
       const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
       if (hasEditPermission && formSetting) {
-        if (editFormData) {
+        if (editMode) {
           if (hasEditPermission.isViewOnly === true) {
             formSetting.isViewOnly = true;
             setIsButtonDisable(true);
@@ -135,7 +136,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
             setIsButtonDisable(false);
           }
         }
-        else if (!editFormData) {
+        else if (!editMode) {
           if (hasAddPermission.hasAccess === true) {
             formSetting.isViewOnly = false;
             setIsButtonDisable(false);
@@ -143,9 +144,10 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
         }
       }
     }
-  }, [editRef, editFormData, SecurityKey])
+  }, [editMode, editRef, SecurityKey])
 
   const handleEditMode = (contactId) => {
+    setEditMode(true);
     contactId && getById(contactId);
     setFieldSetting(contactDetailFormData, 'contactTypeId', settingTypeEnums.isDisabled, true);
   }
@@ -157,6 +159,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       setFormData(form);
       if (isOpen) {
         setContactId(0);
+        setEditMode(false);
         setPhoneNumberData("");
         setEmailAddressData("");
       }
@@ -187,8 +190,8 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       <div className="row">
         {!isGetByIdFetching ?
           <React.Fragment>
-            <ManageEmailAddress isSupplier={isSupplier} onGetContactList={onGetContactList} />
-            <ManageContactNumbers isSupplier={isSupplier} onGetContactList={onGetContactList} />
+            <ManageEmailAddress isButtonDisable={isButtonDisable} isSupplier={isSupplier} onGetContactList={onGetContactList} />
+            <ManageContactNumbers isButtonDisable={isButtonDisable} isSupplier={isSupplier} onGetContactList={onGetContactList} />
           </React.Fragment>
           : <DataLoader />
         }

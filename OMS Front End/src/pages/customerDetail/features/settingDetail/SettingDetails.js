@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import React, { useContext, useState } from "react";
 //** Lib's */
 import "./SettingDetails.scss"
-import ShippingSettings from "./features/ShippingSetting/ShippingSettings";
 import FinancialSettings from "./FinancialSettings";
-import CardSection from "../../../../components/ui/card/CardSection";
 import { securityKey } from "../../../../data/SecurityKey";
-import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { useEffect } from "react";
 import Unauthorize from "../../../unauthorize/Unauthorize";
+import CardSection from "../../../../components/ui/card/CardSection";
+import ShippingSettings from "./features/ShippingSetting/ShippingSettings";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 const SettingDetails = ({ isEditablePage }) => {
   const [activeTab, setActiveTab] = useState("0");
@@ -25,7 +25,7 @@ const SettingDetails = ({ isEditablePage }) => {
   const hasFinacialPermission = hasFunctionalPermission(securityKey.CUSTOMERFINANCIALSETTING);
 
   useEffect(() => {
-    if (!isResponsibleUser) {
+    if (isEditablePage && !isResponsibleUser) {
       if (hasShippingPermission.hasAccess === true) {
         setShowShippingTab(true);
       } else {
@@ -34,10 +34,10 @@ const SettingDetails = ({ isEditablePage }) => {
     } else {
       setShowShippingTab(true);
     }
-  }, [hasShippingPermission]);
+  }, [isEditablePage, hasShippingPermission]);
 
   useEffect(() => {
-    if (!isResponsibleUser) {
+    if (isEditablePage && !isResponsibleUser) {
       if (hasFinacialPermission.hasAccess === true) {
         setShowFinacialTab(true);
       } else {
@@ -47,7 +47,7 @@ const SettingDetails = ({ isEditablePage }) => {
     else {
       setShowFinacialTab(true);
     }
-  }, [hasFinacialPermission]);
+  }, [isEditablePage, hasFinacialPermission]);
 
   const tabs = [
     {
