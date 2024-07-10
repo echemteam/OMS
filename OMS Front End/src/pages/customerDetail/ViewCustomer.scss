@@ -109,7 +109,7 @@
           padding-top: 2px;
         }
 
-        .inf-label-width{
+        .inf-label-width {
           min-width: 170px;
           max-width: 170px;
         }
@@ -202,9 +202,7 @@
 }
 
 .customer-detail-tab-sec {
-  .card-body-sec {
-    
-  }
+  .card-body-sec {}
 }
 
 .contact-accrodiaon-scroll {
@@ -253,7 +251,8 @@
             max-width: 150px;
             min-width: 150px;
           }
-          .inf-label-width{
+
+          .inf-label-width {
             min-width: 130px;
             max-width: 130px;
           }
@@ -280,7 +279,12 @@
     .card-body-sec {
       max-height: calc(100vh - 224px);
       // height: calc(100vh - 224px);
-padding: 0;
+      padding: 0;
+    }
+    &.contact-card-section-new{
+      .card-body-sec {
+        padding: 10px;
+      }
     }
   }
 }
