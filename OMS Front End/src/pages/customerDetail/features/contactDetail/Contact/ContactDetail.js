@@ -87,10 +87,7 @@ const ContactDetail = ({
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetContactData) {
-      const modifyData = isSupplier
-        ? contactSupplierTransformData(isGetContactData)
-        : contactCustomerTransformData(isGetContactData);
-      setModifyContactData(modifyData);
+      setModifyContactData(isGetContactData);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetContactData]);
 
@@ -188,10 +185,10 @@ const ContactDetail = ({
   };
 
   useEffect(() => {
-    if (search === "") {
+    if (search === "" && selectedDrpvalues === "") {
       onGetContactList();
     }
-  }, [search]);
+  }, [search , selectedDrpvalues]);
 
   const handleChangeDropdown = (selectedOptions) => {
     const selectedValues = selectedOptions.map(option => option.value);

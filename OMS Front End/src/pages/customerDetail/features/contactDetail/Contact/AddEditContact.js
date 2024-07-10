@@ -101,12 +101,12 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       setSupplierContactId(data?.supplierContactId);
       setFieldSetting(form, 'contactTypeId', settingTypeEnums.isMultiSelect);
 
-      const modifyPhoneNumberList = isGetByIdData.phoneNumberLsit.map((item, index) => ({
+      const modifyPhoneNumberList = isGetByIdData.phoneNumberList.map((item, index) => ({
         ...item,
         id: index + 1,
         extension: item.extension === 0 ? '-' : item.extension
       }));
-      const modifyEmailAddressLst = isGetByIdData.emailAddressLst.map((item, index) => ({
+      const modifyEmailAddressLst = isGetByIdData.emailAddressList.map((item, index) => ({
         ...item,
         id: index + 1
       }));
