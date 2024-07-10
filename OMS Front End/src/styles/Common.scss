@@ -2031,7 +2031,12 @@ input[type="checkbox"]:disabled {
   font-size: var(--commonFont-extraSmall) !important;
   color: var(--inputBorder) !important;
 }
-
+.contact-type-icon{
+  min-height: 20px !important;
+  min-width: 20px !important;
+  max-height: 20px !important;
+  max-width: 20px !important;
+}
 .right-contact-ext-type {
   .contact-type {
     span {

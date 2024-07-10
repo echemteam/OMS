@@ -19,19 +19,19 @@ const ContactPhoneNumberDropdown = ({
     switch (type) {
       case 1:
         return (
-          <span title="Home">
+          <span className="contact-type-icon" title="Home">
             <i className="fa fa-home"></i>
           </span>
         );
       case 2:
         return (
-          <span title="Work">
+          <span className="contact-type-icon" title="Work">
             <i className="fa fa-briefcase"></i>
           </span>
         );
       case 3:
         return (
-          <span title="Mobile">
+          <span className="contact-type-icon" title="Mobile">
             <i className="fa fa-mobile"></i>
           </span>
         );
