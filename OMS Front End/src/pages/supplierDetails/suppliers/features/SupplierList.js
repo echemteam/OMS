@@ -18,6 +18,9 @@ import { useAddSupplierNotesMutation } from '../../../../app/services/supplierNo
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { useSelector } from 'react-redux';
 import { StatusEnums, StatusFeild } from '../../../../utils/Enums/StatusEnums';
+import { useUpdateResponsibleUserMutation } from '../../../../app/services/commonAPI';
+import { ownerType } from '../../../../utils/Enums/enums';
+
 
 const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter , handleSearch , handleClear , shouldRerenderFormCreator}) => {
 
@@ -34,6 +37,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   const [statusFeild, setStatusFeild] = useState()
   const authState = useSelector((state) => state.auth);
   const { supplierListRef } = useContext(SupplierContext);
+  const [assignRUser, setAssignRUser] = useState();
   const { isResponsibleUser, setIsResponsibleUser } = useContext(AddSupplierContext);
 
   const [
@@ -46,6 +50,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   const [updateSupplierInActiveStatus, { isLoading: updateInActiveStatusSupplierLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
 
   const [addSupplierNotes] = useAddSupplierNotesMutation();
+  const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
@@ -209,7 +214,15 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
     onReset()
   };
 
+  const removeFields = () => {
+    const removeFields = ['ResponsibleUserId']
+    const newFrom = { ...formData };
+    newFrom.formFields = formData.formFields.filter(field => !removeFields.includes(field.id));
+    setFormData(newFrom);
+  }
+
   const handlefreeze = (data) => {
+    removeFields();
     setShowModal(true);
     setSupplierId(data.supplierId)
     setStaticId(StatusEnums.Freeze)
@@ -217,6 +230,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   }
 
   const handleDiseble = (data) => {
+    removeFields();
     setShowModal(true);
     setSupplierId(data.supplierId)
     setStaticId(StatusEnums.Disable)
@@ -224,16 +238,23 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   }
 
   const handleBlock = (data) => {
+    removeFields();
     setShowModal(true);
     setSupplierId(data.supplierId)
     setStaticId(StatusEnums.Block)
     setStatusFeild(StatusFeild.Block)
   }
   const handleReject = (data) => {
+    const supllierData = dataSource.find(item => item.supplierId === data.supplierId);
     setShowModal(true);
+    setAssignRUser(false);
     setSupplierId(data.supplierId)
     setStaticId(StatusEnums.Reject)
-    setStatusFeild(StatusFeild.Reject)
+    setStatusFeild(StatusFeild.Reject);
+    if (supllierData.responsibleUserId) {
+      removeFields();
+      setAssignRUser(true);
+    }
   }
 
   const onReset = () => {
@@ -253,7 +274,19 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
       }
       updateSupplierInActiveStatus(req)
       addSupplierNotes(req);
+      if (!assignRUser) {
+        updateRUserData(custData.responsibleUserId.value);
+      }
     }
+  }
+
+  const updateRUserData = (value) => {
+    let req = {
+      ownerId: supplierID,
+      ownerType: ownerType.Supplier,
+      responsibleUserId: value
+    }
+    updateResponsibleUser(req);
   }
 
   const actionHandler = {

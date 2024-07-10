@@ -21,5 +21,11 @@ export const settingEnum = {
     ShippingSettings: 1
 }
 
+export const ownerType = {
+    Customer: 1,
+    Supplier: 2
+}
+
+
 export const ListShowCustomer = { value: 1, label: "Customer Name" }
 export const ListSupplier = { value: 2, label: "Supplier Name" }
