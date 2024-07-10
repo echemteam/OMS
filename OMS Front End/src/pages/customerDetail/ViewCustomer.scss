@@ -109,6 +109,11 @@
           padding-top: 2px;
         }
 
+        .inf-label-width{
+          min-width: 170px;
+          max-width: 170px;
+        }
+
         .info-desc {
           max-width: 240px;
           min-width: 240px;
@@ -247,6 +252,10 @@
           .info-desc {
             max-width: 150px;
             min-width: 150px;
+          }
+          .inf-label-width{
+            min-width: 130px;
+            max-width: 130px;
           }
         }
       }

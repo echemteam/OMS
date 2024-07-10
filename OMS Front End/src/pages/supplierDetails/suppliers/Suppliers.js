@@ -22,6 +22,7 @@ const Suppliers = () => {
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
   const [selectedStatusOptions, setSelectedStatusOptions] = useState("");
   const [statusOptions, setStatusOptions] = useState([]);
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const debouncedSearch = useDebounce(search, 300);
   const handleTabClick = (tabIndex) => {
@@ -110,8 +111,14 @@ const Suppliers = () => {
     setSelectedDrpvalues("");
     setSelectedStatusOptions("");
     setSearch("");
-    getListApi();
+    setShouldRerenderFormCreator((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    if (debouncedSearch === "") {
+      getListApi();
+    }
+  }, [debouncedSearch]);
 
   const tabs = [
     {
@@ -128,6 +135,7 @@ const Suppliers = () => {
             searchStatusFilter={true}
             handleSearch={handleSearch}
             handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
@@ -145,7 +153,9 @@ const Suppliers = () => {
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
             handleSearch={handleSearch}
-            handleClear={handleClear} />
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
+ />
         </div>
       ),
     },
@@ -163,6 +173,8 @@ const Suppliers = () => {
             searchStatusFilter={false}
             handleSearch={handleSearch}
             handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
+
           />
         </div>
       ),
@@ -181,6 +193,8 @@ const Suppliers = () => {
             searchStatusFilter={false}
             handleSearch={handleSearch}
             handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
+
           />
         </div>
       ),
@@ -206,7 +220,10 @@ const Suppliers = () => {
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
             handleSearch={handleSearch}
-            handleClear={handleClear} />
+            handleClear={handleClear} 
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
+
+            />
         </div>
       ),
     },

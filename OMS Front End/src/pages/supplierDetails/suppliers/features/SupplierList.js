@@ -21,7 +21,8 @@ import { StatusEnums, StatusFeild } from '../../../../utils/Enums/StatusEnums';
 import { useUpdateResponsibleUserMutation } from '../../../../app/services/commonAPI';
 import { ownerType } from '../../../../utils/Enums/enums';
 
-const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear }) => {
+
+const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter , handleSearch , handleClear , shouldRerenderFormCreator}) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
@@ -299,7 +300,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   return (
     <div>
       <div className="row">
-        <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
+        <div className="col-xxl-12 col-xl-12 col-md-12 col-12" key={shouldRerenderFormCreator}>
           <CardSection
             searchInput={true}
             handleChange={handleChange}

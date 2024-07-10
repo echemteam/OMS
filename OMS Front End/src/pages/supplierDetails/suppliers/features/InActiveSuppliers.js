@@ -15,7 +15,7 @@ import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSuppli
 import { useSelector } from 'react-redux';
 import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
 
-export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear }) => {
+export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear , shouldRerenderFormCreator }) => {
 
     const childRef = useRef();
     const molGridRef = useRef();
@@ -186,7 +186,7 @@ export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, 
     return (
         <div>
             <div className="row">
-                <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
+                <div className="col-xxl-12 col-xl-12 col-md-12 col-12" kry={shouldRerenderFormCreator}>
                     <CardSection
                         searchInput={true}
                         handleChange={handleChange}

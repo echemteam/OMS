@@ -117,6 +117,7 @@ const Customers = () => {
     setSelectedDrpvalues("");
     setSelectedStatusOptions("");
     setSearch("");
+    setShouldRerenderFormCreator((prevState) => !prevState);
   };
 
   useEffect(() => {

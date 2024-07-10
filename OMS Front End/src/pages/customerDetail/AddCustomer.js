@@ -19,7 +19,7 @@ const CustomerContactDetails = React.lazy(() => import("./features/contactDetail
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, movePreviewPage, addCustomer, customerId, showSubBackButton, handleActiveSubTabClick, saveFinacialSetting , setActiveTab } = useContext(BasicDetailContext);
+  const { activeTab, movePreviewPage, addCustomer, customerId, showSubBackButton, handleActiveSubTabClick, saveFinacialSetting } = useContext(BasicDetailContext);
 
   const [
     updateCustomerStatus,
@@ -56,7 +56,7 @@ const AddCustomer = () => {
     {
       label: "Contact",
       subLabel: "Enter Customer Contact Details",
-      content: <CustomerContactDetails isEditablePage={false} />,
+      content: <CustomerContactDetails isEditablePage={false} isSearchFilterShow={false} />,
       tab: TabEnum.Contact,
     },
     {
@@ -79,9 +79,9 @@ const AddCustomer = () => {
     },
   ];
 
-  const handleTabClick = (index) => {
-    setActiveTab(index);
-  };
+  // const handleTabClick = (index) => {
+  //   setActiveTab(index);
+  // };
 
   const handleSubmit = () => {
     let req = {
@@ -108,7 +108,7 @@ const AddCustomer = () => {
               <React.Fragment key={index}>
                 <div className={`step ${activeTab === index ? "active" : ""}`} >
                   <button className="step-button"
-                  onClick={() => handleTabClick(index)}
+                  // onClick={() => handleTabClick(index)}
                   >
                     <span className="stepper-box">{index + 1}</span>
                     <span className="stepper-label">

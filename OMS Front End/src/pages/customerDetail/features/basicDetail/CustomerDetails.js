@@ -345,7 +345,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
             </div>
           </div> */}
           <div className="field-desc">
-            <div className="inf-label">Is Buying for Third Party</div>
+            <div className="inf-label inf-label-width ">Is Buying for Third Party</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">
               {customerData?.isBuyingForThirdParty}

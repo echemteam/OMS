@@ -23,7 +23,8 @@ const ContactDetail = ({
   isSupplier,
   isEditablePage,
   SecurityKey,
-  getContactById
+  getContactById,
+  isSearchFilterShow
 }) => {
   //** State */
   const editRef = useRef();
@@ -37,6 +38,7 @@ const ContactDetail = ({
   const [contactType, setContactType] = useState("")
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
   const [search, setSearch] = useState("");
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   //** API Call's */
   const [
@@ -176,9 +178,17 @@ const ContactDetail = ({
   }
 
   const onhandleClear = () => {
-    setSearch("");
     setSelectedDrpvalues("");
-  }
+    setSearch("");
+    setContactType("")
+    setShouldRerenderFormCreator((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    if (search === "") {
+      onGetContactList();
+    }
+  }, [search]);
 
   const handleChangeDropdown = (selectedOptions) => {
     const selectedValues = selectedOptions.map(option => option.value);
@@ -187,42 +197,44 @@ const ContactDetail = ({
 
   return (
     <>
-      <CardSection
-        // cardTitle="Contact"
-        handleChange={handleChange}
-        searchInputName="Search By Name and Email"
-        searchInput={isEditablePage ? true : false}
-        buttonClassName="theme-button"
-        textWithIcon={true}
-        iconImg={AppIcons.PlusIcon}
-        rightButton={buttonVisible ? true : false}
-        buttonText="Add"
-        titleButtonClick={handleToggleModal}
-        // isFilter={true}
-        // filterHeaderTitle="Contact Filter"
-        clearButton={isEditablePage ? true : false}
-        clearTitleButtonClick={onhandleClear}
-        clearButtonText="Clear"
-        searchButton={isEditablePage ? true : false}
-        searchbuttonText="Search"
-        searchTitleButtonClick={onhandleSearch}
-        searchFilter={isEditablePage ? true : false}
-        handleChangeDropdown={handleChangeDropdown}
-        selectedOptions={selectedDrpvalues}
-        optionsValue={contactType}
-        isMultiSelect={true}
-        placeholder="Search by Contact Type"
-        isCardSection={true}
-        isdropdownOpen={true}
-        clearButtonClassName="dark-btn"
-      >
-        <ManageContactList
-          handleEdit={handleEdit}
-          modifyContactData={modifyContactData}
-          isLoading={isGetContactFetching}
-          showEditIcon={showEditIcon}
-        />
-      </CardSection>
+      <div key={shouldRerenderFormCreator}>
+        <CardSection
+          cardTitle={isSearchFilterShow ? "" : "Contact"}
+          handleChange={handleChange}
+          searchInputName="Search By Name and Email"
+          searchInput={isSearchFilterShow ? true : false}
+          buttonClassName="theme-button"
+          textWithIcon={true}
+          iconImg={AppIcons.PlusIcon}
+          rightButton={buttonVisible ? true : false}
+          buttonText="Add"
+          titleButtonClick={handleToggleModal}
+          // isFilter={true}
+          // filterHeaderTitle="Contact Filter"
+          clearButton={isSearchFilterShow ? true : false}
+          clearTitleButtonClick={onhandleClear}
+          clearButtonText="Clear"
+          searchButton={isSearchFilterShow ? true : false}
+          searchbuttonText="Search"
+          searchTitleButtonClick={onhandleSearch}
+          searchFilter={isSearchFilterShow ? true : false}
+          handleChangeDropdown={handleChangeDropdown}
+          selectedOptions={selectedDrpvalues}
+          optionsValue={contactType}
+          isMultiSelect={true}
+          placeholder="Search by Contact Type"
+          isCardSection={true}
+          isdropdownOpen={true}
+          clearButtonClassName="dark-btn"
+        >
+          <ManageContactList
+            handleEdit={handleEdit}
+            modifyContactData={modifyContactData}
+            isLoading={isGetContactFetching}
+            showEditIcon={showEditIcon}
+          />
+        </CardSection>
+      </div>
       <div className="sidebar-contact-model">
         <SidebarModel
           modalTitle="Add/Edit Contact"
