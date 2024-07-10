@@ -30,6 +30,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLUSER = "GetAllUser";
         const string GETEVENTNAMEANDUSERNAMEBYCUSTOMERID = "GetEventNameAndUserNameByCustomerId";
         const string GETEVENTNAMEANDUSERNAMEBYSUPPLIERID = "GetEventNameAndUserNameBySupplierId";
+        const string GETALLMODULES = "GetAllModules";
+        const string GETALLFUNCTIONALITIES = "GetAllFunctionalities";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -137,6 +139,19 @@ namespace OMS.Domain.Repository.Implementation
             List<GetEventNameAndUserNameBySupplierIdResponse> getEventNameAndUserNameBySupplierIdResponse = await _context.GetList<GetEventNameAndUserNameBySupplierIdResponse>(GETEVENTNAMEANDUSERNAMEBYSUPPLIERID, new
             {
                 supplierId
+            }, commandType: CommandType.StoredProcedure);
+            return getEventNameAndUserNameBySupplierIdResponse;
+        }
+
+        public async Task<List<GetAllModulesResponse>> GetAllModules()
+        {
+            return await _context.GetList<GetAllModulesResponse>(GETALLMODULES, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllFunctionalitiesResponse>> GetAllFunctionalities(int moduleId)
+        {
+            List<GetAllFunctionalitiesResponse> getEventNameAndUserNameBySupplierIdResponse = await _context.GetList<GetAllFunctionalitiesResponse>(GETALLFUNCTIONALITIES, new
+            {
+                moduleId
             }, commandType: CommandType.StoredProcedure);
             return getEventNameAndUserNameBySupplierIdResponse;
         }

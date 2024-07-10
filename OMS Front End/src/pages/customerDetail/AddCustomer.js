@@ -1,24 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext } from "react";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
+import { TabEnum, settingEnum } from "../../utils/Enums/enums";
+import { StatusEnums } from "../../utils/Enums/StatusEnums";
 import CardSection from "../../components/ui/card/CardSection";
 import ToastService from "../../services/toastService/ToastService";
-import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
-import { TabEnum } from "../../utils/Enums/enums";
-import { StatusEnums } from "../../utils/Enums/StatusEnums";
+import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Compoent's */
 const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
+const SettingDetails = React.lazy(() => import("./features/settingDetail/SettingDetails"));
 const CustomerAddressDetails = React.lazy(() => import("./features/addressDetail/CustomerAddressDetails"));
 const CustomerDocumentDetails = React.lazy(() => import("./features/documentsDetail/CustomerDocumentDetails"));
 const CustomerContactDetails = React.lazy(() => import("./features/contactDetail/Contact/CustomerContactDetails"));
-const SettingDetails = React.lazy(() => import("./features/settingDetail/SettingDetails"));
 
 const AddCustomer = () => {
   const navigate = useNavigate();
-  const { activeTab, movePreviewPage, addCustomer, customerId, setActiveTab } = useContext(BasicDetailContext);
+  const { activeTab, movePreviewPage, addCustomer, customerId, showSubBackButton, handleActiveSubTabClick, saveFinacialSetting } = useContext(BasicDetailContext);
 
   const [
     updateCustomerStatus,
@@ -99,93 +100,86 @@ const AddCustomer = () => {
   };
 
   return (
-    <>
-      <div className="stepper-card">
-        <CardSection>
-          <div className="stepper-section">
-            <div className="stepper-header">
-              {tabContent.map((step, index) => (
-                <React.Fragment key={index}>
-                  <div
-                    className={`step ${activeTab === index ? "active" : ""}`}
+    <div className="stepper-card">
+      <CardSection>
+        <div className="stepper-section">
+          <div className="stepper-header">
+            {tabContent.map((step, index) => (
+              <React.Fragment key={index}>
+                <div className={`step ${activeTab === index ? "active" : ""}`} >
+                  <button className="step-button"
+                  // onClick={() => handleTabClick(index)}
                   >
-                    <button
-                      className="step-button"
-                      // onClick={() => handleTabClick(index)}
-                    >
-                      <span className="stepper-box">{index + 1}</span>
-                      <span className="stepper-label">
-                        <span>{step.label}</span>
-                        <span className="small-txt">{step.subLabel}</span>
-                      </span>
-                    </button>
+                    <span className="stepper-box">{index + 1}</span>
+                    <span className="stepper-label">
+                      <span>{step.label}</span>
+                      <span className="small-txt">{step.subLabel}</span>
+                    </span>
+                  </button>
+                </div>
+                {index < tabContent.length - 1 && (
+                  <div className="right-arrow">
+                    <Image imagePath={AppIcons.arrowIcon} />
                   </div>
-                  {index < tabContent.length - 1 && (
-                    <div className="right-arrow">
-                      <Image imagePath={AppIcons.arrowIcon} />
-                    </div>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-            <div className="stepper-content">
-              <form onSubmit={onSubmit}>
-                {tabContent.map((step, index) => (
-                  <div
-                    key={index}
-                    className={`content ${activeTab === index ? "active" : ""}`}
-                  >
-                    <div className="row">
-                      <div className="col-12 mx-auto">
-                        {step.content}
-                        <div className="d-flex justify-content-end mt-2">
-                          {index > 0 && (
-                            <button
-                              type="button"
-                              className="btn dark-btn mr-3"
-                              onClick={movePreviewPage}
-                            >
-                              Back
-                            </button>
-                          )}
-                          {index < tabContent.length - 1 ? (
-                            <button
-                              type="button"
-                              className="btn theme-button"
-                              onClick={() => addCustomer(step.tab)}
-                            >
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+          <div className="stepper-content">
+            <form onSubmit={onSubmit}>
+              {tabContent.map((step, index) => (
+                <div key={index} className={`content ${activeTab === index ? "active" : ""}`} >
+                  <div className="row">
+                    <div className="col-12 mx-auto">
+                      {step.content}
+                      <div className="d-flex justify-content-end mt-2">
+                        {index > 0 && !showSubBackButton && (
+                          <button type="button" className="btn dark-btn mr-3" onClick={movePreviewPage} >
+                            Back
+                          </button>
+                        )}
+                        {index < tabContent.length - 1 ? (
+                          activeTab === 3 ? (
+                            <React.Fragment>
+                              {!showSubBackButton ?
+                                <button type="button" className="btn theme-button" onClick={saveFinacialSetting}>
+                                  Save Financial Settings
+                                </button>
+                                :
+                                <button type="button" className="btn dark-btn mr-3" onClick={() => handleActiveSubTabClick(settingEnum.FinancialSettings)} >
+                                  Back
+                                </button>
+                              }
+                              <button type="button" className="btn theme-button ml-3" onClick={() => addCustomer(step.tab)}>
+                                Next
+                              </button>
+                            </React.Fragment>
+                          ) : (
+                            <button type="button" className="btn theme-button" onClick={() => addCustomer(step.tab)} >
                               Next
                             </button>
-                          ) : (
-                            <>
-                              <button
-                                type="submit"
-                                className="btn theme-button"
-                                onClick={handleDraft}
-                              >
-                                Save as Draft
-                              </button>
+                          )
+                        ) : (
+                          <>
+                            <button type="submit" className="btn theme-button" onClick={handleDraft} >
+                              Save as Draft
+                            </button>
 
-                              <button
-                                type="submit"
-                                className="btn theme-button ml-3"
-                                onClick={handleSubmit}
-                              >
-                                Save as Submit
-                              </button>
-                            </>
-                          )}
-                        </div>
+                            <button type="submit" className="btn theme-button ml-3" onClick={handleSubmit} >
+                              Save as Submit
+                            </button>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
-                ))}
-              </form>
-            </div>
+                </div>
+              ))}
+            </form>
           </div>
-        </CardSection>
-      </div>
-    </>
+        </div>
+      </CardSection>
+    </div>
   );
 };
 

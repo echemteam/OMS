@@ -29,10 +29,10 @@ const ContactDetail = ({
   const editRef = useRef();
   const childRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
-  const [editFormData, setEditFormData] = useState();
+
   const [isModelOpen, setisModelOpen] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
-  const [showEditIcon, setShowEditIcon] = useState(false);
+  const [showEditIcon, setShowEditIcon] = useState(true);
   const [modifyContactData, setModifyContactData] = useState([]);
 
   //** API Call's */
@@ -72,6 +72,10 @@ const ContactDetail = ({
       }
       if (hasEditPermission && hasEditPermission.isViewOnly === true) {
         setShowEditIcon(true);
+      } else if (hasEditPermission.isEditable === true) {
+        setShowEditIcon(true);
+      } else {
+        setShowEditIcon(false);
       }
     }
   }, [isEditablePage, isSupplier, SecurityKey]);
@@ -119,7 +123,6 @@ const ContactDetail = ({
   const handleToggleModal = () => {
     setIsEdit(false);
     setisModelOpen(true);
-    setEditFormData("");
     if (childRef.current) {
       childRef.current.callChildFunction();
     }
@@ -206,12 +209,11 @@ const ContactDetail = ({
           contentClass="content-45"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
-          isOpen={isModelOpen}
-        >
+          isOpen={isModelOpen} >
+          {/* {isModelOpen ? */}
           <AddEditContact
             isSupplier={isSupplier}
             onSidebarClose={onSidebarClose}
-            editFormData={editFormData}
             childRef={childRef}
             onSuccess={onSuccess}
             isEdit={isEdit}
@@ -224,6 +226,7 @@ const ContactDetail = ({
             isOpen={isModelOpen}
             getContactById={getContactById}
           />
+          {/* : null} */}
         </SidebarModel>
       </div>
     </>

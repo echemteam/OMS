@@ -23,7 +23,6 @@ export const InActiveCustomers = ({ statusId, configFile, handleChange, search, 
   const molGridRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [dataSource, setDataSource] = useState();
-  const [customerId, setCustomerId] = useState();
   const { DataRef } = useContext(CustomerListContext);
   const authState = useSelector((state) => state.auth);
   const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
@@ -132,12 +131,11 @@ export const InActiveCustomers = ({ statusId, configFile, handleChange, search, 
   //   }
   // }, [search , selectedStatusOptions]);
 
-  const approvalCheckList = (data) => {
-    if (childRef.current) {
-      childRef.current.callChildFunction(data.customerId);
-    }
-    setCustomerId(data.customerId);
-  }
+  // const approvalCheckList = (data) => {
+  //   if (childRef.current) {
+  //     childRef.current.callChildFunction(data.customerId);
+  //   }
+  // }
 
   const handleUnfreeze = (data) => {
     // approvalCheckList(data);

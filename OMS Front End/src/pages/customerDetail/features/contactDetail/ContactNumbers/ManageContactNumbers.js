@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { Message } from "../Util/ContactMessages";
 import { deleteData } from "../Util/ContactEmailAddressUtil";
-import { addEditContactsFormData } from "./config/AddEditContactsForm.data";
+import { addEditContactsFormData, phoneNumberConfig } from "./config/AddEditContactsForm.data";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
@@ -16,7 +16,7 @@ import { setOptionFieldSetting } from "../../../../../utils/FieldsSetting/SetFie
 const ContactNumberList = React.lazy(() => import("./ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./AddEditContactNumber"));
 
-const ManageContactNumbers = ({ onGetContactList, isSupplier }) => {
+const ManageContactNumbers = ({ onGetContactList, isSupplier, isButtonDisable }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -38,6 +38,17 @@ const ManageContactNumbers = ({ onGetContactList, isSupplier }) => {
         getPhoneTypes();
         getAllCountries();
     }, [contactId]);
+
+    useEffect(() => {
+        const actionColumn = phoneNumberConfig.columns.find(column => column.name === "Action");
+        if (isButtonDisable && actionColumn) {
+            actionColumn.defaultAction.allowEdit = false;
+            actionColumn.defaultAction.allowDelete = false;
+        } else if (actionColumn) {
+            actionColumn.defaultAction.allowEdit = true;
+            actionColumn.defaultAction.allowDelete = true;
+        }
+    }, [isButtonDisable]);
 
     useEffect(() => {
         if (isGetAllCountriesSucess && isCountriesData) {
@@ -102,7 +113,8 @@ const ManageContactNumbers = ({ onGetContactList, isSupplier }) => {
 
     return (
         <React.Fragment>
-            <ContactNumberList isSupplier={isSupplier} molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} isLoading={isGetContactFetching} />
+            <ContactNumberList isSupplier={isSupplier} molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
+                isLoading={isGetContactFetching} isButtonDisable={isButtonDisable} />
             {showModal && (
                 <AddEditContactNumber isSupplier={isSupplier} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal}
                     editFormData={editFormData} isEdit={isEdit} />
