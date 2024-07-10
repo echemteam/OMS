@@ -159,7 +159,7 @@ const ContactDetail = ({
     let req = {
       id: mainId,
       searchText: search,
-      contactType: contactType
+      contactType: selectedDrpvalues
     }
     mainId && GetContactList(req);
   };
