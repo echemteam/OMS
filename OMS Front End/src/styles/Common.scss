@@ -1465,8 +1465,9 @@ a {
   box-shadow: 0 4px 8px var(--card-shadow);
   margin: 10px 0;
   // background: #fec971;
-  height: 100px;
+  min-height: 100px;
   overflow: auto;
+  height: 100%;
 
   .card-content {
     display: flex;
