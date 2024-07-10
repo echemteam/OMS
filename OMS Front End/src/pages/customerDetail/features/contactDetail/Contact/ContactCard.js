@@ -5,7 +5,6 @@ import ContactEmailsDropdown from "./ContactEmailsDropdown";
 import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
 
 const ContactCard = ({ childData, handleEdit, showEditIcon, type }) => {
-
   const emailDropdownRef = useRef(null);
   const phoneDropdownRef = useRef(null);
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
@@ -37,7 +36,11 @@ const ContactCard = ({ childData, handleEdit, showEditIcon, type }) => {
     <>
       {childData && (
         <>
-          <div className={`contact-card ${showEmailDropdown || showPhoneDropdown ? "dropdown-open" : ""}`}>
+          <div
+            className={`contact-card ${
+              showEmailDropdown || showPhoneDropdown ? "dropdown-open" : ""
+            }`}
+          >
             <div className="contact-card-desc">
               <div className="contact-info">
                 <span className="user-icon">
@@ -45,9 +48,7 @@ const ContactCard = ({ childData, handleEdit, showEditIcon, type }) => {
                 </span>
                 <div className="contact-name">
                   <span className="contact-title">
-                    <b>
-                      {childData.firstName + " " + childData.lastName}
-                    </b>
+                    <b>{childData.firstName + " " + childData.lastName}</b>
                   </span>
                   {childData.isPrimary && (
                     <span className="primary-label"> ( Primary ) </span>
@@ -56,27 +57,26 @@ const ContactCard = ({ childData, handleEdit, showEditIcon, type }) => {
               </div>
               <div className="contact-details">
                 <div className="dropdown-sec">
-                  {childData.emailAddressList?.length > 0 ?
+                  {childData.emailAddressList?.length > 0 ? (
                     <ContactEmailsDropdown
                       showEmailDropdown={showEmailDropdown}
                       setShowEmailDropdown={setShowEmailDropdown}
                       emailAddressesList={childData.emailAddressList}
                     />
-                    : null}
+                  ) : null}
                 </div>
                 <div className="dropdown-sec">
-                  {childData.phoneNumberList?.length > 0 ?
+                  {childData.phoneNumberList?.length > 0 ? (
                     <ContactPhoneNumberDropdown
                       showPhoneDropdown={showPhoneDropdown}
                       setShowPhoneDropdown={setShowPhoneDropdown}
                       phoneNumberList={childData.phoneNumberList}
                     />
-                    : null}
+                  ) : null}
                 </div>
               </div>
             </div>
-            <div className="contact-type-badge">
-              {type}</div>
+            <div className="contact-type-badge">{type}</div>
             <div className="edit-delete-button">
               {showEditIcon ? (
                 <button
