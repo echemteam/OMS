@@ -28,8 +28,12 @@ import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDeta
 import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
 import { useSelector } from "react-redux";
 import { StatusEnums, StatusFeild } from "../../../../utils/Enums/StatusEnums";
+import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../app/services/commonAPI";
+import { setOptionFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
+import { excludingRoles } from "../../features/basicDetail/config/BasicDetailForm.data";
+import { ownerType } from "../../../../utils/Enums/enums";
 
-export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues  , searchStatusFilter , handleSearch , handleClear , shouldRerenderFormCreator}) => {
+export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
   const navigate = useNavigate();
   const molGridRef = useRef();
@@ -44,6 +48,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   const [statusFeild, setStatusFeild] = useState();
   const { listRef } = useContext(CustomerContext);
   const authState = useSelector((state) => state.auth);
+  const [assignRUser, setAssignRUser] = useState();
   const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [
@@ -63,7 +68,23 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
     },
   ] = useUpdateCustomerInActiveStatusMutation();
 
+  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
+  const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
+
   const [addCustomerNotes] = useAddCustomerNotesMutation();
+
+  useEffect(() => {
+    getAllUser();
+  }, [statusId]);
+
+  useEffect(() => {
+    if (isGetAllUserSucess && allGetAlluserData) {
+      const filterCondition = (item) => {
+        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
+      };
+      setOptionFieldSetting(allGetAlluserData, 'userId', 'fullName', reasonData, 'responsibleUserId', filterCondition);
+    }
+  }, [isGetAllUserSucess, allGetAlluserData,]);
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
@@ -205,13 +226,6 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
     getCustomers(request);
   };
 
-  // useEffect(() => {
-  //   if (molGridRef.current) {
-  //     const currentPageObject = molGridRef.current.getCurrentPageObject();
-  //     getListApi(currentPageObject);
-  //   }
-  // }, [search , selectedStatusOptions]);
-
   const handleEditClick = (data) => {
     navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
   };
@@ -235,7 +249,15 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
     onReset();
   };
 
+  const removeFields = () => {
+    const removeFields = ['ResponsibleUserId']
+    const newFrom = { ...formData };
+    newFrom.formFields = formData.formFields.filter(field => !removeFields.includes(field.id));
+    setFormData(newFrom);
+  }
+
   const handlefreeze = (data) => {
+    removeFields();
     setShowModal(true);
     setcustomerId(data.customerId);
     setStaticId(StatusEnums.Freeze);
@@ -243,6 +265,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   };
 
   const handleDiseble = (data) => {
+    removeFields();
     setShowModal(true);
     setcustomerId(data.customerId);
     setStaticId(StatusEnums.Disable);
@@ -250,16 +273,23 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   };
 
   const handleBlock = (data) => {
+    removeFields();
     setShowModal(true);
     setcustomerId(data.customerId);
     setStaticId(StatusEnums.Block);
     setStatusFeild(StatusFeild.Block);
   };
   const handleReject = (data) => {
+    const customerData = dataSource.find(customerItem => customerItem.customerId === data.customerId);
     setShowModal(true);
+    setAssignRUser(false);
     setcustomerId(data.customerId);
     setStaticId(StatusEnums.Reject);
     setStatusFeild(StatusFeild.Reject);
+    if (customerData.responsibleUserId) {
+      removeFields();
+      setAssignRUser(true);
+    }
   };
   const onReset = () => {
     let restData = { ...reasonData };
@@ -278,8 +308,20 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       };
       updateCustomerInActiveStatus(req);
       addCustomerNotes(req);
+      if (!assignRUser) {
+        updateRUserData(custData.responsibleUserId.value);
+      }
     }
   };
+
+  const updateRUserData = (value) => {
+    let req = {
+      ownerId: customerID,
+      ownerType: ownerType.Customer,
+      responsibleUserId: value
+    }
+    updateResponsibleUser(req);
+  }
 
   const actionHandler = {
     EDIT: handleEditClick,
@@ -288,7 +330,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
     BLOCKED: handleBlock,
     REJECT: handleReject,
   };
-  
+
   return (
     <div>
       <div className="row">
@@ -341,8 +383,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
             showModal={showModal}
             handleToggleModal={handleToggleModal}
             modalTitle={`${statusFeild} Reason`}
-            modelSizeClass="w-50s"
-          >
+            modelSizeClass="w-50s" >
             <div className="row horizontal-form">
               <FormCreator config={formData} ref={reasonRef} {...formData} />
               <div className="col-md-12 mt-2">

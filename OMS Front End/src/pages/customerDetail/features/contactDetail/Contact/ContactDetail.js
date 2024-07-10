@@ -87,10 +87,7 @@ const ContactDetail = ({
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetContactData) {
-      const modifyData = isSupplier
-        ? contactSupplierTransformData(isGetContactData)
-        : contactCustomerTransformData(isGetContactData);
-      setModifyContactData(modifyData);
+      setModifyContactData(isGetContactData);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetContactData]);
 

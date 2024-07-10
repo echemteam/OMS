@@ -3,17 +3,20 @@ import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 
-const ContactPhoneNumberDropdown = ({
-  showPhoneDropdown,
-  setShowPhoneDropdown,
-  primaryPhoneNumber,
-  phoneNumbers,
-}) => {
-  const ref = useRef(null);
+const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, phoneNumberList }) => {
 
+  const ref = useRef(null);
   const togglePhoneDropdown = () => {
     setShowPhoneDropdown(!showPhoneDropdown);
   };
+
+  let phoneNumbers = phoneNumberList && phoneNumberList.filter((data) => data.isPrimary === false);
+  let primaryPhoneNumber = phoneNumberList && phoneNumberList.find((data) => data.isPrimary === true);
+
+  if (!primaryPhoneNumber && phoneNumberList && phoneNumberList.length > 0) {
+    primaryPhoneNumber = phoneNumberList[0];
+    phoneNumbers = phoneNumbers.slice(1);
+  }
 
   const phoneTypesIcon = (type) => {
     switch (type) {
@@ -49,63 +52,27 @@ const ContactPhoneNumberDropdown = ({
               <div className="number-type">
                 {phoneTypesIcon(primaryPhoneNumber?.phoneTypeId)}
               </div>
-
-              <div
-                className={`card-value ml-0 ${
-                  primaryPhoneNumber?.isPrimary ? "primary-phone" : ""
-                }`}
-              >
+              <div className={`card-value ml-0 ${primaryPhoneNumber?.isPrimary ? "primary-phone" : ""}`}>
                 {`(${primaryPhoneNumber?.phoneCode}) ${primaryPhoneNumber?.phoneNumber}`}
               </div>
               {/* <span className="title">Ext.</span> */}
               {/* { */}
-              <div
-                className={`card-value ${
-                  primaryPhoneNumber?.isPrimary ? "primary-phone" : ""
-                }`}
-              >
-                {`${
-                  primaryPhoneNumber?.extension > 0
-                    ? "," + primaryPhoneNumber?.extension
-                    : ""
-                }`}
+              <div className={`card-value ${primaryPhoneNumber?.isPrimary ? "primary-phone" : ""}`} >
+                {`${primaryPhoneNumber?.extension > 0 ? "," + primaryPhoneNumber?.extension : ""}`}
               </div>
-
               {primaryPhoneNumber?.isPrimary ? (
                 <div className="primary-icon" title="Is Primary"></div>
               ) : null}
-
-              <span
-                className="copy-icon"
-                onClick={() =>
-                  CopyText(
-                    `(${primaryPhoneNumber.phoneCode}) ${
-                      primaryPhoneNumber.phoneNumber
-                    } 
-                            ${
-                              primaryPhoneNumber.extension > 0
-                                ? primaryPhoneNumber.extension
-                                : ""
-                            }`,
-                    "phone"
-                  )
-                }
-              >
+              <span className="copy-icon" onClick={() => CopyText(`(${primaryPhoneNumber.phoneCode}) ${primaryPhoneNumber.phoneNumber} 
+              ${primaryPhoneNumber.extension > 0 ? primaryPhoneNumber.extension : ""}`, "phone")}>
                 <Image imagePath={AppIcons.copyIcon} altText="Icon" />
               </span>
             </>
           ) : null}
         </div>
       </div>
-      <div
-        className="drop-down mobilenumber"
-        ref={ref}
-        onClick={togglePhoneDropdown}
-      >
-        <i
-          className={`fa fa-caret-down ${showPhoneDropdown ? "rotated" : ""}`}
-          aria-hidden="true"
-        ></i>
+      <div className="drop-down mobilenumber" ref={ref} onClick={togglePhoneDropdown} >
+        <i className={`fa fa-caret-down ${showPhoneDropdown ? "rotated" : ""}`} aria-hidden="true" ></i>
         {showPhoneDropdown && (
           <div className="dropdown-content show">
             {phoneNumbers.map((phoneData, index) => (
@@ -113,22 +80,11 @@ const ContactPhoneNumberDropdown = ({
                 <span>
                   {phoneTypesIcon(phoneData?.phoneTypeId)}
                   <span className="ml-1">
-                    {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}${
-                      phoneData.extension ? `, ${phoneData.extension}` : ""
-                    }`}
+                    {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}${phoneData.extension ? `, ${phoneData.extension}` : ""
+                      }`}
                   </span>
                 </span>
-                <span
-                  className="copy-icon"
-                  onClick={() =>
-                    CopyText(
-                      `(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${
-                        phoneData.extension > 0 ? phoneData.extension : ""
-                      }`,
-                      "phone"
-                    )
-                  }
-                >
+                <span className="copy-icon" onClick={() => CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${phoneData.extension > 0 ? phoneData.extension : ""}`, "phone")} >
                   <Image imagePath={AppIcons.copyIcon} altText="Icon" />
                 </span>
               </span>

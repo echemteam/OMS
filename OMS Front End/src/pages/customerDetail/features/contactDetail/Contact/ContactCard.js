@@ -5,26 +5,11 @@ import ContactEmailsDropdown from "./ContactEmailsDropdown";
 import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
 
 const ContactCard = ({ childData, handleEdit, showEditIcon, type }) => {
-  const [showEmailDropdown, setShowEmailDropdown] = useState(false);
-  const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
+
   const emailDropdownRef = useRef(null);
   const phoneDropdownRef = useRef(null);
-
-  const cardInfoData = childData.cardInformation;
-
-  // Split the email addresses and phone numbers into arrays
-  const emailAddresses = cardInfoData.emailAddress.filter(
-    (data) => data.isPrimary === false
-  );
-  const primaryEmailAddres = cardInfoData.emailAddress.find(
-    (data) => data.isPrimary === true
-  );
-  const primaryPhoneNumber = cardInfoData.phoneNumber.find(
-    (data) => data.isPrimary === true
-  );
-  const phoneNumbers = cardInfoData.phoneNumber.filter(
-    (data) => data.isPrimary === false
-  );
+  const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
+  const [showEmailDropdown, setShowEmailDropdown] = useState(false);
 
   const handleClickOutside = (event) => {
     if (
@@ -50,13 +35,9 @@ const ContactCard = ({ childData, handleEdit, showEditIcon, type }) => {
 
   return (
     <>
-      {cardInfoData && (
+      {childData && (
         <>
-          <div
-            className={`contact-card ${
-              showEmailDropdown || showPhoneDropdown ? "dropdown-open" : ""
-            }`}
-          >
+          <div className={`contact-card ${showEmailDropdown || showPhoneDropdown ? "dropdown-open" : ""}`}>
             <div className="contact-card-desc">
               <div className="contact-info">
                 <span className="user-icon">
@@ -65,30 +46,32 @@ const ContactCard = ({ childData, handleEdit, showEditIcon, type }) => {
                 <div className="contact-name">
                   <span className="contact-title">
                     <b>
-                      {cardInfoData.firstName + " " + cardInfoData.lastName}
+                      {childData.firstName + " " + childData.lastName}
                     </b>
                   </span>
-                  {cardInfoData.isPrimary && (
+                  {childData.isPrimary && (
                     <span className="primary-label"> ( Primary ) </span>
                   )}
                 </div>
               </div>
               <div className="contact-details">
                 <div className="dropdown-sec">
-                  <ContactEmailsDropdown
-                    showEmailDropdown={showEmailDropdown}
-                    setShowEmailDropdown={setShowEmailDropdown}
-                    primaryEmailAddres={primaryEmailAddres}
-                    emailAddresses={emailAddresses}
-                  />
+                  {childData.emailAddressList?.length > 0 ?
+                    <ContactEmailsDropdown
+                      showEmailDropdown={showEmailDropdown}
+                      setShowEmailDropdown={setShowEmailDropdown}
+                      emailAddressesList={childData.emailAddressList}
+                    />
+                    : null}
                 </div>
                 <div className="dropdown-sec">
-                  <ContactPhoneNumberDropdown
-                    showPhoneDropdown={showPhoneDropdown}
-                    setShowPhoneDropdown={setShowPhoneDropdown}
-                    primaryPhoneNumber={primaryPhoneNumber}
-                    phoneNumbers={phoneNumbers}
-                  />
+                  {childData.phoneNumberList?.length > 0 ?
+                    <ContactPhoneNumberDropdown
+                      showPhoneDropdown={showPhoneDropdown}
+                      setShowPhoneDropdown={setShowPhoneDropdown}
+                      phoneNumberList={childData.phoneNumberList}
+                    />
+                    : null}
                 </div>
               </div>
             </div>
@@ -97,7 +80,7 @@ const ContactCard = ({ childData, handleEdit, showEditIcon, type }) => {
             <div className="edit-delete-button">
               {showEditIcon ? (
                 <button
-                  onClick={() => handleEdit(cardInfoData?.contactId)}
+                  onClick={() => handleEdit(childData?.contactId)}
                   className="edit-btn"
                 >
                   <Image imagePath={AppIcons.editThemeIcon} />
