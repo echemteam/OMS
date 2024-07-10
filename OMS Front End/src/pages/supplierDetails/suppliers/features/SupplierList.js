@@ -22,7 +22,7 @@ import { useUpdateResponsibleUserMutation } from '../../../../app/services/commo
 import { ownerType } from '../../../../utils/Enums/enums';
 
 
-const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter , handleSearch , handleClear , shouldRerenderFormCreator}) => {
+const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
@@ -144,7 +144,11 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
         } else {
           setIsResponsibleUser(false);
         }
-        setDataSource(isListeData.dataSource);
+        const modifyCustomerData = isListeData.dataSource.map(data => ({
+          ...data,
+          taxId: data.taxId === '' ? '-' : data.taxId
+        }));
+        setDataSource(modifyCustomerData);
       }
       if (isListeData.totalRecord) {
         setTotalRowCount(isListeData.totalRecord);

@@ -183,7 +183,11 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
         } else {
           setIsResponsibleUser(false);
         }
-        setDataSource(isListeData.dataSource);
+        const modifyCustomerData = isListeData.dataSource.map(data => ({
+          ...data,
+          taxId: data.taxId === '' ? '-' : data.taxId
+        }));
+        setDataSource(modifyCustomerData);
       }
       if (isListeData.totalRecord) {
         setTotalRowCount(isListeData.totalRecord);
