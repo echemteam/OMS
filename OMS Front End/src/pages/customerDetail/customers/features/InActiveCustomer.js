@@ -93,11 +93,17 @@ const InActiveCustomer = ({ statusId }) => {
   };
 
   const handleClear = () => {
-    // setSelectedDrpvalues("");
-    // setSelectedStatusOptions("");
-    // setSearch("");
-    // // getListApi();
+    setSelectedDrpvalues("");
+    setSelectedStatusOptions("");
+    setSearch("");
+    setShouldRerenderFormCreator((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    if (debouncedSearch === "") {
+      getListApi();
+    }
+  }, [debouncedSearch]);
 
   const tabs = [
     {

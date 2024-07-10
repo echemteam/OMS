@@ -106,7 +106,7 @@ const SupplierDetails = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2">
-          <SupplierContactDetail isEditablePage={true} />
+          <SupplierContactDetail isEditablePage={true} isSearchFilterShow={true}/>
         </div>
       ),
       isVisible: hasContactPermission.hasAccess,
