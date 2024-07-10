@@ -152,18 +152,46 @@ const ContactDetail = ({
     mainId && GetContactList(mainId);
   };
 
+  const onhandleSearch = () => {
+
+  }
+
+  const onhandleClear = () => {
+
+  }
+
+  const handleChangeDropdown = () => {
+
+  }
+
   return (
     <>
       <CardSection
         cardTitle="Contact"
+        searchInputName="Search By Name and Email"
+        searchInput={true}
         buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
         rightButton={buttonVisible ? true : false}
         buttonText="Add"
         titleButtonClick={handleToggleModal}
-        isFilter={true}
-        filterHeaderTitle="Contact Filter"
+        // isFilter={true}
+        // filterHeaderTitle="Contact Filter"
+        clearButton={true}
+        clearTitleButtonClick={onhandleSearch}
+        clearButtonText="Clear"
+        searchButton={true}
+        searchbuttonText="Search"
+        searchTitleButtonClick={onhandleClear}
+        searchFilter={true}
+        handleChangeDropdown={handleChangeDropdown}
+        // selectedOptions={selectedDrpvalues}
+        // optionsValue={statusOptions}
+        isMultiSelect={true}
+        placeholder="Search by Contact Type"
+        isCardSection={true}
+        isdropdownOpen={true}
       >
         <ManageContactList
           handleEdit={handleEdit}

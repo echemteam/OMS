@@ -14,6 +14,7 @@ const InActiveCustomer = ({ statusId }) => {
   const [statusOptions, setStatusOptions] = useState([]);
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
   const [selectedStatusOptions, setSelectedStatusOptions] = useState("");
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const [allManageData, setAllManageData] = useState(AllInActiveCustomerGridConfig);
   const [freezeManageData, setFrezzeManageData] = useState(FreezedInActiveCustomerGridConfig);
@@ -67,12 +68,13 @@ const InActiveCustomer = ({ statusId }) => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
+  const handleSearch = () => {
+    getListApi();
+  };
+
   const handleChange = (event) => {
-    const value = event.target.value;
-    // if (value.length >= 3) {
-    setSearch(value.trim());
-    // }
-  }
+    setSearch(event.target.value.trim());
+  };
 
   useEffect(() => {
     if (StatusValue) {
@@ -90,6 +92,15 @@ const InActiveCustomer = ({ statusId }) => {
     setSelectedStatusOptions(selectedValues);
   };
 
+  const handleClear = () => {
+    // setShouldRerenderFormCreator((prevState) => !prevState);
+    // setSelectedDrpvalues("");
+    // setSelectedStatusOptions("");
+    // setSearch("");
+    // // getListApi();
+    // console.log("search)" , search)
+  };
+
   const tabs = [
     {
       sMenuItemCaption: "All",
@@ -105,6 +116,9 @@ const InActiveCustomer = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={true}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
@@ -123,6 +137,9 @@ const InActiveCustomer = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
@@ -141,6 +158,9 @@ const InActiveCustomer = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
@@ -159,6 +179,9 @@ const InActiveCustomer = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),

@@ -29,7 +29,7 @@ import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
 import { useSelector } from "react-redux";
 import { StatusEnums, StatusFeild } from "../../../../utils/Enums/StatusEnums";
 
-export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter}) => {
+export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues , selectedStatusOptions , searchStatusFilter , handleSearch , handleClear , shouldRerenderFormCreator}) => {
 
   const navigate = useNavigate();
   const molGridRef = useRef();
@@ -205,12 +205,12 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
     getCustomers(request);
   };
 
-  useEffect(() => {
-    if (molGridRef.current) {
-      const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getListApi(currentPageObject);
-    }
-  }, [search , selectedStatusOptions]);
+  // useEffect(() => {
+  //   if (molGridRef.current) {
+  //     const currentPageObject = molGridRef.current.getCurrentPageObject();
+  //     getListApi(currentPageObject);
+  //   }
+  // }, [search , selectedStatusOptions]);
 
   const handleEditClick = (data) => {
     navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
@@ -292,7 +292,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   return (
     <div>
       <div className="row">
-        <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
+        <div className="col-xxl-12 col-xl-12 col-md-12 col-12" key={shouldRerenderFormCreator}>
           <CardSection
             searchInput={true}
             handleChange={handleChange}
@@ -305,6 +305,13 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
             placeholder="Search by Status"
             isCardSection={true}
             isdropdownOpen={true}
+            searchButton={true}
+            searchbuttonText="Search"
+            buttonClassName="theme-button"
+            searchTitleButtonClick={handleSearch}
+            clearButton={true}
+            clearTitleButtonClick={handleClear}
+            clearButtonText="Clear"
           >
             <div className="row">
               <div className="col-md-12 table-striped">
