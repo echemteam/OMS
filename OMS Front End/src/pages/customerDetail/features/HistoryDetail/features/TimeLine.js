@@ -181,9 +181,13 @@ const TimeLine = ({
   const fetchMoreData = () => {
     setPageNumber((prevPageNumber) => prevPageNumber + 1);
   };
-
+  
   const handleSearch = () => {
-    getListApi(pageNumber)
+    if (selectedDateRange.startDate || selectedDateRange.endDate || selectedUserName.length > 0 || selectedEventName.length > 0 || selectedUserId.length > 0) {
+      getListApi(pageNumber)
+    } else {
+      ToastService.warning("Please Select Any Dropdown")
+    }
   }
 
   const handleClear = () => {
