@@ -1,6 +1,8 @@
 ﻿using OMS.Application.Services.Implementation;
+using OMS.Domain.Entities.API.Request.Common;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
 using OMS.Shared.Services.Contract;
 
@@ -117,6 +119,13 @@ namespace OMS.Application.Services.Common
         public Task<List<GetAllFunctionalitiesResponse>> GetAllFunctionalities(int moduleId)
         {
             return repositoryManager.commonRepository.GetAllFunctionalities(moduleId);
+        }
+
+        public async Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
+        {
+            AddEntityDTO<int> responceData = new();
+            responceData = await repositoryManager.commonRepository.UpdateResponsibleUser(requestData);
+            return responceData;
         }
     }
 }
