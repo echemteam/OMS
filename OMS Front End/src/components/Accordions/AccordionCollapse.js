@@ -9,7 +9,12 @@ const ContactCard = React.lazy(() =>
   )
 );
 
-const AccordionCollapse = ({ accordionList, contentTypeId, handleEdit, showEditIcon }) => {
+const AccordionCollapse = ({
+  accordionList,
+  contentTypeId,
+  handleEdit,
+  showEditIcon,
+}) => {
   const [activeKey, setActiveKey] = useState([]);
   const [customCardDetails, setCustomCardDetails] = useState();
 
@@ -51,35 +56,52 @@ const AccordionCollapse = ({ accordionList, contentTypeId, handleEdit, showEditI
 
   const memoizedAccordionList = useMemo(() => {
     return Object.entries(accordionList).map(([type, items], index) => (
-      <Accordion.Item
-        eventKey={index.toString()}
-        className={activeKey === index.toString() ? "active" : ""}
-        key={index}
-      >
-        <div className="header-title-btn">
-          <Accordion.Header>
-            <span>{type}</span>
-          </Accordion.Header>
-        </div>
-        <Accordion.Body className="add-desc-part mt-4">
-          <div className="add-desc-part">
-            <div className="row">
-              {items.map((childData, childIndex) => (
-                <div
-                  className={customCardDetails?.cardClassName}
-                  key={childIndex}
-                >
-                  {AccordtionCardDetails(
-                    contentTypeId,
-                    childData,
-                    customCardDetails
-                  )}
-                </div>
-              ))}
+      <>
+        {items.map((childData, childIndex) => (
+          <>
+            <div className={customCardDetails?.cardClassName} key={childIndex}>
+              <ContactCard
+                type={type}
+                items={items}
+                childData={childData}
+                handleEdit={handleEdit}
+                cardDetails={customCardDetails}
+                showEditIcon={showEditIcon}
+              />
             </div>
-          </div>
-        </Accordion.Body>
-      </Accordion.Item>
+          </>
+        ))}
+      </>
+
+      // <Accordion.Item
+      //   eventKey={index.toString()}
+      //   className={activeKey === index.toString() ? "active" : ""}
+      //   key={index}
+      // >
+      //   <div className="header-title-btn">
+      //     <Accordion.Header>
+      //       <span>{type}</span>
+      //     </Accordion.Header>
+      //   </div>
+      //   <Accordion.Body className="add-desc-part mt-4">
+      //     <div className="add-desc-part">
+      //       <div className="row">
+      //         {items.map((childData, childIndex) => (
+      //           <div
+      //             className={customCardDetails?.cardClassName}
+      //             key={childIndex}
+      //           >
+      //             {AccordtionCardDetails(
+      //               contentTypeId,
+      //               childData,
+      //               customCardDetails
+      //             )}
+      //           </div>
+      //         ))}
+      //       </div>
+      //     </div>
+      //   </Accordion.Body>
+      // </Accordion.Item>
     ));
   }, [
     accordionList,
@@ -90,7 +112,9 @@ const AccordionCollapse = ({ accordionList, contentTypeId, handleEdit, showEditI
   ]);
 
   useEffect(() => {
-    setActiveKey(Object.keys(accordionList).map((_, index) => index.toString()));
+    setActiveKey(
+      Object.keys(accordionList).map((_, index) => index.toString())
+    );
   }, [accordionList]);
 
   return (
