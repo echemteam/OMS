@@ -518,6 +518,7 @@ a {
       text-transform: capitalize;
       font-size: var(--commonFont-large);
       font-weight: 600;
+      white-space: nowrap;
     }
 
     p {
@@ -2381,6 +2382,9 @@ input[type="checkbox"]:disabled {
         }
       }
     }
+  }
+  .input-label{
+    min-height: 28px;
   }
 }
 
