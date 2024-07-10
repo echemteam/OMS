@@ -122,8 +122,8 @@ namespace OMS.Application.Services.Contact
             GetCustomerContactByContactIdResponse contactDetail = await repositoryManager.contact.GetCustomerContactByContactId(contactId);
             OwnerType ownerTypeId = OwnerType.CustomerContact;
 
-            contactDetail.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contactId, (short)ownerTypeId);
-            contactDetail.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
+            contactDetail.EmailAddressList = await repositoryManager.emailAddress.GetEmailByContactId(contactId, (short)ownerTypeId);
+            contactDetail.PhoneNumberList = await repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
             return contactDetail!;
         }
 
@@ -136,8 +136,8 @@ namespace OMS.Application.Services.Contact
             {
                 foreach (var contact in contactList)
                 {
-                    contact.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, (short)ownerTypeId);
-                    contact.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+                    contact.EmailAddressList = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, (short)ownerTypeId);
+                    contact.PhoneNumberList = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
                 }
             }
             return contactList!;
@@ -152,8 +152,8 @@ namespace OMS.Application.Services.Contact
             {
                 foreach (var contact in contactList)
                 {
-                    contact.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, (short)ownerTypeId);
-                    contact.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+                    contact.EmailAddressList = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, (short)ownerTypeId);
+                    contact.PhoneNumberList = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
                 }
             }
             return contactList!;
@@ -164,8 +164,8 @@ namespace OMS.Application.Services.Contact
             GetSupllierContactByContactIdResponse contactDetail = await repositoryManager.contact.GetSupllierContactByContactId(contactId);
             OwnerType ownerTypeId = OwnerType.SupplierContact;
 
-            contactDetail.EmailAddressLst = await repositoryManager.emailAddress.GetEmailByContactId(contactId, (short)ownerTypeId);
-            contactDetail.PhoneNumberLsit = await repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
+            contactDetail.EmailAddressList = await repositoryManager.emailAddress.GetEmailByContactId(contactId, (short)ownerTypeId);
+            contactDetail.PhoneNumberList = await repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
             return contactDetail!;
         }
 

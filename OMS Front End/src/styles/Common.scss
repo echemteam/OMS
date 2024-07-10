@@ -956,9 +956,12 @@ a {
             height: calc(100vh - 220px);
             overflow: hidden;
             overflow-y: auto;
+            @media only screen and (max-width: 1560px) {
+              height:calc(100vh - 197px);
+            }
 
             .card {
-              box-shadow: none;
+              margin: 4px 5px 0;
             }
           }
         }
@@ -1686,7 +1689,8 @@ a {
 .card {
   .card-body-sec {
     .note-card-sec {
-      max-height: calc(100vh - 235px);
+      // max-height: calc(100vh - 235px);
+      height: calc(100vh - 223px);
       overflow: hidden;
       overflow-y: auto;
     }

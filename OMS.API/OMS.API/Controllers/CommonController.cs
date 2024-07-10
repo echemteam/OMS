@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
+using OMS.Domain.Entities.API.Request.Address;
+using OMS.Domain.Entities.API.Request.Common;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
 using OMS.Framework;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.API.Controllers
@@ -100,7 +101,7 @@ namespace OMS.API.Controllers
             List<GetAllPaymentTermsResponse> responseData = await _serviceManager.commonServices.GetAllPaymentTerms().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
-         
+
         [HttpGet("GetAllPaymentMethod")]
         public async Task<IActionResult> GetAllPaymentMethod()
         {
@@ -176,5 +177,13 @@ namespace OMS.API.Controllers
             List<GetAllFunctionalitiesResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalities(moduleId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+
+        [HttpPost("UpdateResponsibleUser")]
+        public async Task<IActionResult> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
+        {
+            var updateItem = await _serviceManager.commonServices.UpdateResponsibleUser(requestData);
+            return APISucessResponce(updateItem);
+        }
+
     }
 }

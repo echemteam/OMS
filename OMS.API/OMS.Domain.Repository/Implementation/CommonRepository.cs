@@ -1,5 +1,7 @@
-﻿using OMS.Domain.Entities.API.Response.Common;
+﻿using OMS.Domain.Entities.API.Request.Common;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
@@ -32,6 +34,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETEVENTNAMEANDUSERNAMEBYSUPPLIERID = "GetEventNameAndUserNameBySupplierId";
         const string GETALLMODULES = "GetAllModules";
         const string GETALLFUNCTIONALITIES = "GetAllFunctionalities";
+        const string UPDATERESPONSIBLEUSER = "UpdateResponsibleUser";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -154,6 +157,15 @@ namespace OMS.Domain.Repository.Implementation
                 moduleId
             }, commandType: CommandType.StoredProcedure);
             return getEventNameAndUserNameBySupplierIdResponse;
+        }
+        public async Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATERESPONSIBLEUSER, new
+            {
+                requestData.OwnerId,
+                requestData.OwnerType,
+                requestData.ResponsibleUserId
+            }, CommandType.StoredProcedure);
         }
     }
 }
