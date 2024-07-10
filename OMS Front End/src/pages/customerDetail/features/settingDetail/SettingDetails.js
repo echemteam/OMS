@@ -60,7 +60,7 @@ const SettingDetails = ({ isEditablePage }) => {
     {
       sMenuItemCaption: "Shipping",
       component: (
-        <div className="mt-4 shipping-sec">
+        <div className="mt-3 shipping-sec">
           {showShippingTab ?
             <ShippingSettings isEditablePage={isEditablePage} />
             : <Unauthorize />
