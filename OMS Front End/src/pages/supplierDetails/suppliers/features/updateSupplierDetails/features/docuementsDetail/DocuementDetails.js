@@ -112,7 +112,7 @@ const DocumentDetails = ({ mainId, isEditablePage, SecurityKey }) => {
 
       <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}
         modalTitle="Add Document" modelSizeClass="w-50s">
-        <div className="row horizontal-form">
+        <div className="row">
           <FormCreator config={DocumentFormData} ref={documentFormRef} {...DocumentFormData} />
           <div className="col-md-12 mt-2">
             <div className="d-flex align-item-end justify-content-end">

@@ -117,7 +117,7 @@ const AddEditGroup = (props) => {
   return (
     <div>
       <div className="row">
-        <div className="col-md-12 horizontal-form">
+        <div className="col-md-12 add-role-input">
           <div className="row vertical-form">
             <FormCreator
               ref={roleFormRef}
@@ -126,7 +126,7 @@ const AddEditGroup = (props) => {
             />
           </div>
         </div>
-        <div className="col-md-12 mt-2">
+        <div className="col-md-12">
           <div className="d-flex align-item-center justify-content-end">
             <Buttons
               buttonTypeClassName="theme-button"

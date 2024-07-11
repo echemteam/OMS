@@ -25,7 +25,7 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-1",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-input",
       },
     },
     {
@@ -40,7 +40,7 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-5 col-xl-5 col-md-4 mb-1 pr-0 border-right-0",
+        containerCss: "col-xxl-3 col-xl-3 col-md-4 mb-input pr-0 border-right-0",
       },
     },
     {
@@ -56,7 +56,7 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-5 col-xl-5 col-md-5 mb-1 pl-0 border-left-r-0",
+        containerCss: "col-xxl-7 col-xl-7 col-md-6 mt-3 mb-input pl-0 border-left-r-0",
       },
     },
     {
@@ -72,7 +72,7 @@ export const addEditContactsFormData = {
         maxLength: 6,
       },
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-md-2 mb-1 pl-0 ",
+        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-md-2 mt-3 mb-input pl-0 extension",
       },
     },
     {
@@ -87,7 +87,7 @@ export const addEditContactsFormData = {
       },
       style: {
         containerCss:
-          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
       },
     },
 

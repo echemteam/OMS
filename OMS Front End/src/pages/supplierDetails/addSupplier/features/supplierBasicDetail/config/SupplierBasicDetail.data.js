@@ -28,7 +28,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-8 col-xl-8 col-md-8 col-12 mb-input",
       },
       inputButtonGroup: {
         isInputButton: true,
@@ -54,7 +54,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
     {
@@ -69,7 +69,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
     {
@@ -84,7 +84,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
     {
@@ -99,7 +99,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
     {
@@ -114,7 +114,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
     {
@@ -130,7 +130,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
     {
@@ -146,7 +146,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
     {
@@ -162,7 +162,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }, { type: "website" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
     {
@@ -184,7 +184,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }, { type: "taxId", minLength: 0, maxLength: 10 }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
     {
@@ -200,7 +200,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-7 col-xl-6 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-7 col-xl-6 col-md-12 col-12 mb-input",
       },
     },
     {
@@ -214,7 +214,7 @@ export const supplierBasicData = {
         allowSpace: true,
       },
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
   ],

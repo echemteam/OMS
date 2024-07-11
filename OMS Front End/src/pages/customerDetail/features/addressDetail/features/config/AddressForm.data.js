@@ -16,7 +16,7 @@ export const addressFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
     
@@ -33,7 +33,7 @@ export const addressFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
     {
@@ -49,7 +49,7 @@ export const addressFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
     {
@@ -65,7 +65,7 @@ export const addressFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
     {
@@ -81,7 +81,7 @@ export const addressFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
     {
@@ -97,7 +97,7 @@ export const addressFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
     {
@@ -112,7 +112,7 @@ export const addressFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2 label-name-small",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-input label-name-small",
       },
     },
     {
@@ -128,7 +128,7 @@ export const addressFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2 label-name-small",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-input label-name-small",
       },
     },
     {
@@ -144,7 +144,7 @@ export const addressFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2 label-name-small",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-input label-name-small",
       },
     },
     {
@@ -160,7 +160,7 @@ export const addressFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-8 col-md-8 col-12 mb-2 label-name-small",
+        containerCss: "col-xxl-6 col-xl-8 col-md-8 col-12 mb-input label-name-small",
       },
     },
     {
@@ -175,7 +175,7 @@ export const addressFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
       },
     },
     {
@@ -190,7 +190,7 @@ export const addressFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
       },
     },
     {
@@ -205,7 +205,7 @@ export const addressFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
       },
     },
   ],

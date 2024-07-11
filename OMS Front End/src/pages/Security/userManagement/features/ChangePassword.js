@@ -37,14 +37,14 @@ const ChangePassword = (props) => {
 
     return (
         <div className="row">
-            <div className="col-md-12 horizontal-form">
+            <div className="col-md-12">
                 <div className="row vertical-form">
                     <FormCreator
                         ref={passwordFormRef} {...passwordForm} config={passwordForm}
                     />
                 </div>
             </div>
-            <div className="col-md-12 mt-2">
+            <div className="col-md-12">
                 <div className="d-flex align-item-center justify-content-end">
                     <Buttons
                         buttonTypeClassName="theme-button"

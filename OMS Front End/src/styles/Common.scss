@@ -35,11 +35,11 @@ a {
   line-height: inherit;
   display: inline-block;
   margin-bottom: 0;
-  font-size: var(--commonFont-medium);
+  font-size: var(--commonFont);
   color: var(--textColor);
   font-weight: 600;
   // text-transform: uppercase;
-  min-height: 35px;
+  // min-height: 35px;
   display: flex;
   align-items: center;
 }
@@ -381,8 +381,7 @@ a {
         }
       }
 
-      .middle-page-section {
-      }
+      .middle-page-section {}
     }
   }
 }
@@ -452,6 +451,68 @@ a {
 
     .date-picker {
       width: 100%;
+    }
+  }
+
+  &.add-edit-user-form {
+    .input-label-part {
+      .input-label-title {
+        min-width: 70px;
+        max-width: 70px;
+      }
+
+    }
+
+    .validation-text {
+      margin-left: 85px !important;
+    }
+
+    .input-field-sec {
+      .checkbox-label-part {
+        margin-left: 82px;
+      }
+    }
+  }
+
+  &.add-role-input {
+    .input-label-part {
+      .input-label-title {
+        min-width: 70px;
+        max-width: 70px;
+      }
+
+    }
+
+    .validation-text {
+      margin-left: 85px !important;
+    }
+  }
+
+  &.assign-user-form {
+    .input-label-part {
+      .input-label-title {
+        min-width: 50px;
+        max-width: 50px;
+      }
+
+    }
+
+    .validation-text {
+      margin-left: 65px !important;
+    }
+  }
+
+  &.basic-info-step {
+    .input-label-part {
+      .input-label-title {
+        min-width: 100px;
+        max-width: 100px;
+      }
+
+    }
+
+    .validation-text {
+      margin-left: 112px !important;
     }
   }
 }
@@ -715,8 +776,7 @@ a {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {
-    }
+    .tab-body-section {}
   }
 
   &.vertical-tab {
@@ -826,8 +886,7 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {
-      }
+      .tab-body-section {}
     }
 
     &.vertical-tab {
@@ -925,8 +984,7 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {
-        }
+        .tab-sub-body-section {}
       }
     }
   }
@@ -953,12 +1011,9 @@ a {
           }
 
           .tab-sub-content {
-            height: calc(100vh - 220px);
             overflow: hidden;
             overflow-y: auto;
-            @media only screen and (max-width: 1560px) {
-              height:calc(100vh - 197px);
-            }
+
 
             .card {
               margin: 4px 5px 0;
@@ -1008,7 +1063,14 @@ a {
     input {
       border-top-left-radius: 0 !important;
       border-bottom-left-radius: 0 !important;
+      margin-top: 2px;
     }
+  }
+}
+
+.extension {
+  input {
+    margin-top: 2px;
   }
 }
 
@@ -1055,7 +1117,6 @@ a {
       border-radius: 12px;
       margin-bottom: 10px !important;
       position: relative;
-      min-height: 120px;
 
       &:last-child {
         margin-bottom: 0;
@@ -1242,6 +1303,7 @@ a {
     border-top-right-radius: 3px;
     font-size: 10px;
     font-weight: 600;
+
     @media only screen and (max-width: 1560px) {
       font-size: 8px;
     }
@@ -1257,6 +1319,7 @@ a {
       align-items: center;
       border-bottom: 1px solid #ebebf1;
       padding-bottom: 5px;
+
       .user-icon {
         display: flex;
         align-items: center;
@@ -1336,10 +1399,12 @@ a {
 
             .values {
               font-size: var(--commonFont-small);
+
               @media only screen and (max-width: 1560px) {
                 font-size: 9px;
               }
-              &.primary-email{
+
+              &.primary-email {
                 color: var(--themeColor);
               }
             }
@@ -1384,6 +1449,7 @@ a {
                 align-items: center;
                 justify-content: center;
                 margin-left: -1px;
+
                 i {
                   font-size: var(--commonFont);
                   opacity: 0.2;
@@ -1398,10 +1464,12 @@ a {
             .card-value {
               font-size: var(--commonFont-small);
               padding-left: 3px;
+
               @media only screen and (max-width: 1560px) {
                 font-size: 9px;
               }
-              &.primary-phone{
+
+              &.primary-phone {
                 color: var(--themeColor);
               }
             }
@@ -1458,9 +1526,11 @@ a {
       border-radius: 10px;
       border: 1px solid var(--linkMenu);
       margin-top: 20px;
+
       @media only screen and (max-width: 1560px) {
         margin-top: 10px;
       }
+
       .left-icons {
         width: 70px;
         display: flex;
@@ -1702,6 +1772,7 @@ a {
       height: calc(100vh - 245px);
       overflow: hidden;
       overflow-y: auto;
+
       @media only screen and (max-width: 1560px) {
         height: calc(100vh - 223px);
       }
@@ -1974,6 +2045,7 @@ a {
   }
 
   .css-1nmdiq5-menu {
+
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -2300,12 +2372,15 @@ input[type="checkbox"]:disabled {
     border-style: solid;
     border-width: 1px;
   }
+
   .react-daterange-picker__wrapper {
     border: none;
   }
+
   .react-calendar__tile--active {
     background-color: var(--themeColor) !important;
   }
+
   .react-daterange-picker__inputGroup {
     min-width: 0;
     flex-grow: 0;
@@ -2313,31 +2388,40 @@ input[type="checkbox"]:disabled {
     cursor: pointer !important;
 
   }
+
   .react-daterange-picker__inputGroup__input:invalid {
     background: none !important;
   }
-  .react-calendar__tile--now{
+
+  .react-calendar__tile--now {
     background: var(--themeColor) !important;
     color: #fff !important;
   }
+
   .react-calendar {
     width: 280px;
     margin-top: 5px;
   }
-  .react-daterange-picker__inputGroup__input{
+
+  .react-daterange-picker__inputGroup__input {
     outline: none;
   }
-  .react-daterange-picker__clear-button{
+
+  .react-daterange-picker__clear-button {
     margin-left: auto;
+
     i {
       color: hsl(0, 0%, 80%);
+
       &:hover {
         color: var(--themeColor) !important;
       }
     }
   }
+
   .react-daterange-picker__calendar-button__icon {
     stroke: hsl(0, 0%, 80%);
+
     &:hover {
       stroke: var(--themeColor) !important;
     }
@@ -2346,6 +2430,7 @@ input[type="checkbox"]:disabled {
 
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
+
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
@@ -2585,8 +2670,9 @@ input[type="checkbox"]:disabled {
   }
 
   .input-label {
-    min-height: 28px;
+    // min-height: 28px;
   }
+
   .custom-datepicker {
     .react-daterange-picker {
       width: 120% !important;
@@ -2598,7 +2684,7 @@ input[type="checkbox"]:disabled {
 
 
 .dropdown-content {
-  
+
   display: none;
   position: absolute;
   background-color: var(--whiteColor);
@@ -2627,6 +2713,7 @@ input[type="checkbox"]:disabled {
     border-bottom: 1px solid rgb(240, 240, 240);
     justify-content: space-between;
     font-size: var(--commonFont-small);
+
     @media only screen and (max-width: 1560px) {
       font-size: 9px;
       padding: 5px 7px;
@@ -2645,4 +2732,25 @@ input[type="checkbox"]:disabled {
 
 .show {
   display: block;
+}
+
+
+.mb-input {
+  margin-bottom: 15px;
+
+  .input-label {
+    min-height: unset;
+  }
+
+  .validation-text {
+    position: absolute;
+  }
+}
+
+.basic-info-sec {
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+    }
+  }
 }

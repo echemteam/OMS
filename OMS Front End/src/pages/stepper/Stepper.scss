@@ -99,7 +99,6 @@
       padding: 10px;
       display: flex;
       flex-direction: column;
-      height: calc(100vh - 225px);
       overflow: hidden;
       overflow-y: auto;
       width: 100%;
@@ -149,9 +148,7 @@
           }
         }
       }
-      .stepper-content {
-        height: calc(100vh - 180px);
-      }
+      
     }
   }
 }

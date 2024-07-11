@@ -107,6 +107,10 @@
           color: var(--textColor);
           font-size: var(--commonFont-medium);
           padding-top: 2px;
+          @media only screen and (max-width: 1366px) {
+            min-width: 65px;
+            max-width: 65px;
+          }
         }
 
         .inf-label-width {
@@ -135,10 +139,17 @@
         .copy-icon {
           margin-left: 5px;
           cursor: pointer;
-
+          @media only screen and (max-width: 1366px) {
+          margin-left: 0px;
+          }
           img {
             width: 17px;
             height: 17px;
+            @media only screen and (max-width: 1366px) {
+              width: 12px;
+            height: 12px;
+            margin-left: 2px;
+            }
           }
         }
       }
@@ -198,7 +209,7 @@
 
 .back-button {
   position: absolute;
-  right: 43px;
+  right: 33px;
 }
 
 .customer-detail-tab-sec {

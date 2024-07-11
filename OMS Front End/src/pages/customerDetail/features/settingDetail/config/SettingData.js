@@ -16,7 +16,7 @@ export const SettingFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
       },
     },
     {
@@ -33,7 +33,7 @@ export const SettingFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
       },
     },
     {
@@ -48,7 +48,7 @@ export const SettingFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
       },
 
     },
@@ -68,7 +68,7 @@ export const SettingFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
       },
     },
     {
@@ -83,7 +83,7 @@ export const SettingFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
 

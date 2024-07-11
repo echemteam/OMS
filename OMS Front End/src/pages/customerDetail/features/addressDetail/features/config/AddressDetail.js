@@ -646,7 +646,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}
         >
-          <div className="row horizontal-form mt-3 add-address-form">
+          <div className="row mt-3 add-address-form">
             <FormCreator
               config={formData}
               ref={userFormRef}

@@ -88,7 +88,7 @@ const Permissions = () => {
           iconImg={AppIcons.BackArrowIcon}>
           <div className="top-filter">
             <div className="row">
-              <div className="col-md-7">
+              <div className="col-md-7 mb-2">
                 <div className="d-flex align-items-end">
                   <div className="input-label-part">
                     <Label labelName="Roles" />

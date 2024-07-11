@@ -21,7 +21,7 @@ export const basicDetailFormDataHalf = {
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-8 col-xl-8 col-md-8 col-12 mb-input",
       },
       inputButtonGroup: {
         isInputButton: true,
@@ -48,52 +48,7 @@ export const basicDetailFormDataHalf = {
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
-      },
-    },
-    {
-      id: "groupTypeId",
-      lable: "Group Type ",
-      Field_Name: "Group Type",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "groupTypeId",
-      fieldSetting: {
-        placeholder: "Select Group Type",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
-      },
-    },
-    {
-      id: "countryId",
-      lable: "Country ",
-      Field_Name: "Country",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "countryId",
-      fieldSetting: {
-        placeholder: "Select Country",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
-      },
-    },
-    {
-      id: "territoryId",
-      lable: "Territory ",
-      Field_Name: "Territory",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "territoryId",
-      fieldSetting: {
-        placeholder: "Select Territory",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
     {
@@ -109,7 +64,7 @@ export const basicDetailFormDataHalf = {
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
     {
@@ -125,9 +80,59 @@ export const basicDetailFormDataHalf = {
       },
       validation: [{ type: "require" }, { type: "website" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
+    
+    {
+      id: "groupTypeId",
+      lable: "Group Type ",
+      Field_Name: "Group Type",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "groupTypeId",
+      fieldSetting: {
+        placeholder: "Select Group Type",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+    
+    
+    {
+      id: "countryId",
+      lable: "Country ",
+      Field_Name: "Country",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "countryId",
+      fieldSetting: {
+        placeholder: "Select Country",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+    {
+      id: "territoryId",
+      lable: "Territory ",
+      Field_Name: "Territory",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "territoryId",
+      fieldSetting: {
+        placeholder: "Select Territory",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+    
+    
     {
       id: "taxId",
       lable: "Tax Id ",
@@ -147,7 +152,7 @@ export const basicDetailFormDataHalf = {
       },
       validation: [{ minLength: 10, maxLength: 10 }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
     {
@@ -163,23 +168,7 @@ export const basicDetailFormDataHalf = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
-      },
-    },
-    {
-      id: "note",
-      lable: "Notes ",
-      Field_Name: "Notes",
-      fieldType: FormFieldTypes.CKEDITOR,
-      dataField: "note",
-      fieldSetting: {
-        placeholder: "Enter Notes",
-        allowSpace: true,
-        maxLength: 1000,
-      },
-      // validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-7 col-xl-6 col-md-12 col-12 mb-2",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
     {
@@ -194,9 +183,27 @@ export const basicDetailFormDataHalf = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 margin-left0-checkbox mb-0",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mt-3 mb-input margin-left0-checkbox",
       },
     },
+    
+    {
+      id: "note",
+      lable: "Notes ",
+      Field_Name: "Notes",
+      fieldType: FormFieldTypes.CKEDITOR,
+      dataField: "note",
+      fieldSetting: {
+        placeholder: "Enter Notes",
+        allowSpace: true,
+        maxLength: 1000,
+      },
+      // validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input mb-0",
+      },
+    },
+    
   ],
   formSetting: {
     isViewOnly: false
