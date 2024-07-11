@@ -10,7 +10,7 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ISupplierRepository
     {
-        Task<AddEntityDTO<int>> AddEditSupplierBasicInformation(SupplierDTO supplier);
+        Task<AddEditResponse> AddEditSupplierBasicInformation(SupplierDTO supplier);
         Task<GetSupplierBasicInformationByIdResponse> GetSupplierBasicInformationById(int supplierId);
         Task<EntityList<GetSuppliersResponse>> GetSuppliers(GetSuppliersRequest queryRequest);
         Task<AddEntityDTO<int>> UpdateSupplierInActiveStatus(SupplierDTO supplier);
