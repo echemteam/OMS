@@ -271,7 +271,7 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
                 value={rUserValue}
                 onChange={handleRUserChange}
                 placeholder="Select Status"
-                isDisabled={isButtonDisable}
+                isDisabled={isResponsibleUser ? true : isButtonDisable}
               />
             </div>
           </div>

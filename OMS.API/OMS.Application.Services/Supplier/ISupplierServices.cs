@@ -9,7 +9,7 @@ namespace OMS.Application.Services.Supplier
 {
     public interface ISupplierServices
     {
-        Task<AddEntityDTO<int>> AddEditSupplierBasicInformation(AddEditSupplierBasicInformationRequest requestData, short CurrentUserId);
+        Task<AddEditResponse> AddEditSupplierBasicInformation(AddEditSupplierBasicInformationRequest requestData, short CurrentUserId);
         Task<GetSupplierBasicInformationByIdResponse> GetSupplierBasicInformationById(int supplierId);
         Task<EntityList<GetSuppliersResponse>> GetSuppliers(GetSuppliersRequest queryRequest);
         Task<AddEntityDTO<int>> UpdateSupplierInActiveStatus(UpdateSupplierInActiveStatusRequest requestData, short CurrentUserId);
