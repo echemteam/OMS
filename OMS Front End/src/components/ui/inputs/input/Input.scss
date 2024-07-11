@@ -53,6 +53,9 @@
   .validation-text {
     margin-left: 145px !important;
     margin-top: -8px !important;
+    @media only screen and (max-width: 1560px) {
+      margin-left: 110px ;
+    }
   }
 }
 

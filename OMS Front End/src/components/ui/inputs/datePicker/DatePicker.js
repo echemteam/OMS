@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import ReactDatePicker from "react-datepicker";
 
 import "./DateRange.scss";
-import "react-datepicker/dist/react-datepicker.css";
-import "bootstrap-daterangepicker/daterangepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
+// import "bootstrap-daterangepicker/daterangepicker.css";
 
 // TODO:KP: remove unused vaiable and add disbale and read only
 

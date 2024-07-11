@@ -2,19 +2,20 @@ import React, { useRef } from 'react'
 import { basicInfoData } from './config/BasicDetailForm.data'
 import MolGrid from '../../../../components/Grid/MolGrid';
 import CardSection from '../../../../components/ui/card/CardSection';
-import { useNavigate } from 'react-router-dom';
 import { encryptUrlData } from '../../../../services/CryptoService';
 
 export const BasicInformation = (props) => {
+    
     const molGridRef = useRef();
-    const navigate = useNavigate();
 
     const handleEditClick = (data) => {
-        if(data.customerId){
-        navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
-        }else{
-            navigate(`/SupplierDetails/${encryptUrlData(data.supplierId)}`, "_blank");
+        let url;
+        if (data.customerId) {
+            url = `/viewCustomer/${encryptUrlData(data.customerId)}`;
+        } else {
+            url = `/SupplierDetails/${encryptUrlData(data.supplierId)}`;
         }
+        window.open(url, "_blank");
     };
 
     const actionHandler = {

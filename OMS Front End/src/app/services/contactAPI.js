@@ -17,16 +17,16 @@ const contactAPI = createApi({
             transformErrorResponse: transformErrorResponse,
         }),
         getContactByCustomerId: builder.query({
-            query: (id) => ({
-                url: encryptQueryString(`/Contact/GetContactByCustomerId/?customerId=${Number(id)}`),
+            query: (data) => ({
+                url: encryptQueryString(`/Contact/GetContactByCustomerId/?customerId=${Number(data.id)}&searchText=${data.searchText}&searchContactType=${data.contactType}`),
                 Method: 'GET',
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
         getContactBySupplierId: builder.query({
-            query: (id) => ({
-                url: encryptQueryString(`/Contact/GetContactBySupplierId/?supplierId=${Number(id)}`),
+            query: (data) => ({
+                url: encryptQueryString(`/Contact/GetContactBySupplierId/?supplierId=${Number(data.id)}&searchText=${data.searchText}&searchContactType=${data.contactType}`),
                 Method: 'GET',
             }),
             transformResponse: transformSucessResponse,

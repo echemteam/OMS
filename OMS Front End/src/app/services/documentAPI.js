@@ -42,9 +42,9 @@ const documentAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-        downloadCustomerDocument: builder.query({
+        downloadDocument: builder.query({
             query: (requestData) => ({
-                url: encryptQueryString(`/CustomerDocuments/DownloadCustomerDocument/?folderName=${requestData.folderName}&fileName=${requestData.fileName}&mainId=${requestData.mainId}`),
+                url: encryptQueryString(`/Common/DownloadDocument/?folderName=${requestData.folderName}&fileName=${requestData.fileName}&keyId=${requestData.keyId}`),
                 Method: 'GET',
                 responseHandler: (response) => response.blob()
             }),
@@ -57,7 +57,7 @@ const documentAPI = createApi({
 
 export const {
     useLazyGetAllDocumentTypesQuery, useAddCustomerDocumentsMutation,
-    useLazyGetCustomerDocumentsByIdQuery, useDeleteCustomerDocumentsByIdMutation, useLazyDownloadCustomerDocumentQuery,
+    useLazyGetCustomerDocumentsByIdQuery, useDeleteCustomerDocumentsByIdMutation, useLazyDownloadDocumentQuery,
 } = documentAPI
 
 export default documentAPI;

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../components/ui/card/CardSection";
 import SupplierList from "./features/SupplierList";
@@ -8,6 +9,8 @@ import { AddSupplierContextProvider } from "../../../utils/ContextAPIs/Supplier/
 import { ListShowCustomer } from "../../../utils/Enums/enums";
 import { StatusEnums, StatusValue } from "../../../utils/Enums/StatusEnums";
 import useDebounce from "../../../app/customHooks/useDebouce";
+import { ErrorMessage } from "../../../data/appMessages";
+import ToastService from "../../../services/toastService/ToastService";
 
 const Suppliers = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -21,6 +24,7 @@ const Suppliers = () => {
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
   const [selectedStatusOptions, setSelectedStatusOptions] = useState("");
   const [statusOptions, setStatusOptions] = useState([]);
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const debouncedSearch = useDebounce(search, 300);
   const handleTabClick = (tabIndex) => {
@@ -80,6 +84,24 @@ const Suppliers = () => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
+  const handleSearch = () => {
+    if (search.length >= 3 || selectedDrpvalues.length > 0) {
+      getListApi();
+    } else {
+      ToastService.warning(ErrorMessage.CommonErrorMessage)
+    }
+  };
+
+  const handleChange = (event) => {
+    // if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
+      setSearch(event.target.value.trim());
+    // } else {
+    //   setSearch("");
+    //   setSelectedDrpvalues("");
+    // }
+  };
+
+
   useEffect(() => {
     if (StatusValue) {
       const statusListData = StatusValue.map((item) => ({
@@ -96,12 +118,19 @@ const Suppliers = () => {
     setSelectedStatusOptions(selectedValues);
   };
 
-  const handleChange = (event) => {
-    const value = event.target.value;
-    // if (value.length >= 3) {
-    setSearch(value.trim());
-    // }
-  }
+  const handleClear = () => {
+    setSelectedDrpvalues("");
+    setSelectedStatusOptions("");
+    setSearch("");
+    setShouldRerenderFormCreator((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    if (debouncedSearch === ""  && selectedDrpvalues === "") {
+      getListApi();
+    }
+  }, [debouncedSearch , selectedDrpvalues]);
+
   const tabs = [
     {
       sMenuItemCaption: "ALL",
@@ -114,7 +143,11 @@ const Suppliers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={true} />
+            searchStatusFilter={true}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
+          />
         </div>
       ),
     },
@@ -129,7 +162,11 @@ const Suppliers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false} />
+            searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
+ />
         </div>
       ),
     },
@@ -144,7 +181,12 @@ const Suppliers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false} />
+            searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
+
+          />
         </div>
       ),
     },
@@ -159,7 +201,12 @@ const Suppliers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false} />
+            searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
+
+          />
         </div>
       ),
     },
@@ -182,7 +229,12 @@ const Suppliers = () => {
             selectedStatusOptions={selectedStatusOptions}
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
-            searchStatusFilter={false} />
+            searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear} 
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
+
+            />
         </div>
       ),
     },

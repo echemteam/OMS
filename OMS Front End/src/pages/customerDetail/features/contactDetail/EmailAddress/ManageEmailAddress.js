@@ -9,11 +9,12 @@ import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useDeleteContactEmailMutation } from "../../../../../app/services/emailAddressAPI";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { emailConfig } from "./config/AddEditEmailForm.data";
 //** Component's */
 const EmailAddressList = React.lazy(() => import("./EmailAddressList"));
 const AddEditEmailModal = React.lazy(() => import("./AddEditEmailAddress"));
 
-const ManageEmailAddress = ({ onGetContactList, isSupplier }) => {
+const ManageEmailAddress = ({ onGetContactList, isSupplier, isButtonDisable }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -34,6 +35,17 @@ const ManageEmailAddress = ({ onGetContactList, isSupplier }) => {
             onGetContactList();
         }
     }, [isDeleteSucess, isDeleteData, isDeleteFetching]);
+
+    useEffect(() => {
+        const actionColumn = emailConfig.columns.find(column => column.name === "Action");
+        if (isButtonDisable && actionColumn) {
+            actionColumn.defaultAction.allowEdit = false;
+            actionColumn.defaultAction.allowDelete = false;
+        } else if (actionColumn) {
+            actionColumn.defaultAction.allowEdit = true;
+            actionColumn.defaultAction.allowDelete = true;
+        }
+    }, [isButtonDisable]);
 
     //** Handle Changes */
     const handleToggleModal = () => {
@@ -78,7 +90,8 @@ const ManageEmailAddress = ({ onGetContactList, isSupplier }) => {
 
     return (
         <React.Fragment>
-            <EmailAddressList isSupplier={isSupplier} molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler} />
+            <EmailAddressList isSupplier={isSupplier} molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
+                isButtonDisable={isButtonDisable} />
             {showModal && (
                 <AddEditEmailModal isSupplier={isSupplier} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} editFormData={editFormData} isEdit={isEdit} />
             )}

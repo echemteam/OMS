@@ -6,6 +6,8 @@ import { InActiveSuppliers } from "./InActiveSuppliers";
 import { ListShowCustomer } from "../../../../utils/Enums/enums";
 import { StatusEnums, StatusValue } from "../../../../utils/Enums/StatusEnums";
 import useDebounce from "../../../../app/customHooks/useDebouce";
+import { ErrorMessage } from "../../../../data/appMessages";
+import ToastService from "../../../../services/toastService/ToastService";
 
 
 const InActiveSupplier = ({ statusId }) => {
@@ -19,6 +21,7 @@ const InActiveSupplier = ({ statusId }) => {
   const [freezeManageData, setFrezzeManageData] = useState(FreezedInActiveCustomerGridConfig);
   const [blockManageData, setBlockManageData] = useState(BlockedInActiveCustomerGridConfig);
   const [disableManageData, setDisableManageData] = useState(DisabledInActiveCustomerGridConfig);
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const debouncedSearch = useDebounce(search, 300);
 
   const handleTabClick = (tabIndex) => {
@@ -67,12 +70,23 @@ const InActiveSupplier = ({ statusId }) => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
+  const handleSearch = () => {
+    if (search.length >= 3 || selectedDrpvalues.length > 0) {
+      getListApi();
+    } else {
+      ToastService.warning(ErrorMessage.CommonErrorMessage)
+    }
+  };
+
   const handleChange = (event) => {
-    const value = event.target.value;
-    // if (value.length >= 3) {
-    setSearch(value.trim());
+    // if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
+      setSearch(event.target.value.trim());
+    // } else {
+    //   setSearch("");
+    //   setSelectedDrpvalues("");
     // }
-  }
+  };
+
 
   useEffect(() => {
     if (StatusValue) {
@@ -90,6 +104,19 @@ const InActiveSupplier = ({ statusId }) => {
     setSelectedStatusOptions(selectedValues);
   };
 
+  const handleClear = () => {
+    setSelectedDrpvalues("");
+    setSelectedStatusOptions("");
+    setSearch("");
+    setShouldRerenderFormCreator((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    if (debouncedSearch === "" && selectedDrpvalues === "") {
+      getListApi();
+    }
+  }, [debouncedSearch , selectedDrpvalues]);
+
   const tabs = [
     {
       sMenuItemCaption: "All",
@@ -103,6 +130,9 @@ const InActiveSupplier = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={true}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
@@ -119,6 +149,9 @@ const InActiveSupplier = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
@@ -135,6 +168,9 @@ const InActiveSupplier = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),
@@ -151,6 +187,9 @@ const InActiveSupplier = ({ statusId }) => {
             handleChangeDropdown={handleChangeDropdown}
             selectedDrpvalues={selectedDrpvalues}
             searchStatusFilter={false}
+            handleSearch={handleSearch}
+            handleClear={handleClear}
+            shouldRerenderFormCreator={shouldRerenderFormCreator}
           />
         </div>
       ),

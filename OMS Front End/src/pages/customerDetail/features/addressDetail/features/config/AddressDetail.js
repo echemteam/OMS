@@ -62,7 +62,11 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
               formSetting.isViewOnly = false;
               setIsButtonDisable(false);
             }
-            if (hasEditPermission.isViewOnly === true) {
+            if (hasEditPermission && hasEditPermission.isViewOnly === true) {
+              setShowEditIcon(true);
+            } else if (hasEditPermission.isEditable === true) {
+              setShowEditIcon(true);
+            } else {
               setShowEditIcon(false);
             }
           }

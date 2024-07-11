@@ -1,5 +1,7 @@
-﻿using OMS.Domain.Entities.API.Response.Common;
+﻿using OMS.Domain.Entities.API.Request.Common;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
+using OMS.Domain.Entities.Entity.CommonEntity;
 
 namespace OMS.Domain.Repository.Contract
 {
@@ -25,5 +27,8 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetAllUserResponse>> GetAllUser();
         Task<List<GetEventNameAndUserNameByCustomerIdResponse>> GetEventNameAndUserNameByCustomerId(int customerId);
         Task<List<GetEventNameAndUserNameBySupplierIdResponse>> GetEventNameAndUserNameBySupplierId(int supplierId);
+        Task<List<GetAllModulesResponse>> GetAllModules();
+        Task<List<GetAllFunctionalitiesResponse>> GetAllFunctionalities(int moduleId);
+        Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData);
     }
 }

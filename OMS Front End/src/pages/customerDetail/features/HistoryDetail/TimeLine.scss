@@ -164,7 +164,7 @@
         border-left: 3px dashed var(--textColor);
         margin-left: 3%;
         margin-right: 2%;
-
+        max-height: calc(100vh - 250px);
         .timeline-item {
             display: flex;
             gap: 20px;
@@ -235,6 +235,7 @@
                         color: var(--whiteColor);
                         background: var(--themeColor);
                         padding: 1px 5px;
+                        white-space: nowrap;
                     }
                 }
 

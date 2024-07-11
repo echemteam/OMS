@@ -36,7 +36,8 @@ export const ErrorMessage = {
 	Already_Exist: '{0} already exist',
 	validateQuantty: 'Please select at least one size',
 	CompareEmail: 'Email address already exist',
-	NotAvailabe : "N/A"
+	NotAvailabe : "N/A",
+	CommonErrorMessage : "Please enter at least 3 characters to search or select a dropdown value."
 };
 
 export const SuccessMessage = {
@@ -56,6 +57,6 @@ export const SuccessMessage = {
 	Map_Alert: '{0} mapped successfully',
 	Alret_Warning: 'Warning !',
 	TaxId: 'Minimum {0} and Maximum {1} characters allowed.',
-	DefaultUSATaxId: 'Minimum 10 and Maximum 10 characters allowed.'
+	DefaultUSATaxId: 'Tax Id Minimum 10 and Maximum 10 characters allowed.'
 };
 

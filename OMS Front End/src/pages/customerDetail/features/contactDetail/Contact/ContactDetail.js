@@ -12,6 +12,8 @@ import {
 //** Service's */
 import { useLazyGetAllContactTypesQuery } from "../../../../../app/services/contactAPI";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import ToastService from "../../../../../services/toastService/ToastService";
+import { ErrorMessage } from "../../../../../data/appMessages";
 //** Component's */
 const AddEditContact = React.lazy(() => import("./AddEditContact"));
 const ManageContactList = React.lazy(() => import("./ManageContactList"));
@@ -23,17 +25,22 @@ const ContactDetail = ({
   isSupplier,
   isEditablePage,
   SecurityKey,
-  getContactById
+  getContactById,
+  isSearchFilterShow
 }) => {
   //** State */
   const editRef = useRef();
   const childRef = useRef();
   const [isEdit, setIsEdit] = useState(false);
-  const [editFormData, setEditFormData] = useState();
+
   const [isModelOpen, setisModelOpen] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
-  const [showEditIcon, setShowEditIcon] = useState(false);
+  const [showEditIcon, setShowEditIcon] = useState(true);
   const [modifyContactData, setModifyContactData] = useState([]);
+  const [contactType, setContactType] = useState("")
+  const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
+  const [search, setSearch] = useState("");
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   //** API Call's */
   const [
@@ -72,16 +79,17 @@ const ContactDetail = ({
       }
       if (hasEditPermission && hasEditPermission.isViewOnly === true) {
         setShowEditIcon(true);
+      } else if (hasEditPermission.isEditable === true) {
+        setShowEditIcon(true);
+      } else {
+        setShowEditIcon(false);
       }
     }
   }, [isEditablePage, isSupplier, SecurityKey]);
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetContactData) {
-      const modifyData = isSupplier
-        ? contactSupplierTransformData(isGetContactData)
-        : contactCustomerTransformData(isGetContactData);
-      setModifyContactData(modifyData);
+      setModifyContactData(isGetContactData);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetContactData]);
 
@@ -99,6 +107,7 @@ const ContactDetail = ({
           (item) => item.dataField === "contactTypeId"
         );
         dropdownField.fieldSetting.options = getData;
+        setContactType(getData)
       } else {
         const getData = allGetAllContactTypesData.filter(x => x.isForCustomers).map((item) => ({
           value: item.contactTypeId,
@@ -108,6 +117,7 @@ const ContactDetail = ({
           (item) => item.dataField === "contactTypeId"
         );
         dropdownField.fieldSetting.options = getData;
+        setContactType(getData)
       }
     }
   }, [
@@ -119,7 +129,6 @@ const ContactDetail = ({
   const handleToggleModal = () => {
     setIsEdit(false);
     setisModelOpen(true);
-    setEditFormData("");
     if (childRef.current) {
       childRef.current.callChildFunction();
     }
@@ -149,41 +158,100 @@ const ContactDetail = ({
 
   //** Get Contact List */
   const onGetContactList = () => {
-    mainId && GetContactList(mainId);
+    let req = {
+      id: mainId,
+      searchText: search,
+      contactType: contactType
+    }
+    mainId && GetContactList(req);
+  };
+
+  const onhandleSearch = () => {
+    if (search.length >= 3 || selectedDrpvalues.length > 0) {
+      let req = {
+        id: mainId,
+        searchText: search,
+        contactType: Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues)
+      }
+      GetContactList(req)
+    } else {
+      ToastService.warning(ErrorMessage.CommonErrorMessage)
+    }
+  }
+
+  const handleChange = (event) => {
+    setSearch(event.target.value.trim());
+  }
+
+  const onhandleClear = () => {
+    setSelectedDrpvalues("");
+    setSearch("");
+    setContactType("")
+    setShouldRerenderFormCreator((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    if (search === "" && selectedDrpvalues === "") {
+      onGetContactList();
+    }
+  }, [search, selectedDrpvalues]);
+
+  const handleChangeDropdown = (selectedOptions) => {
+    const selectedValues = selectedOptions.map(option => option.value);
+    setSelectedDrpvalues(selectedValues);
   };
 
   return (
     <>
-      <CardSection
-        cardTitle="Contact"
-        buttonClassName="theme-button"
-        textWithIcon={true}
-        iconImg={AppIcons.PlusIcon}
-        rightButton={buttonVisible ? true : false}
-        buttonText="Add"
-        titleButtonClick={handleToggleModal}
-        isFilter={true}
-        filterHeaderTitle="Contact Filter"
-      >
-        <ManageContactList
-          handleEdit={handleEdit}
-          modifyContactData={modifyContactData}
-          isLoading={isGetContactFetching}
-          showEditIcon={showEditIcon}
-        />
-      </CardSection>
+      <div key={shouldRerenderFormCreator}>
+        <CardSection
+          cardTitle={isSearchFilterShow ? "" : "Contact"}
+          handleChange={handleChange}
+          searchInputName="Search By Name and Email"
+          searchInput={isSearchFilterShow ? true : false}
+          buttonClassName="theme-button"
+          textWithIcon={true}
+          iconImg={AppIcons.PlusIcon}
+          rightButton={buttonVisible ? true : false}
+          buttonText="Add"
+          titleButtonClick={handleToggleModal}
+          // isFilter={true}
+          // filterHeaderTitle="Contact Filter"
+          clearButton={isSearchFilterShow ? true : false}
+          clearTitleButtonClick={onhandleClear}
+          clearButtonText="Clear"
+          searchButton={isSearchFilterShow ? true : false}
+          searchbuttonText="Search"
+          searchTitleButtonClick={onhandleSearch}
+          searchFilter={isSearchFilterShow ? true : false}
+          handleChangeDropdown={handleChangeDropdown}
+          selectedOptions={selectedDrpvalues}
+          optionsValue={contactType}
+          isMultiSelect={true}
+          placeholder="Search by Contact Type"
+          isCardSection={true}
+          isdropdownOpen={true}
+          clearButtonClassName="dark-btn"
+        >
+          <ManageContactList
+            handleEdit={handleEdit}
+            modifyContactData={modifyContactData}
+            isLoading={isGetContactFetching}
+            showEditIcon={showEditIcon}
+          />
+        </CardSection>
+      </div>
       <div className="sidebar-contact-model">
         <SidebarModel
           modalTitle="Add/Edit Contact"
           contentClass="content-45"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
-          isOpen={isModelOpen}
-        >
+          isOpen={isModelOpen} >
+          {/* {isModelOpen ? */}
           <AddEditContact
             isSupplier={isSupplier}
             onSidebarClose={onSidebarClose}
-            editFormData={editFormData}
             childRef={childRef}
             onSuccess={onSuccess}
             isEdit={isEdit}
@@ -196,6 +264,7 @@ const ContactDetail = ({
             isOpen={isModelOpen}
             getContactById={getContactById}
           />
+          {/* : null} */}
         </SidebarModel>
       </div>
     </>

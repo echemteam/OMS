@@ -1,7 +1,7 @@
 
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { customFetchBase } from '../../utils/API/fetchBaseQuery';
-import { encryptQueryString } from "../../utils/API/requestMiddleware";
+import { encryptQueryString, transformRequest } from "../../utils/API/requestMiddleware";
 import { transformErrorResponse, transformSucessResponse } from "../../utils/API/responseMiddleware";
 
 const commonAPI = createApi({
@@ -40,11 +40,21 @@ const commonAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+        updateResponsibleUser: builder.mutation({
+            query: (requestData) => ({
+                url: '/Common/UpdateResponsibleUser',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
 export const {
-    useGetAllDeliveryCarriersQuery, useGetAllDeliveryMethodsQuery, useLazyGetAllDeliveryAccountsQuery,  useLazyGetAllUserQuery,
+    useGetAllDeliveryCarriersQuery, useGetAllDeliveryMethodsQuery, useLazyGetAllDeliveryAccountsQuery, useLazyGetAllUserQuery,
+    useUpdateResponsibleUserMutation
 } = commonAPI
 
 export default commonAPI;

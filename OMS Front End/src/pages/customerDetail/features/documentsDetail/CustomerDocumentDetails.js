@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { securityKey } from '../../../../data/SecurityKey';
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
 //** Service */
-import { useAddCustomerDocumentsMutation, useDeleteCustomerDocumentsByIdMutation, useLazyDownloadCustomerDocumentQuery, useLazyGetCustomerDocumentsByIdQuery } from '../../../../app/services/documentAPI';
+import { useAddCustomerDocumentsMutation, useDeleteCustomerDocumentsByIdMutation, useLazyDownloadDocumentQuery, useLazyGetCustomerDocumentsByIdQuery } from '../../../../app/services/documentAPI';
 //** Component's */
 const DocumentDetails = React.lazy(() => import("./DocumentDetails"));
 
@@ -19,7 +19,7 @@ const CustomerDocumentDetails = ({ isEditablePage }) => {
     return (
         //** Also, We replace the API Name and mainId based on the customer and supplier module*/
         <DocumentDetails keyId={customerId ? customerId : 0} isSupplier={false} isEditablePage={isEditablePage} SecurityKey={!isResponsibleUser ? customerSecurityKey : null}
-            addDocuments={useAddCustomerDocumentsMutation} downloadDocument={useLazyDownloadCustomerDocumentQuery}
+            addDocuments={useAddCustomerDocumentsMutation} downloadDocument={useLazyDownloadDocumentQuery}
             deleteDocumentsById={useDeleteCustomerDocumentsByIdMutation} getDocumentsById={useLazyGetCustomerDocumentsByIdQuery} />
     )
 }

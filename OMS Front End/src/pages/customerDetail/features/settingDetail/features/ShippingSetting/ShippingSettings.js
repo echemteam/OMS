@@ -69,9 +69,11 @@ const ShippingSettings = ({ isEditablePage }) => {
 
   useEffect(() => {
     if (isAddDefaultShippingsSuccess && isAddDefaultShippingsData) {
-      if (isDefaultValue) {
-        handleGetDefaultList();
-      }
+      // if (isDefaultValue) {
+      handleGetDefaultList();
+      // }else{
+      //   getDefaultList()
+      // }
       ToastService.success(isAddDefaultShippingsData.errorMessage);
     }
   }, [isAddDefaultShippingsSuccess, isAddDefaultShippingsData]);
@@ -91,10 +93,14 @@ const ShippingSettings = ({ isEditablePage }) => {
           zone: data.isForInternational ? 'International' : 'Domestic'
         }));
         setDeliveryMethodsList(updatedDeliveryMethodsList);
+      } else if (isGetDefaultValueData?.deliveryMethodsList?.length === 0) {
+        setDeliveryMethodsList([]);
       }
 
       if (isGetDefaultValueData?.shppingDeliveryCarriersList?.length > 0) {
         setCarriersList(isGetDefaultValueData?.shppingDeliveryCarriersList);
+      }else if (isGetDefaultValueData?.shppingDeliveryCarriersList?.length === 0) {
+        setCarriersList([]);
       }
     }
   }, [isGetDefaultValueFetching, isGetDefaultValueSuccess, isGetDefaultValueData]);

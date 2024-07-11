@@ -32,7 +32,15 @@ function CardSection({
   isMultiSelect,
   isCardSection,
   isdropdownOpen,
-  placeholder
+  placeholder,
+  clearButton,
+  clearTitleButtonClick,
+  clearButtonText,
+  searchTitleButtonClick,
+  searchButton,
+  searchbuttonText,
+  clearButtonClassName,
+
 }) {
   return (
     <div
@@ -42,13 +50,13 @@ function CardSection({
       {(cardTitle || rightButton || searchFilter || searchInput) && (
         <div className="card-top-title-btn">
           {cardTitle && (
-            <div className="section-title">
+            <div className="section-title mr-3">
               <h4>{cardTitle}</h4>
               <p>{cardSubTitle}</p>
             </div>
           )}
           <div className="manage-customer-dropdown">
-            <div className="col-md-3">
+            <div className="col-md-4">
               {searchInput && (
                 <div>
                   <SearchBar
@@ -58,7 +66,7 @@ function CardSection({
                 </div>
               )}
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               {searchFilter && (
                 <div className="ml-2">
                   <DropDown
@@ -74,6 +82,30 @@ function CardSection({
               )}
             </div>
           </div>
+          {searchButton && (
+            <>
+              <div className="btn-right-sec">
+                {/* Button to open the Add Craft modal */}
+                <Buttons
+                  onClick={searchTitleButtonClick}
+                  buttonText={searchbuttonText}
+                  buttonTypeClassName={buttonClassName}
+                />
+              </div>
+            </>
+          )}
+          {clearButton && (
+            <>
+              <div className="btn-right-sec">
+                {/* Button to open the Add Craft modal */}
+                <Buttons
+                  onClick={clearTitleButtonClick}
+                  buttonText={clearButtonText}
+                  buttonTypeClassName={clearButtonClassName}
+                />
+              </div>
+            </>
+          )}
           {
             // isButtonVisible && (
 
@@ -104,15 +136,17 @@ function CardSection({
                     titleText={titleText}
                   />
                 </div>
+
               </>
               // )
             )
+
           }
         </div>
       )
       }
       <div className="card-body-sec">{children}</div>
-    </div>
+    </div >
   );
 }
 

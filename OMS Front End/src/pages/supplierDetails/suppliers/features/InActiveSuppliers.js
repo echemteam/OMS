@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import CardSection from '../../../../components/ui/card/CardSection';
 import MolGrid from '../../../../components/Grid/MolGrid';
@@ -14,7 +15,7 @@ import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSuppli
 import { useSelector } from 'react-redux';
 import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
 
-export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
+export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear , shouldRerenderFormCreator }) => {
 
     const childRef = useRef();
     const molGridRef = useRef();
@@ -110,13 +111,6 @@ export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, 
         getListApi,
     }));
 
-    useEffect(() => {
-        if (molGridRef.current) {
-          const currentPageObject = molGridRef.current.getCurrentPageObject();
-          getListApi(currentPageObject);
-        }
-      }, [search , selectedStatusOptions]);
-
     const getListApi = () => {
         const currentPageObject = molGridRef.current.getCurrentPageObject();
         const request = {
@@ -192,7 +186,7 @@ export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, 
     return (
         <div>
             <div className="row">
-                <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
+                <div className="col-xxl-12 col-xl-12 col-md-12 col-12" kry={shouldRerenderFormCreator}>
                     <CardSection
                         searchInput={true}
                         handleChange={handleChange}
@@ -205,6 +199,14 @@ export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, 
                         placeholder="Search by Status"
                         isCardSection={true}
                         isdropdownOpen={true}
+                        searchButton={true}
+                        searchbuttonText="Search"
+                        buttonClassName="theme-button"
+                        searchTitleButtonClick={handleSearch}
+                        clearButton={true}
+                        clearTitleButtonClick={handleClear}
+                        clearButtonText="Clear"
+                        clearButtonClassName="dark-btn"
                     >
                         <div className="row">
                             <div className="col-md-12 table-striped">

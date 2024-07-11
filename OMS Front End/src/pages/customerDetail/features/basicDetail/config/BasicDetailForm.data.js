@@ -29,7 +29,7 @@ export const basicDetailFormDataHalf = {
         isMultiButton: true,
         showInformation: {
           showInputButton: true,
-          faIcon: "fa-list",
+          faIcon: "fa-search",
           title : "Customer Information"
         }
       },

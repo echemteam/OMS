@@ -1,7 +1,10 @@
 ﻿using OMS.Application.Services.Implementation;
+using OMS.Domain.Entities.API.Request.Common;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
+using OMS.FileManger.Services;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.Application.Services.Common
@@ -110,6 +113,35 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetEventNameAndUserNameBySupplierId(supplierId);
         }
+        public Task<List<GetAllModulesResponse>> GetAllModules()
+        {
+            return repositoryManager.commonRepository.GetAllModules();
+        }
+        public Task<List<GetAllFunctionalitiesResponse>> GetAllFunctionalities(int moduleId)
+        {
+            return repositoryManager.commonRepository.GetAllFunctionalities(moduleId);
+        }
 
+        public async Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
+        {
+            AddEntityDTO<int> responceData = new();
+            responceData = await repositoryManager.commonRepository.UpdateResponsibleUser(requestData);
+            return responceData;
+        }
+
+        public async Task<byte[]> DownloadDocument(string folderName, string fileName, int keyId)
+        {
+            byte[] decryptedBytes = null!;
+            string AESKey = commonSettingService.EncryptionSettings.AESKey!;
+            string AESIV = commonSettingService.EncryptionSettings.AESIV!;
+            var contentPath = commonSettingService.ApplicationSettings.SaveFilePath;
+            string filePath = Path.Combine(contentPath!, folderName, keyId.ToString(), fileName);
+
+            if (File.Exists(filePath))
+            {
+                decryptedBytes = await FileManager.DownloadDecryptFile(filePath!, AESKey, AESIV);
+            }
+            return decryptedBytes!;
+        }
     }
 }

@@ -3,52 +3,63 @@ import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 
-const ContactEmailsDropdown = ({ showEmailDropdown, setShowEmailDropdown, primaryEmailAddres, emailAddresses }) => {
+const ContactEmailsDropdown = ({ showEmailDropdown, setShowEmailDropdown, emailAddressesList }) => {
 
-    const ref = useRef(null);
-    const toggleEmailDropdown = () => {
-        setShowEmailDropdown(!showEmailDropdown);
-    };
+  const ref = useRef(null);
+  const toggleEmailDropdown = () => {
+    setShowEmailDropdown(!showEmailDropdown);
+  };
 
+  let emailAddresses = emailAddressesList && emailAddressesList.filter(data => data.isPrimary === false);
+  let primaryEmailAddress = emailAddressesList && emailAddressesList.find(data => data.isPrimary === true);
 
-    return (
-        <React.Fragment>
-            <div className="label-txt d-flex align-items-center email-sec">
-                <Image imgCustomClassName="contact-icon-img" imagePath={AppIcons.Mail} altText="contact icon" />
-                <div className="fix-data">
-                    {primaryEmailAddres ?
-                        <div className="d-flex align-items-center mb-0">
-                            <div className="card-value">
-                                {primaryEmailAddres?.emailAddres}
-                            </div>
-                            <span className="copy-icon" onClick={() => CopyText(primaryEmailAddres?.emailAddres, "email")}>
-                                <Image imagePath={AppIcons.copyIcon} altText="Icon" />
-                            </span>
-                        </div>
-                        : null}
-                </div>
-            </div>
-            <div className="drop-down" ref={ref} onClick={toggleEmailDropdown} >
-                <i className={`fa fa-caret-down ${showEmailDropdown ? "rotated" : ""}`} aria-hidden="true" ></i>
-                {showEmailDropdown && (
-                    <div className="dropdown-content show">
-                        {emailAddresses.map((emaildata, index) => (
-                            <>
-                                <span
-                                    className="contact-list d-flex flex-row" key={index}>
-                                    <span>{emaildata?.emailAddres}</span>
-                                    <span className="copy-icon" onClick={() => CopyText(emaildata?.emailAddres, "email")}>
-                                        <Image imagePath={AppIcons.copyIcon} altText="Icon" />
-                                    </span>
-                                </span>
-                            </>
-                        ))}
-                    </div>
-                )}
-            </div>
+  if (!primaryEmailAddress && emailAddressesList && emailAddressesList.length > 0) {
+    primaryEmailAddress = emailAddressesList[0];
+    emailAddresses = emailAddresses.slice(1);
+  }
 
-        </React.Fragment>
-    )
-}
+  return (
+    <React.Fragment>
+      <div className="dropdown-desc-sec">
+        <div className="icon-part" title="Home">
+          <i className="fa fa-envelope"></i>
+        </div>
+        <div className="desc-part">
+          {primaryEmailAddress?.emailAddress ? (
+            <>
+              <div className={`values ${primaryEmailAddress?.isPrimary ? "primary-email" : ""}`}>
+                {primaryEmailAddress?.emailAddress}
+              </div>
+              <span className="copy-icon" onClick={() => CopyText(primaryEmailAddress?.emailAddress, "email")}>
+                <Image imagePath={AppIcons.copyIcon} altText="Icon" />
+              </span>
+            </>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="drop-down" ref={ref} onClick={toggleEmailDropdown}>
+        <i className={`fa fa-caret-down ${showEmailDropdown ? "rotated" : ""}`} aria-hidden="true" ></i>
+        {showEmailDropdown && (
+          <div className="dropdown-content show">
+            {emailAddresses.map((emaildata, index) => (
+              <>
+                <span className="contact-list d-flex flex-row" key={index}>
+                  <span>{emaildata?.emailAddress}</span>
+                  <span
+                    className="copy-icon"
+                    onClick={() => CopyText(emaildata?.emailAddress, "email")}
+                  >
+                    <Image imagePath={AppIcons.copyIcon} altText="Icon" />
+                  </span>
+                </span>
+              </>
+            ))}
+          </div>
+        )}
+      </div>
+    </React.Fragment>
+  );
+};
 
 export default ContactEmailsDropdown;

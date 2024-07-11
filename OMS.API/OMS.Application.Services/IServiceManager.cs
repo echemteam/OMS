@@ -16,6 +16,7 @@ using OMS.Application.Services.Test;
 using OMS.Application.Services.User;
 using OMS.Application.Services.SupplierDocuements;
 using OMS.Application.Services.Approval;
+using OMS.Application.Services.ApprovalConfiguration;
 
 namespace OMS.Application.Services
 {
@@ -40,5 +41,6 @@ namespace OMS.Application.Services
         ISupplierDocuementsService supplierDocuementsService { get; }
         ISupplierNotesService supplierNotesService { get; }
         IApprovalService approvalService { get; }
+        IApprovalConfigurationServices approvalConfigurationServices { get; }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
+using OMS.Domain.Entities.API.Request.Address;
+using OMS.Domain.Entities.API.Request.Common;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
+using OMS.FileManger.Services;
 using OMS.Framework;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.API.Controllers
@@ -100,7 +102,7 @@ namespace OMS.API.Controllers
             List<GetAllPaymentTermsResponse> responseData = await _serviceManager.commonServices.GetAllPaymentTerms().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
-         
+
         [HttpGet("GetAllPaymentMethod")]
         public async Task<IActionResult> GetAllPaymentMethod()
         {
@@ -161,6 +163,48 @@ namespace OMS.API.Controllers
         {
             List<GetEventNameAndUserNameBySupplierIdResponse> responseData = await _serviceManager.commonServices.GetEventNameAndUserNameBySupplierId(supplierId).ConfigureAwait(true);
             return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllModules")]
+        public async Task<IActionResult> GetAllModules()
+        {
+            List<GetAllModulesResponse> responseData = await _serviceManager.commonServices.GetAllModules().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllFunctionalities")]
+        public async Task<IActionResult> GetAllFunctionalities(int moduleId)
+        {
+            List<GetAllFunctionalitiesResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalities(moduleId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpPost("UpdateResponsibleUser")]
+        public async Task<IActionResult> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
+        {
+            var updateItem = await _serviceManager.commonServices.UpdateResponsibleUser(requestData);
+            return APISucessResponce(updateItem);
+        }
+
+        [HttpGet("DownloadDocument")]
+        public async Task<IActionResult> DownloadDocument(string folderName, string fileName, int keyId)
+        {
+
+            byte[] decryptedBytes = await _serviceManager.commonServices.DownloadDocument(folderName, fileName, keyId);
+            if (decryptedBytes == null)
+            {
+                return APISucessResponce("File not found");
+            }
+            var memory = new MemoryStream(decryptedBytes)
+            {
+                Position = 0
+            };
+
+            string ext = FileManager.GetExtension(fileName);
+            string mimeType = FileManager.GetMimeType(ext);
+            var contentType = mimeType;
+
+            return File(memory, contentType, fileName);
         }
     }
 }
