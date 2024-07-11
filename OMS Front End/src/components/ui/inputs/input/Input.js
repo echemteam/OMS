@@ -131,7 +131,7 @@ const Input = ({
         :
         <>
           {inputButtonGroup?.isInputButton ?
-            <div class="input-group mb-3">
+            <div class="input-group">
               <input
                 id={name}
                 value={value}

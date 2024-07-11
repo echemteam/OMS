@@ -22,7 +22,7 @@ export const contactDetailFormData = {
       },
       validation: [{ type: "require" } , { type: "onlyText"}],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-input",
       },
     },
     {
@@ -38,7 +38,7 @@ export const contactDetailFormData = {
       },
       validation: [{ type: "require" } , { type: "onlyText"}],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 col-12 mb-input",
       },
     },
     {
@@ -55,7 +55,7 @@ export const contactDetailFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-8 col-xl-8 col-md-12 col-12 col-12 mb-2",
+        containerCss: "col-xxl-8 col-xl-8 col-md-12 col-12 col-12 mb-input",
       },
     },
     {
@@ -70,7 +70,7 @@ export const contactDetailFormData = {
       },
       style: {
         containerCss:
-          "col-xxl-4 col-xl-4 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+          "col-xxl-4 col-xl-4 col-md-12 col-12 col-12 mb-input mt-3 margin-left0-checkbox",
       },
     },
   ],

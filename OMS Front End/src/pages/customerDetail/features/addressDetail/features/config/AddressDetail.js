@@ -502,8 +502,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
           contentClass="content-40"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
-          isOpen={isModelOpen}>
-          <div className="row horizontal-form mt-3 add-address-form">
+          isOpen={isModelOpen}
+        >
+          <div className="row mt-3 add-address-form">
             <FormCreator
               config={formData}
               ref={userFormRef}

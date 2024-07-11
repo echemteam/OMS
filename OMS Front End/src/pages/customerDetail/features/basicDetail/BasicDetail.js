@@ -403,7 +403,7 @@ const BasicDetail = (props) => {
   return (
     <div className="basic-info-sec half-sec">
       <CardSection buttonClassName="theme-button">
-        <div className="row horizontal-form basic-info-step">
+        <div className="row basic-info-step">
           <FormCreator
             config={formData}
             ref={basicDetailRef}

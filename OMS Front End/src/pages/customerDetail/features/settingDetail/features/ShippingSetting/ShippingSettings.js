@@ -145,7 +145,7 @@ const ShippingSettings = ({ isEditablePage }) => {
 
 
   return (
-    <div className="row horizontal-form">
+    <div className="row">
       <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler} />
       {!isGetDefaultValueFetching ?
         <div className="grid-section">

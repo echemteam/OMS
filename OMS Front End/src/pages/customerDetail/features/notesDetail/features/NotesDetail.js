@@ -177,9 +177,9 @@ const NotesDetail = ({ keyId, isSupplier, isEditablePage, SecurityKey, onAddNote
         modalTitle="Add/Edit Notes"
         modelSizeClass="w-60"
       >
-        <div className="row horizontal-form custom-height-tiny add-edit-notesForm">
+        <div className="row custom-height-tiny add-edit-notesForm">
           <FormCreator config={formData} ref={notesFormRef} {...formData} />
-          <div className="col-md-12 mt-2">
+          <div className="col-md-12">
             <div className="d-flex align-item-end justify-content-end">
               <div className="d-flex align-item-end">
                 <Buttons

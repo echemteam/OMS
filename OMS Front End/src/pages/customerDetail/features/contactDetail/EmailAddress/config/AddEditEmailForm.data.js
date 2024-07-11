@@ -22,7 +22,7 @@ export const addEditEmailFormData = {
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-input",
       },
     },
     {
@@ -37,7 +37,7 @@ export const addEditEmailFormData = {
       },
       style: {
         containerCss:
-          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-2 margin-left0-checkbox",
+          "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
       },
     },
   ],

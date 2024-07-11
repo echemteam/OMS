@@ -129,10 +129,9 @@ const AddCustomer = () => {
             <form onSubmit={onSubmit}>
               {tabContent.map((step, index) => (
                 <div key={index} className={`content ${activeTab === index ? "active" : ""}`} >
-                  <div className="row">
-                    <div className="col-12 mx-auto">
+                  <div className="">
                       {step.content}
-                      <div className="d-flex justify-content-end mt-2">
+                      <div className="d-flex justify-content-end">
                         {index > 0 && !showSubBackButton && (
                           <button type="button" className="btn dark-btn mr-3" onClick={movePreviewPage} >
                             Back
@@ -171,7 +170,6 @@ const AddCustomer = () => {
                           </>
                         )}
                       </div>
-                    </div>
                   </div>
                 </div>
               ))}

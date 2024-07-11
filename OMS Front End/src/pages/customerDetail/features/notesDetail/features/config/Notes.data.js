@@ -17,7 +17,7 @@ export const NotesData = {
             },
             validation: [{ type: "require" }],
             style: {
-              containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
+              containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-input",
             },
         },],
         formSetting: {

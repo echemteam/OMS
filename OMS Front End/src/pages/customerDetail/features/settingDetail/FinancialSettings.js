@@ -141,7 +141,7 @@ const FinancialSettings = ({ isEditablePage }) => {
   };
 
   return (
-    <div className="row horizontal-form">
+    <div className="row">
       {!isGetDetailByCustomerIDFetching ?
         <FormCreator
           config={customerSettingFormData}

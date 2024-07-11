@@ -26,7 +26,7 @@ export const DocumentFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
       },
     },
     {
@@ -42,7 +42,7 @@ export const DocumentFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-2",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
       },
     },
     {
@@ -60,7 +60,7 @@ export const DocumentFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 custom-file-upload-section",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-input mb-0 custom-file-upload-section",
       },
 
     },

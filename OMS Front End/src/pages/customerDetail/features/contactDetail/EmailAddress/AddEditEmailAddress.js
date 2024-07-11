@@ -62,7 +62,7 @@ const AddEditEmailModal = ({ editFormData, handleToggleModal, showModal, isEdit,
             modalTitle="Add/Edit Email Address"
             modelSizeClass="w-40">
             <div className="row">
-                <div className="col-md-12 horizontal-form add-edit-emailAddressForm">
+                <div className="col-md-12 add-edit-emailAddressForm">
                     <div className="row vertical-form add-edit-contactForm">
                         <FormCreator
                             config={formData}
