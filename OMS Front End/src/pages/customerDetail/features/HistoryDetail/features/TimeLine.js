@@ -139,25 +139,34 @@ const TimeLine = ({
 
   const handleEventNameChange = (selectedOptions) => {
     const selectedValues = selectedOptions.map((option) => option.value);
-    setSelectedEventName(selectedValues);
-    const selectedEvent = isGetSearchFilterData.find(
-      (item) => item.eventName === selectedValues[0]
-    );
-    if (selectedEvent) {
-      if (!selectedEvent.userName) {
-        setSelectedUserName(selectedEvent.userName);
+    if (selectedValues.length > 0) {
+      setSelectedEventName(selectedValues);
+      const selectedEvent = isGetSearchFilterData.find(
+        (item) => item.eventName === selectedValues[0]
+      );
+      if (selectedEvent) {
+        if (!selectedEvent.userName) {
+          setSelectedUserName(selectedEvent.userName);
+        }
       }
+    } else {
+      setSelectedEventName("");
     }
   };
 
   const handleUserNameChange = (selectedOptions) => {
     const selectedValues = selectedOptions.map((option) => option.value);
-    setSelectedUserName(selectedValues);
-    const selectedUserIds = isGetSearchFilterData
-      .filter((item) => selectedValues.includes(item.userName))
-      .map((user) => user.userId.toString())
-      .join(",");
-    setSelectedUserId(selectedUserIds);
+    if (selectedValues.length > 0) {
+      setSelectedUserName(selectedValues);
+      const selectedUserIds = isGetSearchFilterData
+        .filter((item) => selectedValues.includes(item.userName))
+        .map((user) => user.userId.toString())
+        .join(",");
+      setSelectedUserId(selectedUserIds);
+    } else {
+      setSelectedUserName("")
+      setSelectedUserId("")
+    }
   };
 
   const handleDateRangeChange = (ranges) => {
@@ -167,6 +176,11 @@ const TimeLine = ({
       setSelectedDateRange({
         startDate: startDate,
         endDate: endDate,
+      });
+    } else {
+      setSelectedDateRange({
+        startDate: null,
+        endDate: null
       });
     }
   };
@@ -181,12 +195,12 @@ const TimeLine = ({
   const fetchMoreData = () => {
     setPageNumber((prevPageNumber) => prevPageNumber + 1);
   };
-  
+
   const handleSearch = () => {
     if (selectedDateRange.startDate || selectedDateRange.endDate || selectedUserName.length > 0 || selectedEventName.length > 0 || selectedUserId.length > 0) {
       getListApi(pageNumber)
     } else {
-      ToastService.warning("Please Select Any Dropdown")
+      ToastService.warning("Please Select Any Dropdown Value")
     }
   }
 
@@ -218,7 +232,7 @@ const TimeLine = ({
       <div className="serach-bar-history">
         <div className="card w-100 mt-2">
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-md-3 pr-0">
               <DropDown
                 placeholder="Search By Event Name"
                 options={eventNameOptions}
@@ -228,7 +242,7 @@ const TimeLine = ({
                 closeMenuOnSelect={false}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-3 input-padding-comman pr-0">
               <DropDown
                 placeholder="Search By User Name"
                 options={userNameOptions}
@@ -238,7 +252,7 @@ const TimeLine = ({
                 closeMenuOnSelect={false}
               />
             </div>
-            <div className="col-md-3 custom-datepicker">
+            <div className="col-md-3 custom-datepicker input-padding-comman">
               <DateRangePicker
                 onChange={handleDateRangeChange}
                 value={[selectedDateRange.startDate, selectedDateRange.endDate]}
@@ -250,16 +264,20 @@ const TimeLine = ({
                 yearPlaceholder="YYYY"
               />
             </div>
-            <div className="col-md-3 refresh-btn-history">
+            <div className="col-md-3 refresh-btn-history pl-0">
               <Buttons
                 buttonTypeClassName="theme-button"
                 buttonText="Search"
                 onClick={handleSearch}
+                imagePath={AppIcons.SearchIcone}
+                textWithIcon={true}
               ></Buttons>
               <Buttons
                 buttonTypeClassName="dark-btn ml-2"
                 buttonText="Clear"
                 onClick={handleClear}
+                imagePath={AppIcons.ClearIcone}
+                textWithIcon={true}
               ></Buttons>
             </div>
           </div>

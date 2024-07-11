@@ -32,6 +32,7 @@ import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../
 import { setOptionFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
 import { excludingRoles } from "../../features/basicDetail/config/BasicDetailForm.data";
 import { ownerType } from "../../../../utils/Enums/enums";
+import { AppIcons } from "../../../../data/appIcons";
 
 export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
@@ -359,6 +360,10 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
             clearTitleButtonClick={handleClear}
             clearButtonText="Clear"
             clearButtonClassName="dark-btn"
+            searchIconImg={AppIcons.SearchIcone}
+            searchTextWithIcon={true}
+            clearTextWithIcon={true}
+            clearIconImg={AppIcons.ClearIcone}
           >
             <div className="row">
               <div className="col-md-12 table-striped">

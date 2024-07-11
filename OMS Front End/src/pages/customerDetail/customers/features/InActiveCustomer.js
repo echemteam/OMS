@@ -35,6 +35,8 @@ const InActiveCustomer = ({ statusId }) => {
   };
 
   useEffect(() => {
+    setSearch("");
+    setSelectedDrpvalues("");
     const updateManageData = () => {
       switch (activeTab) {
         case "0":
@@ -99,8 +101,13 @@ const InActiveCustomer = ({ statusId }) => {
 
   const handleChangeDropdown = (selectedOptions) => {
     const selectedValues = selectedOptions.map(option => option.value);
-    setSelectedDrpvalues(selectedValues);
-    setSelectedStatusOptions(selectedValues);
+    if (selectedValues.length > 0) {
+      setSelectedDrpvalues(selectedValues);
+      setSelectedStatusOptions(selectedValues);
+    } else {
+      setSelectedDrpvalues("");
+      setSelectedStatusOptions("");
+    }
   };
 
   const handleClear = () => {

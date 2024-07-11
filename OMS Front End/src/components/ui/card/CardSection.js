@@ -40,6 +40,10 @@ function CardSection({
   searchButton,
   searchbuttonText,
   clearButtonClassName,
+  searchIconImg,
+  searchTextWithIcon,
+  clearTextWithIcon,
+  clearIconImg
 
 }) {
   return (
@@ -81,8 +85,7 @@ function CardSection({
                 </div>
               )}
             </div>
-          </div>
-          {searchButton && (
+            {searchButton && (
             <>
               <div className="btn-right-sec">
                 {/* Button to open the Add Craft modal */}
@@ -90,6 +93,8 @@ function CardSection({
                   onClick={searchTitleButtonClick}
                   buttonText={searchbuttonText}
                   buttonTypeClassName={buttonClassName}
+                  textWithIcon={searchTextWithIcon}
+                  imagePath={searchIconImg}
                 />
               </div>
             </>
@@ -102,10 +107,14 @@ function CardSection({
                   onClick={clearTitleButtonClick}
                   buttonText={clearButtonText}
                   buttonTypeClassName={clearButtonClassName}
+                  textWithIcon={clearTextWithIcon}
+                  imagePath={clearIconImg}
                 />
               </div>
             </>
           )}
+          </div>
+        
           {
             // isButtonVisible && (
 
