@@ -1065,14 +1065,20 @@ a {
     input {
       border-top-left-radius: 0 !important;
       border-bottom-left-radius: 0 !important;
-      margin-top: 2px;
+      margin-top: 5px;
+      @media only screen and (max-width: 1560px) {
+        margin-top: 2px;
+      }
     }
   }
 }
 
 .extension {
   input {
-    margin-top: 2px;
+    margin-top: 5px;
+    @media only screen and (max-width: 1560px) {
+      margin-top: 2px;
+    }
   }
 }
 
