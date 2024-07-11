@@ -26,7 +26,6 @@ const ShippingSettings = ({ isEditablePage }) => {
   const { confirm } = SwalAlert();
   const [isShowButton, setIsShowButton] = useState(true);
   const [accountTypeId, setAccountTypeId] = useState(0);
-  const [isDefaultValue, setIsDefaultValue] = useState(0);
   const [formData, setFormData] = useState(shippingFormData);
   const { customerId, setDeliveryMethodsList, setCarriersList, isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -99,7 +98,7 @@ const ShippingSettings = ({ isEditablePage }) => {
 
       if (isGetDefaultValueData?.shppingDeliveryCarriersList?.length > 0) {
         setCarriersList(isGetDefaultValueData?.shppingDeliveryCarriersList);
-      }else if (isGetDefaultValueData?.shppingDeliveryCarriersList?.length === 0) {
+      } else if (isGetDefaultValueData?.shppingDeliveryCarriersList?.length === 0) {
         setCarriersList([]);
       }
     }
@@ -121,7 +120,6 @@ const ShippingSettings = ({ isEditablePage }) => {
             ...request,
             isByDefault: true
           }
-          setIsDefaultValue(true);
           addDefaultShippings(defaultRequest);
           setAccountTypeId(data.value);
         } else if (!confirmed) {
@@ -129,7 +127,6 @@ const ShippingSettings = ({ isEditablePage }) => {
             ...request,
             isByDefault: false
           }
-          setIsDefaultValue(false);
           addDefaultShippings(defaultRequest);
           setAccountTypeId(data.value);
         }
