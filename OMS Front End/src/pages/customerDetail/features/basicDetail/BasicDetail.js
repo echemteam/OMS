@@ -26,7 +26,7 @@ const BasicDetail = (props) => {
   const [customerInfoData, setCustomerInfoData] = useState(false);
 
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
-  const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser } = useContext(BasicDetailContext);
+  const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const { formSetting } = basicDetailFormDataHalf;
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
@@ -43,20 +43,20 @@ const BasicDetail = (props) => {
           formSetting.isViewOnly = true;
           setIsButtonDisable(true);
           setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, true);
-          setIsRCustomerUserDisble(true);
+          setIsResponsibleUser(true);
         }
         else {
           formSetting.isViewOnly = false;
           setIsButtonDisable(false);
           setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, false);
-          setIsRCustomerUserDisble(false);
+          setIsResponsibleUser(false);
         }
       }
       if (isResponsibleUser) {
         formSetting.isViewOnly = false;
         setIsButtonDisable(false);
         setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, true);
-        setIsRCustomerUserDisble(true);
+        setIsResponsibleUser(true);
       }
     }
   }, [props.isOpen, hasEditPermission, formSetting.isViewOnly, isResponsibleUser])
