@@ -1,0 +1,154 @@
+.config-card {
+  .card {
+    height: calc(100vh - 140px);
+    overflow: hidden;
+    width: 100%;
+
+    .card-body-sec{
+      margin: 0;
+    }
+  }
+  .config-content {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 210px);
+    overflow: hidden;
+    overflow-y: auto;
+    width: 100%;
+    .config-module-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      margin: 0 -5px 0px;
+      padding: 7px 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #ebebeb;
+
+      &:hover {
+        background-color: var(--linkMenu);
+      }
+      &.selected {
+        background-color: var(--themeColorLight);
+        span {
+          color: var(--themeColor);
+        }
+      }
+
+      span {
+        color: var(--textColor);
+        font-weight: 500;
+      }
+      
+      .fa{
+        transform: rotate(-90deg);
+        position: absolute;
+        right: 4px;
+        font-size: var(--commonFont-extraLarge);
+        color: var(--themeColor);
+      }
+    }
+
+    .config-functionalities-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      margin: 0 -5px 0px;
+      padding: 7px 10px;
+      cursor: pointer;
+      border: 1px solid #ebebeb;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: var(--linkMenu);
+      }
+      &.selected {
+        background-color: var(--themeColorLight);
+        span {
+          color: var(--themeColor);
+        }
+      }
+    
+      .profile-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border: 1px solid var(--themeColor);
+        color: var(--themeColor);;
+        border-radius: 100%;
+        box-shadow: var(--card-shadow);
+
+        .fa{
+          font-size: var(--commonFont-extraLarge);
+        }
+      }
+    
+      span {
+        margin-left: 10px;
+        color: var(--textColor);
+        font-weight: 500;
+      }
+
+      .right-dropdown{
+        transform: rotate(-90deg);
+        position: absolute;
+        right: 4px;
+        font-size: 18px;
+        color: var(--themeColor);
+      }
+    }
+
+    .config-rule-info {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin: 5px 0;
+      padding: 7px 10px;
+      border: 1px solid var(--themeColor);
+      border-radius: 5px;
+
+      .profile-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        background: var(--gradient-theme);
+        border-radius: 100%;
+        color: var(--whiteColor);
+        font-size: var(--commonFont-large);
+        box-shadow: var(--card-shadow);
+      }
+
+      span {
+        color: var(--textColor);
+        font-weight: 500;
+      }
+      .edit-icons {
+        cursor: pointer;
+
+        img {
+          width: 20px;
+        }
+      }
+    }
+  }
+}
+
+
+@media only screen and (max-width: 1560px) {
+  .config-card {
+    .card {
+      height: calc(100vh - 120px);
+      margin-bottom: 0;
+    }
+    .config-content{
+      max-height: calc(100vh - 180px);
+    }
+  }
+}

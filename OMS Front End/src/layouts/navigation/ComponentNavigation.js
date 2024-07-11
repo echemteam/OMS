@@ -4,6 +4,7 @@ import DemoGrid from "../../pages/demoGrid/DemoGrid";
 import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
+import ApprovalRules from "../../pages/configuration/ApprovalRules";
 
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
@@ -287,5 +288,15 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'Supplier Detail',
     securityKey: securityKey.SUPPLIER
+  },
+  {
+    id: 'ApprovalRules',
+    path: '/ApprovalRules',
+    exact: true,
+    title: 'Approval Rules',
+    component: ApprovalRules,
+    hasParams: false,
+    text: 'Approval Rules',
+    securityKey: securityKey.APPROVALRULES
   },
 ];

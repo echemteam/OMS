@@ -273,7 +273,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
                 value={rUserValue}
                 onChange={handleRUserChange}
                 placeholder="Select Status"
-                isDisabled={isButtonDisable}
+                isDisabled={isResponsibleUser ? true : isButtonDisable}
               />
             </div>
           </div>
