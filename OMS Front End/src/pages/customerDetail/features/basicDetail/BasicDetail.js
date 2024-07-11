@@ -26,7 +26,7 @@ const BasicDetail = (props) => {
   const [customerInfoData, setCustomerInfoData] = useState(false);
 
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
-  const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser, setIsRCustomerUserDisble } = useContext(BasicDetailContext);
+  const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser } = useContext(BasicDetailContext);
 
   const { formSetting } = basicDetailFormDataHalf;
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
