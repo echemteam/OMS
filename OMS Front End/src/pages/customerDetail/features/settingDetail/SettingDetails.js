@@ -15,7 +15,7 @@ const SettingDetails = ({ isEditablePage }) => {
 
   const [showFinacialTab, setShowFinacialTab] = useState(false);
   const [showShippingTab, setShowShippingTab] = useState(false);
-  const { isResponsibleUser, activeSubTab, handleActiveSubTabClick } = useContext(BasicDetailContext);
+  const { isResponsibleUser, activeSubTab,handleActiveSubTabClick } = useContext(BasicDetailContext);
 
   const hasShippingPermission = hasFunctionalPermission(securityKey.CUSTOMERSHIPPINGSETTING);
   const hasFinacialPermission = hasFunctionalPermission(securityKey.CUSTOMERFINANCIALSETTING);
@@ -80,9 +80,17 @@ const SettingDetails = ({ isEditablePage }) => {
                   <div className="tab-sub-header">
                     {tabs &&
                       tabs.map((tab, index) => (
-                        <button key={index} className={activeSubTab === index ? "active" : ""} onClick={() => handleActiveSubTabClick(index, tab.sPage)}>
-                          {tab.sMenuItemCaption}
-                        </button>
+                        <>
+                          {isEditablePage ?
+                            <button key={index} className={activeSubTab === index ? "active" : ""} onClick={() => handleActiveSubTabClick(index, tab.sPage)}>
+                              {tab.sMenuItemCaption}
+                            </button>
+                            :
+                            <button key={index} className={activeSubTab === index ? "active" : ""}>
+                              {tab.sMenuItemCaption}
+                            </button>
+                          }
+                        </>
                       ))}
                   </div>
                   {activeSubTab !== -1 && tabs[activeSubTab].component && (
