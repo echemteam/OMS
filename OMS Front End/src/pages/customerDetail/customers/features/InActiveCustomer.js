@@ -35,6 +35,8 @@ const InActiveCustomer = ({ statusId }) => {
   };
 
   useEffect(() => {
+    setSearch("");
+    setSelectedDrpvalues("");
     const updateManageData = () => {
       switch (activeTab) {
         case "0":
@@ -79,12 +81,12 @@ const InActiveCustomer = ({ statusId }) => {
   };
 
   const handleChange = (event) => {
-    if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
+    // if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
       setSearch(event.target.value.trim());
-    } else {
-      setSearch("");
-      setSelectedDrpvalues("");
-    }
+    // } else {
+    //   setSearch("");
+    //   setSelectedDrpvalues("");
+    // }
   };
 
   useEffect(() => {
@@ -99,8 +101,13 @@ const InActiveCustomer = ({ statusId }) => {
 
   const handleChangeDropdown = (selectedOptions) => {
     const selectedValues = selectedOptions.map(option => option.value);
-    setSelectedDrpvalues(selectedValues);
-    setSelectedStatusOptions(selectedValues);
+    if (selectedValues.length > 0) {
+      setSelectedDrpvalues(selectedValues);
+      setSelectedStatusOptions(selectedValues);
+    } else {
+      setSelectedDrpvalues("");
+      setSelectedStatusOptions("");
+    }
   };
 
   const handleClear = () => {

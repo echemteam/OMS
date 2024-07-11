@@ -218,9 +218,14 @@ const BasicDetail = (props) => {
         return;
       }
       // setCustomerId(isUpdateCustomersBasicInformationData.keyValue)
-      props.onhandleRepeatCall()
-      ToastService.success(isUpdateCustomersBasicInformationData.errorMessage);
-      onreset()
+      if (props.pageId > 0) {
+        props.onhandleRepeatCall()
+        onreset()
+        ToastService.success(isUpdateCustomersBasicInformationData.errorMessage);
+      } else {
+        ToastService.success(isUpdateCustomersBasicInformationData.errorMessage);
+        moveNextPage();
+      }
     }
   }, [isUpdateCustomersBasicInformationSuccess, isUpdateCustomersBasicInformationData]);
 
@@ -250,6 +255,7 @@ const BasicDetail = (props) => {
 
   useImperativeHandle(nextRef, () => ({
     handleAddBasicDetails,
+    handleUpdate
   }));
 
   const handleAddBasicDetails = () => {
@@ -269,7 +275,7 @@ const BasicDetail = (props) => {
       } else {
         if (data.taxId) {
           const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, basicDetailFormDataHalf.formFields, 'taxId');
-          if (data.taxId.length === minLength && data.taxId.length >= maxLength) {
+          if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
             addCustomersBasicInformation(req);
           } else {
             ToastService.warning(validateTaxIdMessage);
@@ -292,15 +298,23 @@ const BasicDetail = (props) => {
         territoryId: data.territoryId && typeof data.territoryId === "object" ? data.territoryId.value : data.territoryId,
         countryId: data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId,
         responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
-        customerId: props.pageId
+        customerId: props.pageId ? props.pageId : customerId
       };
       if (data.taxId === "") {
-        updateCustomersBasicInformation(req);
+        let value = {
+          ...req,
+          responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
+        }
+        updateCustomersBasicInformation(value);
       } else {
         if (data.taxId) {
           const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, basicDetailFormDataHalf.formFields, 'taxId');
           if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
-            updateCustomersBasicInformation(req);
+            let value = {
+              ...req,
+              responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
+            }
+            updateCustomersBasicInformation(value);
           } else {
             ToastService.warning(validateTaxIdMessage);
           }

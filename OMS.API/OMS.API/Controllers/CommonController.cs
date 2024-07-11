@@ -5,6 +5,7 @@ using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Common;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
+using OMS.FileManger.Services;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -185,5 +186,25 @@ namespace OMS.API.Controllers
             return APISucessResponce(updateItem);
         }
 
+        [HttpGet("DownloadDocument")]
+        public async Task<IActionResult> DownloadDocument(string folderName, string fileName, int keyId)
+        {
+
+            byte[] decryptedBytes = await _serviceManager.commonServices.DownloadDocument(folderName, fileName, keyId);
+            if (decryptedBytes == null)
+            {
+                return APISucessResponce("File not found");
+            }
+            var memory = new MemoryStream(decryptedBytes)
+            {
+                Position = 0
+            };
+
+            string ext = FileManager.GetExtension(fileName);
+            string mimeType = FileManager.GetMimeType(ext);
+            var contentType = mimeType;
+
+            return File(memory, contentType, fileName);
+        }
     }
 }

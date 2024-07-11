@@ -57,20 +57,6 @@ namespace OMS.Application.Services.CustomerDocuments
             return await repositoryManager.customerDocuments.DeleteCustomerDocumentsById(customerDocumentId, deletedBy);
         }
 
-        public async Task<byte[]> DownloadCustomerDocument(string folderName, string fileName, int mainId)
-        {
-            byte[] decryptedBytes = null!;
-            string AESKey = commonSettingService.EncryptionSettings.AESKey!;
-            string AESIV = commonSettingService.EncryptionSettings.AESIV!;
-            var contentPath = commonSettingService.ApplicationSettings.SaveFilePath;
-            string filePath = Path.Combine(contentPath!, folderName, mainId.ToString(), fileName);
-
-            if (File.Exists(filePath))
-            {
-                decryptedBytes = await FileManager.DownloadDecryptFile(filePath!, AESKey, AESIV);
-            }
-            return decryptedBytes!;
-        }
         #endregion
     }
 }

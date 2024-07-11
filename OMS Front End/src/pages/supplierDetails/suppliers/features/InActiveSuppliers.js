@@ -14,8 +14,9 @@ import SwalAlert from '../../../../services/swalService/SwalService';
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { useSelector } from 'react-redux';
 import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
+import { AppIcons } from '../../../../data/appIcons';
 
-export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear , shouldRerenderFormCreator }) => {
+export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
     const childRef = useRef();
     const molGridRef = useRef();
@@ -207,6 +208,10 @@ export const InActiveSuppliers = ({ statusId, configFile, handleChange, search, 
                         clearTitleButtonClick={handleClear}
                         clearButtonText="Clear"
                         clearButtonClassName="dark-btn"
+                        searchIconImg={AppIcons.SearchIcone}
+                        searchTextWithIcon={true}
+                        clearTextWithIcon={true}
+                        clearIconImg={AppIcons.ClearIcone}
                     >
                         <div className="row">
                             <div className="col-md-12 table-striped">

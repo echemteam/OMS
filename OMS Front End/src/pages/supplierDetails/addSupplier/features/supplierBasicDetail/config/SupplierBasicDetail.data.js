@@ -1,3 +1,4 @@
+import { SuccessMessage } from "../../../../../../data/appMessages";
 import { FormFieldTypes } from "../../../../../../data/formFieldType";
 
 // export const securityKeys = {
@@ -13,7 +14,7 @@ import { FormFieldTypes } from "../../../../../../data/formFieldType";
 
 
 export const supplierBasicData = {
-  initialState: { name: "", groupTypeId: "", supplierTypeId:"", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName:"" ,responsibleUserId:""},
+  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "" , supplierNoteId:""},
   formFields: [
     {
       id: "name",
@@ -37,7 +38,7 @@ export const supplierBasicData = {
         showInformation: {
           showInputButton: true,
           faIcon: "fa-search",
-          title : "Supplier Information"
+          title: "Supplier Information"
         }
       },
     },
@@ -175,15 +176,14 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "Tax Id",
         allowSpace: true,
-        minLength: 0,
+        minLength: 10,
         maxLength: 10,
       },
       inputIcon: {
         isIconShow: true,
         faIcon: "fa-info-circle",
-        message: "Please enter a minimum of 10 and a maximum of 10 characters"
+        message: SuccessMessage.DefaultUSATaxId
       },
-      validation: [{ type: "require" }, { type: "taxId", minLength: 0, maxLength: 10 }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
       },
@@ -199,7 +199,6 @@ export const supplierBasicData = {
         allowSpace: true,
         maxLength: 1000,
       },
-      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input mb-0",
       },

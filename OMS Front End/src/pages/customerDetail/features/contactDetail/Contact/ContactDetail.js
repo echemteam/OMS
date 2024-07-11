@@ -12,6 +12,8 @@ import {
 //** Service's */
 import { useLazyGetAllContactTypesQuery } from "../../../../../app/services/contactAPI";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import ToastService from "../../../../../services/toastService/ToastService";
+import { ErrorMessage } from "../../../../../data/appMessages";
 //** Component's */
 const AddEditContact = React.lazy(() => import("./AddEditContact"));
 const ManageContactList = React.lazy(() => import("./ManageContactList"));
@@ -165,16 +167,25 @@ const ContactDetail = ({
   };
 
   const onhandleSearch = () => {
-    let req = {
-      id: mainId,
-      searchText: search,
-      contactType: Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues)
+    if (search.length >= 3 || selectedDrpvalues.length > 0) {
+      let req = {
+        id: mainId,
+        searchText: search,
+        contactType: Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues)
+      }
+      GetContactList(req)
+    } else {
+      ToastService.warning(ErrorMessage.CommonErrorMessage)
     }
-    GetContactList(req)
   }
 
   const handleChange = (event) => {
+    // if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
     setSearch(event.target.value.trim());
+    // } else {
+    //   setSearch("");
+    //   setSelectedDrpvalues("");
+    // }
   }
 
   const onhandleClear = () => {
@@ -188,11 +199,15 @@ const ContactDetail = ({
     if (search === "" && selectedDrpvalues === "") {
       onGetContactList();
     }
-  }, [search , selectedDrpvalues]);
+  }, [search, selectedDrpvalues]);
 
   const handleChangeDropdown = (selectedOptions) => {
     const selectedValues = selectedOptions.map(option => option.value);
-    setSelectedDrpvalues(selectedValues);
+    if (selectedValues.length > 0) {
+      setSelectedDrpvalues(selectedValues);
+    } else {
+      setSelectedDrpvalues("");
+    }
   };
 
   return (

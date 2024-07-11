@@ -45,6 +45,9 @@ const Customers = () => {
   };
 
   useEffect(() => {
+    setSearch("");
+    setSelectedDrpvalues("");
+    setShouldRerenderFormCreator((prevState) => !prevState);
     const updateManageData = () => {
       switch (activeTab) {
         case "0":
@@ -100,12 +103,12 @@ const Customers = () => {
   };
 
   const handleChange = (event) => {
-    if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
+    // if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
       setSearch(event.target.value.trim());
-    } else {
-      setSearch("");
-      setSelectedDrpvalues("");
-    }
+    // } else {
+    //   setSearch("");
+    //   setSelectedDrpvalues("");
+    // }
   };
 
   useEffect(() => {
@@ -120,9 +123,14 @@ const Customers = () => {
 
   const handleChangeDropdown = (selectedOptions) => {
     const selectedValues = selectedOptions.map(option => option.value);
-    setSelectedDrpvalues(selectedValues);
-    setSelectedStatusOptions(selectedValues);
-  };
+    if (selectedValues.length > 0) {
+      setSelectedDrpvalues(selectedValues);
+      setSelectedStatusOptions(selectedValues);
+    } else {
+      setSelectedDrpvalues("");
+      setSelectedStatusOptions("");
+    }
+  }
 
   const handleClear = () => {
     setSelectedDrpvalues("");

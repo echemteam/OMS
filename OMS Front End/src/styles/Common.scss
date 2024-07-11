@@ -1013,7 +1013,9 @@ a {
           .tab-sub-content {
             overflow: hidden;
             overflow-y: auto;
-
+            @media only screen and (max-width: 1560px) {
+              height: calc(100vh - 197px);
+            }
 
             .card {
               margin: 4px 5px 0;
@@ -1184,7 +1186,6 @@ a {
   .add-desc-part {
     padding: 0 5px;
     margin-top: 10px !important;
-
   }
 }
 
@@ -1197,7 +1198,6 @@ a {
   margin-top: 2px;
   position: relative;
   min-height: 70px;
-
 
   // min-height: 125px;
   &.dropdown-open {
@@ -1234,10 +1234,11 @@ a {
       display: flex;
       align-items: center;
 
-      .email-sec {}
+      .email-sec {
+      }
 
-      .contact-sec {}
-
+      .contact-sec {
+      }
     }
 
     .contact-type {
@@ -1290,7 +1291,6 @@ a {
     }
   }
 
-
   .contact-type-badge {
     position: absolute;
     padding: 0px 5px;
@@ -1309,8 +1309,7 @@ a {
     }
   }
 
-
-  // 
+  //
   .contact-card-desc {
     position: relative;
 
@@ -1339,7 +1338,8 @@ a {
           color: var(--themeColor);
         }
 
-        @media only screen and (max-width: 1560px) {}
+        @media only screen and (max-width: 1560px) {
+        }
       }
 
       .contact-name {
@@ -1364,7 +1364,6 @@ a {
           font-weight: 600;
         }
       }
-
     }
 
     .contact-details {
@@ -1403,7 +1402,6 @@ a {
               @media only screen and (max-width: 1560px) {
                 font-size: 9px;
               }
-
               &.primary-email {
                 color: var(--themeColor);
               }
@@ -1468,7 +1466,6 @@ a {
               @media only screen and (max-width: 1560px) {
                 font-size: 9px;
               }
-
               &.primary-phone {
                 color: var(--themeColor);
               }
@@ -1477,8 +1474,6 @@ a {
         }
       }
     }
-
-
   }
 }
 
@@ -2273,7 +2268,6 @@ input[type="checkbox"]:disabled {
   color: var(--inputBorder) !important;
 }
 
-
 .btn-right-sec {
   display: flex;
   align-items: center;
@@ -2354,7 +2348,7 @@ input[type="checkbox"]:disabled {
 
 .refresh-btn-history {
   display: flex;
-  justify-content: end;
+  justify-content: flex-start;
   margin-left: auto;
 }
 
@@ -2386,13 +2380,11 @@ input[type="checkbox"]:disabled {
     flex-grow: 0;
     font-size: var(--commonFont-small);
     cursor: pointer !important;
-
   }
 
   .react-daterange-picker__inputGroup__input:invalid {
     background: none !important;
   }
-
   .react-calendar__tile--now {
     background: var(--themeColor) !important;
     color: #fff !important;
@@ -2402,11 +2394,9 @@ input[type="checkbox"]:disabled {
     width: 280px;
     margin-top: 5px;
   }
-
   .react-daterange-picker__inputGroup__input {
     outline: none;
   }
-
   .react-daterange-picker__clear-button {
     margin-left: auto;
 
@@ -2681,10 +2671,7 @@ input[type="checkbox"]:disabled {
   }
 }
 
-
-
 .dropdown-content {
-
   display: none;
   position: absolute;
   background-color: var(--whiteColor);

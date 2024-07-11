@@ -31,9 +31,13 @@ export const AddSupplierContextProvider = ({ children }) => {
         setActiveTab((prev) => prev - 1);
     };
 
-    const addSupplier = () => {
-        if (supplierId > 0) {
-            setActiveTab((prev) => prev + 1);
+    const addSupplier = (data) => {
+        if (supplierId > 0 && data === 1) {
+            if (nextStepRef.current) {
+                nextStepRef.current.handleAddSupplierBasicDetails();
+            }
+        } else if(supplierId > 0){
+            setActiveTab((prev) => prev + 1)
         }
         else {
             if (nextStepRef.current) {

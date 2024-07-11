@@ -26,12 +26,12 @@ export const getTaxIdMinMaxLength = (countryId, formFields, formFieldsId) => {
         message = SuccessMessage.TaxId.replace("{0}", minLength).replace("{1}", maxLength);
         formField = formFields.find((data) => data.id === formFieldsId);
         if (formField) {
-            const validation = formField.validation;
+            // const validation = formField.validation;
             formField.fieldSetting.minLength = minLength;
             formField.fieldSetting.maxLength = maxLength;
             formField.inputIcon.message = SuccessMessage.TaxId.replace("{0}", minLength).replace("{1}", maxLength);
-            validation.minLength = minLength;
-            validation.maxLength = maxLength;
+            // validation.minLength = minLength;
+            // validation.maxLength = maxLength;
         }
     }
     return { message, maxLength, minLength, formFields };

@@ -150,7 +150,6 @@ export const basicDetailFormDataHalf = {
         faIcon: "fa-info-circle",
         message: SuccessMessage.DefaultUSATaxId
       },
-      validation: [{ minLength: 10, maxLength: 10 }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
       },

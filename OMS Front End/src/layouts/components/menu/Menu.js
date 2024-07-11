@@ -77,4 +77,20 @@ export const Menu = [
       },
     ],
   },
+  {
+    id: "configuration",
+    name: "Configuration",
+    iconClass: "fa fa-cog",
+    subMenu: true, 
+    to: "#",
+    securityKey: securityKey.CONFIGURATION,
+    children: [
+      {
+        id: "approvalRules",
+        submenuName: "Approval Rules",
+        to: "/ApprovalRules",
+        securityKey: securityKey.APPROVALRULES,
+      },
+    ],
+  },
 ];

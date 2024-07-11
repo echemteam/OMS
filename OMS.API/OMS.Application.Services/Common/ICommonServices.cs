@@ -30,5 +30,6 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllModulesResponse>> GetAllModules();
         Task<List<GetAllFunctionalitiesResponse>> GetAllFunctionalities(int moduleId);
         Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData);
+        Task<byte[]> DownloadDocument(string folderName, string fileName, int keyId);
     }
 }

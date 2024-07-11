@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { TextInputType, NumberValueType } from "../../../../data/formControlTypes";
 import { PatternFormat } from 'react-number-format';
 import "./Input.scss"
+import Image from "../../../image/Image";
+import { AppIcons } from "../../../../data/appIcons";
 
 const excptIntSymbol = ["e", "E", "+", "-", "."];
 const excptDecimalSymbol = ["e", "E", "+", "-"];
@@ -37,6 +39,7 @@ const Input = ({
 
   const [inputAttributes, setInputAttributes] = useState({});
   const [format, setFormat] = useState(maskFormat)
+  const [showPassword, setShowPassword] = useState(false);
 
   const updateAttributes = () => {
     const newAttribute = { ...inputAttributes };
@@ -83,6 +86,11 @@ const Input = ({
     const unMaskedValue = inputValue.replace(/\D/g, '');
     setFormat(unMaskedValue.length >= minValueLength ? extendedFormat : maskFormat);
   };
+
+  const toggleShowPassword = () => {
+    setShowPassword(prevShowPassword => !prevShowPassword);
+  };
+
 
   const handleKeyDown = (e) => {
     if (!allowSpace && e.keyCode === 32) {
@@ -166,12 +174,12 @@ const Input = ({
             </div>
             :
             <>
-              <div class="input-group">
+              <div className={`input-group ${type === TextInputType.PASSWORD ? 'custom-pass-sec' : null}`}>
                 <input
                   id={name}
                   value={value}
                   name={name}
-                  type={type}
+                  type={showPassword && type === TextInputType.PASSWORD ? TextInputType.TEXT : type}
                   className={cssClass}
                   placeholder={placeholder}
                   onChange={handleInputChange}
@@ -182,7 +190,19 @@ const Input = ({
                   min={min}
                   max={max}
                   {...inputAttributes} />
-
+                {type === TextInputType.PASSWORD && (
+                  <div type="button" className="password-hide-show" onClick={toggleShowPassword}>
+                    {showPassword ?
+                      <>
+                        <Image imagePath={AppIcons.EyeSlashIcon} altText="Password Hide" />
+                      </>
+                      :
+                      <>
+                        <Image imagePath={AppIcons.EyeIcon} altText="Password Show" />
+                      </>
+                    }
+                  </div>
+                )}
                 {inputIcon?.isIconShow &&
                   <div className="icon-fix">
                     <div className="input-icon">

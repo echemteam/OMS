@@ -5,10 +5,14 @@ import AddressCard from "../AddressCard";
 import { addressFormData } from "./AddressForm.data";
 import { AppIcons } from "../../../../../../data/appIcons";
 import Buttons from "../../../../../../components/ui/button/Buttons";
+import { settingTypeEnums } from "../../../../../../utils/Enums/enums";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../../components/ui/card/CardSection";
 import SidebarModel from "../../../../../../components/ui/sidebarModel/SidebarModel";
+import { onResetForm } from "../../../../../../utils/FormFields/ResetForm/handleResetForm";
+import { removeFormFields } from "../../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { setFieldSetting, setOptionFieldSetting } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Service's */
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../../app/services/basicdetailAPI";
@@ -150,24 +154,11 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   }, [mainId]);
 
   const manageFilteredForm = () => {
-    const manageData = { ...formData };
-    const filteredFormFields = addressFormData.formFields.filter(
-      (field) =>
-        field.dataField !== "isPreferredShipping" &&
-        field.dataField !== "isShippingAndBilling" &&
-        field.dataField !== "isPreferredBilling"
-    );
-    manageData.formFields = filteredFormFields;
-
+    removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling'], setFormData);
     if (updateSetData === null) {
-      handleChangeDropdownList(fixData, "countryId")
-      const dropdownFieldIndexs = manageData.formFields.findIndex(
-        (item) => item.dataField === "cityId"
-      );
-      manageData.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = true;
+      handleChangeDropdownList(fixData, "countryId");
+      setFieldSetting(formData, 'cityId', settingTypeEnums.isDisabled, true);
     }
-    setFormData(manageData);
-    // onreset();
   };
 
   useEffect(() => {
@@ -184,90 +175,38 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     GetAddresssByCustomerIdData,
   ]);
 
-  useEffect(() => {
-    if (
-      isGetAllAddressTypesSucess &&
-      allGetAllAddressTypesData
-    ) {
-      if (isSupplier === true) {
-        const getData = allGetAllAddressTypesData.filter(x => x.isForSuppliers).map((item) => ({
-          value: item.addressTypeId,
-          label: item.type,
-        }));
-        const dropdownField = addressFormData.formFields.find(
-          (item) => item.dataField === "addressTypeId"
-        );
-        dropdownField.fieldSetting.options = getData;
-      } else {
-        const getData = allGetAllAddressTypesData.filter(x => x.isForCustomers).map((item) => ({
-          value: item.addressTypeId,
-          label: item.type,
-        }));
-        const dropdownField = addressFormData.formFields.find(
-          (item) => item.dataField === "addressTypeId"
-        );
-        dropdownField.fieldSetting.options = getData;
-      }
-    }
-  }, [
-    isGetAllAddressTypesSucess,
-    allGetAllAddressTypesData,
-  ]);
+  const handleCountryOption = (responseData) => {
+    setOptionFieldSetting(responseData, 'countryId', 'name', addressFormData, 'countryId');
+  }
+  const handleStateOption = (responseData) => {
+    setOptionFieldSetting(responseData, 'stateId', 'name', addressFormData, 'stateId');
+  }
+  const handleCityOption = (responseData) => {
+    setOptionFieldSetting(responseData, 'cityId', 'name', addressFormData, 'cityId');
+  }
 
   useEffect(() => {
-    if (
-      isGetAllCountriesSucess &&
-      allGetAllCountriesData
-    ) {
-      const getData = allGetAllCountriesData.map((item) => ({
-        value: item.countryId,
-        label: item.name,
-      }));
-      const dropdownField = addressFormData.formFields.find(
-        (item) => item.dataField === "countryId"
-      );
-      dropdownField.fieldSetting.options = getData;
-    }
-  }, [
-    isGetAllCountriesSucess,
-    allGetAllCountriesData,
-  ]);
-
-  useEffect(() => {
-    if (
-      isGetAllStatesSucess &&
-      allGetAllStatesData
-    ) {
-      const getData = allGetAllStatesData.map((item) => ({
-        value: item.stateId,
-        label: item.name,
-      }));
-      const dropdownField = addressFormData.formFields.find(
-        (item) => item.dataField === "stateId"
-      );
-      dropdownField.fieldSetting.options = getData;
-      // setSelectedState(allGetAllStatesData)
+    if (isGetAllCountriesSucess && allGetAllCountriesData) {
+      handleCountryOption(allGetAllCountriesData);
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetAllStatesSucess, allGetAllStatesData]);
-
-  useEffect(() => {
-    if (
-      isGetAllCitiesSucess &&
-      allGetAllCitiesData
-    ) {
-      const getData = allGetAllCitiesData.map((item) => ({
-        value: item.cityId,
-        label: item.name,
-      }));
-      const dropdownField = addressFormData.formFields.find(
-        (item) => item.dataField === "cityId"
-      );
-      dropdownField.fieldSetting.options = getData;
-      // setSelectedCity(allGetAllCitiesData)
+    if (isGetAllStatesSucess && allGetAllStatesData) {
+      handleStateOption(allGetAllStatesData);
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetAllCitiesSucess, allGetAllCitiesData]);
+    if (isGetAllCitiesSucess && allGetAllCitiesData) {
+      handleCityOption(allGetAllCitiesData);
+      setShouldRerenderFormCreator((prevState) => !prevState);
+    }
+    if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
+      const filterCondition = (item) => {
+        let condition = isSupplier ? item.isForSuppliers : item.isForCustomers
+        return condition;
+      };
+      setOptionFieldSetting(allGetAllAddressTypesData, 'addressTypeId', 'type', addressFormData, 'addressTypeId', filterCondition);
+      setShouldRerenderFormCreator((prevState) => !prevState);
+    }
+  }, [isGetAllCountriesSucess, allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllAddressTypesSucess, allGetAllAddressTypesData]);
 
   useEffect(() => {
     if (allGetAllStatesData) {
@@ -278,9 +217,18 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
 
   const handleToggleModal = () => {
     setisModelOpen(true);
-    // manageFilteredForm();
-    onResetSupplier();
+    if (isSupplier) {
+      onResetSupplier()
+    }
+    setFieldSetting(formData, 'cityId', settingTypeEnums.isDisabled, true);
   };
+
+  useEffect(() => {
+    if (isButtonDisable) {
+      setFieldSetting(formData, 'cityId', settingTypeEnums.isDisabled, true);
+      setFieldSetting(formData, 'stateId', settingTypeEnums.isDisabled, true);
+    }
+  }, [isButtonDisable])
 
   useEffect(() => {
     if (!isGetAddresssByIdFetching && isGetAddresssByIdSuccess && isGetAddresssByIdData) {
@@ -291,38 +239,16 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       }
       let form = { ...formData };
       if (data) {
-        const dropdownFieldIndex = form.formFields.findIndex(
-          (item) => item.dataField === "stateId"
-        );
-        const dropdownFieldIndexs = form.formFields.findIndex(
-          (item) => item.dataField === "cityId"
-        );
-        form.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
-        form.formFields[dropdownFieldIndexs].fieldSetting.isDisabled = false;
+        if (!isButtonDisable) {
+          setFieldSetting(formData, 'cityId', settingTypeEnums.isDisabled, false);
+          setFieldSetting(formData, 'stateId', settingTypeEnums.isDisabled, false);
+        }
       }
       if (data.countryId) {
-        const dataValue = allGetAllStatesData
-          ?.filter((item) => item.countryId === data.countryId)
-          .map((item) => ({
-            value: item.stateId,
-            label: item.name,
-          }));
-        const dropdownFieldIndex = form.formFields.findIndex(
-          (item) => item.dataField === "stateId"
-        );
-        form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
+        handleStateOption(allGetAllStatesData);
       }
       if (data.stateId) {
-        const dataValue = allGetAllCitiesData
-          ?.filter((item) => item.stateId === data.stateId)
-          .map((item) => ({
-            value: item.cityId,
-            label: item.name,
-          }));
-        const dropdownFieldIndex = form.formFields.findIndex(
-          (item) => item.dataField === "cityId"
-        );
-        form.formFields[dropdownFieldIndex].fieldSetting.options = dataValue;
+        handleCityOption(allGetAllCitiesData);
       }
       form.initialState = {
         customerId: isSupplier === false ? mainId : 0,
@@ -340,14 +266,10 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
         isPreferredShipping: data.isPreferredShipping,
         isPreferredBilling: data.isPreferredBilling,
       };
-      if (isSupplier === false) {
-        const filteredFormFields = addressFormData.formFields.filter(
-          (field) => field.dataField !== "isShippingAndBilling"
-        );
-        form.formFields = filteredFormFields;
-        // setFormData(form);
-      }
       setFormData(form);
+      if (isSupplier === false) {
+        removeFormFields(addressFormData, ['isShippingAndBilling'], setFormData);
+      }
     }
   }, [isGetAddresssByIdFetching, isGetAddresssByIdSuccess, isGetAddresssByIdData]);
 
@@ -361,36 +283,11 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     } else {
       if (updateSetData) {
         if (updateSetData.type === "Billing") {
-          const manageData = { ...formData };
-          const filteredFormFields = addressFormData.formFields.filter(
-            (field) =>
-              field.dataField !== "isShippingAndBilling" &&
-              field.dataField !== "isPreferredShipping"
-          );
-          manageData.formFields = filteredFormFields;
-          setFormData(manageData);
+          removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredShipping'], setFormData);
         } else if (updateSetData.type === "Shipping") {
-          const manageData = { ...formData };
-          const filteredFormFields = addressFormData.formFields.filter(
-            (field) =>
-              field.dataField !== "isShippingAndBilling" &&
-              field.dataField !== "isPreferredBilling"
-          );
-          manageData.formFields = filteredFormFields;
-          setFormData(manageData);
-        } else if (
-          updateSetData.type === "AP" ||
-          updateSetData.type === "Primary"
-        ) {
-          const manageData = { ...formData };
-          const filteredFormFields = addressFormData.formFields.filter(
-            (field) =>
-              field.dataField !== "isShippingAndBilling" &&
-              field.dataField !== "isPreferredBilling" &&
-              field.dataField !== "isPreferredShipping"
-          );
-          manageData.formFields = filteredFormFields;
-          setFormData(manageData);
+          removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling'], setFormData);
+        } else if (updateSetData.type === "AP" || updateSetData.type === "Primary") {
+          removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling', 'isPreferredShipping'], setFormData);
         }
       }
     }
@@ -398,66 +295,39 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
 
   const onSidebarClose = () => {
     setisModelOpen(false);
-    onreset();
+    onResetForm(addressFormData, setFormData, null, [
+      { setter: setUpdateSetData, value: null },
+      { setter: setUpdateSetDataSupplier, value: null }
+    ]);
   };
 
   const onResetSupplier = () => {
-    let restData = { ...addressFormData };
-    restData.initialState = { ...addressFormData.initialState };
-    const filteredFormFields = restData.formFields.filter(
-      (field) =>
-        field.dataField !== "isPreferredShipping" &&
-        field.dataField !== "isShippingAndBilling" &&
-        field.dataField !== "isPreferredBilling"
-    );
-    restData.formFields = filteredFormFields;
-    setFormData(restData);
-    setUpdateSetData(null);
-    setUpdateSetDataSupplier(null);
-  };
-
-  const onreset = () => {
-
-    let restData = { ...addressFormData };
-    restData.initialState = { ...addressFormData.initialState };
-    setFormData(restData);
-    setUpdateSetData(null);
-    setUpdateSetDataSupplier(null);
+    onResetForm(addressFormData, setFormData, null, [
+      { setter: setUpdateSetData, value: null },
+      { setter: setUpdateSetDataSupplier, value: null }
+    ]);
+    removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling'], setFormData);
   };
 
   const handleChangeDropdownList = (data, dataField) => {
     setlebel(data)
     const manageData = { ...formData };
     if (dataField === "countryId") {
-      const dataValue = allGetAllStatesData
-        ?.filter((item) => item.countryId === data.value)
-        .map((item) => ({
-          value: item.stateId,
-          label: item.name,
-        }));
-      const dropdownFieldIndex = manageData.formFields.findIndex(
-        (item) => item.dataField === "stateId"
-      );
-      manageData.formFields[dropdownFieldIndex].fieldSetting.options =
-        dataValue;
-      manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
+      const filterCondition = (item) => {
+        return item.countryId === data.value;
+      }
+      setOptionFieldSetting(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', filterCondition);
+      setFieldSetting(manageData, 'stateId', settingTypeEnums.isDisabled, false);
       userFormRef.current.updateFormFieldValue({
         countryId: data.value,
         stateId: null,
       });
     } else if (dataField === "stateId") {
-      const dataValue = allGetAllCitiesData
-        ?.filter((item) => item.stateId === data.value)
-        .map((item) => ({
-          value: item.cityId,
-          label: item.name,
-        }));
-      const dropdownFieldIndex = manageData.formFields.findIndex(
-        (item) => item.dataField === "cityId"
-      );
-      manageData.formFields[dropdownFieldIndex].fieldSetting.options =
-        dataValue;
-      manageData.formFields[dropdownFieldIndex].fieldSetting.isDisabled = false;
+      const filterCondition = (item) => {
+        return item.stateId === data.value;
+      }
+      setOptionFieldSetting(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', filterCondition);
+      setFieldSetting(manageData, 'cityId', settingTypeEnums.isDisabled, false);
       userFormRef.current.updateFormFieldValue({
         stateId: data.value,
         cityId: null,
@@ -498,6 +368,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
           );
         }
         manageData.formFields = filteredFormFields;
+        console.log(formData.initialState);
         if (updateSetData) {
           manageData.initialState = {
             ...formData.initialState,
@@ -515,33 +386,32 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     // setShouldRerenderFormCreator(prevState => !prevState);
   };
 
-  useEffect(() => {
-    if (isAddAddressSuccess && isAddAddressData) {
-      if (isAddAddressData.errorMessage.includes("exists")) {
-        ToastService.warning(isAddAddressData.errorMessage);
+  const handleAddressResponse = (isSuccess, responseData) => {
+    if (isSuccess && responseData) {
+      if (responseData.errorMessage.includes("exists")) {
+        ToastService.warning(responseData.errorMessage);
         getById(mainId);
         return;
       }
-      onreset();
-      ToastService.success(isAddAddressData.errorMessage);
+      onResetForm(addressFormData, setFormData, null, [
+        { setter: setUpdateSetData, value: null },
+        { setter: setUpdateSetDataSupplier, value: null }
+      ]);
+      ToastService.success(responseData.errorMessage);
       getById(mainId);
       onSidebarClose();
     }
-  }, [isAddAddressSuccess, isAddAddressData]);
+  }
 
   useEffect(() => {
-    if (isUpdateAddAddressSuccess && isUpdateAddAddressData) {
-      if (isUpdateAddAddressData.errorMessage.includes("exists")) {
-        ToastService.warning(isUpdateAddAddressData.errorMessage);
-        getById(mainId);
-        return;
-      }
-      onreset();
-      ToastService.success(isUpdateAddAddressData.errorMessage);
-      getById(mainId);
-      onSidebarClose();
+    if (isAddAddressSuccess && isAddAddressData) {
+      handleAddressResponse(isAddAddressSuccess, isAddAddressData);
     }
-  }, [isUpdateAddAddressSuccess, isUpdateAddAddressData]);
+    if (isUpdateAddAddressSuccess && isUpdateAddAddressData) {
+      handleAddressResponse(isUpdateAddAddressSuccess, isUpdateAddAddressData);
+    }
+  }, [isAddAddressSuccess, isAddAddressData, isUpdateAddAddressSuccess, isUpdateAddAddressData]);
+
 
   const handleAddress = () => {
     let data = userFormRef.current.getFormData();
@@ -596,21 +466,9 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
 
   useEffect(() => {
     if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 1) {
-      const manageData = { ...formData };
-      let filteredFormFields;
-      filteredFormFields = addressFormData.formFields.filter(
-        (field) => field.dataField !== "isPreferredShipping"
-      );
-      manageData.formFields = filteredFormFields
-      setFormData(manageData)
+      removeFormFields(formData, ['isPreferredShipping'], setFormData);
     } else if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 2) {
-      const manageData = { ...formData };
-      let filteredFormFields;
-      filteredFormFields = addressFormData.formFields.filter(
-        (field) => field.dataField !== "isPreferredBilling"
-      );
-      manageData.formFields = filteredFormFields
-      setFormData(manageData)
+      removeFormFields(formData, ['isPreferredBilling'], setFormData);
     }
   }, [checkbox, checkboxFeild])
 
@@ -653,8 +511,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
               {...formData}
               onActionChange={formActionHandler}
               onCheckBoxChange={formActionHandler}
-              key={shouldRerenderFormCreator}
-            />
+              key={shouldRerenderFormCreator} />
             <div className="col-md-12 mt-2">
               <div className="d-flex align-item-end justify-content-end">
                 <Buttons

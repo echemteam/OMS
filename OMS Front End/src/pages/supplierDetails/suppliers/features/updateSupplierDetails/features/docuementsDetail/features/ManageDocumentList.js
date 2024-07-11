@@ -10,7 +10,7 @@ import { supplierDocumentTransformData } from "../../../../../../../../utils/Tra
 //** Service's */
 import SwalAlert from "../../../../../../../../services/swalService/SwalService";
 import { useDeleteSupplierDocumentsByIdMutation, useLazyGetSupplierDocumentsByIdQuery } from "../../../../../../../../app/services/supplierDocuementsAPI";
-import { useLazyDownloadCustomerDocumentQuery } from "../../../../../../../../app/services/documentAPI";
+import { useLazyDownloadDocumentQuery } from "../../../../../../../../app/services/documentAPI";
 import { hasFunctionalPermission } from "../../../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 
@@ -25,7 +25,7 @@ const ManageDocumentList = forwardRef(({ mainId, childRef, SecurityKey, isEditab
     //** API Call's */
     const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteSupplierDocumentsByIdMutation();
     const [getList, { isFetching: isListFetching, isSuccess: isListSucess, data: isListData }] = useLazyGetSupplierDocumentsByIdQuery();
-    const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = useLazyDownloadCustomerDocumentQuery();
+    const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = useLazyDownloadDocumentQuery();
 
     //** UseEffect */
     useEffect(() => {
@@ -83,7 +83,7 @@ const ManageDocumentList = forwardRef(({ mainId, childRef, SecurityKey, isEditab
     const handleDownload = (name) => {
         let request = {
             folderName: 'SupplierDocuements',
-            mainId: mainId,
+            keyId: keyId,
             fileName: name
         }
         Downalod(request);

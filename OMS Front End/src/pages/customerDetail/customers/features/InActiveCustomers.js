@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import SwalAlert from '../../../../services/swalService/SwalService';
 import { useSelector } from 'react-redux';
 import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
+import { AppIcons } from '../../../../data/appIcons';
 
 export const InActiveCustomers = ({ statusId, configFile, handleChange, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
 
@@ -212,6 +213,10 @@ export const InActiveCustomers = ({ statusId, configFile, handleChange, search, 
             clearTitleButtonClick={handleClear}
             clearButtonText="Clear"
             clearButtonClassName="dark-btn"
+            searchIconImg={AppIcons.SearchIcone}
+            searchTextWithIcon={true}
+            clearTextWithIcon={true}
+            clearIconImg={AppIcons.ClearIcone}
           >
             <div className="row">
               <div className="col-md-12 table-striped">
