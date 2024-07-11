@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux';
 import { StatusEnums, StatusFeild } from '../../../../utils/Enums/StatusEnums';
 import { useUpdateResponsibleUserMutation } from '../../../../app/services/commonAPI';
 import { ownerType } from '../../../../utils/Enums/enums';
+import { AppIcons } from '../../../../data/appIcons';
 
 
 const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
@@ -325,6 +326,10 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
             clearTitleButtonClick={handleClear}
             clearButtonText="Clear"
             clearButtonClassName="dark-btn"
+            searchIconImg={AppIcons.SearchIcone}
+            searchTextWithIcon={true}
+            clearTextWithIcon={true}
+            clearIconImg={AppIcons.ClearIcone}
           >
             <div className="row">
               <div className="col-md-12 table-striped">

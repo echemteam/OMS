@@ -56,7 +56,7 @@ export const SuccessMessage = {
 	Confirm_SubmitMap: 'Map?',
 	Map_Alert: '{0} mapped successfully',
 	Alret_Warning: 'Warning !',
-	TaxId: 'Minimum {0} and Maximum {1} characters allowed.',
-	DefaultUSATaxId: 'Tax Id Minimum 10 and Maximum 10 characters allowed.'
+	TaxId: 'Tax Id Minimum {0} and Maximum {1} characters allowed.',
+	DefaultUSATaxId: 'Minimum 10 and Maximum 10 characters allowed.'
 };
 

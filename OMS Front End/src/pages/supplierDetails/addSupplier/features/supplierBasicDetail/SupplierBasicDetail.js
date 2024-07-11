@@ -229,14 +229,14 @@ const SupplierBasicDetail = (props) => {
         ToastService.warning(isAddEditSupplierBasicInformationData.errorMessage);
         return;
       }
-      if (supplierId === 0) {
-        setSupplierId(isAddEditSupplierBasicInformationData.keyValue)
-        ToastService.success(isAddEditSupplierBasicInformationData.errorMessage);
-        moveNextPage();
-      } else {
+      if (pageId > 0) {
         onhandleRepeatCall()
         ToastService.success(isAddEditSupplierBasicInformationData.errorMessage);
         onreset()
+      } else {
+        setSupplierId(isAddEditSupplierBasicInformationData.keyValue)
+        ToastService.success(isAddEditSupplierBasicInformationData.errorMessage);
+        moveNextPage();
       }
     }
   }, [isAddEditSupplierBasicInformationSuccess, isAddEditSupplierBasicInformationData]);
@@ -274,27 +274,7 @@ const SupplierBasicDetail = (props) => {
   const handleAddSupplierBasicDetails = () => {
     let data = basicDetailRef.current.getFormData();
     if (data) {
-      let req = {
-        ...data,
-        supplierTypeId: data.supplierTypeId.value,
-        groupTypeId: data.groupTypeId.value,
-        territoryId: data.territoryId && typeof data.territoryId === "object"
-          ? data.territoryId.value
-          : data.territoryId,
-        countryId: data.countryId && typeof data.countryId === "object"
-          ? data.countryId.value
-          : data.countryId,
-        responsibleUserId: data.responsibleUserId ? data.responsibleUserId : null,
-      }
-      addEditSupplierBasicInformation(req);
-    } else {
-      ToastService.warning('Please enter supplier basic information');
-    }
-  };
-
-  const handleUpdate = () => {
-    let data = basicDetailRef.current.getFormData();
-    if (data) {
+      let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
       let req = {
         ...data,
         groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object"
@@ -312,9 +292,30 @@ const SupplierBasicDetail = (props) => {
         responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
           ? data.responsibleUserId.value
           : data.responsibleUserId,
-        supplierId: pageId
+        supplierId: pageId ? pageId : supplierId
       }
-      addEditSupplierBasicInformation(req);
+
+      if (data.taxId === "") {
+        let value = {
+          ...req,
+          responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
+        }
+        addEditSupplierBasicInformation(value);
+      } else {
+        if (data.taxId) {
+          const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, supplierBasicData.formFields, 'taxId');
+          if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
+            let value = {
+              ...req,
+              responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
+            }
+            addEditSupplierBasicInformation(value);
+          } else {
+            ToastService.warning(validateTaxIdMessage);
+          }
+        }
+      }
+
     } else {
       ToastService.warning('Please enter supplier basic information');
     }
@@ -365,10 +366,10 @@ const SupplierBasicDetail = (props) => {
   useEffect(() => {
 
     if (!isGetSupplierDetailsBySupplierNameFetching && isGetSupplierDetailsBySupplierNameSucess && isGetSupplierDetailsBySupplierNameData) {
-      if(isGetSupplierDetailsBySupplierNameData.length > 0){
-      setIsShowModel(true)
-      setSupplierInfoData(isGetSupplierDetailsBySupplierNameData)
-      }else{
+      if (isGetSupplierDetailsBySupplierNameData.length > 0) {
+        setIsShowModel(true)
+        setSupplierInfoData(isGetSupplierDetailsBySupplierNameData)
+      } else {
         ToastService.warning("No record found");
       }
     }
@@ -382,7 +383,7 @@ const SupplierBasicDetail = (props) => {
 
     if (supplierName !== '' && supplierName.trim().length >= 3) {
       getSupplierDetailsBySupplierName(supplierName);
-      
+
     } else {
       ToastService.warning('Please enter at least three characters.');
     }
@@ -413,7 +414,7 @@ const SupplierBasicDetail = (props) => {
               <Buttons
                 buttonTypeClassName="theme-button"
                 buttonText="Update"
-                onClick={handleUpdate}
+                onClick={handleAddSupplierBasicDetails}
                 isLoading={isAddEditSupplierBasicInformationLoading}
                 isDisable={isButtonDisable}
               />
@@ -427,22 +428,22 @@ const SupplierBasicDetail = (props) => {
         }
 
       </CardSection>
-  {isShowModel &&
-    <SidebarModel
-    modalTitle="Supplier Information"
-    contentClass="content-50 basic-info-model"
-    onClose={sidebarClose}
-    isOpen={isShowModel}
-    onClick={handleInputShowInfo}
-  >
-    <BasicInformation
-      onSidebarClose={sidebarClose}
-      infoData={supplierInfoData}
-    />
-  </SidebarModel>
-}
-      
-    
+      {isShowModel &&
+        <SidebarModel
+          modalTitle="Supplier Information"
+          contentClass="content-50 basic-info-model"
+          onClose={sidebarClose}
+          isOpen={isShowModel}
+          onClick={handleInputShowInfo}
+        >
+          <BasicInformation
+            onSidebarClose={sidebarClose}
+            infoData={supplierInfoData}
+          />
+        </SidebarModel>
+      }
+
+
     </div>
   );
 }

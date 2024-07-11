@@ -25,6 +25,7 @@ import commonAPI from './services/commonAPI';
 import customerHistoryAPI from './services/customerHistoryAPI';
 import supplierHistoryAPI from './services/supplierHistoryAPI';
 import approvalAPI from './services/ApprovalAPI';
+import configurationAPI from './services/configurationAPI';
 
 export const store = configureStore({
   reducer: {
@@ -37,6 +38,7 @@ export const store = configureStore({
     [basicdetailAPI.reducerPath]: basicdetailAPI.reducer, 
     [contactAPI.reducerPath]: contactAPI.reducer, 
     [addressAPI.reducerPath]: addressAPI.reducer, 
+    [configurationAPI.reducerPath]: configurationAPI.reducer, 
     [documentAPI.reducerPath]: documentAPI.reducer, 
     [notesAPI.reducerPath]:notesAPI.reducer,
     [phoneNumberAPI.reducerPath]: phoneNumberAPI.reducer, 
@@ -61,6 +63,7 @@ export const store = configureStore({
     basicdetailAPI.middleware,
     contactAPI.middleware,
     addressAPI.middleware,
+    configurationAPI.middleware,
     documentAPI.middleware,
     notesAPI.middleware,
     phoneNumberAPI.middleware,

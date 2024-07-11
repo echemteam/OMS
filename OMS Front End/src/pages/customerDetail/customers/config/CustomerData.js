@@ -285,7 +285,7 @@ export const AllInActiveCustomerGridConfig = {
       colType: GridColumnType.DATE,
       colSettings: {
         isUTC: true,
-        format: "DD/MM/YYYY hh:mm A ",
+        format: "MM/DD/YYYY hh:mm A ",
       },
     },
     {
@@ -328,7 +328,7 @@ export const FreezedInActiveCustomerGridConfig = {
       colType: GridColumnType.DATE,
       colSettings: {
         isUTC: true,
-        format: "DD/MM/YYYY hh:mm A ",
+        format: "MM/DD/YYYY hh:mm A ",
       },
     },
     {
@@ -370,7 +370,7 @@ export const BlockedInActiveCustomerGridConfig = {
       colType: GridColumnType.DATE,
       colSettings: {
         isUTC: true,
-        format: "DD/MM/YYYY hh:mm A ",
+        format: "MM/DD/YYYY hh:mm A ",
       },
     },
     {
@@ -413,7 +413,7 @@ export const DisabledInActiveCustomerGridConfig = {
       colType: GridColumnType.DATE,
       colSettings: {
         isUTC: true,
-        format: "DD/MM/YYYY hh:mm A ",
+        format: "MM/DD/YYYY hh:mm A ",
       },
     },
     // {
