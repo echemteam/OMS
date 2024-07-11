@@ -57,28 +57,6 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(customerDocumentId);
         }
-
-        [HttpGet("DownloadCustomerDocument")]
-        public async Task<IActionResult> DownloadCustomerDocument(string folderName, string fileName, int mainId)
-        {
-
-            byte[] decryptedBytes = await _serviceManager.customerDocumentsService.DownloadCustomerDocument(folderName, fileName, mainId);
-            if (decryptedBytes == null)
-            {
-                return APISucessResponce("File not found");
-            }
-            var memory = new MemoryStream(decryptedBytes)
-            {
-                Position = 0
-            };
-
-            string ext = FileManager.GetExtension(fileName);
-            string mimeType = FileManager.GetMimeType(ext);
-            var contentType = mimeType;
-
-            return File(memory, contentType, fileName);
-        }
-
         #endregion
 
     }
