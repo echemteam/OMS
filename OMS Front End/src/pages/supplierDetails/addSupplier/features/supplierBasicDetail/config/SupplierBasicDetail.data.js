@@ -58,82 +58,6 @@ export const supplierBasicData = {
       },
     },
     {
-      id: "groupTypeId",
-      lable: "Group Type ",
-      Field_Name: "Group Type",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "groupTypeId",
-      fieldSetting: {
-        placeholder: "Select Group Type",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
-      },
-    },
-    {
-      id: "countryId",
-      lable: "Country ",
-      Field_Name: "Country",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "countryId",
-      fieldSetting: {
-        placeholder: "Select Country",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
-      },
-    },
-    {
-      id: "territoryId",
-      lable: "Territory ",
-      Field_Name: "Territory",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "territoryId",
-      fieldSetting: {
-        placeholder: "Select Territory",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
-      },
-    },
-    {
-      id: "supplierTypeId",
-      lable: "Supplier Type ",
-      Field_Name: "Supplier Type",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "supplierTypeId",
-      fieldSetting: {
-        placeholder: "Select Supplier Type",
-        allowSpace: true,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
-      },
-    },
-    {
-      id: "dbaName",
-      lable: "Doing Business As Name ",
-      Field_Name: "Doing Business As Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "dbaName",
-      fieldSetting: {
-        placeholder: "Doing Business As Name",
-        allowSpace: true,
-        maxLength: 50,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
-      },
-    },
-    {
       id: "emailAddress",
       lable: "Email ",
       Field_Name: "Email",
@@ -166,6 +90,83 @@ export const supplierBasicData = {
       },
     },
     {
+      id: "groupTypeId",
+      lable: "Group Type ",
+      Field_Name: "Group Type",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "groupTypeId",
+      fieldSetting: {
+        placeholder: "Select Group Type",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+    {
+      id: "countryId",
+      lable: "Country ",
+      Field_Name: "Country",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "countryId",
+      fieldSetting: {
+        placeholder: "Select Country",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+    {
+      id: "territoryId",
+      lable: "Territory ",
+      Field_Name: "Territory",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "territoryId",
+      fieldSetting: {
+        placeholder: "Select Territory",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+    {
+      id: "supplierTypeId",
+      lable: "Supplier Type ",
+      Field_Name: "Supplier Type",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "supplierTypeId",
+      fieldSetting: {
+        placeholder: "Select Supplier Type",
+        allowSpace: true,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+    {
+      id: "dbaName",
+      lable: "Doing Business As Name ",
+      Field_Name: "Doing Business As Name",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "dbaName",
+      fieldSetting: {
+        placeholder: "Doing Business As Name",
+        allowSpace: true,
+        maxLength: 50,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+    
+    {
       id: "taxId",
       lable: "Tax Id ",
       Field_Name: "Tax Id",
@@ -184,7 +185,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }, { type: "taxId", minLength: 0, maxLength: 10 }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
     {
@@ -200,7 +201,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-7 col-xl-6 col-md-12 col-12 mb-input",
+        containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input mb-0",
       },
     },
     {
