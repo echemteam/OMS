@@ -32,6 +32,7 @@ const SupplierBasicDetail = (props) => {
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
   const [supplierInfoData, setSupplierInfoData] = useState(false);
+  const [noteId , setNotId] = useState("")
 
   const [
     getSupplierBasicInformationById,
@@ -229,6 +230,7 @@ const SupplierBasicDetail = (props) => {
         ToastService.warning(isAddEditSupplierBasicInformationData.errorMessage);
         return;
       }
+      setNotId(isAddEditSupplierBasicInformationData.noteId)
       if (pageId > 0) {
         onhandleRepeatCall()
         ToastService.success(isAddEditSupplierBasicInformationData.errorMessage);
@@ -292,7 +294,8 @@ const SupplierBasicDetail = (props) => {
         responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
           ? data.responsibleUserId.value
           : data.responsibleUserId,
-        supplierId: pageId ? pageId : supplierId
+        supplierId: pageId ? pageId : supplierId,
+        supplierNoteId : noteId ? noteId : 0
       }
 
       if (data.taxId === "") {

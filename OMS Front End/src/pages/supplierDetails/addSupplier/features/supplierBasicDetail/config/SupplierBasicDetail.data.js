@@ -14,7 +14,7 @@ import { FormFieldTypes } from "../../../../../../data/formFieldType";
 
 
 export const supplierBasicData = {
-  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "" },
+  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "" , supplierNoteId:""},
   formFields: [
     {
       id: "name",
