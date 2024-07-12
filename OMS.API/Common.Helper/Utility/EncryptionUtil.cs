@@ -146,7 +146,7 @@ namespace Common.Helper.Utility
         public static string GenerateHashKeyUsingSalt(string value, string saltKey, string passwordFormat = "SHA1")
         {
             if (String.IsNullOrEmpty(passwordFormat))
-                passwordFormat = "SHA1";
+                _ = "SHA1";
             string saltAndPassword = String.Concat(value, saltKey);
             string hashedPassword = Sha1Hash1(saltAndPassword).ToUpper();
             return hashedPassword;
@@ -160,25 +160,25 @@ namespace Common.Helper.Utility
         public static string GetRandomLetters()
         {
 
-            Random ran = new Random();
+            Random ran = new();
 
             String b = "abcdefghijklmnopqrstuvwxyz0123456789";
             String sc = "123456789";
 
             int length = 6;
 
-            String random = "";
+            StringBuilder random = new();
             for (int i = 0; i < length; i++)
             {
                 int a = ran.Next(b.Length);
-                random = random + b.ElementAt(a);
+                random.Append(b.ElementAt(a));
             }
             for (int j = 0; j < 2; j++)
             {
                 int sz = ran.Next(sc.Length);
-                random = random + sc.ElementAt(sz);
+                random.Append(sc.ElementAt(sz));
             }
-            return random;
+            return random.ToString();
         }
 
         public static string GenerateAesKeyAndAesIV()

@@ -179,6 +179,13 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
+        [HttpGet("GetAllFunctionalitiesFields")]
+        public async Task<IActionResult> GetAllFunctionalitiesFields(int functionalityId)
+        {
+            List<GetAllFunctionalitiesFieldsResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalitiesFields(functionalityId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
         [HttpPost("UpdateResponsibleUser")]
         public async Task<IActionResult> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
         {

@@ -121,6 +121,10 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllFunctionalities(moduleId);
         }
+        public Task<List<GetAllFunctionalitiesFieldsResponse>> GetAllFunctionalitiesFields(int functionalityId)
+        {
+            return repositoryManager.commonRepository.GetAllFunctionalitiesFields(functionalityId);
+        }
 
         public async Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
         {

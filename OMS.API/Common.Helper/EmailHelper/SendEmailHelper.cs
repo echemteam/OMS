@@ -28,8 +28,6 @@ namespace Common.Helper.EmailHelper
             this.BCC = string.Empty;
             this.TO = string.Empty;
             this.EnableSendMail = true;
-            //this.EnableEmailTemplate = true;
-            //this.Attachments = new List<System.Net.Mail.Attachment>();
         }
 
         public bool SendEmail()
@@ -70,12 +68,11 @@ namespace Common.Helper.EmailHelper
                     }
                 }
 
-                SmtpClient objSMTP = new SmtpClient();
-                // For Display Daily Send Mail Count
+                SmtpClient objSMTP = new();
                 mailMesg.From = new MailAddress(this.FromEmail);
                 if (!string.IsNullOrEmpty(this.FromEmail))
                 {
-                    System.Net.NetworkCredential creditial = new System.Net.NetworkCredential(this.FromEmail, this.Password);
+                    System.Net.NetworkCredential creditial = new(this.FromEmail, this.Password);
                     objSMTP.Credentials = creditial;
                 }
                 objSMTP.Host = this.HostName;

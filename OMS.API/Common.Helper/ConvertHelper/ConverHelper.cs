@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Data;
+using System.Globalization;
 
 namespace Common.Helper.ConvertHelper
 {
     public class ConvertHelper
     {
+        public ConvertHelper()
+        {
+
+        }
         /// <summary>
         /// To convert into Boolean datatype
         /// </summary>
@@ -29,13 +34,13 @@ namespace Common.Helper.ConvertHelper
         /// </summary>
         /// <param name="objDT"></param>
         /// <returns></returns>
-        public static DateTime ToDateTime(object objDT)
+        public static DateTime ToDateTime(object objDT, IFormatProvider formatProvider = null!)
         {
-            string strDt = Convert.ToString(objDT);
+            string strDt = Convert.ToString(objDT)!;
             if (strDt.Length > 0)
             {
-                DateTime dtReturn;
-                DateTime.TryParse(strDt, out dtReturn);
+                DateTime.TryParse(strDt, out DateTime dtReturn);
+                _ = formatProvider ?? CultureInfo.InvariantCulture;
                 if (dtReturn == DateTime.MinValue)
                 {
                     return new DateTime();
@@ -142,9 +147,9 @@ namespace Common.Helper.ConvertHelper
                     list.Add(ht);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
             return list;
         }

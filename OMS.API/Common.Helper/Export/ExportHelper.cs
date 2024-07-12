@@ -32,7 +32,7 @@ namespace Common.Helper.Export
             }
             catch (Exception ex)
             {
-                throw (Exception)ex;
+                throw ex!;
             }
         }
     }

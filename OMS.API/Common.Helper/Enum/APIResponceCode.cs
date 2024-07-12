@@ -9,7 +9,6 @@
         //If server just point the duplicate
         RecordExist = 409,
         INTERNAL_SERVER_ERROR = 500,
-
         InValidRequest = 600
 
     }
