@@ -3,6 +3,6 @@
     public class GetAllFunctionalitiesFieldsResponse
     {
         public int? FunctionalitiesFieldId { get; set; }
-        public int? FieldName { get; set; }
+        public string? FieldName { get; set; }
     }
 }
