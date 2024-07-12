@@ -1,14 +1,9 @@
 ﻿using Common.Helper.Extension;
-using Common.Helper.Utility;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.RoleMapping;
-using OMS.Domain.Entities.API.Request.User;
 using OMS.Domain.Entities.API.Response.RoleMapping;
-using OMS.Domain.Entities.API.Response.Roles;
-using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.RoleMapping;
-using OMS.Domain.Entities.Entity.User;
 using OMS.Domain.Repository;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;

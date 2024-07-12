@@ -2,7 +2,9 @@
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Customers;
+using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.CustomerNotes;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository;
 using OMS.Shared.Entities.CommonEntity;
@@ -24,11 +26,38 @@ namespace OMS.Application.Services.Customers
         #endregion
 
         #region Customers Services
-        public async Task<AddEntityDTO<int>> AddCustomersBasicInformation(AddCustomersBasicInformationRequest requestData, short CurrentUserId)
+        public async Task<AddEditResponse> AddEditCustomersBasicInformation(AddEditCustomersBasicInformationRequest requestData, short CurrentUserId)
         {
-            CustomersDTO customersDTO = requestData.ToMapp<AddCustomersBasicInformationRequest, CustomersDTO>();
+            CustomersDTO customersDTO = requestData.ToMapp<AddEditCustomersBasicInformationRequest, CustomersDTO>();
             customersDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.customers.AddCustomersBasicInformation(customersDTO);
+            AddEditResponse responseData = await repositoryManager.customers.AddEditCustomersBasicInformation(customersDTO);
+
+            if (!string.IsNullOrEmpty(requestData.Note) && responseData.KeyValue > 0)
+            {
+                _ = new AddEntityDTO<long>();
+                CustomerNotesDTO customerNotes = new()
+                {
+                    CustomerNoteId = requestData.CustomerNoteId,
+                    Note = requestData.Note,
+                    CustomerId = responseData.KeyValue,
+                    CreatedBy = CurrentUserId
+                };
+                AddEntityDTO<long> addEntityDTO;
+                if (requestData.CustomerNoteId > 0)
+                {
+                    // Update existing customer note
+                    customerNotes.UpdatedBy = CurrentUserId;
+                    addEntityDTO = await repositoryManager.customerNotes.UpdateCustomerNotes(customerNotes);
+                    responseData.NoteId = addEntityDTO.KeyValue;
+                }
+                else
+                {
+                    // Add new customer note
+                    addEntityDTO = await repositoryManager.customerNotes.AddCustomerNotes(customerNotes);
+                    responseData.NoteId = addEntityDTO.KeyValue;
+                }
+            }
+            return responseData;
         }
 
         public async Task<AddEntityDTO<int>> UpdateCustomersBasicInformation(UpdateCustomersBasicInformationRequest requestData, short CurrentUserId)

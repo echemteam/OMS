@@ -1,7 +1,8 @@
 ﻿namespace OMS.Domain.Entities.API.Request.Customers
 {
-    public class AddCustomersBasicInformationRequest
+    public class AddEditCustomersBasicInformationRequest
     {
+        public int? CustomerId { get; set; }
         public string? Name { get; set; }
         public short? GroupTypeId { get; set; }
         public short? TerritoryId { get; set; }
@@ -12,5 +13,6 @@
         public string? TaxId { get; set; }
         public bool? IsBuyingForThirdParty {  get; set; }
         public short? ResponsibleUserId {  get; set; }
+        public long? CustomerNoteId { get; set; }
     }
 }

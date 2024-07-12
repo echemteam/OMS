@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Customers;
-using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
@@ -27,11 +26,11 @@ namespace OMS.API.Controllers
         #endregion
 
         #region Customers API
-        [HttpPost("AddCustomersBasicInformation")]
-        public async Task<IActionResult> AddCustomersBasicInformation(AddCustomersBasicInformationRequest requestData)
+        [HttpPost("AddEditCustomersBasicInformation")]
+        public async Task<IActionResult> AddEditCustomersBasicInformation(AddEditCustomersBasicInformationRequest requestData)
         {
-            var addItem = await _serviceManager.customersServices.AddCustomersBasicInformation(requestData, CurrentUserId);
-            return APISucessResponce(addItem);
+            var addEditItem = await _serviceManager.customersServices.AddEditCustomersBasicInformation(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
         }
 
         [HttpPost("UpdateCustomersBasicInformation")]

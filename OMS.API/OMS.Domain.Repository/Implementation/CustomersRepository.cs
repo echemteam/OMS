@@ -1,5 +1,6 @@
 ﻿using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Customers;
+using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
@@ -13,7 +14,7 @@ namespace OMS.Domain.Repository.Implementation
     internal class CustomersRepository : BaseRepository<Customers>, ICustomersRepository
     {
         #region SP Name
-        const string ADDCUSTOMERSBASICINFORMATION = "AddCustomersBasicInformation";
+        const string ADDEDITCUSTOMERSBASICINFORMATION = "AddEditCustomersBasicInformation";
         const string UPDATECUSTOMERSBASICINFORMATION = "UpdateCustomersBasicInformation";
         const string GETCUSTOMERSBASICINFORMATIONBYID = "GetCustomersBasicInformationById";
         const string GETCUSTOMERS = "GetCustomers";
@@ -33,10 +34,11 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Customers Repository
-        public async Task<AddEntityDTO<int>> AddCustomersBasicInformation(CustomersDTO customers)
+        public async Task<AddEditResponse> AddEditCustomersBasicInformation(CustomersDTO customers)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERSBASICINFORMATION, new
+            return await _context.GetSingleAsync<AddEditResponse>(ADDEDITCUSTOMERSBASICINFORMATION, new
             {
+                customers.CustomerId,
                 customers.Name,
                 customers.GroupTypeId,
                 customers.TerritoryId,

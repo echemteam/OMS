@@ -1,7 +1,7 @@
-﻿using Common.Helper.Extension;
+﻿using Common.Helper.Enum;
+using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
-using OMS.Domain.Entities.API.Response.Address;
 using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerAccountingSettings;
@@ -55,11 +55,13 @@ namespace OMS.Application.Services.CustomerAccountingSettings
             {
                 if (shppingDetails.DeliveryAccountId != null)
                 {
-                    if (shppingDetails.DeliveryAccountId == 1)
+                    var deliveryAccountId = (DeliveryAccount)shppingDetails.DeliveryAccountId;
+
+                    if (deliveryAccountId == DeliveryAccount.OurAccount)
                     {
                         shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
                     }
-                    else if (shppingDetails.DeliveryAccountId == 2)
+                    else if (deliveryAccountId == DeliveryAccount.CollectAccount)
                     {
                         shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
                         shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);

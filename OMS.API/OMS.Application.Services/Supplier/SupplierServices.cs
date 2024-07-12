@@ -31,30 +31,31 @@ namespace OMS.Application.Services.Supplier
             supplierDTO.CreatedBy = CurrentUserId;
             AddEditResponse responseData = await repositoryManager.supplier.AddEditSupplierBasicInformation(supplierDTO);
 
-            AddEntityDTO<long> addEntityDTO = new();
-            if (!string.IsNullOrEmpty(requestData.Note) && requestData.SupplierNoteId > 0)
+            if (!string.IsNullOrEmpty(requestData.Note) && responseData.KeyValue > 0)
             {
-                SupplierNoteDTO supplierNotesUpdate = new()
+                AddEntityDTO<long> addEntityDTO = new();
+                SupplierNoteDTO supplierNotes = new()
                 {
                     SupplierNoteId = requestData.SupplierNoteId,
                     Note = requestData.Note,
-                    SupplierId = responseData.KeyValue
-                };
-
-                addEntityDTO = await repositoryManager.supplierNotes.UpdateSupplierNotes(supplierNotesUpdate);
-            }
-            else if (requestData.SupplierId > 0 && !string.IsNullOrEmpty(requestData.Note))
-            {
-                SupplierNoteDTO supplierNotesUpdate = new()
-                {
                     SupplierId = responseData.KeyValue,
-                    Note = requestData.Note,
                     CreatedBy = CurrentUserId
                 };
 
-                addEntityDTO = await repositoryManager.supplierNotes.AddSupplierNotes(supplierNotesUpdate);
+                if (requestData.SupplierNoteId > 0)
+                {
+                    // Update existing supplier note
+                    supplierNotes.UpdatedBy = CurrentUserId;
+                    addEntityDTO = await repositoryManager.supplierNotes.UpdateSupplierNotes(supplierNotes);
+                    responseData.NoteId = addEntityDTO.KeyValue;
+                }
+                else
+                {
+                    // Add new supplier note
+                    addEntityDTO = await repositoryManager.supplierNotes.AddSupplierNotes(supplierNotes);
+                    responseData.NoteId = addEntityDTO.KeyValue;
+                }
             }
-            responseData.NoteId = addEntityDTO.KeyValue;
             return responseData;
         }
 
@@ -104,6 +105,5 @@ namespace OMS.Application.Services.Supplier
             return await repositoryManager.supplier.GetSupplierDetailsBySupplierName(supplierName);
         }
         #endregion
-
     }
 }

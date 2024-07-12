@@ -1,4 +1,5 @@
-﻿using Common.Helper.Extension;
+﻿using Common.Helper.Enum;
+using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Customers;
@@ -42,14 +43,14 @@ namespace OMS.Application.Services.Address
             {
                 switch (requestData.AddressTypeId)
                 {
-                    case 1:
-                        requestData.AddressTypeId = 2;
+                    case (short?)AddressType.Billing:
+                        requestData.AddressTypeId = (short?)AddressType.Shipping;
                         break;
 
-                    case 2:
-                        requestData.AddressTypeId = 1;
+                    case (short?)AddressType.Shipping:
+                        requestData.AddressTypeId = (short?)AddressType.Billing;
                         break;
-              }
+                }
                 var duplicateResponseData = await repositoryManager.address.AddAddress(addressDTO);
                 await LinkSameAddress(requestData, duplicateResponseData.KeyValue, CurrentUserId);
             }
