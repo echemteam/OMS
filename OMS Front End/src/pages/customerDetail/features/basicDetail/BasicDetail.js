@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 //** Libs's */
 import { securityKey } from "../../../../data/SecurityKey";
 import Buttons from "../../../../components/ui/button/Buttons";
-import { getTaxIdMinMaxLength } from "./config/TaxIdValidator";
+import { getTaxIdMinMaxLength } from "../../feature/customerBasicDetail/config/TaxIdValidator";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { basicDetailFormDataHalf, excludingRoles } from "./config/BasicDetailForm.data";
