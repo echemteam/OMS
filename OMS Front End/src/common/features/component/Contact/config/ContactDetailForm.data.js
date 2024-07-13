@@ -1,4 +1,4 @@
-import { FormFieldTypes } from "../../../../../../data/formFieldType";
+import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const contactDetailFormData = {
   name: "Email From",

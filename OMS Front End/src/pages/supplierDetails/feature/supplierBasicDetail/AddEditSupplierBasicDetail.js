@@ -31,7 +31,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     //** State */
     const parentRef = useRef();
     const basicDetailRef = useRef();
-    const [noteId, setNotId] = useState(0);
+    const [noteId, setNoteId] = useState(0);
     const { formSetting } = supplierBasicData;
     const [supplierName, setSupplierName] = useState('');
     const [formData, setFormData] = useState(supplierBasicData);
@@ -78,16 +78,24 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     }, [isOpen, hasEditPermission, formSetting, formData, isResponsibleUser])
 
     useEffect(() => {
-        getAllUser();
-        getAllCountries();
-        getAllGroupTypes();
-        getAllTerritories();
-        getAllSupplierType();
-        if (!isOpen) {
-            removeFormFields(formData, ['responsibleUserId'], setFormData);
-            setFieldSetting(formData, 'name', settingTypeEnums.isInputButton, true);
-        }
+        const fetchData = async () => {
+            await Promise.all([
+                getAllUser(),
+                getAllCountries(),
+                getAllGroupTypes(),
+                getAllTerritories(),
+                getAllSupplierType()
+            ]);
+
+            if (!isOpen) {
+                removeFormFields(formData, ['responsibleUserId'], setFormData);
+                setFieldSetting(formData, 'name', settingTypeEnums.isInputButton, true);
+            }
+        };
+
+        fetchData();
     }, [keyId, isOpen]);
+
 
     useEffect(() => {
         if (isOpen) {
@@ -133,19 +141,20 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     useEffect(() => {
         if (isAddEditSupplierBasicInformationSuccess && isAddEditSupplierBasicInformationData) {
-            if (isAddEditSupplierBasicInformationData.errorMessage.includes('exists')) {
-                ToastService.warning(isAddEditSupplierBasicInformationData.errorMessage);
+            const { errorMessage, noteId, keyValue } = isAddEditSupplierBasicInformationData;
+            if (errorMessage.includes('exists')) {
+                ToastService.warning(errorMessage);
                 return;
             }
-            setNotId(isAddEditSupplierBasicInformationData?.noteId)
+            setNoteId(noteId)
             if (keyId > 0) {
                 getSupplierById();
-                ToastService.success(isAddEditSupplierBasicInformationData.errorMessage);
+                ToastService.success(errorMessage);
                 onResetForm(supplierBasicData, setFormData);
                 onSidebarClose();
             } else {
-                setSupplierId(isAddEditSupplierBasicInformationData.keyValue)
-                ToastService.success(isAddEditSupplierBasicInformationData.errorMessage);
+                setSupplierId(keyValue)
+                ToastService.success(errorMessage);
                 moveNextPage();
             }
         }
@@ -153,90 +162,76 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     useEffect(() => {
         if (isSupplierNameExistSucess && isSupplierNameExistData) {
-            if (isSupplierNameExistData.errorMessage.includes('exists')) {
-                ToastService.warning(isSupplierNameExistData.errorMessage);
+            const { errorMessage } = isSupplierNameExistData;
+            if (errorMessage.includes('exists')) {
+                ToastService.warning(errorMessage);
                 return;
             }
-            ToastService.info(isSupplierNameExistData.errorMessage);
+            ToastService.info(errorMessage);
         }
     }, [isSupplierNameExistSucess, isSupplierNameExistData]);
 
     //** Handle Function's */
     const handleAddEditSupplier = () => {
         let data = basicDetailRef.current.getFormData();
-        if (data) {
-            let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
-            let req = {
-                ...data,
-                groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object"
-                    ? data.groupTypeId.value
-                    : data.groupTypeId,
-                supplierTypeId: data.supplierTypeId && typeof data.supplierTypeId === "object"
-                    ? data.supplierTypeId.value
-                    : data.supplierTypeId,
-                territoryId: data.territoryId && typeof data.territoryId === "object"
-                    ? data.territoryId.value
-                    : data.territoryId,
-                countryId: data.countryId && typeof data.countryId === "object"
-                    ? data.countryId.value
-                    : data.countryId,
-                responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object"
-                    ? data.responsibleUserId.value
-                    : data.responsibleUserId,
-                supplierId: keyId ? keyId : supplierId,
-                supplierNoteId: noteId ? noteId : 0
-            }
-
-            if (data.taxId === "") {
-                let value = {
-                    ...req,
-                    responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
-                }
-                addEditSupplierBasicInformation(value);
-            } else {
-                if (data.taxId) {
-                    const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, supplierBasicData.formFields, 'taxId');
-                    if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
-                        let value = {
-                            ...req,
-                            responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
-                        }
-                        addEditSupplierBasicInformation(value);
-                    } else {
-                        ToastService.warning(validateTaxIdMessage);
-                    }
-                }
-            }
-
-        } else {
+        if (!data) {
             ToastService.warning('Please enter supplier basic information');
+            return;
+        }
+
+        const getIdValue = (field) => {
+            return field && typeof field === "object" ? field.value : field;
+        }
+
+        const req = {
+            ...data,
+            groupTypeId: getIdValue(data.groupTypeId),
+            supplierTypeId: getIdValue(data.supplierTypeId),
+            territoryId: getIdValue(data.territoryId),
+            countryId: getIdValue(data.countryId),
+            responsibleUserId: getIdValue(data.responsibleUserId) || 0,
+            supplierId: keyId || supplierId,
+            supplierNoteId: noteId || 0
+        };
+
+        if (!data.taxId) {
+            addEditSupplierBasicInformation(req);
+            return;
+        }
+
+        const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(req.countryId || 0, supplierBasicData.formFields, 'taxId');
+        if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
+            addEditSupplierBasicInformation(req);
+        } else {
+            ToastService.warning(validateTaxIdMessage);
         }
     };
+
+
+
     const handleInputGroupButton = () => {
-        if (supplierName !== '') {
-            let request = {
-                name: supplierName
-            }
-            CheckSupplierNameExist(request);
+        if (supplierName.trim() !== '') {
+            CheckSupplierNameExist({ name: supplierName.trim() });
         }
     };
+
     const handleValidateTextId = (data, dataField) => {
-        if (dataField === 'countryId') {
-            const modifyFormFields = getTaxIdMinMaxLength(data.value, supplierBasicData.formFields, 'taxId');
-            const updatedForm = { ...formData };
-            updatedForm.formFields = modifyFormFields;
+        if (dataField !== 'countryId') return;
+
+        const updatedFormFields = getTaxIdMinMaxLength(data.value, supplierBasicData.formFields, 'taxId');
+        const filteredFields = supplierBasicData.formFields.filter(field => {
             if (isOpen) {
-                updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name" && field.dataField !== "note");
-            } else {
-                updatedForm.formFields = supplierBasicData.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
+                return field.id !== "name" && field.dataField !== "note";
             }
-            setFormData(updatedForm);
-        }
+            return field.id !== "name-input" && field.dataField !== "responsibleUserId";
+        });
+
+        setFormData({ ...formData, formFields: isOpen ? filteredFields : updatedFormFields });
     };
+
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const trimCustomerName = data.replace(/\s+/g, '');
-            setSupplierName(trimCustomerName);
+            setSupplierName(data.trim());
         }
     };
 
@@ -253,15 +248,23 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         DDL_CHANGED: handleValidateTextId
     };
 
+
     const handleExistingInfo = () => {
-        if (supplierName !== '' && supplierName.trim().length >= 3) {
-            if (parentRef.current) {
-                parentRef.current.callChildFunction(supplierName);
-            }
-        } else {
-            ToastService.warning('Please enter at least three characters.');
+        if (!supplierName || typeof supplierName !== 'string') {
+            ToastService.warning('Supplier name is invalid.');
+            return;
         }
-    }
+        const trimmedName = supplierName.trim();
+
+        if (trimmedName.length < 3) {
+            ToastService.warning('Please enter at least three characters.');
+            return;
+        }
+
+        if (parentRef.current) {
+            parentRef.current.callChildFunction(trimmedName);
+        }
+    };
 
     return (
         <React.Fragment>

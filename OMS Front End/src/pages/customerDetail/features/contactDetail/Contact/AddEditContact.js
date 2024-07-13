@@ -3,7 +3,7 @@ import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, 
 //** Lib's */
 import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
-import { contactDetailFormData } from "./config/ContactDetailForm.data";
+import { contactDetailFormData } from "../../../../../common/features/component/Contact/config/ContactDetailForm.data";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
@@ -12,9 +12,6 @@ import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicD
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { setFieldSetting } from "../../../../../utils/FieldsSetting/SetFieldSetting";
 import { settingTypeEnums } from "../../../../../utils/Enums/enums";
-//** Component's */
-const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
-const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));
 
 const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, SecurityKey,
   isEditablePage, isSupplier, isEdit, isOpen, getContactById }) => {
@@ -190,8 +187,8 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       <div className="row">
         {!isGetByIdFetching ?
           <React.Fragment>
-            <ManageEmailAddress isButtonDisable={isButtonDisable} isSupplier={isSupplier} onGetContactList={onGetContactList} />
-            <ManageContactNumbers isButtonDisable={isButtonDisable} isSupplier={isSupplier} onGetContactList={onGetContactList} />
+            {/* <ManageEmailAddress isButtonDisable={isButtonDisable} isSupplier={isSupplier} onGetContactList={onGetContactList} />
+            <ManageContactNumbers isButtonDisable={isButtonDisable} isSupplier={isSupplier} onGetContactList={onGetContactList} /> */}
           </React.Fragment>
           : <DataLoader />
         }

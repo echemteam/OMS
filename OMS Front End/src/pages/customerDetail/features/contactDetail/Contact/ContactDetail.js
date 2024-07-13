@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
 import CardSection from "../../../../../components/ui/card/CardSection";
-import { contactDetailFormData } from "./config/ContactDetailForm.data";
+import { contactDetailFormData } from "../../../../../common/features/component/Contact/config/ContactDetailForm.data";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import {
   contactCustomerTransformData,

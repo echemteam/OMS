@@ -8,7 +8,7 @@ import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFo
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 
 
-const ContactDetailCard = forwardRef(({ keyId, handleEdit, showEditIcon, type, getListRef, getContactByKeyId }) => {
+const ContactDetailCard = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, getContactByKeyId }) => {
 
     const emailDropdownRef = useRef(null);
     const phoneDropdownRef = useRef(null);
@@ -17,6 +17,11 @@ const ContactDetailCard = forwardRef(({ keyId, handleEdit, showEditIcon, type, g
     const [showEmailDropdown, setShowEmailDropdown] = useState(false);
 
     //** API Call's */
+    /**
+     * This hook dynamically sets the API call based on the module (customer or supplier).
+     * The API endpoint and parameters are configured within the SupplierContactDetail OR CustomerContactDetail component.
+     * It fetches Contact details by the customer or supplier ID.
+    */
     const [getContactList, { isFetching: isGetContactFetching, isSuccess: isGetContactSucess, data: isGetcontactItem }] = getContactByKeyId();
 
 
@@ -56,11 +61,11 @@ const ContactDetailCard = forwardRef(({ keyId, handleEdit, showEditIcon, type, g
             searchText: "",  // Initial call: no search text provided.
             contactType: "" // Initial call: no specific contact type specified.
         }
-        keyId && getContactList(req);
+        contactList(req);
     };
 
     const contactList = (req) => {
-        getContactList(req);
+        keyId && getContactList(req);
     }
 
     //** Use Imperative Handle */
@@ -108,7 +113,7 @@ const ContactDetailCard = forwardRef(({ keyId, handleEdit, showEditIcon, type, g
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="contact-type-badge">{type}</div>
+                                        <div className="contact-type-badge">{contactItem.type}</div>
                                         <div className="edit-delete-button">
                                             {showEditIcon ? (
                                                 <button onClick={() => handleEdit(contactItem?.contactId)} className="edit-btn">
