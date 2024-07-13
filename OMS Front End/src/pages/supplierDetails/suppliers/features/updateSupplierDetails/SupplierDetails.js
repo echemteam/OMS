@@ -9,23 +9,23 @@ import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
 import { AppIcons } from "../../../../../data/appIcons";
 import SupplierViewDetail from "./features/SupplierViewDetail";
 import CardSection from "../../../../../components/ui/card/CardSection";
-import SupplierBasicDetail from "../../../addSupplier/features/supplierBasicDetail/SupplierBasicDetail";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { useNavigate } from "react-router-dom/dist";
 import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuementDetail";
-import SupplierContactDetail from "../../../addSupplier/features/supplierContactDetail/SupplierContactDetail";
-import SuplierAddressDetails from "../../../addSupplier/features/supplierAddressDetail/SupplierAddressDetails";
 import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
 import { useSelector } from "react-redux";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { securityKey } from "../../../../../data/SecurityKey";
 import ManageSupplierNotes from "./features/notesDetails/ManageSupplierNotes";
+import SupplierBasicDetail from "../../../feature/supplierBasicDetail/SupplierBasicDetail";
+import SuplierAddressDetails from "../../../feature/supplierAddressDetail/SupplierAddressDetails";
+import SupplierContactDetail from "../../../feature/supplierContactDetail/SupplierContactDetail";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const pageId = id ? decryptUrlData(id) : 0;
+  const keyId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setisModelOpen] = useState(false);
   const [supplierData, setSupplierData] = useState(null);
   const authState = useSelector((state) => state.auth);
@@ -73,14 +73,14 @@ const SupplierDetails = () => {
   ]);
 
   useEffect(() => {
-    if (pageId) {
-      setSupplierId(pageId);
-      getSupplierBasicInformationById(pageId);
+    if (keyId) {
+      setSupplierId(keyId);
+      getSupplierById(keyId);
     }
   }, []);
 
-  const handleRepeatCall = () => {
-    getSupplierBasicInformationById(pageId);
+  const getSupplierById = (keyId) => {
+    keyId && getSupplierBasicInformationById(keyId);
   };
 
   const handleToggleModal = () => {
@@ -106,7 +106,7 @@ const SupplierDetails = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2">
-          <SupplierContactDetail isEditablePage={true} isSearchFilterShow={true}/>
+          <SupplierContactDetail isEditablePage={true} isSearchFilterShow={true} />
         </div>
       ),
       isVisible: hasContactPermission.hasAccess,
@@ -115,7 +115,7 @@ const SupplierDetails = () => {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          <SupplierDocumentDetail pageId={pageId} isEditablePage={true} />
+          <SupplierDocumentDetail keyId={keyId} isEditablePage={true} />
         </div>
       ),
       isVisible: hasDocumentPermission.hasAccess,
@@ -151,7 +151,7 @@ const SupplierDetails = () => {
                 supplierData={supplierData}
                 isLoading={isGetSupplierBasicInformationByIdFetching}
                 supplierId={supplierId}
-                onhandleRepeatCall={handleRepeatCall}
+                onhandleRepeatCall={getSupplierById}
               />
             </CardSection>
           </div>
@@ -178,8 +178,8 @@ const SupplierDetails = () => {
           onSidebarClose={onSidebarClose}
           isOpen={isModelOpen}
           supplierData={supplierData}
-          pageId={pageId}
-          onhandleRepeatCall={handleRepeatCall}
+          keyId={keyId}
+          getSupplierById={getSupplierById}
         />
       </SidebarModel>
     </>

@@ -1,5 +1,5 @@
-import { SuccessMessage } from "../../../../../../data/appMessages";
-import { FormFieldTypes } from "../../../../../../data/formFieldType";
+import { SuccessMessage } from "../../../../../data/appMessages";
+import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 // export const securityKeys = {
 //   ADD: securityKey.ADDCUSTOMER,
@@ -14,7 +14,7 @@ import { FormFieldTypes } from "../../../../../../data/formFieldType";
 
 
 export const supplierBasicData = {
-  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "" , supplierNoteId:""},
+  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "", supplierNoteId: "" },
   formFields: [
     {
       id: "name",
@@ -40,22 +40,6 @@ export const supplierBasicData = {
           faIcon: "fa-search",
           title: "Supplier Information"
         }
-      },
-    },
-    {
-      id: "name-input",
-      lable: "Supplier Name ",
-      Field_Name: "Supplier Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "name",
-      fieldSetting: {
-        placeholder: "Enter Supplier Name",
-        allowSpace: true,
-        maxLength: 50,
-      },
-      validation: [{ type: "require" }, { type: "uniqueName" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
     {
@@ -166,7 +150,7 @@ export const supplierBasicData = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
-    
+
     {
       id: "taxId",
       lable: "Tax Id ",

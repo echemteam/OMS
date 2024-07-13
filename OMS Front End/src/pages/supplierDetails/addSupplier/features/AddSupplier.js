@@ -5,14 +5,14 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import Image from "../../../../components/image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import SupplierBasicDetail from "./supplierBasicDetail/SupplierBasicDetail";
-import SupplierContactDetail from "./supplierContactDetail/SupplierContactDetail";
-import SuplierAddressDetails from "./supplierAddressDetail/SupplierAddressDetails";
 import { useUpdateSupplierStatusMutation } from "../../../../app/services/supplierAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import SupplierDocumentDetail from "../../suppliers/features/updateSupplierDetails/features/docuementsDetail/SupplierDocuementDetail";
 import { TabEnum } from "../../../../utils/Enums/enums";
 import { StatusEnums } from "../../../../utils/Enums/StatusEnums";
+import SupplierBasicDetail from "../../feature/supplierBasicDetail/SupplierBasicDetail";
+import SuplierAddressDetails from "../../feature/supplierAddressDetail/SupplierAddressDetails";
+import SupplierContactDetail from "../../feature/supplierContactDetail/SupplierContactDetail";
 
 
 const AddSupplier = () => {
@@ -41,7 +41,7 @@ const AddSupplier = () => {
     {
       label: "Contact",
       subLabel: "Enter Supplier Contact Details",
-      content: <SupplierContactDetail isEditablePage={false} isSearchFilterShow={false}/>,
+      content: <SupplierContactDetail isEditablePage={false} isSearchFilterShow={false} />,
       tab: TabEnum.Contact
     },
     {
