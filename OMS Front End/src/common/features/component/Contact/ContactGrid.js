@@ -11,7 +11,7 @@ import { findFieldData, setOptionFieldSetting } from "../../../../utils/FormFiel
 import ToastService from "../../../../services/toastService/ToastService";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Component's */
-const AddEditContact = React.lazy(() => import("./AddEditContact"));
+const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
 const ContactDetailCard = React.lazy(() => import("./feature/ContactDetailCard"));
 
 const ContactGrid = ({ keyId, getContactByKeyId, addEditContactMutation, isSupplier, isEditablePage, SecurityKey, getContactById, isSearchFilterShow }) => {

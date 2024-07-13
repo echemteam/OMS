@@ -7,7 +7,7 @@ import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { addressFormData } from "../../../../pages/customerDetail/features/addressDetail/features/config/AddressForm.data";
 //** Compoent's */
-const AddEditAddress = React.lazy(() => import("./AddEditAddress"));
+const AddEditAddress = React.lazy(() => import("./feature/AddEditAddress"));
 const AddressDetailCard = React.lazy(() => import("./feature/AddressDetailCard"));
 
 const AddressGrid = ({ keyId, isSupplier, isEditablePage, SecurityKey, getAddresssByCustomerId, updateAddress, addAddress, getAddresssById }) => {

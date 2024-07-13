@@ -12,9 +12,6 @@ import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicD
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { setFieldSetting } from "../../../../../utils/FieldsSetting/SetFieldSetting";
 import { settingTypeEnums } from "../../../../../utils/Enums/enums";
-//** Component's */
-const ManageEmailAddress = React.lazy(() => import("../../../../../common/features/component/EmailAddress/ManageEmailAddress"));
-const ManageContactNumbers = React.lazy(() => import("../../../../../common/features/component/ContactNumber/ManageContactNumbers"));
 
 const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, onGetContactList, SecurityKey,
   isEditablePage, isSupplier, isEdit, isOpen, getContactById }) => {
@@ -190,8 +187,8 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       <div className="row">
         {!isGetByIdFetching ?
           <React.Fragment>
-            <ManageEmailAddress isButtonDisable={isButtonDisable} isSupplier={isSupplier} onGetContactList={onGetContactList} />
-            <ManageContactNumbers isButtonDisable={isButtonDisable} isSupplier={isSupplier} onGetContactList={onGetContactList} />
+            {/* <ManageEmailAddress isButtonDisable={isButtonDisable} isSupplier={isSupplier} onGetContactList={onGetContactList} />
+            <ManageContactNumbers isButtonDisable={isButtonDisable} isSupplier={isSupplier} onGetContactList={onGetContactList} /> */}
           </React.Fragment>
           : <DataLoader />
         }

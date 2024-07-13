@@ -5,18 +5,16 @@ import { Message } from "../EmailAddress/utils/ContactMessages";
 import { deleteData } from "../EmailAddress/utils/ContactEmailAddressUtil";
 import { addEditContactsFormData, phoneNumberConfig } from "./config/AddEditContactsForm.data";
 import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
-import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Service's */
 import SwalAlert from "../../../../services/swalService/SwalService";
 import ToastService from "../../../../services/toastService/ToastService";
-import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery, useLazyGetPhoneByContactIdQuery } from "../../../../app/services/phoneNumberAPI";
+import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery } from "../../../../app/services/phoneNumberAPI";
 import { setOptionFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
 //** Component's */
 const ContactNumberList = React.lazy(() => import("./feature/ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./feature/AddEditContactNumber"));
 
-const ManageContactNumbers = ({ contactId, phoneNumberList, setPhoneNumberList, isButtonDisable }) => {
+const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, isButtonDisable }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -119,4 +117,4 @@ const ManageContactNumbers = ({ contactId, phoneNumberList, setPhoneNumberList, 
 
 }
 
-export default ManageContactNumbers;
+export default ContactNumbersGrid;

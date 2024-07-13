@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Lib's */
-import Buttons from "../../../../components/ui/button/Buttons";
-import { settingTypeEnums } from "../../../../utils/Enums/enums";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
-import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-import { setFieldSetting, setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { addressFormData } from "../../../../pages/customerDetail/features/addressDetail/features/config/AddressForm.data";
+import Buttons from "../../../../../components/ui/button/Buttons";
+import { settingTypeEnums } from "../../../../../utils/Enums/enums";
+import FormCreator from "../../../../../components/Forms/FormCreator";
+import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
+import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+import { setFieldSetting, setOptionFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { addressFormData } from "../../../../../pages/customerDetail/features/addressDetail/features/config/AddressForm.data";
 //** Service's */
-import ToastService from "../../../../services/toastService/ToastService";
-import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
-import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../app/services/addressAPI";
+import ToastService from "../../../../../services/toastService/ToastService";
+import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
+import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 
 const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef }) => {
 

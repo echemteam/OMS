@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Lib's */
-import Buttons from "../../../../components/ui/button/Buttons";
-import { settingTypeEnums } from "../../../../utils/Enums/enums";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import { contactDetailFormData } from "./config/ContactDetailForm.data";
-import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
-import { modifyPhoneNumberData } from "../../../../utils/TransformData/TransformAPIData";
-import { setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import Buttons from "../../../../../components/ui/button/Buttons";
+import { settingTypeEnums } from "../../../../../utils/Enums/enums";
+import FormCreator from "../../../../../components/Forms/FormCreator";
+import { contactDetailFormData } from "../config/ContactDetailForm.data";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
+import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
+import { setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Service's */
-import ToastService from "../../../../services/toastService/ToastService";
+import ToastService from "../../../../../services/toastService/ToastService";
 //** Component's */
-const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
-const ManageContactNumbers = React.lazy(() => import("../ContactNumber/ManageContactNumbers"));
+const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddressGrid"));
+const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
 const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey,
     isEditablePage, isSupplier, isEdit, isOpen, getContactById }) => {
@@ -189,9 +189,9 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                         <FormCreator config={formData} ref={ref} {...formData} />
                     </div>
                     <div className="row">
-                        <ManageEmailAddress isButtonDisable={isButtonDisable} emailAddressList={emailAddressList}
+                        <EmailAddressGrid isButtonDisable={isButtonDisable} emailAddressList={emailAddressList}
                             setEmailAddressList={setEmailAddressList} contactId={contactId} />
-                        <ManageContactNumbers isButtonDisable={isButtonDisable} phoneNumberList={phoneNumberList}
+                        <ContactNumbersGrid isButtonDisable={isButtonDisable} phoneNumberList={phoneNumberList}
                             setPhoneNumberList={setPhoneNumberList} contactId={contactId} />
                     </div>
                 </React.Fragment>
