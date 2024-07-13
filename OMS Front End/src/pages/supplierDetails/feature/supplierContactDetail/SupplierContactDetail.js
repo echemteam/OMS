@@ -1,19 +1,10 @@
 import React, { useContext } from "react";
+import { securityKey } from "../../../../data/SecurityKey";
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Service */
-import {
-  useAddEditContactMutation,
-  useLazyGetContactBySupplierIdQuery,
-  useLazyGetSupllierContactByContactQuery,
-} from "../../../../app/services/contactAPI";
-import { securityKey } from "../../../../data/SecurityKey";
-import ContactGrid from "../../../../common/features/component/Contact/ContactGrid";
+import { useAddEditContactMutation, useLazyGetContactBySupplierIdQuery, useLazyGetSupllierContactByContactQuery, } from "../../../../app/services/contactAPI";
 //** Component's */
-const ContactDetail = React.lazy(() =>
-  import(
-    "../../../customerDetail/features/contactDetail/Contact/ContactDetail"
-  )
-);
+const ContactGrid = React.lazy(() => import("../../../../common/features/component/Contact/ContactGrid"));
 
 const supplierSecurityKey = {
   ADD: securityKey.ADDSUPPLIERCONTACT,
@@ -24,7 +15,10 @@ const SupplierContactDetail = ({ isEditSupplierPage, isSearchFilterShow }) => {
   const { supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
   return (
-    //** Also, We replace the API Name and mainId based on the customer and supplier module*/
+    /**
+      * This component displays an ContactGrid for the supplier module.
+      * This hook dynamically sets the API call based on the module (customer or supplier).
+    */
     <div className="supplier-contacts">
       <ContactGrid
         isSupplier={true}
@@ -36,16 +30,6 @@ const SupplierContactDetail = ({ isEditSupplierPage, isSearchFilterShow }) => {
         SecurityKey={!isResponsibleUser ? supplierSecurityKey : null}
         getContactById={useLazyGetSupllierContactByContactQuery}
       />
-      {/* <ContactDetail
-        isSupplier={true}
-        isEditablePage={isEditSupplierPage}
-        mainId={supplierId ? supplierId : 0}
-        isSearchFilterShow={isSearchFilterShow}
-        getContactByKeyId={useLazyGetContactBySupplierIdQuery}
-        addEditContactMutation={useAddEditContactMutation}
-        SecurityKey={!isResponsibleUser ? supplierSecurityKey : null}
-        getContactById={useLazyGetSupllierContactByContactQuery}
-      /> */}
     </div>
   );
 };

@@ -36,7 +36,7 @@ export const AddSupplierContextProvider = ({ children }) => {
             if (nextStepRef.current) {
                 nextStepRef.current.handleAddSupplierBasicDetails();
             }
-        } else if(supplierId > 0){
+        } else if (supplierId > 0) {
             setActiveTab((prev) => prev + 1)
         }
         else {
@@ -49,8 +49,8 @@ export const AddSupplierContextProvider = ({ children }) => {
     return (
         <AddSupplierContext.Provider value={{
             nextStepRef, supplierId, setSupplierId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addSupplier, setAllCountries, allCountries, setMainId, mainId,
-            contactId, setContactId, contactMainModal, contactNumbers, setContactNumbers, setPhoneNumberData, setIsResponsibleUser, isResponsibleUser,
-            phoneNumberData, emailAddressData, setEmailAddressData, setContactMainModal
+            contactId, setContactId, contactMainModal, contactNumbers, setContactNumbers, setIsResponsibleUser, isResponsibleUser,
+            setContactMainModal
         }}>
             {children}
         </AddSupplierContext.Provider>

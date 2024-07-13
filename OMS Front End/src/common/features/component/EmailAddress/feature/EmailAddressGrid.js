@@ -1,16 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
-import { emailConfig } from "./config/AddEditEmailForm.data";
 import MolGrid from "../../../../../components/Grid/MolGrid";
+import { emailConfig } from "../config/AddEditEmailForm.data";
 import CardSection from "../../../../../components/ui/card/CardSection";
-import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 
-const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler, isSupplier, isButtonDisable }) => {
 
-    const { emailAddressData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
+const EmailAddressGrid = ({ emailAddressList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
 
     return (
         <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-0 card-email-sec">
@@ -27,7 +23,7 @@ const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler, isSupp
                         <MolGrid
                             ref={molGridRef}
                             configuration={emailConfig}
-                            dataSource={emailAddressData}
+                            dataSource={emailAddressList}
                             allowPagination={false}
                             onActionChange={actionHandler}
                         />
@@ -38,4 +34,4 @@ const EmailAddressList = ({ molGridRef, handleToggleModal, actionHandler, isSupp
     )
 }
 
-export default EmailAddressList;
+export default EmailAddressGrid;
