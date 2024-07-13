@@ -34,14 +34,14 @@ export const AddSupplierContextProvider = ({ children }) => {
     const addSupplier = (data) => {
         if (supplierId > 0 && data === 1) {
             if (nextStepRef.current) {
-                nextStepRef.current.handleAddSupplierBasicDetails();
+                nextStepRef.current.handleAddEditSupplier();
             }
         } else if (supplierId > 0) {
             setActiveTab((prev) => prev + 1)
         }
         else {
             if (nextStepRef.current) {
-                nextStepRef.current.handleAddSupplierBasicDetails();
+                nextStepRef.current.handleAddEditSupplier();
             }
         }
     }

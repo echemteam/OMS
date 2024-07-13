@@ -55,7 +55,7 @@ const Layout = (props) => {
             <div className={`middle-page-section`}>
               <Header />
 
-              {isAuthorize ?
+              {/* {isAuthorize ? */}
                 <div className="center-content-part">
                   <div className="content-desc-section">
                     <Breadcome componentRoutes={props.componentRoutes} />
@@ -65,8 +65,8 @@ const Layout = (props) => {
                     <Footer />
                   </div>
                 </div>
-                : <Unauthorize />
-              }
+                {/* : <Unauthorize /> */}
+              {/* } */}
             </div>
           </div>
         </div>
