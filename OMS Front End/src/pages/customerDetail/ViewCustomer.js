@@ -14,12 +14,10 @@ import { securityKey } from "../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../utils/AuthorizeNavigation/authorizeNavigation";
 import { useSelector } from "react-redux";
 import { CustomerHistoryDetail } from "./features/HistoryDetail/CustomerHistoryDetail";
+import CustomerBasicDetail from "./feature/customerBasicDetail/CustomerBasicDetail";
 
 const RenderTabs = React.lazy(() =>
   import("../../components/ui/tabs/RenderTabs")
-);
-const BasicDetail = React.lazy(() =>
-  import("./features/basicDetail/BasicDetail")
 );
 const CustomerDetails = React.lazy(() =>
   import("./features/basicDetail/CustomerDetails")
@@ -28,7 +26,7 @@ const SettingDetails = React.lazy(() =>
   import("./features/settingDetail/SettingDetails")
 );
 const CustomerAddressDetails = React.lazy(() =>
-  import("./features/addressDetail/CustomerAddressDetails")
+  import("./feature/customerAddressDetail/CustomerAddressDetail")
 );
 const CustomerDocumentDetails = React.lazy(() =>
   import("./features/documentsDetail/CustomerDocumentDetails")
@@ -45,7 +43,7 @@ const ViewCustomer = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const authState = useSelector((state) => state.auth);
-  const pageId = id ? decryptUrlData(id) : 0;
+  const keyId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
@@ -92,14 +90,14 @@ const ViewCustomer = () => {
   ]);
 
   useEffect(() => {
-    if (pageId) {
-      setCustomerId(pageId);
-      getCustomersBasicInformationById(pageId);
+    if (keyId) {
+      setCustomerId(keyId);
+      getCustomersBasicInformationById(keyId);
     }
-  }, [pageId]);
+  }, [keyId]);
 
-  const handleRepeatCall = () => {
-    getCustomersBasicInformationById(pageId);
+  const getCustomerById = (keyId) => {
+    keyId && getCustomersBasicInformationById(keyId);
   };
 
   const handleToggleModal = () => {
@@ -184,7 +182,7 @@ const ViewCustomer = () => {
                 customerData={customerData}
                 isLoading={isGetCustomersBasicInformationByIdFetching}
                 customerId={customerId}
-                onhandleRepeatCall={handleRepeatCall}
+                onhandleRepeatCall={getCustomerById}
               />
             </CardSection>
           </div>
@@ -209,12 +207,12 @@ const ViewCustomer = () => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}
       >
-        <BasicDetail
+        <CustomerBasicDetail
           onSidebarClose={onSidebarClose}
           isOpen={isModelOpen}
           customerData={customerData}
-          pageId={pageId}
-          onhandleRepeatCall={handleRepeatCall}
+          keyId={keyId}
+          getCustomerById={getCustomerById}
         />
       </SidebarModel>
     </>

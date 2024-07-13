@@ -11,11 +11,11 @@ import ToastService from "../../services/toastService/ToastService";
 import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailAPI";
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Compoent's */
-const BasicDetail = React.lazy(() => import("./features/basicDetail/BasicDetail"));
-const SettingDetails = React.lazy(() => import("./features/settingDetail/SettingDetails"));
-const CustomerAddressDetails = React.lazy(() => import("./features/addressDetail/CustomerAddressDetails"));
 const CustomerDocumentDetails = React.lazy(() => import("./features/documentsDetail/CustomerDocumentDetails"));
+const CustomerBasicDetail = React.lazy(() => import("./feature/customerBasicDetail/CustomerBasicDetail"));
+const SettingDetails = React.lazy(() => import("./features/settingDetail/SettingDetails"));
 const CustomerContactDetails = React.lazy(() => import("./features/contactDetail/Contact/CustomerContactDetails"));
+const CustomerAddressDetails = React.lazy(() => import("./feature/customerAddressDetail/CustomerAddressDetail"));
 
 const AddCustomer = () => {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const AddCustomer = () => {
     {
       label: "Basic Information",
       subLabel: "Enter Customer Basic information",
-      content: <BasicDetail />,
+      content: <CustomerBasicDetail />,
       tab: TabEnum.BasicInformation,
     },
     {

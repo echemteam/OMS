@@ -130,10 +130,12 @@
         font-weight: 500;
       }
       .edit-icons {
-        cursor: pointer !important;
-
         img {
           width: 20px;
+          cursor: pointer !important;
+        }
+        .cursor-pointer{
+          cursor: pointer !important;
         }
       }
     }
