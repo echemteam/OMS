@@ -4,7 +4,7 @@ import DemoGrid from "../../pages/demoGrid/DemoGrid";
 import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
-import ApprovalRules from "../../pages/configuration/ApprovalRules";
+import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
 
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));

@@ -1,7 +1,7 @@
 import { FormFieldTypes } from "../../../../data/formFieldType";
 
 export const rulesFormData = {
-    initialState: { ruleName: "", moduleId: "" , functionalityId:"" , fieldId:"" , approverRoleId: "" , approvalAction:""},
+    initialState: { ruleName: "", moduleId: "" , functionalityId:"", functionalitiesFieldId:"" , roleId: "" , approvalAction:""},
     formFields: [
         {
             id: "ruleName",
@@ -26,7 +26,6 @@ export const rulesFormData = {
             dataField: "moduleId",
             fieldSetting: {
                 placeholder: "Select Module",
-                allowSpace: true,
             },
             validation: [{ type: "require" }],
             style: {
@@ -36,12 +35,12 @@ export const rulesFormData = {
         {
             id: "functionalityId",
             lable: "Functionality ",
-            Field_Name: "Functionality",
+            Field_Name: "name",
             fieldType: FormFieldTypes.SELECT,
             dataField: "functionalityId",
             fieldSetting: {
+                // isDisabled: true,
                 placeholder: "Select Functionality",
-                allowSpace: true,
             },
             validation: [{ type: "require" }],
             style: {
@@ -49,14 +48,14 @@ export const rulesFormData = {
             },
         },
         {
-            id: "fieldId",
+            id: "functionalitiesFieldId",
             lable: "Field ",
-            Field_Name: "Field",
+            Field_Name: "fieldName",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "fieldId",
+            dataField: "functionalitiesFieldId",
             fieldSetting: {
+                // isDisabled: true,
                 placeholder: "Select Module",
-                allowSpace: true,
             },
             validation: [{ type: "require" }],
             style: {
@@ -64,14 +63,13 @@ export const rulesFormData = {
             },
         },
         {
-            id: "approverRoleId",
+            id: "roleId",
             lable: "Approver Role ",
-            Field_Name: "Approver Role",
+            Field_Name: "roleName",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "approverRoleId",
+            dataField: "roleId",
             fieldSetting: {
                 placeholder: "Select Approver Role",
-                allowSpace: true,
             },
             validation: [{ type: "require" }],
             style: {

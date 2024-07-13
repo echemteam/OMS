@@ -11,6 +11,11 @@
 
 */
 export const setOptionFieldSetting = (apiResponseData, valueField, labelField, formFieldsData, fieldId, filterCondition = null) => {
+
+    if (!Array.isArray(apiResponseData)) {
+        console.error('API response data is not an array or is undefined.');
+        return;
+      }
     // Filter the API response data if a filter condition is provided
     const filteredData = filterCondition ? apiResponseData.filter(filterCondition) : apiResponseData;
 

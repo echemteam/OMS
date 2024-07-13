@@ -12,7 +12,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
-import { useAddCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery, useUpdateCustomersBasicInformationMutation } from "../../../../app/services/basicdetailAPI";
+import { useAddEditCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery } from "../../../../app/services/basicdetailAPI";
 import { BasicInformation } from "./BasicInformation";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { setFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
@@ -24,6 +24,7 @@ const BasicDetail = (props) => {
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [customerInfoData, setCustomerInfoData] = useState(false);
+  const [noteId, setNoteId] = useState("")
 
   const [formData, setFormData] = useState(basicDetailFormDataHalf);
   const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
@@ -94,21 +95,13 @@ const BasicDetail = (props) => {
   ] = useLazyGetAllUserQuery();
 
   const [
-    addCustomersBasicInformation,
+    addEditCustomersBasicInformation,
     {
-      isSuccess: isAddCustomersBasicInformationSuccess,
-      data: isAddCustomersBasicInformationData,
+      isLoading: isAddEditCustomersBasicInformationLoading,
+      isSuccess: isAddEditCustomersBasicInformationSuccess,
+      data: isAddEditCustomersBasicInformationData,
     },
-  ] = useAddCustomersBasicInformationMutation();
-
-  const [
-    updateCustomersBasicInformation,
-    {
-      isLoading,
-      isSuccess: isUpdateCustomersBasicInformationSuccess,
-      data: isUpdateCustomersBasicInformationData,
-    },
-  ] = useUpdateCustomersBasicInformationMutation();
+  ] = useAddEditCustomersBasicInformationMutation();
 
   useEffect(() => {
     getAllGroupTypes();
@@ -200,34 +193,23 @@ const BasicDetail = (props) => {
   }, [isGetAllUserSucess, allGetAlluserData,]);
 
   useEffect(() => {
-    if (isAddCustomersBasicInformationSuccess && isAddCustomersBasicInformationData) {
-      if (isAddCustomersBasicInformationData.errorMessage.includes('exists')) {
-        ToastService.warning(isAddCustomersBasicInformationData.errorMessage);
+    if (isAddEditCustomersBasicInformationSuccess && isAddEditCustomersBasicInformationData) {
+      if (isAddEditCustomersBasicInformationData.errorMessage.includes('exists')) {
+        ToastService.warning(isAddEditCustomersBasicInformationData.errorMessage);
         return;
       }
-      setCustomerId(isAddCustomersBasicInformationData.keyValue)
-      ToastService.success(isAddCustomersBasicInformationData.errorMessage);
-      moveNextPage();
-    }
-  }, [isAddCustomersBasicInformationSuccess, isAddCustomersBasicInformationData]);
-
-  useEffect(() => {
-    if (isUpdateCustomersBasicInformationSuccess && isUpdateCustomersBasicInformationData) {
-      if (isUpdateCustomersBasicInformationData.errorMessage.includes('exists')) {
-        ToastService.warning(isUpdateCustomersBasicInformationData.errorMessage);
-        return;
-      }
-      // setCustomerId(isUpdateCustomersBasicInformationData.keyValue)
+      setNoteId(isAddEditCustomersBasicInformationData.noteId)
       if (props.pageId > 0) {
         props.onhandleRepeatCall()
         onreset()
-        ToastService.success(isUpdateCustomersBasicInformationData.errorMessage);
+        ToastService.success(isAddEditCustomersBasicInformationData.errorMessage);
       } else {
-        ToastService.success(isUpdateCustomersBasicInformationData.errorMessage);
+        setCustomerId(isAddEditCustomersBasicInformationData.keyValue)
+        ToastService.success(isAddEditCustomersBasicInformationData.errorMessage);
         moveNextPage();
       }
     }
-  }, [isUpdateCustomersBasicInformationSuccess, isUpdateCustomersBasicInformationData]);
+  }, [isAddEditCustomersBasicInformationSuccess, isAddEditCustomersBasicInformationData]);
 
   const onreset = () => {
     props.onSidebarClose()
@@ -255,7 +237,6 @@ const BasicDetail = (props) => {
 
   useImperativeHandle(nextRef, () => ({
     handleAddBasicDetails,
-    handleUpdate
   }));
 
   const handleAddBasicDetails = () => {
@@ -266,46 +247,18 @@ const BasicDetail = (props) => {
         ...data,
         groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object" ? data.groupTypeId.value : data.groupTypeId,
         territoryId: data.territoryId && typeof data.territoryId === "object" ? data.territoryId.value : data.territoryId,
-        countryId: countryId,
-        responsibleUserId: data.responsibleUserId ? data.responsibleUserId : null,
-      };
-
-      if (data.taxId === "") {
-        addCustomersBasicInformation(req);
-      } else {
-        if (data.taxId) {
-          const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, basicDetailFormDataHalf.formFields, 'taxId');
-          if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
-            addCustomersBasicInformation(req);
-          } else {
-            ToastService.warning(validateTaxIdMessage);
-          }
-        }
-      }
-    } else {
-      ToastService.warning('Please enter customer basic information');
-    }
-  };
-
-
-  const handleUpdate = () => {
-    let data = basicDetailRef.current.getFormData();
-    if (data) {
-      let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
-      let req = {
-        ...data,
-        groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object" ? data.groupTypeId.value : data.groupTypeId,
-        territoryId: data.territoryId && typeof data.territoryId === "object" ? data.territoryId.value : data.territoryId,
         countryId: data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId,
         responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
-        customerId: props.pageId ? props.pageId : customerId
+        customerId: props.pageId ? props.pageId : customerId,
+        customerNoteId: noteId ? noteId : 0
       };
+
       if (data.taxId === "") {
         let value = {
           ...req,
           responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
         }
-        updateCustomersBasicInformation(value);
+        addEditCustomersBasicInformation(value);
       } else {
         if (data.taxId) {
           const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, basicDetailFormDataHalf.formFields, 'taxId');
@@ -314,18 +267,16 @@ const BasicDetail = (props) => {
               ...req,
               responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
             }
-            updateCustomersBasicInformation(value);
+            addEditCustomersBasicInformation(value);
           } else {
             ToastService.warning(validateTaxIdMessage);
           }
         }
       }
-
     } else {
       ToastService.warning('Please enter customer basic information');
     }
   };
-
 
   const handleValidateTextId = (data, dataField) => {
     if (dataField === 'countryId') {
@@ -421,8 +372,8 @@ const BasicDetail = (props) => {
               <Buttons
                 buttonTypeClassName="theme-button"
                 buttonText="Update"
-                onClick={handleUpdate}
-                isLoading={isLoading}
+                onClick={handleAddBasicDetails}
+                isLoading={isAddEditCustomersBasicInformationLoading}
                 isDisable={isButtonDisable}
               />
               <Buttons

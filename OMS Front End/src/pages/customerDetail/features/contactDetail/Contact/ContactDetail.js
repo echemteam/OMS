@@ -241,6 +241,10 @@ const ContactDetail = ({
           isCardSection={true}
           isdropdownOpen={true}
           clearButtonClassName="dark-btn"
+          searchIconImg={AppIcons.SearchIcone}
+          searchTextWithIcon={true}
+          clearTextWithIcon={true}
+          clearIconImg={AppIcons.ClearIcone}
         >
           <ManageContactList
             handleEdit={handleEdit}

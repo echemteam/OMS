@@ -2765,3 +2765,16 @@ input[type="checkbox"]:disabled {
     }
   }
 }
+
+.custom-pass-sec{
+  position: relative;
+  .password-hide-show {
+    position: absolute;
+    right: 15px;
+    top: 49%;
+    transform: translateY(-50%);
+    img {
+      width: 20px;
+    }
+  }
+}
