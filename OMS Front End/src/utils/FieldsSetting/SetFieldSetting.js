@@ -44,6 +44,9 @@ export const setFieldSetting = (formFieldsData, fieldId, settingType, value = fa
             case 'isDisabled':
                 selectField.fieldSetting.isDisabled = value;
                 break;
+            case 'isInputButton':
+                selectField.inputButtonGroup.isInputButton = value;
+                break;
             default:
                 break;
         }

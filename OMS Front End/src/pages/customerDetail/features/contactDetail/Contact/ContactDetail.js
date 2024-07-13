@@ -18,16 +18,7 @@ import { ErrorMessage } from "../../../../../data/appMessages";
 const AddEditContact = React.lazy(() => import("./AddEditContact"));
 const ManageContactList = React.lazy(() => import("./ManageContactList"));
 
-const ContactDetail = ({
-  mainId,
-  getContactByKeyId,
-  addEditContactMutation,
-  isSupplier,
-  isEditablePage,
-  SecurityKey,
-  getContactById,
-  isSearchFilterShow
-}) => {
+const ContactDetail = ({ mainId, getContactByKeyId, addEditContactMutation, isSupplier, isEditablePage, SecurityKey, getContactById, isSearchFilterShow }) => {
   //** State */
   const editRef = useRef();
   const childRef = useRef();

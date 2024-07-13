@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "../../../../../components/image/Image";
 import { AppIcons } from "../../../../../data/appIcons";
-import ContactEmailsDropdown from "./ContactEmailsDropdown";
-import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
+import ContactEmailsDropdown from "../../../../../common/features/component/Contact/feature/ContactEmailsDropdown";
+import ContactPhoneNumberDropdown from "../../../../../common/features/component/Contact/feature/ContactPhoneNumberDropdown";
 
 const ContactCard = ({ childData, handleEdit, showEditIcon, type }) => {
   const emailDropdownRef = useRef(null);

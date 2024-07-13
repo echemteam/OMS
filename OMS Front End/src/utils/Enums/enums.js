@@ -1,6 +1,7 @@
 export const settingTypeEnums = {
     isMultiSelect: "isMultiSelect",
     isDisabled: "isDisabled",
+    isInputButton: "isInputButton",
 }
 
 export const ApprovalEnum = {
