@@ -6,7 +6,7 @@ import { emailConfig } from "../config/AddEditEmailForm.data";
 import CardSection from "../../../../../components/ui/card/CardSection";
 
 
-const EmailAddressGrid = ({ emailAddressList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
+const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
 
     return (
         <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-0 card-email-sec">
@@ -34,4 +34,4 @@ const EmailAddressGrid = ({ emailAddressList, molGridRef, handleToggleModal, act
     )
 }
 
-export default EmailAddressGrid;
+export default EmailAddressList;

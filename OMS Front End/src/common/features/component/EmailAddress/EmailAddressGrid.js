@@ -9,7 +9,7 @@ import SwalAlert from "../../../../services/swalService/SwalService";
 import ToastService from "../../../../services/toastService/ToastService";
 import { useDeleteContactEmailMutation } from "../../../../app/services/emailAddressAPI";
 //** Component's */
-const EmailAddressGrid = React.lazy(() => import("./feature/EmailAddressGrid"));
+const EmailAddressList = React.lazy(() => import("./feature/EmailAddressList"));
 const AddEditEmailModal = React.lazy(() => import("./feature/AddEditEmailAddress"));
 
 const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, isButtonDisable }) => {
@@ -86,7 +86,7 @@ const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, 
 
     return (
         <React.Fragment>
-            <EmailAddressGrid molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
+            <EmailAddressList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
                 isButtonDisable={isButtonDisable} emailAddressList={emailAddressList} />
             {showModal && (
                 <AddEditEmailModal contactId={contactId} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal}
