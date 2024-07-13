@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CardSection from "../../../components/ui/card/CardSection";
+import CardSection from "../../../../components/ui/card/CardSection";
 
 const Functionalities = ({
   functionalities,
-  selectedFunctionality,
+  selectedFunctionalityId,
   onFunctionalityClick,
 }) => {
   return (
@@ -12,23 +12,17 @@ const Functionalities = ({
       <CardSection cardTitle="Functionalities" rightButton={true}>
         <div className="config-content">
           {functionalities &&
-            Object.keys(functionalities).map((func) => (
+            functionalities.map((functionality) => (
               <div
-                key={func}
-                className={`config-functionalities-info ${
-                  selectedFunctionality === func ? "selected" : ""
-                }`}
-                onClick={() => onFunctionalityClick(func)}
+                key={functionality.functionalityId}
+                className={`config-functionalities-info ${selectedFunctionalityId === functionality.functionalityId ? "selected" : ""
+                  }`}
+                onClick={() => onFunctionalityClick(functionality.functionalityId)}
               >
                 <div className="profile-icon">
                   <i className="fa fa-cog" aria-hidden="true"></i>
                 </div>
-                <span>{func}</span>
-                {/* {selectedFunctionality === func && (
-                  <div className="right-dropdown">
-                    <i className="fa fa-caret-down" aria-hidden="true"></i>
-                  </div>
-              )} */}
+                <span>{functionality.name}</span>
               </div>
             ))}
         </div>
@@ -39,7 +33,7 @@ const Functionalities = ({
 
 Functionalities.propTypes = {
   functionalities: PropTypes.object,
-  selectedFunctionality: PropTypes.string,
+  selectedFunctionalityId: PropTypes.string,
   onFunctionalityClick: PropTypes.func.isRequired,
 };
 

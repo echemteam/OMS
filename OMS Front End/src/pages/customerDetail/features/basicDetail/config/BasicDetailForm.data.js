@@ -6,7 +6,7 @@ import { getLabelClass } from "../../../../../utils/StatusColors/StatusColors";
 export const excludingRoles = ['Admin', 'manager']
 
 export const basicDetailFormDataHalf = {
-  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false, responsibleUserId: "" },
+  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isCompany: false, taxId: "", isBuyingForThirdParty: false, responsibleUserId: "", customerNoteId: "" },
   formFields: [
     {
       id: "name",
@@ -24,13 +24,13 @@ export const basicDetailFormDataHalf = {
         containerCss: "col-xxl-8 col-xl-8 col-md-8 col-12 mb-input",
       },
       inputButtonGroup: {
+        // isMultiButton: false,
         isInputButton: true,
         buttonText: 'Verify',
-        isMultiButton: true,
         showInformation: {
           showInputButton: true,
           faIcon: "fa-search",
-          title : "Customer Information"
+          title: "Customer Information"
         }
       },
 
@@ -83,7 +83,7 @@ export const basicDetailFormDataHalf = {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
-    
+
     {
       id: "groupTypeId",
       lable: "Group Type ",
@@ -99,8 +99,8 @@ export const basicDetailFormDataHalf = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
-    
-    
+
+
     {
       id: "countryId",
       lable: "Country ",
@@ -131,8 +131,8 @@ export const basicDetailFormDataHalf = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
-    
-    
+
+
     {
       id: "taxId",
       lable: "Tax Id ",
@@ -185,7 +185,7 @@ export const basicDetailFormDataHalf = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mt-3 mb-input margin-left0-checkbox",
       },
     },
-    
+
     {
       id: "note",
       lable: "Notes ",
@@ -202,7 +202,7 @@ export const basicDetailFormDataHalf = {
         containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input mb-0",
       },
     },
-    
+
   ],
   formSetting: {
     isViewOnly: false
@@ -214,32 +214,32 @@ export const basicInfoData = {
     {
       name: "Name",
       fieldName: "name",
-      width:"15%",
+      width: "15%",
       // allowShort: true,
     },
     {
       name: "Tax Id",
       fieldName: "taxId",
-      width:"15%",
+      width: "15%",
       // allowShort: true,
     },
     {
       name: "Country",
       fieldName: "countryName",
-      width:"15%",
+      width: "15%",
       // allowShort: true,
     },
-  
+
     {
       name: "Email",
       fieldName: "emailAddress",
-      width:"15%",
+      width: "15%",
       // allowShort: true,
     },
     {
       name: "Group Type",
       fieldName: "groupType",
-      width:"15%",
+      width: "15%",
       // allowShort: true,
     },
     {
@@ -255,7 +255,7 @@ export const basicInfoData = {
     },
     {
       name: "Action",
-      width:"10%",
+      width: "10%",
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

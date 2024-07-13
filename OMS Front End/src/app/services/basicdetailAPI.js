@@ -33,18 +33,9 @@ const basicdetailAPI = createApi({
             transformErrorResponse: transformErrorResponse,
         }),
       
-        addCustomersBasicInformation: builder.mutation({
+        addEditCustomersBasicInformation: builder.mutation({
             query: (Details) => ({
-                url: '/Customers/AddCustomersBasicInformation',
-                method: 'POST',
-                body: transformRequest(Details)
-            }),
-            transformResponse: transformSucessResponse,
-            transformErrorResponse: transformErrorResponse
-        }),
-        updateCustomersBasicInformation: builder.mutation({
-            query: (Details) => ({
-                url: '/Customers/UpdateCustomersBasicInformation',
+                url: '/Customers/AddEditCustomersBasicInformation',
                 method: 'POST',
                 body: transformRequest(Details)
             }),
@@ -104,15 +95,6 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-        // getCustomersDetailsByCutomerName: builder.mutation({
-        //     query: (Details) => ({
-        //         url: '/Customers/GetCustomersDetailsByCutomerName',
-        //         method: 'POST',
-        //         body: transformRequest(Details)
-        //     }),
-        //     transformResponse: transformSucessResponse,
-        //     transformErrorResponse: transformErrorResponse
-        // }),
         getCustomersDetailsByCutomerName: builder.query({
             query: (userName) => ({
                 url: encryptQueryString(`/Customers/GetCustomersDetailsByCutomerName/?customerName=${String(userName)}`),
@@ -133,8 +115,7 @@ export const {
     useLazyGetAllTerritoriesQuery,
     useLazyGetAllCountriesQuery,
     useLazyGetCustomersBasicInformationByIdQuery,
-    useAddCustomersBasicInformationMutation,
-    useUpdateCustomersBasicInformationMutation,
+    useAddEditCustomersBasicInformationMutation,
     useCheckCustomerNameExistMutation,
     useLazyGetCustomersDetailsByCutomerNameQuery
 } = basicdetailAPI
