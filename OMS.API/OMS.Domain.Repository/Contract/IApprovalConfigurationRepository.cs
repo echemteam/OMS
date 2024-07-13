@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
+using OMS.Domain.Entities.Entity.ApprovalConfiguration;
+using OMS.Domain.Entities.Entity.CommonEntity;
 
 namespace OMS.Domain.Repository.Contract
 {
-    internal interface IApprovalConfigurationRepository
+    public interface IApprovalConfigurationRepository
     {
+        Task<AddEntityDTO<int>> AddEditApprovalConfiguration(ApprovalConfigurationDTO addEditApprovalConfiguration);
+        Task<List<GetApprovalConfigurationByApprovalConfigurationIdResponse>> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId);
+        Task<List<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse>> GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(int moduleId, int functionalityId);
     }
 }

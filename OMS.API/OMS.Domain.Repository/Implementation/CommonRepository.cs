@@ -34,6 +34,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETEVENTNAMEANDUSERNAMEBYSUPPLIERID = "GetEventNameAndUserNameBySupplierId";
         const string GETALLMODULES = "GetAllModules";
         const string GETALLFUNCTIONALITIES = "GetAllFunctionalities";
+        const string GETALLFUNCTIONALITIESFIELDS = "GetAllFunctionalitiesFields";
         const string UPDATERESPONSIBLEUSER = "UpdateResponsibleUser";
         #endregion
 
@@ -157,6 +158,14 @@ namespace OMS.Domain.Repository.Implementation
                 moduleId
             }, commandType: CommandType.StoredProcedure);
             return getEventNameAndUserNameBySupplierIdResponse;
+        }
+        public async Task<List<GetAllFunctionalitiesFieldsResponse>> GetAllFunctionalitiesFields(int functionalityId)
+        {
+            List<GetAllFunctionalitiesFieldsResponse> getAllFunctionalitiesFieldsResponse = await _context.GetList<GetAllFunctionalitiesFieldsResponse>(GETALLFUNCTIONALITIESFIELDS, new
+            {
+                functionalityId
+            }, commandType: CommandType.StoredProcedure);
+            return getAllFunctionalitiesFieldsResponse;
         }
         public async Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
         {
