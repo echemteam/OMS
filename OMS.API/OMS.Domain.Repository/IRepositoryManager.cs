@@ -25,5 +25,6 @@ namespace OMS.Domain.Repository
         IApprovalRepository approval { get; }
         IApprovalConfigurationRepository approvalConfiguration { get; }
         IApiProviderRepository apiProvider { get; }
+        IApiEndpointRepository apiEndpoint { get; }
     }
 }
