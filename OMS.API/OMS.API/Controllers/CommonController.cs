@@ -213,5 +213,12 @@ namespace OMS.API.Controllers
 
             return File(memory, contentType, fileName);
         }
+
+        [HttpGet("GetAllAPIProviders")]
+        public async Task<IActionResult> GetAllAPIProviders()
+        {
+            List<GetAllAPIProvidersResponse> responseData = await _serviceManager.commonServices.GetAllAPIProviders().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

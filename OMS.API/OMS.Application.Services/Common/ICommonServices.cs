@@ -32,5 +32,6 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllFunctionalitiesFieldsResponse>> GetAllFunctionalitiesFields(int functionalityId);
         Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData);
         Task<byte[]> DownloadDocument(string folderName, string fileName, int keyId);
+        Task<List<GetAllAPIProvidersResponse>> GetAllAPIProviders();
     }
 }
