@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 //** Lib's */
-import { NotesData } from "./config/Notes.data";
+import { NotesData } from "../../../../../common/features/component/Note/config/Notes.data";
 import { AppIcons } from "../../../../../data/appIcons";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
@@ -157,8 +157,7 @@ const NotesDetail = ({ keyId, isSupplier, isEditablePage, SecurityKey, onAddNote
         iconImg={AppIcons.PlusIcon}
         rightButton={buttonVisible ? true : false}
         buttonText="Add"
-        titleButtonClick={handleToggleModal}
-      >
+        titleButtonClick={handleToggleModal}>
         <div className="note-card-sec">
           {!isGetNotesFetching ?
             <NotesCard

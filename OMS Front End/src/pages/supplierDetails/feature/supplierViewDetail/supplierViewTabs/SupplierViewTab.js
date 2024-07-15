@@ -8,6 +8,9 @@ import SupplierContactDetail from "../../supplierContactDetail/SupplierContactDe
 import SupplierDocumentDetail from "../../supplierDocumentDetail/SupplierDocumentDetail";
 // import { SupplierHistoryDetail } from "../../../suppliers/features/updateSupplierDetails/features/historyDetails/SupplierHistoryDetail";
 import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
+import SupplierNoteDetail from "../../supplierNoteDetail/SupplierNoteDetail";
+import HistotyList from "../../../../../common/features/component/History/HistotyList";
+import { SupplierHistory } from "../../supplierHistoryDetail/SupplierHistory";
 
 const SupplierViewTab = (supplierId) => {
 
@@ -51,7 +54,7 @@ const SupplierViewTab = (supplierId) => {
             sMenuItemCaption: "Notes",
             component: (
                 <div className="mt-2">
-                    {/* {<ManageSupplierNotes isEditablePage={true} />} */}
+                    <SupplierNoteDetail isEditablePage={true} />
                 </div>
             ),
             isVisible: hasNotePermission.hasAccess,
@@ -61,6 +64,7 @@ const SupplierViewTab = (supplierId) => {
             component: (
                 <div className="mt-2">
                     {/* {<SupplierHistoryDetail />} */}
+                    <SupplierHistory />
                 </div>
             ),
             isVisible: hasHistoryPermission.hasAccess,
