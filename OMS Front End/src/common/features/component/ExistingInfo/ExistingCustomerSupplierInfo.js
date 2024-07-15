@@ -23,6 +23,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
     useEffect(() => {
         if (!isGetSupplierDetailsBySupplierNameFetching && isGetSupplierDetailsBySupplierNameSucess && isGetSupplierDetailsBySupplierNameData) {
             if (isGetSupplierDetailsBySupplierNameData.length > 0) {
+                setIsExistingModel(true);
                 setExistingInfoData(isGetSupplierDetailsBySupplierNameData)
             } else {
                 ToastService.warning("No record found");
@@ -41,7 +42,6 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
         window.open(url, "_blank");
     };
     const onHandleExistingInfo = (supplierName) => {
-        setIsExistingModel(true);
         checkExistingInformation(supplierName);
     };
 

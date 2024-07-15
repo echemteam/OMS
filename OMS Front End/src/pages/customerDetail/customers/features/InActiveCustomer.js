@@ -4,7 +4,7 @@ import { InActiveCustomers } from "./InActiveCustomers";
 import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext"
 import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../config/CustomerData";
 import useDebounce from "../../../../app/customHooks/useDebouce";
-import { ListSupplier } from "../../../../utils/Enums/enums";
+import { ListSupplier } from "../../../../utils/Enums/commonEnums";
 import { StatusEnums, StatusValue } from "../../../../utils/Enums/StatusEnums";
 import { ErrorMessage } from "../../../../data/appMessages";
 import ToastService from "../../../../services/toastService/ToastService";

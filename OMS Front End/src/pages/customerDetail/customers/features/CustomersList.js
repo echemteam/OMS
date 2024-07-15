@@ -30,9 +30,9 @@ import { useSelector } from "react-redux";
 import { StatusEnums, StatusFeild } from "../../../../utils/Enums/StatusEnums";
 import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../app/services/commonAPI";
 import { excludingRoles } from "../../features/basicDetail/config/BasicDetailForm.data";
-import { ownerType } from "../../../../utils/Enums/enums";
+import { OwnerType } from "../../../../utils/Enums/commonEnums";
 import { AppIcons } from "../../../../data/appIcons";
-import { setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
@@ -83,7 +83,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       const filterCondition = (item) => {
         return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
       };
-      setOptionFieldSetting(allGetAlluserData, 'userId', 'fullName', reasonData, 'responsibleUserId', filterCondition);
+      setDropDownOptionField(allGetAlluserData, 'userId', 'fullName', reasonData, 'responsibleUserId', filterCondition);
     }
   }, [isGetAllUserSucess, allGetAlluserData,]);
 
@@ -322,7 +322,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   const updateRUserData = (value) => {
     let req = {
       ownerId: customerID,
-      ownerType: ownerType.Customer,
+      OwnerType: OwnerType.Customer,
       responsibleUserId: value
     }
     updateResponsibleUser(req);

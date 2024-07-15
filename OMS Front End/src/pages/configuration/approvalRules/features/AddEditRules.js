@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import { useAddEditApprovalConfigurationMutation, useLazyGetAllFunctionalitiesFieldsQuery, useLazyGetAllFunctionalitiesQuery, useLazyGetAllModulesQuery } from '../../../../app/services/configurationAPI';
-import { commansDataField } from '../../../../utils/Enums/DropdownEnums';
+import { CommansDataField } from '../../../../utils/Enums/DropdownEnums';
 import { useLazyGetAllRolesQuery } from '../../../../app/services/securityPermissionsAPI';
 import ToastService from '../../../../services/toastService/ToastService';
 import { onResetForm } from '../../../../utils/FormFields/ResetForm/handleResetForm';
-import { setOptionFieldSetting } from '../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
+import { setDropDownOptionField } from '../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 
 const AddEditRules = (props) => {
     const ruleFormRef = useRef();
@@ -113,19 +113,19 @@ const AddEditRules = (props) => {
     }, [props.getApprovedConfigData])
 
     const handleModuleOption = (responseData) => {
-        setOptionFieldSetting(responseData, commansDataField.ModuleId, 'moduleName', props.rulesFormData, commansDataField.ModuleId);
+        setDropDownOptionField(responseData, CommansDataField.ModuleId, 'moduleName', props.rulesFormData, CommansDataField.ModuleId);
     }
 
     const handleFunctionalityOption = (responseData) => {
-        setOptionFieldSetting(responseData, commansDataField.FunctionalityId, 'name', props.rulesFormData, commansDataField.FunctionalityId);
+        setDropDownOptionField(responseData, CommansDataField.FunctionalityId, 'name', props.rulesFormData, CommansDataField.FunctionalityId);
     }
 
     const handleFunctionalityFieldOption = (responseData) => {
-        setOptionFieldSetting(responseData, 'functionalitiesFieldId', 'fieldName', props.rulesFormData, 'functionalitiesFieldId');
+        setDropDownOptionField(responseData, 'functionalitiesFieldId', 'fieldName', props.rulesFormData, 'functionalitiesFieldId');
     }
 
     const handleRoleOption = (responseData) => {
-        setOptionFieldSetting(responseData, 'roleId', 'roleName', props.rulesFormData, 'roleId');
+        setDropDownOptionField(responseData, 'roleId', 'roleName', props.rulesFormData, 'roleId');
     }
 
     const handleAddEditRulesResponse = (isSuccess, responseData) => {
@@ -147,16 +147,16 @@ const AddEditRules = (props) => {
 
     const handleChangeDropdownList = (data, dataField) => {
         const manageData = { ...props.formData };
-        if (dataField === commansDataField.ModuleId) {
+        if (dataField === CommansDataField.ModuleId) {
             setModuleID(data.value)
-            setOptionFieldSetting(props.allGetAllFunctionalitiesData, 'functionalityId', 'name', manageData, 'functionalityId');
+            setDropDownOptionField(props.allGetAllFunctionalitiesData, 'functionalityId', 'name', manageData, 'functionalityId');
             ruleFormRef.current.updateFormFieldValue({
                 moduleId: data.value,
                 functionalityId: null,
             });
-        } else if (dataField === commansDataField.FunctionalityId) {
+        } else if (dataField === CommansDataField.FunctionalityId) {
             setFunctionalityID(data.value)
-            setOptionFieldSetting(props.allGetAllFunctionalitiesFieldsData, 'functionalitiesFieldId', 'fieldName', manageData, 'functionalitiesFieldId');
+            setDropDownOptionField(props.allGetAllFunctionalitiesFieldsData, 'functionalitiesFieldId', 'fieldName', manageData, 'functionalitiesFieldId');
             ruleFormRef.current.updateFormFieldValue({
                 functionalityId: data.value,
                 functionalitiesFieldId: null,

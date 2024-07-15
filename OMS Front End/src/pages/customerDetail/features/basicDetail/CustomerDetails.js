@@ -20,7 +20,7 @@ import { ErrorMessage } from "../../../../data/appMessages";
 import { StaticStatus, StatusValue } from "../../../../utils/Enums/StatusEnums";
 import { excludingRoles } from "./config/BasicDetailForm.data";
 import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../app/services/commonAPI";
-import { ownerType } from "../../../../utils/Enums/enums";
+import { OwnerType } from "../../../../utils/Enums/commonEnums";
 
 const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const childRef = useRef();
@@ -178,7 +178,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   const updateRUserData = (value) => {
     let req = {
       ownerId: customerId,
-      ownerType: ownerType.Customer,
+      OwnerType: OwnerType.Customer,
       responsibleUserId: value
     }
     updateResponsibleUser(req);

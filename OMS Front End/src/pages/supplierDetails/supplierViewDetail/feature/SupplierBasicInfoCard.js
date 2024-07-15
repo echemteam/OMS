@@ -3,11 +3,11 @@ import React, { useEffect, useRef, useState, useContext } from 'react'
 //** Lib's */
 import Image from '../../../../components/image/Image';
 import { AppIcons } from '../../../../data/appIcons';
-import { ownerType } from '../../../../utils/Enums/enums';
 import CopyText from '../../../../utils/CopyText/CopyText';
 import { securityKey } from '../../../../data/SecurityKey';
 import { ErrorMessage } from '../../../../data/appMessages';
 import Buttons from '../../../../components/ui/button/Buttons';
+import { OwnerType } from '../../../../utils/Enums/commonEnums';
 import FormCreator from '../../../../components/Forms/FormCreator';
 import DropDown from '../../../../components/ui/dropdown/DropDrown';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
@@ -147,7 +147,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const updateRUserData = (value) => {
     let req = {
       ownerId: supplierId,
-      ownerType: ownerType.Supplier,
+      OwnerType: OwnerType.Supplier,
       responsibleUserId: value
     }
     updateResponsibleUser(req);

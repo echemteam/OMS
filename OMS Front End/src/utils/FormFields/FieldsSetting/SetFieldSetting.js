@@ -1,3 +1,21 @@
+import PropTypes from 'prop-types';
+
+/**
+ * Finds a specific field data object within the form fields data by its field ID.
+ * @param {Object} formFieldsData - The object containing all form fields data.
+ * @param {string} fieldId - The identifier of the field to find.
+ * @returns {Object|null} - The field data object if found, otherwise null.
+ */
+export const getFieldData = (formFieldsData, fieldId) => {
+    return formFieldsData.formFields.find((item) => item.dataField === fieldId) || null;
+};
+// Define propTypes for the function parameters
+getFieldData.propTypes = {
+    formFieldsData: PropTypes.array.isRequired,
+    fieldId: PropTypes.string.isRequired
+};
+
+
 /**
  * Sets the options for a dropdown field within form fields data based on API response data.
  * 
@@ -12,9 +30,9 @@
  * const filterCondition = (item) => {
         return (item) => item.isActive;
     };
- * setOptionFieldSetting(apiResponseData, 'id', 'name', formFieldsData, 'countryDropdown', filterCondition);
+ * setDropDownOptionField(apiResponseData, 'id', 'name', formFieldsData, 'countryDropdown', filterCondition);
  */
-export const setOptionFieldSetting = (apiResponseData, valueField, labelField, formFieldsData, fieldId, filterCondition = null) => {
+export const setDropDownOptionField = (apiResponseData, valueField, labelField, formFieldsData, fieldId, filterCondition = null) => {
 
     // Filter the API response data if a filter condition is provided
     const filteredData = filterCondition ? apiResponseData.filter(filterCondition) : apiResponseData;
@@ -26,7 +44,7 @@ export const setOptionFieldSetting = (apiResponseData, valueField, labelField, f
     }));
 
     // Find the dropdown field within the form fields data
-    const dropdownField = formFieldsData.formFields.find((item) => item.dataField === fieldId);
+    const dropdownField = getFieldData(formFieldsData, fieldId);
 
     // If the dropdown field is found, set its options to the mapped data
     if (dropdownField) {
@@ -34,9 +52,15 @@ export const setOptionFieldSetting = (apiResponseData, valueField, labelField, f
     }
 };
 
-export const findFieldData = (formFieldsData, fieldId) => {
-    return formFieldsData.formFields.find((item) => item.dataField === fieldId);
-}
+// Define propTypes for the function parameters
+setDropDownOptionField.propTypes = {
+    apiResponseData: PropTypes.array.isRequired,
+    valueField: PropTypes.string.isRequired,
+    labelField: PropTypes.string.isRequired,
+    formFieldsData: PropTypes.array.isRequired,
+    fieldId: PropTypes.string.isRequired,
+    filterCondition: PropTypes.func
+};
 
 
 /**
@@ -44,24 +68,37 @@ export const findFieldData = (formFieldsData, fieldId) => {
  * 
  * @param {object} formFieldsData - The object containing form fields data.
  * @param {string} fieldId - The identifier for the field to be updated.
- * @param {string} settingType - The type of setting to be updated (e.g., 'isMultiSelect', 'isDisabled') and Also, create Enums for the setting type.
+ * @param {string} fieldSettingType - The type of setting to be updated (e.g., 'isMultiSelect', 'isDisabled') and Also, create Enums for the setting type.
  * @param {any} [value=false] - The value to set for the specified setting type. Default is `false`.
  * 
  * Example usage:
- * setFieldSetting(formFieldsData, 'countryDropdown', settingTypeEnums.isDisabled/settingTypeEnums.isMultiSelect, true);
+ * setFieldSetting(formFieldsData, 'countryDropdown', FieldSettingType.DISABLED/FieldSettingType.MULTISELECT, true);
  */
-export const setFieldSetting = (formFieldsData, fieldId, settingType, value = false) => {
-    const selectField = formFieldsData.formFields.find((item) => item.dataField === fieldId);
+export const setFieldSetting = (formFieldsData, fieldId, fieldSettingType, value = false) => {
+    const selectField = getFieldData(formFieldsData, fieldId);
     if (selectField) {
-        switch (settingType) {
+        switch (fieldSettingType) {
             case 'isMultiSelect':
                 selectField.fieldSetting.isMultiSelect = value;
                 break;
             case 'isDisabled':
                 selectField.fieldSetting.isDisabled = value;
                 break;
+            case 'isInputButton':
+                selectField.inputButtonGroup.isInputButton = value;
+                break;
+            case 'isSecoundryInputButton':
+                selectField.inputButtonGroup.showInformation.showInputButton = value;
+                break;
             default:
                 break;
         }
     }
+};
+// Define propTypes for the function parameters
+setFieldSetting.propTypes = {
+    formFieldsData: PropTypes.array.isRequired,
+    fieldId: PropTypes.string.isRequired,
+    fieldSettingType: PropTypes.array.isRequired,
+    value: PropTypes.bool
 };

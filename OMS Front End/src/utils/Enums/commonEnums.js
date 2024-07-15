@@ -1,6 +1,8 @@
-export const settingTypeEnums = {
-    isMultiSelect: "isMultiSelect",
-    isDisabled: "isDisabled",
+export const FieldSettingType = {
+    MULTISELECT: "isMultiSelect",
+    DISABLED: "isDisabled",
+    INPUTBUTTON: "isInputButton",
+    SECOUNDRYINPUTBUTTON: "isSecoundryInputButton"
 }
 
 export const ApprovalEnum = {
@@ -8,7 +10,7 @@ export const ApprovalEnum = {
     APPROVESUPPLIER: "2"
 }
 
-export const TabEnum = {
+export const CustomerSupplierTabEnum = {
     BasicInformation: 1,
     Address: 2,
     Contact: 3,
@@ -16,12 +18,12 @@ export const TabEnum = {
     Setting: 5
 }
 
-export const settingEnum = {
+export const CustomerSettingEnum = {
     FinancialSettings: 0,
     ShippingSettings: 1
 }
 
-export const ownerType = {
+export const OwnerType = {
     Customer: 1,
     Supplier: 2
 }

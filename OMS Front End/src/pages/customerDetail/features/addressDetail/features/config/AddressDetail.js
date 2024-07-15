@@ -5,14 +5,14 @@ import AddressCard from "../AddressCard";
 import { addressFormData } from "./AddressForm.data";
 import { AppIcons } from "../../../../../../data/appIcons";
 import Buttons from "../../../../../../components/ui/button/Buttons";
-import { settingTypeEnums } from "../../../../../../utils/Enums/enums";
+import { FieldSettingType } from "../../../../../../utils/Enums/commonEnums";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../../components/ui/card/CardSection";
 import SidebarModel from "../../../../../../components/ui/sidebarModel/SidebarModel";
 import { onResetForm } from "../../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { setFieldSetting, setOptionFieldSetting } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setFieldSetting, setDropDownOptionField } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Service's */
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../../app/services/basicdetailAPI";
@@ -154,10 +154,11 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   }, [mainId]);
 
   const manageFilteredForm = () => {
-    removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling'], setFormData);
+    const modifyFormFields = removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
+    setFormData(modifyFormFields);
     if (updateSetData === null) {
       handleChangeDropdownList(fixData, "countryId");
-      setFieldSetting(formData, 'cityId', settingTypeEnums.isDisabled, true);
+      setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
     }
   };
 
@@ -176,13 +177,13 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
   ]);
 
   const handleCountryOption = (responseData) => {
-    setOptionFieldSetting(responseData, 'countryId', 'name', addressFormData, 'countryId');
+    setDropDownOptionField(responseData, 'countryId', 'name', addressFormData, 'countryId');
   }
   const handleStateOption = (responseData) => {
-    setOptionFieldSetting(responseData, 'stateId', 'name', addressFormData, 'stateId');
+    setDropDownOptionField(responseData, 'stateId', 'name', addressFormData, 'stateId');
   }
   const handleCityOption = (responseData) => {
-    setOptionFieldSetting(responseData, 'cityId', 'name', addressFormData, 'cityId');
+    setDropDownOptionField(responseData, 'cityId', 'name', addressFormData, 'cityId');
   }
 
   useEffect(() => {
@@ -203,7 +204,7 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
         let condition = isSupplier ? item.isForSuppliers : item.isForCustomers
         return condition;
       };
-      setOptionFieldSetting(allGetAllAddressTypesData, 'addressTypeId', 'type', addressFormData, 'addressTypeId', filterCondition);
+      setDropDownOptionField(allGetAllAddressTypesData, 'addressTypeId', 'type', addressFormData, 'addressTypeId', filterCondition);
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetAllCountriesSucess, allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllAddressTypesSucess, allGetAllAddressTypesData]);
@@ -220,13 +221,13 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     if (isSupplier) {
       onResetSupplier()
     }
-    setFieldSetting(formData, 'cityId', settingTypeEnums.isDisabled, true);
+    setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
   };
 
   useEffect(() => {
     if (isButtonDisable) {
-      setFieldSetting(formData, 'cityId', settingTypeEnums.isDisabled, true);
-      setFieldSetting(formData, 'stateId', settingTypeEnums.isDisabled, true);
+      setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
+      setFieldSetting(formData, 'stateId', FieldSettingType.DISABLED, true);
     }
   }, [isButtonDisable])
 
@@ -240,8 +241,8 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       let form = { ...formData };
       if (data) {
         if (!isButtonDisable) {
-          setFieldSetting(formData, 'cityId', settingTypeEnums.isDisabled, false);
-          setFieldSetting(formData, 'stateId', settingTypeEnums.isDisabled, false);
+          setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, false);
+          setFieldSetting(formData, 'stateId', FieldSettingType.DISABLED, false);
         }
       }
       if (data.countryId) {
@@ -268,7 +269,8 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       };
       setFormData(form);
       if (isSupplier === false) {
-        removeFormFields(addressFormData, ['isShippingAndBilling'], setFormData);
+        const modifyFormFields = removeFormFields(addressFormData, ['isShippingAndBilling']);
+        setFormData(modifyFormFields);
       }
     }
   }, [isGetAddresssByIdFetching, isGetAddresssByIdSuccess, isGetAddresssByIdData]);
@@ -283,11 +285,14 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
     } else {
       if (updateSetData) {
         if (updateSetData.type === "Billing") {
-          removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredShipping'], setFormData);
+          const modifyFormFields = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredShipping']);
+          setFormData(modifyFormFields);
         } else if (updateSetData.type === "Shipping") {
-          removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling'], setFormData);
+          const modifyFormFields = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling']);
+          setFormData(modifyFormFields);
         } else if (updateSetData.type === "AP" || updateSetData.type === "Primary") {
-          removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling', 'isPreferredShipping'], setFormData);
+          const modifyFormFields = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling', 'isPreferredShipping']);
+          setFormData(modifyFormFields);
         }
       }
     }
@@ -306,7 +311,8 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       { setter: setUpdateSetData, value: null },
       { setter: setUpdateSetDataSupplier, value: null }
     ]);
-    removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling'], setFormData);
+    const modifyFormFields = removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
+    setFormData(modifyFormFields);
   };
 
   const handleChangeDropdownList = (data, dataField) => {
@@ -316,8 +322,8 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       const filterCondition = (item) => {
         return item.countryId === data.value;
       }
-      setOptionFieldSetting(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', filterCondition);
-      setFieldSetting(manageData, 'stateId', settingTypeEnums.isDisabled, false);
+      setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', filterCondition);
+      setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
       userFormRef.current.updateFormFieldValue({
         countryId: data.value,
         stateId: null,
@@ -326,8 +332,8 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
       const filterCondition = (item) => {
         return item.stateId === data.value;
       }
-      setOptionFieldSetting(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', filterCondition);
-      setFieldSetting(manageData, 'cityId', settingTypeEnums.isDisabled, false);
+      setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', filterCondition);
+      setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
       userFormRef.current.updateFormFieldValue({
         stateId: data.value,
         cityId: null,
@@ -466,9 +472,11 @@ const AddressDetail = ({ isEditablePage, addAddressMutation, updateAddAddressMut
 
   useEffect(() => {
     if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 1) {
-      removeFormFields(formData, ['isPreferredShipping'], setFormData);
+      const modifyFormFields = removeFormFields(formData, ['isPreferredShipping']);
+      setFormData(modifyFormFields);
     } else if (checkboxFeild === "isShippingAndBilling" && checkbox === false && lebel.value === 2) {
-      removeFormFields(formData, ['isPreferredBilling'], setFormData);
+      const modifyFormFields = removeFormFields(formData, ['isPreferredBilling']);
+      setFormData(modifyFormFields);
     }
   }, [checkbox, checkboxFeild])
 

@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 //** Lib's */
 import { ErrorMessage } from "../../../../../data/appMessages";
-import { ListShowCustomer } from "../../../../../utils/Enums/enums";
+import { ListShowCustomer } from "../../../../../utils/Enums/commonEnums";
 import useDebounce from "../../../../../app/customHooks/useDebouce";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";

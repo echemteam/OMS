@@ -3,7 +3,7 @@ import { forwardRef, useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { addEditDeliveryFormData } from "../config/DevliveryConfig";
 import Buttons from "../../../../../../../components/ui/button/Buttons";
-import { settingTypeEnums } from "../../../../../../../utils/Enums/enums";
+import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
 import FormCreator from "../../../../../../../components/Forms/FormCreator";
 import CenterModel from "../../../../../../../components/ui/centerModel/CenterModel";
 import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
@@ -82,10 +82,10 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
     useEffect(() => {
         if (isEdit && deliveryMethodId) {
             getById(deliveryMethodId);
-            setFieldSetting(formData, 'chargeType', settingTypeEnums.isDisabled, true);
+            setFieldSetting(formData, 'chargeType', FieldSettingType.DISABLED, true);
         } else if (!isEdit) {
             onResetData();
-            setFieldSetting(formData, 'chargeType', settingTypeEnums.isDisabled);
+            setFieldSetting(formData, 'chargeType', FieldSettingType.DISABLED);
         }
     }, [isEdit, deliveryMethodId])
 

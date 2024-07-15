@@ -2,11 +2,11 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Lib's */
 import Buttons from "../../../../../components/ui/button/Buttons";
-import { settingTypeEnums } from "../../../../../utils/Enums/enums";
+import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-import { setFieldSetting, setOptionFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setFieldSetting, setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { addressFormData } from "../../../../../pages/customerDetail/features/addressDetail/features/config/AddressForm.data";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
@@ -63,22 +63,22 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     useEffect(() => {
         if (isSupplier && isModelOpen) {
             onResetSupplier();
-            setFieldSetting(formData, 'cityId', settingTypeEnums.isDisabled, true);
+            setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
         } else if (!isModelOpen) {
             onResetForm(addressFormData, setFormData, null);
         }
     }, [isSupplier, isModelOpen]);
 
     const handleStateOption = (responseData) => {
-        setOptionFieldSetting(responseData, 'stateId', 'name', addressFormData, 'stateId');
+        setDropDownOptionField(responseData, 'stateId', 'name', addressFormData, 'stateId');
     }
     const handleCityOption = (responseData) => {
-        setOptionFieldSetting(responseData, 'cityId', 'name', addressFormData, 'cityId');
+        setDropDownOptionField(responseData, 'cityId', 'name', addressFormData, 'cityId');
     }
 
     useEffect(() => {
         if (isGetAllCountriesSucess && allGetAllCountriesData) {
-            setOptionFieldSetting(allGetAllCountriesData, 'countryId', 'name', addressFormData, 'countryId');
+            setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', addressFormData, 'countryId');
             setShouldRerenderFormCreator((prevState) => !prevState);
         }
         if (isGetAllStatesSucess && allGetAllStatesData) {
@@ -94,7 +94,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 let condition = isSupplier ? item.isForSuppliers : item.isForCustomers
                 return condition;
             };
-            setOptionFieldSetting(allGetAllAddressTypesData, 'addressTypeId', 'type', addressFormData, 'addressTypeId', filterCondition);
+            setDropDownOptionField(allGetAllAddressTypesData, 'addressTypeId', 'type', addressFormData, 'addressTypeId', filterCondition);
             setShouldRerenderFormCreator((prevState) => !prevState);
         }
     }, [isGetAllCountriesSucess, allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllAddressTypesSucess, allGetAllAddressTypesData]);
@@ -105,8 +105,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             const form = { ...formData };
 
             if (!isButtonDisable) {
-                setFieldSetting(form, 'cityId', settingTypeEnums.isDisabled, false);
-                setFieldSetting(form, 'stateId', settingTypeEnums.isDisabled, false);
+                setFieldSetting(form, 'cityId', FieldSettingType.DISABLED, false);
+                setFieldSetting(form, 'stateId', FieldSettingType.DISABLED, false);
             }
 
             if (countryId) {
@@ -121,7 +121,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             setFormData(form);
 
             if (!isSupplier) {
-                removeFormFields(addressFormData, ['isShippingAndBilling'], setFormData);
+                const modifyFormFields = removeFormFields(addressFormData, ['isShippingAndBilling']);
+                setFormData(modifyFormFields);
             }
         }
     }, [isGetByIdFetching, isGetByIdSuccess, isGetByIdData]);
@@ -173,15 +174,15 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         const manageData = { ...formData };
 
         if (dataField === "countryId") {
-            setOptionFieldSetting(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
-            setFieldSetting(manageData, 'stateId', settingTypeEnums.isDisabled, false);
+            setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+            setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
             ref.current.updateFormFieldValue({
                 countryId: data.value,
                 stateId: null,
             });
         } else if (dataField === "stateId") {
-            setOptionFieldSetting(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', item => item.stateId === data.value);
-            setFieldSetting(manageData, 'cityId', settingTypeEnums.isDisabled, false);
+            setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', item => item.stateId === data.value);
+            setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
             ref.current.updateFormFieldValue({
                 stateId: data.value,
                 cityId: null,
@@ -231,7 +232,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     //** Reset  */
     const onResetSupplier = () => {
         onResetForm(addressFormData, setFormData, null);
-        removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling'], setFormData);
+        const modifyFormFields = removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
+        setFormData(modifyFormFields);
     };
 
     return (

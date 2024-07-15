@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 //** Lib's */
 import { AppIcons } from '../../../../../../data/appIcons';
 import MolGrid from '../../../../../../components/Grid/MolGrid';
-import { ownerType } from '../../../../../../utils/Enums/enums';
+import { OwnerType } from '../../../../../../utils/Enums/commonEnums';
 import { securityKey } from '../../../../../../data/SecurityKey';
 import Buttons from '../../../../../../components/ui/button/Buttons';
 import FormCreator from '../../../../../../components/Forms/FormCreator';
@@ -292,7 +292,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   const updateRUserData = (value) => {
     let req = {
       ownerId: supplierID,
-      ownerType: ownerType.Supplier,
+      OwnerType: OwnerType.Supplier,
       responsibleUserId: value
     }
     updateResponsibleUser(req);

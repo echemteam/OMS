@@ -5,8 +5,8 @@ import Rules from "./features/Rules";
 import "./Configuration.scss";
 import { useLazyGetAllFunctionalitiesFieldsQuery, useLazyGetAllFunctionalitiesQuery, useLazyGetAllModulesQuery, useLazyGetApprovalConfigurationRulesByModuleIdAndFunctionalityIdQuery } from "../../../app/services/configurationAPI";
 import { rulesFormData } from "./config/RulesForm.data";
-import { commansDataField } from "../../../utils/Enums/DropdownEnums";
-import { setOptionFieldSetting } from "../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { CommansDataField } from "../../../utils/Enums/DropdownEnums";
+import { setDropDownOptionField } from "../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const ApprovalRules = () => {
 
@@ -91,15 +91,15 @@ const ApprovalRules = () => {
   }, [isGetAllFunctionalitiesFieldsSucess, allGetAllFunctionalitiesFieldsData, isgetAllModulesSucess, allGetAllModulesData, isGetAllFunctionalitiesSucess, allGetAllFunctionalitiesData, isGetModuleandfunctionalityIdSucess, allGetModuleandfunctionalityIdData, isGetModuleandfunctionalityIdFetching])
 
   const handleModuleOption = (responseData) => {
-    setOptionFieldSetting(responseData, commansDataField.ModuleId, 'moduleName', rulesFormData, commansDataField.ModuleId);
+    setDropDownOptionField(responseData, CommansDataField.ModuleId, 'moduleName', rulesFormData, CommansDataField.ModuleId);
   }
 
   const handleFunctionalityOption = (responseData) => {
-    setOptionFieldSetting(responseData, commansDataField.FunctionalityId, 'name', rulesFormData, commansDataField.FunctionalityId);
+    setDropDownOptionField(responseData, CommansDataField.FunctionalityId, 'name', rulesFormData, CommansDataField.FunctionalityId);
   }
 
   const handleFunctionalitiesFields = (responseData) => {
-    setOptionFieldSetting(responseData, commansDataField.FunctionalityFieldId, 'fieldName', rulesFormData, commansDataField.FunctionalityFieldId);
+    setDropDownOptionField(responseData, CommansDataField.FunctionalityFieldId, 'fieldName', rulesFormData, CommansDataField.FunctionalityFieldId);
   }
 
   const handleGetRules = (responseData) => {

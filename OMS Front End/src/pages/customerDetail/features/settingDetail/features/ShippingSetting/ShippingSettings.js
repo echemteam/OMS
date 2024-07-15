@@ -14,7 +14,7 @@ import { securityKey } from "../../../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { OurAccountGridConfig } from "../DeliveryMethod/config/DevliveryConfig";
 import { AccountGridConfig } from "../Carrier/config/CarrierConfig";
-import { setOptionFieldSetting } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setDropDownOptionField } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Component's */
 const ManageCarrier = React.lazy(() => import("../Carrier/ManageCarrier"));
 const ManageDevliveryMethod = React.lazy(() => import("../DeliveryMethod/ManageDevliveryMethod"));
@@ -61,7 +61,7 @@ const ShippingSettings = ({ isEditablePage }) => {
 
   useEffect(() => {
     if (!isAccountTypeFetching && isAccountTypeSuccess && isAccountTypeData) {
-      setOptionFieldSetting(isAccountTypeData, 'deliveryAccountId', 'name', shippingFormData, 'deliveryAccountId');
+      setDropDownOptionField(isAccountTypeData, 'deliveryAccountId', 'name', shippingFormData, 'deliveryAccountId');
     }
   }, [isAccountTypeFetching, isAccountTypeSuccess, isAccountTypeData]);
 

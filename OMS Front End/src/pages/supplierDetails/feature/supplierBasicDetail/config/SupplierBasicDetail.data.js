@@ -34,7 +34,6 @@ export const supplierBasicData = {
       inputButtonGroup: {
         isInputButton: true,
         buttonText: 'Verify',
-        isMultiButton: true,
         showInformation: {
           showInputButton: true,
           faIcon: "fa-search",
