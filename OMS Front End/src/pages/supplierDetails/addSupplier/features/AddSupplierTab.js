@@ -15,7 +15,7 @@ import SupplierContactDetail from "../../feature/supplierContactDetail/SupplierC
 import SupplierDocumentDetail from "../../feature/supplierDocumentDetail/SupplierDocumentDetail";
 
 
-const AddSupplier = () => {
+const AddSupplierTab = () => {
   const navigate = useNavigate();
   const { activeTab, movePreviewPage, addSupplier, supplierId } = useContext(AddSupplierContext);
 
@@ -169,4 +169,4 @@ const AddSupplier = () => {
 
 };
 
-export default AddSupplier;
+export default AddSupplierTab;

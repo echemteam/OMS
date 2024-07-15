@@ -1,13 +1,13 @@
 import { AddSupplierContextProvider } from "../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import AddSupplier from "./features/AddSupplier";
+import AddSupplierTab from "./features/AddSupplierTab";
 
-const AddSupplierNew = () => {
+const AddSupplier = () => {
 
     return (
         <AddSupplierContextProvider>
-            <AddSupplier />
+            <AddSupplierTab />
         </AddSupplierContextProvider>
     )
 }
 
-export default AddSupplierNew;
+export default AddSupplier;
