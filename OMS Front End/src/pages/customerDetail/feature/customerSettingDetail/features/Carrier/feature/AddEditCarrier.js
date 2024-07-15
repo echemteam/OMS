@@ -3,7 +3,6 @@ import { forwardRef, useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { addEditCarrierFormData } from "../config/CarrierConfig";
 import Buttons from "../../../../../../../components/ui/button/Buttons";
-import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
 import FormCreator from "../../../../../../../components/Forms/FormCreator";
 import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
 import CenterModel from "../../../../../../../components/ui/centerModel/CenterModel";
@@ -12,6 +11,7 @@ import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/
 import ToastService from "../../../../../../../services/toastService/ToastService";
 import { useAddShppingDeliveryCarriersMutation, useLazyGetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdQuery, useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import { setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
 
 const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, deliveryCarrierId, onSuccess }) => {
 

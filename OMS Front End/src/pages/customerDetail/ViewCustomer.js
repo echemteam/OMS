@@ -13,13 +13,13 @@ import Button from "../../components/ui/button/Buttons";
 import { securityKey } from "../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../utils/AuthorizeNavigation/authorizeNavigation";
 import { useSelector } from "react-redux";
-import { CustomerHistoryDetail } from "./features/HistoryDetail/CustomerHistoryDetail";
+import { CustomerHistory } from "./feature/customerHistoryDetail/CustomerHistoryDetail"
 
 const RenderTabs = React.lazy(() =>
   import("../../components/ui/tabs/RenderTabs")
 );
-const BasicDetail = React.lazy(() =>
-  import("./features/basicDetail/BasicDetail")
+const CustomerBasicDetail = React.lazy(() =>
+  import("./feature/customerBasicDetail/CustomerBasicDetail")
 );
 const CustomerDetails = React.lazy(() =>
   import("./features/basicDetail/CustomerDetails")
@@ -27,25 +27,24 @@ const CustomerDetails = React.lazy(() =>
 const SettingDetails = React.lazy(() =>
   import("./features/settingDetail/SettingDetails")
 );
-const CustomerAddressDetails = React.lazy(() =>
-  import("./features/addressDetail/CustomerAddressDetails")
+const CustomerAddressDetail = React.lazy(() =>
+  import("./feature/customerAddressDetail/CustomerAddressDetail")
 );
-const CustomerDocumentDetails = React.lazy(() =>
-  import("./features/documentsDetail/CustomerDocumentDetails")
+const CustomerDocumentDetail = React.lazy(() =>
+  import("./feature/customerDocumentDetail/CustomerDocumentDetail")
 );
-const CustomerContactDetails = React.lazy(() =>
-  import("./features/contactDetail/Contact/CustomerContactDetails")
+const CustomerContactDetail = React.lazy(() =>
+  import("./feature/customerContactDetail/CustomerContactDetail")
 );
-const ManageCustomerNotes = React.lazy(() =>
-  import("./features/notesDetail/ManageCustomerNotes")
+const CustomerNoteDetail = React.lazy(() =>
+  import("./feature/customerNoteDetail/CustomerNoteDetail")
 );
-
 
 const ViewCustomer = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const authState = useSelector((state) => state.auth);
-  const pageId = id ? decryptUrlData(id) : 0;
+  const keyId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
@@ -92,14 +91,14 @@ const ViewCustomer = () => {
   ]);
 
   useEffect(() => {
-    if (pageId) {
-      setCustomerId(pageId);
-      getCustomersBasicInformationById(pageId);
+    if (keyId) {
+      setCustomerId(keyId);
+      getCustomersBasicInformationById(keyId);
     }
-  }, [pageId]);
+  }, [keyId]);
 
-  const handleRepeatCall = () => {
-    getCustomersBasicInformationById(pageId);
+  const getCustomerById = (keyId) => {
+    keyId && getCustomersBasicInformationById(keyId);
   };
 
   const handleToggleModal = () => {
@@ -117,7 +116,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Address",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
-          <CustomerAddressDetails isEditablePage={true} />
+          <CustomerAddressDetail isEditablePage={true} />
         </div>
       ),
       isVisible: hasAddressPermission.hasAccess,
@@ -126,7 +125,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Contact",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll contact-card-section-new">
-          <CustomerContactDetails isEditablePage={true} isSearchFilterShow={true}/>
+          <CustomerContactDetail isEditablePage={true} isSearchFilterShow={true}/>
         </div>
       ),
       isVisible: hasContactPermission.hasAccess,
@@ -144,7 +143,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          <CustomerDocumentDetails isEditablePage={true} />
+          <CustomerDocumentDetail isEditablePage={true} />
         </div>
       ),
       isVisible: hasDocumentPermission.hasAccess,
@@ -153,7 +152,7 @@ const ViewCustomer = () => {
       sMenuItemCaption: "Notes",
       component: (
         <div className="mt-2">
-          <ManageCustomerNotes isEditablePage={true} />
+          <CustomerNoteDetail isEditablePage={true} />
         </div>
       ),
       isVisible: hasNotePermission.hasAccess,
@@ -162,16 +161,16 @@ const ViewCustomer = () => {
       sMenuItemCaption: "History",
       component: (
         <div className="">
-          <CustomerHistoryDetail isEditablePage={true} />
+          <CustomerHistory isEditablePage={true} />
         </div>
       ),
       isVisible: hasHistoryPermission.hasAccess,
     },
   ];
 
-  const visibleTabs = !isResponsibleUser
-    ? tabs.filter((tab) => tab.isVisible)
-    : tabs;
+  // const visibleTabs = !isResponsibleUser
+  //   ? tabs.filter((tab) => tab.isVisible)
+  //   : tabs;
 
   return (
     <>
@@ -184,7 +183,7 @@ const ViewCustomer = () => {
                 customerData={customerData}
                 isLoading={isGetCustomersBasicInformationByIdFetching}
                 customerId={customerId}
-                onhandleRepeatCall={handleRepeatCall}
+                onhandleRepeatCall={getCustomerById}
               />
             </CardSection>
           </div>
@@ -197,7 +196,7 @@ const ViewCustomer = () => {
               imagePath={AppIcons.BackArrowIcon}
             ></Button>
             <div className="customer-detail-tab-sec">
-              <RenderTabs tabs={customerId ? visibleTabs : null} />
+              {/* <RenderTabs tabs={customerId ? visibleTabs : null} /> */}
             </div>
           </div>
         </div>
@@ -209,12 +208,12 @@ const ViewCustomer = () => {
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}
       >
-        <BasicDetail
+        <CustomerBasicDetail
           onSidebarClose={onSidebarClose}
           isOpen={isModelOpen}
           customerData={customerData}
-          pageId={pageId}
-          onhandleRepeatCall={handleRepeatCall}
+          keyId={keyId}
+          getCustomerById={getCustomerById}
         />
       </SidebarModel>
     </>

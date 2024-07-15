@@ -23,7 +23,7 @@ import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import CustomerApproval from "../../features/cutomerApproval/CustomerApproval";
+import CustomerApproval from "../../feature/cutomerApproval/CustomerApproval";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
 import { useSelector } from "react-redux";
@@ -232,7 +232,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   };
 
   const handleEditClick = (data) => {
-    navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
+    navigate(`/CustomerDetails/${encryptUrlData(data.customerId)}`, "_blank");
   };
 
   const handleGridCheckBoxChange = (rowData) => {

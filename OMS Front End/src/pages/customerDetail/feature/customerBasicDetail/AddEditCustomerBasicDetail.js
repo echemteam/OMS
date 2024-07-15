@@ -12,12 +12,10 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddEditCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery } from "../../../../app/services/basicdetailAPI";
-import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
-import { setFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
 import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { customerbasicData, excludingRoles } from "./config/CustomerBasicDetail.data";
-import { BasicInformation } from "../../features/basicDetail/BasicInformation";
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
+import { setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose }) => {
     const parentRef = useRef();

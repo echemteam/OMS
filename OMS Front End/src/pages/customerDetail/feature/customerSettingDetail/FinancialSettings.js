@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 //** Libs's */
 import { SettingFormData } from "./config/SettingData";
 import { securityKey } from "../../../../data/SecurityKey";
-import { CustomerSettingEnum } from "../../../../utils/Enums/commonEnums";
 import Buttons from "../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
@@ -12,6 +11,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
+import { CustomerSettingEnum } from "../../../../utils/Enums/commonEnums";
 
 const FinancialSettings = ({ isEditablePage }) => {
 

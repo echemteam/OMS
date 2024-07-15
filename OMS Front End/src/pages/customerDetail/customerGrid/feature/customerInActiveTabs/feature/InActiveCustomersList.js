@@ -7,7 +7,7 @@ import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../
 import ToastService from '../../../../services/toastService/ToastService';
 import { securityKey } from '../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
-import CustomerApproval from '../../feature/cutomerApproval/CustomerApproval';
+import CustomerApproval from '../../features/cutomerApproval/CustomerApproval';
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
 import { encryptUrlData } from '../../../../services/CryptoService';
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
 import { AppIcons } from '../../../../data/appIcons';
 
-export const InActiveCustomers = ({ statusId, configFile, handleChange, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
+export const InActiveCustomersList = ({ statusId, configFile, handleChange, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
 
   const navigate = useNavigate();
   const { confirm } = SwalAlert();

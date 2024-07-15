@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
-import { CustomerSettingEnum, CustomerSupplierTabEnum } from "../../utils/Enums/commonEnums";
+import { TabEnum, settingEnum } from "../../utils/Enums/enums";
 import { StatusEnums } from "../../utils/Enums/StatusEnums";
 import CardSection from "../../components/ui/card/CardSection";
 import ToastService from "../../services/toastService/ToastService";
@@ -12,13 +12,13 @@ import { useUpdateCustomerStatusMutation } from "../../app/services/basicdetailA
 import BasicDetailContext from "../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 //** Compoent's */
-const CustomerBasicDetail = React.lazy(() => import("./feature/customerBasicDetail/CustomerBasicDetail"));
-const CustomerSettingDetails = React.lazy(() => import("./feature/customerSettingDetail/CustomerSettingDetails"));
-const CustomerAddressDetail = React.lazy(() => import("./feature/customerAddressDetail/CustomerAddressDetail"));
-const CustomerDocumentDetail = React.lazy(() => import("./feature/customerDocumentDetail/CustomerDocumentDetail"));
-const CustomerContactDetail = React.lazy(() => import("./feature/customerContactDetail/CustomerContactDetail"));
+const CustomerBasicDetail = React.lazy(() => import("../../feature/customerBasicDetail/CustomerBasicDetail"));
+const CustomerSettingDetails = React.lazy(() => import("../../feature/customerSettingDetail/CustomerSettingDetails"));
+const CustomerAddressDetail = React.lazy(() => import("../../feature/customerAddressDetail/CustomerAddressDetail"));
+const CustomerDocumentDetail = React.lazy(() => import("../../feature/customerDocumentDetail/CustomerDocumentDetail"));
+const CustomerContactDetail = React.lazy(() => import("../../feature/customerContactDetail/CustomerContactDetail"));
 
-const AddCustomer = () => {
+const AddCustomerTab = () => {
   const navigate = useNavigate();
   const { activeTab, movePreviewPage, addCustomer, customerId, showSubBackButton, handleActiveSubTabClick, saveFinacialSetting } = useContext(BasicDetailContext);
 
@@ -46,19 +46,19 @@ const AddCustomer = () => {
       label: "Basic Information",
       subLabel: "Enter Customer Basic information",
       content: <CustomerBasicDetail />,
-      tab: CustomerSupplierTabEnum.BasicInformation,
+      tab: TabEnum.BasicInformation,
     },
     {
       label: "Address",
       subLabel: "Enter Customer Address Details",
       content: <CustomerAddressDetail isEditablePage={false} />,
-      tab: CustomerSupplierTabEnum.Address,
+      tab: TabEnum.Address,
     },
     {
       label: "Contact",
       subLabel: "Enter Customer Contact Details",
       content: <CustomerContactDetail isEditablePage={false} isSearchFilterShow={false} />,
-      tab: CustomerSupplierTabEnum.Contact,
+      tab: TabEnum.Contact,
     },
     {
       label: "Setting",
@@ -70,13 +70,13 @@ const AddCustomer = () => {
           </div>
         </>
       ),
-      tab: CustomerSupplierTabEnum.Setting,
+      tab: TabEnum.Setting,
     },
     {
       label: "Documents",
       subLabel: "Add Customer Documents Details",
       content: <CustomerDocumentDetail isEditablePage={false} />,
-      tab: CustomerSupplierTabEnum.Documents,
+      tab: TabEnum.Documents,
     },
   ];
 
@@ -146,7 +146,7 @@ const AddCustomer = () => {
                                 Save Financial Settings
                               </button>
                               :
-                              <button type="button" className="btn dark-btn mr-3" onClick={() => handleActiveSubTabClick(CustomerSettingEnum.FinancialSettings)} >
+                              <button type="button" className="btn dark-btn mr-3" onClick={() => handleActiveSubTabClick(settingEnum.FinancialSettings)} >
                                 Back
                               </button>
                             }
@@ -182,4 +182,4 @@ const AddCustomer = () => {
   );
 };
 
-export default AddCustomer;
+export default AddCustomerTab;

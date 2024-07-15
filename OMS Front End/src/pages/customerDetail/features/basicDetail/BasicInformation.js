@@ -11,7 +11,7 @@ export const BasicInformation = (props) => {
     const handleEditClick = (data) => {
         let url;
         if (data.customerId) {
-            url = `/viewCustomer/${encryptUrlData(data.customerId)}`;
+            url = `/CustomerDetails/${encryptUrlData(data.customerId)}`;
         } else {
             url = `/SupplierDetails/${encryptUrlData(data.supplierId)}`;
         }

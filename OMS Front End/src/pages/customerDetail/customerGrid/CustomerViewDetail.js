@@ -1,13 +1,13 @@
 import { BasicDetailContextProvider } from "../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import AddCustomerTab from "./features/AddCustomerTab";
+import CustomerDetails from "../customerGrid/feature/customerViewDetail/CustomerDetails"
 
-const AddCustomerNew = () => {
+const CustomerViewDetails = () => {
 
     return (
         <BasicDetailContextProvider>
-            <AddCustomerTab />
+            <CustomerDetails />
         </BasicDetailContextProvider>
     )
 }
 
-export default AddCustomerNew;
+export default CustomerViewDetails;

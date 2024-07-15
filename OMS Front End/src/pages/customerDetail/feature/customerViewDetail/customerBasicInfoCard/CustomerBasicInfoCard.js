@@ -1,28 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Image from "../../../../components/image/Image";
-import { AppIcons } from "../../../../data/appIcons";
-import CopyText from "../../../../utils/CopyText/CopyText";
-import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
-import DropDown from "../../../../components/ui/dropdown/DropDrown";
-import { useUpdateCustomerInActiveStatusMutation, useUpdateCustomerStatusMutation } from "../../../../app/services/basicdetailAPI";
-import ToastService from "../../../../services/toastService/ToastService";
-import SwalAlert from "../../../../services/swalService/SwalService";
-import CenterModel from "../../../../components/ui/centerModel/CenterModel";
-import { reasonData } from "../../customers/config/CustomerData";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import Buttons from "../../../../components/ui/button/Buttons";
-import CustomerApproval from "../../feature/cutomerApproval/CustomerApproval";
-import { securityKey } from "../../../../data/SecurityKey";
-import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { ErrorMessage } from "../../../../data/appMessages";
-import { StaticStatus, StatusValue } from "../../../../utils/Enums/StatusEnums";
-import { excludingRoles } from "./config/BasicDetailForm.data";
-import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../app/services/commonAPI";
-import { OwnerType } from "../../../../utils/Enums/commonEnums";
+import Image from "../../../../../components/image/Image";
+import DropDown from "../../../../../components/ui/dropdown/DropDrown";
+import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
+import FormCreator from "../../../../../components/Forms/FormCreator";
+import Buttons from "../../../../../components/ui/button/Buttons";
+import CustomerApproval from "../../cutomerApproval/CustomerApproval";
+import SwalAlert from "../../../../../services/swalService/SwalService";
+import { reasonData } from "../../../customers/config/CustomerData";
+import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../../app/services/commonAPI";
+import { useUpdateCustomerInActiveStatusMutation, useUpdateCustomerStatusMutation } from "../../../../../app/services/basicdetailAPI";
+import ToastService from "../../../../../services/toastService/ToastService";
+import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import { securityKey } from "../../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { StaticStatus, StatusValue } from "../../../../../utils/Enums/StatusEnums";
+import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDetail.data";
+import { AppIcons } from "../../../../../data/appIcons";
+import CopyText from "../../../../../utils/CopyText/CopyText";
+import { ErrorMessage } from "../../../../../data/appMessages";
+import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
+import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 
-const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
+const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
@@ -178,7 +178,7 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   const updateRUserData = (value) => {
     let req = {
       ownerId: customerId,
-      OwnerType: OwnerType.Customer,
+      ownerType: OwnerType.Customer,
       responsibleUserId: value
     }
     updateResponsibleUser(req);
@@ -392,4 +392,4 @@ const CustomerDetails = ({ editClick, customerData, isLoading, customerId, onhan
   );
 };
 
-export default CustomerDetails;
+export default CustomerBasicInfoCard;
