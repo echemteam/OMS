@@ -48,7 +48,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }, [showModal])
 
   const boldSpecificWords = (text) => {
-    const wordsToBold = ["TaxId", "Address", "Contact"];
+    const wordsToBold = ["Billing Address", "Shipping Address", "Invoice Submission Contact Email","Accounts Payable Contact Email","Default Payment Terms Template","Payment Method","Credit Limit","Billing Currency","Accounting Settings","Delivery Methods","Delivery Carriers"];
     const regex = new RegExp(`\\b(${wordsToBold.join("|")})\\b`, "g");
     return text.replace(
       regex,
