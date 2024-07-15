@@ -10,11 +10,11 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import SupplierViewTab from "../../../feature/supplierViewDetail/supplierViewTabs/SupplierViewTab";
+import SupplierViewTab from "../../../supplierViewDetail/feature/SupplierViewTab";
 import SupplierBasicDetail from "../../../feature/supplierBasicDetail/SupplierBasicDetail";
 
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../../../app/services/supplierAPI";
-import SupplierBasicInfoCard from "../../../feature/supplierViewDetail/SupplierBasicInfo/SupplierBasicInfoCard";
+import SupplierBasicInfoCard from "../../../supplierViewDetail/feature/SupplierBasicInfoCard";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
