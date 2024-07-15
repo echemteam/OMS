@@ -2,7 +2,7 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Lib's */
 import Buttons from "../../../../../components/ui/button/Buttons";
-import { settingTypeEnums } from "../../../../../utils/Enums/enums";
+import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { contactDetailFormData } from "../config/ContactDetailForm.data";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
@@ -99,7 +99,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             setFormData(form);
             setContactId(data.contactId);
             isSupplier ? setSupplierContactId(data?.supplierContactId) : setCustomerContactId(data?.customerContactId);
-            setFieldSetting(form, 'contactTypeId', settingTypeEnums.isMultiSelect);
+            setFieldSetting(form, 'contactTypeId', FieldSettingType.MULTISELECT);
 
             const modifyPhoneNumberList = isGetByIdData.phoneNumberList.map((item, index) => ({
                 ...item,
@@ -148,13 +148,13 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const handleEditMode = (contactId) => {
         setEditMode(true);
         contactId && getById(contactId);
-        setFieldSetting(contactDetailFormData, 'contactTypeId', settingTypeEnums.isDisabled, true);
+        setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
     }
 
     useEffect(() => {
         if (!isEdit) {
             let form = { ...contactDetailFormData };
-            setFieldSetting(form, 'contactTypeId', settingTypeEnums.isMultiSelect, isSupplier ? false : true);
+            setFieldSetting(form, 'contactTypeId', FieldSettingType.MULTISELECT, isSupplier ? false : true);
             setFormData(form);
             if (isOpen) {
                 setContactId(0);
@@ -167,7 +167,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
 
     //** Reset Data */
     const onResetData = () => {
-        setFieldSetting(contactDetailFormData, 'contactTypeId', settingTypeEnums.isDisabled, false);
+        setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, false);
         let form = { ...contactDetailFormData };
         form.initialState = { ...contactDetailFormData.initialState };
         setFormData(form);

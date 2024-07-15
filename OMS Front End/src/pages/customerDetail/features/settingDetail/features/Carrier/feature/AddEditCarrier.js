@@ -3,7 +3,7 @@ import { forwardRef, useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { addEditCarrierFormData } from "../config/CarrierConfig";
 import Buttons from "../../../../../../../components/ui/button/Buttons";
-import { settingTypeEnums } from "../../../../../../../utils/Enums/enums";
+import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
 import FormCreator from "../../../../../../../components/Forms/FormCreator";
 import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
 import CenterModel from "../../../../../../../components/ui/centerModel/CenterModel";
@@ -83,10 +83,10 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, deliv
     useEffect(() => {
         if (isEdit && deliveryCarrierId) {
             getById(deliveryCarrierId);
-            setFieldSetting(formData, 'carrier', settingTypeEnums.isDisabled, true);
+            setFieldSetting(formData, 'carrier', FieldSettingType.DISABLED, true);
         } else if (!isEdit) {
             onResetData();
-            setFieldSetting(formData, 'carrier', settingTypeEnums.isDisabled);
+            setFieldSetting(formData, 'carrier', FieldSettingType.DISABLED);
         }
     }, [isEdit, deliveryCarrierId]);
 

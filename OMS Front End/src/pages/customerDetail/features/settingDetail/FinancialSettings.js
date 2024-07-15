@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 //** Libs's */
 import { SettingFormData } from "./config/SettingData";
 import { securityKey } from "../../../../data/SecurityKey";
-import { settingEnum } from "../../../../utils/Enums/enums";
+import { CustomerSettingEnum } from "../../../../utils/Enums/commonEnums";
 import Buttons from "../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
@@ -101,7 +101,7 @@ const FinancialSettings = ({ isEditablePage }) => {
   useEffect(() => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
       ToastService.success(isAddEditCustomerSettingsData.errorMessage);
-      handleActiveSubTabClick(settingEnum.ShippingSettings);
+      handleActiveSubTabClick(CustomerSettingEnum.ShippingSettings);
     }
   }, [isAddEditCustomerSettingsSuccess, isAddEditCustomerSettingsData]);
 

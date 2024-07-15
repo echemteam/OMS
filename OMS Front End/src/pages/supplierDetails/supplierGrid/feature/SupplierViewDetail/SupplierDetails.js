@@ -68,6 +68,10 @@ const SupplierDetails = () => {
     keyId && getSupplierBasicInformationById(keyId);
   };
 
+  const onSuccess = () => {
+    keyId && getSupplierBasicInformationById(keyId);
+  }
+
   const handleToggleModal = () => {
     setisModelOpen(true);
   };
@@ -88,9 +92,9 @@ const SupplierDetails = () => {
               <SupplierBasicInfoCard
                 editClick={handleToggleModal}
                 supplierData={supplierData}
-                isLoading={isGetSupplierBasicInformationByIdFetching}
+                isLoading={!isModelOpen ? isGetSupplierBasicInformationByIdFetching : null}
                 supplierId={supplierId}
-                onhandleRepeatCall={getSupplierById}
+                getSupplierById={onSuccess}
               />
             </CardSection>
           </div>
@@ -110,14 +114,13 @@ const SupplierDetails = () => {
         contentClass="content-65 basic-info-model"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
-        isOpen={isModelOpen}
-      >
+        isOpen={isModelOpen}>
         <SupplierBasicDetail
           onSidebarClose={onSidebarClose}
           isOpen={isModelOpen}
           supplierData={supplierData}
           keyId={keyId}
-          getSupplierById={getSupplierById}
+          getSupplierById={onSuccess}
         />
       </SidebarModel>
     </>

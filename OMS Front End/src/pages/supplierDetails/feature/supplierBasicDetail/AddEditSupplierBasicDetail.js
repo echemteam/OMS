@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect, useImperativeHandle, useContext } f
 //** Libs's */
 import { securityKey } from "../../../../data/SecurityKey";
 import Buttons from "../../../../components/ui/button/Buttons";
-import { settingTypeEnums } from "../../../../utils/Enums/enums";
+import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { supplierBasicData } from "./config/SupplierBasicDetail.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
@@ -11,7 +11,7 @@ import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/hand
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { excludingRoles } from "../../../customerDetail/features/basicDetail/config/BasicDetailForm.data";
 import { getTaxIdMinMaxLength } from "../../../customerDetail/features/basicDetail/config/TaxIdValidator";
-import { setFieldSetting, setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setFieldSetting, setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Context API */
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Service's */
@@ -22,6 +22,7 @@ import {
     useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery,
     useLazyGetSupplierDetailsBySupplierNameQuery
 } from "../../../../app/services/supplierAPI";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
@@ -61,20 +62,26 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
                 if (hasEditPermission.isViewOnly === true) {
                     formSetting.isViewOnly = true;
                     setIsButtonDisable(true);
-                    setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, true);
+                    setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, true);
                 }
                 else {
                     formSetting.isViewOnly = false;
                     setIsButtonDisable(false);
-                    setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, false);
+                    setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, false);
                 }
             }
             if (isResponsibleUser) {
                 formSetting.isViewOnly = false;
                 setIsButtonDisable(false);
-                setFieldSetting(formData, 'responsibleUserId', settingTypeEnums.isDisabled, true);
+                setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, true);
             }
+            setFieldSetting(supplierBasicData, 'name', FieldSettingType.INPUTBUTTON);
+            setFieldSetting(supplierBasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
+        } else if (!isOpen) {
+            setFieldSetting(supplierBasicData, 'name', FieldSettingType.INPUTBUTTON, true);
+            setFieldSetting(supplierBasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
         }
+
     }, [isOpen, hasEditPermission, formSetting, formData, isResponsibleUser])
 
     useEffect(() => {
@@ -88,8 +95,9 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             ]);
 
             if (!isOpen) {
-                removeFormFields(formData, ['responsibleUserId'], setFormData);
-                setFieldSetting(formData, 'name', settingTypeEnums.isInputButton, true);
+                const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+                setFormData(modifyFormFields);
+                setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON, true);
             }
         };
 
@@ -101,29 +109,29 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         if (isOpen) {
             if (supplierId > 0) {
                 getSupplierBasicInformationById(supplierId);
-                setFieldSetting(formData, 'name', settingTypeEnums.isInputButton);
+                setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON);
             }
         }
     }, [isOpen, supplierId, getSupplierBasicInformationById])
 
     useEffect(() => {
         if (isGetAllGroupTypesSucess && allGetAllGroupTypesData) {
-            setOptionFieldSetting(allGetAllGroupTypesData, 'groupTypeId', 'type', supplierBasicData, 'groupTypeId');
+            setDropDownOptionField(allGetAllGroupTypesData, 'groupTypeId', 'type', supplierBasicData, 'groupTypeId');
         }
         if (isGetAllUserSucess && allGetAllUserData) {
             const filterCondition = (item) => {
                 return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());;
             };
-            setOptionFieldSetting(allGetAllUserData, 'userId', 'fullName', supplierBasicData, 'responsibleUserId', filterCondition);
+            setDropDownOptionField(allGetAllUserData, 'userId', 'fullName', supplierBasicData, 'responsibleUserId', filterCondition);
         }
         if (isGetAllCountriesSucess && allGetAllCountriesData) {
-            setOptionFieldSetting(allGetAllCountriesData, 'countryId', 'name', supplierBasicData, 'countryId');
+            setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', supplierBasicData, 'countryId');
         }
         if (isGetAllTerritoriesSucess && allGetAllTerritoriesData) {
-            setOptionFieldSetting(allGetAllTerritoriesData, 'territoryId', 'territory', supplierBasicData, 'territoryId');
+            setDropDownOptionField(allGetAllTerritoriesData, 'territoryId', 'territory', supplierBasicData, 'territoryId');
         }
         if (isGetAllSupplierTypeSucess && allGetAllSupplierTypeData) {
-            setOptionFieldSetting(allGetAllSupplierTypeData, 'supplierTypeId', 'type', supplierBasicData, 'supplierTypeId');
+            setDropDownOptionField(allGetAllSupplierTypeData, 'supplierTypeId', 'type', supplierBasicData, 'supplierTypeId');
         }
     }, [isGetAllGroupTypesSucess, allGetAllGroupTypesData, isGetAllUserSucess, allGetAllUserData, isGetAllCountriesSucess, allGetAllCountriesData,
         isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllSupplierTypeSucess, allGetAllSupplierTypeData]);
@@ -269,15 +277,18 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     return (
         <React.Fragment>
             <div className="row horizontal-form basic-info-step">
-                <FormCreator
-                    config={formData}
-                    ref={basicDetailRef}
-                    {...formData}
-                    onActionChange={formActionHandler}
-                    onInputChange={formInputHandler}
-                    handleInputGroupButton={handleInputGroupButton}
-                    handleInputShowInfo={handleExistingInfo}
-                />
+                {!isGetSupplierBasicInformationByIdFetching ?
+                    <FormCreator
+                        config={formData}
+                        ref={basicDetailRef}
+                        {...formData}
+                        onActionChange={formActionHandler}
+                        onInputChange={formInputHandler}
+                        handleInputGroupButton={handleInputGroupButton}
+                        handleInputShowInfo={handleExistingInfo}
+                    />
+                    : <DataLoader />
+                }
             </div>
 
             {isOpen &&

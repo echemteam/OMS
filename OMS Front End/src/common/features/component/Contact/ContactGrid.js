@@ -6,7 +6,7 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import { contactDetailFormData } from "./config/ContactDetailForm.data";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { useLazyGetAllContactTypesQuery } from "../../../../app/services/contactAPI";
-import { findFieldData, setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { getFieldData, setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
@@ -66,8 +66,8 @@ const ContactGrid = ({ keyId, getContactByKeyId, addEditContactMutation, isSuppl
                 let condition = isSupplier ? item.isForSuppliers : item.isForCustomers
                 return condition;
             };
-            setOptionFieldSetting(allGetAllContactTypesData, 'contactTypeId', 'type', contactDetailFormData, 'contactTypeId', filterCondition);
-            const contactOption = findFieldData(contactDetailFormData, 'contactTypeId');
+            setDropDownOptionField(allGetAllContactTypesData, 'contactTypeId', 'type', contactDetailFormData, 'contactTypeId', filterCondition);
+            const contactOption = getFieldData(contactDetailFormData, 'contactTypeId');
             setContactType(contactOption?.fieldSetting?.options);
         }
     }, [isGetAllContactTypesSucess, allGetAllContactTypesData]);

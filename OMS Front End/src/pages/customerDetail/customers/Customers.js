@@ -13,7 +13,7 @@ import {
 import InActiveCustomer from "./features/InActiveCustomer";
 import { BasicDetailContextProvider } from "../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import useDebounce from "../../../app/customHooks/useDebouce"
-import { ListSupplier } from "../../../utils/Enums/enums";
+import { ListSupplier } from "../../../utils/Enums/commonEnums";
 import { StatusEnums, StatusValue } from "../../../utils/Enums/StatusEnums";
 import ToastService from "../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../data/appMessages";

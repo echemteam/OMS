@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Lib's */
-import { ApprovalEnum } from "../../../../utils/Enums/enums";
+import { ApprovalEnum } from "../../../../utils/Enums/commonEnums";
 import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
 //** Service's */
 import { useGetValidateCheckListMutation } from "../../../../app/services/ApprovalAPI";

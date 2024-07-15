@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 /**
  * Resets form data and optionally other states to their initial values.
  * 
@@ -23,4 +24,14 @@ export const onResetForm = (formData, setFormData, initialState = null, otherSet
     if (otherSettersWithValues.length > 0) {
         otherSettersWithValues.forEach(({ setter, value }) => setter(value));
     }
+};
+
+onResetForm.propTypes = {
+    formData: PropTypes.object.isRequired,
+    setFormData: PropTypes.func.isRequired,
+    initialState: PropTypes.object,
+    otherSettersWithValues: PropTypes.arrayOf(PropTypes.shape({
+        setter: PropTypes.func.isRequired,
+        value: PropTypes.any.isRequired, // Use PropTypes.any because value can be of any type
+    })),
 };

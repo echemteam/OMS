@@ -1,6 +1,6 @@
 import { FormFieldTypes } from "../../../../data/formFieldType";
 import { GridColumnType } from "../../../../data/gridColumnType";
-import { ListShowCustomer, ListSupplier } from "../../../../utils/Enums/enums";
+import { ListShowCustomer, ListSupplier } from "../../../../utils/Enums/commonEnums";
 import { getLabelClass } from "../../../../utils/StatusColors/StatusColors";
 
 export const reasonData = {

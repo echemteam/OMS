@@ -7,7 +7,7 @@ import { AppIcons } from "../../../../data/appIcons";
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { useUpdateSupplierStatusMutation } from "../../../../app/services/supplierAPI";
 import ToastService from "../../../../services/toastService/ToastService";
-import { TabEnum } from "../../../../utils/Enums/enums";
+import { CustomerSupplierTabEnum } from "../../../../utils/Enums/commonEnums";
 import { StatusEnums } from "../../../../utils/Enums/StatusEnums";
 import SupplierBasicDetail from "../../feature/supplierBasicDetail/SupplierBasicDetail";
 import SuplierAddressDetails from "../../feature/supplierAddressDetail/SupplierAddressDetails";
@@ -30,25 +30,25 @@ const AddSupplierTab = () => {
       label: "Basic Information",
       subLabel: "Enter Supplier Basic information",
       content: <SupplierBasicDetail />,
-      tab: TabEnum.BasicInformation
+      tab: CustomerSupplierTabEnum.BasicInformation
     },
     {
       label: "Address",
       subLabel: "Enter Supplier Address Details",
       content: <SuplierAddressDetails isEditablePage={false} />,
-      tab: TabEnum.Address
+      tab: CustomerSupplierTabEnum.Address
     },
     {
       label: "Contact",
       subLabel: "Enter Supplier Contact Details",
       content: <SupplierContactDetail isEditablePage={false} isSearchFilterShow={false} />,
-      tab: TabEnum.Contact
+      tab: CustomerSupplierTabEnum.Contact
     },
     {
       label: "Documents",
       subLabel: "Add Supplier Documents Details",
       content: <SupplierDocumentDetail isEditablePage={false} />,
-      tab: TabEnum.Documents
+      tab: CustomerSupplierTabEnum.Documents
     },
   ];
 

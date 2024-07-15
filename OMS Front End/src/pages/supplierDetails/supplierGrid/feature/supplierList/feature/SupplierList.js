@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 //** Lib's */
 import { AppIcons } from '../../../../../../data/appIcons';
 import MolGrid from '../../../../../../components/Grid/MolGrid';
-import { ownerType } from '../../../../../../utils/Enums/enums';
+import { OwnerType } from '../../../../../../utils/Enums/commonEnums';
 import { securityKey } from '../../../../../../data/SecurityKey';
 import Buttons from '../../../../../../components/ui/button/Buttons';
 import FormCreator from '../../../../../../components/Forms/FormCreator';
@@ -22,6 +22,7 @@ import ToastService from '../../../../../../services/toastService/ToastService';
 import { useUpdateResponsibleUserMutation } from '../../../../../../app/services/commonAPI';
 import { useAddSupplierNotesMutation } from '../../../../../../app/services/supplierNotesAPI';
 import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../../../app/services/supplierAPI';
+import { removeFormFields } from '../../../../../../utils/FormFields/RemoveFields/handleRemoveFields';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
@@ -45,13 +46,8 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   const [assignRUser, setAssignRUser] = useState();
   const { isResponsibleUser, setIsResponsibleUser } = useContext(AddSupplierContext);
 
-  const [
-    getSuppliers,
-    { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
-  ] = useGetSuppliersMutation();
-
+  const [getSuppliers, { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData }] = useGetSuppliersMutation();
   const [updateSupplierApproveStatus, { isSuccess: isSuccessUpdateSupplier, data: updateSupplierData }] = useUpdateSupplierApproveStatusMutation();
-
   const [updateSupplierInActiveStatus, { isLoading: updateInActiveStatusSupplierLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
 
   const [addSupplierNotes] = useAddSupplierNotesMutation();
@@ -224,10 +220,8 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   };
 
   const removeFields = () => {
-    const removeFields = ['ResponsibleUserId']
-    const newFrom = { ...formData };
-    newFrom.formFields = formData.formFields.filter(field => !removeFields.includes(field.id));
-    setFormData(newFrom);
+    const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+    setFormData(modifyFormFields);
   }
 
   const handlefreeze = (data) => {
@@ -292,7 +286,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   const updateRUserData = (value) => {
     let req = {
       ownerId: supplierID,
-      ownerType: ownerType.Supplier,
+      OwnerType: OwnerType.Supplier,
       responsibleUserId: value
     }
     updateResponsibleUser(req);

@@ -9,7 +9,7 @@ import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetai
 import SwalAlert from "../../../../services/swalService/SwalService";
 import ToastService from "../../../../services/toastService/ToastService";
 import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery } from "../../../../app/services/phoneNumberAPI";
-import { setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Component's */
 const ContactNumberList = React.lazy(() => import("./feature/ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./feature/AddEditContactNumber"));
@@ -47,13 +47,13 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
 
     useEffect(() => {
         if (isGetAllCountriesSucess && isCountriesData) {
-            setOptionFieldSetting(isCountriesData, 'countryId', 'phoneCode', addEditContactsFormData, 'phoneCode');
+            setDropDownOptionField(isCountriesData, 'countryId', 'phoneCode', addEditContactsFormData, 'phoneCode');
         }
     }, [isGetAllCountriesSucess, isCountriesData]);
 
     useEffect(() => {
         if (isGetAllPhoneTypesSucess && isPhoneTypesData) {
-            setOptionFieldSetting(isPhoneTypesData, 'phoneTypeId', 'type', addEditContactsFormData, 'phoneTypeId');
+            setDropDownOptionField(isPhoneTypesData, 'phoneTypeId', 'type', addEditContactsFormData, 'phoneTypeId');
         }
     }, [isGetAllPhoneTypesSucess, isPhoneTypesData])
 

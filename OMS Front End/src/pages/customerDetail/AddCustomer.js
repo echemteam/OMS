@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppIcons } from "../../data/appIcons";
 import Image from "../../components/image/Image";
-import { TabEnum, settingEnum } from "../../utils/Enums/enums";
+import { CustomerSupplierTabEnum, CustomerSettingEnum } from "../../utils/Enums/commonEnums";
 import { StatusEnums } from "../../utils/Enums/StatusEnums";
 import CardSection from "../../components/ui/card/CardSection";
 import ToastService from "../../services/toastService/ToastService";
@@ -45,19 +45,19 @@ const AddCustomer = () => {
       label: "Basic Information",
       subLabel: "Enter Customer Basic information",
       content: <BasicDetail />,
-      tab: TabEnum.BasicInformation,
+      tab: CustomerSupplierTabEnum.BasicInformation,
     },
     {
       label: "Address",
       subLabel: "Enter Customer Address Details",
       content: <CustomerAddressDetails isEditablePage={false} />,
-      tab: TabEnum.Address,
+      tab: CustomerSupplierTabEnum.Address,
     },
     {
       label: "Contact",
       subLabel: "Enter Customer Contact Details",
       content: <CustomerContactDetails isEditablePage={false} isSearchFilterShow={false} />,
-      tab: TabEnum.Contact,
+      tab: CustomerSupplierTabEnum.Contact,
     },
     {
       label: "Setting",
@@ -69,13 +69,13 @@ const AddCustomer = () => {
           </div>
         </>
       ),
-      tab: TabEnum.Setting,
+      tab: CustomerSupplierTabEnum.Setting,
     },
     {
       label: "Documents",
       subLabel: "Add Customer Documents Details",
       content: <CustomerDocumentDetails isEditablePage={false} />,
-      tab: TabEnum.Documents,
+      tab: CustomerSupplierTabEnum.Documents,
     },
   ];
 
@@ -145,7 +145,7 @@ const AddCustomer = () => {
                                   Save Financial Settings
                                 </button>
                                 :
-                                <button type="button" className="btn dark-btn mr-3" onClick={() => handleActiveSubTabClick(settingEnum.FinancialSettings)} >
+                                <button type="button" className="btn dark-btn mr-3" onClick={() => handleActiveSubTabClick(CustomerSettingEnum.FinancialSettings)} >
                                   Back
                                 </button>
                               }

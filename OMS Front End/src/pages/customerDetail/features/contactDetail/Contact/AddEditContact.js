@@ -10,7 +10,7 @@ import { modifyPhoneNumberData } from "../../../../../utils/TransformData/Transf
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { settingTypeEnums } from "../../../../../utils/Enums/enums";
+import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import { setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
@@ -99,7 +99,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
       setContactId(data.contactId);
       setCustomerContactId(data?.customerContactId);
       setSupplierContactId(data?.supplierContactId);
-      setFieldSetting(form, 'contactTypeId', settingTypeEnums.isMultiSelect);
+      setFieldSetting(form, 'contactTypeId', FieldSettingType.MULTISELECT);
 
       const modifyPhoneNumberList = isGetByIdData.phoneNumberList.map((item, index) => ({
         ...item,
@@ -149,13 +149,13 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
   const handleEditMode = (contactId) => {
     setEditMode(true);
     contactId && getById(contactId);
-    setFieldSetting(contactDetailFormData, 'contactTypeId', settingTypeEnums.isDisabled, true);
+    setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
   }
 
   useEffect(() => {
     if (!isEdit) {
       let form = { ...contactDetailFormData };
-      setFieldSetting(form, 'contactTypeId', settingTypeEnums.isMultiSelect, isSupplier ? false : true);
+      setFieldSetting(form, 'contactTypeId', FieldSettingType.MULTISELECT, isSupplier ? false : true);
       setFormData(form);
       if (isOpen) {
         setContactId(0);
@@ -168,7 +168,7 @@ const AddEditContact = forwardRef(({ mainId, addEditContactMutation, onSidebarCl
 
   //** Reset Data */
   const onResetData = () => {
-    setFieldSetting(contactDetailFormData, 'contactTypeId', settingTypeEnums.isDisabled, false);
+    setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, false);
     let form = { ...contactDetailFormData };
     form.initialState = { ...contactDetailFormData.initialState };
     setFormData(form);

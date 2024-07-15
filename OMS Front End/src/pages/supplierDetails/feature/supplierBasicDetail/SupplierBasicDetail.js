@@ -7,13 +7,13 @@ const AddEditSupplierBasicDetail = React.lazy(() => import("./AddEditSupplierBas
 
 const SupplierBasicDetail = (props) => {
 
-  const { isOpen, getCustomerById, onSidebarClose, keyId } = props;
+  const { isOpen, getSupplierById, onSidebarClose, keyId } = props;
 
   return (
     <div className="basic-info-sec half-sec">
       <div className="basic-info-sec half-sec">
         <CardSection buttonClassName="theme-button">
-          <AddEditSupplierBasicDetail keyId={keyId} getCustomerById={getCustomerById} isOpen={isOpen} onSidebarClose={onSidebarClose} />
+          <AddEditSupplierBasicDetail keyId={keyId} getSupplierById={getSupplierById} isOpen={isOpen} onSidebarClose={onSidebarClose} />
         </CardSection>
       </div>
 
