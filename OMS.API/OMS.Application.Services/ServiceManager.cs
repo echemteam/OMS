@@ -1,4 +1,5 @@
 ﻿using OMS.Application.Services.Address;
+using OMS.Application.Services.APIConfiguration;
 using OMS.Application.Services.Approval;
 using OMS.Application.Services.ApprovalConfiguration;
 using OMS.Application.Services.Authentication;
@@ -54,6 +55,7 @@ namespace OMS.Application.Services
         ISupplierNotesService _supplierNotesService;
         IApprovalService _approvalService;
         IApprovalConfigurationServices _approvalConfigurationServices;
+        IApiConfigurationService _apiConfigurationService;
 
         public ITestService testService
         {
@@ -301,6 +303,19 @@ namespace OMS.Application.Services
                     _approvalConfigurationServices = new ApprovalConfigurationServices(_repositoryManager, _commonSettingService);
                 }
                 return _approvalConfigurationServices;
+
+            }
+        }
+
+        public IApiConfigurationService apiConfigurationService
+        {
+            get
+            {
+                if (_apiConfigurationService == null)
+                {
+                    _apiConfigurationService = new ApiConfigurationService(_repositoryManager, _commonSettingService);
+                }
+                return _apiConfigurationService;
 
             }
         }

@@ -33,6 +33,7 @@ namespace OMS.Domain.Repository
         ISupplierNotesRepository _supplierNotesRepository;
         IApprovalRepository _approvalRepository;
         IApprovalConfigurationRepository _approvalConfigurationRepository;
+        IApiProviderRepository _apiProviderRepository;
 
         public ITestRepository test
         {
@@ -263,6 +264,17 @@ namespace OMS.Domain.Repository
                     _approvalConfigurationRepository = new ApprovalConfigurationRepository(_context);
                 }
                 return _approvalConfigurationRepository;
+            }
+        }
+        public IApiProviderRepository apiProvider
+        {
+            get
+            {
+                if (_apiProviderRepository == null)
+                {
+                    _apiProviderRepository = new ApiProviderRepository(_context);
+                }
+                return _apiProviderRepository;
             }
         }
     }

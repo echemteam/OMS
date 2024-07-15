@@ -1,4 +1,7 @@
 ﻿using OMS.Application.Services.Address;
+using OMS.Application.Services.APIConfiguration;
+using OMS.Application.Services.Approval;
+using OMS.Application.Services.ApprovalConfiguration;
 using OMS.Application.Services.Authentication;
 using OMS.Application.Services.Common;
 using OMS.Application.Services.Contact;
@@ -11,12 +14,10 @@ using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
 using OMS.Application.Services.Supplier;
+using OMS.Application.Services.SupplierDocuements;
 using OMS.Application.Services.SupplierNotes;
 using OMS.Application.Services.Test;
 using OMS.Application.Services.User;
-using OMS.Application.Services.SupplierDocuements;
-using OMS.Application.Services.Approval;
-using OMS.Application.Services.ApprovalConfiguration;
 
 namespace OMS.Application.Services
 {
@@ -42,5 +43,6 @@ namespace OMS.Application.Services
         ISupplierNotesService supplierNotesService { get; }
         IApprovalService approvalService { get; }
         IApprovalConfigurationServices approvalConfigurationServices { get; }
+        IApiConfigurationService apiConfigurationService { get; }
     }
 }
