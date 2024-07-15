@@ -1,16 +1,16 @@
 import { useContext } from "react";
-import { securityKey } from "../../../../../data/SecurityKey";
-import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { securityKey } from "../../../../data/SecurityKey";
+import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 
-import SuplierAddressDetails from "../../supplierAddressDetail/SupplierAddressDetails";
-import SupplierContactDetail from "../../supplierContactDetail/SupplierContactDetail";
-import SupplierDocumentDetail from "../../supplierDocumentDetail/SupplierDocumentDetail";
+import SuplierAddressDetails from "../../feature/supplierAddressDetail/SupplierAddressDetails";
+import SupplierContactDetail from "../../feature/supplierContactDetail/SupplierContactDetail";
+import SupplierDocumentDetail from "../../feature/supplierDocumentDetail/SupplierDocumentDetail";
 // import { SupplierHistoryDetail } from "../../../suppliers/features/updateSupplierDetails/features/historyDetails/SupplierHistoryDetail";
-import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
-import SupplierNoteDetail from "../../supplierNoteDetail/SupplierNoteDetail";
-import HistotyList from "../../../../../common/features/component/History/HistotyList";
-import { SupplierHistory } from "../../supplierHistoryDetail/SupplierHistory";
+import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
+import SupplierNoteDetail from "../../feature/supplierNoteDetail/SupplierNoteDetail";
+import HistotyList from "../../../../common/features/component/History/HistotyList";
+import { SupplierHistory } from "../../feature/supplierHistoryDetail/SupplierHistory";
 
 const SupplierViewTab = (supplierId) => {
 
