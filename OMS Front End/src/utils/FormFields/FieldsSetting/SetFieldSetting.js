@@ -34,6 +34,10 @@ export const setOptionFieldSetting = (apiResponseData, valueField, labelField, f
     }
 };
 
+export const findFieldData = (formFieldsData, fieldId) => {
+    return formFieldsData.formFields.find((item) => item.dataField === fieldId);
+}
+
 
 /**
  * Sets a specific field setting for a given field within form fields data.

@@ -15,7 +15,7 @@ export const setOptionFieldSetting = (apiResponseData, valueField, labelField, f
     if (!Array.isArray(apiResponseData)) {
         console.error('API response data is not an array or is undefined.');
         return;
-      }
+    }
     // Filter the API response data if a filter condition is provided
     const filteredData = filterCondition ? apiResponseData.filter(filterCondition) : apiResponseData;
 
@@ -33,6 +33,8 @@ export const setOptionFieldSetting = (apiResponseData, valueField, labelField, f
         dropdownField.fieldSetting.options = mappedData;
     }
 };
+
+
 
 export const setFieldSetting = (formFieldsData, fieldId, settingType, value = false) => {
     const selectField = formFieldsData.formFields.find((item) => item.dataField === fieldId);
