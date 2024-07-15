@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApiConfiguration;
+using OMS.Domain.Entities.API.Request.ApiEndpoints;
+using OMS.Domain.Entities.API.Response.ApiEndpoint;
 using OMS.Domain.Entities.API.Response.ApiProvider;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
@@ -58,6 +60,43 @@ namespace OMS.API.Controllers
         {
             var providers = await _serviceManager.apiConfigurationService.GetApiProviders(requestData);
             return APISucessResponce<object>(providers);
+        }
+
+        [HttpPost("AddEditApiEndpoint")]
+        public async Task<IActionResult> AddEditApiEndpoint(AddEditApiEndpointRequest requestData)
+        {
+            var addEditItem = await _serviceManager.apiConfigurationService.AddEditApiEndpoint(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+
+        [HttpGet("GetApiEndpointByEndpointId")]
+        public async Task<IActionResult> GetApiEndpointByEndpointId(int endpointId)
+        {
+            if (endpointId > 0)
+            {
+                GetApiEndpointByEndpointIdResponse responseData = await _serviceManager.apiConfigurationService.GetApiEndpointByEndpointId(endpointId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(endpointId);
+        }
+
+
+        [HttpDelete("DeleteApiEndpoint")]
+        public async Task<IActionResult> DeleteApiEndpoint(int endpointId)
+        {
+            if (endpointId > 0)
+            {
+                var deleteItem = await _serviceManager.apiConfigurationService.DeleteApiEndpoint(endpointId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(endpointId);
+        }
+
+        [HttpPost("GetApiEndpoints")]
+        public async Task<IActionResult> GetApiEndpoints([FromBody] ListEntityRequest<BaseFilter> requestData)
+        {
+            var endpoint = await _serviceManager.apiConfigurationService.GetApiEndpoints(requestData);
+            return APISucessResponce<object>(endpoint);
         }
         #endregion
     }
