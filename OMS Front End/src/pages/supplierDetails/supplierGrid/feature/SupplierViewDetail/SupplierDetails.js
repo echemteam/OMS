@@ -117,6 +117,7 @@ const SupplierDetails = () => {
           supplierData={supplierData}
           keyId={keyId}
           getSupplierById={onSuccess}
+          isEditablePage={true}
         />
       </SidebarModel>
     </>
