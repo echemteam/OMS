@@ -5,8 +5,8 @@ import Rules from "./features/Rules";
 import "./Configuration.scss";
 import { useLazyGetAllFunctionalitiesFieldsQuery, useLazyGetAllFunctionalitiesQuery, useLazyGetAllModulesQuery, useLazyGetApprovalConfigurationRulesByModuleIdAndFunctionalityIdQuery } from "../../../app/services/configurationAPI";
 import { rulesFormData } from "./config/RulesForm.data";
-import { setOptionFieldSetting } from "../../../utils/FieldsSetting/SetFieldSetting";
 import { commansDataField } from "../../../utils/Enums/DropdownEnums";
+import { setOptionFieldSetting } from "../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const ApprovalRules = () => {
 

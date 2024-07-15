@@ -20,7 +20,7 @@ export const setOptionFieldSetting = (apiResponseData, valueField, labelField, f
     const filteredData = filterCondition ? apiResponseData.filter(filterCondition) : apiResponseData;
 
     // Map the filtered data to the required format
-    const mappedData = filteredData.map((item) => ({
+    const mappedData = filteredData?.map((item) => ({
         value: item[valueField],
         label: item[labelField],
     }));
@@ -33,6 +33,10 @@ export const setOptionFieldSetting = (apiResponseData, valueField, labelField, f
         dropdownField.fieldSetting.options = mappedData;
     }
 };
+
+export const findFieldData = (formFieldsData, fieldId) => {
+    return formFieldsData.formFields.find((item) => item.dataField === fieldId);
+}
 
 
 /**

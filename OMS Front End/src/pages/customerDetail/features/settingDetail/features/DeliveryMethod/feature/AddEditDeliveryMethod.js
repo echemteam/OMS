@@ -6,11 +6,11 @@ import Buttons from "../../../../../../../components/ui/button/Buttons";
 import { settingTypeEnums } from "../../../../../../../utils/Enums/enums";
 import FormCreator from "../../../../../../../components/Forms/FormCreator";
 import CenterModel from "../../../../../../../components/ui/centerModel/CenterModel";
-import { setFieldSetting } from "../../../../../../../utils/FieldsSetting/SetFieldSetting";
 import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import ToastService from "../../../../../../../services/toastService/ToastService";
 import { useAddDeliveryMethodsMutation, useLazyGetCustomerDeliveryMethodByCustomerDeliveryMethodIdQuery, useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
+import { setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit, deliveryMethodId, onSuccess }) => {
     //** State */

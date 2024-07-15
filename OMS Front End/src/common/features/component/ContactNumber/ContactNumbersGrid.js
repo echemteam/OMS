@@ -1,22 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
-import { Message } from "../Util/ContactMessages";
-import { deleteData } from "../Util/ContactEmailAddressUtil";
+import { Message } from "../EmailAddress/utils/ContactMessages";
+import { deleteData } from "../EmailAddress/utils/ContactEmailAddressUtil";
 import { addEditContactsFormData, phoneNumberConfig } from "./config/AddEditContactsForm.data";
-import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
-import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
 //** Service's */
-import SwalAlert from "../../../../../services/swalService/SwalService";
-import ToastService from "../../../../../services/toastService/ToastService";
-import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery, useLazyGetPhoneByContactIdQuery } from "../../../../../app/services/phoneNumberAPI";
-import { setOptionFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import SwalAlert from "../../../../services/swalService/SwalService";
+import ToastService from "../../../../services/toastService/ToastService";
+import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery } from "../../../../app/services/phoneNumberAPI";
+import { setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Component's */
-const ContactNumberList = React.lazy(() => import("./ContactNumberList"));
-const AddEditContactNumber = React.lazy(() => import("./AddEditContactNumber"));
+const ContactNumberList = React.lazy(() => import("./feature/ContactNumberList"));
+const AddEditContactNumber = React.lazy(() => import("./feature/AddEditContactNumber"));
 
-const ManageContactNumbers = ({ onGetContactList, isSupplier, isButtonDisable }) => {
+const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, isButtonDisable }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -24,17 +22,14 @@ const ManageContactNumbers = ({ onGetContactList, isSupplier, isButtonDisable })
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
-    const { contactId, setPhoneNumberData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     //** API Call's */
-    const [getList, { isFetching: isGetContactFetching }] = useLazyGetPhoneByContactIdQuery();
     const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: isCountriesData }] = useLazyGetAllCountriesQuery();
     const [getPhoneTypes, { isSuccess: isGetAllPhoneTypesSucess, data: isPhoneTypesData }] = useLazyGetAllPhoneTypesQuery();
     const [deletePhoneNumber, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactPhoneMutation();
 
     //** UseEffect */
     useEffect(() => {
-        contactId && getList(contactId);
         getPhoneTypes();
         getAllCountries();
     }, [contactId]);
@@ -65,14 +60,12 @@ const ManageContactNumbers = ({ onGetContactList, isSupplier, isButtonDisable })
     useEffect(() => {
         if (isDeleteSucess && isDeleteData && !isDeleteFetching) {
             ToastService.success(isDeleteData.errorMessage);
-            contactId && getList(contactId);
-            onGetContactList();
         }
     }, [isDeleteSucess, isDeleteData, isDeleteFetching]);
 
     //** Handle Changes */
     const handleToggleModal = () => {
-        if (phoneNumberData?.length < 5) {
+        if (phoneNumberList?.length < 5) {
             setShowModal(!showModal);
             setIsEdit(false);
         } else {
@@ -102,7 +95,7 @@ const ManageContactNumbers = ({ onGetContactList, isSupplier, isButtonDisable })
             "Delete", "Cancel"
         ).then((confirmed) => {
             if (confirmed) {
-                deleteData(data.phoneId, data.id, deletePhoneNumber, phoneNumberData, setPhoneNumberData, Message.ContactNumberDelete, false)
+                deleteData(data.phoneId, data.id, deletePhoneNumber, phoneNumberList, setPhoneNumberList, Message.ContactNumberDelete, false)
             }
         });
     }
@@ -113,15 +106,15 @@ const ManageContactNumbers = ({ onGetContactList, isSupplier, isButtonDisable })
 
     return (
         <React.Fragment>
-            <ContactNumberList isSupplier={isSupplier} molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
-                isLoading={isGetContactFetching} isButtonDisable={isButtonDisable} />
+            <ContactNumberList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
+                isButtonDisable={isButtonDisable} phoneNumberList={phoneNumberList} />
             {showModal && (
-                <AddEditContactNumber isSupplier={isSupplier} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal}
-                    editFormData={editFormData} isEdit={isEdit} />
+                <AddEditContactNumber handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal}
+                    editFormData={editFormData} isEdit={isEdit} contactId={contactId} phoneNumberList={phoneNumberList} setPhoneNumberList={setPhoneNumberList} />
             )}
         </React.Fragment>
     )
 
 }
 
-export default ManageContactNumbers;
+export default ContactNumbersGrid;

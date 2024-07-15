@@ -10,8 +10,8 @@ import { modifyPhoneNumberData } from "../../../../../utils/TransformData/Transf
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { setFieldSetting } from "../../../../../utils/FieldsSetting/SetFieldSetting";
 import { settingTypeEnums } from "../../../../../utils/Enums/enums";
+import { setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Component's */
 const ManageEmailAddress = React.lazy(() => import("../EmailAddress/ManageEmailAddress"));
 const ManageContactNumbers = React.lazy(() => import("../ContactNumbers/ManageContactNumbers"));

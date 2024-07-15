@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import { useAddEditApprovalConfigurationMutation, useLazyGetAllFunctionalitiesFieldsQuery, useLazyGetAllFunctionalitiesQuery, useLazyGetAllModulesQuery } from '../../../../app/services/configurationAPI';
-import { setOptionFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting"
 import { commansDataField } from '../../../../utils/Enums/DropdownEnums';
 import { useLazyGetAllRolesQuery } from '../../../../app/services/securityPermissionsAPI';
 import ToastService from '../../../../services/toastService/ToastService';
 import { onResetForm } from '../../../../utils/FormFields/ResetForm/handleResetForm';
+import { setOptionFieldSetting } from '../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 
 const AddEditRules = (props) => {
     const ruleFormRef = useRef();

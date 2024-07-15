@@ -1,103 +1,69 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
-import CardSection from "../../../../components/ui/card/CardSection";
-import MolGrid from "../../../../components/Grid/MolGrid";
-import {
-  useGetCustomersMutation,
-  useUpdateCustomerApproveStatusMutation,
-  useUpdateCustomerInActiveStatusMutation,
-} from "../../../../app/services/basicdetailAPI";
-import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext";
-import { useNavigate } from "react-router-dom";
-import { encryptUrlData } from "../../../../services/CryptoService";
-import ToastService from "../../../../services/toastService/ToastService";
-import { reasonData } from "../config/CustomerData";
-import CenterModel from "../../../../components/ui/centerModel/CenterModel";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import Buttons from "../../../../components/ui/button/Buttons";
-import { securityKey } from "../../../../data/SecurityKey";
-import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import CustomerApproval from "../../features/cutomerApproval/CustomerApproval";
-import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
-import { useSelector } from "react-redux";
-import { StatusEnums, StatusFeild } from "../../../../utils/Enums/StatusEnums";
-import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../app/services/commonAPI";
-import { excludingRoles } from "../../features/basicDetail/config/BasicDetailForm.data";
-import { ownerType } from "../../../../utils/Enums/enums";
-import { AppIcons } from "../../../../data/appIcons";
-import { setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
+import SupplierContext from "../../../../../../utils/ContextAPIs/Supplier/SupplierListContext"
+import Buttons from '../../../../../../components/ui/button/Buttons';
+import ToastService from '../../../../../../services/toastService/ToastService';
+import CardSection from '../../../../../../components/ui/card/CardSection';
+import MolGrid from '../../../../../../components/Grid/MolGrid';
+import CenterModel from '../../../../../../components/ui/centerModel/CenterModel';
+import FormCreator from '../../../../../../components/Forms/FormCreator';
+import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../../../app/services/supplierAPI';
+import { encryptUrlData } from '../../../../../../services/CryptoService';
+import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import { securityKey } from '../../../../../../data/SecurityKey';
+import { useAddSupplierNotesMutation } from '../../../../../../app/services/supplierNotesAPI';
+import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { useSelector } from 'react-redux';
+import { StatusEnums, StatusFeild } from '../../../../../../utils/Enums/StatusEnums';
+import { useUpdateResponsibleUserMutation } from '../../../../../../app/services/commonAPI';
+import { ownerType } from '../../../../../../utils/Enums/enums';
+import { AppIcons } from '../../../../../../data/appIcons';
+import SupplierApproval from '../../../../feature/supplierApproval/SupplierApproval';
 
-export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
-  const navigate = useNavigate();
-  const molGridRef = useRef();
-  const reasonRef = useRef();
+const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
+
   const childRef = useRef();
+  const reasonRef = useRef();
+  const molGridRef = useRef();
+  const navigate = useNavigate();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [dataSource, setDataSource] = useState();
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(reasonData);
-  const [customerID, setcustomerId] = useState();
-  const [staticId, setStaticId] = useState();
-  const [statusFeild, setStatusFeild] = useState();
-  const { listRef } = useContext(CustomerContext);
+  const [supplierID, setSupplierId] = useState();
+  const [staticId, setStaticId] = useState()
+  const [statusFeild, setStatusFeild] = useState()
   const authState = useSelector((state) => state.auth);
+  const { supplierListRef } = useContext(SupplierContext);
   const [assignRUser, setAssignRUser] = useState();
-  const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
+  const { isResponsibleUser, setIsResponsibleUser } = useContext(AddSupplierContext);
 
   const [
-    getCustomers,
+    getSuppliers,
     { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData },
-  ] = useGetCustomersMutation();
-  const [
-    updateCustomerApproveStatus,
-    { isSuccess: isSuccessUpdateCustomer, data: updateCustomerData },
-  ] = useUpdateCustomerApproveStatusMutation();
-  const [
-    updateCustomerInActiveStatus,
-    {
-      isLoading: updateCustomerInActiveStatusCustomerLoading,
-      isSuccess: isSuccessUpdateCustomerInActiveStatus,
-      data: updateCustomerInActiveStatusData,
-    },
-  ] = useUpdateCustomerInActiveStatusMutation();
+  ] = useGetSuppliersMutation();
 
-  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
+  const [updateSupplierApproveStatus, { isSuccess: isSuccessUpdateSupplier, data: updateSupplierData }] = useUpdateSupplierApproveStatusMutation();
+
+  const [updateSupplierInActiveStatus, { isLoading: updateInActiveStatusSupplierLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
+
+  const [addSupplierNotes] = useAddSupplierNotesMutation();
   const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
-
-  const [addCustomerNotes] = useAddCustomerNotesMutation();
-
-  useEffect(() => {
-    getAllUser();
-  }, [statusId]);
-
-  useEffect(() => {
-    if (isGetAllUserSucess && allGetAlluserData) {
-      const filterCondition = (item) => {
-        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
-      };
-      setOptionFieldSetting(allGetAlluserData, 'userId', 'fullName', reasonData, 'responsibleUserId', filterCondition);
-    }
-  }, [isGetAllUserSucess, allGetAlluserData,]);
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
     const approvalAction = configFile?.columns.find((column) => column.name === "Approve");
     if (actionColumn) {
-      const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
-      const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
-      const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
-      const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
-      const hasDisable = hasFunctionalPermission(securityKey.DISABLECUSTOMER);
-      const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
-      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+      const hasEdit = hasFunctionalPermission(securityKey.EDITSUPPLIER);
+      const hasBlock = hasFunctionalPermission(securityKey.BLOCKSUPPLIER);
+      const hasFreeze = hasFunctionalPermission(securityKey.FREEZESUPPLIER);
+      const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
+      const hasDisable = hasFunctionalPermission(securityKey.DISABLESUPPLIER);
+      const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
+      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
 
       if (actionColumn.defaultAction.allowEdit) {
         actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
@@ -108,8 +74,8 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       if (actionColumn.defaultAction.allowFreeze) {
         actionColumn.defaultAction.allowFreeze = hasFreeze?.hasAccess;
       }
-      if (actionColumn.defaultAction.allowActiveCustomer) {
-        actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
+      if (actionColumn.defaultAction.allowActiveSupplier) {
+        actionColumn.defaultAction.allowActiveSupplier = hasActive?.hasAccess;
       }
       if (actionColumn.defaultAction.allowDisable) {
         actionColumn.defaultAction.allowDisable = hasDisable?.hasAccess;
@@ -119,11 +85,6 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       }
       if (actionColumn.defaultAction.allowUnfreeze) {
         actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
-      }
-      if (approvalAction) {
-        if (approvalAction.colSettings.allowCheckbox) {
-          approvalAction.colSettings.allowCheckbox = true;
-        }
       }
     }
     if (isResponsibleUser) {
@@ -147,8 +108,8 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       if (actionColumn.defaultAction.hasOwnProperty('allowFreeze')) {
         actionColumn.defaultAction.allowFreeze = true;
       }
-      if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
-        actionColumn.defaultAction.allowActiveCustomer = true;
+      if (actionColumn.defaultAction.hasOwnProperty('allowActiveSupplier')) {
+        actionColumn.defaultAction.allowActiveSupplier = true;
       }
       if (actionColumn.defaultAction.hasOwnProperty('allowDisable')) {
         actionColumn.defaultAction.allowDisable = true;
@@ -171,7 +132,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       filters: { searchText: search },
       statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
     };
-    getCustomers(request);
+    getSuppliers(request);
   };
 
   useEffect(() => {
@@ -197,24 +158,28 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   }, [isListSuccess, isListeData]);
 
   useEffect(() => {
-    if (isSuccessUpdateCustomer && updateCustomerData) {
-      ToastService.success(updateCustomerData.errorMessage);
-      getListApi();
+    if (isSuccessUpdateSupplier && updateSupplierData) {
+      ToastService.success(updateSupplierData.errorMessage);
+      getListApi()
     }
-  }, [isSuccessUpdateCustomer, updateCustomerData]);
+  }, [isSuccessUpdateSupplier, updateSupplierData]);
+
+  // useEffect(() => {
+  //   if (molGridRef.current) {
+  //     const currentPageObject = molGridRef.current.getCurrentPageObject();
+  //     getListApi(currentPageObject);
+  //   }
+  // }, [search, selectedStatusOptions]);
 
   useEffect(() => {
-    if (
-      isSuccessUpdateCustomerInActiveStatus &&
-      updateCustomerInActiveStatusData
-    ) {
-      ToastService.success(updateCustomerInActiveStatusData.errorMessage);
-      getListApi();
-      handleToggleModal();
+    if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
+      ToastService.success(updateSupplierInActiveStatusData.errorMessage);
+      getListApi()
+      handleToggleModal()
     }
-  }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
+  }, [isSuccessUpdateSupplierInActiveStatus, updateSupplierInActiveStatusData]);
 
-  useImperativeHandle(listRef, () => ({
+  useImperativeHandle(supplierListRef, () => ({
     getListApi,
   }));
 
@@ -228,30 +193,30 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       filters: { searchText: search },
       statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
     };
-    getCustomers(request);
+    getSuppliers(request);
   };
 
   const handleEditClick = (data) => {
-    navigate(`/viewCustomer/${encryptUrlData(data.customerId)}`, "_blank");
+    navigate(`/SupplierDetails/${encryptUrlData(data.supplierId)}`, "_blank");
   };
 
   const handleGridCheckBoxChange = (rowData) => {
     if (childRef.current) {
-      childRef.current.callChildFunction(rowData.customerId);
+      childRef.current.callChildFunction(rowData.supplierId);
     }
-    setcustomerId(rowData.customerId);
-  };
+    setSupplierId(rowData.supplierId);
+  }
 
-  const updateCustomerApproval = () => {
+  const updateSupplierApprovel = () => {
     let req = {
-      customerId: customerID,
+      supplierId: supplierID
     };
-    updateCustomerApproveStatus(req);
+    updateSupplierApproveStatus(req);
   };
 
   const handleToggleModal = () => {
     setShowModal(false);
-    onReset();
+    onReset()
   };
 
   const removeFields = () => {
@@ -264,65 +229,66 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   const handlefreeze = (data) => {
     removeFields();
     setShowModal(true);
-    setcustomerId(data.customerId);
-    setStaticId(StatusEnums.Freeze);
-    setStatusFeild(StatusFeild.Freeze);
-  };
+    setSupplierId(data.supplierId)
+    setStaticId(StatusEnums.Freeze)
+    setStatusFeild(StatusFeild.Freeze)
+  }
 
   const handleDiseble = (data) => {
     removeFields();
     setShowModal(true);
-    setcustomerId(data.customerId);
-    setStaticId(StatusEnums.Disable);
-    setStatusFeild(StatusFeild.Disable);
-  };
+    setSupplierId(data.supplierId)
+    setStaticId(StatusEnums.Disable)
+    setStatusFeild(StatusFeild.Disable)
+  }
 
   const handleBlock = (data) => {
     removeFields();
     setShowModal(true);
-    setcustomerId(data.customerId);
-    setStaticId(StatusEnums.Block);
-    setStatusFeild(StatusFeild.Block);
-  };
+    setSupplierId(data.supplierId)
+    setStaticId(StatusEnums.Block)
+    setStatusFeild(StatusFeild.Block)
+  }
   const handleReject = (data) => {
-    const customerData = dataSource.find(customerItem => customerItem.customerId === data.customerId);
+    const supllierData = dataSource.find(item => item.supplierId === data.supplierId);
     setShowModal(true);
     setAssignRUser(false);
-    setcustomerId(data.customerId);
-    setStaticId(StatusEnums.Reject);
+    setSupplierId(data.supplierId)
+    setStaticId(StatusEnums.Reject)
     setStatusFeild(StatusFeild.Reject);
-    if (customerData.responsibleUserId) {
+    if (supllierData.responsibleUserId) {
       removeFields();
       setAssignRUser(true);
     }
-  };
+  }
+
   const onReset = () => {
     let restData = { ...reasonData };
     restData.initialState = { ...formData };
     setFormData(restData);
-  };
+  }
 
   const handleUpdate = () => {
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
         ...custData,
-        customerId: customerID,
+        supplierId: supplierID,
         statusId: staticId,
         note: custData.inActiveReason,
-      };
-      updateCustomerInActiveStatus(req);
-      addCustomerNotes(req);
+      }
+      updateSupplierInActiveStatus(req)
+      addSupplierNotes(req);
       if (!assignRUser) {
         updateRUserData(custData.responsibleUserId.value);
       }
     }
-  };
+  }
 
   const updateRUserData = (value) => {
     let req = {
-      ownerId: customerID,
-      ownerType: ownerType.Customer,
+      ownerId: supplierID,
+      ownerType: ownerType.Supplier,
       responsibleUserId: value
     }
     updateResponsibleUser(req);
@@ -343,7 +309,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
           <CardSection
             searchInput={true}
             handleChange={handleChange}
-            searchInputName="Search By Customer Name, Tax Id , Email Address"
+            searchInputName="Search By Supplier Name, Tax Id , Email Address"
             searchFilter={searchStatusFilter ? true : false}
             handleChangeDropdown={handleChangeDropdown}
             selectedOptions={selectedDrpvalues}
@@ -367,7 +333,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
           >
             <div className="row">
               <div className="col-md-12 table-striped">
-                {/* <div className="customer-list"> */}
+                {/* <div className='customer-list'> */}
                 <MolGrid
                   ref={molGridRef}
                   configuration={configFile}
@@ -383,40 +349,49 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
                   allowPagination={true}
                   onCellDataChange={handleGridCheckBoxChange}
                 />
-                {/* </div> */}
+                {/* </div>/ */}
               </div>
             </div>
           </CardSection>
+          {showModal && (
+            <CenterModel
+              showModal={showModal}
+              handleToggleModal={handleToggleModal}
+              modalTitle={`${statusFeild + " "}Reason`}
+              modelSizeClass="w-50s"
+            >
+              <div className="row horizontal-form">
+                <FormCreator
+                  config={formData}
+                  ref={reasonRef}
+                  {...formData}
 
-          <CenterModel
-            showModal={showModal}
-            handleToggleModal={handleToggleModal}
-            modalTitle={`${statusFeild} Reason`}
-            modelSizeClass="w-50s" >
-            <div className="row horizontal-form">
-              <FormCreator config={formData} ref={reasonRef} {...formData} />
-              <div className="col-md-12 mt-2">
-                <div className="d-flex align-item-end justify-content-end">
-                  <div className="d-flex align-item-end">
-                    <Buttons
-                      buttonTypeClassName="theme-button"
-                      buttonText="Update"
-                      isLoading={updateCustomerInActiveStatusCustomerLoading}
-                      onClick={handleUpdate}
-                    />
-                    <Buttons
-                      buttonTypeClassName="dark-btn ml-5"
-                      buttonText="Cancel"
-                      onClick={handleToggleModal}
-                    />
+                />
+                <div className="col-md-12 mt-2">
+                  <div className="d-flex align-item-end justify-content-end">
+                    <div className="d-flex align-item-end">
+                      <Buttons
+                        buttonTypeClassName="theme-button"
+                        buttonText="Update"
+                        isLoading={updateInActiveStatusSupplierLoading}
+                        onClick={handleUpdate}
+                      />
+                      <Buttons
+                        buttonTypeClassName="dark-btn ml-5"
+                        buttonText="Cancel"
+                        onClick={handleToggleModal}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </CenterModel>
+            </CenterModel>
+          )}
         </div>
+        <SupplierApproval childRef={childRef} getListApi={getListApi} updateApproval={updateSupplierApprovel} />
       </div>
-      <CustomerApproval childRef={childRef} getListApi={getListApi} updateCustomerApproval={updateCustomerApproval} />
     </div>
-  );
-};
+  )
+}
+
+export default SupplierList
