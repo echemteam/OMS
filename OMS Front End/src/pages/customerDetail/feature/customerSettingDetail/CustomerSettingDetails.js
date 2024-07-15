@@ -7,11 +7,11 @@ import FinancialSettings from "./FinancialSettings";
 import { securityKey } from "../../../../data/SecurityKey";
 import Unauthorize from "../../../unauthorize/Unauthorize";
 import CardSection from "../../../../components/ui/card/CardSection";
-import ShippingSettings from "./features/ShippingSetting/ShippingSettings";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import ShippingSettings from "./features/ShippingSetting/ShippingSettings";
 
-const SettingDetails = ({ isEditablePage }) => {
+const CustomerSettingDetails = ({ isEditablePage }) => {
 
   const [showFinacialTab, setShowFinacialTab] = useState(false);
   const [showShippingTab, setShowShippingTab] = useState(false);
@@ -110,4 +110,4 @@ const SettingDetails = ({ isEditablePage }) => {
   );
 };
 
-export default SettingDetails;
+export default CustomerSettingDetails;

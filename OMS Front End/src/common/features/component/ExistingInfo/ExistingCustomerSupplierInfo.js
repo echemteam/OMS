@@ -35,7 +35,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
     const handleEditClick = (data) => {
         let url;
         if (!isSupplier) {
-            url = `/viewCustomer/${encryptUrlData(data.customerId)}`;
+            url = `/CustomerDetails/${encryptUrlData(data.customerId)}`;
         } else {
             url = `/SupplierDetails/${encryptUrlData(data.supplierId)}`;
         }

@@ -13,12 +13,21 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 
+const SetInitialCountry = {
+    label: "United States",
+    value: 233
+}
+
 const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef }) => {
 
     //** States */
     const ref = useRef();
     const [formData, setFormData] = useState(addressFormData);
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+    // const [getByIdValue, setGetByIdValue] = useState();
+    const [addressDataField, setAddressDataField] = useState();
+    const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
+    const [selectedCheckbox, setSelectedCheckbox] = useState(null);
 
     //** API Call's */
     /**
@@ -101,24 +110,39 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     useEffect(() => {
         if (!isGetByIdFetching && isGetByIdSuccess && isGetByIdData) {
-            const { countryId, stateId } = isGetByIdData;
-            const form = { ...formData };
+            let form = { ...formData };
+            let data = isGetByIdData;
+            // setGetByIdValue(data);
 
             if (!isButtonDisable) {
-                setFieldSetting(form, 'cityId', FieldSettingType.DISABLED, false);
-                setFieldSetting(form, 'stateId', FieldSettingType.DISABLED, false);
+                setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, false);
+                setFieldSetting(formData, 'stateId', FieldSettingType.DISABLED, false);
             }
 
-            if (countryId) {
+            if (data.countryId) {
                 handleStateOption(allGetAllStatesData);
             }
 
-            if (stateId) {
+            if (data.stateId) {
                 handleCityOption(allGetAllCitiesData);
             }
 
-            form.initialState = { ...isGetByIdData };
-            setFormData(form);
+            form.initialState = {
+                customerId: isSupplier === false ? keyId : 0,
+                supplierId: isSupplier === true ? keyId : 0,
+                addressTypeId: data.addressTypeId,
+                addressLine1: data.addressLine1,
+                addressLine2: data.addressLine2,
+                addressLine3: data.addressLine3,
+                addressLine4: data.addressLine4,
+                addressLine5: data.addressLine5,
+                countryId: data.countryId,
+                stateId: data.stateId,
+                cityId: data.cityId,
+                zipCode: data.zipCode,
+                isPreferredShipping: data.isPreferredShipping,
+                isPreferredBilling: data.isPreferredBilling,
+            };
 
             if (!isSupplier) {
                 const modifyFormFields = removeFormFields(addressFormData, ['isShippingAndBilling']);
@@ -126,6 +150,54 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             }
         }
     }, [isGetByIdFetching, isGetByIdSuccess, isGetByIdData]);
+
+    const setInitialValue = () => {
+        if (!editMode) {
+            let updatedFormData;
+            updatedFormData = removeFormFields(addressFormData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
+            if (allGetAllStatesData) {
+                handleChangeDropdownList(SetInitialCountry, "countryId");
+                setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
+            }
+            setFormData(updatedFormData)
+            onResetForm(updatedFormData, setFormData, null);
+        }
+    }
+
+    useEffect(() => {
+        setInitialValue()
+    }, [allGetAllStatesData, isModelOpen])
+
+    useEffect(() => {
+        if (isGetByIdData) {
+            let updatedFormData = { ...formData };
+            // let updatedFormData;
+            if (isGetByIdData.type === "Billing") {
+                updatedFormData = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredShipping']);
+            } else if (isGetByIdData.type === "Shipping") {
+                updatedFormData = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling']);
+            } else if (isGetByIdData.type === "AP" || isGetByIdData.type === "Primary") {
+                updatedFormData = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling', 'isPreferredShipping']);
+            }
+            updatedFormData.initialState = {
+                customerId: isSupplier === false ? keyId : 0,
+                supplierId: isSupplier === true ? keyId : 0,
+                addressTypeId: isGetByIdData.addressTypeId,
+                addressLine1: isGetByIdData.addressLine1,
+                addressLine2: isGetByIdData.addressLine2,
+                addressLine3: isGetByIdData.addressLine3,
+                addressLine4: isGetByIdData.addressLine4,
+                addressLine5: isGetByIdData.addressLine5,
+                countryId: isGetByIdData.countryId,
+                stateId: isGetByIdData.stateId,
+                cityId: isGetByIdData.cityId,
+                zipCode: isGetByIdData.zipCode,
+                isPreferredShipping: isGetByIdData.isPreferredShipping,
+                isPreferredBilling: isGetByIdData.isPreferredBilling,
+            };
+            setFormData(updatedFormData);
+        }
+    }, [isGetByIdData])
 
 
     const handleAddressResponse = (isSuccess, responseData) => {
@@ -145,7 +217,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
         if (data) {
-            const transformedData = {
+            let transformedData = {
                 ...data,
                 [isSupplier ? 'supplierId' : 'customerId']: keyId,
                 addressTypeId: extractValue(data.addressTypeId),
@@ -155,7 +227,13 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             };
 
             if (editMode) {
-                update(transformedData);
+                let updateData = {
+                    ...transformedData,
+                    addressId: isGetByIdData.addressId,
+                    customerAddressId: isSupplier === false ? (isGetByIdData ? isGetByIdData.customerAddressId : isGetByIdData.customerAddressId) : 0,
+                    supplierAddressId: isSupplier === true ? (isGetByIdData ? isGetByIdData.supplierAddressId : isGetByIdData.supplierAddressId) : 0,
+                }
+                update(updateData);
             } else {
                 add(transformedData);
             }
@@ -172,7 +250,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     const handleChangeDropdownList = (data, dataField) => {
         const manageData = { ...formData };
-
+        setAddressDataField(data)
         if (dataField === "countryId") {
             setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
             setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
@@ -216,7 +294,29 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         }
     };
 
-    const handleCheckboxChanges = (data, dataField) => { };
+    const handleCheckboxChanges = (data, dataField) => {
+        setSelectedCheckbox(data)
+        setSelectedCheckboxFeild(dataField)
+        if (dataField === "isShippingAndBilling" && data) {
+            const manageData = { ...formData };
+            let filteredFormFields;
+            filteredFormFields = addressFormData.formFields
+            manageData.formFields = filteredFormFields;
+            setFormData(manageData)
+        }
+    };
+
+    useEffect(() => {
+        if (selectedCheckboxFeild === "isShippingAndBilling" && selectedCheckbox === false && addressDataField.value === 1) {
+            let updatedFormData;
+            updatedFormData = removeFormFields(formData, ['isPreferredShipping']);
+            setFormData(updatedFormData)
+        } else if (selectedCheckboxFeild === "isShippingAndBilling" && selectedCheckbox === false && addressDataField.value === 2) {
+            let updatedFormData;
+            updatedFormData = removeFormFields(formData, ['isPreferredBilling']);
+            setFormData(updatedFormData)
+        }
+    }, [selectedCheckbox, selectedCheckboxFeild])
 
     //** Use Imperative Handle */
     useImperativeHandle(editRef, () => ({
@@ -231,6 +331,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     //** Reset  */
     const onResetSupplier = () => {
+        let updatedFormData;
         onResetForm(addressFormData, setFormData, null);
         const modifyFormFields = removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
         setFormData(modifyFormFields);

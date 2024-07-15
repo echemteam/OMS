@@ -78,7 +78,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
     if (isSupplierApproval) {
       url = `/SupplierDetails/${encryptUrlData(mainId)}`;
     } else {
-      url = `/viewCustomer/${encryptUrlData(mainId)}`;
+      url = `/CustomerDetails/${encryptUrlData(mainId)}`;
     }
     window.open(url, "_blank");
   }

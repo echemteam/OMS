@@ -12,7 +12,7 @@ const customerSecurityKey = {
     EDIT: securityKey.EDITCUSTOMERADDRESS,
 }
 
-const CustomerAddressDetails = ({ isEditablePage }) => {
+const CustomerAddressDetail = ({ isEditablePage }) => {
 
     const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -29,4 +29,4 @@ const CustomerAddressDetails = ({ isEditablePage }) => {
     )
 }
 
-export default CustomerAddressDetails
+export default CustomerAddressDetail
