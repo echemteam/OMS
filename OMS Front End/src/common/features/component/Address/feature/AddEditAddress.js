@@ -144,10 +144,12 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 isPreferredBilling: data.isPreferredBilling,
             };
 
-            if (!isSupplier) {
-                const modifyFormFields = removeFormFields(addressFormData, ['isShippingAndBilling']);
-                setFormData(modifyFormFields);
-            }
+            setFormData(form);
+            // let removeData;
+            // if (!isSupplier) {
+            //     removeData = removeFormFields(addressFormData, ['isShippingAndBilling']);
+            //     setFormData(removeData)
+            // }
         }
     }, [isGetByIdFetching, isGetByIdSuccess, isGetByIdData]);
 
@@ -333,8 +335,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const onResetSupplier = () => {
         let updatedFormData;
         onResetForm(addressFormData, setFormData, null);
-        const modifyFormFields = removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
-        setFormData(modifyFormFields);
+        updatedFormData = removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
+        setFormData(updatedFormData)
     };
 
     return (
