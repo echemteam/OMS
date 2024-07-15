@@ -5,7 +5,7 @@ import AddSupplierContext from '../../../../utils/ContextAPIs/Supplier/AddSuppli
 import { useLazyDownloadDocumentQuery } from '../../../../app/services/documentAPI';
 import { useAddSupplierDocumentsMutation, useDeleteSupplierDocumentsByIdMutation, useLazyGetSupplierDocumentsByIdQuery } from '../../../../app/services/supplierDocuementsAPI';
 //** Component's */
-import DocumentGrid from '../../../../common/features/component/Document/DocumentGrid';
+const DocumentGrid = React.lazy(() => import("../../../../common/features/component/Document/DocumentGrid"));
 
 
 const supplierSecurityKey = {

@@ -10,6 +10,8 @@ import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetF
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { excludingRoles } from "../../../customerDetail/features/basicDetail/config/BasicDetailForm.data";
+import { getTaxIdMinMaxLength } from "../../../customerDetail/features/basicDetail/config/TaxIdValidator";
+import { setFieldSetting, setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Context API */
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Service's */
@@ -20,8 +22,7 @@ import {
     useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery,
     useLazyGetSupplierDetailsBySupplierNameQuery
 } from "../../../../app/services/supplierAPI";
-import { getTaxIdMinMaxLength } from "../../../customerDetail/features/basicDetail/config/TaxIdValidator";
-import { setFieldSetting, setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
 

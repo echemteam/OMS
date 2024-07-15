@@ -6,10 +6,8 @@ import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSuppli
 import SuplierAddressDetails from "../../feature/supplierAddressDetail/SupplierAddressDetails";
 import SupplierContactDetail from "../../feature/supplierContactDetail/SupplierContactDetail";
 import SupplierDocumentDetail from "../../feature/supplierDocumentDetail/SupplierDocumentDetail";
-// import { SupplierHistoryDetail } from "../../../suppliers/features/updateSupplierDetails/features/historyDetails/SupplierHistoryDetail";
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 import SupplierNoteDetail from "../../feature/supplierNoteDetail/SupplierNoteDetail";
-import HistotyList from "../../../../common/features/component/History/HistotyList";
 import { SupplierHistory } from "../../feature/supplierHistoryDetail/SupplierHistory";
 
 const SupplierViewTab = (supplierId) => {
@@ -63,7 +61,6 @@ const SupplierViewTab = (supplierId) => {
             sMenuItemCaption: "History",
             component: (
                 <div className="mt-2">
-                    {/* {<SupplierHistoryDetail />} */}
                     <SupplierHistory />
                 </div>
             ),

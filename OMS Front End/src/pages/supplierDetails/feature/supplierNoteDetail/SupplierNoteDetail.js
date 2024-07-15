@@ -1,8 +1,11 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
+//** Libs's */
 import { securityKey } from "../../../../data/SecurityKey";
-import NoteGrid from "../../../../common/features/component/Note/NoteGrid";
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+//** Service's */
 import { useAddSupplierNotesMutation, useLazyGetSupplierNotesBySupplierIdQuery, useUpdateSupplierNotesMutation } from "../../../../app/services/supplierNotesAPI";
+//** Component's */
+const NoteGrid = React.lazy(() => import("../../../../common/features/component/Note/NoteGrid"));
 
 const supplierSecurityKey = {
     ADD: securityKey.ADDSUPPLIERNOTE,

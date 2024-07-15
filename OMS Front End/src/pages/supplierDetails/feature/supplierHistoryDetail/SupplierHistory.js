@@ -1,7 +1,10 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
+//** Lib's */
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import HistotyList from "../../../../common/features/component/History/HistotyList";
+//** Service's */
 import { useGetSupplierAuditHistoryBySupplierIdMutation, useLazyGetEventNameAndUserNameBySupplierIdQuery } from "../../../../app/services/supplierHistoryAPI";
+//** Component's */
+const HistotyList = React.lazy(() => import("../../../../common/features/component/History/HistotyList"));
 
 export const SupplierHistory = () => {
 

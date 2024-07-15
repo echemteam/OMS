@@ -1,16 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
+//** Lib's */
+import { ErrorMessage } from "../../../../../data/appMessages";
+import { ListShowCustomer } from "../../../../../utils/Enums/enums";
+import useDebounce from "../../../../../app/customHooks/useDebouce";
 import CardSection from "../../../../../components/ui/card/CardSection";
-import SupplierList from "./feature/SupplierList";
-import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../../customerDetail/customers/config/CustomerData";
+import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
 import SupplierListContext from '../../../../../utils/ContextAPIs/Supplier/SupplierListContext'
 import { AddSupplierContextProvider } from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import { ListShowCustomer } from "../../../../../utils/Enums/enums";
-import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
-import useDebounce from "../../../../../app/customHooks/useDebouce";
-import { ErrorMessage } from "../../../../../data/appMessages";
+import {
+  AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig,
+  SubmittedCustomerGridConfig
+} from "../../../../customerDetail/customers/config/CustomerData";
+//** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
-import InActiveSupplierTab from "../InActiveTabs/InActiveSupplierTab";
+//** Component's */
+const SupplierList = React.lazy(() => import("./feature/SupplierList"));
+const InActiveSupplierTab = React.lazy(() => import("../InActiveTabs/InActiveSupplierTab"));
 
 const Suppliers = () => {
   const [activeTab, setActiveTab] = useState("0");

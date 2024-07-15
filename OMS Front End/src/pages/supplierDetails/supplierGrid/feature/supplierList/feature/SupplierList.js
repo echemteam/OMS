@@ -1,26 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
-import SupplierContext from "../../../../../../utils/ContextAPIs/Supplier/SupplierListContext"
-import Buttons from '../../../../../../components/ui/button/Buttons';
-import ToastService from '../../../../../../services/toastService/ToastService';
-import CardSection from '../../../../../../components/ui/card/CardSection';
-import MolGrid from '../../../../../../components/Grid/MolGrid';
-import CenterModel from '../../../../../../components/ui/centerModel/CenterModel';
-import FormCreator from '../../../../../../components/Forms/FormCreator';
-import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../../../app/services/supplierAPI';
-import { encryptUrlData } from '../../../../../../services/CryptoService';
-import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
-import { securityKey } from '../../../../../../data/SecurityKey';
-import { useAddSupplierNotesMutation } from '../../../../../../app/services/supplierNotesAPI';
-import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { useSelector } from 'react-redux';
-import { StatusEnums, StatusFeild } from '../../../../../../utils/Enums/StatusEnums';
-import { useUpdateResponsibleUserMutation } from '../../../../../../app/services/commonAPI';
-import { ownerType } from '../../../../../../utils/Enums/enums';
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
+//** Lib's */
 import { AppIcons } from '../../../../../../data/appIcons';
-import SupplierApproval from '../../../../feature/supplierApproval/SupplierApproval';
+import MolGrid from '../../../../../../components/Grid/MolGrid';
+import { ownerType } from '../../../../../../utils/Enums/enums';
+import { securityKey } from '../../../../../../data/SecurityKey';
+import Buttons from '../../../../../../components/ui/button/Buttons';
+import FormCreator from '../../../../../../components/Forms/FormCreator';
+import CardSection from '../../../../../../components/ui/card/CardSection';
+import CenterModel from '../../../../../../components/ui/centerModel/CenterModel';
+import { StatusEnums, StatusFeild } from '../../../../../../utils/Enums/StatusEnums';
+import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
+import SupplierContext from "../../../../../../utils/ContextAPIs/Supplier/SupplierListContext";
+import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
+//** Service's */
+import { encryptUrlData } from '../../../../../../services/CryptoService';
+import ToastService from '../../../../../../services/toastService/ToastService';
+import { useUpdateResponsibleUserMutation } from '../../../../../../app/services/commonAPI';
+import { useAddSupplierNotesMutation } from '../../../../../../app/services/supplierNotesAPI';
+import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../../../app/services/supplierAPI';
+
+//** Component's */
+const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
 
 
 const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {

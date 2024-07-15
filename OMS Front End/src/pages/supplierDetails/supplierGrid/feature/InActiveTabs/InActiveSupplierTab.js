@@ -1,14 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import CardSection from "../../../../../components/ui/card/CardSection";
-import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../customerDetail/customers/config/CustomerData";
-import SupplierListContext from "../../../../../utils/ContextAPIs/Supplier/SupplierListContext";
-import { InActiveSuppliersList } from "./feature/InActiveSuppliersList";
-import { ListShowCustomer } from "../../../../../utils/Enums/enums";
-import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
-import useDebounce from "../../../../../app/customHooks/useDebouce";
+//** Lib's */
 import { ErrorMessage } from "../../../../../data/appMessages";
+import { ListShowCustomer } from "../../../../../utils/Enums/enums";
+import useDebounce from "../../../../../app/customHooks/useDebouce";
+import CardSection from "../../../../../components/ui/card/CardSection";
+import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
+import SupplierListContext from "../../../../../utils/ContextAPIs/Supplier/SupplierListContext";
+import {
+  AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig,
+  FreezedInActiveCustomerGridConfig
+} from "../../../../customerDetail/customers/config/CustomerData";
+//** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
-
+//** Component's */
+const InActiveSuppliersList = React.lazy(() => import("./feature/InActiveSuppliersList"));
 
 const InActiveSupplierTab = ({ statusId }) => {
   const [activeTab, setActiveTab] = useState("0");

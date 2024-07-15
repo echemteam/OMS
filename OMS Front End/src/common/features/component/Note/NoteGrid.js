@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 //** Lib's */
-import NoteList from "./feature/NoteList";
 import { NotesData } from "./config/Notes.data";
-import AddEditNote from "./feature/AddEditNote";
 import { AppIcons } from "../../../../data/appIcons";
 import CardSection from "../../../../components/ui/card/CardSection";
 import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+//** Component's */
+const NoteList = React.lazy(() => import("./feature/NoteList"));
+const AddEditNote = React.lazy(() => import("./feature/AddEditNote"));
 
 const NoteGrid = ({ keyId, isSupplier, isEditablePage, SecurityKey, onAddNotes, onUpdateNotes, onGetByIdNotes }) => {
 

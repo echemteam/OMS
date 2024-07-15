@@ -3,18 +3,21 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom/dist";
 import React, { useContext, useEffect, useState } from "react";
+//** Lib's */
 import "../../../../customerDetail/ViewCustomer.scss";
 import { AppIcons } from "../../../../../data/appIcons";
+import Buttons from "../../../../../components/ui/button/Buttons";
 import { decryptUrlData } from "../../../../../services/CryptoService";
 import CardSection from "../../../../../components/ui/card/CardSection";
-import Buttons from "../../../../../components/ui/button/Buttons";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import SupplierViewTab from "../../../supplierViewDetail/feature/SupplierViewTab";
-import SupplierBasicDetail from "../../../feature/supplierBasicDetail/SupplierBasicDetail";
-
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+//** Service's */
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../../../app/services/supplierAPI";
-import SupplierBasicInfoCard from "../../../supplierViewDetail/feature/SupplierBasicInfoCard";
+
+//** Component's */
+const SupplierBasicDetail = React.lazy(() => import("../../../feature/supplierBasicDetail/SupplierBasicDetail"));
+const SupplierBasicInfoCard = React.lazy(() => import("../../../supplierViewDetail/feature/SupplierBasicInfoCard"));
 
 const SupplierDetails = () => {
   const navigate = useNavigate();

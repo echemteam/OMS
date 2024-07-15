@@ -1,26 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState, useContext } from 'react'
-import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../app/services/supplierAPI';
-import { reasonData } from '../../../customerDetail/customers/config/CustomerData';
-import SwalAlert from '../../../../services/swalService/SwalService';
-import ToastService from '../../../../services/toastService/ToastService';
+//** Lib's */
 import Image from '../../../../components/image/Image';
 import { AppIcons } from '../../../../data/appIcons';
-import DropDown from '../../../../components/ui/dropdown/DropDrown';
+import { ownerType } from '../../../../utils/Enums/enums';
 import CopyText from '../../../../utils/CopyText/CopyText';
-import FormCreator from '../../../../components/Forms/FormCreator';
+import { securityKey } from '../../../../data/SecurityKey';
+import { ErrorMessage } from '../../../../data/appMessages';
 import Buttons from '../../../../components/ui/button/Buttons';
+import FormCreator from '../../../../components/Forms/FormCreator';
+import DropDown from '../../../../components/ui/dropdown/DropDrown';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../components/ui/centerModel/CenterModel';
-import { ErrorMessage } from '../../../../data/appMessages';
+import { StaticStatus, StatusValue } from '../../../../utils/Enums/StatusEnums';
+import { reasonData } from '../../../customerDetail/customers/config/CustomerData';
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
-import { securityKey } from '../../../../data/SecurityKey';
-import { StaticStatus, StatusValue } from '../../../../utils/Enums/StatusEnums';
-import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../../../app/services/commonAPI';
-import { ownerType } from '../../../../utils/Enums/enums';
 import { excludingRoles } from '../../../customerDetail/features/basicDetail/config/BasicDetailForm.data';
-import SupplierApproval from '../../feature/supplierApproval/SupplierApproval';
+//** Service's */
+import SwalAlert from '../../../../services/swalService/SwalService';
+import ToastService from '../../../../services/toastService/ToastService';
+import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../../../app/services/commonAPI';
+import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../app/services/supplierAPI';
+
+//** Component's */
+const SupplierApproval = React.lazy(() => import("../../feature/supplierApproval/SupplierApproval"));
 
 const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
 

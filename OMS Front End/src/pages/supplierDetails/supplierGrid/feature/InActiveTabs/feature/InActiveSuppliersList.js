@@ -1,20 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import CardSection from '../../../../../../components/ui/card/CardSection';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
+//** Lib's */
+import { AppIcons } from '../../../../../../data/appIcons';
 import MolGrid from '../../../../../../components/Grid/MolGrid';
+import { securityKey } from '../../../../../../data/SecurityKey';
+import { StatusEnums } from '../../../../../../utils/Enums/StatusEnums';
+import CardSection from '../../../../../../components/ui/card/CardSection';
 import SupplierContext from "../../../../../../utils/ContextAPIs/Supplier/SupplierListContext"
+import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
+//** Service's */
+import { encryptUrlData } from '../../../../../../services/CryptoService';
+import SwalAlert from '../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../services/toastService/ToastService';
 import { useGetSuppliersMutation, useUpdateSupplierStatusMutation } from '../../../../../../app/services/supplierAPI';
-import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
-import { securityKey } from '../../../../../../data/SecurityKey';
-import { encryptUrlData } from '../../../../../../services/CryptoService';
-import { useNavigate } from 'react-router-dom';
-import SwalAlert from '../../../../../../services/swalService/SwalService';
-import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import { useSelector } from 'react-redux';
-import { StatusEnums } from '../../../../../../utils/Enums/StatusEnums';
-import { AppIcons } from '../../../../../../data/appIcons';
-import SupplierApproval from '../../../../feature/supplierApproval/SupplierApproval';
+//** Component's */
+const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
+
 
 export const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
