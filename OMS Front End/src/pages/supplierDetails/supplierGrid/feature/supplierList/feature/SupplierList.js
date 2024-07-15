@@ -15,6 +15,7 @@ import { StatusEnums, StatusFeild } from '../../../../../../utils/Enums/StatusEn
 import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
 import SupplierContext from "../../../../../../utils/ContextAPIs/Supplier/SupplierListContext";
 import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { removeFormFields } from '../../../../../../utils/FormFields/RemoveFields/handleRemoveFields';
 import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 //** Service's */
 import { encryptUrlData } from '../../../../../../services/CryptoService';
@@ -22,7 +23,6 @@ import ToastService from '../../../../../../services/toastService/ToastService';
 import { useUpdateResponsibleUserMutation } from '../../../../../../app/services/commonAPI';
 import { useAddSupplierNotesMutation } from '../../../../../../app/services/supplierNotesAPI';
 import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../../../app/services/supplierAPI';
-import { removeFormFields } from '../../../../../../utils/FormFields/RemoveFields/handleRemoveFields';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
@@ -85,6 +85,11 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
       }
       if (actionColumn.defaultAction.allowUnfreeze) {
         actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
+      }
+      if (approvalAction) {
+        if (approvalAction.colSettings.allowCheckbox) {
+          approvalAction.colSettings.allowCheckbox = true;
+        }
       }
     }
     if (isResponsibleUser) {
