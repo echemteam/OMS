@@ -27,7 +27,7 @@ const ManageAddCustomer = React.lazy(() => import('../../pages/customerDetail/Ma
 //** Supplier  */
 const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/supplierGrid/SupplierGrid'));
 const AddSupplierNew = React.lazy(() => import('../../pages/supplierDetails/addSupplierNew/AddSupplierNew'));
-const SupplierDetails = React.lazy(() => import("../../pages/supplierDetails/supplierGrid/SupplierDetails"));
+const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/supplierGrid/SupplierViewDetail"));
 
 
 export const ComponentNavigation = [
@@ -262,7 +262,7 @@ export const ComponentNavigation = [
     path: '/SupplierDetails/:id',
     exact: true,
     title: 'Supplier Details',
-    component: SupplierDetails,
+    component: SupplierViewDetail,
     hasParams: false,
     text: 'Supplier Detail',
     securityKey: securityKey.SUPPLIER
