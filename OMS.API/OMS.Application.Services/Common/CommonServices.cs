@@ -151,5 +151,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllAPIProviders();
         }
+        public Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints()
+        {
+            return repositoryManager.commonRepository.GetAllAPIEndpoints();
+        }
     }
 }

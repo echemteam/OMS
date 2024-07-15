@@ -220,5 +220,12 @@ namespace OMS.API.Controllers
             List<GetAllAPIProvidersResponse> responseData = await _serviceManager.commonServices.GetAllAPIProviders().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+
+        [HttpGet("GetAllAPIEndpoints")]
+        public async Task<IActionResult> GetAllAPIEndpoints()
+        {
+            List<GetAllAPIEndpointsResponse> responseData = await _serviceManager.commonServices.GetAllAPIEndpoints().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }
