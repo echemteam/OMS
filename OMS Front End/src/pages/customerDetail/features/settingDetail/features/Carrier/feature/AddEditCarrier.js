@@ -7,11 +7,11 @@ import { settingTypeEnums } from "../../../../../../../utils/Enums/enums";
 import FormCreator from "../../../../../../../components/Forms/FormCreator";
 import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
 import CenterModel from "../../../../../../../components/ui/centerModel/CenterModel";
-import { setFieldSetting } from "../../../../../../../utils/FieldsSetting/SetFieldSetting";
 import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import ToastService from "../../../../../../../services/toastService/ToastService";
 import { useAddShppingDeliveryCarriersMutation, useLazyGetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdQuery, useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
+import { setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, deliveryCarrierId, onSuccess }) => {
 

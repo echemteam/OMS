@@ -15,8 +15,8 @@ import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddEditCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery } from "../../../../app/services/basicdetailAPI";
 import { BasicInformation } from "./BasicInformation";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
-import { setFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
 import { settingTypeEnums } from "../../../../utils/Enums/enums";
+import { setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const BasicDetail = (props) => {
   const basicDetailRef = useRef();

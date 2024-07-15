@@ -14,8 +14,7 @@ import { securityKey } from "../../../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { OurAccountGridConfig } from "../DeliveryMethod/config/DevliveryConfig";
 import { AccountGridConfig } from "../Carrier/config/CarrierConfig";
-import { setOptionFieldSetting } from "../../../../../../utils/FieldsSetting/SetFieldSetting";
-
+import { setOptionFieldSetting } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Component's */
 const ManageCarrier = React.lazy(() => import("../Carrier/ManageCarrier"));
 const ManageDevliveryMethod = React.lazy(() => import("../DeliveryMethod/ManageDevliveryMethod"));

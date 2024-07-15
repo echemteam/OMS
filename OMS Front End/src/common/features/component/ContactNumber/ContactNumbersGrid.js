@@ -9,7 +9,7 @@ import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetai
 import SwalAlert from "../../../../services/swalService/SwalService";
 import ToastService from "../../../../services/toastService/ToastService";
 import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery } from "../../../../app/services/phoneNumberAPI";
-import { setOptionFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
+import { setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Component's */
 const ContactNumberList = React.lazy(() => import("./feature/ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./feature/AddEditContactNumber"));

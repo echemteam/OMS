@@ -11,7 +11,7 @@ import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSup
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery, useLazyGetPhoneByContactIdQuery } from "../../../../../app/services/phoneNumberAPI";
-import { setOptionFieldSetting } from "../../../../../utils/FieldsSetting/SetFieldSetting";
+import { setOptionFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Component's */
 const ContactNumberList = React.lazy(() => import("./ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./AddEditContactNumber"));

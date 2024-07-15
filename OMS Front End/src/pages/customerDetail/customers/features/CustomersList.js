@@ -29,10 +29,10 @@ import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
 import { useSelector } from "react-redux";
 import { StatusEnums, StatusFeild } from "../../../../utils/Enums/StatusEnums";
 import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../app/services/commonAPI";
-import { setOptionFieldSetting } from "../../../../utils/FieldsSetting/SetFieldSetting";
 import { excludingRoles } from "../../features/basicDetail/config/BasicDetailForm.data";
 import { ownerType } from "../../../../utils/Enums/enums";
 import { AppIcons } from "../../../../data/appIcons";
+import { setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
