@@ -94,7 +94,7 @@ const SupplierDetails = () => {
                 supplierData={supplierData}
                 isLoading={!isModelOpen ? isGetSupplierBasicInformationByIdFetching : null}
                 supplierId={supplierId}
-                onhandleRepeatCall={getSupplierById}
+                getSupplierById={onSuccess}
               />
             </CardSection>
           </div>

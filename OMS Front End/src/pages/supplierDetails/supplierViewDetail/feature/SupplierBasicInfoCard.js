@@ -22,11 +22,13 @@ import SwalAlert from '../../../../services/swalService/SwalService';
 import ToastService from '../../../../services/toastService/ToastService';
 import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../../../app/services/commonAPI';
 import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../app/services/supplierAPI';
+import { removeFormFields } from '../../../../utils/FormFields/RemoveFields/handleRemoveFields';
+import { setDropDownOptionField } from '../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../feature/supplierApproval/SupplierApproval"));
 
-const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
+const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId, getSupplierById }) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
@@ -131,6 +133,10 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
         label: item.fullName,
       }));
       setResponsibleUserOptions(modifyUserData);
+      const filterCondition = (item) => {
+        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
+      };
+      setDropDownOptionField(allGetAlluserData, 'userId', 'fullName', formData, 'responsibleUserId', filterCondition);
     }
   }, [isGetAllUserSucess, allGetAlluserData]);
 
@@ -166,32 +172,42 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
       if (selectedOption.value === "1" || selectedOption.value === "2") {
-        confirm(
-          "Warning?",
-          `Are you sure you want to change the supplier status to ${selectedOption.label}?`,
-          "Yes",
-          "Cancel"
-        ).then((confirmed) => {
-          if (confirmed) {
-            let req = {
-              supplierId: supplierId,
-              statusId: selectedOption.value
+        confirm("Warning?", `Are you sure you want to change the supplier status to ${selectedOption.label}?`,
+          "Yes", "Cancel").then((confirmed) => {
+            if (confirmed) {
+              removeFields();
+              let req = {
+                supplierId: supplierId,
+                statusId: selectedOption.value
+              }
+              updateSupplierStatus(req)
+              setSelectedStatus(selectedOption.value);
             }
-            updateSupplierStatus(req)
-            setSelectedStatus(selectedOption.value);
-          }
-        });
-      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6" || selectedOption.value === "7") {
+          });
+      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6") {
+        removeFields();
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
       } else if (selectedOption.value === "3") {
+        removeFields();
         if (childRef.current) {
           childRef.current.callChildFunction(supplierId);
         }
         setStatusId(selectedOption.value);
+      } else if (selectedOption.value === "7") {
+        if (supplierData.responsibleUserId) {
+          removeFields();
+        }
+        setShowModal(true);
+        setSelectedStatus(selectedOption.value);
       }
     }
   };
+
+  const removeFields = () => {
+    const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+    setFormData(modifyFormFields);
+  }
 
   const updateCustomerApproval = () => {
     setSelectedStatus(statusId);
@@ -223,7 +239,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const handleToggleModal = () => {
     setShowModal(false);
     onReset()
-    onhandleRepeatCall()
+    getSupplierById();
     setSelectedStatus(supplierData.status)
   };
 
