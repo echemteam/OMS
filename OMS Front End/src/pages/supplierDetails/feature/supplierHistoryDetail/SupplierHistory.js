@@ -6,7 +6,7 @@ import { useGetSupplierAuditHistoryBySupplierIdMutation, useLazyGetEventNameAndU
 //** Component's */
 const HistotyList = React.lazy(() => import("../../../../common/features/component/History/HistotyList"));
 
-export const SupplierHistory = () => {
+const SupplierHistory = () => {
 
     const { supplierId } = useContext(AddSupplierContext);
 
@@ -22,3 +22,4 @@ export const SupplierHistory = () => {
         </div>
     )
 }
+export default SupplierHistory;

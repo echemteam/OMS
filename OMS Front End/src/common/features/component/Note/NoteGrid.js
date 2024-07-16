@@ -5,6 +5,7 @@ import { AppIcons } from "../../../../data/appIcons";
 import CardSection from "../../../../components/ui/card/CardSection";
 import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { getFieldData } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Component's */
 const NoteList = React.lazy(() => import("./feature/NoteList"));
 const AddEditNote = React.lazy(() => import("./feature/AddEditNote"));
@@ -16,6 +17,7 @@ const NoteGrid = ({ keyId, isSupplier, isEditablePage, SecurityKey, onAddNotes, 
     const [showModal, setShowModal] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [isEditModeData, setIsEditModeData] = useState();
+    const [showEditIcon, setShowEditIcon] = useState(true);
     const [buttonVisible, setButtonVisible] = useState(true);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
 
@@ -28,14 +30,19 @@ const NoteGrid = ({ keyId, isSupplier, isEditablePage, SecurityKey, onAddNotes, 
                 if (hasEditPermission.isViewOnly === true) {
                     formSetting.isViewOnly = true;
                     setIsButtonDisable(true);
+                    setShowEditIcon(true);
+                    const noteFormData = getFieldData(NotesData, 'note');
+                    noteFormData.fieldSetting.isDisable = true;
+                } else if (hasEditPermission.isEditable === true) {
+                    setShowEditIcon(true);
                 } else {
                     formSetting.isViewOnly = false;
                     setIsButtonDisable(false);
+                    setShowEditIcon(false);
                 }
             }
             if (hasAddPermission.hasAccess === true) {
                 formSetting.isViewOnly = false;
-                setIsButtonDisable(false);
                 setButtonVisible(true);
             } else {
                 formSetting.isViewOnly = true;
@@ -67,7 +74,7 @@ const NoteGrid = ({ keyId, isSupplier, isEditablePage, SecurityKey, onAddNotes, 
             <CardSection cardTitle="Notes" buttonClassName="theme-button" textWithIcon={true} iconImg={AppIcons.PlusIcon}
                 rightButton={buttonVisible ? true : false} buttonText="Add" titleButtonClick={handleToggleModal}>
                 <div className="note-card-sec">
-                    <NoteList listRef={listRef} handleEditClick={handleEditClick} onGetByIdNotes={onGetByIdNotes} keyId={keyId} />
+                    <NoteList listRef={listRef} handleEditClick={handleEditClick} onGetByIdNotes={onGetByIdNotes} keyId={keyId} showEditIcon={showEditIcon} />
                 </div>
             </CardSection>
 

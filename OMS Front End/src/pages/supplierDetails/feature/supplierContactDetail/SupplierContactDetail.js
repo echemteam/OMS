@@ -11,7 +11,7 @@ const supplierSecurityKey = {
   EDIT: securityKey.EDITSUPPLIERCONTACT,
 };
 
-const SupplierContactDetail = ({ isEditSupplierPage, isSearchFilterShow }) => {
+const SupplierContactDetail = ({ isEditablePage, isSearchFilterShow }) => {
   const { supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
   return (
@@ -22,7 +22,7 @@ const SupplierContactDetail = ({ isEditSupplierPage, isSearchFilterShow }) => {
     <div className="supplier-contacts">
       <ContactGrid
         isSupplier={true}
-        isEditablePage={isEditSupplierPage}
+        isEditablePage={isEditablePage}
         keyId={supplierId ? supplierId : 0}
         isSearchFilterShow={isSearchFilterShow}
         getContactByKeyId={useLazyGetContactBySupplierIdQuery}
