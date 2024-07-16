@@ -6,6 +6,10 @@ import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
 import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
 
+import ApiProviders from "../../pages/apiConfiguration/apiProviders/ApiProviders";
+import ApiEndPoints from "../../pages/apiConfiguration/apiEndPoints/ApiEndPoints";
+import AddEditApiEndPoints from "../../pages/apiConfiguration/apiEndPoints/features/AddEditApiEndPoints";
+
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 //** Dashboard */
@@ -276,5 +280,25 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'Approval Rules',
     securityKey: securityKey.APPROVALRULES
+  },
+  {
+    id: 'apiProviders',
+    path: '/APIProviders',
+    exact: true,
+    title: 'API Providers',
+    component: ApiProviders,
+    hasParams: false,
+    text: 'API Providers',
+    //securityKey: securityKey.APPROVALRULES
+  },
+  {
+    id: 'apiEndpoints',
+    path: '/APIEndpoints',
+    exact: true,
+    title: 'API EndPoints',
+    component: ApiEndPoints,
+    hasParams: false,
+    text: 'API EndPoints',
+    //securityKey: securityKey.APPROVALRULES
   },
 ];
