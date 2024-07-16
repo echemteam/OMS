@@ -235,7 +235,7 @@ import { reasonData } from "../../../../../../common/features/component/Customer
   
     const handleGridCheckBoxChange = (rowData) => {
       if (childRef.current) {
-        childRef.current.callChildFunction(rowData.customerId);
+        childRef.current.callChildFunction(rowData.customerId,rowData.isSubCompany? rowData.isSubCompany : false);
       }
       setcustomerId(rowData.customerId);
     };

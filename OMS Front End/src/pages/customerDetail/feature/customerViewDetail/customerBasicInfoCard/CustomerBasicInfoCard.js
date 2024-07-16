@@ -221,10 +221,7 @@ const CustomerBasicInfoCard = ({
         setSelectedStatus(selectedOption.value);
       } else if (selectedOption.value === "3") {
         if (childRef.current) {
-          childRef.current.callChildFunction(
-            customerId,
-            customerData.isSubCompany
-          );
+          childRef.current.callChildFunction(customerId, customerData.isSubCompany ? customerData.isSubCompany : false);
         }
         setcustomerId(customerId);
         setStatusId(selectedOption.value);

@@ -19,7 +19,7 @@ export const customerbasicData = {
         allowSpace: true,
         maxLength: 50,
       },
-      validation: [{ type: "require" }, { type: "uniqueName" }],
+      validation: [{ type: "require" }, { type: "invalidBoundarySpaces" }, { type: "invalidBoundarySpaces" }],
       style: {
         containerCss: "col-xxl-8 col-xl-8 col-md-8 col-12 mb-input",
       },

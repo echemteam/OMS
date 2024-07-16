@@ -15,10 +15,11 @@ import {
 import ToastService from "../../../../services/toastService/ToastService";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Component's */
+const ContactList = React.lazy(() => import("./feature/ContactList"));
 const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
-const ContactDetailCard = React.lazy(() =>
-  import("./feature/ContactDetailCard")
-);
+// const ContactDetailCard = React.lazy(() =>
+//   import("./feature/ContactDetailCard")
+// );
 
 const ContactGrid = ({
   keyId,
@@ -195,13 +196,14 @@ const ContactGrid = ({
         clearButtonClassName="dark-btn"
       >
         {/* Contact Detail Card */}
-        <ContactDetailCard
+        {/* <ContactDetailCard
           keyId={keyId}
           getListRef={getListRef}
           handleEdit={handleEdit}
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
-        />
+        /> */}
+        <ContactList keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon} getContactByKeyId={getContactByKeyId} />
       </CardSection>
       <div className="sidebar-contact-model">
         <SidebarModel
