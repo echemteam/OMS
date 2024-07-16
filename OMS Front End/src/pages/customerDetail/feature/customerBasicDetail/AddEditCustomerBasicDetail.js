@@ -16,8 +16,9 @@ import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { customerbasicData, excludingRoles } from "./config/CustomerBasicDetail.data";
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
 import { setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 
-const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose }) => {
+const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
     const parentRef = useRef();
     const basicDetailRef = useRef();
     const [customerName, setCustomerName] = useState('');
@@ -25,7 +26,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [noteId, setNoteId] = useState("")
 
     const [formData, setFormData] = useState(customerbasicData);
-    const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
+    const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser } = useContext(BasicDetailContext);
 
     const { formSetting } = customerbasicData;
     const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
@@ -35,7 +36,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
 
     useEffect(() => {
-        if (isOpen) {
+        if (isEditablePage) {
             if (!isResponsibleUser) {
                 if (hasEditPermission.isViewOnly === true) {
                     formSetting.isViewOnly = true;
@@ -53,6 +54,19 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 setIsButtonDisable(false);
                 setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, true);
             }
+        } else {
+            formSetting.isViewOnly = false;
+        }
+        if (isOpen) {
+            const modifyFormFields = removeFormFields(customerbasicData, ['responsibleUserId', 'isSubCompany', 'note']);
+            setFormData(modifyFormFields);
+            setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
+            setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
+        } else if (!isOpen) {
+            setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON, true);
+            setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
+            const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+            setFormData(modifyFormFields);
         }
     }, [isOpen, hasEditPermission, formSetting.isViewOnly, isResponsibleUser])
 
@@ -101,7 +115,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         getAllGroupTypes();
         getAllCountries();
         getAllTerritories();
-        manageFilteredForm();
         getAllUser();
     }, []);
 

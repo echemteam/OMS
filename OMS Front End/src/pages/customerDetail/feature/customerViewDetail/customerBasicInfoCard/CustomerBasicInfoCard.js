@@ -8,7 +8,7 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import CustomerApproval from "../../cutomerApproval/CustomerApproval";
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../../app/services/commonAPI";
-import { useUpdateCustomerInActiveStatusMutation, useUpdateCustomerStatusMutation } from "../../../../../app/services/basicdetailAPI";
+import { useUpdateCustomerInActiveStatusMutation, useUpdateCustomerStatusMutation, useUpdateCustomerSubCompanyMutation } from "../../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { securityKey } from "../../../../../data/SecurityKey";
@@ -17,12 +17,12 @@ import { StaticStatus, StatusValue } from "../../../../../utils/Enums/StatusEnum
 import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDetail.data";
 import { AppIcons } from "../../../../../data/appIcons";
 import CopyText from "../../../../../utils/CopyText/CopyText";
-import { ErrorMessage } from "../../../../../data/appMessages";
+import { ErrorMessage, SuccessMessage } from "../../../../../data/appMessages";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
 
-const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
+const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId, getCustomerById }) => {
   const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
@@ -39,6 +39,7 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
 
   const [updateResponsibleUser, { isSuccess: isSuccessRUser, data: isUpdateRUserData }] = useUpdateResponsibleUserMutation();
+  const [updateSubCompany, { isSuccess: isSuccessUpdateSubCompany, data: isUpdateSubCompanyData }] = useUpdateCustomerSubCompanyMutation();
   const [updateCustomerStatus, { isSuccess: isSuccessUpdateCustomerStatus, data: updateCustomerStatusData }] = useUpdateCustomerStatusMutation();
   const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
 
@@ -225,7 +226,7 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
   const handleToggleModal = () => {
     setShowModal(false);
     onReset()
-    onhandleRepeatCall()
+    getCustomerById()
     setSelectedStatus(customerData.status)
   };
 
@@ -249,6 +250,28 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
         return "badge-gradient-info";
     }
   };
+
+  const handleCheckboxChange = (e) => {
+    const value = e.target.checked;
+    confirm("Warning?", SuccessMessage.Confirm_Update.replace("{0}", "Sub Company"),
+      "Yes", "Cancel"
+    ).then((confirmed) => {
+      if (confirmed) {
+        let request = {
+          customerId: customerId,
+          isSubCompany: value
+        }
+        updateSubCompany(request);
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (isSuccessUpdateSubCompany && isUpdateSubCompanyData) {
+      ToastService.success(isUpdateSubCompanyData.errorMessage);
+      getCustomerById();
+    }
+  }, [isSuccessUpdateSubCompany, isUpdateSubCompanyData]);
 
   return (
     !isLoading ?
@@ -292,7 +315,7 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
                 value={selectedStatus}
                 onChange={handleStatusChange}
                 placeholder="Select Status"
-                isDisabled={isButtonDisable}
+                isDisabled={isResponsibleUser ? true : isButtonDisable}
               />
             </div>
           </div>
@@ -318,19 +341,16 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
             </span>
 
           </div>
-
           <div className="field-desc">
             <div className="inf-label">Country</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">{customerData?.countryName}</div>
           </div>
-
           <div className="field-desc">
             <div className="inf-label">Group Type</div>
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">{customerData?.type}</div>
           </div>
-
           <div className="field-desc">
             <div className="inf-label">Territory</div>
             <b>&nbsp;:&nbsp;</b>
@@ -341,20 +361,30 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
             <b>&nbsp;:&nbsp;</b>
             <div className="info-desc">{customerData?.taxId ? customerData?.taxId : ErrorMessage.NotAvailabe}</div>
           </div>
-          {/* <div className="field-desc">
-            <div className="inf-label">Is Company</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">
-              {customerData?.isCompany}
-              {customerData && customerData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
-            </div>
-          </div> */}
           <div className="field-desc">
             <div className="inf-label inf-label-width ">Is Buying for Third Party</div>
             <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">
+            <div className="info-desc ml-2">
               {customerData?.isBuyingForThirdParty}
               {customerData && customerData.isBuyingForThirdParty ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
+            </div>
+          </div>
+          <div className="field-desc">
+            <div className="inf-label inf-label-width">Is Sub Company</div>
+            <b>&nbsp;:&nbsp;</b>
+            <div className="checkbox-part ml-2">
+              <div className="checkbox">
+                <input
+                  name={"isSubCompany"}
+                  className="form-checkbox"
+                  type="checkbox"
+                  id={"isSubCompany"}
+                  checked={customerData?.isSubCompany}
+                  onChange={handleCheckboxChange}
+                  disabled={isButtonDisable}
+                />
+                <label htmlFor={"isSubCompany"} className="checkbox-label"></label>
+              </div>
             </div>
           </div>
         </div>
