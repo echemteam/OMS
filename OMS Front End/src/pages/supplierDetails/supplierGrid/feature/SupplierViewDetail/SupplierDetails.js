@@ -15,9 +15,9 @@ import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSup
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../../../app/services/supplierAPI";
 
 //** Component's */
-const SupplierViewTab = React.lazy(() => import("../../../supplierViewDetail/feature/SupplierViewTab"));
+const SupplierViewTab = React.lazy(() => import("../../../feature/supplierViewDetail/supplierViewTabs/SupplierViewTab"));
 const SupplierBasicDetail = React.lazy(() => import("../../../feature/supplierBasicDetail/SupplierBasicDetail"));
-const SupplierBasicInfoCard = React.lazy(() => import("../../../supplierViewDetail/feature/SupplierBasicInfoCard"));
+const SupplierBasicInfoCard = React.lazy(() => import("../../../feature/supplierViewDetail/SupplierBasicInfo/SupplierBasicInfoCard"));
 
 const SupplierDetails = () => {
   const navigate = useNavigate();

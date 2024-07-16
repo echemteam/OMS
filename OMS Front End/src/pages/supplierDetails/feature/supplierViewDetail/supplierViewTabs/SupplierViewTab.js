@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { securityKey } from "../../../../data/SecurityKey";
-import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { securityKey } from "../../../../../data/SecurityKey";
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Component's */
-import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
-const SupplierHistory = React.lazy(() => import("../../feature/supplierHistoryDetail/SupplierHistory"));
-const SupplierNoteDetail = React.lazy(() => import("../../feature/supplierNoteDetail/SupplierNoteDetail"));
-const SupplierContactDetail = React.lazy(() => import("../../feature/supplierContactDetail/SupplierContactDetail"));
-const SuplierAddressDetails = React.lazy(() => import("../../feature/supplierAddressDetail/SupplierAddressDetails"));
-const SupplierDocumentDetail = React.lazy(() => import("../../feature/supplierDocumentDetail/SupplierDocumentDetail"));
+import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
+const SupplierHistory = React.lazy(() => import("../../supplierHistoryDetail/SupplierHistory"));
+const SupplierNoteDetail = React.lazy(() => import("../../supplierNoteDetail/SupplierNoteDetail"));
+const SupplierContactDetail = React.lazy(() => import("../../supplierContactDetail/SupplierContactDetail"));
+const SuplierAddressDetails = React.lazy(() => import("../../supplierAddressDetail/SupplierAddressDetails"));
+const SupplierDocumentDetail = React.lazy(() => import("../../supplierDocumentDetail/SupplierDocumentDetail"));
 
 const SupplierViewTab = (supplierId) => {
 
