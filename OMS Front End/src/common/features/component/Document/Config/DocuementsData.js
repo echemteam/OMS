@@ -8,6 +8,7 @@ export const DocumentFormData = {
     name: "",
     documentTypeId: "",
     supplierId: "",
+    customerId: "",
     attachment: "",
     base64File: "",
     storagePath: ""

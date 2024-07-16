@@ -4,13 +4,10 @@ import React, { useRef, useState, useEffect, useImperativeHandle, useContext } f
 import { securityKey } from "../../../../data/SecurityKey";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
-import { supplierBasicData } from "./config/SupplierBasicDetail.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { excludingRoles } from "../../../customerDetail/features/basicDetail/config/BasicDetailForm.data";
-import { getTaxIdMinMaxLength } from "../../../customerDetail/features/basicDetail/config/TaxIdValidator";
 import { setFieldSetting, setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 //** Context API */
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
@@ -23,6 +20,9 @@ import {
     useLazyGetSupplierDetailsBySupplierNameQuery
 } from "../../../../app/services/supplierAPI";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { supplierBasicData } from "./config/SupplierBasicDetail.data";
+import { excludingRoles } from "../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
+import { getTaxIdMinMaxLength } from "../../../customerDetail/feature/customerBasicDetail/config/TaxIdValidator";
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
