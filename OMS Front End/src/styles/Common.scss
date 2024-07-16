@@ -662,11 +662,47 @@ a {
     margin-bottom: 0;
   }
 }
-.address-main-card-sec{
-  .card{
-    padding-top: 2p3;
+
+.address-main-card-sec {
+  .card {
+    padding-top: 4px;
+
+    @media only screen and (max-width: 1560px) {
+      padding-top: 7px;
+    }
   }
 }
+
+.contact-main-card-section {
+  .card {
+    padding-top: 4px;
+
+    @media only screen and (max-width: 1560px) {
+      padding-top: 7px;
+    }
+  }
+}
+
+.document-section {
+  .card {
+    padding-top: 4px;
+
+    @media only screen and (max-width: 1560px) {
+      padding-top: 7px;
+    }
+  }
+}
+
+.notes-main-card-section {
+  .card {
+    padding-top: 4px;
+
+    @media only screen and (max-width: 1560px) {
+      padding-top: 7px;
+    }
+  }
+}
+
 .card-email-sec {
   .card {
     margin-bottom: 0;
@@ -866,6 +902,7 @@ a {
         border-right: 1px solid var(--whiteColor);
         margin-right: 0;
         color: var(--textColor);
+        transition: 0.3s all;
 
         &.active {
           margin-bottom: 0;
@@ -885,6 +922,14 @@ a {
             border-top: 10px solid var(--themeColor);
             /* Change color as needed */
           }
+
+          &:hover {
+            color: var(--themeColor);
+          }
+        }
+
+        &:hover {
+          color: var(--textColorLight);
         }
       }
     }
@@ -966,7 +1011,7 @@ a {
         margin-left: 20px;
 
         button {
-          padding: 7px 25px 7px;
+          padding: 7px 25px;
           border: none;
           background: var(--whiteColor);
           border-radius: 0px;
@@ -976,13 +1021,18 @@ a {
           border-right: 1px solid var(--whiteColor);
           margin-right: 0;
           color: var(--textColor);
+          transition: 0.6s all;
+          border-bottom: 2px solid var(--whiteColor);
 
           &.active {
             margin-bottom: 0;
             color: var(--themeColor);
             position: relative;
-            padding-bottom: 15px;
             border-bottom: 2px solid var(--themeColor);
+          }
+
+          &:hover {
+            background: var(--themeColorLight);
           }
         }
       }
@@ -1816,7 +1866,7 @@ a {
       overflow-y: auto;
 
       @media only screen and (max-width: 1560px) {
-        height: calc(100vh - 345px);
+        height: calc(100vh - 310px);
       }
     }
   }
@@ -2178,6 +2228,8 @@ input[type="checkbox"]:disabled {
 }
 
 .customer-list-all {
+  margin-top: 5px !important;
+
   table {
     thead {
       tr {
@@ -2390,20 +2442,25 @@ input[type="checkbox"]:disabled {
 
 .serach-bar-history {
   display: flex;
+  align-items: center;
   width: 100%;
-  
-  .name-field{
-    min-width:22%;
+
+  .name-field {
+    min-width: 22%;
   }
-  .user-name-field{
-    min-width:22%;
+
+  .user-name-field {
+    min-width: 22%;
   }
-  .date-field{
-    min-width:22%;
+
+  .date-field {
+    min-width: 22%;
   }
+
   .refresh-btn-history {
     display: flex;
     justify-content: flex-end;
+    width: 197px;
   }
 }
 
@@ -2630,6 +2687,24 @@ input[type="checkbox"]:disabled {
         }
       }
     }
+
+    @media only screen and (max-width: 1560px) {
+      .main-inactive-grid {
+        .card {
+          margin-top: 0;
+          padding: 0;
+        }
+
+        .tab-sub-header {
+          margin-left: 10px !important;
+
+          button {
+            font-size: var(--commonFont-medium) !important;
+            padding: 3px 15px 5px !important;
+          }
+        }
+      }
+    }
   }
 
   .sidebar-contact-model {
@@ -2727,7 +2802,7 @@ input[type="checkbox"]:disabled {
   .custom-datepicker {
     .react-daterange-picker {
       width: 120% !important;
-      min-height: 29px !important;
+      min-height: 28px !important;
     }
   }
 }
@@ -2807,7 +2882,7 @@ input[type="checkbox"]:disabled {
   .sidebar-contact-model {
     .card-email-sec {
       .card {
-        padding: 8px 20px;
+        padding: 5px 10px;
 
         .card-body-sec {
           margin-top: 10px;

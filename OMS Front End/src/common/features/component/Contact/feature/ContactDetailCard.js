@@ -141,7 +141,7 @@ const ContactDetailCard = forwardRef(
                     <div
                       className={`contact-card ${
                         showEmailDropdown || showPhoneDropdown
-                          ? "dropdown-open"
+                          ? "open-dropdown"
                           : ""
                       }`}
                     >
