@@ -14,5 +14,6 @@
         public bool? IsBuyingForThirdParty {  get; set; }
         public short? ResponsibleUserId {  get; set; }
         public long? CustomerNoteId { get; set; }
+        public bool? IsSubCompany { get; set; }
     }
 }

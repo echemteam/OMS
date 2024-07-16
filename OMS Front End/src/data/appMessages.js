@@ -53,6 +53,7 @@ export const SuccessMessage = {
 	Charge_Success: '{0} charge successful',
 	Confirm_Submit: 'Save {0}?',
 	Confirm_Save: 'Are you sure you want to save this {0}?',
+	Confirm_Update: 'Are you sure you want to update the {0}?',
 	Confirm_Map: 'Are you sure you want to map?',
 	Confirm_SubmitMap: 'Map?',
 	Map_Alert: '{0} mapped successfully',
