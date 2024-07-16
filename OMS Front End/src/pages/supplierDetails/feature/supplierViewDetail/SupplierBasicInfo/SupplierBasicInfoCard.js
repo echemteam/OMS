@@ -405,13 +405,14 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
             </div> */}
           </div>
         </div>
-
+        {showEditIcon ? 
         <div className="edit-icons" onClick={editClick}>
           <Image
             imagePath={AppIcons.editThemeIcon}
             altText="Website Icon"
           />
         </div>
+        :null}
       </div>
       {showModal && (
         <CenterModel

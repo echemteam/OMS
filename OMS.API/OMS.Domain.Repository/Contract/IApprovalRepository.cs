@@ -15,6 +15,6 @@ namespace OMS.Domain.Repository.Contract
          Task<List<GetCheckListItemResponse>> GetCheckListItemByListId(int ChecklistId);
          Task<AddEntityDTO<int>> AddUserChecklistResponse(DataTable CheckListDataTable);
          Task<List<GetValidateCheckListResponse>> getValidateCustomer(int mainId,bool? IsSubCompany);
-         Task<List<GetValidateCheckListResponse>> getValidateSupplier(int mainId, bool? IsSubCompany);
+         Task<List<GetValidateCheckListResponse>> getValidateSupplier(int mainId);
     }
 }

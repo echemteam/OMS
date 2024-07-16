@@ -422,9 +422,11 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
 
 
           </div>
-          <div className="edit-icons" onClick={editClick}>
-            <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
-          </div>
+          {showEditIcon ?
+            <div className="edit-icons" onClick={editClick}>
+              <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
+            </div>
+            : null}
 
           {/* <div className="field-desc d-flex align-items-center">
           <div className="inf-label">R-User</div>

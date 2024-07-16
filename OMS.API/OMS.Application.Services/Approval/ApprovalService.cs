@@ -56,7 +56,7 @@ namespace OMS.Application.Services.Approval
             }
             else if (validaterequest.SupplierId > 0)
             {
-                responses = await repositoryManager.approval.getValidateSupplier(validaterequest.SupplierId, validaterequest.IsSubCompany);
+                responses = await repositoryManager.approval.getValidateSupplier(validaterequest.SupplierId);
 
             }
             return responses;

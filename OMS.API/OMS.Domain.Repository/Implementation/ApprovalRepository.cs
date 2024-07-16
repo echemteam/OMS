@@ -65,12 +65,11 @@ namespace OMS.Domain.Repository.Implementation
             return getApprovalCheckList;
 
         }
-        public async Task<List<GetValidateCheckListResponse>> getValidateSupplier(int SupplierId, bool? IsSubCompany)
+        public async Task<List<GetValidateCheckListResponse>> getValidateSupplier(int SupplierId)
         {
             List<GetValidateCheckListResponse> getApprovalCheckList = await _context.GetList<GetValidateCheckListResponse>(VALIDATESUPPLIERDATA, new
             {
-                SupplierId,
-                IsSubCompany
+                SupplierId
             }, commandType: CommandType.StoredProcedure);
             return getApprovalCheckList;
 
