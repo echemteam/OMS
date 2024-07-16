@@ -35,6 +35,7 @@ namespace OMS.Domain.Repository
         IApprovalConfigurationRepository _approvalConfigurationRepository;
         IApiProviderRepository _apiProviderRepository;
         IApiEndpointRepository _apiEndpointRepository;
+        IApiParameterRepository _apiParameterRepository;
 
         public ITestRepository test
         {
@@ -287,6 +288,17 @@ namespace OMS.Domain.Repository
                     _apiEndpointRepository = new ApiEndpointRepository(_context);
                 }
                 return _apiEndpointRepository;
+            }
+        }
+        public IApiParameterRepository apiParameter
+        {
+            get
+            {
+                if (_apiParameterRepository == null)
+                {
+                    _apiParameterRepository = new ApiParameterRepository(_context);
+                }
+                return _apiParameterRepository;
             }
         }
     }
