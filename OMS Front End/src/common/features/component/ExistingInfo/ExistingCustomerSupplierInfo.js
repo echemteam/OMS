@@ -7,6 +7,7 @@ import SidebarModel from '../../../../components/ui/sidebarModel/SidebarModel';
 //** Service's */
 import { encryptUrlData } from '../../../../services/CryptoService';
 import ToastService from '../../../../services/toastService/ToastService';
+import { ErrorMessage } from '../../../../data/appMessages';
 
 const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExistingInfoByName }) => {
 
@@ -26,7 +27,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
                 setIsExistingModel(true);
                 setExistingInfoData(isGetSupplierDetailsBySupplierNameData)
             } else {
-                ToastService.warning("No record found");
+                ToastService.info(ErrorMessage.NoFound);
             }
         }
     }, [isGetSupplierDetailsBySupplierNameFetching, isGetSupplierDetailsBySupplierNameSucess, isGetSupplierDetailsBySupplierNameData]);
