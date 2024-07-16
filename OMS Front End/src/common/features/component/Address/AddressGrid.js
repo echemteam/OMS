@@ -5,7 +5,7 @@ import { AppIcons } from "../../../../data/appIcons";
 import CardSection from "../../../../components/ui/card/CardSection";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { addressFormData } from "../../../../pages/customerDetail/features/addressDetail/features/config/AddressForm.data";
+import { addressFormData } from "./config/AddressForm.data";
 //** Compoent's */
 const AddEditAddress = React.lazy(() => import("./feature/AddEditAddress"));
 const AddressDetailCard = React.lazy(() => import("./feature/AddressDetailCard"));

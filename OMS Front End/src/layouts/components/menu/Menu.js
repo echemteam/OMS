@@ -93,4 +93,26 @@ export const Menu = [
       },
     ],
   },
+  {
+    id: "apiconfiguration",
+    name: "API Configuration",
+    iconClass: "fa fa-cog",
+    subMenu: true, 
+    to: "#",
+   // securityKey: securityKey.CONFIGURATION,
+    children: [
+      {
+        id: "apiProviders",
+        submenuName: "API Providers",
+        to: "/APIProviders", 
+        //securityKey: securityKey.APPROVALRULES,
+      },
+      {
+        id: "apiEndpoints",
+        submenuName: "API EndPoints",
+        to: "/APIEndpoints", 
+        //securityKey: securityKey.APPROVALRULES,
+      },
+    ],
+  },
 ];

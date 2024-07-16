@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef } from "react";
 import React, { useEffect, useImperativeHandle, useState } from "react";
 //** Lib's */
@@ -78,7 +79,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
     if (isSupplierApproval) {
       url = `/SupplierDetails/${encryptUrlData(mainId)}`;
     } else {
-      url = `/viewCustomer/${encryptUrlData(mainId)}`;
+      url = `/CustomerDetails/${encryptUrlData(mainId)}`;
     }
     window.open(url, "_blank");
   }

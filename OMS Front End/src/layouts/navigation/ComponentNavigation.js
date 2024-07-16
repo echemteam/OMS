@@ -6,6 +6,10 @@ import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
 import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
 
+import ApiProviders from "../../pages/apiConfiguration/apiProviders/ApiProviders";
+import ApiEndPoints from "../../pages/apiConfiguration/apiEndPoints/ApiEndPoints";
+import AddEditApiEndPoints from "../../pages/apiConfiguration/apiEndPoints/features/AddEditApiEndPoints";
+
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 //** Dashboard */
@@ -20,14 +24,14 @@ const SecurityRoleManagement = React.lazy(() => import('../../pages/Security/sec
 
 //** Customer  */
 // const CustomerDetail = React.lazy(() => import('../../pages/customerDetail/CustomerDetail'));
-const Customers = React.lazy(() => import('../../pages/customerDetail/customers/Customers'));
-const ViewCustomer = React.lazy(() => import('../../pages/customerDetail/ManageViewCustomer'));
-const ManageAddCustomer = React.lazy(() => import('../../pages/customerDetail/ManageAddCustomer'));
+const AddCustomer = React.lazy(() => import('../../pages/customerDetail/addCustomer/AddCustomer'));
+const CustomerGrid = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerGrid'));
+const CustomerViewDetails = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerViewDetail'));
 
 //** Supplier  */
-const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/supplierGrid/SupplierGrid'));
 const AddSupplier = React.lazy(() => import('../../pages/supplierDetails/addSupplier/AddSupplier'));
-const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/supplierViewDetail/SupplierViewDetail"));
+const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/supplierGrid/SupplierGrid'));
+const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/supplierGrid/SupplierViewDetail"));
 
 
 export const ComponentNavigation = [
@@ -202,17 +206,17 @@ export const ComponentNavigation = [
     path: '/addCustomer',
     exact: true,
     title: 'Add Customer',
-    component: ManageAddCustomer,
+    component: AddCustomer,
     hasParams: false,
     text: 'Add Customer',
     securityKey: securityKey.CUSTOMER
   },
   {
-    id: 'viewCustomer',
-    path: '/viewCustomer/:id',
+    id: 'CustomerDetails',
+    path: '/CustomerDetails/:id',
     exact: true,
     title: 'View Detail',
-    component: ViewCustomer,
+    component: CustomerViewDetails,
     hasParams: false,
     text: 'Customer Detail',
     securityKey: securityKey.CUSTOMER
@@ -222,7 +226,7 @@ export const ComponentNavigation = [
     path: '/Customers',
     exact: true,
     title: 'Customers',
-    component: Customers,
+    component: CustomerGrid,
     hasParams: false,
     text: 'Customers',
     securityKey: securityKey.CUSTOMER
@@ -276,5 +280,25 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'Approval Rules',
     securityKey: securityKey.APPROVALRULES
+  },
+  {
+    id: 'apiProviders',
+    path: '/APIProviders',
+    exact: true,
+    title: 'API Providers',
+    component: ApiProviders,
+    hasParams: false,
+    text: 'API Providers',
+    //securityKey: securityKey.APPROVALRULES
+  },
+  {
+    id: 'apiEndpoints',
+    path: '/APIEndpoints',
+    exact: true,
+    title: 'API EndPoints',
+    component: ApiEndPoints,
+    hasParams: false,
+    text: 'API EndPoints',
+    //securityKey: securityKey.APPROVALRULES
   },
 ];

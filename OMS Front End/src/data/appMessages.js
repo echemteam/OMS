@@ -36,8 +36,9 @@ export const ErrorMessage = {
 	Already_Exist: '{0} already exist',
 	validateQuantty: 'Please select at least one size',
 	CompareEmail: 'Email address already exist',
-	NotAvailabe : "N/A",
-	CommonErrorMessage : "Please enter at least 3 characters to search or select a dropdown value."
+	NotAvailabe: "N/A",
+	CommonErrorMessage: "Please enter at least 3 characters to search or select a dropdown value.",
+	NoFound: "No Records found"
 };
 
 export const SuccessMessage = {

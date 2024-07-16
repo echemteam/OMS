@@ -31,3 +31,16 @@ export const OwnerType = {
 
 export const ListShowCustomer = { value: 1, label: "Customer Name" }
 export const ListSupplier = { value: 2, label: "Supplier Name" }
+
+export const AuthenticationTypes={
+    APIKEY: "APIKey",
+    OAUTH:"OAuth"
+
+}
+
+export const ApiEndPointMethods={
+    GET:"GET",
+    POST:"POST",
+    PUT:"PUT",
+    DELETE:"DELETE"
+}
