@@ -1,22 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import CardSection from '../../../../components/ui/card/CardSection';
-import MolGrid from '../../../../components/Grid/MolGrid';
-import CustomerListContext from '../../../../utils/ContextAPIs/Customer/CustomerListContext';
-import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../app/services/basicdetailAPI';
-import ToastService from '../../../../services/toastService/ToastService';
-import { securityKey } from '../../../../data/SecurityKey';
-import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
-import CustomerApproval from '../../features/cutomerApproval/CustomerApproval';
-import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
-import { encryptUrlData } from '../../../../services/CryptoService';
-import { useNavigate } from "react-router-dom";
-import SwalAlert from '../../../../services/swalService/SwalService';
+import { useNavigate } from 'react-router-dom';
+import SwalAlert from '../../../../../../services/swalService/SwalService';
+import BasicDetailContext from '../../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
 import { useSelector } from 'react-redux';
-import { StatusEnums } from '../../../../utils/Enums/StatusEnums';
-import { AppIcons } from '../../../../data/appIcons';
+import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import { securityKey } from '../../../../../../data/SecurityKey';
+import CustomerApproval from '../../../../feature/cutomerApproval/CustomerApproval';
+import ToastService from '../../../../../../services/toastService/ToastService';
+import { AppIcons } from '../../../../../../data/appIcons';
+import { StatusEnums } from '../../../../../../utils/Enums/StatusEnums';
+import { encryptUrlData } from '../../../../../../services/CryptoService';
+import MolGrid from '../../../../../../components/Grid/MolGrid';
+import CardSection from '../../../../../../components/ui/card/CardSection';
+import CustomerListContext from '../../../../../../utils/ContextAPIs/Customer/CustomerListContext';
+import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../../../app/services/basicdetailAPI';
 
-export const InActiveCustomersList = ({ statusId, configFile, handleChange, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
+
+const InActiveCustomersList = ({ statusId, configFile, handleChange, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
 
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
@@ -245,3 +246,5 @@ export const InActiveCustomersList = ({ statusId, configFile, handleChange, sear
     </div>
   )
 }
+
+export default InActiveCustomersList

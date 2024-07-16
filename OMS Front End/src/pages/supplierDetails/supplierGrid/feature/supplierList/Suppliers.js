@@ -8,12 +8,10 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
 import SupplierListContext from '../../../../../utils/ContextAPIs/Supplier/SupplierListContext'
 import { AddSupplierContextProvider } from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import {
-  AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig,
-  SubmittedCustomerGridConfig
-} from "../../../../customerDetail/customers/config/CustomerData";
+
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
+import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
 //** Component's */
 const SupplierList = React.lazy(() => import("./feature/SupplierList"));
 const InActiveSupplierTab = React.lazy(() => import("../InActiveTabs/InActiveSupplierTab"));

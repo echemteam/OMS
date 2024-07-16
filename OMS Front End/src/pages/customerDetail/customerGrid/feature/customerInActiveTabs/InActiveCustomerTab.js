@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import CardSection from "../../../../components/ui/card/CardSection";
-import { InActiveCustomers } from "./InActiveCustomers";
-import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext"
-import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../config/CustomerData";
-import useDebounce from "../../../../app/customHooks/useDebouce";
-import { ListSupplier } from "../../../../utils/Enums/enums";
-import { StatusEnums, StatusValue } from "../../../../utils/Enums/StatusEnums";
-import { ErrorMessage } from "../../../../data/appMessages";
-import ToastService from "../../../../services/toastService/ToastService";
+import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../customerDetail/customers/config/CustomerData";
+import useDebounce from "../../../../../app/customHooks/useDebouce";
+import { ListSupplier } from "../../../../../utils/Enums/commonEnums";
+import ToastService from "../../../../../services/toastService/ToastService";
+import { ErrorMessage } from "../../../../../data/appMessages";
+import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
+import { InActiveCustomersList } from "./feature/InActiveCustomersList";
+import CardSection from "../../../../../components/ui/card/CardSection";
+import CustomerListContext from "../../../../../utils/ContextAPIs/Customer/CustomerListContext";
+
 
 const InActiveCustomerTab = ({ statusId }) => {
   const [activeTab, setActiveTab] = useState("0");
@@ -128,7 +129,7 @@ const InActiveCustomerTab = ({ statusId }) => {
       sMenuItemCaption: "All",
       component: (
         <div className="mt-2">
-          <InActiveCustomers
+          <InActiveCustomersList
             statusId={statusId}
             configFile={allManageData}
             search={debouncedSearch}
@@ -149,7 +150,7 @@ const InActiveCustomerTab = ({ statusId }) => {
       sMenuItemCaption: "Freezed",
       component: (
         <div className="mt-2">
-          <InActiveCustomers
+          <InActiveCustomersList
             statusId={StatusEnums.Freeze}
             configFile={freezeManageData}
             search={debouncedSearch}
@@ -170,7 +171,7 @@ const InActiveCustomerTab = ({ statusId }) => {
       sMenuItemCaption: "Block",
       component: (
         <div className="mt-2">
-          <InActiveCustomers
+          <InActiveCustomersList
             statusId={StatusEnums.Block}
             configFile={blockManageData}
             search={debouncedSearch}
@@ -191,7 +192,7 @@ const InActiveCustomerTab = ({ statusId }) => {
       sMenuItemCaption: "Disable",
       component: (
         <div className="mt-2">
-          <InActiveCustomers
+          <InActiveCustomersList
             statusId={StatusEnums.Disable}
             configFile={disableManageData}
             search={debouncedSearch}
@@ -212,7 +213,7 @@ const InActiveCustomerTab = ({ statusId }) => {
 
   return (
     <>
-      <CustomerContext.Provider value={{ DataRef }}>
+      <CustomerListContext.Provider value={{ DataRef }}>
         <div className="main-inactive-grid">
           <div className="row">
             <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
@@ -251,7 +252,7 @@ const InActiveCustomerTab = ({ statusId }) => {
             </div>
           </div>
         </div>
-      </CustomerContext.Provider>
+      </CustomerListContext.Provider>
     </>
   );
 };

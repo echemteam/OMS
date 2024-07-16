@@ -1,23 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
-import CardSection from "../../../components/ui/card/CardSection";
-import { CustomersList } from "../customerList/feature/CustomerList";
-import CustomerContext from "../../../utils/ContextAPIs/Customer/CustomerListContext";
-import {
-  AllCustomerGridConfig,
-  ApprovedCustomerGridConfig,
-  PendingCustomerGridConfig,
-  RejectedCustomerGridConfig,
-  SubmittedCustomerGridConfig,
-} from "./config/CustomerData";
-import { BasicDetailContextProvider } from "../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import useDebounce from "../../../app/customHooks/useDebouce"
-import { ListSupplier } from "../../../utils/Enums/enums";
-import { StatusEnums, StatusValue } from "../../../utils/Enums/StatusEnums";
-import ToastService from "../../../services/toastService/ToastService";
-import { ErrorMessage } from "../../../data/appMessages";
-import InActiveCustomerTab from "../customerInActiveTabs/InActiveCustomerTab";
-import { InActiveCustomersList } from "../customerInActiveTabs/feature/InActiveCustomersList";
+
+import useDebounce from "../../../../../app/customHooks/useDebouce";
+import { ListSupplier } from "../../../../../utils/Enums/commonEnums";
+import ToastService from "../../../../../services/toastService/ToastService";
+import { ErrorMessage } from "../../../../../data/appMessages";
+import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
+import { CustomersList } from "./feature/CustomerList";
+import CardSection from "../../../../../components/ui/card/CardSection";
+import InActiveCustomersList from "../customerInActiveTabs/feature/InActiveCustomersList";
+import { BasicDetailContextProvider } from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import CustomerListContext from "../../../../../utils/ContextAPIs/Customer/CustomerListContext";
+import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -271,7 +265,7 @@ const Customers = () => {
 
   return (
     <BasicDetailContextProvider>
-      <CustomerContext.Provider value={{ listRef }}>
+      <CustomerListContext.Provider value={{ listRef }}>
         <div className="main-customer-grid">
           <div className="row">
             <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
@@ -317,7 +311,7 @@ const Customers = () => {
             </div>
           </div>
         </div>
-      </CustomerContext.Provider>
+      </CustomerListContext.Provider>
     </BasicDetailContextProvider>
   );
 };

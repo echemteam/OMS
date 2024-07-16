@@ -7,7 +7,7 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import { setFieldSetting, setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { addressFormData } from "../../../../../pages/customerDetail/features/addressDetail/features/config/AddressForm.data";
+import { addressFormData } from "../config/AddressForm.data";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";

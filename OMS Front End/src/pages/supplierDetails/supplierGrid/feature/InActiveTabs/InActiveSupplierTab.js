@@ -6,12 +6,10 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import { ListShowCustomer } from "../../../../../utils/Enums/commonEnums";
 import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
 import SupplierListContext from "../../../../../utils/ContextAPIs/Supplier/SupplierListContext";
-import {
-  AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig,
-  FreezedInActiveCustomerGridConfig
-} from "../../../../customerDetail/customers/config/CustomerData";
+
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
+import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
 //** Component's */
 const InActiveSuppliersList = React.lazy(() => import("./feature/InActiveSuppliersList"));
 

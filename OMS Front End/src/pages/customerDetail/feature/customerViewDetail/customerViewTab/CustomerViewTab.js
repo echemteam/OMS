@@ -1,14 +1,15 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { securityKey } from "../../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
-import CustomerAddressDetail from "../../customerAddressDetail/CustomerAddressDetail";
-import CustomerContactDetail from "../../customerContactDetail/CustomerContactDetail";
-import CustomerDocumentDetail from "../../customerDocumentDetail/CustomerDocumentDetail";
-import CustomerNoteDetail from "../../customerNoteDetail/CustomerNoteDetail";
 import { CustomerHistory } from "../../customerHistoryDetail/CustomerHistoryDetail";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import CustomerSettingDetails from "../../customerSettingDetail/CustomerSettingDetails";
+
+const CustomerContactDetail = React.lazy(() => import("../../customerContactDetail/CustomerContactDetail"));
+const CustomerDocumentDetail = React.lazy(() => import("../../customerDocumentDetail/CustomerDocumentDetail"));
+const CustomerNoteDetail = React.lazy(() => import("../../customerNoteDetail/CustomerNoteDetail"));
+const CustomerAddressDetail = React.lazy(() => import("../../customerAddressDetail/CustomerAddressDetail"));
+const CustomerSettingDetails = React.lazy(() => import("../../customerAddressDetail/CustomerAddressDetail"));
 
 const CustomerViewTab = (customerId) => {
 

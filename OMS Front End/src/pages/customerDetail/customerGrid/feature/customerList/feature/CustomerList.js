@@ -6,33 +6,31 @@ import React, {
     useRef,
     useState,
   } from "react";
-  import CardSection from "../../../../components/ui/card/CardSection";
-  import MolGrid from "../../../../components/Grid/MolGrid";
-  import {
-    useGetCustomersMutation,
-    useUpdateCustomerApproveStatusMutation,
-    useUpdateCustomerInActiveStatusMutation,
-  } from "../../../../app/services/basicdetailAPI";
-  import CustomerContext from "../../../../utils/ContextAPIs/Customer/CustomerListContext";
+
   import { useNavigate } from "react-router-dom";
-  import { encryptUrlData } from "../../../../services/CryptoService";
-  import ToastService from "../../../../services/toastService/ToastService";
-  import { reasonData } from "../config/CustomerData";
-  import CenterModel from "../../../../components/ui/centerModel/CenterModel";
-  import FormCreator from "../../../../components/Forms/FormCreator";
-  import Buttons from "../../../../components/ui/button/Buttons";
-  import { securityKey } from "../../../../data/SecurityKey";
-  import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-  import CustomerApproval from "../../features/cutomerApproval/CustomerApproval";
-  import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-  import { useAddCustomerNotesMutation } from "../../../../app/services/notesAPI";
-  import { useSelector } from "react-redux";
-  import { StatusEnums, StatusFeild } from "../../../../utils/Enums/StatusEnums";
-  import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../app/services/commonAPI";
-  import { excludingRoles } from "../../features/basicDetail/config/BasicDetailForm.data";
-  import { ownerType } from "../../../../utils/Enums/enums";
-  import { AppIcons } from "../../../../data/appIcons";
-  import { setOptionFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+  
+import CardSection from "../../../../../../components/ui/card/CardSection";
+import MolGrid from "../../../../../../components/Grid/MolGrid";
+import { useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from "../../../../../../app/services/basicdetailAPI";
+import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import CustomerListContext from "../../../../../../utils/ContextAPIs/Customer/CustomerListContext";
+import { useAddCustomerNotesMutation } from "../../../../../../app/services/notesAPI";
+import { useSelector } from "react-redux";
+import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../../../app/services/commonAPI";
+import { excludingRoles } from "../../../../feature/customerBasicDetail/config/CustomerBasicDetail.data";
+import { setDropDownOptionField } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { securityKey } from "../../../../../../data/SecurityKey";
+import ToastService from "../../../../../../services/toastService/ToastService";
+import { encryptUrlData } from "../../../../../../services/CryptoService";
+import { StatusEnums, StatusFeild } from "../../../../../../utils/Enums/StatusEnums";
+import { OwnerType } from "../../../../../../utils/Enums/commonEnums";
+import { AppIcons } from "../../../../../../data/appIcons";
+import CenterModel from "../../../../../../components/ui/centerModel/CenterModel";
+import FormCreator from "../../../../../../components/Forms/FormCreator";
+import Buttons from "../../../../../../components/ui/button/Buttons";
+import CustomerApproval from "../../../../feature/cutomerApproval/CustomerApproval";
+import { reasonData } from "../../../../../../common/features/component/CustomerSupplierReason/Reason.data";
   
   export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
   
@@ -47,7 +45,7 @@ import React, {
     const [customerID, setcustomerId] = useState();
     const [staticId, setStaticId] = useState();
     const [statusFeild, setStatusFeild] = useState();
-    const { listRef } = useContext(CustomerContext);
+    const { listRef } = useContext(CustomerListContext);
     const authState = useSelector((state) => state.auth);
     const [assignRUser, setAssignRUser] = useState();
     const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
@@ -83,7 +81,7 @@ import React, {
         const filterCondition = (item) => {
           return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
         };
-        setOptionFieldSetting(allGetAlluserData, 'userId', 'fullName', reasonData, 'responsibleUserId', filterCondition);
+        setDropDownOptionField(allGetAlluserData, 'userId', 'fullName', reasonData, 'responsibleUserId', filterCondition);
       }
     }, [isGetAllUserSucess, allGetAlluserData,]);
   
@@ -322,7 +320,7 @@ import React, {
     const updateRUserData = (value) => {
       let req = {
         ownerId: customerID,
-        ownerType: ownerType.Customer,
+        ownerType: OwnerType.Customer,
         responsibleUserId: value
       }
       updateResponsibleUser(req);

@@ -7,7 +7,6 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import CustomerApproval from "../../cutomerApproval/CustomerApproval";
 import SwalAlert from "../../../../../services/swalService/SwalService";
-import { reasonData } from "../../../customers/config/CustomerData";
 import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../../app/services/commonAPI";
 import { useUpdateCustomerInActiveStatusMutation, useUpdateCustomerStatusMutation } from "../../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../../services/toastService/ToastService";
@@ -21,6 +20,7 @@ import CopyText from "../../../../../utils/CopyText/CopyText";
 import { ErrorMessage } from "../../../../../data/appMessages";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { OwnerType } from "../../../../../utils/Enums/commonEnums";
+import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
 
 const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId, onhandleRepeatCall }) => {
   const childRef = useRef();
