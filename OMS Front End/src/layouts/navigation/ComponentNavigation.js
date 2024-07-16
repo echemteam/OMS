@@ -20,9 +20,9 @@ const SecurityRoleManagement = React.lazy(() => import('../../pages/Security/sec
 
 //** Customer  */
 // const CustomerDetail = React.lazy(() => import('../../pages/customerDetail/CustomerDetail'));
+const AddCustomer = React.lazy(() => import('../../pages/customerDetail/addCustomer/AddCustomer'));
 const CustomerGrid = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerGrid'));
 const CustomerViewDetails = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerViewDetail'));
-const AddCustomer = React.lazy(() => import('../../pages/customerDetail/addCustomerNew/AddCustomer'));
 
 //** Supplier  */
 const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/supplierGrid/SupplierGrid'));
