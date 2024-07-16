@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 //** Lib's */
 import formatDate from "../../../../../lib/formatDate";
@@ -6,7 +7,7 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { getRandomColor } from "../../../../../utils/RandomColors/RandomColors";
 
-const NoteList = forwardRef(({ keyId, handleEditClick, onGetByIdNotes, listRef }) => {
+const NoteList = forwardRef(({ keyId, handleEditClick, onGetByIdNotes, showEditIcon, listRef }) => {
 
     //** States */
     const [notesFormData, setNotesFormData] = useState([]);
@@ -57,11 +58,14 @@ const NoteList = forwardRef(({ keyId, handleEditClick, onGetByIdNotes, listRef }
                                         <div className="card-notes ">
                                             <div className="note-label">Created on {formatDate(notes.noteDate, "MM/DD/YYYY hh:mm A")} by {notes.fullName}</div>
                                             <div className="edit-button">
-                                                <Buttons
-                                                    buttonTypeClassName="edit-btn"
-                                                    onClick={() => handleEditClick(notes)}
-                                                    textWithIcon={true}
-                                                    imagePath={AppIcons.editThemeIcon}></Buttons>
+                                                {showEditIcon ?
+                                                    <Buttons
+                                                        buttonTypeClassName="edit-btn"
+                                                        onClick={() => handleEditClick(notes)}
+                                                        textWithIcon={true}
+                                                        imagePath={AppIcons.editThemeIcon}></Buttons>
+                                                    : null
+                                                }
                                             </div>
                                         </div>
                                     </div>

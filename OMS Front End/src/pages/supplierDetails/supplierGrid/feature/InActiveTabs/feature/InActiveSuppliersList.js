@@ -20,7 +20,7 @@ import { useGetSuppliersMutation, useUpdateSupplierStatusMutation } from '../../
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
 
 
-export const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
+const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
     const childRef = useRef();
     const molGridRef = useRef();
@@ -244,3 +244,5 @@ export const InActiveSuppliersList = ({ statusId, configFile, handleChange, sear
         </div>
     )
 }
+
+export default InActiveSuppliersList;

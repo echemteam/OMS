@@ -24,9 +24,9 @@ const SecurityRoleManagement = React.lazy(() => import('../../pages/Security/sec
 
 //** Customer  */
 // const CustomerDetail = React.lazy(() => import('../../pages/customerDetail/CustomerDetail'));
-const Customers = React.lazy(() => import('../../pages/customerDetail/customers/Customers'));
-const ViewCustomer = React.lazy(() => import('../../pages/customerDetail/ManageViewCustomer'));
-const ManageAddCustomer = React.lazy(() => import('../../pages/customerDetail/ManageAddCustomer'));
+const AddCustomer = React.lazy(() => import('../../pages/customerDetail/addCustomer/AddCustomer'));
+const CustomerGrid = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerGrid'));
+const CustomerViewDetails = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerViewDetail'));
 
 //** Supplier  */
 const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/supplierGrid/SupplierGrid'));
@@ -206,17 +206,17 @@ export const ComponentNavigation = [
     path: '/addCustomer',
     exact: true,
     title: 'Add Customer',
-    component: ManageAddCustomer,
+    component: AddCustomer,
     hasParams: false,
     text: 'Add Customer',
     securityKey: securityKey.CUSTOMER
   },
   {
-    id: 'viewCustomer',
-    path: '/viewCustomer/:id',
+    id: 'CustomerDetails',
+    path: '/CustomerDetails/:id',
     exact: true,
     title: 'View Detail',
-    component: ViewCustomer,
+    component: CustomerViewDetails,
     hasParams: false,
     text: 'Customer Detail',
     securityKey: securityKey.CUSTOMER
@@ -226,7 +226,7 @@ export const ComponentNavigation = [
     path: '/Customers',
     exact: true,
     title: 'Customers',
-    component: Customers,
+    component: CustomerGrid,
     hasParams: false,
     text: 'Customers',
     securityKey: securityKey.CUSTOMER

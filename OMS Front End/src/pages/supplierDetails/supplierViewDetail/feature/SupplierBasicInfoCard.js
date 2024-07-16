@@ -13,10 +13,8 @@ import DropDown from '../../../../components/ui/dropdown/DropDrown';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../components/ui/centerModel/CenterModel';
 import { StaticStatus, StatusValue } from '../../../../utils/Enums/StatusEnums';
-import { reasonData } from '../../../customerDetail/customers/config/CustomerData';
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
-import { excludingRoles } from '../../../customerDetail/features/basicDetail/config/BasicDetailForm.data';
 //** Service's */
 import SwalAlert from '../../../../services/swalService/SwalService';
 import ToastService from '../../../../services/toastService/ToastService';
@@ -24,6 +22,8 @@ import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../
 import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../app/services/supplierAPI';
 import { removeFormFields } from '../../../../utils/FormFields/RemoveFields/handleRemoveFields';
 import { setDropDownOptionField } from '../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
+import { reasonData } from '../../../../common/features/component/CustomerSupplierReason/Reason.data';
+import { excludingRoles } from '../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../feature/supplierApproval/SupplierApproval"));

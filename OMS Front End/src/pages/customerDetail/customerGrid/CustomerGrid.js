@@ -1,10 +1,10 @@
 import { BasicDetailContextProvider } from "../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import ViewCustomer from "../ViewCustomer";
+import Customers from "../../customerDetail/customerGrid/feature/customerList/Customers";
 
 const CustomerGrid = () => {
     return (
         <BasicDetailContextProvider>
-            <ViewCustomer />
+            <Customers />
         </BasicDetailContextProvider>
     )
 }

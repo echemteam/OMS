@@ -32,5 +32,6 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetAllFunctionalitiesFieldsResponse>> GetAllFunctionalitiesFields(int functionalityId);
         Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData);
         Task<List<GetAllAPIProvidersResponse>> GetAllAPIProviders();
+        Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints();
     }
 }
