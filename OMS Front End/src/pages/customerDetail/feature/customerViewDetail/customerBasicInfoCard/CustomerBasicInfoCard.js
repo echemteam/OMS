@@ -275,10 +275,10 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
 
   return (
     !isLoading ?
-    <div className="basic-customer-detail">
-      <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-       
-        <div className="d-flex gap-5 profile-info  justify-content-between col-11">
+      <div className="basic-customer-detail">
+        <div className="col-xl-12 col-lg-12 col-md-12 col-12">
+
+          <div className="d-flex gap-5 profile-info  justify-content-between col-11">
 
             <div className="d-flex col-3 flex-column profile-icon-desc justify-content-center">
 
@@ -359,9 +359,9 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
                 </div>
               </div>
             </div>
-         
 
-         
+
+
             {/* second no */}
             <div className="col-3  separator">
               <div className="field-desc">
@@ -400,15 +400,33 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
                   )}
                 </div>
               </div>
+              <div className="field-desc">
+                <div className="inf-label inf-label-width">Is Sub Company</div>
+                <b>&nbsp;:&nbsp;</b>
+                <div className="checkbox-part ml-2">
+                  <div className="checkbox">
+                    <input
+                      name={"isSubCompany"}
+                      className="form-checkbox"
+                      type="checkbox"
+                      id={"isSubCompany"}
+                      checked={customerData?.isSubCompany}
+                      onChange={handleCheckboxChange}
+                      disabled={isButtonDisable}
+                    />
+                    <label htmlFor={"isSubCompany"} className="checkbox-label"></label>
+                  </div>
+                </div>
+              </div>
             </div>
 
-         
-        </div>
-        <div className="edit-icons" onClick={editClick}>
-          <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
-        </div>
 
-        {/* <div className="field-desc d-flex align-items-center">
+          </div>
+          <div className="edit-icons" onClick={editClick}>
+            <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
+          </div>
+
+          {/* <div className="field-desc d-flex align-items-center">
           <div className="inf-label">R-User</div>
           <b>&nbsp;:&nbsp;</b>
           <div className="status-dropdown">
@@ -499,7 +517,7 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
               {customerData && customerData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
             </div>
           </div> */}
-        {/* <div className="field-desc">
+          {/* <div className="field-desc">
           <div className="inf-label inf-label-width ">
             Is Buying for Third Party
           </div>
@@ -513,42 +531,42 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
             )}
           </div>
         </div> */}
-      </div>
-      {showModal && (
-        <CenterModel
-          showModal={showModal}
-          handleToggleModal={handleToggleModal}
-          modalTitle={`${statusFeild} Reason`}
-          modelSizeClass="w-50s"
-        >
-          <div className="row horizontal-form">
-            <FormCreator config={formData} ref={reasonRef} {...formData} />
-            <div className="col-md-12 mt-2">
-              <div className="d-flex align-item-end justify-content-end">
-                <div className="d-flex align-item-end">
-                  <Buttons
-                    buttonTypeClassName="theme-button"
-                    buttonText="Update"
-                    isLoading={updateCustomerInActiveStatusCustomerLoading}
-                    onClick={handleUpdate}
-                  />
-                  <Buttons
-                    buttonTypeClassName="dark-btn ml-5"
-                    buttonText="Cancel"
-                    onClick={handleToggleModal}
-                  />
+        </div>
+        {showModal && (
+          <CenterModel
+            showModal={showModal}
+            handleToggleModal={handleToggleModal}
+            modalTitle={`${statusFeild} Reason`}
+            modelSizeClass="w-50s"
+          >
+            <div className="row horizontal-form">
+              <FormCreator config={formData} ref={reasonRef} {...formData} />
+              <div className="col-md-12 mt-2">
+                <div className="d-flex align-item-end justify-content-end">
+                  <div className="d-flex align-item-end">
+                    <Buttons
+                      buttonTypeClassName="theme-button"
+                      buttonText="Update"
+                      isLoading={updateCustomerInActiveStatusCustomerLoading}
+                      onClick={handleUpdate}
+                    />
+                    <Buttons
+                      buttonTypeClassName="dark-btn ml-5"
+                      buttonText="Cancel"
+                      onClick={handleToggleModal}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </CenterModel>
-      )}
-      <CustomerApproval
-        isDetailPage={true}
-        childRef={childRef}
-        updateCustomerApproval={updateCustomerApproval}
-      />
-    </div>
+          </CenterModel>
+        )}
+        <CustomerApproval
+          isDetailPage={true}
+          childRef={childRef}
+          updateCustomerApproval={updateCustomerApproval}
+        />
+      </div>
       : <DataLoader />
   );
 };
