@@ -51,12 +51,12 @@ namespace OMS.Application.Services.Approval
             List<GetValidateCheckListResponse> responses = new();
             if (validaterequest.CustomerId > 0)
             {
-                responses = await repositoryManager.approval.getValidateCustomer(validaterequest.CustomerId);
+                responses = await repositoryManager.approval.getValidateCustomer(validaterequest.CustomerId, validaterequest.IsSubCompany);
 
             }
             else if (validaterequest.SupplierId > 0)
             {
-                responses = await repositoryManager.approval.getValidateSupplier(validaterequest.SupplierId);
+                responses = await repositoryManager.approval.getValidateSupplier(validaterequest.SupplierId, validaterequest.IsSubCompany);
 
             }
             return responses;
