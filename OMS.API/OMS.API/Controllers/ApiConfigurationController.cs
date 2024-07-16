@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
+using OMS.Domain.Entities.API.Request.ApiAuthentication;
 using OMS.Domain.Entities.API.Request.ApiConfiguration;
 using OMS.Domain.Entities.API.Request.ApiEndpoints;
 using OMS.Domain.Entities.API.Request.ApiParameter;
+using OMS.Domain.Entities.API.Response.ApiAuthentication;
 using OMS.Domain.Entities.API.Response.ApiEndpoint;
 using OMS.Domain.Entities.API.Response.ApiParameter;
 using OMS.Domain.Entities.API.Response.ApiProvider;
@@ -138,40 +140,40 @@ namespace OMS.API.Controllers
             return APISucessResponce<object>(parameter);
         }
         [HttpPost("AddEditApiAuthentication")]
-        public async Task<IActionResult> AddEditApiParameter(AddEditApiParameterRequest requestData)
+        public async Task<IActionResult> AddEditApiAuthentication(AddEditApiAuthenticationRequest requestData)
         {
-            var addEditItem = await _serviceManager.apiConfigurationService.AddEditApiParameter(requestData, CurrentUserId);
+            var addEditItem = await _serviceManager.apiConfigurationService.AddEditApiAuthentication(requestData, CurrentUserId);
             return APISucessResponce(addEditItem);
         }
 
-        [HttpGet("GetApiApiParameterByParameterId")]
-        public async Task<IActionResult> GetApiApiParameterByParameterId(int parameterId)
+        [HttpGet("GetApiAuthenticationByAuthId")]
+        public async Task<IActionResult> GetApiAuthenticationByAuthId(int authId)
         {
-            if (parameterId > 0)
+            if (authId > 0)
             {
-                GetApiParameterByParameterIdResponse responseData = await _serviceManager.apiConfigurationService.GetApiApiParameterByParameterId(parameterId).ConfigureAwait(true);
+                GetApiAuthenticationByAuthIdResponse responseData = await _serviceManager.apiConfigurationService.GetApiAuthenticationByAuthId(authId).ConfigureAwait(true);
                 return APISucessResponce(responseData);
             }
-            return APISucessResponce(parameterId);
+            return APISucessResponce(authId);
         }
 
 
-        [HttpDelete("DeleteApiParameter")]
-        public async Task<IActionResult> DeleteApiParameter(int parameterId)
+        [HttpDelete("DeleteApiAuthentication")]
+        public async Task<IActionResult> DeleteApiAuthentication(int authId)
         {
-            if (parameterId > 0)
+            if (authId > 0)
             {
-                var deleteItem = await _serviceManager.apiConfigurationService.DeleteApiParameter(parameterId, CurrentUserId).ConfigureAwait(true);
+                var deleteItem = await _serviceManager.apiConfigurationService.DeleteApiAuthentication(authId, CurrentUserId).ConfigureAwait(true);
                 return APISucessResponce<object>(deleteItem);
             }
-            return APISucessResponce(parameterId);
+            return APISucessResponce(authId);
         }
 
-        [HttpPost("GetApiParameters")]
-        public async Task<IActionResult> GetApiParameters([FromBody] ListEntityRequest<BaseFilter> requestData)
+        [HttpPost("GetApiAuthentications")]
+        public async Task<IActionResult> GetApiAuthentications([FromBody] ListEntityRequest<BaseFilter> requestData)
         {
-            var parameter = await _serviceManager.apiConfigurationService.GetApiParameters(requestData);
-            return APISucessResponce<object>(parameter);
+            var authentication = await _serviceManager.apiConfigurationService.GetApiAuthentications(requestData);
+            return APISucessResponce<object>(authentication);
         }
         #endregion
     }

@@ -1,6 +1,8 @@
-﻿using OMS.Domain.Entities.API.Request.ApiConfiguration;
+﻿using OMS.Domain.Entities.API.Request.ApiAuthentication;
+using OMS.Domain.Entities.API.Request.ApiConfiguration;
 using OMS.Domain.Entities.API.Request.ApiEndpoints;
 using OMS.Domain.Entities.API.Request.ApiParameter;
+using OMS.Domain.Entities.API.Response.ApiAuthentication;
 using OMS.Domain.Entities.API.Response.ApiEndpoint;
 using OMS.Domain.Entities.API.Response.ApiParameter;
 using OMS.Domain.Entities.API.Response.ApiProvider;
@@ -23,6 +25,10 @@ namespace OMS.Application.Services.APIConfiguration
         Task<GetApiParameterByParameterIdResponse> GetApiParameterByParameterId(int parameterId);
         Task<AddEntityDTO<int>> DeleteApiParameter(int parameterId, short CurrentUserId);
         Task<EntityList<GetApiParametersResponse>> GetApiParameters(ListEntityRequest<BaseFilter> requestData);
+        Task<AddEntityDTO<int>> AddEditApiAuthentication(AddEditApiAuthenticationRequest requestData, short CurrentUserId);
+        Task<GetApiAuthenticationByAuthIdResponse> GetApiAuthenticationByAuthId(int authId);
+        Task<AddEntityDTO<int>> DeleteApiAuthentication(int authId, short CurrentUserId);
+        Task<EntityList<GetApiAuthenticationsResponse>> GetApiAuthentications(ListEntityRequest<BaseFilter> requestData);
 
     }
 }

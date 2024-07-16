@@ -9,7 +9,7 @@ using System.Data;
 
 namespace OMS.Domain.Repository.Implementation
 {
-    internal class ApiProviderRepository : BaseRepository<Addresses>, IApiProviderRepository
+    internal class ApiProviderRepository : BaseRepository<ApiProvider>, IApiProviderRepository
     {
         #region SP Name
         const string ADDEDITAPIPROVIDER = "AddEditApiProvider";

@@ -27,5 +27,6 @@ namespace OMS.Domain.Repository
         IApiProviderRepository apiProvider { get; }
         IApiEndpointRepository apiEndpoint { get; }
         IApiParameterRepository apiParameter { get; }
+        IApiAuthenticationRepository apiAuthentication { get; }
     }
 }
