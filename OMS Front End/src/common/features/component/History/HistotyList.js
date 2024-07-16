@@ -216,7 +216,7 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
     return (
         <div className="row">
             <div className="serach-bar-history">
-                <div className="card w-100 mt-2">
+                <div className="card w-100">
                     <div className="d-flex ">
                         <div className="pr-0 name-field">
                             <DropDown

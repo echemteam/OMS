@@ -60,7 +60,7 @@ const SupplierViewTab = (supplierId) => {
         {
             sMenuItemCaption: "History",
             component: (
-                <div className="mt-2">
+                <div className="">
                     <SupplierHistory />
                 </div>
             ),
