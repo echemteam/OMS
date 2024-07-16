@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
-import "../../../../customerDetail/ViewCustomer.scss";
+import "../../../../customerDetail/CustomerSupplier.scss";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom/dist";
 import { useSelector } from "react-redux";

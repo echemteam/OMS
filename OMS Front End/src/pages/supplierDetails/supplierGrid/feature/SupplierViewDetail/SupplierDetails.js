@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom/dist";
 import React, { useContext, useEffect, useState } from "react";
 //** Lib's */
-import "../../../../customerDetail/ViewCustomer.scss";
+import "../../../../customerDetail/CustomerSupplier.scss";
 import { AppIcons } from "../../../../../data/appIcons";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { decryptUrlData } from "../../../../../services/CryptoService";

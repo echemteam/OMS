@@ -219,8 +219,6 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         }
     };
 
-
-
     const handleInputGroupButton = () => {
         if (supplierName.trim() !== '') {
             CheckSupplierNameExist({ name: supplierName.trim() });
