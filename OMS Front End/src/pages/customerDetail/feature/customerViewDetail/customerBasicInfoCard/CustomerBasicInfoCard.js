@@ -162,7 +162,7 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
         setSelectedStatus(selectedOption.value);
       } else if (selectedOption.value === "3") {
         if (childRef.current) {
-          childRef.current.callChildFunction(customerId);
+          childRef.current.callChildFunction(customerId, customerData.isSubCompany);
         }
         setcustomerId(customerId);
         setStatusId(selectedOption.value);

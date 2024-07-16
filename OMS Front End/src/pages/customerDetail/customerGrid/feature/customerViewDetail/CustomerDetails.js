@@ -91,7 +91,7 @@ const CustomerDetails = () => {
                 customerData={customerData}
                 isLoading={isGetCustomersBasicInformationByIdFetching}
                 customerId={customerId}
-                onhandleRepeatCall={getCustomerById}
+                onhandleRepeatCall={onSuccess}
               />
             </CardSection>
           </div>
