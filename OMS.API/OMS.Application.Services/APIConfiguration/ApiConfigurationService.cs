@@ -79,9 +79,9 @@ namespace OMS.Application.Services.APIConfiguration
             apiParameterDTO.CreatedBy = CurrentUserId;
             return await repositoryManager.apiParameter.AddEditApiParameter(apiParameterDTO);
         }
-        public Task<GetApiApiParameterByParameterIdResponse> GetApiApiParameterByParameterId(int parameterId)
+        public Task<GetApiParameterByParameterIdResponse> GetApiParameterByParameterId(int parameterId)
         {
-            return repositoryManager.apiParameter.GetApiApiParameterByParameterId(parameterId);
+            return repositoryManager.apiParameter.GetApiParameterByParameterId(parameterId);
         }
         public async Task<AddEntityDTO<int>> DeleteApiParameter(int parameterId, short CurrentUserId)
         {

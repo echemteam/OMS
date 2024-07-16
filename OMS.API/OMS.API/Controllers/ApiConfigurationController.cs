@@ -108,12 +108,48 @@ namespace OMS.API.Controllers
             return APISucessResponce(addEditItem);
         }
 
+        [HttpGet("GetApiParameterByParameterId")]
+        public async Task<IActionResult> GetApiParameterByParameterId(int parameterId)
+        {
+            if (parameterId > 0)
+            {
+                GetApiParameterByParameterIdResponse responseData = await _serviceManager.apiConfigurationService.GetApiParameterByParameterId(parameterId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(parameterId);
+        }
+
+
+        [HttpDelete("DeleteApiParameter")]
+        public async Task<IActionResult> DeleteApiParameter(int parameterId)
+        {
+            if (parameterId > 0)
+            {
+                var deleteItem = await _serviceManager.apiConfigurationService.DeleteApiParameter(parameterId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(parameterId);
+        }
+
+        [HttpPost("GetApiParameters")]
+        public async Task<IActionResult> GetApiParameters([FromBody] ListEntityRequest<BaseFilter> requestData)
+        {
+            var parameter = await _serviceManager.apiConfigurationService.GetApiParameters(requestData);
+            return APISucessResponce<object>(parameter);
+        }
+        [HttpPost("AddEditApiAuthentication")]
+        public async Task<IActionResult> AddEditApiParameter(AddEditApiParameterRequest requestData)
+        {
+            var addEditItem = await _serviceManager.apiConfigurationService.AddEditApiParameter(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+
         [HttpGet("GetApiApiParameterByParameterId")]
         public async Task<IActionResult> GetApiApiParameterByParameterId(int parameterId)
         {
             if (parameterId > 0)
             {
-                GetApiApiParameterByParameterIdResponse responseData = await _serviceManager.apiConfigurationService.GetApiApiParameterByParameterId(parameterId).ConfigureAwait(true);
+                GetApiParameterByParameterIdResponse responseData = await _serviceManager.apiConfigurationService.GetApiApiParameterByParameterId(parameterId).ConfigureAwait(true);
                 return APISucessResponce(responseData);
             }
             return APISucessResponce(parameterId);

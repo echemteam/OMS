@@ -20,7 +20,7 @@ namespace OMS.Application.Services.APIConfiguration
         Task<AddEntityDTO<int>> DeleteApiEndpoint(int endpointId, short CurrentUserId);
         Task<EntityList<GetApiEndpointsResponse>> GetApiEndpoints(ListEntityRequest<BaseFilter> requestData);
         Task<AddEntityDTO<int>> AddEditApiParameter(AddEditApiParameterRequest requestData, short CurrentUserId);
-        Task<GetApiApiParameterByParameterIdResponse> GetApiApiParameterByParameterId(int parameterId);
+        Task<GetApiParameterByParameterIdResponse> GetApiParameterByParameterId(int parameterId);
         Task<AddEntityDTO<int>> DeleteApiParameter(int parameterId, short CurrentUserId);
         Task<EntityList<GetApiParametersResponse>> GetApiParameters(ListEntityRequest<BaseFilter> requestData);
 

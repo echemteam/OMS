@@ -13,7 +13,7 @@ namespace OMS.Domain.Repository.Implementation
     {
         #region SP Name
         const string ADDEDITAPIPARAMETER = "AddEditApiParameter";
-        const string GETAPIAPIPARAMETERBYPARAMETERID = "GetApiApiParameterByParameterId";
+        const string GETAPIPARAMETERBYPARAMETERID = "GetApiParameterByParameterId";
         const string DELETEAPIPARAMETER = "DeleteApiParameter";
         const string GETAPIPARAMETERS = "GetApiParameters";
         #endregion
@@ -36,9 +36,9 @@ namespace OMS.Domain.Repository.Implementation
                 apiParameter.CreatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<GetApiApiParameterByParameterIdResponse> GetApiApiParameterByParameterId(int parameterId)
+        public async Task<GetApiParameterByParameterIdResponse> GetApiParameterByParameterId(int parameterId)
         {
-            GetApiApiParameterByParameterIdResponse getApiApiParameterByParameterIdResponse = await _context.GetFrist<GetApiApiParameterByParameterIdResponse>(GETAPIAPIPARAMETERBYPARAMETERID, new
+            GetApiParameterByParameterIdResponse getApiApiParameterByParameterIdResponse = await _context.GetFrist<GetApiParameterByParameterIdResponse>(GETAPIPARAMETERBYPARAMETERID, new
             {
                 parameterId
             }, commandType: CommandType.StoredProcedure);

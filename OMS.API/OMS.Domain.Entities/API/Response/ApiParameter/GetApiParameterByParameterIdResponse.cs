@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.API.Response.ApiParameter
 {
-    public class GetApiApiParameterByParameterIdResponse
+    public class GetApiParameterByParameterIdResponse
     {
         public int? ParameterId { get; set; }
         public int? EndpointId { get; set; }
