@@ -1,5 +1,5 @@
 /* Component  */
-import { compare, email, number, required, uniqueIdentifier, isvalidPassword, maxLength, minLength, maxProspects, minEndDate, maxSum, distinct, isValidEIN, isValidPhone, isValidFax, isUnique, isWebsite, isTaxId, isOnlyText } from './ValidateField'
+import { compare, email, number, required, uniqueIdentifier, isvalidPassword, maxLength, minLength, maxProspects, minEndDate, maxSum, distinct, isValidEIN, isValidPhone, isValidFax, isUnique, isWebsite, isTaxId, isOnlyText, invalidBoundarySpaces } from './ValidateField'
 
 // Validation functions 
 
@@ -135,6 +135,12 @@ export function ValidateField(value, fieldRules, state) {
           break;
         case 'uniqueName':
           if (!isUnique(value)) {
+            result.isvalid = false;
+            result.message = rule.message
+          }
+          break;
+        case 'invalidBoundarySpaces':
+          if (!invalidBoundarySpaces(value)) {
             result.isvalid = false;
             result.message = rule.message
           }
