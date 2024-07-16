@@ -310,7 +310,7 @@ a {
 
       .content-desc-section {
         .center-container {
-          height: calc(100vh - 106px);
+          height: calc(100vh - 15px);
           overflow: hidden;
           overflow-y: auto;
           margin-bottom: 0;
@@ -545,7 +545,8 @@ a {
   }
 
   .card-top-title-btn {
-    padding-bottom: 10px;
+    // padding: 10px 10px;
+    padding-bottom: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -559,7 +560,7 @@ a {
       width: 100%;
       background: var(--linkMenu);
       left: 0;
-      bottom: 0;
+      bottom: 0px;
     }
 
     .btn-right-sec {
@@ -578,9 +579,10 @@ a {
       color: var(--themeColor);
       margin-bottom: 0;
       text-transform: capitalize;
-      font-size: var(--commonFont-medium);
+      font-size: var(--commonFont-extraLarge);
       font-weight: 600;
       white-space: nowrap;
+
     }
 
     p {
@@ -660,7 +662,11 @@ a {
     margin-bottom: 0;
   }
 }
-
+.address-main-card-sec{
+  .card{
+    padding-top: 2p3;
+  }
+}
 .card-email-sec {
   .card {
     margin-bottom: 0;
@@ -732,7 +738,7 @@ a {
 .status-btn {
   color: #ffffff;
   display: inline-block;
-  width: 95px;
+  min-width: 95px;
   border-radius: 4px;
   box-shadow:
     0 4px 8px rgba(126, 126, 126, 0.2),
@@ -1013,8 +1019,9 @@ a {
           .tab-sub-content {
             overflow: hidden;
             overflow-y: auto;
+
             @media only screen and (max-width: 1560px) {
-              height: calc(100vh - 197px);
+              height: calc(100vh - 295px);
             }
 
             .card {
@@ -1066,6 +1073,7 @@ a {
       border-top-left-radius: 0 !important;
       border-bottom-left-radius: 0 !important;
       margin-top: 5px;
+
       @media only screen and (max-width: 1560px) {
         margin-top: 2px;
       }
@@ -1076,6 +1084,7 @@ a {
 .extension {
   input {
     margin-top: 5px;
+
     @media only screen and (max-width: 1560px) {
       margin-top: 2px;
     }
@@ -1128,6 +1137,7 @@ a {
 
       &:last-child {
         margin-bottom: 0;
+        min-height: 120px;
       }
 
       .add-line {
@@ -1240,11 +1250,9 @@ a {
       display: flex;
       align-items: center;
 
-      .email-sec {
-      }
+      .email-sec {}
 
-      .contact-sec {
-      }
+      .contact-sec {}
     }
 
     .contact-type {
@@ -1300,10 +1308,9 @@ a {
   .contact-type-badge {
     position: absolute;
     padding: 0px 5px;
+    top: -10px;
     background: var(--themeColorLight);
-    top: -7px;
-    // left: 50%;
-    // transform: translateX(-50%);
+    color: var(--blackColor);
     right: 0;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
@@ -1313,6 +1320,39 @@ a {
     @media only screen and (max-width: 1560px) {
       font-size: 8px;
     }
+
+    &.contact-badge {
+      color: var(--whiteColor);
+    }
+
+    &.badge-default {
+      background: var(--themeColorLight);
+    }
+
+    &.badge-primary {
+      background: var(--PrimaryColor);
+    }
+
+    &.badge-endUser {
+      background: var(--pending-theme);
+    }
+
+    &.badge-purchasing {
+      background: var(--submitted-theme);
+    }
+
+    &.badge-submission {
+      background: var(--submission-color);
+    }
+
+    &.badge-followup {
+      background: var(--frozen-theme);
+    }
+
+    &.badge-ap {
+      background: var(--disabled-theme);
+    }
+
   }
 
   //
@@ -1344,8 +1384,7 @@ a {
           color: var(--themeColor);
         }
 
-        @media only screen and (max-width: 1560px) {
-        }
+        @media only screen and (max-width: 1560px) {}
       }
 
       .contact-name {
@@ -1394,7 +1433,7 @@ a {
 
             i {
               font-size: var(--commonFont);
-              opacity: 0.2;
+              opacity: 0.3;
             }
           }
 
@@ -1408,6 +1447,7 @@ a {
               @media only screen and (max-width: 1560px) {
                 font-size: 9px;
               }
+
               &.primary-email {
                 color: var(--themeColor);
               }
@@ -1456,7 +1496,7 @@ a {
 
                 i {
                   font-size: var(--commonFont);
-                  opacity: 0.2;
+                  opacity: 0.3;
 
                   &.fa-mobile {
                     font-size: var(--commonFont-extraLarge);
@@ -1472,6 +1512,7 @@ a {
               @media only screen and (max-width: 1560px) {
                 font-size: 9px;
               }
+
               &.primary-phone {
                 color: var(--themeColor);
               }
@@ -1526,7 +1567,7 @@ a {
       box-shadow: 0 3px 20px -10px var(--textColorLight);
       border-radius: 10px;
       border: 1px solid var(--linkMenu);
-      margin-top: 20px;
+      margin: 15px 0px 10px 0px;
 
       @media only screen and (max-width: 1560px) {
         margin-top: 10px;
@@ -1770,12 +1811,12 @@ a {
   .card-body-sec {
     .note-card-sec {
       // max-height: calc(100vh - 235px);
-      height: calc(100vh - 245px);
+      height: calc(100vh - 345px);
       overflow: hidden;
       overflow-y: auto;
 
       @media only screen and (max-width: 1560px) {
-        height: calc(100vh - 223px);
+        height: calc(100vh - 345px);
       }
     }
   }
@@ -2350,20 +2391,29 @@ input[type="checkbox"]:disabled {
 .serach-bar-history {
   display: flex;
   width: 100%;
+  .name-field{
+    min-width:22%;
+  }
+  .user-name-field{
+    min-width:22%;
+  }
+  .date-field{
+    min-width:22%;
+  }
+  .refresh-btn-history {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
-.refresh-btn-history {
-  display: flex;
-  justify-content: flex-start;
-  margin-left: auto;
-}
+
 
 .custom-datepicker {
   .react-daterange-picker {
     width: 100%;
     display: flex;
     align-items: center;
-    min-height: 35px;
+    min-height: 37px;
     outline: 0 !important;
     position: relative;
     background-color: hsl(0, 0%, 100%);
@@ -2375,6 +2425,7 @@ input[type="checkbox"]:disabled {
 
   .react-daterange-picker__wrapper {
     border: none;
+    padding-left: 4px;
   }
 
   .react-calendar__tile--active {
@@ -2391,6 +2442,7 @@ input[type="checkbox"]:disabled {
   .react-daterange-picker__inputGroup__input:invalid {
     background: none !important;
   }
+
   .react-calendar__tile--now {
     background: var(--themeColor) !important;
     color: #fff !important;
@@ -2400,9 +2452,11 @@ input[type="checkbox"]:disabled {
     width: 280px;
     margin-top: 5px;
   }
+
   .react-daterange-picker__inputGroup__input {
     outline: none;
   }
+
   .react-daterange-picker__clear-button {
     margin-left: auto;
 
@@ -2748,33 +2802,20 @@ input[type="checkbox"]:disabled {
   }
 }
 
-.supplier-contacts{
-  .sidebar-contact-model{
+.supplier-contacts {
+  .sidebar-contact-model {
     .card-email-sec {
-      .card{
+      .card {
         padding: 8px 20px;
-        .card-body-sec{
+
+        .card-body-sec {
           margin-top: 10px;
         }
+
         .card-body-sec {
-          .note-card-sec{
-            
-          }
+          .note-card-sec {}
         }
       }
-    }
-  }
-}
-
-.custom-pass-sec{
-  position: relative;
-  .password-hide-show {
-    position: absolute;
-    right: 15px;
-    top: 49%;
-    transform: translateY(-50%);
-    img {
-      width: 20px;
     }
   }
 }

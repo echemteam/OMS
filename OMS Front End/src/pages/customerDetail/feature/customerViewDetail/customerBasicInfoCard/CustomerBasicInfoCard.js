@@ -252,148 +252,175 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
 
   return (
     !isLoading ?
-      <div className="basic-customer-detail" >
-        <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-          <div className="profile-info">
-            <div className="profile-icon-desc">
-              <div className="d-flex align-items-center">
-                <div className="profile-icon"> {customerData?.name ? customerData?.name.charAt(0).toUpperCase() : ""}</div>
-                <h5>{customerData?.name}</h5>
+    <div className="basic-customer-detail">
+    <div className="col-xl-12 col-lg-12 col-md-12 col-12">
+     
+      <div className="d-flex gap-5 profile-info  justify-content-between col-11">
+
+          <div className="d-flex col-3 flex-column profile-icon-desc justify-content-center">
+
+            <div className="d-flex">
+              <div className="profile-icon ">
+                {" "}
+                {customerData?.name
+                  ? customerData?.name.charAt(0).toUpperCase()
+                  : ""}
               </div>
-              {showEditIcon ?
-                <div className="edit-icons" onClick={editClick}>
-                  <Image
-                    imagePath={AppIcons.editThemeIcon}
-                    altText="Website Icon"
-                  />
-                </div>
-                : null}
+              <h5 className="ml-0">{customerData?.name}</h5>
+            </div>
+
+            <div className="field-desc col-span-3">
+              <i class="fa fa-envelope"></i>
+              <a
+                className="email-link"
+                href={`mailto:${customerData?.emailAddress}`}
+              >
+                <div className="info-desc">{customerData?.emailAddress}</div>
+              </a>
+              <span
+                className="copy-icon"
+                onClick={() => CopyText(customerData?.emailAddress, "email")}
+              >
+                <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+              </span>
+            </div>
+
+            <div className="field-desc ">
+              <i class="fa fa-globe"></i>
+              <div className="info-desc">{customerData?.website}</div>
+
+              <span
+                className="copy-icon"
+                onClick={() => CopyText(customerData?.website, "website")}
+              >
+                <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+              </span>
             </div>
           </div>
-          <div className="field-desc d-flex align-items-center">
-            <div className="inf-label">R-User</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className='status-dropdown'>
-              <DropDown
-                options={responsibleUserOptions}
-                value={rUserValue}
-                onChange={handleRUserChange}
-                placeholder="Select Status"
-                isDisabled={isResponsibleUser ? true : isButtonDisable}
-              />
+
+          <div className="col-3">
+            <div className="field-desc">
+              <div className="inf-label">R-User</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="status-dropdown">
+                <DropDown
+                  options={responsibleUserOptions}
+                  value={rUserValue}
+                  onChange={handleRUserChange}
+                  placeholder="Select Status"
+                  isDisabled={isResponsibleUser ? true : isButtonDisable}
+                />
+              </div>
+            </div>
+            <div className="field-desc">
+              <div className="inf-label">Status</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className={`status-dropdown ${getStatusClass()}`}>
+                <DropDown
+                  options={options}
+                  value={selectedStatus}
+                  onChange={handleStatusChange}
+                  placeholder="Select Status"
+                  isDisabled={isButtonDisable}
+                />
+              </div>
+            </div>
+
+            <div className="field-desc">
+              <div className="inf-label">Tax Id</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">
+                {customerData?.taxId
+                  ? customerData?.taxId
+                  : ErrorMessage.NotAvailabe}
+              </div>
             </div>
           </div>
-          <div className="field-desc d-flex align-items-center">
-            <div className="inf-label">Status</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className={`status-dropdown ${getStatusClass()}`}>
-              <DropDown
-                options={options}
-                value={selectedStatus}
-                onChange={handleStatusChange}
-                placeholder="Select Status"
-                isDisabled={isButtonDisable}
-              />
+       
+
+       
+          {/* second no */}
+          <div className="col-3  separator">
+            <div className="field-desc">
+              <div className="inf-label">Territory</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">{customerData?.territory}</div>
+            </div>
+
+            <div className="field-desc">
+              <div className="inf-label">Country</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">{customerData?.countryName}</div>
+            </div>
+
+            <div className="field-desc">
+              <div className="inf-label">Group Type</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">{customerData?.type}</div>
             </div>
           </div>
-          <div className="field-desc">
-            <div className="inf-label">Email</div>
-            <b>&nbsp;:&nbsp;</b>
-            <a className="email-link" href={`mailto:${customerData?.emailAddress}`}>
-              <div className="info-desc">{customerData?.emailAddress}</div>
-            </a>
-            <span className="copy-icon" onClick={() => CopyText(customerData?.emailAddress, 'email')}>
-              <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
-            </span>
 
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">Website</div>
-            <b>&nbsp;:&nbsp;</b>
+          {/* third no */}
 
-            <div className="info-desc">{customerData?.website}</div>
-
-            <span className="copy-icon" onClick={() => CopyText(customerData?.website, 'website')}>
-              <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
-            </span>
-
-          </div>
-
-          <div className="field-desc">
-            <div className="inf-label">Country</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.countryName}</div>
-          </div>
-
-          <div className="field-desc">
-            <div className="inf-label">Group Type</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.type}</div>
-          </div>
-
-          <div className="field-desc">
-            <div className="inf-label">Territory</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.territory}</div>
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">Tax Id</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{customerData?.taxId ? customerData?.taxId : ErrorMessage.NotAvailabe}</div>
-          </div>
-          {/* <div className="field-desc">
-            <div className="inf-label">Is Company</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">
-              {customerData?.isCompany}
-              {customerData && customerData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
+          <div className="col-3">
+            <div className="field-desc">
+              <div className="inf-label inf-label-width ">
+                Is Buying for Third Party
+              </div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">
+                {customerData?.isBuyingForThirdParty}
+                {customerData && customerData.isBuyingForThirdParty ? (
+                  <i className="fa fa-check green-color"></i>
+                ) : (
+                  <i className="fa fa-times red-color"></i>
+                )}
+              </div>
             </div>
-          </div> */}
-          <div className="field-desc">
-            <div className="inf-label inf-label-width ">Is Buying for Third Party</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">
-              {customerData?.isBuyingForThirdParty}
-              {customerData && customerData.isBuyingForThirdParty ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
+          </div>
+
+       
+      </div>
+      <div className="edit-icons" onClick={editClick}>
+        <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
+      </div>
+
+    </div>
+    {showModal && (
+      <CenterModel
+        showModal={showModal}
+        handleToggleModal={handleToggleModal}
+        modalTitle={`${statusFeild} Reason`}
+        modelSizeClass="w-50s"
+      >
+        <div className="row horizontal-form">
+          <FormCreator config={formData} ref={reasonRef} {...formData} />
+          <div className="col-md-12 mt-2">
+            <div className="d-flex align-item-end justify-content-end">
+              <div className="d-flex align-item-end">
+                <Buttons
+                  buttonTypeClassName="theme-button"
+                  buttonText="Update"
+                  isLoading={updateCustomerInActiveStatusCustomerLoading}
+                  onClick={handleUpdate}
+                />
+                <Buttons
+                  buttonTypeClassName="dark-btn ml-5"
+                  buttonText="Cancel"
+                  onClick={handleToggleModal}
+                />
+              </div>
             </div>
           </div>
         </div>
-        {showModal && (
-          <CenterModel
-            showModal={showModal}
-            handleToggleModal={handleToggleModal}
-            modalTitle={`${statusFeild} Reason`}
-            modelSizeClass="w-50s"
-          >
-            <div className="row horizontal-form">
-              <FormCreator
-                config={formData}
-                ref={reasonRef}
-                {...formData}
-
-              />
-              <div className="col-md-12 mt-2">
-                <div className="d-flex align-item-end justify-content-end">
-                  <div className="d-flex align-item-end">
-                    <Buttons
-                      buttonTypeClassName="theme-button"
-                      buttonText="Update"
-                      isLoading={updateCustomerInActiveStatusCustomerLoading}
-                      onClick={handleUpdate}
-                    />
-                    <Buttons
-                      buttonTypeClassName="dark-btn ml-5"
-                      buttonText="Cancel"
-                      onClick={handleToggleModal}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CenterModel>
-        )}
-        <CustomerApproval isDetailPage={true} childRef={childRef} updateCustomerApproval={updateCustomerApproval} />
-      </div>
+      </CenterModel>
+    )}
+    <CustomerApproval
+      isDetailPage={true}
+      childRef={childRef}
+      updateCustomerApproval={updateCustomerApproval}
+    />
+  </div>
       : <DataLoader />
   );
 };

@@ -113,6 +113,10 @@ export const FileTypeIcons = [
     icon: AppIcons.DocIcon
   },
   {
+    type: 'docx',
+    icon: AppIcons.DocIcon
+  },
+  {
     type: 'xls',
     icon: AppIcons.XlsIcon
   },
