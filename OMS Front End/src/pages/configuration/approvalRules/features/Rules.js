@@ -63,7 +63,7 @@ const Rules = (props) => {
                 >
                   <span>{rule.ruleName}</span>
                   <div className="edit-icons" onClick={() => handleEditModal(rule)}>
-                    <Image imagePath={AppIcons.editThemeIcon} altText="Edit Icon" />
+                    <Image imagePath={AppIcons.editThemeIcon} className="cursor-pointer" altText="Edit Icon" />
                   </div>
                 </div>
               ))}

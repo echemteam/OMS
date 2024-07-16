@@ -12,7 +12,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllDocumentTypesQuery } from "../../../../app/services/documentAPI";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
-const ManageDocumentList = React.lazy(() => import("./features/ManageDocumentList"));
+const DocumentList = React.lazy(() => import("../../../../common/features/component/Document/feature/DocumentList"));
 
 
 const DocumentDetails = ({ keyId, isSupplier, addDocuments, downloadDocument, deleteDocumentsById, getDocumentsById, isEditablePage, SecurityKey }) => {
@@ -112,7 +112,7 @@ const DocumentDetails = ({ keyId, isSupplier, addDocuments, downloadDocument, de
           buttonText="Add"
           titleButtonClick={handleToggleModal}>
           <div className="">
-            <ManageDocumentList childRef={childRef} isEditablePage={isEditablePage} SecurityKey={SecurityKey} keyId={keyId} isSupplier={isSupplier}
+            <DocumentList childRef={childRef} isEditablePage={isEditablePage} SecurityKey={SecurityKey} keyId={keyId} isSupplier={isSupplier}
               downloadDocument={downloadDocument} deleteDocumentsById={deleteDocumentsById} getDocumentsById={getDocumentsById} />
           </div>
         </CardSection>

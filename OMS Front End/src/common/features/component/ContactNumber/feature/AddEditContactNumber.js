@@ -1,22 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 //** Lib's */
-import { Message } from '../Util/ContactMessages';
+import { Message } from '../../EmailAddress/utils/ContactMessages';
 import Buttons from '../../../../../components/ui/button/Buttons';
 import FormCreator from '../../../../../components/Forms/FormCreator';
-import { addEditContactsFormData } from './config/AddEditContactsForm.data';
+import { addEditContactsFormData } from '../config/AddEditContactsForm.data';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
 import { addPhoneNumberData, updatePhoneNumberData } from '../Util/ContactPhoneNumberUtil';
-import BasicDetailContext from '../../../../../utils/ContextAPIs/Customer/BasicDetailContext';
-import AddSupplierContext from '../../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
 
-const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEdit, onSuccess, isSupplier }) => {
+const AddEditContactNumber = ({ contactId, phoneNumberList, setPhoneNumberList, editFormData, handleToggleModal, showModal, isEdit, onSuccess }) => {
 
     //** State */
     const ref = useRef();
     const [formData, setFormData] = useState(addEditContactsFormData);
-    const { contactId, setPhoneNumberData, phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
-
 
     //** Handle Changes */
     const handleAddEdit = () => {
@@ -27,13 +23,13 @@ const AddEditContactNumber = ({ editFormData, handleToggleModal, showModal, isEd
                     ...data,
                     isPrimary: data.isPrimaryPhoneNumber
                 }
-                addPhoneNumberData(req, contactId, phoneNumberData, setPhoneNumberData, Message.ContactNumberAdded, Message.ContactNumberMaxLength, Message.ContactNumberDuplicate, onResetData, onSuccess);
+                addPhoneNumberData(req, contactId, phoneNumberList, setPhoneNumberList, Message.ContactNumberAdded, Message.ContactNumberMaxLength, Message.ContactNumberDuplicate, onResetData, onSuccess);
             } else if (data.id) {
                 let req = {
                     ...data,
                     isPrimary: data.isPrimaryPhoneNumber
                 }
-                updatePhoneNumberData(req, phoneNumberData, setPhoneNumberData, Message.ContactNumberUpdated, Message.ContactNumberDuplicate, Message.InvalidData, onResetData, onSuccess);
+                updatePhoneNumberData(req, phoneNumberList, setPhoneNumberList, Message.ContactNumberUpdated, Message.ContactNumberDuplicate, Message.InvalidData, onResetData, onSuccess);
             }
         }
     };

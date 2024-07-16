@@ -1,20 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 //** Lib's */
-import { Message } from "../Util/ContactMessages";
-import { deleteData } from "../Util/ContactEmailAddressUtil";
-import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-//** Service's */
-import SwalAlert from "../../../../../services/swalService/SwalService";
-import ToastService from "../../../../../services/toastService/ToastService";
-import { useDeleteContactEmailMutation } from "../../../../../app/services/emailAddressAPI";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { emailConfig } from "./config/AddEditEmailForm.data";
+import { Message } from "./utils/ContactMessages";
+import { deleteData } from "./utils/ContactEmailAddressUtil";
+//** Service's */
+import SwalAlert from "../../../../services/swalService/SwalService";
+import ToastService from "../../../../services/toastService/ToastService";
+import { useDeleteContactEmailMutation } from "../../../../app/services/emailAddressAPI";
 //** Component's */
-const EmailAddressList = React.lazy(() => import("./EmailAddressList"));
-const AddEditEmailModal = React.lazy(() => import("./AddEditEmailAddress"));
+const EmailAddressList = React.lazy(() => import("./feature/EmailAddressList"));
+const AddEditEmailModal = React.lazy(() => import("./feature/AddEditEmailAddress"));
 
-const ManageEmailAddress = ({ onGetContactList, isSupplier, isButtonDisable }) => {
+const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, isButtonDisable }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -22,7 +20,6 @@ const ManageEmailAddress = ({ onGetContactList, isSupplier, isButtonDisable }) =
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
-    const { setEmailAddressData, emailAddressData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
 
     //** API Call's */
     const [deleteContactEmail, { isFetching: isDeleteFetching, isSuccess: isDeleteSucess, data: isDeleteData }] = useDeleteContactEmailMutation();
@@ -32,7 +29,6 @@ const ManageEmailAddress = ({ onGetContactList, isSupplier, isButtonDisable }) =
     useEffect(() => {
         if (isDeleteSucess && isDeleteData && !isDeleteFetching) {
             ToastService.success(isDeleteData.errorMessage);
-            onGetContactList();
         }
     }, [isDeleteSucess, isDeleteData, isDeleteFetching]);
 
@@ -49,7 +45,7 @@ const ManageEmailAddress = ({ onGetContactList, isSupplier, isButtonDisable }) =
 
     //** Handle Changes */
     const handleToggleModal = () => {
-        if (emailAddressData?.length < 2) {
+        if (emailAddressList?.length < 2) {
             setShowModal(!showModal);
             setIsEdit(false);
         } else {
@@ -79,7 +75,7 @@ const ManageEmailAddress = ({ onGetContactList, isSupplier, isButtonDisable }) =
             "Delete", "Cancel"
         ).then((confirmed) => {
             if (confirmed) {
-                deleteData(data.emailId, data.id, deleteContactEmail, emailAddressData, setEmailAddressData, Message.EmailDelete, true)
+                deleteData(data.emailId, data.id, deleteContactEmail, emailAddressList, setEmailAddressList, Message.EmailDelete, true)
             }
         });
     }
@@ -90,10 +86,11 @@ const ManageEmailAddress = ({ onGetContactList, isSupplier, isButtonDisable }) =
 
     return (
         <React.Fragment>
-            <EmailAddressList isSupplier={isSupplier} molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
-                isButtonDisable={isButtonDisable} />
+            <EmailAddressList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
+                isButtonDisable={isButtonDisable} emailAddressList={emailAddressList} />
             {showModal && (
-                <AddEditEmailModal isSupplier={isSupplier} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} editFormData={editFormData} isEdit={isEdit} />
+                <AddEditEmailModal contactId={contactId} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal}
+                    editFormData={editFormData} isEdit={isEdit} emailAddressList={emailAddressList} setEmailAddressList={setEmailAddressList} />
             )}
         </React.Fragment>
     )

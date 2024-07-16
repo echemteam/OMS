@@ -12,7 +12,6 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { useNavigate } from "react-router-dom/dist";
-import SupplierDocumentDetail from "./features/docuementsDetail/SupplierDocuementDetail";
 import { SupplierHistoryDetail } from "./features/historyDetails/SupplierHistoryDetail";
 import { useSelector } from "react-redux";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
@@ -21,6 +20,7 @@ import ManageSupplierNotes from "./features/notesDetails/ManageSupplierNotes";
 import SupplierBasicDetail from "../../../feature/supplierBasicDetail/SupplierBasicDetail";
 import SuplierAddressDetails from "../../../feature/supplierAddressDetail/SupplierAddressDetails";
 import SupplierContactDetail from "../../../feature/supplierContactDetail/SupplierContactDetail";
+import SupplierDocumentDetail from "../../../feature/supplierDocumentDetail/SupplierDocumentDetail";
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -115,7 +115,7 @@ const SupplierDetails = () => {
       sMenuItemCaption: "Documents",
       component: (
         <div className="mt-2">
-          <SupplierDocumentDetail keyId={keyId} isEditablePage={true} />
+          <SupplierDocumentDetail isEditablePage={true} />
         </div>
       ),
       isVisible: hasDocumentPermission.hasAccess,

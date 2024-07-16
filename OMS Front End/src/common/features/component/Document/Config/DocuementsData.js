@@ -1,6 +1,6 @@
-import { AppIcons } from "../../../../../../../../data/appIcons";
-import { FormFieldTypes } from "../../../../../../../../data/formFieldType";
-import { GridColumnType } from "../../../../../../../../data/gridColumnType";
+import { AppIcons } from "../../../../../data/appIcons";
+import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const DocumentFormData = {
   name: "Document Form",

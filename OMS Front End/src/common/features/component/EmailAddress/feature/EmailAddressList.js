@@ -1,20 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
 import MolGrid from "../../../../../components/Grid/MolGrid";
-import { phoneNumberConfig } from "./config/AddEditContactsForm.data";
+import { emailConfig } from "../config/AddEditEmailForm.data";
 import CardSection from "../../../../../components/ui/card/CardSection";
-import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
-import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 
-const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler, isLoading, isSupplier, isButtonDisable }) => {
 
-    const { phoneNumberData } = useContext(isSupplier ? AddSupplierContext : BasicDetailContext);
+const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
+
     return (
-        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2 card-email-sec">
+        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-0 card-email-sec">
             <CardSection
-                cardTitle="Phone Numbers"
+                cardTitle="Email Address"
                 buttonClassName="theme-button"
                 textWithIcon={true}
                 iconImg={AppIcons.PlusIcon}
@@ -25,11 +22,10 @@ const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler, isLoa
                     <div className="col-md-12 table-striped p-0">
                         <MolGrid
                             ref={molGridRef}
-                            configuration={phoneNumberConfig}
-                            dataSource={phoneNumberData}
+                            configuration={emailConfig}
+                            dataSource={emailAddressList}
                             allowPagination={false}
                             onActionChange={actionHandler}
-                            isLoading={isLoading}
                         />
                     </div>
                 </div>
@@ -38,4 +34,4 @@ const ContactNumberList = ({ molGridRef, handleToggleModal, actionHandler, isLoa
     )
 }
 
-export default ContactNumberList;
+export default EmailAddressList;

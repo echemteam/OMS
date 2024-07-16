@@ -2,10 +2,10 @@
 import React from 'react';
 //** Lib's */
 import CardSection from '../../../../components/ui/card/CardSection';
+import AddEditCustomerBasicDetail from './AddEditCustomerBasicDetail';
 //** Component */
-const AddEditSupplierBasicDetail = React.lazy(() => import("./AddEditSupplierBasicDetail"));
 
-const SupplierBasicDetail = (props) => {
+const CustomerBasicDetail = (props) => {
 
   const { isOpen, getCustomerById, onSidebarClose, keyId } = props;
 
@@ -13,7 +13,7 @@ const SupplierBasicDetail = (props) => {
     <div className="basic-info-sec half-sec">
       <div className="basic-info-sec half-sec">
         <CardSection buttonClassName="theme-button">
-          <AddEditSupplierBasicDetail keyId={keyId} getCustomerById={getCustomerById} isOpen={isOpen} onSidebarClose={onSidebarClose} />
+          <AddEditCustomerBasicDetail keyId={keyId} getCustomerById={getCustomerById} isOpen={isOpen} onSidebarClose={onSidebarClose} />
         </CardSection>
       </div>
 
@@ -21,4 +21,4 @@ const SupplierBasicDetail = (props) => {
   );
 }
 
-export default SupplierBasicDetail
+export default CustomerBasicDetail

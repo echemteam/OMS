@@ -26,7 +26,7 @@ export const setOptionFieldSetting = (apiResponseData, valueField, labelField, f
     }));
 
     // Find the dropdown field within the form fields data
-    const dropdownField = formFieldsData.formFields.find((item) => item.dataField === fieldId);
+    const dropdownField = findFieldData(formFieldsData, fieldId);
 
     // If the dropdown field is found, set its options to the mapped data
     if (dropdownField) {
@@ -34,6 +34,9 @@ export const setOptionFieldSetting = (apiResponseData, valueField, labelField, f
     }
 };
 
+export const findFieldData = (formFieldsData, fieldId) => {
+    return formFieldsData.formFields.find((item) => item.dataField === fieldId);
+}
 
 /**
  * Sets a specific field setting for a given field within form fields data.

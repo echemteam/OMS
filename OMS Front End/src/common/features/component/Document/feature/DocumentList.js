@@ -4,15 +4,15 @@ import React, { forwardRef, useEffect, useImperativeHandle, useState } from "rea
 import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
-import ToastService from "../../../../../services/toastService/ToastService";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
-import { documentTransformData, supplierDocumentTransformData } from "../../../../../utils/TransformData/TransformAPIData";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { documentTransformData, supplierDocumentTransformData } from "../../../../../utils/TransformData/TransformAPIData";
 //** Service's */
 import SwalAlert from "../../../../../services/swalService/SwalService";
+import ToastService from "../../../../../services/toastService/ToastService";
 
 
-const ManageDocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDocumentsById, getDocumentsById, childRef, SecurityKey, isEditablePage }) => {
+const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDocumentsById, getDocumentsById, childRef, SecurityKey, isEditablePage }) => {
 
     //** State */
     const { confirm } = SwalAlert();
@@ -20,10 +20,9 @@ const ManageDocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, de
     const [showDeleteButton, setShowDeleteButton] = useState(true);
     const [showDownalodButton, setShowDownalodButton] = useState(true);
 
-    /* NOTE:- 
-      API Call
-      The "downloadDocument","deleteDocumentsById","getDocumentsById" function is passed dynamically as a prop.
-      This allows the DocumentDetails component to be reused with different API call functions.
+    /**
+     * This hook dynamically sets the API call based on the module (customer or supplier).
+     * The API endpoint and parameters are configured within the SupplierDocumentDetail OR CustomerDocumentDetail component.
     */
     const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] = deleteDocumentsById();
     const [getList, { isFetching: isListFetching, isSuccess: isListSucess, data: isListData }] = getDocumentsById();
@@ -160,4 +159,4 @@ const ManageDocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, de
     );
 });
 
-export default ManageDocumentList;
+export default DocumentList;

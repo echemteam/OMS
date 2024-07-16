@@ -1,5 +1,5 @@
-import { FormFieldTypes } from "../../../../../../data/formFieldType";
-import { GridColumnType } from "../../../../../../data/gridColumnType";
+import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../data/gridColumnType";
 
 
 export const addEditContactsFormData = {

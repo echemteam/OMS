@@ -31,7 +31,7 @@ const AddEditRules = (props) => {
     ] = useLazyGetAllFunctionalitiesQuery();
 
     const [
-        // getAllFunctionalitiesFields,
+        getAllFunctionalitiesFields,
         {
             isSuccess: isGetAllFunctionalitiesFieldsSucess,
             data: allGetAllFunctionalitiesFieldsData,
