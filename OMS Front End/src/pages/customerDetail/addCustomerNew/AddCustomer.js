@@ -1,7 +1,7 @@
 import { BasicDetailContextProvider } from "../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import AddCustomerTab from "./features/AddCustomerTab";
 
-const AddCustomerNew = () => {
+const AddCustomer = () => {
 
     return (
         <BasicDetailContextProvider>
@@ -10,4 +10,4 @@ const AddCustomerNew = () => {
     )
 }
 
-export default AddCustomerNew;
+export default AddCustomer;

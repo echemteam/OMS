@@ -22,7 +22,7 @@ const SecurityRoleManagement = React.lazy(() => import('../../pages/Security/sec
 // const CustomerDetail = React.lazy(() => import('../../pages/customerDetail/CustomerDetail'));
 const CustomerGrid = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerGrid'));
 const CustomerViewDetails = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerViewDetail'));
-const AddCustomerNew = React.lazy(() => import('../../pages/customerDetail/addCustomerNew/AddCustomerNew'));
+const AddCustomer = React.lazy(() => import('../../pages/customerDetail/addCustomerNew/AddCustomer'));
 
 //** Supplier  */
 const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/supplierGrid/SupplierGrid'));
@@ -202,7 +202,7 @@ export const ComponentNavigation = [
     path: '/addCustomer',
     exact: true,
     title: 'Add Customer',
-    component: AddCustomerNew,
+    component: AddCustomer,
     hasParams: false,
     text: 'Add Customer',
     securityKey: securityKey.CUSTOMER
