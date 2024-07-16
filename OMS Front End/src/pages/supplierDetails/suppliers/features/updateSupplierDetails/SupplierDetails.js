@@ -144,7 +144,7 @@ const SupplierDetails = () => {
     <>
       <div className="card-bottom-m-0">
         <div className="row">
-          <div className="col-xxl-3 col-xl-3 col-md-4 col-12 basic-left-part customer-desc-left-sec">
+          <div className="col-xxl-12 col-xl-3 col-md-4 col-12 basic-left-part customer-desc-left-sec mb-2">
             <CardSection>
               <SupplierViewDetail
                 editClick={handleToggleModal}
@@ -155,7 +155,7 @@ const SupplierDetails = () => {
               />
             </CardSection>
           </div>
-          <div className="col-xxl-9 col-xl-9 col-md-5 col-12 other-info-tab">
+          <div className="col-xxl-12 col-xl-9 col-md-8 col-12 other-info-tab">
             <Buttons
               buttonTypeClassName="back-button btn dark-btn"
               onClick={handleBackClick}

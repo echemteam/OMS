@@ -209,7 +209,12 @@
 
 .back-button {
   position: absolute;
-  right: 33px;
+  right: 20px;
+  top: 0;
+}
+
+.other-info-tab{
+  position: relative;
 }
 
 .customer-detail-tab-sec {
@@ -225,12 +230,13 @@
   .card-top-title-btn {
     display: flex;
     width: 100%;
+    // padding-bottom: 15px;
   }
 
   .card-body-sec {
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - 251px);
+    max-height: calc(100vh - 345px);
     overflow: hidden;
     overflow-y: auto;
     width: 100%;
@@ -288,7 +294,7 @@
 
   .contact-accrodiaon-scroll {
     .card-body-sec {
-      max-height: calc(100vh - 224px);
+      max-height: calc(100vh - 330px);
       // height: calc(100vh - 224px);
       padding: 0;
     }
@@ -299,3 +305,120 @@
     }
   }
 }
+
+// New CSS 
+
+.info-desc {
+  min-width: 0 !important;
+  font-size: var(--commonFont-medium);
+  // color: #888e98 !important;
+}
+
+.email-link {
+  text-decoration: none !important;
+
+  &:hover {
+    color: var(--themeColor);
+  }
+}
+
+
+.field-desc {
+  display: flex;
+  align-items: center !important;
+  margin-bottom: 0px !important;
+  margin-left: 10px;
+  max-height: 18px !important;
+  white-space:nowrap;
+
+ .fa-envelope , .fa-globe {
+    color: var(--themeColor);
+    margin-right: 10px;
+    font-size: 12px;
+    margin-left: 3px;
+    margin-top: 3px;
+  }
+
+  .fa-globe{
+    font-size: 14px !important;
+  }
+}
+
+.profile-info {
+  position: relative;
+  border-bottom: none !important;
+  padding: 5px 0px 5px 0px !important;
+  margin: 0 !important;
+}
+
+.profile-icon{
+  width: 20px !important;
+  margin-left: 9px;
+  font-size: 10px !important;
+  height: 20px !important;
+}
+
+.edit-icons{
+    position: absolute;
+    top: -10px;
+    right: -8px;
+    // z-index: 999;
+    border-radius: 50%;
+    color: #fff !important;
+    background: var(--gradient-theme);
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.card{
+  margin-top: 10px;
+  padding: 5px 10px;
+  // padding-bottom: 15px;
+}
+
+.edit-icons img{
+  filter: brightness(100) !important;
+  padding: 6px;
+
+}
+
+.tab-section .tab-header{
+  border: none;
+}
+
+.tab-section .tab-header button.active {
+  margin: 0 !important;
+}
+
+.separator{
+  position: relative;
+}
+.separator::after{
+  position: absolute;
+  height: 65px;
+  width: 1px;
+  background-color: #bfc1c4;
+  content: "";
+  top: -4px;
+  left: -10px;
+}
+
+.profile-icon-desc{
+  align-items: flex-start !important;
+}
+
+.info-desc{
+  max-width: 450px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0px 5px;
+  transition: all 0.5s ease; /* Optional: Smooth transition */
+}
+
+// .center-container {
+//   height: calc(100vh - 80px) !important;
+// }

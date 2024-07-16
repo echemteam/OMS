@@ -1,74 +1,111 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState, useContext } from 'react'
-import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../../../app/services/supplierAPI';
-import { reasonData } from '../../../../../customerDetail/customers/config/CustomerData';
-import SwalAlert from '../../../../../../services/swalService/SwalService';
-import ToastService from '../../../../../../services/toastService/ToastService';
-import Image from '../../../../../../components/image/Image';
-import { AppIcons } from '../../../../../../data/appIcons';
-import DropDown from '../../../../../../components/ui/dropdown/DropDrown';
-import CopyText from '../../../../../../utils/CopyText/CopyText';
-import FormCreator from '../../../../../../components/Forms/FormCreator';
-import Buttons from '../../../../../../components/ui/button/Buttons';
-import DataLoader from '../../../../../../components/ui/dataLoader/DataLoader';
-import CenterModel from '../../../../../../components/ui/centerModel/CenterModel';
-import SupplierApproval from '../../supplierApproval/SupplierApproval';
-import { ErrorMessage } from '../../../../../../data/appMessages';
+import React, { useEffect, useRef, useState, useContext } from "react";
+import {
+  useUpdateSupplierInActiveStatusMutation,
+  useUpdateSupplierStatusMutation,
+} from "../../../../../../app/services/supplierAPI";
+import { reasonData } from "../../../../../customerDetail/customers/config/CustomerData";
+import SwalAlert from "../../../../../../services/swalService/SwalService";
+import ToastService from "../../../../../../services/toastService/ToastService";
+import Image from "../../../../../../components/image/Image";
+import { AppIcons } from "../../../../../../data/appIcons";
+import DropDown from "../../../../../../components/ui/dropdown/DropDrown";
+import CopyText from "../../../../../../utils/CopyText/CopyText";
+import FormCreator from "../../../../../../components/Forms/FormCreator";
+import Buttons from "../../../../../../components/ui/button/Buttons";
+import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
+import CenterModel from "../../../../../../components/ui/centerModel/CenterModel";
+import SupplierApproval from "../../supplierApproval/SupplierApproval";
+import { ErrorMessage } from "../../../../../../data/appMessages";
 import AddSupplierContext from "../../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNavigation/authorizeNavigation';
-import { securityKey } from '../../../../../../data/SecurityKey';
-import { StaticStatus, StatusValue } from '../../../../../../utils/Enums/StatusEnums';
-import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../../../../../app/services/commonAPI';
-import { ownerType } from '../../../../../../utils/Enums/enums';
-import { excludingRoles } from '../../../../../customerDetail/features/basicDetail/config/BasicDetailForm.data';
+import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import { securityKey } from "../../../../../../data/SecurityKey";
+import {
+  StaticStatus,
+  StatusValue,
+} from "../../../../../../utils/Enums/StatusEnums";
+import {
+  useLazyGetAllUserQuery,
+  useUpdateResponsibleUserMutation,
+} from "../../../../../../app/services/commonAPI";
+import { ownerType } from "../../../../../../utils/Enums/enums";
+import { excludingRoles } from "../../../../../customerDetail/features/basicDetail/config/BasicDetailForm.data";
 
-const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, onhandleRepeatCall }) => {
-
+const SupplierViewDetail = ({
+  editClick,
+  supplierData,
+  isLoading,
+  supplierId,
+  onhandleRepeatCall,
+}) => {
   const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [formData, setFormData] = useState(reasonData);
   const [showModal, setShowModal] = useState(false);
-  const [staticId, setStaticId] = useState("")
-  const [statusFeild, setStatusFeild] = useState("")
+  const [staticId, setStaticId] = useState("");
+  const [statusFeild, setStatusFeild] = useState("");
   const [options, setOptions] = useState([]);
   const [statusId, setStatusId] = useState();
   // const [supplierId, setSupplierId] = useState();
 
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
-  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
-  const [updateResponsibleUser, { isSuccess: isSuccessRUser, data: isUpdateRUserData }] = useUpdateResponsibleUserMutation();
-  const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
-  const [updateSupplierInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
+  const [
+    getAllUser,
+    { isSuccess: isGetAllUserSucess, data: allGetAlluserData },
+  ] = useLazyGetAllUserQuery();
+  const [
+    updateResponsibleUser,
+    { isSuccess: isSuccessRUser, data: isUpdateRUserData },
+  ] = useUpdateResponsibleUserMutation();
+  const [
+    updateSupplierStatus,
+    {
+      isSuccess: isSuccessUpdateSupplierStatus,
+      data: updateSupplierStatusData,
+    },
+  ] = useUpdateSupplierStatusMutation();
+  const [
+    updateSupplierInActiveStatus,
+    {
+      isLoading: updateCustomerInActiveStatusCustomerLoading,
+      isSuccess: isSuccessUpdateSupplierInActiveStatus,
+      data: updateSupplierInActiveStatusData,
+    },
+  ] = useUpdateSupplierInActiveStatusMutation();
 
   const { isResponsibleUser } = useContext(AddSupplierContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
+  const hasEditPermission = hasFunctionalPermission(
+    securityKey.EDITBASICSUPPLIERDETAILS
+  );
 
   useEffect(() => {
     if (!isResponsibleUser) {
       if (hasEditPermission.isViewOnly === true) {
         setIsButtonDisable(true);
-      }
-      else {
+      } else {
         setIsButtonDisable(false);
       }
     }
-  }, [hasEditPermission, isResponsibleUser])
+  }, [hasEditPermission, isResponsibleUser]);
 
   useEffect(() => {
-    if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
+    if (
+      isSuccessUpdateSupplierInActiveStatus &&
+      updateSupplierInActiveStatusData
+    ) {
       ToastService.success(updateSupplierInActiveStatusData.errorMessage);
-      handleToggleModal()
+      handleToggleModal();
     }
   }, [isSuccessUpdateSupplierInActiveStatus, updateSupplierInActiveStatusData]);
 
   useEffect(() => {
     if (isSuccessUpdateSupplierStatus && updateSupplierStatusData) {
       ToastService.success(updateSupplierStatusData.errorMessage);
-      handleToggleModal()
+      handleToggleModal();
     }
   }, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
 
@@ -96,7 +133,11 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
           ]);
           break;
         case 6:
-          setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
+          setOptions(
+            StaticStatus.Approved.filter(
+              (option) => option.label === StatusValue[statusId - 1].label
+            )
+          );
           break;
         case 7:
           setOptions(StaticStatus[StatusValue[statusId - 1].label]);
@@ -120,7 +161,12 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
       const filterData = allGetAlluserData.filter((item) => {
-        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
+        return (
+          item.roleName === null ||
+          !excludingRoles
+            .map((role) => role.toLowerCase())
+            .includes(item.roleName.toLowerCase())
+        );
       });
       const modifyUserData = filterData.map((item) => ({
         value: item.userId,
@@ -132,23 +178,26 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
 
   //** Responsible User  */
   const handleRUserChange = (selectedValue) => {
-    confirm("Warning?", `Are you sure you want to assign the responsible user?`,
-      "Yes", "Cancel"
+    confirm(
+      "Warning?",
+      `Are you sure you want to assign the responsible user?`,
+      "Yes",
+      "Cancel"
     ).then((confirmed) => {
       if (confirmed) {
         updateRUserData(selectedValue.value);
       }
     });
-  }
+  };
   const updateRUserData = (value) => {
     let req = {
       ownerId: supplierId,
       ownerType: ownerType.Supplier,
-      responsibleUserId: value
-    }
+      responsibleUserId: value,
+    };
     updateResponsibleUser(req);
     setRUserValue(value);
-  }
+  };
   useEffect(() => {
     if (isSuccessRUser && isUpdateRUserData) {
       ToastService.success(isUpdateRUserData.errorMessage);
@@ -156,10 +205,12 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
   }, [isSuccessRUser, isUpdateRUserData]);
 
   const handleStatusChange = (selectedOption) => {
-    setStaticId(selectedOption.value)
-    setStatusFeild(selectedOption.label)
+    setStaticId(selectedOption.value);
+    setStatusFeild(selectedOption.label);
     if (selectedOption.label === supplierData.status) {
-      ToastService.warning("You can't change the status of the customer to currect customer status.");
+      ToastService.warning(
+        "You can't change the status of the customer to currect customer status."
+      );
     } else {
       if (selectedOption.value === "1" || selectedOption.value === "2") {
         confirm(
@@ -171,13 +222,18 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
           if (confirmed) {
             let req = {
               supplierId: supplierId,
-              statusId: selectedOption.value
-            }
-            updateSupplierStatus(req)
+              statusId: selectedOption.value,
+            };
+            updateSupplierStatus(req);
             setSelectedStatus(selectedOption.value);
           }
         });
-      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6" || selectedOption.value === "7") {
+      } else if (
+        selectedOption.value === "4" ||
+        selectedOption.value === "5" ||
+        selectedOption.value === "6" ||
+        selectedOption.value === "7"
+      ) {
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
       } else if (selectedOption.value === "3") {
@@ -193,16 +249,16 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
     setSelectedStatus(statusId);
     let req = {
       supplierId: supplierId,
-      statusId: statusId
-    }
-    updateSupplierStatus(req)
-  }
+      statusId: statusId,
+    };
+    updateSupplierStatus(req);
+  };
 
   const onReset = () => {
     let restData = { ...reasonData };
     restData.initialState = { ...formData };
     setFormData(restData);
-  }
+  };
 
   const handleUpdate = () => {
     let custData = reasonRef.current.getFormData();
@@ -210,17 +266,17 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
       let req = {
         ...custData,
         supplierId: supplierId,
-        statusId: staticId
-      }
-      updateSupplierInActiveStatus(req)
+        statusId: staticId,
+      };
+      updateSupplierInActiveStatus(req);
     }
-  }
+  };
 
   const handleToggleModal = () => {
     setShowModal(false);
-    onReset()
-    onhandleRepeatCall()
-    setSelectedStatus(supplierData.status)
+    onReset();
+    onhandleRepeatCall();
+    setSelectedStatus(supplierData.status);
   };
 
   const getStatusClass = () => {
@@ -245,148 +301,332 @@ const SupplierViewDetail = ({ editClick, supplierData, isLoading, supplierId, on
   };
 
   return (
-    <>{!isLoading ?
-      <div className="basic-customer-detail" >
-        <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-          <div className="profile-info">
-            <div className="profile-icon-desc">
-              <div className="d-flex align-items-center">
-                <div className="profile-icon"> {supplierData?.name ? supplierData?.name.charAt(0).toUpperCase() : ""}</div>
-                <h5>{supplierData?.name}</h5>
-              </div>
-              <div className="edit-icons" onClick={editClick}>
-                <Image
-                  imagePath={AppIcons.editThemeIcon}
-                  altText="Website Icon"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="field-desc d-flex align-items-center">
-            <div className="inf-label">R-User</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className='status-dropdown'>
-              <DropDown
-                options={responsibleUserOptions}
-                value={rUserValue}
-                onChange={handleRUserChange}
-                placeholder="Select Status"
-                isDisabled={isResponsibleUser ? true : isButtonDisable}
-              />
-            </div>
-          </div>
-          <div className="field-desc d-flex align-items-center">
-            <div className="inf-label">Status</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className={`status-dropdown ${getStatusClass()}`}>
-              <DropDown
-                options={options}
-                value={selectedStatus}
-                onChange={handleStatusChange}
-                placeholder="Select Status"
-                isDisabled={isButtonDisable}
-              />
-            </div>
+    <>
+      {!isLoading ? (
+        // <div className="basic-customer-detail" >
+        //   <div className="col-xl-12 col-lg-12 col-md-12 col-12">
+        //     <div className="profile-info">
+        //       <div className="profile-icon-desc">
+        //         <div className="d-flex align-items-center">
+        //           <div className="profile-icon"> {supplierData?.name ? supplierData?.name.charAt(0).toUpperCase() : ""}</div>
+        //           <h5>{supplierData?.name}</h5>
+        //         </div>
+        //         <div className="edit-icons" onClick={editClick}>
+        //           <Image
+        //             imagePath={AppIcons.editThemeIcon}
+        //             altText="Website Icon"
+        //           />
+        //         </div>
+        //       </div>
+        //     </div>
 
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">Email</div>
-            <b>&nbsp;:&nbsp;</b>
-            <a className="email-link" href={`mailto:${supplierData?.emailAddress}`}>
-              <div className="info-desc">{supplierData?.emailAddress}</div>
-            </a>
-            <span className="copy-icon" onClick={() => CopyText(supplierData?.emailAddress, 'email')}>
-              <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
-            </span>
+        //     <div className="field-desc d-flex align-items-center">
+        //       <div className="inf-label">R-User</div>
+        //       <b>&nbsp;:&nbsp;</b>
+        //       <div className='status-dropdown'>
+        //         <DropDown
+        //           options={responsibleUserOptions}
+        //           value={rUserValue}
+        //           onChange={handleRUserChange}
+        //           placeholder="Select Status"
+        //           isDisabled={isResponsibleUser ? true : isButtonDisable}
+        //         />
+        //       </div>
+        //     </div>
+        //     <div className="field-desc d-flex align-items-center">
+        //       <div className="inf-label">Status</div>
+        //       <b>&nbsp;:&nbsp;</b>
+        //       <div className={`status-dropdown ${getStatusClass()}`}>
+        //         <DropDown
+        //           options={options}
+        //           value={selectedStatus}
+        //           onChange={handleStatusChange}
+        //           placeholder="Select Status"
+        //           isDisabled={isButtonDisable}
+        //         />
+        //       </div>
 
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">Website</div>
-            <b>&nbsp;:&nbsp;</b>
+        //     </div>
+        //     <div className="field-desc">
+        //       <div className="inf-label">Email</div>
+        //       <b>&nbsp;:&nbsp;</b>
+        //       <a className="email-link" href={`mailto:${supplierData?.emailAddress}`}>
+        //         <div className="info-desc">{supplierData?.emailAddress}</div>
+        //       </a>
+        //       <span className="copy-icon" onClick={() => CopyText(supplierData?.emailAddress, 'email')}>
+        //         <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+        //       </span>
 
-            <div className="info-desc">{supplierData?.website}</div>
+        //     </div>
+        //     <div className="field-desc">
+        //       <div className="inf-label">Website</div>
+        //       <b>&nbsp;:&nbsp;</b>
 
-            <span className="copy-icon" onClick={() => CopyText(supplierData?.website, 'website')}>
-              <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
-            </span>
+        //       <div className="info-desc">{supplierData?.website}</div>
 
-          </div>
+        //       <span className="copy-icon" onClick={() => CopyText(supplierData?.website, 'website')}>
+        //         <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+        //       </span>
 
-          <div className="field-desc">
-            <div className="inf-label">Country</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.countryName}</div>
-          </div>
+        //     </div>
 
-          <div className="field-desc">
-            <div className="inf-label">Group Type</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.groupType}</div>
-          </div>
+        //     <div className="field-desc">
+        //       <div className="inf-label">Country</div>
+        //       <b>&nbsp;:&nbsp;</b>
+        //       <div className="info-desc">{supplierData?.countryName}</div>
+        //     </div>
 
-          <div className="field-desc">
-            <div className="inf-label">Territory</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.territory}</div>
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">Tax Id</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.taxId ? supplierData?.taxId : ErrorMessage.NotAvailabe}</div>
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">Supplier Type</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.supplierType}</div>
-          </div>
-          {/* <div className="field-desc">
-            <div className="inf-label">Is Company</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">
-              {supplierData?.isCompany}
-              {supplierData && supplierData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
-            </div>
-          </div> */}
-        </div>
-        {showModal && (
-          <CenterModel
-            showModal={showModal}
-            handleToggleModal={handleToggleModal}
-            modalTitle={`${statusFeild} Reason`}
-            modelSizeClass="w-50s"
-          >
-            <div className="row horizontal-form">
-              <FormCreator
-                config={formData}
-                ref={reasonRef}
-                {...formData}
+        //     <div className="field-desc">
+        //       <div className="inf-label">Group Type</div>
+        //       <b>&nbsp;:&nbsp;</b>
+        //       <div className="info-desc">{supplierData?.groupType}</div>
+        //     </div>
 
-              />
-              <div className="col-md-12 mt-2">
-                <div className="d-flex align-item-end justify-content-end">
-                  <div className="d-flex align-item-end">
-                    <Buttons
-                      buttonTypeClassName="theme-button"
-                      buttonText="Update"
-                      isLoading={updateCustomerInActiveStatusCustomerLoading}
-                      onClick={handleUpdate}
+        //     <div className="field-desc">
+        //       <div className="inf-label">Territory</div>
+        //       <b>&nbsp;:&nbsp;</b>
+        //       <div className="info-desc">{supplierData?.territory}</div>
+        //     </div>
+        //     <div className="field-desc">
+        //       <div className="inf-label">Tax Id</div>
+        //       <b>&nbsp;:&nbsp;</b>
+        //       <div className="info-desc">{supplierData?.taxId ? supplierData?.taxId : ErrorMessage.NotAvailabe}</div>
+        //     </div>
+        //     <div className="field-desc">
+        //       <div className="inf-label">Supplier Type</div>
+        //       <b>&nbsp;:&nbsp;</b>
+        //       <div className="info-desc">{supplierData?.supplierType}</div>
+        //     </div>
+
+        //     <div className="field-desc">
+        //       <div className="inf-label">Is Company</div>
+        //       <b>&nbsp;:&nbsp;</b>
+        //       <div className="info-desc">
+        //         {supplierData?.isCompany}
+        //         {supplierData && supplierData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
+        //       </div>
+        //     </div>
+        //   </div>
+        //   {showModal && (
+        //     <CenterModel
+        //       showModal={showModal}
+        //       handleToggleModal={handleToggleModal}
+        //       modalTitle={`${statusFeild} Reason`}
+        //       modelSizeClass="w-50s"
+        //     >
+        //       <div className="row horizontal-form">
+        //         <FormCreator
+        //           config={formData}
+        //           ref={reasonRef}
+        //           {...formData}
+
+        //         />
+        //         <div className="col-md-12 mt-2">
+        //           <div className="d-flex align-item-end justify-content-end">
+        //             <div className="d-flex align-item-end">
+        //               <Buttons
+        //                 buttonTypeClassName="theme-button"
+        //                 buttonText="Update"
+        //                 isLoading={updateCustomerInActiveStatusCustomerLoading}
+        //                 onClick={handleUpdate}
+        //               />
+        //               <Buttons
+        //                 buttonTypeClassName="dark-btn ml-5"
+        //                 buttonText="Cancel"
+        //                 onClick={handleToggleModal}
+        //               />
+        //             </div>
+        //           </div>
+        //         </div>
+        //       </div>
+        //     </CenterModel>
+        //   )}
+        // </div>
+        // -------------------------
+        <div className="basic-customer-detail">
+          <div className="col-xl-12 col-lg-12 col-md-12 col-12">
+            <div className="d-flex gap-5 profile-info  justify-content-between col-11">
+              <div className="d-flex col-3 flex-column profile-icon-desc justify-content-center">
+                <div className="d-flex">
+                  <div className="profile-icon ">
+                    {" "}
+                    {supplierData?.name
+                      ? supplierData?.name.charAt(0).toUpperCase()
+                      : ""}
+                  </div>
+                  <h5 className="ml-0">{supplierData?.name}</h5>
+                </div>
+
+                <div className="field-desc col-span-3">
+                  <i class="fa fa-envelope"></i>
+                  <a
+                    className="email-link"
+                    href={`mailto:${supplierData?.emailAddress}`}
+                  >
+                    <div className="info-desc">
+                      {supplierData?.emailAddress}
+                    </div>
+                  </a>
+                  <span
+                    className="copy-icon"
+                    onClick={() =>
+                      CopyText(supplierData?.emailAddress, "email")
+                    }
+                  >
+                    <Image
+                      imagePath={AppIcons.copyIcon}
+                      altText="Website Icon"
                     />
-                    <Buttons
-                      buttonTypeClassName="dark-btn ml-5"
-                      buttonText="Cancel"
-                      onClick={handleToggleModal}
+                  </span>
+                </div>
+
+                <div className="field-desc ">
+                  <i class="fa fa-globe"></i>
+                  <div className="info-desc">{supplierData?.website}</div>
+
+                  <span
+                    className="copy-icon"
+                    onClick={() => CopyText(supplierData?.website, "website")}
+                  >
+                    <Image
+                      imagePath={AppIcons.copyIcon}
+                      altText="Website Icon"
+                    />
+                  </span>
+                </div>
+              </div>
+
+              <div className="col-3">
+                <div className="field-desc">
+                  <div className="inf-label">R-User</div>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className="status-dropdown">
+                    <DropDown
+                      options={responsibleUserOptions}
+                      value={rUserValue}
+                      onChange={handleRUserChange}
+                      placeholder="Select Status"
+                      isDisabled={isResponsibleUser ? true : isButtonDisable}
                     />
                   </div>
                 </div>
+                <div className="field-desc">
+                  <div className="inf-label">Status</div>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className={`status-dropdown ${getStatusClass()}`}>
+                    <DropDown
+                      options={options}
+                      value={selectedStatus}
+                      onChange={handleStatusChange}
+                      placeholder="Select Status"
+                      isDisabled={isButtonDisable}
+                    />
+                  </div>
+                </div>
+
+                <div className="field-desc">
+                  <div className="inf-label">Tax Id</div>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className="info-desc">
+                    {supplierData?.taxId
+                      ? supplierData?.taxId
+                      : ErrorMessage.NotAvailabe}
+                  </div>
+                </div>
+              </div>
+
+              {/* second no */}
+              <div className="col-3  separator">
+                <div className="field-desc">
+                  <div className="inf-label">Territory</div>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className="info-desc">{supplierData?.territory}</div>
+                </div>
+
+                <div className="field-desc">
+                  <div className="inf-label">Country</div>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className="info-desc">{supplierData?.countryName}</div>
+                </div>
+
+                <div className="field-desc">
+                  <div className="inf-label">Supplier Type</div>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className="info-desc">{supplierData?.supplierType}</div>
+                </div>
+              </div>
+
+              {/* third no */}
+
+              <div className="col-3">
+                <di className="field-desc">
+                  <div className="inf-label">Group Type</div>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className="info-desc">{supplierData?.groupType}</div>
+                </di>
+
+                {/* <div className="field-desc">
+                  <div className="inf-label">Is Company</div>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className="info-desc">
+                    {supplierData?.isCompany}
+                    {supplierData && supplierData.isCompany ? (
+                      <i className="fa fa-check green-color"></i>
+                    ) : (
+                      <i className="fa fa-times red-color"></i>
+                    )}
+                  </div>
+                </div> */}
               </div>
             </div>
-          </CenterModel>
-        )}
-      </div>
-      : <DataLoader />}
-      <SupplierApproval childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} />
+
+            <div className="edit-icons" onClick={editClick}>
+              <Image
+                imagePath={AppIcons.editThemeIcon}
+                altText="Website Icon"
+              />
+            </div>
+          </div>
+          {showModal && (
+            <CenterModel
+              showModal={showModal}
+              handleToggleModal={handleToggleModal}
+              modalTitle={`${statusFeild} Reason`}
+              modelSizeClass="w-50s"
+            >
+              <div className="row horizontal-form">
+                <FormCreator config={formData} ref={reasonRef} {...formData} />
+                <div className="col-md-12 mt-2">
+                  <div className="d-flex align-item-end justify-content-end">
+                    <div className="d-flex align-item-end">
+                      <Buttons
+                        buttonTypeClassName="theme-button"
+                        buttonText="Update"
+                        isLoading={updateCustomerInActiveStatusCustomerLoading}
+                        onClick={handleUpdate}
+                      />
+                      <Buttons
+                        buttonTypeClassName="dark-btn ml-5"
+                        buttonText="Cancel"
+                        onClick={handleToggleModal}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CenterModel>
+          )}
+        </div>
+      ) : (
+        <DataLoader />
+      )}
+      <SupplierApproval
+        childRef={childRef}
+        isDetailPage={true}
+        updateApproval={updateCustomerApproval}
+      />
     </>
   );
-}
+};
 
-export default SupplierViewDetail
+export default SupplierViewDetail;

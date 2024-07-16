@@ -81,17 +81,17 @@ const AddEditRules = ({ onClose }) => {
             <div className="col-md-12">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
+                        buttonTypeClassName="dark-btn ml-5"
+                        buttonText="Cancel"
+                        onClick={onClose}
+                    />
+                    <Buttons
                         buttonTypeClassName="theme-button"
                         // buttonText={updateSetData ? "Update" : "Save"}
                         buttonText="Save"
                     // onClick={handleAddress}
                     // isLoading={isAddAddressLoading || isUpdateAddAddressLoading}
                     // isDisable={isButtonDisable}
-                    />
-                    <Buttons
-                        buttonTypeClassName="dark-btn ml-5"
-                        buttonText="Cancel"
-                        onClick={onClose}
                     />
                 </div>
             </div>
