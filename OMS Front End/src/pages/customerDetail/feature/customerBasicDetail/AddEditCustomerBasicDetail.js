@@ -41,20 +41,17 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                     formSetting.isViewOnly = true;
                     setIsButtonDisable(true);
                     setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, true);
-                    setIsResponsibleUser(true);
                 }
                 else {
                     formSetting.isViewOnly = false;
                     setIsButtonDisable(false);
                     setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, false);
-                    setIsResponsibleUser(false);
                 }
             }
             if (isResponsibleUser) {
                 formSetting.isViewOnly = false;
                 setIsButtonDisable(false);
                 setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, true);
-                setIsResponsibleUser(true);
             }
         }
     }, [isOpen, hasEditPermission, formSetting.isViewOnly, isResponsibleUser])

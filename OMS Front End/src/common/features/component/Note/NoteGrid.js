@@ -21,11 +21,11 @@ const NoteGrid = ({ keyId, isSupplier, isEditablePage, SecurityKey, onAddNotes, 
     const [buttonVisible, setButtonVisible] = useState(true);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
 
-    const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
-    const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
+    const hasAddPermission = hasFunctionalPermission(SecurityKey?.ADD);
+    const hasEditPermission = hasFunctionalPermission(SecurityKey?.EDIT);
 
     useEffect(() => {
-        if (hasEditPermission && hasAddPermission) {
+        if (hasEditPermission && hasAddPermission && SecurityKey) {
             if (isEditablePage) {
                 if (hasEditPermission.isViewOnly === true) {
                     formSetting.isViewOnly = true;
