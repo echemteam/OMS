@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 //** Lib's */
 import formatDate from "../../../../../lib/formatDate";

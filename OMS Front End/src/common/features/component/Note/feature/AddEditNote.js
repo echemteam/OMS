@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 //** Lib's */
 import { NotesData } from "../config/Notes.data";
