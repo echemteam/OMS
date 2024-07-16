@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
