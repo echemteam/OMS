@@ -40,7 +40,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const [statusFeild, setStatusFeild] = useState("")
   const [options, setOptions] = useState([]);
   const [statusId, setStatusId] = useState();
-  // const [supplierId, setSupplierId] = useState();
+  const [showEditIcon, setShowEditIcon] = useState(true);
 
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
@@ -55,11 +55,14 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
 
   useEffect(() => {
     if (!isResponsibleUser) {
-      if (hasEditPermission.isViewOnly === true) {
+      if (hasEditPermission && hasEditPermission.isViewOnly === true) {
+        setShowEditIcon(true);
         setIsButtonDisable(true);
-      }
-      else {
-        setIsButtonDisable(false);
+      } else if (hasEditPermission.isEditable === true) {
+        setShowEditIcon(true);
+      } else {
+        setShowEditIcon(false);
+        setIsButtonDisable(true);
       }
     }
   }, [hasEditPermission, isResponsibleUser])
@@ -274,12 +277,14 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                 <div className="profile-icon"> {supplierData?.name ? supplierData?.name.charAt(0).toUpperCase() : ""}</div>
                 <h5>{supplierData?.name}</h5>
               </div>
-              <div className="edit-icons" onClick={editClick}>
-                <Image
-                  imagePath={AppIcons.editThemeIcon}
-                  altText="Website Icon"
-                />
-              </div>
+              {showEditIcon ?
+                <div className="edit-icons" onClick={editClick}>
+                  <Image
+                    imagePath={AppIcons.editThemeIcon}
+                    altText="Website Icon"
+                  />
+                </div>
+                : null}
             </div>
           </div>
           <div className="field-desc d-flex align-items-center">

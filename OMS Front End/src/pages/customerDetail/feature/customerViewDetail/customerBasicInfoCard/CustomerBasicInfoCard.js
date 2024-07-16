@@ -35,6 +35,7 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
   const [customerID, setcustomerId] = useState();
   const [statusId, setStatusId] = useState();
   const [rUserValue, setRUserValue] = useState([]);
+  const [showEditIcon, setShowEditIcon] = useState(true);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
 
   const [updateResponsibleUser, { isSuccess: isSuccessRUser, data: isUpdateRUserData }] = useUpdateResponsibleUserMutation();
@@ -49,11 +50,14 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
 
   useEffect(() => {
     if (!isResponsibleUser) {
-      if (hasEditPermission.isViewOnly === true) {
+      if (hasEditPermission && hasEditPermission.isViewOnly === true) {
+        setShowEditIcon(true);
         setIsButtonDisable(true);
-      }
-      else {
-        setIsButtonDisable(false);
+      } else if (hasEditPermission.isEditable === true) {
+        setShowEditIcon(true);
+      } else {
+        setShowEditIcon(false);
+        setIsButtonDisable(true);
       }
     }
   }, [hasEditPermission, isResponsibleUser]);
@@ -256,12 +260,14 @@ const CustomerBasicInfoCard = ({ editClick, customerData, isLoading, customerId,
                 <div className="profile-icon"> {customerData?.name ? customerData?.name.charAt(0).toUpperCase() : ""}</div>
                 <h5>{customerData?.name}</h5>
               </div>
-              <div className="edit-icons" onClick={editClick}>
-                <Image
-                  imagePath={AppIcons.editThemeIcon}
-                  altText="Website Icon"
-                />
-              </div>
+              {showEditIcon ?
+                <div className="edit-icons" onClick={editClick}>
+                  <Image
+                    imagePath={AppIcons.editThemeIcon}
+                    altText="Website Icon"
+                  />
+                </div>
+                : null}
             </div>
           </div>
           <div className="field-desc d-flex align-items-center">

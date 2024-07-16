@@ -58,16 +58,19 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         fetchData();
     }, [editMode, isModelOpen]);
 
+    const handleResponse = (success, data) => {
+        if (success && data) {
+            handleAddressResponse(success, data);
+        }
+    };
 
     useEffect(() => {
-        const handleResponse = (success, data) => {
-            if (success && data) {
-                handleAddressResponse(success, data);
-            }
-        };
         handleResponse(isAddSuccess, isAddData);
+    }, [isAddSuccess, isAddData]);
+
+    useEffect(() => {
         handleResponse(isUpdateSuccess, isUpdateData);
-    }, [isAddSuccess, isAddData, isUpdateSuccess, isUpdateData]);
+    }, [isUpdateSuccess, isUpdateData]);
 
     useEffect(() => {
         if (isSupplier && isModelOpen) {
@@ -115,8 +118,11 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             // setGetByIdValue(data);
 
             if (!isButtonDisable) {
-                setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, false);
-                setFieldSetting(formData, 'stateId', FieldSettingType.DISABLED, false);
+                setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED);
+                setFieldSetting(formData, 'stateId', FieldSettingType.DISABLED);
+            } else if (isButtonDisable) {
+                setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
+                setFieldSetting(formData, 'stateId', FieldSettingType.DISABLED, true);
             }
 
             if (data.countryId) {

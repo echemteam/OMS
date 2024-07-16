@@ -78,7 +78,7 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
             ToastService.success(isDeleteData.errorMessage);
             onGetData();
         }
-    }, [isDeleteSucess, isDownalodData]);
+    }, [isDeleteSucess, isDeleteData]);
 
     //** Handle Change's */
     const handleDownload = (name) => {
