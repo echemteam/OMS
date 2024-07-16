@@ -9,7 +9,7 @@ const CustomerContactDetail = React.lazy(() => import("../../customerContactDeta
 const CustomerDocumentDetail = React.lazy(() => import("../../customerDocumentDetail/CustomerDocumentDetail"));
 const CustomerNoteDetail = React.lazy(() => import("../../customerNoteDetail/CustomerNoteDetail"));
 const CustomerAddressDetail = React.lazy(() => import("../../customerAddressDetail/CustomerAddressDetail"));
-const CustomerSettingDetails = React.lazy(() => import("../../customerAddressDetail/CustomerAddressDetail"));
+const CustomerSettingDetails = React.lazy(() => import("../../customerSettingDetail/CustomerSettingDetails"));
 
 const CustomerViewTab = (customerId) => {
 
