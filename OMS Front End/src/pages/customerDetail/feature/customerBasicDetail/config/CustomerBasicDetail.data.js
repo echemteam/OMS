@@ -154,7 +154,7 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isBuyingForThirdParty",
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mt-3 mb-input margin-left0-checkbox",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mt-3 pt-2 mb-input margin-left0-checkbox",
       },
     },
     {
@@ -164,7 +164,7 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isSubCompany",
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mt-3 mb-input margin-left0-checkbox",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mt-3 pt-2 mb-input margin-left0-checkbox",
       },
     },
     {
