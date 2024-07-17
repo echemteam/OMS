@@ -1,23 +1,23 @@
-import { FormFieldTypes } from "../../../../data/formFieldType";
 import { GridColumnType } from "../../../../data/gridColumnType";
+import { FormFieldTypes } from "../../../../data/formFieldType";
 
-export const addEditApiEndPointsFormData ={
+export const addEditApiParameterFormData ={
     initialState:{
-        providerId:"",
+        endpointId:"",
         name: "",
-        path:"",
-        method:"",
-        description:"",
+        dataType:"",
+        defaultValue:"",
+        isRequired:"",
     },
     formFields: [
         {
-            id: "providerId",
-            lable: "Provider Id ",
-            Field_Name: "Provider Id",
+            id: "endpointId",
+            lable: "EndPoint Id ",
+            Field_Name: "EndPoint Id ",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "providerId",
+            dataField: "endpointId",
             fieldSetting: {
-                placeholder: "Select Provider ",
+                placeholder: "Select Endpoint ",
             },
             
          validation: [{ type: "require" }],
@@ -42,28 +42,13 @@ export const addEditApiEndPointsFormData ={
             },
         },
         {
-            id: "path",
-            lable: "Path",
-            Field_Name: "Path",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "path",
-            fieldSetting: {
-                placeholder: "Enter Path",
-                allowSpace: true,
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
-        {
-            id: "method",
-            lable: "Method ",
-            Field_Name: "Method",
+            id: "dataType",
+            lable: "DataType ",
+            Field_Name: "DataType",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "method",
+            dataField: "dataType",
             fieldSetting: {
-                placeholder: "Select Method",
+                placeholder: "Select DataType",
             },
             
             validation: [{ type: "require" }],
@@ -72,13 +57,13 @@ export const addEditApiEndPointsFormData ={
             },
         },
         {
-            id: "description",
-            lable: "Description",
-            Field_Name: "Description",
-            fieldType: FormFieldTypes.TEXTAREA,
-            dataField: "description",
+            id: "defaultValue",
+            lable: "Default Value",
+            Field_Name: "Default Value",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "defaultValue",
             fieldSetting: {
-                placeholder: "Enter Description",
+                placeholder: "Enter Default Value",
                 allowSpace: true,
             },
             validation: [{ type: "require" }],
@@ -87,43 +72,63 @@ export const addEditApiEndPointsFormData ={
             },
         },
        
+        {
+            id: "isRequired",
+            lable: "Is Required",
+            Field_Name: "Is Required",
+            fieldType: FormFieldTypes.CHECKBOX,
+            dataField: "isRequired",
+            fieldSetting: {
+              placeholder: "",
+              allowSpace: true,
+            },
+            style: {
+              containerCss:
+                "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
+            },
+        },
     ],
     formSetting: {
         isViewOnly: false
     }
 
 }
-export const ApiEndPointGridConfig = {
+
+export const ApiParameterGridConfig = {
     columns: [
         {
-            name: "Provider Name",
-            fieldName: "name",
+            name: "EndPoint Name",
+            fieldName: "endpointName",
             width: "15%",
             allowShort: true,
           },
       {
-        name: "EndPoint Name",
-        fieldName: "endpointName",
-        width: "15%",
-        allowShort: true,
-      },
-      {
-        name: "EndPoint Path",
-        fieldName: "path",
-        width: "25%",
-        allowShort: true,
-      },
-      {
-        name: "EndPoint Method",
-        fieldName: "method",
-        width: "15%",
-        allowShort: true,
-      },
-      {
-        name: "Description",
-        fieldName: "description",
+        name: "Parameter Name",
+        fieldName: "name",
         width: "20%",
         allowShort: true,
+      },
+      {
+        name: "DataType ",
+        fieldName: "dataType",
+        width: "20%",
+        allowShort: true,
+      },
+      {
+        name: "Default Value ",
+        fieldName: "defaultValue",
+        width: "20%",
+        allowShort: true,
+      },
+      {
+        name: "Is Required",
+        fieldName: "isRequired",
+        width: "15%",
+        colType: GridColumnType.CHECKBOX,
+        colSettings: {
+          allowCheckbox: true,
+          allowDisable: true
+        },
       },
       {
         name: "Action",
@@ -135,5 +140,4 @@ export const ApiEndPointGridConfig = {
         },
       },
     ],
-  
   };
