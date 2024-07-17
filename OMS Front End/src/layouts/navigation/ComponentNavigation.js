@@ -289,7 +289,7 @@ export const ComponentNavigation = [
     component: ApiProvidersGrid,
     hasParams: false,
     text: 'API Providers',
-    //securityKey: securityKey.APPROVALRULES
+    securityKey: securityKey.APIPROVIDERS
   },
   {
     id: 'apiEndpoints',
@@ -299,7 +299,7 @@ export const ComponentNavigation = [
     component: ApiEndPointsGrid,
     hasParams: false,
     text: 'API EndPoints',
-    //securityKey: securityKey.APPROVALRULES
+    securityKey: securityKey.APIENDPOINTS
   },
   {
     id: 'apiParameters',
@@ -309,7 +309,7 @@ export const ComponentNavigation = [
     component: ApiParametersGrid,
     hasParams: false,
     text: 'API Parameters',
-    //securityKey: securityKey.APPROVALRULES
+    securityKey: securityKey.APIPARAMETERS
   },
   {
     id: 'apiAuthentication',
@@ -319,6 +319,6 @@ export const ComponentNavigation = [
     component: ApiAuthenticationGrid,
     hasParams: false,
     text: 'API Authentication',
-    //securityKey: securityKey.APPROVALRULES
+    securityKey: securityKey.APIAUTHENTICATION
   },
 ];

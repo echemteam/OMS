@@ -96,8 +96,14 @@ export const securityKey = {
      //** Supplier History */
      SUPPLIERHISTORY: "Supplier History",
 
+    
+     //** Api Configration */
+     APICONFIGURATION: "API Configuration",
 
-
+     APIPROVIDERS:"API Providers",
+     APIENDPOINTS:"API EndPoints",
+     APIPARAMETERS:"API Parameters",
+     APIAUTHENTICATION:"API Authentication",
 
 
      //** Wating for the generate keys */
