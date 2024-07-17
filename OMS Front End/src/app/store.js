@@ -28,6 +28,8 @@ import approvalAPI from './services/ApprovalAPI';
 import configurationAPI from './services/configurationAPI';
 import apiProviderAPI from './services/apiProviderAPI';
 import apiEndPointsAPI from './services/apiEndPointsAPI';
+import apiParametersAPI from './services/apiParametersAPI';
+import apiAuthenticationAPI from './services/apiAuthenticationAPI';
 
 export const store = configureStore({
   reducer: {
@@ -56,6 +58,8 @@ export const store = configureStore({
     [approvalAPI.reducerPath]: approvalAPI.reducer,
     [apiProviderAPI.reducerPath]: apiProviderAPI.reducer,
     [apiEndPointsAPI.reducerPath]:apiEndPointsAPI.reducer,
+    [apiParametersAPI.reducerPath]:apiParametersAPI.reducer,
+    [apiAuthenticationAPI.reducerPath]:apiAuthenticationAPI.reducer,
 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
@@ -83,6 +87,8 @@ export const store = configureStore({
     approvalAPI.middleware,
     apiProviderAPI.middleware,
     apiEndPointsAPI.middleware,
+    apiParametersAPI.middleware,
+    apiAuthenticationAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);

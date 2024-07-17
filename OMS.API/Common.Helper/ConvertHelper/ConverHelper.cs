@@ -6,7 +6,7 @@ namespace Common.Helper.ConvertHelper
 {
     public class ConvertHelper
     {
-        public ConvertHelper()
+        protected ConvertHelper()
         {
 
         }
@@ -21,12 +21,8 @@ namespace Common.Helper.ConvertHelper
             {
                 return false;
             }
-            bool iResult = false;
-            if (bool.TryParse(Convert.ToString(obj), out iResult))
-            {
-                return iResult;
-            }
-            return iResult;
+
+            return bool.TryParse(obj.ToString(), out bool result) && result;
         }
 
         /// <summary>
@@ -34,21 +30,21 @@ namespace Common.Helper.ConvertHelper
         /// </summary>
         /// <param name="objDT"></param>
         /// <returns></returns>
-        public static DateTime ToDateTime(object objDT, IFormatProvider formatProvider = null!)
+        public static DateTime ToDateTime(object objDT)
         {
-            string strDt = Convert.ToString(objDT)!;
-            if (strDt.Length > 0)
+            if (objDT == null || string.IsNullOrWhiteSpace(objDT.ToString()))
             {
-                DateTime.TryParse(strDt, out DateTime dtReturn);
-                _ = formatProvider ?? CultureInfo.InvariantCulture;
-                if (dtReturn == DateTime.MinValue)
-                {
-                    return new DateTime();
-                }
-                return dtReturn;
+                return DateTime.MinValue;
             }
-            return new DateTime();
+
+            if (DateTime.TryParse(objDT.ToString(), CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
+            {
+                return result;
+            }
+
+            return DateTime.MinValue;
         }
+
         /// <summary>
         /// To convert into Decimal datatype
         /// </summary>
@@ -72,22 +68,21 @@ namespace Common.Helper.ConvertHelper
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static int ToInt32(object obj)
+        public static int ToInt(object obj)
         {
-            if (obj != null)
+            if (obj == null || string.IsNullOrWhiteSpace(obj.ToString()))
             {
-                if (Convert.ToString(obj).Trim().Length == 0)
-                {
-                    return 0;
-                }
-                int intResult = 0;
-                if (int.TryParse(Convert.ToString(obj), out intResult))
-                {
-                    return intResult;
-                }
+                return 0;
             }
+
+            if (int.TryParse(obj.ToString(), out int result))
+            {
+                return result;
+            }
+
             return 0;
         }
+
         /// <summary>
         /// To Convert into Int64 datatype
         /// </summary>
@@ -95,20 +90,19 @@ namespace Common.Helper.ConvertHelper
         /// <returns></returns>
         public static long ToInt64(object obj)
         {
-            if (obj != null)
+            if (obj == null || string.IsNullOrWhiteSpace(obj.ToString()))
             {
-                if (Convert.ToString(obj).Trim().Length == 0)
-                {
-                    return 0L;
-                }
-                long intResult;
-                if (long.TryParse(Convert.ToString(obj), out intResult))
-                {
-                    return intResult;
-                }
+                return 0L;
             }
+
+            if (long.TryParse(obj.ToString(), out long result))
+            {
+                return result;
+            }
+
             return 0L;
         }
+
         /// <summary>
         /// To convert into String datatype
         /// </summary>
@@ -116,11 +110,7 @@ namespace Common.Helper.ConvertHelper
         /// <returns></returns>
         public static string ToString(object obj)
         {
-            if (obj == null)
-            {
-                return "";
-            }
-            return Convert.ToString(obj);
+            return obj?.ToString() ?? string.Empty;
         }
         /// <summary>
         /// for converting DataTable to List datatype
@@ -129,28 +119,20 @@ namespace Common.Helper.ConvertHelper
         /// <returns></returns>
         public static IList ConvertDataTabelToIList(DataTable dt)
         {
-            IList list = new List<Hashtable>();
-            try
-            {
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    Hashtable ht = new Hashtable();
-                    for (int j = 0; j < dt.Columns.Count; j++)
-                    {
-                        ht.Add(dt.Columns[j].ColumnName, "");
-                    }
+            var list = new List<Hashtable>();
 
-                    for (int n = 0; n < dt.Columns.Count; n++)
-                    {
-                        ht[dt.Columns[n].ColumnName] = dt.Rows[i][dt.Columns[n].ColumnName];
-                    }
-                    list.Add(ht);
-                }
-            }
-            catch (Exception)
+            foreach (DataRow row in dt.Rows)
             {
-                throw;
+                var ht = new Hashtable();
+
+                foreach (DataColumn column in dt.Columns)
+                {
+                    ht[column.ColumnName] = row[column.ColumnName];
+                }
+
+                list.Add(ht);
             }
+
             return list;
         }
         /// <summary>
@@ -160,15 +142,7 @@ namespace Common.Helper.ConvertHelper
         /// <returns></returns>
         public static string ConvertDBNullToString(object obj)
         {
-            if (!Convert.IsDBNull(obj))
-            {
-                return obj.ToString();
-            }
-            else
-            {
-                return string.Empty;
-
-            }
+            return obj is DBNull ? string.Empty : obj.ToString();
         }
     }
 }

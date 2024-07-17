@@ -658,11 +658,47 @@ a {
     margin-bottom: 0;
   }
 }
+
 .address-main-card-sec {
   .card {
-    padding-top: 2p3;
+    padding-top: 4px;
+
+    @media only screen and (max-width: 1560px) {
+      padding-top: 7px;
+    }
   }
 }
+
+.contact-main-card-section {
+  .card {
+    padding-top: 4px;
+
+    @media only screen and (max-width: 1560px) {
+      padding-top: 7px;
+    }
+  }
+}
+
+.document-section {
+  .card {
+    padding-top: 4px;
+
+    @media only screen and (max-width: 1560px) {
+      padding-top: 7px;
+    }
+  }
+}
+
+.notes-main-card-section {
+  .card {
+    padding-top: 4px;
+
+    @media only screen and (max-width: 1560px) {
+      padding-top: 7px;
+    }
+  }
+}
+
 .card-email-sec {
   .card {
     margin-bottom: 0;
@@ -743,101 +779,15 @@ a {
   text-align: center;
 }
 
-// Tab Section Start
-.tab-section {
-  margin-bottom: 30px;
-
-  .tab-header {
-    border-bottom: 1px solid var(--linkMenu);
-
-    // background: var(--whiteColor);
-    @media only screen and (max-width: 1366px) {
-      width: 86%;
-    }
-
-    button {
-      padding: 7px 25px 7px;
-      border: none;
-      background: var(--tabBgColor);
-      border-radius: 0px;
-      font-weight: 600;
-      font-size: var(--commonFont-medium);
-      border: none;
-      border-right: 1px solid var(--whiteColor);
-      margin-right: 0;
-      color: var(--textColor);
-
-      &.active {
-        margin-bottom: 10px;
-        background: var(--gradient-theme);
-        color: var(--whiteColor);
-      }
-    }
-  }
-
-  .tab-content {
-    // padding-top: 20px;
-
-    .tab-body-section {
-    }
-  }
-
-  &.vertical-tab {
-    display: flex;
-    align-items: flex-start;
-    width: 100%;
-    height: 100%;
-
-    .tab-header {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      width: 180px;
-      height: 100%;
-      border-right: 1px solid #d0d4df;
-      border-bottom: 0;
-      padding: 5px 0px 0 0px;
-
-      // background: var(--bg-main-content);
-      button {
-        margin: 0;
-        width: 100%;
-        border-radius: 0;
-        text-align: left;
-        margin-bottom: 5px;
-        border: none;
-        border-bottom: 1px solid #d0d4df;
-        margin-right: 10px;
-        z-index: 1;
-        background: #e2e6f0;
-        border-right-color: var(--whiteColor);
-        color: var(--textColor);
-
-        &.active {
-          background: var(--gradient-theme);
-          border-right: 1px solid var(--themeColor);
-          color: var(--whiteColor);
-          border-left: 4px solid var(--textColor);
-        }
-      }
-    }
-
-    .tab-content {
-      width: calc(100% - 180px);
-    }
-
-    .card {
-      padding-right: 0;
-      padding-top: 10px;
-    }
-
+.vertical-tab-card {
+  .card {
     .card-body-sec {
-      margin-top: 10px;
+      padding: 5px !important;
     }
   }
 }
 
-// Tab Section End
+
 
 .main-customer-grid {
   .card-body-sec {
@@ -863,6 +813,7 @@ a {
         border-right: 1px solid var(--whiteColor);
         margin-right: 0;
         color: var(--textColor);
+        transition: 0.3s all;
 
         &.active {
           margin-bottom: 0;
@@ -882,6 +833,14 @@ a {
             border-top: 10px solid var(--themeColor);
             /* Change color as needed */
           }
+
+          &:hover {
+            color: var(--themeColor);
+          }
+        }
+
+        &:hover {
+          color: var(--textColorLight);
         }
       }
     }
@@ -964,7 +923,7 @@ a {
         margin-left: 20px;
 
         button {
-          padding: 7px 25px 7px;
+          padding: 7px 25px;
           border: none;
           background: var(--whiteColor);
           border-radius: 0px;
@@ -974,13 +933,18 @@ a {
           border-right: 1px solid var(--whiteColor);
           margin-right: 0;
           color: var(--textColor);
+          transition: 0.6s all;
+          border-bottom: 2px solid var(--whiteColor);
 
           &.active {
             margin-bottom: 0;
             color: var(--themeColor);
             position: relative;
-            padding-bottom: 15px;
             border-bottom: 2px solid var(--themeColor);
+          }
+
+          &:hover {
+            background: var(--themeColorLight);
           }
         }
       }
@@ -1090,7 +1054,7 @@ a {
   }
 }
 
-.contact-card-section,
+// Address Card Start
 .address-card-section {
   .accordion-item {
     border: 1px solid #eaf1f9;
@@ -1116,64 +1080,72 @@ a {
       }
     }
 
-    // .accordion-body{
-    //   max-height: 268px;
-    //   overflow: hidden;
-    //   overflow-y: auto;
-    // }
   }
 
   .add-desc-part {
-    padding: 10px;
     padding-bottom: 0;
 
-    .address-card {
-      box-shadow: 0px 0px 17px -10px var(--textColorLight);
-      padding: 10px;
-      border-radius: 12px;
-      margin-bottom: 10px !important;
-      position: relative;
+    .address-card-list {
+      display: flex;
+      flex-wrap: wrap;
 
-      &:last-child {
-        margin-bottom: 0;
-        min-height: 120px;
-      }
+      .address-main-card-section {
+        width: 24%;
+        margin: 0 0.5%;
+        height: auto;
+        margin-bottom: 16px;
 
-      .add-line {
-        width: 92%;
-        display: flex;
-        flex-direction: column;
+        .address-card {
+          border: 1px solid var(--cardborderColor);
+          padding: 5px;
+          border-radius: 5px;
+          margin-top: 2px;
+          position: relative;
+          min-height: 70px;
+          height: 100%;
 
-        span {
-          color: #2d3641db;
-          font-size: var(--commonFont-medium);
 
-          &:first-child {
-            font-weight: 600;
-          }
-        }
-      }
+          .add-line {
+            width: 92%;
+            display: flex;
+            flex-direction: column;
 
-      .edit-delete-button {
-        position: absolute;
-        top: 5px;
-        right: 5px;
+            span {
+              color: #2d3641db;
+              font-size: var(--commonFont-medium);
 
-        .edit-btn {
-          border: none;
-          outline: none;
-          box-shadow: none;
-          background: transparent;
-          padding: 0;
-
-          img {
-            width: 20px;
-            transition: 0.5s all;
+              &:first-child {
+                font-weight: 600;
+              }
+            }
           }
 
-          &:hover {
-            img {
-              filter: brightness(0);
+          .edit-delete-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+
+            .edit-btn {
+              border: none;
+              outline: none;
+              box-shadow: none;
+              background: transparent;
+              padding: 0;
+
+              img {
+                width: 20px;
+                transition: 0.5s all;
+                
+                @media only screen and (max-width: 1560px) {
+                  width: 15px;
+                }
+              }
+
+              &:hover {
+                img {
+                  filter: brightness(0);
+                }
+              }
             }
           }
         }
@@ -1182,6 +1154,7 @@ a {
   }
 }
 
+// Address Card end
 .contact-card-section {
   .contact-type-title {
     background: var(--cardTitleBg);
@@ -1204,318 +1177,287 @@ a {
   }
 }
 
-.contact-card {
-  box-shadow: 0px 1px 11px -6px var(--textColorLight);
-  // border: 1px solid var(--cardborderColor);
-  padding: 5px;
-  border-radius: 5px;
-  margin-bottom: 16px;
-  margin-top: 2px;
-  position: relative;
-  min-height: 70px;
+// Contact Card Start
+.contact-card-list {
+  display: flex;
+  flex-wrap: wrap;
 
-  // min-height: 125px;
-  &.dropdown-open {
-    background-color: var(--tabBgColor);
-  }
+  .contact-main-card-section {
+    width: 24%;
+    margin: 0 0.5%;
+    height: auto;
+    margin-bottom: 16px;
 
-  .add-line {
-    display: flex;
-    flex-direction: column;
+    .contact-card {
+      // box-shadow: 0px 1px 11px -6px var(--textColorLight);
+      border: 1px solid var(--cardborderColor);
+      padding: 5px;
+      border-radius: 5px;
 
-    .user-icon-name {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 0;
+      margin-top: 2px;
+      position: relative;
+      height: 100%;
+      min-height: 70px;
 
-      .user-icon {
-        width: 15px;
-        height: 15px;
+      // min-height: 125px;
+      &.dropdown-open {
+        background-color: var(--tabBgColor);
       }
 
-      .primary-label {
-        color: var(--PrimaryColor);
-        margin-left: 5px;
-        font-size: var(--commonFont-extraSmall);
-      }
-
-      .contact-name {
-        padding-right: 5px;
-      }
-    }
-
-    .contact-right-info {
-      margin-left: 0;
-      display: flex;
-      align-items: center;
-
-      .email-sec {
-      }
-
-      .contact-sec {
-      }
-    }
-
-    .contact-type {
-      margin: 0 2px;
-    }
-
-    span {
-      font-size: var(--commonFont-small);
-      color: #2d3641db;
-
-      &.user-name {
-        font-size: var(--commonFont-small);
-        color: var(--themeColor);
-        margin-bottom: 0;
-        // margin-left: 31px;
-        // margin-top: -4px;
-      }
-
-      b {
-        display: inline-block;
-        min-width: 0px;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-      }
-    }
-  }
-
-  .edit-delete-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-
-    .edit-btn {
-      border: none;
-      outline: none;
-      box-shadow: none;
-      background: transparent;
-      padding: 0;
-
-      img {
-        width: 15px;
-        transition: 0.5s all;
-      }
-
-      &:hover {
-        img {
-          filter: brightness(0);
-        }
-      }
-    }
-  }
-
-  .contact-type-badge {
-    position: absolute;
-    padding: 0px 5px;
-    top: -10px;
-    background: var(--themeColorLight);
-    color: var(--blackColor);
-    right: 0;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    font-size: 10px;
-    font-weight: 600;
-
-    @media only screen and (max-width: 1560px) {
-      font-size: 8px;
-    }
-
-    &.contact-badge {
-      color: var(--whiteColor);
-    }
-
-    &.badge-default {
-      background: var(--themeColorLight);
-    }
-
-    &.badge-primary {
-      background: var(--PrimaryColor);
-    }
-
-    &.badge-endUser {
-      background: var(--pending-theme);
-    }
-
-    &.badge-purchasing {
-      background: var(--submitted-theme);
-    }
-
-    &.badge-submission {
-      background: var(--submission-color);
-    }
-
-    &.badge-followup {
-      background: var(--frozen-theme);
-    }
-
-    &.badge-ap {
-      background: var(--disabled-theme);
-    }
-  }
-
-  //
-  .contact-card-desc {
-    position: relative;
-
-    .contact-info {
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid #ebebf1;
-      padding-bottom: 5px;
-
-      .user-icon {
+      .add-line {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--whiteColor);
-        min-height: 26px;
-        min-width: 26px;
-        max-height: 26px;
-        max-width: 26px;
-        border-radius: 100%;
-        box-shadow: 0px 0px 15px -6px var(--themeColor);
-        margin-left: -10px;
-        margin-top: -10px;
+        flex-direction: column;
 
-        i {
-          font-size: var(--commonFont-extraLarge);
-          color: var(--themeColor);
-        }
+        .user-icon-name {
+          display: flex;
+          align-items: flex-start;
+          margin-bottom: 0;
 
-        @media only screen and (max-width: 1560px) {
-        }
-      }
+          .user-icon {
+            width: 15px;
+            height: 15px;
+          }
 
-      .contact-name {
-        display: flex;
-        align-items: center;
-        margin-left: 5px;
+          .primary-label {
+            color: var(--PrimaryColor);
+            margin-left: 5px;
+            font-size: var(--commonFont-extraSmall);
+          }
 
-        .contact-title {
-          color: var(--themeColor);
-          font-size: var(--commonFont);
-          text-transform: capitalize;
-
-          @media only screen and (max-width: 1560px) {
-            font-size: var(--commonFont-small);
+          .contact-name {
+            padding-right: 5px;
           }
         }
 
-        .primary-label {
-          font-size: var(--commonFont-extraSmall);
-          color: var(--PrimaryColor);
-          margin-left: 3px;
-          font-weight: 600;
-        }
-      }
-    }
-
-    .contact-details {
-      margin-top: 0px;
-
-      .dropdown-sec {
-        display: flex;
-        align-items: center;
-        // padding-left: 22px;
-        margin-bottom: 2px;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-
-        .dropdown-desc-sec {
+        .contact-right-info {
+          margin-left: 0;
           display: flex;
           align-items: center;
 
-          .icon-part {
-            margin-right: 5px;
+          .email-sec {}
+
+          .contact-sec {}
+        }
+
+        .contact-type {
+          margin: 0 2px;
+        }
+
+        span {
+          font-size: var(--commonFont-small);
+          color: #2d3641db;
+
+          &.user-name {
+            font-size: var(--commonFont-small);
+            color: var(--themeColor);
+            margin-bottom: 0;
+            // margin-left: 31px;
+            // margin-top: -4px;
+          }
+
+          b {
+            display: inline-block;
+            min-width: 0px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+          }
+        }
+      }
+
+      .edit-delete-button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+
+        .edit-btn {
+          border: none;
+          outline: none;
+          box-shadow: none;
+          background: transparent;
+          padding: 0;
+
+          img {
+            width: 15px;
+            transition: 0.5s all;
+          }
+
+          &:hover {
+            img {
+              filter: brightness(0);
+            }
+          }
+        }
+      }
+
+
+
+      //
+      .contact-card-desc {
+        position: relative;
+
+        .contact-info {
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid #ebebf1;
+          padding-bottom: 5px;
+
+          .user-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--whiteColor);
+            min-height: 26px;
+            min-width: 26px;
+            max-height: 26px;
+            max-width: 26px;
+            border-radius: 100%;
+            // box-shadow: 0px 0px 15px -6px var(--themeColor);
+            border: 1px solid #ebebf1;
 
             i {
-              font-size: var(--commonFont);
-              opacity: 0.3;
-            }
-          }
-
-          .desc-part {
-            display: flex;
-            align-items: center;
-
-            .values {
-              font-size: var(--commonFont-small);
-
-              @media only screen and (max-width: 1560px) {
-                font-size: 9px;
-              }
-
-              &.primary-email {
-                color: var(--themeColor);
-              }
-            }
-          }
-        }
-
-        .drop-down {
-          margin-left: 7px;
-          cursor: pointer;
-
-          i {
-            &.fa-caret-down {
+              font-size: var(--commonFont-large);
               color: var(--themeColor);
             }
+
+            @media only screen and (max-width: 1560px) {}
           }
 
-          &.mobilenumber {
-            margin-left: 10px;
-          }
+          .contact-name {
+            display: flex;
+            align-items: center;
+            margin-left: 5px;
 
-          .rotated {
-            transform: rotate(180deg);
-            transition: transform 0.3s ease;
+            .contact-title {
+              color: var(--themeColor);
+              font-size: var(--commonFont);
+              text-transform: capitalize;
+
+              @media only screen and (max-width: 1560px) {
+                font-size: var(--commonFont-small);
+              }
+            }
+
+            .primary-label {
+              font-size: var(--commonFont-extraSmall);
+              color: var(--PrimaryColor);
+              margin-left: 3px;
+              font-weight: 600;
+            }
           }
         }
 
-        .contact-sec {
-          display: flex;
-          align-items: center;
+        .contact-details {
+          margin-top: 2px;
 
-          .number-list {
+          .dropdown-sec {
             display: flex;
             align-items: center;
+            // padding-left: 22px;
+            margin-bottom: 3px;
 
-            .number-type {
-              span {
-                min-width: 15px;
-                min-height: 15px;
-                max-width: 15px;
-                max-height: 15px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-left: -1px;
+            &:last-child {
+              margin-bottom: 0;
+            }
+
+            .dropdown-desc-sec {
+              display: flex;
+              align-items: center;
+
+              .icon-part {
+                margin-right: 5px;
 
                 i {
                   font-size: var(--commonFont);
-                  opacity: 0.3;
+                  opacity: 0.4;
+                  color: #5e6470;
+                }
+              }
 
-                  &.fa-mobile {
-                    font-size: var(--commonFont-extraLarge);
+              .desc-part {
+                display: flex;
+                align-items: center;
+
+                .values {
+                  font-size: var(--commonFont-small);
+                  color: #5e6470;
+
+                  @media only screen and (max-width: 1560px) {
+                    font-size: 9px;
+                  }
+
+                  &.primary-email {
+                    // color: var(--themeColor);
+                    color: #5e6470;
                   }
                 }
               }
             }
 
-            .card-value {
-              font-size: var(--commonFont-small);
-              padding-left: 3px;
+            .drop-down {
+              margin-left: 7px;
+              cursor: pointer;
 
-              @media only screen and (max-width: 1560px) {
-                font-size: 9px;
+              i {
+                &.fa-caret-down {
+                  color: var(--themeColor);
+                }
               }
 
-              &.primary-phone {
-                color: var(--themeColor);
+              &.mobilenumber {
+                margin-left: 10px;
+              }
+
+              .rotated {
+                transform: rotate(180deg);
+                transition: transform 0.3s ease;
+              }
+            }
+
+            .contact-sec {
+              display: flex;
+              align-items: center;
+
+              .number-list {
+                display: flex;
+                align-items: center;
+
+                .number-type {
+                  span {
+                    min-width: 15px;
+                    min-height: 15px;
+                    max-width: 15px;
+                    max-height: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-left: -1px;
+
+                    i {
+                      font-size: var(--commonFont);
+                      opacity: 0.4;
+                      color: #5e6470;
+
+                      &.fa-mobile {
+                        font-size: var(--commonFont-extraLarge);
+                      }
+                    }
+                  }
+                }
+
+                .card-value {
+                  font-size: var(--commonFont-small);
+                  padding-left: 3px;
+                  color: #5e6470;
+
+                  @media only screen and (max-width: 1560px) {
+                    font-size: 9px;
+                  }
+
+                  &.primary-phone {
+                    // color: var(--themeColor);
+                    color: #5e6470;
+                  }
+                }
               }
             }
           }
@@ -1523,6 +1465,61 @@ a {
       }
     }
   }
+}
+
+// Contact card End
+
+
+
+
+.contact-type-badge {
+  position: absolute;
+  padding: 0px 5px;
+  top: -10px;
+  background: var(--themeColorLight);
+  color: var(--blackColor);
+  right: 0;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+
+  @media only screen and (max-width: 1560px) {
+    font-size: 8px;
+  }
+
+  &.contact-badge {
+    color: var(--whiteColor);
+  }
+
+  &.badge-default {
+    background: var(--themeColorLight);
+  }
+
+  &.badge-primary {
+    background: var(--PrimaryColor);
+  }
+
+  &.badge-endUser {
+    background: var(--pending-theme);
+  }
+
+  &.badge-purchasing {
+    background: var(--submitted-theme);
+  }
+
+  &.badge-submission {
+    background: var(--submission-color);
+  }
+
+  &.badge-followup {
+    background: var(--frozen-theme);
+  }
+
+  &.badge-ap {
+    background: var(--disabled-theme);
+  }
+
 }
 
 .sidebar-contact-model {
@@ -1817,7 +1814,7 @@ a {
       overflow-y: auto;
 
       @media only screen and (max-width: 1560px) {
-        height: calc(100vh - 345px);
+        height: calc(100vh - 310px);
       }
     }
   }
@@ -1980,11 +1977,16 @@ a {
     transform: translateY(-50%);
     z-index: 2;
     pointer-events: none;
+    @media only screen and (max-width: 1560px) {
+      height: 15px;
+    width: 15px;
+    }
   }
 
   .css-1dimb5e-singleValue {
     margin-left: 0 !important;
     font-size: var(--commonFont-small);
+    font-weight: 600;
   }
 
   .css-13cymwt-control {
@@ -2178,6 +2180,8 @@ input[type="checkbox"]:disabled {
 }
 
 .customer-list-all {
+  margin-top: 5px !important;
+
   table {
     thead {
       tr {
@@ -2252,8 +2256,7 @@ input[type="checkbox"]:disabled {
 
   .field-info {
     padding: 3px 5px;
-    // border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 5px;
     font-size: var(--commonFont-small);
     font-weight: 600;
 
@@ -2293,17 +2296,6 @@ input[type="checkbox"]:disabled {
 }
 
 .primary-icon {
-  // margin-left: 5px;
-  // background: var(--PrimaryColor);
-  // border-radius: 100%;
-  // padding: 3px;
-  // min-width: 13px;
-  // min-height: 13px;
-  // max-width: 13px;
-  // max-height: 13px;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
 
   img {
     filter: brightness(100);
@@ -2390,20 +2382,25 @@ input[type="checkbox"]:disabled {
 
 .serach-bar-history {
   display: flex;
+  align-items: center;
   width: 100%;
 
   .name-field {
     min-width: 22%;
   }
+
   .user-name-field {
     min-width: 22%;
   }
+
   .date-field {
     min-width: 22%;
   }
+
   .refresh-btn-history {
     display: flex;
     justify-content: flex-end;
+    width: 197px;
   }
 }
 
@@ -2627,6 +2624,24 @@ input[type="checkbox"]:disabled {
         }
       }
     }
+
+    @media only screen and (max-width: 1560px) {
+      .main-inactive-grid {
+        .card {
+          margin-top: 0;
+          padding: 0;
+        }
+
+        .tab-sub-header {
+          margin-left: 10px !important;
+
+          button {
+            font-size: var(--commonFont-medium) !important;
+            padding: 3px 15px 5px !important;
+          }
+        }
+      }
+    }
   }
 
   .sidebar-contact-model {
@@ -2724,7 +2739,7 @@ input[type="checkbox"]:disabled {
   .custom-datepicker {
     .react-daterange-picker {
       width: 120% !important;
-      min-height: 29px !important;
+      min-height: 28px !important;
     }
   }
 }
@@ -2803,7 +2818,7 @@ input[type="checkbox"]:disabled {
   .sidebar-contact-model {
     .card-email-sec {
       .card {
-        padding: 8px 20px;
+        padding: 5px 10px;
 
         .card-body-sec {
           margin-top: 10px;
@@ -2817,6 +2832,238 @@ input[type="checkbox"]:disabled {
     }
   }
 }
+
+// Tab Section Start
+.tab-section {
+  margin-bottom: 30px;
+
+  .tab-header {
+    border-bottom: 1px solid var(--linkMenu);
+
+    // background: var(--whiteColor);
+    @media only screen and (max-width: 1366px) {
+      width: 86%;
+    }
+
+    button {
+      padding: 7px 25px 7px;
+      border: none;
+      background: var(--tabBgColor);
+      border-radius: 0px;
+      font-weight: 600;
+      font-size: var(--commonFont-medium);
+      border: none;
+      border-right: 1px solid var(--whiteColor);
+      margin-right: 0;
+      color: var(--textColor);
+
+      &.active {
+        margin-bottom: 10px;
+        background: var(--gradient-theme);
+        color: var(--whiteColor);
+      }
+    }
+  }
+
+  .tab-content {
+    // padding-top: 20px;
+
+    .tab-body-section {}
+  }
+
+  &.vertical-tab {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+
+    .tab-header {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 180px;
+      height: 100%;
+      border-right: 1px solid #d0d4df;
+      border-bottom: 0;
+      padding: 5px 0px 0 0px;
+
+      // background: var(--bg-main-content);
+      button {
+        margin: 0;
+        width: 100%;
+        border-radius: 0;
+        text-align: left;
+        margin-bottom: 5px;
+        border: none;
+        border-bottom: 1px solid #d0d4df;
+        margin-right: 10px;
+        z-index: 1;
+        background: #e2e6f0;
+        border-right-color: var(--whiteColor);
+        color: var(--textColor);
+
+        &.active {
+          background: var(--gradient-theme);
+          border-right: 1px solid var(--themeColor);
+          color: var(--whiteColor);
+          border-left: 4px solid var(--textColor);
+        }
+      }
+    }
+
+    .tab-content {
+      width: calc(100% - 180px);
+    }
+
+    .card {
+      padding-right: 0;
+      padding-top: 10px;
+    }
+
+    .card-body-sec {
+      margin-top: 10px;
+    }
+  }
+}
+
+
+.vertical-tab-inner {
+  .tab-section {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 355px);
+    position: relative;
+
+    @media only screen and (max-width: 1560px) {
+      height: calc(100vh - 340px);
+    }
+
+
+    .tab-header {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--linkMenu);
+      width: 15%;
+      overflow: hidden;
+      transition: 0.5s all;
+      padding-top: 11px;
+
+      button {
+        padding: 10px 15px;
+        border: none;
+        background: none;
+        border-radius: 0px;
+        font-weight: 600;
+        font-size: var(--commonFont);
+        border: none;
+        border-bottom: 1px solid var(--linkMenu);
+        margin-right: 0;
+        color: var(--textColor);
+        text-align: left;
+        transition: 0.5s all;
+        color: #5e6470;
+
+        &:hover {
+          background: var(--linkMenu);
+        }
+
+        &.active {
+          background: var(--themeColorLight);
+          color: var(--themeColor);
+        }
+
+        @media only screen and (max-width: 1560px) {
+          padding: 10px 15px 8px;
+        }
+
+      }
+
+
+    }
+
+    .tab-content {
+      width: 85%;
+      padding: 0 0 15px 15px;
+      height: calc(100vh - 355px);
+      overflow: hidden;
+      overflow-y: auto;
+      transition: 0.5s all;
+
+      @media only screen and (max-width: 1560px) {
+        height: calc(100vh - 340px);
+        padding-bottom: 0;
+      }
+    }
+
+    .collapse-tab {
+      position: absolute;
+      top: -5px;
+      left: calc(15% - 11px);
+      min-height: 22px;
+      min-width: 22px;
+      max-height: 22px;
+      max-width: 22px;
+      background: var(--gradient-theme);
+      border-radius: 100%;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.5s all;
+
+      img {
+        filter: brightness(100);
+        transform: rotate(90deg);
+        transition: 0.5s all;
+      }
+
+      &:hover {
+        box-shadow: var(--card-shadow);
+        background: linear-gradient(to right, #2d3641db, #000000db);
+      }
+    }
+
+    &.collapse-tabs {
+      .collapse-tab {
+        left: calc(0% - 5px);
+        background: linear-gradient(to right, #2d3641db, #000000db);
+
+        img {
+          transform: rotate(270deg);
+        }
+      }
+
+      .tab-header {
+        width: 0;
+        padding-right: 5px;
+        transition: 0.5s all;
+
+        button {
+          display: none;
+        }
+      }
+
+      .tab-content {
+        width: 100%;
+
+        .contact-card-list {
+          .contact-main-card-section {
+            width: 19%;
+          }
+        }
+        .address-card-list {
+          .address-main-card-section{
+            width: 19%;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+// Tab Section End
 
 .model-hight-fix {
   height: calc(100vh - 300px);

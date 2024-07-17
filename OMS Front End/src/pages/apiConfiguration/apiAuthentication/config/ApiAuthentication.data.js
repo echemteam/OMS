@@ -1,13 +1,14 @@
 import { FormFieldTypes } from "../../../../data/formFieldType";
 import { GridColumnType } from "../../../../data/gridColumnType";
 
-export const addEditApiEndPointsFormData ={
+export const addEditApiAuthenticationFormData ={
     initialState:{
         providerId:"",
-        name: "",
-        path:"",
-        method:"",
-        description:"",
+       authKey: "",
+        clientId:"",
+        clientSecret:"",
+        tokenEndpoint:"",
+        tokenExpires:"",
     },
     formFields: [
         {
@@ -27,13 +28,13 @@ export const addEditApiEndPointsFormData ={
         },
       
         {
-            id: "name",
-            lable: "Name ",
-            Field_Name: "Name",
+            id: "authKey",
+            lable: "AuthKey ",
+            Field_Name: "authKey",
             fieldType: FormFieldTypes.INPUT,
-            dataField: "name",
+            dataField: "authKey",
             fieldSetting: {
-                placeholder: "Enter Name",
+                placeholder: "Enter AuthKey",
                 allowSpace: true,
             },
             validation: [{ type: "require" }],
@@ -42,13 +43,13 @@ export const addEditApiEndPointsFormData ={
             },
         },
         {
-            id: "path",
-            lable: "Path",
-            Field_Name: "Path",
+            id: "clientId",
+            lable: "Client Id",
+            Field_Name: "Client Id",
             fieldType: FormFieldTypes.INPUT,
-            dataField: "path",
+            dataField: "clientId",
             fieldSetting: {
-                placeholder: "Enter Path",
+                placeholder: "Enter ClientId",
                 allowSpace: true,
             },
             validation: [{ type: "require" }],
@@ -57,28 +58,13 @@ export const addEditApiEndPointsFormData ={
             },
         },
         {
-            id: "method",
-            lable: "Method ",
-            Field_Name: "Method",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "method",
+            id: "clientSecret",
+            lable: "Client Secret",
+            Field_Name: "Client Secret",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "clientSecret",
             fieldSetting: {
-                placeholder: "Select Method",
-            },
-            
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
-            },
-        },
-        {
-            id: "description",
-            lable: "Description",
-            Field_Name: "Description",
-            fieldType: FormFieldTypes.TEXTAREA,
-            dataField: "description",
-            fieldSetting: {
-                placeholder: "Enter Description",
+                placeholder: "Enter Client Secret",
                 allowSpace: true,
             },
             validation: [{ type: "require" }],
@@ -86,44 +72,83 @@ export const addEditApiEndPointsFormData ={
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
-       
+        {
+            id: "tokenEndpoint",
+            lable: "Token Endpoint",
+            Field_Name: "Token Endpoint",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "tokenEndpoint",
+            fieldSetting: {
+                placeholder: "Enter Token Endpoint",
+                allowSpace: true,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+            },
+        },
+        {
+            id: "tokenExpires",
+            lable: "Token Expires Date",
+            Field_Name: "TokenExpires",
+            fieldType: FormFieldTypes.DATEPICKER,
+            dataField: "tokenExpires",
+            fieldSetting: {
+              placeholder: "Select Expire Date",
+              allowSpace: true,
+            },
+            // validation: [{ type: "require" }],
+            style: {
+              containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
+            },
+          },
     ],
     formSetting: {
         isViewOnly: false
     }
 
 }
-export const ApiEndPointGridConfig = {
+export const ApiAuthenticationtGridConfig = {
     columns: [
         {
             name: "Provider Name",
-            fieldName: "name",
+            fieldName: "providerName",
             width: "15%",
             allowShort: true,
           },
       {
-        name: "EndPoint Name",
-        fieldName: "endpointName",
+        name: "AuthKey",
+        fieldName: "authKey",
         width: "15%",
         allowShort: true,
       },
       {
-        name: "EndPoint Path",
-        fieldName: "path",
+        name: "ClientId",
+        fieldName: "clientId",
         width: "25%",
         allowShort: true,
       },
       {
-        name: "EndPoint Method",
-        fieldName: "method",
+        name: "Client Secret",
+        fieldName: "clientSecret",
         width: "15%",
         allowShort: true,
       },
       {
-        name: "Description",
-        fieldName: "description",
+        name: "Token Endpoint",
+        fieldName: "tokenEndpoint",
         width: "20%",
         allowShort: true,
+      },
+      {
+        name: "Token Expires",
+        fieldName: "tokenExpires",
+        width: "20%",
+        colType: GridColumnType.DATE,
+        allowShort: true,
+        colSettings: {
+          format: "DD/MM/YYYY",
+        },
       },
       {
         name: "Action",

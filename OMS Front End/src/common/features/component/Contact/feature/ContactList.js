@@ -51,7 +51,7 @@ const ContactList = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, g
             {!isGetContactFetching ? (
                 <>
                     {contactDetails && contactDetails.length > 0 ? (
-                        <div className="row">
+                        <div className="contact-card-list">
                             {contactDetails.map((contactItem, childIndex) => (
                                 <ContactDetailCard contactItem={contactItem} handleEdit={handleEdit} showEditIcon={showEditIcon} />
                             ))}

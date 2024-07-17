@@ -47,7 +47,7 @@
         }
 
         h5 {
-          font-size: var(--commonFont-extraLarge);
+          font-size: var(--commonFont-large);
           font-weight: 600;
           color: var(--themeColor);
           margin-bottom: 0px;
@@ -206,10 +206,15 @@
 .basic-info-model {
   .card {
     box-shadow: none;
-    padding: 10px 0 0;
+    padding: 0px 0 0;
+    margin-top: 7px;
   }
 }
-
+.supplier-basic-info-model{
+  .card {
+    margin-top: 15px;
+  }
+}
 .back-button {
   position: absolute;
   right: 20px;
@@ -386,6 +391,7 @@
     align-items: center;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 .card{

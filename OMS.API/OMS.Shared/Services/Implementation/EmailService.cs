@@ -25,7 +25,7 @@ namespace OMS.Shared.Services.Implementation
                     FromEmail = _commonSettingService.EmailSettings.FromEmail!,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     Password = _commonSettingService.EmailSettings.Password!,
-                    TO = _commonSettingService.EmailSettings.ErrorEmailTo!,
+                    To = _commonSettingService.EmailSettings.ErrorEmailTo!,
                     EnableSsl = Convert.ToBoolean(_commonSettingService.EmailSettings.EnableSSL),
                     Subject = subject,
                     Body = body

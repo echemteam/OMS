@@ -96,9 +96,14 @@ export const securityKey = {
      //** Supplier History */
      SUPPLIERHISTORY: "Supplier History",
 
+    
+     //** Api Configration */
+     APICONFIGURATION: "API Configuration",
 
-     CONFIGURATION : "Configuration",
-     APPROVALRULES : "Approval Rules",
+     APIPROVIDERS:"API Providers",
+     APIENDPOINTS:"API EndPoints",
+     APIPARAMETERS:"API Parameters",
+     APIAUTHENTICATION:"API Authentication",
 
 
      //** Wating for the generate keys */
@@ -110,5 +115,8 @@ export const securityKey = {
      //** Permissions Management */ -- Pending 
      PERMISSIONMANAGEMENT: "Permissions Management",
      SAVEPERMISSIONS: "Save Permission",
+
+     CONFIGURATION : "Configuration",
+     APPROVALRULES : "Approval Rules",
 
 };

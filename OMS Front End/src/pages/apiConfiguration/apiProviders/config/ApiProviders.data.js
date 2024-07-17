@@ -69,19 +69,19 @@ export const ApiProvidersGridConfig = {
         name: "Name",
         fieldName: "name",
         width: "20%",
-        // allowShort: true,
+        allowShort: true,
       },
       {
         name: "Base URL",
         fieldName: "baseURL",
         width: "35%",
-        // allowShort: true,
+        allowShort: true,
       },
       {
         name: "Authentication Type",
         fieldName: "authenticationType",
         width: "35%",
-        // allowShort: true,
+        allowShort: true,
       },
      
       {
