@@ -34,7 +34,7 @@ export const assignUserListData = {
       name: "User Name",
       fieldName: "userName",
       width:"80%",
-      // allowShort: true,
+      allowShort: true,
     },
     {
       name: "Action",

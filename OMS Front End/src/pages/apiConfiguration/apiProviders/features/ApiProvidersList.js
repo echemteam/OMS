@@ -21,28 +21,29 @@ const ApiProvidersList=({handleEditClick,childRef})=>{
       if (isDeleteProviderSuccess && isDeleteProvidereData) {
         ToastService.success(isDeleteProvidereData.errorMessage);
         const currentPageObject = molGridRef.current.getCurrentPageObject();
-        getLists(currentPageObject);
+        getLists(currentPageObject,molGridRef.current.generateSortingString());
       }
     }, [isDeleteProviderSuccess, isDeleteProvidereData]);
 
-    const getLists = (pageObject) => {
+    const getLists = (pageObject,sortingString) => {
       const request = {
         pagination: {
           pageNumber: pageObject.pageNumber,
           pageSize: pageObject.pageSize,
         },
         filters: { searchText: "" },
+        sortString: sortingString
       };
       getApiProviders(request);
     };
 
     const handlePageChange = (page) => {
-      getLists(page);
+      getLists(page,molGridRef.current.generateSortingString());
     };
     const onGetData = () =>{
       if (molGridRef.current) {
         const defaultPageObject = molGridRef.current.getCurrentPageObject();
-        getLists(defaultPageObject);
+        getLists(defaultPageObject,molGridRef.current.generateSortingString());
       }
     }
 
@@ -92,6 +93,7 @@ return(<>
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
+              onSorting={handleSorting}
               isLoading={isApiProvidersLoading}
               onActionChange={actionHandler}
             />

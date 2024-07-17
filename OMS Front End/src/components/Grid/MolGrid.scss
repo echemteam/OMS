@@ -80,7 +80,7 @@ table {
 
           .shorting-part {
 
-            // display: inline-block;
+            display: inline-block;
             button {
               background: transparent;
               border: none;
@@ -285,10 +285,10 @@ table {
             cursor: pointer;
 
             img {
-              min-height: 20px;
-              min-width: 20px;
-              max-height: 20px;
-              max-width: 20px;
+              min-height: 17px;
+              min-width: 17px;
+              max-height: 17px;
+              max-width: 17px;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -353,7 +353,7 @@ table {
       max-height: calc(100vh - 345px);
 
       @media only screen and (max-width: 1560px) {
-          max-height: calc(100vh - 324px);
+        max-height: calc(100vh - 335px);
       }
     }
   }

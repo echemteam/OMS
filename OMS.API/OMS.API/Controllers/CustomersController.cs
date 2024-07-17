@@ -108,6 +108,13 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(customerName);
         }
+
+        [HttpPost("UpdateCustomerSubCompany")]
+        public async Task<IActionResult> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData)
+        {
+            var responseData = await _serviceManager.customersServices.UpdateCustomerSubCompany(requestData).ConfigureAwait(true);
+            return APISucessResponce<object>(responseData);
+        }
         #endregion
     }
 }

@@ -37,7 +37,26 @@ const MolGridHeader = (props) => {
     if (props.onSortingUpdate)
       props.onSortingUpdate(sortingObj);
   };
+  
+  // Function to remove a sorted column
+  const handleRemoveSortColumn = (col) => {
+    const index = props.selectedSorting.findIndex((item) => item.fieldName === col.fieldName);
+    let sortingObj = [...props.selectedSorting];
 
+    if (index !== -1) {
+      // If it exists, remove the object from the array
+      sortingObj.splice(index, 1);
+
+      // Update the sort number for the remaining objects
+      sortingObj = sortingObj.map((item, idx) => ({
+        ...item,
+        sortNumber: idx + 1
+      }));
+    }
+    
+    if (props.onSortingUpdate)
+      props.onSortingUpdate(sortingObj);
+  }
   const renderShortColumn = (col) => {
     let shortColObj = props.selectedSorting.find(
       (s) => s.fieldName === col.fieldName
@@ -62,7 +81,7 @@ const MolGridHeader = (props) => {
               altText="Arrow Icon"
             />
           </button>
-          {/* {shortColObj ? (
+          {shortColObj ? (
             <span className="sort-priority-number">
               <div className="short-count">
                 {shortColObj.sortNumber}
@@ -76,7 +95,7 @@ const MolGridHeader = (props) => {
                 </button>
               </div>
             </span>
-          ) : null} */}
+          ) : null}
         </div>
       </>
     );

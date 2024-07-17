@@ -48,8 +48,7 @@ export const isValidFax = (value) => {
 }
 
 export const isUnique = (value) => {
-    const invalidChars = /[^a-zA-Z0-9\-&]/;
-    // const invalidChars = /[^a-zA-Z\-&]/; 
+    const invalidChars = /[^a-zA-Z0-9\-& ]/;
     return !invalidChars.test(value);
 }
 
@@ -62,3 +61,22 @@ export const isOnlyText = (value) => {
     const invalidChars = /^\D*$/;
     return invalidChars.test(value);
 }
+
+export const invalidBoundarySpaces = (value) => {
+    // Otherwise, check if the string contains spaces only between characters
+    const validPattern = /^[^\s][a-zA-Z\s]*[^\s]$/;
+    return validPattern.test(value);
+}
+
+// export const invalidBoundarySpaces = () => {
+//     const invalidChars = /^\s|\s$/;
+
+//     // If the string starts or ends with a space, return false
+//     if (invalidChars.test(value)) {
+//         return false;
+//     }
+
+//     // Otherwise, check if the string contains spaces only between characters
+//     const validPattern = /^[^\s][a-zA-Z\s]*[^\s]$/;
+//     return validPattern.test(value);
+// }

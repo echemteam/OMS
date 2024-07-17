@@ -40,13 +40,14 @@ const Users = () => {
   const [deleteUser, { isSuccess: isDeleteSuccess, data: isDeletData }] =
     useDeleteUserMutation();
 
-  const getLists = (pageObject) => {
+  const getLists = (pageObject, sortingString) => {
     const request = {
       pagination: {
         pageNumber: pageObject.pageNumber,
         pageSize: pageObject.pageSize,
       },
       filters: { searchText: debouncedSearch },
+      sortString: sortingString
     };
     getUsers(request);
   };
@@ -57,9 +58,12 @@ const Users = () => {
   };
 
   const handlePageChange = (page) => {
-    getLists(page);
+    getLists(page, molGridRef.current.generateSortingString());
   };
 
+  const handleSorting = (shortString) => {
+    getLists(molGridRef.current.getCurrentPageObject(), shortString);
+  }
 
   //** Check grid Action Permission */
   useEffect(() => {
@@ -107,14 +111,14 @@ const Users = () => {
     if (isDeleteSuccess && isDeletData) {
       ToastService.success(isDeletData.errorMessage);
       const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(currentPageObject);
+      getLists(currentPageObject, molGridRef.current.generateSortingString());
     }
   }, [isDeleteSuccess, isDeletData]);
 
   useEffect(() => {
     if (molGridRef.current) {
       const defaultPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(defaultPageObject);
+      getLists(defaultPageObject, molGridRef.current.generateSortingString());
     }
   }, [debouncedSearch]);
 
@@ -172,6 +176,7 @@ const Users = () => {
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
+              onSorting={handleSorting}
               isLoading={isListLoading}
               onActionChange={actionHandler}
             />

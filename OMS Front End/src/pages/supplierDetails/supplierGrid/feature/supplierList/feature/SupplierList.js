@@ -128,7 +128,8 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
     }
   }
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page,sortingString) => {
+    const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
     const request = {
       pagination: {
         pageNumber: page.pageNumber,
@@ -136,6 +137,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
       },
       filters: { searchText: search },
       statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
+      sortString: sortingStringObject
     };
     getSuppliers(request);
   };
@@ -165,7 +167,8 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   useEffect(() => {
     if (isSuccessUpdateSupplier && updateSupplierData) {
       ToastService.success(updateSupplierData.errorMessage);
-      getListApi()
+      const currentPageObject = molGridRef.current.getCurrentPageObject();
+      getListApi(currentPageObject, molGridRef.current.generateSortingString())
     }
   }, [isSuccessUpdateSupplier, updateSupplierData]);
 
@@ -179,7 +182,8 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   useEffect(() => {
     if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
       ToastService.success(updateSupplierInActiveStatusData.errorMessage);
-      getListApi()
+      const currentPageObject = molGridRef.current.getCurrentPageObject();
+      getListApi(currentPageObject, molGridRef.current.generateSortingString())
       handleToggleModal()
     }
   }, [isSuccessUpdateSupplierInActiveStatus, updateSupplierInActiveStatusData]);
@@ -188,8 +192,9 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
     getListApi,
   }));
 
-  const getListApi = () => {
-    const currentPageObject = molGridRef.current.getCurrentPageObject();
+  const getListApi = (pageObject, sortingString) => {
+    const currentPageObject = pageObject ? pageObject : molGridRef.current.getCurrentPageObject();
+    const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
     const request = {
       pagination: {
         pageNumber: currentPageObject.pageNumber,
@@ -197,9 +202,15 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
       },
       filters: { searchText: search },
       statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
+      sortString: sortingStringObject,
     };
     getSuppliers(request);
   };
+
+  
+  const handleSorting = (shortString) => {
+    getListApi(molGridRef.current.getCurrentPageObject(), shortString);
+  }
 
   const handleEditClick = (data) => {
     navigate(`/SupplierDetails/${encryptUrlData(data.supplierId)}`, "_blank");
@@ -348,6 +359,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
                     currentPage: 1,
                   }}
                   onPageChange={handlePageChange}
+                  onSorting={handleSorting}
                   onActionChange={actionHandler}
                   allowPagination={true}
                   onCellDataChange={handleGridCheckBoxChange}

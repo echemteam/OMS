@@ -16,17 +16,23 @@ import CustomerViewTab from "../../../feature/customerViewDetail/customerViewTab
 import CustomerBasicInfoCard from "../../../feature/customerViewDetail/customerBasicInfoCard/CustomerBasicInfoCard";
 
 const CustomerDetails = () => {
-    const navigate = useNavigate();
-    const { id } = useParams();
-    const authState = useSelector((state) => state.auth);
-    const keyId = id ? decryptUrlData(id) : 0;
-    const [isModelOpen, setisModelOpen] = useState(false);
-    const [customerData, setCustomerData] = useState(null);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const authState = useSelector((state) => state.auth);
+  const keyId = id ? decryptUrlData(id) : 0;
+  const [isModelOpen, setisModelOpen] = useState(false);
+  const [customerData, setCustomerData] = useState(null);
 
   const { setCustomerId, customerId, setIsResponsibleUser } = useContext(BasicDetailContext);
 
-  const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById,
-    data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
+  const [
+    getCustomersBasicInformationById,
+    {
+      isFetching: isGetCustomersBasicInformationByIdFetching,
+      isSuccess: isGetCustomersBasicInformationById,
+      data: GetCustomersBasicInformationByIdData,
+    },
+  ] = useLazyGetCustomersBasicInformationByIdQuery();
 
   useEffect(() => {
     if (
@@ -59,6 +65,10 @@ const CustomerDetails = () => {
     keyId && getCustomersBasicInformationById(keyId);
   };
 
+  const onSuccess = () => {
+    keyId && getCustomersBasicInformationById(keyId);
+  };
+
   const handleToggleModal = () => {
     setisModelOpen(true);
   };
@@ -69,52 +79,52 @@ const CustomerDetails = () => {
     navigate("/Customers");
   };
 
-
   return (
     <>
-    <div className="card-bottom-m-0">
-      <div className="row">
-        <div className="col-xxl-3 col-xl-3 col-md-4 col-12 basic-left-part customer-desc-left-sec">
-          <CardSection>
-            <CustomerBasicInfoCard
-              editClick={handleToggleModal}
-              customerData={customerData}
-              isLoading={isGetCustomersBasicInformationByIdFetching}
-              customerId={customerId}
-              onhandleRepeatCall={getCustomerById}
-            />
-          </CardSection>
-        </div>
-        <div className="col-xxl-9 col-xl-9 col-md-8 col-12 other-info-tab">
-          <Buttons
-            buttonTypeClassName="back-button btn dark-btn"
-            onClick={handleBackClick}
-            textWithIcon={true}
-            buttonText="Back"
-            imagePath={AppIcons.BackArrowIcon}
-          ></Buttons>
-          <div className="customer-detail-tab-sec">
-            <CustomerViewTab customerId={customerId } />
+      <div className="card-bottom-m-0">
+        <div className="row">
+          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 basic-left-part customer-desc-left-sec mb-2">
+            <CardSection>
+              <CustomerBasicInfoCard
+                editClick={handleToggleModal}
+                customerData={customerData}
+                isLoading={!isModelOpen ? isGetCustomersBasicInformationByIdFetching : null}
+                customerId={customerId}
+                getCustomerById={onSuccess}
+              />
+            </CardSection>
+          </div>
+          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
+            <Buttons
+              buttonTypeClassName="back-button btn dark-btn"
+              onClick={handleBackClick}
+              textWithIcon={true}
+              buttonText="Back"
+              imagePath={AppIcons.BackArrowIcon}
+            ></Buttons>
+            <div className="customer-detail-tab-sec">
+              <CustomerViewTab customerId={customerId} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <SidebarModel
-      modalTitle="Edit Basic Information"
-      contentClass="content-65 basic-info-model"
-      onClose={onSidebarClose}
-      modalTitleIcon={AppIcons.AddIcon}
-      isOpen={isModelOpen}
-    >
-      <CustomerBasicDetail
-        onSidebarClose={onSidebarClose}
+      <SidebarModel
+        modalTitle="Edit Basic Information"
+        contentClass="content-50 basic-info-model"
+        onClose={onSidebarClose}
+        modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}
-        customerData={customerData}
-        keyId={keyId}
-        getCustomerById={getCustomerById}
-      />
-    </SidebarModel>
-  </>
+      >
+        <CustomerBasicDetail
+          onSidebarClose={onSidebarClose}
+          isOpen={isModelOpen}
+          customerData={customerData}
+          keyId={keyId}
+          isEditablePage={true}
+          getCustomerById={getCustomerById}
+        />
+      </SidebarModel>
+    </>
   );
 };
 

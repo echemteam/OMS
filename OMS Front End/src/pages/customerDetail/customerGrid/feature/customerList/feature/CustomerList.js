@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-    useContext,
-    useEffect,
-    useImperativeHandle,
-    useRef,
-    useState,
-  } from "react";
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
-  import { useNavigate } from "react-router-dom";
-  
+import { useNavigate } from "react-router-dom";
+
 import CardSection from "../../../../../../components/ui/card/CardSection";
 import MolGrid from "../../../../../../components/Grid/MolGrid";
 import { useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from "../../../../../../app/services/basicdetailAPI";
@@ -160,7 +160,8 @@ import { reasonData } from "../../../../../../common/features/component/Customer
       }
     }
   
-    const handlePageChange = (page) => {
+    const handlePageChange = (page,sortingString) => {
+      const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
       const request = {
         pagination: {
           pageNumber: page.pageNumber,
@@ -168,6 +169,7 @@ import { reasonData } from "../../../../../../common/features/component/Customer
         },
         filters: { searchText: search },
         statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
+        sortString: sortingStringObject
       };
       getCustomers(request);
     };
@@ -197,7 +199,8 @@ import { reasonData } from "../../../../../../common/features/component/Customer
     useEffect(() => {
       if (isSuccessUpdateCustomer && updateCustomerData) {
         ToastService.success(updateCustomerData.errorMessage);
-        getListApi();
+        const currentPageObject = molGridRef.current.getCurrentPageObject();
+        getListApi(currentPageObject, molGridRef.current.generateSortingString());
       }
     }, [isSuccessUpdateCustomer, updateCustomerData]);
   
@@ -207,7 +210,8 @@ import { reasonData } from "../../../../../../common/features/component/Customer
         updateCustomerInActiveStatusData
       ) {
         ToastService.success(updateCustomerInActiveStatusData.errorMessage);
-        getListApi();
+        const currentPageObject = molGridRef.current.getCurrentPageObject();
+        getListApi(currentPageObject, molGridRef.current.generateSortingString());
         handleToggleModal();
       }
     }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
@@ -216,8 +220,9 @@ import { reasonData } from "../../../../../../common/features/component/Customer
       getListApi,
     }));
   
-    const getListApi = () => {
-      const currentPageObject = molGridRef.current.getCurrentPageObject();
+    const getListApi = (pageObject, sortingString) => { 
+      const currentPageObject = pageObject ? pageObject : molGridRef.current.getCurrentPageObject();
+      const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
       const request = {
         pagination: {
           pageNumber: currentPageObject.pageNumber,
@@ -225,17 +230,22 @@ import { reasonData } from "../../../../../../common/features/component/Customer
         },
         filters: { searchText: search },
         statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
+        sortString: sortingStringObject,
       };
       getCustomers(request);
     };
   
+    const handleSorting = (shortString) => {
+      getListApi(molGridRef.current.getCurrentPageObject(), shortString);
+    }
+
     const handleEditClick = (data) => {
       navigate(`/CustomerDetails/${encryptUrlData(data.customerId)}`, "_blank");
     };
   
     const handleGridCheckBoxChange = (rowData) => {
       if (childRef.current) {
-        childRef.current.callChildFunction(rowData.customerId);
+        childRef.current.callChildFunction(rowData.customerId,rowData.isSubCompany? rowData.isSubCompany : false);
       }
       setcustomerId(rowData.customerId);
     };
@@ -377,6 +387,7 @@ import { reasonData } from "../../../../../../common/features/component/Customer
                       currentPage: 1,
                     }}
                     onPageChange={handlePageChange}
+                    onSorting={handleSorting}
                     onActionChange={actionHandler}
                     allowPagination={true}
                     onCellDataChange={handleGridCheckBoxChange}

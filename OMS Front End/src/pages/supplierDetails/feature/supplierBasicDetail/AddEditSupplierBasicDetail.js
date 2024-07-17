@@ -278,7 +278,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     return (
         <React.Fragment>
-            <div className="row horizontal-form basic-info-step">
+            <div className="row basic-info-step">
                 {!isGetSupplierBasicInformationByIdFetching ?
                     <FormCreator
                         config={formData}

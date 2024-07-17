@@ -27,6 +27,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETCUSTOMERAUDITHISTORYBYCUSTOMERID = "GetCustomerAuditHistoryByCustomerId";
         const string ADDEDITCONTACTFORCUSTOMER = "AddEditContactForCustomer";
         const string GETCUSTOMERSDETAILSBYCUTOMERNAME = "GetCustomersDetailsByCutomerName";
+        const string UPDATECUSTOMERSUBCOMPANY = "UpdateCustomerSubCompany";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -49,7 +50,8 @@ namespace OMS.Domain.Repository.Implementation
                 customers.TaxId,
                 customers.CreatedBy,
                 customers.IsBuyingForThirdParty,
-                customers.ResponsibleUserId
+                customers.ResponsibleUserId,
+                customers.IsSubCompany
             }, CommandType.StoredProcedure);
         }
 
@@ -87,7 +89,8 @@ namespace OMS.Domain.Repository.Implementation
                 queryRequest.StatusId,
                 queryRequest.Pagination!.PageNumber,
                 queryRequest.Pagination.PageSize,
-                queryRequest.Filters?.SearchText
+                queryRequest.Filters?.SearchText,
+                queryRequest.SortString
             }, true);
         }
 
@@ -188,6 +191,14 @@ namespace OMS.Domain.Repository.Implementation
                 customerName
             }, CommandType.StoredProcedure);
             return customerDetails;
+        }
+        public async Task<AddEntityDTO<bool>> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<bool>>(UPDATECUSTOMERSUBCOMPANY, new
+            {
+                requestData.CustomerId,
+                requestData.IsSubCompany
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }
