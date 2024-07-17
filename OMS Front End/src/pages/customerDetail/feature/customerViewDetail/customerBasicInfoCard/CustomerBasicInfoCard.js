@@ -221,7 +221,10 @@ const CustomerBasicInfoCard = ({
         setSelectedStatus(selectedOption.value);
       } else if (selectedOption.value === "3") {
         if (childRef.current) {
-          childRef.current.callChildFunction(customerId, customerData.isSubCompany ? customerData.isSubCompany : false);
+          childRef.current.callChildFunction(
+            customerId,
+            customerData.isSubCompany ? customerData.isSubCompany : false
+          );
         }
         setcustomerId(customerId);
         setStatusId(selectedOption.value);
@@ -383,19 +386,6 @@ const CustomerBasicInfoCard = ({
 
           <div className="col-3">
             <div className="field-desc">
-              <div className="inf-label">R-User</div>
-              <b>&nbsp;:&nbsp;</b>
-              <div className="status-dropdown">
-                <DropDown
-                  options={responsibleUserOptions}
-                  value={rUserValue}
-                  onChange={handleRUserChange}
-                  placeholder="Select Status"
-                  isDisabled={isResponsibleUser ? true : isButtonDisable}
-                />
-              </div>
-            </div>
-            <div className="field-desc">
               <div className="inf-label">Status</div>
               <b>&nbsp;:&nbsp;</b>
               <div className={`status-dropdown ${getStatusClass()}`}>
@@ -416,6 +406,19 @@ const CustomerBasicInfoCard = ({
                 {customerData?.taxId
                   ? customerData?.taxId
                   : ErrorMessage.NotAvailabe}
+              </div>
+            </div>
+            <div className="field-desc">
+              <div className="inf-label">R-User</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="status-dropdown">
+                <DropDown
+                  options={responsibleUserOptions}
+                  value={rUserValue}
+                  onChange={handleRUserChange}
+                  placeholder="Select Status"
+                  isDisabled={isResponsibleUser ? true : isButtonDisable}
+                />
               </div>
             </div>
           </div>
