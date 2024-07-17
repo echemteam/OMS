@@ -29,9 +29,9 @@ const CustomerGrid = React.lazy(() => import('../../pages/customerDetail/custome
 const CustomerViewDetails = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerViewDetail'));
 
 //** Supplier  */
-const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/supplierGrid/SupplierGrid'));
 const AddSupplier = React.lazy(() => import('../../pages/supplierDetails/addSupplier/AddSupplier'));
-const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/supplierViewDetail/SupplierViewDetail"));
+const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/supplierGrid/SupplierGrid'));
+const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/supplierGrid/SupplierViewDetail"));
 
 
 export const ComponentNavigation = [

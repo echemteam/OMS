@@ -15,9 +15,9 @@ import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSup
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../../../app/services/supplierAPI";
 
 //** Component's */
-const SupplierViewTab = React.lazy(() => import("../../../supplierViewDetail/feature/SupplierViewTab"));
+const SupplierViewTab = React.lazy(() => import("../../../feature/supplierViewDetail/supplierViewTabs/SupplierViewTab"));
 const SupplierBasicDetail = React.lazy(() => import("../../../feature/supplierBasicDetail/SupplierBasicDetail"));
-const SupplierBasicInfoCard = React.lazy(() => import("../../../supplierViewDetail/feature/SupplierBasicInfoCard"));
+const SupplierBasicInfoCard = React.lazy(() => import("../../../feature/supplierViewDetail/SupplierBasicInfo/SupplierBasicInfoCard"));
 
 const SupplierDetails = () => {
   const navigate = useNavigate();
@@ -87,7 +87,7 @@ const SupplierDetails = () => {
     <>
       <div className="card-bottom-m-0">
         <div className="row">
-          <div className="col-xxl-3 col-xl-3 col-md-4 col-12 basic-left-part customer-desc-left-sec">
+          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 basic-left-part customer-desc-left-sec mb-2">
             <CardSection>
               <SupplierBasicInfoCard
                 editClick={handleToggleModal}
@@ -97,7 +97,7 @@ const SupplierDetails = () => {
                 getSupplierById={onSuccess} />
             </CardSection>
           </div>
-          <div className="col-xxl-9 col-xl-9 col-md-5 col-12 other-info-tab">
+          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
             <Buttons buttonTypeClassName="back-button btn dark-btn" onClick={handleBackClick}
               textWithIcon={true} buttonText="Back" imagePath={AppIcons.BackArrowIcon}></Buttons>
             {/* Supplier Tab's */}

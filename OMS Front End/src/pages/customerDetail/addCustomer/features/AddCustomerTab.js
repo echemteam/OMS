@@ -46,7 +46,7 @@ const AddCustomerTab = () => {
     {
       label: "Basic Information",
       subLabel: "Enter Customer Basic information",
-      content: <CustomerBasicDetail />,
+      content: <CustomerBasicDetail isEditablePage={false} />,
       tab: CustomerSupplierTabEnum.BasicInformation,
     },
     {

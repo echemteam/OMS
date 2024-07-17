@@ -78,7 +78,7 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
             ToastService.success(isDeleteData.errorMessage);
             onGetData();
         }
-    }, [isDeleteSucess, isDownalodData]);
+    }, [isDeleteSucess, isDeleteData]);
 
     //** Handle Change's */
     const handleDownload = (name) => {
@@ -119,11 +119,11 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
                                 {
                                     Object.entries(documentListData).map(([type, items], index) => (
                                         <React.Fragment key={index}>
-                                            <div className="col-md-6 col-12">
+                                            <div className="col-xl-4 col-lg-4 col-md-4 col-12">
                                                 {items.map((data, childIndex) => (
                                                     <div className="documents" key={childIndex}>
                                                         <div className="left-icons">
-                                                            <Image imagePath={data.documentIcon} alt="Document Icon" />
+                                                            <Image imagePath={data.documentIcon} alt="Document Icon"/>
                                                         </div>
                                                         <div className="right-desc">
                                                             <div className="doc-details">

@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-    useContext,
-    useEffect,
-    useImperativeHandle,
-    useRef,
-    useState,
-  } from "react";
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
-  import { useNavigate } from "react-router-dom";
-  
+import { useNavigate } from "react-router-dom";
+
 import CardSection from "../../../../../../components/ui/card/CardSection";
 import MolGrid from "../../../../../../components/Grid/MolGrid";
 import { useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from "../../../../../../app/services/basicdetailAPI";
@@ -235,7 +235,7 @@ import { reasonData } from "../../../../../../common/features/component/Customer
   
     const handleGridCheckBoxChange = (rowData) => {
       if (childRef.current) {
-        childRef.current.callChildFunction(rowData.customerId);
+        childRef.current.callChildFunction(rowData.customerId,rowData.isSubCompany? rowData.isSubCompany : false);
       }
       setcustomerId(rowData.customerId);
     };

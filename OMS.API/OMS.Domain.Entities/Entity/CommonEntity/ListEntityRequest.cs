@@ -5,5 +5,6 @@
     {
         public PaginationDto? Pagination { get; set; }
         public T? Filters { get; set; }
+        public string? SortString { get; set; }
     }
 }

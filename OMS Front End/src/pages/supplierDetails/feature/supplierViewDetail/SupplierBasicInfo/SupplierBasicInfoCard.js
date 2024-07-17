@@ -1,32 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState, useContext } from 'react'
 //** Lib's */
-import Image from '../../../../components/image/Image';
-import { AppIcons } from '../../../../data/appIcons';
-import CopyText from '../../../../utils/CopyText/CopyText';
-import { securityKey } from '../../../../data/SecurityKey';
-import { ErrorMessage } from '../../../../data/appMessages';
-import Buttons from '../../../../components/ui/button/Buttons';
-import { OwnerType } from '../../../../utils/Enums/commonEnums';
-import FormCreator from '../../../../components/Forms/FormCreator';
-import DropDown from '../../../../components/ui/dropdown/DropDrown';
-import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
-import CenterModel from '../../../../components/ui/centerModel/CenterModel';
-import { StaticStatus, StatusValue } from '../../../../utils/Enums/StatusEnums';
-import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
-import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import Image from '../../../../../components/image/Image';
+import { AppIcons } from '../../../../../data/appIcons';
+import CopyText from '../../../../../utils/CopyText/CopyText';
+import { securityKey } from '../../../../../data/SecurityKey';
+import { ErrorMessage } from '../../../../../data/appMessages';
+import Buttons from '../../../../../components/ui/button/Buttons';
+import { OwnerType } from '../../../../../utils/Enums/commonEnums';
+import FormCreator from '../../../../../components/Forms/FormCreator';
+import DropDown from '../../../../../components/ui/dropdown/DropDrown';
+import DataLoader from '../../../../../components/ui/dataLoader/DataLoader';
+import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
+import { StaticStatus, StatusValue } from '../../../../../utils/Enums/StatusEnums';
+import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
+import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 //** Service's */
-import SwalAlert from '../../../../services/swalService/SwalService';
-import ToastService from '../../../../services/toastService/ToastService';
-import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../../../app/services/commonAPI';
-import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../app/services/supplierAPI';
-import { removeFormFields } from '../../../../utils/FormFields/RemoveFields/handleRemoveFields';
-import { setDropDownOptionField } from '../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
-import { reasonData } from '../../../../common/features/component/CustomerSupplierReason/Reason.data';
-import { excludingRoles } from '../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data';
+import SwalAlert from '../../../../../services/swalService/SwalService';
+import ToastService from '../../../../../services/toastService/ToastService';
+import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../../../../app/services/commonAPI';
+import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../../app/services/supplierAPI';
+import { removeFormFields } from '../../../../../utils/FormFields/RemoveFields/handleRemoveFields';
+import { setDropDownOptionField } from '../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
+import { reasonData } from '../../../../../common/features/component/CustomerSupplierReason/Reason.data';
+import { excludingRoles } from '../../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data';
 
 //** Component's */
-const SupplierApproval = React.lazy(() => import("../../feature/supplierApproval/SupplierApproval"));
+const SupplierApproval = React.lazy(() => import("../../supplierApproval/SupplierApproval"));
 
 const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId, getSupplierById }) => {
 
@@ -40,7 +40,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const [statusFeild, setStatusFeild] = useState("")
   const [options, setOptions] = useState([]);
   const [statusId, setStatusId] = useState();
-  // const [supplierId, setSupplierId] = useState();
+  const [showEditIcon, setShowEditIcon] = useState(true);
 
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
@@ -55,11 +55,14 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
 
   useEffect(() => {
     if (!isResponsibleUser) {
-      if (hasEditPermission.isViewOnly === true) {
+      if (hasEditPermission && hasEditPermission.isViewOnly === true) {
+        setShowEditIcon(true);
         setIsButtonDisable(true);
-      }
-      else {
-        setIsButtonDisable(false);
+      } else if (hasEditPermission.isEditable === true) {
+        setShowEditIcon(true);
+      } else {
+        setShowEditIcon(false);
+        setIsButtonDisable(true);
       }
     }
   }, [hasEditPermission, isResponsibleUser])
@@ -266,143 +269,181 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
 
   return (
     <>{!isLoading ?
-      <div className="basic-customer-detail" >
-        <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-          <div className="profile-info">
-            <div className="profile-icon-desc">
-              <div className="d-flex align-items-center">
-                <div className="profile-icon"> {supplierData?.name ? supplierData?.name.charAt(0).toUpperCase() : ""}</div>
-                <h5>{supplierData?.name}</h5>
+      <div className="basic-customer-detail">
+      <div className="col-xl-12 col-lg-12 col-md-12 col-12">
+        <div className="d-flex gap-5 profile-info  justify-content-between col-11">
+          <div className="d-flex col-3 flex-column profile-icon-desc justify-content-center">
+            <div className="d-flex">
+              <div className="profile-icon ">
+                {" "}
+                {supplierData?.name
+                  ? supplierData?.name.charAt(0).toUpperCase()
+                  : ""}
               </div>
-              <div className="edit-icons" onClick={editClick}>
+              <h5 className="ml-0">{supplierData?.name}</h5>
+            </div>
+
+            <div className="field-desc col-span-3">
+              <i class="fa fa-envelope"></i>
+              <a
+                className="email-link"
+                href={`mailto:${supplierData?.emailAddress}`}
+              >
+                <div className="info-desc">
+                  {supplierData?.emailAddress}
+                </div>
+              </a>
+              <span
+                className="copy-icon"
+                onClick={() =>
+                  CopyText(supplierData?.emailAddress, "email")
+                }
+              >
                 <Image
-                  imagePath={AppIcons.editThemeIcon}
+                  imagePath={AppIcons.copyIcon}
                   altText="Website Icon"
+                />
+              </span>
+            </div>
+
+            <div className="field-desc ">
+              <i class="fa fa-globe"></i>
+              <div className="info-desc">{supplierData?.website}</div>
+
+              <span
+                className="copy-icon"
+                onClick={() => CopyText(supplierData?.website, "website")}
+              >
+                <Image
+                  imagePath={AppIcons.copyIcon}
+                  altText="Website Icon"
+                />
+              </span>
+            </div>
+          </div>
+
+          <div className="col-3">
+            <div className="field-desc">
+              <div className="inf-label">R-User</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="status-dropdown">
+                <DropDown
+                  options={responsibleUserOptions}
+                  value={rUserValue}
+                  onChange={handleRUserChange}
+                  placeholder="Select Status"
+                  isDisabled={isResponsibleUser ? true : isButtonDisable}
                 />
               </div>
             </div>
-          </div>
-          <div className="field-desc d-flex align-items-center">
-            <div className="inf-label">R-User</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className='status-dropdown'>
-              <DropDown
-                options={responsibleUserOptions}
-                value={rUserValue}
-                onChange={handleRUserChange}
-                placeholder="Select Status"
-                isDisabled={isResponsibleUser ? true : isButtonDisable}
-              />
-            </div>
-          </div>
-          <div className="field-desc d-flex align-items-center">
-            <div className="inf-label">Status</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className={`status-dropdown ${getStatusClass()}`}>
-              <DropDown
-                options={options}
-                value={selectedStatus}
-                onChange={handleStatusChange}
-                placeholder="Select Status"
-                isDisabled={isButtonDisable}
-              />
+            <div className="field-desc">
+              <div className="inf-label">Status</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className={`status-dropdown ${getStatusClass()}`}>
+                <DropDown
+                  options={options}
+                  value={selectedStatus}
+                  onChange={handleStatusChange}
+                  placeholder="Select Status"
+                  isDisabled={isButtonDisable}
+                />
+              </div>
             </div>
 
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">Email</div>
-            <b>&nbsp;:&nbsp;</b>
-            <a className="email-link" href={`mailto:${supplierData?.emailAddress}`}>
-              <div className="info-desc">{supplierData?.emailAddress}</div>
-            </a>
-            <span className="copy-icon" onClick={() => CopyText(supplierData?.emailAddress, 'email')}>
-              <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
-            </span>
-
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">Website</div>
-            <b>&nbsp;:&nbsp;</b>
-
-            <div className="info-desc">{supplierData?.website}</div>
-
-            <span className="copy-icon" onClick={() => CopyText(supplierData?.website, 'website')}>
-              <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
-            </span>
-
-          </div>
-
-          <div className="field-desc">
-            <div className="inf-label">Country</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.countryName}</div>
-          </div>
-
-          <div className="field-desc">
-            <div className="inf-label">Group Type</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.groupType}</div>
-          </div>
-
-          <div className="field-desc">
-            <div className="inf-label">Territory</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.territory}</div>
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">Tax Id</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.taxId ? supplierData?.taxId : ErrorMessage.NotAvailabe}</div>
-          </div>
-          <div className="field-desc">
-            <div className="inf-label">Supplier Type</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">{supplierData?.supplierType}</div>
-          </div>
-          {/* <div className="field-desc">
-            <div className="inf-label">Is Company</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">
-              {supplierData?.isCompany}
-              {supplierData && supplierData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
+            <div className="field-desc">
+              <div className="inf-label">Tax Id</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">
+                {supplierData?.taxId
+                  ? supplierData?.taxId
+                  : ErrorMessage.NotAvailabe}
+              </div>
             </div>
-          </div> */}
+          </div>
+
+          {/* second no */}
+          <div className="col-3  separator">
+            <div className="field-desc">
+              <div className="inf-label">Territory</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">{supplierData?.territory}</div>
+            </div>
+
+            <div className="field-desc">
+              <div className="inf-label">Country</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">{supplierData?.countryName}</div>
+            </div>
+
+            <div className="field-desc">
+              <div className="inf-label">Supplier Type</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">{supplierData?.supplierType}</div>
+            </div>
+          </div>
+
+          {/* third no */}
+
+          <div className="col-3">
+            <di className="field-desc">
+              <div className="inf-label">Group Type</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">{supplierData?.groupType}</div>
+            </di>
+
+            {/* <div className="field-desc">
+              <div className="inf-label">Is Company</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">
+                {supplierData?.isCompany}
+                {supplierData && supplierData.isCompany ? (
+                  <i className="fa fa-check green-color"></i>
+                ) : (
+                  <i className="fa fa-times red-color"></i>
+                )}
+              </div>
+            </div> */}
+          </div>
         </div>
-        {showModal && (
-          <CenterModel
-            showModal={showModal}
-            handleToggleModal={handleToggleModal}
-            modalTitle={`${statusFeild} Reason`}
-            modelSizeClass="w-50s"
-          >
-            <div className="row horizontal-form">
-              <FormCreator
-                config={formData}
-                ref={reasonRef}
-                {...formData}
-
-              />
-              <div className="col-md-12 mt-2">
-                <div className="d-flex align-item-end justify-content-end">
-                  <div className="d-flex align-item-end">
-                    <Buttons
-                      buttonTypeClassName="theme-button"
-                      buttonText="Update"
-                      isLoading={updateCustomerInActiveStatusCustomerLoading}
-                      onClick={handleUpdate}
-                    />
-                    <Buttons
-                      buttonTypeClassName="dark-btn ml-5"
-                      buttonText="Cancel"
-                      onClick={handleToggleModal}
-                    />
-                  </div>
+        {showEditIcon ? 
+        <div className="edit-icons" onClick={editClick}>
+          <Image
+            imagePath={AppIcons.editThemeIcon}
+            altText="Website Icon"
+          />
+        </div>
+        :null}
+      </div>
+      {showModal && (
+        <CenterModel
+          showModal={showModal}
+          handleToggleModal={handleToggleModal}
+          modalTitle={`${statusFeild} Reason`}
+          modelSizeClass="w-50s"
+        >
+          <div className="row horizontal-form">
+            <FormCreator config={formData} ref={reasonRef} {...formData} />
+            <div className="col-md-12 mt-2">
+              <div className="d-flex align-item-end justify-content-end">
+                <div className="d-flex align-item-end">
+                  <Buttons
+                    buttonTypeClassName="theme-button"
+                    buttonText="Update"
+                    isLoading={updateCustomerInActiveStatusCustomerLoading}
+                    onClick={handleUpdate}
+                  />
+                  <Buttons
+                    buttonTypeClassName="dark-btn ml-5"
+                    buttonText="Cancel"
+                    onClick={handleToggleModal}
+                  />
                 </div>
               </div>
             </div>
-          </CenterModel>
-        )}
-      </div>
+          </div>
+        </CenterModel>
+      )}
+    </div>
       : <DataLoader />}
       <SupplierApproval childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} />
     </>

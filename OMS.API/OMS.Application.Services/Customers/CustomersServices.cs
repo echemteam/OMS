@@ -113,6 +113,10 @@ namespace OMS.Application.Services.Customers
         {
             return await repositoryManager.customers.GetCustomersDetailsByCutomerName(customerName);
         }
+        public async Task<AddEntityDTO<bool>> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData)
+        {
+            return await repositoryManager.customers.UpdateCustomerSubCompany(requestData);
+        }
         #endregion
     }
 }
