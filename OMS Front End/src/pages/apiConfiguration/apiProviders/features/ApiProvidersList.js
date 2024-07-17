@@ -93,7 +93,7 @@ return(<>
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
-              onSorting={handleSorting}
+              // onSorting={handleSorting}
               isLoading={isApiProvidersLoading}
               onActionChange={actionHandler}
             />
