@@ -102,7 +102,10 @@ const handleAPIAuthentication = () => {
     let requestData = {
       ...formData,
       authId: authId,
-      providerId: formData.providerId.value,
+      providerId:
+      formData.providerId && typeof formData.providerId === "object"
+        ? formData.providerId.value
+        : formData.providerId,
       
     };
     addEditApiAuthentication(requestData);
