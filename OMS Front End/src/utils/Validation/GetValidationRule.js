@@ -71,6 +71,12 @@ const getValidationRule = (element, validation) => {
                 message: ErrorMessage.UniqueName
             }
             break;
+        case "invalidBoundarySpaces":
+            valObj = {
+                type: validation.type,
+                message: ErrorMessage.InvalidBoundarySpaces
+            }
+            break;
         case "website":
             valObj = {
                 type: validation.type,
