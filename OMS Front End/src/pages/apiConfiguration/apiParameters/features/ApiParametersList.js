@@ -21,17 +21,18 @@ const ApiParametersList=({handleEditClick,childRef})=>{
       if (isDeleteApiParameterSuccess && isDeleteApiParametereData) {
         ToastService.success(isDeleteApiParametereData.errorMessage);
         const currentPageObject = molGridRef.current.getCurrentPageObject();
-        getLists(currentPageObject);
+        getLists(currentPageObject,molGridRef.current.generateSortingString());
       }
     }, [isDeleteApiParameterSuccess, isDeleteApiParametereData]);
 
-    const getLists = (pageObject) => {
+    const getLists = (pageObject,sortingString) => {
       const request = {
         pagination: {
           pageNumber: pageObject.pageNumber,
           pageSize: pageObject.pageSize,
         },
         filters: { searchText: "" },
+        sortString: sortingString
       };
       getApiParameters(request);
     };
@@ -39,10 +40,14 @@ const ApiParametersList=({handleEditClick,childRef})=>{
     const handlePageChange = (page) => {
       getLists(page);
     };
+    
+    const handleSorting = (shortString) => {
+      getLists(molGridRef.current.getCurrentPageObject(), shortString);
+    }
     const onGetData = () =>{
         if (molGridRef.current) {
           const defaultPageObject = molGridRef.current.getCurrentPageObject();
-          getLists(defaultPageObject);
+          getLists(defaultPageObject,molGridRef.current.generateSortingString());
         }
       }
   
@@ -92,6 +97,7 @@ const ApiParametersList=({handleEditClick,childRef})=>{
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
+              onSorting={handleSorting}
               isLoading={isGetApiParametersLoading}
               onActionChange={actionHandler}
             />

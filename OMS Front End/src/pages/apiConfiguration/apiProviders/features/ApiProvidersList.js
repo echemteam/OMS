@@ -40,6 +40,9 @@ const ApiProvidersList=({handleEditClick,childRef})=>{
     const handlePageChange = (page) => {
       getLists(page,molGridRef.current.generateSortingString());
     };
+    const handleSorting = (shortString) => {
+      getLists(molGridRef.current.getCurrentPageObject(), shortString);
+    }
     const onGetData = () =>{
       if (molGridRef.current) {
         const defaultPageObject = molGridRef.current.getCurrentPageObject();
@@ -93,7 +96,7 @@ return(<>
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
-              // onSorting={handleSorting}
+              onSorting={handleSorting}
               isLoading={isApiProvidersLoading}
               onActionChange={actionHandler}
             />

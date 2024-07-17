@@ -36,7 +36,7 @@ const ApiAuthenticationList=({handleEditClick, childRef})=>{
     }, [isDeleteApiAuthenticationSuccess, isDeleteApiAuthenticationData]);
  
 
-    const getLists = (pageObject) => {
+    const getLists = (pageObject,sortingString) => {
   
       const request = {
         pagination: {
@@ -44,18 +44,22 @@ const ApiAuthenticationList=({handleEditClick, childRef})=>{
           pageSize: pageObject.pageSize,
         },
         filters: { searchText: "" },
+        sortString: sortingString
       };
       getApiAuthentications(request);
     };
 
     const handlePageChange = (page) => {
-      getLists(page);
+      getLists(page,molGridRef.current.generateSortingString());
     };
 
+    const handleSorting = (shortString) => {
+      getLists(molGridRef.current.getCurrentPageObject(), shortString);
+    }
     const onGetData = () =>{
       if (molGridRef.current) {
         const defaultPageObject = molGridRef.current.getCurrentPageObject();
-        getLists(defaultPageObject);
+        getLists(defaultPageObject,molGridRef.current.generateSortingString());
       }
     }
 
@@ -95,6 +99,7 @@ const ApiAuthenticationList=({handleEditClick, childRef})=>{
               currentPage: 1,
             }}
             onPageChange={handlePageChange}
+            onSorting={handleSorting}
             isLoading={isApiAuthenticationLoading}
             onActionChange={actionHandler}
           />
