@@ -20,10 +20,10 @@ const AddEditApiProviders = (props) => {
 const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFetching,isSuccess: isGetApiProviderByProviderSuccess,data: GetApiProviderByProviderIdData, },] = useLazyGetApiProviderByProviderIdQuery();
 
   useEffect(() => {
-    if (props.isEdit) {
+    if (providerId && props.isEdit) {
       getApiProviderByProviderId(providerId);
     }
-  }, [providerId]);
+  }, [providerId, props.isEdit]);
 
   useEffect(() => {
     if ( isGetApiProviderByProviderSuccess && GetApiProviderByProviderIdData && !isGetApiProviderByProviderIdFetching) {
@@ -40,7 +40,7 @@ const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFet
   useEffect(() => {
     if (isAddEditApiProviderSucess && allAddEditApiProviderData) {
       onResetForm(addEditApiProviderFormData, setProviderFormData, null);
-      props.listDataGet();
+      props.onSuccess();
       ToastService.success(allAddEditApiProviderData.errorMessage);
       props.onClose();
     }

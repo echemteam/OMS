@@ -6,10 +6,10 @@ import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
 import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
 
-import ApiProviders from "../../pages/apiConfiguration/apiProviders/ApiProviders";
-import ApiEndPoints from "../../pages/apiConfiguration/apiEndPoints/ApiEndPoints";
-import AddEditApiEndPoints from "../../pages/apiConfiguration/apiEndPoints/features/AddEditApiEndPoints";
-
+const ApiParametersGrid=React.lazy(()=> import("../../pages/apiConfiguration/apiParameters/ApiParametersGrid"));
+const ApiAuthenticationGrid=React.lazy(()=> import("../../pages/apiConfiguration/apiAuthentication/ApiAuthenticationGrid"));
+const ApiEndPointsGrid=React.lazy(()=> import("../../pages/apiConfiguration/apiEndPoints/ApiEndPointsGrid"));
+const ApiProvidersGrid=React.lazy(()=> import("../../pages/apiConfiguration/apiProviders/ApiProvidersGrid"));
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 //** Dashboard */
@@ -286,7 +286,7 @@ export const ComponentNavigation = [
     path: '/APIProviders',
     exact: true,
     title: 'API Providers',
-    component: ApiProviders,
+    component: ApiProvidersGrid,
     hasParams: false,
     text: 'API Providers',
     //securityKey: securityKey.APPROVALRULES
@@ -296,9 +296,29 @@ export const ComponentNavigation = [
     path: '/APIEndpoints',
     exact: true,
     title: 'API EndPoints',
-    component: ApiEndPoints,
+    component: ApiEndPointsGrid,
     hasParams: false,
     text: 'API EndPoints',
+    //securityKey: securityKey.APPROVALRULES
+  },
+  {
+    id: 'apiParameters',
+    path: '/APIParameters',
+    exact: true,
+    title: 'API Parameters',
+    component: ApiParametersGrid,
+    hasParams: false,
+    text: 'API Parameters',
+    //securityKey: securityKey.APPROVALRULES
+  },
+  {
+    id: 'apiAuthentication',
+    path: '/APIAuthentication',
+    exact: true,
+    title: 'API Authentication',
+    component: ApiAuthenticationGrid,
+    hasParams: false,
+    text: 'API Authentication',
     //securityKey: securityKey.APPROVALRULES
   },
 ];

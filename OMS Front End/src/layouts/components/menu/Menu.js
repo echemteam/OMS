@@ -113,6 +113,18 @@ export const Menu = [
         to: "/APIEndpoints", 
         //securityKey: securityKey.APPROVALRULES,
       },
+      {
+        id: "apiParameters",
+        submenuName: "API Parameters",
+        to: "/APIParameters", 
+        //securityKey: securityKey.APPROVALRULES,
+      },
+      {
+        id: "apiAuthentication",
+        submenuName: "API Authentication",
+        to: "/APIAuthentication", 
+        //securityKey: securityKey.APPROVALRULES,
+      },
     ],
   },
 ];

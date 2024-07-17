@@ -33,18 +33,18 @@ const AddEditApiEndPoints = (props) => {
       };
       setEndPointFormData(newFrom);
     }
-  }, [ isGetApiEndpointByEndpointIdSuccess,GetApiEndpointByEndpointIdData,isGetApiEndpointByEndpointIdFetching,  ]);
+  }, [isGetApiEndpointByEndpointIdSuccess,GetApiEndpointByEndpointIdData,isGetApiEndpointByEndpointIdFetching]);
 
   useEffect(() => {
-    if (props.isEdit) {
+    if (endpointId && props.isEdit) {
       getApiEndpointByEndpointId(endpointId);
     }
-  }, [endpointId]);
+  }, [endpointId ,props.isEdit]);
 
   useEffect(() => {
     if (isAddEditApiEndPointSucess && allAddEditApiEndPointData) {
       onResetForm(addEditApiEndPointsFormData, setEndPointFormData, null);
-      props.listDataGet();
+      props.onSuccess();
       ToastService.success(allAddEditApiEndPointData.errorMessage);
       props.onClose();
     }
