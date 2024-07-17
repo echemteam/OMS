@@ -23,8 +23,7 @@ const CustomerDetails = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
-  const { setCustomerId, customerId, setIsResponsibleUser } =
-    useContext(BasicDetailContext);
+  const { setCustomerId, customerId, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [
     getCustomersBasicInformationById,
@@ -89,7 +88,7 @@ const CustomerDetails = () => {
               <CustomerBasicInfoCard
                 editClick={handleToggleModal}
                 customerData={customerData}
-                isLoading={isGetCustomersBasicInformationByIdFetching}
+                isLoading={!isModelOpen ? isGetCustomersBasicInformationByIdFetching : null}
                 customerId={customerId}
                 getCustomerById={onSuccess}
               />
