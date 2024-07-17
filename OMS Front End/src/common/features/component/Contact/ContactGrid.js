@@ -12,8 +12,8 @@ import { getFieldData, setDropDownOptionField } from "../../../../utils/FormFiel
 import ToastService from "../../../../services/toastService/ToastService";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Component's */
+const ContactList = React.lazy(() => import("./feature/ContactList"));
 const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
-const ContactDetailCard = React.lazy(() => import("./feature/ContactDetailCard"));
 
 const ContactGrid = ({ keyId, getContactByKeyId, addEditContactMutation, isSupplier, isEditablePage, SecurityKey, getContactById, isSearchFilterShow }) => {
 
@@ -148,7 +148,8 @@ const ContactGrid = ({ keyId, getContactByKeyId, addEditContactMutation, isSuppl
                 selectedOptions={selectedDrpvalues} optionsValue={contactType} isMultiSelect={true} placeholder="Search by Contact Type" isCardSection={true}
                 isdropdownOpen={true} clearButtonClassName="dark-btn">
                 {/* Contact Detail Card */}
-                <ContactDetailCard keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon} getContactByKeyId={getContactByKeyId} />
+                <ContactList keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon} getContactByKeyId={getContactByKeyId} />
+                {/* <ContactDetailCard /> */}
 
             </CardSection>
             <div className="sidebar-contact-model">

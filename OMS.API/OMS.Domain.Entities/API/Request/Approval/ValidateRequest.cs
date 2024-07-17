@@ -10,5 +10,6 @@ namespace OMS.Domain.Entities.API.Request.Approval
     {
         public int CustomerId { get; set; }
         public int SupplierId { get; set; }
+        public bool? IsSubCompany { get; set; }
     }
 }

@@ -19,12 +19,11 @@ export const customerbasicData = {
         allowSpace: true,
         maxLength: 50,
       },
-      validation: [{ type: "require" }, { type: "uniqueName" }],
+      validation: [{ type: "require" }, { type: "uniqueName" }, { type: "invalidBoundarySpaces" }],
       style: {
         containerCss: "col-xxl-8 col-xl-8 col-md-8 col-12 mb-input",
       },
       inputButtonGroup: {
-        // isMultiButton: false,
         isInputButton: true,
         buttonText: 'Verify',
         showInformation: {
@@ -32,24 +31,7 @@ export const customerbasicData = {
           faIcon: "fa-search",
           title: "Customer Information"
         }
-      },
-
-    },
-    {
-      id: "name-input",
-      lable: "Customer Name ",
-      Field_Name: "Customer Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "name",
-      fieldSetting: {
-        placeholder: "Enter Customer Name",
-        allowSpace: true,
-        maxLength: 50,
-      },
-      validation: [{ type: "require" }, { type: "uniqueName" }],
-      style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
-      },
+      }
     },
     {
       id: "emailAddress",
@@ -91,8 +73,7 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "groupTypeId",
       fieldSetting: {
-        placeholder: "Select Group Type",
-        allowSpace: true,
+        placeholder: "Select Group Type"
       },
       validation: [{ type: "require" }],
       style: {
@@ -108,8 +89,7 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "countryId",
       fieldSetting: {
-        placeholder: "Select Country",
-        allowSpace: true,
+        placeholder: "Select Country"
       },
       validation: [{ type: "require" }],
       style: {
@@ -123,8 +103,7 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "territoryId",
       fieldSetting: {
-        placeholder: "Select Territory",
-        allowSpace: true,
+        placeholder: "Select Territory"
       },
       validation: [{ type: "require" }],
       style: {
@@ -162,10 +141,8 @@ export const customerbasicData = {
       dataField: "responsibleUserId",
       fieldSetting: {
         placeholder: "Select Responsible User",
-        allowSpace: true,
         isDisabled: false,
       },
-      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
       },
@@ -176,16 +153,20 @@ export const customerbasicData = {
       Field_Name: "Is Buying for Third Party",
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isBuyingForThirdParty",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mt-3 mb-input margin-left0-checkbox",
       },
     },
-
+    {
+      id: "isSubCompany",
+      lable: "Is Sub Company",
+      Field_Name: "Is Sub Company",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isSubCompany",
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mt-3 mb-input margin-left0-checkbox",
+      },
+    },
     {
       id: "note",
       lable: "Notes ",

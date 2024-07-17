@@ -15,27 +15,40 @@ import { useAddEditCustomersBasicInformationMutation, useCheckCustomerNameExistM
 import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { customerbasicData, excludingRoles } from "./config/CustomerBasicDetail.data";
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
-import { setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
-const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose }) => {
+const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
+
+    //** State */
     const parentRef = useRef();
     const basicDetailRef = useRef();
-    const [customerName, setCustomerName] = useState('');
-    const [isButtonDisable, setIsButtonDisable] = useState(false);
-    const [noteId, setNoteId] = useState("")
-
-    const [formData, setFormData] = useState(customerbasicData);
-    const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
-
+    const [noteId, setNoteId] = useState(0);
     const { formSetting } = customerbasicData;
-    const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
+    const [customerName, setCustomerName] = useState('');
+    const [formData, setFormData] = useState(customerbasicData);
 
+    const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser } = useContext(BasicDetailContext);
+
+    //** API Call's */
+    const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
+    const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
+    const [getAllGroupTypes, { isSuccess: isGetAllGroupTypesSucess, data: allGetAllGroupTypesData }] = useLazyGetAllGroupTypesQuery();
+    const [getAllTerritories, { isSuccess: isGetAllTerritoriesSucess, data: allGetAllTerritoriesData }] = useLazyGetAllTerritoriesQuery();
+    const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
     const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById,
         data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
-    const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
+    const [addEditCustomersBasicInformation, { isLoading: isAddEditCustomersBasicInformationLoading, isSuccess: isAddEditCustomersBasicInformationSuccess,
+        data: isAddEditCustomersBasicInformationData }] = useAddEditCustomersBasicInformationMutation();
 
+    //** Security Key */
+    const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
+
+    //** UseEffect's */
     useEffect(() => {
-        if (isOpen) {
+        if (isEditablePage) {
             if (!isResponsibleUser) {
                 if (hasEditPermission.isViewOnly === true) {
                     formSetting.isViewOnly = true;
@@ -53,138 +66,70 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 setIsButtonDisable(false);
                 setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, true);
             }
+        } else {
+            formSetting.isViewOnly = false;
         }
-    }, [isOpen, hasEditPermission, formSetting.isViewOnly, isResponsibleUser])
+        if (isOpen) {
+            setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
+            setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
+        } else if (!isOpen) {
+            const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+            setFormData(modifyFormFields);
+            setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON, true);
+            setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
+        }
 
-    const [
-        getAllGroupTypes,
-        {
-            isSuccess: isGetAllGroupTypesSucess,
-            data: allGetAllGroupTypesData,
-        },
-    ] = useLazyGetAllGroupTypesQuery();
-
-    const [
-        getAllCountries,
-        {
-            isSuccess: isGetAllCountriesSucess,
-            data: allGetAllCountriesData,
-        },
-    ] = useLazyGetAllCountriesQuery();
-
-    const [
-        getAllTerritories,
-        {
-            isSuccess: isGetAllTerritoriesSucess,
-            data: allGetAllTerritoriesData,
-        },
-    ] = useLazyGetAllTerritoriesQuery();
-
-    const [
-        getAllUser,
-        {
-            isSuccess: isGetAllUserSucess,
-            data: allGetAlluserData,
-        },
-    ] = useLazyGetAllUserQuery();
-
-    const [
-        addEditCustomersBasicInformation,
-        {
-            isLoading: isAddEditCustomersBasicInformationLoading,
-            isSuccess: isAddEditCustomersBasicInformationSuccess,
-            data: isAddEditCustomersBasicInformationData,
-        },
-    ] = useAddEditCustomersBasicInformationMutation();
+    }, [isOpen, isEditablePage, hasEditPermission, formSetting, formData, isResponsibleUser])
 
     useEffect(() => {
-        getAllGroupTypes();
-        getAllCountries();
-        getAllTerritories();
-        manageFilteredForm();
-        getAllUser();
-    }, []);
+        const fetchData = async () => {
+            await Promise.all([
+                getAllUser(),
+                getAllCountries(),
+                getAllGroupTypes(),
+                getAllTerritories()
+            ]);
 
-    const manageFilteredForm = () => {
-        const manageData = { ...formData }
-        const filteredFormFields = customerbasicData.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
-        manageData.formFields = filteredFormFields;
-        setFormData(manageData)
-    };
+            if (!isOpen) {
+                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+                // setFormData(modifyFormFields);
+                // setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON, true);
+            }
+        };
 
-    useEffect(() => {
-        if (
-            isGetAllGroupTypesSucess &&
-            allGetAllGroupTypesData
-        ) {
-            const getData = allGetAllGroupTypesData.filter(x => x.isForCustomers).map((item) => ({
-                value: item.groupTypeId,
-                label: item.type,
-            }));
-            const dropdownField = customerbasicData.formFields.find(
-                (item) => item.dataField === "groupTypeId"
-            );
-            dropdownField.fieldSetting.options = getData;
-        }
-    }, [
-        isGetAllGroupTypesSucess,
-        allGetAllGroupTypesData,
-    ]);
+        fetchData();
+    }, [keyId, isOpen]);
 
     useEffect(() => {
-        if (
-            isGetAllCountriesSucess &&
-            allGetAllCountriesData
-        ) {
-            const getData = allGetAllCountriesData.map((item) => ({
-                value: item.countryId,
-                label: item.name,
-            }));
-            const dropdownField = customerbasicData.formFields.find(
-                (item) => item.dataField === "countryId"
-            );
-            dropdownField.fieldSetting.options = getData;
+        if (isOpen) {
+            if (customerId > 0) {
+                getCustomersBasicInformationById(customerId);
+                const modifyFormFields = removeFormFields(formData, ['responsibleUserId', 'isSubCompany', 'note']);
+                setFormData(modifyFormFields);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
+            }
         }
-    }, [
-        isGetAllCountriesSucess,
-        allGetAllCountriesData,
-    ]);
+    }, [isOpen, customerId, getCustomersBasicInformationById])
 
     useEffect(() => {
-        if (
-            isGetAllTerritoriesSucess &&
-            allGetAllTerritoriesData
-        ) {
-            const getData = allGetAllTerritoriesData.map((item) => ({
-                value: item.territoryId,
-                label: item.territory,
-            }));
-            const dropdownField = customerbasicData.formFields.find(
-                (item) => item.dataField === "territoryId"
-            );
-            dropdownField.fieldSetting.options = getData;
+        if (isGetAllGroupTypesSucess && allGetAllGroupTypesData) {
+            setDropDownOptionField(allGetAllGroupTypesData, 'groupTypeId', 'type', customerbasicData, 'groupTypeId');
         }
-    }, [
-        isGetAllTerritoriesSucess,
-        allGetAllTerritoriesData,
-    ]);
-
-    useEffect(() => {
-        if (isGetAllUserSucess && allGetAlluserData) {
-            const filterData = allGetAlluserData.filter((item) => {
-                return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
-            });
-
-            const getData = filterData.map((item) => ({
-                value: item.userId,
-                label: item.fullName,
-            }));
-            const dropdownField = customerbasicData.formFields.find(
-                (item) => item.dataField === "responsibleUserId"
-            );
-            dropdownField.fieldSetting.options = getData;
+        if (isGetAllUserSucess && allGetAllUserData) {
+            const filterCondition = (item) => {
+                return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());;
+            };
+            setDropDownOptionField(allGetAllUserData, 'userId', 'fullName', customerbasicData, 'responsibleUserId', filterCondition);
         }
-    }, [isGetAllUserSucess, allGetAlluserData,]);
+        if (isGetAllCountriesSucess && allGetAllCountriesData) {
+            setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', customerbasicData, 'countryId');
+        }
+        if (isGetAllTerritoriesSucess && allGetAllTerritoriesData) {
+            setDropDownOptionField(allGetAllTerritoriesData, 'territoryId', 'territory', customerbasicData, 'territoryId');
+        }
+    }, [isGetAllGroupTypesSucess, allGetAllGroupTypesData, isGetAllUserSucess, allGetAllUserData, isGetAllCountriesSucess, allGetAllCountriesData,
+        isGetAllTerritoriesSucess, allGetAllTerritoriesData]);
 
     useEffect(() => {
         if (isAddEditCustomersBasicInformationSuccess && isAddEditCustomersBasicInformationData) {
@@ -218,7 +163,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, customerbasicData.formFields, 'taxId');
             newFrom.formFields = formFields;
             newFrom.initialState = { ...GetCustomersBasicInformationByIdData };
-            newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.id !== "name");
+            newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== 'isSubCompany' && field.dataField !== 'responsibleUserId');
             setFormData(newFrom);
         }
     }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
@@ -334,15 +279,17 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         <div className="basic-info-sec half-sec">
             <CardSection buttonClassName="theme-button">
                 <div className="row basic-info-step">
-                    <FormCreator
-                        config={formData}
-                        ref={basicDetailRef}
-                        {...formData}
-                        onActionChange={formActionHandler}
-                        onInputChange={formInputHandler}
-                        handleInputGroupButton={handleInputGroupButton}
-                        handleInputShowInfo={handleExistingInfo}
-                    />
+                    {!isGetCustomersBasicInformationByIdFetching ?
+                        <FormCreator
+                            config={formData}
+                            ref={basicDetailRef}
+                            {...formData}
+                            onActionChange={formActionHandler}
+                            onInputChange={formInputHandler}
+                            handleInputGroupButton={handleInputGroupButton}
+                            handleInputShowInfo={handleExistingInfo}
+                        />
+                        : <DataLoader />}
                 </div>
 
                 {isOpen &&

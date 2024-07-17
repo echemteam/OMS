@@ -216,9 +216,9 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
     return (
         <div className="row">
             <div className="serach-bar-history">
-                <div className="card w-100 mt-2">
-                    <div className="row">
-                        <div className="col-md-3 pr-0">
+                <div className="card w-100">
+                    <div className="d-flex ">
+                        <div className="pr-0 name-field">
                             <DropDown
                                 placeholder="Search By Event Name"
                                 options={eventNameOptions}
@@ -228,7 +228,7 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
                                 closeMenuOnSelect={false}
                             />
                         </div>
-                        <div className="col-md-3 input-padding-comman pr-0">
+                        <div className="input-padding-comman user-name-field pr-0 mx-2">
                             <DropDown
                                 placeholder="Search By User Name"
                                 options={userNameOptions}
@@ -238,7 +238,7 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
                                 closeMenuOnSelect={false}
                             />
                         </div>
-                        <div className="col-md-3 custom-datepicker input-padding-comman">
+                        <div className="custom-datepicker date-field input-padding-comman">
                             <DateRangePicker
                                 onChange={handleDateRangeChange}
                                 value={[selectedDateRange.startDate, selectedDateRange.endDate]}
@@ -250,7 +250,7 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
                                 yearPlaceholder="YYYY"
                             />
                         </div>
-                        <div className="col-md-3 refresh-btn-history pl-0">
+                        <div className="refresh-btn-history pl-0 ml-2">
                             <Buttons
                                 buttonTypeClassName="theme-button"
                                 buttonText="Search"

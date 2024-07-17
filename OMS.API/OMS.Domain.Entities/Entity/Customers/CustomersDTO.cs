@@ -43,5 +43,7 @@ namespace OMS.Domain.Entities.Entity.Customers
         public short? DeletedBy { get; set; }
         [Column("ResponsibleUserId")]
         public short? ResponsibleUserId { get; set; }
+        [Column("IsSubCompany")]
+        public short? IsSubCompany { get; set; }
     }
 }
