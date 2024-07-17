@@ -381,7 +381,8 @@ a {
         }
       }
 
-      .middle-page-section {}
+      .middle-page-section {
+      }
     }
   }
 }
@@ -460,7 +461,6 @@ a {
         min-width: 70px;
         max-width: 70px;
       }
-
     }
 
     .validation-text {
@@ -480,7 +480,6 @@ a {
         min-width: 70px;
         max-width: 70px;
       }
-
     }
 
     .validation-text {
@@ -494,7 +493,6 @@ a {
         min-width: 50px;
         max-width: 50px;
       }
-
     }
 
     .validation-text {
@@ -508,7 +506,6 @@ a {
         min-width: 100px;
         max-width: 100px;
       }
-
     }
 
     .validation-text {
@@ -582,7 +579,6 @@ a {
       font-size: var(--commonFont-extraLarge);
       font-weight: 600;
       white-space: nowrap;
-
     }
 
     p {
@@ -662,8 +658,8 @@ a {
     margin-bottom: 0;
   }
 }
-.address-main-card-sec{
-  .card{
+.address-main-card-sec {
+  .card {
     padding-top: 2p3;
   }
 }
@@ -782,7 +778,8 @@ a {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {}
+    .tab-body-section {
+    }
   }
 
   &.vertical-tab {
@@ -892,7 +889,8 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {}
+      .tab-body-section {
+      }
     }
 
     &.vertical-tab {
@@ -990,7 +988,8 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {}
+        .tab-sub-body-section {
+        }
       }
     }
   }
@@ -1250,9 +1249,11 @@ a {
       display: flex;
       align-items: center;
 
-      .email-sec {}
+      .email-sec {
+      }
 
-      .contact-sec {}
+      .contact-sec {
+      }
     }
 
     .contact-type {
@@ -1352,7 +1353,6 @@ a {
     &.badge-ap {
       background: var(--disabled-theme);
     }
-
   }
 
   //
@@ -1384,7 +1384,8 @@ a {
           color: var(--themeColor);
         }
 
-        @media only screen and (max-width: 1560px) {}
+        @media only screen and (max-width: 1560px) {
+        }
       }
 
       .contact-name {
@@ -2087,7 +2088,6 @@ a {
   }
 
   .css-1nmdiq5-menu {
-
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -2391,23 +2391,21 @@ input[type="checkbox"]:disabled {
 .serach-bar-history {
   display: flex;
   width: 100%;
-  
-  .name-field{
-    min-width:22%;
+
+  .name-field {
+    min-width: 22%;
   }
-  .user-name-field{
-    min-width:22%;
+  .user-name-field {
+    min-width: 22%;
   }
-  .date-field{
-    min-width:22%;
+  .date-field {
+    min-width: 22%;
   }
   .refresh-btn-history {
     display: flex;
     justify-content: flex-end;
   }
 }
-
-
 
 .custom-datepicker {
   .react-daterange-picker {
@@ -2481,7 +2479,6 @@ input[type="checkbox"]:disabled {
 
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
-
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
@@ -2782,7 +2779,6 @@ input[type="checkbox"]:disabled {
   display: block;
 }
 
-
 .mb-input {
   margin-bottom: 15px;
 
@@ -2814,9 +2810,14 @@ input[type="checkbox"]:disabled {
         }
 
         .card-body-sec {
-          .note-card-sec {}
+          .note-card-sec {
+          }
         }
       }
     }
   }
+}
+
+.model-hight-fix {
+  height: calc(100vh - 300px);
 }

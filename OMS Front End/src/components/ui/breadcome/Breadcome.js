@@ -10,16 +10,16 @@ function Breadcome(props) {
 
   // Assuming that your paths and ids should match after removing leading '/'
   const breadCrumb = props.componentRoutes?.find(x => x.path.toLowerCase().replace('/', '') === currentPath);
-  
+
   const renderPageIcon = () => {
     if (props.brcimg && props.brcimg !== "") {
       return (
         <div className="page-icon-part">
           <Image
-              imgCustomClassName="icon-page"
-              imagePath={props.brcimg}
-              altText="Icon"
-            />
+            imgCustomClassName="icon-page"
+            imagePath={props.brcimg}
+            altText="Icon"
+          />
         </div>
       );
     }
@@ -34,14 +34,18 @@ function Breadcome(props) {
 
 
   return (
-    <div className="main-top-title">
-      <div className="left-section">
-        <div className="page-title">
-          {renderPageIcon()}
-          {renderTitle()}
+    <>
+      {breadCrumb &&
+        <div className="main-top-title">
+          <div className="left-section">
+            <div className="page-title">
+              {renderPageIcon()}
+              {renderTitle()}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      }
+    </>
   );
 }
 export default Breadcome;

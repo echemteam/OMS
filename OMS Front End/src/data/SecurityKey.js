@@ -97,7 +97,8 @@ export const securityKey = {
      SUPPLIERHISTORY: "Supplier History",
 
 
-
+     CONFIGURATION : "Configuration",
+     APPROVALRULES : "Approval Rules",
 
 
      //** Wating for the generate keys */

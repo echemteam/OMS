@@ -11,14 +11,11 @@ const SupplierBasicDetail = (props) => {
 
   return (
     <div className="basic-info-sec half-sec">
-      <div className="basic-info-sec half-sec">
         <CardSection buttonClassName="theme-button">
           <AddEditSupplierBasicDetail keyId={keyId} getSupplierById={getSupplierById} isOpen={isOpen} isEditablePage={isEditablePage}
             onSidebarClose={onSidebarClose} />
         </CardSection>
       </div>
-
-    </div>
   );
 }
 

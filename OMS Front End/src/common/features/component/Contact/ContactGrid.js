@@ -137,6 +137,11 @@ const ContactGrid = ({ keyId, getContactByKeyId, addEditContactMutation, isSuppl
         onGetContactList();
     };
 
+    useEffect(() => {
+        if (search === "" && selectedDrpvalues === "") {
+            onGetContactList();
+        }
+    }, [search, selectedDrpvalues]);
 
     return (
         <div key={shouldRerenderFormCreator}>
