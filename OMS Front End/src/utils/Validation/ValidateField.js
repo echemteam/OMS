@@ -48,8 +48,7 @@ export const isValidFax = (value) => {
 }
 
 export const isUnique = (value) => {
-    const invalidChars = /[^a-zA-Z0-9\-&]/;
-    // const invalidChars = /[^a-zA-Z\-&]/; 
+    const invalidChars = /[^a-zA-Z0-9\-& ]/;
     return !invalidChars.test(value);
 }
 

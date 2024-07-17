@@ -8,14 +8,15 @@ import { ErrorMessage } from "../../../../../data/appMessages";
 import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
 import { CustomersList } from "./feature/CustomerList";
 import CardSection from "../../../../../components/ui/card/CardSection";
-import InActiveCustomersList from "../customerInActiveTabs/feature/InActiveCustomersList";
 import { BasicDetailContextProvider } from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import CustomerListContext from "../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
+import InActiveCustomerTab from "../customerInActiveTabs/InActiveCustomerTab";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
   const listRef = useRef();
+  const molGridRef = useRef();
   const [search, setSearch] = useState("");
   const [statusOptions, setStatusOptions] = useState([]);
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("")
@@ -229,7 +230,7 @@ const Customers = () => {
       sMenuItemCaption: "INACTIVE",
       component: (
         <div className="mt-2 inactive-list-sec">
-          <InActiveCustomersList
+          <InActiveCustomerTab
             statusId={[
               StatusEnums.Freeze,
               StatusEnums.Block,

@@ -38,7 +38,8 @@ export const ErrorMessage = {
 	CompareEmail: 'Email address already exist',
 	NotAvailabe: "N/A",
 	CommonErrorMessage: "Please enter at least 3 characters to search or select a dropdown value.",
-	NoFound: "No Records found"
+	NoFound: "No Records found",
+	InvalidBoundarySpaces: "Only letters, digits, hyphens, ampersands, and spaces between characters are allowed."
 };
 
 export const SuccessMessage = {
