@@ -147,5 +147,13 @@ namespace OMS.Application.Services.Common
             }
             return decryptedBytes!;
         }
+        public Task<List<GetAllAPIProvidersResponse>> GetAllAPIProviders()
+        {
+            return repositoryManager.commonRepository.GetAllAPIProviders();
+        }
+        public Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints()
+        {
+            return repositoryManager.commonRepository.GetAllAPIEndpoints();
+        }
     }
 }

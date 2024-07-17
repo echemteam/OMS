@@ -24,5 +24,9 @@ namespace OMS.Domain.Repository
         ISupplierNotesRepository supplierNotes { get; }
         IApprovalRepository approval { get; }
         IApprovalConfigurationRepository approvalConfiguration { get; }
+        IApiProviderRepository apiProvider { get; }
+        IApiEndpointRepository apiEndpoint { get; }
+        IApiParameterRepository apiParameter { get; }
+        IApiAuthenticationRepository apiAuthentication { get; }
     }
 }

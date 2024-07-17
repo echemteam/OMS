@@ -33,6 +33,10 @@ namespace OMS.Domain.Repository
         ISupplierNotesRepository _supplierNotesRepository;
         IApprovalRepository _approvalRepository;
         IApprovalConfigurationRepository _approvalConfigurationRepository;
+        IApiProviderRepository _apiProviderRepository;
+        IApiEndpointRepository _apiEndpointRepository;
+        IApiParameterRepository _apiParameterRepository;
+        IApiAuthenticationRepository _apiAuthenticationRepository;
 
         public ITestRepository test
         {
@@ -263,6 +267,50 @@ namespace OMS.Domain.Repository
                     _approvalConfigurationRepository = new ApprovalConfigurationRepository(_context);
                 }
                 return _approvalConfigurationRepository;
+            }
+        }
+        public IApiProviderRepository apiProvider
+        {
+            get
+            {
+                if (_apiProviderRepository == null)
+                {
+                    _apiProviderRepository = new ApiProviderRepository(_context);
+                }
+                return _apiProviderRepository;
+            }
+        }
+        public IApiEndpointRepository apiEndpoint 
+        {
+            get
+            {
+                if (_apiEndpointRepository == null)
+                {
+                    _apiEndpointRepository = new ApiEndpointRepository(_context);
+                }
+                return _apiEndpointRepository;
+            }
+        }
+        public IApiParameterRepository apiParameter
+        {
+            get
+            {
+                if (_apiParameterRepository == null)
+                {
+                    _apiParameterRepository = new ApiParameterRepository(_context);
+                }
+                return _apiParameterRepository;
+            }
+        }
+        public IApiAuthenticationRepository apiAuthentication
+        {
+            get
+            {
+                if (_apiAuthenticationRepository == null)
+                {
+                    _apiAuthenticationRepository = new ApiAuthenticationRepository(_context);
+                }
+                return _apiAuthenticationRepository;
             }
         }
     }

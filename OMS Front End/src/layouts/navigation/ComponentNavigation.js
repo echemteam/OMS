@@ -4,7 +4,11 @@ import DemoGrid from "../../pages/demoGrid/DemoGrid";
 import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
-import ApprovalRules from "../../pages/configuration/ApprovalRules";
+import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
+
+import ApiProviders from "../../pages/apiConfiguration/apiProviders/ApiProviders";
+import ApiEndPoints from "../../pages/apiConfiguration/apiEndPoints/ApiEndPoints";
+import AddEditApiEndPoints from "../../pages/apiConfiguration/apiEndPoints/features/AddEditApiEndPoints";
 
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
@@ -13,23 +17,22 @@ const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
 //** User */
 const Users = React.lazy(() => import('../../pages/Security/userManagement/Users'));
 const AddEditUser = React.lazy(() => import('../../pages/Security/userManagement/features/AddEditUser'));
-// const UsersRole = React.lazy(() => import('../../pages/Security/roleManagement/UsersRole'));
 
 //** Permissions */
 const Permissions = React.lazy(() => import('../../pages/Security/permissions/Permissions'));
 const SecurityRoleManagement = React.lazy(() => import('../../pages/Security/securityManagement/SecurityRoleManagement'));
 
-//**Customer  */
+//** Customer  */
 // const CustomerDetail = React.lazy(() => import('../../pages/customerDetail/CustomerDetail'));
-const Customers = React.lazy(() => import('../../pages/customerDetail/customers/Customers'));
-const ViewCustomer = React.lazy(() => import('../../pages/customerDetail/ManageViewCustomer'));
-const ManageAddCustomer = React.lazy(() => import('../../pages/customerDetail/ManageAddCustomer'));
-const AddEditContact = React.lazy(() => import('../../pages/customerDetail/features/contactDetail/Contact/AddEditContact'));
+const AddCustomer = React.lazy(() => import('../../pages/customerDetail/addCustomer/AddCustomer'));
+const CustomerGrid = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerGrid'));
+const CustomerViewDetails = React.lazy(() => import('../../pages/customerDetail/customerGrid/CustomerViewDetail'));
 
-const Suppliers = React.lazy(() => import('../../pages/supplierDetails/suppliers/Suppliers'));
-const ManageAddSupplier = React.lazy(() => import('../../pages/supplierDetails/addSupplier/ManageAddSupplier'));
+//** Supplier  */
+const AddSupplier = React.lazy(() => import('../../pages/supplierDetails/addSupplier/AddSupplier'));
+const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/supplierGrid/SupplierGrid'));
+const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/supplierGrid/SupplierViewDetail"));
 
-const SupplierDetails = React.lazy(() => import("../../pages/supplierDetails/suppliers/ManageSupplier"));
 
 export const ComponentNavigation = [
   {
@@ -203,17 +206,17 @@ export const ComponentNavigation = [
     path: '/addCustomer',
     exact: true,
     title: 'Add Customer',
-    component: ManageAddCustomer,
+    component: AddCustomer,
     hasParams: false,
     text: 'Add Customer',
     securityKey: securityKey.CUSTOMER
   },
   {
-    id: 'viewCustomer',
-    path: '/viewCustomer/:id',
+    id: 'CustomerDetails',
+    path: '/CustomerDetails/:id',
     exact: true,
     title: 'View Detail',
-    component: ViewCustomer,
+    component: CustomerViewDetails,
     hasParams: false,
     text: 'Customer Detail',
     securityKey: securityKey.CUSTOMER
@@ -223,32 +226,11 @@ export const ComponentNavigation = [
     path: '/Customers',
     exact: true,
     title: 'Customers',
-    component: Customers,
+    component: CustomerGrid,
     hasParams: false,
     text: 'Customers',
     securityKey: securityKey.CUSTOMER
   },
-
-  {
-    id: 'addEditContact',
-    path: '/addEditContact',
-    exact: true,
-    title: '',
-    component: AddEditContact,
-    hasParams: false,
-    text: '',
-    securityKey: ""
-  },
-  // {
-  //   id: 'permissions',
-  //   path: '/permissions',
-  //   exact: true,
-  //   title: 'Permissions',
-  //   component: Permissions,
-  //   hasParams: false,
-  //   text: 'Permissions',
-  //   securityKey: securityKey.PERMISSIONMANAGEMENT
-  // },
   {
     id: 'EditPermissions',
     path: '/EditPermissions/:id',
@@ -264,7 +246,7 @@ export const ComponentNavigation = [
     path: '/addSupplier',
     exact: true,
     title: 'Add Supplier',
-    component: ManageAddSupplier,
+    component: AddSupplier,
     hasParams: false,
     text: 'Add Supplier',
     securityKey: securityKey.SUPPLIER
@@ -274,7 +256,7 @@ export const ComponentNavigation = [
     path: '/Suppliers',
     exact: true,
     title: 'Suppliers',
-    component: Suppliers,
+    component: SupplierGrid,
     hasParams: false,
     text: 'Suppliers',
     securityKey: securityKey.SUPPLIER
@@ -284,7 +266,7 @@ export const ComponentNavigation = [
     path: '/SupplierDetails/:id',
     exact: true,
     title: 'Supplier Details',
-    component: SupplierDetails,
+    component: SupplierViewDetail,
     hasParams: false,
     text: 'Supplier Detail',
     securityKey: securityKey.SUPPLIER
@@ -298,5 +280,25 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'Approval Rules',
     securityKey: securityKey.APPROVALRULES
+  },
+  {
+    id: 'apiProviders',
+    path: '/APIProviders',
+    exact: true,
+    title: 'API Providers',
+    component: ApiProviders,
+    hasParams: false,
+    text: 'API Providers',
+    //securityKey: securityKey.APPROVALRULES
+  },
+  {
+    id: 'apiEndpoints',
+    path: '/APIEndpoints',
+    exact: true,
+    title: 'API EndPoints',
+    component: ApiEndPoints,
+    hasParams: false,
+    text: 'API EndPoints',
+    //securityKey: securityKey.APPROVALRULES
   },
 ];

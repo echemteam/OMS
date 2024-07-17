@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Common;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
@@ -212,6 +211,20 @@ namespace OMS.API.Controllers
             var contentType = mimeType;
 
             return File(memory, contentType, fileName);
+        }
+
+        [HttpGet("GetAllAPIProviders")]
+        public async Task<IActionResult> GetAllAPIProviders()
+        {
+            List<GetAllAPIProvidersResponse> responseData = await _serviceManager.commonServices.GetAllAPIProviders().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllAPIEndpoints")]
+        public async Task<IActionResult> GetAllAPIEndpoints()
+        {
+            List<GetAllAPIEndpointsResponse> responseData = await _serviceManager.commonServices.GetAllAPIEndpoints().ConfigureAwait(true);
+            return APISucessResponce(responseData);
         }
     }
 }

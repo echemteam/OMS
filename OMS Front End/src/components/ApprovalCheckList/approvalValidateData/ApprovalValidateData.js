@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef } from "react";
 import React, { useEffect, useImperativeHandle, useState } from "react";
 //** Lib's */
@@ -48,7 +49,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }, [showModal])
 
   const boldSpecificWords = (text) => {
-    const wordsToBold = ["TaxId", "Address", "Contact"];
+    const wordsToBold = ["Billing Address", "Shipping Address", "Invoice Submission Contact Email","Accounts Payable Contact Email","Default Payment Terms Template","Payment Method","Credit Limit","Billing Currency","Accounting Settings","Delivery Methods","Delivery Carriers"];
     const regex = new RegExp(`\\b(${wordsToBold.join("|")})\\b`, "g");
     return text.replace(
       regex,
@@ -78,7 +79,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
     if (isSupplierApproval) {
       url = `/SupplierDetails/${encryptUrlData(mainId)}`;
     } else {
-      url = `/viewCustomer/${encryptUrlData(mainId)}`;
+      url = `/CustomerDetails/${encryptUrlData(mainId)}`;
     }
     window.open(url, "_blank");
   }

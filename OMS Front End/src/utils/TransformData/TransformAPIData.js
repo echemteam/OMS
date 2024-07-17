@@ -1,5 +1,5 @@
+import { FileTypeIcons } from "../../common/features/component/Document/Config/DocuementsData";
 import formatDate from "../../lib/formatDate";
-import { FileTypeIcons } from "../../pages/customerDetail/features/documentsDetail/config/DocumentsData";
 
 export const contactCustomerTransformData = (data) => {
     return data.reduce((acc, item) => {

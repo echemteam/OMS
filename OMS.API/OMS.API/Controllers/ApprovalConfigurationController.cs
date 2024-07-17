@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
-using OMS.Domain.Entities.API.Response.CustomerNotes;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -41,7 +40,7 @@ namespace OMS.API.Controllers
         [HttpGet("GetApprovalConfigurationRulesByModuleIdAndFunctionalityId")]
         public async Task<IActionResult> GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(int moduleId, int functionalityId)
         {
-            List<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse> responseData = await _serviceManager.approvalConfigurationServices.GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(moduleId,functionalityId).ConfigureAwait(true);
+            List<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse> responseData = await _serviceManager.approvalConfigurationServices.GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(moduleId, functionalityId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
         #endregion
