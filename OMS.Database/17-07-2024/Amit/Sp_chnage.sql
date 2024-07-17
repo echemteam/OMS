@@ -359,52 +359,58 @@ BEGIN
     BEGIN TRY                                            
     DECLARE @keyId AS INT    
                 
-    IF @EndpointId > 0               
-    BEGIN    
-            UPDATE [dbo].[APIEndpoints]  
-            SET                   
-            [ProviderId] = @ProviderId,  
-            [Name] = @Name,  
-            [Path] = @Path,  
-            [Method] = @Method,  
-            [Description] = @Description,  
-            [UpdatedAt] = GETDATE(),  
-            [UpdatedBy] = @CreatedBy  
-            WHERE  [EndpointId] = @EndpointId AND [DeletedBy] IS NULL AND [DeletedAt] IS NULL;       
-                     
-            SET @keyId = @EndpointId;    
-                     
-            SELECT @keyId AS KeyValue,               
-            'APIEndpoint Updated' AS ErrorMessage     
-    
-    END    
-    ELSE    
-    BEGIN                                   
-            INSERT INTO [dbo].[APIEndpoints]  
-            (    
-                ProviderId,                        
-                Name,  
-                Path,  
-                Method,  
-                Description,    
-                CreatedBy,    
-                CreatedAt           
-            )                                  
-            VALUES                                
-            (   
-                @ProviderId,                         
-                @Name,  
-                @Path,  
-                @Method,  
-                @Description,    
-                @CreatedBy,    
-                GETDATE()          
-            )                                  
-            SET  @keyId = SCOPE_IDENTITY()                                          
-                                                  
-        SELECT @keyId as KeyValue,                                             
-        'APIProvider Added' as ErrorMessage    
-        END    
+     IF @EndpointId > 0                 
+    BEGIN      
+            UPDATE [dbo].[APIEndpoints]    
+            SET                     
+            [ProviderId] = @ProviderId,    
+            [Name] = @Name,    
+            [Path] = @Path,    
+            [Method] = @Method,    
+            [Description] = @Description,    
+            [UpdatedAt] = GETDATE(),    
+            [UpdatedBy] = @CreatedBy    
+            WHERE  [EndpointId] = @EndpointId AND [DeletedBy] IS NULL AND [DeletedAt] IS NULL;         
+                       
+            SET @keyId = @EndpointId;      
+                       
+            SELECT @keyId AS KeyValue,                 
+            'APIEndpoint Updated' AS ErrorMessage       
+      
+    END      
+    ELSE      
+    BEGIN   
+        IF EXISTS (SELECT 1 FROM [dbo].[APIEndpoints] WHERE Name = @Name AND ProviderId=@ProviderId AND Path=@Path AND DeletedAt IS NULL AND DeletedBy IS NULL)            
+        BEGIN                        
+            SELECT CAST(0 AS INT) as KeyValue,                                                            
+            'APIEndpoint already exists.' as ErrorMessage                                
+        END                        
+        ELSE                                     
+            INSERT INTO [dbo].[APIEndpoints]    
+            (      
+                ProviderId,                          
+                Name,    
+                Path,    
+                Method,    
+                Description,      
+                CreatedBy,      
+                CreatedAt             
+            )                                    
+            VALUES                                  
+            (     
+                @ProviderId,                           
+                @Name,    
+                @Path,    
+                @Method,    
+                @Description,      
+                @CreatedBy,      
+                GETDATE()            
+            )                                    
+            SET  @keyId = SCOPE_IDENTITY()                                            
+                                               
+        SELECT @keyId as KeyValue,                                               
+        'APIEndpoint Added' as ErrorMessage      
+        END      
     
 END TRY                                              
 BEGIN CATCH                                            
@@ -521,7 +527,7 @@ BEGIN
             [AuthenticationType] = @AuthenticationType,
             [UpdatedBy] = @CreatedBy,
             [UpdatedAt] = GETDATE()
-            WHERE [ProviderId] = @ProviderId;   
+            WHERE [ProviderId] = @ProviderId AND DeletedAt IS NULL AND DeletedBy IS NULL;   
                  
             SET @keyId = @ProviderId;
                  
@@ -531,7 +537,7 @@ BEGIN
     END
     ELSE
     BEGIN             
-        IF EXISTS (SELECT 1 FROM [dbo].[APIProviders] WHERE Name = @Name)        
+        IF EXISTS (SELECT 1 FROM [dbo].[APIProviders] WHERE Name = @Name AND DeletedAt IS NULL AND DeletedBy IS NULL)        
         BEGIN                    
             SELECT CAST(0 AS INT) as KeyValue,                                                        
             'APIProvider already exists.' as ErrorMessage                            
