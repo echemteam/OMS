@@ -14,16 +14,16 @@ const ApiProvidersList=({handleEditClick,childRef})=>{
 
     const { confirm } = SwalAlert();
  
-    const [getApiProviders,{ isLoading: isApiProvidersLoading, isSuccess: isApiProvidersSuccess, data: isApiProviderseData },] = useGetApiProvidersMutation();
-    const [deleteApiProvider,{  isSuccess: isDeleteProviderSuccess, data: isDeleteProvidereData },] = useDeleteApiProviderMutation();
+    const [getApiProviders,{ isLoading: isApiProvidersLoading, isSuccess: isApiProvidersSuccess, data: isApiProvidersData },] = useGetApiProvidersMutation();
+    const [deleteApiProvider,{  isSuccess: isDeleteProviderSuccess, data: isDeleteProviderData },] = useDeleteApiProviderMutation();
 
     useEffect(() => {
-      if (isDeleteProviderSuccess && isDeleteProvidereData) {
-        ToastService.success(isDeleteProvidereData.errorMessage);
+      if (isDeleteProviderSuccess && isDeleteProviderData) {
+        ToastService.success(isDeleteProviderData.errorMessage);
         const currentPageObject = molGridRef.current.getCurrentPageObject();
         getLists(currentPageObject,molGridRef.current.generateSortingString());
       }
-    }, [isDeleteProviderSuccess, isDeleteProvidereData]);
+    }, [isDeleteProviderSuccess, isDeleteProviderData]);
 
     const getLists = (pageObject,sortingString) => {
       const request = {
@@ -55,15 +55,15 @@ const ApiProvidersList=({handleEditClick,childRef})=>{
     }, []);
   
     useEffect(() => {
-      if (isApiProvidersSuccess && isApiProviderseData) {
-        if (isApiProviderseData) {
-          setListData(isApiProviderseData.dataSource);  
+      if (isApiProvidersSuccess && isApiProvidersData) {
+        if (isApiProvidersData) {
+          setListData(isApiProvidersData.dataSource);  
         }
-        if (isApiProviderseData.totalRecord) {
-          setTotalRowCount(isApiProviderseData.totalRecord);
+        if (isApiProvidersData.totalRecord) {
+          setTotalRowCount(isApiProvidersData.totalRecord);
         }
       }
-    }, [isApiProvidersSuccess, isApiProviderseData]);
+    }, [isApiProvidersSuccess, isApiProvidersData]);
   
     
     
