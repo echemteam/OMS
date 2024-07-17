@@ -6,6 +6,7 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { addressFormData } from "./config/AddressForm.data";
+import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 //** Compoent's */
 const AddEditAddress = React.lazy(() => import("./feature/AddEditAddress"));
 const AddressDetailCard = React.lazy(() =>
@@ -92,9 +93,41 @@ const AddressGrid = ({
     }
   };
 
+  const tabs = [
+    {
+      sMenuItemCaption: "All",
+      component: (
+        <div className="mt-2">
+          <AddressDetailCard
+            keyId={keyId}
+            getAddresssByCustomerId={getAddresssByCustomerId}
+            onHandleEditAddress={handleEditAddress}
+            showEditIcon={showEditIcon}
+            getByIdRef={getByIdRef}
+          />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "Billing",
+      component: <div className="mt-2">Tab 2</div>,
+    },
+    {
+      sMenuItemCaption: "Shipping",
+      component: <div className="mt-2">Tab 3</div>,
+    },
+    {
+      sMenuItemCaption: "AP",
+      component: <div className="mt-2">Tab 4</div>,
+    },
+    {
+      sMenuItemCaption: "Primary",
+      component: <div className="mt-2">Tab 5</div>,
+    },
+  ];
   return (
     <React.Fragment>
-      <div className="address-main-card-sec">
+      <div className="address-main-card-sec vertical-tab-card">
         <CardSection
           cardTitle="Address"
           buttonClassName="theme-button"
@@ -104,13 +137,9 @@ const AddressGrid = ({
           buttonText="Add"
           titleButtonClick={handleToggleModal}
         >
-          <AddressDetailCard
-            keyId={keyId}
-            getAddresssByCustomerId={getAddresssByCustomerId}
-            onHandleEditAddress={handleEditAddress}
-            showEditIcon={showEditIcon}
-            getByIdRef={getByIdRef}
-          />
+          <div className="vertical-tab-inner">
+            <RenderTabs tabs={tabs} isCollapse={true} />
+          </div>
         </CardSection>
         <div className="address-model">
           <SidebarModel

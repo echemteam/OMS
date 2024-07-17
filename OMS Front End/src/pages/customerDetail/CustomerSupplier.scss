@@ -47,7 +47,7 @@
         }
 
         h5 {
-          font-size: var(--commonFont-extraLarge);
+          font-size: var(--commonFont-large);
           font-weight: 600;
           color: var(--themeColor);
           margin-bottom: 0px;
@@ -391,6 +391,7 @@
     align-items: center;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 .card{
