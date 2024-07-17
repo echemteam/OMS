@@ -26,28 +26,34 @@ const ApiProviders=()=>{
       if (isDeleteProviderSuccess && isDeleteProvidereData) {
         ToastService.success(isDeleteProvidereData.errorMessage);
         const currentPageObject = molGridRef.current.getCurrentPageObject();
-        getLists(currentPageObject);
+        getLists(currentPageObject,molGridRef.current.generateSortingString());
       }
     }, [isDeleteProviderSuccess, isDeleteProvidereData]);
 
-    const getLists = (pageObject) => {
+    const getLists = (pageObject,sortingString) => {
       const request = {
         pagination: {
           pageNumber: pageObject.pageNumber,
           pageSize: pageObject.pageSize,
         },
         filters: { searchText: "" },
+        sortString: sortingString
       };
       getApiProviders(request);
     };
 
     const handlePageChange = (page) => {
-      getLists(page);
+      getLists(page,molGridRef.current.generateSortingString());
     };
+
+    const handleSorting = (shortString) => {
+      getLists(molGridRef.current.getCurrentPageObject(), shortString);
+    }
+
     useEffect(() => {
       if (molGridRef.current) {
         const defaultPageObject = molGridRef.current.getCurrentPageObject();
-        getLists(defaultPageObject);
+        getLists(defaultPageObject,molGridRef.current.generateSortingString());
       }
     }, []);
   
@@ -76,7 +82,7 @@ const ApiProviders=()=>{
       };
       const listDataGet = () => {
         const currentPageObject = molGridRef.current.getCurrentPageObject();
-        getLists(currentPageObject);
+        getLists(currentPageObject,molGridRef.current.generateSortingString());
       };
     
   const handleDeleteClick = (data) => {
@@ -117,6 +123,7 @@ const ApiProviders=()=>{
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
+              onSorting={handleSorting}
               isLoading={isApiProvidersLoading}
               onActionChange={actionHandler}
             />

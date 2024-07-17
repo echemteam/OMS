@@ -31,7 +31,7 @@ const ApiEndPoints=()=>{
         if (isDeleteApiEndpointSuccess && isDeleteApiEndpointeData) {
           ToastService.success(isDeleteApiEndpointeData.errorMessage);
           const currentPageObject = molGridRef.current.getCurrentPageObject();
-          getLists(currentPageObject);
+          getLists(currentPageObject,molGridRef.current.generateSortingString());
         }
       }, [isDeleteApiEndpointSuccess, isDeleteApiEndpointeData]);
    
@@ -47,24 +47,30 @@ const ApiEndPoints=()=>{
       }
     }, [isApiEndPointsSuccess, isApiEndPointseData]);
 
-    const getLists = (pageObject) => {
+    const getLists = (pageObject,sortingString) => {
       const request = {
         pagination: {
           pageNumber: pageObject.pageNumber,
           pageSize: pageObject.pageSize,
         },
         filters: { searchText: "" },
+        sortString: sortingString
       };
       getApiEndpoints(request);
     };
 
     const handlePageChange = (page) => {
-      getLists(page);
+      getLists(page,molGridRef.current.generateSortingString());
     };
+
+    const handleSorting = (shortString) => {
+      getLists(molGridRef.current.getCurrentPageObject(), shortString);
+    }
+
     useEffect(() => {
       if (molGridRef.current) {
         const defaultPageObject = molGridRef.current.getCurrentPageObject();
-        getLists(defaultPageObject);
+        getLists(defaultPageObject,molGridRef.current.generateSortingString());
       }
     }, []);
 
@@ -86,7 +92,7 @@ const ApiEndPoints=()=>{
 
     const listDataGet = () => {
        const currentPageObject = molGridRef.current.getCurrentPageObject();
-        getLists(currentPageObject);
+        getLists(currentPageObject,molGridRef.current.generateSortingString());
    };
    const onSidebarClose = () => {
          setIsModelOpen(false);
@@ -120,6 +126,7 @@ return(<>
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
+              onSorting={handleSorting}
               isLoading={isApiEndPointsLoading}
               onActionChange={actionHandler}
             />
