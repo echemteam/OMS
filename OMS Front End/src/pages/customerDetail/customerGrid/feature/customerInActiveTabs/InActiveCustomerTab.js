@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../customerDetail/customers/config/CustomerData";
 import useDebounce from "../../../../../app/customHooks/useDebouce";
 import { ListSupplier } from "../../../../../utils/Enums/commonEnums";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../../data/appMessages";
 import { StatusEnums, StatusValue } from "../../../../../utils/Enums/StatusEnums";
-import { InActiveCustomersList } from "./feature/InActiveCustomersList";
+import InActiveCustomersList  from "../customerInActiveTabs/feature/InActiveCustomersList";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import CustomerListContext from "../../../../../utils/ContextAPIs/Customer/CustomerListContext";
+import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
 
 
 const InActiveCustomerTab = ({ statusId }) => {
