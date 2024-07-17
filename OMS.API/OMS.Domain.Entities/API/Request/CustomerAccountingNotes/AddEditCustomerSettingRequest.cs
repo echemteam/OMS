@@ -15,5 +15,8 @@ namespace OMS.Domain.Entities.API.Request.CustomerAccountingNotes
         public short? PaymentMethodId { get; set; }
         public string? InvoiceSubmissionInstruction { get; set; }
         public string? BillingCurrency { get; set; }
+        public decimal? SalesTax { get; set; }
+        public bool? ExemptSalesTax { get; set; }
+        public decimal? CardProcessingCharges { get; set; }
     }
 }

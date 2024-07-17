@@ -30,7 +30,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [formData, setFormData] = useState(customerbasicData);
 
     const [isButtonDisable, setIsButtonDisable] = useState(false);
-    const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser } = useContext(BasicDetailContext);
+    const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser, setCustomerCountryId } = useContext(BasicDetailContext);
 
     //** API Call's */
     const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
@@ -165,6 +165,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             newFrom.initialState = { ...GetCustomersBasicInformationByIdData };
             newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== 'isSubCompany' && field.dataField !== 'responsibleUserId');
             setFormData(newFrom);
+            setCustomerCountryId(GetCustomersBasicInformationByIdData.countryId);
         }
     }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
 

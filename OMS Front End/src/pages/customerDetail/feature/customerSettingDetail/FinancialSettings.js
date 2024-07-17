@@ -11,7 +11,9 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
-import { CustomerSettingEnum } from "../../../../utils/Enums/commonEnums";
+import { CountryCode, CustomerSettingEnum, PaymentMethodTypes, PaymentMethods } from "../../../../utils/Enums/commonEnums";
+import { addFormFields, removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+import { getFieldData } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 
 const FinancialSettings = ({ isEditablePage }) => {
 
@@ -19,7 +21,7 @@ const FinancialSettings = ({ isEditablePage }) => {
   const [showButton, setShowButton] = useState(true);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
-  const { customerId, isResponsibleUser, settingRef, handleActiveSubTabClick } = useContext(BasicDetailContext);
+  const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, handleActiveSubTabClick } = useContext(BasicDetailContext);
 
   //** API Call's */
   const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
@@ -47,7 +49,14 @@ const FinancialSettings = ({ isEditablePage }) => {
   useEffect(() => {
     getAllPaymentTerms();
     getAllPaymentMethod();
+    // removeCardProcessCharge();
   }, []);
+
+  useEffect(() => {
+    if (customerCountryId) {
+      GetDetailsbyCustomerID(customerId);
+    }
+  }, [customerCountryId, setCustomerCountryId])
 
   useEffect(() => {
     if (customerId > 0) {
@@ -82,9 +91,15 @@ const FinancialSettings = ({ isEditablePage }) => {
   useEffect(() => {
     if (!isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDSuccess && isGetDetailByCustomerIDData) {
       if (isGetDetailByCustomerIDData) {
-        let formData = { ...customerSettingFormData };
+        let modifyFormFields;
+        if (isGetDetailByCustomerIDData.paymentMethodId !== PaymentMethodTypes.CREDITCARD) {
+          modifyFormFields = handleExcludeCardValue();
+        } else if (isGetDetailByCustomerIDData.paymentMethodId === PaymentMethodTypes.CREDITCARD) {
+          modifyFormFields = handleCrditCardValue();
+        }
+        let formData = { ...modifyFormFields };
         formData.initialState = {
-          ...customerSettingFormData.initialState,
+          ...modifyFormFields.initialState,
           customerAccountingSettingId: isGetDetailByCustomerIDData.customerAccountingSettingId,
           paymentTermId: isGetDetailByCustomerIDData.paymentTermId,
           creditLimit: isGetDetailByCustomerIDData.creditLimit,
@@ -140,6 +155,97 @@ const FinancialSettings = ({ isEditablePage }) => {
     }
   };
 
+  const handleCheckboxChanges = (data, dataField) => {
+    if (dataField === 'exemptSalesTax' && data) {
+      let formData = { ...customerSettingFormData };
+      formData.formFields = formData.formFields.filter((field) => field.dataField !== 'salesTax');
+      // const modifyFormFields = removeFormFields(customerSettingFormData, ['salesTax']);
+      setCustomerSettingFormData(formData);
+    } else if (dataField === 'exemptSalesTax' && !data) {
+      let modifyFormFields = { ...SettingFormData }
+      // modifyFormFields.initialState = customerSettingFormData.initialState
+      if (customerSettingFormData.initialState.paymentTermId !== PaymentMethodTypes.CREDITCARD) {
+        modifyFormFields = handleExcludeCardValue(true);
+      } else if (customerSettingFormData.initialState.paymentTermId === PaymentMethodTypes.CREDITCARD) {
+        modifyFormFields = handleCrditCardValue(true);
+      }
+      setCustomerSettingFormData(modifyFormFields);
+    }
+  };
+
+  const handleCrditCardValue = (isExemptSalesTAX) => {
+    let salesTaxFieldsAdd;
+    let findCreditFields = getFieldData(SettingFormData, 'cardProcessingCharges');
+    if (isExemptSalesTAX) {
+      salesTaxFieldsAdd = getFieldData(SettingFormData, 'salesTax');
+    }
+    let formData = { ...customerSettingFormData };
+    formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+    const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'cardProcessingCharges');
+    const isSalesTaxPresent = isExemptSalesTAX ? formData.formFields.some((field) => field.dataField === 'salesTax') : true;
+    if (!isBankFeePresent) {
+      const insertIndex = formData.formFields.length - 1;
+      let updatedFormFields = [...formData.formFields];
+      updatedFormFields.splice(insertIndex, 0, findCreditFields);
+      formData.formFields = updatedFormFields;
+    }
+    else if (!isSalesTaxPresent) {
+      const insertIndex = formData.formFields.length - 2;
+      let updatedFormFields = [...formData.formFields];
+      updatedFormFields.splice(insertIndex, 0, isExemptSalesTAX ? salesTaxFieldsAdd : null);
+      formData.formFields = updatedFormFields;
+    }
+    return formData;
+  }
+
+  const handleExcludeCardValue = (isExemptSalesTAX) => {
+    let salesTaxFieldsAdd;
+    const findCreditFields = getFieldData(SettingFormData, 'bankFee');
+    if (isExemptSalesTAX) {
+      salesTaxFieldsAdd = getFieldData(SettingFormData, 'salesTax');
+    }
+    let formData = { ...customerSettingFormData };
+    formData.formFields = formData.formFields.filter((field) => field.dataField !== 'cardProcessingCharges');
+    const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankFee');
+    const isSalesTaxPresent = isExemptSalesTAX ? formData.formFields.some((field) => field.dataField === 'salesTax') : true;
+    if (!isBankFeePresent) {
+      const insertIndex = formData.formFields.length - 1;
+      let updatedFormFields = [...formData.formFields];
+      if (!isSalesTaxPresent && salesTaxFieldsAdd) {
+        updatedFormFields.splice(insertIndex, 0, salesTaxFieldsAdd, findCreditFields);
+      } else {
+        updatedFormFields.splice(insertIndex, 0, findCreditFields);
+      }
+      formData.formFields = updatedFormFields;
+    } else if (!isSalesTaxPresent) {
+      const insertIndex = formData.formFields.length - 2;
+      let updatedFormFields = [...formData.formFields];
+      updatedFormFields.splice(insertIndex, 0, isExemptSalesTAX ? salesTaxFieldsAdd : null);
+      formData.formFields = updatedFormFields;
+    }
+    return formData;
+  }
+
+  const handleDropdownChanges = (data, dataField) => {
+    if (dataField === 'paymentMethodId') {
+      if (data.value !== PaymentMethodTypes.CREDITCARD) {
+        const modifyFormFields = handleExcludeCardValue();
+        setCustomerSettingFormData(modifyFormFields);
+      } else if (data.value === PaymentMethodTypes.CREDITCARD) {
+        const modifyFormFields = handleCrditCardValue();
+        setCustomerSettingFormData(modifyFormFields);
+      }
+      settingFormRef.current.updateFormFieldValue({
+        paymentMethodId: data.value
+      });
+    }
+  }
+  //** Action Handler */
+  const formActionHandler = {
+    DDL_CHANGED: handleDropdownChanges,
+    CHECK_CHANGE: handleCheckboxChanges
+  };
+
   return (
     <div className="row">
       {!isGetDetailByCustomerIDFetching ?
@@ -147,7 +253,9 @@ const FinancialSettings = ({ isEditablePage }) => {
           config={customerSettingFormData}
           ref={settingFormRef}
           key={shouldRerenderFormCreator}
-          {...customerSettingFormData} />
+          // {...customerSettingFormData}
+          onCheckBoxChange={formActionHandler}
+          onActionChange={formActionHandler} />
         : <DataLoader />
       }
       {isEditablePage &&

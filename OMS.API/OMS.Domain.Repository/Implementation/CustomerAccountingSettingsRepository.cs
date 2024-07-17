@@ -52,6 +52,9 @@ namespace OMS.Domain.Repository.Implementation
                 settings.BillingCurrency,
                 settings.InvoiceSubmissionInstruction,
                 settings.CreatedBy,
+                settings.ExemptSalesTax,
+                settings.SalesTax,
+                settings.CardProcessingCharges
             }, CommandType.StoredProcedure);
         }
 
