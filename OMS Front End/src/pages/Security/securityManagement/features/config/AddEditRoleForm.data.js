@@ -33,7 +33,7 @@ export const SecurityRoleGridConfig = {
     {
       name: "Role Name",
       fieldName: "roleName",
-      // allowShort: true,
+      allowShort: true,
       width:"80%",
     },
     {

@@ -57,7 +57,8 @@ namespace OMS.Domain.Repository.Implementation
             {
                 requestData.Pagination!.PageNumber,
                 requestData.Pagination.PageSize,
-                requestData.Filters?.SearchText
+                requestData.Filters?.SearchText,
+                requestData.SortString
             }, true);
         }
 

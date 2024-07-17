@@ -109,7 +109,7 @@ const AssignUser = (props) => {
     GetUnAssignedUserByRoleIdData,
   ]);
 
-  const getLists = (pageObject) => {
+  const getLists = (pageObject,sortingString) => {
     const request = {
       pagination: {
         pageNumber: pageObject.pageNumber,
@@ -117,13 +117,18 @@ const AssignUser = (props) => {
       },
       filters: { searchText: "" },
       roleId: props.initData.roleId,
+      sortString: sortingString
     };
     getRolesMappingByRoleId(request);
   };
 
   const handlePageChange = (page) => {
-    getLists(page);
+    getLists(page,molGridRef.current.generateSortingString());
   };
+
+  const handleSorting = (shortString) => {
+    getLists(molGridRef.current.getCurrentPageObject(), shortString);
+  }
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
@@ -139,7 +144,7 @@ const AssignUser = (props) => {
   useEffect(() => {
     if (molGridRef.current) {
       const defaultPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(defaultPageObject);
+      getLists(defaultPageObject,molGridRef.current.generateSortingString());
     }
   }, [props.isOpen]);
 
@@ -173,7 +178,7 @@ const AssignUser = (props) => {
     if (isUserAddRoleMapping && AddRoleMappingData) {
       ToastService.success(AddRoleMappingData.errorMessage);
       const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(currentPageObject);
+      getLists(currentPageObject,molGridRef.current.generateSortingString());
       getUnAssignedUserByRoleId(props.initData.roleId);
     }
   }, [isUserAddRoleMapping, AddRoleMappingData]);
@@ -182,7 +187,7 @@ const AssignUser = (props) => {
     if (isDeleteSuccess && isDeletData) {
       ToastService.success(isDeletData.errorMessage);
       const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(currentPageObject);
+      getLists(currentPageObject,molGridRef.current.generateSortingString());
       getUnAssignedUserByRoleId(props.initData.roleId);
     }
   }, [isDeleteSuccess, isDeletData]);
@@ -229,6 +234,7 @@ const AssignUser = (props) => {
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
+              onSorting={handleSorting}
               isLoading={isListLoading}
               onActionChange={actionHandler}
             />

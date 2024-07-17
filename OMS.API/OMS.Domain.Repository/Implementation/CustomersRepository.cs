@@ -87,7 +87,8 @@ namespace OMS.Domain.Repository.Implementation
                 queryRequest.StatusId,
                 queryRequest.Pagination!.PageNumber,
                 queryRequest.Pagination.PageSize,
-                queryRequest.Filters?.SearchText
+                queryRequest.Filters?.SearchText,
+                queryRequest.SortString
             }, true);
         }
 

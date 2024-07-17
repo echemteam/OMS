@@ -99,18 +99,19 @@ export const UserGridConfig = {
       name: "User Name",
       fieldName: "userName",
       width: "20%",
-      // allowShort: true,
+      allowShort: true,
     },
     {
       name: "First Name",
       fieldName: "firstName",
-      // allowShort: true,
       width: "20%",
+      allowShort: true,
     },
     {
       name: "Last Name",
       fieldName: "lastName",
       width: "20%",
+      allowShort: true,
     },
     {
       name: "IsActive",
@@ -119,7 +120,7 @@ export const UserGridConfig = {
       colType: GridColumnType.CHECKBOX,
       colSettings: {
         allowCheckbox: true,
-        allowDisable: true
+        allowDisable: true,
       },
     },
     {
