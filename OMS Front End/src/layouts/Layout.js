@@ -29,7 +29,6 @@ const Layout = (props) => {
   // Check if the user is authorized to access the current route
   const isAuthorize = renderComponent?.securityKey ? hasPermission(renderComponent.securityKey) : false;
 
-
   // Handler to toggle the collapse state
   const handleToggleClick = () => {
     setIsCollapsed(!isCollapsed);

@@ -109,7 +109,7 @@ const CustomerDetails = () => {
         </div>
       </div>
       <SidebarModel
-        modalTitle="Edit Basic Information"
+        modalTitle="Edit Customer Basic Information"
         contentClass="content-50 basic-info-model"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}

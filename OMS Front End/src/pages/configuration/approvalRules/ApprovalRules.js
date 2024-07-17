@@ -127,10 +127,11 @@ const ApprovalRules = () => {
       ...prevFormData,
       initialState: {
         ...prevFormData.initialState,
-        moduleId: selectedModule
+        moduleId: selectedModule,
+        functionalityId : selectedFunctionality
       }
     }));
-  }, [selectedModule]);
+  }, [selectedModule , selectedFunctionality]);
 
   return (
     <div className="row">

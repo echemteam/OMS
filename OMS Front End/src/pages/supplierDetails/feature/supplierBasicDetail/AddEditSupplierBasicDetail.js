@@ -23,6 +23,7 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { supplierBasicData } from "./config/SupplierBasicDetail.data";
 import { excludingRoles } from "../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { getTaxIdMinMaxLength } from "../../../customerDetail/feature/customerBasicDetail/config/TaxIdValidator";
+import CardSection from "../../../../components/ui/card/CardSection";
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
@@ -231,7 +232,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         const updatedFormFields = getTaxIdMinMaxLength(data.value, supplierBasicData.formFields, 'taxId');
         const filteredFields = supplierBasicData.formFields.filter(field => {
             if (isOpen) {
-                return field.id !== "name" && field.dataField !== "note";
+                return field.dataField !== "note";
             }
             return field.id !== "name-input" && field.dataField !== "responsibleUserId";
         });
