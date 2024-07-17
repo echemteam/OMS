@@ -14,6 +14,7 @@ import {
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 //** Component's */
 const ContactList = React.lazy(() => import("./feature/ContactList"));
 const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
@@ -165,9 +166,52 @@ const ContactGrid = ({
     setisModelOpen(false);
     onGetContactList();
   };
+  const tabs = [
+    {
+      sMenuItemCaption: "All",
+      component: (
+        <div className="mt-2">
+          <ContactList
+            keyId={keyId}
+            getListRef={getListRef}
+            handleEdit={handleEdit}
+            showEditIcon={showEditIcon}
+            getContactByKeyId={getContactByKeyId}
+          />
+        </div>
+      ),
+    },
+    {
+      sMenuItemCaption: "Primary",
+      component: <div className="mt-2">Tab 2</div>,
+    },
+    {
+      sMenuItemCaption: "Purchasing",
+      component: <div className="mt-2">Tab 3</div>,
+    },
+    {
+      sMenuItemCaption: "End User",
+      component: <div className="mt-2">Tab 4</div>,
+    },
+    {
+      sMenuItemCaption: "Invoice Submission",
+      component: <div className="mt-2">Tab 5</div>,
+    },
+    {
+      sMenuItemCaption: "Invoice Following-up",
+      component: <div className="mt-2">Tab 6</div>,
+    },
+    {
+      sMenuItemCaption: "AP",
+      component: <div className="mt-2">Tab 7</div>,
+    },
+  ];
 
   return (
-    <div key={shouldRerenderFormCreator} className="contact-main-card-section">
+    <div
+      key={shouldRerenderFormCreator}
+      className="contact-main-card-section vertical-tab-card"
+    >
       <CardSection
         cardTitle={isSearchFilterShow ? "" : "Contact"}
         handleChange={handleChange}
@@ -195,15 +239,9 @@ const ContactGrid = ({
         isdropdownOpen={true}
         clearButtonClassName="dark-btn"
       >
-        {/* Contact Detail Card */}
-        {/* <ContactDetailCard
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-        /> */}
-        <ContactList keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon} getContactByKeyId={getContactByKeyId} />
+        <div className="vertical-tab-inner">
+          <RenderTabs tabs={tabs} isCollapse={true} />
+        </div>
       </CardSection>
       <div className="sidebar-contact-model">
         <SidebarModel

@@ -33,8 +33,8 @@ export const ListShowCustomer = { value: 1, label: "Customer Name" }
 export const ListSupplier = { value: 2, label: "Supplier Name" }
 
 export const AuthenticationTypes={
-    APIKEY: "APIKey",
-    OAUTH:"OAuth"
+    APIKey: "APIKey",
+    OAuth:"OAuth"
 
 }
 
@@ -43,4 +43,10 @@ export const ApiEndPointMethods={
     POST:"POST",
     PUT:"PUT",
     DELETE:"DELETE"
+}
+
+export const ApiParametersDataTypes={
+    String:"String",
+    Number:"Number",
+    Boolean:"Boolean",
 }
