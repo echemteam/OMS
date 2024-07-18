@@ -132,7 +132,7 @@ namespace OMS.Application.Services.Contact
 
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId, string searchText, string searchContactType)
         {
-            List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId,searchText,searchContactType);
+            List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId, searchText, searchContactType);
             OwnerType ownerTypeId = OwnerType.CustomerContact;
 
             if (contactList != null && contactList.Count > 0)
@@ -148,7 +148,7 @@ namespace OMS.Application.Services.Contact
 
         public async Task<List<GetContactBySupplierIdResponse>> GetContactBySupplierId(int supplierId, string searchText, string searchContactType)
         {
-            List<GetContactBySupplierIdResponse> contactList = await repositoryManager.contact.GetContactBySupplierId(supplierId,searchText,searchContactType);
+            List<GetContactBySupplierIdResponse> contactList = await repositoryManager.contact.GetContactBySupplierId(supplierId, searchText, searchContactType);
             OwnerType ownerTypeId = OwnerType.SupplierContact;
 
             if (contactList != null && contactList.Count > 0)

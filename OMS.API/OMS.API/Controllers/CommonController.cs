@@ -197,20 +197,18 @@ namespace OMS.API.Controllers
         {
 
             byte[] decryptedBytes = await _serviceManager.commonServices.DownloadDocument(folderName, fileName, keyId);
-            if (decryptedBytes == null)
+            if (decryptedBytes != null)
             {
-                return APISucessResponce("File not found");
+                var memory = new MemoryStream(decryptedBytes!)
+                {
+                    Position = 0
+                };
+                string ext = FileManager.GetExtension(fileName);
+                string mimeType = FileManager.GetMimeType(ext);
+                var contentType = mimeType;
+                return File(memory, contentType, fileName);
             }
-            var memory = new MemoryStream(decryptedBytes)
-            {
-                Position = 0
-            };
-
-            string ext = FileManager.GetExtension(fileName);
-            string mimeType = FileManager.GetMimeType(ext);
-            var contentType = mimeType;
-
-            return File(memory, contentType, fileName);
+            return File("", "", fileName);
         }
 
         [HttpGet("GetAllAPIProviders")]
