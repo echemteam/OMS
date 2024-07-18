@@ -9,7 +9,7 @@ import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetF
 
 const Rules = (props) => {
   const [isModelOpen, setisModelOpen] = useState(false);
-  const [getApprovedConfigData, setGetApprovedConfigData] = useState("")
+  const [getApprovedConfigData, setGetApprovedConfigData] = useState()
 
   const [
     getApprovalConfigurationByApprovalConfigurationId,
