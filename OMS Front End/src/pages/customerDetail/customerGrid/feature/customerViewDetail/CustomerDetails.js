@@ -61,12 +61,9 @@ const CustomerDetails = () => {
   ]);
 
   useEffect(() => {
-    debugger
     if (keyId) {
       setCustomerId(keyId);
       getCustomersBasicInformationById(keyId);
-
-getCustomersBasicInformationById()
     }
   }, [keyId]);
 

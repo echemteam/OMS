@@ -27,7 +27,6 @@ const AddEditSubCustomer=(props)=>{
     }, [isGetAllSubCompanyFetching && isGetAllSubCompanySuccess, isGetAllSubCompanyData]);
 
     useEffect(()=>{
-      debugger
       getAllSubCompany(props?.isSubCompany);
     },[])
   
