@@ -124,8 +124,11 @@ namespace OMS.Application.Services.Customers
             AddEntityDTO<int> responceData = new();
             foreach (var singleSubCompanyId in subCompanyId)
             {
-                requestData.SubCompanyId = singleSubCompanyId;
-                responceData = await repositoryManager.customers.AddSubCompanyMainCompany(requestData);
+                if (!string.IsNullOrEmpty(singleSubCompanyId))
+                {
+                    requestData.SubCompanyId = singleSubCompanyId;
+                    responceData = await repositoryManager.customers.AddSubCompanyMainCompany(requestData);
+                }
             }
             return responceData;
         }
