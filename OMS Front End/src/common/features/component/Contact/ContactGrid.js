@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../data/appIcons";
 import { ErrorMessage } from "../../../../data/appMessages";
