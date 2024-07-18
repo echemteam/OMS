@@ -17,6 +17,7 @@ import { customerbasicData, excludingRoles } from "./config/CustomerBasicDetail.
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
 import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
 
@@ -85,8 +86,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 // setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
                 // setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
             } else if (!isOpen) {
-                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
-                // setFormData(modifyFormFields);
+                const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+                setFormData(modifyFormFields);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON, true);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
             }
