@@ -346,7 +346,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     };
 
     return (
-        <div className="row mt-3 add-address-form">
+        <div className="row mt-2 add-address-form">
             <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler}
                 onCheckBoxChange={formActionHandler} key={shouldRerenderFormCreator} />
             <div className="col-md-12 mt-2">

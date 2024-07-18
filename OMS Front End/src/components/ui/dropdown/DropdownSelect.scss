@@ -55,6 +55,16 @@
     padding: 5px !important;
   }
 }
+.basic-info-select{
+  .css-1hb7zxy-IndicatorsContainer {
+    height: 32px !important;
+  }
+  .css-t3ipsp-control, .css-13cymwt-control{
+    min-height: 32px !important;
+    height: 32px !important;
+    padding-top: 0 !important;
+  }
+}
 
 .css-1nmdiqs-menu {
   font-size: var(--commonFont-small) !important;

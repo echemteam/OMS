@@ -144,7 +144,7 @@ const AddressGrid = ({
         <div className="address-model">
           <SidebarModel
             modalTitle={editMode ? "Update Address" : "Add Address"}
-            contentClass="content-40"
+            contentClass="content-35"
             onClose={onSidebarClose}
             modalTitleIcon={AppIcons.AddIcon}
             isOpen={isModelOpen}

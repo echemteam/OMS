@@ -116,4 +116,7 @@ export const securityKey = {
      PERMISSIONMANAGEMENT: "Permissions Management",
      SAVEPERMISSIONS: "Save Permission",
 
+     CONFIGURATION : "Configuration",
+     APPROVALRULES : "Approval Rules",
+
 };

@@ -83,7 +83,7 @@ const CustomerDetails = () => {
     <>
       <div className="card-bottom-m-0">
         <div className="row">
-          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 basic-left-part customer-desc-left-sec mb-2">
+          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 basic-left-part customer-desc-left-sec mb-2 mt-2">
             <CardSection>
               <CustomerBasicInfoCard
                 editClick={handleToggleModal}
@@ -109,7 +109,7 @@ const CustomerDetails = () => {
         </div>
       </div>
       <SidebarModel
-        modalTitle="Edit Basic Information"
+        modalTitle="Edit Customer Basic Information"
         contentClass="content-50 basic-info-model"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}

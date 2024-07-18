@@ -166,6 +166,13 @@ const ContactGrid = ({
     setisModelOpen(false);
     onGetContactList();
   };
+
+  useEffect(() => {
+    if (search === "" && selectedDrpvalues === "") {
+        onGetContactList();
+    }
+}, [search, selectedDrpvalues]);
+
   const tabs = [
     {
       sMenuItemCaption: "All",
