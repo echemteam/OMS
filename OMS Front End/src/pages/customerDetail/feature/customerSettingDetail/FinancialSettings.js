@@ -127,11 +127,11 @@ const FinancialSettings = ({ isEditablePage }) => {
         if (isGetDetailByCustomerIDData.paymentMethodId !== PaymentMethodTypes.CREDITCARD) {
           setIsBankFee(true);
           setIsCardCharges(false);
-          modifyFormFields = handleExcludeCardValue();
+          modifyFormFields = handleExcludeCardValue(isGetDetailByCustomerIDData.paymentMethodId, false);
         } else if (isGetDetailByCustomerIDData.paymentMethodId === PaymentMethodTypes.CREDITCARD) {
           setIsBankFee(false);
           setIsCardCharges(true);
-          modifyFormFields = handleCrditCardValue();
+          modifyFormFields = handleCrditCardValue(isGetDetailByCustomerIDData.paymentMethodId, false);
         }
         let formData = { ...modifyFormFields };
         formData.initialState = {
@@ -264,12 +264,25 @@ const FinancialSettings = ({ isEditablePage }) => {
     handleSalesTax(data, dataField);
   };
 
-  const handleCrditCardValue = (dropdownValue) => {
+  const handleCrditCardValue = (dropdownValue, isHandleChange) => {
     let findCreditFields = getFieldData(SettingFormData, 'cardProcessingCharges');
     let formData = { ...customerSettingFormData };
     if (customerCountryId === CountryId.USA) {
       formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
     }
+    let value = isHandleChange ? dropdownValue.value : dropdownValue;
+    if (customerCountryId !== CountryId.USA && value === PaymentMethodTypes.CREDITCARD) {
+      formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+    }
+    // else if (customerCountryId !== CountryId.USA && value !== PaymentMethodTypes.CREDITCARD) {
+    //   const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankFee');
+    //   if (!isBankFeePresent) {
+    //     let updatedFormFields = [...formData.formFields];
+    //     formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+    //     updatedFormFields = [...formData.formFields];
+    //     formData.formFields = updatedFormFields;
+    //   }
+    // }
     const isCardChargePresent = formData.formFields.some((field) => field.dataField === 'cardProcessingCharges');
     if (!isCardChargePresent) {
       const insertIndex = formData.formFields.length - 1;
@@ -282,7 +295,7 @@ const FinancialSettings = ({ isEditablePage }) => {
     return formData;
   }
 
-  const handleExcludeCardValue = (dropdownValue) => {
+  const handleExcludeCardValue = (dropdownValue, isHandleChange) => {
     const findCreditFields = getFieldData(SettingFormData, 'bankFee');
     let formData = { ...customerSettingFormData };
     formData.formFields = formData.formFields.filter((field) => field.dataField !== 'cardProcessingCharges');
@@ -302,6 +315,19 @@ const FinancialSettings = ({ isEditablePage }) => {
         formData.formFields = updatedFormFields;
       }
     }
+    let value = isHandleChange ? dropdownValue.value : dropdownValue;
+    if (customerCountryId !== CountryId.USA && value === PaymentMethodTypes.CREDITCARD) {
+      formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+    }
+    // else if (customerCountryId !== CountryId.USA && value !== PaymentMethodTypes.CREDITCARD) {
+    //   const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankFee');
+    //   if (!isBankFeePresent) {
+    //     let updatedFormFields = [...formData.formFields];
+    //     formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+    //     updatedFormFields = [...formData.formFields];
+    //     formData.formFields = updatedFormFields;
+    //   }
+    // }
     const getFormData = settingFormRef.current.getFormDataWithoutValidation();
     formData.initialState = { ...getFormData, paymentMethodId: dropdownValue, cardProcessingCharges: '' };
     return formData;
@@ -312,12 +338,12 @@ const FinancialSettings = ({ isEditablePage }) => {
       if (data.value !== PaymentMethodTypes.CREDITCARD) {
         setIsBankFee(true);
         setIsCardCharges(false);
-        const modifyFormFields = handleExcludeCardValue(data);
+        const modifyFormFields = handleExcludeCardValue(data, true);
         setCustomerSettingFormData(modifyFormFields);
       } else if (data.value === PaymentMethodTypes.CREDITCARD) {
         setIsBankFee(false);
         setIsCardCharges(true);
-        const modifyFormFields = handleCrditCardValue(data);
+        const modifyFormFields = handleCrditCardValue(data, true);
         setCustomerSettingFormData(modifyFormFields);
       }
     }
