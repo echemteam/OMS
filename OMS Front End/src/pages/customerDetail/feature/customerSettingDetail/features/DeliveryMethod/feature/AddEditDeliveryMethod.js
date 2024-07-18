@@ -11,6 +11,7 @@ import ToastService from "../../../../../../../services/toastService/ToastServic
 import { useAddDeliveryMethodsMutation, useLazyGetCustomerDeliveryMethodByCustomerDeliveryMethodIdQuery, useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import { setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
+import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
 
 const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit, deliveryMethodId, onSuccess }) => {
     //** State */
@@ -103,10 +104,13 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
             modalTitle="Add/Edit Delivery Method" modelSizeClass="w-30" >
             <div className="row">
                 <div className="col-md-12">
-                    <div className="row">
-                        <FormCreator config={formData} ref={ref} {...formData} />
-                    </div>
+                    {!isGetByIdFetching ?
+                        <div className="row">
+                            <FormCreator config={formData} ref={ref} {...formData} />
+                        </div>
+                        : <DataLoader />}
                 </div>
+
                 <div className="col-md-12 mt-3">
                     <div className="d-flex align-item-end justify-content-end">
                         <div className="d-flex align-item-end">

@@ -14,6 +14,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     //****  If we have supplier page we have set main id as supplierId. and If we have customer page we have set main id as customerId   */
     const [mainId, setMainId] = useState(0);
     const [customerId, setCustomerId] = useState(0);
+    const [customerCountryId, setCustomerCountryId] = useState('');
     //** */
 
     //** Shipping Method's */
@@ -80,7 +81,8 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     return (
         <BasicDetailContext.Provider value={{
-            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData,
+            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setCustomerCountryId,
+            customerCountryId,
             phoneNumberData, setMainId, mainId, setShowSubBackButton, showSubBackButton, setActiveSubTab, activeSubTab, handleActiveSubTabClick, saveFinacialSetting,
             emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
             setIsResponsibleUser, isResponsibleUser
