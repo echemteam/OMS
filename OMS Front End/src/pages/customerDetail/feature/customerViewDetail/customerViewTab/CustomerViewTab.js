@@ -10,7 +10,7 @@ const CustomerDocumentDetail = React.lazy(() => import("../../customerDocumentDe
 const CustomerNoteDetail = React.lazy(() => import("../../customerNoteDetail/CustomerNoteDetail"));
 const CustomerAddressDetail = React.lazy(() => import("../../customerAddressDetail/CustomerAddressDetail"));
 const CustomerSettingDetails = React.lazy(() => import("../../customerSettingDetail/CustomerSettingDetails"));
-
+const CustomerSubCustomerDetail=React.lazy(() => import("../../customerSubCustomerDetail/CustomerSubCustomerDetail"));
 const CustomerViewTab = (customerId) => {
 
     const { isResponsibleUser } = useContext(BasicDetailContext);
@@ -83,6 +83,15 @@ const CustomerViewTab = (customerId) => {
           component: (
             <div className="">
               <CustomerHistory isEditablePage={true} />
+            </div>
+          ),
+          isVisible: hasHistoryPermission.hasAccess,
+        },
+        {
+          sMenuItemCaption: "Sub-Customer",
+          component: (
+            <div className="mt-2">
+              <CustomerSubCustomerDetail  />
             </div>
           ),
           isVisible: hasHistoryPermission.hasAccess,
