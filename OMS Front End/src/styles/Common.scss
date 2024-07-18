@@ -904,14 +904,16 @@ a {
       }
     }
   }
-  &.setting-tab-sec{
+
+  &.setting-tab-sec {
     .card-body-sec {
       margin-top: 0;
+
       @media only screen and (max-width: 1560px) {
         max-height: calc(100vh - 236px);
       }
     }
-  
+
   }
 }
 
@@ -997,6 +999,22 @@ a {
               margin: 4px 5px 0;
             }
           }
+        }
+      }
+    }
+  }
+}
+
+.setting-tab-sec {
+  .card {
+    padding: 0;
+
+    .tab-section {
+      .tab-sub-content {
+        max-height: calc(100vh - 300px);
+
+        @media only screen and (max-width: 1560px) {
+          max-height: calc(100vh - 265px)
         }
       }
     }
@@ -1655,6 +1673,7 @@ a {
   .card-body-sec {
     margin-top: 0 !important;
     height: calc(100vh - 310px);
+
     @media only screen and (max-width: 1560px) {
       height: calc(100vh - 280px);
     }
@@ -1838,6 +1857,7 @@ a {
         overflow: hidden;
         overflow-y: auto;
         margin: 10px 0;
+
         @media only screen and (max-width: 1560px) {
           max-height: calc(100vh - 235px);
         }
@@ -2197,9 +2217,11 @@ input[type="checkbox"]:disabled {
 
 .customer-list-all {
   margin-top: 5px !important;
-.card {
-  padding: 10px 0 !important;
-}
+
+  .card {
+    padding: 10px 0 !important;
+  }
+
   table {
     thead {
       tr {
@@ -2662,9 +2684,10 @@ input[type="checkbox"]:disabled {
           }
         }
       }
-      &.setting-tab-sec{
+
+      &.setting-tab-sec {
         .main-inactive-grid {
-          .tab-sub-header{
+          .tab-sub-header {
             margin-left: 0 !important;
           }
         }
@@ -3069,6 +3092,7 @@ input[type="checkbox"]:disabled {
       display: flex;
       flex-direction: column;
       border-right: 1px solid var(--linkMenu);
+      border-bottom: 0 !important;
       width: 15%;
       overflow: hidden;
       transition: 0.5s all;
@@ -3197,10 +3221,10 @@ input[type="checkbox"]:disabled {
 }
 
 .main-customer-grid {
-  .tab-section{
+  .tab-section {
     .tab-header {
-      button{
-        &.active{
+      button {
+        &.active {
           background: transparent;
         }
       }
@@ -3208,6 +3232,6 @@ input[type="checkbox"]:disabled {
   }
 }
 
-.modal-body{
+.modal-body {
   padding: 12px !important;
 }

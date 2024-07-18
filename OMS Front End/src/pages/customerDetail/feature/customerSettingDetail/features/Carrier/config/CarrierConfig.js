@@ -18,7 +18,7 @@ export const addEditCarrierFormData = {
             dataField: "carrier",
             fieldSetting: {
                 placeholder: "Select Carrier",
-                allowSpace: true,
+                isEnableOnChange: true
             },
             validation: [{ type: "require" }],
             style: {

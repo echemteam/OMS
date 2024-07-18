@@ -18,6 +18,7 @@ export const addEditApiEndPointsFormData ={
             dataField: "providerId",
             fieldSetting: {
                 placeholder: "Select Provider ",
+                isEnableOnChange: true
             },
             
          validation: [{ type: "require" }],
@@ -64,6 +65,7 @@ export const addEditApiEndPointsFormData ={
             dataField: "method",
             fieldSetting: {
                 placeholder: "Select Method",
+                isEnableOnChange: true
             },
             
             validation: [{ type: "require" }],

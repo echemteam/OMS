@@ -73,7 +73,8 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "groupTypeId",
       fieldSetting: {
-        placeholder: "Select Group Type"
+        placeholder: "Select Group Type",
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -89,7 +90,8 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "countryId",
       fieldSetting: {
-        placeholder: "Select Country"
+        placeholder: "Select Country",
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -103,7 +105,8 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "territoryId",
       fieldSetting: {
-        placeholder: "Select Territory"
+        placeholder: "Select Territory",
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -141,6 +144,7 @@ export const customerbasicData = {
       dataField: "responsibleUserId",
       fieldSetting: {
         placeholder: "Select Responsible User",
+        isEnableOnChange: true,
         isDisabled: false,
       },
       style: {

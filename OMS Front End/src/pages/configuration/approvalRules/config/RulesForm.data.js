@@ -26,6 +26,7 @@ export const rulesFormData = {
             dataField: "moduleId",
             fieldSetting: {
                 placeholder: "Select Module",
+                isEnableOnChange: true
             },
             validation: [{ type: "require" }],
             style: {
@@ -41,6 +42,7 @@ export const rulesFormData = {
             fieldSetting: {
                 // isDisabled: true,
                 placeholder: "Select Functionality",
+                isEnableOnChange: true
             },
             validation: [{ type: "require" }],
             style: {
@@ -56,6 +58,7 @@ export const rulesFormData = {
             fieldSetting: {
                 // isDisabled: true,
                 placeholder: "Select Module",
+                isEnableOnChange: true
             },
             validation: [{ type: "require" }],
             style: {
@@ -70,6 +73,7 @@ export const rulesFormData = {
             dataField: "roleId",
             fieldSetting: {
                 placeholder: "Select Approver Role",
+                isEnableOnChange: true
             },
             validation: [{ type: "require" }],
             style: {

@@ -17,7 +17,7 @@ export const addEditDeliveryFormData = {
             dataField: "chargeType",
             fieldSetting: {
                 placeholder: "Select Charge Type",
-                allowSpace: true,
+                isEnableOnChange: true,
                 isDisabled: false,
             },
             validation: [{ type: "require" }],

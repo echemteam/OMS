@@ -46,6 +46,7 @@ export const addEditApiProviderFormData ={
             dataField: "authenticationType",
             fieldSetting: {
                 placeholder: "Select Authentication Type",
+                isEnableOnChange: true
             },
             
            // validation: [{ type: "require" }],
