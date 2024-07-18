@@ -50,9 +50,7 @@ const AddressDetailCard = forwardRef(
         isGetAddresssByCustomerId &&
         GetAddresssByCustomerIdData
       ) {
-        const filteredData = selectedAddressTypeId[0]
-        ? GetAddresssByCustomerIdData.filter(address => address.addressTypeId === selectedAddressTypeId[0])
-        : GetAddresssByCustomerIdData;
+        const filteredData = selectedAddressTypeId[0] ? GetAddresssByCustomerIdData.filter(address => address.addressTypeId === selectedAddressTypeId[0]): GetAddresssByCustomerIdData;
         setAddressData(filteredData);
       }
     }, [
