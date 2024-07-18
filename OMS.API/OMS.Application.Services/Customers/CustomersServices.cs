@@ -132,7 +132,11 @@ namespace OMS.Application.Services.Customers
             }
             return responceData;
         }
-
+        public async Task<EntityList<GetSubCompanysByMainCompanyIdResponse>> GetSubCompanysByMainCompanyId(GetSubCompanysByMainCompanyIdRequest requestData)
+        {
+            var subCompanyDetails = await repositoryManager.customers.GetSubCompanysByMainCompanyId(requestData);
+            return subCompanyDetails!;
+        }
         #endregion
     }
 }

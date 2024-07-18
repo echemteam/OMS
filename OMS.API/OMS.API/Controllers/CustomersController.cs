@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
@@ -120,6 +121,12 @@ namespace OMS.API.Controllers
         {
             var addEditItem = await _serviceManager.customersServices.AddSubCompanyMainCompany(requestData);
             return APISucessResponce(addEditItem);
+        }
+        [HttpPost("GetSubCompanysByMainCompanyId")]
+        public async Task<IActionResult> GetSubCompanysByMainCompanyId(GetSubCompanysByMainCompanyIdRequest requestData)
+        {
+            var subCompanyDetails = await _serviceManager.customersServices.GetSubCompanysByMainCompanyId(requestData).ConfigureAwait(true);
+            return APISucessResponce<object>(subCompanyDetails);
         }
         #endregion
     }

@@ -29,6 +29,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETCUSTOMERSDETAILSBYCUTOMERNAME = "GetCustomersDetailsByCutomerName";
         const string UPDATECUSTOMERSUBCOMPANY = "UpdateCustomerSubCompany";
         const string ADDSUBCOMPANYMAINCOMPANY = "AddSubCompanyMainCompany";
+        const string GETSUBCOMPANYSBYMAINCOMPANYID = "GetSubCompanysByMainCompanyId";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -157,7 +158,7 @@ namespace OMS.Domain.Repository.Implementation
                 updatedBy
             }, CommandType.StoredProcedure);
         }
-  
+
         public async Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest)
         {
             return await _context.GetListSP<GetCustomerAuditHistoryByCustomerIdResponse>(GETCUSTOMERAUDITHISTORYBYCUSTOMERID, new
@@ -208,6 +209,17 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.MainCompanyId,
                 requestData.SubCompanyId
             }, CommandType.StoredProcedure);
+        }
+        public async Task<EntityList<GetSubCompanysByMainCompanyIdResponse>> GetSubCompanysByMainCompanyId(GetSubCompanysByMainCompanyIdRequest requestData)
+        {
+            return await _context.GetListSP<GetSubCompanysByMainCompanyIdResponse>(GETSUBCOMPANYSBYMAINCOMPANYID, new
+            {
+                requestData.MainCompanyId,
+                requestData.Pagination!.PageNumber,
+                requestData.Pagination.PageSize,
+                requestData.Filters?.SearchText,
+                requestData.SortString
+            }, true);
         }
         #endregion
     }
