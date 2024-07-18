@@ -50,3 +50,8 @@ export const ApiParametersDataTypes={
     Number:"Number",
     Boolean:"Boolean",
 }
+
+export const ModulePathName = {
+    Customer : "Customer",
+    Supplier : "Supplier"
+}

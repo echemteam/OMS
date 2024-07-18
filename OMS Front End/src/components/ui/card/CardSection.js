@@ -70,8 +70,8 @@ function CardSection({
                 </div>
               )}
             </div>
-            <div className="col-md-4">
-              {searchFilter && (
+            {searchFilter && (
+              <div className="col-md-4">
                 <div className="ml-2">
                   <DropDown
                     value={selectedOptions}
@@ -83,38 +83,38 @@ function CardSection({
                     placeholder={placeholder}
                   />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
             {searchButton && (
-            <>
-              <div className="btn-right-sec">
-                {/* Button to open the Add Craft modal */}
-                <Buttons
-                  onClick={searchTitleButtonClick}
-                  buttonText={searchbuttonText}
-                  buttonTypeClassName={buttonClassName}
-                  textWithIcon={searchTextWithIcon}
-                  imagePath={searchIconImg}
-                />
-              </div>
-            </>
-          )}
-          {clearButton && (
-            <>
-              <div className="btn-right-sec">
-                {/* Button to open the Add Craft modal */}
-                <Buttons
-                  onClick={clearTitleButtonClick}
-                  buttonText={clearButtonText}
-                  buttonTypeClassName={clearButtonClassName}
-                  textWithIcon={clearTextWithIcon}
-                  imagePath={clearIconImg}
-                />
-              </div>
-            </>
-          )}
+              <>
+                <div className="btn-right-sec">
+                  {/* Button to open the Add Craft modal */}
+                  <Buttons
+                    onClick={searchTitleButtonClick}
+                    buttonText={searchbuttonText}
+                    buttonTypeClassName={buttonClassName}
+                    textWithIcon={searchTextWithIcon}
+                    imagePath={searchIconImg}
+                  />
+                </div>
+              </>
+            )}
+            {clearButton && (
+              <>
+                <div className="btn-right-sec">
+                  {/* Button to open the Add Craft modal */}
+                  <Buttons
+                    onClick={clearTitleButtonClick}
+                    buttonText={clearButtonText}
+                    buttonTypeClassName={clearButtonClassName}
+                    textWithIcon={clearTextWithIcon}
+                    imagePath={clearIconImg}
+                  />
+                </div>
+              </>
+            )}
           </div>
-        
+
           {
             // isButtonVisible && (
 
