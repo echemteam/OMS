@@ -24,7 +24,7 @@ const SupplierViewTab = (supplierId) => {
         {
             sMenuItemCaption: "Address",
             component: (
-                <div className="mt-2">
+                <div className="mt-2 contact-accrodiaon-scroll">
                     <SuplierAddressDetails isEditablePage={true} />
                 </div>
             ),
@@ -33,7 +33,7 @@ const SupplierViewTab = (supplierId) => {
         {
             sMenuItemCaption: "Contact",
             component: (
-                <div className="mt-2">
+                <div className="mt-2 contact-accrodiaon-scroll contact-card-section-new">
                     <SupplierContactDetail isEditablePage={true} isSearchFilterShow={true} />
                 </div>
             ),
