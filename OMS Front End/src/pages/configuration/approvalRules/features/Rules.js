@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
@@ -10,7 +9,7 @@ import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetF
 
 const Rules = (props) => {
   const [isModelOpen, setisModelOpen] = useState(false);
-  const [getApprovedConfigData, setGetApprovedConfigData] = useState("")
+  const [getApprovedConfigData, setGetApprovedConfigData] = useState()
 
   const [
     getApprovalConfigurationByApprovalConfigurationId,

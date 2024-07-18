@@ -16,7 +16,6 @@ import InActiveCustomerTab from "../customerInActiveTabs/InActiveCustomerTab";
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
   const listRef = useRef();
-  const molGridRef = useRef();
   const [search, setSearch] = useState("");
   const [statusOptions, setStatusOptions] = useState([]);
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("")

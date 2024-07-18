@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -214,7 +215,7 @@ const AddEditRules = (props) => {
         "functionalitiesFieldId"
       );
       ruleFormRef.current.updateFormFieldValue({
-        functionalityId: data.value,
+        functionalityId: functionalityId[0].functionalityId,
         functionalitiesFieldId: null,
       });
     }
@@ -249,8 +250,8 @@ const AddEditRules = (props) => {
         approvalAction: data.approvalAction,
       };
       addEditApprovalConfiguration(requestData);
-      setFunctionalityID(requestData.moduleId);
-      setModuleID(requestData.functionalityId);
+      setFunctionalityID(requestData.functionalityId);
+      setModuleID(requestData.moduleId);
     }
   };
 

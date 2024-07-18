@@ -117,6 +117,32 @@ namespace OMS.Application.Services.Customers
         {
             return await repositoryManager.customers.UpdateCustomerSubCompany(requestData);
         }
+        public async Task<AddEntityDTO<int>> AddSubCompanyMainCompany(AddSubCompanyMainCompanyRequest requestData)
+        {
+            string[] subCompanyId = requestData.SubCompanyId!.Split(',');
+
+            AddEntityDTO<int> responceData = new();
+            foreach (var singleSubCompanyId in subCompanyId)
+            {
+                if (!string.IsNullOrEmpty(singleSubCompanyId))
+                {
+                    requestData.SubCompanyId = singleSubCompanyId;
+                    responceData = await repositoryManager.customers.AddSubCompanyMainCompany(requestData);
+                }
+            }
+            return responceData;
+        }
+        public async Task<EntityList<GetSubCompanysByMainCompanyIdResponse>> GetSubCompanysByMainCompanyId(GetSubCompanysByMainCompanyIdRequest requestData)
+        {
+            var subCompanyDetails = await repositoryManager.customers.GetSubCompanysByMainCompanyId(requestData);
+            return subCompanyDetails!;
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteSubCompany(int subCompanyMainCompanyId, short CurrentUserId)
+        {
+            short deletedBy = CurrentUserId;
+            return await repositoryManager.customers.DeleteSubCompany(subCompanyMainCompanyId, deletedBy);
+        }
         #endregion
     }
 }

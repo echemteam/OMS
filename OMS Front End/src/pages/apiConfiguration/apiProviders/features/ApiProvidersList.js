@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef ,useState,useEffect} from "react";
 import MolGrid from "../../../../components/Grid/MolGrid";
 import SwalAlert from "../../../../services/swalService/SwalService";

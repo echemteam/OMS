@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { generateColorArray, tailwindConfig } from './ChartTailwindConfig';
 

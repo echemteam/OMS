@@ -10,6 +10,5 @@ namespace OMS.Application.Services.CustomerNotes
         Task<AddEntityDTO<long>> AddCustomerNotes(AddCustomerNotesRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<long>> UpdateCustomerNotes(UpdateCustomerNotesRequest requestData, short CurrentUserId);
         Task<List<GetCustomerNotesByCustomerIdResponse>> GetCustomerNoteByCustomerId(int customerId);
-         
     }
 }

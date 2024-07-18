@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { transformSucessResponse, transformErrorResponse } from "../../utils/API/responseMiddleware";
 import { encryptQueryString, transformRequest } from "../../utils/API/requestMiddleware"
-import { customFetchBase, defaultBaseQuery } from '../../utils/API/fetchBaseQuery';
+import { customFetchBase } from '../../utils/API/fetchBaseQuery';
 
 const userAPI = createApi({
     reducerPath: 'userAPI',

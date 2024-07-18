@@ -28,6 +28,9 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDEDITCONTACTFORCUSTOMER = "AddEditContactForCustomer";
         const string GETCUSTOMERSDETAILSBYCUTOMERNAME = "GetCustomersDetailsByCutomerName";
         const string UPDATECUSTOMERSUBCOMPANY = "UpdateCustomerSubCompany";
+        const string ADDSUBCOMPANYMAINCOMPANY = "AddSubCompanyMainCompany";
+        const string GETSUBCOMPANYSBYMAINCOMPANYID = "GetSubCompanysByMainCompanyId";
+        const string DELETESUBCOMPANY = "DeleteSubCompany";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -156,7 +159,7 @@ namespace OMS.Domain.Repository.Implementation
                 updatedBy
             }, CommandType.StoredProcedure);
         }
-  
+
         public async Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest)
         {
             return await _context.GetListSP<GetCustomerAuditHistoryByCustomerIdResponse>(GETCUSTOMERAUDITHISTORYBYCUSTOMERID, new
@@ -198,6 +201,34 @@ namespace OMS.Domain.Repository.Implementation
             {
                 requestData.CustomerId,
                 requestData.IsSubCompany
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDTO<int>> AddSubCompanyMainCompany(AddSubCompanyMainCompanyRequest requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDSUBCOMPANYMAINCOMPANY, new
+            {
+                requestData.MainCompanyId,
+                requestData.SubCompanyId
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<EntityList<GetSubCompanysByMainCompanyIdResponse>> GetSubCompanysByMainCompanyId(GetSubCompanysByMainCompanyIdRequest requestData)
+        {
+            return await _context.GetListSP<GetSubCompanysByMainCompanyIdResponse>(GETSUBCOMPANYSBYMAINCOMPANYID, new
+            {
+                requestData.MainCompanyId,
+                requestData.Pagination!.PageNumber,
+                requestData.Pagination.PageSize,
+                requestData.Filters?.SearchText,
+                requestData.SortString
+            }, true);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteSubCompany(int subCompanyMainCompanyId, short deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETESUBCOMPANY, new
+            {
+                subCompanyMainCompanyId,
+                deletedBy
             }, CommandType.StoredProcedure);
         }
         #endregion
