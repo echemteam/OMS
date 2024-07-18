@@ -9,8 +9,8 @@ const  customerSubCustomerAPI= createApi({
     endpoints: (builder) => ({
 
         getAllSubCompany: builder.query({
-            query: () => ({
-                url: encryptQueryString(`/Common/GetAllSubCompany`),
+            query: (data) => ({
+                url: encryptQueryString(`/Common/GetAllSubCompany/?isSubCustomer=${data.isSubCustomer}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],

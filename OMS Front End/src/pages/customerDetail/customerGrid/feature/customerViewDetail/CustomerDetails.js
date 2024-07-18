@@ -16,6 +16,7 @@ import CustomerViewTab from "../../../feature/customerViewDetail/customerViewTab
 import CustomerBasicInfoCard from "../../../feature/customerViewDetail/customerBasicInfoCard/CustomerBasicInfoCard";
 
 const CustomerDetails = () => {
+
   const navigate = useNavigate();
   const { id } = useParams();
   const authState = useSelector((state) => state.auth);
@@ -23,7 +24,7 @@ const CustomerDetails = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
-  const { setCustomerId, customerId, setIsResponsibleUser, setCustomerCountryId } = useContext(BasicDetailContext);
+  const { setCustomerId, customerId, setIsResponsibleUser, setCustomerCountryId ,setIsSubCompany} = useContext(BasicDetailContext);
 
   const [
     getCustomersBasicInformationById,
@@ -45,9 +46,13 @@ const CustomerDetails = () => {
         GetCustomersBasicInformationByIdData.responsibleUserId
       ) {
         setIsResponsibleUser(false);
+
       }
+
+
       setCustomerData(GetCustomersBasicInformationByIdData);
       setCustomerCountryId(GetCustomersBasicInformationByIdData.countryId)
+      setIsSubCompany(GetCustomersBasicInformationByIdData.isSubCompany)
     }
   }, [
     isGetCustomersBasicInformationById,
@@ -56,9 +61,12 @@ const CustomerDetails = () => {
   ]);
 
   useEffect(() => {
+    debugger
     if (keyId) {
       setCustomerId(keyId);
       getCustomersBasicInformationById(keyId);
+
+getCustomersBasicInformationById()
     }
   }, [keyId]);
 
