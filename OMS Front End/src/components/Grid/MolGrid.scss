@@ -350,10 +350,10 @@ table {
 .customer-list-all {
   table {
     tbody {
-      max-height: calc(100vh - 345px);
+      max-height: calc(100vh - 365px);
 
       @media only screen and (max-width: 1560px) {
-        max-height: calc(100vh - 335px);
+        max-height: calc(100vh - 315px);
       }
     }
   }
@@ -363,6 +363,9 @@ table {
   table {
     tbody {
       max-height: calc(100vh - 400px);
+      @media only screen and (max-width: 1560px) {
+        max-height: calc(100vh - 332px);
+      }
     }
   }
 }
