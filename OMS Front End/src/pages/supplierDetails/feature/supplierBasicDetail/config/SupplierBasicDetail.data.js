@@ -81,7 +81,7 @@ export const supplierBasicData = {
       dataField: "groupTypeId",
       fieldSetting: {
         placeholder: "Select Group Type",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -96,7 +96,7 @@ export const supplierBasicData = {
       dataField: "countryId",
       fieldSetting: {
         placeholder: "Select Country",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -111,7 +111,7 @@ export const supplierBasicData = {
       dataField: "territoryId",
       fieldSetting: {
         placeholder: "Select Territory",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -126,7 +126,7 @@ export const supplierBasicData = {
       dataField: "supplierTypeId",
       fieldSetting: {
         placeholder: "Select Supplier Type",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {

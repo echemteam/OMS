@@ -18,6 +18,7 @@ export const addEditApiParameterFormData ={
             dataField: "endpointId",
             fieldSetting: {
                 placeholder: "Select Endpoint ",
+                isEnableOnChange: true
             },
             
          validation: [{ type: "require" }],
@@ -49,6 +50,7 @@ export const addEditApiParameterFormData ={
             dataField: "dataType",
             fieldSetting: {
                 placeholder: "Select DataType",
+                isEnableOnChange: true
             },
             
             validation: [{ type: "require" }],

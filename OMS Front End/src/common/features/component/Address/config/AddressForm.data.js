@@ -12,7 +12,7 @@ export const addressFormData = {
       dataField: "addressTypeId",
       fieldSetting: {
         placeholder: "Select Address Type",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -108,6 +108,7 @@ export const addressFormData = {
       dataField: "countryId",
       fieldSetting: {
         placeholder: "Select Country",
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -123,6 +124,7 @@ export const addressFormData = {
       fieldSetting: {
         isDisabled: false,
         placeholder: "Select State",
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -138,6 +140,7 @@ export const addressFormData = {
       fieldSetting: {
         isDisabled: true,
         placeholder: "Select City",
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {

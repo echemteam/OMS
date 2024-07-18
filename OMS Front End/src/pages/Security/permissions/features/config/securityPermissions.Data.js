@@ -18,6 +18,7 @@ const SecurityPermissions = {
             fieldSetting: {
                 placeholder: "Select Role Name",
                 options: [],
+                isEnableOnChange: true
             },
             validation: [{ type: "require" }],
             style: {

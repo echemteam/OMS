@@ -15,7 +15,6 @@ export const SettingFormData = {
       dataField: "paymentTermId",
       fieldSetting: {
         placeholder: "Select Default Payment Terms Template",
-        allowSpace: true,
         isEnableOnChange: true
       },
       validation: [{ type: "require" }],
@@ -48,7 +47,6 @@ export const SettingFormData = {
       dataField: "paymentMethodId",
       fieldSetting: {
         placeholder: "Select Payment Method",
-        allowSpace: true,
         isEnableOnChange: true
       },
       validation: [{ type: "require" }],
@@ -65,7 +63,6 @@ export const SettingFormData = {
       dataField: "billingCurrency",
       fieldSetting: {
         placeholder: "Billing Currency",
-        allowSpace: true,
         isEnableOnChange: true,
         options: [
           { value: "USD", label: "USD" },

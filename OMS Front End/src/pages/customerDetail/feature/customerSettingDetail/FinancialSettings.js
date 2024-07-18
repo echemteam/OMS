@@ -161,6 +161,9 @@ const FinancialSettings = ({ isEditablePage }) => {
             } else if (isBankFeePresent && isCardPresent) {
               setIndex = 3;
             }
+            else {
+              setIndex = 1;
+            }
             const insertIndex = formData.formFields.length - setIndex;
             let updatedFormFields = [...formData.formFields];
             updatedFormFields.splice(insertIndex, 0, findSalesTaxFields);
@@ -240,6 +243,8 @@ const FinancialSettings = ({ isEditablePage }) => {
         setIndex = 2;
       } else if (isBankFeePresent && isCardPresent) {
         setIndex = 3;
+      } else {
+        setIndex = 1;
       }
       const isSalesTaxPresent = formData.formFields.some((field) => (field.dataField === 'salesTax'));
       if (!isSalesTaxPresent) {

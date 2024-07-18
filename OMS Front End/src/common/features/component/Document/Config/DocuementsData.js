@@ -22,7 +22,7 @@ export const DocumentFormData = {
       dataField: "documentTypeId",
       fieldSetting: {
         placeholder: "Select Document Type",
-        allowSpace: true,
+        isEnableOnChange: true,
         options: []
       },
       validation: [{ type: "require" }],
