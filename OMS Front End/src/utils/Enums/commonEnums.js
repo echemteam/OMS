@@ -69,6 +69,6 @@ export const PaymentMethodTypes = {
     OTHERWITHNOTEDIELD: 6
 }
 
-export const CountryCode = {
+export const CountryId = {
     USA: 233
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.API.Response.CustomerAccountingSettings
+﻿namespace OMS.Domain.Entities.API.Response.CustomerAccountingSettings
 {
     public class GetDetailsByCustomerIdResponse
     {
@@ -14,5 +8,9 @@ namespace OMS.Domain.Entities.API.Response.CustomerAccountingSettings
         public decimal? CreditLimit { get; set; }
         public string? BillingCurrency { get; set; }
         public string? InvoiceSubmissionInstruction { get; set; }
+        public decimal? SalesTax { get; set; }
+        public bool? ExemptSalesTax { get; set; }
+        public decimal? CardProcessingCharges { get; set; }
+        public decimal? BankFee { get; set; }
     }
 }

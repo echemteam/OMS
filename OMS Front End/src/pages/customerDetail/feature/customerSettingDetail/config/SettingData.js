@@ -2,7 +2,10 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const SettingFormData = {
   name: "Setting Form",
-  initialState: { paymentTermId: "", creditLimit: 10000, paymentMethodId: "", billingCurrency: "USD", invoiceSubmissionInstruction: "" },
+  initialState: {
+    paymentTermId: "", creditLimit: 10000, paymentMethodId: "", billingCurrency: "USD",
+    invoiceSubmissionInstruction: "", bankFee: '', salesTax: '', cardProcessingCharges: '', exemptSalesTax: false
+  },
   formFields: [
     {
       id: "paymentTermId",
@@ -98,6 +101,7 @@ export const SettingFormData = {
       fieldSetting: {
         placeholder: "Enter Sales TAX"
       },
+      validation: [{ type: "require" }],
       style: {
         containerCss:
           "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
@@ -112,6 +116,7 @@ export const SettingFormData = {
       fieldSetting: {
         placeholder: "Enter Bank Fee"
       },
+      validation: [{ type: "require" }],
       style: {
         containerCss:
           "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
@@ -126,6 +131,7 @@ export const SettingFormData = {
       fieldSetting: {
         placeholder: "Enter Card Processing Charges"
       },
+      validation: [{ type: "require" }],
       style: {
         containerCss:
           "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",

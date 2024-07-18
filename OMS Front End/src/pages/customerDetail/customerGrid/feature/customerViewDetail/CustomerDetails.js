@@ -122,7 +122,7 @@ const CustomerDetails = () => {
           customerData={customerData}
           keyId={keyId}
           isEditablePage={true}
-          getCustomerById={getCustomerById}
+          getCustomerById={onSuccess}
         />
       </SidebarModel>
     </>
