@@ -55,7 +55,7 @@ return(<> <div>
     
       <SidebarModel
        modalTitle= "Add/Edit API Authentication"
-       contentClass="content-40"
+       contentClass="content-35"
       onClose={onSidebarClose}
        modalTitleIcon={AppIcons.AddIcon}
       isOpen={isModelOpen}

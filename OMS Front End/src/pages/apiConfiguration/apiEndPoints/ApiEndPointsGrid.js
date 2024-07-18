@@ -50,7 +50,7 @@ return(<>
       
         <SidebarModel
          modalTitle= {isEdit ? "Update Api EndPoints" : "Add Api EndPoints"}
-         contentClass="content-40"
+         contentClass="content-35"
          onClose={onSidebarClose}
          modalTitleIcon={AppIcons.AddIcon}
          isOpen={isModelOpen}

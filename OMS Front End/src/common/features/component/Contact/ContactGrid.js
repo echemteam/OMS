@@ -257,7 +257,7 @@ const ContactGrid = ({
       <div className="sidebar-contact-model">
         <SidebarModel
           modalTitle="Add/Edit Contact"
-          contentClass="content-45"
+          contentClass="content-40"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}

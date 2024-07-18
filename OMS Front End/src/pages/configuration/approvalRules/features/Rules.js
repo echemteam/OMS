@@ -71,7 +71,7 @@ const Rules = (props) => {
       </div>
       <SidebarModel
         modalTitle={getApprovedConfigData ? "Update Rule" : "Add Rule"}
-        contentClass="content-40"
+        contentClass="content-35"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}
