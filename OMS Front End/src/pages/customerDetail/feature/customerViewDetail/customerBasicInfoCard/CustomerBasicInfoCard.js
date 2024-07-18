@@ -469,7 +469,7 @@ const CustomerBasicInfoCard = ({
                     className="form-checkbox"
                     type="checkbox"
                     id={"isSubCompany"}
-                    checked={customerData?.isSubCompany}
+                    checked={customerData?.isSubCompany ? customerData?.isSubCompany : false}
                     onChange={handleCheckboxChange}
                     disabled={isButtonDisable}
                   />
