@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -18,7 +19,7 @@ const AddEditApiAuthentication = (props) => {
   const apiAuthenticationRef = useRef();
   const authId = props.initData.authId;
    const [authenticationFormData, setAuthenticationFormData] = useState(addEditApiAuthenticationFormData);
-   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  //  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
    const [getAllAPIProviders,{ isSuccess: isgetAllAPIProvidersSuccess, data: isgetAllAPIProvidersData }, ] = useLazyGetAllAPIProvidersQuery();
    const [addEditApiAuthentication,{  isLoading: isAddEditApiAuthenticationLoading,isSuccess: isAddEditApiAuthenticationSucess,data: allAddEditApiAuthenticationData,}, ] = useAddEditApiAuthenticationMutation();
    const [getApiAuthenticationByAuthId,{ isFetching: isGetApiAuthenticationByAuthIdFetching, isSuccess: isGetApiAuthenticationByAuthIdSuccess, data: GetApiAuthenticationByAuthIdData,},] = useLazyGetApiAuthenticationByAuthIdQuery();
@@ -35,7 +36,7 @@ const AddEditApiAuthentication = (props) => {
     if (isgetAllAPIProvidersSuccess && isgetAllAPIProvidersData) {
 
       setDropDownOptionField(isgetAllAPIProvidersData, 'providerId', 'name', authenticationFormData, 'providerId');
-      setShouldRerenderFormCreator((prevState) => !prevState);
+      // setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isgetAllAPIProvidersSuccess, isgetAllAPIProvidersData]);
   useEffect(() => {
@@ -85,7 +86,7 @@ const handleProviderChange = (field, value) => {
   }
 
   setAuthenticationFormData(newFormData);
-  setShouldRerenderFormCreator((prevState) => !prevState);
+  // setShouldRerenderFormCreator((prevState) => !prevState);
 };
 
 const handleAPIAuthentication = () => {
