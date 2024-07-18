@@ -8,7 +8,6 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import { addressFormData } from "./config/AddressForm.data";
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 import { useLazyGetAllAddressTypesQuery } from "../../../../app/services/addressAPI";
-import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { modifyAddressType } from "../../../../utils/TransformData/TransformAPIData";
 //** Compoent's */
 const AddEditAddress = React.lazy(() => import("./feature/AddEditAddress"));
