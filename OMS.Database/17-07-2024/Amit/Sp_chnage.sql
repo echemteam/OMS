@@ -295,7 +295,7 @@ BEGIN
             SET @keyId = @AuthId;    
                      
             SELECT @keyId AS KeyValue,               
-            'APIAuthentication Updated' AS ErrorMessage     
+            'API Authentication Updated' AS ErrorMessage     
     
     END    
     ELSE    
@@ -325,7 +325,7 @@ BEGIN
             SET  @keyId = SCOPE_IDENTITY()                                          
                                                     
             SELECT @keyId as KeyValue,                                             
-            'APIAuthentication Added' as ErrorMessage    
+            'API Authentication Added' as ErrorMessage    
         END    
     
 END TRY                                              
@@ -375,7 +375,7 @@ BEGIN
             SET @keyId = @EndpointId;      
                        
             SELECT @keyId AS KeyValue,                 
-            'APIEndpoint Updated' AS ErrorMessage       
+            'API Endpoint Updated' AS ErrorMessage       
       
     END      
     ELSE      
@@ -383,7 +383,7 @@ BEGIN
         IF EXISTS (SELECT 1 FROM [dbo].[APIEndpoints] WHERE Name = @Name AND ProviderId=@ProviderId AND Path=@Path AND DeletedAt IS NULL AND DeletedBy IS NULL)            
         BEGIN                        
             SELECT CAST(0 AS INT) as KeyValue,                                                            
-            'APIEndpoint already exists.' as ErrorMessage                                
+            'API Endpoint already exists.' as ErrorMessage                                
         END                        
         ELSE                                     
             INSERT INTO [dbo].[APIEndpoints]    
@@ -409,7 +409,7 @@ BEGIN
             SET  @keyId = SCOPE_IDENTITY()                                            
                                                
         SELECT @keyId as KeyValue,                                               
-        'APIEndpoint Added' as ErrorMessage      
+        'API Endpoint Added' as ErrorMessage      
         END      
     
 END TRY                                              
@@ -458,7 +458,7 @@ BEGIN
             SET @keyId = @ParameterId;  
                    
             SELECT @keyId AS KeyValue,             
-         'APIParameter Updated' AS ErrorMessage   
+         'API Parameter Updated' AS ErrorMessage   
   
     END  
     ELSE  
@@ -486,7 +486,7 @@ BEGIN
             SET  @keyId = SCOPE_IDENTITY()                                        
                                                   
             SELECT @keyId as KeyValue,                                           
-            'APIParameter Added' as ErrorMessage  
+            'API Parameter Added' as ErrorMessage  
         END  
   
 END TRY                                            
@@ -532,7 +532,7 @@ BEGIN
             SET @keyId = @ProviderId;
                  
             SELECT @keyId AS KeyValue,           
-         'APIProvider Updated' AS ErrorMessage 
+         'API Provider Updated' AS ErrorMessage 
 
     END
     ELSE
@@ -540,7 +540,7 @@ BEGIN
         IF EXISTS (SELECT 1 FROM [dbo].[APIProviders] WHERE Name = @Name AND DeletedAt IS NULL AND DeletedBy IS NULL)        
         BEGIN                    
             SELECT CAST(0 AS INT) as KeyValue,                                                        
-            'APIProvider already exists.' as ErrorMessage                            
+            'API Provider already exists.' as ErrorMessage                            
         END                    
         ELSE                  
         BEGIN                  
@@ -564,7 +564,7 @@ BEGIN
                               
         END                  
         SELECT @keyId as KeyValue,                                         
-        'APIProvider Added' as ErrorMessage
+        'API Provider Added' as ErrorMessage
         END
 
 END TRY                                          
@@ -997,7 +997,7 @@ BEGIN
             WHERE  [AuthId] = @AuthId AND  [DeletedBy] IS NULL AND  [DeletedAt] IS NULL         
           
             SELECT @AuthId AS KeyValue,          
-            'APIAuthentication Deleted' AS ErrorMessage;          
+            'API Authentication Deleted' AS ErrorMessage;          
         END          
         ELSE          
         BEGIN          
@@ -1037,7 +1037,7 @@ BEGIN
             WHERE  EndpointId= @EndpointId AND  [DeletedBy] IS NULL AND  [DeletedAt] IS NULL     
       
             SELECT @EndpointId AS KeyValue,      
-            'APIEndpoint Deleted' AS ErrorMessage;      
+            'API Endpoint Deleted' AS ErrorMessage;      
         END      
         ELSE      
         BEGIN      
@@ -1077,7 +1077,7 @@ BEGIN
             WHERE  ParameterID= @ParameterId AND  [DeletedBy] IS NULL AND  [DeletedAt] IS NULL       
         
             SELECT @ParameterId AS KeyValue,        
-            'APIParameter Deleted' AS ErrorMessage;        
+            'API Parameter Deleted' AS ErrorMessage;        
         END        
         ELSE        
         BEGIN        
@@ -1117,7 +1117,7 @@ BEGIN
             WHERE ProviderId= @ProviderId  
     
             SELECT @ProviderId AS KeyValue,    
-            'APIProviders Deleted' AS ErrorMessage;    
+            'API Providers Deleted' AS ErrorMessage;    
         END    
         ELSE    
         BEGIN    
