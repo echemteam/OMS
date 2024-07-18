@@ -1007,8 +1007,6 @@ a {
 
 .setting-tab-sec {
   .card {
-    padding: 0;
-
     .tab-section {
       .tab-sub-content {
         max-height: calc(100vh - 300px);
@@ -1853,7 +1851,7 @@ a {
   .tab-sub-section {
     .tab-sub-content {
       .grid-section {
-        max-height: calc(100vh - 375px);
+        max-height: calc(100vh - 395px);
         overflow: hidden;
         overflow-y: auto;
         margin: 10px 0;
