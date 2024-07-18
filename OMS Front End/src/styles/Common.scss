@@ -904,6 +904,15 @@ a {
       }
     }
   }
+  &.setting-tab-sec{
+    .card-body-sec {
+      margin-top: 0;
+      @media only screen and (max-width: 1560px) {
+        height: calc(100vh - 236px);
+      }
+    }
+  
+  }
 }
 
 .main-customer-grid {
@@ -1646,6 +1655,9 @@ a {
   .card-body-sec {
     margin-top: 0 !important;
     height: calc(100vh - 310px);
+    @media only screen and (max-width: 1560px) {
+      height: calc(100vh - 280px);
+    }
   }
 
   .document-section {
@@ -1812,7 +1824,7 @@ a {
       overflow-y: auto;
 
       @media only screen and (max-width: 1560px) {
-        height: calc(100vh - 310px);
+        height: calc(100vh - 290px);
       }
     }
   }
@@ -2181,7 +2193,9 @@ input[type="checkbox"]:disabled {
 
 .customer-list-all {
   margin-top: 5px !important;
-
+.card {
+  padding: 10px 0 !important;
+}
   table {
     thead {
       tr {
@@ -2612,7 +2626,7 @@ input[type="checkbox"]:disabled {
     .tab-section {
       .tab-header {
         button {
-          padding: 2px 15px 7px;
+          padding: 2px 15px 10px;
 
           &.active {
             padding-bottom: 10px;
@@ -3043,7 +3057,7 @@ input[type="checkbox"]:disabled {
     position: relative;
 
     @media only screen and (max-width: 1560px) {
-      height: calc(100vh - 340px);
+      height: calc(100vh - 300px);
     }
 
 
