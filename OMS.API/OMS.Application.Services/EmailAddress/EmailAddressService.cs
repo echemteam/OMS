@@ -1,7 +1,6 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Contact;
-using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Contact;
 using OMS.Domain.Repository;

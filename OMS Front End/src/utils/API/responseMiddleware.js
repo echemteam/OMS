@@ -7,7 +7,6 @@ import ToastService from "../../services/toastService/ToastService";
 const { error } = SwalAlert();
 
 export const transformSucessResponse = async (response, meta, arg) => {
-
     let rData = response.responseData;
     let apiData = rData;
     // Check if the response is encrypted.
@@ -22,7 +21,7 @@ export const transformSucessResponse = async (response, meta, arg) => {
     else if (meta.request.url.includes('Report')) {
         // Decrypt the data.
         return response;
-    } else if (meta.request.url.includes('DownloadCustomerDocument') && arg?.fileName) {
+    } else if (meta.request.url.includes('DownloadDocument') && arg?.fileName) {
         rData = response;
         apiData = rData;
     }
@@ -41,7 +40,7 @@ export const transformSucessResponse = async (response, meta, arg) => {
             fileData: apiData
         }
         return responseData;
-    } else if (meta.request.url.includes('DownloadCustomerDocument') && meta.response.status === 200 && arg.fileName) {
+    } else if (meta.request.url.includes('DownloadDocument') && meta.response.status === 200 && arg.fileName) {
         const responseData = {
             fileName: arg.fileName,
             fileData: apiData
@@ -120,6 +119,10 @@ export const transformErrorResponse = (response, meta, arg) => {
             error(errorMessage);
         }
 
+    }
+    if (meta.request.url.includes('DownloadDocument') && meta.response.status === 500) {
+        ToastService.error("File Not Found.");
+        return null;
     }
     if (meta.request.url.includes("Report") && response.data && response.data.type && response.status === 404) {
         error("No Data found for particular Report", "OOPS! Not Found!");

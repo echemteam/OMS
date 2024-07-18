@@ -1,0 +1,22 @@
+const fieldKeys = {
+    type: 'type',
+    name: 'name',
+    roleId: 'roleId',
+    cityId: 'cityId',
+    userId: 'userId',
+    stateId: 'stateId',
+    roleName: 'roleName',
+    fullName: 'fullName',
+    countryId: 'countryId',
+    fieldName: 'fieldName',
+    phoneCode: 'phoneCode',
+    moduleName: 'moduleName',
+    territoryId: 'territoryId',
+    groupTypeId: 'groupTypeId',
+    phoneTypeId: 'phoneTypeId',
+    supplierTypeId: 'supplierTypeId',
+    addressTypeId: 'addressTypeId',
+    deliveryAccountId: 'deliveryAccountId',
+    responsibleUserId: 'responsibleUserId',
+    functionalitiesFieldId: 'functionalitiesFieldId'
+};

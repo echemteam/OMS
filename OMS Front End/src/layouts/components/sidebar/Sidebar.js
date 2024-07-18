@@ -50,12 +50,12 @@ const Sidebar = (props) => {
                             {menuItem.children.map((subMenu, index) => (
                               <>
                                 {hasPermission(subMenu.securityKey) ?
-                                  <li className="dropdown-menus">
-                                    <Link to={subMenu.to} className={clickedValueSubMenu === subMenu.id ? "active-submenu" : ""} onClick={(e) => handleChildClick(e, subMenu.id)}>
-                                      {subMenu.submenuName}
-                                    </Link>
-                                  </li>
-                                  : null}
+                                <li className="dropdown-menus">
+                                  <Link to={subMenu.to} className={clickedValueSubMenu === subMenu.id ? "active-submenu" : ""} onClick={(e) => handleChildClick(e, subMenu.id)}>
+                                    {subMenu.submenuName}
+                                  </Link>
+                                </li>
+                                : null}
                               </>
 
                             ))}

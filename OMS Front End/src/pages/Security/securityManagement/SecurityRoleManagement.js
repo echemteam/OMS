@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
@@ -126,13 +127,14 @@ const SecurityRoleManagement = () => {
     setFormData(form);
   };
 
-  const getLists = (pageObject) => {
+  const getLists = (pageObject,sortingString) => {
     const request = {
       pagination: {
         pageNumber: pageObject.pageNumber,
         pageSize: pageObject.pageSize,
       },
       filters: { searchText: "" },
+      sortString: sortingString
     };
     getRoles(request);
   };
@@ -143,8 +145,12 @@ const SecurityRoleManagement = () => {
   // };
 
   const handlePageChange = (page) => {
-    getLists(page);
+    getLists(page,molGridRef.current.generateSortingString());
   };
+
+  const handleSorting = (shortString) => {
+    getLists(molGridRef.current.getCurrentPageObject(), shortString);
+  }
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
@@ -161,14 +167,14 @@ const SecurityRoleManagement = () => {
     if (isDeleteSuccess && isDeletData) {
       ToastService.success(isDeletData.errorMessage);
       const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(currentPageObject);
+      getLists(currentPageObject,molGridRef.current.generateSortingString());
     }
   }, [isDeleteSuccess, isDeletData]);
 
   useEffect(() => {
     if (molGridRef.current) {
       const defaultPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(defaultPageObject);
+      getLists(defaultPageObject,molGridRef.current.generateSortingString());
     }
   }, []);
 
@@ -201,7 +207,7 @@ const SecurityRoleManagement = () => {
   const onSuccess = () => {
     onModalClose();
     const defaultPageObject = molGridRef.current.getCurrentPageObject();
-    getLists(defaultPageObject);
+    getLists(defaultPageObject,molGridRef.current.generateSortingString());
   };
 
   const onSidebarClose = () => {
@@ -233,6 +239,7 @@ const SecurityRoleManagement = () => {
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
+              onSorting={handleSorting}
               isLoading={isListLoading}
               onActionChange={actionHandler}
             />

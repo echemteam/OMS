@@ -1,0 +1,185 @@
+.account-table {
+  &.table-striped {
+    .border-table-simple {
+      thead {
+        tr {
+          th {
+            &:nth-child(1) {
+              width: 39%;
+              text-align: left;
+            }
+
+            &:nth-child(2) {
+              width: 39%;
+              text-align: left;
+            }
+
+            &:nth-child(3) {
+              width: 12%;
+              text-align: center;
+            }
+
+            &:nth-child(4) {
+              width: 10%;
+              text-align: center;
+            }
+          }
+
+        }
+      }
+
+      tbody {
+        tr {
+          td {
+            &:nth-child(1) {
+              width: 39%;
+              text-align: left;
+            }
+
+            &:nth-child(2) {
+              width: 39%;
+              text-align: left;
+            }
+
+            &:nth-child(3) {
+              width: 12%;
+              text-align: center;
+            }
+
+            &:nth-child(4) {
+              width: 10%;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.our-account-table {
+    &.table-striped {
+      .border-table-simple {
+        thead {
+          tr {
+            th {
+              &:nth-child(1) {
+                width: 32%;
+                text-align: left;
+              }
+
+              &:nth-child(2) {
+                width: 32%;
+                text-align: left;
+              }
+
+              &:nth-child(3) {
+                width: 15%;
+                text-align: left;
+              }
+
+              &:nth-child(4) {
+                width: 12%;
+                text-align: center;
+              }
+
+              &:nth-child(5) {
+                width: 10%;
+                text-align: center;
+              }
+
+
+            }
+
+          }
+        }
+
+        tbody {
+          tr {
+            td {
+              &:nth-child(1) {
+                width: 32%;
+                text-align: left;
+              }
+
+              &:nth-child(2) {
+                width: 32%;
+                text-align: left;
+              }
+
+              &:nth-child(3) {
+                width: 15%;
+                text-align: left;
+              }
+
+              &:nth-child(4) {
+                width: 12%;
+                text-align: center;
+              }
+
+              &:nth-child(5) {
+                width: 10%;
+                text-align: center;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.shipping-sec{
+  min-height: 170px;
+}
+
+.financial-sec {
+  .horizontal-form {
+    .input-label-part {
+      .input-label-title {
+        min-width: 130px;
+      }
+    }
+  }
+}
+.main-customer-grid {
+  &.setting-tab-sec {
+    .card {
+      padding-bottom: 0;
+
+      .tab-section {
+        .card {
+          padding: 10px;
+          background: var(--whiteColor);
+          border-radius: 12px;
+          margin-top: 3px;
+          border: none;
+          box-shadow: 0 2px 6px 0 rgb(67 89 113 / 34%);
+
+
+        }
+      }
+
+      .section-title {
+        h4 {
+          color: var(--themeColor);
+        }
+      }
+    }
+  }
+}
+.first-card {
+  border-bottom: 1px solid var(--textColor);
+  margin-bottom: 15px;
+  &:last-child{
+    margin-bottom: -8px;
+    border-bottom: 0;
+  }
+  .card{
+    margin-bottom: 15px !important;
+  }
+}
+.last-card {
+  .card {
+      margin-bottom: 10px !important;
+  }
+}

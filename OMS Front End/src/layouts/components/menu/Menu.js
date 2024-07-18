@@ -77,4 +77,54 @@ export const Menu = [
       },
     ],
   },
+  {
+    id: "configuration",
+    name: "Configuration",
+    iconClass: "fa fa-cog",
+    subMenu: true, 
+    to: "#",
+    securityKey: securityKey.CONFIGURATION,
+    children: [
+      {
+        id: "approvalRules",
+        submenuName: "Approval Rules",
+        to: "/ApprovalRules",
+        securityKey: securityKey.APPROVALRULES,
+      },
+    ],
+  },
+  {
+    id: "apiconfiguration",
+    name: "API Configuration",
+    iconClass: "fa fa-cog",
+    subMenu: true, 
+    to: "#",
+    securityKey: securityKey.APICONFIGURATION,
+    children: [
+      {
+        id: "apiProviders",
+        submenuName: "API Providers",
+        to: "/APIProviders", 
+        securityKey: securityKey.APIPROVIDERS,
+      },
+      {
+        id: "apiEndpoints",
+        submenuName: "API EndPoints",
+        to: "/APIEndpoints", 
+        securityKey: securityKey.APIENDPOINTS,
+      },
+      {
+        id: "apiParameters",
+        submenuName: "API Parameters",
+        to: "/APIParameters", 
+        securityKey: securityKey.APIPARAMETERS,
+      },
+      {
+        id: "apiAuthentication",
+        submenuName: "API Authentication",
+        to: "/APIAuthentication", 
+        securityKey: securityKey.APIAUTHENTICATION,
+      },
+    ],
+  },
 ];

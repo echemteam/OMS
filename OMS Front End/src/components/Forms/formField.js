@@ -90,9 +90,8 @@ const FormFields = ({
 
 
   const renderField = (field, index) => {
-    const { containerCss } = field.style || { containerCss: "col-md-6" };
+    const { containerCss } = field?.style || { containerCss: "col-md-6" };
     const isRequired = fieldValiadtionRules && fieldValiadtionRules[field.dataField]?.length > 0;
-
     switch (field.fieldType) {
       case FormFieldTypes.INPUT:
       case FormFieldTypes.PASSWORD:

@@ -1,5 +1,6 @@
 ﻿using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Customers;
+using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
@@ -13,7 +14,7 @@ namespace OMS.Domain.Repository.Implementation
     internal class CustomersRepository : BaseRepository<Customers>, ICustomersRepository
     {
         #region SP Name
-        const string ADDCUSTOMERSBASICINFORMATION = "AddCustomersBasicInformation";
+        const string ADDEDITCUSTOMERSBASICINFORMATION = "AddEditCustomersBasicInformation";
         const string UPDATECUSTOMERSBASICINFORMATION = "UpdateCustomersBasicInformation";
         const string GETCUSTOMERSBASICINFORMATIONBYID = "GetCustomersBasicInformationById";
         const string GETCUSTOMERS = "GetCustomers";
@@ -26,6 +27,10 @@ namespace OMS.Domain.Repository.Implementation
         const string GETCUSTOMERAUDITHISTORYBYCUSTOMERID = "GetCustomerAuditHistoryByCustomerId";
         const string ADDEDITCONTACTFORCUSTOMER = "AddEditContactForCustomer";
         const string GETCUSTOMERSDETAILSBYCUTOMERNAME = "GetCustomersDetailsByCutomerName";
+        const string UPDATECUSTOMERSUBCOMPANY = "UpdateCustomerSubCompany";
+        const string ADDSUBCOMPANYMAINCOMPANY = "AddSubCompanyMainCompany";
+        const string GETSUBCOMPANYSBYMAINCOMPANYID = "GetSubCompanysByMainCompanyId";
+        const string DELETESUBCOMPANY = "DeleteSubCompany";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -33,10 +38,11 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Customers Repository
-        public async Task<AddEntityDTO<int>> AddCustomersBasicInformation(CustomersDTO customers)
+        public async Task<AddEditResponse> AddEditCustomersBasicInformation(CustomersDTO customers)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERSBASICINFORMATION, new
+            return await _context.GetSingleAsync<AddEditResponse>(ADDEDITCUSTOMERSBASICINFORMATION, new
             {
+                customers.CustomerId,
                 customers.Name,
                 customers.GroupTypeId,
                 customers.TerritoryId,
@@ -47,7 +53,8 @@ namespace OMS.Domain.Repository.Implementation
                 customers.TaxId,
                 customers.CreatedBy,
                 customers.IsBuyingForThirdParty,
-                customers.ResponsibleUserId
+                customers.ResponsibleUserId,
+                customers.IsSubCompany
             }, CommandType.StoredProcedure);
         }
 
@@ -85,7 +92,8 @@ namespace OMS.Domain.Repository.Implementation
                 queryRequest.StatusId,
                 queryRequest.Pagination!.PageNumber,
                 queryRequest.Pagination.PageSize,
-                queryRequest.Filters?.SearchText
+                queryRequest.Filters?.SearchText,
+                queryRequest.SortString
             }, true);
         }
 
@@ -151,7 +159,7 @@ namespace OMS.Domain.Repository.Implementation
                 updatedBy
             }, CommandType.StoredProcedure);
         }
-  
+
         public async Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest)
         {
             return await _context.GetListSP<GetCustomerAuditHistoryByCustomerIdResponse>(GETCUSTOMERAUDITHISTORYBYCUSTOMERID, new
@@ -186,6 +194,42 @@ namespace OMS.Domain.Repository.Implementation
                 customerName
             }, CommandType.StoredProcedure);
             return customerDetails;
+        }
+        public async Task<AddEntityDTO<bool>> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<bool>>(UPDATECUSTOMERSUBCOMPANY, new
+            {
+                requestData.CustomerId,
+                requestData.IsSubCompany
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDTO<int>> AddSubCompanyMainCompany(AddSubCompanyMainCompanyRequest requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDSUBCOMPANYMAINCOMPANY, new
+            {
+                requestData.MainCompanyId,
+                requestData.SubCompanyId
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<EntityList<GetSubCompanysByMainCompanyIdResponse>> GetSubCompanysByMainCompanyId(GetSubCompanysByMainCompanyIdRequest requestData)
+        {
+            return await _context.GetListSP<GetSubCompanysByMainCompanyIdResponse>(GETSUBCOMPANYSBYMAINCOMPANYID, new
+            {
+                requestData.MainCompanyId,
+                requestData.Pagination!.PageNumber,
+                requestData.Pagination.PageSize,
+                requestData.Filters?.SearchText,
+                requestData.SortString
+            }, true);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteSubCompany(int subCompanyMainCompanyId, short deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETESUBCOMPANY, new
+            {
+                subCompanyMainCompanyId,
+                deletedBy
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }

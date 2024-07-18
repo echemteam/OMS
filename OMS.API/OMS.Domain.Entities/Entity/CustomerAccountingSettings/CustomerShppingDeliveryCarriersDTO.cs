@@ -17,5 +17,6 @@
         public DateTime? DeletedAt { get; set; }
         public short? DeletedBy { get; set; }
         public bool? IsByDefault { get; set; }
+        public decimal? HandlingFee { get; set; }
     }
 }

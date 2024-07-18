@@ -14,8 +14,9 @@ export const BasicDetailContextProvider = ({ children }) => {
     //****  If we have supplier page we have set main id as supplierId. and If we have customer page we have set main id as customerId   */
     const [mainId, setMainId] = useState(0);
     const [customerId, setCustomerId] = useState(0);
+    const [customerCountryId, setCustomerCountryId] = useState('');
     //** */
-
+    const [isSubCompany,setIsSubCompany]=useState(false); 
     //** Shipping Method's */
     const [carriersList, setCarriersList] = useState([]);
     const [showSubBackButton, setShowSubBackButton] = useState(false);
@@ -29,8 +30,6 @@ export const BasicDetailContextProvider = ({ children }) => {
     //** */
 
     const [isResponsibleUser, setIsResponsibleUser] = useState(true);
-    const [isRCustomerUserDisble, setIsRCustomerUserDisble] = useState(false);
-    const [isRSupplierUserDisble, setIsRSupplierUserDisble] = useState(false);
 
     //** Use for Tab's */
     const nextRef = useRef(null);
@@ -56,8 +55,12 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     //** Use for Move next step */
     const addCustomer = (data) => {
-        if (customerId > 0) {
-            setActiveTab((prev) => prev + 1);
+        if (customerId > 0 && data === 1) {
+            if (nextRef.current) {
+                nextRef.current.handleAddBasicDetails();
+            }
+        } else if (customerId > 0) {
+            setActiveTab((prev) => prev + 1)
         }
         else {
             if (nextRef.current) {
@@ -78,11 +81,11 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     return (
         <BasicDetailContext.Provider value={{
-            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setIsRCustomerUserDisble,
-            isRCustomerUserDisble, isRSupplierUserDisble, setIsRSupplierUserDisble,
+            nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setCustomerCountryId,
+            customerCountryId,
             phoneNumberData, setMainId, mainId, setShowSubBackButton, showSubBackButton, setActiveSubTab, activeSubTab, handleActiveSubTabClick, saveFinacialSetting,
             emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
-            setIsResponsibleUser, isResponsibleUser
+            setIsResponsibleUser, isResponsibleUser ,isSubCompany,setIsSubCompany
         }}>
             {children}
         </BasicDetailContext.Provider>

@@ -29,6 +29,9 @@ namespace OMS.Application.Services.Contact
         #region  Contact Service
         public async Task<AddEntityDTO<int>> AddEditContact(AddEditContactRequest requestData, short CurrentUserId)
         {
+            const string? OwnerTypeIdColumnName = "OwnerTypeId";
+            const string? CreatedByColumnName = "CreatedBy";
+
             string[] contactTypeIds = requestData.ContactTypeId!.Split(',');
 
             AddEntityDTO<int> responceData = new();
@@ -61,13 +64,13 @@ namespace OMS.Application.Services.Contact
                     if (requestData.EmailList != null && requestData.EmailList.Count > 0)
                     {
                         DataTable emailDataTable = ExportHelper.ListToDataTable(emailDT);
-                        emailDataTable.Columns.Add("OwnerTypeId", typeof(short));
-                        emailDataTable.Columns.Add("CreatedBy", typeof(short));
+                        emailDataTable.Columns.Add(OwnerTypeIdColumnName, typeof(short));
+                        emailDataTable.Columns.Add(CreatedByColumnName, typeof(short));
 
                         foreach (DataRow row in emailDataTable.Rows)
                         {
-                            row["OwnerTypeId"] = ownerTypeId;
-                            row["CreatedBy"] = CurrentUserId;
+                            row[OwnerTypeIdColumnName] = ownerTypeId;
+                            row[CreatedByColumnName] = CurrentUserId;
 
                         }
                         _ = await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);
@@ -76,13 +79,13 @@ namespace OMS.Application.Services.Contact
                     if (requestData.PhoneList != null && requestData.PhoneList.Count > 0)
                     {
                         DataTable phoneDataTable = ExportHelper.ListToDataTable(PhoneDT);
-                        phoneDataTable.Columns.Add("OwnerTypeId", typeof(short));
-                        phoneDataTable.Columns.Add("CreatedBy", typeof(short));
+                        phoneDataTable.Columns.Add(OwnerTypeIdColumnName, typeof(short));
+                        phoneDataTable.Columns.Add(CreatedByColumnName, typeof(short));
 
                         foreach (DataRow row in phoneDataTable.Rows)
                         {
-                            row["OwnerTypeId"] = ownerTypeId;
-                            row["CreatedBy"] = CurrentUserId;
+                            row[OwnerTypeIdColumnName] = ownerTypeId;
+                            row[CreatedByColumnName] = CurrentUserId;
                         }
                         _ = await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
                     }
@@ -129,7 +132,7 @@ namespace OMS.Application.Services.Contact
 
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId, string searchText, string searchContactType)
         {
-            List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId,searchText,searchContactType);
+            List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId, searchText, searchContactType);
             OwnerType ownerTypeId = OwnerType.CustomerContact;
 
             if (contactList != null && contactList.Count > 0)
@@ -145,7 +148,7 @@ namespace OMS.Application.Services.Contact
 
         public async Task<List<GetContactBySupplierIdResponse>> GetContactBySupplierId(int supplierId, string searchText, string searchContactType)
         {
-            List<GetContactBySupplierIdResponse> contactList = await repositoryManager.contact.GetContactBySupplierId(supplierId,searchText,searchContactType);
+            List<GetContactBySupplierIdResponse> contactList = await repositoryManager.contact.GetContactBySupplierId(supplierId, searchText, searchContactType);
             OwnerType ownerTypeId = OwnerType.SupplierContact;
 
             if (contactList != null && contactList.Count > 0)

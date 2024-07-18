@@ -5,7 +5,7 @@
   --themeColorLight: #e7e7ff;
   --themeColorLightGridRow: #696cff08;
   --whiteColor: #ffffff;
-  --textColor: #566a7f;
+  --textColor: #000000;
   --textColorLight: #6c7b8e;
   --iconCOlor: #bba8bff5;
   --bg-main-content: #f5f5f9;
@@ -23,8 +23,8 @@
   --cardTitleBg: #e7f6febd;
   --lightDarkblack: #00000026;
   --blackColor: #000;
-  --cardborderColor:#e0e0e0;
-  --tabBgColor:#dcdde0;
+  --cardborderColor: #e0e0e0;
+  --tabBgColor: #dcdde0;
   // Stiky Background Start
 
   --lightBlue: #e2f1ff;
@@ -42,18 +42,19 @@
   --gradient-danger: linear-gradient(to right, #ffbf96, var(--dangerColor));
   --gradient-warning: linear-gradient(to right, #f6e384, var(--warningColor));
   --gradient-info: linear-gradient(to right, #90caf9, var(--infoColor));
-  --gradient-success: linear-gradient(to right, #a0efe8, var(--successColor));
+  --gradient-success: linear-gradient(to right, #7ec6c0, var(--successColor));
 
   --white-card-shadow: 0px 0px 24px rgba(27, 46, 94, 0.05);
   --card-shadow: 0px 8px 24px rgba(27, 46, 94, 0.12);
   --pending-theme: #f1c40f;
   --blocked-theme: #000000;
-  --frozen-theme: #ff5f1f;
+  --frozen-theme: #ff672a;
   --approved-theme: #32cd32;
   --submitted-theme: #007bff;
   --disabled-theme: #808080;
   --PrimaryColor: #00b100;
   --reject-color: #DC3545;
+  --submission-color: #4ccebf;
   // Bg-Gradient Color End
 
 

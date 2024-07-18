@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Common;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
+using OMS.FileManger.Services;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -178,6 +178,13 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
+        [HttpGet("GetAllFunctionalitiesFields")]
+        public async Task<IActionResult> GetAllFunctionalitiesFields(int functionalityId)
+        {
+            List<GetAllFunctionalitiesFieldsResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalitiesFields(functionalityId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
         [HttpPost("UpdateResponsibleUser")]
         public async Task<IActionResult> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
         {
@@ -185,5 +192,44 @@ namespace OMS.API.Controllers
             return APISucessResponce(updateItem);
         }
 
+        [HttpGet("DownloadDocument")]
+        public async Task<IActionResult> DownloadDocument(string folderName, string fileName, int keyId)
+        {
+
+            byte[] decryptedBytes = await _serviceManager.commonServices.DownloadDocument(folderName, fileName, keyId);
+            if (decryptedBytes != null)
+            {
+                var memory = new MemoryStream(decryptedBytes!)
+                {
+                    Position = 0
+                };
+                string ext = FileManager.GetExtension(fileName);
+                string mimeType = FileManager.GetMimeType(ext);
+                var contentType = mimeType;
+                return File(memory, contentType, fileName);
+            }
+            return File("", "", fileName);
+        }
+
+        [HttpGet("GetAllAPIProviders")]
+        public async Task<IActionResult> GetAllAPIProviders()
+        {
+            List<GetAllAPIProvidersResponse> responseData = await _serviceManager.commonServices.GetAllAPIProviders().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllAPIEndpoints")]
+        public async Task<IActionResult> GetAllAPIEndpoints()
+        {
+            List<GetAllAPIEndpointsResponse> responseData = await _serviceManager.commonServices.GetAllAPIEndpoints().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllSubCompany")]
+        public async Task<IActionResult> GetAllSubCompany(bool isSubCustomer)
+        {
+            List<GetAllSubCompanyResponse> responseData = await _serviceManager.commonServices.GetAllSubCompany(isSubCustomer).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

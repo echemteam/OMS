@@ -1,94 +1,81 @@
-﻿using System.Net.Mail;
+﻿using System.Net;
+using System.Net.Mail;
 
 namespace Common.Helper.EmailHelper
 {
     public class SendEmailHelper
     {
-        public string TO { get; set; }
-        public string CC { get; set; }
-        public string BCC { get; set; }
+        public string To { get; set; }
+        public string Cc { get; set; }
+        public string Bcc { get; set; }
         public string FromEmail { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
         public string HostName { get; set; }
         public string UserName { get; set; }
-        public string UserNameTwo { get; set; }
         public string Password { get; set; }
-        public bool EnableSsl { get; set; }
-        public bool EnableSendMail { get; set; }
-        public int Port { get; set; }
-        public SmtpDeliveryMethod DeliveryMethod { get; set; }
+        public bool EnableSsl { get; set; } = true;
+        public bool EnableSendMail { get; set; } = true;
+        public int Port { get; set; } = 1;
+        public SmtpDeliveryMethod DeliveryMethod { get; set; } = SmtpDeliveryMethod.Network;
 
         public SendEmailHelper()
         {
-            this.EnableSsl = true;
-            this.Port = 1;
-            this.DeliveryMethod = SmtpDeliveryMethod.Network;
-            this.CC = string.Empty;
-            this.BCC = string.Empty;
-            this.TO = string.Empty;
-            this.EnableSendMail = true;
-            //this.EnableEmailTemplate = true;
-            //this.Attachments = new List<System.Net.Mail.Attachment>();
+            Cc = string.Empty;
+            Bcc = string.Empty;
+            To = string.Empty;
         }
 
         public bool SendEmail()
         {
-            bool isMailSent = false;
             try
             {
-                MailMessage mailMesg = new MailMessage();
-                mailMesg.Body = this.Body;
-                mailMesg.Subject = this.Subject;
-                mailMesg.IsBodyHtml = true;
-                string[] to = this.TO.Split(';');
-                string[] cc = this.CC.Split(';');
-                string[] bcc = this.BCC.Split(';');
-                if (!String.IsNullOrEmpty(TO))
+                var mailMessage = new MailMessage
                 {
-                    foreach (string address in to)
-                    {
-                        if (!string.IsNullOrEmpty(address))
-                            mailMesg.To.Add(new MailAddress(address));
-                    }
-                }
-                if (!String.IsNullOrEmpty(CC))
+                    From = new MailAddress(FromEmail),
+                    Subject = Subject,
+                    Body = Body,
+                    IsBodyHtml = true
+                };
+
+                AddEmailAddresses(To, mailMessage.To);
+                AddEmailAddresses(Cc, mailMessage.CC);
+                AddEmailAddresses(Bcc, mailMessage.Bcc);
+
+                using (var smtpClient = new SmtpClient(HostName, Port)
                 {
-                    foreach (string address in cc)
-                    {
-                        if (!string.IsNullOrEmpty(address))
-                            mailMesg.CC.Add(new MailAddress(address));
-                    }
+                    Credentials = new NetworkCredential(FromEmail, Password),
+                    EnableSsl = EnableSsl,
+                    DeliveryMethod = DeliveryMethod
+                })
+                {
+                    smtpClient.Send(mailMessage);
                 }
 
-                if (!String.IsNullOrEmpty(BCC))
-                {
-                    foreach (string address in bcc)
-                    {
-                        if (!string.IsNullOrEmpty(address))
-                            mailMesg.Bcc.Add(new MailAddress(address));
-                    }
-                }
-
-                SmtpClient objSMTP = new SmtpClient();
-                // For Display Daily Send Mail Count
-                mailMesg.From = new MailAddress(this.FromEmail);
-                if (!string.IsNullOrEmpty(this.FromEmail))
-                {
-                    System.Net.NetworkCredential creditial = new System.Net.NetworkCredential(this.FromEmail, this.Password);
-                    objSMTP.Credentials = creditial;
-                }
-                objSMTP.Host = this.HostName;
-                objSMTP.EnableSsl = this.EnableSsl;
-                objSMTP.Port = Port;
-                objSMTP.DeliveryMethod = DeliveryMethod;
-                objSMTP.Send(mailMesg);
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                return isMailSent;
+                // Log the exception (logging logic to be implemented as needed)
+                Console.WriteLine($"Failed to send email: {ex.Message}");
+                return false;
             }
         }
+
+        private void AddEmailAddresses(string addresses, MailAddressCollection addressCollection)
+        {
+            if (string.IsNullOrEmpty(addresses)) return;
+
+            var addressList = addresses.Split(';');
+            foreach (var address in addressList)
+            {
+                if (!string.IsNullOrEmpty(address))
+                {
+                    addressCollection.Add(new MailAddress(address));
+                }
+            }
+        }
+
+
     }
 }

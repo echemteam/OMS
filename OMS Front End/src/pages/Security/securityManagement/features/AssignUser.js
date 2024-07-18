@@ -109,7 +109,7 @@ const AssignUser = (props) => {
     GetUnAssignedUserByRoleIdData,
   ]);
 
-  const getLists = (pageObject) => {
+  const getLists = (pageObject,sortingString) => {
     const request = {
       pagination: {
         pageNumber: pageObject.pageNumber,
@@ -117,13 +117,18 @@ const AssignUser = (props) => {
       },
       filters: { searchText: "" },
       roleId: props.initData.roleId,
+      sortString: sortingString
     };
     getRolesMappingByRoleId(request);
   };
 
   const handlePageChange = (page) => {
-    getLists(page);
+    getLists(page,molGridRef.current.generateSortingString());
   };
+
+  const handleSorting = (shortString) => {
+    getLists(molGridRef.current.getCurrentPageObject(), shortString);
+  }
 
   useEffect(() => {
     if (isListSuccess && isListeData) {
@@ -139,7 +144,7 @@ const AssignUser = (props) => {
   useEffect(() => {
     if (molGridRef.current) {
       const defaultPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(defaultPageObject);
+      getLists(defaultPageObject,molGridRef.current.generateSortingString());
     }
   }, [props.isOpen]);
 
@@ -173,7 +178,7 @@ const AssignUser = (props) => {
     if (isUserAddRoleMapping && AddRoleMappingData) {
       ToastService.success(AddRoleMappingData.errorMessage);
       const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(currentPageObject);
+      getLists(currentPageObject,molGridRef.current.generateSortingString());
       getUnAssignedUserByRoleId(props.initData.roleId);
     }
   }, [isUserAddRoleMapping, AddRoleMappingData]);
@@ -182,7 +187,7 @@ const AssignUser = (props) => {
     if (isDeleteSuccess && isDeletData) {
       ToastService.success(isDeletData.errorMessage);
       const currentPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(currentPageObject);
+      getLists(currentPageObject,molGridRef.current.generateSortingString());
       getUnAssignedUserByRoleId(props.initData.roleId);
     }
   }, [isDeleteSuccess, isDeletData]);
@@ -194,15 +199,15 @@ const AssignUser = (props) => {
   return (
     <div>
       <div className="row">
-        <div className="col-12 col-md-11 horizontal-form mt-3">
-          <div className="row vertical-form">
+        <div className="col-12 col-md-11 assign-user-form">
+          <div className="row mt-2">
             <FormCreator
               ref={asignUserFormRef}
               config={userForm}
               {...userForm}
               key={shouldRerenderFormCreator}
             />
-            <div className="col-xxl-2 col-xl-2 col-md-2  mb-3">
+            <div className="col-xxl-2 col-xl-2 col-md-2 mt-3">
               {buttonVisible ?
                 <Buttons
                   buttonTypeClassName="theme-button"
@@ -229,6 +234,7 @@ const AssignUser = (props) => {
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
+              onSorting={handleSorting}
               isLoading={isListLoading}
               onActionChange={actionHandler}
             />

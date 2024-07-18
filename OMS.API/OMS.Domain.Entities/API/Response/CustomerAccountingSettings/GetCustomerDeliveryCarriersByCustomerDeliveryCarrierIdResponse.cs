@@ -8,5 +8,6 @@
         public string? AccountNumber { get; set; }
         public int? CustomerId { get; set; }
         public bool? IsPrimary { get; set; }
+        public decimal? HandlingFee { get; set; }
     }
 }

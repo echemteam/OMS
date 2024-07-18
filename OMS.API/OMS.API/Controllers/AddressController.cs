@@ -41,7 +41,6 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
-
         [HttpGet("GetCustomerAddresssByAddressId")]
         public async Task<IActionResult> GetCustomerAddresssByAddressId(int addressId)
         {

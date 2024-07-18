@@ -72,6 +72,10 @@ import primaryTick from "../assets/images/primaryTick.png";
 import unauthorizedImg from "../assets/images/unauthorized.png";
 import filterIcon from "../assets/images/filter.png";
 import clearAllIcon from "../assets/images/clearAll.png";
+import eyeIcon from "../assets/images/eye.png";
+import eyeSlashIcon from "../assets/images/eyeslash.png";
+import SearchIcone from "../assets/images/search.png";
+import ClearIcone from "../assets/images/clear.png";
 
 
 export const AppIcons = {
@@ -143,4 +147,8 @@ export const AppIcons = {
   unauthorizedImg :unauthorizedImg,
   FilterIcon:filterIcon,
   ClearAllIcon:clearAllIcon,
+  EyeIcon:eyeIcon,
+  EyeSlashIcon:eyeSlashIcon,
+  ClearIcone:ClearIcone,
+  SearchIcone:SearchIcone,
 };

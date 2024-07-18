@@ -1,89 +1,27 @@
 import formatDate from "../../lib/formatDate";
-import { FileTypeIcons } from "../../pages/customerDetail/features/documentsDetail/config/DocumentsData";
+import { FileTypeIcons } from "../../common/features/component/Document/Config/DocuementsData";
 
-export const contactCustomerTransformData = (data) => {
-    return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit, isPrimary } = item;
+export const modifyContactType = (apiResponseData) => {
+    const allType = {
+        id: 0,
+        type: 'All', // It's used for all the types
+        isForSuppliers: true,
+        isForCustomers: true,
+        contactTypeId: ""
+    };
+    return [allType, ...apiResponseData];
+}
 
-        const emailAddress = emailAddressLst.map((item) => ({
-            emailAddres: item.emailAddress,
-            isPrimary: item.isPrimary
-        }));
-        const phoneNumber = phoneNumberLsit.map(item => ({
-            phoneTypeId: item.phoneTypeId,
-            isPrimary: item.isPrimary,
-            phoneCode: item.phoneCode,
-            extension: item.extension,
-            phoneNumber: item.phoneNumber
-        }));
-        const transformedItem = {
-            cardInformation: {
-                firstName,
-                lastName,
-                contactId,
-                contactTypeId,
-                customerContactId,
-                emailAddress,
-                phoneNumber,
-                isPrimary
-            }
-        };
-
-        if (!acc[type]) {
-            acc[type] = [];
-        }
-
-        acc[type].push(transformedItem);
-        return acc;
-    }, {});
-};
-
-export const contactSupplierTransformData = (data) => {
-    return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, supplierContactId, phoneNumberLsit, isPrimary } = item;
-
-        const modifyPhoneNumberList = phoneNumberLsit.map((item, index) => ({
-            ...item,
-            id: index + 1
-        }));
-        const modifyEmailAddressLst = emailAddressLst.map((item, index) => ({
-            ...item,
-            id: index + 1
-        }));
-        const emailAddress = emailAddressLst.map((item) => ({
-            emailAddres: item.emailAddress,
-            isPrimary: item.isPrimary
-        }));
-        const phoneNumber = phoneNumberLsit.map(item => ({
-            phoneTypeId: item.phoneTypeId,
-            isPrimary: item.isPrimary,
-            phoneCode: item.phoneCode,
-            extension: item.extension,
-            phoneNumber: item.phoneNumber
-        }));
-        const transformedItem = {
-            cardInformation: {
-                firstName,
-                lastName,
-                contactId,
-                contactTypeId,
-                supplierContactId,
-                emailAddress,
-                phoneNumber,
-                isPrimary
-            },
-            emailAddressLst: modifyEmailAddressLst,
-            phoneNumberLsit: modifyPhoneNumberList
-        };
-
-        if (!acc[type]) {
-            acc[type] = [];
-        }
-
-        acc[type].push(transformedItem);
-        return acc;
-    }, {});
-};
+export const modifyAddressType = (apiResponseData) => {
+    const allType = {
+        id: 0,
+        type: 'All', // It's used for all the types
+        isForSuppliers: true,
+        isForCustomers: true,
+        addressTypeId: ""
+    };
+    return [allType, ...apiResponseData];
+}
 
 export const modifyPhoneNumberData = (phoneDataArray) => {
     const newArray = phoneDataArray.map(phoneData => ({
@@ -96,7 +34,7 @@ export const modifyPhoneNumberData = (phoneDataArray) => {
 export const modifyTimeLineData = (timelineData) => {
     const newArray = timelineData.map(data => ({
         ...data,
-        description: data.description + ' by ' + data.name + ' on ' + formatDate(data.changedAt, 'DD/MM/YYYY hh:mm A')
+        description: data.description + ' by ' + data.name + ' on ' + formatDate(data.changedAt, 'MM/DD/YYYY hh:mm A')
     }));
     return newArray;
 };

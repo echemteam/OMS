@@ -33,9 +33,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Supplier Repository
-        public async Task<AddEntityDTO<int>> AddEditSupplierBasicInformation(SupplierDTO supplier)
+        public async Task<AddEditResponse> AddEditSupplierBasicInformation(SupplierDTO supplier)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITSUPPLIERBASICINFORMATION, new
+            return await _context.GetSingleAsync<AddEditResponse>(ADDEDITSUPPLIERBASICINFORMATION, new
             {
                 supplier.SupplierId,
                 supplier.GroupTypeId,
@@ -49,7 +49,7 @@ namespace OMS.Domain.Repository.Implementation
                 supplier.Note,
                 supplier.EmailAddress,
                 supplier.CreatedBy,
-                supplier.ResponsibleUserId,
+                supplier.ResponsibleUserId
             }, CommandType.StoredProcedure);
         }
 
@@ -69,7 +69,8 @@ namespace OMS.Domain.Repository.Implementation
                 queryRequest.StatusId,
                 queryRequest.Pagination!.PageNumber,
                 queryRequest.Pagination.PageSize,
-                queryRequest.Filters?.SearchText
+                queryRequest.Filters?.SearchText,
+                queryRequest.SortString
             }, true);
         }
 

@@ -18,7 +18,7 @@ export const addEditRoleFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-input",
       },
     },
 
@@ -33,7 +33,7 @@ export const SecurityRoleGridConfig = {
     {
       name: "Role Name",
       fieldName: "roleName",
-      // allowShort: true,
+      allowShort: true,
       width:"80%",
     },
     {

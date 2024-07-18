@@ -29,6 +29,10 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetEventNameAndUserNameBySupplierIdResponse>> GetEventNameAndUserNameBySupplierId(int supplierId);
         Task<List<GetAllModulesResponse>> GetAllModules();
         Task<List<GetAllFunctionalitiesResponse>> GetAllFunctionalities(int moduleId);
+        Task<List<GetAllFunctionalitiesFieldsResponse>> GetAllFunctionalitiesFields(int functionalityId);
         Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData);
+        Task<List<GetAllAPIProvidersResponse>> GetAllAPIProviders();
+        Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints();
+        Task<List<GetAllSubCompanyResponse>> GetAllSubCompany(bool isSubCustomer);
     }
 }

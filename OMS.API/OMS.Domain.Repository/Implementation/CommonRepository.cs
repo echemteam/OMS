@@ -34,7 +34,11 @@ namespace OMS.Domain.Repository.Implementation
         const string GETEVENTNAMEANDUSERNAMEBYSUPPLIERID = "GetEventNameAndUserNameBySupplierId";
         const string GETALLMODULES = "GetAllModules";
         const string GETALLFUNCTIONALITIES = "GetAllFunctionalities";
+        const string GETALLFUNCTIONALITIESFIELDS = "GetAllFunctionalitiesFields";
         const string UPDATERESPONSIBLEUSER = "UpdateResponsibleUser";
+        const string GETALLAPIPROVIDERS = "GetAllAPIProviders";
+        const string GETALLAPIENDPOINTS = "GetAllAPIEndpoints";
+        const string GETALLSUBCOMPANY = "GetAllSubCompany";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -158,6 +162,14 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getEventNameAndUserNameBySupplierIdResponse;
         }
+        public async Task<List<GetAllFunctionalitiesFieldsResponse>> GetAllFunctionalitiesFields(int functionalityId)
+        {
+            List<GetAllFunctionalitiesFieldsResponse> getAllFunctionalitiesFieldsResponse = await _context.GetList<GetAllFunctionalitiesFieldsResponse>(GETALLFUNCTIONALITIESFIELDS, new
+            {
+                functionalityId
+            }, commandType: CommandType.StoredProcedure);
+            return getAllFunctionalitiesFieldsResponse;
+        }
         public async Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATERESPONSIBLEUSER, new
@@ -166,6 +178,23 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OwnerType,
                 requestData.ResponsibleUserId
             }, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllAPIProvidersResponse>> GetAllAPIProviders()
+        {
+            return await _context.GetList<GetAllAPIProvidersResponse>(GETALLAPIPROVIDERS, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints()
+        {
+            return await _context.GetList<GetAllAPIEndpointsResponse>(GETALLAPIENDPOINTS, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllSubCompanyResponse>> GetAllSubCompany(bool isSubCustomer)
+        {
+            List<GetAllSubCompanyResponse> getAllSubCompanyResponse = await _context.GetList<GetAllSubCompanyResponse>(GETALLSUBCOMPANY, new
+            {
+                isSubCustomer
+            }, commandType: CommandType.StoredProcedure);
+            return getAllSubCompanyResponse;
+
         }
     }
 }

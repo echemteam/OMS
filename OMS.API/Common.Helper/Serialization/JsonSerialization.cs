@@ -60,7 +60,7 @@ namespace Common.Helper.Serialization
         {
             try
             {
-                var obj = JsonConvert.DeserializeObject(jsonString);
+                JsonConvert.DeserializeObject(jsonString);
                 return true;
             }
             catch (JsonReaderException)

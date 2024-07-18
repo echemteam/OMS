@@ -1,7 +1,7 @@
-﻿using Common.Helper.Extension;
+﻿using Common.Helper.Enum;
+using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
-using OMS.Domain.Entities.API.Response.Address;
 using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerAccountingSettings;
@@ -51,21 +51,21 @@ namespace OMS.Application.Services.CustomerAccountingSettings
         public async Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId)
         {
             GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse shppingDetails = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarrierAndDeliveryMethodsById(customerId);
-            if (shppingDetails != null)
+            if (shppingDetails?.DeliveryAccountId != null)
             {
-                if (shppingDetails.DeliveryAccountId != null)
+                var deliveryAccountId = (DeliveryAccount)shppingDetails.DeliveryAccountId;
+
+                if (deliveryAccountId == DeliveryAccount.OurAccount)
                 {
-                    if (shppingDetails.DeliveryAccountId == 1)
-                    {
-                        shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
-                    }
-                    else if (shppingDetails.DeliveryAccountId == 2)
-                    {
-                        shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
-                        shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
-                    }
+                    shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
+                }
+                else if (deliveryAccountId == DeliveryAccount.CollectAccount)
+                {
+                    shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
+                    shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
                 }
             }
+
             return shppingDetails!;
         }
 

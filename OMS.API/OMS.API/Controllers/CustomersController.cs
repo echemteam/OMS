@@ -27,11 +27,11 @@ namespace OMS.API.Controllers
         #endregion
 
         #region Customers API
-        [HttpPost("AddCustomersBasicInformation")]
-        public async Task<IActionResult> AddCustomersBasicInformation(AddCustomersBasicInformationRequest requestData)
+        [HttpPost("AddEditCustomersBasicInformation")]
+        public async Task<IActionResult> AddEditCustomersBasicInformation(AddEditCustomersBasicInformationRequest requestData)
         {
-            var addItem = await _serviceManager.customersServices.AddCustomersBasicInformation(requestData, CurrentUserId);
-            return APISucessResponce(addItem);
+            var addEditItem = await _serviceManager.customersServices.AddEditCustomersBasicInformation(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
         }
 
         [HttpPost("UpdateCustomersBasicInformation")]
@@ -108,6 +108,35 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(responseData);
             }
             return APISucessResponce(customerName);
+        }
+
+        [HttpPost("UpdateCustomerSubCompany")]
+        public async Task<IActionResult> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData)
+        {
+            var responseData = await _serviceManager.customersServices.UpdateCustomerSubCompany(requestData).ConfigureAwait(true);
+            return APISucessResponce<object>(responseData);
+        }
+        [HttpPost("AddSubCompanyMainCompany")]
+        public async Task<IActionResult> AddSubCompanyMainCompany(AddSubCompanyMainCompanyRequest requestData)
+        {
+            var addEditItem = await _serviceManager.customersServices.AddSubCompanyMainCompany(requestData);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpPost("GetSubCompanysByMainCompanyId")]
+        public async Task<IActionResult> GetSubCompanysByMainCompanyId(GetSubCompanysByMainCompanyIdRequest requestData)
+        {
+            var subCompanyDetails = await _serviceManager.customersServices.GetSubCompanysByMainCompanyId(requestData).ConfigureAwait(true);
+            return APISucessResponce<object>(subCompanyDetails);
+        }
+        [HttpDelete("DeleteSubCompany")]
+        public async Task<IActionResult> DeleteSubCompany(int subCompanyMainCompanyId)
+        {
+            if (subCompanyMainCompanyId > 0)
+            {
+                var deleteItem = await _serviceManager.customersServices.DeleteSubCompany(subCompanyMainCompanyId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(subCompanyMainCompanyId);
         }
         #endregion
     }

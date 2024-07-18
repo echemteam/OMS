@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "./components/header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Breadcome from "../components/ui/breadcome/Breadcome";
 import Footer from "./components/footer/Footer";
 import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation";
@@ -28,7 +28,6 @@ const Layout = (props) => {
 
   // Check if the user is authorized to access the current route
   const isAuthorize = renderComponent?.securityKey ? hasPermission(renderComponent.securityKey) : false;
-
 
   // Handler to toggle the collapse state
   const handleToggleClick = () => {

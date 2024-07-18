@@ -24,7 +24,7 @@ export const userFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl- col-xl-6 col-md-6 mb-2",
+        containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
       },
     },
     {
@@ -39,7 +39,7 @@ export const userFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-2",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 mb-input",
       },
     },
     {
@@ -54,7 +54,7 @@ export const userFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl- col-xl-6 col-md-6 mb-2",
+        containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
       },
     },
     {
@@ -68,7 +68,7 @@ export const userFormData = {
       },
       validation: [{ type: "require" }, { type: "password" }],
       style: {
-        containerCss: "col-md-6",
+        containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
       },
     },
     {
@@ -83,7 +83,7 @@ export const userFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-2",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-input mt-3",
       },
     },
 
@@ -99,18 +99,19 @@ export const UserGridConfig = {
       name: "User Name",
       fieldName: "userName",
       width: "20%",
-      // allowShort: true,
+      allowShort: true,
     },
     {
       name: "First Name",
       fieldName: "firstName",
-      // allowShort: true,
       width: "20%",
+      allowShort: true,
     },
     {
       name: "Last Name",
       fieldName: "lastName",
       width: "20%",
+      allowShort: true,
     },
     {
       name: "IsActive",
@@ -119,7 +120,7 @@ export const UserGridConfig = {
       colType: GridColumnType.CHECKBOX,
       colSettings: {
         allowCheckbox: true,
-        allowDisable: true
+        allowDisable: true,
       },
     },
     {

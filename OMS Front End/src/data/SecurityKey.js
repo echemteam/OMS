@@ -62,6 +62,8 @@ export const securityKey = {
      //** Customer History */
      CUSTOMERHISTORY: "Customer History",
 
+     CUSTOMERSUBCUSTOMER:"Customer Sub-Customer",
+
 
      //** SUPPLIER */
      SUPPLIER: "Supplier",
@@ -96,8 +98,14 @@ export const securityKey = {
      //** Supplier History */
      SUPPLIERHISTORY: "Supplier History",
 
+    
+     //** Api Configration */
+     APICONFIGURATION: "API Configuration",
 
-
+     APIPROVIDERS:"API Providers",
+     APIENDPOINTS:"API EndPoints",
+     APIPARAMETERS:"API Parameters",
+     APIAUTHENTICATION:"API Authentication",
 
 
      //** Wating for the generate keys */
@@ -109,5 +117,8 @@ export const securityKey = {
      //** Permissions Management */ -- Pending 
      PERMISSIONMANAGEMENT: "Permissions Management",
      SAVEPERMISSIONS: "Save Permission",
+
+     CONFIGURATION : "Configuration",
+     APPROVALRULES : "Approval Rules",
 
 };

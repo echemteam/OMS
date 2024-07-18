@@ -12,7 +12,7 @@ namespace Common.Helper.Extension
         /// <typeparam name="TRetun"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        ///TODO: check if we can make this method better for future
+
         public static TRetun ToMapp<TBase, TRetun>(this TBase value)
             where TBase : class
             where TRetun : class
@@ -34,6 +34,7 @@ namespace Common.Helper.Extension
         /// <typeparam name="TRetun"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
+
         public static List<TRetun> ListToMapp<TBase, TRetun>(this List<TBase> value)
             where TBase : class
             where TRetun : class

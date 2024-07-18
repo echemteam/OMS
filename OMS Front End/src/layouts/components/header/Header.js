@@ -3,7 +3,6 @@ import "./Header.scss";
 import Image from "../../../components/image/Image";
 import { AppIcons } from "../../../data/appIcons";
 import SearchBar from "../../../common/features/component/SearchBar";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../app/slice/authSlice";
 // import { a } from "react-router-dom";

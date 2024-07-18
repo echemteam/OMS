@@ -7,7 +7,7 @@ namespace OMS.Application.Services
     public interface ICustomerAccoutingSettingsService
     {
         Task<GetDetailsByCustomerIdResponse> GetDetailsbyCustomerID(int customerId);
-        Task<AddEntityDTO<int>> AddEditCustomerSettings(AddEditCustomerSettingRequest requestData, short currentUserId);
+        Task<AddEntityDTO<int>> AddEditCustomerSettings(AddEditCustomerSettingRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(AddCustomerShppingDeliveryCarriersAndDeliveryMethodsRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> UpdateShppingDeliveryCarriers(UpdateShppingDeliveryCarriersRequest requestData, short CurrentUserId);
         Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId);

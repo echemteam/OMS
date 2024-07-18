@@ -29,6 +29,11 @@ namespace OMS.Application.Services.Common
         Task<List<GetEventNameAndUserNameBySupplierIdResponse>> GetEventNameAndUserNameBySupplierId(int supplierId);
         Task<List<GetAllModulesResponse>> GetAllModules();
         Task<List<GetAllFunctionalitiesResponse>> GetAllFunctionalities(int moduleId);
+        Task<List<GetAllFunctionalitiesFieldsResponse>> GetAllFunctionalitiesFields(int functionalityId);
         Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData);
+        Task<byte[]> DownloadDocument(string folderName, string fileName, int keyId);
+        Task<List<GetAllAPIProvidersResponse>> GetAllAPIProviders();
+        Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints();
+        Task<List<GetAllSubCompanyResponse>> GetAllSubCompany(bool isSubCustomer);
     }
 }

@@ -15,11 +15,11 @@ export const assignUserFormData = {
       dataField: "userName",
       fieldSetting: {
         placeholder: "Select Users",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-10 col-xl-10 col-md-10 mb-2",
+        containerCss: "col-xxl-10 col-xl-10 col-md-10 mb-input",
       },
     },
   ],
@@ -34,7 +34,7 @@ export const assignUserListData = {
       name: "User Name",
       fieldName: "userName",
       width:"80%",
-      // allowShort: true,
+      allowShort: true,
     },
     {
       name: "Action",

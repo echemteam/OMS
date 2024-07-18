@@ -52,7 +52,10 @@ useImperativeHandle(
           },
           updateFormFieldValue:(data)=>{
               updateFormData(data);
-          }
+          },
+          getFormDataWithoutValidation: () => {
+                return formData;
+        },
       };
   },
   // eslint-disable-next-line
