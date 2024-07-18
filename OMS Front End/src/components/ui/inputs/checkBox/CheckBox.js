@@ -14,7 +14,6 @@ const Checkbox = ({
   showColomns,
   ...checkboxProps
 }) => {
-
   const handleCheckboxChange = (e) => {
     const newValue = e.target.checked;
     if (onChange) {
@@ -24,7 +23,6 @@ const Checkbox = ({
 
   // TODO : check my comments
   return (
-    
     <div className="checkbox-part">
       <div className="checkbox">
         <input
@@ -38,7 +36,14 @@ const Checkbox = ({
         />
         <label htmlFor={name} className="checkbox-label"></label>
       </div>
-      {label && label !== "" && <Label labelName={label} for={name} isRequired={checkboxProps.isRequired} showColomns={showColomns}/>}
+      {label && label !== "" && (
+        <Label
+          labelName={label}
+          for={name}
+          isRequired={checkboxProps.isRequired}
+          showColomns={showColomns}
+        />
+      )}
     </div>
   );
 };
