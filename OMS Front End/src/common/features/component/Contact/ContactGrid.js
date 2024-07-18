@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 //** Lib's */
 import { AppIcons } from "../../../../data/appIcons";
 import { ErrorMessage } from "../../../../data/appMessages";
@@ -108,9 +108,14 @@ const ContactGrid = ({
   };
   const onhandleClear = () => {
     setSearch("");
-    setContactType("");
-    setSelectedDrpvalues("");
-    setShouldRerenderFormCreator((prevState) => !prevState);
+    let request = {
+      id: keyId,
+      searchText: "",
+      contactType: Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues),
+    };
+    if (getListRef.current) {
+      getListRef.current.callChildListFunction(request);
+    }
   };
   const handleToggleModal = () => {
     setIsEdit(false);
@@ -160,102 +165,136 @@ const ContactGrid = ({
 
   useEffect(() => {
     if (search === "" && selectedDrpvalues === "") {
-      onGetContactList();
+      // onGetContactList();
     }
   }, [search, selectedDrpvalues]);
 
-  const components = [
-    (contactTypeId) => (
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-        />
-      </div>
-    ),
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-        />
-      </div>
+  // Memoize the ContactList component to prevent unnecessary re-renders
+  const MemoizedContactList = React.memo(({ keyId, getListRef, handleEdit, showEditIcon, getContactByKeyId, selectedContactTypeId }) => (
+    <div className="mt-2">
+      <ContactList
+        keyId={keyId}
+        getListRef={getListRef}
+        handleEdit={handleEdit}
+        showEditIcon={showEditIcon}
+        getContactByKeyId={getContactByKeyId}
+        selectedContactTypeId={selectedContactTypeId}
+      />
     </div>
+  ));
+
+  const components = [
+    (contactTypeId) => <MemoizedContactList keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon}
+      getContactByKeyId={getContactByKeyId} selectedContactTypeId={contactTypeId} />,
+    (contactTypeId) => <MemoizedContactList keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon}
+      getContactByKeyId={getContactByKeyId} selectedContactTypeId={contactTypeId} />,
+    (contactTypeId) => <MemoizedContactList keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon}
+      getContactByKeyId={getContactByKeyId} selectedContactTypeId={contactTypeId} />,
+    (contactTypeId) => <MemoizedContactList keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon}
+      getContactByKeyId={getContactByKeyId} selectedContactTypeId={contactTypeId} />,
+    (contactTypeId) => <MemoizedContactList keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon}
+      getContactByKeyId={getContactByKeyId} selectedContactTypeId={contactTypeId} />,
+    (contactTypeId) => <MemoizedContactList keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon}
+      getContactByKeyId={getContactByKeyId} selectedContactTypeId={contactTypeId} />,
+    (contactTypeId) => <MemoizedContactList keyId={keyId} getListRef={getListRef} handleEdit={handleEdit} showEditIcon={showEditIcon}
+      getContactByKeyId={getContactByKeyId} selectedContactTypeId={contactTypeId} />
   ];
 
-  const tabs = tabContactType && tabContactType.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers)
-    .map((data, index) => ({
-      sMenuItemCaption: data.type,
-      component: components[index] ? components[index](data.contactTypeId ? [data.contactTypeId] : "") : <div className="mt-2">Default Tab</div>
-    }));
+
+  // const components = [
+  //   (contactTypeId) => (
+  //     <div className="mt-2">
+  //       <ContactList
+  //         keyId={keyId}
+  //         getListRef={getListRef}
+  //         handleEdit={handleEdit}
+  //         showEditIcon={showEditIcon}
+  //         getContactByKeyId={getContactByKeyId}
+  //         selectedContactTypeId={contactTypeId}
+  //       />
+  //     </div>
+  //   ),
+  //   (contactTypeId) => <div className="mt-2">
+  //     <div className="mt-2">
+  //       <ContactList
+  //         keyId={keyId}
+  //         getListRef={getListRef}
+  //         handleEdit={handleEdit}
+  //         showEditIcon={showEditIcon}
+  //         getContactByKeyId={getContactByKeyId}
+  //         selectedContactTypeId={contactTypeId}
+  //       />
+  //     </div>
+  //   </div>,
+  //   (contactTypeId) => <div className="mt-2">
+  //     <div className="mt-2">
+  //       <ContactList
+  //         keyId={keyId}
+  //         getListRef={getListRef}
+  //         handleEdit={handleEdit}
+  //         showEditIcon={showEditIcon}
+  //         getContactByKeyId={getContactByKeyId}
+  //         selectedContactTypeId={contactTypeId}
+  //       />
+  //     </div>
+  //   </div>,
+  //   (contactTypeId) => <div className="mt-2">
+  //     <div className="mt-2">
+  //       <ContactList
+  //         keyId={keyId}
+  //         getListRef={getListRef}
+  //         handleEdit={handleEdit}
+  //         showEditIcon={showEditIcon}
+  //         getContactByKeyId={getContactByKeyId}
+  //         selectedContactTypeId={contactTypeId}
+  //       />
+  //     </div>
+  //   </div>,
+  //   (contactTypeId) => <div className="mt-2">
+  //     <div className="mt-2">
+  //       <ContactList
+  //         keyId={keyId}
+  //         getListRef={getListRef}
+  //         handleEdit={handleEdit}
+  //         showEditIcon={showEditIcon}
+  //         getContactByKeyId={getContactByKeyId}
+  //         selectedContactTypeId={contactTypeId}
+  //       />
+  //     </div>
+  //   </div>,
+  //   (contactTypeId) => <div className="mt-2">
+  //     <div className="mt-2">
+  //       <ContactList
+  //         keyId={keyId}
+  //         getListRef={getListRef}
+  //         handleEdit={handleEdit}
+  //         showEditIcon={showEditIcon}
+  //         getContactByKeyId={getContactByKeyId}
+  //         selectedContactTypeId={contactTypeId}
+  //       />
+  //     </div>
+  //   </div>,
+  //   (contactTypeId) => <div className="mt-2">
+  //     <div className="mt-2">
+  //       <ContactList
+  //         keyId={keyId}
+  //         getListRef={getListRef}
+  //         handleEdit={handleEdit}
+  //         showEditIcon={showEditIcon}
+  //         getContactByKeyId={getContactByKeyId}
+  //         selectedContactTypeId={contactTypeId}
+  //       />
+  //     </div>
+  //   </div>
+  // ];
+
+  const tabs = useMemo(() => {
+    return tabContactType && tabContactType.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers)
+      .map((data, index) => ({
+        sMenuItemCaption: data.type,
+        component: components[index] ? components[index](data.contactTypeId ? [data.contactTypeId] : "") : <div className="mt-2">Default Tab</div>
+      }));
+  }, [tabContactType, isSupplier]);
 
   return (
     <div key={shouldRerenderFormCreator} className="contact-main-card-section vertical-tab-card">
@@ -289,6 +328,7 @@ const ContactGrid = ({
         searchTextWithIcon={true}
         clearTextWithIcon={true}
         clearIconImg={AppIcons.ClearIcone}
+        searchValue={search}
       >
         <div className="vertical-tab-inner">
           <RenderTabs tabs={tabs} isCollapse={true} />

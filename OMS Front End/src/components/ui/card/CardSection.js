@@ -44,12 +44,12 @@ function CardSection({
   searchTextWithIcon,
   clearTextWithIcon,
   clearIconImg,
+  searchValue
 }) {
   return (
     <div
-      className={`card ${cardTitle ? "card-section-left" : ""}${
-        searchInput && rightButton ? "card-section-between" : ""
-      }${rightButton ? "card-button-only" : ""}`}
+      className={`card ${cardTitle ? "card-section-left" : ""}${searchInput && rightButton ? "card-section-between" : ""
+        }${rightButton ? "card-button-only" : ""}`}
     >
       {(cardTitle || rightButton || searchFilter || searchInput) && (
         <div className="card-top-title-btn">
@@ -64,6 +64,7 @@ function CardSection({
               <div className="col-md-4">
                 <div>
                   <SearchBar
+                    searchValue={searchValue}
                     searchText={searchInputName}
                     handleChange={handleChange}
                   />

@@ -69,17 +69,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         } else {
             formSetting.isViewOnly = false;
         }
-        if (isOpen) {
-            setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
-            setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
-        } else if (!isOpen) {
-            const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
-            setFormData(modifyFormFields);
-            setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON, true);
-            setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
-        }
-
-    }, [isOpen, isEditablePage, hasEditPermission, formSetting, formData, isResponsibleUser])
+    }, [isEditablePage, hasEditPermission, isResponsibleUser])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -90,6 +80,15 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 getAllTerritories()
             ]);
 
+            if (isOpen) {
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
+            } else if (!isOpen) {
+                const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+                setFormData(modifyFormFields);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON, true);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
+            }
             if (!isOpen) {
                 // const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 // setFormData(modifyFormFields);
