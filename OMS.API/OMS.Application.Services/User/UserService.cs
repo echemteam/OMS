@@ -45,8 +45,9 @@ namespace OMS.Application.Services.User
             return await repositoryManager.user.GetUserByUserId(userId);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteUser(short userId, short deletedBy)
+        public async Task<AddEntityDTO<int>> DeleteUser(short userId, short CurrentUserId)
         {
+            short deletedBy = CurrentUserId;
             return await repositoryManager.user.DeleteUser(userId, deletedBy);
         }
 
