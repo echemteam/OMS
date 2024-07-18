@@ -117,6 +117,19 @@ namespace OMS.Application.Services.Customers
         {
             return await repositoryManager.customers.UpdateCustomerSubCompany(requestData);
         }
+        public async Task<AddEntityDTO<int>> AddSubCompanyMainCompany(AddSubCompanyMainCompanyRequest requestData)
+        {
+            string[] subCompanyId = requestData.SubCompanyId!.Split(',');
+
+            AddEntityDTO<int> responceData = new();
+            foreach (var singleSubCompanyId in subCompanyId)
+            {
+                requestData.SubCompanyId = singleSubCompanyId;
+                responceData = await repositoryManager.customers.AddSubCompanyMainCompany(requestData);
+            }
+            return responceData;
+        }
+
         #endregion
     }
 }

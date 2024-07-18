@@ -28,6 +28,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDEDITCONTACTFORCUSTOMER = "AddEditContactForCustomer";
         const string GETCUSTOMERSDETAILSBYCUTOMERNAME = "GetCustomersDetailsByCutomerName";
         const string UPDATECUSTOMERSUBCOMPANY = "UpdateCustomerSubCompany";
+        const string ADDSUBCOMPANYMAINCOMPANY = "AddSubCompanyMainCompany";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -198,6 +199,14 @@ namespace OMS.Domain.Repository.Implementation
             {
                 requestData.CustomerId,
                 requestData.IsSubCompany
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDTO<int>> AddSubCompanyMainCompany(AddSubCompanyMainCompanyRequest requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDSUBCOMPANYMAINCOMPANY, new
+            {
+                requestData.MainCompanyId,
+                requestData.SubCompanyId
             }, CommandType.StoredProcedure);
         }
         #endregion
