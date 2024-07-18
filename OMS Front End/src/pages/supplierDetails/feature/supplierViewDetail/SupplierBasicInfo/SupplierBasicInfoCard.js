@@ -323,20 +323,8 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
           </div>
 
           <div className="col-3">
-            <div className="field-desc">
-              <div className="inf-label">R-User</div>
-              <b>&nbsp;:&nbsp;</b>
-              <div className="status-dropdown">
-                <DropDown
-                  options={responsibleUserOptions}
-                  value={rUserValue}
-                  onChange={handleRUserChange}
-                  placeholder="Select Status"
-                  isDisabled={isResponsibleUser ? true : isButtonDisable}
-                />
-              </div>
-            </div>
-            <div className="field-desc">
+            
+            <div className="field-desc basic-info-select">
               <div className="inf-label">Status</div>
               <b>&nbsp;:&nbsp;</b>
               <div className={`status-dropdown ${getStatusClass()}`}>
@@ -357,6 +345,19 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                 {supplierData?.taxId
                   ? supplierData?.taxId
                   : ErrorMessage.NotAvailabe}
+              </div>
+            </div>
+            <div className="field-desc basic-info-select">
+              <div className="inf-label">R-User</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="status-dropdown">
+                <DropDown
+                  options={responsibleUserOptions}
+                  value={rUserValue}
+                  onChange={handleRUserChange}
+                  placeholder="Select Status"
+                  isDisabled={isResponsibleUser ? true : isButtonDisable}
+                />
               </div>
             </div>
           </div>

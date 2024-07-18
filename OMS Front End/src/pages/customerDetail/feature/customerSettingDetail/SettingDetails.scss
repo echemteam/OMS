@@ -170,6 +170,10 @@
 .first-card {
   border-bottom: 1px solid var(--textColor);
   margin-bottom: 15px;
+  &:last-child{
+    margin-bottom: -8px;
+    border-bottom: 0;
+  }
   .card{
     margin-bottom: 15px !important;
   }
