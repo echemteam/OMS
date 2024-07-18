@@ -28,18 +28,11 @@ const FormSelectField = ({
 
   const handleChange = (selectedOption) => {
     if (onChange) {
-      if (isMultiSelect) {
-        const selectedValues = selectedOption.map((option) => option.value);
-        onChange(dataField, selectedValues)
-        if (fieldActions) {
-          fieldActions('DDL_CHANGED', dataField, selectedOption);
-        }
-      }
-      else {
-        onChange(dataField, selectedOption);
-        if (fieldActions) {
-          fieldActions('DDL_CHANGED', dataField, selectedOption);
-        }
+      const value = isMultiSelect ? selectedOption.map((option) => option.value) : selectedOption;
+      onChange(dataField, value);
+    
+      if (fieldActions && selectFormFieldProps?.isEnableOnChange) {
+        fieldActions('DDL_CHANGED', dataField, selectedOption);
       }
     }
   }

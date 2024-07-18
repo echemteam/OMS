@@ -5,7 +5,7 @@ import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFo
 //** Component's */
 const ContactDetailCard = React.lazy(() => import("./ContactDetailCard"));
 
-const ContactList = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, getContactByKeyId }) => {
+const ContactList = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, getContactByKeyId, selectedContactTypeId }) => {
 
     const [contactDetails, setContactDetails] = useState([]);
 
@@ -19,14 +19,14 @@ const ContactList = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, g
     //** UseEffect */
     useEffect(() => {
         onGetContactList();
-    }, [keyId]);
+    }, [keyId, selectedContactTypeId]);
 
     //** Get Contact List */
     const onGetContactList = () => {
         let req = {
             id: keyId,
             searchText: "", // Initial call: no search text provided.
-            contactType: "", // Initial call: no specific contact type specified.
+            contactType: selectedContactTypeId ? selectedContactTypeId : ""
         };
         contactList(req);
     };

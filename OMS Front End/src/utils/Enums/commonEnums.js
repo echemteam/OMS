@@ -50,3 +50,30 @@ export const ApiParametersDataTypes={
     Number:"Number",
     Boolean:"Boolean",
 }
+
+// export const PaymentMethods = [
+//     { value: 1, label: "Check" },
+//     { value: 2, label: "ACH / Echeck" },
+//     { value: 3, label: "Wire" },
+//     { value: 4, label: "Credit Card" },
+//     { value: 5, label: "" },
+//     { value: 6, label: "Other - With noted field" }
+// ]
+
+export const PaymentMethodTypes = {
+    CHECK: 1,
+    ACHECHECK: 2,
+    Wire: 3,
+    CREDITCARD: 4,
+    ADVANCEDCOLLECT: 5,
+    OTHERWITHNOTEDIELD: 6
+}
+
+export const CountryId = {
+    USA: 233
+}
+
+export const ModulePathName = {
+    Customer : "Customer",
+    Supplier : "Supplier"
+}

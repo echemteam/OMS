@@ -5,6 +5,7 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
+import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 
 const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuccess }) => {
 
@@ -37,7 +38,7 @@ const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuc
                 ...data,
                 base64File: data.attachment.base64Data,
                 attachment: data.attachment.fileName,
-                storagePath: isSupplier ? "SupplierDocuements" : "Customer",
+                storagePath: isSupplier ? ModulePathName.Supplier : ModulePathName.Customer,
                 [isSupplier ? 'supplierId' : 'customerId']: keyId,
                 documentTypeId: data.documentTypeId && typeof data.documentTypeId === "object" ? data.documentTypeId.value : data.documentTypeId,
             };

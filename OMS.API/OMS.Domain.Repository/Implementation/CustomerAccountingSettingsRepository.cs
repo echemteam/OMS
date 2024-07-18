@@ -52,6 +52,10 @@ namespace OMS.Domain.Repository.Implementation
                 addEditSettings.BillingCurrency,
                 addEditSettings.InvoiceSubmissionInstruction,
                 addEditSettings.CreatedBy,
+                addEditSettings.ExemptSalesTax,
+                addEditSettings.SalesTax,
+                addEditSettings.CardProcessingCharges,
+                addEditSettings.BankFee
             }, CommandType.StoredProcedure);
         }
 
@@ -75,7 +79,8 @@ namespace OMS.Domain.Repository.Implementation
                 updateCarriers.CarrierId,
                 updateCarriers.AccountNumber,
                 updateCarriers.IsPrimary,
-                updateCarriers.UpdatedBy
+                updateCarriers.UpdatedBy,
+                updateCarriers.HandlingFee
             }, CommandType.StoredProcedure);
         }
 
@@ -145,6 +150,7 @@ namespace OMS.Domain.Repository.Implementation
                 carriers.AccountNumber,
                 carriers.IsPrimary,
                 carriers.CreatedBy,
+                carriers.HandlingFee
             }, CommandType.StoredProcedure);
         }
         public async Task<AddEntityDTO<int>> AddDeliveryMethods(CustomerDeliveryMethodsDTO deliveryMethods)

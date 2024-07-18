@@ -15,7 +15,7 @@ export const assignUserFormData = {
       dataField: "userName",
       fieldSetting: {
         placeholder: "Select Users",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {

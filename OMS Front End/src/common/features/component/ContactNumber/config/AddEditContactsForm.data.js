@@ -21,7 +21,7 @@ export const addEditContactsFormData = {
       dataField: "phoneTypeId",
       fieldSetting: {
         placeholder: "Enter Phone Type",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -36,7 +36,7 @@ export const addEditContactsFormData = {
       dataField: "phoneCode",
       fieldSetting: {
         placeholder: "",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {

@@ -9,7 +9,6 @@ export const addEditDeliveryFormData = {
         isDeliveryMethodPrimary: false,
     },
     formFields: [
-
         {
             id: "chargeType",
             lable: "Charge Type ",
@@ -18,7 +17,7 @@ export const addEditDeliveryFormData = {
             dataField: "chargeType",
             fieldSetting: {
                 placeholder: "Select Charge Type",
-                allowSpace: true,
+                isEnableOnChange: true,
                 isDisabled: false,
             },
             validation: [{ type: "require" }],
@@ -77,6 +76,7 @@ export const OurAccountGridConfig = {
         {
             name: "Charge",
             fieldName: "charge",
+            colType: GridColumnType.MONEY,
             width: "20%"
         },
         {

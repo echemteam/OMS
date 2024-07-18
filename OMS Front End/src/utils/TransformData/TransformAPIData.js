@@ -1,89 +1,16 @@
-import { FileTypeIcons } from "../../common/features/component/Document/Config/DocuementsData";
 import formatDate from "../../lib/formatDate";
+import { FileTypeIcons } from "../../common/features/component/Document/Config/DocuementsData";
 
-export const contactCustomerTransformData = (data) => {
-    return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, customerContactId, phoneNumberLsit, isPrimary } = item;
-
-        const emailAddress = emailAddressLst.map((item) => ({
-            emailAddres: item.emailAddress,
-            isPrimary: item.isPrimary
-        }));
-        const phoneNumber = phoneNumberLsit.map(item => ({
-            phoneTypeId: item.phoneTypeId,
-            isPrimary: item.isPrimary,
-            phoneCode: item.phoneCode,
-            extension: item.extension,
-            phoneNumber: item.phoneNumber
-        }));
-        const transformedItem = {
-            cardInformation: {
-                firstName,
-                lastName,
-                contactId,
-                contactTypeId,
-                customerContactId,
-                emailAddress,
-                phoneNumber,
-                isPrimary
-            }
-        };
-
-        if (!acc[type]) {
-            acc[type] = [];
-        }
-
-        acc[type].push(transformedItem);
-        return acc;
-    }, {});
-};
-
-export const contactSupplierTransformData = (data) => {
-    return data.reduce((acc, item) => {
-        const { type, firstName, lastName, emailAddressLst, contactId, contactTypeId, supplierContactId, phoneNumberLsit, isPrimary } = item;
-
-        const modifyPhoneNumberList = phoneNumberLsit.map((item, index) => ({
-            ...item,
-            id: index + 1
-        }));
-        const modifyEmailAddressLst = emailAddressLst.map((item, index) => ({
-            ...item,
-            id: index + 1
-        }));
-        const emailAddress = emailAddressLst.map((item) => ({
-            emailAddres: item.emailAddress,
-            isPrimary: item.isPrimary
-        }));
-        const phoneNumber = phoneNumberLsit.map(item => ({
-            phoneTypeId: item.phoneTypeId,
-            isPrimary: item.isPrimary,
-            phoneCode: item.phoneCode,
-            extension: item.extension,
-            phoneNumber: item.phoneNumber
-        }));
-        const transformedItem = {
-            cardInformation: {
-                firstName,
-                lastName,
-                contactId,
-                contactTypeId,
-                supplierContactId,
-                emailAddress,
-                phoneNumber,
-                isPrimary
-            },
-            emailAddressLst: modifyEmailAddressLst,
-            phoneNumberLsit: modifyPhoneNumberList
-        };
-
-        if (!acc[type]) {
-            acc[type] = [];
-        }
-
-        acc[type].push(transformedItem);
-        return acc;
-    }, {});
-};
+export const modifyContactType = (apiResponseData) => {
+    const allType = {
+        id: 0,
+        type: 'All', // It's used for all the types
+        isForSuppliers: true,
+        isForCustomers: true,
+        contactTypeId: ""
+    };
+    return [allType, ...apiResponseData];
+}
 
 export const modifyPhoneNumberData = (phoneDataArray) => {
     const newArray = phoneDataArray.map(phoneData => ({

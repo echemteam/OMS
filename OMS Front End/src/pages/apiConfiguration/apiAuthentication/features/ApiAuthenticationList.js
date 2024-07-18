@@ -88,7 +88,7 @@ const ApiAuthenticationList=({handleEditClick, childRef})=>{
     return(
     <>
       <div className="row">
-        <div className="col-md-12 table-striped">
+        <div className="col-md-12 table-striped api-provider">
           <MolGrid
             ref={molGridRef}
            configuration={ApiAuthenticationtGridConfig}

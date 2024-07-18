@@ -130,12 +130,17 @@
         font-weight: 500;
       }
       .edit-icons {
+        background: none;
         cursor: pointer !important;
-
+        padding: 0 !important;
+        top: 0;
+        right: 0;
         img {
-          width: 20px;
+          width: 20px !important;
+          filter: none !important;
+          padding: 0 !important;
           @media only screen and (max-width: 1560px) {
-            width: 15px;
+            width: 15px !important;
           }
         }
       }
@@ -152,6 +157,15 @@
     }
     .config-content{
       max-height: calc(100vh - 180px);
+    }
+  }
+}
+
+
+.api-provider{
+  table {
+    tbody{
+      max-height: calc(100vh - 265px);
     }
   }
 }

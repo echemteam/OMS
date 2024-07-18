@@ -88,10 +88,11 @@ const MolGridHeader = (props) => {
                 <button className="cancel-short" onClick={() => {
                   handleRemoveSortColumn(col);
                 }}>
-                  <Image
-                    imagePath={AppIcons.crossIcon}
+                  {/* <Image
+                    imagePath={AppIcons.CloseIcon}
                     altText="cancel"
-                  />
+                  /> */}
+                  <i className="fa fa-times"></i>
                 </button>
               </div>
             </span>

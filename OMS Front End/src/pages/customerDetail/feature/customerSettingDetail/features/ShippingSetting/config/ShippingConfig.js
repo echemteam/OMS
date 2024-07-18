@@ -13,6 +13,7 @@ export const shippingFormData = {
             fieldSetting: {
                 placeholder: "Select Account",
                 allowSpace: true,
+                isEnableOnChange: true
             },
             validation: [{ type: "require" }],
             style: {

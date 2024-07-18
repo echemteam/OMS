@@ -6,6 +6,7 @@ export const addEditCarrierFormData = {
     initialState: {
         carrierId: 0,
         accountNumber: '',
+        handlingFee: 10,
         isCarrierPrimary: false
     },
     formFields: [
@@ -17,7 +18,7 @@ export const addEditCarrierFormData = {
             dataField: "carrier",
             fieldSetting: {
                 placeholder: "Select Carrier",
-                allowSpace: true,
+                isEnableOnChange: true
             },
             validation: [{ type: "require" }],
             style: {
@@ -32,6 +33,22 @@ export const addEditCarrierFormData = {
             dataField: "accountNumber",
             fieldSetting: {
                 placeholder: "Enter Account Number",
+                allowSpace: true,
+                maxLength: 25,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-3 label-h-0",
+            },
+        },
+        {
+            id: "handlingFee",
+            lable: "Fee",
+            Field_Name: "Fee",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "handlingFee",
+            fieldSetting: {
+                placeholder: "Enter Fee",
                 allowSpace: true,
                 maxLength: 25,
             },
@@ -70,6 +87,12 @@ export const AccountGridConfig = {
             name: "Account Number",
             width: "25%",
             fieldName: "accountNumber"
+        },
+        {
+            name: "Fee",
+            width: "25%",
+            fieldName: "handlingFee",
+            colType: GridColumnType.MONEY,
         },
         {
             name: "Is Primary",

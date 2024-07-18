@@ -23,5 +23,9 @@ namespace OMS.Domain.Entities.Entity.CustomerAccountingSettings
         public short? UpdatedBy { get; set; }
         public string? InvoiceSubmissionInstruction { get; set; }
         public string? BillingCurrency { get; set; }
+        public decimal? SalesTax { get; set; }
+        public bool? ExemptSalesTax { get; set; }
+        public decimal? CardProcessingCharges { get; set; }
+        public decimal? BankFee { get; set; }
     }
 }

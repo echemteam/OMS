@@ -38,7 +38,7 @@ const Sidebar = (props) => {
             <ul className="sidebar-menu-list">
               {Menu.map((menuItem, index) => (
                 <>
-                  {hasPermission(menuItem.securityKey) ?
+                  {/* {hasPermission(menuItem.securityKey) ? */}
                     <li key={index} className={selectedMenu === menuItem.id ? "menu-item active-menu" : "menu-item"} onClick={() => handleClick(menuItem.id)} >
                       <Link to={menuItem.to} className={menuItem.subMenu ? "menu-arrow" : ""}>
                         <i className={menuItem.iconClass}></i>
@@ -49,13 +49,13 @@ const Sidebar = (props) => {
                           <ul className="sidebar-dropdown">
                             {menuItem.children.map((subMenu, index) => (
                               <>
-                                {hasPermission(subMenu.securityKey) ?
-                                  <li className="dropdown-menus">
-                                    <Link to={subMenu.to} className={clickedValueSubMenu === subMenu.id ? "active-submenu" : ""} onClick={(e) => handleChildClick(e, subMenu.id)}>
-                                      {subMenu.submenuName}
-                                    </Link>
-                                  </li>
-                                  : null}
+                                {/* {hasPermission(subMenu.securityKey) ? */}
+                                <li className="dropdown-menus">
+                                  <Link to={subMenu.to} className={clickedValueSubMenu === subMenu.id ? "active-submenu" : ""} onClick={(e) => handleChildClick(e, subMenu.id)}>
+                                    {subMenu.submenuName}
+                                  </Link>
+                                </li>
+                                {/* : null} */}
                               </>
 
                             ))}
@@ -63,7 +63,7 @@ const Sidebar = (props) => {
                         </>
                       ) : null}
                     </li>
-                    : null}
+                    {/* : null} */}
                 </>
               ))}
             </ul>
