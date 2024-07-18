@@ -24,5 +24,7 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetCustomersDetailsByCutomerNameResponse>> GetCustomersDetailsByCutomerName(string customerName);
         Task<AddEntityDTO<bool>> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData);
         Task<AddEntityDTO<int>> AddSubCompanyMainCompany(AddSubCompanyMainCompanyRequest requestData);
+        Task<EntityList<GetSubCompanysByMainCompanyIdResponse>> GetSubCompanysByMainCompanyId(GetSubCompanysByMainCompanyIdRequest requestData);
+        Task<AddEntityDTO<int>> DeleteSubCompany(int subCompanyMainCompanyId, short deletedBy);
     }
 }

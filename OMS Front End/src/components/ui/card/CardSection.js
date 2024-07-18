@@ -43,13 +43,13 @@ function CardSection({
   searchIconImg,
   searchTextWithIcon,
   clearTextWithIcon,
-  clearIconImg
-
+  clearIconImg,
 }) {
   return (
     <div
-      className={`card ${cardTitle ? "card-section-left" : ""}${searchInput && rightButton ? "card-section-between" : ""
-        }${rightButton ? "card-button-only" : ""}`}
+      className={`card ${cardTitle ? "card-section-left" : ""}${
+        searchInput && rightButton ? "card-section-between" : ""
+      }${rightButton ? "card-button-only" : ""}`}
     >
       {(cardTitle || rightButton || searchFilter || searchInput) && (
         <div className="card-top-title-btn">
@@ -60,16 +60,16 @@ function CardSection({
             </div>
           )}
           <div className="manage-customer-dropdown">
-            <div className="col-md-4">
-              {searchInput && (
+            {searchInput && (
+              <div className="col-md-4">
                 <div>
                   <SearchBar
                     searchText={searchInputName}
                     handleChange={handleChange}
                   />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
             {searchFilter && (
               <div className="col-md-4">
                 <div className="ml-2">
@@ -145,17 +145,14 @@ function CardSection({
                     titleText={titleText}
                   />
                 </div>
-
               </>
               // )
             )
-
           }
         </div>
-      )
-      }
+      )}
       <div className="card-body-sec">{children}</div>
-    </div >
+    </div>
   );
 }
 

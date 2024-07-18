@@ -908,7 +908,7 @@ a {
     .card-body-sec {
       margin-top: 0;
       @media only screen and (max-width: 1560px) {
-        height: calc(100vh - 236px);
+        max-height: calc(100vh - 236px);
       }
     }
   
@@ -1834,9 +1834,13 @@ a {
   .tab-sub-section {
     .tab-sub-content {
       .grid-section {
-        max-height: calc(100vh - 235px);
+        max-height: calc(100vh - 375px);
         overflow: hidden;
         overflow-y: auto;
+        margin: 10px 0;
+        @media only screen and (max-width: 1560px) {
+          max-height: calc(100vh - 235px);
+        }
       }
     }
   }

@@ -36,6 +36,7 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, deliv
                 accountNumber: data.accountNumber,
                 customerDeliveryCarrierId: data.customerDeliveryCarrierId ? data.customerDeliveryCarrierId : 0,
                 carrierId: data.carrier && typeof data.carrier === "object" ? data.carrier.value : data.carrierId,
+                handlingFee: data.handlingFee
             }
             if (data && !data.customerDeliveryCarrierId) {
                 addEdit(request)
@@ -73,6 +74,7 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, deliv
             let form = { ...addEditCarrierFormData };
             form.initialState = {
                 ...isGetByIdData,
+                handlingFee: isGetByIdData.handlingFee ? isGetByIdData.handlingFee : 10, // Default handling fee set to 10
                 isCarrierPrimary: isGetByIdData.isPrimary
             }
             setFormData(form);
