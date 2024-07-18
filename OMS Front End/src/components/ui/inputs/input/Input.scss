@@ -110,7 +110,7 @@ form {
       font-size: var(--commonFont-small);
       visibility: hidden;
       width: 160%;
-      background-color: #555;
+      background-color: #000000;
       color: #fff;
       text-align: center;
       border-radius: 5px;
@@ -118,18 +118,18 @@ form {
       position: absolute;
       z-index: 1;
       right: 0;
+      bottom: -46px;
       margin-right: -5px;
-      transition: opacity 0.3s;
 
       &::after {
         content: "";
         position: absolute;
-        top: 12px;
-        right: 7px;
+        top: -10px;
+        right: 20px;
         border-width: 6px;
         border-style: solid;
-        border-color: #555 transparent transparent transparent;
-        transform: rotate(90deg);
+        border-color: #000000 transparent transparent transparent;
+        transform: rotate(180deg);
       }
     }
   }
