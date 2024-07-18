@@ -3,14 +3,14 @@ import { transformSucessResponse, transformErrorResponse } from "../../utils/API
 import { encryptQueryString, transformRequest } from "../../utils/API/requestMiddleware"
 import { customFetchBase } from '../../utils/API/fetchBaseQuery';
 
-const  customerSubCustomerAPI= createApi({
+const customerSubCustomerAPI = createApi({
     reducerPath: 'customerSubCustomerAPI',
     baseQuery: customFetchBase,
     endpoints: (builder) => ({
 
         getAllSubCompany: builder.query({
-            query: () => ({
-                url: encryptQueryString(`/Common/GetAllSubCompany`),
+            query: (isSubCustomer) => ({
+                url: encryptQueryString(`/Common/GetAllSubCompany/?isSubCustomer=${isSubCustomer}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
@@ -53,11 +53,11 @@ const  customerSubCustomerAPI= createApi({
     })
 })
 
-export const { 
+export const {
     useAddSubCompanyMainCompanyMutation,
-     useGetSubCompanysByMainCompanyIdMutation,
-     useLazyGetAllSubCompanyQuery,
-     useDeleteSubCompanyMutation,
-     } = customerSubCustomerAPI;
+    useGetSubCompanysByMainCompanyIdMutation,
+    useLazyGetAllSubCompanyQuery,
+    useDeleteSubCompanyMutation,
+} = customerSubCustomerAPI;
 
 export default customerSubCustomerAPI;

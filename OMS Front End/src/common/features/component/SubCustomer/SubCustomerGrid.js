@@ -3,7 +3,7 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import AddEditSubCustomer from "./feature/AddEditSubCustomer";
 import SubCustomerList from "./feature/SubCustomerList";
 
-const SubCustomerGrid=({customerId})=>{
+const SubCustomerGrid=({customerId,isSubCompany})=>{
     const childRef = useRef();
 
     const onSuccess = () => {
@@ -14,10 +14,10 @@ const SubCustomerGrid=({customerId})=>{
     return(<>
 
      <CardSection
-        cardTitle="Sub-Customer"
+        cardTitle="Link Customer"
         buttonClassName="theme-button"
       >
-       <AddEditSubCustomer customerId={customerId} onSuccess={onSuccess}/>
+       <AddEditSubCustomer customerId={customerId} onSuccess={onSuccess} isSubCompany={isSubCompany}/>
      <SubCustomerList customerId={customerId} childRef={childRef} />
 
       </CardSection>

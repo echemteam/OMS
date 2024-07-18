@@ -7,12 +7,12 @@ export const SubCustomerFormData = {
     formFields: [
       {
         id: "customerId",
-        lable: "Sub-Customer ",
-        Field_Name: "Sub-Customer",
+        lable: "Link Customer ",
+        Field_Name: "Link-Customer",
         fieldType: FormFieldTypes.SELECT,
         dataField: "customerId",
         fieldSetting: {
-          placeholder: "Select Sub-Customer ",
+          placeholder: "Select Customer ",
           isMultiSelect:true,
           options: []
         },
@@ -30,7 +30,7 @@ export const SubCustomerFormData = {
     columns: [
 
         {
-          name: "Sub-Company Name",
+          name: "Customer Name",
           fieldName: "subCompanyName",
           width: "30%",
           allowShort: true,

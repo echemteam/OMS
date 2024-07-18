@@ -31,7 +31,9 @@ const CustomerViewTab = (customerId) => {
     const hasDocumentPermission = hasFunctionalPermission(
       securityKey.CUSTOMERDOCUMENT
     );
-
+    const hasSubCustomerPermission = hasFunctionalPermission(
+      securityKey.CUSTOMERSUBCUSTOMER
+    );
     const tabs = [
         {
           sMenuItemCaption: "Address",
@@ -88,13 +90,13 @@ const CustomerViewTab = (customerId) => {
           isVisible: hasHistoryPermission.hasAccess,
         },
         {
-          sMenuItemCaption: "Sub-Customer",
+          sMenuItemCaption: "Link Customer",
           component: (
             <div className="mt-2">
               <CustomerSubCustomerDetail  />
             </div>
           ),
-          isVisible: hasHistoryPermission.hasAccess,
+          isVisible: hasSubCustomerPermission.hasAccess,
         },
       ];
 

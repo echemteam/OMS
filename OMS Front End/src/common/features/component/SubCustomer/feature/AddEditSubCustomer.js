@@ -11,6 +11,7 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 
 const AddEditSubCustomer=(props)=>{
+
     const subcustomerRef=useRef();
     const [subCustomerFormData, setSubCustomerFormData] = useState(SubCustomerFormData);
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
@@ -19,14 +20,14 @@ const AddEditSubCustomer=(props)=>{
     const [addSubCompanyMainCompany, { isLoading: isAddSubCompanyMainCompanyLoading, isSuccess: isAddSubCompanyMainCompanySuccess, data: isAddSubCompanyMainCompanyData }] = useAddSubCompanyMainCompanyMutation();
     useEffect(() => {
       if (!isGetAllSubCompanyFetching && isGetAllSubCompanySuccess && isGetAllSubCompanyData) {
-  
+        
         setDropDownOptionField(isGetAllSubCompanyData, 'customerId', 'name', subCustomerFormData, 'customerId');
         setShouldRerenderFormCreator((prevState) => !prevState);
       }
     }, [isGetAllSubCompanyFetching && isGetAllSubCompanySuccess, isGetAllSubCompanyData]);
 
     useEffect(()=>{
-      getAllSubCompany();
+      getAllSubCompany(props?.isSubCompany);
     },[])
   
     useEffect(() => {
@@ -65,7 +66,7 @@ const onhandleEditSubcustomer=()=>{
             <div className="col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mt-4">
               <Buttons
                 buttonTypeClassName="theme-button"
-                buttonText="Assign Sub-Customer"
+                buttonText="Assign"
                 onClick={onhandleEditSubcustomer}
                 isLoading={isAddSubCompanyMainCompanyLoading}
               />
