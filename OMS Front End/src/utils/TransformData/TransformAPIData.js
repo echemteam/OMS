@@ -12,6 +12,17 @@ export const modifyContactType = (apiResponseData) => {
     return [allType, ...apiResponseData];
 }
 
+export const modifyAddressType = (apiResponseData) => {
+    const allType = {
+        id: 0,
+        type: 'All', // It's used for all the types
+        isForSuppliers: true,
+        isForCustomers: true,
+        addressTypeId: ""
+    };
+    return [allType, ...apiResponseData];
+}
+
 export const modifyPhoneNumberData = (phoneDataArray) => {
     const newArray = phoneDataArray.map(phoneData => ({
         ...phoneData,
