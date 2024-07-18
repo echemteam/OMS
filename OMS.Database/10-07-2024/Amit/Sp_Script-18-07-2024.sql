@@ -1,5 +1,4 @@
-USE [OmsLite]
-GO
+
 /****** Object:  StoredProcedure [dbo].[GetSubCompanysByMainCompanyId]    Script Date: 18-07-2024 14:25:09 ******/
 DROP PROCEDURE [dbo].[GetSubCompanysByMainCompanyId]
 GO
@@ -40,7 +39,7 @@ BEGIN TRY
    SET  @keyId = SCOPE_IDENTITY()                    
             
    SELECT @keyId as KeyValue,                     
-   'Sub Company added' as ErrorMessage                   
+   'Sub Customer added' as ErrorMessage                   
         
 END TRY                        
 BEGIN CATCH                      
@@ -75,7 +74,7 @@ BEGIN
             WHERE SubCompanyMainCompanyId = @SubCompanyMainCompanyId
   
             SELECT @SubCompanyMainCompanyId AS KeyValue,  
-                   'Sub Company Deleted' AS ErrorMessage;  
+                   'Sub Customer Deleted' AS ErrorMessage;  
         END  
         ELSE  
         BEGIN  
@@ -97,21 +96,32 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 --GetAllSubCompany      
-CREATE PROCEDURE [dbo].[GetAllSubCompany]              
-AS                                
-BEGIN                                
-    SET NOCOUNT ON;                                
-    BEGIN TRY                                        
-        SELECT      
-        [CustomerId],
-        [Name]    
-        FROM [dbo].[Customers] where IsSubCompany=1 ANd deletedby IS NULL AND deletedAt is NULL    
-END TRY                                        
-BEGIN CATCH                                        
- DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()                                        
- DECLARE @ErrorSeverity nvarchar(max) = ERROR_SEVERITY()                                        
- DECLARE @ErrorState nvarchar(max) = ERROR_STATE()                                        
-    RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)                                        
+CREATE PROCEDURE [dbo].[GetAllSubCompany]   
+@IsSubCustomer bit             
+AS                                  
+BEGIN                                  
+    SET NOCOUNT ON;                                  
+    BEGIN TRY     
+        IF @IsSubCustomer = 1
+        BEGIN                                     
+            SELECT        
+            [CustomerId],  
+            [Name]      
+            FROM [dbo].[Customers] WHERE (IsSubCompany = 0 OR IsSubCompany IS NULL) AND deletedby IS NULL AND deletedAt is NULL 
+        END
+        ELSE
+        BEGIN
+            SELECT        
+            [CustomerId],  
+            [Name]      
+            FROM [dbo].[Customers] where IsSubCompany=1 AND deletedby IS NULL AND deletedAt is NULL 
+        END     
+END TRY                                          
+BEGIN CATCH                                          
+ DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()                                          
+ DECLARE @ErrorSeverity nvarchar(max) = ERROR_SEVERITY()                                          
+ DECLARE @ErrorState nvarchar(max) = ERROR_STATE()                                          
+    RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)                                          
 END CATCH                                 
                                 
 END 

@@ -155,9 +155,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllAPIEndpoints();
         }
-        public Task<List<GetAllSubCompanyResponse>> GetAllSubCompany()
+        public Task<List<GetAllSubCompanyResponse>> GetAllSubCompany(bool isSubCustomer)
         {
-            return repositoryManager.commonRepository.GetAllSubCompany();
+            return repositoryManager.commonRepository.GetAllSubCompany(isSubCustomer);
         }
     }
 }

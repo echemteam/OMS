@@ -187,9 +187,14 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetList<GetAllAPIEndpointsResponse>(GETALLAPIENDPOINTS, commandType: CommandType.StoredProcedure);
         }
-        public async Task<List<GetAllSubCompanyResponse>> GetAllSubCompany()
+        public async Task<List<GetAllSubCompanyResponse>> GetAllSubCompany(bool isSubCustomer)
         {
-            return await _context.GetList<GetAllSubCompanyResponse>(GETALLSUBCOMPANY, commandType: CommandType.StoredProcedure);
+            List<GetAllSubCompanyResponse> getAllSubCompanyResponse = await _context.GetList<GetAllSubCompanyResponse>(GETALLSUBCOMPANY, new
+            {
+                isSubCustomer
+            }, commandType: CommandType.StoredProcedure);
+            return getAllSubCompanyResponse;
+
         }
     }
 }
