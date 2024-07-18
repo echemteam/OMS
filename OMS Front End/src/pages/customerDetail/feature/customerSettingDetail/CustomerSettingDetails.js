@@ -49,7 +49,7 @@ const CustomerSettingDetails = ({ isEditablePage }) => {
     {
       sMenuItemCaption: "Financial",
       component: (
-        <div className="mt-3 financial-sec">
+        <div className="mt-2 financial-sec">
           {showFinacialTab ?
             <FinancialSettings isEditablePage={isEditablePage} /> :
             <Unauthorize />
@@ -60,7 +60,7 @@ const CustomerSettingDetails = ({ isEditablePage }) => {
     {
       sMenuItemCaption: "Shipping",
       component: (
-        <div className="mt-3 shipping-sec">
+        <div className="mt-2 shipping-sec">
           {showShippingTab ?
             <ShippingSettings isEditablePage={isEditablePage} />
             : <Unauthorize />

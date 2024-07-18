@@ -575,7 +575,7 @@ a {
       color: var(--themeColor);
       margin-bottom: 0;
       text-transform: capitalize;
-      font-size: var(--commonFont-extraLarge);
+      font-size: var(--commonFont-large);
       font-weight: 600;
       white-space: nowrap;
     }
@@ -2384,6 +2384,7 @@ input[type="checkbox"]:disabled {
   display: flex;
   align-items: center;
   width: 100%;
+  margin-top: 8px;
 
   .name-field {
     min-width: 22%;
@@ -2552,7 +2553,7 @@ input[type="checkbox"]:disabled {
 
     .card-top-title-btn {
       min-height: unset;
-      padding-bottom: 8px;
+      padding-bottom: 7px;
     }
   }
 
@@ -2596,7 +2597,8 @@ input[type="checkbox"]:disabled {
     .tab-sub-section {
       .tab-sub-content {
         .grid-section {
-          max-height: calc(100vh - 270px);
+          max-height: calc(100vh - 340px);
+          margin: 10px 0;
         }
       }
     }
@@ -2639,6 +2641,13 @@ input[type="checkbox"]:disabled {
           button {
             font-size: var(--commonFont-medium) !important;
             padding: 3px 15px 5px !important;
+          }
+        }
+      }
+      &.setting-tab-sec{
+        .main-inactive-grid {
+          .tab-sub-header{
+            margin-left: 0 !important;
           }
         }
       }
@@ -3179,4 +3188,8 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+}
+
+.modal-body{
+  padding: 12px !important;
 }

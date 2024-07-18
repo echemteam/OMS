@@ -185,7 +185,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         <div>
             {!isGetByIdFetching ?
                 <React.Fragment>
-                    <div className="row mt-3 addEditContact-form">
+                    <div className="row mt-2 addEditContact-form">
                         <FormCreator config={formData} ref={ref} {...formData} />
                     </div>
                     <div className="row">
