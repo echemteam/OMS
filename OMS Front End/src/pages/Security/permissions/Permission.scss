@@ -65,9 +65,10 @@
             img {
               cursor: pointer;
               width: 35px;
+
               @media only screen and (max-width: 1560px) {
                 width: 25px;
-              } 
+              }
             }
           }
 
@@ -126,12 +127,12 @@
 
                 ul {
                   &.sub2-parent {
-                    li{
+                    li {
                       .parent-part {
                         .drop-menu-icon {
                           .arrow-icon {
                             left: 40px;
-  
+
                             img {
                               width: 15px;
                               transform: rotate(0deg);
@@ -142,7 +143,7 @@
                         }
                       }
                     }
-                    
+
                   }
                 }
               }
@@ -258,11 +259,23 @@
 
     }
   }
-}
-@media only screen and (max-width: 1560px) {
-.permission-list{
-  .card{
-    margin-bottom: 0;
+  &.security-permission{
+    .inner-section{
+      max-height: calc(100vh - 380px);
+      overflow: hidden;
+      overflow-y: auto;
+      @media only screen and (max-width: 1560px) {
+        max-height: calc(100vh - 310px);
+      }
+    }
   }
 }
+
+@media only screen and (max-width: 1560px) {
+  .permission-list {
+    .card {
+      margin-bottom: 0;
+    }
+  }
 }
+

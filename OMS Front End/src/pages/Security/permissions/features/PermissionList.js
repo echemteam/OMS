@@ -11,7 +11,7 @@ const PermissionList = (props) => {
     const { onUpdatePermission, isLoading, permissionsData } = props;
 
     return (
-        <div className="tree-section-view">
+        <div className="tree-section-view security-permission">
             <div className="section-header-part">
                 {SecurityPermissionsGrid.map((column, index) => (
                     <div key={index} className={column.className}>{column.name}</div>
