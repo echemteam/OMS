@@ -51,23 +51,21 @@ namespace OMS.Application.Services.CustomerAccountingSettings
         public async Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId)
         {
             GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse shppingDetails = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarrierAndDeliveryMethodsById(customerId);
-            if (shppingDetails != null)
+            if (shppingDetails?.DeliveryAccountId != null)
             {
-                if (shppingDetails.DeliveryAccountId != null)
-                {
-                    var deliveryAccountId = (DeliveryAccount)shppingDetails.DeliveryAccountId;
+                var deliveryAccountId = (DeliveryAccount)shppingDetails.DeliveryAccountId;
 
-                    if (deliveryAccountId == DeliveryAccount.OurAccount)
-                    {
-                        shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
-                    }
-                    else if (deliveryAccountId == DeliveryAccount.CollectAccount)
-                    {
-                        shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
-                        shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
-                    }
+                if (deliveryAccountId == DeliveryAccount.OurAccount)
+                {
+                    shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
+                }
+                else if (deliveryAccountId == DeliveryAccount.CollectAccount)
+                {
+                    shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
+                    shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
                 }
             }
+
             return shppingDetails!;
         }
 

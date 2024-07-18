@@ -169,9 +169,9 @@ const ContactGrid = ({
 
   useEffect(() => {
     if (search === "" && selectedDrpvalues === "") {
-        onGetContactList();
+      onGetContactList();
     }
-}, [search, selectedDrpvalues]);
+  }, [search, selectedDrpvalues]);
 
   const tabs = [
     {
@@ -245,6 +245,10 @@ const ContactGrid = ({
         isCardSection={true}
         isdropdownOpen={true}
         clearButtonClassName="dark-btn"
+        searchIconImg={AppIcons.SearchIcone}
+        searchTextWithIcon={true}
+        clearTextWithIcon={true}
+        clearIconImg={AppIcons.ClearIcone}
       >
         <div className="vertical-tab-inner">
           <RenderTabs tabs={tabs} isCollapse={true} />
@@ -253,7 +257,7 @@ const ContactGrid = ({
       <div className="sidebar-contact-model">
         <SidebarModel
           modalTitle="Add/Edit Contact"
-          contentClass="content-45"
+          contentClass="content-40"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}

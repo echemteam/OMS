@@ -40,9 +40,9 @@ namespace OMS.API.Controllers
             return APISucessResponce(addCheckList);
         }
         [HttpPost("GetValidateCheckList")]
-        public async Task<IActionResult> GetValidateCheckList(ValidateRequest validateRequest)
+        public async Task<IActionResult> GetValidateCheckList(ValidateRequest requestData)
         {
-            List<GetValidateCheckListResponse> responseData = await _serviceManager.approvalService.GetValidateCheckList(validateRequest).ConfigureAwait(true);
+            List<GetValidateCheckListResponse> responseData = await _serviceManager.approvalService.GetValidateCheckList(requestData).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
         #endregion

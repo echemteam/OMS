@@ -29,11 +29,11 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return userDTO;
         }
-        public async Task<BaseRolesDTO> GetUserRoles(short? UserId)
+        public async Task<BaseRolesDTO> GetUserRoles(short? userId)
         {
             BaseRolesDTO userDTO = await _context.GetFrist<BaseRolesDTO>(GETUSERROLES, new
             {
-                UserId
+                userId
             }, CommandType.StoredProcedure);
             return userDTO;
         }

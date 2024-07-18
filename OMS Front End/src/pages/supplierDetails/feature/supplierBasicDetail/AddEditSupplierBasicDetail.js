@@ -23,7 +23,6 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { supplierBasicData } from "./config/SupplierBasicDetail.data";
 import { excludingRoles } from "../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { getTaxIdMinMaxLength } from "../../../customerDetail/feature/customerBasicDetail/config/TaxIdValidator";
-import CardSection from "../../../../components/ui/card/CardSection";
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));

@@ -38,6 +38,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATERESPONSIBLEUSER = "UpdateResponsibleUser";
         const string GETALLAPIPROVIDERS = "GetAllAPIProviders";
         const string GETALLAPIENDPOINTS = "GetAllAPIEndpoints";
+        const string GETALLSUBCOMPANY = "GetAllSubCompany";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -185,6 +186,10 @@ namespace OMS.Domain.Repository.Implementation
         public async Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints()
         {
             return await _context.GetList<GetAllAPIEndpointsResponse>(GETALLAPIENDPOINTS, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllSubCompanyResponse>> GetAllSubCompany()
+        {
+            return await _context.GetList<GetAllSubCompanyResponse>(GETALLSUBCOMPANY, commandType: CommandType.StoredProcedure);
         }
     }
 }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
@@ -72,7 +71,7 @@ const Rules = (props) => {
       </div>
       <SidebarModel
         modalTitle={getApprovedConfigData ? "Update Rule" : "Add Rule"}
-        contentClass="content-40"
+        contentClass="content-35"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}

@@ -26,9 +26,9 @@ namespace OMS.Application.Services.Security
             return await repositoryManager.securityPermission.GetAllPagesByRoleId(id);
         }
 
-        public async Task<bool> AddSecurityPermissions(AddSecurityPermissionsRequestList request, short CurrentUserId)
+        public async Task<bool> AddSecurityPermissions(AddSecurityPermissionsRequestList requestData, short CurrentUserId)
         {
-            List<SecurityPermissionsTypeList> dt = request.SecurityPermissionsList!;
+            List<SecurityPermissionsTypeList> dt = requestData.SecurityPermissionsList!;
             DataTable tbl = ExportHelper.ListToDataTable(dt);
             return await repositoryManager.securityPermission.AddSecurityPermissions(tbl, CurrentUserId);
         }

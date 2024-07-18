@@ -139,7 +139,7 @@ const AddEditApiAuthentication = (props) => {
     <>
       <div>
         <div className="row">
-          <div className="col-md-12 horizontal-form">
+          <div className="col-md-12">
             <div className="row vertical-form">
               <FormCreator
                 ref={apiAuthenticationRef}

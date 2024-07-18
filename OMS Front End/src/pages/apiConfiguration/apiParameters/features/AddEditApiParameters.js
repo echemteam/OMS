@@ -1,4 +1,4 @@
-
+/* eslint-disable react-hooks/exhaustive-deps */
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { addEditApiParameterFormData } from "../config/ApiParameter.data";
@@ -111,7 +111,7 @@ const AddEditApiParameters = (props) => {
     <>
       <div>
         <div className="row">
-          <div className="col-md-12 horizontal-form">
+          <div className="col-md-12">
             <div className="row vertical-form">
               <FormCreator
                 ref={apiParameterRef}
