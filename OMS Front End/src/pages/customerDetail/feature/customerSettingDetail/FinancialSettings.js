@@ -111,27 +111,14 @@ const FinancialSettings = ({ isEditablePage }) => {
 
   useEffect(() => {
     if (isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
-      const getData = isGetAllPaymentTermsData.map((item) => ({
-        value: item.paymentTermId,
-        label: item.paymentTerm,
-      }));
-      const dropdownField = SettingFormData.formFields.find((item) => item.dataField === "paymentTermId");
-      dropdownField.fieldSetting.options = getData;
+      setDropDownOptionField(isGetAllPaymentTermsData, "paymentTermId", "paymentTerm", SettingFormData, "paymentTermId");
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData,]);
-
-  useEffect(() => {
     if (isGetAllPaymentMethodSuccess && isGetAllPaymentMethodData) {
-      const getData = isGetAllPaymentMethodData.map((item) => ({
-        value: item.paymentMethodId,
-        label: item.method,
-      }));
-      const dropdownField = SettingFormData.formFields.find((item) => item.dataField === "paymentMethodId");
-      dropdownField.fieldSetting.options = getData;
+      setDropDownOptionField(isGetAllPaymentMethodData, "paymentMethodId", "method", SettingFormData, "paymentMethodId");
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetAllPaymentMethodSuccess, isGetAllPaymentMethodData,]);
+  }, [isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData, isGetAllPaymentMethodSuccess, isGetAllPaymentMethodData]);
 
   useEffect(() => {
     if (!isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDSuccess && isGetDetailByCustomerIDData) {
