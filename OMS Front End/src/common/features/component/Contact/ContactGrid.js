@@ -45,8 +45,6 @@ const ContactGrid = ({
   const [tabContactType, setTabContactType] = useState([]);
   const [buttonVisible, setButtonVisible] = useState(true);
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("");
-  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] =
-    useState(false);
 
   //** API Call's  */
   const [
@@ -297,7 +295,7 @@ const ContactGrid = ({
   }, [tabContactType, isSupplier]);
 
   return (
-    <div key={shouldRerenderFormCreator} className="contact-main-card-section vertical-tab-card">
+    <div className="contact-main-card-section vertical-tab-card">
       <CardSection
         cardTitle={isSearchFilterShow ? "" : "Contact"}
         handleChange={handleChange}

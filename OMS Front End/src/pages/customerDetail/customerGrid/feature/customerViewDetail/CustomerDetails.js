@@ -62,10 +62,6 @@ const CustomerDetails = () => {
     }
   }, [keyId]);
 
-  const getCustomerById = (keyId) => {
-    keyId && getCustomersBasicInformationById(keyId);
-  };
-
   const onSuccess = () => {
     keyId && getCustomersBasicInformationById(keyId);
   };

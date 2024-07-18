@@ -16,7 +16,6 @@ import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { customerbasicData, excludingRoles } from "./config/CustomerBasicDetail.data";
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
 import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
