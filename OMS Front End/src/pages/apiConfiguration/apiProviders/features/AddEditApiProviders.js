@@ -39,6 +39,13 @@ const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFet
 
   useEffect(() => {
     if (isAddEditApiProviderSucess && allAddEditApiProviderData) {
+
+      if (allAddEditApiProviderData.errorMessage.includes("exists")) {
+        ToastService.warning(allAddEditApiProviderData.errorMessage);
+        props.onSuccess();
+        props.onClose();
+        return;
+    }
       onResetForm(addEditApiProviderFormData, setProviderFormData, null);
       props.onSuccess();
       ToastService.success(allAddEditApiProviderData.errorMessage);

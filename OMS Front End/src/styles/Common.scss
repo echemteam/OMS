@@ -460,7 +460,6 @@ a {
         min-width: 70px;
         max-width: 70px;
       }
-
     }
 
     .validation-text {
@@ -480,7 +479,6 @@ a {
         min-width: 70px;
         max-width: 70px;
       }
-
     }
 
     .validation-text {
@@ -494,7 +492,6 @@ a {
         min-width: 50px;
         max-width: 50px;
       }
-
     }
 
     .validation-text {
@@ -508,7 +505,6 @@ a {
         min-width: 100px;
         max-width: 100px;
       }
-
     }
 
     .validation-text {
@@ -582,7 +578,6 @@ a {
       font-size: var(--commonFont-extraLarge);
       font-weight: 600;
       white-space: nowrap;
-
     }
 
     p {
@@ -985,9 +980,9 @@ a {
             overflow: hidden;
             overflow-y: auto;
 
-            @media only screen and (max-width: 1560px) {
-              height: calc(100vh - 295px);
-            }
+            // @media only screen and (max-width: 1560px) {
+            //   height: calc(100vh - 295px);
+            // }
 
             .card {
               margin: 4px 5px 0;
@@ -1137,7 +1132,7 @@ a {
               img {
                 width: 20px;
                 transition: 0.5s all;
-                
+
                 @media only screen and (max-width: 1560px) {
                   width: 15px;
                 }
@@ -1203,7 +1198,7 @@ a {
 
       // min-height: 125px;
       &.dropdown-open {
-        background-color: var(--tabBgColor);
+        background-color: #f1f4fc;
       }
 
       .add-line {
@@ -1979,9 +1974,10 @@ a {
     transform: translateY(-50%);
     z-index: 2;
     pointer-events: none;
+
     @media only screen and (max-width: 1560px) {
       height: 15px;
-    width: 15px;
+      width: 15px;
     }
   }
 
@@ -2407,8 +2403,6 @@ input[type="checkbox"]:disabled {
   }
 }
 
-
-
 .custom-datepicker {
   .react-daterange-picker {
     width: 100%;
@@ -2573,7 +2567,7 @@ input[type="checkbox"]:disabled {
 
   .main-customer-grid.setting-tab-sec {
     .card {
-      padding: 3px 10px 0;
+      padding: 7px 10px 0;
     }
   }
 
@@ -2800,7 +2794,6 @@ input[type="checkbox"]:disabled {
   display: block;
 }
 
-
 .mb-input {
   margin-bottom: 15px;
 
@@ -2870,6 +2863,105 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+
+  .main-customer-grid {
+    .tab-section {
+      .tab-section {
+        margin-bottom: 30px;
+
+        .tab-header {
+          border-bottom: 1px solid var(--linkMenu);
+
+          // background: var(--whiteColor);
+          @media only screen and (max-width: 1366px) {
+            width: 86%;
+          }
+
+          button {
+            padding: 7px 25px 7px;
+            border: none;
+            background: var(--tabBgColor);
+            border-radius: 0px;
+            font-weight: 600;
+            font-size: var(--commonFont-medium);
+            border: none;
+            border-right: 1px solid var(--whiteColor);
+            margin-right: 0;
+            color: var(--textColor);
+
+            &.active {
+              margin-bottom: 10px;
+              background: var(--gradient-theme);
+              color: var(--whiteColor);
+            }
+          }
+        }
+
+
+
+        .tab-content {
+          // padding-top: 20px;
+
+          .tab-body-section {}
+        }
+
+        &.vertical-tab {
+          display: flex;
+          align-items: flex-start;
+          width: 100%;
+          height: 100%;
+
+          .tab-header {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 180px;
+            height: 100%;
+            border-right: 1px solid #d0d4df;
+            border-bottom: 0;
+            padding: 5px 0px 0 0px;
+
+            // background: var(--bg-main-content);
+            button {
+              margin: 0;
+              width: 100%;
+              border-radius: 0;
+              text-align: left;
+              margin-bottom: 5px;
+              border: none;
+              border-bottom: 1px solid #d0d4df;
+              margin-right: 10px;
+              z-index: 1;
+              background: #e2e6f0;
+              border-right-color: var(--whiteColor);
+              color: var(--textColor);
+
+              &.active {
+                background: var(--gradient-theme);
+                border-right: 1px solid var(--themeColor);
+                color: var(--whiteColor);
+                border-left: 4px solid var(--textColor);
+              }
+            }
+          }
+
+          .tab-content {
+            width: calc(100% - 180px);
+          }
+
+          .card {
+            padding-right: 0;
+            padding-top: 10px;
+          }
+
+          .card-body-sec {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
+
 
   .tab-content {
     // padding-top: 20px;
@@ -3058,8 +3150,9 @@ input[type="checkbox"]:disabled {
             width: 19%;
           }
         }
+
         .address-card-list {
-          .address-main-card-section{
+          .address-main-card-section {
             width: 19%;
           }
         }
@@ -3070,3 +3163,19 @@ input[type="checkbox"]:disabled {
 }
 
 // Tab Section End
+
+.model-hight-fix {
+  height: calc(100vh - 300px);
+}
+
+.main-customer-grid {
+  .tab-section{
+    .tab-header {
+      button{
+        &.active{
+          background: transparent;
+        }
+      }
+    }
+  }
+}

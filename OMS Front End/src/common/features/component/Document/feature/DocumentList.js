@@ -10,6 +10,8 @@ import { documentTransformData, supplierDocumentTransformData } from "../../../.
 //** Service's */
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
+import FileViewer from "react-file-viewer";
+import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 
 
 const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDocumentsById, getDocumentsById, childRef, SecurityKey, isEditablePage }) => {
@@ -19,6 +21,10 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
     const [documentListData, setDocumentListData] = useState([]);
     const [showDeleteButton, setShowDeleteButton] = useState(true);
     const [showDownalodButton, setShowDownalodButton] = useState(true);
+    const [selectedDocument, setSelectedDocument] = useState(null);
+    const [getfileType, setGetFileType] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [actionType, setActionType] = useState(null);
 
     /**
      * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -65,11 +71,25 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
 
     useEffect(() => {
         if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
-            var file = new Blob([isDownalodData.fileData], {
-                type: isDownalodData?.fileData.type,
-            });
-            URL.createObjectURL(file);
-            window.open(URL.createObjectURL(file), "_blank");
+            const fileData = isDownalodData.fileData;
+            const blob = new Blob([fileData], { type: fileData.type });
+            const fileURL = URL.createObjectURL(blob);
+
+            if (actionType === 'download') {
+                // window.open(fileURL, "_blank");
+                // URL.revokeObjectURL(fileURL);
+                const link = document.createElement('a');
+                link.href = fileURL;
+                link.download = isDownalodData.fileName;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                URL.revokeObjectURL(fileURL);
+            } else if (actionType === 'view') {
+                setSelectedDocument(fileURL);
+                setIsModalOpen(true);
+                setGetFileType(determineFileType(isDownalodData.fileName));
+            }
         }
     }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
@@ -80,15 +100,25 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
         }
     }, [isDeleteSucess, isDeleteData]);
 
-    //** Handle Change's */
-    const handleDownload = (name) => {
+    const handleDocumentAction = (action, fileName) => {
+        setGetFileType(null);
+        setSelectedDocument(null);
+        setIsModalOpen(false);
+        setActionType(action);
+
         let request = {
-            folderName: isSupplier ? 'SupplierDocuements' : 'Customer',
+            folderName: isSupplier ? 'SupplierDocuments' : 'Customer',
             keyId: keyId,
-            fileName: name
+            fileName: fileName
+        };
+
+        if (action === 'download') {
+            Downalod(request);
+        } else if (action === 'view') {
+            Downalod(request);
         }
-        Downalod(request);
     };
+
     const handleDelete = (documentId) => {
         confirm("Delete?",
             "Are you sure you want to Delete?",
@@ -100,6 +130,19 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
         });
     };
 
+    const determineFileType = (fileName) => {
+        const extension = fileName.split('.').pop().toLowerCase();
+        if (extension === 'pdf') {
+            return 'pdf';
+        } else if (extension === 'doc' || extension === 'docx') {
+            return 'docx';
+        } else if (extension === 'ppt' || extension === 'pptx') {
+            return 'pptx';
+        } else {
+            return null;
+        }
+    };
+
     const onGetData = () => {
         keyId && getList(keyId);
     };
@@ -109,13 +152,20 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
         callChildFunction: onGetData
     }));
 
+    const handleToggleModal = () => {
+        setIsModalOpen(false);
+        setGetFileType(null);
+        setSelectedDocument(null);
+        setActionType(null);
+    };
+
     return (
         <div className="document-list-sec">
             <div className="document-listing">
                 <div className="row">
                     {!isListFetching ?
                         documentListData && Object.values(documentListData).some(arr => Array.isArray(arr) && arr.length > 0) ?
-                            < React.Fragment >
+                            <React.Fragment>
                                 {
                                     Object.entries(documentListData).map(([type, items], index) => (
                                         <React.Fragment key={index}>
@@ -123,7 +173,7 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
                                                 {items.map((data, childIndex) => (
                                                     <div className="documents" key={childIndex}>
                                                         <div className="left-icons">
-                                                            <Image imagePath={data.documentIcon} alt="Document Icon"/>
+                                                            <Image imagePath={data.documentIcon} alt="Document Icon" />
                                                         </div>
                                                         <div className="right-desc">
                                                             <div className="doc-details">
@@ -132,12 +182,15 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
                                                                 <div className="document-type">{data.attachment}</div>
                                                             </div>
                                                             <div className="document-action">
-                                                                {showDeleteButton ?
-                                                                    <span className="action-icon" onClick={() => handleDownload(data.attachment)} >
+                                                                <span className="action-icon" onClick={() => handleDocumentAction('view', data.attachment)} >
+                                                                    <Image imagePath={AppIcons.EyeIcon} alt="View Icone" />
+                                                                </span>
+                                                                {showDownalodButton ?
+                                                                    <span className="action-icon" onClick={() => handleDocumentAction('download', data.attachment)} >
                                                                         <Image imagePath={AppIcons.DownloadIcon} alt="Download Icon" />
                                                                     </span>
                                                                     : null}
-                                                                {showDownalodButton ?
+                                                                {showDeleteButton ?
                                                                     <span className="action-icon" onClick={() => handleDelete(isSupplier ? data.supplierDocumentId : data.customerDocumentId)} >
                                                                         <Image imagePath={AppIcons.deleteIcon} alt="Delete Icon" />
                                                                     </span>
@@ -155,8 +208,22 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
                         : <DataLoader />}
                 </div>
             </div>
-        </div >
+            <CenterModel showModal={isModalOpen} handleToggleModal={handleToggleModal}
+                modalTitle="File Preview" modelSizeClass="w-40">
+                <div className="model-hight-fix">
+                    {selectedDocument && getfileType &&
+                        <FileViewer
+                            fileType={getfileType}
+                            filePath={selectedDocument}
+                            onError={(error) => console.error("Error:", error)}
+                        />
+                    }
+                </div>
+            </CenterModel>
+        </div>
     );
 });
+
+
 
 export default DocumentList;

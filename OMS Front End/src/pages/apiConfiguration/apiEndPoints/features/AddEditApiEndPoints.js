@@ -43,6 +43,13 @@ const AddEditApiEndPoints = (props) => {
 
   useEffect(() => {
     if (isAddEditApiEndPointSucess && allAddEditApiEndPointData) {
+
+      if (allAddEditApiEndPointData.errorMessage.includes("exists")) {
+        props.onSuccess();
+        ToastService.warning(allAddEditApiEndPointData.errorMessage); 
+        props.onClose();
+        return;
+    }
       onResetForm(addEditApiEndPointsFormData, setEndPointFormData, null);
       props.onSuccess();
       ToastService.success(allAddEditApiEndPointData.errorMessage);

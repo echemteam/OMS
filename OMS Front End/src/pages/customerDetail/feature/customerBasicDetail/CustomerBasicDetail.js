@@ -10,16 +10,14 @@ const CustomerBasicDetail = (props) => {
 
   return (
     <div className="basic-info-sec half-sec">
-      <div className="basic-info-sec half-sec">
-        <CardSection buttonClassName="theme-button">
-          <AddEditCustomerBasicDetail
-            keyId={keyId}
-            getCustomerById={getCustomerById}
-            isOpen={isOpen}
-            onSidebarClose={onSidebarClose}
-          />
-        </CardSection>
-      </div>
+      <CardSection buttonClassName="theme-button">
+        <AddEditCustomerBasicDetail
+          keyId={keyId}
+          getCustomerById={getCustomerById}
+          isOpen={isOpen}
+          onSidebarClose={onSidebarClose}
+        />
+      </CardSection>
     </div>
   );
 };
