@@ -30,6 +30,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATECUSTOMERSUBCOMPANY = "UpdateCustomerSubCompany";
         const string ADDSUBCOMPANYMAINCOMPANY = "AddSubCompanyMainCompany";
         const string GETSUBCOMPANYSBYMAINCOMPANYID = "GetSubCompanysByMainCompanyId";
+        const string DELETESUBCOMPANY = "DeleteSubCompany";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -220,6 +221,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.Filters?.SearchText,
                 requestData.SortString
             }, true);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteSubCompany(int subCompanyMainCompanyId, short deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETESUBCOMPANY, new
+            {
+                subCompanyMainCompanyId,
+                deletedBy
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }

@@ -128,6 +128,16 @@ namespace OMS.API.Controllers
             var subCompanyDetails = await _serviceManager.customersServices.GetSubCompanysByMainCompanyId(requestData).ConfigureAwait(true);
             return APISucessResponce<object>(subCompanyDetails);
         }
+        [HttpDelete("DeleteSubCompany")]
+        public async Task<IActionResult> DeleteSubCompany(int subCompanyMainCompanyId)
+        {
+            if (subCompanyMainCompanyId > 0)
+            {
+                var deleteItem = await _serviceManager.customersServices.DeleteSubCompany(subCompanyMainCompanyId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(subCompanyMainCompanyId);
+        }
         #endregion
     }
 }
