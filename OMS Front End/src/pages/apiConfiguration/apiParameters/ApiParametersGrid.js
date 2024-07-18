@@ -52,7 +52,7 @@ const ApiParameters=()=>{
       
         <SidebarModel
          modalTitle= {isEdit ? "Update Api Parameter" : "Add Api Parameter"}
-         contentClass="content-40"
+         contentClass="content-35"
          onClose={onSidebarClose}
          modalTitleIcon={AppIcons.AddIcon}
          isOpen={isModelOpen}
