@@ -20,7 +20,7 @@ const AddEditRules = (props) => {
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] =
     useState(false);
   const [moduleId, setModuleID] = useState("");
-  // const [functionalityId, setFunctionalityID] = useState("");
+  const [functionalityId, setFunctionalityID] = useState("");
 
   const [
     // getAllModules,
@@ -86,7 +86,7 @@ const AddEditRules = (props) => {
     }
     if (isGetAllFunctionalitiesSucess && allGetAllFunctionalitiesData) {
       handleFunctionalityOption(allGetAllFunctionalitiesData);
-      // setFunctionalityID(allGetAllFunctionalitiesData);
+      setFunctionalityID(allGetAllFunctionalitiesData);
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [
@@ -206,7 +206,7 @@ const AddEditRules = (props) => {
         functionalityId: null,
       });
     } else if (dataField === CommansDataField.FunctionalityId) {
-      // setFunctionalityID(data.value);
+      setFunctionalityID(data.value);
       setDropDownOptionField(
         props.allGetAllFunctionalitiesFieldsData,
         "functionalitiesFieldId",
@@ -215,7 +215,7 @@ const AddEditRules = (props) => {
         "functionalitiesFieldId"
       );
       ruleFormRef.current.updateFormFieldValue({
-        functionalityId: data.value,
+        functionalityId: functionalityId[0].functionalityId,
         functionalitiesFieldId: null,
       });
     }
@@ -250,8 +250,8 @@ const AddEditRules = (props) => {
         approvalAction: data.approvalAction,
       };
       addEditApprovalConfiguration(requestData);
-      // setFunctionalityID(requestData.moduleId);
-      setModuleID(requestData.functionalityId);
+      setFunctionalityID(requestData.functionalityId);
+      setModuleID(requestData.moduleId);
     }
   };
 
