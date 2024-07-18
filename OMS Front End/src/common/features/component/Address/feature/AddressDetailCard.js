@@ -19,6 +19,7 @@ const AddressDetailCard = forwardRef(
     showEditIcon,
     getAddresssByCustomerId,
     getByIdRef,
+    selectedAddressTypeId
   }) => {
     //** States */
     const [addressData, setAddressData] = useState([]);
@@ -41,7 +42,7 @@ const AddressDetailCard = forwardRef(
     //** Use Effect */
     useEffect(() => {
       keyId && getById(keyId);
-    }, [keyId]);
+    }, [keyId , selectedAddressTypeId]);
 
     useEffect(() => {
       if (
@@ -49,8 +50,8 @@ const AddressDetailCard = forwardRef(
         isGetAddresssByCustomerId &&
         GetAddresssByCustomerIdData
       ) {
-        console.log(GetAddresssByCustomerIdData);
-        setAddressData(GetAddresssByCustomerIdData);
+        const filteredData = selectedAddressTypeId[0] ? GetAddresssByCustomerIdData.filter(address => address.addressTypeId === selectedAddressTypeId[0]): GetAddresssByCustomerIdData;
+        setAddressData(filteredData);
       }
     }, [
       isGetAddresssByCustomerIdFetching,
@@ -66,7 +67,7 @@ const AddressDetailCard = forwardRef(
     const handleEdit = (data) => {
       onHandleEditAddress(data);
     };
- 
+
 
     //** Use Imperative Handle */
     useImperativeHandle(getByIdRef, () => ({
@@ -83,24 +84,24 @@ const AddressDetailCard = forwardRef(
       }
     }
     const getAddressTypeClass = (type) => {
-        switch (type) {
-          case "Primary":
-            return "badge-primary contact-badge";
-  
-          case "Billing":
-            return "badge-purchasing contact-badge";
-    
-          case "Shipping":
-            return "badge-followup contact-badge";
-  
-          case "AP":
-            return "badge-ap contact-badge";
-  
-          default:
-            return "badge-default";
-        }
-      };
-  
+      switch (type) {
+        case "Primary":
+          return "badge-primary contact-badge";
+
+        case "Billing":
+          return "badge-purchasing contact-badge";
+
+        case "Shipping":
+          return "badge-followup contact-badge";
+
+        case "AP":
+          return "badge-ap contact-badge";
+
+        default:
+          return "badge-default";
+      }
+    };
+
     return (
       <React.Fragment>
         {!isGetAddresssByCustomerIdFetching ? (
@@ -112,33 +113,32 @@ const AddressDetailCard = forwardRef(
                     className="address-main-card-section"
                     key={addrIndex}
                   >
-                    
+
                     <div className="address-card">
                       {((address.isPreferredBilling &&
                         address.addressTypeId === 1) ||
                         (address.isPreferredShipping &&
                           address.addressTypeId === 2)) && (
-                        <div className="status-desc">
-                          <span className="field-info active-green-color">
-                            {address.isPreferredBilling &&
-                            address.addressTypeId === 1
-                              ? "Preferred Billing"
-                              : address.isPreferredShipping &&
-                                address.addressTypeId === 2
-                              ? "Preferred Shipping"
-                              : ""}
-                          </span>
-                        </div>
-                      )}
+                          <div className="status-desc">
+                            <span className="field-info active-green-color">
+                              {address.isPreferredBilling &&
+                                address.addressTypeId === 1
+                                ? "Preferred Billing"
+                                : address.isPreferredShipping &&
+                                  address.addressTypeId === 2
+                                  ? "Preferred Shipping"
+                                  : ""}
+                            </span>
+                          </div>
+                        )}
                       <div
-                        className={`add-line ${
-                          (address.isPreferredBilling &&
+                        className={`add-line ${(address.isPreferredBilling &&
                             address.addressTypeId === 1) ||
-                          (address.isPreferredShipping &&
-                            address.addressTypeId === 2)
+                            (address.isPreferredShipping &&
+                              address.addressTypeId === 2)
                             ? ""
                             : ""
-                        }`}
+                          }`}
                       >
                         <span className="label-txt">
                           {address.addressLine1}

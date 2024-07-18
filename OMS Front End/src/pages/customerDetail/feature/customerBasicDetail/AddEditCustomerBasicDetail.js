@@ -16,7 +16,6 @@ import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { customerbasicData, excludingRoles } from "./config/CustomerBasicDetail.data";
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
 import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
@@ -81,21 +80,17 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             ]);
 
             if (isOpen) {
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
+                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId', 'isSubCompany', 'note']);
+                // setFormData(modifyFormFields);
+                // setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
+                // setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
             } else if (!isOpen) {
-                const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
-                setFormData(modifyFormFields);
+                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+                // setFormData(modifyFormFields);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON, true);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
             }
-            if (!isOpen) {
-                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
-                // setFormData(modifyFormFields);
-                // setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON, true);
-            }
         };
-
         fetchData();
     }, [keyId, isOpen]);
 
@@ -103,8 +98,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         if (isOpen) {
             if (customerId > 0) {
                 getCustomersBasicInformationById(customerId);
-                const modifyFormFields = removeFormFields(formData, ['responsibleUserId', 'isSubCompany', 'note']);
-                setFormData(modifyFormFields);
+                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId', 'isSubCompany', 'note']);
+                // setFormData(modifyFormFields);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
             }
@@ -162,7 +157,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, customerbasicData.formFields, 'taxId');
             newFrom.formFields = formFields;
             newFrom.initialState = { ...GetCustomersBasicInformationByIdData };
-            newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note");
+            newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCompany" && field.dataField !== "responsibleUserId");
             setFormData(newFrom);
             setCustomerCountryId(GetCustomersBasicInformationByIdData.countryId);
         }
@@ -223,9 +218,9 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             const updatedForm = { ...formData };
             updatedForm.formFields = formFields;
             if (isOpen) {
-                updatedForm.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note");
+                updatedForm.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCompany" && field.dataField !== "responsibleUserId");
             } else {
-                updatedForm.formFields = customerbasicData.formFields.filter(field => field.id !== "name-input" && field.dataField !== "responsibleUserId");
+                updatedForm.formFields = customerbasicData.formFields.filter(field => field.dataField !== "responsibleUserId");
             }
             setFormData(updatedForm);
         }
