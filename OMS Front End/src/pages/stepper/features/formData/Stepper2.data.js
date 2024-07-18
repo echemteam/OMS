@@ -57,7 +57,7 @@ export const Stepper2FormData = {
       dataField: "SelectHobby",
       fieldSetting: {
         placeholder: "Please Select Hobby",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       // validation: [{ type: "require" }],
       style: {

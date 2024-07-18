@@ -12,8 +12,8 @@ export const reasonData = {
       dataField: "responsibleUserId",
       fieldSetting: {
         placeholder: "Select Responsible User",
-        allowSpace: true,
         isDisabled: false,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {

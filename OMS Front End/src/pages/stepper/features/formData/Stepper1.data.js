@@ -57,7 +57,7 @@ export const Stepper1FormData = {
       dataField: "InputSelect",
       fieldSetting: {
         placeholder: "",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       // validation: [{ type: "require" }],
       style: {

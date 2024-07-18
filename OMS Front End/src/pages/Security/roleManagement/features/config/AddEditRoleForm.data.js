@@ -28,7 +28,7 @@ export const addEditRoleFormData = {
       dataField: "UserRole",
       fieldSetting: {
         placeholder: "Select User Role",
-        allowSpace: true,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {

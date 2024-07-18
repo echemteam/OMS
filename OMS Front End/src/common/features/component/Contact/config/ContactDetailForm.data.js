@@ -49,9 +49,9 @@ export const contactDetailFormData = {
       dataField: "contactTypeId",
       fieldSetting: {
         placeholder: "Select Contact Type",
-        allowSpace: true,
         isMultiSelect: true,
-        isDisabled: false
+        isDisabled: false,
+        isEnableOnChange: true
       },
       validation: [{ type: "require" }],
       style: {
