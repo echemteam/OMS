@@ -36,7 +36,7 @@ const UploadFiles = ({ uploadFilesTypeId, handleToggleModal }) => {
     };
 
     return (
-        <div className="row horizontal-form">
+        <div className="row">
             {formData &&
                 <FormCreator config={formData} ref={ref} {...formData} />}
             <div className="col-md-12 mt-2">

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef } from "react";
 import { addEditApiProviderFormData } from "../config/ApiProviders.data";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -92,7 +93,7 @@ const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFet
     <>
       <div>
         <div className="row">
-          <div className="col-md-12 horizontal-form">
+          <div className="col-md-12">
             <div className="row vertical-form">
               <FormCreator
                 ref={apiProviderRef}

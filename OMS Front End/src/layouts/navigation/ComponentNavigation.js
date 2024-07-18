@@ -6,10 +6,10 @@ import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
 import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
 
-const ApiParametersGrid=React.lazy(()=> import("../../pages/apiConfiguration/apiParameters/ApiParametersGrid"));
-const ApiAuthenticationGrid=React.lazy(()=> import("../../pages/apiConfiguration/apiAuthentication/ApiAuthenticationGrid"));
-const ApiEndPointsGrid=React.lazy(()=> import("../../pages/apiConfiguration/apiEndPoints/ApiEndPointsGrid"));
-const ApiProvidersGrid=React.lazy(()=> import("../../pages/apiConfiguration/apiProviders/ApiProvidersGrid"));
+const ApiParametersGrid = React.lazy(()=> import("../../pages/apiConfiguration/apiParameters/ApiParametersGrid"));
+const ApiAuthenticationGrid = React.lazy(()=> import("../../pages/apiConfiguration/apiAuthentication/ApiAuthenticationGrid"));
+const ApiEndPointsGrid = React.lazy(()=> import("../../pages/apiConfiguration/apiEndPoints/ApiEndPointsGrid"));
+const ApiProvidersGrid = React.lazy(()=> import("../../pages/apiConfiguration/apiProviders/ApiProvidersGrid"));
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 //** Dashboard */

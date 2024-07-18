@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -117,7 +118,7 @@ const AddEditApiEndPoints = (props) => {
     <>
       <div>
         <div className="row">
-          <div className="col-md-12 horizontal-form">
+          <div className="col-md-12">
             <div className="row vertical-form">
               <FormCreator
                 ref={apiEndPointRef}
