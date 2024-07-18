@@ -174,7 +174,7 @@ export const addressFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
+        containerCss: "col-xxl-5 col-xl-5 col-md-12 col-12 col-12 ",
       },
     },
     {
@@ -188,7 +188,7 @@ export const addressFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
+        containerCss: "col-xxl-3 col-xl-3 col-md-12 col-12 col-12 ",
       },
     },
     {
@@ -202,7 +202,7 @@ export const addressFormData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
+        containerCss: "col-xxl-4 col-xl-4 col-md-12 col-12 col-12 ",
       },
     },
   ],
