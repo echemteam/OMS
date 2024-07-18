@@ -12,6 +12,7 @@ import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
 import FileViewer from "react-file-viewer";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
+import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 
 
 const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDocumentsById, getDocumentsById, childRef, SecurityKey, isEditablePage }) => {
@@ -107,7 +108,7 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
         setActionType(action);
 
         let request = {
-            folderName: isSupplier ? 'SupplierDocuments' : 'Customer',
+            folderName: isSupplier ? ModulePathName.Supplier : ModulePathName.Customer,
             keyId: keyId,
             fileName: fileName
         };

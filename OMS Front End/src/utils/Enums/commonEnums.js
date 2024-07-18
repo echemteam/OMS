@@ -72,3 +72,8 @@ export const PaymentMethodTypes = {
 export const CountryId = {
     USA: 233
 }
+
+export const ModulePathName = {
+    Customer : "Customer",
+    Supplier : "Supplier"
+}
