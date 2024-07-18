@@ -43,13 +43,13 @@ function CardSection({
   searchIconImg,
   searchTextWithIcon,
   clearTextWithIcon,
-  clearIconImg
-
+  clearIconImg,
 }) {
   return (
     <div
-      className={`card ${cardTitle ? "card-section-left" : ""}${searchInput && rightButton ? "card-section-between" : ""
-        }${rightButton ? "card-button-only" : ""}`}
+      className={`card ${cardTitle ? "card-section-left" : ""}${
+        searchInput && rightButton ? "card-section-between" : ""
+      }${rightButton ? "card-button-only" : ""}`}
     >
       {(cardTitle || rightButton || searchFilter || searchInput) && (
         <div className="card-top-title-btn">
@@ -60,18 +60,18 @@ function CardSection({
             </div>
           )}
           <div className="manage-customer-dropdown">
-            <div className="col-md-4">
-              {searchInput && (
+            {searchInput && (
+              <div className="col-md-4">
                 <div>
                   <SearchBar
                     searchText={searchInputName}
                     handleChange={handleChange}
                   />
                 </div>
-              )}
-            </div>
-            <div className="col-md-4">
-              {searchFilter && (
+              </div>
+            )}
+            {searchFilter && (
+              <div className="col-md-4">
                 <div className="ml-2">
                   <DropDown
                     value={selectedOptions}
@@ -83,38 +83,38 @@ function CardSection({
                     placeholder={placeholder}
                   />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
             {searchButton && (
-            <>
-              <div className="btn-right-sec">
-                {/* Button to open the Add Craft modal */}
-                <Buttons
-                  onClick={searchTitleButtonClick}
-                  buttonText={searchbuttonText}
-                  buttonTypeClassName={buttonClassName}
-                  textWithIcon={searchTextWithIcon}
-                  imagePath={searchIconImg}
-                />
-              </div>
-            </>
-          )}
-          {clearButton && (
-            <>
-              <div className="btn-right-sec">
-                {/* Button to open the Add Craft modal */}
-                <Buttons
-                  onClick={clearTitleButtonClick}
-                  buttonText={clearButtonText}
-                  buttonTypeClassName={clearButtonClassName}
-                  textWithIcon={clearTextWithIcon}
-                  imagePath={clearIconImg}
-                />
-              </div>
-            </>
-          )}
+              <>
+                <div className="btn-right-sec">
+                  {/* Button to open the Add Craft modal */}
+                  <Buttons
+                    onClick={searchTitleButtonClick}
+                    buttonText={searchbuttonText}
+                    buttonTypeClassName={buttonClassName}
+                    textWithIcon={searchTextWithIcon}
+                    imagePath={searchIconImg}
+                  />
+                </div>
+              </>
+            )}
+            {clearButton && (
+              <>
+                <div className="btn-right-sec">
+                  {/* Button to open the Add Craft modal */}
+                  <Buttons
+                    onClick={clearTitleButtonClick}
+                    buttonText={clearButtonText}
+                    buttonTypeClassName={clearButtonClassName}
+                    textWithIcon={clearTextWithIcon}
+                    imagePath={clearIconImg}
+                  />
+                </div>
+              </>
+            )}
           </div>
-        
+
           {
             // isButtonVisible && (
 
@@ -145,17 +145,14 @@ function CardSection({
                     titleText={titleText}
                   />
                 </div>
-
               </>
               // )
             )
-
           }
         </div>
-      )
-      }
+      )}
       <div className="card-body-sec">{children}</div>
-    </div >
+    </div>
   );
 }
 
