@@ -32,7 +32,11 @@ const ContactList = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, g
     };
 
     const contactList = (req) => {
-        keyId && getContactList(req);
+        let request = {
+            ...req,
+            contactType: selectedContactTypeId
+        }
+        keyId && getContactList(request);
     };
 
     //** Use Imperative Handle */
