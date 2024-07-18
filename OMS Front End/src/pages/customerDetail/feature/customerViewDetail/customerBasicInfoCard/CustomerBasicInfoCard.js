@@ -426,17 +426,15 @@ const CustomerBasicInfoCard = ({
           {/* second no */}
           <div className="col-3  separator">
             <div className="field-desc">
-              <div className="inf-label">Territory</div>
-              <b>&nbsp;:&nbsp;</b>
-              <div className="info-desc">{customerData?.territory}</div>
-            </div>
-
-            <div className="field-desc">
               <div className="inf-label">Country</div>
               <b>&nbsp;:&nbsp;</b>
               <div className="info-desc">{customerData?.countryName}</div>
             </div>
-
+            <div className="field-desc">
+              <div className="inf-label">Territory</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">{customerData?.territory}</div>
+            </div>
             <div className="field-desc">
               <div className="inf-label">Group Type</div>
               <b>&nbsp;:&nbsp;</b>
