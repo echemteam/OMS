@@ -51,7 +51,7 @@ const CustomerBasicInfoCard = ({
   const [customerID, setcustomerId] = useState();
   const [statusId, setStatusId] = useState();
   const [rUserValue, setRUserValue] = useState([]);
-  const [showEditIcon, setShowEditIcon] = useState(true);
+  // const [showEditIcon, setShowEditIcon] = useState(true);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
 
   const [
@@ -92,12 +92,12 @@ const CustomerBasicInfoCard = ({
   useEffect(() => {
     if (!isResponsibleUser) {
       if (hasEditPermission && hasEditPermission.isViewOnly === true) {
-        setShowEditIcon(true);
+        // setShowEditIcon(true);
         setIsButtonDisable(true);
       } else if (hasEditPermission.isEditable === true) {
-        setShowEditIcon(true);
+        // setShowEditIcon(true);
       } else {
-        setShowEditIcon(false);
+        // setShowEditIcon(false);
         setIsButtonDisable(true);
       }
     }

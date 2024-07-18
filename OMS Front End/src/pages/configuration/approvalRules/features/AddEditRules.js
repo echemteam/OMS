@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -19,7 +20,7 @@ const AddEditRules = (props) => {
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] =
     useState(false);
   const [moduleId, setModuleID] = useState("");
-  const [functionalityId, setFunctionalityID] = useState("");
+  // const [functionalityId, setFunctionalityID] = useState("");
 
   const [
     // getAllModules,
@@ -85,7 +86,7 @@ const AddEditRules = (props) => {
     }
     if (isGetAllFunctionalitiesSucess && allGetAllFunctionalitiesData) {
       handleFunctionalityOption(allGetAllFunctionalitiesData);
-      setFunctionalityID(allGetAllFunctionalitiesData);
+      // setFunctionalityID(allGetAllFunctionalitiesData);
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [
@@ -205,7 +206,7 @@ const AddEditRules = (props) => {
         functionalityId: null,
       });
     } else if (dataField === CommansDataField.FunctionalityId) {
-      setFunctionalityID(data.value);
+      // setFunctionalityID(data.value);
       setDropDownOptionField(
         props.allGetAllFunctionalitiesFieldsData,
         "functionalitiesFieldId",
@@ -249,7 +250,7 @@ const AddEditRules = (props) => {
         approvalAction: data.approvalAction,
       };
       addEditApprovalConfiguration(requestData);
-      setFunctionalityID(requestData.moduleId);
+      // setFunctionalityID(requestData.moduleId);
       setModuleID(requestData.functionalityId);
     }
   };
