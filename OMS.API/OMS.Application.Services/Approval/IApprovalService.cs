@@ -14,6 +14,6 @@ namespace OMS.Application.Services.Approval
     {
         Task<List<GetUserCheckListByEventIdResponse>> GetUserCheckList(int eventId);
         Task<AddEntityDTO<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData,int CurrentUserId);
-        Task<List<GetValidateCheckListResponse>> GetValidateCheckList(ValidateRequest validateRequest);
+        Task<List<GetValidateCheckListResponse>> GetValidateCheckList(ValidateRequest requestData);
     }
 }

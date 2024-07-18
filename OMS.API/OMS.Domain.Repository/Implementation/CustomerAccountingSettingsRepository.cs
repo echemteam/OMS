@@ -40,29 +40,29 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return customerDetails;
         }
-        public async Task<AddEntityDTO<int>> AddEditCustomerSettings(CustomerAccountingSettingsDTO settings)
+        public async Task<AddEntityDTO<int>> AddEditCustomerSettings(CustomerAccountingSettingsDTO addEditSettings)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCUSTOMERSETTINGS, new
             {
-                settings.CustomerAccountingSettingId,
-                settings.CustomerId,
-                settings.PaymentTermId,
-                settings.PaymentMethodId,
-                settings.CreditLimit,
-                settings.BillingCurrency,
-                settings.InvoiceSubmissionInstruction,
-                settings.CreatedBy,
+                addEditSettings.CustomerAccountingSettingId,
+                addEditSettings.CustomerId,
+                addEditSettings.PaymentTermId,
+                addEditSettings.PaymentMethodId,
+                addEditSettings.CreditLimit,
+                addEditSettings.BillingCurrency,
+                addEditSettings.InvoiceSubmissionInstruction,
+                addEditSettings.CreatedBy,
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDTO carriers)
+        public async Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDTO addShppingMethods)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERSHPPINGDELIVERYCARRIERSANDDELIVERYMETHODS, new
             {
-                carriers.DeliveryAccountId,
-                carriers.CustomerId,
-                carriers.IsByDefault,
-                carriers.CreatedBy,
+                addShppingMethods.DeliveryAccountId,
+                addShppingMethods.CustomerId,
+                addShppingMethods.IsByDefault,
+                addShppingMethods.CreatedBy,
             }, CommandType.StoredProcedure);
         }
 

@@ -32,7 +32,7 @@ namespace OMS.Application.Services.Approval
                     checkListItem.CheckListItem = await repositoryManager.approval.GetCheckListItemByListId(checkListItem.ChecklistId);
                 }
             }
-            return checkList;
+            return checkList!;
         }
         public async Task<AddEntityDTO<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData, int CurrentUserId)
         {
@@ -46,17 +46,17 @@ namespace OMS.Application.Services.Approval
             }
             return await repositoryManager.approval.AddUserChecklistResponse(CheckListDataTable);
         }
-        public async Task<List<GetValidateCheckListResponse>> GetValidateCheckList(ValidateRequest validaterequest)
+        public async Task<List<GetValidateCheckListResponse>> GetValidateCheckList(ValidateRequest requestData)
         {
             List<GetValidateCheckListResponse> responses = new();
-            if (validaterequest.CustomerId > 0)
+            if (requestData.CustomerId > 0)
             {
-                responses = await repositoryManager.approval.getValidateCustomer(validaterequest.CustomerId, validaterequest.IsSubCompany);
+                responses = await repositoryManager.approval.GetValidateCustomer(requestData.CustomerId, requestData.IsSubCompany);
 
             }
-            else if (validaterequest.SupplierId > 0)
+            else if (requestData.SupplierId > 0)
             {
-                responses = await repositoryManager.approval.getValidateSupplier(validaterequest.SupplierId);
+                responses = await repositoryManager.approval.GetValidateSupplier(requestData.SupplierId);
 
             }
             return responses;
