@@ -29,7 +29,7 @@ const AddEditSubCustomer=(props)=>{
     }, [isGetAllSubCustomerFetching && isGetAllSubCustomerSuccess, isGetAllSubCustomerData]);
 
     useEffect(()=>{
-      getAllSubCustomer(props?.isSubCustomer);
+      getAllSubCustomer(props?.isSubCustomer ? !props?.isSubCustomer : true);
     },[])
   
     useEffect(() => {
