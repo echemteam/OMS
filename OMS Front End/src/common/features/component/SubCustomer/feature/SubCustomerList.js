@@ -78,7 +78,7 @@ const SubCustomerList = (props) => {
  
 
   const handleEditClick = (data) => {
-    window.open(`/CustomerDetails/${encryptUrlData(data.customerId)}`, '_blank');
+    window.open(`/CustomerDetails/${encryptUrlData(data.subCustomerId)}`, '_blank');
   };
   const actionHandler = {
     EDIT:handleEditClick,
