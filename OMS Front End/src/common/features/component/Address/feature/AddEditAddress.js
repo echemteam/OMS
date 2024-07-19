@@ -78,7 +78,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
             setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, false);
             setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, true);
-            if (isSupplier && editMode) {
+            if (editMode) {
                 setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, false);
                 setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
             }
