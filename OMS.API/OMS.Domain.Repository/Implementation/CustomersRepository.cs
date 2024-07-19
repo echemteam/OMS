@@ -27,7 +27,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETCUSTOMERAUDITHISTORYBYCUSTOMERID = "GetCustomerAuditHistoryByCustomerId";
         const string ADDEDITCONTACTFORCUSTOMER = "AddEditContactForCustomer";
         const string GETCUSTOMERSDETAILSBYCUTOMERNAME = "GetCustomersDetailsByCutomerName";
-        const string UPDATECUSTOMERSUBCOMPANY = "UpdateCustomerSubCompany";
+        const string UPDATECUSTOMERSUBCUSTOMER = "UpdateCustomerSubCustomer";
         const string ADDSUBCUSTOMER = "AddSubCustomer";
         const string GETSUBCUSTOMERBYCUSTOMERID = "GetSubCustomerByCustomerId";
         const string DELETESUBCUSTOMER = "DeleteSubCustomer";
@@ -54,7 +54,7 @@ namespace OMS.Domain.Repository.Implementation
                 customers.CreatedBy,
                 customers.IsBuyingForThirdParty,
                 customers.ResponsibleUserId,
-                customers.IsSubCompany
+                customers.IsSubCustomer
             }, CommandType.StoredProcedure);
         }
 
@@ -195,12 +195,12 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return customerDetails;
         }
-        public async Task<AddEntityDTO<bool>> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData)
+        public async Task<AddEntityDTO<bool>> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<bool>>(UPDATECUSTOMERSUBCOMPANY, new
+            return await _context.GetSingleAsync<AddEntityDTO<bool>>(UPDATECUSTOMERSUBCUSTOMER, new
             {
                 requestData.CustomerId,
-                requestData.IsSubCompany
+                requestData.IsSubCustomer
             }, CommandType.StoredProcedure);
         }
         public async Task<AddEntityDTO<int>> AddSubCustomer(AddSubCustomerRequest requestData)

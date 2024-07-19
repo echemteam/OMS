@@ -22,7 +22,7 @@ namespace OMS.Domain.Repository.Contract
         Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest);
         Task<AddEntityDTO<int>> AddEditContactForCustomer(AddEditContactForCustomerRequest requestData, short createdBy);
         Task<List<GetCustomersDetailsByCutomerNameResponse>> GetCustomersDetailsByCutomerName(string customerName);
-        Task<AddEntityDTO<bool>> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData);
+        Task<AddEntityDTO<bool>> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData);
         Task<AddEntityDTO<int>> AddSubCustomer(AddSubCustomerRequest requestData);
         Task<EntityList<GetSubCustomerByCustomerIdResponse>> GetSubCustomerByCustomerId(GetSubCustomerByCustomerIdRequest requestData);
         Task<AddEntityDTO<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short deletedBy);

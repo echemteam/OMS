@@ -113,9 +113,9 @@ namespace OMS.Application.Services.Customers
         {
             return await repositoryManager.customers.GetCustomersDetailsByCutomerName(customerName);
         }
-        public async Task<AddEntityDTO<bool>> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData)
+        public async Task<AddEntityDTO<bool>> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData)
         {
-            return await repositoryManager.customers.UpdateCustomerSubCompany(requestData);
+            return await repositoryManager.customers.UpdateCustomerSubCustomer(requestData);
         }
         public async Task<AddEntityDTO<int>> AddSubCustomer(AddSubCustomerRequest requestData)
         {

@@ -110,10 +110,10 @@ namespace OMS.API.Controllers
             return APISucessResponce(customerName);
         }
 
-        [HttpPost("UpdateCustomerSubCompany")]
-        public async Task<IActionResult> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData)
+        [HttpPost("UpdateCustomerSubCustomer")]
+        public async Task<IActionResult> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData)
         {
-            var responseData = await _serviceManager.customersServices.UpdateCustomerSubCompany(requestData).ConfigureAwait(true);
+            var responseData = await _serviceManager.customersServices.UpdateCustomerSubCustomer(requestData).ConfigureAwait(true);
             return APISucessResponce<object>(responseData);
         }
         [HttpPost("AddSubCustomer")]
@@ -122,7 +122,7 @@ namespace OMS.API.Controllers
             var addEditItem = await _serviceManager.customersServices.AddSubCustomer(requestData);
             return APISucessResponce(addEditItem);
         }
-        [HttpPost("GetSubCustomerByCustomerId,")]
+        [HttpPost("GetSubCustomerByCustomerId")]
         public async Task<IActionResult> GetSubCustomerByCustomerId(GetSubCustomerByCustomerIdRequest requestData)
         {
             var subCustomerDetails = await _serviceManager.customersServices.GetSubCustomerByCustomerId(requestData).ConfigureAwait(true);

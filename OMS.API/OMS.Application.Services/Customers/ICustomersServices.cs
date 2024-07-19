@@ -18,7 +18,7 @@ namespace OMS.Application.Services.Customers
         Task<AddEntityDTO<int>> UpdateCustomerStatus(UpdateCustomerStatusRequest requestData, short CurrentUserId);
         Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest);
         Task<List<GetCustomersDetailsByCutomerNameResponse>> GetCustomersDetailsByCutomerName(string customerName);
-        Task<AddEntityDTO<bool>> UpdateCustomerSubCompany(UpdateCustomerSubCompanyRequest requestData);
+        Task<AddEntityDTO<bool>> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData);
         Task<AddEntityDTO<int>> AddSubCustomer(AddSubCustomerRequest requestData);
         Task<EntityList<GetSubCustomerByCustomerIdResponse>> GetSubCustomerByCustomerId(GetSubCustomerByCustomerIdRequest requestData);
         Task<AddEntityDTO<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short CurrentUserId);

@@ -17,6 +17,6 @@
         public string? Status { get; set; }
         public short? ResponsibleUserId {  get; set; }
         public string? ResponsibleUserName {  get; set; }
-        public bool? IsSubCompany { get; set; }
+        public bool? IsSubCustomer { get; set; }
     }
 }
