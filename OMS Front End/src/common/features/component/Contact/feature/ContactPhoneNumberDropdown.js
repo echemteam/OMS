@@ -76,15 +76,16 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
       <>
      {phoneNumbers.map((phoneData, index) => (
               <span className="contact-list d-flex flex-row" key={index}>
-                <span>
+                <span className="number-list">
                   {phoneTypesIcon(phoneData?.phoneTypeId)}
-                  <span className="ml-1">
+                  <span className="">
                     {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}${phoneData.extension ? `, ${phoneData.extension}` : ""
                       }`}
                   </span>
                 </span>
                 <span className="copy-icon" title="Copy" onClick={() => CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${phoneData.extension > 0 ? phoneData.extension : ""}`, "phone")} >
-                  <i className="fa fa-files-o"></i>
+                  {/* <i className="fa fa-files-o"></i> */}
+                  <Image imagePath={AppIcons.copyIcon} altText="Icon" />
                 </span>
               </span>
             ))}

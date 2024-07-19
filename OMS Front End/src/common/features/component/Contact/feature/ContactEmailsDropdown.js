@@ -71,7 +71,8 @@ const ContactEmailsDropdown = ({
                   title="Copy"
                   onClick={() => CopyText(emaildata?.emailAddress, "email")}
                 >
-                  <i className="fa fa-files-o"></i>
+                  {/* <i className="fa fa-files-o"></i> */}
+                  <Image imagePath={AppIcons.copyIcon} altText="Icon" />
                 </span>
               </span>
             </>

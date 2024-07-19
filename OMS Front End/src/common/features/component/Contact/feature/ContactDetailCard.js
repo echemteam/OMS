@@ -245,7 +245,7 @@ const ContactDetailCard = forwardRef(
                           </span>
                         </div>
                         <div className="contact-type-list">
-                          <ul>
+                          <ul className="number-list">
                             <li>
                               {contactItem.phoneNumberList?.length > 0 ? (
                                 <ContactPhoneNumberDropdown
