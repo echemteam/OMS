@@ -10,7 +10,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { ApiProvidersGridConfig } from "../config/ApiProviders.data";
 import { useImperativeHandle } from "react";
 
-const ApiProvidersList = ({ handleEditClick, childRef }) => {
+const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange, search,handleClear, shouldRerenderFormCreator}) => {
   const molGridRef = useRef();
   const [listData, setListData] = useState();
   const [totalRowCount, setTotalRowCount] = useState(0);
@@ -44,9 +44,9 @@ const ApiProvidersList = ({ handleEditClick, childRef }) => {
         pageNumber: pageObject.pageNumber,
         pageSize: pageObject.pageSize,
       },
-      filters: { searchText: "" },
+      filters: { searchText: search },
       sortString: sortingString,
-    };
+          };
     getApiProviders(request);
   };
 
@@ -64,10 +64,6 @@ const ApiProvidersList = ({ handleEditClick, childRef }) => {
   };
 
   useEffect(() => {
-    onGetData();
-  }, []);
-
-  useEffect(() => {
     if (isApiProvidersSuccess && isApiProvidersData) {
       if (isApiProvidersData) {
         setListData(isApiProvidersData.dataSource);
@@ -77,6 +73,13 @@ const ApiProvidersList = ({ handleEditClick, childRef }) => {
       }
     }
   }, [isApiProvidersSuccess, isApiProvidersData]);
+
+  useEffect(() => {
+    if (shouldRerenderFormCreator) {
+      onGetData();
+    }
+    onGetData();
+  }, [shouldRerenderFormCreator]);
 
   const handleDeleteClick = (data) => {
     confirm(
@@ -103,6 +106,7 @@ const ApiProvidersList = ({ handleEditClick, childRef }) => {
         <div className="col-md-12 table-striped api-provider">
           <MolGrid
             ref={molGridRef}
+            key={shouldRerenderFormCreator}
             configuration={ApiProvidersGridConfig}
             dataSource={listData}
             allowPagination={true}
@@ -115,6 +119,10 @@ const ApiProvidersList = ({ handleEditClick, childRef }) => {
             onSorting={handleSorting}
             isLoading={isApiProvidersLoading}
             onActionChange={actionHandler}
+            searchTitleButtonClick={handleSearch}
+            handleChange={handleChange}
+            handleClear={handleClear}
+            
           />
         </div>
       </div>
