@@ -99,7 +99,7 @@ export const addEditApiParameterFormData ={
 export const ApiParameterGridConfig = {
     columns: [
         {
-            name: "EndPoint Name",
+            name: "End Point Name",
             fieldName: "endpointName",
             width: "15%",
             allowShort: true,
@@ -111,7 +111,7 @@ export const ApiParameterGridConfig = {
         allowShort: true,
       },
       {
-        name: "DataType ",
+        name: "Data Type ",
         fieldName: "dataType",
         width: "20%",
         allowShort: true,

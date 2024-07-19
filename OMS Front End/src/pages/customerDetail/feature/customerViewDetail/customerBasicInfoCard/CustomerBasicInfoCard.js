@@ -14,7 +14,8 @@ import {
 import {
   useUpdateCustomerInActiveStatusMutation,
   useUpdateCustomerStatusMutation,
-  useUpdateCustomerSubCompanyMutation,
+  useUpdateCustomerSubCustomerMutation,
+
 } from "../../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
@@ -59,9 +60,9 @@ const CustomerBasicInfoCard = ({
     { isSuccess: isSuccessRUser, data: isUpdateRUserData },
   ] = useUpdateResponsibleUserMutation();
   const [
-    updateSubCompany,
-    { isSuccess: isSuccessUpdateSubCompany, data: isUpdateSubCompanyData },
-  ] = useUpdateCustomerSubCompanyMutation();
+    updateCustomerSubCustomer,
+    { isSuccess: isSuccessUpdateCustomerSubCustomer, data: isUpdateCustomerSubCustomerData },
+  ] = useUpdateCustomerSubCustomerMutation();
   const [
     updateCustomerStatus,
     {
@@ -223,7 +224,7 @@ const CustomerBasicInfoCard = ({
         if (childRef.current) {
           childRef.current.callChildFunction(
             customerId,
-            customerData.isSubCompany ? customerData.isSubCompany : false
+            customerData.isSubCustomer ? customerData.isSubCustomer : false
           );
         }
         setcustomerId(customerId);
@@ -326,19 +327,19 @@ const CustomerBasicInfoCard = ({
       if (confirmed) {
         let request = {
           customerId: customerId,
-          isSubCompany: value,
+          isSubCustomer: value,
         };
-        updateSubCompany(request);
+        updateCustomerSubCustomer(request);
       }
     });
   };
 
   useEffect(() => {
-    if (isSuccessUpdateSubCompany && isUpdateSubCompanyData) {
-      ToastService.success(isUpdateSubCompanyData.errorMessage);
+    if (isSuccessUpdateCustomerSubCustomer && isUpdateCustomerSubCustomerData) {
+      ToastService.success(isUpdateCustomerSubCustomerData.errorMessage);
       getCustomerById();
     }
-  }, [isSuccessUpdateSubCompany, isUpdateSubCompanyData]);
+  }, [isSuccessUpdateCustomerSubCustomer, isUpdateCustomerSubCustomerData]);
 
   return !isLoading ? (
     <div className="basic-customer-detail">
@@ -460,21 +461,21 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
             <div className="field-desc">
-              <div className="inf-label inf-label-width">Is Sub Company</div>
+              <div className="inf-label inf-label-width">Is Sub Customer</div>
               <b>&nbsp;:&nbsp;</b>
               <div className="checkbox-part ml-2 mt-2">
                 <div className="checkbox">
                   <input
-                    name={"isSubCompany"}
+                    name={"isSubCustomer"}
                     className="form-checkbox"
                     type="checkbox"
-                    id={"isSubCompany"}
-                    checked={customerData?.isSubCompany ? customerData?.isSubCompany : false}
+                    id={"isSubCustomer"}
+                    checked={customerData?.isSubCustomer ? customerData?.isSubCustomer : false}
                     onChange={handleCheckboxChange}
                     disabled={isButtonDisable}
                   />
                   <label
-                    htmlFor={"isSubCompany"}
+                    htmlFor={"isSubCustomer"}
                     className="checkbox-label"
                   ></label>
                 </div>

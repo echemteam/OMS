@@ -16,7 +16,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [customerId, setCustomerId] = useState(0);
     const [customerCountryId, setCustomerCountryId] = useState('');
     //** */
-    const [isSubCompany,setIsSubCompany]=useState(false); 
+    const [isSubCustomer,setIsSubCustomer]=useState(false); 
     //** Shipping Method's */
     const [carriersList, setCarriersList] = useState([]);
     const [showSubBackButton, setShowSubBackButton] = useState(false);
@@ -85,7 +85,7 @@ export const BasicDetailContextProvider = ({ children }) => {
             customerCountryId,
             phoneNumberData, setMainId, mainId, setShowSubBackButton, showSubBackButton, setActiveSubTab, activeSubTab, handleActiveSubTabClick, saveFinacialSetting,
             emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
-            setIsResponsibleUser, isResponsibleUser ,isSubCompany,setIsSubCompany
+            setIsResponsibleUser, isResponsibleUser ,isSubCustomer,setIsSubCustomer
         }}>
             {children}
         </BasicDetailContext.Provider>

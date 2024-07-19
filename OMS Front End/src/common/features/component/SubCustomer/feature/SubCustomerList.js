@@ -1,21 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef } from "react";
+import { useRef ,useEffect,useState } from "react";
 import MolGrid from "../../../../../components/Grid/MolGrid";
 import { SubCustomerGridConfig } from "../config/SubCustomer.data";
-import { useState } from "react";
-import { useDeleteSubCompanyMutation, useGetSubCompanysByMainCompanyIdMutation } from "../../../../../app/services/customerSubCustomerAPI";
-import { useEffect } from "react";
 import ToastService from "../../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import { useImperativeHandle } from "react";
+import { encryptUrlData } from "../../../../../services/CryptoService";
+import { useDeleteSubCustomerMutation, useGetSubCustomerByCustomerIdMutation } from "../../../../../app/services/customerSubCustomerAPI";
 
 const SubCustomerList = (props) => {
   const molGridRef = useRef();
   const [listData, setListData] = useState();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const { confirm } = SwalAlert();
-  const [getSubCompanysByMainCompanyId,{ isLoading: isGetSubCompanysByMainCompanyIdLoading, isSuccess: isGetSubCompanysByMainCompanyIdSuccess, data: isGetSubCompanysByMainCompanyIdData },] = useGetSubCompanysByMainCompanyIdMutation();
-  const [deleteSubCompany,{  isSuccess: isDeleteSubCompanySuccess, data: isDeleteSubCompanyData }, ] = useDeleteSubCompanyMutation();
+  const [getSubCustomerByCustomerId,{ isLoading: isGetSubCustomerByCustomerIdLoading, isSuccess: isGetSubCustomerByCustomerIdSuccess, data: isGetSubCustomerByCustomerIdData },] = useGetSubCustomerByCustomerIdMutation();
+  const [deleteSubCustomer,{  isSuccess: isDeleteSubCustomerSuccess, data: isDeleteSubCustomerData }, ] = useDeleteSubCustomerMutation();
  const getLists = (pageObject,sortingString) => {
     const request = {
       pagination: {
@@ -24,9 +23,9 @@ const SubCustomerList = (props) => {
       },
       filters: { searchText: "" },
       sortString: sortingString,
-      mainCompanyId: props.customerId,
+      customerId: props.customerId,
     };
-    getSubCompanysByMainCompanyId(request);
+    getSubCustomerByCustomerId(request);
   };
 
   const handlePageChange = (page) => {
@@ -44,19 +43,19 @@ const SubCustomerList = (props) => {
   }
 
   useEffect(() => {
-    if (isDeleteSubCompanySuccess && isDeleteSubCompanyData) {
-      ToastService.success(isDeleteSubCompanyData.errorMessage);
+    if (isDeleteSubCustomerSuccess && isDeleteSubCustomerData) {
+      ToastService.success(isDeleteSubCustomerData.errorMessage);
        const currentPageObject = molGridRef.current.getCurrentPageObject();
       handlePageChange(currentPageObject)
     }
-  }, [isDeleteSubCompanySuccess, isDeleteSubCompanyData]);
+  }, [isDeleteSubCustomerSuccess, isDeleteSubCustomerData]);
 
   const handleDeleteClick = (data) => {
 
     confirm( "Delete?", "Are you sure you want to Delete?", "Delete",  "Cancel" )
        .then((confirmed) => {
          if (confirmed) {
-            deleteSubCompany(data.subCompanyMainCompanyId);
+          deleteSubCustomer(data.subCustomerMainCustomerId);
          }
        });
      };
@@ -66,18 +65,23 @@ const SubCustomerList = (props) => {
   }, []);
 
   useEffect(() => {
-    if (isGetSubCompanysByMainCompanyIdSuccess && isGetSubCompanysByMainCompanyIdData) {
+    if (isGetSubCustomerByCustomerIdSuccess && isGetSubCustomerByCustomerIdData) {
   
-      if (isGetSubCompanysByMainCompanyIdData) {
-        setListData(isGetSubCompanysByMainCompanyIdData.dataSource);  
+      if (isGetSubCustomerByCustomerIdData) {
+        setListData(isGetSubCustomerByCustomerIdData.dataSource);  
       }
-      if (isGetSubCompanysByMainCompanyIdData.totalRecord) {
-        setTotalRowCount(isGetSubCompanysByMainCompanyIdData.totalRecord);
+      if (isGetSubCustomerByCustomerIdData.totalRecord) {
+        setTotalRowCount(isGetSubCustomerByCustomerIdData.totalRecord);
       }
     }
-  }, [isGetSubCompanysByMainCompanyIdSuccess, isGetSubCompanysByMainCompanyIdData]);
+  }, [isGetSubCustomerByCustomerIdSuccess, isGetSubCustomerByCustomerIdData]);
  
+
+  const handleEditClick = (data) => {
+    window.open(`/CustomerDetails/${encryptUrlData(data.customerId)}`, '_blank');
+  };
   const actionHandler = {
+    EDIT:handleEditClick,
     DELETE: handleDeleteClick,    
   };
 
@@ -100,7 +104,7 @@ const SubCustomerList = (props) => {
             }}
             onPageChange={handlePageChange}
              onSorting={handleSorting}
-             isLoading={isGetSubCompanysByMainCompanyIdLoading}
+             isLoading={isGetSubCustomerByCustomerIdLoading}
              onActionChange={actionHandler}
           />
         </div>

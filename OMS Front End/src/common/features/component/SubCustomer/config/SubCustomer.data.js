@@ -1,3 +1,4 @@
+import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
@@ -31,7 +32,7 @@ export const SubCustomerFormData = {
 
         {
           name: "Customer Name",
-          fieldName: "subCompanyName",
+          fieldName: "subCustomerName",
           width: "30%",
           allowShort: true,
         },
@@ -53,9 +54,15 @@ export const SubCustomerFormData = {
           width: "20%",
           colType: GridColumnType.ACTION,
           defaultAction: {
-
             allowDelete: true,
           },
+          customAction: [
+            {
+                name: "EDIT",
+                iconName: AppIcons.EyeIcon,
+            },
+        ],
+          
         },
       ],
   }

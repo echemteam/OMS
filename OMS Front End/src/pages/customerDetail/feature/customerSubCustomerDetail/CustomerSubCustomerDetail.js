@@ -5,9 +5,9 @@ import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDeta
 
 const CustomerSubCustomerDetail=()=>{
 
-    const { customerId, isSubCompany } = useContext(BasicDetailContext);
+    const { customerId, isSubCustomer } = useContext(BasicDetailContext);
  return(<>
-     <SubCustomerGrid  customerId={customerId} isSubCompany={isSubCompany}/>
+     <SubCustomerGrid  customerId={customerId} isSubCustomer={isSubCustomer}/>
  </>)
 }
 export default CustomerSubCustomerDetail;

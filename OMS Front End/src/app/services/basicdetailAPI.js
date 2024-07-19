@@ -103,9 +103,9 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-        updateCustomerSubCompany: builder.mutation({
+        updateCustomerSubCustomer: builder.mutation({
             query: (requestData) => ({
-                url: '/Customers/UpdateCustomerSubCompany',
+                url: '/Customers/UpdateCustomerSubCustomer',
                 method: 'POST',
                 body: transformRequest(requestData)
             }), 
@@ -127,7 +127,7 @@ export const {
     useAddEditCustomersBasicInformationMutation,
     useCheckCustomerNameExistMutation,
     useLazyGetCustomersDetailsByCutomerNameQuery,
-    useUpdateCustomerSubCompanyMutation
+    useUpdateCustomerSubCustomerMutation
 } = basicdetailAPI
 
 export default basicdetailAPI;

@@ -31,12 +31,12 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     };
 
     //** Validate check list Modal */
-    const handleShowValidateModal = (customerId, isSubCompany) => {
+    const handleShowValidateModal = (customerId, isSubCustomer) => {
         setIsShowValidateModal(!isShowValidateModal);
         let request = {
             customerId: customerId,
             supplierId: 0,
-            isSubCompany: isSubCompany
+            isSubCustomer: isSubCustomer
         }
         getValidateCheckList(request);
         setCustomerId(customerId);

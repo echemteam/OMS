@@ -8,9 +8,9 @@ const customerSubCustomerAPI = createApi({
     baseQuery: customFetchBase,
     endpoints: (builder) => ({
 
-        getAllSubCompany: builder.query({
+        getAllSubCustomer: builder.query({
             query: (isSubCustomer) => ({
-                url: encryptQueryString(`/Common/GetAllSubCompany/?isSubCustomer=${isSubCustomer}`),
+                url: encryptQueryString(`/Common/GetAllSubCustomer/?isSubCustomer=${isSubCustomer}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
@@ -18,9 +18,9 @@ const customerSubCustomerAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
-        addSubCompanyMainCompany: builder.mutation({
+        addSubCustomer: builder.mutation({
             query: (data) => ({
-                url: '/Customers/AddSubCompanyMainCompany',
+                url: '/Customers/AddSubCustomer',
                 method: 'POST',
                 body: transformRequest(data)
             }),
@@ -29,9 +29,9 @@ const customerSubCustomerAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
-        getSubCompanysByMainCompanyId: builder.mutation({
+        getSubCustomerByCustomerId: builder.mutation({
             query: (userQuery) => ({
-                url: '/Customers/GetSubCompanysByMainCompanyId',
+                url: '/Customers/GetSubCustomerByCustomerId',
                 method: 'POST',
                 body: transformRequest(userQuery)
             }),
@@ -39,11 +39,11 @@ const customerSubCustomerAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
-        deleteSubCompany: builder.mutation({
-            query: (subCompanyMainCompanyId) => ({
-                url: encryptQueryString(`/Customers/DeleteSubCompany/?subCompanyMainCompanyId=${subCompanyMainCompanyId}`),
+        deleteSubCustomer: builder.mutation({
+            query: (subCustomerMainCustomerId) => ({
+                url: encryptQueryString(`/Customers/DeleteSubCustomer/?subCustomerMainCustomerId=${subCustomerMainCustomerId}`),
                 method: 'DELETE',
-                body: transformRequest(subCompanyMainCompanyId)
+                body: transformRequest(subCustomerMainCustomerId)
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
@@ -54,10 +54,10 @@ const customerSubCustomerAPI = createApi({
 })
 
 export const {
-    useAddSubCompanyMainCompanyMutation,
-    useGetSubCompanysByMainCompanyIdMutation,
-    useLazyGetAllSubCompanyQuery,
-    useDeleteSubCompanyMutation,
+    useAddSubCustomerMutation,
+    useGetSubCustomerByCustomerIdMutation,
+    useLazyGetAllSubCustomerQuery,
+    useDeleteSubCustomerMutation,
 } = customerSubCustomerAPI;
 
 export default customerSubCustomerAPI;

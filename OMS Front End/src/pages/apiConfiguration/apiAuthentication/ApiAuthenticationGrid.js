@@ -54,7 +54,7 @@ const ApiAuthentication = () => {
       </CardSection>
 
       <SidebarModel
-        modalTitle="Add/Edit API Authentication"
+        modalTitle={isEdit ?"Upadte API Authentication" : "Add API Authentication" }
         contentClass="content-40"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
