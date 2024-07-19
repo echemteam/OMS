@@ -2162,6 +2162,7 @@ input[type="checkbox"]:checked:before {
   top: 0;
   left: 0;
   background-color: var(--themeColor);
+  border: 1px solid var(--themeColor);
 }
 
 input[type="checkbox"]:checked:after {
@@ -2577,13 +2578,13 @@ input[type="checkbox"]:disabled {
   }
 
   input[type="checkbox"]:checked:before {
-    width: 17px;
-    height: 17px;
+    // width: 17px;
+    // height: 17px;
   }
 
   input[type="checkbox"]:checked:after {
-    top: 57%;
-    left: 65%;
+    top: 66%;
+    left: 75%;
   }
 
   .card {
