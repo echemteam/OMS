@@ -11,7 +11,7 @@ const ContactDetailCard = forwardRef(
     const phoneDropdownRef = useRef(null);
     const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
     const [showEmailDropdown, setShowEmailDropdown] = useState(false);
-
+    const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     //** API Call's */
     const handleClickOutside = (event) => {
       if (
@@ -80,6 +80,27 @@ const ContactDetailCard = forwardRef(
       }
     };
 
+    const handleOptionsClick = () => {
+      setIsOptionsOpen((prevState) => !prevState);
+    };
+
+    const handleBodyClick = (e) => {
+      if (!e.target.closest(".right-action-icon")) {
+        setIsOptionsOpen(false);
+      }
+    };
+
+    useEffect(() => {
+      if (isOptionsOpen) {
+        document.body.addEventListener("click", handleBodyClick);
+      } else {
+        document.body.removeEventListener("click", handleBodyClick);
+      }
+      return () => {
+        document.body.removeEventListener("click", handleBodyClick);
+      };
+    }, [isOptionsOpen]);
+
     return (
       <>
         <div className="contact-main-card-section d-none">
@@ -106,8 +127,6 @@ const ContactDetailCard = forwardRef(
                 <div className="dropdown-sec">
                   {contactItem.emailAddressList?.length > 0 ? (
                     <ContactEmailsDropdown
-                      showEmailDropdown={showEmailDropdown}
-                      setShowEmailDropdown={setShowEmailDropdown}
                       emailAddressesList={contactItem.emailAddressList}
                     />
                   ) : null}
@@ -115,8 +134,6 @@ const ContactDetailCard = forwardRef(
                 <div className="dropdown-sec">
                   {contactItem.phoneNumberList?.length > 0 ? (
                     <ContactPhoneNumberDropdown
-                      showPhoneDropdown={showPhoneDropdown}
-                      setShowPhoneDropdown={setShowPhoneDropdown}
                       phoneNumberList={contactItem.phoneNumberList}
                     />
                   ) : null}
@@ -142,27 +159,105 @@ const ContactDetailCard = forwardRef(
             </div>
           </div>
         </div>
+
         <div className="contact-main-card-section">
           <div className="card-section-body">
             <div className="top-profile-section">
               <div className="profile-sec">
-                <span className="profile-icon">PC</span>
+                <span className="profile-icon">
+                  {contactItem.firstName && contactItem.lastName
+                    ? contactItem.firstName.charAt(0).toUpperCase() +
+                      contactItem.lastName.charAt(0).toUpperCase()
+                    : ""}
+                </span>
                 <span className="contact-name">
-                  {/* {contactItem.firstName + " " + contactItem.lastName} */}
-                  Pankaj Chauhan
+                  {contactItem.firstName + " " + contactItem.lastName}
                 </span>
               </div>
               <div className="right-action-icon">
-                <Image
-                  imagePath={AppIcons.EllipsisIcon}
-                  altText="EllipsisIcon"
-                />
-                <div className="customer-detail-model">
+                <div className="edit-view-icon">
+                  <div className="edit-delete-button">
+                    {showEditIcon ? (
+                      <button
+                        onClick={() => handleEdit(contactItem?.contactId)}
+                        className="edit-btn"
+                      >
+                        <Image imagePath={AppIcons.editThemeIcon} />
+                      </button>
+                    ) : null}
+                  </div>
+                  <span className="option-icon" onClick={handleOptionsClick}>
+                    <Image
+                      imagePath={AppIcons.EllipsisIcon}
+                      altText="EllipsisIcon"
+                    />
+                  </span>
+                </div>
+                <div
+                  className={`customer-detail-model ${
+                    isOptionsOpen ? "open-model" : ""
+                  }`}
+                >
                   <div className="customer-card-top-sec">
                     <div className="profile-icon">
-                      <span className="profile-text">PC</span>
+                      <span className="profile-text">
+                        {contactItem.firstName && contactItem.lastName
+                          ? contactItem.firstName.charAt(0).toUpperCase() +
+                            contactItem.lastName.charAt(0).toUpperCase()
+                          : ""}
+                      </span>
                     </div>
-                    <div className="profile-name">Pankaj Chauhan</div>
+                    <div className="profile-name">
+                      {contactItem.firstName + " " + contactItem.lastName}
+                    </div>
+                  </div>
+                  <div className="bottom-contact-desc">
+                    {contactItem.emailAddressList?.length > 0 ? (
+                      <div className="contact-part">
+                        <div className="type-title">
+                          <i className="fa fa-envelope-o"></i>
+                          <span className="contact-type-title">
+                            Email Address
+                          </span>
+                        </div>
+                        <div className="contact-type-list">
+                          <ul>
+                            <li>
+                              {contactItem.emailAddressList?.length > 0 ? (
+                                <ContactEmailsDropdown
+                                  isOptionsOpen={isOptionsOpen}
+                                  emailAddressesList={
+                                    contactItem.emailAddressList
+                                  }
+                                />
+                              ) : null}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    ) : null}
+                    {contactItem.phoneNumberList?.length > 0 ? (
+                      <div className="contact-part">
+                        <div className="type-title">
+                          <i className="fa fa-phone"></i>
+                          <span className="contact-type-title">
+                            Phone Number
+                          </span>
+                        </div>
+                        <div className="contact-type-list">
+                          <ul>
+                            <li>
+                              {contactItem.phoneNumberList?.length > 0 ? (
+                                <ContactPhoneNumberDropdown
+                                  isOptionsOpen={isOptionsOpen}
+                                  phoneNumberList={contactItem.phoneNumberList}
+                                />
+                              ) : null}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </div>

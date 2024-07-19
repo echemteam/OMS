@@ -7,6 +7,7 @@ const ContactEmailsDropdown = ({
   showEmailDropdown,
   setShowEmailDropdown,
   emailAddressesList,
+  isOptionsOpen,
 }) => {
   const ref = useRef(null);
   const toggleEmailDropdown = () => {
@@ -59,31 +60,24 @@ const ContactEmailsDropdown = ({
           ) : null}
         </div>
       </div>
-
-      <div className="drop-down" ref={ref} onClick={toggleEmailDropdown}>
-        <i
-          className={`fa fa-caret-down ${showEmailDropdown ? "rotated" : ""}`}
-          aria-hidden="true"
-        ></i>
-        {showEmailDropdown && (
-          <div className="dropdown-content show">
-            {emailAddresses.map((emaildata, index) => (
-              <>
-                <span className="contact-list d-flex flex-row" key={index}>
-                  <span>{emaildata?.emailAddress}</span>
-                  <span
-                    className="copy-icon" title="Copy"
-                    onClick={() => CopyText(emaildata?.emailAddress, "email")}
-                  >
-                    {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
-                    <i className="fa fa-files-o"></i>
-                  </span>
+      {isOptionsOpen ? (
+        <>
+          {emailAddresses.map((emaildata, index) => (
+            <>
+              <span className="contact-list d-flex flex-row" key={index}>
+                <span>{emaildata?.emailAddress}</span>
+                <span
+                  className="copy-icon"
+                  title="Copy"
+                  onClick={() => CopyText(emaildata?.emailAddress, "email")}
+                >
+                  <i className="fa fa-files-o"></i>
                 </span>
-              </>
-            ))}
-          </div>
-        )}
-      </div>
+              </span>
+            </>
+          ))}
+        </>
+      ) : null}
     </React.Fragment>
   );
 };

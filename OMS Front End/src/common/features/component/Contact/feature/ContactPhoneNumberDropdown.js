@@ -3,7 +3,7 @@ import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 
-const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, phoneNumberList }) => {
+const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, phoneNumberList,isOptionsOpen }) => {
 
   const ref = useRef(null);
   const togglePhoneDropdown = () => {
@@ -72,11 +72,9 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
           ) : null}
         </div>
       </div>
-      <div className="drop-down mobilenumber" ref={ref} onClick={togglePhoneDropdown} >
-        <i className={`fa fa-caret-down ${showPhoneDropdown ? "rotated" : ""}`} aria-hidden="true" ></i>
-        {showPhoneDropdown && (
-          <div className="dropdown-content show">
-            {phoneNumbers.map((phoneData, index) => (
+      {isOptionsOpen ? 
+      <>
+     {phoneNumbers.map((phoneData, index) => (
               <span className="contact-list d-flex flex-row" key={index}>
                 <span>
                   {phoneTypesIcon(phoneData?.phoneTypeId)}
@@ -86,14 +84,12 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
                   </span>
                 </span>
                 <span className="copy-icon" title="Copy" onClick={() => CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${phoneData.extension > 0 ? phoneData.extension : ""}`, "phone")} >
-                  {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
                   <i className="fa fa-files-o"></i>
                 </span>
               </span>
             ))}
-          </div>
-        )}
-      </div>
+      </>
+      :null}
     </React.Fragment>
   );
 };
