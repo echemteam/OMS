@@ -7,6 +7,8 @@ import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { addressFormData } from "./config/AddressForm.data";
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
+import { useLazyGetAllAddressTypesQuery } from "../../../../app/services/addressAPI";
+import { modifyAddressType } from "../../../../utils/TransformData/TransformAPIData";
 //** Compoent's */
 const AddEditAddress = React.lazy(() => import("./feature/AddEditAddress"));
 const AddressDetailCard = React.lazy(() =>
@@ -32,6 +34,9 @@ const AddressGrid = ({
   const [showEditIcon, setShowEditIcon] = useState(true);
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [tabAddresstType, setTabAddressType] = useState([]);
+
+  const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
 
   //** Use Effect */
   useEffect(() => {
@@ -73,6 +78,16 @@ const AddressGrid = ({
     }
   }, [isEditablePage, isSupplier, SecurityKey, editMode]);
 
+  useEffect(() => {
+    getAllAddressTypes();
+  }, [keyId]);
+
+  useEffect(() => {
+    if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
+      setTabAddressType(modifyAddressType(allGetAllAddressTypesData));
+    }
+  }, [isGetAllAddressTypesSucess, allGetAllAddressTypesData]);
+
   //** Handle Changes */
   const handleToggleModal = () => {
     setEditMode(false);
@@ -93,38 +108,81 @@ const AddressGrid = ({
     }
   };
 
-  const tabs = [
-    {
-      sMenuItemCaption: "All",
-      component: (
-        <div className="mt-2">
-          <AddressDetailCard
-            keyId={keyId}
-            getAddresssByCustomerId={getAddresssByCustomerId}
-            onHandleEditAddress={handleEditAddress}
-            showEditIcon={showEditIcon}
-            getByIdRef={getByIdRef}
-          />
-        </div>
-      ),
-    },
-    {
-      sMenuItemCaption: "Billing",
-      component: <div className="mt-2">Tab 2</div>,
-    },
-    {
-      sMenuItemCaption: "Shipping",
-      component: <div className="mt-2">Tab 3</div>,
-    },
-    {
-      sMenuItemCaption: "AP",
-      component: <div className="mt-2">Tab 4</div>,
-    },
-    {
-      sMenuItemCaption: "Primary",
-      component: <div className="mt-2">Tab 5</div>,
-    },
+  const components = [
+
+    (addressTypeId) => (
+      <div className="mt-2">
+        <AddressDetailCard
+          keyId={keyId}
+          getAddresssByCustomerId={getAddresssByCustomerId}
+          onHandleEditAddress={handleEditAddress}
+          showEditIcon={showEditIcon}
+          getByIdRef={getByIdRef}
+          selectedAddressTypeId={addressTypeId}
+        />
+      </div>
+    ),
+
+    (addressTypeId) => (
+      <div className="mt-2">
+        <AddressDetailCard
+          keyId={keyId}
+          getAddresssByCustomerId={getAddresssByCustomerId}
+          onHandleEditAddress={handleEditAddress}
+          showEditIcon={showEditIcon}
+          getByIdRef={getByIdRef}
+          selectedAddressTypeId={addressTypeId}
+        />
+      </div>
+    ),
+
+    (addressTypeId) => (
+      <div className="mt-2">
+        <AddressDetailCard
+          keyId={keyId}
+          getAddresssByCustomerId={getAddresssByCustomerId}
+          onHandleEditAddress={handleEditAddress}
+          showEditIcon={showEditIcon}
+          getByIdRef={getByIdRef}
+          selectedAddressTypeId={addressTypeId}
+        />
+      </div>
+    ),
+
+    (addressTypeId) => (
+      <div className="mt-2">
+        <AddressDetailCard
+          keyId={keyId}
+          getAddresssByCustomerId={getAddresssByCustomerId}
+          onHandleEditAddress={handleEditAddress}
+          showEditIcon={showEditIcon}
+          getByIdRef={getByIdRef}
+          selectedAddressTypeId={addressTypeId}
+        />
+      </div>
+    ),
+
+    (addressTypeId) => (
+      <div className="mt-2">
+        <AddressDetailCard
+          keyId={keyId}
+          getAddresssByCustomerId={getAddresssByCustomerId}
+          onHandleEditAddress={handleEditAddress}
+          showEditIcon={showEditIcon}
+          getByIdRef={getByIdRef}
+          selectedAddressTypeId={addressTypeId}
+        />
+      </div>
+    ),
+
   ];
+
+  const tabs = tabAddresstType && tabAddresstType.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers)
+    .map((data, index) => ({
+      sMenuItemCaption: data.type,
+      component: components[index] ? components[index](data.addressTypeId ? [data.addressTypeId] : "") : <div className="mt-2">Default Tab</div>
+    }));
+
   return (
     <React.Fragment>
       <div className="address-main-card-sec vertical-tab-card">

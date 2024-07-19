@@ -62,6 +62,8 @@ export const securityKey = {
      //** Customer History */
      CUSTOMERHISTORY: "Customer History",
 
+     CUSTOMERSUBCUSTOMER:"Customer Sub-Customer",
+
 
      //** SUPPLIER */
      SUPPLIER: "Supplier",

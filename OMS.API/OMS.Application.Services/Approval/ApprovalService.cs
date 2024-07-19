@@ -51,7 +51,7 @@ namespace OMS.Application.Services.Approval
             List<GetValidateCheckListResponse> responses = new();
             if (requestData.CustomerId > 0)
             {
-                responses = await repositoryManager.approval.GetValidateCustomer(requestData.CustomerId, requestData.IsSubCompany);
+                responses = await repositoryManager.approval.GetValidateCustomer(requestData.CustomerId, requestData.IsSubCustomer);
 
             }
             else if (requestData.SupplierId > 0)

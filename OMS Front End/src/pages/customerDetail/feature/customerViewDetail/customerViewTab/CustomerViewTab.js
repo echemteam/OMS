@@ -10,7 +10,7 @@ const CustomerDocumentDetail = React.lazy(() => import("../../customerDocumentDe
 const CustomerNoteDetail = React.lazy(() => import("../../customerNoteDetail/CustomerNoteDetail"));
 const CustomerAddressDetail = React.lazy(() => import("../../customerAddressDetail/CustomerAddressDetail"));
 const CustomerSettingDetails = React.lazy(() => import("../../customerSettingDetail/CustomerSettingDetails"));
-
+const CustomerSubCustomerDetail=React.lazy(() => import("../../customerSubCustomerDetail/CustomerSubCustomerDetail"));
 const CustomerViewTab = (customerId) => {
 
     const { isResponsibleUser } = useContext(BasicDetailContext);
@@ -31,7 +31,9 @@ const CustomerViewTab = (customerId) => {
     const hasDocumentPermission = hasFunctionalPermission(
       securityKey.CUSTOMERDOCUMENT
     );
-
+    const hasSubCustomerPermission = hasFunctionalPermission(
+      securityKey.CUSTOMERSUBCUSTOMER
+    );
     const tabs = [
         {
           sMenuItemCaption: "Address",
@@ -86,6 +88,15 @@ const CustomerViewTab = (customerId) => {
             </div>
           ),
           isVisible: hasHistoryPermission.hasAccess,
+        },
+        {
+          sMenuItemCaption: "Link Customer",
+          component: (
+            <div className="mt-2">
+              <CustomerSubCustomerDetail  />
+            </div>
+          ),
+          isVisible: hasSubCustomerPermission.hasAccess,
         },
       ];
 

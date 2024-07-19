@@ -144,7 +144,7 @@ export const supplierBasicData = {
         allowSpace: true,
         maxLength: 50,
       },
-      validation: [{ type: "require" }],
+    // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
       },

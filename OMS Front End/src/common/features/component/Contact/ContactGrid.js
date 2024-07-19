@@ -15,6 +15,7 @@ import {
 import ToastService from "../../../../services/toastService/ToastService";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
+import { modifyContactType } from "../../../../utils/TransformData/TransformAPIData";
 //** Component's */
 const ContactList = React.lazy(() => import("./feature/ContactList"));
 const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
@@ -41,10 +42,9 @@ const ContactGrid = ({
   const [contactType, setContactType] = useState("");
   const [isModelOpen, setisModelOpen] = useState(false);
   const [showEditIcon, setShowEditIcon] = useState(true);
+  const [tabContactType, setTabContactType] = useState([]);
   const [buttonVisible, setButtonVisible] = useState(true);
   const [selectedDrpvalues, setSelectedDrpvalues] = useState("");
-  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] =
-    useState(false);
 
   //** API Call's  */
   const [
@@ -86,19 +86,10 @@ const ContactGrid = ({
         let condition = isSupplier ? item.isForSuppliers : item.isForCustomers;
         return condition;
       };
-      setDropDownOptionField(
-        allGetAllContactTypesData,
-        "contactTypeId",
-        "type",
-        contactDetailFormData,
-        "contactTypeId",
-        filterCondition
-      );
-      const contactOption = getFieldData(
-        contactDetailFormData,
-        "contactTypeId"
-      );
+      setDropDownOptionField(allGetAllContactTypesData, "contactTypeId", "type", contactDetailFormData, "contactTypeId", filterCondition);
+      const contactOption = getFieldData(contactDetailFormData, "contactTypeId");
       setContactType(contactOption?.fieldSetting?.options);
+      setTabContactType(modifyContactType(allGetAllContactTypesData));
     }
   }, [isGetAllContactTypesSucess, allGetAllContactTypesData]);
 
@@ -115,9 +106,14 @@ const ContactGrid = ({
   };
   const onhandleClear = () => {
     setSearch("");
-    setContactType("");
-    setSelectedDrpvalues("");
-    setShouldRerenderFormCreator((prevState) => !prevState);
+    let request = {
+      id: keyId,
+      searchText: "",
+      contactType: Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues),
+    };
+    if (getListRef.current) {
+      getListRef.current.callChildListFunction(request);
+    }
   };
   const handleToggleModal = () => {
     setIsEdit(false);
@@ -147,9 +143,7 @@ const ContactGrid = ({
     let request = {
       id: keyId,
       searchText: search,
-      contactType: Array.isArray(selectedDrpvalues)
-        ? selectedDrpvalues.join(",")
-        : String(selectedDrpvalues),
+      contactType: Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues),
     };
     if (getListRef.current) {
       getListRef.current.callChildListFunction(request);
@@ -169,56 +163,107 @@ const ContactGrid = ({
 
   useEffect(() => {
     if (search === "" && selectedDrpvalues === "") {
-      onGetContactList();
+      // onGetContactList();
     }
   }, [search, selectedDrpvalues]);
 
-  const tabs = [
-    {
-      sMenuItemCaption: "All",
-      component: (
-        <div className="mt-2">
-          <ContactList
-            keyId={keyId}
-            getListRef={getListRef}
-            handleEdit={handleEdit}
-            showEditIcon={showEditIcon}
-            getContactByKeyId={getContactByKeyId}
-          />
-        </div>
-      ),
-    },
-    {
-      sMenuItemCaption: "Primary",
-      component: <div className="mt-2">Tab 2</div>,
-    },
-    {
-      sMenuItemCaption: "Purchasing",
-      component: <div className="mt-2">Tab 3</div>,
-    },
-    {
-      sMenuItemCaption: "End User",
-      component: <div className="mt-2">Tab 4</div>,
-    },
-    {
-      sMenuItemCaption: "Invoice Submission",
-      component: <div className="mt-2">Tab 5</div>,
-    },
-    {
-      sMenuItemCaption: "Invoice Following-up",
-      component: <div className="mt-2">Tab 6</div>,
-    },
-    {
-      sMenuItemCaption: "AP",
-      component: <div className="mt-2">Tab 7</div>,
-    },
+
+  const components = [
+    (contactTypeId) => (
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+        />
+      </div>
+    ),
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+        />
+      </div>
+    </div>
   ];
 
+  const tabs = tabContactType && tabContactType.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers)
+    .map((data, index) => ({
+      sMenuItemCaption: data.type,
+      component: components[index] ? components[index](data.contactTypeId ? [data.contactTypeId] : "") : <div className="mt-2">Default Tab</div>
+    }));
+
+
   return (
-    <div
-      key={shouldRerenderFormCreator}
-      className="contact-main-card-section vertical-tab-card"
-    >
+    <div className="contact-main-card-section vertical-tab-card">
       <CardSection
         cardTitle={isSearchFilterShow ? "" : "Contact"}
         handleChange={handleChange}
@@ -236,7 +281,7 @@ const ContactGrid = ({
         searchButton={isSearchFilterShow ? true : false}
         searchbuttonText="Search"
         searchTitleButtonClick={onhandleSearch}
-        searchFilter={isSearchFilterShow ? true : false}
+        searchFilter={false}
         handleChangeDropdown={handleChangeDropdown}
         selectedOptions={selectedDrpvalues}
         optionsValue={contactType}
@@ -249,6 +294,7 @@ const ContactGrid = ({
         searchTextWithIcon={true}
         clearTextWithIcon={true}
         clearIconImg={AppIcons.ClearIcone}
+        searchValue={search}
       >
         <div className="vertical-tab-inner">
           <RenderTabs tabs={tabs} isCollapse={true} />
