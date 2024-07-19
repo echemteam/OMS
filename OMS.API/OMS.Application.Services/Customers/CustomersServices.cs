@@ -117,31 +117,31 @@ namespace OMS.Application.Services.Customers
         {
             return await repositoryManager.customers.UpdateCustomerSubCompany(requestData);
         }
-        public async Task<AddEntityDTO<int>> AddSubCompanyMainCompany(AddSubCompanyMainCompanyRequest requestData)
+        public async Task<AddEntityDTO<int>> AddSubCustomer(AddSubCustomerRequest requestData)
         {
-            string[] subCompanyId = requestData.SubCompanyId!.Split(',');
+            string[] subCustomerId = requestData.SubCustomerId!.Split(',');
 
             AddEntityDTO<int> responceData = new();
-            foreach (var singleSubCompanyId in subCompanyId)
+            foreach (var singleSubCustomerId in subCustomerId)
             {
-                if (!string.IsNullOrEmpty(singleSubCompanyId))
+                if (!string.IsNullOrEmpty(singleSubCustomerId))
                 {
-                    requestData.SubCompanyId = singleSubCompanyId;
-                    responceData = await repositoryManager.customers.AddSubCompanyMainCompany(requestData);
+                    requestData.SubCustomerId = singleSubCustomerId;
+                    responceData = await repositoryManager.customers.AddSubCustomer(requestData);
                 }
             }
             return responceData;
         }
-        public async Task<EntityList<GetSubCompanysByMainCompanyIdResponse>> GetSubCompanysByMainCompanyId(GetSubCompanysByMainCompanyIdRequest requestData)
+        public async Task<EntityList<GetSubCustomerByCustomerIdResponse>> GetSubCustomerByCustomerId(GetSubCustomerByCustomerIdRequest requestData)
         {
-            var subCompanyDetails = await repositoryManager.customers.GetSubCompanysByMainCompanyId(requestData);
-            return subCompanyDetails!;
+            var subCustomerDetails = await repositoryManager.customers.GetSubCustomerByCustomerId(requestData);
+            return subCustomerDetails!;
         }
 
-        public async Task<AddEntityDTO<int>> DeleteSubCompany(int subCompanyMainCompanyId, short CurrentUserId)
+        public async Task<AddEntityDTO<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short CurrentUserId)
         {
             short deletedBy = CurrentUserId;
-            return await repositoryManager.customers.DeleteSubCompany(subCompanyMainCompanyId, deletedBy);
+            return await repositoryManager.customers.DeleteSubCustomer(subCustomerMainCustomerId, deletedBy);
         }
         #endregion
     }

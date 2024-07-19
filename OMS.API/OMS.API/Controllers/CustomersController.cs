@@ -116,27 +116,27 @@ namespace OMS.API.Controllers
             var responseData = await _serviceManager.customersServices.UpdateCustomerSubCompany(requestData).ConfigureAwait(true);
             return APISucessResponce<object>(responseData);
         }
-        [HttpPost("AddSubCompanyMainCompany")]
-        public async Task<IActionResult> AddSubCompanyMainCompany(AddSubCompanyMainCompanyRequest requestData)
+        [HttpPost("AddSubCustomer")]
+        public async Task<IActionResult> AddSubCustomer(AddSubCustomerRequest requestData)
         {
-            var addEditItem = await _serviceManager.customersServices.AddSubCompanyMainCompany(requestData);
+            var addEditItem = await _serviceManager.customersServices.AddSubCustomer(requestData);
             return APISucessResponce(addEditItem);
         }
-        [HttpPost("GetSubCompanysByMainCompanyId")]
-        public async Task<IActionResult> GetSubCompanysByMainCompanyId(GetSubCompanysByMainCompanyIdRequest requestData)
+        [HttpPost("GetSubCustomerByCustomerId,")]
+        public async Task<IActionResult> GetSubCustomerByCustomerId(GetSubCustomerByCustomerIdRequest requestData)
         {
-            var subCompanyDetails = await _serviceManager.customersServices.GetSubCompanysByMainCompanyId(requestData).ConfigureAwait(true);
-            return APISucessResponce<object>(subCompanyDetails);
+            var subCustomerDetails = await _serviceManager.customersServices.GetSubCustomerByCustomerId(requestData).ConfigureAwait(true);
+            return APISucessResponce<object>(subCustomerDetails);
         }
-        [HttpDelete("DeleteSubCompany")]
-        public async Task<IActionResult> DeleteSubCompany(int subCompanyMainCompanyId)
+        [HttpDelete("DeleteSubCustomer")]
+        public async Task<IActionResult> DeleteSubCustomer(int subCustomerMainCustomerId)
         {
-            if (subCompanyMainCompanyId > 0)
+            if (subCustomerMainCustomerId > 0)
             {
-                var deleteItem = await _serviceManager.customersServices.DeleteSubCompany(subCompanyMainCompanyId, CurrentUserId).ConfigureAwait(true);
+                var deleteItem = await _serviceManager.customersServices.DeleteSubCustomer(subCustomerMainCustomerId, CurrentUserId).ConfigureAwait(true);
                 return APISucessResponce<object>(deleteItem);
             }
-            return APISucessResponce(subCompanyMainCompanyId);
+            return APISucessResponce(subCustomerMainCustomerId);
         }
         #endregion
     }
