@@ -24,7 +24,7 @@ const CustomerDetails = () => {
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
 
-  const { setCustomerId, customerId, setIsResponsibleUser, setCustomerCountryId ,setIsSubCompany} = useContext(BasicDetailContext);
+  const { setCustomerId, customerId, setIsResponsibleUser, setCustomerCountryId ,setIsSubCustomer} = useContext(BasicDetailContext);
 
   const [
     getCustomersBasicInformationById,
@@ -52,7 +52,7 @@ const CustomerDetails = () => {
 
       setCustomerData(GetCustomersBasicInformationByIdData);
       setCustomerCountryId(GetCustomersBasicInformationByIdData.countryId)
-      setIsSubCompany(GetCustomersBasicInformationByIdData.isSubCompany)
+      setIsSubCustomer(GetCustomersBasicInformationByIdData.isSubCustomer)
     }
   }, [
     isGetCustomersBasicInformationById,

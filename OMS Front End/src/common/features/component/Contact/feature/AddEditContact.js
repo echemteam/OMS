@@ -43,19 +43,10 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         let data = ref.current.getFormData();
         if (data) {
             let contactTypeId = null;
-
-            if (isSupplier === true) {
-                if (isEdit) {
-                    contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
-                } else {
-                    contactTypeId = String(data.contactTypeId.value);
-                }
+            if (isEdit) {
+                contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
             } else {
-                if (isEdit) {
-                    contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
-                } else {
-                    contactTypeId = Array.isArray(data.contactTypeId) ? data.contactTypeId.map(String).join(",") : data.contactTypeId;
-                }
+                contactTypeId = Array.isArray(data.contactTypeId) ? data.contactTypeId.map(String).join(",") : data.contactTypeId;
             }
 
             let request = {
@@ -154,7 +145,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     useEffect(() => {
         if (!isEdit) {
             let form = { ...contactDetailFormData };
-            setFieldSetting(form, 'contactTypeId', FieldSettingType.MULTISELECT, isSupplier ? false : true);
+            // setFieldSetting(form, 'contactTypeId', FieldSettingType.MULTISELECT, isSupplier ? false : true);
             setFormData(form);
             if (isOpen) {
                 setContactId(0);

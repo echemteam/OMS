@@ -36,7 +36,7 @@ const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFet
       };
       setProviderFormData(newFrom);
     }
-  }, [isGetApiProviderByProviderSuccess, GetApiProviderByProviderIdData, isGetApiProviderByProviderIdFetching, ]);
+  }, [isGetApiProviderByProviderSuccess, GetApiProviderByProviderIdData, isGetApiProviderByProviderIdFetching]);
 
   useEffect(() => {
     if (isAddEditApiProviderSucess && allAddEditApiProviderData) {

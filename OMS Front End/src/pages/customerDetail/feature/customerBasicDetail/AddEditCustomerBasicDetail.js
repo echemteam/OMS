@@ -158,7 +158,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, customerbasicData.formFields, 'taxId');
             newFrom.formFields = formFields;
             newFrom.initialState = { ...GetCustomersBasicInformationByIdData };
-            newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCompany" && field.dataField !== "responsibleUserId");
+            newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCustomer" && field.dataField !== "responsibleUserId");
             setFormData(newFrom);
             setCustomerCountryId(GetCustomersBasicInformationByIdData.countryId);
         }
@@ -219,7 +219,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             const updatedForm = { ...formData };
             updatedForm.formFields = formFields;
             if (isOpen) {
-                updatedForm.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCompany" && field.dataField !== "responsibleUserId");
+                updatedForm.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCustomer" && field.dataField !== "responsibleUserId");
             } else {
                 updatedForm.formFields = customerbasicData.formFields.filter(field => field.dataField !== "responsibleUserId");
             }

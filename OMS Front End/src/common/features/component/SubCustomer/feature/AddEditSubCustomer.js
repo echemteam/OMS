@@ -4,11 +4,12 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { SubCustomerFormData } from "../config/SubCustomer.data";
 import { useRef } from "react";
-import { useAddSubCompanyMainCompanyMutation, useLazyGetAllSubCompanyQuery } from "../../../../../app/services/customerSubCustomerAPI";
+
 import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useEffect } from "react";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
+import { useAddSubCustomerMutation, useLazyGetAllSubCustomerQuery } from "../../../../../app/services/customerSubCustomerAPI";
 
 const AddEditSubCustomer=(props)=>{
 
@@ -16,41 +17,41 @@ const AddEditSubCustomer=(props)=>{
     const [subCustomerFormData, setSubCustomerFormData] = useState(SubCustomerFormData);
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
-    const [getAllSubCompany, { isFetching: isGetAllSubCompanyFetching, isSuccess: isGetAllSubCompanySuccess, data: isGetAllSubCompanyData }] = useLazyGetAllSubCompanyQuery();
-    const [addSubCompanyMainCompany, { isLoading: isAddSubCompanyMainCompanyLoading, isSuccess: isAddSubCompanyMainCompanySuccess, data: isAddSubCompanyMainCompanyData }] = useAddSubCompanyMainCompanyMutation();
+    const [getAllSubCustomer, { isFetching: isGetAllSubCustomerFetching, isSuccess: isGetAllSubCustomerSuccess, data: isGetAllSubCustomerData }] = useLazyGetAllSubCustomerQuery();
+    const [addSubCustomer, { isLoading: isAddSubCustomerLoading, isSuccess: isAddSubCustomerSuccess, data: isAddSubCustomerData }] = useAddSubCustomerMutation();
     useEffect(() => {
-      if (!isGetAllSubCompanyFetching && isGetAllSubCompanySuccess && isGetAllSubCompanyData) {
+      
+      if (!isGetAllSubCustomerFetching && isGetAllSubCustomerSuccess && isGetAllSubCustomerData) {
         
-        setDropDownOptionField(isGetAllSubCompanyData, 'customerId', 'name', subCustomerFormData, 'customerId');
+        setDropDownOptionField(isGetAllSubCustomerData, 'customerId', 'name', subCustomerFormData, 'customerId');
         setShouldRerenderFormCreator((prevState) => !prevState);
       }
-    }, [isGetAllSubCompanyFetching && isGetAllSubCompanySuccess, isGetAllSubCompanyData]);
+    }, [isGetAllSubCustomerFetching && isGetAllSubCustomerSuccess, isGetAllSubCustomerData]);
 
     useEffect(()=>{
-      getAllSubCompany(props?.isSubCompany);
+      getAllSubCustomer(props?.isSubCustomer ? !props?.isSubCustomer : true);
     },[])
   
     useEffect(() => {
-      if (isAddSubCompanyMainCompanySuccess && isAddSubCompanyMainCompanyData) {
+      if (isAddSubCustomerSuccess && isAddSubCustomerData) {
        props.onSuccess()
-       
-        ToastService.success(isAddSubCompanyMainCompanyData.errorMessage);
+        ToastService.success(isAddSubCustomerData.errorMessage);
         onResetForm(SubCustomerFormData, setSubCustomerFormData, null);
       }
-    }, [isAddSubCompanyMainCompanySuccess, isAddSubCompanyMainCompanyData]);
+    }, [isAddSubCustomerSuccess, isAddSubCustomerData]);
   
 const onhandleEditSubcustomer=()=>{
   const formData=subcustomerRef.current.getFormData();
- 
+
   if(formData && !formData.subCompanyMainCompanyId){
     const customerIdList = formData.customerId.map((item) => ({ customerId: item }));
-    let customerId = customerIdList.map((item) => item.customerId).join(",");
+    let subCustomerId = customerIdList.map((item) => item.customerId).join(",");
     const request={
     ...formData,
-    mainCompanyId:props.customerId,
-    subCompanyId:customerId,
+    customerId:props.customerId,
+    subCustomerId:subCustomerId,
     }
-    addSubCompanyMainCompany(request);
+    addSubCustomer(request);
   }
 }
 
@@ -68,7 +69,7 @@ const onhandleEditSubcustomer=()=>{
                 buttonTypeClassName="theme-button"
                 buttonText="Assign"
                 onClick={onhandleEditSubcustomer}
-                isLoading={isAddSubCompanyMainCompanyLoading}
+                isLoading={isAddSubCustomerLoading}
               />
             </div>
     </div>

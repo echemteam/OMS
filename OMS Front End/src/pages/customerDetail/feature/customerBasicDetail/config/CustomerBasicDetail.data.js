@@ -162,11 +162,11 @@ export const customerbasicData = {
       },
     },
     {
-      id: "isSubCompany",
-      lable: "Is Sub Company",
-      Field_Name: "Is Sub Company",
+      id: "isSubCustomer",
+      lable: "Is Sub Customer",
+      Field_Name: "Is Sub Customer",
       fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isSubCompany",
+      dataField: "isSubCustomer",
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mt-3 pt-2 mb-input margin-left0-checkbox",
       },
