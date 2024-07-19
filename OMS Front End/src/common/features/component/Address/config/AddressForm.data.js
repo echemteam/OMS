@@ -12,7 +12,9 @@ export const addressFormData = {
       dataField: "addressTypeId",
       fieldSetting: {
         placeholder: "Select Address Type",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        isMultiSelect: false,
+        isDisabled: false,
       },
       validation: [{ type: "require" }],
       style: {

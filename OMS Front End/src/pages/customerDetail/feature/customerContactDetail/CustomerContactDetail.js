@@ -20,7 +20,7 @@ const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow }) => {
       * This component displays an ContactGrid for the supplier module.
       * This hook dynamically sets the API call based on the module (customer or supplier).
     */
-    <div className="supplier-contacts">
+    <div className="supplier-contacts custom-card-sec">
       <ContactGrid
         isSupplier={false}
         isEditablePage={isEditablePage}

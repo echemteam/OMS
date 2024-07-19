@@ -25,7 +25,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const [formData, setFormData] = useState(addressFormData);
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
     // const [getByIdValue, setGetByIdValue] = useState();
-    const [addressDataField, setAddressDataField] = useState();
+    // const [addressDataField, setAddressDataField] = useState();
     const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
     const [selectedCheckbox, setSelectedCheckbox] = useState(null);
 
@@ -74,12 +74,22 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     useEffect(() => {
         if (isSupplier && isModelOpen) {
-            onResetSupplier();
+            // onResetSupplier();
             setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
+            setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, false);
+            setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, true);
+            if (editMode) {
+                setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, false);
+                setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
+            }
         } else if (!isModelOpen) {
             onResetForm(addressFormData, setFormData, null);
+        } else if (!isSupplier) {
+            setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, false);
+            setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, false);
         }
     }, [isSupplier, isModelOpen]);
+
 
     const handleStateOption = (responseData) => {
         setDropDownOptionField(responseData, 'stateId', 'name', addressFormData, 'stateId');
@@ -168,7 +178,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
             }
             setFormData(updatedFormData)
-            onResetForm(updatedFormData, setFormData, null);
+            // onResetForm(updatedFormData, setFormData, null);
         }
     }
 
@@ -225,10 +235,23 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
         if (data) {
+
+            let addressTypeId = null;
+
+            if (isSupplier === true) {
+                if (editMode) {
+                    addressTypeId = data.addressTypeId && typeof data.addressTypeId === "object" ? String(data.addressTypeId.value) : String(data.addressTypeId);
+                } else {
+                    addressTypeId = Array.isArray(data.addressTypeId) ? data.addressTypeId.map(String).join(",") : data.addressTypeId;
+                }
+            } else {
+                addressTypeId = data.addressTypeId && typeof data.addressTypeId === "object" ? String(data.addressTypeId.value) : String(data.addressTypeId);
+            }
+
             let transformedData = {
                 ...data,
                 [isSupplier ? 'supplierId' : 'customerId']: keyId,
-                addressTypeId: extractValue(data.addressTypeId),
+                addressTypeId: extractValue(addressTypeId),
                 countryId: extractValue(data.countryId),
                 stateId: extractValue(data.stateId),
                 cityId: extractValue(data.cityId)
@@ -258,7 +281,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     const handleChangeDropdownList = (data, dataField) => {
         const manageData = { ...formData };
-        setAddressDataField(data)
+        // setAddressDataField(data)
         if (dataField === "countryId") {
             setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
             setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
@@ -273,7 +296,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 stateId: data.value,
                 cityId: null,
             });
-        } else if (!isSupplier && dataField === "addressTypeId") {
+        }
+        else if (!isSupplier && dataField === "addressTypeId") {
             let filteredFormFields;
             switch (data.label) {
                 case "Billing":
@@ -315,11 +339,12 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     };
 
     useEffect(() => {
-        if (selectedCheckboxFeild === "isShippingAndBilling" && selectedCheckbox === false && addressDataField.value === 1) {
+        let data = {...formData}
+        if (selectedCheckboxFeild === "isShippingAndBilling" && selectedCheckbox === false && data.initialState.addressTypeId === 1) {
             let updatedFormData;
             updatedFormData = removeFormFields(formData, ['isPreferredShipping']);
             setFormData(updatedFormData)
-        } else if (selectedCheckboxFeild === "isShippingAndBilling" && selectedCheckbox === false && addressDataField.value === 2) {
+        } else if (selectedCheckboxFeild === "isShippingAndBilling" && selectedCheckbox === false && data.initialState.addressTypeId === 2) {
             let updatedFormData;
             updatedFormData = removeFormFields(formData, ['isPreferredBilling']);
             setFormData(updatedFormData)
@@ -338,12 +363,12 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     };
 
     //** Reset  */
-    const onResetSupplier = () => {
-        let updatedFormData;
-        onResetForm(addressFormData, setFormData, null);
-        updatedFormData = removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
-        setFormData(updatedFormData)
-    };
+    // const onResetSupplier = () => {
+    //     let updatedFormData;
+    //     onResetForm(addressFormData, setFormData, null);
+    //     updatedFormData = removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
+    //     setFormData(updatedFormData)
+    // };
 
     return (
         <div className="row mt-2 add-address-form">
