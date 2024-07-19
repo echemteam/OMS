@@ -29,32 +29,39 @@ namespace OMS.Application.Services.Address
         public async Task<AddEntityDTO<int>> AddAddress(AddAddressRequest requestData, short CurrentUserId)
         {
             AddEntityDTO<int> responceData = new();
+            string[] addressTypeIds = requestData.AddressTypeId!.Split(',');
 
-            AddressDTO addressDTO = requestData.ToMapp<AddAddressRequest, AddressDTO>();
-            addressDTO.CreatedBy = CurrentUserId;
-            responceData = await repositoryManager.address.AddAddress(addressDTO);
-
-            if (responceData.KeyValue > 0)
+            foreach (var singleAddressTypeId in addressTypeIds)
             {
-                await LinkSameAddress(requestData, responceData.KeyValue, CurrentUserId);
-            }
+                requestData.AddressTypeId = singleAddressTypeId;
+                AddressDTO addressDTO = requestData.ToMapp<AddAddressRequest, AddressDTO>();
+                addressDTO.CreatedBy = CurrentUserId;
+                responceData = await repositoryManager.address.AddAddress(addressDTO);
 
-            if (responceData.KeyValue > 0 && requestData.IsShippingAndBilling == true)
-            {
-                switch (requestData.AddressTypeId)
+                if (responceData.KeyValue > 0)
                 {
-                    case (short?)AddressType.Billing:
-                        requestData.AddressTypeId = (short?)AddressType.Shipping;
-                        break;
-
-                    case (short?)AddressType.Shipping:
-                        requestData.AddressTypeId = (short?)AddressType.Billing;
-                        break;
+                    await LinkSameAddress(requestData, responceData.KeyValue, CurrentUserId);
                 }
-                var duplicateResponseData = await repositoryManager.address.AddAddress(addressDTO);
-                await LinkSameAddress(requestData, duplicateResponseData.KeyValue, CurrentUserId);
-            }
 
+                if (responceData.KeyValue > 0 && requestData.IsShippingAndBilling == true && requestData.CustomerId > 0)
+                {
+                    if (int.TryParse(singleAddressTypeId, out int addressTypeId))
+                    {
+                        switch (addressTypeId)
+                        {
+                            case (int)AddressType.Billing:
+                                requestData.AddressTypeId = ((int)AddressType.Shipping).ToString();
+                                break;
+
+                            case (int)AddressType.Shipping:
+                                requestData.AddressTypeId = ((int)AddressType.Billing).ToString();
+                                break;
+                        }
+                    }
+                    var duplicateResponseData = await repositoryManager.address.AddAddress(addressDTO);
+                    await LinkSameAddress(requestData, duplicateResponseData.KeyValue, CurrentUserId);
+                }
+            }
             return responceData;
         }
 
@@ -66,7 +73,7 @@ namespace OMS.Application.Services.Address
                 {
                     CustomerId = requestData.CustomerId,
                     AddressId = addressId,
-                    AddressTypeId = requestData.AddressTypeId,
+                    AddressTypeId = short.Parse(requestData.AddressTypeId!),
                     IsPreferredShipping = requestData.IsPreferredShipping,
                     IsPreferredBilling = requestData.IsPreferredBilling
                 };
@@ -79,7 +86,7 @@ namespace OMS.Application.Services.Address
                 {
                     SupplierId = requestData.SupplierId,
                     AddressId = addressId,
-                    AddressTypeId = requestData.AddressTypeId
+                    AddressTypeId = short.Parse(requestData.AddressTypeId!)
                 };
                 _ = await repositoryManager.supplier.AddAddressForSupplier(addAddressForCustomerRequest, CurrentUserId);
             }

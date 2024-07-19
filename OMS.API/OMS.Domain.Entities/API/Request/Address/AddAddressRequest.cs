@@ -6,7 +6,7 @@ namespace OMS.Domain.Entities.API.Request.Address
     {
         public int? CustomerId { get; set; }
         public int? SupplierId { get; set; }
-        public short? AddressTypeId { get; set; }
+        public string? AddressTypeId { get; set; }
         public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }
         public string? AddressLine3 { get; set; }
