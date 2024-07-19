@@ -63,9 +63,10 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
               {primaryPhoneNumber?.isPrimary ? (
                 <div className="primary-icon" title="Is Primary"></div>
               ) : null}
-              <span className="copy-icon" onClick={() => CopyText(`(${primaryPhoneNumber.phoneCode}) ${primaryPhoneNumber.phoneNumber} 
+              <span className="copy-icon" title="Copy" onClick={() => CopyText(`(${primaryPhoneNumber.phoneCode}) ${primaryPhoneNumber.phoneNumber} 
               ${primaryPhoneNumber.extension > 0 ? primaryPhoneNumber.extension : ""}`, "phone")}>
                 <Image imagePath={AppIcons.copyIcon} altText="Icon" />
+                {/* <i className="fa fa-files-o"></i> */}
               </span>
             </>
           ) : null}
@@ -84,8 +85,9 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
                       }`}
                   </span>
                 </span>
-                <span className="copy-icon" onClick={() => CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${phoneData.extension > 0 ? phoneData.extension : ""}`, "phone")} >
-                  <Image imagePath={AppIcons.copyIcon} altText="Icon" />
+                <span className="copy-icon" title="Copy" onClick={() => CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${phoneData.extension > 0 ? phoneData.extension : ""}`, "phone")} >
+                  {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
+                  <i className="fa fa-files-o"></i>
                 </span>
               </span>
             ))}

@@ -14,7 +14,7 @@ import { useLazyGetCustomersBasicInformationByIdQuery } from "../../../../../app
 import CardSection from "../../../../../components/ui/card/CardSection";
 import CustomerViewTab from "../../../feature/customerViewDetail/customerViewTab/CustomerViewTab";
 import CustomerBasicInfoCard from "../../../feature/customerViewDetail/customerBasicInfoCard/CustomerBasicInfoCard";
-
+import "./CustomerDetails.scss"
 const CustomerDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();

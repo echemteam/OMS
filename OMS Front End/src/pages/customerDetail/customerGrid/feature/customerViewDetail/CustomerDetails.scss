@@ -1,0 +1,304 @@
+// Contact Card New UI Start
+.custom-contact-card {
+
+  display: flex;
+  flex-wrap: wrap;
+
+  .contact-main-card-section {
+    width: 24%;
+    margin: 0 0.5%;
+    height: auto;
+    margin-bottom: 16px;
+
+    .card-section-body {
+      padding: 10px;
+      background: #f8f9fb;
+      border-radius: 5px;
+      border: 1px solid #f2f4f6;
+      height: 100%;
+      min-height: 124px;
+      position: relative;
+
+      @media only screen and (max-width: 1560px) {
+        min-height: 112px;
+      }
+
+      .top-profile-section {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        .profile-sec {
+          display: flex;
+          align-items: center;
+
+          .profile-icon {
+            min-width: 25px;
+            min-height: 25px;
+            max-width: 25px;
+            max-height: 25px;
+            background: linear-gradient(to right, rgba(45, 54, 65, 0.8588235294), rgba(0, 0, 0, 0.8588235294));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+            color: var(--whiteColor);
+            padding: 3px;
+            margin: 0;
+          }
+
+          .contact-name {
+            margin-left: 10px;
+            font-weight: 600;
+          }
+        }
+
+        .right-action-icon {
+          position: relative;
+          cursor: pointer;
+
+          img {
+            width: 3px;
+            object-fit: contain;
+          }
+
+          .customer-detail-model {
+            min-width: 300px;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 5px;
+            border: 1px solid #f2f4f6;
+            position: absolute;
+            right: -15px;
+            top: 0px;
+            z-index: 1;
+            display: none;
+
+            .customer-card-top-sec {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-direction: column;
+              border-bottom: 1px solid #cad7e6;
+              padding-bottom: 5px;
+              .profile-icon {
+                margin: 0;
+                content: "";
+                min-height: 50px;
+                min-width: 50px;
+                max-height: 50px;
+                max-width: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 100%;
+                background: linear-gradient(to right, rgba(45, 54, 65, 0.8588235294), rgba(0, 0, 0, 0.8588235294));
+
+
+                .profile-text {
+                  color: var(--whiteColor);
+                  font-size: var(--commonFont-medium);
+                }
+              }
+              .profile-name{
+                font-size: var(--commonFont-large);
+                font-weight: bold;
+                margin-top: 5px;
+                color: #6e839b;
+              }
+            }
+          }
+        }
+      }
+
+      .customer-details {
+        margin-top: 5px;
+        padding-left: 5px;
+
+        .email-address {
+          .dropdown-desc-sec {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3px;
+
+            .icon-part {
+              margin-right: 10px;
+              // display: none;
+              color: #6e839b;
+            }
+
+            .desc-part {
+              display: flex;
+              align-items: center;
+
+              .values {
+                color: #6e839b;
+              }
+
+              .copy-icon {
+                cursor: pointer;
+
+                i {
+                  margin-left: 5px;
+                  color: var(--textColor);
+                  font-size: var(--commonFont);
+                  font-weight: bold;
+                }
+              }
+            }
+
+
+          }
+
+          .drop-down {
+            display: none;
+          }
+        }
+
+        .contact-number {
+          .contact-sec {
+            .number-list {
+              display: flex;
+              align-items: center;
+
+              .number-type {
+
+                .contact-type-icon {
+                  margin-right: 10px;
+                  // display: none;
+                  color: #6e839b;
+                  width: 14px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  i{
+                    font-size: var(--commonFont-extraLarge);
+                  }
+                }
+              }
+
+              .copy-icon {
+                cursor: pointer;
+
+                i {
+                  margin-left: 5px;
+                  color: var(--textColor);
+                  font-size: var(--commonFont);
+                  font-weight: bold;
+                }
+              }
+
+              .card-value {
+                color: #6e839b;
+              }
+            }
+          }
+
+          .drop-down {
+            display: none;
+          }
+        }
+
+        .customer-type {
+          margin-top: 5px;
+          display: flex;
+          width: fit-content;
+          align-items: center;
+          background: #eef0f2;
+          padding: 2px 10px;
+          border-radius: 30px;
+          position: absolute;
+          bottom: 10px;
+
+          .customer-type-icon {
+            content: "";
+            height: 10px;
+            width: 10px;
+            display: inline-block;
+            background: var(--textColor);
+            border-radius: 100%;
+            margin-right: 5px;
+
+            &.badge-default {
+              background: var(--themeColorLight);
+            }
+
+            &.badge-primary {
+              background: var(--PrimaryColor);
+            }
+
+            &.badge-endUser {
+              background: var(--pending-theme);
+            }
+
+            &.badge-purchasing {
+              background: var(--submitted-theme);
+            }
+
+            &.badge-submission {
+              background: var(--submission-color);
+            }
+
+            &.badge-followup {
+              background: var(--frozen-theme);
+            }
+
+            &.badge-ap {
+              background: var(--disabled-theme);
+            }
+          }
+
+          .type-value {
+            font-size: var(--commonFont-small);
+            font-weight: 600;
+            color: #6e839b;
+
+            &.badge-default {
+              color: var(--themeColorLight);
+            }
+
+            &.badge-primary {
+              color: var(--PrimaryColor);
+            }
+
+            &.badge-endUser {
+              color: var(--pending-theme);
+            }
+
+            &.badge-purchasing {
+              color: var(--submitted-theme);
+            }
+
+            &.badge-submission {
+              color: var(--submission-color);
+            }
+
+            &.badge-followup {
+              color: var(--frozen-theme);
+            }
+
+            &.badge-ap {
+              color: var(--disabled-theme);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.custom-card-sec {
+  .vertical-tab-inner {
+    .tab-section {
+      .tab-content {
+        padding-bottom: 0;
+
+        @media only screen and (max-width: 1560px) {
+          height: calc(100vh - 295px);
+        }
+      }
+    }
+  }
+}
+
+// Contact Card New UI End
