@@ -31,13 +31,13 @@ export const SubCustomerFormData = {
     columns: [
 
         {
-          name: "Customer Name",
+          name: "Customer",
           fieldName: "subCustomerName",
           width: "30%",
           allowShort: true,
         },
         {
-          name: "Country Name",
+          name: "Country",
           fieldName: "countryName",
           width: "25%",
           allowShort: true,
