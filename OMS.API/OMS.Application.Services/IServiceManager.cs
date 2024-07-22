@@ -9,6 +9,7 @@ using OMS.Application.Services.CustomerDocuments;
 using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.EmailAddress;
+using OMS.Application.Services.Organization;
 using OMS.Application.Services.PhoneNumber;
 using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
@@ -44,5 +45,6 @@ namespace OMS.Application.Services
         IApprovalService approvalService { get; }
         IApprovalConfigurationServices approvalConfigurationServices { get; }
         IApiConfigurationService apiConfigurationService { get; }
+        IOrganizationService organizationService { get; }
     }
 }

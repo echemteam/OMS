@@ -10,6 +10,7 @@ using OMS.Application.Services.CustomerDocuments;
 using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.EmailAddress;
+using OMS.Application.Services.Organization;
 using OMS.Application.Services.PhoneNumber;
 using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
@@ -56,6 +57,7 @@ namespace OMS.Application.Services
         IApprovalService _approvalService;
         IApprovalConfigurationServices _approvalConfigurationServices;
         IApiConfigurationService _apiConfigurationService;
+        IOrganizationService _organizationService;
 
         public ITestService testService
         {
@@ -316,6 +318,18 @@ namespace OMS.Application.Services
                     _apiConfigurationService = new ApiConfigurationService(_repositoryManager, _commonSettingService);
                 }
                 return _apiConfigurationService;
+
+            }
+        }
+        public IOrganizationService organizationService
+        {
+            get
+            {
+                if (_organizationService == null)
+                {
+                    _organizationService = new OrganizationService(_repositoryManager, _commonSettingService);
+                }
+                return _organizationService;
 
             }
         }

@@ -1,4 +1,5 @@
 ﻿using OMS.Domain.Repository.Contract;
+using OMS.Domain.Repository.Implementation;
 
 namespace OMS.Domain.Repository
 {
@@ -28,5 +29,8 @@ namespace OMS.Domain.Repository
         IApiEndpointRepository apiEndpoint { get; }
         IApiParameterRepository apiParameter { get; }
         IApiAuthenticationRepository apiAuthentication { get; }
+        IOrganizationRepository organization { get; }
+        IOrganizationOtherSettingsRepository organizationOtherSettings { get; }
+        ISmtpSettingsRepository smtpSettings { get; }
     }
 }
