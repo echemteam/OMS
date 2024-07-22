@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.ApiParameter;
+﻿using OMS.Domain.Entities.API.Request.ApiParameter;
+using OMS.Domain.Entities.API.Response.ApiParameter;
 using OMS.Domain.Entities.Entity.ApiParameter;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
@@ -52,10 +53,11 @@ namespace OMS.Domain.Repository.Implementation
                 deletedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<EntityList<GetApiParametersResponse>> GetApiParameters(ListEntityRequest<BaseFilter> requestData)
+        public async Task<EntityList<GetApiParametersResponse>> GetApiParameters(GetApiParametersRequest requestData)
         {
             return await _context.GetListSP<GetApiParametersResponse>(GETAPIPARAMETERS, new
             {
+                requestData.EndpointId,
                 requestData.Pagination?.PageNumber,
                 requestData.Pagination?.PageSize,
                 requestData.Filters?.SearchText,

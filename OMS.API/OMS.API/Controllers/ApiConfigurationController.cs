@@ -97,7 +97,7 @@ namespace OMS.API.Controllers
         }
 
         [HttpPost("GetApiEndpoints")]
-        public async Task<IActionResult> GetApiEndpoints([FromBody] ListEntityRequest<BaseFilter> requestData)
+        public async Task<IActionResult> GetApiEndpoints(GetApiEndpointsRequest requestData)
         {
             var endpoint = await _serviceManager.apiConfigurationService.GetApiEndpoints(requestData);
             return APISucessResponce<object>(endpoint);
@@ -134,7 +134,7 @@ namespace OMS.API.Controllers
         }
 
         [HttpPost("GetApiParameters")]
-        public async Task<IActionResult> GetApiParameters([FromBody] ListEntityRequest<BaseFilter> requestData)
+        public async Task<IActionResult> GetApiParameters(GetApiParametersRequest requestData)
         {
             var parameter = await _serviceManager.apiConfigurationService.GetApiParameters(requestData);
             return APISucessResponce<object>(parameter);
@@ -170,7 +170,7 @@ namespace OMS.API.Controllers
         }
 
         [HttpPost("GetApiAuthentications")]
-        public async Task<IActionResult> GetApiAuthentications([FromBody] ListEntityRequest<BaseFilter> requestData)
+        public async Task<IActionResult> GetApiAuthentications(GetApiAuthenticationsRequest requestData)
         {
             var authentication = await _serviceManager.apiConfigurationService.GetApiAuthentications(requestData);
             return APISucessResponce<object>(authentication);

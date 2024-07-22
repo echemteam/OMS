@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.ApiAuthentication;
+﻿using OMS.Domain.Entities.API.Request.ApiAuthentication;
+using OMS.Domain.Entities.API.Response.ApiAuthentication;
 using OMS.Domain.Entities.Entity.ApiAuthentication;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
@@ -53,10 +54,11 @@ namespace OMS.Domain.Repository.Implementation
                 deletedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<EntityList<GetApiAuthenticationsResponse>> GetApiAuthentications(ListEntityRequest<BaseFilter> requestData)
+        public async Task<EntityList<GetApiAuthenticationsResponse>> GetApiAuthentications(GetApiAuthenticationsRequest requestData)
         {
             return await _context.GetListSP<GetApiAuthenticationsResponse>(GETAPIAUTHENTICATIONS, new
             {
+                requestData.ProviderId,
                 requestData.Pagination?.PageNumber,
                 requestData.Pagination?.PageSize,
                 requestData.Filters?.SearchText,
