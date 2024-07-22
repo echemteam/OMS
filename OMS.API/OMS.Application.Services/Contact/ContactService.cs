@@ -132,19 +132,26 @@ namespace OMS.Application.Services.Contact
 
         public async Task<List<GetContactByCustomerIdResponse>> GetContactByCustomerId(int customerId, string searchText, string searchContactType)
         {
-            List<GetContactByCustomerIdResponse> contactList = await repositoryManager.contact.GetContactByCustomerId(customerId, searchText, searchContactType);
-            OwnerType ownerTypeId = OwnerType.CustomerContact;
-
-            if (contactList != null && contactList.Count > 0)
+            var contactList = await repositoryManager.contact.GetContactByCustomerId(customerId, searchText, searchContactType);
+            if (contactList == null || contactList.Count == 0)
             {
-                foreach (var contact in contactList)
-                {
-                    contact.EmailAddressList = await repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, (short)ownerTypeId);
-                    contact.PhoneNumberList = await repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
-                }
+                return contactList!;
             }
+            var ownerTypeId = OwnerType.CustomerContact;
+            var tasks = contactList.Select(async contact =>
+            {
+                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, (short)ownerTypeId);
+                var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
+
+                await Task.WhenAll(emailTask, phoneTask);
+
+                contact.EmailAddressList = await emailTask;
+                contact.PhoneNumberList = await phoneTask;
+            });
+            await Task.WhenAll(tasks);
             return contactList!;
         }
+
 
         public async Task<List<GetContactBySupplierIdResponse>> GetContactBySupplierId(int supplierId, string searchText, string searchContactType)
         {
