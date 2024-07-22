@@ -3234,3 +3234,13 @@ input[type="checkbox"]:disabled {
 .modal-body {
   padding: 12px !important;
 }
+
+.password-hide-show{
+  position: absolute;
+  width: 25px;
+  right: 10px;
+  top: 5px;
+  img{
+    width: 85%;
+  }
+}
