@@ -14,6 +14,10 @@ const ApiProvidersGrid = React.lazy(()=> import("../../pages/apiConfiguration/ap
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 //** Dashboard */
 const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
+
+//** MyTask */
+const MyTask = React.lazy(() => import('../../pages/mytask/MyTask'));
+
 //** User */
 const Users = React.lazy(() => import('../../pages/Security/userManagement/Users'));
 const AddEditUser = React.lazy(() => import('../../pages/Security/userManagement/features/AddEditUser'));
@@ -55,6 +59,7 @@ export const ComponentNavigation = [
     text: 'Dashboard Page',
     securityKey: securityKey.DASHBOARD
   },
+ 
   {
     id: 'demoForm',
     path: '/themeComponent/demoForm',
@@ -320,5 +325,15 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'API Authentication',
     securityKey: securityKey.APIAUTHENTICATION
+  },
+  {
+    id: "",
+    path: "/MyTask",
+    exact: true,
+    title: 'Tasks',
+    component: MyTask,
+    hasParams: false,
+    text: 'May Task Page',
+    securityKey: securityKey.MYTASK
   },
 ];

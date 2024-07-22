@@ -77,6 +77,7 @@ import eyeSlashIcon from "../assets/images/eyeslash.png";
 import SearchIcone from "../assets/images/search.png";
 import ClearIcone from "../assets/images/clear.png";
 import ellipsisIcon from "../assets/images/ellipsisIcon.png";
+import iIcon from "../assets/images/i-icon.svg"
 
 
 export const AppIcons = {
@@ -153,4 +154,5 @@ export const AppIcons = {
   ClearIcone:ClearIcone,
   SearchIcone:SearchIcone,
   EllipsisIcon:ellipsisIcon,
+  Iicon:iIcon,
 };

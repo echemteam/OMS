@@ -10,6 +10,7 @@ export const Menu = [
     securityKey: securityKey.DASHBOARD,
     children: []
   },
+  
   {
     id: "Security",
     name: "Security",
@@ -127,4 +128,14 @@ export const Menu = [
       },
     ],
   },
+  {
+    id: "MyTask",
+    name: "My Task",
+    iconClass: "fa fa-clipboard",
+    subMenu: false, 
+    to: "/MyTask",
+    securityKey: securityKey.MYTASK,
+    children: []
+  },
+  
 ];
