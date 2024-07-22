@@ -186,20 +186,20 @@ export const supplierBasicData = {
         containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input mb-0",
       },
     },
-    {
-      id: "responsibleUserId",
-      lable: "Responsible User ",
-      Field_Name: "Responsible User ",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "responsibleUserId",
-      fieldSetting: {
-        placeholder: "Select Responsible USer",
-        allowSpace: true,
-      },
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
-      },
-    },
+    // {
+    //   id: "responsibleUserId",
+    //   lable: "Responsible User ",
+    //   Field_Name: "Responsible User ",
+    //   fieldType: FormFieldTypes.SELECT,
+    //   dataField: "responsibleUserId",
+    //   fieldSetting: {
+    //     placeholder: "Select Responsible USer",
+    //     allowSpace: true,
+    //   },
+    //   style: {
+    //     containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
+    //   },
+    // },
   ],
   formSetting: {
     isViewOnly: false
