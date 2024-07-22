@@ -10,7 +10,7 @@ import { FieldSettingType } from '../../../utils/Enums/commonEnums';
 import { useAddEditOrganizationProfileMutation, useLazyGetOrganizationProfileByOrganizationIdQuery } from '../../../app/services/organizationAPI';
 import ToastService from '../../../services/toastService/ToastService';
 import DataLoader from '../../../components/ui/dataLoader/DataLoader';
-import { onResetForm } from '../../../utils/FormFields/ResetForm/handleResetForm';
+// import { onResetForm } from '../../../utils/FormFields/ResetForm/handleResetForm';
 
 const OrganizationProfileManagement = (props) => {
     const organizationProfile = useRef();

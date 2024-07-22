@@ -9,7 +9,7 @@ import { useAddEditOrganizationOtherSettingsMutation, useLazyGetOrganizationOthe
 import ToastService from '../../../services/toastService/ToastService';
 import { ErrorMessage } from '../../../data/appMessages';
 import DataLoader from '../../../components/ui/dataLoader/DataLoader';
-import { onResetForm } from '../../../utils/FormFields/ResetForm/handleResetForm';
+// import { onResetForm } from '../../../utils/FormFields/ResetForm/handleResetForm';
 
 const OtherSettings = (props) => {
     const otherSetting = useRef();
