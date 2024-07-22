@@ -12,7 +12,7 @@ namespace OMS.Prisitance.Entities.Entities
         [Column("OrganizationId")]
         public byte? OrganizationId { get; set; }
         [Column("DefaultPaymentTerms")]
-        public string? DefaultPaymentTerms { get; set; }
+        public byte? DefaultPaymentTerms { get; set; }
         [Column("FedexAccountDetail")]
         public string? FedexAccountDetail { get; set; }
         [Column("CreatedAt")]
