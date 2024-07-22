@@ -3,6 +3,9 @@ export const securityKey = {
      //** Dashboard */
      DASHBOARD: "Dashboard",
 
+     // My Task 
+     MYTASK: "MyTask",
+
      //** User Management */
      USERMANAGEMENT: "User Management",
      ADDUSER: "Add User",

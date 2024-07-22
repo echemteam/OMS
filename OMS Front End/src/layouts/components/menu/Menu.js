@@ -10,6 +10,7 @@ export const Menu = [
     securityKey: securityKey.DASHBOARD,
     children: []
   },
+
   {
     id: "Security",
     name: "Security",
@@ -59,7 +60,7 @@ export const Menu = [
     id: "supplier",
     name: "Supplier Details",
     iconClass: "fa fa-truck",
-    subMenu: true, 
+    subMenu: true,
     to: "#",
     securityKey: securityKey.SUPPLIER,
     children: [
@@ -81,7 +82,7 @@ export const Menu = [
     id: "configuration",
     name: "Configuration",
     iconClass: "fa fa-cog fa-spin",
-    subMenu: true, 
+    subMenu: true,
     to: "#",
     securityKey: securityKey.CONFIGURATION,
     children: [
@@ -97,35 +98,44 @@ export const Menu = [
     id: "apiconfiguration",
     name: "API Configuration",
     iconClass: "fa fa-cog",
-    subMenu: true, 
+    subMenu: true,
     to: "#",
     securityKey: securityKey.APICONFIGURATION,
     children: [
       {
         id: "apiProviders",
         submenuName: "API Providers",
-        to: "/APIProviders", 
+        to: "/APIProviders",
         securityKey: securityKey.APIPROVIDERS,
       },
       {
         id: "apiEndpoints",
         submenuName: "API EndPoints",
-        to: "/APIEndpoints", 
+        to: "/APIEndpoints",
         securityKey: securityKey.APIENDPOINTS,
       },
       {
         id: "apiParameters",
         submenuName: "API Parameters",
-        to: "/APIParameters", 
+        to: "/APIParameters",
         securityKey: securityKey.APIPARAMETERS,
       },
       {
         id: "apiAuthentication",
         submenuName: "API Authentication",
-        to: "/APIAuthentication", 
+        to: "/APIAuthentication",
         securityKey: securityKey.APIAUTHENTICATION,
       },
     ],
+  },
+  {
+    id: "MyTask",
+    name: "My Task",
+    iconClass: "fa fa-clipboard",
+    subMenu: false,
+    to: "/MyTask",
+    securityKey: securityKey.MYTASK,
+    children: []
   },
   {
     name: "Organization",

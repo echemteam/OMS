@@ -124,7 +124,7 @@ const AddEditUser = forwardRef(() => {
   };
 
   return (
-    <div>
+    <div className="mt-2">
       <CardSection
         cardTitle="User Basic Information"
         rightButton={true}
