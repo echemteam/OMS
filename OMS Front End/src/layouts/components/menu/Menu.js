@@ -80,7 +80,7 @@ export const Menu = [
   {
     id: "configuration",
     name: "Configuration",
-    iconClass: "fa fa-cog",
+    iconClass: "fa fa-cog fa-spin",
     subMenu: true, 
     to: "#",
     securityKey: securityKey.CONFIGURATION,
@@ -126,5 +126,14 @@ export const Menu = [
         securityKey: securityKey.APIAUTHENTICATION,
       },
     ],
+  },
+  {
+    name: "Organization",
+    id: "Organization",
+    to: "/Organization",
+    iconClass: "bi bi-file-earmark-medical",
+    subMenu: false,
+    securityKey: securityKey.DASHBOARD,
+    children: []
   },
 ];

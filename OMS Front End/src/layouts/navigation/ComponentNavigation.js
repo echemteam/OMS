@@ -33,6 +33,7 @@ const AddSupplier = React.lazy(() => import('../../pages/supplierDetails/addSupp
 const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/supplierGrid/SupplierGrid'));
 const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/supplierGrid/SupplierViewDetail"));
 
+const Organization = React.lazy(() => import("../../pages/organization/Organization"));
 
 export const ComponentNavigation = [
   {
@@ -320,5 +321,15 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'API Authentication',
     securityKey: securityKey.APIAUTHENTICATION
+  },
+  {
+    id: 'Organization',
+    path: '/Organization',
+    exact: true,
+    title: 'Organization',
+    component: Organization,
+    hasParams: false,
+    text: 'Organization',
+    // securityKey: securityKey.USERMANAGEMENT
   },
 ];

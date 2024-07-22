@@ -35,7 +35,7 @@ getFieldData.propTypes = {
 export const setDropDownOptionField = (apiResponseData, valueField, labelField, formFieldsData, fieldId, filterCondition = null) => {
 
     // Filter the API response data if a filter condition is provided
-    const filteredData = filterCondition ? apiResponseData.filter(filterCondition) : apiResponseData;
+    const filteredData = filterCondition ? apiResponseData?.filter(filterCondition) : apiResponseData;
 
     // Map the filtered data to the required format
     const mappedData = filteredData?.map((item) => ({

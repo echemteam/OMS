@@ -381,7 +381,8 @@ a {
         }
       }
 
-      .middle-page-section {}
+      .middle-page-section {
+      }
     }
   }
 }
@@ -786,8 +787,6 @@ a {
   }
 }
 
-
-
 .main-customer-grid {
   .card-body-sec {
     margin-top: 0;
@@ -847,7 +846,8 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {}
+      .tab-body-section {
+      }
     }
 
     &.vertical-tab {
@@ -913,7 +913,6 @@ a {
         max-height: calc(100vh - 236px);
       }
     }
-
   }
 }
 
@@ -961,7 +960,8 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {}
+        .tab-sub-body-section {
+        }
       }
     }
   }
@@ -1012,7 +1012,7 @@ a {
         max-height: calc(100vh - 300px);
 
         @media only screen and (max-width: 1560px) {
-          max-height: calc(100vh - 265px)
+          max-height: calc(100vh - 265px);
         }
       }
     }
@@ -1101,7 +1101,6 @@ a {
         }
       }
     }
-
   }
 
   .add-desc-part {
@@ -1125,7 +1124,6 @@ a {
           position: relative;
           min-height: 70px;
           height: 100%;
-
 
           .add-line {
             width: 92%;
@@ -1256,9 +1254,11 @@ a {
           display: flex;
           align-items: center;
 
-          .email-sec {}
+          .email-sec {
+          }
 
-          .contact-sec {}
+          .contact-sec {
+          }
         }
 
         .contact-type {
@@ -1311,8 +1311,6 @@ a {
         }
       }
 
-
-
       //
       .contact-card-desc {
         position: relative;
@@ -1341,7 +1339,8 @@ a {
               color: var(--themeColor);
             }
 
-            @media only screen and (max-width: 1560px) {}
+            @media only screen and (max-width: 1560px) {
+            }
           }
 
           .contact-name {
@@ -1491,9 +1490,6 @@ a {
 
 // Contact card End
 
-
-
-
 .contact-type-badge {
   position: absolute;
   padding: 0px 5px;
@@ -1541,7 +1537,6 @@ a {
   &.badge-ap {
     background: var(--disabled-theme);
   }
-
 }
 
 .sidebar-contact-model {
@@ -2123,7 +2118,6 @@ a {
   }
 
   .css-1nmdiq5-menu {
-
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -2335,7 +2329,6 @@ input[type="checkbox"]:disabled {
 }
 
 .primary-icon {
-
   img {
     filter: brightness(100);
   }
@@ -2514,9 +2507,69 @@ input[type="checkbox"]:disabled {
   }
 }
 
+// .organization-tab {
+//   .card-body-sec {
+//     margin-top: 0;
+//   }
+
+//   .tab-section {
+//     margin-bottom: 0;
+
+//     .tab-header {
+//       border-bottom: 1px solid var(--linkMenu);
+
+//       button {
+//         padding: 2px 25px 16px;
+//         border: none;
+//         background: var(--whiteColor);
+//         border-radius: 0px;
+//         font-weight: 600;
+//         font-size: var(--commonFont);
+//         border: none;
+//         border-right: 1px solid var(--whiteColor);
+//         margin-right: 0;
+//         color: var(--textColor);
+
+//         &.active {
+//           margin-bottom: 0;
+//           color: var(--themeColor);
+//           position: relative;
+//           font-size: var(--commonFont);
+//           background: none;
+//           border-bottom: 2px solid var(--themeColor);
+
+//           &:hover {
+//             color: var(--themeColor);
+//           }
+//         }
+
+//         &:hover {
+//           color: var(--textColorLight);
+//         }
+//       }
+//     }
+
+//     .tab-content {
+//       padding-top: 0;
+//     }
+//   }
+
+//   .custom-pass-sec{
+//     position: relative;
+//     .password-hide-show {
+//       position: absolute;
+//       right: 15px;
+//       top: 49%;
+//       transform: translateY(-50%);
+//       img {
+//         width: 20px;
+//       }
+//     }
+//   }
+// }
+
 @media only screen and (max-width: 1560px) {
   .status-dropdown {
-
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
@@ -2875,7 +2928,8 @@ input[type="checkbox"]:disabled {
         }
 
         .card-body-sec {
-          .note-card-sec {}
+          .note-card-sec {
+          }
         }
       }
     }
@@ -2947,12 +3001,11 @@ input[type="checkbox"]:disabled {
           }
         }
 
-
-
         .tab-content {
           // padding-top: 20px;
 
-          .tab-body-section {}
+          .tab-body-section {
+          }
         }
 
         &.vertical-tab {
@@ -3012,11 +3065,11 @@ input[type="checkbox"]:disabled {
     }
   }
 
-
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {}
+    .tab-body-section {
+    }
   }
 
   &.vertical-tab {
@@ -3074,7 +3127,6 @@ input[type="checkbox"]:disabled {
   }
 }
 
-
 .vertical-tab-inner {
   .tab-section {
     display: flex;
@@ -3085,7 +3137,6 @@ input[type="checkbox"]:disabled {
     @media only screen and (max-width: 1560px) {
       height: calc(100vh - 300px);
     }
-
 
     .tab-header {
       display: flex;
@@ -3124,10 +3175,7 @@ input[type="checkbox"]:disabled {
         @media only screen and (max-width: 1560px) {
           padding: 10px 15px 8px;
         }
-
       }
-
-
     }
 
     .tab-content {
@@ -3209,7 +3257,18 @@ input[type="checkbox"]:disabled {
         }
       }
     }
-
+  }
+  .custom-pass-sec{
+    position: relative;
+    .password-hide-show {
+      position: absolute;
+      right: 15px;
+      top: 49%;
+      transform: translateY(-50%);
+      img {
+        width: 20px;
+      }
+    }
   }
 }
 

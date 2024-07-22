@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Image from "../../image/Image";
 import { AppIcons } from "../../../data/appIcons";
 
-const RenderTabs = ({ tabs, isCollapse }) => {
+const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [isCollapsediv, setIsCollapsediv] = useState(false);
@@ -16,6 +17,14 @@ const RenderTabs = ({ tabs, isCollapse }) => {
   const handleCollapseClick = () => {
     setIsCollapsediv(prevState => !prevState);
   };
+
+  useEffect(() => {
+    if (activeTab && isOrganization === true) {
+      onActiveTab(activeTab)
+    } else if (activeTab === 0 && isOrganization === true) {
+      onActiveTab(activeTab)
+    }
+  }, [activeTab])
 
   return (
     <>
@@ -37,7 +46,7 @@ const RenderTabs = ({ tabs, isCollapse }) => {
                 {isCollapse ? (
                   <>
                     <div className="collapse-tab" onClick={handleCollapseClick} title="Collapse Tabs">
-                        <Image imagePath={AppIcons.arrowIcon}/>
+                      <Image imagePath={AppIcons.arrowIcon} />
                     </div>
                   </>
                 ) : null}
