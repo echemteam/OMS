@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types';
 import { OtherSettingsData } from './config/OtherSettings.data';
 import Buttons from '../../../components/ui/button/Buttons';
 import FormCreator from '../../../components/Forms/FormCreator';
 import { useLazyGetAllPaymentTermsQuery } from '../../../app/services/customerSettingsAPI';
 import { setDropDownOptionField } from '../../../utils/FormFields/FieldsSetting/SetFieldSetting';
-import { useAddEditOrganizationOtherSettingsMutation, useLazyGetOrganizationOtherSettingsByIdQuery } from '../../../app/services/organizationAPI';
+import { useAddEditOrganizationOtherSettingsMutation, useLazyGetOrganizationOtherSettingsQuery } from '../../../app/services/organizationAPI';
 import ToastService from '../../../services/toastService/ToastService';
 import { ErrorMessage } from '../../../data/appMessages';
 import DataLoader from '../../../components/ui/dataLoader/DataLoader';
-// import { onResetForm } from '../../../utils/FormFields/ResetForm/handleResetForm';
 
 const OtherSettings = (props) => {
     const otherSetting = useRef();
@@ -18,7 +18,7 @@ const OtherSettings = (props) => {
     const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
 
     const [addEditOrganizationOtherSettings, { isLoading: isAddEditOrganizationOtherSettingsLoading, isSuccess: isAddEditOrganizationOtherSettingsSuccess, data: isAddEditOrganizationOtherSettingsData }] = useAddEditOrganizationOtherSettingsMutation();
-    const [getOrganizationOtherSettingsById, { isFetching: isOrganizationOtherSettingsByIdFetching, isSuccess: isOrganizationOtherSettingsByIdSuccess, data: isOrganizationOtherSettingsByIdData }] = useLazyGetOrganizationOtherSettingsByIdQuery();
+    const [getOrganizationOtherSettings, { isFetching: isGetOrganizationOtherSettingsFetching, isSuccess: isGetOrganizationOtherSettingsSuccess, data: isGetOrganizationOtherSettingsData }] = useLazyGetOrganizationOtherSettingsQuery();
 
     useEffect(() => {
         getAllPaymentTerms();
@@ -71,33 +71,29 @@ const OtherSettings = (props) => {
     }
 
     useEffect(() => {
-        if (props.organizationOtherSettingId > 0) {
-            getOrganizationOtherSettingsById(props.organizationOtherSettingId)
-        } else if (props.smtpSettingId === 0 && props.activeTabId === 2) {
-            ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "SMTP Settings Data"))
-        }
-    }, [props.organizationOtherSettingId, props.activeTabId])
+        // if (props.organizationOtherSettingId > 0) {
+            getOrganizationOtherSettings()
+        // } else if (props.smtpSettingId === 0 && props.activeTabId === 2) {
+        //     ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "SMTP Settings Data"))
+        // }
+    }, [props.activeTabId])
 
     useEffect(() => {
-        if (!isOrganizationOtherSettingsByIdFetching && isOrganizationOtherSettingsByIdSuccess && isOrganizationOtherSettingsByIdData) {
+        if (!isGetOrganizationOtherSettingsFetching && isGetOrganizationOtherSettingsSuccess && isGetOrganizationOtherSettingsData) {
             let formData = { ...OtherSettingsData };
             formData.initialState = {
-                paymentTermId: isOrganizationOtherSettingsByIdData.defaultPaymentTerms,
-                fedexAccountDetail: isOrganizationOtherSettingsByIdData.fedexAccountDetail,
+                paymentTermId: isGetOrganizationOtherSettingsData.defaultPaymentTerms,
+                fedexAccountDetail: isGetOrganizationOtherSettingsData.fedexAccountDetail,
             };
             setOtherSettingData(formData);
+            props.onHandleOrganizationOtherSetting(isGetOrganizationOtherSettingsData.organizationOtherSettingId)
             setShouldRerenderFormCreator((prevState) => !prevState);
         }
-    }, [isOrganizationOtherSettingsByIdFetching, isOrganizationOtherSettingsByIdSuccess, isOrganizationOtherSettingsByIdData,]);
-
-
-    // const onHandleReset = () => {
-    //     onResetForm(OtherSettingsData, setOtherSettingData, null);
-    // }
+    }, [isGetOrganizationOtherSettingsFetching, isGetOrganizationOtherSettingsSuccess, isGetOrganizationOtherSettingsData,]);
 
     return (
         <div className="row mt-2 add-address-form">
-            {!isOrganizationOtherSettingsByIdFetching ?
+            {!isGetOrganizationOtherSettingsFetching ?
                 <FormCreator config={otherSettingData}
                     ref={otherSetting}
                     {...otherSettingData}
@@ -113,15 +109,18 @@ const OtherSettings = (props) => {
                         isLoading={isAddEditOrganizationOtherSettingsLoading}
                     // isDisable={isButtonDisable} 
                     />
-                    {/* <Buttons
-                        buttonTypeClassName="dark-btn ml-5"
-                        buttonText="Cancel"
-                        onClick={onHandleReset}
-                    /> */}
                 </div>
             </div>
         </div>
     )
 }
+
+OtherSettings.propTypes = {
+    activeTabId: PropTypes.number.isRequired,
+    organizationId: PropTypes.number,
+    smtpSettingId: PropTypes.number,
+    organizationOtherSettingId: PropTypes.number,
+    onHandleOrganizationOtherSetting: PropTypes.func.isRequired
+};
 
 export default OtherSettings
