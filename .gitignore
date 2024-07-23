@@ -49,3 +49,4 @@ OMS.API/OMS.Domain.Entities/bin/Release/net8.0/*
 OMS.API/OMS.FileManger.Services/bin/Release/net8.0/*
 OMS.API/OMS.Framework/bin/Release/net8.0/*
 OMS.API/.sonarqube/*
+OMS Front End/.scannerwork/*
