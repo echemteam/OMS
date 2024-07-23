@@ -225,10 +225,10 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
 
-        [HttpGet("GetAllSubCustomer")]
-        public async Task<IActionResult> GetAllSubCustomer()
+        [HttpGet("GetAllApproveCustomerForLinking")]
+        public async Task<IActionResult> GetAllApproveCustomerForLinking()
         {
-            List<GetAllSubCustomerResponse> responseData = await _serviceManager.commonServices.GetAllSubCustomer().ConfigureAwait(true);
+            List<GetAllApproveCustomerForLinkingResponse> responseData = await _serviceManager.commonServices.GetAllApproveCustomerForLinking().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
     }
