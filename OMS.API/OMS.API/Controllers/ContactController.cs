@@ -36,7 +36,7 @@ namespace OMS.API.Controllers
         [HttpGet("GetContactByCustomerId")]
         public async Task<IActionResult> GetContactByCustomerId(int customerId,string? searchText,string? searchContactType)
         {                                                                             
-            List<GetContactByCustomerIdResponse> responseData = await _serviceManager.contactService.GetContactByCustomerId(customerId,searchText,searchContactType).ConfigureAwait(true);
+            List<GetContactByCustomerIdResponse> responseData = await _serviceManager.contactService.GetContactByCustomerId(customerId,searchText!,searchContactType!).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
 

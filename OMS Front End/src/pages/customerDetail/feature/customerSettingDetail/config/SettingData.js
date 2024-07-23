@@ -33,6 +33,11 @@ export const SettingFormData = {
         allowSpace: true,
         minLength: 0,
         maxLength: 6,
+        masking: {
+          isMasking: true,
+          maskingType: 'currency',
+          countryCode: 'USD'
+        }
       },
       validation: [{ type: "require" }],
       style: {
@@ -91,7 +96,7 @@ export const SettingFormData = {
     },
     {
       id: "salesTax",
-      lable: "Sales TAX",
+      lable: "Sales TAX (%)",
       Field_Name: "Sales TAX",
       fieldType: FormFieldTypes.NUMERIC,
       dataField: "salesTax",
@@ -105,13 +110,13 @@ export const SettingFormData = {
       },
     },
     {
-      id: "bankFee",
-      lable: "Bank Fee",
-      Field_Name: "Bank Fee",
+      id: "bankWireFee",
+      lable: "Bank Wire Fee ($)",
+      Field_Name: "Bank Wire Fee",
       fieldType: FormFieldTypes.NUMERIC,
-      dataField: "bankFee",
+      dataField: "bankWireFee",
       fieldSetting: {
-        placeholder: "Enter Bank Fee"
+        placeholder: "Enter Bank Wire Fee"
       },
       validation: [{ type: "require" }],
       style: {
@@ -121,7 +126,7 @@ export const SettingFormData = {
     },
     {
       id: "cardProcessingCharges",
-      lable: "Card Processing Charges",
+      lable: "Card Processing Charges (%)",
       Field_Name: "Card Processing Charges",
       fieldType: FormFieldTypes.NUMERIC,
       dataField: "cardProcessingCharges",

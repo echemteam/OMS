@@ -19,7 +19,7 @@ const AddressDetailCard = forwardRef(
     showEditIcon,
     getAddresssByCustomerId,
     getByIdRef,
-    selectedAddressTypeId
+    selectedAddressTypeId,
   }) => {
     //** States */
     const [addressData, setAddressData] = useState([]);
@@ -42,7 +42,7 @@ const AddressDetailCard = forwardRef(
     //** Use Effect */
     useEffect(() => {
       keyId && getById(keyId);
-    }, [keyId , selectedAddressTypeId]);
+    }, [keyId, selectedAddressTypeId]);
 
     useEffect(() => {
       if (
@@ -50,7 +50,11 @@ const AddressDetailCard = forwardRef(
         isGetAddresssByCustomerId &&
         GetAddresssByCustomerIdData
       ) {
-        const filteredData = selectedAddressTypeId[0] ? GetAddresssByCustomerIdData.filter(address => address.addressTypeId === selectedAddressTypeId[0]): GetAddresssByCustomerIdData;
+        const filteredData = selectedAddressTypeId[0]
+          ? GetAddresssByCustomerIdData.filter(
+              (address) => address.addressTypeId === selectedAddressTypeId[0]
+            )
+          : GetAddresssByCustomerIdData;
         setAddressData(filteredData);
       }
     }, [
@@ -59,7 +63,6 @@ const AddressDetailCard = forwardRef(
       GetAddresssByCustomerIdData,
     ]);
 
-
     //** Handle Changes */
     const handleGetAddress = () => {
       keyId && getById(keyId);
@@ -67,7 +70,6 @@ const AddressDetailCard = forwardRef(
     const handleEdit = (data) => {
       onHandleEditAddress(data);
     };
-
 
     //** Use Imperative Handle */
     useImperativeHandle(getByIdRef, () => ({
@@ -87,13 +89,24 @@ const AddressDetailCard = forwardRef(
       switch (type) {
         case "Primary":
           return "badge-primary contact-badge";
-
+        // Shipping Start
+        case "Bank Address":
+          return "badge-primary contact-badge";
+        // Shipping End
         case "Billing":
           return "badge-purchasing contact-badge";
 
+        // Shipping Start
+        case "Physical Address- HQ":
+          return "badge-purchasing contact-badge";
+        // Shipping End
+
         case "Shipping":
           return "badge-followup contact-badge";
-
+        // Shipping Start
+        case "Remittance Address":
+          return "badge-followup contact-badge";
+        // Shipping End
         case "AP":
           return "badge-ap contact-badge";
 
@@ -109,36 +122,33 @@ const AddressDetailCard = forwardRef(
             <div className="add-desc-part">
               <div className="address-card-list">
                 {addressData.map((address, addrIndex) => (
-                  <div
-                    className="address-main-card-section"
-                    key={addrIndex}
-                  >
-
+                  <div className="address-main-card-section" key={addrIndex}>
                     <div className="address-card">
                       {((address.isPreferredBilling &&
                         address.addressTypeId === 1) ||
                         (address.isPreferredShipping &&
                           address.addressTypeId === 2)) && (
-                          <div className="status-desc">
-                            <span className="field-info active-green-color">
-                              {address.isPreferredBilling &&
-                                address.addressTypeId === 1
-                                ? "Preferred Billing"
-                                : address.isPreferredShipping &&
-                                  address.addressTypeId === 2
-                                  ? "Preferred Shipping"
-                                  : ""}
-                            </span>
-                          </div>
-                        )}
+                        <div className="status-desc">
+                          <span className="field-info active-green-color">
+                            {address.isPreferredBilling &&
+                            address.addressTypeId === 1
+                              ? "Preferred Billing"
+                              : address.isPreferredShipping &&
+                                address.addressTypeId === 2
+                              ? "Preferred Shipping"
+                              : ""}
+                          </span>
+                        </div>
+                      )}
                       <div
-                        className={`add-line ${(address.isPreferredBilling &&
+                        className={`add-line ${
+                          (address.isPreferredBilling &&
                             address.addressTypeId === 1) ||
-                            (address.isPreferredShipping &&
-                              address.addressTypeId === 2)
+                          (address.isPreferredShipping &&
+                            address.addressTypeId === 2)
                             ? ""
                             : ""
-                          }`}
+                        }`}
                       >
                         <span className="label-txt">
                           {address.addressLine1}
@@ -162,7 +172,11 @@ const AddressDetailCard = forwardRef(
                           </button>
                         ) : null}
                       </div>
-                      <div className={`contact-type-badge ${getAddressTypeClass(address.type)}`}>
+                      <div
+                        className={`contact-type-badge ${getAddressTypeClass(
+                          address.type
+                        )}`}
+                      >
                         {address.type}
                       </div>
                     </div>

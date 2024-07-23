@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 //** Lib's */
+import PropTypes from 'prop-types';
 import { ErrorMessage } from "../../../../../data/appMessages";
 import useDebounce from "../../../../../app/customHooks/useDebouce";
 import CardSection from "../../../../../components/ui/card/CardSection";
@@ -251,6 +252,10 @@ const InActiveSupplierTab = ({ statusId }) => {
       </SupplierListContext.Provider>
     </>
   );
+};
+
+InActiveSupplierTab.propTypes = {
+  statusId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
 export default InActiveSupplierTab;

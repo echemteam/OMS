@@ -11,6 +11,6 @@
         public decimal? SalesTax { get; set; }
         public bool? ExemptSalesTax { get; set; }
         public decimal? CardProcessingCharges { get; set; }
-        public decimal? BankFee { get; set; }
+        public decimal? BankWireFee { get; set; }
     }
 }

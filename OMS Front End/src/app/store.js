@@ -31,6 +31,7 @@ import apiEndPointsAPI from './services/apiEndPointsAPI';
 import apiParametersAPI from './services/apiParametersAPI';
 import apiAuthenticationAPI from './services/apiAuthenticationAPI';
 import customerSubCustomerAPI from './services/customerSubCustomerAPI';
+import organizationAPI from './services/organizationAPI';
 
 export const store = configureStore({
   reducer: {
@@ -62,6 +63,7 @@ export const store = configureStore({
     [apiParametersAPI.reducerPath]:apiParametersAPI.reducer,
     [apiAuthenticationAPI.reducerPath]:apiAuthenticationAPI.reducer,
     [customerSubCustomerAPI.reducerPath]:customerSubCustomerAPI.reducer,
+    [organizationAPI.reducerPath]:organizationAPI.reducer,
 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
@@ -92,6 +94,7 @@ export const store = configureStore({
     apiParametersAPI.middleware,
     apiAuthenticationAPI.middleware,
     customerSubCustomerAPI.middleware,
+    organizationAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);

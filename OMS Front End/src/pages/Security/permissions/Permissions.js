@@ -79,6 +79,7 @@ const Permissions = () => {
   return (
     <React.Fragment>
       <SecurityPermissionsContext.Provider value={{ togglePermissionCard, selectedRoleId, childRef }}>
+        <div className="mt-2">
         <CardSection
           cardTitle="Select Group"
           rightButton={true}
@@ -110,6 +111,7 @@ const Permissions = () => {
             </div>
           </div>
         </CardSection>
+        </div>
         <ManagePermission />
       </SecurityPermissionsContext.Provider>
     </React.Fragment>

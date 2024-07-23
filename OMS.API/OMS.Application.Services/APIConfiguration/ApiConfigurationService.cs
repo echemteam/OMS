@@ -70,7 +70,7 @@ namespace OMS.Application.Services.APIConfiguration
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiEndpoint.DeleteApiEndpoint(endpointId, deletedBy);
         }
-        public async Task<EntityList<GetApiEndpointsResponse>> GetApiEndpoints(ListEntityRequest<BaseFilter> requestData)
+        public async Task<EntityList<GetApiEndpointsResponse>> GetApiEndpoints(GetApiEndpointsRequest requestData)
         {
             var endpointsDetails = await repositoryManager.apiEndpoint.GetApiEndpoints(requestData);
             return endpointsDetails!;
@@ -91,7 +91,7 @@ namespace OMS.Application.Services.APIConfiguration
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiParameter.DeleteApiParameter(parameterId, deletedBy);
         }
-        public async Task<EntityList<GetApiParametersResponse>> GetApiParameters(ListEntityRequest<BaseFilter> requestData)
+        public async Task<EntityList<GetApiParametersResponse>> GetApiParameters(GetApiParametersRequest requestData)
         {
             var parametersDetails = await repositoryManager.apiParameter.GetApiParameters(requestData);
             return parametersDetails!;
@@ -111,7 +111,7 @@ namespace OMS.Application.Services.APIConfiguration
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiAuthentication.DeleteApiAuthentication(authId, deletedBy);
         }
-        public async Task<EntityList<GetApiAuthenticationsResponse>> GetApiAuthentications(ListEntityRequest<BaseFilter> requestData)
+        public async Task<EntityList<GetApiAuthenticationsResponse>> GetApiAuthentications(GetApiAuthenticationsRequest requestData)
         {
             var parametersDetails = await repositoryManager.apiAuthentication.GetApiAuthentications(requestData);
             return parametersDetails!;

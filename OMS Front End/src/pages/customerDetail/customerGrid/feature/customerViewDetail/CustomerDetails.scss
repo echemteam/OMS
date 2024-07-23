@@ -55,7 +55,7 @@
         }
 
         .right-action-icon {
-          position: relative;
+          
           cursor: pointer;
 
           img {
@@ -103,7 +103,7 @@
           }
 
           .customer-detail-model {
-            min-width: 300px;
+            min-width: 100%;
             padding: 10px;
             background: #ffffff;
             border-radius: 5px;
@@ -250,11 +250,23 @@
                         align-items: flex-start;
 
                         .contact-type-icon {
-                          margin-right: 7px;
+                          margin-right: 5px;
+                          width: 15px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          i{
+                            font-size: 14px;
+                          }
                         }
 
                         .number-list {
                           display: flex;
+                          align-items: center;
+                          margin-top: 2px;
+                          &:last-child{
+                            margin-top: 0;
+                          }
                         }
                       }
 
@@ -268,6 +280,13 @@
                             width: 15px;
                             height: 15px;
                             text-align: center;
+                            span{
+                              &.contact-type-icon{
+                                .fa-mobile{
+                                  font-size: 17px;
+                                }
+                              }
+                            }
                           }
                         }
                       }

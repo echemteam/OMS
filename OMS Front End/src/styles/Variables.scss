@@ -25,8 +25,15 @@
   --blackColor: #000;
   --cardborderColor: #e0e0e0;
   --tabBgColor: #dcdde0;
-  // Stiky Background Start
 
+  --sidebarColor: #2f3349;
+  --sidebarHoverColor: #393d53;
+  --sidebarTextColor: #c6c3db;
+  --sidebarHoverTextColor: #fff;
+  --sidebarActiveTextColor: #fff;
+  --sidebarActiveMenuColor: #4e536b;
+
+  // Stiky Background Start
   --lightBlue: #e2f1ff;
   --lightGreen: #e4f9e0;
   --lightYellow: #fff7d1;
@@ -44,19 +51,20 @@
   --gradient-info: linear-gradient(to right, #90caf9, var(--infoColor));
   --gradient-success: linear-gradient(to right, #7ec6c0, var(--successColor));
 
+  --gradient-sidebar: linear-gradient(270deg,rgba(115, 103, 240, 0.7) 0%,#7367f0 100%);
+
   --white-card-shadow: 0px 0px 24px rgba(27, 46, 94, 0.05);
   --card-shadow: 0px 8px 24px rgba(27, 46, 94, 0.12);
-  --pending-theme: #e2b70b;
+  --pending-theme: #e1b505;
   --blocked-theme: #000000;
   --frozen-theme: #ff672a;
   --approved-theme: #32cd32;
   --submitted-theme: #007bff;
   --disabled-theme: #808080;
   --PrimaryColor: #00b100;
-  --reject-color: #DC3545;
+  --reject-color: #dc3545;
   --submission-color: #4ccebf;
   // Bg-Gradient Color End
-
 
   // Font-styling
   --commonFont-2extraLarge: 21px;
@@ -69,7 +77,6 @@
 }
 
 // Variable Styling End
-
 
 // Media Query Start
 @media only screen and (max-width: 1560px) {

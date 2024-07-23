@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 //** Lib's */
@@ -408,5 +409,20 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
     </div>
   )
 }
+
+SupplierList.propTypes = {
+  statusId: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
+  configFile: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  search: PropTypes.string.isRequired,
+  handleChangeDropdown: PropTypes.func.isRequired,
+  statusOptions: PropTypes.array.isRequired,
+  selectedDrpvalues: PropTypes.array.isRequired,
+  selectedStatusOptions: PropTypes.array.isRequired,
+  searchStatusFilter: PropTypes.array.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  handleClear: PropTypes.func.isRequired,
+  shouldRerenderFormCreator: PropTypes.bool.isRequired,
+};
 
 export default SupplierList

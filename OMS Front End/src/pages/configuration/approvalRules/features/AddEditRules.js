@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from 'prop-types';
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import {
@@ -291,6 +292,29 @@ const AddEditRules = (props) => {
       </div>
     </div>
   );
+};
+
+AddEditRules.propTypes = {
+  getApprovedConfigData: PropTypes.arrayOf(
+    PropTypes.shape({
+      approvalConfigurationId: PropTypes.number.isRequired,
+      approvalAction: PropTypes.string.isRequired,
+      functionalitiesFieldId: PropTypes.number.isRequired,
+      functionalityId: PropTypes.number.isRequired,
+      moduleId: PropTypes.number.isRequired,
+      approverRoleId: PropTypes.number.isRequired,
+      ruleName: PropTypes.string.isRequired,
+    })
+  ),
+  rulesFormData: PropTypes.object.isRequired,
+  setFormData: PropTypes.func.isRequired,
+  selectedFunctionalityId: PropTypes.number.isRequired,
+  selectedModuleId: PropTypes.number.isRequired,
+  handleRepeatCallRule: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  formData: PropTypes.object.isRequired,
+  allGetAllFunctionalitiesData: PropTypes.array,
+  allGetAllFunctionalitiesFieldsData: PropTypes.array,
 };
 
 export default AddEditRules;

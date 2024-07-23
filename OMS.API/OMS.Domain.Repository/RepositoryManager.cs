@@ -37,6 +37,9 @@ namespace OMS.Domain.Repository
         IApiEndpointRepository _apiEndpointRepository;
         IApiParameterRepository _apiParameterRepository;
         IApiAuthenticationRepository _apiAuthenticationRepository;
+        IOrganizationRepository _organizationRepository;
+        IOrganizationOtherSettingsRepository _organizationOtherSettingsRepository;
+        ISmtpSettingsRepository _smtpSettingsRepository;
 
         public ITestRepository test
         {
@@ -280,7 +283,7 @@ namespace OMS.Domain.Repository
                 return _apiProviderRepository;
             }
         }
-        public IApiEndpointRepository apiEndpoint 
+        public IApiEndpointRepository apiEndpoint
         {
             get
             {
@@ -312,6 +315,41 @@ namespace OMS.Domain.Repository
                 }
                 return _apiAuthenticationRepository;
             }
+        }
+        public IOrganizationRepository organization
+        {
+            get
+            {
+                if (_organizationRepository == null)
+                {
+                    _organizationRepository = new OrganizationRepository(_context);
+                }
+                return _organizationRepository;
+            }
+        }
+        public IOrganizationOtherSettingsRepository organizationOtherSettings
+        {
+            get
+            {
+                if (_organizationOtherSettingsRepository == null)
+                {
+                    _organizationOtherSettingsRepository = new OrganizationOtherSettingsRepository(_context);
+                }
+                return _organizationOtherSettingsRepository;
+            }
+        }
+
+        public ISmtpSettingsRepository smtpSettings 
+        {
+            get
+            {
+                if (_smtpSettingsRepository == null)
+                {
+                    _smtpSettingsRepository = new SmtpSettingsRepository(_context);
+                }
+                return _smtpSettingsRepository;
+            }
+
         }
     }
 }
