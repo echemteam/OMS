@@ -30,7 +30,7 @@ const Sidebar = (props) => {
           </Link>
           <div className="sidebar-menu">
             <ul className="sidebar-menu-list">
-              {Menu.map((group, groupIndex) => (
+              {Menu?.map((group, groupIndex) => (
                 <div key={groupIndex} className="menu-group">
                   <div className="group-label">{group.groupLabel}</div>
                   {group.items.map((menuItem, index) => (

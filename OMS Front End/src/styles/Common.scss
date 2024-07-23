@@ -364,6 +364,7 @@ a {
                         justify-content: center;
                         padding: 10px;
 
+
                         &.menu-arrow {
                           &::before {
                             display: none;
@@ -378,13 +379,21 @@ a {
                       }
 
                       .sidebar-dropdown {
+                        display: none;
+                        opacity: 0;
+                        transition: all 1s ease-in-out;
+                      }
+                      &:hover{
+                      .sidebar-dropdown {
                         display: block;
+                        opacity: 1;
                         opacity: 1;
                         // position: absolute;
                         z-index: 999;
+                        transition: all 1s ease-in-out;
                         min-width: 245px;
                         background: transparent;
-                        left: 0;
+                        left: 11px;
                         
                         .collapse-dropdown{
                           background-color: #2f3349af;
@@ -398,6 +407,7 @@ a {
                           }
                         }
                       }
+                    }
                     }
                   }
                 }

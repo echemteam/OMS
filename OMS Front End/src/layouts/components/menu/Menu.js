@@ -26,7 +26,7 @@ export const Menu = [
         name: "Organization",
         id: "Organization",
         to: "/Organization",
-        iconClass: "fa fa-building-o",
+        iconClass: "bi bi-file-earmark-medical",
         subMenu: false,
         securityKey: securityKey.DASHBOARD,
         children: []
@@ -81,63 +81,77 @@ export const Menu = [
         ],
       },
       {
-        id: "Suppliers",
-        submenuName: "Supplier",
-        to: "/Suppliers",
-        securityKey: securityKey.SUPPLIERLIST,
+        id: "supplier",
+        name: "Supplier Details",
+        iconClass: "fa fa-truck",
+        subMenu: true,
+        to: "#",
+        securityKey: securityKey.SUPPLIER,
+        children: [
+          {
+            id: "addSupplier",
+            submenuName: "Add Supplier",
+            to: "/addSupplier",
+            securityKey: securityKey.ADDSUPPLIER,
+          },
+          {
+            id: "Suppliers",
+            submenuName: "Supplier",
+            to: "/Suppliers",
+            securityKey: securityKey.SUPPLIERLIST,
+          },
+        ],
       },
-    ],
-  },
-  {
-    id: "configuration",
-    name: "Configuration",
-    iconClass: "fa fa-cog fa-spin",
-    subMenu: true,
-    to: "#",
-    securityKey: securityKey.CONFIGURATION,
-    children: [
       {
-        id: "approvalRules",
-        submenuName: "Approval Rules",
-        to: "/ApprovalRules",
-        securityKey: securityKey.APPROVALRULES,
+        id: "configuration",
+        name: "Configuration",
+        iconClass: "fa fa-cog fa-spin",
+        subMenu: true,
+        to: "#",
+        securityKey: securityKey.CONFIGURATION,
+        children: [
+          {
+            id: "approvalRules",
+            submenuName: "Approval Rules",
+            to: "/ApprovalRules",
+            securityKey: securityKey.APPROVALRULES,
+          },
+        ],
       },
-    ],
-  },
-  {
-    id: "apiconfiguration",
-    name: "API Configuration",
-    iconClass: "fa fa-cog",
-    subMenu: true,
-    to: "#",
-    securityKey: securityKey.APICONFIGURATION,
-    children: [
       {
-        id: "apiProviders",
-        submenuName: "API Providers Management",
-        to: "/APIProviders",
-        securityKey: securityKey.APIPROVIDERS,
+        id: "apiconfiguration",
+        name: "API Configuration",
+        iconClass: "fa fa-cog fa-spin",
+        subMenu: true,
+        to: "#",
+        securityKey: securityKey.APICONFIGURATION,
+        children: [
+          {
+            id: "apiProviders",
+            submenuName: "API Providers",
+            to: "/APIProviders",
+            securityKey: securityKey.APIPROVIDERS,
+          },
+          {
+            id: "apiEndpoints",
+            submenuName: "API EndPoints",
+            to: "/APIEndpoints",
+            securityKey: securityKey.APIENDPOINTS,
+          },
+          {
+            id: "apiParameters",
+            submenuName: "API Parameters",
+            to: "/APIParameters",
+            securityKey: securityKey.APIPARAMETERS,
+          },
+          {
+            id: "apiAuthentication",
+            submenuName: "API Authentication",
+            to: "/APIAuthentication",
+            securityKey: securityKey.APIAUTHENTICATION,
+          },
+        ],
       },
-    
-
-    ],
-  },
-  {
-    id: "MyTask",
-    name: "My Task",
-    iconClass: "fa fa-clipboard",
-    subMenu: false,
-    to: "/MyTask",
-    securityKey: securityKey.MYTASK,
-    children: []
-  },
-  {
-    name: "Organization",
-    id: "Organization",
-    to: "/Organization",
-    iconClass: "bi bi-file-earmark-medical",
-    subMenu: false,
-    securityKey: securityKey.DASHBOARD,
-    children: []
-  },
+    ]
+  }
 ];
