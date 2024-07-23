@@ -90,13 +90,20 @@ const ContactGrid = ({
       const contactOption = getFieldData(contactDetailFormData, "contactTypeId");
       setContactType(contactOption?.fieldSetting?.options);
       setTabContactType(modifyContactType(allGetAllContactTypesData));
-    }
+          }
   }, [isGetAllContactTypesSucess, allGetAllContactTypesData]);
+
+  useEffect(() => {
+    if (search === "") {
+      onGetContactList();
+    }
+  }, [search]);
 
   //** Handle Change's */
   const handleChange = (event) => {
     setSearch(event.target.value.trim());
   };
+
   const onhandleSearch = () => {
     if (search.length >= 3 || selectedDrpvalues.length > 0) {
       onGetContactList();
@@ -129,6 +136,7 @@ const ContactGrid = ({
     } else {
       setSelectedDrpvalues("");
     }
+
   };
 
   const handleEdit = (contactId) => {
@@ -145,7 +153,7 @@ const ContactGrid = ({
       searchText: search,
       contactType: Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues),
     };
-    if (getListRef.current) {
+        if (getListRef.current) {
       getListRef.current.callChildListFunction(request);
     }
   };
@@ -161,26 +169,7 @@ const ContactGrid = ({
     onGetContactList();
   };
 
-  useEffect(() => {
-    if (search === "" && selectedDrpvalues === "") {
-      // onGetContactList();
-    }
-  }, [search, selectedDrpvalues]);
-
-
   const components = [
-    (contactTypeId) => (
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-        />
-      </div>
-    ),
     (contactTypeId) => <div className="mt-2">
       <div className="mt-2">
         <ContactList
@@ -190,9 +179,11 @@ const ContactGrid = ({
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
+          search={search}
         />
       </div>
-    </div>,
+    </div>
+    ,
     (contactTypeId) => <div className="mt-2">
       <div className="mt-2">
         <ContactList
@@ -202,6 +193,7 @@ const ContactGrid = ({
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
+          search={search}
         />
       </div>
     </div>,
@@ -214,6 +206,7 @@ const ContactGrid = ({
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
+          search={search}
         />
       </div>
     </div>,
@@ -226,6 +219,7 @@ const ContactGrid = ({
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
+          search={search}
         />
       </div>
     </div>,
@@ -238,6 +232,7 @@ const ContactGrid = ({
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
+          search={search}
         />
       </div>
     </div>,
@@ -250,6 +245,20 @@ const ContactGrid = ({
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
+          search={search}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+          search={search}
         />
       </div>
     </div>
