@@ -7,7 +7,7 @@ export const SMTPSettingsData = {
         {
             id: "emailProvider",
             lable: "Email Provider  ",
-            Field_Name: "emailProvider",
+            Field_Name: "Email Provider",
             fieldType: FormFieldTypes.INPUT,
             dataField: "emailProvider",
             fieldSetting: {
@@ -23,12 +23,13 @@ export const SMTPSettingsData = {
         {
             id: "smtpServer",
             lable: "Server",
-            Field_Name: "smtpServer",
+            Field_Name: "Server",
             fieldType: FormFieldTypes.INPUT,
             dataField: "smtpServer",
             fieldSetting: {
                 placeholder: "Enter Server",
                 allowSpace: true,
+                maxLength: 255,
             },
             validation: [{ type: "require" }],
             style: {
@@ -38,7 +39,7 @@ export const SMTPSettingsData = {
         {
             id: "smtpPort",
             lable: "Port",
-            Field_Name: "smtpPort",
+            Field_Name: "Port",
             fieldType: FormFieldTypes.NUMERIC,
             dataField: "smtpPort",
             fieldSetting: {
@@ -53,7 +54,7 @@ export const SMTPSettingsData = {
         {
             id: "smtpUserName",
             lable: "User Name",
-            Field_Name: "smtpUserName",
+            Field_Name: "User Name",
             fieldType: FormFieldTypes.INPUT,
             dataField: "smtpUserName",
             fieldSetting: {
@@ -68,7 +69,7 @@ export const SMTPSettingsData = {
         {
             id: "smtpPassword",
             lable: "Password ",
-            Field_Name: "smtpPassword",
+            Field_Name: "Password",
             fieldType: FormFieldTypes.PASSWORD,
             dataField: "smtpPassword",
             fieldSetting: {

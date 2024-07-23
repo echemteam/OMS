@@ -4,6 +4,7 @@ import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSup
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Component's */
 import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
+import SupplierSettingDetail from "../../financialSettings/FinancialSettings";
 const SupplierHistory = React.lazy(() => import("../../supplierHistoryDetail/SupplierHistory"));
 const SupplierNoteDetail = React.lazy(() => import("../../supplierNoteDetail/SupplierNoteDetail"));
 const SupplierContactDetail = React.lazy(() => import("../../supplierContactDetail/SupplierContactDetail"));
@@ -35,6 +36,15 @@ const SupplierViewTab = (supplierId) => {
             component: (
                 <div className="mt-2 contact-accrodiaon-scroll contact-card-section-new">
                     <SupplierContactDetail isEditablePage={true} isSearchFilterShow={true} />
+                </div>
+            ),
+            isVisible: hasContactPermission.hasAccess,
+        },
+        {
+            sMenuItemCaption: "Financial Settings",
+            component: (
+                <div className="mt-2 supplier-setting-sec">
+                    <SupplierSettingDetail/>
                 </div>
             ),
             isVisible: hasContactPermission.hasAccess,

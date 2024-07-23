@@ -7,11 +7,11 @@ namespace OMS.Application.Services.Organization
     public interface IOrganizationService
     {
         Task<AddEntityDTO<int>> AddEditOrganizationProfile(AddEditOrganizationProfileRequest requestData, short CurrentUserId);
-        Task<GetOrganizationProfileByOrganizationIdResponse> GetOrganizationProfileByOrganizationId(byte organizationId);
+        Task<GetOrganizationProfileResponse> GetOrganizationProfile();
         Task<AddEntityDTO<int>> AddEditSmtpSettings(AddEditSmtpSettingsRequest requestData, short CurrentUserId);
-        Task<GetSmtpSettingsBySmtpSettingIdResponse> GetSmtpSettingsBySmtpSettingId(short smtpSettingId);
+        Task<GetSmtpSettingsResponse> GetSmtpSettings();
         Task<AddEntityDTO<int>> AddEditOrganizationOtherSettings(AddEditOrganizationOtherSettingsRequest requestData, short CurrentUserId);
-        Task<GetOrganizationOtherSettingsByIdResponse> GetOrganizationOtherSettingsById(int organizationOtherSettingId);
+        Task<GetOrganizationOtherSettingsResponse> GetOrganizationOtherSettings();
 
     }
 }

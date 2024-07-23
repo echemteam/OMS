@@ -12,7 +12,7 @@ namespace OMS.Domain.Repository.Implementation
     {
         #region SP Name
         const string ADDEDITORGANIZATIONOTHERSETTINGS = "AddEditOrganizationOtherSettings";
-        const string GETORGANIZATIONOTHERSETTINGSBYID = "GetOrganizationOtherSettingsById";
+        const string GETORGANIZATIONOTHERSETTINGS = "GetOrganizationOtherSettings";
         #endregion
 
         public OrganizationOtherSettingsRepository(DapperContext dapperContext) : base(dapperContext)
@@ -31,12 +31,9 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
-        public async Task<GetOrganizationOtherSettingsByIdResponse> GetOrganizationOtherSettingsById(int organizationOtherSettingId)
+        public async Task<GetOrganizationOtherSettingsResponse> GetOrganizationOtherSettings()
         {
-            GetOrganizationOtherSettingsByIdResponse organizationProfileDetails = await _context.GetFrist<GetOrganizationOtherSettingsByIdResponse>(GETORGANIZATIONOTHERSETTINGSBYID, new
-            {
-                organizationOtherSettingId
-            }, CommandType.StoredProcedure);
+            GetOrganizationOtherSettingsResponse organizationProfileDetails = await _context.GetFrist<GetOrganizationOtherSettingsResponse>(GETORGANIZATIONOTHERSETTINGS, CommandType.StoredProcedure);
             return organizationProfileDetails;
         }
         #endregion
