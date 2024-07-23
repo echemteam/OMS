@@ -155,9 +155,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllAPIEndpoints();
         }
-        public Task<List<GetAllApproveCustomerForLinkingResponse>> GetAllApproveCustomerForLinking()
+        public Task<List<GetAllApproveCustomerForLinkingResponse>> GetAllApproveCustomerForLinking(int customerId)
         {
-            return repositoryManager.commonRepository.GetAllApproveCustomerForLinking();
+            return repositoryManager.commonRepository.GetAllApproveCustomerForLinking(customerId);
         }
     }
 }

@@ -226,9 +226,9 @@ namespace OMS.API.Controllers
         }
 
         [HttpGet("GetAllApproveCustomerForLinking")]
-        public async Task<IActionResult> GetAllApproveCustomerForLinking()
+        public async Task<IActionResult> GetAllApproveCustomerForLinking(int customerId)
         {
-            List<GetAllApproveCustomerForLinkingResponse> responseData = await _serviceManager.commonServices.GetAllApproveCustomerForLinking().ConfigureAwait(true);
+            List<GetAllApproveCustomerForLinkingResponse> responseData = await _serviceManager.commonServices.GetAllApproveCustomerForLinking(customerId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
     }
