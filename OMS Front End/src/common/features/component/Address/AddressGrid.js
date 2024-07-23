@@ -36,7 +36,10 @@ const AddressGrid = ({
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [tabAddresstType, setTabAddressType] = useState([]);
 
-  const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
+  const [
+    getAllAddressTypes,
+    { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData },
+  ] = useLazyGetAllAddressTypesQuery();
 
   //** Use Effect */
   useEffect(() => {
@@ -109,7 +112,6 @@ const AddressGrid = ({
   };
 
   const components = [
-
     (addressTypeId) => (
       <div className="mt-2">
         <AddressDetailCard
@@ -174,14 +176,22 @@ const AddressGrid = ({
         />
       </div>
     ),
-
   ];
 
-  const tabs = tabAddresstType && tabAddresstType.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers)
-    .map((data, index) => ({
-      sMenuItemCaption: data.type,
-      component: components[index] ? components[index](data.addressTypeId ? [data.addressTypeId] : "") : <div className="mt-2">Default Tab</div>
-    }));
+  const tabs =
+    tabAddresstType &&
+    tabAddresstType
+      .filter((item) =>
+        isSupplier ? item.isForSuppliers : item.isForCustomers
+      )
+      .map((data, index) => ({
+        sMenuItemCaption: data.type,
+        component: components[index] ? (
+          components[index](data.addressTypeId ? [data.addressTypeId] : "")
+        ) : (
+          <div className="mt-2">Default Tab</div>
+        ),
+      }));
 
   return (
     <React.Fragment>
