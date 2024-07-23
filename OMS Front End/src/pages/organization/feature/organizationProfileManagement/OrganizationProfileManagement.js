@@ -2,15 +2,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { OrganizationProfileManagementdata } from './config/OrganizationProfileManagement.data';
-import Buttons from '../../../components/ui/button/Buttons';
-import FormCreator from '../../../components/Forms/FormCreator';
-import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from '../../../app/services/addressAPI';
-import { useLazyGetAllCountriesQuery } from '../../../app/services/basicdetailAPI';
-import { setDropDownOptionField, setFieldSetting } from '../../../utils/FormFields/FieldsSetting/SetFieldSetting';
-import { FieldSettingType } from '../../../utils/Enums/commonEnums';
-import { useAddEditOrganizationProfileMutation, useLazyGetOrganizationProfileQuery } from '../../../app/services/organizationAPI';
-import ToastService from '../../../services/toastService/ToastService';
-import DataLoader from '../../../components/ui/dataLoader/DataLoader';
+import Buttons from '../../../../components/ui/button/Buttons';
+import FormCreator from '../../../../components/Forms/FormCreator';
+import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from '../../../../app/services/addressAPI';
+import { useLazyGetAllCountriesQuery } from '../../../../app/services/basicdetailAPI';
+import { setDropDownOptionField, setFieldSetting } from '../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
+import { FieldSettingType } from '../../../../utils/Enums/commonEnums';
+import { useAddEditOrganizationProfileMutation, useLazyGetOrganizationProfileQuery } from '../../../../app/services/organizationAPI';
+import ToastService from '../../../../services/toastService/ToastService';
+import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 
 const OrganizationProfileManagement = (props) => {
     const organizationProfile = useRef();

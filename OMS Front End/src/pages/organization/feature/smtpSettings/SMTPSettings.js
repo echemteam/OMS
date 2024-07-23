@@ -2,12 +2,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import { SMTPSettingsData } from './config/SMTPSettings.data';
-import FormCreator from '../../../components/Forms/FormCreator';
-import Buttons from '../../../components/ui/button/Buttons';
-import { useAddEditSmtpSettingsMutation, useLazyGetSmtpSettingsQuery } from '../../../app/services/organizationAPI';
-import ToastService from '../../../services/toastService/ToastService';
-import { ErrorMessage } from '../../../data/appMessages';
-import DataLoader from '../../../components/ui/dataLoader/DataLoader';
+import FormCreator from '../../../../components/Forms/FormCreator';
+import Buttons from '../../../../components/ui/button/Buttons';
+import { useAddEditSmtpSettingsMutation, useLazyGetSmtpSettingsQuery } from '../../../../app/services/organizationAPI';
+import ToastService from '../../../../services/toastService/ToastService';
+import { ErrorMessage } from '../../../../data/appMessages';
+import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 
 const SMTPSettings = (props) => {
     const smtpRef = useRef();

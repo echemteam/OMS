@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
-const SMTPSettings = React.lazy(() => import("./smtpSettings/SMTPSettings"));
-const OtherSettings = React.lazy(() => import("./otherSettings/OtherSettings"));
-const OrganizationProfileManagement = React.lazy(() => import("./organizationProfileManagement/OrganizationProfileManagement"));
+const SMTPSettings = React.lazy(() => import("./feature/smtpSettings/SMTPSettings"));
+const OtherSettings = React.lazy(() => import("./feature/otherSettings/OtherSettings"));
+const OrganizationProfileManagement = React.lazy(() => import("./feature/organizationProfileManagement/OrganizationProfileManagement"));
 
 const Organization = () => {
 

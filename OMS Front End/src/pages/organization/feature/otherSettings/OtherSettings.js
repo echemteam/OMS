@@ -2,14 +2,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import { OtherSettingsData } from './config/OtherSettings.data';
-import Buttons from '../../../components/ui/button/Buttons';
-import FormCreator from '../../../components/Forms/FormCreator';
-import { useLazyGetAllPaymentTermsQuery } from '../../../app/services/customerSettingsAPI';
-import { setDropDownOptionField } from '../../../utils/FormFields/FieldsSetting/SetFieldSetting';
-import { useAddEditOrganizationOtherSettingsMutation, useLazyGetOrganizationOtherSettingsQuery } from '../../../app/services/organizationAPI';
-import ToastService from '../../../services/toastService/ToastService';
-import { ErrorMessage } from '../../../data/appMessages';
-import DataLoader from '../../../components/ui/dataLoader/DataLoader';
+import Buttons from '../../../../components/ui/button/Buttons';
+import FormCreator from '../../../../components/Forms/FormCreator';
+import { useLazyGetAllPaymentTermsQuery } from '../../../../app/services/customerSettingsAPI';
+import { setDropDownOptionField } from '../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
+import { useAddEditOrganizationOtherSettingsMutation, useLazyGetOrganizationOtherSettingsQuery } from '../../../../app/services/organizationAPI';
+import ToastService from '../../../../services/toastService/ToastService';
+import { ErrorMessage } from '../../../../data/appMessages';
+import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 
 const OtherSettings = (props) => {
     const otherSetting = useRef();
