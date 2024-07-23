@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Organization;
 using OMS.Framework;
@@ -8,6 +9,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrganizationController : BaseController
     {
         #region private variable
@@ -28,15 +30,11 @@ namespace OMS.API.Controllers
             var addEditItem = await _serviceManager.organizationService.AddEditOrganizationProfile(requestData, CurrentUserId);
             return APISucessResponce(addEditItem);
         }
-        [HttpGet("GetOrganizationProfileByOrganizationId")]
-        public async Task<IActionResult> GetOrganizationProfileByOrganizationId(byte organizationId)
+        [HttpGet("GetOrganizationProfile")]
+        public async Task<IActionResult> GetOrganizationProfile()
         {
-            if (organizationId > 0)
-            {
-                var organizationProfileDetails = await _serviceManager.organizationService.GetOrganizationProfileByOrganizationId(organizationId).ConfigureAwait(true);
-                return APISucessResponce<object>(organizationProfileDetails);
-            }
-            return APISucessResponce(organizationId);
+            var organizationProfileDetails = await _serviceManager.organizationService.GetOrganizationProfile().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationProfileDetails);
         }
 
         [HttpPost("AddEditSmtpSettings")]
@@ -45,15 +43,11 @@ namespace OMS.API.Controllers
             var addEditItem = await _serviceManager.organizationService.AddEditSmtpSettings(requestData, CurrentUserId);
             return APISucessResponce(addEditItem);
         }
-        [HttpGet("GetSmtpSettingsBySmtpSettingId")]
-        public async Task<IActionResult> GetSmtpSettingsBySmtpSettingId(short smtpSettingId)
+        [HttpGet("GetSmtpSettings")]
+        public async Task<IActionResult> GetSmtpSettings()
         {
-            if (smtpSettingId > 0)
-            {
-                var organizationProfileDetails = await _serviceManager.organizationService.GetSmtpSettingsBySmtpSettingId(smtpSettingId).ConfigureAwait(true);
-                return APISucessResponce<object>(organizationProfileDetails);
-            }
-            return APISucessResponce(smtpSettingId);
+            var organizationProfileDetails = await _serviceManager.organizationService.GetSmtpSettings().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationProfileDetails);
         }
 
         [HttpPost("AddEditOrganizationOtherSettings")]
@@ -62,15 +56,12 @@ namespace OMS.API.Controllers
             var addEditItem = await _serviceManager.organizationService.AddEditOrganizationOtherSettings(requestData, CurrentUserId);
             return APISucessResponce(addEditItem);
         }
-        [HttpGet("GetOrganizationOtherSettingsById")]
-        public async Task<IActionResult> GetOrganizationOtherSettingsById(int organizationOtherSettingId)
+        [HttpGet("GetOrganizationOtherSettings")]
+        public async Task<IActionResult> GetOrganizationOtherSettings()
         {
-            if (organizationOtherSettingId > 0)
-            {
-                var organizationOtherSettingDetails = await _serviceManager.organizationService.GetOrganizationOtherSettingsById(organizationOtherSettingId).ConfigureAwait(true);
-                return APISucessResponce<object>(organizationOtherSettingDetails);
-            }
-            return APISucessResponce(organizationOtherSettingId);
+
+            var organizationOtherSettingDetails = await _serviceManager.organizationService.GetOrganizationOtherSettings().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationOtherSettingDetails);
         }
 
         #endregion

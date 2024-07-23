@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.API.Response.Organization
 {
-    public class GetOrganizationProfileByOrganizationIdResponse
+    public class GetOrganizationProfileResponse
     {
         public byte? OrganizationId { get; set; }
         public string? Name { get; set; }

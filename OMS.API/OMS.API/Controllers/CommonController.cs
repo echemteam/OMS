@@ -226,9 +226,9 @@ namespace OMS.API.Controllers
         }
 
         [HttpGet("GetAllSubCustomer")]
-        public async Task<IActionResult> GetAllSubCustomer(bool isSubCustomer)
+        public async Task<IActionResult> GetAllSubCustomer()
         {
-            List<GetAllSubCustomerResponse> responseData = await _serviceManager.commonServices.GetAllSubCustomer(isSubCustomer).ConfigureAwait(true);
+            List<GetAllSubCustomerResponse> responseData = await _serviceManager.commonServices.GetAllSubCustomer().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
     }
