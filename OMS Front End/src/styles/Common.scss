@@ -339,6 +339,22 @@ a {
             .sidebar-menu {
               ul {
                 &.sidebar-menu-list {
+                  .menu-group{
+                    position: relative;
+                    margin: 15px 0;
+                    &::before{
+                      content: "";
+                      height: 1px;
+                      width: 30px;
+                      transform: translate(15%);
+                      background-color: #e6e6e8;
+                      position: absolute;
+                      top: -9px;
+                    }
+                    .group-label{
+                      display: none;
+                    }
+                  }
                   li {
                     &.menu-item {
                       a {
