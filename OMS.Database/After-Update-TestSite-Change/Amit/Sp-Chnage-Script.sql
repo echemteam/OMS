@@ -8,15 +8,6 @@ GO
 /****** Object:  StoredProcedure [dbo].[GetSubCustomerByCustomerId]    Script Date: 23-07-2024 11:07:39 ******/
 DROP PROCEDURE [dbo].[GetSubCustomerByCustomerId]
 GO
-/****** Object:  StoredProcedure [dbo].[GetSmtpSettingsBySmtpSettingId]    Script Date: 23-07-2024 11:07:39 ******/
-DROP PROCEDURE [dbo].[GetSmtpSettingsBySmtpSettingId]
-GO
-/****** Object:  StoredProcedure [dbo].[GetOrganizationProfileByOrganizationId]    Script Date: 23-07-2024 11:07:39 ******/
-DROP PROCEDURE [dbo].[GetOrganizationProfileByOrganizationId]
-GO
-/****** Object:  StoredProcedure [dbo].[GetOrganizationOtherSettingsById]    Script Date: 23-07-2024 11:07:39 ******/
-DROP PROCEDURE [dbo].[GetOrganizationOtherSettingsById]
-GO
 /****** Object:  StoredProcedure [dbo].[GetCustomersBasicInformationById]    Script Date: 23-07-2024 11:07:39 ******/
 DROP PROCEDURE [dbo].[GetCustomersBasicInformationById]
 GO
@@ -31,9 +22,6 @@ DROP PROCEDURE [dbo].[GetApiEndpoints]
 GO
 /****** Object:  StoredProcedure [dbo].[GetApiAuthentications]    Script Date: 23-07-2024 11:07:39 ******/
 DROP PROCEDURE [dbo].[GetApiAuthentications]
-GO
-/****** Object:  StoredProcedure [dbo].[GetAllSubCustomer]    Script Date: 23-07-2024 11:07:39 ******/
-DROP PROCEDURE [dbo].[GetAllSubCustomer]
 GO
 /****** Object:  StoredProcedure [dbo].[DeleteSubCustomer]    Script Date: 23-07-2024 11:07:39 ******/
 DROP PROCEDURE [dbo].[DeleteSubCustomer]
@@ -52,6 +40,18 @@ DROP PROCEDURE [dbo].[AddEditOrganizationOtherSettings]
 GO
 /****** Object:  StoredProcedure [dbo].[AddCustomersBasicInformation]    Script Date: 23-07-2024 11:07:39 ******/
 DROP PROCEDURE [dbo].[AddCustomersBasicInformation]
+GO
+/****** Object:  StoredProcedure [dbo].[GetSmtpSettings]    Script Date: 23-07-2024 13:18:15 ******/
+DROP PROCEDURE [dbo].[GetSmtpSettings]
+GO
+/****** Object:  StoredProcedure [dbo].[GetOrganizationProfile]    Script Date: 23-07-2024 13:18:15 ******/
+DROP PROCEDURE [dbo].[GetOrganizationProfile]
+GO
+/****** Object:  StoredProcedure [dbo].[GetOrganizationOtherSettings]    Script Date: 23-07-2024 13:18:15 ******/
+DROP PROCEDURE [dbo].[GetOrganizationOtherSettings]
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllSubCustomer]    Script Date: 23-07-2024 13:18:15 ******/
+DROP PROCEDURE [dbo].[GetAllSubCustomer]
 GO
 /****** Object:  StoredProcedure [dbo].[AddCustomersBasicInformation]    Script Date: 23-07-2024 11:07:39 ******/
 SET ANSI_NULLS ON
@@ -484,42 +484,6 @@ BEGIN
     END CATCH      
 END; 
 GO
-/****** Object:  StoredProcedure [dbo].[GetAllSubCustomer]    Script Date: 23-07-2024 11:07:40 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
---GetAllSubCustomer        
-CREATE PROCEDURE [dbo].[GetAllSubCustomer]     
-@IsSubCustomer bit               
-AS                                    
-BEGIN                                    
-    SET NOCOUNT ON;                                    
-    BEGIN TRY       
-        IF @IsSubCustomer = 1  
-        BEGIN                                       
-            SELECT          
-            [CustomerId],    
-            [Name]        
-            FROM [dbo].[Customers] WHERE (IsSubCustomer = 0 OR IsSubCustomer IS NULL) AND deletedby IS NULL AND deletedAt is NULL   
-        END  
-        ELSE  
-        BEGIN  
-            SELECT          
-            [CustomerId],    
-            [Name]        
-            FROM [dbo].[Customers] where IsSubCustomer=1 AND deletedby IS NULL AND deletedAt is NULL   
-        END       
-END TRY                                            
-BEGIN CATCH                                            
- DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()                                            
- DECLARE @ErrorSeverity nvarchar(max) = ERROR_SEVERITY()                                            
- DECLARE @ErrorState nvarchar(max) = ERROR_STATE()                                            
-    RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)                                            
-END CATCH                                   
-                                  
-END   
-GO
 /****** Object:  StoredProcedure [dbo].[GetApiAuthentications]    Script Date: 23-07-2024 11:07:40 ******/
 SET ANSI_NULLS ON
 GO
@@ -871,119 +835,7 @@ BEGIN CATCH
 END CATCH                            
 END 
 GO
-/****** Object:  StoredProcedure [dbo].[GetOrganizationOtherSettingsById]    Script Date: 23-07-2024 11:07:40 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-     --GetOrganizationOtherSettingsById 5
-CREATE PROCEDURE [dbo].[GetOrganizationOtherSettingsById]            
-@OrganizationOtherSettingId INT        
-AS            
-BEGIN            
- SET NOCOUNT ON;            
-       
- BEGIN TRY            
-    SELECT  
-        OOS.OrganizationOtherSettingId,  
-        OOS.OrganizationId,  
-        OP.Name,  
-        OOS.DefaultPaymentTerms,
-        PT.PaymentTerm,  
-        OOS.FedexAccountDetail  
-    FROM [dbo].[OrganizationOtherSettings] OOS  
-    left JOIN [dbo].[OrganizationProfile] OP ON OOS.OrganizationId = OP.OrganizationId  
-    left JOIN [dbo].[PaymentTerms] PT ON OOS.DefaultPaymentTerms= PT.PaymentTermId
-    WHERE  [OrganizationOtherSettingId] = @OrganizationOtherSettingId AND OOS.DeletedBy IS NULL AND OOS.DeletedAt IS NULL        
-    ORDER BY OOS.OrganizationOtherSettingId DESC        
-      
-END TRY      
-    BEGIN CATCH          
-     DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()          
-     DECLARE @ErrorSeverity nvarchar(max) = ERROR_SEVERITY()          
-     DECLARE @ErrorState nvarchar(max) = ERROR_STATE()          
-        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)          
-    END CATCH       
-END 
-GO
-/****** Object:  StoredProcedure [dbo].[GetOrganizationProfileByOrganizationId]    Script Date: 23-07-2024 11:07:40 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-   
-CREATE PROCEDURE [dbo].[GetOrganizationProfileByOrganizationId]          
-@OrganizationId TINYINT          
-AS          
-BEGIN          
- SET NOCOUNT ON;          
-     
- BEGIN TRY          
-    SELECT
-        OP.OrganizationId,
-        OP.Name,
-        OP.Logo,
-        OP.AddressLine1,
-        OP.AddressLine2,
-        OP.CityId,
-        C.Name As CityName,
-        OP.StateId,
-        S.Name As StateName,
-        OP.CountryId,
-        C.Name As CountryName,
-        OP.ZipCode  
-    FROM [dbo].[OrganizationProfile] OP 
-    left JOIN [dbo].[Countries] C ON C.CountryId = OP.CountryId      
-    left JOIN [dbo].[States] S ON S.StateId= OP.StateId      
-    left JOIN [dbo].[Cities] CI ON CI.CityId = OP.CityId      
-    WHERE  OP.[OrganizationId] = @OrganizationId AND OP.DeletedBy IS NULL AND OP.DeletedAt IS NULL      
-    ORDER BY OP.OrganizationId DESC      
-    
-END TRY    
-    BEGIN CATCH        
-     DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()        
-     DECLARE @ErrorSeverity nvarchar(max) = ERROR_SEVERITY()        
-     DECLARE @ErrorState nvarchar(max) = ERROR_STATE()        
-        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)        
-    END CATCH     
-END 
-GO
-/****** Object:  StoredProcedure [dbo].[GetSmtpSettingsBySmtpSettingId]    Script Date: 23-07-2024 11:07:40 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[GetSmtpSettingsBySmtpSettingId]            
-@SmtpSettingId SMALLINT           
-AS            
-BEGIN            
- SET NOCOUNT ON;            
-       
- BEGIN TRY            
-    SELECT  
-        SS.SmtpSettingId,  
-        OP.OrganizationId,  
-        OP.Name,  
-        SS.EmailProvider,  
-        SS.SmtpServer,  
-        SS.SmtpPort,  
-        SS.SmtpUserName,  
-        SS.SmtpPassword,  
-        SS.UseSsl  
-    FROM [dbo].[SMTPSettings] SS  
-    left JOIN [dbo].[OrganizationProfile] OP ON SS.OrganizationId = OP.OrganizationId  
-    WHERE  SS.SmtpSettingId = @SmtpSettingId AND SS.DeletedBy IS NULL AND SS.DeletedAt IS NULL        
-    ORDER BY OP.OrganizationId DESC        
-      
-END TRY      
-    BEGIN CATCH          
-     DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()          
-     DECLARE @ErrorSeverity nvarchar(max) = ERROR_SEVERITY()          
-     DECLARE @ErrorState nvarchar(max) = ERROR_STATE()          
-        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)          
-    END CATCH       
-END 
-GO
+
 /****** Object:  StoredProcedure [dbo].[GetSubCustomerByCustomerId]    Script Date: 23-07-2024 11:07:40 ******/
 SET ANSI_NULLS ON
 GO
@@ -1330,3 +1182,143 @@ BEGIN
     FROM @ValidationResults;      
 END 
 GO
+
+/****** Object:  StoredProcedure [dbo].[GetAllSubCustomer]    Script Date: 23-07-2024 13:18:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--GetAllSubCustomer          
+CREATE PROCEDURE [dbo].[GetAllSubCustomer]                       
+AS                                      
+BEGIN                                      
+    SET NOCOUNT ON;                                      
+    BEGIN TRY         
+                              
+            SELECT            
+            [CustomerId],      
+            [Name]          
+            FROM [dbo].[Customers] WHERE IsActive=1 AND deletedby IS NULL AND deletedAt is NULL             
+     END TRY                                              
+BEGIN CATCH                                              
+ DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()                                              
+ DECLARE @ErrorSeverity nvarchar(max) = ERROR_SEVERITY()                                              
+ DECLARE @ErrorState nvarchar(max) = ERROR_STATE()                                              
+    RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)                                              
+END CATCH                                     
+                                    
+END 
+
+GO
+/****** Object:  StoredProcedure [dbo].[GetOrganizationOtherSettings]    Script Date: 23-07-2024 13:18:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--GetOrganizationOtherSettings   
+CREATE PROCEDURE [dbo].[GetOrganizationOtherSettings]                       
+AS              
+BEGIN              
+ SET NOCOUNT ON;              
+         
+ BEGIN TRY              
+    SELECT TOP 1   
+        OOS.OrganizationOtherSettingId,    
+        OOS.OrganizationId,    
+        OP.Name,    
+        OOS.DefaultPaymentTerms,  
+        PT.PaymentTerm,    
+        OOS.FedexAccountDetail    
+    FROM [dbo].[OrganizationOtherSettings] OOS    
+    left JOIN [dbo].[OrganizationProfile] OP ON OOS.OrganizationId = OP.OrganizationId    
+    left JOIN [dbo].[PaymentTerms] PT ON OOS.DefaultPaymentTerms= PT.PaymentTermId  
+    WHERE OOS.DeletedBy IS NULL AND OOS.DeletedAt IS NULL          
+    ORDER BY OOS.OrganizationOtherSettingId DESC          
+        
+END TRY        
+    BEGIN CATCH            
+     DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()            
+     DECLARE @ErrorSeverity nvarchar(max) = ERROR_SEVERITY()            
+     DECLARE @ErrorState nvarchar(max) = ERROR_STATE()            
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)            
+    END CATCH         
+END 
+GO
+/****** Object:  StoredProcedure [dbo].[GetOrganizationProfile]    Script Date: 23-07-2024 13:18:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ --GetOrganizationProfile    
+CREATE PROCEDURE [dbo].[GetOrganizationProfile]                      
+AS            
+BEGIN            
+ SET NOCOUNT ON;            
+       
+ BEGIN TRY            
+    SELECT TOP 1 
+        OP.OrganizationId,  
+        OP.Name,  
+        OP.Logo,  
+        OP.AddressLine1,  
+        OP.AddressLine2,  
+        OP.CityId,  
+        C.Name As CityName,  
+        OP.StateId,  
+        S.Name As StateName,  
+        OP.CountryId,  
+        C.Name As CountryName,  
+        OP.ZipCode    
+    FROM [dbo].[OrganizationProfile] OP   
+    left JOIN [dbo].[Countries] C ON C.CountryId = OP.CountryId        
+    left JOIN [dbo].[States] S ON S.StateId= OP.StateId        
+    left JOIN [dbo].[Cities] CI ON CI.CityId = OP.CityId        
+    WHERE OP.DeletedBy IS NULL AND OP.DeletedAt IS NULL        
+    ORDER BY OP.OrganizationId DESC        
+      
+END TRY      
+    BEGIN CATCH          
+     DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()          
+     DECLARE @ErrorSeverity nvarchar(max) = ERROR_SEVERITY()          
+     DECLARE @ErrorState nvarchar(max) = ERROR_STATE()          
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)          
+    END CATCH       
+END 
+GO
+/****** Object:  StoredProcedure [dbo].[GetSmtpSettings]    Script Date: 23-07-2024 13:18:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--GetSmtpSettings
+CREATE PROCEDURE [dbo].[GetSmtpSettings]                       
+AS              
+BEGIN              
+ SET NOCOUNT ON;              
+         
+ BEGIN TRY              
+    SELECT TOP 1   
+        SS.SmtpSettingId,    
+        OP.OrganizationId,    
+        OP.Name,    
+        SS.EmailProvider,    
+        SS.SmtpServer,    
+        SS.SmtpPort,    
+        SS.SmtpUserName,    
+        SS.SmtpPassword,    
+        SS.UseSsl    
+    FROM [dbo].[SMTPSettings] SS    
+    left JOIN [dbo].[OrganizationProfile] OP ON SS.OrganizationId = OP.OrganizationId    
+    WHERE SS.DeletedBy IS NULL AND SS.DeletedAt IS NULL          
+    ORDER BY OP.OrganizationId DESC          
+        
+END TRY        
+    BEGIN CATCH            
+     DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()            
+     DECLARE @ErrorSeverity nvarchar(max) = ERROR_SEVERITY()            
+     DECLARE @ErrorState nvarchar(max) = ERROR_STATE()            
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)            
+    END CATCH         
+END 
+GO
+
