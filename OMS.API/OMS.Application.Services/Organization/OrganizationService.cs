@@ -30,9 +30,9 @@ namespace OMS.Application.Services.Organization
             return await repositoryManager.organization.AddEditOrganizationProfile(organizationProfileDTO);
 
         }
-        public async Task<GetOrganizationProfileByOrganizationIdResponse> GetOrganizationProfileByOrganizationId(byte organizationId)
+        public async Task<GetOrganizationProfileResponse> GetOrganizationProfile()
         {
-            return await repositoryManager.organization.GetOrganizationProfileByOrganizationId(organizationId);
+            return await repositoryManager.organization.GetOrganizationProfile();
         }
         public async Task<AddEntityDTO<int>> AddEditSmtpSettings(AddEditSmtpSettingsRequest requestData, short CurrentUserId)
         {
@@ -41,9 +41,9 @@ namespace OMS.Application.Services.Organization
             return await repositoryManager.smtpSettings.AddEditSmtpSettings(smtpSettingsDTO);
 
         }
-        public async Task<GetSmtpSettingsBySmtpSettingIdResponse> GetSmtpSettingsBySmtpSettingId(short smtpSettingId)
+        public async Task<GetSmtpSettingsResponse> GetSmtpSettings()
         {
-            return await repositoryManager.smtpSettings.GetSmtpSettingsBySmtpSettingId(smtpSettingId);
+            return await repositoryManager.smtpSettings.GetSmtpSettings();
         }
 
         public async Task<AddEntityDTO<int>> AddEditOrganizationOtherSettings(AddEditOrganizationOtherSettingsRequest requestData, short CurrentUserId)
@@ -53,9 +53,9 @@ namespace OMS.Application.Services.Organization
             return await repositoryManager.organizationOtherSettings.AddEditOrganizationOtherSettings(organizationOtherSettingsDTO);
 
         }
-        public async Task<GetOrganizationOtherSettingsByIdResponse> GetOrganizationOtherSettingsById(int organizationOtherSettingId)
+        public async Task<GetOrganizationOtherSettingsResponse> GetOrganizationOtherSettings()
         {
-            return await repositoryManager.organizationOtherSettings.GetOrganizationOtherSettingsById(organizationOtherSettingId);
+            return await repositoryManager.organizationOtherSettings.GetOrganizationOtherSettings();
         }
         #endregion
     }

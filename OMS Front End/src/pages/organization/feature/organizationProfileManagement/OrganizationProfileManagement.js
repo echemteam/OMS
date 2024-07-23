@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { OrganizationProfileManagementdata } from './config/OrganizationProfileManagement.data';
-import Buttons from '../../../components/ui/button/Buttons';
-import FormCreator from '../../../components/Forms/FormCreator';
-import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from '../../../app/services/addressAPI';
-import { useLazyGetAllCountriesQuery } from '../../../app/services/basicdetailAPI';
-import { setDropDownOptionField, setFieldSetting } from '../../../utils/FormFields/FieldsSetting/SetFieldSetting';
-import { FieldSettingType } from '../../../utils/Enums/commonEnums';
-import { useAddEditOrganizationProfileMutation, useLazyGetOrganizationProfileByOrganizationIdQuery } from '../../../app/services/organizationAPI';
-import ToastService from '../../../services/toastService/ToastService';
-import DataLoader from '../../../components/ui/dataLoader/DataLoader';
-// import { onResetForm } from '../../../utils/FormFields/ResetForm/handleResetForm';
+import Buttons from '../../../../components/ui/button/Buttons';
+import FormCreator from '../../../../components/Forms/FormCreator';
+import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from '../../../../app/services/addressAPI';
+import { useLazyGetAllCountriesQuery } from '../../../../app/services/basicdetailAPI';
+import { setDropDownOptionField, setFieldSetting } from '../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
+import { FieldSettingType } from '../../../../utils/Enums/commonEnums';
+import { useAddEditOrganizationProfileMutation, useLazyGetOrganizationProfileQuery } from '../../../../app/services/organizationAPI';
+import ToastService from '../../../../services/toastService/ToastService';
+import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 
 const OrganizationProfileManagement = (props) => {
     const organizationProfile = useRef();
@@ -22,7 +22,7 @@ const OrganizationProfileManagement = (props) => {
     const [getAllStates, { isSuccess: isGetAllStatesSucess, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
     const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
     const [addEditOrganization, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddEditOrganizationProfileMutation();
-    const [getOrganizationProfileByOrganizationId, { isFetching: isgetOrganizationProfileByOrganizationIdFetching, isSuccess: isgetOrganizationProfileByOrganizationIdSuccess, data: isgetOrganizationProfileByOrganizationIdData }] = useLazyGetOrganizationProfileByOrganizationIdQuery();
+    const [getOrganizationProfile, { isFetching: isGetOrganizationProfileFetching, isSuccess: isGetOrganizationProfileSuccess, data: isGetOrganizationProfileData }] = useLazyGetOrganizationProfileQuery();
 
     useEffect(() => {
         getAllCountries();
@@ -31,27 +31,28 @@ const OrganizationProfileManagement = (props) => {
     }, []);
 
     useEffect(() => {
-        if (props.organizationId > 0) {
-            getOrganizationProfileByOrganizationId(props.organizationId)
-        }
-    }, [props.organizationId, props.activeTabId])
+        // if (props.organizationId > 0) {
+            getOrganizationProfile()
+        // }
+    }, [props.activeTabId])
 
     useEffect(() => {
-        if (!isgetOrganizationProfileByOrganizationIdFetching && isgetOrganizationProfileByOrganizationIdSuccess && isgetOrganizationProfileByOrganizationIdData) {
+        if (!isGetOrganizationProfileFetching && isGetOrganizationProfileSuccess && isGetOrganizationProfileData) {
             let formData = { ...organizationProfileData };
             formData.initialState = {
-                name: isgetOrganizationProfileByOrganizationIdData.name,
-                logo: isgetOrganizationProfileByOrganizationIdData.logo,
-                addressLine1: isgetOrganizationProfileByOrganizationIdData.addressLine1,
-                addressLine2: isgetOrganizationProfileByOrganizationIdData.addressLine2,
-                countryId: isgetOrganizationProfileByOrganizationIdData.countryId,
-                stateId: isgetOrganizationProfileByOrganizationIdData.stateId,
-                zipCode: isgetOrganizationProfileByOrganizationIdData.zipCode,
-                cityId: isgetOrganizationProfileByOrganizationIdData.cityId,
+                name: isGetOrganizationProfileData.name,
+                logo: isGetOrganizationProfileData.logo,
+                addressLine1: isGetOrganizationProfileData.addressLine1,
+                addressLine2: isGetOrganizationProfileData.addressLine2,
+                countryId: isGetOrganizationProfileData.countryId,
+                stateId: isGetOrganizationProfileData.stateId,
+                zipCode: isGetOrganizationProfileData.zipCode,
+                cityId: isGetOrganizationProfileData.cityId,
             };
             setOrganizationProfileData(formData);
+            props.onHandleOrganization(isGetOrganizationProfileData.organizationId)
         }
-    }, [isgetOrganizationProfileByOrganizationIdFetching, isgetOrganizationProfileByOrganizationIdSuccess, isgetOrganizationProfileByOrganizationIdData,]);
+    }, [isGetOrganizationProfileFetching, isGetOrganizationProfileSuccess, isGetOrganizationProfileData,]);
 
     useEffect(() => {
         if (isGetAllCountriesSucess && allGetAllCountriesData) {
@@ -135,13 +136,9 @@ const OrganizationProfileManagement = (props) => {
         DDL_CHANGED: handleChangeDropdownList,
     };
 
-    // const onHandleReset = () => {
-    //     onResetForm(OrganizationProfileManagementdata, setOrganizationProfileData, null);
-    // }
-
     return (
         <div className="row mt-2 add-address-form">
-            {!isgetOrganizationProfileByOrganizationIdFetching ?
+            {!isGetOrganizationProfileFetching ?
                 <FormCreator
                     config={organizationProfileData}
                     ref={organizationProfile}
@@ -158,15 +155,16 @@ const OrganizationProfileManagement = (props) => {
                         onClick={handleAddEdit}
                         isLoading={isAddLoading}
                     />
-                    {/* <Buttons
-                        buttonTypeClassName="dark-btn ml-5"
-                        buttonText="Cancel"
-                        onClick={onHandleReset}
-                    /> */}
                 </div>
             </div>
         </div>
     );
+};
+
+OrganizationProfileManagement.propTypes = {
+    activeTabId: PropTypes.number.isRequired,
+    organizationId: PropTypes.number,
+    onHandleOrganization: PropTypes.func.isRequired
 };
 
 export default OrganizationProfileManagement;

@@ -10,10 +10,10 @@ import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFo
 //** Component's */
 const ContactDetailCard = React.lazy(() => import("./ContactDetailCard"));
 
-const ContactList = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, getContactByKeyId, selectedContactTypeId }) => {
+const ContactList = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, getContactByKeyId, selectedContactTypeId ,search}) => {
 
     const [contactDetails, setContactDetails] = useState([]);
-
+     
     /**
      * This hook dynamically sets the API call based on the module (customer or supplier).
      * The API endpoint and parameters are configured within the SupplierContactDetail OR CustomerContactDetail component.
@@ -31,13 +31,13 @@ const ContactList = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, g
     //** UseEffect */
     useEffect(() => {
         onGetContactList();
-    }, [keyId, selectedContactTypeId]);
+    }, [keyId,selectedContactTypeId]);
 
     //** Get Contact List */
     const onGetContactList = () => {
         let req = {
             id: keyId,
-            searchText: "", // Initial call: no search text provided.
+            searchText: search, // Initial call: no search text provided.
             contactType: selectedContactTypeId ? selectedContactTypeId : ""
         };
         contactList(req);

@@ -13,6 +13,7 @@ import { CountryId, CustomerSettingEnum, PaymentMethodTypes } from "../../../../
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
+import Masking from "../../../../utils/Masking";
 
 const FinancialSettings = ({ isEditablePage }) => {
 
@@ -69,7 +70,7 @@ const FinancialSettings = ({ isEditablePage }) => {
 
   useEffect(() => {
     let formData = { ...customerSettingFormData };
-    const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankFee');
+    const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankWireFee');
     const isCardPresent = formData.formFields.some((field) => field.dataField === 'cardProcessingCharges');
     if (isBankFeePresent) {
       setIsBankFee(true);
@@ -86,13 +87,13 @@ const FinancialSettings = ({ isEditablePage }) => {
   const addRemoveBankFee = () => {
     let updatedFormFields;
     let formData = { ...customerSettingFormData };
-    const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankFee');
+    const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankWireFee');
     const isSalesTaxPresent = formData.formFields.some((field) => field.dataField === 'salesTax');
     if (customerCountryId === CountryId.USA) {
-      updatedFormFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+      updatedFormFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
       formData.formFields = updatedFormFields
     } else if (customerCountryId !== CountryId.USA && !isBankFeePresent) {
-      const findBankFields = getFieldData(SettingFormData, 'bankFee');
+      const findBankFields = getFieldData(SettingFormData, 'bankWireFee');
       const insertIndex = formData.formFields.length - 1;
       updatedFormFields = [...formData.formFields];
       updatedFormFields.splice(insertIndex, 0, findBankFields);
@@ -142,7 +143,7 @@ const FinancialSettings = ({ isEditablePage }) => {
           paymentMethodId: isGetDetailByCustomerIDData.paymentMethodId,
           billingCurrency: isGetDetailByCustomerIDData.billingCurrency,
           invoiceSubmissionInstruction: isGetDetailByCustomerIDData.invoiceSubmissionInstruction,
-          bankFee: isGetDetailByCustomerIDData.bankFee,
+          bankWireFee: isGetDetailByCustomerIDData.bankWireFee,
           salesTax: isGetDetailByCustomerIDData.salesTax,
           exemptSalesTax: isGetDetailByCustomerIDData.exemptSalesTax,
           cardProcessingCharges: isGetDetailByCustomerIDData.cardProcessingCharges,
@@ -150,7 +151,7 @@ const FinancialSettings = ({ isEditablePage }) => {
         if (isGetDetailByCustomerIDData.exemptSalesTax) {
           formData.formFields = formData.formFields.filter((field) => field.dataField !== 'salesTax');
         } else {
-          const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankFee');
+          const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankWireFee');
           const isCardPresent = formData.formFields.some((field) => field.dataField === 'cardProcessingCharges');
           const isSalesTaxPresent = formData.formFields.some((field) => (field.dataField === 'salesTax'));
           if (!isSalesTaxPresent) {
@@ -198,7 +199,7 @@ const FinancialSettings = ({ isEditablePage }) => {
         paymentTermId: settingFormData.paymentTermId.value,
         paymentMethodId: settingFormData.paymentMethodId.value,
         billingCurrency: !settingFormData.billingCurrency?.value ? settingFormData.billingCurrency : settingFormData.billingCurrency.value,
-        bankFee: settingFormData.bankFee && isBankFee ? settingFormData.bankFee : null,
+        bankWireFee: settingFormData.bankWireFee && isBankFee ? settingFormData.bankWireFee : null,
         salesTax: settingFormData.salesTax && !settingFormData.exemptSalesTax ? settingFormData.salesTax : null,
         exemptSalesTax: settingFormData.exemptSalesTax,
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
@@ -219,7 +220,7 @@ const FinancialSettings = ({ isEditablePage }) => {
         billingCurrency: settingFormData.billingCurrency && typeof settingFormData.billingCurrency === "object"
           ? settingFormData.billingCurrency.value
           : settingFormData.billingCurrency,
-        bankFee: settingFormData.bankFee && isBankFee ? settingFormData.bankFee : null,
+        bankWireFee: settingFormData.bankWireFee && isBankFee ? settingFormData.bankWireFee : null,
         salesTax: settingFormData.salesTax && !settingFormData.exemptSalesTax ? settingFormData.salesTax : null,
         exemptSalesTax: settingFormData.exemptSalesTax,
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
@@ -236,7 +237,7 @@ const FinancialSettings = ({ isEditablePage }) => {
     } else if (dataField === 'exemptSalesTax' && !data) {
       let updatedFormFields;
       let formData = { ...customerSettingFormData };
-      const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankFee');
+      const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankWireFee');
       const isCardPresent = formData.formFields.some((field) => field.dataField === 'cardProcessingCharges');
       let setIndex;
       if ((isBankFeePresent && !isCardPresent) || (!isBankFeePresent && isCardPresent)) {
@@ -268,17 +269,17 @@ const FinancialSettings = ({ isEditablePage }) => {
     let findCreditFields = getFieldData(SettingFormData, 'cardProcessingCharges');
     let formData = { ...customerSettingFormData };
     if (customerCountryId === CountryId.USA) {
-      formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+      formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
     }
     let value = isHandleChange ? dropdownValue.value : dropdownValue;
     if (customerCountryId !== CountryId.USA && value === PaymentMethodTypes.CREDITCARD) {
-      formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+      formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
     }
     // else if (customerCountryId !== CountryId.USA && value !== PaymentMethodTypes.CREDITCARD) {
-    //   const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankFee');
+    //   const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankWireFee');
     //   if (!isBankFeePresent) {
     //     let updatedFormFields = [...formData.formFields];
-    //     formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+    //     formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
     //     updatedFormFields = [...formData.formFields];
     //     formData.formFields = updatedFormFields;
     //   }
@@ -291,15 +292,15 @@ const FinancialSettings = ({ isEditablePage }) => {
       formData.formFields = updatedFormFields;
     }
     const getFormData = settingFormRef.current.getFormDataWithoutValidation();
-    formData.initialState = { ...getFormData, paymentMethodId: dropdownValue, bankFee: '' };
+    formData.initialState = { ...getFormData, paymentMethodId: dropdownValue, bankWireFee: '' };
     return formData;
   }
 
   const handleExcludeCardValue = (dropdownValue, isHandleChange) => {
-    const findCreditFields = getFieldData(SettingFormData, 'bankFee');
+    const findCreditFields = getFieldData(SettingFormData, 'bankWireFee');
     let formData = { ...customerSettingFormData };
     formData.formFields = formData.formFields.filter((field) => field.dataField !== 'cardProcessingCharges');
-    const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankFee');
+    const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankWireFee');
     if (!isBankFeePresent) {
       const insertIndex = formData.formFields.length - 1;
       let updatedFormFields = [...formData.formFields];
@@ -310,24 +311,15 @@ const FinancialSettings = ({ isEditablePage }) => {
     } else if (isBankFeePresent) {
       if (customerCountryId === CountryId.USA) {
         let updatedFormFields = [...formData.formFields];
-        formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+        formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
         updatedFormFields = [...formData.formFields];
         formData.formFields = updatedFormFields;
       }
     }
     let value = isHandleChange ? dropdownValue.value : dropdownValue;
     if (customerCountryId !== CountryId.USA && value === PaymentMethodTypes.CREDITCARD) {
-      formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
+      formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
     }
-    // else if (customerCountryId !== CountryId.USA && value !== PaymentMethodTypes.CREDITCARD) {
-    //   const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankFee');
-    //   if (!isBankFeePresent) {
-    //     let updatedFormFields = [...formData.formFields];
-    //     formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankFee');
-    //     updatedFormFields = [...formData.formFields];
-    //     formData.formFields = updatedFormFields;
-    //   }
-    // }
     const getFormData = settingFormRef.current.getFormDataWithoutValidation();
     formData.initialState = { ...getFormData, paymentMethodId: dropdownValue, cardProcessingCharges: '' };
     return formData;
@@ -356,6 +348,7 @@ const FinancialSettings = ({ isEditablePage }) => {
 
   return (
     <div className="row">
+      {/* <Masking type="currency" currencyCode="USD" currencySymbol="$" maxLength={4} /> */}
       {!isGetDetailByCustomerIDFetching ?
         <FormCreator
           config={customerSettingFormData}

@@ -7,7 +7,7 @@ namespace OMS.Domain.Repository.Contract
     public interface IOrganizationOtherSettingsRepository
     {
         Task<AddEntityDTO<int>> AddEditOrganizationOtherSettings(OrganizationOtherSettingsDTO requestData);
-        Task<GetOrganizationOtherSettingsByIdResponse> GetOrganizationOtherSettingsById(int organizationOtherSettingId);
+        Task<GetOrganizationOtherSettingsResponse> GetOrganizationOtherSettings();
 
     }
 }

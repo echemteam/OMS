@@ -36,25 +36,25 @@ const organizationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-        getOrganizationProfileByOrganizationId: builder.query({
-            query: (id) => ({
-                url: encryptQueryString(`/Organization/GetOrganizationProfileByOrganizationId/?organizationId=${Number(id)}`),
+        getOrganizationProfile: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationProfile'),
                 Method: 'GET',
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-        getOrganizationOtherSettingsById: builder.query({
-            query: (id) => ({
-                url: encryptQueryString(`/Organization/GetOrganizationOtherSettingsById/?organizationOtherSettingId=${Number(id)}`),
+        getOrganizationOtherSettings: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationOtherSettings'),
                 Method: 'GET',
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-        getSmtpSettingsBySmtpSettingId: builder.query({
-            query: (id) => ({
-                url: encryptQueryString(`/Organization/GetSmtpSettingsBySmtpSettingId/?smtpSettingId=${Number(id)}`),
+        getSmtpSettings: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetSmtpSettings'),
                 Method: 'GET',
             }),
             transformResponse: transformSucessResponse,
@@ -67,9 +67,9 @@ export const {
     useAddEditOrganizationProfileMutation,
     useAddEditSmtpSettingsMutation,
     useAddEditOrganizationOtherSettingsMutation,
-    useLazyGetOrganizationProfileByOrganizationIdQuery,
-    useLazyGetOrganizationOtherSettingsByIdQuery,
-    useLazyGetSmtpSettingsBySmtpSettingIdQuery,
+    useLazyGetOrganizationProfileQuery,
+    useLazyGetOrganizationOtherSettingsQuery,
+    useLazyGetSmtpSettingsQuery,
 
 } = organizationAPI
 

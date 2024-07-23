@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
-const SMTPSettings = React.lazy(() => import("./smtpSettings/SMTPSettings"));
-const OtherSettings = React.lazy(() => import("./otherSettings/OtherSettings"));
-const OrganizationProfileManagement = React.lazy(() => import("./organizationProfileManagement/OrganizationProfileManagement"));
+const SMTPSettings = React.lazy(() => import("./feature/smtpSettings/SMTPSettings"));
+const OtherSettings = React.lazy(() => import("./feature/otherSettings/OtherSettings"));
+const OrganizationProfileManagement = React.lazy(() => import("./feature/organizationProfileManagement/OrganizationProfileManagement"));
 
 const Organization = () => {
 
@@ -33,23 +33,38 @@ const Organization = () => {
             sMenuItemCaption: "Organization Profile Management",
             component: (
                 <div className="mt-2">
-                    <OrganizationProfileManagement activeTabId={activeTabId} onHandleOrganization={handleSetOrganizationId} organizationId={organizationId} />
+                    <OrganizationProfileManagement
+                        activeTabId={activeTabId}
+                        onHandleOrganization={handleSetOrganizationId}
+                        organizationId={organizationId} />
                 </div>
             ),
         },
+        organizationId > 0 &&
         {
             sMenuItemCaption: "SMTP Settings",
             component: (
                 <div className="mt-2">
-                    <SMTPSettings activeTabId={activeTabId} organizationId={organizationId} onHandleSmtp={handleSetSmtpSettingId} smtpSettingId={smtpSettingId} />
+                    <SMTPSettings
+                        activeTabId={activeTabId}
+                        organizationId={organizationId}
+                        onHandleSmtp={handleSetSmtpSettingId}
+                        smtpSettingId={smtpSettingId} />
                 </div>
             ),
         },
+
+        smtpSettingId > 0 &&
         {
             sMenuItemCaption: "Other Settings",
             component: (
                 <div className="mt-2">
-                    <OtherSettings activeTabId={activeTabId} organizationId={organizationId} smtpSettingId={smtpSettingId} organizationOtherSettingId={organizationOtherSettingId} onHandleOrganizationOtherSetting={handleSetOrganizationOtherSettingId} />
+                    <OtherSettings
+                        activeTabId={activeTabId}
+                        organizationId={organizationId}
+                        smtpSettingId={smtpSettingId}
+                        organizationOtherSettingId={organizationOtherSettingId}
+                        onHandleOrganizationOtherSetting={handleSetOrganizationOtherSettingId} />
                 </div>
             ),
         },

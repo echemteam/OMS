@@ -1,4 +1,4 @@
-import { FormFieldTypes } from "../../../../data/formFieldType";
+import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const OtherSettingsData = {
     // name: "Email From",
@@ -22,7 +22,7 @@ export const OtherSettingsData = {
         {
             id: "fedexAccountDetail",
             lable: "Fedex Account Detail ",
-            Field_Name: "fedexAccountDetail",
+            Field_Name: "Fedex Account Detail",
             fieldType: FormFieldTypes.INPUT,
             dataField: "fedexAccountDetail",
             fieldSetting: {

@@ -11,7 +11,7 @@ namespace OMS.Domain.Repository.Implementation
     {
         #region SP Name
         const string ADDEDITSMTPSETTINGS = "AddEditSmtpSettings";
-        const string GETSMTPSETTINGSBYSMTPSETTINGID = "GetSmtpSettingsBySmtpSettingId";
+        const string GETSMTPSETTINGS = "GetSmtpSettings";
         #endregion
 
         public SmtpSettingsRepository(DapperContext dapperContext) : base(dapperContext)
@@ -34,12 +34,9 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
-        public async Task<GetSmtpSettingsBySmtpSettingIdResponse> GetSmtpSettingsBySmtpSettingId(short smtpSettingId)
+        public async Task<GetSmtpSettingsResponse> GetSmtpSettings()
         {
-            GetSmtpSettingsBySmtpSettingIdResponse organizationProfileDetails = await _context.GetFrist<GetSmtpSettingsBySmtpSettingIdResponse>(GETSMTPSETTINGSBYSMTPSETTINGID, new
-            {
-                smtpSettingId
-            }, CommandType.StoredProcedure);
+            GetSmtpSettingsResponse organizationProfileDetails = await _context.GetFrist<GetSmtpSettingsResponse>(GETSMTPSETTINGS, CommandType.StoredProcedure);
             return organizationProfileDetails;
         }
         #endregion

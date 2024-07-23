@@ -38,7 +38,7 @@ namespace OMS.Domain.Repository.Implementation
         const string UPDATERESPONSIBLEUSER = "UpdateResponsibleUser";
         const string GETALLAPIPROVIDERS = "GetAllAPIProviders";
         const string GETALLAPIENDPOINTS = "GetAllAPIEndpoints";
-        const string GETALLSUBCUSTOMER = "GetAllSubCustomer";
+        const string GETALLAPPROVECUSTOMERFORLINKING = "GetAllApproveCustomerForLinking";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -187,14 +187,13 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetList<GetAllAPIEndpointsResponse>(GETALLAPIENDPOINTS, commandType: CommandType.StoredProcedure);
         }
-        public async Task<List<GetAllSubCustomerResponse>> GetAllSubCustomer(bool isSubCustomer)
+        public async Task<List<GetAllApproveCustomerForLinkingResponse>> GetAllApproveCustomerForLinking(int customerId)
         {
-            List<GetAllSubCustomerResponse> getAllSubCustomerResponse = await _context.GetList<GetAllSubCustomerResponse>(GETALLSUBCUSTOMER, new
+            List<GetAllApproveCustomerForLinkingResponse> getAllApproveCustomerForLinkingResponse = await _context.GetList<GetAllApproveCustomerForLinkingResponse>(GETALLAPPROVECUSTOMERFORLINKING, new
             {
-                isSubCustomer
+                customerId
             }, commandType: CommandType.StoredProcedure);
-            return getAllSubCustomerResponse;
-
+            return getAllApproveCustomerForLinkingResponse;
         }
     }
 }

@@ -1,0 +1,53 @@
+.supplier-setting-sec {
+  .ach-wire-section {
+    height: 100%;
+    display: block;
+    position: relative;
+    .card {
+      padding-top: 0;
+
+      .card-top-title-btn {
+        min-height: unset;
+
+        .section-title {
+          padding-bottom: 3px;
+
+          h4 {
+            color: var(--textColorLight);
+          }
+        }
+      }
+
+    }
+
+    .validation-text {
+      position: absolute;
+    }
+
+    .sub-card-sec-add {
+      border-bottom: 2px dashed var(--linkMenu);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+
+      &:last-child {
+        padding-bottom: 0;
+        border: none;
+      }
+    }
+
+  }
+  .vertical-tab-inner {
+    .tab-section {
+      height: calc(100vh - 445px);
+      @media only screen and (max-width: 1560px) {
+        height: calc(100vh - 385px);
+      }
+      .tab-content{
+        height: calc(100vh - 445px);
+        @media only screen and (max-width: 1560px) {
+          height: calc(100vh - 385px);
+        }
+      }
+    }
+  }
+}
