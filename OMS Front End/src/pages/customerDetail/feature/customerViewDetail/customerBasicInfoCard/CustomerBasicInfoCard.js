@@ -13,9 +13,7 @@ import {
 } from "../../../../../app/services/commonAPI";
 import {
   useUpdateCustomerInActiveStatusMutation,
-  useUpdateCustomerStatusMutation,
-  useUpdateCustomerSubCustomerMutation,
-
+  useUpdateCustomerStatusMutation
 } from "../../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
@@ -28,7 +26,7 @@ import {
 import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDetail.data";
 import { AppIcons } from "../../../../../data/appIcons";
 import CopyText from "../../../../../utils/CopyText/CopyText";
-import { ErrorMessage, SuccessMessage } from "../../../../../data/appMessages";
+import { ErrorMessage } from "../../../../../data/appMessages";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
@@ -59,10 +57,6 @@ const CustomerBasicInfoCard = ({
     updateResponsibleUser,
     { isSuccess: isSuccessRUser, data: isUpdateRUserData },
   ] = useUpdateResponsibleUserMutation();
-  const [
-    updateCustomerSubCustomer,
-    { isSuccess: isSuccessUpdateCustomerSubCustomer, data: isUpdateCustomerSubCustomerData },
-  ] = useUpdateCustomerSubCustomerMutation();
   const [
     updateCustomerStatus,
     {
@@ -316,31 +310,6 @@ const CustomerBasicInfoCard = ({
     }
   };
 
-  const handleCheckboxChange = (e) => {
-    const value = e.target.checked;
-    confirm(
-      "Warning?",
-      SuccessMessage.Confirm_Update.replace("{0}", "Sub Company"),
-      "Yes",
-      "Cancel"
-    ).then((confirmed) => {
-      if (confirmed) {
-        let request = {
-          customerId: customerId,
-          isSubCustomer: value,
-        };
-        updateCustomerSubCustomer(request);
-      }
-    });
-  };
-
-  useEffect(() => {
-    if (isSuccessUpdateCustomerSubCustomer && isUpdateCustomerSubCustomerData) {
-      ToastService.success(isUpdateCustomerSubCustomerData.errorMessage);
-      getCustomerById();
-    }
-  }, [isSuccessUpdateCustomerSubCustomer, isUpdateCustomerSubCustomerData]);
-
   return !isLoading ? (
     <div className="basic-customer-detail">
       <div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -461,24 +430,17 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
             <div className="field-desc">
-              <div className="inf-label inf-label-width">Is Sub Customer</div>
+              <div className="inf-label inf-label-width ">
+                Is Sub Customer
+              </div>
               <b>&nbsp;:&nbsp;</b>
-              <div className="checkbox-part ml-2 mt-2">
-                <div className="checkbox">
-                  <input
-                    name={"isSubCustomer"}
-                    className="form-checkbox"
-                    type="checkbox"
-                    id={"isSubCustomer"}
-                    checked={customerData?.isSubCustomer ? customerData?.isSubCustomer : false}
-                    onChange={handleCheckboxChange}
-                    disabled={isButtonDisable}
-                  />
-                  <label
-                    htmlFor={"isSubCustomer"}
-                    className="checkbox-label"
-                  ></label>
-                </div>
+              <div className="info-desc">
+                {customerData?.isSubCustomer}
+                {customerData && customerData.isSubCustomer ? (
+                  <i className="fa fa-check green-color"></i>
+                ) : (
+                  <i className="fa fa-times red-color"></i>
+                )}
               </div>
             </div>
           </div>
@@ -486,112 +448,6 @@ const CustomerBasicInfoCard = ({
         <div className="edit-icons" onClick={editClick}>
           <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
         </div>
-
-        {/* <div className="field-desc d-flex align-items-center">
-          <div className="inf-label">R-User</div>
-          <b>&nbsp;:&nbsp;</b>
-          <div className="status-dropdown">
-            <DropDown
-              options={responsibleUserOptions}
-              value={rUserValue}
-              onChange={handleRUserChange}
-              placeholder="Select Status"
-              isDisabled={isResponsibleUser ? true : isButtonDisable}
-            />
-          </div>
-        </div>
-        <div className="field-desc d-flex align-items-center">
-          <div className="inf-label">Status</div>
-          <b>&nbsp;:&nbsp;</b>
-          <div className={`status-dropdown ${getStatusClass()}`}>
-            <DropDown
-              options={options}
-              value={selectedStatus}
-              onChange={handleStatusChange}
-              placeholder="Select Status"
-              isDisabled={isButtonDisable}
-            />
-          </div>
-        </div>
-        <div className="field-desc">
-          <div className="inf-label">Email</div>
-          <b>&nbsp;:&nbsp;</b>
-          <a
-            className="email-link"
-            href={`mailto:${customerData?.emailAddress}`}
-          >
-            <div className="info-desc">{customerData?.emailAddress}</div>
-          </a>
-          <span
-            className="copy-icon"
-            onClick={() => CopyText(customerData?.emailAddress, "email")}
-          >
-            <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
-          </span>
-        </div>
-        <div className="field-desc">
-          <div className="inf-label">Website</div>
-          <b>&nbsp;:&nbsp;</b>
-
-          <div className="info-desc">{customerData?.website}</div>
-
-          <span
-            className="copy-icon"
-            onClick={() => CopyText(customerData?.website, "website")}
-          >
-            <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
-          </span>
-        </div>
-
-        <div className="field-desc">
-          <div className="inf-label">Country</div>
-          <b>&nbsp;:&nbsp;</b>
-          <div className="info-desc">{customerData?.countryName}</div>
-        </div>
-
-        <div className="field-desc">
-          <div className="inf-label">Group Type</div>
-          <b>&nbsp;:&nbsp;</b>
-          <div className="info-desc">{customerData?.type}</div>
-        </div>
-
-        <div className="field-desc">
-          <div className="inf-label">Territory</div>
-          <b>&nbsp;:&nbsp;</b>
-          <div className="info-desc">{customerData?.territory}</div>
-        </div>
-
-        <div className="field-desc">
-          <div className="inf-label">Tax Id</div>
-          <b>&nbsp;:&nbsp;</b>
-          <div className="info-desc">
-            {customerData?.taxId
-              ? customerData?.taxId
-              : ErrorMessage.NotAvailabe}
-          </div>
-        </div>
-        {/* <div className="field-desc">
-            <div className="inf-label">Is Company</div>
-            <b>&nbsp;:&nbsp;</b>
-            <div className="info-desc">
-              {customerData?.isCompany}
-              {customerData && customerData.isCompany ? <i className="fa fa-check green-color"></i> : <i className="fa fa-times red-color"></i>}
-            </div>
-          </div> */}
-        {/* <div className="field-desc">
-          <div className="inf-label inf-label-width ">
-            Is Buying for Third Party
-          </div>
-          <b>&nbsp;:&nbsp;</b>
-          <div className="info-desc">
-            {customerData?.isBuyingForThirdParty}
-            {customerData && customerData.isBuyingForThirdParty ? (
-              <i className="fa fa-check green-color"></i>
-            ) : (
-              <i className="fa fa-times red-color"></i>
-            )}
-          </div>
-        </div> */}
       </div>
       {showModal && (
         <CenterModel
