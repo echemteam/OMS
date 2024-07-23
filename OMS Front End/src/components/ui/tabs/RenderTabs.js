@@ -35,6 +35,7 @@ const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization }) => {
               <div className="tab-header">
                 {tabs &&
                   tabs.map((tab, index) => (
+                    tab &&
                     <button
                       key={index}
                       className={activeTab === index ? "active" : ""}

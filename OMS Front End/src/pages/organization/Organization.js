@@ -33,23 +33,38 @@ const Organization = () => {
             sMenuItemCaption: "Organization Profile Management",
             component: (
                 <div className="mt-2">
-                    <OrganizationProfileManagement activeTabId={activeTabId} onHandleOrganization={handleSetOrganizationId} organizationId={organizationId} />
+                    <OrganizationProfileManagement
+                        activeTabId={activeTabId}
+                        onHandleOrganization={handleSetOrganizationId}
+                        organizationId={organizationId} />
                 </div>
             ),
         },
+        organizationId > 0 &&
         {
             sMenuItemCaption: "SMTP Settings",
             component: (
                 <div className="mt-2">
-                    <SMTPSettings activeTabId={activeTabId} organizationId={organizationId} onHandleSmtp={handleSetSmtpSettingId} smtpSettingId={smtpSettingId} />
+                    <SMTPSettings
+                        activeTabId={activeTabId}
+                        organizationId={organizationId}
+                        onHandleSmtp={handleSetSmtpSettingId}
+                        smtpSettingId={smtpSettingId} />
                 </div>
             ),
         },
+
+        smtpSettingId > 0 &&
         {
             sMenuItemCaption: "Other Settings",
             component: (
                 <div className="mt-2">
-                    <OtherSettings activeTabId={activeTabId} organizationId={organizationId} smtpSettingId={smtpSettingId} organizationOtherSettingId={organizationOtherSettingId} onHandleOrganizationOtherSetting={handleSetOrganizationOtherSettingId} />
+                    <OtherSettings
+                        activeTabId={activeTabId}
+                        organizationId={organizationId}
+                        smtpSettingId={smtpSettingId}
+                        organizationOtherSettingId={organizationOtherSettingId}
+                        onHandleOrganizationOtherSetting={handleSetOrganizationOtherSettingId} />
                 </div>
             ),
         },

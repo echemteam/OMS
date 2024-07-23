@@ -33,6 +33,6 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData);
         Task<List<GetAllAPIProvidersResponse>> GetAllAPIProviders();
         Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints();
-        Task<List<GetAllApproveCustomerForLinkingResponse>> GetAllApproveCustomerForLinking();
+        Task<List<GetAllApproveCustomerForLinkingResponse>> GetAllApproveCustomerForLinking(int customerId);
     }
 }

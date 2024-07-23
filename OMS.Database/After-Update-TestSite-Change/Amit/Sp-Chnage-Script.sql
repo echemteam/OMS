@@ -50,8 +50,8 @@ GO
 /****** Object:  StoredProcedure [dbo].[GetOrganizationOtherSettings]    Script Date: 23-07-2024 13:18:15 ******/
 DROP PROCEDURE [dbo].[GetOrganizationOtherSettings]
 GO
-/****** Object:  StoredProcedure [dbo].[GetAllSubCustomer]    Script Date: 23-07-2024 13:18:15 ******/
-DROP PROCEDURE [dbo].[GetAllSubCustomer]
+/****** Object:  StoredProcedure [dbo].[GetAllApproveCustomerForLinking]    Script Date: 23-07-2024 13:18:15 ******/
+DROP PROCEDURE [dbo].[GetAllApproveCustomerForLinking]
 GO
 /****** Object:  StoredProcedure [dbo].[AddCustomersBasicInformation]    Script Date: 23-07-2024 11:07:39 ******/
 SET ANSI_NULLS ON
@@ -1183,22 +1183,35 @@ BEGIN
 END 
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetAllSubCustomer]    Script Date: 23-07-2024 13:18:15 ******/
+/****** Object:  StoredProcedure [dbo].[GetAllApproveCustomerForLinking]    Script Date: 23-07-2024 13:18:15 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
---GetAllSubCustomer          
-CREATE PROCEDURE [dbo].[GetAllSubCustomer]                       
+--GetAllApproveCustomerForLinking          
+CREATE PROCEDURE [dbo].[GetAllApproveCustomerForLinking] 
+@CustomerId INT                       
 AS                                      
 BEGIN                                      
     SET NOCOUNT ON;                                      
     BEGIN TRY         
                               
-            SELECT            
-            [CustomerId],      
-            [Name]          
-            FROM [dbo].[Customers] WHERE IsActive=1 AND deletedby IS NULL AND deletedAt is NULL             
+            SELECT                  
+            C.[CustomerId],            
+            C.[Name]                
+        FROM [dbo].[Customers] C
+        WHERE 
+            C.IsActive = 1 
+            AND C.StatusId = 3 
+            AND C.DeletedBy IS NULL 
+            AND C.DeletedAt IS NULL 
+            AND C.CustomerId NOT IN (
+                SELECT SubCustomerId
+                FROM [dbo].[SubCustomerMainCustomer] 
+                WHERE CustomerId = @CustomerId
+                AND DeletedBy IS NULL 
+                AND DeletedAt IS NULL 
+          )                       
      END TRY                                              
 BEGIN CATCH                                              
  DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()                                              
