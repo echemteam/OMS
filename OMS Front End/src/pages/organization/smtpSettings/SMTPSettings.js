@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types';
 import { SMTPSettingsData } from './config/SMTPSettings.data';
 import FormCreator from '../../../components/Forms/FormCreator';
 import Buttons from '../../../components/ui/button/Buttons';
-import { useAddEditSmtpSettingsMutation, useLazyGetSmtpSettingsBySmtpSettingIdQuery } from '../../../app/services/organizationAPI';
+import { useAddEditSmtpSettingsMutation, useLazyGetSmtpSettingsQuery } from '../../../app/services/organizationAPI';
 import ToastService from '../../../services/toastService/ToastService';
 import { ErrorMessage } from '../../../data/appMessages';
 import DataLoader from '../../../components/ui/dataLoader/DataLoader';
-// import { onResetForm } from '../../../utils/FormFields/ResetForm/handleResetForm';
 
 const SMTPSettings = (props) => {
     const smtpRef = useRef();
@@ -15,7 +15,7 @@ const SMTPSettings = (props) => {
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
     const [addEditSmtpSetting, { isLoading: isAddEditSmtpSettingLoading, isSuccess: isAddEditSmtpSettingSuccess, data: isAddEditSmtpSettingData }] = useAddEditSmtpSettingsMutation();
-    const [getSmtpSettingId, { isFetching: isGetSmtpSettingIdFetching, isSuccess: isgetSmtpSettingIdSuccess, data: isGetSmtpSettingIdData }] = useLazyGetSmtpSettingsBySmtpSettingIdQuery();
+    const [getSmtpSettings, { isFetching: isGetSmtpSettingsFetching, isSuccess: isGetSmtpSettingsSuccess, data: isGetSmtpSettingsData }] = useLazyGetSmtpSettingsQuery();
 
     useEffect(() => {
         handleResponse(isAddEditSmtpSettingSuccess, isAddEditSmtpSettingData);
@@ -56,36 +56,33 @@ const SMTPSettings = (props) => {
     }
 
     useEffect(() => {
-        if (props.smtpSettingId > 0) {
-            getSmtpSettingId(props.smtpSettingId)
-        } else if (props.organizationId === 0 && props.activeTabId === 1) {
-            ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "Organization Profile Management Data"))
-        }
-    }, [props.smtpSettingId, props.activeTabId])
+        // if (props.smtpSettingId > 0) {
+            getSmtpSettings()
+        // } else if (props.organizationId === 0 && props.activeTabId === 1) {
+        //     ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "Organization Profile Management Data"))
+        // }
+    }, [props.activeTabId])
 
     useEffect(() => {
-        if (!isGetSmtpSettingIdFetching && isgetSmtpSettingIdSuccess && isGetSmtpSettingIdData) {
+        if (!isGetSmtpSettingsFetching && isGetSmtpSettingsSuccess && isGetSmtpSettingsData) {
             let formData = { ...SMTPSettingsData };
             formData.initialState = {
-                emailProvider: isGetSmtpSettingIdData.emailProvider,
-                smtpServer: isGetSmtpSettingIdData.smtpServer,
-                smtpPort: isGetSmtpSettingIdData.smtpPort,
-                smtpUserName: isGetSmtpSettingIdData.smtpUserName,
-                smtpPassword: isGetSmtpSettingIdData.smtpPassword,
-                useSsl: isGetSmtpSettingIdData.useSsl,
+                emailProvider: isGetSmtpSettingsData.emailProvider,
+                smtpServer: isGetSmtpSettingsData.smtpServer,
+                smtpPort: isGetSmtpSettingsData.smtpPort,
+                smtpUserName: isGetSmtpSettingsData.smtpUserName,
+                smtpPassword: isGetSmtpSettingsData.smtpPassword,
+                useSsl: isGetSmtpSettingsData.useSsl,
             };
             setSmtpSettingData(formData);
+            props.onHandleSmtp(isGetSmtpSettingsData.smtpSettingId)
             setShouldRerenderFormCreator((prevState) => !prevState);
         }
-    }, [isGetSmtpSettingIdFetching, isgetSmtpSettingIdSuccess, isGetSmtpSettingIdData,]);
-
-    // const onHandleReset = () => {
-    //     onResetForm(SMTPSettingsData, setSmtpSettingData, null);
-    // }
+    }, [isGetSmtpSettingsFetching, isGetSmtpSettingsSuccess, isGetSmtpSettingsData,]);
 
     return (
         <div className="row mt-2 add-address-form">
-            {!isGetSmtpSettingIdFetching ?
+            {!isGetSmtpSettingsFetching ?
                 <FormCreator config={smtpSettingData}
                     ref={smtpRef}
                     {...smtpSettingData}
@@ -102,15 +99,17 @@ const SMTPSettings = (props) => {
                         isLoading={isAddEditSmtpSettingLoading}
                     // isDisable={isButtonDisable} 
                     />
-                    {/* <Buttons
-                        buttonTypeClassName="dark-btn ml-5"
-                        buttonText="Cancel"
-                        onClick={onHandleReset}
-                    /> */}
                 </div>
             </div>
         </div>
     )
 }
+
+SMTPSettings.propTypes = {
+    activeTabId: PropTypes.number.isRequired,
+    organizationId: PropTypes.number,
+    smtpSettingId: PropTypes.number,
+    onHandleSmtp: PropTypes.func.isRequired
+};
 
 export default SMTPSettings
