@@ -43,12 +43,12 @@ export const addEditCarrierFormData = {
         },
         {
             id: "handlingFee",
-            lable: "Fee",
-            Field_Name: "Fee",
+            lable: "Handling Fee",
+            Field_Name: "Handling Fee",
             fieldType: FormFieldTypes.INPUT,
             dataField: "handlingFee",
             fieldSetting: {
-                placeholder: "Enter Fee",
+                placeholder: "Enter Handling Fee",
                 allowSpace: true,
                 maxLength: 25,
             },
@@ -89,7 +89,7 @@ export const AccountGridConfig = {
             fieldName: "accountNumber"
         },
         {
-            name: "Fee",
+            name: "Handling Fee",
             width: "25%",
             fieldName: "handlingFee",
             colType: GridColumnType.MONEY,

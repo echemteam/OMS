@@ -22,7 +22,7 @@ export const OtherSettingsData = {
         {
             id: "fedexAccountDetail",
             lable: "Fedex Account Detail ",
-            Field_Name: "fedexAccountDetail",
+            Field_Name: "Fedex Account Detail",
             fieldType: FormFieldTypes.INPUT,
             dataField: "fedexAccountDetail",
             fieldSetting: {

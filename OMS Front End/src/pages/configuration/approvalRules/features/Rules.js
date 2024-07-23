@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
@@ -92,6 +93,19 @@ const Rules = (props) => {
       </SidebarModel>
     </>
   );
+};
+
+Rules.propTypes = {
+  getRules: PropTypes.any.isRequired,
+  selectedModuleId: PropTypes.number.isRequired,
+  selectedFunctionalityId: PropTypes.number.isRequired,
+  allGetAllModulesData: PropTypes.array.isRequired,
+  allGetAllFunctionalitiesData: PropTypes.array.isRequired,
+  allGetAllFunctionalitiesFieldsData: PropTypes.array.isRequired,
+  onRepeatCall: PropTypes.func.isRequired,
+  rulesFormData: PropTypes.object.isRequired,
+  setFormData: PropTypes.func.isRequired,
+  formData: PropTypes.object.isRequired,
 };
 
 export default Rules;

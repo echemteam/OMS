@@ -2,7 +2,7 @@
 
 namespace OMS.Domain.Entities.API.Response.Organization
 {
-    public class GetSmtpSettingsBySmtpSettingIdResponse
+    public class GetSmtpSettingsResponse
     {
         public short? SmtpSettingId { get; set; }
         public byte? OrganizationId { get; set; }
