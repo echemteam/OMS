@@ -1196,15 +1196,18 @@ BEGIN
     SET NOCOUNT ON;                                      
     BEGIN TRY         
                               
-            SELECT            
-            [CustomerId],      
-            [Name]          
-            FROM [dbo].[Customers] WHERE IsActive=1 AND StatusId=3 AND deletedby IS NULL AND deletedAt is NULL 
-            AND [CustomerId] NOT IN (
-              SELECT SubCustomerId 
-              FROM [dbo].[SubCustomerMainCustomer]
-              WHERE SubCustomerId IS NOT NULL AND SubCustomerId = @CustomerId
-             )                 
+             SELECT                  
+            C.[CustomerId],            
+            C.[Name]                
+        FROM [dbo].[Customers] C
+        LEFT JOIN [dbo].[SubCustomerMainCustomer] SB ON C.CustomerId = SB.SubCustomerId 
+        AND SB.CustomerId = @CustomerId
+        WHERE 
+            C.IsActive = 1 
+            AND C.StatusId = 3 
+            AND C.DeletedBy IS NULL 
+            AND C.DeletedAt IS NULL 
+            AND SB.SubCustomerId IS NULL                 
      END TRY                                              
 BEGIN CATCH                                              
  DECLARE @ErrorMessage nvarchar(max) = ERROR_MESSAGE()                                              
