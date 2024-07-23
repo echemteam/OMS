@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from 'prop-types';
 import { securityKey } from "../../../../../data/SecurityKey";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
@@ -74,4 +75,14 @@ const SupplierViewTab = (supplierId) => {
         <RenderTabs tabs={supplierId ? visibleTabs : null} />
     )
 }
+
+// PropTypes for the component
+SupplierViewTab.propTypes = {
+    supplierId: PropTypes.number,
+};
+
+SupplierViewTab.defaultProps = {
+    supplierId: null,
+};
+
 export default SupplierViewTab;
