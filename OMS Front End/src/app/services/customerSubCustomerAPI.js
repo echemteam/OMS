@@ -8,9 +8,9 @@ const customerSubCustomerAPI = createApi({
     baseQuery: customFetchBase,
     endpoints: (builder) => ({
 
-        getAllSubCustomer: builder.query({
-            query: (isSubCustomer) => ({
-                url: encryptQueryString(`/Common/GetAllSubCustomer/?isSubCustomer=${isSubCustomer}`),
+        getAllApproveCustomerForLinking: builder.query({
+            query: (customerId) => ({
+                url: encryptQueryString(`/Common/GetAllApproveCustomerForLinking?customerId=${customerId}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
@@ -56,7 +56,7 @@ const customerSubCustomerAPI = createApi({
 export const {
     useAddSubCustomerMutation,
     useGetSubCustomerByCustomerIdMutation,
-    useLazyGetAllSubCustomerQuery,
+    useLazyGetAllApproveCustomerForLinkingQuery,
     useDeleteSubCustomerMutation,
 } = customerSubCustomerAPI;
 

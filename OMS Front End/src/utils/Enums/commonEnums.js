@@ -6,8 +6,9 @@ export const FieldSettingType = {
 }
 
 export const ApprovalEnum = {
-    APPROVECUSTOMER: "1",
-    APPROVESUPPLIER: "2"
+    APPROVECUSTOMER: 1,
+    APPROVESUPPLIER: 2,
+    APPROVESUBCUSTOMER: 3,
 }
 
 export const CustomerSupplierTabEnum = {
