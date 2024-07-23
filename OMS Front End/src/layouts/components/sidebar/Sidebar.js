@@ -53,6 +53,7 @@ const Sidebar = (props) => {
                           </Link>
                           {menuItem.subMenu && (
                             <ul className="sidebar-dropdown">
+                              <div className="collapse-dropdown">
                               {menuItem.children.map((subMenu, subIndex) => (
                                 <React.Fragment key={subIndex}>
                                   {hasPermission(subMenu.securityKey) && (
@@ -74,6 +75,7 @@ const Sidebar = (props) => {
                                   )}
                                 </React.Fragment>
                               ))}
+                              </div>
                             </ul>
                           )}
                         </li>
