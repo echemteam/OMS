@@ -1,21 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef,useEffect ,useState} from "react";
-import { useDeleteApiEndpointMutation, useGetApiEndpointsMutation } from "../../../../app/services/apiEndPointsAPI";
-import MolGrid from "../../../../components/Grid/MolGrid";
+
+import { useState ,useRef ,useEffect} from "react";
+import SwalAlert from "../../../../../../services/swalService/SwalService";
+import MolGrid from "../../../../../../components/Grid/MolGrid";
+import SidebarModel from "../../../../../../components/ui/sidebarModel/SidebarModel";
+import AddEditApiParameters from "../../apiParameters/features/AddEditApiParameters";
 import { ApiEndPointGridConfig } from "../config/ApiEndPoints.data";
-import SwalAlert from "../../../../services/swalService/SwalService";
-import ToastService from "../../../../services/toastService/ToastService";
 import { useImperativeHandle } from "react";
+import ToastService from "../../../../../../services/toastService/ToastService";
+import { AppIcons } from "../../../../../../data/appIcons";
+import { useDeleteApiEndpointMutation,useGetApiEndpointsMutation,} from "../../../../../../app/services/apiEndPointsAPI";
 
-
-const ApiEndPointsList=({handleEditClick,childRef})=>{
+let parameterData = {};
+const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
     const molGridRef = useRef();
+    const endpointId=initData.endpointId;
+  
      const [listData, setListData] = useState();
     const [totalRowCount, setTotalRowCount] = useState(0);
-  
     const { confirm } = SwalAlert();
+    const [isModelOpen, setIsModelOpen] = useState(false);
     
-    const [getApiEndpoints,{ isLoading: isApiEndPointsLoading, isSuccess: isApiEndPointsSuccess, data: isApiEndPointseData },] = useGetApiEndpointsMutation();
+    const [getApiEndpoints,{ isLoading: isApiEndPointsLoading, isSuccess: isApiEndPointsSuccess, data: isApiEndPointsData },] = useGetApiEndpointsMutation();
     const [deleteApiEndpoint,{  isSuccess: isDeleteApiEndpointSuccess, data: isDeleteApiEndpointeData }, ] = useDeleteApiEndpointMutation();
 
 
@@ -28,16 +34,16 @@ const ApiEndPointsList=({handleEditClick,childRef})=>{
       }, [isDeleteApiEndpointSuccess, isDeleteApiEndpointeData]);
    
     useEffect(() => {
-      if (isApiEndPointsSuccess && isApiEndPointseData) {
-        if (isApiEndPointseData) {
-          setListData(isApiEndPointseData.dataSource);
+      if (isApiEndPointsSuccess && isApiEndPointsData) {
+        if (isApiEndPointsData) {
+          setListData(isApiEndPointsData.dataSource);
           
         }
-        if (isApiEndPointseData.totalRecord) {
-          setTotalRowCount(isApiEndPointseData.totalRecord);
+        if (isApiEndPointsData.totalRecord) {
+          setTotalRowCount(isApiEndPointsData.totalRecord);
         }
       }
-    }, [isApiEndPointsSuccess, isApiEndPointseData]);
+    }, [isApiEndPointsSuccess, isApiEndPointsData]);
 
     const getLists = (pageObject,sortingString) => {
       const request = {
@@ -46,7 +52,8 @@ const ApiEndPointsList=({handleEditClick,childRef})=>{
           pageSize: pageObject.pageSize,
         },
         filters: { searchText: "" },
-        sortString: sortingString
+        sortString: sortingString,
+        providerId:providerId,
       };
       getApiEndpoints(request);
     };
@@ -81,7 +88,26 @@ const ApiEndPointsList=({handleEditClick,childRef})=>{
         callChildFunction: onGetData
     }));
 
+    const handleParameterAddClick=(data)=>{
+   
+      parameterData = { ...data }
+        setIsModelOpen(!isModelOpen);
+    }
+
+    const onSidebarClose = () => {
+      setIsModelOpen(false);
+
+   };
+   
+  const onSuccess = () => {
+    setIsModelOpen(true);
+    if (childRef.current) {
+        childRef.current.callChildFunction();
+    }
+};
+
    const actionHandler = {
+    ADD:handleParameterAddClick,
         EDIT: handleEditClick,
        DELETE: handleDeleteClick,    
       };
@@ -95,7 +121,7 @@ const ApiEndPointsList=({handleEditClick,childRef})=>{
               allowPagination={true}
               pagination={{
                 totalCount: totalRowCount,
-                pageSize: 20,
+                pageSize: 10,
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
@@ -105,6 +131,24 @@ const ApiEndPointsList=({handleEditClick,childRef})=>{
             />
           </div>
         </div>
+        <SidebarModel
+         modalTitle=  "Add Api Parameter"
+         contentClass="content-60"
+         onClose={onSidebarClose}
+         modalTitleIcon={AppIcons.AddIcon}
+         isOpen={isModelOpen}
+        
+        >
+          <AddEditApiParameters
+       
+        initData={parameterData}
+          onClose={onSidebarClose}
+          onSuccess={onSuccess}
+          endpointId={endpointId}
+          />
+
+ 
+        </SidebarModel>
  </>)
 }
 export default ApiEndPointsList;

@@ -1,31 +1,17 @@
-import { GridColumnType } from "../../../../data/gridColumnType";
-import { FormFieldTypes } from "../../../../data/formFieldType";
+import { FormFieldTypes } from "../../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../../data/gridColumnType";
+
 
 export const addEditApiParameterFormData ={
     initialState:{
-        endpointId:"",
+    
         name: "",
         dataType:"",
         defaultValue:"",
         isRequired:"",
     },
     formFields: [
-        {
-            id: "endpointId",
-            lable: "EndPoint Id ",
-            Field_Name: "EndPoint Id ",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "endpointId",
-            fieldSetting: {
-                placeholder: "Select Endpoint ",
-                isEnableOnChange: true
-            },
-            
-         validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 mt-2",
-            },
-        },
+       
       
         {
             id: "name",
@@ -39,7 +25,7 @@ export const addEditApiParameterFormData ={
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
+                containerCss: "col-xxl-16 col-xl-6 col-md-6 col-6 mb-2 ",
             },
         },
         {
@@ -55,7 +41,7 @@ export const addEditApiParameterFormData ={
             
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-2",
             },
         },
         {
@@ -70,7 +56,7 @@ export const addEditApiParameterFormData ={
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-2",
             },
         },
        
@@ -86,7 +72,7 @@ export const addEditApiParameterFormData ={
             },
             style: {
               containerCss:
-                "col-xxl-6 col-xl-6 col-md-12 col-12 col-12 mb-input margin-left0-checkbox",
+                "col-xxl-6 col-xl-6 col-md-6 col-6 col-6 mb-input margin-left0-checkbox mt-2",
             },
         },
     ],
@@ -98,12 +84,7 @@ export const addEditApiParameterFormData ={
 
 export const ApiParameterGridConfig = {
     columns: [
-        {
-            name: "End Point Name",
-            fieldName: "endpointName",
-            width: "15%",
-            allowShort: true,
-          },
+
       {
         name: "Parameter Name",
         fieldName: "name",
@@ -125,7 +106,7 @@ export const ApiParameterGridConfig = {
       {
         name: "Is Required",
         fieldName: "isRequired",
-        width: "15%",
+        width: "20%",
         colType: GridColumnType.CHECKBOX,
         colSettings: {
           allowCheckbox: true,
@@ -134,7 +115,7 @@ export const ApiParameterGridConfig = {
       },
       {
         name: "Action",
-        width: "10%",
+        width: "20%",
         colType: GridColumnType.ACTION,
         defaultAction: {
           allowEdit: true,

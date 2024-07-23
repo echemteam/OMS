@@ -5,10 +5,10 @@ import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
 import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
+import ApiProviderViewDetail from "../../pages/apiConfiguration/apiProviders/features/apiProviderViewDetail/ApiProviderViewDetail";
 
-const ApiParametersGrid = React.lazy(() => import("../../pages/apiConfiguration/apiParameters/ApiParametersGrid"));
-const ApiAuthenticationGrid = React.lazy(() => import("../../pages/apiConfiguration/apiAuthentication/ApiAuthenticationGrid"));
-const ApiEndPointsGrid = React.lazy(() => import("../../pages/apiConfiguration/apiEndPoints/ApiEndPointsGrid"));
+
+// const ApiParametersGrid = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/features/apiParameters/ApiParametersGrid"));
 const ApiProvidersGrid = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProvidersGrid"));
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
@@ -298,34 +298,14 @@ export const ComponentNavigation = [
     securityKey: securityKey.APIPROVIDERS
   },
   {
-    id: 'apiEndpoints',
-    path: '/APIEndpoints',
+    id: 'apiProviderDetails',
+    path: '/APIProviderDetail/:id',
     exact: true,
-    title: 'API EndPoints',
-    component: ApiEndPointsGrid,
+    title: 'API Provider Detail',
+    component: ApiProviderViewDetail,
     hasParams: false,
-    text: 'API EndPoints',
-    securityKey: securityKey.APIENDPOINTS
-  },
-  {
-    id: 'apiParameters',
-    path: '/APIParameters',
-    exact: true,
-    title: 'API Parameters',
-    component: ApiParametersGrid,
-    hasParams: false,
-    text: 'API Parameters',
-    securityKey: securityKey.APIPARAMETERS
-  },
-  {
-    id: 'apiAuthentication',
-    path: '/APIAuthentication',
-    exact: true,
-    title: 'API Authentication',
-    component: ApiAuthenticationGrid,
-    hasParams: false,
-    text: 'API Authentication',
-    securityKey: securityKey.APIAUTHENTICATION
+    text: 'API Providers Detail',
+    securityKey: securityKey.APIPROVIDERS
   },
   {
     id: "",
@@ -347,4 +327,5 @@ export const ComponentNavigation = [
     text: 'Organization',
     // securityKey: securityKey.MYTASK
   }
+
 ];
