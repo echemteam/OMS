@@ -10,9 +10,9 @@ const Sidebar = (props) => {
 
   const handleClick = (menu) => {
     if (selectedMenu === menu) {
-      setSelectedMenu(null); // Remove class if same menu clicked again
+      setSelectedMenu(null);
     } else {
-      setSelectedMenu(menu); // Add class to the clicked menu
+      setSelectedMenu(menu);
     }
   };
 
@@ -23,55 +23,69 @@ const Sidebar = (props) => {
 
   return (
     <>
-
       <nav className="sidebar">
         <div className="main-menus">
           <Link className="sidebar-brand">
-            {/* <Image
-                imagePath={AppIcons.logoImage}
-                imgCustomClassName="open-bar"
-                altText="Icon"
-              ></Image> */}
             OMS&nbsp;<span className="small-sidebar">Lite</span>
           </Link>
           <div className="sidebar-menu">
             <ul className="sidebar-menu-list">
-              {Menu.map((menuItem, index) => (
-                <>
-                  {hasPermission(menuItem.securityKey) ?
-                    <li key={index} className={selectedMenu === menuItem.id ? "menu-item active-menu" : "menu-item"} onClick={() => handleClick(menuItem.id)} >
-                      <Link to={menuItem.to} className={menuItem.subMenu ? "menu-arrow" : ""}>
-                        <i className={menuItem.iconClass}></i>
-                        <span>{menuItem.name}</span>
-                      </Link>
-                      {menuItem.subMenu ? (
-                        <>
-                          <ul className="sidebar-dropdown">
-                            {menuItem.children.map((subMenu, index) => (
-                              <>
-                                {hasPermission(subMenu.securityKey) ?
-                                <li className="dropdown-menus">
-                                  <Link to={subMenu.to} className={clickedValueSubMenu === subMenu.id ? "active-submenu" : ""} onClick={(e) => handleChildClick(e, subMenu.id)}>
-                                    {subMenu.submenuName}
-                                  </Link>
-                                </li>
-                                : null}
-                              </>
-
-                            ))}
-                          </ul>
-                        </>
-                      ) : null}
-                    </li>
-                    : null}
-                </>
+              {Menu.map((group, groupIndex) => (
+                <div key={groupIndex} className="menu-group">
+                  <div className="group-label">{group.groupLabel}</div>
+                  {group.items.map((menuItem, index) => (
+                    <React.Fragment key={index}>
+                      {hasPermission(menuItem.securityKey) && (
+                        <li
+                          className={
+                            selectedMenu === menuItem.id
+                              ? "menu-item active-menu"
+                              : "menu-item"
+                          }
+                          onClick={() => handleClick(menuItem.id)}
+                        >
+                          <Link
+                            to={menuItem.to}
+                            className={menuItem.subMenu ? "menu-arrow" : ""}
+                          >
+                            <i className={menuItem.iconClass}></i>
+                            <span>{menuItem.name}</span>
+                          </Link>
+                          {menuItem.subMenu && (
+                            <ul className="sidebar-dropdown">
+                              {menuItem.children.map((subMenu, subIndex) => (
+                                <React.Fragment key={subIndex}>
+                                  {hasPermission(subMenu.securityKey) && (
+                                    <li className="dropdown-menus">
+                                      <Link
+                                        to={subMenu.to}
+                                        className={
+                                          clickedValueSubMenu === subMenu.id
+                                            ? "active-submenu"
+                                            : ""
+                                        }
+                                        onClick={(e) =>
+                                          handleChildClick(e, subMenu.id)
+                                        }
+                                      >
+                                        {subMenu.submenuName}
+                                      </Link>
+                                    </li>
+                                  )}
+                                </React.Fragment>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </div>
               ))}
             </ul>
           </div>
         </div>
       </nav>
-
-
     </>
   );
 };

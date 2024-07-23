@@ -187,10 +187,13 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetList<GetAllAPIEndpointsResponse>(GETALLAPIENDPOINTS, commandType: CommandType.StoredProcedure);
         }
-        public async Task<List<GetAllApproveCustomerForLinkingResponse>> GetAllApproveCustomerForLinking()
+        public async Task<List<GetAllApproveCustomerForLinkingResponse>> GetAllApproveCustomerForLinking(int customerId)
         {
-            return await _context.GetList<GetAllApproveCustomerForLinkingResponse>(GETALLAPPROVECUSTOMERFORLINKING, commandType: CommandType.StoredProcedure);
-
+            List<GetAllApproveCustomerForLinkingResponse> getAllApproveCustomerForLinkingResponse = await _context.GetList<GetAllApproveCustomerForLinkingResponse>(GETALLAPPROVECUSTOMERFORLINKING, new
+            {
+                customerId
+            }, commandType: CommandType.StoredProcedure);
+            return getAllApproveCustomerForLinkingResponse;
         }
     }
 }

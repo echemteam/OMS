@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 //** Lib's */
 import { AppIcons } from '../../../../../../data/appIcons';
@@ -244,5 +245,33 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
         </div>
     )
 }
+
+InActiveSuppliersList.propTypes = {
+    statusId: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number]))
+    ]).isRequired,
+    configFile: PropTypes.object.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    search: PropTypes.string.isRequired,
+    handleChangeDropdown: PropTypes.func.isRequired,
+    statusOptions: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        label: PropTypes.string
+      })
+    ).isRequired,
+    selectedDrpvalues: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    ).isRequired,
+    selectedStatusOptions: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    ).isRequired,
+    searchStatusFilter: PropTypes.bool.isRequired,
+    handleSearch: PropTypes.func.isRequired,
+    handleClear: PropTypes.func.isRequired,
+    shouldRerenderFormCreator: PropTypes.bool.isRequired,
+  };
 
 export default InActiveSuppliersList;
