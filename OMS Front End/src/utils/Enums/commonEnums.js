@@ -32,23 +32,23 @@ export const OwnerType = {
 export const ListShowCustomer = { value: 1, label: "Customer Name" }
 export const ListSupplier = { value: 2, label: "Supplier Name" }
 
-export const AuthenticationTypes={
+export const AuthenticationTypes = {
     APIKey: "APIKey",
-    OAuth:"OAuth"
+    OAuth: "OAuth"
 
 }
 
-export const ApiEndPointMethods={
-    GET:"GET",
-    POST:"POST",
-    PUT:"PUT",
-    DELETE:"DELETE"
+export const ApiEndPointMethods = {
+    GET: "GET",
+    POST: "POST",
+    PUT: "PUT",
+    DELETE: "DELETE"
 }
 
-export const ApiParametersDataTypes={
-    String:"String",
-    Number:"Number",
-    Boolean:"Boolean",
+export const ApiParametersDataTypes = {
+    String: "String",
+    Number: "Number",
+    Boolean: "Boolean",
 }
 
 // export const PaymentMethods = [
@@ -74,6 +74,11 @@ export const CountryId = {
 }
 
 export const ModulePathName = {
-    Customer : "Customer",
-    Supplier : "Supplier"
+    Customer: "Customer",
+    Supplier: "Supplier"
+}
+
+export const MaskingType = {
+    CURRENCY: "currency",
+    PERCENT: "percent"
 }

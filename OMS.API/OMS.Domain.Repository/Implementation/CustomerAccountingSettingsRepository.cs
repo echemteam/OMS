@@ -55,7 +55,7 @@ namespace OMS.Domain.Repository.Implementation
                 addEditSettings.ExemptSalesTax,
                 addEditSettings.SalesTax,
                 addEditSettings.CardProcessingCharges,
-                addEditSettings.BankFee
+                addEditSettings.BankWireFee
             }, CommandType.StoredProcedure);
         }
 
