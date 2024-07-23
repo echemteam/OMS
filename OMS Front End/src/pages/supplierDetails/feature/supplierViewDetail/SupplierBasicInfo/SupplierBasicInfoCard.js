@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState, useContext } from 'react'
 //** Lib's */
+import PropTypes from 'prop-types';
 import Image from '../../../../../components/image/Image';
 import { AppIcons } from '../../../../../data/appIcons';
 import CopyText from '../../../../../utils/CopyText/CopyText';
@@ -448,5 +449,27 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
     </>
   );
 }
+
+SupplierBasicInfoCard.propTypes = {
+  editClick: PropTypes.func.isRequired,
+  supplierData: PropTypes.shape({
+    name: PropTypes.string,
+    emailAddress: PropTypes.string,
+    website: PropTypes.string,
+    taxId: PropTypes.string,
+    statusId: PropTypes.number,
+    status: PropTypes.string,
+    responsibleUserId: PropTypes.number,
+    responsibleUserName: PropTypes.string,
+    countryName: PropTypes.string,
+    territory: PropTypes.string,
+    supplierType: PropTypes.string,
+    groupType: PropTypes.string,
+    isCompany: PropTypes.bool
+  }),
+  isLoading: PropTypes.bool.isRequired,
+  supplierId: PropTypes.number.isRequired,
+  getSupplierById: PropTypes.func.isRequired,
+};
 
 export default SupplierBasicInfoCard
