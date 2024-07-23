@@ -8,11 +8,14 @@ import { addEditApiProviderFormData } from "./config/ApiProviders.data";
 import { onResetForm } from "../../../utils/FormFields/ResetForm/handleResetForm";
 import ToastService from "../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../data/appMessages";
+import { useNavigate } from "react-router-dom";
+import { encryptUrlData } from "../../../services/CryptoService";
 
 const ApiProviders=()=>{
   const [isEdit, setIsEdit] = useState(false);
     const [isModelOpen, setIsModelOpen] = useState(false);
     const childRef = useRef();
+    const navigate=useNavigate();
     const [formData, setFormData] = useState(addEditApiProviderFormData);
     const [search, setSearch] = useState("");
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
@@ -25,10 +28,7 @@ const ApiProviders=()=>{
        setIsEdit(false)
     };
     const handleEditClick = (data) => {
-      onResetForm(addEditApiProviderFormData,setFormData, null);
-   setIsModelOpen(true);
-   setFormData(data);
-   setIsEdit(true);        
+        navigate(`/APIProviderDetail/${encryptUrlData(data.providerId)}`);    
     };
  
     const onSuccess = () => {
@@ -97,7 +97,7 @@ const ApiProviders=()=>{
         >
           <AddEditApiProviders 
           isEdit={isEdit}
-          initData={formData}
+           initData={formData}
           onSuccess={onSuccess}
           onClose={onSidebarClose}
           />

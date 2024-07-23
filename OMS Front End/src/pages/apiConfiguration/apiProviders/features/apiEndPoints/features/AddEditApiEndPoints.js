@@ -1,26 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef } from "react";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import Buttons from "../../../../components/ui/button/Buttons";
-import { addEditApiEndPointsFormData } from "../config/ApiEndPoints.data";
-import { ApiEndPointMethods } from "../../../../utils/Enums/commonEnums";
-import { useEffect } from "react";
-import {
-  useAddEditApiEndpointMutation,
-  useLazyGetAllAPIProvidersQuery,
-  useLazyGetApiEndpointByEndpointIdQuery,
-} from "../../../../app/services/apiEndPointsAPI";
+
 import { useState } from "react";
-import ToastService from "../../../../services/toastService/ToastService";
-import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
+import { useRef } from "react";
+import { addEditApiEndPointsFormData } from "../config/ApiEndPoints.data";
+import { useEffect } from "react";
+import ToastService from "../../../../../../services/toastService/ToastService";
+import FormCreator from "../../../../../../components/Forms/FormCreator";
+import Buttons from "../../../../../../components/ui/button/Buttons";
+import { onResetForm } from "../../../../../../utils/FormFields/ResetForm/handleResetForm";
+import { ApiEndPointMethods } from "../../../../../../utils/Enums/commonEnums";
+import {useAddEditApiEndpointMutation, useLazyGetApiEndpointByEndpointIdQuery ,} from "../../../../../../app/services/apiEndPointsAPI";
 
 const AddEditApiEndPoints = (props) => {
   const apiEndPointRef = useRef();
   const endpointId = props.initData.endpointId;
-  const [getAllAPIProviders,{ isSuccess: isgetAllAPIProvidersSuccess, data: isgetAllAPIProvidersData }, ] = useLazyGetAllAPIProvidersQuery();
   const [getApiEndpointByEndpointId,{ isFetching: isGetApiEndpointByEndpointIdFetching, isSuccess: isGetApiEndpointByEndpointIdSuccess, data: GetApiEndpointByEndpointIdData,},] = useLazyGetApiEndpointByEndpointIdQuery();
   const [endPointFormData, setEndPointFormData] = useState( addEditApiEndPointsFormData);
-  const [addEditApiEndpoint,{  isLoading: isAddEditApiEndPointLoading,isSuccess: isAddEditApiEndPointSucess,data: allAddEditApiEndPointData,}, ] = useAddEditApiEndpointMutation();
+  const [addEditApiEndpoint,{  isLoading: isAddEditApiEndPointLoading,isSuccess: isAddEditApiEndPointSuccess,data: allAddEditApiEndPointData,}, ] = useAddEditApiEndpointMutation();
   useEffect(() => {
     if ( isGetApiEndpointByEndpointIdSuccess &&GetApiEndpointByEndpointIdData &&!isGetApiEndpointByEndpointIdFetching ) {
       const newFrom = { ...endPointFormData };
@@ -43,7 +39,7 @@ const AddEditApiEndPoints = (props) => {
   }, [endpointId ,props.isEdit]);
 
   useEffect(() => {
-    if (isAddEditApiEndPointSucess && allAddEditApiEndPointData) {
+    if (isAddEditApiEndPointSuccess && allAddEditApiEndPointData) {
 
       if (allAddEditApiEndPointData.errorMessage.includes("exists")) {
         props.onSuccess();
@@ -56,7 +52,7 @@ const AddEditApiEndPoints = (props) => {
       ToastService.success(allAddEditApiEndPointData.errorMessage);
       props.onClose();
     }
-  }, [isAddEditApiEndPointSucess, allAddEditApiEndPointData]);
+  }, [isAddEditApiEndPointSuccess, allAddEditApiEndPointData]);
 
   const handleResetAndClose = () => {
     onResetForm(addEditApiEndPointsFormData, setEndPointFormData, null);
@@ -72,28 +68,13 @@ const AddEditApiEndPoints = (props) => {
     );
   }, []);
 
-  useEffect(() => {
-    getAllAPIProviders();
-  }, []);
-  useEffect(() => {
-    if (isgetAllAPIProvidersSuccess && isgetAllAPIProvidersData) {
-      const getData = isgetAllAPIProvidersData.map((item) => ({
-        value: item.providerId,
-        label: item.name,
-      }));
-      const dropdownField = endPointFormData.formFields.find(
-        (item) => item.dataField === "providerId"
-      );
-      dropdownField.fieldSetting.options = getData;
-    }
-  }, [isgetAllAPIProvidersSuccess, isgetAllAPIProvidersData]);
 
   const handleAddEditAPIEndPoints = () => {
     const formData = apiEndPointRef.current.getFormData();
     if (formData && !endpointId) {
       let request = {
         ...formData,
-        providerId: formData.providerId.value,
+        providerId: props.providerId,
         method: formData.method.value,
       };
       addEditApiEndpoint(request);
@@ -105,10 +86,8 @@ const AddEditApiEndPoints = (props) => {
           formData.method && typeof formData.method === "object"
             ? formData.method.value
             : formData.method,
-        providerId:
-          formData.providerId && typeof formData.providerId === "object"
-            ? formData.providerId.value
-            : formData.providerId,
+            providerId: props.providerId,
+         
       };
       addEditApiEndpoint(requestData);
     }
@@ -124,7 +103,7 @@ const AddEditApiEndPoints = (props) => {
                 ref={apiEndPointRef}
                 config={endPointFormData}
                 {...endPointFormData}
-                // onFormDataUpdate={handleFormDataChange}
+                
               />
             </div>
           </div>

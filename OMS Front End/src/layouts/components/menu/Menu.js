@@ -104,28 +104,12 @@ export const Menu = [
     children: [
       {
         id: "apiProviders",
-        submenuName: "API Providers",
+        submenuName: "API Providers Management",
         to: "/APIProviders",
         securityKey: securityKey.APIPROVIDERS,
       },
-      {
-        id: "apiEndpoints",
-        submenuName: "API EndPoints",
-        to: "/APIEndpoints",
-        securityKey: securityKey.APIENDPOINTS,
-      },
-      {
-        id: "apiParameters",
-        submenuName: "API Parameters",
-        to: "/APIParameters",
-        securityKey: securityKey.APIPARAMETERS,
-      },
-      {
-        id: "apiAuthentication",
-        submenuName: "API Authentication",
-        to: "/APIAuthentication",
-        securityKey: securityKey.APIAUTHENTICATION,
-      },
+    
+
     ],
   },
   {

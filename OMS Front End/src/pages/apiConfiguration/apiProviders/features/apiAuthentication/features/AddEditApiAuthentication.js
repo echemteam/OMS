@@ -1,37 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef, useState, useEffect, useImperativeHandle } from "react";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import Buttons from "../../../../components/ui/button/Buttons";
-import ToastService from "../../../../services/toastService/ToastService";
-import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
+
+import { useState } from "react";
+import { useRef } from "react";
 import { addEditApiAuthenticationFormData } from "../config/ApiAuthentication.data";
-import { useLazyGetAllAPIProvidersQuery } from "../../../../app/services/apiEndPointsAPI";
-import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-import { useAddEditApiAuthenticationMutation, useLazyGetApiAuthenticationByAuthIdQuery } from "../../../../app/services/apiAuthenticationAPI";
-import { AuthenticationTypes, FieldSettingType } from "../../../../utils/Enums/commonEnums";
+import { useEffect } from "react";
+import { removeFormFields } from "../../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+import { setFieldSetting } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import FormCreator from "../../../../../../components/Forms/FormCreator";
+import Buttons from "../../../../../../components/ui/button/Buttons";
+import { AuthenticationTypes, FieldSettingType } from "../../../../../../utils/Enums/commonEnums";
+import ToastService from "../../../../../../services/toastService/ToastService";
+import { onResetForm } from "../../../../../../utils/FormFields/ResetForm/handleResetForm";
+import { useImperativeHandle } from "react";
+import { useAddEditApiAuthenticationMutation, useLazyGetApiAuthenticationByAuthIdQuery,  } from "../../../../../../app/services/apiAuthenticationAPI";
+
 
 const AddEditApiAuthentication = (props) => {
   const apiAuthenticationRef = useRef();
   const authId = props.authId;
-
   const [authenticationFormData, setAuthenticationFormData] = useState(addEditApiAuthenticationFormData);
-
-  const [getAllAPIProviders, { isSuccess: isGetAllAPIProvidersSuccess, data: allAPIProvidersData }] = useLazyGetAllAPIProvidersQuery();
   const [addEditApiAuthentication, { isLoading: isAddEditApiAuthenticationLoading, isSuccess: isAddEditApiAuthenticationSuccess, data: addEditApiAuthenticationData }] = useAddEditApiAuthenticationMutation();
   const [getApiAuthenticationByAuthId, { isFetching: isGetApiAuthenticationByAuthIdFetching, isSuccess: isGetApiAuthenticationByAuthIdSuccess, data: apiAuthenticationData }] = useLazyGetApiAuthenticationByAuthIdQuery();
-
-  useEffect(() => {
-    let newFormData = removeFormFields(authenticationFormData, ['authKey', 'clientSecret', 'clientId']);
-    setAuthenticationFormData(newFormData);
-    getAllAPIProviders();
-  }, []);
-
-  useEffect(() => {
-    if (isGetAllAPIProvidersSuccess && allAPIProvidersData) {
-      setDropDownOptionField(allAPIProvidersData, 'providerId', 'name', authenticationFormData, 'providerId');
-    }
-  }, [isGetAllAPIProvidersSuccess, allAPIProvidersData]);
 
   useEffect(() => {
     let newFormData = { ...addEditApiAuthenticationFormData }
@@ -40,8 +29,7 @@ const AddEditApiAuthentication = (props) => {
       getApiAuthenticationByAuthId(authId);
     }
     else {
-      newFormData = removeFormFields(addEditApiAuthenticationFormData, ['authKey', 'clientSecret', 'clientId']);
-      setAuthenticationFormData(newFormData);
+      handlePageLoad();
     }
   }, [authId, getApiAuthenticationByAuthId, props.isEdit, props.isModelOpen]);
 
@@ -82,16 +70,19 @@ const AddEditApiAuthentication = (props) => {
   }, [isGetApiAuthenticationByAuthIdSuccess, apiAuthenticationData, isGetApiAuthenticationByAuthIdFetching]);
 
   useEffect(() => {
+  
     if (isAddEditApiAuthenticationSuccess && addEditApiAuthenticationData) {
       props.onSuccess();
       ToastService.success(addEditApiAuthenticationData.errorMessage);
       props.onClose();
+      
     }
   }, [isAddEditApiAuthenticationSuccess, addEditApiAuthenticationData]);
 
-  const handleProviderChange = (field, dataField) => {
-    if (dataField === 'providerId') {
-      const selectedProvider = allAPIProvidersData.find((item) => item.providerId === field.value);
+const handlePageLoad=() => {
+
+    if (props.providerId) {
+      const selectedProvider = props.providerData;
       let newFormData = { ...addEditApiAuthenticationFormData };
 
       const authFieldsMap = {
@@ -113,7 +104,7 @@ const AddEditApiAuthentication = (props) => {
     if (formData) {
       const requestData = {
         ...formData,
-        providerId: typeof formData.providerId === "object" ? formData.providerId.value : formData.providerId,
+        providerId: props.providerId,
         ...(authId && { authId }),
       };
       addEditApiAuthentication(requestData);
@@ -131,9 +122,6 @@ const AddEditApiAuthentication = (props) => {
     callChildFunction: onResetData,
   }));
 
-  const formActionHandler = {
-    DDL_CHANGED: handleProviderChange,
-  };
 
   return (
     <>
@@ -144,8 +132,8 @@ const AddEditApiAuthentication = (props) => {
               <FormCreator
                 ref={apiAuthenticationRef}
                 config={authenticationFormData}
-                // {...authenticationFormData}
-                onActionChange={formActionHandler}
+               //  {...authenticationFormData}
+            
               />
             </div>
           </div>

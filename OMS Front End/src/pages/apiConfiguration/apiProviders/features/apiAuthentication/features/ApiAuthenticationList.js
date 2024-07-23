@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
-import MolGrid from "../../../../components/Grid/MolGrid";
+import MolGrid from "../../../../../../components/Grid/MolGrid";
 import { ApiAuthenticationtGridConfig,  } from "../config/ApiAuthentication.data";
-import ToastService from "../../../../services/toastService/ToastService";
-import SwalAlert from "../../../../services/swalService/SwalService";
+import ToastService from "../../../../../../services/toastService/ToastService";
+import SwalAlert from "../../../../../../services/swalService/SwalService";
 import { useImperativeHandle } from "react";
-import { useDeleteApiAuthenticationMutation, useGetApiAuthenticationsMutation } from "../../../../app/services/apiAuthenticationAPI";
+import { useDeleteApiAuthenticationMutation, useGetApiAuthenticationsMutation } from "../../../../../../app/services/apiAuthenticationAPI";
 
-const ApiAuthenticationList=({handleEditClick, childRef})=>{
+const ApiAuthenticationList=({handleEditClick, getDataRef,providerId})=>{
+  
     const molGridRef=useRef();
     const [listData, setListData] = useState();
     const [totalRowCount, setTotalRowCount] = useState(0);
@@ -15,6 +16,11 @@ const ApiAuthenticationList=({handleEditClick, childRef})=>{
     const [deleteApiAuthentication,{  isSuccess: isDeleteApiAuthenticationSuccess, data: isDeleteApiAuthenticationData }, ] = useDeleteApiAuthenticationMutation();
 
     const [getApiAuthentications,{ isLoading: isApiAuthenticationLoading, isSuccess: isApiAuthenticationSuccess, data: isApiAuthenticationeData },] = useGetApiAuthenticationsMutation();
+    
+    useEffect(() => {
+      onGetData()
+    }, []);
+
     useEffect(() => {
       if (isApiAuthenticationSuccess && isApiAuthenticationeData) {
         if (isApiAuthenticationeData) {
@@ -38,14 +44,15 @@ const ApiAuthenticationList=({handleEditClick, childRef})=>{
  
 
     const getLists = (pageObject,sortingString) => {
-  
+
       const request = {
         pagination: {
           pageNumber: pageObject.pageNumber,
           pageSize: pageObject.pageSize,
         },
         filters: { searchText: "" },
-        sortString: sortingString
+        sortString: sortingString,  
+        providerId:providerId,
       };
       getApiAuthentications(request);
     };
@@ -58,15 +65,12 @@ const ApiAuthenticationList=({handleEditClick, childRef})=>{
       getLists(molGridRef.current.getCurrentPageObject(), shortString);
     }
     const onGetData = () =>{
+
       if (molGridRef.current) {
         const defaultPageObject = molGridRef.current.getCurrentPageObject();
         getLists(defaultPageObject,molGridRef.current.generateSortingString());
       }
     }
-
-    useEffect(() => {
-      onGetData()
-    }, []);
 
     const handleDeleteClick = (data) => {
       confirm( "Delete?", "Are you sure you want to Delete?", "Delete",  "Cancel" )
@@ -82,7 +86,8 @@ const ApiAuthenticationList=({handleEditClick, childRef})=>{
     DELETE: handleDeleteClick,    
     };
 
-    useImperativeHandle(childRef, () => ({
+
+    useImperativeHandle(getDataRef, () => ({
       callChildFunction: onGetData
   }));
     return(
@@ -96,7 +101,7 @@ const ApiAuthenticationList=({handleEditClick, childRef})=>{
            allowPagination={true}
             pagination={{
               totalCount: totalRowCount,
-              pageSize: 20,
+              pageSize: 10,
               currentPage: 1,
             }}
             onPageChange={handlePageChange}

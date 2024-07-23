@@ -9,13 +9,13 @@ import { useDeleteApiParameterMutation, useGetApiParametersMutation } from "../.
 import ToastService from "../../../../services/toastService/ToastService";
 import { useImperativeHandle } from "react";
 
-const ApiParametersList=({handleEditClick,childRef})=>{
+const ApiParametersList=({handleEditClick,childRef,endpointId})=>{
     const molGridRef = useRef();
     const [listData, setListData] = useState();
     const [totalRowCount, setTotalRowCount] = useState(0);
     const { confirm } = SwalAlert();
    
-    const [getApiParameters,{ isLoading: isGetApiParametersLoading, isSuccess: isGetApiParametersSuccess, data: isGetApiParameterseData },] = useGetApiParametersMutation();
+    const [getApiParameters,{ isLoading: isGetApiParametersLoading, isSuccess: isGetApiParametersSuccess, data: isGetApiParametersData },] = useGetApiParametersMutation();
     const [deleteApiParameter,{  isSuccess: isDeleteApiParameterSuccess, data: isDeleteApiParametereData },] = useDeleteApiParameterMutation();
 
     useEffect(() => {
@@ -33,7 +33,8 @@ const ApiParametersList=({handleEditClick,childRef})=>{
           pageSize: pageObject.pageSize,
         },
         filters: { searchText: "" },
-        sortString: sortingString
+        sortString: sortingString,
+        endpointId:endpointId,
       };
       getApiParameters(request);
     };
@@ -57,15 +58,15 @@ const ApiParametersList=({handleEditClick,childRef})=>{
       }, []);
   
     useEffect(() => {
-      if (isGetApiParametersSuccess && isGetApiParameterseData) {
-        if (isGetApiParameterseData) {
-          setListData(isGetApiParameterseData.dataSource);  
+      if (isGetApiParametersSuccess && isGetApiParametersData) {
+        if (isGetApiParametersData) {
+          setListData(isGetApiParametersData.dataSource);  
         }
-        if (isGetApiParameterseData.totalRecord) {
-          setTotalRowCount(isGetApiParameterseData.totalRecord);
+        if (isGetApiParametersData.totalRecord) {
+          setTotalRowCount(isGetApiParametersData.totalRecord);
         }
       }
-    }, [isGetApiParametersSuccess, isGetApiParameterseData]);
+    }, [isGetApiParametersSuccess, isGetApiParametersData]);
  
      
   const handleDeleteClick = (data) => {

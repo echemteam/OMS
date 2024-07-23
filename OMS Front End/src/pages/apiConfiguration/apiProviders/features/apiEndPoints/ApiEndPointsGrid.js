@@ -1,19 +1,21 @@
 import { useState ,useRef} from "react";
-import CardSection from "../../../components/ui/card/CardSection";
-import SidebarModel from "../../../components/ui/sidebarModel/SidebarModel";
-import { AppIcons } from "../../../data/appIcons";
-import AddEditApiEndPoints from "./features/AddEditApiEndPoints";
-import {  addEditApiEndPointsFormData } from "./config/ApiEndPoints.data";
-import { onResetForm } from "../../../utils/FormFields/ResetForm/handleResetForm";
-import ApiEndPointsList from "./features/AddEndPointsList";
 
-const ApiEndPoints=()=>{
+import CardSection from "../../../../../components/ui/card/CardSection";
+import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
+import AddEditApiEndPoints from "../../features/apiEndPoints/features/AddEditApiEndPoints";
+import ApiEndPointsList from "../../features/apiEndPoints/features/AddEndPointsList";
+import { addEditApiEndPointsFormData } from "./config/ApiEndPoints.data";
+import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
+import { AppIcons } from "../../../../../data/appIcons";
+
+const ApiEndPoints=({providerId})=>{
   const childRef = useRef();
     const [isModelOpen, setIsModelOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [formData, setFormData] = useState(addEditApiEndPointsFormData);
 
     const handleEditClick = (data) => {
+  
       onResetForm(addEditApiEndPointsFormData,setFormData, null);
       setIsModelOpen(true);
       setFormData(data);
@@ -38,14 +40,13 @@ return(<>
       <CardSection
         cardTitle="API EndPoints"
         buttonClassName="btn theme-button"
-       // rightButton={buttonVisible ? true : false}
         rightButton={ true }
         buttonText="Add"
        textWithIcon={true}
        iconImg={AppIcons.PlusIcon}
        titleButtonClick={handleToggleModal}
       >
-       <ApiEndPointsList   childRef={childRef}  handleEditClick={handleEditClick}/>
+       <ApiEndPointsList  providerId={providerId}  initData={formData} childRef={childRef}  handleEditClick={handleEditClick}/>
       </CardSection>
       
         <SidebarModel
@@ -57,6 +58,7 @@ return(<>
         >
           <AddEditApiEndPoints
             isEdit={isEdit}
+            providerId={providerId}
          initData={formData}
         onClose={onSidebarClose}
         onSuccess={onSuccess}
