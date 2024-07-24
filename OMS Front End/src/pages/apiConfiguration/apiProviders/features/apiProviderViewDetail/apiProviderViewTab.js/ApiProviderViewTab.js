@@ -1,9 +1,9 @@
+import React from "react";
 import RenderTabs from "../../../../../../components/ui/tabs/RenderTabs";
 import { securityKey } from "../../../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import ApiAuthentication from "../../apiAuthentication/ApiAuthenticationGrid";
-import ApiEndPoints from "../../apiEndPoints/ApiEndPointsGrid";
-
+const ApiEndPoints = React.lazy(() => import("../../apiEndPoints/ApiEndPoints"));
+const ApiAuthentication = React.lazy(() => import("../../apiAuthentication/ApiAuthentication"));
 
 const ApiproviderViewTab = ({ providerId, providerData }) => {
   const hasApiEndpointPermission = hasFunctionalPermission(

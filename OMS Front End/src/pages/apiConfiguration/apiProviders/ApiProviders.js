@@ -15,7 +15,6 @@ const ApiProviders=()=>{
     const [isModelOpen, setIsModelOpen] = useState(false);
     const childRef = useRef();
     const navigate=useNavigate();
-    const [formData, setFormData] = useState(addEditApiProviderFormData);
     const [search, setSearch] = useState("");
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   
@@ -77,7 +76,6 @@ const ApiProviders=()=>{
           clearIconImg={AppIcons.ClearIcone}
           searchValue={search}
           buttonClassName="btn theme-button"
-          // rightButton={buttonVisible ? true : false}
           rightButton={true}
           buttonText="Add"
           textWithIcon={true}
