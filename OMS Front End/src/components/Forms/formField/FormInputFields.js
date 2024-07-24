@@ -32,9 +32,13 @@ const FormInputFields = ({
     if (onChange) {
       if (e.target.type !== "file") {
         setSelectedFile(null);
-        onChange(dataField, e.target.value);
+        let newValue = e.target.value;
+        if (inputProps.exemptBoundarySpaces) {
+          newValue = newValue.trimStart();
+        }
+        onChange(dataField, newValue);
         if (inputField) {
-          inputField('INPUT_CHANGED', dataField, e.target.value);
+          inputField('INPUT_CHANGED', dataField, newValue);
         }
       } else if (e.target.files[0]) {
         const fileObj = e.target.files[0];
@@ -46,9 +50,13 @@ const FormInputFields = ({
     }
   };
 
-  const handleOnBlur = () => {
+  const handleOnBlur = (e) => {
     if (onValidation) {
       onValidation(dataField);
+    }
+    if (inputProps.exemptBoundarySpaces) {
+      let newValue = e.target.value.trim();
+      onChange(dataField, newValue);
     }
   };
 
