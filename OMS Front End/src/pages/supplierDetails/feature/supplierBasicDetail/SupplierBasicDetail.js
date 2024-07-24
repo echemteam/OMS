@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
+import PropTypes from 'prop-types'; 
 //** Lib's */
 import CardSection from '../../../../components/ui/card/CardSection';
 //** Component */
@@ -18,5 +19,13 @@ const SupplierBasicDetail = (props) => {
     </div>
   );
 }
+
+SupplierBasicDetail.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  getSupplierById: PropTypes.func.isRequired,
+  onSidebarClose: PropTypes.func.isRequired,
+  keyId: PropTypes.number.isRequired,
+  isEditablePage: PropTypes.bool.isRequired,
+};
 
 export default SupplierBasicDetail

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { securityKey } from "../../../../../data/SecurityKey";
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+
 //** Component's */
 import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
 import SupplierSettingDetail from "../../financialSettings/FinancialSettings";

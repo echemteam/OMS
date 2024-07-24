@@ -1,4 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import PropTypes from 'prop-types';
 //** Lib's */
 import { ApprovalEnum } from "../../../../utils/Enums/commonEnums";
 import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
@@ -88,4 +89,12 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
     )
 });
 
+SupplierApproval.propTypes = {
+    childRef: PropTypes.shape({
+        current: PropTypes.object
+    }).isRequired,
+    getListApi: PropTypes.func,
+    updateApproval: PropTypes.func.isRequired,
+    isDetailPage: PropTypes.bool,
+};
 export default SupplierApproval;

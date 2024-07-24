@@ -1,4 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 //** Libs's */
 import { basicInfoData } from './Config/Existing.data';
 import MolGrid from '../../../../components/Grid/MolGrid';
@@ -81,5 +82,14 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
     )
 });
 
+ExistingCustomerSupplierInfo.propTypes = {
+    parentRef: PropTypes.shape({
+        current: PropTypes.shape({
+            callChildFunction: PropTypes.func
+        })
+    }).isRequired,
+    isSupplier: PropTypes.bool.isRequired,
+    getExistingInfoByName: PropTypes.func.isRequired
+};
 
 export default ExistingCustomerSupplierInfo;
