@@ -39,6 +39,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLAPIPROVIDERS = "GetAllAPIProviders";
         const string GETALLAPIENDPOINTS = "GetAllAPIEndpoints";
         const string GETALLAPPROVECUSTOMERFORLINKING = "GetAllApproveCustomerForLinking";
+        const string GETALLPODELIVERYMETHOD = "GetAllPODeliveryMethod";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -194,6 +195,10 @@ namespace OMS.Domain.Repository.Implementation
                 customerId
             }, commandType: CommandType.StoredProcedure);
             return getAllApproveCustomerForLinkingResponse;
+        }
+        public async Task<List<GetAllPODeliveryMethodResponse>> GetAllPODeliveryMethod()
+        {
+            return await _context.GetList<GetAllPODeliveryMethodResponse>(GETALLPODELIVERYMETHOD, commandType: CommandType.StoredProcedure);
         }
     }
 }

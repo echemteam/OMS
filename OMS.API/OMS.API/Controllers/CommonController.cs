@@ -231,5 +231,11 @@ namespace OMS.API.Controllers
             List<GetAllApproveCustomerForLinkingResponse> responseData = await _serviceManager.commonServices.GetAllApproveCustomerForLinking(customerId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpGet("GetAllPODeliveryMethod")]
+        public async Task<IActionResult> GetAllPODeliveryMethod()
+        {
+            List<GetAllPODeliveryMethodResponse> responseData = await _serviceManager.commonServices.GetAllPODeliveryMethod().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

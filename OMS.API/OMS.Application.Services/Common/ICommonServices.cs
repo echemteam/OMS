@@ -35,5 +35,6 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllAPIProvidersResponse>> GetAllAPIProviders();
         Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints();
         Task<List<GetAllApproveCustomerForLinkingResponse>> GetAllApproveCustomerForLinking(int customerId);
+        Task<List<GetAllPODeliveryMethodResponse>> GetAllPODeliveryMethod();
     }
 }

@@ -19,8 +19,7 @@ namespace OMS.Prisitance.Entities.Entities
         public byte? PoDeliveryMethodId { get; set; }
         [Column("IsActive")]
         public bool? IsActive { get; set; }
-        [Column("PODeliveryMethodDetail")]
-        public string? PODeliveryMethodDetail { get; set; }
+     
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]
