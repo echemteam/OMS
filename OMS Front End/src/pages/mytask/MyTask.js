@@ -53,7 +53,7 @@ const MyTask = () => {
               <div className="d-flex">
                 <RenderTabs tabs={mainTabs} />
               </div>
-              <SearchBar />
+              {/* <SearchBar /> */}
             </div>
             <div className="customer-info">
               <div className="tabs">

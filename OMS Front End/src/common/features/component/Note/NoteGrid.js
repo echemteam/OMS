@@ -7,6 +7,7 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { getFieldData } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import PropTypes from 'prop-types';
 //** Component's */
 const NoteList = React.lazy(() => import("./feature/NoteList"));
 const AddEditNote = React.lazy(() => import("./feature/AddEditNote"));
@@ -119,6 +120,19 @@ const NoteGrid = ({
       </CenterModel>
     </div>
   );
+};
+
+NoteGrid.propTypes = {
+  keyId: PropTypes.number.isRequired,
+  isSupplier: PropTypes.bool.isRequired,
+  isEditablePage: PropTypes.bool.isRequired,
+  SecurityKey: PropTypes.shape({
+    ADD: PropTypes.string,
+    EDIT: PropTypes.string,
+  }),
+  onAddNotes: PropTypes.func.isRequired,
+  onUpdateNotes: PropTypes.func.isRequired,
+  onGetByIdNotes: PropTypes.func.isRequired,
 };
 
 export default NoteGrid;

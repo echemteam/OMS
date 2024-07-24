@@ -12,6 +12,7 @@ import { useAddDeliveryMethodsMutation, useLazyGetCustomerDeliveryMethodByCustom
 import { setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
 import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
+import PropTypes from 'prop-types';
 
 const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit, deliveryMethodId, onSuccess }) => {
     //** State */
@@ -132,5 +133,13 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
         </CenterModel>
     )
 })
+
+AddEditDeliveryMethod.propTypes = {
+    showModal: PropTypes.bool.isRequired,
+    handleToggleModal: PropTypes.func.isRequired,
+    isEdit: PropTypes.bool.isRequired,
+    deliveryMethodId: PropTypes.number,
+    onSuccess: PropTypes.func.isRequired
+};
 
 export default AddEditDeliveryMethod;

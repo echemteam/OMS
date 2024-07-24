@@ -9,6 +9,7 @@ import { addressFormData } from "./config/AddressForm.data";
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 import { useLazyGetAllAddressTypesQuery } from "../../../../app/services/addressAPI";
 import { modifyAddressType } from "../../../../utils/TransformData/TransformAPIData";
+import PropTypes from 'prop-types';
 //** Compoent's */
 const AddEditAddress = React.lazy(() => import("./feature/AddEditAddress"));
 const AddressDetailCard = React.lazy(() =>
@@ -236,4 +237,17 @@ const AddressGrid = ({
   );
 };
 
+AddressGrid.propTypes = {
+  keyId: PropTypes.number.isRequired,
+  isSupplier: PropTypes.bool.isRequired,
+  isEditablePage: PropTypes.bool.isRequired,
+  SecurityKey: PropTypes.shape({
+    ADD: PropTypes.string,
+    EDIT: PropTypes.string,
+  }),
+  getAddresssByCustomerId: PropTypes.func.isRequired,
+  updateAddress: PropTypes.func.isRequired,
+  addAddress: PropTypes.func.isRequired,
+  getAddresssById: PropTypes.func.isRequired,
+};
 export default AddressGrid;

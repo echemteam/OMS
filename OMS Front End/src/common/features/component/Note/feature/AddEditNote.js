@@ -6,6 +6,7 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
+import PropTypes from 'prop-types';
 
 const AddEditNote = ({ keyId, onAddNotes, onUpdateNotes, isSupplier, isEditMode, isEditModeData, isButtonDisable, handleToggleModal, onSuccess }) => {
 
@@ -92,5 +93,21 @@ const AddEditNote = ({ keyId, onAddNotes, onUpdateNotes, isSupplier, isEditMode,
         </div>
     )
 }
+
+AddEditNote.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    onAddNotes: PropTypes.func.isRequired,
+    onUpdateNotes: PropTypes.func.isRequired,
+    isSupplier: PropTypes.bool.isRequired,
+    isEditMode: PropTypes.bool.isRequired,
+    isEditModeData: PropTypes.shape({
+        note: PropTypes.string,
+        supplierNoteId: PropTypes.number,
+        customerNoteId: PropTypes.number
+    }),
+    isButtonDisable: PropTypes.bool.isRequired,
+    handleToggleModal: PropTypes.func.isRequired,
+    onSuccess: PropTypes.func.isRequired
+};
 
 export default AddEditNote;

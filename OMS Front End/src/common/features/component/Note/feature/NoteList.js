@@ -7,6 +7,7 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { getRandomColor } from "../../../../../utils/RandomColors/RandomColors";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
+import PropTypes from 'prop-types';
 
 const NoteList = forwardRef(({ keyId, handleEditClick, onGetByIdNotes, showEditIcon, listRef }) => {
 
@@ -84,5 +85,17 @@ const NoteList = forwardRef(({ keyId, handleEditClick, onGetByIdNotes, showEditI
         </div>
     )
 });
+
+NoteList.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    handleEditClick: PropTypes.func.isRequired,
+    onGetByIdNotes: PropTypes.func.isRequired,
+    showEditIcon: PropTypes.bool.isRequired,
+    listRef: PropTypes.shape({
+        current: PropTypes.shape({
+            callListFunction: PropTypes.func
+        })
+    })
+};
 
 export default NoteList;

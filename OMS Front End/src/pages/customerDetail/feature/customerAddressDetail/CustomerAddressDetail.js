@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
 import { useAddAddressMutation, useLazyGetAddresssByCustomerIdQuery, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from '../../../../app/services/addressAPI';
 import { securityKey } from '../../../../data/SecurityKey';
+import PropTypes from 'prop-types';
 //** Component's */
 const AddressGrid = React.lazy(() => import("../../../../common/features/component/Address/AddressGrid"));
 
@@ -29,4 +30,7 @@ const CustomerAddressDetail = ({ isEditablePage }) => {
     )
 }
 
+CustomerAddressDetail.propTypes = {
+    isEditablePage: PropTypes.bool.isRequired
+};
 export default CustomerAddressDetail

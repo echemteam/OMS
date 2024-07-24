@@ -14,6 +14,7 @@ import "react-calendar/dist/Calendar.css";
 import ToastService from "../../../../services/toastService/ToastService";
 import DropDown from "../../../../components/ui/dropdown/DropDrown";
 import Buttons from "../../../../components/ui/button/Buttons";
+import PropTypes from 'prop-types';
 
 const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHistory }) => {
 
@@ -323,6 +324,13 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
             )}
         </div>
     );
+};
+
+HistotyList.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    isSupplier: PropTypes.bool.isRequired,
+    getAuditHistory: PropTypes.func.isRequired,
+    getSearchFilterBindHistory: PropTypes.func.isRequired,
 };
 
 export default HistotyList;

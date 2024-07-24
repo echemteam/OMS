@@ -12,6 +12,7 @@ import ToastService from "../../../../../../../services/toastService/ToastServic
 import { useAddShppingDeliveryCarriersMutation, useLazyGetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdQuery, useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import { setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
+import PropTypes from 'prop-types';
 
 const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, deliveryCarrierId, onSuccess }) => {
 
@@ -132,5 +133,13 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, deliv
         </CenterModel>
     )
 });
+
+AddEditCarrier.propTypes = {
+    showModal: PropTypes.bool.isRequired,
+    handleToggleModal: PropTypes.func.isRequired,
+    isEdit: PropTypes.bool.isRequired,
+    deliveryCarrierId: PropTypes.number,
+    onSuccess: PropTypes.func.isRequired,
+};
 
 export default AddEditCarrier;

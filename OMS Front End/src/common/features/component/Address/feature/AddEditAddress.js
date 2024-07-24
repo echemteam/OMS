@@ -12,6 +12,7 @@ import { addressFormData } from "../config/AddressForm.data";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
+import PropTypes from 'prop-types';
 
 const SetInitialCountry = {
     label: "United States",
@@ -391,5 +392,18 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         </div>
     )
 });
+
+AddEditAddress.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    isSupplier: PropTypes.bool.isRequired,
+    updateAddress: PropTypes.func.isRequired,
+    addAddress: PropTypes.func.isRequired,
+    getAddresssById: PropTypes.func.isRequired,
+    isModelOpen: PropTypes.bool.isRequired,
+    editMode: PropTypes.bool.isRequired,
+    isButtonDisable: PropTypes.bool.isRequired,
+    onSidebarClose: PropTypes.func.isRequired,
+    editRef: PropTypes.object
+};
 
 export default AddEditAddress;
