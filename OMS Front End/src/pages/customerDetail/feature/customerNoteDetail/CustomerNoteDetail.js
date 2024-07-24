@@ -3,6 +3,7 @@ import { securityKey } from "../../../../data/SecurityKey";
 import NoteGrid from "../../../../common/features/component/Note/NoteGrid";
 import { useAddCustomerNotesMutation, useLazyGetCustomerNoteByCustomerIdQuery, useUpdateCustomerNotesMutation } from "../../../../app/services/notesAPI";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import PropTypes from 'prop-types';
 
 const customerSecurityKey = {
     ADD: securityKey.ADDCUSTOMERNOTE,
@@ -22,5 +23,9 @@ const CustomerNoteDetail = ({ isEditablePage }) => {
             onAddNotes={useAddCustomerNotesMutation} onUpdateNotes={useUpdateCustomerNotesMutation} onGetByIdNotes={useLazyGetCustomerNoteByCustomerIdQuery} />
     )
 }
+
+CustomerNoteDetail.propTypes = {
+    isEditablePage: PropTypes.bool.isRequired,
+};
 
 export default CustomerNoteDetail;
