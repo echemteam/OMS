@@ -16,7 +16,9 @@ using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
 using OMS.Application.Services.Supplier;
+using OMS.Application.Services.SupplierAccoutingSetting;
 using OMS.Application.Services.SupplierDocuements;
+using OMS.Application.Services.SupplierFinancialSettings;
 using OMS.Application.Services.SupplierNotes;
 using OMS.Application.Services.Test;
 using OMS.Application.Services.User;
@@ -58,6 +60,7 @@ namespace OMS.Application.Services
         IApprovalConfigurationServices _approvalConfigurationServices;
         IApiConfigurationService _apiConfigurationService;
         IOrganizationService _organizationService;
+        ISupplierFinancialSettingsService _supplierFinancialSettingsService;
 
         public ITestService testService
         {
@@ -148,7 +151,7 @@ namespace OMS.Application.Services
 
             }
         }
-        public ICustomersServices customersServices 
+        public ICustomersServices customersServices
         {
             get
             {
@@ -330,6 +333,18 @@ namespace OMS.Application.Services
                     _organizationService = new OrganizationService(_repositoryManager, _commonSettingService);
                 }
                 return _organizationService;
+
+            }
+        }
+        public ISupplierFinancialSettingsService supplierFinancialSettingsService
+        {
+            get
+            {
+                if (_supplierFinancialSettingsService == null)
+                {
+                    _supplierFinancialSettingsService = new SupplierFinancialSettingsService(_repositoryManager, _commonSettingService);
+                }
+                return _supplierFinancialSettingsService;
 
             }
         }

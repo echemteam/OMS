@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
-using OMS.Domain.Entities.API.Response.Address;
 using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;

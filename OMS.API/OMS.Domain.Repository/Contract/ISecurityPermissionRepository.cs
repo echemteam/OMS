@@ -8,6 +8,6 @@ namespace OMS.Domain.Repository.Contract
     {
         Task<List<GetSecurityPermissionByUserIdResponse>> GetSecurityPermissionByUserId(short? userId);
         Task<List<GetAllPagesByRoleIdResponse>> GetAllPagesByRoleId(int id);
-        Task<bool> AddSecurityPermissions(DataTable tbl, short? CurrentUserId);
+        Task<bool> AddSecurityPermissions(DataTable tbl, short? currentUserId);
     }
 }

@@ -33,7 +33,7 @@ namespace OMS.Shared.Services.Implementation
                 bool mail = objEmail.SendEmail();
                 return mail;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
