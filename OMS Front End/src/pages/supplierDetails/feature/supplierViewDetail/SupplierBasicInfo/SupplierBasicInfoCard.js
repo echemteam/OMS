@@ -467,7 +467,7 @@ SupplierBasicInfoCard.propTypes = {
     groupType: PropTypes.string,
     isCompany: PropTypes.bool
   }),
-  isLoading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool,
   supplierId: PropTypes.number.isRequired,
   getSupplierById: PropTypes.func.isRequired,
 };

@@ -27,7 +27,7 @@ const CheckListItem = ({ itemList, handleCheckChange, checkItemListId }) => {
 
 CheckListItem.propTypes = {
     itemList: PropTypes.shape({
-        title: PropTypes.string.isRequired,
+        title: PropTypes.string,
         isApproved: PropTypes.bool,
         isMainChecked: PropTypes.bool,
         isMainCheckBox: PropTypes.bool,

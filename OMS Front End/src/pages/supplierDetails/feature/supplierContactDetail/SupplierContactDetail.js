@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from 'prop-types'; 
 import { securityKey } from "../../../../data/SecurityKey";
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Service */
@@ -34,4 +35,8 @@ const SupplierContactDetail = ({ isEditablePage, isSearchFilterShow }) => {
   );
 };
 
+SupplierContactDetail.propTypes = {
+  isEditablePage: PropTypes.bool.isRequired,
+  isSearchFilterShow: PropTypes.bool.isRequired,
+};
 export default SupplierContactDetail;

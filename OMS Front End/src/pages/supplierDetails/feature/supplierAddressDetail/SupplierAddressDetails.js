@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 //** Lib's */
 import { securityKey } from '../../../../data/SecurityKey';
 import AddSupplierContext from '../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
@@ -37,4 +38,7 @@ const SuplierAddressDetails = ({ isEditablePage }) => {
     )
 }
 
+SuplierAddressDetails.propTypes = {
+    isEditablePage: PropTypes.bool.isRequired,
+};
 export default SuplierAddressDetails

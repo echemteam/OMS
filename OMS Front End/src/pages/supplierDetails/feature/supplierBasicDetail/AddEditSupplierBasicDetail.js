@@ -23,6 +23,7 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { supplierBasicData } from "./config/SupplierBasicDetail.data";
 import { excludingRoles } from "../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { getTaxIdMinMaxLength } from "../../../customerDetail/feature/customerBasicDetail/config/TaxIdValidator";
+import PropTypes from 'prop-types';
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
@@ -318,4 +319,11 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     );
 }
 
+AddEditSupplierBasicDetail.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    getSupplierById: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    onSidebarClose: PropTypes.func.isRequired,
+    isEditablePage: PropTypes.bool.isRequired
+};
 export default AddEditSupplierBasicDetail;
