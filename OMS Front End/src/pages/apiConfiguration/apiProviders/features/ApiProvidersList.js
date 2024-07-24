@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import MolGrid from "../../../../components/Grid/MolGrid";
 import SwalAlert from "../../../../services/swalService/SwalService";
-import {
-  useDeleteApiProviderMutation,
-  useGetApiProvidersMutation,
-} from "../../../../app/services/apiProviderAPI";
+import {useDeleteApiProviderMutation,useGetApiProvidersMutation} from "../../../../app/services/apiProviderAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import { ApiProvidersGridConfig } from "../config/ApiProviders.data";
 import { useImperativeHandle } from "react";
@@ -14,9 +12,7 @@ const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange
   const molGridRef = useRef();
   const [listData, setListData] = useState();
   const [totalRowCount, setTotalRowCount] = useState(0);
-
   const { confirm } = SwalAlert();
-
   const [getApiProviders,{isLoading: isApiProvidersLoading,isSuccess: isApiProvidersSuccess,data: isApiProvidersData, },] = useGetApiProvidersMutation();
   const [deleteApiProvider,{ isSuccess: isDeleteProviderSuccess, data: isDeleteProviderData },] = useDeleteApiProviderMutation();
 
@@ -114,5 +110,15 @@ const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange
       </div>
     </>
   );
+};
+
+ApiProvidersList.propTypes = {
+  handleEditClick: PropTypes.func.isRequired,
+  childRef: PropTypes.object.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  search: PropTypes.string.isRequired,
+  handleClear: PropTypes.func.isRequired,
+  shouldRerenderFormCreator: PropTypes.bool.isRequired,
 };
 export default ApiProvidersList;

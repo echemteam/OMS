@@ -10,6 +10,7 @@ export const FormFieldTypes = {
     FILE: 10,
     RADIOBUTTON: 11,
     CKEDITOR: 12,
+    IMAGE: 13,
     // DECIMAL :4
     // NUMERIC: 4,
     // PASSWORD: 7,

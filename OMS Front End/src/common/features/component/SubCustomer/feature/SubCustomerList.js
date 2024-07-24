@@ -7,6 +7,7 @@ import SwalAlert from "../../../../../services/swalService/SwalService";
 import { useImperativeHandle } from "react";
 import { encryptUrlData } from "../../../../../services/CryptoService";
 import { useDeleteSubCustomerMutation, useGetSubCustomerByCustomerIdMutation } from "../../../../../app/services/customerSubCustomerAPI";
+import PropTypes from 'prop-types';
 
 const SubCustomerList = (props) => {
   const molGridRef = useRef();
@@ -111,5 +112,10 @@ const SubCustomerList = (props) => {
       </div>
     </>
   );
+};
+SubCustomerList.propTypes = {
+  customerId: PropTypes.number.isRequired,
+  onGetLinkCustomer: PropTypes.func.isRequired,
+  childRef: PropTypes.object
 };
 export default SubCustomerList;

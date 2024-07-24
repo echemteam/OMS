@@ -56,11 +56,11 @@ const SMTPSettings = (props) => {
     }
 
     useEffect(() => {
-        // if (props.smtpSettingId > 0) {
+        if (props.organizationId > 0) {
             getSmtpSettings()
-        // } else if (props.organizationId === 0 && props.activeTabId === 1) {
-        //     ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "Organization Profile Management Data"))
-        // }
+        } else if (props.organizationId === 0 && props.activeTabId === 1) {
+            ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "Organization Profile Management Data"))
+        }
     }, [props.activeTabId])
 
     useEffect(() => {

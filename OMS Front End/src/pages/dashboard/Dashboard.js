@@ -2,8 +2,10 @@ import React from "react";
 import "./Dashboard.scss";
 import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
+// import TestImagesUploading from "../../components/TestImagesUploader/TestImagesUploading";
 
 function Dashboard() {
+
   return (
     <>
       <div className="dashboard-sec">
@@ -86,6 +88,10 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      {/* 
+            This component using for the Image upload testing...
+      */}
+      {/* <TestImagesUploading /> */}
     </>
   );
 }

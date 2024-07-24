@@ -1,11 +1,12 @@
 export const TextInputType = {
     TEXT: "text",
-    FILE:"file",
+    FILE: "file",
     EMAIL: "email",
+    IMAGE: "image",
     PASSWORD: "password",
     NUMBER: "number",
     CHECKBOX: "checkbox",
-    DATEPICKER:"datepicker"
+    DATEPICKER: "datepicker"
 }
 
 export const NumberValueType = {

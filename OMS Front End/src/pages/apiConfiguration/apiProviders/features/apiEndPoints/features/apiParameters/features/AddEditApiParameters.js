@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useState,useRef,useEffect } from "react";
+import PropTypes from "prop-types";
 import SwalAlert from "../../../../../../../../services/swalService/SwalService";
 import { ApiParameterGridConfig, addEditApiParameterFormData } from "../config/ApiParameter.data";
 import { onResetForm } from "../../../../../../../../utils/FormFields/ResetForm/handleResetForm";
@@ -15,7 +16,6 @@ const AddEditApiParameters = (props) => {
   
   const apiParameterRef = useRef();
    const [parameterId,setParameterId ]=useState()
-
    const molGridRef = useRef();
    const [listData, setListData] = useState();
    const [totalRowCount, setTotalRowCount] = useState(0);
@@ -224,4 +224,12 @@ const AddEditApiParameters = (props) => {
     </>
   );
 };
+AddEditApiParameters.propTypes = {
+  isEdit: PropTypes.bool,
+  initData: PropTypes.shape({
+    endpointId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }).isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
 export default AddEditApiParameters;

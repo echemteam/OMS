@@ -30,7 +30,7 @@ const Organization = () => {
 
     const tabs = [
         {
-            sMenuItemCaption: "Organization Profile Management",
+            sMenuItemCaption: "Organization Profile",
             component: (
                 <div className="mt-2">
                     <OrganizationProfileManagement
@@ -40,7 +40,7 @@ const Organization = () => {
                 </div>
             ),
         },
-        organizationId > 0 &&
+        // organizationId > 0 &&
         {
             sMenuItemCaption: "SMTP Settings",
             component: (
@@ -54,7 +54,7 @@ const Organization = () => {
             ),
         },
 
-        smtpSettingId > 0 &&
+        // smtpSettingId > 0 &&
         {
             sMenuItemCaption: "Other Settings",
             component: (

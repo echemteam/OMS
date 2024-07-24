@@ -13,6 +13,7 @@ const FormRadioButtonField = React.lazy(() => import("./formField/FormRadioButto
 const FormTextAreaFields = React.lazy(() => import("./formField/FormTextAreaField"));
 const FormTinyEditorField = React.lazy(() => import("./formField/FormTinyEditorField"));
 const FormFileUploadField = React.lazy(() => import("./formField/FormFileUploadField"));
+const FormImageUploadFields = React.lazy(() => import("./formField/FormImageUploadFields"));
 const FormEditableSelectField = React.lazy(() => import("./formField/FormEditableSelectField"));
 
 const FormFields = ({
@@ -259,6 +260,30 @@ const FormFields = ({
         return (
           <div className={containerCss}>
             <FormFileUploadField
+              key={field.dataField}
+              labelName={field.lable}
+              dataField={field.dataField}
+              name={field.id}
+              onValidation={onUpdateValidation}
+              value={formData?.[field.dataField] || ""}
+              onChange={handleInputChange}
+              error={validState.error[field.dataField] || ""}
+              formSetting={formSetting}
+              fieldActions={onActionChange}
+              formData={formData}
+              changeAction={field.changeAction}
+              overRideProps={overRideProps?.[field.dataField]}
+              isRequired={isRequired}
+              fileFormate={field.fileFormate}
+              {...field.fieldSetting}
+            // isModelOpen={formData.isModelOpen}
+            />
+          </div>
+        );
+      case FormFieldTypes.IMAGE:
+        return (
+          <div className={containerCss}>
+            <FormImageUploadFields
               key={field.dataField}
               labelName={field.lable}
               dataField={field.dataField}

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import RenderTabs from "../../../../../../components/ui/tabs/RenderTabs";
 import { securityKey } from "../../../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
@@ -44,5 +45,10 @@ const ApiproviderViewTab = ({ providerId, providerData }) => {
       <RenderTabs tabs={providerId ? visibleTabs : null} />
     </>
   );
+};
+
+ApiproviderViewTab.propTypes = {
+  providerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  providerData: PropTypes.object,
 };
 export default ApiproviderViewTab;

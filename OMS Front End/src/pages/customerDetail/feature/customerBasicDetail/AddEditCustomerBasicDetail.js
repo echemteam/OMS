@@ -18,7 +18,7 @@ import ExistingCustomerSupplierInfo from "../../../../common/features/component/
 import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-
+import PropTypes from 'prop-types'; 
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
 
     //** State */
@@ -317,5 +317,11 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     );
 };
 
-
+AddEditCustomerBasicDetail.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    getCustomerById: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    onSidebarClose: PropTypes.func.isRequired,
+    isEditablePage: PropTypes.bool,
+  };
 export default AddEditCustomerBasicDetail;

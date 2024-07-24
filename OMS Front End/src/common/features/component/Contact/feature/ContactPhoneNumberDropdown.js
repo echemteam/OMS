@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import CopyText from "../../../../../utils/CopyText/CopyText";
+import PropTypes from "prop-types";
 
 const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, phoneNumberList,isOptionsOpen }) => {
 
@@ -93,6 +94,21 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
       :null}
     </React.Fragment>
   );
+};
+
+ContactPhoneNumberDropdown.propTypes = {
+  showPhoneDropdown: PropTypes.bool,
+  setShowPhoneDropdown: PropTypes.func,
+  phoneNumberList: PropTypes.arrayOf(
+    PropTypes.shape({
+      phoneCode: PropTypes.string,
+      phoneNumber: PropTypes.string ,
+      extension: PropTypes.number ,
+      phoneTypeId: PropTypes.number ,
+      isPrimary: PropTypes.bool 
+    })
+  ).isRequired,
+  isOptionsOpen: PropTypes.bool
 };
 
 export default ContactPhoneNumberDropdown;

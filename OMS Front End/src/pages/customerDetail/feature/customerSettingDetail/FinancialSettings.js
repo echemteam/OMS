@@ -10,6 +10,7 @@ import { getFieldData, setDropDownOptionField } from "../../../../utils/FormFiel
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { CountryId, CustomerSettingEnum, PaymentMethodTypes } from "../../../../utils/Enums/commonEnums";
+import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
@@ -376,6 +377,10 @@ const FinancialSettings = ({ isEditablePage }) => {
       }
     </div>
   );
+};
+
+FinancialSettings.propTypes = {
+  isEditablePage: PropTypes.bool.isRequired,
 };
 
 export default FinancialSettings;

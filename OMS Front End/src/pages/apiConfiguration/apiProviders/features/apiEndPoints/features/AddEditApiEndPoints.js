@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState } from "react";
-import { useRef } from "react";
+import { useState ,useRef,useEffect} from "react";
+import PropTypes from "prop-types";
 import { addEditApiEndPointsFormData } from "../config/ApiEndPoints.data";
-import { useEffect } from "react";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../../components/ui/button/Buttons";
@@ -126,5 +125,15 @@ const AddEditApiEndPoints = (props) => {
       </div>
     </>
   );
+};
+
+AddEditApiEndPoints.propTypes = {
+  providerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  initData: PropTypes.shape({
+    endpointId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }).isRequired,
+  isEdit: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
 };
 export default AddEditApiEndPoints;

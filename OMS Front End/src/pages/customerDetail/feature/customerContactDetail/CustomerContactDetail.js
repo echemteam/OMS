@@ -3,6 +3,7 @@ import { securityKey } from "../../../../data/SecurityKey";
 //** Service */
 import { useAddEditContactMutation, useLazyGetContactByCustomerIdQuery, useLazyGetCustomerContactByContactIdQuery, } from "../../../../app/services/contactAPI";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
+import PropTypes from "prop-types";
 //** Component's */
 const ContactGrid = React.lazy(() => import("../../../../common/features/component/Contact/ContactGrid"));
 
@@ -35,4 +36,8 @@ const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow }) => {
   );
 };
 
+CustomerContactDetail.propTypes = {
+  isEditablePage: PropTypes.bool.isRequired,
+  isSearchFilterShow: PropTypes.bool.isRequired,
+};
 export default CustomerContactDetail;

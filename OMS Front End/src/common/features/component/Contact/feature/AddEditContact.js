@@ -9,6 +9,7 @@ import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
 import { setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 //** Component's */
@@ -207,5 +208,27 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         </div>
     );
 });
+
+AddEditContact.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    addEditContactMutation: PropTypes.func.isRequired, 
+    onSidebarClose: PropTypes.func.isRequired,
+    onSuccess: PropTypes.func,
+    childRef: PropTypes.shape({
+      current: PropTypes.object
+    }),
+    editRef: PropTypes.shape({
+      current: PropTypes.object
+    }),
+    SecurityKey: PropTypes.shape({
+      EDIT: PropTypes.string,
+      ADD: PropTypes.string
+    }),
+    isEditablePage: PropTypes.bool,
+    isSupplier: PropTypes.bool,
+    isEdit: PropTypes.bool,
+    isOpen: PropTypes.bool,
+    getContactById: PropTypes.func.isRequired
+  };
 
 export default AddEditContact;

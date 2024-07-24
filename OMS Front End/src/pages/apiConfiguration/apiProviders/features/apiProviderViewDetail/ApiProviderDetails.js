@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { AppIcons } from "../../../../../data/appIcons";
 import ApiProviderBasicInfoCard from "./apiProviderInfoCard/ApiProviderBasicInfoCard";
 import CardSection from "../../../../../components/ui/card/CardSection";
@@ -92,5 +93,23 @@ return(<>
     </>
 </>)
 }
+ApiProviderBasicInfoCard.propTypes = {
+  editClick: PropTypes.func.isRequired,
+  providerFormData: PropTypes.object,
+  mainProviderId: PropTypes.number.isRequired,
+  getCustomerById: PropTypes.func,
+};
 
+ApiproviderViewTab.propTypes = {
+  providerData: PropTypes.object,
+  providerId: PropTypes.number.isRequired,
+};
+
+AddEditApiProviders.propTypes = {
+  isOpen: PropTypes.bool,
+  initData: PropTypes.object,
+  getCustomerById: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
+  isEditablePage: PropTypes.bool,
+};
 export default ApiProviderDetail;

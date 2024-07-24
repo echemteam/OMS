@@ -2,6 +2,7 @@ import MolGrid from "../../../../../../../components/Grid/MolGrid";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import { AccountGridConfig } from "../config/CarrierConfig";
+import PropTypes from 'prop-types';
 
 const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton }) => {
 
@@ -29,5 +30,14 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
         </div>
     )
 }
+
+CarrierList.propTypes = {
+    molGridRef: PropTypes.object.isRequired,
+    collectAccountData: PropTypes.array.isRequired,
+    actionHandler: PropTypes.object.isRequired,
+    handleToggleModal: PropTypes.func.isRequired,
+    isGetDataLoading: PropTypes.bool.isRequired,
+    isShowButton: PropTypes.bool.isRequired,
+};
 
 export default CarrierList;

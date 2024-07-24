@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Image from "../../image/Image";
 import { AppIcons } from "../../../data/appIcons";
+import PropTypes from "prop-types";
 
-const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization }) => {
+const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization, onTabClick }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [isCollapsediv, setIsCollapsediv] = useState(false);
@@ -12,6 +13,9 @@ const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization }) => {
   const handleTabClick = (tabIndex, navigationPath) => {
     setActiveTab(tabIndex);
     navigate(navigationPath);
+    if (onTabClick) {
+      onTabClick(tabIndex);
+    }
   };
 
   const handleCollapseClick = () => {
@@ -65,6 +69,19 @@ const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization }) => {
       )}
     </>
   );
+};
+
+RenderTabs.propTypes = {
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      sMenuItemCaption: PropTypes.string,
+      sPage: PropTypes.string,
+      component: PropTypes.node
+    })
+  ),
+  isCollapse: PropTypes.bool,
+  onActiveTab: PropTypes.func,
+  isOrganization: PropTypes.bool
 };
 
 export default RenderTabs;

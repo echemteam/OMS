@@ -8,7 +8,6 @@ import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules
 import ApiProviderViewDetail from "../../pages/apiConfiguration/apiProviders/features/apiProviderViewDetail/ApiProviderViewDetail";
 import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/feature/thirdPartyApiConfigurationList/feature/thirdPartyApiConfigurationViewDetails/ThirdPartyApiConfigurationViewDetails";
 
-// const ApiParametersGrid = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/features/apiParameters/ApiParametersGrid"));
 const ApiProviders = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProviders"));
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));

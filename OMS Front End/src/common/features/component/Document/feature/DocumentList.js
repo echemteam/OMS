@@ -13,6 +13,7 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 import FileViewer from 'react-file-viewer';
+import PropTypes from 'prop-types'; 
 
 const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDocumentsById, getDocumentsById, childRef, SecurityKey, isEditablePage }) => {
 
@@ -247,6 +248,18 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
     );
 });
 
-
+DocumentList.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    isSupplier: PropTypes.bool.isRequired,
+    downloadDocument: PropTypes.func.isRequired,
+    deleteDocumentsById: PropTypes.func.isRequired,
+    getDocumentsById: PropTypes.func.isRequired,
+    childRef: PropTypes.object.isRequired,
+    SecurityKey: PropTypes.shape({
+        DELETE: PropTypes.string,
+        DOWNALOD: PropTypes.string
+    }).isRequired,
+    isEditablePage: PropTypes.bool.isRequired
+};
 
 export default DocumentList;
