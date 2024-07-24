@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import MolGrid from "../../../../../../components/Grid/MolGrid";
 import { ApiAuthenticationtGridConfig,  } from "../config/ApiAuthentication.data";
 import ToastService from "../../../../../../services/toastService/ToastService";
@@ -113,4 +114,13 @@ const ApiAuthenticationList=({handleEditClick, getDataRef,providerId})=>{
     </>
 )
 }
+ApiAuthenticationList.propTypes = {
+  handleEditClick: PropTypes.func.isRequired,
+  getDataRef: PropTypes.shape({
+    current: PropTypes.shape({
+      callChildFunction: PropTypes.func,
+    }),
+  }),
+  providerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
 export default ApiAuthenticationList;
