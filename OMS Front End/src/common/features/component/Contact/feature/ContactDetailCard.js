@@ -4,6 +4,7 @@ import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
 import { AppIcons } from "../../../../../data/appIcons";
 import { forwardRef } from "react";
 import Image from "../../../../../components/image/Image";
+import PropTypes from "prop-types";
 
 const ContactDetailCard = forwardRef(
   ({ contactItem, handleEdit, showEditIcon }) => {
@@ -302,5 +303,19 @@ const ContactDetailCard = forwardRef(
     );
   }
 );
+
+ContactDetailCard.propTypes = {
+  contactItem: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    isPrimary: PropTypes.bool,
+    emailAddressList: PropTypes.arrayOf(PropTypes.string),
+    phoneNumberList: PropTypes.arrayOf(PropTypes.string),
+    type: PropTypes.string,
+    contactId: PropTypes.number
+  }).isRequired,
+  handleEdit: PropTypes.func.isRequired,
+  showEditIcon: PropTypes.bool.isRequired
+};
 
 export default ContactDetailCard;

@@ -6,6 +6,7 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
+import PropTypes from 'prop-types'; 
 
 const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuccess }) => {
 
@@ -67,5 +68,11 @@ const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuc
         </div>
     )
 }
-
+AddDocument.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    isSupplier: PropTypes.bool.isRequired,
+    addDocuments: PropTypes.func.isRequired,
+    handleToggleModal: PropTypes.func.isRequired,
+    onSuccess: PropTypes.func.isRequired
+};
 export default AddDocument;

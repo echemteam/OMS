@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
+import PropTypes from "prop-types";
 //** Component's */
 const ContactDetailCard = React.lazy(() => import("./ContactDetailCard"));
 
@@ -87,5 +88,17 @@ const ContactList = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, g
     );
   }
 );
-
+ContactList.propTypes = {
+  keyId: PropTypes.number.isRequired,
+  handleEdit: PropTypes.func.isRequired,
+  showEditIcon: PropTypes.bool.isRequired,
+  getListRef: PropTypes.shape({
+    current: PropTypes.shape({
+      callChildListFunction: PropTypes.func
+    })
+  }).isRequired,
+  getContactByKeyId: PropTypes.func.isRequired,
+  selectedContactTypeId: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  search: PropTypes.string.isRequired,
+};
 export default ContactList;

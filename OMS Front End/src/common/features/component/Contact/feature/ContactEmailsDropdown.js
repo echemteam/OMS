@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import CopyText from "../../../../../utils/CopyText/CopyText";
+import PropTypes from "prop-types";
 
 const ContactEmailsDropdown = ({
   showEmailDropdown,
@@ -81,6 +82,18 @@ const ContactEmailsDropdown = ({
       ) : null}
     </React.Fragment>
   );
+};
+
+ContactEmailsDropdown.propTypes = {
+  showEmailDropdown: PropTypes.bool,
+  setShowEmailDropdown: PropTypes.func,
+  emailAddressesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      emailAddress: PropTypes.string ,
+      isPrimary: PropTypes.bool 
+    })
+  ).isRequired,
+  isOptionsOpen: PropTypes.bool
 };
 
 export default ContactEmailsDropdown;

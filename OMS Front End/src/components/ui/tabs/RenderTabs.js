@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Image from "../../image/Image";
 import { AppIcons } from "../../../data/appIcons";
+import PropTypes from "prop-types";
 
 const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization }) => {
   const navigate = useNavigate();
@@ -65,6 +66,19 @@ const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization }) => {
       )}
     </>
   );
+};
+
+RenderTabs.propTypes = {
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      sMenuItemCaption: PropTypes.string.isRequired,
+      sPage: PropTypes.string.isRequired,
+      component: PropTypes.node
+    })
+  ).isRequired,
+  isCollapse: PropTypes.bool,
+  onActiveTab: PropTypes.func,
+  isOrganization: PropTypes.bool
 };
 
 export default RenderTabs;

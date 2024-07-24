@@ -6,6 +6,7 @@ import { DocumentFormData } from "./Config/DocuementsData";
 import CardSection from "../../../../components/ui/card/CardSection";
 import CenterModel from "../../../../components/ui/centerModel/CenterModel";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import PropTypes from 'prop-types';
 //** Service's */
 import { useLazyGetAllDocumentTypesQuery } from "../../../../app/services/documentAPI";
 //** Component's */
@@ -83,4 +84,18 @@ const DocumentGrid = ({ keyId, isSupplier, addDocuments, downloadDocument, delet
     );
 }
 
+DocumentGrid.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    isSupplier: PropTypes.bool.isRequired,
+    addDocuments: PropTypes.func.isRequired,
+    downloadDocument: PropTypes.func.isRequired,
+    deleteDocumentsById: PropTypes.func.isRequired,
+    getDocumentsById: PropTypes.func.isRequired,
+    isEditablePage: PropTypes.bool.isRequired,
+    SecurityKey: PropTypes.shape({
+        ADD: PropTypes.string,
+        DELETE: PropTypes.string,
+        DOWNALOD: PropTypes.string
+    })
+};
 export default DocumentGrid;

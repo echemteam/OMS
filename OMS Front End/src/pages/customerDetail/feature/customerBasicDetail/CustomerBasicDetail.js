@@ -3,6 +3,7 @@ import React from "react";
 //** Lib's */
 import CardSection from "../../../../components/ui/card/CardSection";
 import AddEditCustomerBasicDetail from "./AddEditCustomerBasicDetail";
+import PropTypes from "prop-types";
 //** Component */
 
 const CustomerBasicDetail = (props) => {
@@ -22,4 +23,10 @@ const CustomerBasicDetail = (props) => {
   );
 };
 
+CustomerBasicDetail.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  getCustomerById: PropTypes.func.isRequired,
+  onSidebarClose: PropTypes.func.isRequired,
+  keyId: PropTypes.number.isRequired,
+};
 export default CustomerBasicDetail;

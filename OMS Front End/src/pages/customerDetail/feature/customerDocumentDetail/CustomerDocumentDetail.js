@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { securityKey } from '../../../../data/SecurityKey';
+import PropTypes from 'prop-types';
 //** Service */
 import { useAddCustomerDocumentsMutation, useDeleteCustomerDocumentsByIdMutation, useLazyDownloadDocumentQuery, useLazyGetCustomerDocumentsByIdQuery } from '../../../../app/services/documentAPI';
 //** Component's */
@@ -27,5 +28,7 @@ const CustomerDocumentDetail = ({ isEditablePage }) => {
             deleteDocumentsById={useDeleteCustomerDocumentsByIdMutation} getDocumentsById={useLazyGetCustomerDocumentsByIdQuery} />
     )
 }
-
+CustomerDocumentDetail.propTypes = {
+    isEditablePage: PropTypes.bool.isRequired
+};
 export default CustomerDocumentDetail;

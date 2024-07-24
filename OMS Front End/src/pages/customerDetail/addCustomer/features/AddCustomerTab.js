@@ -10,6 +10,7 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import Image from "../../../../components/image/Image";
 import { CustomerSettingEnum, CustomerSupplierTabEnum } from "../../../../utils/Enums/commonEnums";
 import { AppIcons } from "../../../../data/appIcons";
+import PropTypes from 'prop-types';
 
 
 //** Compoent's */
@@ -181,6 +182,16 @@ const AddCustomerTab = () => {
       </CardSection>
     </div>
   );
+};
+
+AddCustomerTab.propTypes = {
+  activeTab: PropTypes.number.isRequired,
+  movePreviewPage: PropTypes.func.isRequired,
+  addCustomer: PropTypes.func.isRequired,
+  customerId: PropTypes.number.isRequired,
+  showSubBackButton: PropTypes.bool.isRequired,
+  handleActiveSubTabClick: PropTypes.func.isRequired,
+  saveFinacialSetting: PropTypes.func.isRequired,
 };
 
 export default AddCustomerTab;

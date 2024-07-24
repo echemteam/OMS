@@ -16,6 +16,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 import { modifyContactType } from "../../../../utils/TransformData/TransformAPIData";
+import PropTypes from "prop-types";
 //** Component's */
 const ContactList = React.lazy(() => import("./feature/ContactList"));
 const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
@@ -339,4 +340,17 @@ const ContactGrid = ({
   );
 };
 
+ContactGrid.propTypes = {
+  keyId: PropTypes.number.isRequired,
+  getContactByKeyId: PropTypes.func.isRequired,
+  addEditContactMutation: PropTypes.func.isRequired,
+  isSupplier: PropTypes.bool.isRequired,
+  isEditablePage: PropTypes.bool.isRequired,
+  SecurityKey: PropTypes.shape({
+    ADD: PropTypes.string,
+    EDIT: PropTypes.string,
+  }),
+  getContactById: PropTypes.func.isRequired,
+  isSearchFilterShow: PropTypes.bool.isRequired,
+};
 export default ContactGrid;
