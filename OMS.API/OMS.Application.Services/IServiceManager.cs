@@ -47,6 +47,6 @@ namespace OMS.Application.Services
         IApprovalConfigurationServices approvalConfigurationServices { get; }
         IApiConfigurationService apiConfigurationService { get; }
         IOrganizationService organizationService { get; }
-        ISupplierAccoutingSettingService supplierAccoutingSettingService { get; }
+        ISupplierFinancialSettingsService supplierFinancialSettingsService { get; }
     }
 }

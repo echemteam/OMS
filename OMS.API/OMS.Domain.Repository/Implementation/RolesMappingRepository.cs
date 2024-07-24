@@ -24,13 +24,13 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Roles Mapping Repsitory
-        public async Task<AddEntityDTO<int>> AddRoleMapping(RoleMappingDTO addRoleMapping)
+        public async Task<AddEntityDTO<int>> AddRoleMapping(RoleMappingDTO roleMapping)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDROLEMAPPING, new
             {
-                addRoleMapping.UserId,
-                addRoleMapping.RoleId,
-                addRoleMapping.CreatedBy
+                roleMapping.UserId,
+                roleMapping.RoleId,
+                roleMapping.CreatedBy
             }, CommandType.StoredProcedure);
         }
 
