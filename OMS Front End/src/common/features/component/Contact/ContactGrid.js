@@ -90,14 +90,14 @@ const ContactGrid = ({
       const contactOption = getFieldData(contactDetailFormData, "contactTypeId");
       setContactType(contactOption?.fieldSetting?.options);
       setTabContactType(modifyContactType(allGetAllContactTypesData));
-          }
+    }
   }, [isGetAllContactTypesSucess, allGetAllContactTypesData]);
 
-  useEffect(() => {
-    if (search === "") {
-      onGetContactList();
-    }
-  }, [search]);
+  // useEffect(() => {
+  //   if (search === "") {
+  //     onGetContactList();
+  //   }
+  // }, [search]);
 
   //** Handle Change's */
   const handleChange = (event) => {
@@ -153,9 +153,14 @@ const ContactGrid = ({
       searchText: search,
       contactType: Array.isArray(selectedDrpvalues) ? selectedDrpvalues.join(",") : String(selectedDrpvalues),
     };
-        if (getListRef.current) {
+    if (getListRef.current) {
       getListRef.current.callChildListFunction(request);
     }
+  };
+
+  //** Tab Change */
+  const onTabClick = () => {
+    setSearch("");
   };
 
   //** Success */
@@ -267,7 +272,7 @@ const ContactGrid = ({
   const tabs = tabContactType && tabContactType.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers)
     .map((data, index) => ({
       sMenuItemCaption: data.type,
-      component: components[index] ? components[index](data.contactTypeId ? [data.contactTypeId] : "") : <div className="mt-2">Default Tab</div>
+      component: components[index] ? components[index]([data.contactTypeId]) : <div className="mt-2">Default Tab</div>
     }));
 
 
@@ -306,7 +311,7 @@ const ContactGrid = ({
         searchValue={search}
       >
         <div className="vertical-tab-inner">
-          <RenderTabs tabs={tabs} isCollapse={true} />
+          <RenderTabs tabs={tabs} isCollapse={true} onTabClick={onTabClick} />
         </div>
       </CardSection>
       <div className="sidebar-contact-model">

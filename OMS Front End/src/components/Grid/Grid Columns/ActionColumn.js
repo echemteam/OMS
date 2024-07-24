@@ -225,6 +225,20 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
       {rowData.status !== "Approved" && col.defaultAction.allowReject && (
         <div className="view-reject-icon w-20p"></div>
       )}
+      {col.defaultAction.allowView && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            handleAction("VIEW", rowData);
+          }}
+          className="mr-4 view-icon"
+          title="VIEW"
+        >
+          <Image
+            imagePath={AppIcons.EyeIcon}
+            altText="Delete Icon" />
+        </Link>
+      )}
 
     </div>
   );

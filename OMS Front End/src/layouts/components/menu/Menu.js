@@ -26,7 +26,7 @@ export const Menu = [
         name: "Organization",
         id: "Organization",
         to: "/Organization",
-        iconClass: "bi bi-file-earmark-medical",
+        iconClass: "fa fa-building-o",
         subMenu: false,
         securityKey: securityKey.DASHBOARD,
         children: []
@@ -106,7 +106,7 @@ export const Menu = [
       {
         id: "configuration",
         name: "Configuration",
-        iconClass: "fa fa-cog fa-spin",
+        iconClass: "fa fa-cog",
         subMenu: true,
         to: "#",
         securityKey: securityKey.CONFIGURATION,
@@ -122,7 +122,7 @@ export const Menu = [
       {
         id: "apiconfiguration",
         name: "API Configuration",
-        iconClass: "fa fa-cog fa-spin",
+        iconClass: "fa fa-cog",
         subMenu: true,
         to: "#",
         securityKey: securityKey.APICONFIGURATION,
@@ -134,6 +134,22 @@ export const Menu = [
             securityKey: securityKey.APIPROVIDERS,
           },
     
+        ],
+      },
+      {
+        id: "ThirdPartyAPI",
+        name: "Third party API",
+        iconClass: "fa fa-building-o",
+        subMenu: true,
+        to: "#",
+        securityKey: securityKey.SECURITY,
+        children: [
+          {
+            id: "Api Configuration",
+            submenuName: "Api Configuration",
+            to: "/ThirdPartyApiConfiguration",
+            securityKey: securityKey.USERMANAGEMENT
+          },
         ],
       },
     ]
