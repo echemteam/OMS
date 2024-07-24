@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef ,useEffect,useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import MolGrid from "../../../../../components/Grid/MolGrid";
 import { SubCustomerGridConfig } from "../config/SubCustomer.data";
 import ToastService from "../../../../../services/toastService/ToastService";
@@ -13,9 +13,9 @@ const SubCustomerList = (props) => {
   const [listData, setListData] = useState();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const { confirm } = SwalAlert();
-  const [getSubCustomerByCustomerId,{ isLoading: isGetSubCustomerByCustomerIdLoading, isSuccess: isGetSubCustomerByCustomerIdSuccess, data: isGetSubCustomerByCustomerIdData },] = useGetSubCustomerByCustomerIdMutation();
-  const [deleteSubCustomer,{  isSuccess: isDeleteSubCustomerSuccess, data: isDeleteSubCustomerData }, ] = useDeleteSubCustomerMutation();
- const getLists = (pageObject,sortingString) => {
+  const [getSubCustomerByCustomerId, { isLoading: isGetSubCustomerByCustomerIdLoading, isSuccess: isGetSubCustomerByCustomerIdSuccess, data: isGetSubCustomerByCustomerIdData },] = useGetSubCustomerByCustomerIdMutation();
+  const [deleteSubCustomer, { isSuccess: isDeleteSubCustomerSuccess, data: isDeleteSubCustomerData },] = useDeleteSubCustomerMutation();
+  const getLists = (pageObject, sortingString) => {
     const request = {
       pagination: {
         pageNumber: pageObject.pageNumber,
@@ -29,36 +29,36 @@ const SubCustomerList = (props) => {
   };
 
   const handlePageChange = (page) => {
-    getLists(page,molGridRef.current.generateSortingString());
+    getLists(page, molGridRef.current.generateSortingString());
   };
   const handleSorting = (shortString) => {
     getLists(molGridRef.current.getCurrentPageObject(), shortString);
   }
-  const onGetData = () =>{
-
+  const onGetData = () => {
     if (molGridRef.current) {
       const defaultPageObject = molGridRef.current.getCurrentPageObject();
-      getLists(defaultPageObject,molGridRef.current.generateSortingString());
+      getLists(defaultPageObject, molGridRef.current.generateSortingString());
     }
   }
 
   useEffect(() => {
     if (isDeleteSubCustomerSuccess && isDeleteSubCustomerData) {
       ToastService.success(isDeleteSubCustomerData.errorMessage);
-       const currentPageObject = molGridRef.current.getCurrentPageObject();
-      handlePageChange(currentPageObject)
+      const currentPageObject = molGridRef.current.getCurrentPageObject();
+      handlePageChange(currentPageObject);
+      props.onGetLinkCustomer();
     }
   }, [isDeleteSubCustomerSuccess, isDeleteSubCustomerData]);
 
   const handleDeleteClick = (data) => {
 
-    confirm( "Delete?", "Are you sure you want to Delete?", "Delete",  "Cancel" )
-       .then((confirmed) => {
-         if (confirmed) {
+    confirm("Delete?", "Are you sure you want to Delete?", "Delete", "Cancel")
+      .then((confirmed) => {
+        if (confirmed) {
           deleteSubCustomer(data.subCustomerMainCustomerId);
-         }
-       });
-     };
+        }
+      });
+  };
 
   useEffect(() => {
     onGetData()
@@ -66,28 +66,28 @@ const SubCustomerList = (props) => {
 
   useEffect(() => {
     if (isGetSubCustomerByCustomerIdSuccess && isGetSubCustomerByCustomerIdData) {
-  
+
       if (isGetSubCustomerByCustomerIdData) {
-        setListData(isGetSubCustomerByCustomerIdData.dataSource);  
+        setListData(isGetSubCustomerByCustomerIdData.dataSource);
       }
       if (isGetSubCustomerByCustomerIdData.totalRecord) {
         setTotalRowCount(isGetSubCustomerByCustomerIdData.totalRecord);
       }
     }
   }, [isGetSubCustomerByCustomerIdSuccess, isGetSubCustomerByCustomerIdData]);
- 
+
 
   const handleEditClick = (data) => {
     window.open(`/CustomerDetails/${encryptUrlData(data.subCustomerId)}`, '_blank');
   };
   const actionHandler = {
-    EDIT:handleEditClick,
-    DELETE: handleDeleteClick,    
+    EDIT: handleEditClick,
+    DELETE: handleDeleteClick,
   };
 
   useImperativeHandle(props.childRef, () => ({
     callChildFunction: onGetData
-}));
+  }));
   return (
     <>
       <div className="row">
@@ -103,9 +103,9 @@ const SubCustomerList = (props) => {
               currentPage: 1,
             }}
             onPageChange={handlePageChange}
-             onSorting={handleSorting}
-             isLoading={isGetSubCustomerByCustomerIdLoading}
-             onActionChange={actionHandler}
+            onSorting={handleSorting}
+            isLoading={isGetSubCustomerByCustomerIdLoading}
+            onActionChange={actionHandler}
           />
         </div>
       </div>

@@ -31,6 +31,7 @@ export const Menu = [
         securityKey: securityKey.DASHBOARD,
         children: []
       },
+      
     ]
   },
   {
@@ -105,7 +106,7 @@ export const Menu = [
       {
         id: "configuration",
         name: "Configuration",
-        iconClass: "fa fa-cog fa-spin",
+        iconClass: "fa fa-cog",
         subMenu: true,
         to: "#",
         securityKey: securityKey.CONFIGURATION,
@@ -121,7 +122,7 @@ export const Menu = [
       {
         id: "apiconfiguration",
         name: "API Configuration",
-        iconClass: "fa fa-cog fa-spin",
+        iconClass: "fa fa-cog",
         subMenu: true,
         to: "#",
         securityKey: securityKey.APICONFIGURATION,
@@ -132,23 +133,22 @@ export const Menu = [
             to: "/APIProviders",
             securityKey: securityKey.APIPROVIDERS,
           },
+    
+        ],
+      },
+      {
+        id: "ThirdPartyAPI",
+        name: "Third party API",
+        iconClass: "fa fa-building-o",
+        subMenu: true,
+        to: "#",
+        securityKey: securityKey.SECURITY,
+        children: [
           {
-            id: "apiEndpoints",
-            submenuName: "API EndPoints",
-            to: "/APIEndpoints",
-            securityKey: securityKey.APIENDPOINTS,
-          },
-          {
-            id: "apiParameters",
-            submenuName: "API Parameters",
-            to: "/APIParameters",
-            securityKey: securityKey.APIPARAMETERS,
-          },
-          {
-            id: "apiAuthentication",
-            submenuName: "API Authentication",
-            to: "/APIAuthentication",
-            securityKey: securityKey.APIAUTHENTICATION,
+            id: "Api Configuration",
+            submenuName: "Api Configuration",
+            to: "/ThirdPartyApiConfiguration",
+            securityKey: securityKey.USERMANAGEMENT
           },
         ],
       },

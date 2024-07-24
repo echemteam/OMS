@@ -3,24 +3,28 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import AddEditSubCustomer from "./feature/AddEditSubCustomer";
 import SubCustomerList from "./feature/SubCustomerList";
 
-const SubCustomerGrid=({customerId,isSubCustomer})=>{
+const SubCustomerGrid = ({ customerId }) => {
     const childRef = useRef();
+    const getLinkCustomerRef = useRef();
 
     const onSuccess = () => {
         if (childRef.current) {
             childRef.current.callChildFunction();
         }
     };
-    return(<>
 
-     <CardSection
-        cardTitle="Link Customer"
-        buttonClassName="theme-button"
-      >
-       <AddEditSubCustomer customerId={customerId} onSuccess={onSuccess} isSubCustomer={isSubCustomer}/>
-     <SubCustomerList customerId={customerId} childRef={childRef} />
+    const onGetLinkCustomer = () => {
+        if (getLinkCustomerRef.current) {
+            getLinkCustomerRef.current.callChildFunction();
+        }
+    };
 
-      </CardSection>
-      </>)
+    return (<>
+
+        <CardSection cardTitle="Link Customer" buttonClassName="theme-button">
+            <AddEditSubCustomer customerId={customerId} onSuccess={onSuccess} getLinkCustomerRef={getLinkCustomerRef} />
+            <SubCustomerList customerId={customerId} childRef={childRef} onGetLinkCustomer={onGetLinkCustomer} />
+        </CardSection>
+    </>)
 }
 export default SubCustomerGrid;

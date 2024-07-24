@@ -6,8 +6,9 @@ export const FieldSettingType = {
 }
 
 export const ApprovalEnum = {
-    APPROVECUSTOMER: "1",
-    APPROVESUPPLIER: "2"
+    APPROVECUSTOMER: 1,
+    APPROVESUPPLIER: 2,
+    APPROVESUBCUSTOMER: 3,
 }
 
 export const CustomerSupplierTabEnum = {
@@ -41,8 +42,7 @@ export const AuthenticationTypes = {
 export const ApiEndPointMethods = {
     GET: "GET",
     POST: "POST",
-    PUT: "PUT",
-    DELETE: "DELETE"
+
 }
 
 export const ApiParametersDataTypes = {

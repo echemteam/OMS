@@ -5,11 +5,10 @@ import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
 import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
+import ApiProviderViewDetail from "../../pages/apiConfiguration/apiProviders/features/apiProviderViewDetail/ApiProviderViewDetail";
+import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/feature/thirdPartyApiConfigurationList/feature/thirdPartyApiConfigurationViewDetails/ThirdPartyApiConfigurationViewDetails";
 
-const ApiParametersGrid = React.lazy(() => import("../../pages/apiConfiguration/apiParameters/ApiParametersGrid"));
-const ApiAuthenticationGrid = React.lazy(() => import("../../pages/apiConfiguration/apiAuthentication/ApiAuthenticationGrid"));
-const ApiEndPointsGrid = React.lazy(() => import("../../pages/apiConfiguration/apiEndPoints/ApiEndPointsGrid"));
-const ApiProvidersGrid = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProvidersGrid"));
+const ApiProviders = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProviders"));
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 //** Dashboard */
@@ -38,6 +37,8 @@ const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/suppli
 const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/supplierGrid/SupplierViewDetail"));
 
 const Organization = React.lazy(() => import("../../pages/organization/Organization"));
+
+const ThirdPartyApiConfiguration = React.lazy(() => import("../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/ThirdPartyApiConfiguration"));
 
 export const ComponentNavigation = [
   {
@@ -292,40 +293,20 @@ export const ComponentNavigation = [
     path: '/APIProviders',
     exact: true,
     title: 'API Providers',
-    component: ApiProvidersGrid,
+    component: ApiProviders,
     hasParams: false,
     text: 'API Providers',
     securityKey: securityKey.APIPROVIDERS
   },
   {
-    id: 'apiEndpoints',
-    path: '/APIEndpoints',
+    id: 'apiProviderDetails',
+    path: '/APIProviderDetail/:id',
     exact: true,
-    title: 'API EndPoints',
-    component: ApiEndPointsGrid,
+    title: 'API Provider Detail',
+    component: ApiProviderViewDetail,
     hasParams: false,
-    text: 'API EndPoints',
-    securityKey: securityKey.APIENDPOINTS
-  },
-  {
-    id: 'apiParameters',
-    path: '/APIParameters',
-    exact: true,
-    title: 'API Parameters',
-    component: ApiParametersGrid,
-    hasParams: false,
-    text: 'API Parameters',
-    securityKey: securityKey.APIPARAMETERS
-  },
-  {
-    id: 'apiAuthentication',
-    path: '/APIAuthentication',
-    exact: true,
-    title: 'API Authentication',
-    component: ApiAuthenticationGrid,
-    hasParams: false,
-    text: 'API Authentication',
-    securityKey: securityKey.APIAUTHENTICATION
+    text: 'API Providers Detail',
+    securityKey: securityKey.APIPROVIDERS
   },
   {
     id: "",
@@ -346,5 +327,26 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'Organization',
     // securityKey: securityKey.MYTASK
+  },
+  {
+    id: 'ThirdPartyApiConfigurationViewDetails',
+    path: '/ThirdPartyApiConfigurationViewDetails',
+    exact: true,
+    title: 'Third Party Api View Details',
+    component: ThirdPartyApiConfigurationViewDetails,
+    hasParams: false,
+    text: 'ThirdPartyApiConfigurationViewDetails',
+    // securityKey: securityKey.MYTASK
+  },
+  {
+    id: 'ThirdPartyApiConfiguration',
+    path: '/ThirdPartyApiConfiguration',
+    exact: true,
+    title: 'Third Party Api Configuration',
+    component: ThirdPartyApiConfiguration,
+    hasParams: false,
+    text: 'ThirdPartyApiConfiguration',
+    // securityKey: securityKey.MYTASK
   }
+
 ];

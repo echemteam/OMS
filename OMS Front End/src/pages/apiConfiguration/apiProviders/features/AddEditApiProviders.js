@@ -6,25 +6,23 @@ import FormCreator from "../../../../components/Forms/FormCreator";
 import { useEffect } from "react";
 import { AuthenticationTypes } from "../../../../utils/Enums/commonEnums";
 import { useState } from "react";
-import {
-  useAddEditApiProviderMutation,
-  useLazyGetApiProviderByProviderIdQuery,
-} from "../../../../app/services/apiProviderAPI";
+import { useAddEditApiProviderMutation, useLazyGetApiProviderByProviderIdQuery} from "../../../../app/services/apiProviderAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
 
 const AddEditApiProviders = (props) => {
-  const providerId = props.initData.providerId;
+  const providerId = props.initData?.providerId;
+  const {getCustomerById} =props;
   const apiProviderRef = useRef();
   const [providerFormData, setProviderFormData] = useState( addEditApiProviderFormData);
-  const [addEditApiProvider, {isLoading: isAddEditApiProviderLoading,isSuccess: isAddEditApiProviderSucess,data: allAddEditApiProviderData,},] = useAddEditApiProviderMutation();
+  const [addEditApiProvider, {isLoading: isAddEditApiProviderLoading,isSuccess: isAddEditApiProviderSuccess,data: allAddEditApiProviderData,},] = useAddEditApiProviderMutation();
 const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFetching,isSuccess: isGetApiProviderByProviderSuccess,data: GetApiProviderByProviderIdData, },] = useLazyGetApiProviderByProviderIdQuery();
 
   useEffect(() => {
-    if (providerId && props.isEdit) {
+    if (providerId ) {
       getApiProviderByProviderId(providerId);
     }
-  }, [providerId, props.isEdit]);
+  }, [providerId]);
 
   useEffect(() => {
     if ( isGetApiProviderByProviderSuccess && GetApiProviderByProviderIdData && !isGetApiProviderByProviderIdFetching) {
@@ -39,7 +37,7 @@ const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFet
   }, [isGetApiProviderByProviderSuccess, GetApiProviderByProviderIdData, isGetApiProviderByProviderIdFetching]);
 
   useEffect(() => {
-    if (isAddEditApiProviderSucess && allAddEditApiProviderData) {
+    if (isAddEditApiProviderSuccess && allAddEditApiProviderData) {
 
       if (allAddEditApiProviderData.errorMessage.includes("exists")) {
         ToastService.warning(allAddEditApiProviderData.errorMessage);
@@ -48,11 +46,16 @@ const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFet
         return;
     }
       onResetForm(addEditApiProviderFormData, setProviderFormData, null);
+      if (providerId > 0) {
+        getCustomerById()
+        ToastService.success(allAddEditApiProviderData.errorMessage);   
+    }else{
       props.onSuccess();
-      ToastService.success(allAddEditApiProviderData.errorMessage);
-      props.onClose();
+      ToastService.success(allAddEditApiProviderData.errorMessage);  
     }
-  }, [isAddEditApiProviderSucess, allAddEditApiProviderData]);
+    props.onClose();
+    }
+  }, [isAddEditApiProviderSuccess, allAddEditApiProviderData]);
 
   const handleResetAndClose = () => {
     onResetForm(addEditApiProviderFormData, setProviderFormData, null);
