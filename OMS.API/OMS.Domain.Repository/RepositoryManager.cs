@@ -40,6 +40,9 @@ namespace OMS.Domain.Repository
         IOrganizationRepository _organizationRepository;
         IOrganizationOtherSettingsRepository _organizationOtherSettingsRepository;
         ISmtpSettingsRepository _smtpSettingsRepository;
+        ISupplierFinancialSettingsRepository _supplierFinancialSettingsRepository;
+        ISuppierBankDetailsRepository _suppierBankDetailsRepository;    
+        ISupplierPaymentSettingsRepository _supplierPaymentSettingsRepository;
 
         public ITestRepository test
         {
@@ -348,6 +351,42 @@ namespace OMS.Domain.Repository
                     _smtpSettingsRepository = new SmtpSettingsRepository(_context);
                 }
                 return _smtpSettingsRepository;
+            }
+
+        }
+        public ISupplierFinancialSettingsRepository supplierFinancialSettings
+        {
+            get
+            {
+                if (_supplierFinancialSettingsRepository == null)
+                {
+                    _supplierFinancialSettingsRepository = new SupplierFinancialSettingsRepository(_context);
+                }
+                return _supplierFinancialSettingsRepository;
+            }
+
+        }
+        public ISuppierBankDetailsRepository suppierBankDetails
+        {
+            get
+            {
+                if (_suppierBankDetailsRepository == null)
+                {
+                    _suppierBankDetailsRepository = new SuppierBankDetailsRepository(_context);
+                }
+                return _suppierBankDetailsRepository;
+            }
+
+        }
+        public ISupplierPaymentSettingsRepository supplierPaymentSettings
+        {
+            get
+            {
+                if (_supplierPaymentSettingsRepository == null)
+                {
+                    _supplierPaymentSettingsRepository = new SupplierPaymentSettingsRepository(_context);
+                }
+                return _supplierPaymentSettingsRepository;
             }
 
         }

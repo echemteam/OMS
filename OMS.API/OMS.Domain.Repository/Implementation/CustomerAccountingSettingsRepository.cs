@@ -40,47 +40,47 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return customerDetails;
         }
-        public async Task<AddEntityDTO<int>> AddEditCustomerSettings(CustomerAccountingSettingsDTO addEditSettings)
+        public async Task<AddEntityDTO<int>> AddEditCustomerSettings(CustomerAccountingSettingsDTO requestData)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCUSTOMERSETTINGS, new
             {
-                addEditSettings.CustomerAccountingSettingId,
-                addEditSettings.CustomerId,
-                addEditSettings.PaymentTermId,
-                addEditSettings.PaymentMethodId,
-                addEditSettings.CreditLimit,
-                addEditSettings.BillingCurrency,
-                addEditSettings.InvoiceSubmissionInstruction,
-                addEditSettings.CreatedBy,
-                addEditSettings.ExemptSalesTax,
-                addEditSettings.SalesTax,
-                addEditSettings.CardProcessingCharges,
-                addEditSettings.BankWireFee
+                requestData.CustomerAccountingSettingId,
+                requestData.CustomerId,
+                requestData.PaymentTermId,
+                requestData.PaymentMethodId,
+                requestData.CreditLimit,
+                requestData.BillingCurrency,
+                requestData.InvoiceSubmissionInstruction,
+                requestData.CreatedBy,
+                requestData.ExemptSalesTax,
+                requestData.SalesTax,
+                requestData.CardProcessingCharges,
+                requestData.BankWireFee
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDTO addShppingMethods)
+        public async Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDTO requestData)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERSHPPINGDELIVERYCARRIERSANDDELIVERYMETHODS, new
             {
-                addShppingMethods.DeliveryAccountId,
-                addShppingMethods.CustomerId,
-                addShppingMethods.IsByDefault,
-                addShppingMethods.CreatedBy,
+                requestData.DeliveryAccountId,
+                requestData.CustomerId,
+                requestData.IsByDefault,
+                requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDTO updateCarriers)
+        public async Task<AddEntityDTO<int>> UpdateShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDTO requestData)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATESHPPINGDELIVERYCARRIERS, new
             {
-                updateCarriers.CustomerId,
-                updateCarriers.CustomerDeliveryCarrierId,
-                updateCarriers.CarrierId,
-                updateCarriers.AccountNumber,
-                updateCarriers.IsPrimary,
-                updateCarriers.UpdatedBy,
-                updateCarriers.HandlingFee
+                requestData.CustomerId,
+                requestData.CustomerDeliveryCarrierId,
+                requestData.CarrierId,
+                requestData.AccountNumber,
+                requestData.IsPrimary,
+                requestData.UpdatedBy,
+                requestData.HandlingFee
             }, CommandType.StoredProcedure);
         }
 
@@ -110,16 +110,16 @@ namespace OMS.Domain.Repository.Implementation
             return getDeliveryMethodsList;
         }
 
-        public async Task<AddEntityDTO<int>> UpdateDeliveryMethods(CustomerDeliveryMethodsDTO updateDeliveryMethods)
+        public async Task<AddEntityDTO<int>> UpdateDeliveryMethods(CustomerDeliveryMethodsDTO requestData)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEDELIVERYMETHODS, new
             {
-                updateDeliveryMethods.CustomerId,
-                updateDeliveryMethods.CustomerDeliveryMethodId,
-                updateDeliveryMethods.DeliveryMethodId,
-                updateDeliveryMethods.Charge,
-                updateDeliveryMethods.IsPrimary,
-                updateDeliveryMethods.UpdatedBy
+                requestData.CustomerId,
+                requestData.CustomerDeliveryMethodId,
+                requestData.DeliveryMethodId,
+                requestData.Charge,
+                requestData.IsPrimary,
+                requestData.UpdatedBy
             }, CommandType.StoredProcedure);
         }
 
@@ -141,27 +141,27 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> AddShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDTO carriers)
+        public async Task<AddEntityDTO<int>> AddShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDTO requestData)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDSHPPINGDELIVERYCARRIERS, new
             {
-                carriers.CustomerId,
-                carriers.CarrierId,
-                carriers.AccountNumber,
-                carriers.IsPrimary,
-                carriers.CreatedBy,
-                carriers.HandlingFee
+                requestData.CustomerId,
+                requestData.CarrierId,
+                requestData.AccountNumber,
+                requestData.IsPrimary,
+                requestData.CreatedBy,
+                requestData.HandlingFee
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> AddDeliveryMethods(CustomerDeliveryMethodsDTO deliveryMethods)
+        public async Task<AddEntityDTO<int>> AddDeliveryMethods(CustomerDeliveryMethodsDTO requestData)
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDDELIVERYMETHODS, new
             {
-                deliveryMethods.CustomerId,
-                deliveryMethods.DeliveryMethodId,
-                deliveryMethods.Charge,
-                deliveryMethods.IsPrimary,
-                deliveryMethods.CreatedBy,
+                requestData.CustomerId,
+                requestData.DeliveryMethodId,
+                requestData.Charge,
+                requestData.IsPrimary,
+                requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
         public async Task<GetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse> GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(int customerDeliveryCarrierId)

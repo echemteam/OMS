@@ -15,6 +15,7 @@ using OMS.Application.Services.Roles;
 using OMS.Application.Services.RolesMapping;
 using OMS.Application.Services.Security;
 using OMS.Application.Services.Supplier;
+using OMS.Application.Services.SupplierAccoutingSetting;
 using OMS.Application.Services.SupplierDocuements;
 using OMS.Application.Services.SupplierNotes;
 using OMS.Application.Services.Test;
@@ -46,5 +47,6 @@ namespace OMS.Application.Services
         IApprovalConfigurationServices approvalConfigurationServices { get; }
         IApiConfigurationService apiConfigurationService { get; }
         IOrganizationService organizationService { get; }
+        ISupplierFinancialSettingsService supplierFinancialSettingsService { get; }
     }
 }

@@ -8,7 +8,7 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IRolesMappingRepository
     {
-        Task<AddEntityDTO<int>> AddRoleMapping(RoleMappingDTO addUser);
+        Task<AddEntityDTO<int>> AddRoleMapping(RoleMappingDTO roleMapping);
         Task<EntityList<GetRolesMappingByRoleIdResponse>> GetRolesMappingByRoleId(GetRolesMappingByRoleIdRequest requestData);
         Task<AddEntityDTO<int>> DeleteRolesMapping(int userRoleId, int deletedBy);
     }
