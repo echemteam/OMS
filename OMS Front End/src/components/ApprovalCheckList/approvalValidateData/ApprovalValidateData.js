@@ -10,6 +10,7 @@ import DataLoader from "../../ui/dataLoader/DataLoader";
 import CenterModel from "../../ui/centerModel/CenterModel";
 import { encryptUrlData } from "../../../services/CryptoService";
 import ToastService from "../../../services/toastService/ToastService";
+import PropTypes from 'prop-types';
 
 const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckList, handleDone, showModal, handleShowValidateModal, handleValidateModalClose,
   isGetCheckListLoading, mainId, isDetailPage, isSupplierApproval }) => {
@@ -19,7 +20,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   const [visibleItems, setVisibleItems] = useState([]);
   const [showDoneButton, setShowDoneButton] = useState(false);
   const [showViewButton, setShowViewButton] = useState(false);
-
+  
   useEffect(() => {
     if (validateCheckList) {
       if (currentIndex < validateCheckList.length) {
@@ -142,4 +143,25 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   );
 };
 
+ApprovalValidateData.propTypes = {
+  parentRef: PropTypes.shape({
+    current: PropTypes.shape({
+      validateApprovalCheckList: PropTypes.func
+    })
+  }).isRequired,
+  handleValidateSuccess: PropTypes.func.isRequired,
+  validateCheckList: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    isValid: PropTypes.bool,
+    messages: PropTypes.string
+  })).isRequired,
+  handleDone: PropTypes.func.isRequired,
+  showModal: PropTypes.bool.isRequired,
+  handleShowValidateModal: PropTypes.func.isRequired,
+  handleValidateModalClose: PropTypes.func.isRequired,
+  isGetCheckListLoading: PropTypes.bool.isRequired,
+  mainId: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]).isRequired,
+  isDetailPage: PropTypes.bool,
+  isSupplierApproval: PropTypes.bool.isRequired
+};
 export default ApprovalValidateData;

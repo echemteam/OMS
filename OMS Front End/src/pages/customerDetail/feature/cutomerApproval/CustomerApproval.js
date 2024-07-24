@@ -3,9 +3,11 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } f
 import { ApprovalEnum } from "../../../../utils/Enums/commonEnums";
 //** Service's */
 import { useGetValidateCheckListMutation } from "../../../../app/services/ApprovalAPI";
+import PropTypes from 'prop-types';
 //** Component's */
 const ApprovalCheckList = React.lazy(() => import("../../../../components/ApprovalCheckList/ApprovalCheckList"));
 const ApprovalValidateData = React.lazy(() => import("../../../../components/ApprovalCheckList/approvalValidateData/ApprovalValidateData"));
+
 
 const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval, isDetailPage }) => {
 
@@ -89,5 +91,14 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
         </React.Fragment>
     )
 });
+
+CustomerApproval.propTypes = {
+    childRef: PropTypes.shape({
+        callChildFunction: PropTypes.func
+    }),
+    getListApi: PropTypes.func,
+    updateCustomerApproval: PropTypes.func.isRequired,
+    isDetailPage: PropTypes.bool
+};
 
 export default CustomerApproval;

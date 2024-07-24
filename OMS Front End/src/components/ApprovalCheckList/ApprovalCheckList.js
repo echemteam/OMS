@@ -10,6 +10,8 @@ import { transformData } from "./Config/ApprovalTransformData";
 //** Service's */
 import ToastService from "../../services/toastService/ToastService";
 import { useAddUserChecklistResponseMutation, useLazyGetUserCheckListQuery } from "../../app/services/ApprovalAPI";
+import PropTypes from 'prop-types';
+
 
 const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSuccessApprovalClose }) => {
 
@@ -121,4 +123,14 @@ const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSucces
     );
 };
 
+
+ApprovalCheckList.propTypes = {
+    ApprovalData: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.number,  
+    ]).isRequired,
+    isModelOpen: PropTypes.bool.isRequired,
+    onSidebarClose: PropTypes.func.isRequired,
+    onSuccessApprovalClose: PropTypes.func.isRequired,
+};
 export default ApprovalCheckList;

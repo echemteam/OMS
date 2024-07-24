@@ -1,6 +1,8 @@
 import React from "react";
 import Label from "../ui/label/Label";
 import "../ui/inputs/checkBox/Checkbox.scss";
+import PropTypes from 'prop-types';
+
 
 const CheckListItem = ({ itemList, handleCheckChange, checkItemListId }) => {
     return (
@@ -22,5 +24,16 @@ const CheckListItem = ({ itemList, handleCheckChange, checkItemListId }) => {
         </React.Fragment>
     );
 }
+
+CheckListItem.propTypes = {
+    itemList: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        isApproved: PropTypes.bool,
+        isMainChecked: PropTypes.bool,
+        isMainCheckBox: PropTypes.bool,
+    }).isRequired,
+    handleCheckChange: PropTypes.func.isRequired,
+    checkItemListId: PropTypes.string,
+};
 
 export default CheckListItem;

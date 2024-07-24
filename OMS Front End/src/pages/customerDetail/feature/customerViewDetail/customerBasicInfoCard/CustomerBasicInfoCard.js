@@ -30,6 +30,8 @@ import { ErrorMessage } from "../../../../../data/appMessages";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
+import PropTypes from 'prop-types';
+
 
 const CustomerBasicInfoCard = ({
   editClick,
@@ -487,6 +489,28 @@ const CustomerBasicInfoCard = ({
   ) : (
     <DataLoader />
   );
+};
+
+
+CustomerBasicInfoCard.propTypes = {
+  editClick: PropTypes.func.isRequired,
+  customerData: PropTypes.shape({
+    name: PropTypes.string,
+    emailAddress: PropTypes.string,
+    website: PropTypes.string,
+    taxId: PropTypes.string,
+    statusId: PropTypes.number,
+    status: PropTypes.string,
+    responsibleUserName: PropTypes.string,
+    countryName: PropTypes.string,
+    territory: PropTypes.string,
+    type: PropTypes.string,
+    isBuyingForThirdParty: PropTypes.bool,
+    isSubCustomer: PropTypes.bool,
+  }),
+  isLoading: PropTypes.bool,
+  customerId: PropTypes.number.isRequired,
+  getCustomerById: PropTypes.func.isRequired,
 };
 
 export default CustomerBasicInfoCard;
