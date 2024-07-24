@@ -40,10 +40,10 @@ const OtherSettings = (props) => {
                 organizationId: props.organizationId,
                 organizationOtherSettingId: props.organizationOtherSettingId
             }
-            if (props.smtpSettingId > 0 && props.organizationId > 0) {
+            if (props.organizationId > 0) {
                 addEditOrganizationOtherSettings(request)
             } else {
-                ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "SMTP Settings Data"))
+                ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "Organization Profile Management Data"))
             }
         }
     }
@@ -71,11 +71,11 @@ const OtherSettings = (props) => {
     }
 
     useEffect(() => {
-        // if (props.organizationOtherSettingId > 0) {
+        if (props.organizationId > 0) {
             getOrganizationOtherSettings()
-        // } else if (props.smtpSettingId === 0 && props.activeTabId === 2) {
-        //     ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "SMTP Settings Data"))
-        // }
+        } else if (props.organizationId === 0 && props.activeTabId === 2) {
+            ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "Organization Profile Management Data"))
+        }
     }, [props.activeTabId])
 
     useEffect(() => {
