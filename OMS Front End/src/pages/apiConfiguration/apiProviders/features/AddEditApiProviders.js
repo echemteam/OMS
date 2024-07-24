@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRef } from "react";
+import PropTypes from "prop-types";
 import { addEditApiProviderFormData } from "../config/ApiProviders.data";
 import Buttons from "../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../components/Forms/FormCreator";
@@ -124,5 +125,15 @@ const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFet
       </div>
     </>
   );
+};
+
+AddEditApiProviders.propTypes = {
+  initData: PropTypes.shape({
+    providerId: PropTypes.number,
+  }),
+  getCustomerById: PropTypes.func,
+  onSuccess: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
+  isEdit: PropTypes.bool.isRequired,
 };
 export default AddEditApiProviders;

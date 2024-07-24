@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useRef } from "react";
+import { useState,useRef } from "react";
+import PropTypes from "prop-types";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import ApiAuthenticationList from "./features/ApiAuthenticationList";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
@@ -80,5 +80,8 @@ const ApiAuthentication = ({ providerId, providerObject }) => {
     </div>
   );
 };
-
+ApiAuthentication.propTypes = {
+  providerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  providerObject: PropTypes.object.isRequired,
+};
 export default ApiAuthentication;

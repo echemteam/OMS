@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState } from "react";
-import { useRef } from "react";
+import { useState ,useRef,useEffect} from "react";
+import PropTypes from "prop-types";
 import { addEditApiAuthenticationFormData } from "../config/ApiAuthentication.data";
-import { useEffect } from "react";
 import { removeFormFields } from "../../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import { setFieldSetting } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
@@ -158,4 +157,20 @@ const handlePageLoad=() => {
   );
 };
 
+AddEditApiAuthentication.propTypes = {
+  authId: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  isEdit: PropTypes.bool.isRequired,
+  isModelOpen: PropTypes.bool.isRequired,
+  providerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  providerData: PropTypes.shape({
+    authenticationType: PropTypes.string.isRequired,
+  }).isRequired,
+  onSuccess: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  childRef: PropTypes.shape({
+    current: PropTypes.shape({
+      callChildFunction: PropTypes.func.isRequired,
+    }),
+  }).isRequired,
+};
 export default AddEditApiAuthentication;

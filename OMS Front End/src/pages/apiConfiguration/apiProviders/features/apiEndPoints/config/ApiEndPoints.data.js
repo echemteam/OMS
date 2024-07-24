@@ -116,7 +116,7 @@ export const ApiEndPointGridConfig = {
         },
         customAction: [
             {
-                name: "Add Parameter",
+                name: "ADDPARAMETERS",
                 iconName: AppIcons.PlusIcon,
             },
         ],

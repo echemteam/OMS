@@ -1,5 +1,5 @@
 import { useState ,useRef} from "react";
-
+import PropTypes from "prop-types";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import AddEditApiEndPoints from "./features/AddEditApiEndPoints";
@@ -66,4 +66,9 @@ return(<>
         </SidebarModel>
     </div></>)
 }
+
+ApiEndPoints.propTypes = {
+  providerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+};
 export default ApiEndPoints

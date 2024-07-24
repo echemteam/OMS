@@ -1,6 +1,6 @@
 import Image from "../../../../../../components/image/Image";
 import { AppIcons } from "../../../../../../data/appIcons";
-
+import PropTypes from "prop-types";
  const ApiProviderBasicInfoCard = ({providerFormData,editClick}) => {
   return (    <>
        <div className="basic-customer-detail">
@@ -45,4 +45,12 @@ import { AppIcons } from "../../../../../../data/appIcons";
     )
 }
 
+ApiProviderBasicInfoCard.propTypes = {
+  providerFormData: PropTypes.shape({
+    name: PropTypes.string,
+    baseURL: PropTypes.string,
+    authenticationType: PropTypes.string,
+  }),
+  editClick: PropTypes.func.isRequired,
+};
 export default ApiProviderBasicInfoCard;

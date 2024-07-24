@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useState ,useRef ,useEffect} from "react";
+import PropTypes from "prop-types";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 import MolGrid from "../../../../../../components/Grid/MolGrid";
 import SidebarModel from "../../../../../../components/ui/sidebarModel/SidebarModel";
@@ -106,7 +107,7 @@ const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
 };
 
    const actionHandler = {
-  "Add Parameter":handleParameterAddClick,
+      ADDPARAMETERS:handleParameterAddClick,
         EDIT: handleEditClick,
        DELETE: handleDeleteClick,    
       };
@@ -147,4 +148,12 @@ const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
         </SidebarModel>
  </>)
 }
+
+ApiEndPointsList.propTypes = {
+  handleEditClick: PropTypes.func.isRequired,
+  providerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  initData: PropTypes.shape({
+      endpointId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }).isRequired,
+};
 export default ApiEndPointsList;
