@@ -31,6 +31,8 @@ import FormCreator from "../../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../../components/ui/button/Buttons";
 import CustomerApproval from "../../../../feature/cutomerApproval/CustomerApproval";
 import { reasonData } from "../../../../../../common/features/component/CustomerSupplierReason/Reason.data";
+import PropTypes from 'prop-types';
+
   
   export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
   
@@ -428,5 +430,41 @@ import { reasonData } from "../../../../../../common/features/component/Customer
         <CustomerApproval childRef={childRef} getListApi={getListApi} updateCustomerApproval={updateCustomerApproval} />
       </div>
     );
+  };
+
+  CustomersList.propTypes = {
+    statusId: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.string
+    ]).isRequired,
+    configFile: PropTypes.shape({
+      columns: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        defaultAction: PropTypes.shape({
+          allowActiveCustomer: PropTypes.bool,
+          allowBlocked: PropTypes.bool,
+          allowEdit: PropTypes.bool,
+          allowFreeze: PropTypes.bool,
+          allowDisable: PropTypes.bool,
+          allowUnblocked: PropTypes.bool,
+          allowUnfreeze: PropTypes.bool
+        })
+      })).isRequired
+    }).isRequired,
+    handleChange: PropTypes.func.isRequired,
+    search: PropTypes.string.isRequired,
+    handleChangeDropdown: PropTypes.func.isRequired,
+    statusOptions: PropTypes.arrayOf(PropTypes.shape({
+      value: PropTypes.number.isRequired,
+      label: PropTypes.string.isRequired
+    })).isRequired,
+    selectedDrpvalues: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.number),
+      PropTypes.string
+    ]).isRequired,
+    searchStatusFilter: PropTypes.bool.isRequired,
+    handleSearch: PropTypes.func.isRequired,
+    handleClear: PropTypes.func.isRequired,
+    shouldRerenderFormCreator: PropTypes.any,
   };
   

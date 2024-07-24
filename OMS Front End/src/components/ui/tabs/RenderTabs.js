@@ -71,11 +71,11 @@ const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization }) => {
 RenderTabs.propTypes = {
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
-      sMenuItemCaption: PropTypes.string.isRequired,
-      sPage: PropTypes.string.isRequired,
+      sMenuItemCaption: PropTypes.string,
+      sPage: PropTypes.string,
       component: PropTypes.node
     })
-  ).isRequired,
+  ),
   isCollapse: PropTypes.bool,
   onActiveTab: PropTypes.func,
   isOrganization: PropTypes.bool

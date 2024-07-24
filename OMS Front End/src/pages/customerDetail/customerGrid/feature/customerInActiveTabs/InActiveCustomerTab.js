@@ -8,6 +8,7 @@ import InActiveCustomersList  from "../customerInActiveTabs/feature/InActiveCust
 import CardSection from "../../../../../components/ui/card/CardSection";
 import CustomerListContext from "../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { AllInActiveCustomerGridConfig, BlockedInActiveCustomerGridConfig, DisabledInActiveCustomerGridConfig, FreezedInActiveCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
+import PropTypes from 'prop-types';
 
 
 const InActiveCustomerTab = ({ statusId }) => {
@@ -255,6 +256,10 @@ const InActiveCustomerTab = ({ statusId }) => {
       </CustomerListContext.Provider>
     </>
   );
+};
+
+InActiveCustomerTab.propTypes = {
+  statusId: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default InActiveCustomerTab;

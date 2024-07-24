@@ -15,7 +15,7 @@ import MolGrid from '../../../../../../components/Grid/MolGrid';
 import CardSection from '../../../../../../components/ui/card/CardSection';
 import CustomerListContext from '../../../../../../utils/ContextAPIs/Customer/CustomerListContext';
 import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../../../app/services/basicdetailAPI';
-
+import PropTypes from 'prop-types';
 
 const InActiveCustomersList = ({ statusId, configFile, handleChange, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
 
@@ -246,5 +246,29 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
     </div>
   )
 }
+
+InActiveCustomersList.propTypes = {
+  statusId: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string
+  ]).isRequired,
+  configFile: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  search: PropTypes.string.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  handleClear: PropTypes.func.isRequired,
+  shouldRerenderFormCreator: PropTypes.bool.isRequired,
+  handleChangeDropdown: PropTypes.func.isRequired,
+  statusOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedDrpvalues: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.number),
+    PropTypes.string
+  ]).isRequired,
+  selectedStatusOptions: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.string
+  ]).isRequired,
+  searchStatusFilter: PropTypes.bool.isRequired,
+};
 
 export default InActiveCustomersList

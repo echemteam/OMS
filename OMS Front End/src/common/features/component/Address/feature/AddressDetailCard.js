@@ -11,6 +11,7 @@ import Image from "../../../../../components/image/Image";
 //** Component's */
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
+import PropTypes from 'prop-types';
 
 const AddressDetailCard = forwardRef(
   ({
@@ -192,5 +193,14 @@ const AddressDetailCard = forwardRef(
     );
   }
 );
+
+AddressDetailCard.propTypes = {
+  keyId: PropTypes.number.isRequired,
+  onHandleEditAddress: PropTypes.func.isRequired,
+  showEditIcon: PropTypes.bool,
+  getAddresssByCustomerId: PropTypes.func.isRequired,
+  getByIdRef: PropTypes.object.isRequired,
+  selectedAddressTypeId: PropTypes.string.isRequired,
+};
 
 export default AddressDetailCard;

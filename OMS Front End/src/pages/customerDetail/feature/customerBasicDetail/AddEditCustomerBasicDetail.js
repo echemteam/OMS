@@ -322,6 +322,6 @@ AddEditCustomerBasicDetail.propTypes = {
     getCustomerById: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
     onSidebarClose: PropTypes.func.isRequired,
-    isEditablePage: PropTypes.bool.isRequired,
+    isEditablePage: PropTypes.bool,
   };
 export default AddEditCustomerBasicDetail;

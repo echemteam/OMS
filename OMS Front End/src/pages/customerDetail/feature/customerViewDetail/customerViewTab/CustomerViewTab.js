@@ -5,6 +5,7 @@ import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
 import { CustomerHistory } from "../../customerHistoryDetail/CustomerHistoryDetail";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import PropTypes from 'prop-types';
 //** Component's */
 const CustomerContactDetail = React.lazy(() => import("../../customerContactDetail/CustomerContactDetail"));
 const CustomerDocumentDetail = React.lazy(() => import("../../customerDocumentDetail/CustomerDocumentDetail"));
@@ -109,4 +110,10 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty }) => {
     <RenderTabs tabs={customerId ? visibleTabs : null} />
   )
 }
+
+CustomerViewTab.propTypes = {
+  customerId: PropTypes.number.isRequired,
+  isBuyingForThirdParty: PropTypes.bool.isRequired
+};
+
 export default CustomerViewTab;
