@@ -18,7 +18,7 @@ const mainTabs = [
   },
 ];
 
-const customerTabs = [
+const customerTabs = [ 
   {
     label: "Praful Desai",
     subtitle: "Customer Information Update",

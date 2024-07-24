@@ -17,18 +17,8 @@ const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange
 
   const { confirm } = SwalAlert();
 
-  const [
-    getApiProviders,
-    {
-      isLoading: isApiProvidersLoading,
-      isSuccess: isApiProvidersSuccess,
-      data: isApiProvidersData,
-    },
-  ] = useGetApiProvidersMutation();
-  const [
-    deleteApiProvider,
-    { isSuccess: isDeleteProviderSuccess, data: isDeleteProviderData },
-  ] = useDeleteApiProviderMutation();
+  const [getApiProviders,{isLoading: isApiProvidersLoading,isSuccess: isApiProvidersSuccess,data: isApiProvidersData, },] = useGetApiProvidersMutation();
+  const [deleteApiProvider,{ isSuccess: isDeleteProviderSuccess, data: isDeleteProviderData },] = useDeleteApiProviderMutation();
 
   useEffect(() => {
     if (isDeleteProviderSuccess && isDeleteProviderData) {
@@ -82,11 +72,7 @@ const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange
   }, [shouldRerenderFormCreator]);
 
   const handleDeleteClick = (data) => {
-    confirm(
-      "Delete?",
-      "Are you sure you want to Delete?",
-      "Delete",
-      "Cancel"
+    confirm( "Delete?", "Are you sure you want to Delete?", "Delete", "Cancel"
     ).then((confirmed) => {
       if (confirmed) {
         deleteApiProvider(data.providerId);

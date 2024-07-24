@@ -30,7 +30,7 @@ const Sidebar = (props) => {
           </Link>
           <div className="sidebar-menu">
             <ul className="sidebar-menu-list">
-              {Menu.map((group, groupIndex) => (
+              {Menu?.map((group, groupIndex) => (
                 <div key={groupIndex} className="menu-group">
                   <div className="group-label">{group.groupLabel}</div>
                   {group.items.map((menuItem, index) => (
@@ -53,6 +53,7 @@ const Sidebar = (props) => {
                           </Link>
                           {menuItem.subMenu && (
                             <ul className="sidebar-dropdown">
+                              <div className="collapse-dropdown">
                               {menuItem.children.map((subMenu, subIndex) => (
                                 <React.Fragment key={subIndex}>
                                   {hasPermission(subMenu.securityKey) && (
@@ -74,6 +75,7 @@ const Sidebar = (props) => {
                                   )}
                                 </React.Fragment>
                               ))}
+                              </div>
                             </ul>
                           )}
                         </li>

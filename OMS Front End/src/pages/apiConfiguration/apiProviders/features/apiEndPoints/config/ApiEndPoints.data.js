@@ -1,32 +1,16 @@
-import { FormFieldTypes } from "../../../../data/formFieldType";
-import { GridColumnType } from "../../../../data/gridColumnType";
+import { AppIcons } from "../../../../../../data/appIcons";
+import { FormFieldTypes } from "../../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../../data/gridColumnType";
 
 export const addEditApiEndPointsFormData ={
     initialState:{
-        providerId:"",
         name: "",
         path:"",
         method:"",
         description:"",
     },
     formFields: [
-        {
-            id: "providerId",
-            lable: "Provider Id ",
-            Field_Name: "Provider Id",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "providerId",
-            fieldSetting: {
-                placeholder: "Select Provider ",
-                isEnableOnChange: true
-            },
-            
-         validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 mt-2",
-            },
-        },
-      
+   
         {
             id: "name",
             lable: "Name ",
@@ -97,28 +81,23 @@ export const addEditApiEndPointsFormData ={
 }
 export const ApiEndPointGridConfig = {
     columns: [
-        {
-            name: "Provider Name",
-            fieldName: "name",
-            width: "15%",
-            allowShort: true,
-          },
+      
       {
-        name: "EndPoint Name",
+        name: "End Point Name",
         fieldName: "endpointName",
-        width: "15%",
+        width: "20%",
         allowShort: true,
       },
       {
-        name: "EndPoint Path",
+        name: "End Point Path",
         fieldName: "path",
         width: "25%",
         allowShort: true,
       },
       {
-        name: "EndPoint Method",
+        name: "End Point Method",
         fieldName: "method",
-        width: "15%",
+        width: "20%",
         allowShort: true,
       },
       {
@@ -129,12 +108,18 @@ export const ApiEndPointGridConfig = {
       },
       {
         name: "Action",
-        width: "10%",
+        width: "15%",
         colType: GridColumnType.ACTION,
         defaultAction: {
           allowEdit: true,
           allowDelete: true,
         },
+        customAction: [
+            {
+                name: "Add Parameter",
+                iconName: AppIcons.PlusIcon,
+            },
+        ],
       },
     ],
   

@@ -1,26 +1,35 @@
-import {  useState } from "react";
-import CardSection from "../../../components/ui/card/CardSection";
-import SidebarModel from "../../../components/ui/sidebarModel/SidebarModel";
-import { AppIcons } from "../../../data/appIcons";
-import { onResetForm } from "../../../utils/FormFields/ResetForm/handleResetForm";
-import {  addEditApiParameterFormData } from "./config/ApiParameter.data";
+import { useRef,useState ,useEffect } from "react";
+import { useParams } from "react-router";
+import { decryptUrlData } from "../../../../../services/CryptoService";
+import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import AddEditApiParameters from "./features/AddEditApiParameters";
 import ApiParametersList from "./features/ApiParametersList";
-import { useRef } from "react";
+import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
+
+
 
 const ApiParameters=()=>{
   const childRef = useRef();
+
+  const { id } = useParams();
+  const  endpointId= id ? decryptUrlData(id) : 0;
+
     const [isModelOpen, setIsModelOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [formData, setFormData] = useState(addEditApiParameterFormData);
-    const handleToggleModal = () => {
-      setIsModelOpen(true);
-    };
+
     const onSidebarClose = () => {
        setIsModelOpen(false);
        setIsEdit(false)   
     };
-  
+    const handleToggleModal = () => {   
+      setIsModelOpen(true);
+    };
+
+    useEffect(()=>{
+      handleToggleModal()
+    },[endpointId])
+
     const handleEditClick = (data) => {
       onResetForm(addEditApiParameterFormData,setFormData, null);
         setIsModelOpen(true);
@@ -36,35 +45,27 @@ const ApiParameters=()=>{
   };
     return(<>
     
-    <div>
-      <CardSection
-        cardTitle= "Add Api Parameter"
-        buttonClassName="btn theme-button"
-       // rightButton={buttonVisible ? true : false}
-        rightButton={ true }
-        buttonText="Add"
-       textWithIcon={true}
-       iconImg={AppIcons.PlusIcon}
-       titleButtonClick={handleToggleModal}
-      >
-      <ApiParametersList handleEditClick={handleEditClick} childRef={childRef}/>
-      </CardSection>
+
       
         <SidebarModel
-         modalTitle= {isEdit ? "Update Api Parameter" : "Add Api Parameter"}
-         contentClass="content-35"
+         modalTitle= "Api Parameter"
+         contentClass="content-60"
          onClose={onSidebarClose}
          modalTitleIcon={AppIcons.AddIcon}
          isOpen={isModelOpen}
+        
         >
           <AddEditApiParameters
           isEdit={isEdit}
           initData={formData}
           onClose={onSidebarClose}
           onSuccess={onSuccess}
+          endpointId={endpointId}
           />
+
+  <ApiParametersList handleEditClick={handleEditClick} endpointId={endpointId} childRef={childRef}/>
         </SidebarModel>
-    </div>
+   
     </>)
 
 }

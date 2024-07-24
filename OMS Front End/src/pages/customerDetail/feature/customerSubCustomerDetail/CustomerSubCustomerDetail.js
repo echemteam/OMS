@@ -3,11 +3,12 @@ import SubCustomerGrid from "../../../../common/features/component/SubCustomer/S
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 
-const CustomerSubCustomerDetail=()=>{
+const CustomerSubCustomerDetail = () => {
 
-    const { customerId, isSubCustomer } = useContext(BasicDetailContext);
- return(<>
-     <SubCustomerGrid  customerId={customerId} isSubCustomer={isSubCustomer}/>
- </>)
+    const { customerId } = useContext(BasicDetailContext);
+
+    return (<>
+        <SubCustomerGrid customerId={customerId} />
+    </>)
 }
 export default CustomerSubCustomerDetail;

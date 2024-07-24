@@ -6,6 +6,7 @@ import { AppIcons } from "../../../../../data/appIcons";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { getRandomColor } from "../../../../../utils/RandomColors/RandomColors";
+import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 
 const NoteList = forwardRef(({ keyId, handleEditClick, onGetByIdNotes, showEditIcon, listRef }) => {
 
@@ -75,7 +76,7 @@ const NoteList = forwardRef(({ keyId, handleEditClick, onGetByIdNotes, showEditI
                         </div>
                     ))
                 ) : (
-                    <div>No notes available</div>
+                    <NoRecordFound />
                 )
                 }</>
                 : <DataLoader />

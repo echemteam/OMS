@@ -1,9 +1,10 @@
-import { FormFieldTypes } from "../../../../data/formFieldType";
-import { GridColumnType } from "../../../../data/gridColumnType";
+import { FormFieldTypes } from "../../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../../data/gridColumnType";
+
 
 export const addEditApiAuthenticationFormData ={
     initialState:{
-        providerId:"",
+     
        authKey: "",
         clientId:"",
         clientSecret:"",
@@ -11,22 +12,7 @@ export const addEditApiAuthenticationFormData ={
         tokenExpires:"",
     },
     formFields: [
-        {
-            id: "providerId",
-            lable: "Provider Id ",
-            Field_Name: "Provider Id",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "providerId",
-            fieldSetting: {
-                placeholder: "Select Provider ",
-                isEnableOnChange: true
-            },
-            
-         validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 mt-2",
-            },
-        },
+       
       
         {
             id: "authKey",
@@ -98,7 +84,7 @@ export const addEditApiAuthenticationFormData ={
               placeholder: "Select Expire Date",
               allowSpace: true,
             },
-            // validation: [{ type: "require" }],
+             validation: [{ type: "require" }],
             style: {
               containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
             },
@@ -111,12 +97,6 @@ export const addEditApiAuthenticationFormData ={
 }
 export const ApiAuthenticationtGridConfig = {
     columns: [
-        {
-            name: "Provider Name",
-            fieldName: "providerName",
-            width: "15%",
-            allowShort: true,
-          },
       {
         name: "AuthKey",
         fieldName: "authKey",
