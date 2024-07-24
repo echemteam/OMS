@@ -5,9 +5,8 @@ import { AppIcons } from "../../../data/appIcons";
 import SearchBar from "../../../common/features/component/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../app/slice/authSlice";
-// import { a } from "react-router-dom";
 
-function Header({ handleChange }) {
+function Header() {
   const dispatch = useDispatch();
   const [isActive, setIsActive] = useState(false);
   const shortcutSecRef = useRef(null);
@@ -53,17 +52,17 @@ function Header({ handleChange }) {
       ],
     },
     {
-      rowId: 2,
+      rowId: 3,
       items: [
         {
-          id: 3,
+          id: 5,
           iconPath: AppIcons.userIcon,
           title: "User Account",
           description: "Edit Profile",
           navigationLink: "#",
         },
         {
-          id: 4,
+          id: 6,
           iconPath: AppIcons.ShortcutIcon,
           title: "Customers",
           description: "View Customers",
@@ -87,6 +86,10 @@ function Header({ handleChange }) {
       document.removeEventListener('click', handleClickOutside, true);
     };
   }, []);
+
+  const handleChange = () => {
+
+  }
 
   return (
     <div className="header-section">
@@ -117,19 +120,19 @@ function Header({ handleChange }) {
                 </span>
               </div>
               <div className="short-cuts-list">
-                {data.map((row) => (
-                  <div key={row.rowId} className="row m-0 manus-items">
-                    {row.items.map((item) => (
-                      <div key={item.id} className="col-6 p-0 shortcut-menus">
-                          <div className="shortcuts" onClick={item.navigationLink}>
-                            <div className="shortcut-icon">
-                              <Image imagePath={item.iconPath} altText="Icon" />
-                            </div>
-                            <div className="shortcut-desc">
-                              <h6>{item.title}</h6>
-                              <p>{item.description}</p>
-                            </div>
+                {data.map((row, index) => (
+                  <div key={index} className="row m-0 manus-items">
+                    {row.items.map((item, rowIndex) => (
+                      <div key={rowIndex} className="col-6 p-0 shortcut-menus">
+                        <div className="shortcuts">
+                          <div className="shortcut-icon">
+                            <Image imagePath={item.iconPath} altText="Icon" />
                           </div>
+                          <div className="shortcut-desc">
+                            <h6>{item.title}</h6>
+                            <p>{item.description}</p>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>

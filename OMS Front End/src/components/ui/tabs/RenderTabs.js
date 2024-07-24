@@ -5,7 +5,7 @@ import Image from "../../image/Image";
 import { AppIcons } from "../../../data/appIcons";
 import PropTypes from "prop-types";
 
-const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization }) => {
+const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization, onTabClick }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [isCollapsediv, setIsCollapsediv] = useState(false);
@@ -13,6 +13,9 @@ const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization }) => {
   const handleTabClick = (tabIndex, navigationPath) => {
     setActiveTab(tabIndex);
     navigate(navigationPath);
+    if (onTabClick) {
+      onTabClick(tabIndex);
+    }
   };
 
   const handleCollapseClick = () => {
