@@ -15,6 +15,8 @@ import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNaviga
 import { OurAccountGridConfig } from "../DeliveryMethod/config/DevliveryConfig";
 import { AccountGridConfig } from "../Carrier/config/CarrierConfig";
 import { setDropDownOptionField } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import PropTypes from "prop-types";
+
 //** Component's */
 const ManageCarrier = React.lazy(() => import("../Carrier/ManageCarrier"));
 const ManageDevliveryMethod = React.lazy(() => import("../DeliveryMethod/ManageDevliveryMethod"));
@@ -160,6 +162,10 @@ const ShippingSettings = ({ isEditablePage }) => {
         : <DataLoader />}
     </div>
   );
+};
+
+ShippingSettings.propTypes = {
+  isEditablePage: PropTypes.bool.isRequired,
 };
 
 export default ShippingSettings;

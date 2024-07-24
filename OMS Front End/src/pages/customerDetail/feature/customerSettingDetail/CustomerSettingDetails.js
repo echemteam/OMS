@@ -10,6 +10,7 @@ import CardSection from "../../../../components/ui/card/CardSection";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import ShippingSettings from "./features/ShippingSetting/ShippingSettings";
+import PropTypes from "prop-types";
 
 const CustomerSettingDetails = ({ isEditablePage }) => {
 
@@ -108,6 +109,10 @@ const CustomerSettingDetails = ({ isEditablePage }) => {
       </CardSection>
     </div>
   );
+};
+
+CustomerSettingDetails.propTypes = {
+  isEditablePage: PropTypes.bool.isRequired,
 };
 
 export default CustomerSettingDetails;

@@ -8,6 +8,7 @@ import SwalAlert from "../../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useGetAllDeliveryCarriersQuery } from "../../../../../../app/services/commonAPI";
 import { useDeleteCustomerDeliveryCarriersByIdMutation } from "../../../../../../app/services/customerSettingsAPI";
+import PropTypes from 'prop-types';
 
 //** Component's */
 const CarrierList = React.lazy(() => import("./feature/CarrierList"));
@@ -93,4 +94,9 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton })
     )
 }
 
+ManageCarrier.propTypes = {
+    handleGetDefaultList: PropTypes.func.isRequired,
+    isGetDataLoading: PropTypes.bool.isRequired,
+    isShowButton: PropTypes.bool.isRequired
+};
 export default ManageCarrier;

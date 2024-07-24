@@ -309,8 +309,16 @@ ContactDetailCard.propTypes = {
     firstName: PropTypes.string,
     lastName: PropTypes.string,
     isPrimary: PropTypes.bool,
-    emailAddressList: PropTypes.arrayOf(PropTypes.string),
-    phoneNumberList: PropTypes.arrayOf(PropTypes.string),
+     emailAddressList: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.string,    
+      })
+    ),
+    phoneNumberList:PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.string,    
+      })
+    ),
     type: PropTypes.string,
     contactId: PropTypes.number
   }).isRequired,
