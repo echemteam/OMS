@@ -37,7 +37,6 @@ const ApiAuthenticationList=({handleEditClick, getDataRef,providerId})=>{
       if (isDeleteApiAuthenticationSuccess && isDeleteApiAuthenticationData) {
         ToastService.success(isDeleteApiAuthenticationData.errorMessage);
          const currentPageObject = molGridRef.current.getCurrentPageObject();
-        // getLists(currentPageObject);
         handlePageChange(currentPageObject)
       }
     }, [isDeleteApiAuthenticationSuccess, isDeleteApiAuthenticationData]);

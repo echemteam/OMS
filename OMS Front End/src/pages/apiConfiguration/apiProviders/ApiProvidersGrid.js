@@ -5,7 +5,6 @@ import AddEditApiProviders from "./features/AddEditApiProviders";
 import { AppIcons } from "../../../data/appIcons";
 import ApiProvidersList from "./features/ApiProvidersList";
 import { addEditApiProviderFormData } from "./config/ApiProviders.data";
-import { onResetForm } from "../../../utils/FormFields/ResetForm/handleResetForm";
 import ToastService from "../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../data/appMessages";
 import { useNavigate } from "react-router-dom";
@@ -97,7 +96,6 @@ const ApiProviders=()=>{
         >
           <AddEditApiProviders 
           isEdit={isEdit}
-           initData={formData}
           onSuccess={onSuccess}
           onClose={onSidebarClose}
           />

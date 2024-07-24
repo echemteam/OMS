@@ -84,7 +84,7 @@ export const addEditApiAuthenticationFormData ={
               placeholder: "Select Expire Date",
               allowSpace: true,
             },
-            // validation: [{ type: "require" }],
+             validation: [{ type: "require" }],
             style: {
               containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-2",
             },
