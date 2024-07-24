@@ -2,8 +2,8 @@ import { useState ,useRef} from "react";
 
 import CardSection from "../../../../../components/ui/card/CardSection";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
-import AddEditApiEndPoints from "../../features/apiEndPoints/features/AddEditApiEndPoints";
-import ApiEndPointsList from "../../features/apiEndPoints/features/AddEndPointsList";
+import AddEditApiEndPoints from "./features/AddEditApiEndPoints";
+import ApiEndPointsList from "./features/AddEndPointsList";
 import { addEditApiEndPointsFormData } from "./config/ApiEndPoints.data";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { AppIcons } from "../../../../../data/appIcons";

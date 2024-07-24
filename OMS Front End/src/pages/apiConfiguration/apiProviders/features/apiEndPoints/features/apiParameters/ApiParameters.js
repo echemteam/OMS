@@ -43,17 +43,13 @@ const ApiParameters=()=>{
           childRef.current.callChildFunction();
       }
   };
-    return(<>
-    
-
-      
+    return(<> 
         <SidebarModel
          modalTitle= "Api Parameter"
          contentClass="content-60"
          onClose={onSidebarClose}
          modalTitleIcon={AppIcons.AddIcon}
-         isOpen={isModelOpen}
-        
+         isOpen={isModelOpen} 
         >
           <AddEditApiParameters
           isEdit={isEdit}
