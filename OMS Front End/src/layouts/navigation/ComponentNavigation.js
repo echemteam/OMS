@@ -5,6 +5,7 @@ import Widgets from "../../pages/widgets/Widgets";
 import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
 import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
+import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/feature/thirdPartyApiConfigurationList/feature/thirdPartyApiConfigurationViewDetails/ThirdPartyApiConfigurationViewDetails";
 
 const ApiParametersGrid = React.lazy(() => import("../../pages/apiConfiguration/apiParameters/ApiParametersGrid"));
 const ApiAuthenticationGrid = React.lazy(() => import("../../pages/apiConfiguration/apiAuthentication/ApiAuthenticationGrid"));
@@ -38,6 +39,8 @@ const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/suppli
 const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/supplierGrid/SupplierViewDetail"));
 
 const Organization = React.lazy(() => import("../../pages/organization/Organization"));
+
+const ThirdPartyApiConfiguration = React.lazy(() => import("../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/ThirdPartyApiConfiguration"));
 
 export const ComponentNavigation = [
   {
@@ -345,6 +348,26 @@ export const ComponentNavigation = [
     component: Organization,
     hasParams: false,
     text: 'Organization',
+    // securityKey: securityKey.MYTASK
+  },
+  {
+    id: 'ThirdPartyApiConfigurationViewDetails',
+    path: '/ThirdPartyApiConfigurationViewDetails',
+    exact: true,
+    title: 'Third Party Api View Details',
+    component: ThirdPartyApiConfigurationViewDetails,
+    hasParams: false,
+    text: 'ThirdPartyApiConfigurationViewDetails',
+    // securityKey: securityKey.MYTASK
+  },
+  {
+    id: 'ThirdPartyApiConfiguration',
+    path: '/ThirdPartyApiConfiguration',
+    exact: true,
+    title: 'Third Party Api Configuration',
+    component: ThirdPartyApiConfiguration,
+    hasParams: false,
+    text: 'ThirdPartyApiConfiguration',
     // securityKey: securityKey.MYTASK
   }
 ];

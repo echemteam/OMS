@@ -105,7 +105,7 @@ export const Menu = [
       {
         id: "configuration",
         name: "Configuration",
-        iconClass: "fa fa-cog fa-spin",
+        iconClass: "fa fa-cog",
         subMenu: true,
         to: "#",
         securityKey: securityKey.CONFIGURATION,
@@ -121,7 +121,7 @@ export const Menu = [
       {
         id: "apiconfiguration",
         name: "API Configuration",
-        iconClass: "fa fa-cog fa-spin",
+        iconClass: "fa fa-cog",
         subMenu: true,
         to: "#",
         securityKey: securityKey.APICONFIGURATION,
@@ -149,6 +149,22 @@ export const Menu = [
             submenuName: "API Authentication",
             to: "/APIAuthentication",
             securityKey: securityKey.APIAUTHENTICATION,
+          },
+        ],
+      },
+      {
+        id: "ThirdPartyAPI",
+        name: "Third party API",
+        iconClass: "fa fa-building-o",
+        subMenu: true,
+        to: "#",
+        securityKey: securityKey.SECURITY,
+        children: [
+          {
+            id: "Api Configuration",
+            submenuName: "Api Configuration",
+            to: "/ThirdPartyApiConfiguration",
+            securityKey: securityKey.USERMANAGEMENT
           },
         ],
       },
