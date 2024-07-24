@@ -26,7 +26,7 @@ export const Menu = [
         name: "Organization",
         id: "Organization",
         to: "/Organization",
-        iconClass: "bi bi-file-earmark-medical",
+        iconClass: "fa fa-building-o",
         subMenu: false,
         securityKey: securityKey.DASHBOARD,
         children: []
