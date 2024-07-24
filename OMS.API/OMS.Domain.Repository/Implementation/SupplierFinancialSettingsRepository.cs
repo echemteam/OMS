@@ -28,7 +28,6 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.InvoiceSubmissionMethod,
                 requestData.PoDeliveryMethodId,
                 requestData.IsActive,
-                requestData.PODeliveryMethodDetail,
                 requestData.CreatedBy
             }, CommandType.StoredProcedure);
         }

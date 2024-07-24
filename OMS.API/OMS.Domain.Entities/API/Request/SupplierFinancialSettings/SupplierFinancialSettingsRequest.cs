@@ -8,6 +8,5 @@
         public byte? InvoiceSubmissionMethod { get; set; }
         public byte? PoDeliveryMethodId { get; set; }
         public bool? IsActive { get; set; }
-        public string? PODeliveryMethodDetail { get; set; }
     }
 }

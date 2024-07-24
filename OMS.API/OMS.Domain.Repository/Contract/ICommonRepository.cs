@@ -34,5 +34,6 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetAllAPIProvidersResponse>> GetAllAPIProviders();
         Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints();
         Task<List<GetAllApproveCustomerForLinkingResponse>> GetAllApproveCustomerForLinking(int customerId);
+        Task<List<GetAllPODeliveryMethodResponse>> GetAllPODeliveryMethod();
     }
 }

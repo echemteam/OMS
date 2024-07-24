@@ -159,5 +159,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllApproveCustomerForLinking(customerId);
         }
+        public Task<List<GetAllPODeliveryMethodResponse>> GetAllPODeliveryMethod()
+        {
+            return repositoryManager.commonRepository.GetAllPODeliveryMethod();
+        }
     }
 }
