@@ -419,13 +419,13 @@ SupplierList.propTypes = {
   handleChange: PropTypes.func.isRequired,
   search: PropTypes.string.isRequired,
   handleChangeDropdown: PropTypes.func.isRequired,
-  selectedStatusOptions: PropTypes.array.isRequired,
+  //selectedStatusOptions: PropTypes.array.isRequired,
   selectedDrpvalues: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.number),
     PropTypes.string
   ]).isRequired,
-  selectedStatusOptions: PropTypes.array.isRequired,
-  searchStatusFilter: PropTypes.array.isRequired,
+  
+  searchStatusFilter: PropTypes.bool,
   handleSearch: PropTypes.func.isRequired,
   handleClear: PropTypes.func.isRequired,
   shouldRerenderFormCreator: PropTypes.bool.isRequired,
