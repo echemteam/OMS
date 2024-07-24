@@ -411,13 +411,19 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
 }
 
 SupplierList.propTypes = {
-  statusId: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
+  statusId: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string
+  ]).isRequired,
   configFile: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   search: PropTypes.string.isRequired,
   handleChangeDropdown: PropTypes.func.isRequired,
-  statusOptions: PropTypes.array.isRequired,
-  selectedDrpvalues: PropTypes.array.isRequired,
+  selectedStatusOptions: PropTypes.array.isRequired,
+  selectedDrpvalues: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.number),
+    PropTypes.string
+  ]).isRequired,
   selectedStatusOptions: PropTypes.array.isRequired,
   searchStatusFilter: PropTypes.array.isRequired,
   handleSearch: PropTypes.func.isRequired,
