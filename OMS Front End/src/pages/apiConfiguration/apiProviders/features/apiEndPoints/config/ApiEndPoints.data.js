@@ -83,19 +83,19 @@ export const ApiEndPointGridConfig = {
     columns: [
       
       {
-        name: "EndPoint Name",
+        name: "End Point Name",
         fieldName: "endpointName",
         width: "20%",
         allowShort: true,
       },
       {
-        name: "EndPoint Path",
+        name: "End Point Path",
         fieldName: "path",
         width: "25%",
         allowShort: true,
       },
       {
-        name: "EndPoint Method",
+        name: "End Point Method",
         fieldName: "method",
         width: "20%",
         allowShort: true,
@@ -116,7 +116,7 @@ export const ApiEndPointGridConfig = {
         },
         customAction: [
             {
-                name: "ADD",
+                name: "Add Parameter",
                 iconName: AppIcons.PlusIcon,
             },
         ],

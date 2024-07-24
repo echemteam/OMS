@@ -1,5 +1,5 @@
-import { FormFieldTypes } from "../../../../../../data/formFieldType";
-import { GridColumnType } from "../../../../../../data/gridColumnType";
+import { FormFieldTypes } from "../../../../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../../../../data/gridColumnType";
 
 
 export const addEditApiParameterFormData ={
@@ -70,6 +70,7 @@ export const addEditApiParameterFormData ={
               placeholder: "",
               allowSpace: true,
             },
+           // validation: [{ type: "require" }],
             style: {
               containerCss:
                 "col-xxl-6 col-xl-6 col-md-6 col-6 col-6 mb-input margin-left0-checkbox mt-2",

@@ -6,10 +6,10 @@ import Stepper from "../../pages/stepper/Stepper";
 import { securityKey } from "../../data/SecurityKey";
 import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
 import ApiProviderViewDetail from "../../pages/apiConfiguration/apiProviders/features/apiProviderViewDetail/ApiProviderViewDetail";
-
+import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/feature/thirdPartyApiConfigurationList/feature/thirdPartyApiConfigurationViewDetails/ThirdPartyApiConfigurationViewDetails";
 
 // const ApiParametersGrid = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/features/apiParameters/ApiParametersGrid"));
-const ApiProvidersGrid = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProvidersGrid"));
+const ApiProviders = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProviders"));
 //** Not Found */
 const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 //** Dashboard */
@@ -38,6 +38,8 @@ const SupplierGrid = React.lazy(() => import('../../pages/supplierDetails/suppli
 const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/supplierGrid/SupplierViewDetail"));
 
 const Organization = React.lazy(() => import("../../pages/organization/Organization"));
+
+const ThirdPartyApiConfiguration = React.lazy(() => import("../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/ThirdPartyApiConfiguration"));
 
 export const ComponentNavigation = [
   {
@@ -292,7 +294,7 @@ export const ComponentNavigation = [
     path: '/APIProviders',
     exact: true,
     title: 'API Providers',
-    component: ApiProvidersGrid,
+    component: ApiProviders,
     hasParams: false,
     text: 'API Providers',
     securityKey: securityKey.APIPROVIDERS
@@ -325,6 +327,26 @@ export const ComponentNavigation = [
     component: Organization,
     hasParams: false,
     text: 'Organization',
+    // securityKey: securityKey.MYTASK
+  },
+  {
+    id: 'ThirdPartyApiConfigurationViewDetails',
+    path: '/ThirdPartyApiConfigurationViewDetails',
+    exact: true,
+    title: 'Third Party Api View Details',
+    component: ThirdPartyApiConfigurationViewDetails,
+    hasParams: false,
+    text: 'ThirdPartyApiConfigurationViewDetails',
+    // securityKey: securityKey.MYTASK
+  },
+  {
+    id: 'ThirdPartyApiConfiguration',
+    path: '/ThirdPartyApiConfiguration',
+    exact: true,
+    title: 'Third Party Api Configuration',
+    component: ThirdPartyApiConfiguration,
+    hasParams: false,
+    text: 'ThirdPartyApiConfiguration',
     // securityKey: securityKey.MYTASK
   }
 

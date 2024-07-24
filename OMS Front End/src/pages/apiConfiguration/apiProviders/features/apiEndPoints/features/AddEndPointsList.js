@@ -4,18 +4,17 @@ import { useState ,useRef ,useEffect} from "react";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 import MolGrid from "../../../../../../components/Grid/MolGrid";
 import SidebarModel from "../../../../../../components/ui/sidebarModel/SidebarModel";
-import AddEditApiParameters from "../../apiParameters/features/AddEditApiParameters";
 import { ApiEndPointGridConfig } from "../config/ApiEndPoints.data";
 import { useImperativeHandle } from "react";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { AppIcons } from "../../../../../../data/appIcons";
 import { useDeleteApiEndpointMutation,useGetApiEndpointsMutation,} from "../../../../../../app/services/apiEndPointsAPI";
+import AddEditApiParameters from "./apiParameters/features/AddEditApiParameters";
 
 let parameterData = {};
 const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
     const molGridRef = useRef();
     const endpointId=initData.endpointId;
-  
      const [listData, setListData] = useState();
     const [totalRowCount, setTotalRowCount] = useState(0);
     const { confirm } = SwalAlert();
@@ -107,7 +106,7 @@ const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
 };
 
    const actionHandler = {
-    ADD:handleParameterAddClick,
+  "Add Parameter":handleParameterAddClick,
         EDIT: handleEditClick,
        DELETE: handleDeleteClick,    
       };
@@ -132,7 +131,7 @@ const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
           </div>
         </div>
         <SidebarModel
-         modalTitle=  "Add Api Parameter"
+         modalTitle=  "Api Parameter"
          contentClass="content-60"
          onClose={onSidebarClose}
          modalTitleIcon={AppIcons.AddIcon}
@@ -140,14 +139,11 @@ const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
         
         >
           <AddEditApiParameters
-       
-        initData={parameterData}
-          onClose={onSidebarClose}
-          onSuccess={onSuccess}
-          endpointId={endpointId}
-          />
-
- 
+          initData={parameterData}
+            onClose={onSidebarClose}
+            onSuccess={onSuccess}
+            endpointId={endpointId}
+            />
         </SidebarModel>
  </>)
 }

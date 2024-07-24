@@ -42,8 +42,7 @@ export const AuthenticationTypes = {
 export const ApiEndPointMethods = {
     GET: "GET",
     POST: "POST",
-    PUT: "PUT",
-    DELETE: "DELETE"
+
 }
 
 export const ApiParametersDataTypes = {

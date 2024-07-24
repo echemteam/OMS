@@ -5,7 +5,6 @@ import AddEditApiProviders from "./features/AddEditApiProviders";
 import { AppIcons } from "../../../data/appIcons";
 import ApiProvidersList from "./features/ApiProvidersList";
 import { addEditApiProviderFormData } from "./config/ApiProviders.data";
-import { onResetForm } from "../../../utils/FormFields/ResetForm/handleResetForm";
 import ToastService from "../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../data/appMessages";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +15,6 @@ const ApiProviders=()=>{
     const [isModelOpen, setIsModelOpen] = useState(false);
     const childRef = useRef();
     const navigate=useNavigate();
-    const [formData, setFormData] = useState(addEditApiProviderFormData);
     const [search, setSearch] = useState("");
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   
@@ -78,7 +76,6 @@ const ApiProviders=()=>{
           clearIconImg={AppIcons.ClearIcone}
           searchValue={search}
           buttonClassName="btn theme-button"
-          // rightButton={buttonVisible ? true : false}
           rightButton={true}
           buttonText="Add"
           textWithIcon={true}
@@ -97,7 +94,6 @@ const ApiProviders=()=>{
         >
           <AddEditApiProviders 
           isEdit={isEdit}
-           initData={formData}
           onSuccess={onSuccess}
           onClose={onSidebarClose}
           />
