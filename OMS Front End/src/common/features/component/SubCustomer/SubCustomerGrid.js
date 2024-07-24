@@ -2,6 +2,7 @@ import { useRef } from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
 import AddEditSubCustomer from "./feature/AddEditSubCustomer";
 import SubCustomerList from "./feature/SubCustomerList";
+import PropTypes from "prop-types";
 
 const SubCustomerGrid = ({ customerId }) => {
     const childRef = useRef();
@@ -27,4 +28,8 @@ const SubCustomerGrid = ({ customerId }) => {
         </CardSection>
     </>)
 }
+
+SubCustomerGrid.propTypes = {
+    customerId: PropTypes.number.isRequired,  
+};
 export default SubCustomerGrid;

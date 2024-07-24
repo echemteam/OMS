@@ -4,7 +4,7 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { SubCustomerFormData } from "../config/SubCustomer.data";
 import { useRef } from "react";
-
+import PropTypes from "prop-types";
 import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useEffect } from "react";
 import ToastService from "../../../../../services/toastService/ToastService";
@@ -85,4 +85,10 @@ const AddEditSubCustomer = (props) => {
     </div>
   </>)
 }
+
+AddEditSubCustomer.propTypes = {
+  customerId: PropTypes.number.isRequired,  
+  onSuccess: PropTypes.func.isRequired,
+  getLinkCustomerRef: PropTypes.object.isRequired,  
+};
 export default AddEditSubCustomer;
