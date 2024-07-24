@@ -13,7 +13,6 @@ import { CountryId, CustomerSettingEnum, PaymentMethodTypes } from "../../../../
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
-import Masking from "../../../../utils/Masking";
 
 const FinancialSettings = ({ isEditablePage }) => {
 

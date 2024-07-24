@@ -9,7 +9,7 @@ export const SubCustomerFormData = {
       {
         id: "customerId",
         lable: "Link Customer ",
-        Field_Name: "Link-Customer",
+        Field_Name: "Link Customer",
         fieldType: FormFieldTypes.SELECT,
         dataField: "customerId",
         fieldSetting: {

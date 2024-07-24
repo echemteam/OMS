@@ -23,8 +23,9 @@ const CustomerDetails = () => {
   const keyId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setisModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
+  const [isBuyingForThirdParty, setIsBuyingForThirdParty] = useState(false);
 
-  const { setCustomerId, customerId, setIsResponsibleUser, setCustomerCountryId ,setIsSubCustomer} = useContext(BasicDetailContext);
+  const { setCustomerId, customerId, setIsResponsibleUser, setCustomerCountryId } = useContext(BasicDetailContext);
 
   const [
     getCustomersBasicInformationById,
@@ -48,11 +49,9 @@ const CustomerDetails = () => {
         setIsResponsibleUser(false);
 
       }
-
-
       setCustomerData(GetCustomersBasicInformationByIdData);
-      setCustomerCountryId(GetCustomersBasicInformationByIdData.countryId)
-      setIsSubCustomer(GetCustomersBasicInformationByIdData.isSubCustomer)
+      setCustomerCountryId(GetCustomersBasicInformationByIdData.countryId);
+      setIsBuyingForThirdParty(GetCustomersBasicInformationByIdData.isBuyingForThirdParty);
     }
   }, [
     isGetCustomersBasicInformationById,
@@ -105,7 +104,7 @@ const CustomerDetails = () => {
               imagePath={AppIcons.BackArrowIcon}
             ></Buttons>
             <div className="customer-detail-tab-sec">
-              <CustomerViewTab customerId={customerId} />
+              <CustomerViewTab customerId={customerId} isBuyingForThirdParty={isBuyingForThirdParty} />
             </div>
           </div>
         </div>
