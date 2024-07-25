@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import FormCreator from "../../../../../components/Forms/FormCreator";
@@ -27,7 +28,7 @@ const ACHWireDetail = ({ supplierId, financialSettingFormRef, getAllCities, getA
   useEffect(() => {
     getAllCountries();
     getAllStates();
-    getAllCities();
+    // getAllCities();
     getAllPaymentTerms();
     getACHWireBySupplierId(supplierId)
   }, []);

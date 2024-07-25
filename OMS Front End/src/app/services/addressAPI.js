@@ -25,9 +25,9 @@ const addressAPI = createApi({
             transformErrorResponse: transformErrorResponse,
         }),
         getAllCities: builder.query({
-            query: () => ({
-                url: encryptQueryString('/Common/GetAllCities'),
-                method: 'GET',
+            query: (userID) => ({
+                url: encryptQueryString(`/Common/GetAllCities/?stateId=${Number(userID)}`),
+                Method: 'GET',
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,

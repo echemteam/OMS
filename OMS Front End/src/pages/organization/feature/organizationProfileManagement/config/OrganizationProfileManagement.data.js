@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const OrganizationProfileManagementdata = {
     // name: "Email From"
-    initialState: { organizationId:0 , name: "", logo:"", addressLine1: "", addressLine2: "", countryId: 10, stateId: 3707, zipCode: "", cityId: 143 , base64File : ""},
+    initialState: { organizationId:0 , name: "", logo:"", addressLine1: "", addressLine2: "", countryId: "", stateId: "", zipCode: "", cityId: "" , base64File : ""},
     formFields: [
         {
             id: "name",

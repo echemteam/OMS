@@ -15,10 +15,10 @@ import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 const OrganizationProfileManagement = (props) => {
     const organizationProfile = useRef();
     const [organizationProfileData, setOrganizationProfileData] = useState(OrganizationProfileManagementdata);
-    const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+    // const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
     // const [getOrganizationId, setOrganizationId] = useState(0)
 
-    const [getAllCities, { isSuccess: isGetAllCitiesSucess, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+    const [getAllCities, {isSuccess: isGetAllCitiesSucess, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
     const [getAllStates, { isSuccess: isGetAllStatesSucess, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
     const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
     const [addEditOrganization, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddEditOrganizationProfileMutation();
@@ -27,7 +27,7 @@ const OrganizationProfileManagement = (props) => {
     useEffect(() => {
         getAllCountries();
         getAllStates();
-        getAllCities();
+        // getAllCities();
     }, []);
 
     useEffect(() => {
@@ -39,6 +39,17 @@ const OrganizationProfileManagement = (props) => {
     useEffect(() => {
         if (!isGetOrganizationProfileFetching && isGetOrganizationProfileSuccess && isGetOrganizationProfileData) {
             let formData = { ...organizationProfileData };
+
+            if (isGetOrganizationProfileData.countryId) {
+                handleStateOption(allGetAllStatesData);
+                setFieldSetting(formData, 'stateId', FieldSettingType.DISABLED, false);
+            }
+
+            if (isGetOrganizationProfileData.stateId) {
+                getAllCities(isGetOrganizationProfileData.stateId)
+                setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, false);
+            }
+
             formData.initialState = {
                 name: isGetOrganizationProfileData.name,
                 logo: isGetOrganizationProfileData.base64File,
@@ -55,25 +66,19 @@ const OrganizationProfileManagement = (props) => {
     }, [isGetOrganizationProfileFetching, isGetOrganizationProfileSuccess, isGetOrganizationProfileData,]);
 
     useEffect(() => {
-        if (isGetAllCountriesSucess && allGetAllCountriesData) {
+        if ( isGetAllCountriesSucess && allGetAllCountriesData) {
             setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', OrganizationProfileManagementdata, 'countryId');
-            setShouldRerenderFormCreator((prevState) => !prevState);
         }
         if (isGetAllStatesSucess && allGetAllStatesData) {
             handleStateOption(allGetAllStatesData);
-            setShouldRerenderFormCreator((prevState) => !prevState);
         }
         if (isGetAllCitiesSucess && allGetAllCitiesData) {
-            handleCityOption(allGetAllCitiesData);
-            setShouldRerenderFormCreator((prevState) => !prevState);
+            setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', OrganizationProfileManagementdata, 'cityId');
         }
     }, [isGetAllCountriesSucess, allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData]);
 
     const handleStateOption = (responseData) => {
         setDropDownOptionField(responseData, 'stateId', 'name', OrganizationProfileManagementdata, 'stateId');
-    };
-    const handleCityOption = (responseData) => {
-        setDropDownOptionField(responseData, 'cityId', 'name', OrganizationProfileManagementdata, 'cityId');
     };
 
     const handleChangeDropdownList = (data, dataField) => {
@@ -86,7 +91,7 @@ const OrganizationProfileManagement = (props) => {
                 stateId: null,
             });
         } else if (dataField === "stateId") {
-            setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', item => item.stateId === data.value);
+            getAllCities(data.value)
             setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
             organizationProfile.current.updateFormFieldValue({
                 stateId: data.value,
@@ -144,7 +149,7 @@ const OrganizationProfileManagement = (props) => {
                 <FormCreator
                     config={organizationProfileData}
                     ref={organizationProfile}
-                    key={shouldRerenderFormCreator}
+                    // key={shouldRerenderFormCreator}
                     onActionChange={formActionHandler}
                 />
                 : <DataLoader />

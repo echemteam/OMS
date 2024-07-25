@@ -94,8 +94,8 @@ const SupplierSettingGrid = ({ supplierId }) => {
           stateId: isGetPaymentSettingsBySupplierIdData.mailingAddress.stateId,
           countryId: isGetPaymentSettingsBySupplierIdData.mailingAddress.countryId,
           zipCode: isGetPaymentSettingsBySupplierIdData.mailingAddress.zipCode,
-          checkMailingAddressId: isGetPaymentSettingsBySupplierIdData.mailingAddress.checkMailingAddressId,
-          supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.mailingAddress.supplierPaymentSettingId,
+          checkMailingAddressId: isGetPaymentSettingsBySupplierIdData.checkMailingAddressId,
+          supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
         };
         setGetCheckData(formCheckData);
       }
@@ -108,7 +108,7 @@ const SupplierSettingGrid = ({ supplierId }) => {
         setGetOtherData(formOtherData);
       }
     }
-  }, [isGetPaymentSettingsBySupplierIdFetching, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData,]);
+  }, [activeTabIndex , isGetPaymentSettingsBySupplierIdFetching, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData,]);
 
   const addressDetailProps = {
     financialSettingFormRef,

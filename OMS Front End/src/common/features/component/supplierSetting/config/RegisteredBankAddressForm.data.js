@@ -5,10 +5,10 @@ export const registeredBankAddressForm = {
   initialState: {
     addressLine1Id: "",
     addressLine2Id: "",
-    stateId: 3707,
+    stateId: "",
     zipCode: "",
-    cityId: 143,
-    countryId:10
+    cityId: "",
+    countryId:""
   },
   formFields: [
     {
