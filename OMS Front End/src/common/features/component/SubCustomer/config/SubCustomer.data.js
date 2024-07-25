@@ -60,6 +60,7 @@ export const SubCustomerFormData = {
             {
                 name: "EDIT",
                 iconName: AppIcons.EyeIcon,
+                title: "Edit"
             },
         ],
           

@@ -118,6 +118,7 @@ export const ApiEndPointGridConfig = {
             {
                 name: "ADDPARAMETERS",
                 iconName: AppIcons.PlusIcon,
+                title :"Add Parameter"
             },
         ],
       },
