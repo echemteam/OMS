@@ -127,9 +127,9 @@ namespace OMS.Application.Services.Contact
             {
                 return contactDetail!;
             }
-            var ownerTypeId = OwnerType.CustomerContact;
+            var ownerTypeId = (short)OwnerType.CustomerContact;
 
-            var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contactId, (short)ownerTypeId);
+            var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contactId,ownerTypeId);
             var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
 
             await Task.WhenAll(emailTask, phoneTask);
@@ -146,13 +146,14 @@ namespace OMS.Application.Services.Contact
             {
                 return contactList!;
             }
-            var ownerTypeId = OwnerType.CustomerContact;
+            var ownerTypeId = (short)OwnerType.CustomerContact;
             var tasks = contactList.Select(async contact =>
             {
-                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, (short)ownerTypeId);
+                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId,ownerTypeId);
                 var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
 
-                await Task.WhenAll(emailTask, phoneTask);
+                var emailAddresses = await emailTask;
+                var phoneNumbers = await phoneTask;
 
                 contact.EmailAddressList = await emailTask;
                 contact.PhoneNumberList = await phoneTask;
@@ -169,17 +170,22 @@ namespace OMS.Application.Services.Contact
             {
                 return contactList!;
             }
-            var ownerTypeId = OwnerType.SupplierContact;
+
+            var ownerTypeId = (short)OwnerType.SupplierContact;
             var tasks = contactList.Select(async contact =>
             {
-                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, (short)ownerTypeId);
+                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
                 var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
 
-                await Task.WhenAll(emailTask, phoneTask);
+                var emailAddresses = await emailTask;
+                var phoneNumbers = await phoneTask;
 
-                contact.EmailAddressList = await emailTask;
-                contact.PhoneNumberList = await phoneTask;
+                contact.EmailAddressList = emailAddresses;
+                contact.PhoneNumberList = phoneNumbers;
             });
+
+            await Task.WhenAll(tasks);
+
             return contactList!;
         }
 
@@ -190,9 +196,9 @@ namespace OMS.Application.Services.Contact
             {
                 return contactDetail!;
             }
-            var ownerTypeId = OwnerType.SupplierContact;
+            var ownerTypeId = (short)OwnerType.SupplierContact;
 
-            var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contactId, (short)ownerTypeId);
+            var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contactId, ownerTypeId);
             var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
             await Task.WhenAll(emailTask, phoneTask);
 
