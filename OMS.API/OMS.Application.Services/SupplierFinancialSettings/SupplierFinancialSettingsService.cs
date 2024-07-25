@@ -5,6 +5,9 @@ using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.SupplierAccoutingSetting;
 using OMS.Domain.Entities.API.Request.SupplierFinancialSettings;
 using OMS.Domain.Entities.API.Request.supplierPaymentSettings;
+using OMS.Domain.Entities.API.Response.SuppierBankDetails;
+using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
+using OMS.Domain.Entities.API.Response.supplierPaymentSettings;
 using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.SuppierBankDetails;
@@ -101,6 +104,31 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             SupplierAccoutingSettingDTO supplierAccoutingSettingDTO = requestData.ToMapp<SupplierFinancialSettingsRequest, SupplierAccoutingSettingDTO>();
             supplierAccoutingSettingDTO.CreatedBy = currentUserId;
             return await repositoryManager.supplierFinancialSettings.AddEditSupplierFinancialSettings(supplierAccoutingSettingDTO);
+        }
+
+        public Task<GetSupplierFinancialSettingsBySupplierIdResponse> GetSupplierFinancialSettingsBySupplierId(int supplierId)
+        {
+            return repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
+        }
+        public async Task<GetACHWireBySupplierIdResponse> GetACHWireBySupplierId(int supplierId)
+        {
+            var responseData = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
+
+            if (supplierId > 0)
+            {
+                responseData.BankAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(responseData.BankAddressId);
+                responseData.RecipientAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(responseData.RecipientAddressId);
+            }
+            return responseData;
+        }
+        public async Task<GetPaymentSettingsBySupplierIdResponse> GetPaymentSettingsBySupplierId(int supplierId)
+        {
+            var responseData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
+            if (responseData != null && supplierId > 0)
+            {
+                responseData.MailingAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(responseData.CheckMailingAddressId);
+            }
+            return responseData!;
         }
         #endregion
     }
