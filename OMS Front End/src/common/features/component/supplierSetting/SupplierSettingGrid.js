@@ -72,11 +72,12 @@ const SupplierSettingGrid = ({ supplierId }) => {
   }, [isGetSupplierFinancialSettingsBySupplierIdFetching, isGetSupplierFinancialSettingsBySupplierIdSuccess, isGetSupplierFinancialSettingsBySupplierIdData]);
 
   useEffect(() => {
+    debugger
     if (!isGetPaymentSettingsBySupplierIdFetching && isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData) {
       let formCreditData = { ...getCreditData };
       let formCheckData = { ...getCheckData };
       let formOtherData = { ...getOtherData };
-      if (activeTabIndex === 1) {
+      if (activeTabIndex === 1 && isGetPaymentSettingsBySupplierIdData.ccNote) {
         formCreditData.initialState = {
           supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
           supplierId: supplierId,
@@ -85,7 +86,7 @@ const SupplierSettingGrid = ({ supplierId }) => {
         };
       }
       setGetCreditData(formCreditData);
-      if (activeTabIndex === 2) {
+      if (activeTabIndex === 2 && isGetPaymentSettingsBySupplierIdData.mailingAddress) {
         formCheckData.initialState = {
           addressId: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressId ? isGetPaymentSettingsBySupplierIdData.mailingAddress.addressId : 0,
           addressLine1Id: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressLine1,
@@ -99,7 +100,7 @@ const SupplierSettingGrid = ({ supplierId }) => {
         };
         setGetCheckData(formCheckData);
       }
-      if (activeTabIndex === 3) {
+      if (activeTabIndex === 3 && isGetPaymentSettingsBySupplierIdData.otherNote) {
         formOtherData.initialState = {
           supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
           supplierId: supplierId,
