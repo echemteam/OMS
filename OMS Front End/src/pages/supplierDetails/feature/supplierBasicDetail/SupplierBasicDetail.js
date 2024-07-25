@@ -21,11 +21,11 @@ const SupplierBasicDetail = (props) => {
 }
 
 SupplierBasicDetail.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  getSupplierById: PropTypes.func.isRequired,
-  onSidebarClose: PropTypes.func.isRequired,
-  keyId: PropTypes.number.isRequired,
-  isEditablePage: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool,
+  getSupplierById: PropTypes.func ,
+  onSidebarClose: PropTypes.func ,
+  keyId: PropTypes.number ,
+  isEditablePage: PropTypes.bool ,
 };
 
 export default SupplierBasicDetail

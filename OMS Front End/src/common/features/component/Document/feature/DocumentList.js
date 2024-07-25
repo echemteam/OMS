@@ -258,7 +258,7 @@ DocumentList.propTypes = {
     SecurityKey: PropTypes.shape({
         DELETE: PropTypes.string,
         DOWNALOD: PropTypes.string
-    }).isRequired,
+    }),
     isEditablePage: PropTypes.bool.isRequired
 };
 

@@ -185,13 +185,13 @@ const AddCustomerTab = () => {
 };
 
 AddCustomerTab.propTypes = {
-  activeTab: PropTypes.number.isRequired,
-  movePreviewPage: PropTypes.func.isRequired,
-  addCustomer: PropTypes.func.isRequired,
-  customerId: PropTypes.number.isRequired,
-  showSubBackButton: PropTypes.bool.isRequired,
-  handleActiveSubTabClick: PropTypes.func.isRequired,
-  saveFinacialSetting: PropTypes.func.isRequired,
+  activeTab: PropTypes.number ,
+  movePreviewPage: PropTypes.func ,
+  addCustomer: PropTypes.func ,
+  customerId: PropTypes.number ,
+  showSubBackButton: PropTypes.bool ,
+  handleActiveSubTabClick: PropTypes.func ,
+  saveFinacialSetting: PropTypes.func ,
 };
 
 export default AddCustomerTab;

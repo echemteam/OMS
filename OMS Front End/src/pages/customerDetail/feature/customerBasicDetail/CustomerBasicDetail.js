@@ -24,9 +24,9 @@ const CustomerBasicDetail = (props) => {
 };
 
 CustomerBasicDetail.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  getCustomerById: PropTypes.func.isRequired,
-  onSidebarClose: PropTypes.func.isRequired,
-  keyId: PropTypes.number.isRequired,
+  isOpen: PropTypes.bool ,
+  getCustomerById: PropTypes.func ,
+  onSidebarClose: PropTypes.func,
+  keyId: PropTypes.number ,
 };
 export default CustomerBasicDetail;
