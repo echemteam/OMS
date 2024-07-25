@@ -20,7 +20,7 @@ const ImageUpload = ({
     isDisable,
     isButtonVisible,
     acceptedFiles,
-    isCustomButtonVisible
+    isCustomButtonVisible,
 }) => {
 
     const imageRef = useRef();
@@ -47,8 +47,11 @@ const ImageUpload = ({
     };
 
     useEffect(() => {
-        if (filename && filename.base64Data) {
-            setImagePreview(filename.base64Data);
+        if (filename && typeof filename === "object") {
+            const fileData = filename.base64Data ? filename.base64Data : (filename.name || filename.fileName)
+            setImagePreview(fileData);
+        } else if (filename) {
+            setImagePreview(filename);
         } else {
             imageRef.current.value = null;
             setImagePreview(null);

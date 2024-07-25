@@ -255,7 +255,6 @@ const InActiveSupplierTab = ({ statusId }) => {
 };
 
 InActiveSupplierTab.propTypes = {
-  statusId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-};
-
+  statusId: PropTypes.arrayOf(PropTypes.string).isRequired,
+}
 export default InActiveSupplierTab;

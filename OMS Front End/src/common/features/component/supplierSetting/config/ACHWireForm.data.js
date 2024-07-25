@@ -5,7 +5,7 @@ export const achWireFormData = {
   // name: "Email From",
   initialState: {
     bankName: "",
-    beneficiaryName : "",
+    beneficiaryName: "",
     accountType: "",
     accountNumber: "",
     messageToRecipientBank: "",
@@ -73,13 +73,13 @@ export const achWireFormData = {
       id: "accountNumber",
       lable: "Account Number",
       Field_Name: "Account Number",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "accountNumber",
       fieldSetting: {
         isDisabled: false,
         placeholder: "Please Enter Account Number",
         isEnableOnChange: true,
-        maxLength: 20,
+        // maxLength: 20,
       },
       validation: [{ type: "require" }],
       style: {
@@ -90,7 +90,7 @@ export const achWireFormData = {
       id: "branchCode",
       lable: "Branch Code",
       Field_Name: "Branch Code",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "branchCode",
       fieldSetting: {
         isDisabled: false,
@@ -106,7 +106,7 @@ export const achWireFormData = {
       id: "ibanNumber",
       lable: "IBAN Number",
       Field_Name: "IBAN Number",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "ibanNumber",
       fieldSetting: {
         isDisabled: false,
@@ -122,7 +122,7 @@ export const achWireFormData = {
       id: "swiftCode",
       lable: "Swift Code",
       Field_Name: "Swift Code",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "swiftCode",
       fieldSetting: {
         isDisabled: false,
@@ -134,7 +134,7 @@ export const achWireFormData = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
       },
     },
-    
+
     {
       id: "routingNumber",
       lable: "Routing No (US Banks) (9 digits)",
@@ -146,6 +146,7 @@ export const achWireFormData = {
         placeholder: "Please Enter Routing No (US Banks) (9 digits)",
         isEnableOnChange: true,
         maxLength: 9,
+        // minLength: 9
       },
       // validation: [{ type: "require" }],
       style: {
@@ -156,13 +157,14 @@ export const achWireFormData = {
       id: "sortCode",
       lable: "Sort Code (UK Banks) (6 digits)",
       Field_Name: "Sort Code (UK Banks) (6 digits)",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "sortCode",
       fieldSetting: {
         isDisabled: false,
         placeholder: "Please Enter Sort Code (UK Banks) (6 digits)",
         isEnableOnChange: true,
         maxLength: 6,
+        // minLength: 6
       },
       // validation: [{ type: "require" }],
       style: {
@@ -173,13 +175,14 @@ export const achWireFormData = {
       id: "bsbNumber",
       lable: "BSB Number (Aust Banks) (6 digits)",
       Field_Name: "BSB Number (Aust Banks) (6 digits)",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "bsbNumber",
       fieldSetting: {
         isDisabled: false,
         placeholder: "Please Enter BSB Number (Aust Banks) (6 digits)",
         isEnableOnChange: true,
         maxLength: 6,
+        // minLength: 6
 
       },
       // validation: [{ type: "require" }],
@@ -191,7 +194,7 @@ export const achWireFormData = {
       id: "recipientPhoneNumber",
       lable: "Recipient Phone Number",
       Field_Name: "Recipient Phone Number",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "recipientPhoneNumber",
       fieldSetting: {
         placeholder: "Please Enter Recipient Phone Number",
@@ -222,27 +225,16 @@ export const achWireFormData = {
       id: "isAddressInUs",
       lable: "Bank Account located in the United States or US Territory",
       Field_Name: "Bank Account located in the United States or US Territory",
-      fieldType: FormFieldTypes.RADIOBUTTON,
+      fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isAddressInUs",
       fieldSetting: {
-        placeholder: "Please Choose Bank Account located in the United States or US Territory",
+        placeholder: "",
         isEnableOnChange: true,
-        isMultiSelect: false,
-        isDisabled: false,
-        options: [
-          {
-            label: "Bank Account located in the United States or US Territory",
-            value: "Bank Account located in the United States or US Territory",
-            isDisable: false,
-            optionClass: "",
-          },
-          // Add more options if needed
-        ],
       },
       // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-3 pt-2",
-      },
+      }
     },
     {
       id: "messageToRecipient",
@@ -270,15 +262,14 @@ export const achWireFormData = {
       fieldSetting: {
         placeholder: "Please Enter Message to recipient Bank",
         isEnableOnChange: true,
-        isMultiSelect: false,
-        isDisabled: false,
+        maxLength: 75,
       },
       // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
-    
+
 
   ],
   formSetting: {

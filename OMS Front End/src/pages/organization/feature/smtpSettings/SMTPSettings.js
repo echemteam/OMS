@@ -8,6 +8,7 @@ import { useAddEditSmtpSettingsMutation, useLazyGetSmtpSettingsQuery } from '../
 import ToastService from '../../../../services/toastService/ToastService';
 import { ErrorMessage } from '../../../../data/appMessages';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
+import { decryptUrlData, encryptAES } from '../../../../services/CryptoService';
 
 const SMTPSettings = (props) => {
     const smtpRef = useRef();
@@ -44,6 +45,10 @@ const SMTPSettings = (props) => {
         if (data) {
             let request = {
                 ...data,
+                emailProvider: encryptAES(data.emailProvider),
+                smtpServer: encryptAES(data.smtpServer),
+                smtpUserName: encryptAES(data.smtpUserName),
+                smtpPassword: encryptAES(data.smtpPassword),
                 organizationId: props.organizationId ? props.organizationId : data.organizationId,
                 smtpSettingId: props.smtpSettingId ? props.smtpSettingId : data.smtpSettingId
             }
@@ -67,11 +72,11 @@ const SMTPSettings = (props) => {
         if (!isGetSmtpSettingsFetching && isGetSmtpSettingsSuccess && isGetSmtpSettingsData) {
             let formData = { ...SMTPSettingsData };
             formData.initialState = {
-                emailProvider: isGetSmtpSettingsData.emailProvider,
-                smtpServer: isGetSmtpSettingsData.smtpServer,
+                emailProvider: decryptUrlData(isGetSmtpSettingsData.emailProvider),
+                smtpServer: decryptUrlData(isGetSmtpSettingsData.smtpServer),
                 smtpPort: isGetSmtpSettingsData.smtpPort,
-                smtpUserName: isGetSmtpSettingsData.smtpUserName,
-                smtpPassword: isGetSmtpSettingsData.smtpPassword,
+                smtpUserName: decryptUrlData(isGetSmtpSettingsData.smtpUserName),
+                smtpPassword: decryptUrlData(isGetSmtpSettingsData.smtpPassword),
                 useSsl: isGetSmtpSettingsData.useSsl,
             };
             setSmtpSettingData(formData);

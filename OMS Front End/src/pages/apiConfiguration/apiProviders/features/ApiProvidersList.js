@@ -8,7 +8,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { ApiProvidersGridConfig } from "../config/ApiProviders.data";
 import { useImperativeHandle } from "react";
 
-const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange, search,handleClear, shouldRerenderFormCreator}) => {
+const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange, search,handleClear}) => {
   const molGridRef = useRef();
   const [listData, setListData] = useState();
   const [totalRowCount, setTotalRowCount] = useState(0);
@@ -60,12 +60,12 @@ const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange
     }
   }, [isApiProvidersSuccess, isApiProvidersData]);
 
-  useEffect(() => {
-    if (shouldRerenderFormCreator) {
-      onGetData();
+  
+  useEffect (() => {
+    if (search === "" ) {
+       onGetData();
     }
-    onGetData();
-  }, [shouldRerenderFormCreator]);
+  }, [search]);
 
   const handleDeleteClick = (data) => {
     confirm( "Delete?", "Are you sure you want to Delete?", "Delete", "Cancel"
@@ -88,7 +88,6 @@ const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange
         <div className="col-md-12 table-striped api-provider">
           <MolGrid
             ref={molGridRef}
-            key={shouldRerenderFormCreator}
             configuration={ApiProvidersGridConfig}
             dataSource={listData}
             allowPagination={true}
@@ -119,6 +118,6 @@ ApiProvidersList.propTypes = {
   handleChange: PropTypes.func.isRequired,
   search: PropTypes.string.isRequired,
   handleClear: PropTypes.func.isRequired,
-  shouldRerenderFormCreator: PropTypes.bool.isRequired,
+   
 };
 export default ApiProvidersList;

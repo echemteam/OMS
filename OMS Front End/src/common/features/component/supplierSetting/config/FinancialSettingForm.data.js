@@ -3,7 +3,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 export const financialSettingFormData = {
   // name: "Email From",
   initialState: {
-    paymentTermId: "",
+    paymentTermId: 0,
     paymentMethodId: "",
     poDeliveryMethodId: "",
   },

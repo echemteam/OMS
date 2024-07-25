@@ -262,12 +262,14 @@ InActiveSuppliersList.propTypes = {
         label: PropTypes.string
       })
     ).isRequired,
-    selectedDrpvalues: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    ).isRequired,
-    selectedStatusOptions: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    ).isRequired,
+    selectedDrpvalues: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.number),
+        PropTypes.string
+      ]).isRequired,
+      selectedStatusOptions: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.object),
+        PropTypes.string
+      ]).isRequired,
     searchStatusFilter: PropTypes.bool.isRequired,
     handleSearch: PropTypes.func.isRequired,
     handleClear: PropTypes.func.isRequired,

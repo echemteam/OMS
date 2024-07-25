@@ -6,7 +6,7 @@ const financialSettings = ({ supplierId }) => {
   return (
     <div>
       <SupplierSettingGrid
-        supplierId={supplierId}
+        supplierId={supplierId.supplierId}
       />
     </div>
   );
