@@ -7,6 +7,7 @@ import { userFormData } from "./config/UserForm.data";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../data/appIcons";
 import { decryptUrlData } from "../../../../services/CryptoService";
+import PropTypes from "prop-types";
 //** Services's */
 import ChangePassword from "./ChangePassword";
 import ToastService from "../../../../services/toastService/ToastService";
@@ -177,4 +178,7 @@ const AddEditUser = forwardRef(() => {
   );
 });
 
+AddEditUser.propTypes = {
+  ref: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+};
 export default AddEditUser;

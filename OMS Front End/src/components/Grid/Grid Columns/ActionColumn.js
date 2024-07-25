@@ -35,7 +35,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
               handleAction(action.name, rowData);
             },
             className: "mr-4",
-            title: action.name,
+            title: action.title,
             href: "",
           };
           // Add condition to check if rowData.contractInputFile is present

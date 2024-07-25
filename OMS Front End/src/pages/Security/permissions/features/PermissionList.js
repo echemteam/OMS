@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
 //** Lib's */
 import { SecurityPermissionsGrid } from "../../permissions/features/config/securityPermissions.Data";
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
@@ -27,5 +29,11 @@ const PermissionList = (props) => {
         </div>
     );
 }
+
+PermissionList.propTypes = {
+    onUpdatePermission: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
+    permissionsData: PropTypes.array.isRequired,
+};
 
 export default PermissionList;

@@ -23,7 +23,7 @@ export const checkFormData = {
         isMultiSelect: false,
         isDisabled: false,
       },
-      // validation: [{ type: "require" }],
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-3",
       },
@@ -55,7 +55,7 @@ export const checkFormData = {
         placeholder: "Select Country",
         isEnableOnChange: true
       },
-      // validation: [{ type: "require" }],
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },
@@ -71,7 +71,7 @@ export const checkFormData = {
         placeholder: "Select State",
         isEnableOnChange: true
       },
-      // validation: [{ type: "require" }],
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },
@@ -87,7 +87,7 @@ export const checkFormData = {
         placeholder: "Select City",
         isEnableOnChange: true
       },
-      // validation: [{ type: "require" }],
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },
@@ -103,7 +103,7 @@ export const checkFormData = {
         allowSpace: true,
         maxLength: 9,
       },
-      // validation: [{ type: "require" }],
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },

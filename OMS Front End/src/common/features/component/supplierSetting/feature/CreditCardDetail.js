@@ -5,7 +5,7 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import { useAddEditCreditCardMutation } from "../../../../../app/services/supplierFinancialSettingsAPI";
 import ToastService from "../../../../../services/toastService/ToastService";
 
-const CreditCardDetail = ({supplierId,financialSettingFormRef}) => {
+const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financialSettingFormRef }) => {
   const creditCardFormRef = useRef();
   const [creditCardForm, setCreditCardFormDataForm] = useState(creditCardFormData);
 
@@ -21,6 +21,17 @@ const CreditCardDetail = ({supplierId,financialSettingFormRef}) => {
     }
   };
 
+  useEffect(() => {
+    if (getCreditData.supplierPaymentSettingId > 0) {
+      let formCreditData = { ...creditCardForm };
+      formCreditData.initialState = {
+        ccNote: getCreditData.ccNote,
+        isCCExistsOnFile: getCreditData.isCCExistsOnFile
+      };
+      setCreditCardFormDataForm(formCreditData);
+    }
+  }, [getCreditData])
+
   const handleAddResponse = (isSuccess, responseData) => {
     if (isSuccess && responseData) {
       if (responseData.errorMessage.includes("exists")) {
@@ -28,25 +39,27 @@ const CreditCardDetail = ({supplierId,financialSettingFormRef}) => {
         return;
       }
       ToastService.success(responseData.errorMessage);
+      if (supplierId) {
+        onHandleGetById(supplierId)
+      }
     }
   }
-
 
   const handleCreditCradAdd = () => {
     let creditCardForm = creditCardFormRef.current.getFormData()
     let formsupplierFinancialSettings = financialSettingFormRef.current.getFormData()
-    if (creditCardForm || formsupplierFinancialSettings) {
+    if (creditCardForm && formsupplierFinancialSettings) {
       let req = {
         supplierFinancialSettings: {
           isActive: true,
-          supplierId: supplierId.supplierId,
-          supplierAccountingSettingId: 0,
+          supplierId: supplierId,
+          supplierAccountingSettingId: formsupplierFinancialSettings.supplierAccountingSettingId ? formsupplierFinancialSettings.supplierAccountingSettingId : 0,
           paymentTermId: formsupplierFinancialSettings.paymentTermId && typeof formsupplierFinancialSettings.paymentTermId === "object" ? formsupplierFinancialSettings.paymentTermId.value : formsupplierFinancialSettings.paymentTermId,
           invoiceSubmissionMethod: formsupplierFinancialSettings.paymentMethodId && typeof formsupplierFinancialSettings.paymentMethodId === "object" ? formsupplierFinancialSettings.paymentMethodId.value : formsupplierFinancialSettings.paymentMethodId,
           poDeliveryMethodId: formsupplierFinancialSettings.poDeliveryMethodId && typeof formsupplierFinancialSettings.poDeliveryMethodId === "object" ? formsupplierFinancialSettings.poDeliveryMethodId.value : formsupplierFinancialSettings.poDeliveryMethodId,
         },
-        supplierPaymentSettingId:0,
-        supplierId:supplierId.supplierId,
+        supplierPaymentSettingId: getCreditData.supplierPaymentSettingId ? getCreditData.supplierPaymentSettingId : 0,
+        supplierId: supplierId,
         ccNote: creditCardForm.ccNote,
         isCCExistsOnFile: creditCardForm.isCCExistsOnFile,
       };

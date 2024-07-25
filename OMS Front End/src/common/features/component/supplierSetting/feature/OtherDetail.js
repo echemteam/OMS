@@ -5,7 +5,7 @@ import { useAddEditOtherMutation } from "../../../../../app/services/supplierFin
 import ToastService from "../../../../../services/toastService/ToastService";
 import Buttons from "../../../../../components/ui/button/Buttons";
 
-const OtherDetail = ({ financialSettingFormRef , supplierId}) => {
+const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId , onHandleGetById}) => {
   const otherFormRef = useRef();
   const [otherForm, setOtherForm] = useState(otherFormData);
   const [addEditOther, { isLoading: isAddEditOtherLoading, isSuccess: isAddEditOtherSuccess, data: isAddEditOtherData }] = useAddEditOtherMutation();
@@ -27,25 +27,40 @@ const OtherDetail = ({ financialSettingFormRef , supplierId}) => {
         return;
       }
       ToastService.success(responseData.errorMessage);
+      if (supplierId) {
+        onHandleGetById(supplierId)
+      }
     }
   }
+
+  useEffect(() => {
+    if (getOtherData.supplierPaymentSettingId > 0) {
+      let formOtherData = { ...otherForm };
+      formOtherData.initialState = {
+        supplierPaymentSettingId: getOtherData.supplierPaymentSettingId,
+        supplierId: supplierId,
+        otherNote: getOtherData.otherNote,
+      };
+      setOtherForm(formOtherData);
+    }
+  }, [getOtherData])
 
   const handleOtherDetailAdd = () => {
     let otherDataForm = otherFormRef.current.getFormData()
     let formsupplierFinancialSettings = financialSettingFormRef.current.getFormData()
-    if (otherDataForm || formsupplierFinancialSettings) {
+    if (otherDataForm && formsupplierFinancialSettings) {
       let req = {
         supplierFinancialSettings: {
           isActive: true,
-          supplierId: supplierId.supplierId,
-          supplierAccountingSettingId: 0,
+          supplierId: supplierId,
+          supplierAccountingSettingId: formsupplierFinancialSettings.supplierAccountingSettingId ? formsupplierFinancialSettings.supplierAccountingSettingId : 0,
           paymentTermId: formsupplierFinancialSettings.paymentTermId && typeof formsupplierFinancialSettings.paymentTermId === "object" ? formsupplierFinancialSettings.paymentTermId.value : formsupplierFinancialSettings.paymentTermId,
           invoiceSubmissionMethod: formsupplierFinancialSettings.paymentMethodId && typeof formsupplierFinancialSettings.paymentMethodId === "object" ? formsupplierFinancialSettings.paymentMethodId.value : formsupplierFinancialSettings.paymentMethodId,
           poDeliveryMethodId: formsupplierFinancialSettings.poDeliveryMethodId && typeof formsupplierFinancialSettings.poDeliveryMethodId === "object" ? formsupplierFinancialSettings.poDeliveryMethodId.value : formsupplierFinancialSettings.poDeliveryMethodId,
         },
         otherNote: otherDataForm.otherNote,
-        supplierPaymentSettingId: 0,
-        supplierId: supplierId.supplierId
+        supplierPaymentSettingId: getOtherData.supplierPaymentSettingId ? getOtherData.supplierPaymentSettingId : 0,
+        supplierId: supplierId
       };
       addEditOther(req)
     }

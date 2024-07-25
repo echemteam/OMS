@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'; 
 //** Lib's */
 import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
@@ -51,5 +52,27 @@ const PermissionItem = ({ item, level, onParenetUpdate }) => {
         </li>
     );
 };
-
+PermissionItem.propTypes = {
+    item: PropTypes.shape({
+        isActive: PropTypes.bool.isRequired,
+        id: PropTypes.number,
+        name: PropTypes.string.isRequired,
+        children: PropTypes.arrayOf(PropTypes.shape({
+            isActive: PropTypes.bool,
+            id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            name: PropTypes.string,
+            children: PropTypes.array,
+            itemData: PropTypes.shape({
+                grantDenyFlag: PropTypes.bool,
+                securitySettingId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])  
+            })
+        })),
+        itemData: PropTypes.shape({
+            grantDenyFlag: PropTypes.bool,
+            securitySettingId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]) 
+        })
+    }).isRequired,
+    level: PropTypes.number.isRequired,
+    onParenetUpdate: PropTypes.func
+};
 export default PermissionItem;

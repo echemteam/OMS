@@ -5,7 +5,6 @@ import { financialSettingFormData } from "./config/FinancialSettingForm.data";
 import ACHWireDetail from "./feature/ACHWireDetail";
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 import CreditCardDetail from "./feature/CreditCardDetail";
-import Buttons from "../../../../components/ui/button/Buttons";
 import CheckDetail from "./feature/CheckDetail";
 import OtherDetail from "./feature/OtherDetail";
 import { useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery } from "../../../../app/services/customerSettingsAPI";
@@ -13,12 +12,19 @@ import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetti
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
 import { SupplierFinancialSettings } from "../../../../utils/Enums/commonEnums";
-import { useLazyGetAllPODeliveryMethodQuery } from "../../../../app/services/supplierFinancialSettingsAPI";
+import { useLazyGetAllPODeliveryMethodQuery, useLazyGetPaymentSettingsBySupplierIdQuery, useLazyGetSupplierFinancialSettingsBySupplierIdQuery } from "../../../../app/services/supplierFinancialSettingsAPI";
+import { checkFormData } from "./config/CheckForm.data";
+import { creditCardFormData } from "./config/CreditCardForm.data";
+import { otherFormData } from "./config/OtherForm.data";
 
-const SupplierSettingGrid = ({supplierId}) => {
+const SupplierSettingGrid = ({ supplierId }) => {
   const financialSettingFormRef = useRef();
   const [financialSettingForm, setfinancialSettingForm] = useState(financialSettingFormData);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  const [getCheckData, setGetCheckData] = useState(checkFormData)
+  const [getCreditData, setGetCreditData] = useState(creditCardFormData)
+  const [getOtherData, setGetOtherData] = useState(otherFormData)
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
 
   const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
   const [getAllPaymentMethod, { isFetching: isGetAllPaymentMethodFetching, isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData }] = useLazyGetAllPaymentMethodQuery();
@@ -26,11 +32,15 @@ const SupplierSettingGrid = ({supplierId}) => {
   const [getAllStates, { isSuccess: isGetAllStatesSucess, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
   const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllDeliveryAccounts, { isFetching: isGetAllPODeliveryMethodFetching, isSuccess: isGetAllPODeliveryMethodSuccess, data: isGetAllPODeliveryMethodData }] = useLazyGetAllPODeliveryMethodQuery();
+  const [getSupplierFinancialSettingsBySupplierId, { isFetching: isGetSupplierFinancialSettingsBySupplierIdFetching, isSuccess: isGetSupplierFinancialSettingsBySupplierIdSuccess, data: isGetSupplierFinancialSettingsBySupplierIdData }] = useLazyGetSupplierFinancialSettingsBySupplierIdQuery();
+  const [getPaymentSettingsBySupplierId, { isFetching: isGetPaymentSettingsBySupplierIdFetching, isSuccess: isGetPaymentSettingsBySupplierIdSuccess, data: isGetPaymentSettingsBySupplierIdData }] = useLazyGetPaymentSettingsBySupplierIdQuery();
 
   useEffect(() => {
     getAllPaymentTerms();
     getAllPaymentMethod();
     getAllDeliveryAccounts()
+    getSupplierFinancialSettingsBySupplierId(supplierId)
+    getPaymentSettingsBySupplierId(supplierId)
   }, []);
 
   useEffect(() => {
@@ -48,8 +58,63 @@ const SupplierSettingGrid = ({supplierId}) => {
     }
   }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData, isGetAllPaymentMethodFetching, isGetAllPaymentMethodSuccess, isGetAllPaymentMethodData, isGetAllPODeliveryMethodData, isGetAllPODeliveryMethodSuccess, isGetAllPODeliveryMethodFetching]);
 
+  useEffect(() => {
+    if (!isGetSupplierFinancialSettingsBySupplierIdFetching && isGetSupplierFinancialSettingsBySupplierIdSuccess && isGetSupplierFinancialSettingsBySupplierIdData) {
+      let formData = { ...financialSettingForm };
+      formData.initialState = {
+        paymentTermId: isGetSupplierFinancialSettingsBySupplierIdData.paymentTermId,
+        paymentMethodId: isGetSupplierFinancialSettingsBySupplierIdData.invoiceSubmissionMethod,
+        poDeliveryMethodId: isGetSupplierFinancialSettingsBySupplierIdData.poDeliveryMethodId,
+        supplierAccountingSettingId: isGetSupplierFinancialSettingsBySupplierIdData.supplierAccountingSettingId
+      };
+      setfinancialSettingForm(formData);
+    }
+  }, [isGetSupplierFinancialSettingsBySupplierIdFetching, isGetSupplierFinancialSettingsBySupplierIdSuccess, isGetSupplierFinancialSettingsBySupplierIdData]);
+
+  useEffect(() => {
+    debugger
+    if (!isGetPaymentSettingsBySupplierIdFetching && isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData) {
+      let formCreditData = { ...getCreditData };
+      let formCheckData = { ...getCheckData };
+      let formOtherData = { ...getOtherData };
+      if (activeTabIndex === 1 && isGetPaymentSettingsBySupplierIdData.ccNote) {
+        formCreditData.initialState = {
+          supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
+          supplierId: supplierId,
+          ccNote: isGetPaymentSettingsBySupplierIdData.ccNote,
+          isCCExistsOnFile: isGetPaymentSettingsBySupplierIdData.isCCExistsOnFile,
+        };
+      }
+      setGetCreditData(formCreditData);
+      if (activeTabIndex === 2 && isGetPaymentSettingsBySupplierIdData.mailingAddress) {
+        formCheckData.initialState = {
+          addressId: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressId ? isGetPaymentSettingsBySupplierIdData.mailingAddress.addressId : 0,
+          addressLine1Id: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressLine1,
+          addressLine2Id: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressLine2,
+          cityId: isGetPaymentSettingsBySupplierIdData.mailingAddress.cityId,
+          stateId: isGetPaymentSettingsBySupplierIdData.mailingAddress.stateId,
+          countryId: isGetPaymentSettingsBySupplierIdData.mailingAddress.countryId,
+          zipCode: isGetPaymentSettingsBySupplierIdData.mailingAddress.zipCode,
+          checkMailingAddressId: isGetPaymentSettingsBySupplierIdData.checkMailingAddressId,
+          supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
+        };
+        setGetCheckData(formCheckData);
+      }
+      if (activeTabIndex === 3 && isGetPaymentSettingsBySupplierIdData.otherNote) {
+        formOtherData.initialState = {
+          supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
+          supplierId: supplierId,
+          otherNote: isGetPaymentSettingsBySupplierIdData.otherNote,
+        };
+        setGetOtherData(formOtherData);
+      }
+    }
+  }, [activeTabIndex , isGetPaymentSettingsBySupplierIdFetching, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData]);
+
   const addressDetailProps = {
+    activeTabIndex,
     financialSettingFormRef,
+    getCheckData,
     supplierId,
     getAllCities,
     getAllStates,
@@ -61,6 +126,14 @@ const SupplierSettingGrid = ({supplierId}) => {
     isGetAllCountriesSucess,
     allGetAllCountriesData,
   };
+
+  const handleGetById = (id) => {
+    getPaymentSettingsBySupplierId(id)
+  }
+
+  const onTabClick = (index) => {
+    setActiveTabIndex(index)
+  }
 
   const tabs = [
     {
@@ -81,6 +154,8 @@ const SupplierSettingGrid = ({supplierId}) => {
           <CreditCardDetail
             financialSettingFormRef={financialSettingFormRef}
             supplierId={supplierId}
+            getCreditData={getCreditData.initialState}
+            onHandleGetById={handleGetById}
           />
         </div>
       ),
@@ -92,6 +167,7 @@ const SupplierSettingGrid = ({supplierId}) => {
         <div className="mt-2">
           <CheckDetail
             {...addressDetailProps}
+            onHandleGetById={handleGetById}
           />
         </div>
       ),
@@ -104,6 +180,8 @@ const SupplierSettingGrid = ({supplierId}) => {
           <OtherDetail
             financialSettingFormRef={financialSettingFormRef}
             supplierId={supplierId}
+            getOtherData={getOtherData.initialState}
+            onHandleGetById={handleGetById}
           />
         </div>
       ),
@@ -128,7 +206,7 @@ const SupplierSettingGrid = ({supplierId}) => {
       <div className="payment-method-sec">
         <CardSection cardTitle="Payment Method">
           <div className="vertical-tab-inner">
-            <RenderTabs tabs={tabs} isCollapse={true} />
+            <RenderTabs tabs={tabs} isCollapse={true} onTabClick={onTabClick} />
           </div>
         </CardSection>
       </div>

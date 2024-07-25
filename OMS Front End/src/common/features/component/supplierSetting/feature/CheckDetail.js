@@ -8,40 +8,41 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 
-const CheckDetail = ({ supplierId, financialSettingFormRef, getAllCities, getAllStates, getAllCountries, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCountriesSucess, allGetAllCountriesData }) => {
+const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSettingFormRef, getAllCities, getAllStates, getAllCountries, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCountriesSucess, allGetAllCountriesData }) => {
   const checkFormRef = useRef();
   const [checkformData, setCheckFormData] = useState(checkFormData);
-  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+  // const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const [addEditCheck, { isLoading: isAddEditCheckLoading, isSuccess: isAddEditCheckSuccess, data: isAddEditCheckData }] = useAddEditCheckMutation();
 
   useEffect(() => {
     getAllCountries();
     getAllStates();
-    getAllCities();
+    // getAllCities();
   }, []);
 
   useEffect(() => {
     if (isGetAllCountriesSucess && allGetAllCountriesData) {
       setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', checkFormData, 'countryId');
-      setShouldRerenderFormCreator((prevState) => !prevState);
+      // setShouldRerenderFormCreator((prevState) => !prevState);
     }
     if (isGetAllStatesSucess && allGetAllStatesData) {
       handleStateOption(allGetAllStatesData);
-      setShouldRerenderFormCreator((prevState) => !prevState);
+      // setShouldRerenderFormCreator((prevState) => !prevState);
     }
     if (isGetAllCitiesSucess && allGetAllCitiesData) {
-      handleCityOption(allGetAllCitiesData);
-      setShouldRerenderFormCreator((prevState) => !prevState);
+      setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', checkFormData, 'cityId');
+      // setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetAllCountriesSucess, allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData]);
 
   const handleStateOption = (responseData) => {
     setDropDownOptionField(responseData, 'stateId', 'name', checkFormData, 'stateId');
   };
-  const handleCityOption = (responseData) => {
-    setDropDownOptionField(responseData, 'cityId', 'name', checkFormData, 'cityId');
-  };
+
+  // const handleCityOption = (responseData) => {
+  //   setDropDownOptionField(responseData, 'cityId', 'name', checkFormData, 'cityId');
+  // };
 
   useEffect(() => {
     handleResponse(isAddEditCheckSuccess, isAddEditCheckData);
@@ -60,27 +61,49 @@ const CheckDetail = ({ supplierId, financialSettingFormRef, getAllCities, getAll
         return;
       }
       ToastService.success(responseData.errorMessage);
+      if (supplierId) {
+        onHandleGetById(supplierId)
+      }
     }
   }
+
+  useEffect(() => {
+    if (getCheckData.initialState.addressId > 0) {
+      if (getCheckData.initialState.stateId) {
+        getAllCities(getCheckData.initialState.stateId)
+      }
+      let formCheckData = { ...checkformData };
+      formCheckData.initialState = {
+        // addressId:getCheckData.initialState.addressId,
+        addressLine1Id: getCheckData.initialState.addressLine1Id,
+        addressLine2Id: getCheckData.initialState.addressLine2Id,
+        cityId: getCheckData.initialState.cityId,
+        stateId: getCheckData.initialState.stateId,
+        countryId: getCheckData.initialState.countryId,
+        zipCode: getCheckData.initialState.zipCode,
+      };
+      setCheckFormData(formCheckData);
+    }
+  }, [getCheckData])
 
   const handleAddCheckDetail = () => {
     let formsupplierFinancialSettings = financialSettingFormRef.current.getFormData()
     let formcheckForm = checkFormRef.current.getFormData();
-    if (formcheckForm || formsupplierFinancialSettings) {
+    if (formcheckForm && formsupplierFinancialSettings) {
       let req = {
         supplierFinancialSettings: {
           isActive: true,
-          supplierId: supplierId.supplierId,
-          supplierAccountingSettingId: 0,
+          supplierId: supplierId,
+          supplierAccountingSettingId: formsupplierFinancialSettings.supplierAccountingSettingId ? formsupplierFinancialSettings.supplierAccountingSettingId : 0,
           paymentTermId: formsupplierFinancialSettings.paymentTermId && typeof formsupplierFinancialSettings.paymentTermId === "object" ? formsupplierFinancialSettings.paymentTermId.value : formsupplierFinancialSettings.paymentTermId,
           invoiceSubmissionMethod: formsupplierFinancialSettings.paymentMethodId && typeof formsupplierFinancialSettings.paymentMethodId === "object" ? formsupplierFinancialSettings.paymentMethodId.value : formsupplierFinancialSettings.paymentMethodId,
           poDeliveryMethodId: formsupplierFinancialSettings.poDeliveryMethodId && typeof formsupplierFinancialSettings.poDeliveryMethodId === "object" ? formsupplierFinancialSettings.poDeliveryMethodId.value : formsupplierFinancialSettings.poDeliveryMethodId,
         },
-        supplierPaymentSettingId: 0,
-        supplierId: supplierId.supplierId,
-        checkMailingAddressId: 0,
+        supplierPaymentSettingId: getCheckData.initialState.supplierPaymentSettingId ? getCheckData.initialState.supplierPaymentSettingId : 0,
+        supplierId: supplierId,
+        checkMailingAddressId: getCheckData.initialState.checkMailingAddressId ? getCheckData.initialState.checkMailingAddressId : 0,
         mailingAddress: {
-          addressId: 0,
+          addressId: getCheckData.initialState.addressId ? getCheckData.initialState.addressId : 0,
           addressLine1: formcheckForm.addressLine1Id,
           addressLine2: formcheckForm.addressLine2Id,
           cityId: formcheckForm.cityId && typeof formcheckForm.cityId === "object" ? formcheckForm.cityId.value : formcheckForm.cityId,
@@ -103,7 +126,8 @@ const CheckDetail = ({ supplierId, financialSettingFormRef, getAllCities, getAll
         stateId: null,
       });
     } else if (dataField === "stateId") {
-      setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', item => item.stateId === data.value);
+      getAllCities(data.value)
+      // setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', item => item.stateId === data.value);
       setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
       checkFormRef.current.updateFormFieldValue({
         stateId: data.value,
@@ -127,7 +151,7 @@ const CheckDetail = ({ supplierId, financialSettingFormRef, getAllCities, getAll
                 config={checkformData}
                 ref={checkFormRef}
                 {...checkformData}
-                key={shouldRerenderFormCreator}
+                // key={shouldRerenderFormCreator}
                 onActionChange={formActionHandler}
               />
             </div>

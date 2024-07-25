@@ -60,6 +60,37 @@ const supplierFinancialSettingsAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+
+        getSupplierFinancialSettingsBySupplierId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/SupplierFinancialSettings/GetSupplierFinancialSettingsBySupplierId/?supplierId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+
+        }),
+
+        getACHWireBySupplierId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/SupplierFinancialSettings/GetACHWireBySupplierId/?supplierId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+
+        }),
+
+        getPaymentSettingsBySupplierId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/SupplierFinancialSettings/GetPaymentSettingsBySupplierId/?supplierId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+
+        }),
+
     })
 })
 
@@ -68,7 +99,10 @@ export const {
     useAddEditOtherMutation,
     useAddEditCheckMutation,
     useAddEditCreditCardMutation,
-    useLazyGetAllPODeliveryMethodQuery
+    useLazyGetAllPODeliveryMethodQuery,
+    useLazyGetSupplierFinancialSettingsBySupplierIdQuery,
+    useLazyGetACHWireBySupplierIdQuery,
+    useLazyGetPaymentSettingsBySupplierIdQuery,
 } = supplierFinancialSettingsAPI;
 
 export default supplierFinancialSettingsAPI;
