@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from 'prop-types';
 //** Libs's */
 import { securityKey } from "../../../../data/SecurityKey";
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
@@ -26,5 +27,9 @@ const SupplierNoteDetail = ({ isEditablePage }) => {
             onAddNotes={useAddSupplierNotesMutation} onUpdateNotes={useUpdateSupplierNotesMutation} onGetByIdNotes={useLazyGetSupplierNotesBySupplierIdQuery} />
     )
 }
+
+SupplierNoteDetail.propTypes = {
+    isEditablePage: PropTypes.bool.isRequired
+};
 
 export default SupplierNoteDetail;

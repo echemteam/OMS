@@ -15,7 +15,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
     //** State */
     const molGridRef = useRef();
     const [isExistingModel, setIsExistingModel] = useState(false);
-    const [existingInfoData, setExistingInfoData] = useState(false);
+    const [existingInfoData, setExistingInfoData] = useState([]);
 
     //** API Call's */
     const [checkExistingInformation, { isFetching: isGetSupplierDetailsBySupplierNameFetching, isSuccess: isGetSupplierDetailsBySupplierNameSucess,

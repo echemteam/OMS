@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { securityKey } from '../../../../data/SecurityKey';
 import AddSupplierContext from '../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
+import PropTypes from 'prop-types';
 //** Service */
 import { useLazyDownloadDocumentQuery } from '../../../../app/services/documentAPI';
 import { useAddSupplierDocumentsMutation, useDeleteSupplierDocumentsByIdMutation, useLazyGetSupplierDocumentsByIdQuery } from '../../../../app/services/supplierDocuementsAPI';
@@ -29,5 +30,9 @@ const SupplierDocumentDetail = ({ isEditablePage }) => {
             deleteDocumentsById={useDeleteSupplierDocumentsByIdMutation} getDocumentsById={useLazyGetSupplierDocumentsByIdQuery} />
     )
 }
+
+SupplierDocumentDetail.propTypes = {
+    isEditablePage: PropTypes.bool.isRequired,
+};
 
 export default SupplierDocumentDetail;

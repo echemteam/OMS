@@ -94,8 +94,4 @@ SupplierViewTab.propTypes = {
     supplierId: PropTypes.number,
 };
 
-SupplierViewTab.defaultProps = {
-    supplierId: null,
-};
-
 export default SupplierViewTab;

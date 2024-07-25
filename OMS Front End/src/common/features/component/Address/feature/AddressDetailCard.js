@@ -200,7 +200,10 @@ AddressDetailCard.propTypes = {
   showEditIcon: PropTypes.bool,
   getAddresssByCustomerId: PropTypes.func.isRequired,
   getByIdRef: PropTypes.object.isRequired,
-  selectedAddressTypeId: PropTypes.arrayOf(PropTypes.number).isRequired,
+  selectedAddressTypeId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.number),
+  ]).isRequired,
 };
 
 export default AddressDetailCard;
