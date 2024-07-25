@@ -46,7 +46,9 @@ const SupplierViewTab = (supplierId) => {
             sMenuItemCaption: "Financial Settings",
             component: (
                 <div className="mt-2 supplier-setting-sec">
-                    <SupplierSettingDetail/>
+                    <SupplierSettingDetail
+                        supplierId={supplierId}
+                    />
                 </div>
             ),
             isVisible: hasContactPermission.hasAccess,

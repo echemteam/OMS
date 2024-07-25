@@ -3,25 +3,20 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 export const creditCardFormData = {
   // name: "Email From",
   initialState: {
-    messageToRecipient: "",
-    addressLine2: "",
-    stateId: "",
-    zipCode: "",
-    cityId: "",
+    ccNote: "",
+    isCCExistsOnFile: "",
   },
   formFields: [
     
     {
-      id: "notesId",
+      id: "ccNote",
       lable: "Notes",
       Field_Name: "Notes",
       fieldType: FormFieldTypes.TEXTAREA,
-      dataField: "notesId",
+      dataField: "ccNote",
       fieldSetting: {
         placeholder: "Please Enter Notes",
         isEnableOnChange: true,
-        isMultiSelect: false,
-        isDisabled: false,
       },
       // validation: [{ type: "require" }],
       style: {
@@ -29,16 +24,14 @@ export const creditCardFormData = {
       },
     },
     {
-      id: "cardExistsOnFileId",
+      id: "isCCExistsOnFile",
       lable: "Card exists on file",
       Field_Name: "Card exists on file",
       fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "cardExistsOnFileId",
+      dataField: "isCCExistsOnFile",
       fieldSetting: {
         placeholder: "Please Select Card exists on file",
         isEnableOnChange: true,
-        isMultiSelect: false,
-        isDisabled: false,
       },
       // validation: [{ type: "require" }],
       style: {

@@ -21,16 +21,16 @@ const ThirdPartyApiConfigurationList = () => {
         setListData(staticData);
     }, []);
 
-    const handleEditClick = () => {
-        navigate("/ThirdPartyApiConfigurationViewDetails");
-    }
+    // const handleEditClick = () => {
+    //     navigate("/ThirdPartyApiConfigurationViewDetails");
+    // }
 
     const handleViewClick = () => {
         navigate("/ThirdPartyApiConfigurationViewDetails");
     }
 
     const actionHandler = {
-        EDIT: handleEditClick,
+        // EDIT: handleEditClick,
         VIEW: handleViewClick,
     };
 

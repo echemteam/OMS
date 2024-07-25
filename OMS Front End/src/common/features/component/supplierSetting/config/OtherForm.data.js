@@ -3,24 +3,18 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 export const otherFormData = {
   // name: "Email From",
   initialState: {
-    messageToRecipient: "",
-    addressLine2: "",
-    stateId: "",
-    zipCode: "",
-    cityId: "",
+    otherNote: "",
   },
   formFields: [
     {
-      id: "notesId",
+      id: "otherNote",
       lable: "Notes",
       Field_Name: "Notes",
       fieldType: FormFieldTypes.TEXTAREA,
-      dataField: "notesId",
+      dataField: "otherNote",
       fieldSetting: {
         placeholder: "Please Enter Notes",
         isEnableOnChange: true,
-        isMultiSelect: false,
-        isDisabled: false,
       },
       // validation: [{ type: "require" }],
       style: {

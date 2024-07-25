@@ -2,10 +2,12 @@ import React from "react";
 
 import SupplierSettingGrid from "../../../../common/features/component/supplierSetting/SupplierSettingGrid";
 
-const financialSettings = () => {
+const financialSettings = ({ supplierId }) => {
   return (
     <div>
-      <SupplierSettingGrid/>
+      <SupplierSettingGrid
+        supplierId={supplierId}
+      />
     </div>
   );
 };

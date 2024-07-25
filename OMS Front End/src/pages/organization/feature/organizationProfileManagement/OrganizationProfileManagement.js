@@ -123,6 +123,8 @@ const OrganizationProfileManagement = (props) => {
         if (data) {
             let request = {
                 ...data,
+                logo:data.logo.fileName,
+                base64File:data.logo.base64Data,
                 cityId: data.cityId && typeof data.cityId === "object" ? data.cityId.value : data.cityId,
                 stateId: data.stateId && typeof data.stateId === "object" ? data.stateId.value : data.stateId,
                 countryId: data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId,
