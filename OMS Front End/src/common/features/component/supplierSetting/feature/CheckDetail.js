@@ -8,7 +8,7 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 
-const CheckDetail = ({ supplierId, financialSettingFormRef, getAllCities, getAllStates, getAllCountries, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCountriesSucess, allGetAllCountriesData }) => {
+const CheckDetail = ({ onHandleGetById , getCheckData, supplierId, financialSettingFormRef, getAllCities, getAllStates, getAllCountries, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCountriesSucess, allGetAllCountriesData }) => {
   const checkFormRef = useRef();
   const [checkformData, setCheckFormData] = useState(checkFormData);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
@@ -60,27 +60,45 @@ const CheckDetail = ({ supplierId, financialSettingFormRef, getAllCities, getAll
         return;
       }
       ToastService.success(responseData.errorMessage);
+      if (supplierId) {
+        onHandleGetById(supplierId)
+      }
     }
   }
+
+  useEffect(() => {
+    if (getCheckData.initialState.addressId > 0) {
+      let formCheckData = { ...checkformData };
+      formCheckData.initialState = {
+        addressLine1Id: getCheckData.initialState.addressLine1Id,
+        addressLine2Id: getCheckData.initialState.addressLine2Id,
+        cityId: getCheckData.initialState.cityId,
+        stateId: getCheckData.initialState.stateId,
+        countryId: getCheckData.initialState.countryId,
+        zipCode: getCheckData.initialState.zipCode,
+      };
+      setCheckFormData(formCheckData);
+    }
+  }, [getCheckData])
 
   const handleAddCheckDetail = () => {
     let formsupplierFinancialSettings = financialSettingFormRef.current.getFormData()
     let formcheckForm = checkFormRef.current.getFormData();
-    if (formcheckForm || formsupplierFinancialSettings) {
+    if (formcheckForm && formsupplierFinancialSettings) {
       let req = {
         supplierFinancialSettings: {
           isActive: true,
-          supplierId: supplierId.supplierId,
-          supplierAccountingSettingId: 0,
+          supplierId: supplierId,
+          supplierAccountingSettingId: formsupplierFinancialSettings.supplierAccountingSettingId ? formsupplierFinancialSettings.supplierAccountingSettingId : 0,
           paymentTermId: formsupplierFinancialSettings.paymentTermId && typeof formsupplierFinancialSettings.paymentTermId === "object" ? formsupplierFinancialSettings.paymentTermId.value : formsupplierFinancialSettings.paymentTermId,
           invoiceSubmissionMethod: formsupplierFinancialSettings.paymentMethodId && typeof formsupplierFinancialSettings.paymentMethodId === "object" ? formsupplierFinancialSettings.paymentMethodId.value : formsupplierFinancialSettings.paymentMethodId,
           poDeliveryMethodId: formsupplierFinancialSettings.poDeliveryMethodId && typeof formsupplierFinancialSettings.poDeliveryMethodId === "object" ? formsupplierFinancialSettings.poDeliveryMethodId.value : formsupplierFinancialSettings.poDeliveryMethodId,
         },
-        supplierPaymentSettingId: 0,
-        supplierId: supplierId.supplierId,
-        checkMailingAddressId: 0,
+        supplierPaymentSettingId: getCheckData.initialState.supplierPaymentSettingId ? getCheckData.initialState.supplierPaymentSettingId : 0,
+        supplierId: supplierId,
+        checkMailingAddressId: getCheckData.initialState.checkMailingAddressId ? getCheckData.initialState.checkMailingAddressId : 0,
         mailingAddress: {
-          addressId: 0,
+          addressId: getCheckData.initialState.addressId ? getCheckData.initialState.addressId : 0,
           addressLine1: formcheckForm.addressLine1Id,
           addressLine2: formcheckForm.addressLine2Id,
           cityId: formcheckForm.cityId && typeof formcheckForm.cityId === "object" ? formcheckForm.cityId.value : formcheckForm.cityId,

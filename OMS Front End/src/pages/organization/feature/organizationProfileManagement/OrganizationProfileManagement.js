@@ -41,7 +41,7 @@ const OrganizationProfileManagement = (props) => {
             let formData = { ...organizationProfileData };
             formData.initialState = {
                 name: isGetOrganizationProfileData.name,
-                logo: isGetOrganizationProfileData.logo,
+                logo: isGetOrganizationProfileData.base64File,
                 addressLine1: isGetOrganizationProfileData.addressLine1,
                 addressLine2: isGetOrganizationProfileData.addressLine2,
                 countryId: isGetOrganizationProfileData.countryId,
