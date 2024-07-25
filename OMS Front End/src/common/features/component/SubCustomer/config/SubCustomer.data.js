@@ -58,9 +58,9 @@ export const SubCustomerFormData = {
           },
           customAction: [
             {
-                name: "EDIT",
+                name: "VIEWCUSTOMER",
                 iconName: AppIcons.EyeIcon,
-                title: "Edit"
+                title: "View Customer"
             },
         ],
           
