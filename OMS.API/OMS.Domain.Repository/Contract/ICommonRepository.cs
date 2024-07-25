@@ -13,7 +13,7 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetAllTerritoriesResponse>> GetAllTerritories();
         Task<List<GetAllCountriesResponse>> GetAllCountries();
         Task<List<GetAllStatesResponse>> GetAllStates();
-        Task<List<GetAllCitiesResponse>> GetAllCities();
+        Task<List<GetAllCitiesResponse>> GetAllCities(int stateId);
         Task<List<GetAllContactTypesResponse>> GetAllContactTypes();
         Task<List<GetAllAddressTypesResponse>> GetAllAddressTypes();
         Task<List<GetAllDocumentTypesResponse>> GetAllDocumentTypes();

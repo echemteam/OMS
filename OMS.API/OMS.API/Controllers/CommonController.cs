@@ -76,9 +76,9 @@ namespace OMS.API.Controllers
         }
 
         [HttpGet("GetAllCities")]
-        public async Task<IActionResult> GetAllCities()
+        public async Task<IActionResult> GetAllCities(int stateId)
         {
-            List<GetAllCitiesResponse> responseData = await _serviceManager.commonServices.GetAllCities().ConfigureAwait(true);
+            List<GetAllCitiesResponse> responseData = await _serviceManager.commonServices.GetAllCities(stateId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
 

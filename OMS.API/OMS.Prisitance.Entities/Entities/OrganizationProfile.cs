@@ -14,6 +14,8 @@ namespace OMS.Prisitance.Entities.Entities
         public string? Name { get; set; }
         [Column("Logo")]
         public string? Logo { get; set; }
+        [Column("Base64File")]
+        public string? Base64File { get; set; }
         [Column("AddressLine1")]
         public string? AddressLine1 { get; set; }
         [Column("AddressLine2")]
