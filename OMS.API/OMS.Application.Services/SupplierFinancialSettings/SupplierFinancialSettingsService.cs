@@ -114,12 +114,12 @@ namespace OMS.Application.Services.SupplierFinancialSettings
         {
             var responseData = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
 
-            if (supplierId > 0)
+            if (responseData != null && supplierId > 0 )
             {
                 responseData.BankAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(responseData.BankAddressId);
                 responseData.RecipientAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(responseData.RecipientAddressId);
             }
-            return responseData;
+            return responseData!;
         }
         public async Task<GetPaymentSettingsBySupplierIdResponse> GetPaymentSettingsBySupplierId(int supplierId)
         {
