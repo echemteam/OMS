@@ -323,7 +323,7 @@ import PropTypes from 'prop-types';
         };
         updateCustomerInActiveStatus(req);
         addCustomerNotes(req);
-        if (!assignRUser) {
+        if (!assignRUser && custData.responsibleUserId && custData.responsibleUserId.value) {
           updateRUserData(custData.responsibleUserId.value);
         }
       }
