@@ -16,7 +16,6 @@ const ApiProviders = () => {
   const childRef = useRef();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const handleToggleModal = () => {
     setIsModelOpen(true);
@@ -53,7 +52,7 @@ const ApiProviders = () => {
   };
   const handleClear = () => {
     setSearch("");
-    setShouldRerenderFormCreator((prevState) => !prevState);
+     
   };
 
   return (
@@ -90,7 +89,6 @@ const ApiProviders = () => {
           handleSearch={handleSearch}
           search={search}
           handleClear={handleClear}
-          shouldRerenderFormCreator={shouldRerenderFormCreator}
         />
       </CardSection>
 
