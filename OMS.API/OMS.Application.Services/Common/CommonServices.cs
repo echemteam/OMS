@@ -57,9 +57,9 @@ namespace OMS.Application.Services.Common
             return repositoryManager.commonRepository.GetAllStates();
         }
 
-        public Task<List<GetAllCitiesResponse>> GetAllCities()
+        public Task<List<GetAllCitiesResponse>> GetAllCities(int stateId)
         {
-            return repositoryManager.commonRepository.GetAllCities();
+            return repositoryManager.commonRepository.GetAllCities(stateId);
         }
 
         public Task<List<GetAllContactTypesResponse>> GetAllContactTypes()

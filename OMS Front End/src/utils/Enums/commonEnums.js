@@ -82,3 +82,10 @@ export const MaskingType = {
     CURRENCY: "currency",
     PERCENT: "percent"
 }
+
+export const SupplierFinancialSettings = {
+    ACHWIRE: 1,
+    CREDITCARD: 2,
+    CHECK: 3,
+    OTHER: 4,
+}

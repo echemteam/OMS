@@ -47,9 +47,9 @@ export const thirdPartyListConfigurationData = {
             width: "10%",
             colType: GridColumnType.ACTION,
             defaultAction: {
-                allowEdit: true,
+                allowEdit: false,
+                allowView : true,
                 allowDelete: true,
-                allowView : true
             },
         },
     ],

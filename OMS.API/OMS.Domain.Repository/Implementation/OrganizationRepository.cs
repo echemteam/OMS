@@ -27,6 +27,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OrganizationId,
                 requestData.Name,
                 requestData.Logo,
+                requestData.Base64File,
                 requestData.AddressLine1,
                 requestData.AddressLine2,
                 requestData.CityId,

@@ -1,4 +1,8 @@
-﻿using OMS.Domain.Entities.Entity.CommonEntity;
+﻿using OMS.Domain.Entities.API.Response.Address;
+using OMS.Domain.Entities.API.Response.SuppierBankDetails;
+using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
+using OMS.Domain.Entities.API.Response.supplierPaymentSettings;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.SupplierPaymentSettings;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -13,6 +17,9 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDEDITCREDITCARD = "AddEditCreditCard";
         const string ADDEDITCHECK = "AddEditCheck";
         const string ADDEDITOTHER = "AddEditOther";
+        const string GETACHWIREBYSUPPLIERID = "GetACHWireBySupplierId";
+        const string GETPAYMENTSETTINGSBYSUPPLIERID = "GetPaymentSettingsBySupplierId";
+        const string GETADDRESSBYADDRESSID = "GetAddressByAddressId";
         #endregion
 
         public SupplierPaymentSettingsRepository(DapperContext dapperContext) : base(dapperContext)
@@ -50,6 +57,31 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OtherNote,
                 requestData.CreatedBy
             }, CommandType.StoredProcedure);
+        }
+
+        public async Task<GetACHWireBySupplierIdResponse> GetACHWireBySupplierId(int supplierId)
+        {
+            GetACHWireBySupplierIdResponse getAddEditACHWireBySupplierIdResponse = await _context.GetFrist<GetACHWireBySupplierIdResponse>(GETACHWIREBYSUPPLIERID, new
+            {
+                supplierId
+            }, commandType: CommandType.StoredProcedure);
+            return getAddEditACHWireBySupplierIdResponse;
+        }
+        public async Task<GetAddressResponse> GetAddressByAddressId(int? addressId)
+        {
+            GetAddressResponse getAddressResponse = await _context.GetFrist<GetAddressResponse>(GETADDRESSBYADDRESSID, new
+            {
+                addressId
+            }, commandType: CommandType.StoredProcedure);
+            return getAddressResponse;
+        }
+        public async Task<GetPaymentSettingsBySupplierIdResponse> GetPaymentSettingsBySupplierId(int supplierId)
+        {
+            GetPaymentSettingsBySupplierIdResponse getCreditCardBySupplierIdResponse = await _context.GetFrist<GetPaymentSettingsBySupplierIdResponse>(GETPAYMENTSETTINGSBYSUPPLIERID, new
+            {
+                supplierId
+            }, commandType: CommandType.StoredProcedure);
+            return getCreditCardBySupplierIdResponse;
         }
         #endregion
     }

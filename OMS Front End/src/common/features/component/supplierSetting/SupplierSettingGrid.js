@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { financialSettingFormData } from "./config/FinancialSettingForm.data";
@@ -8,44 +8,106 @@ import CreditCardDetail from "./feature/CreditCardDetail";
 import Buttons from "../../../../components/ui/button/Buttons";
 import CheckDetail from "./feature/CheckDetail";
 import OtherDetail from "./feature/OtherDetail";
+import { useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery } from "../../../../app/services/customerSettingsAPI";
+import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../app/services/addressAPI";
+import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
+import { SupplierFinancialSettings } from "../../../../utils/Enums/commonEnums";
+import { useLazyGetAllPODeliveryMethodQuery } from "../../../../app/services/supplierFinancialSettingsAPI";
 
-const SupplierSettingGrid = () => {
+const SupplierSettingGrid = ({supplierId}) => {
   const financialSettingFormRef = useRef();
-  const [financialSettingForm, setfinancialSettingForm] = useState(
-    financialSettingFormData
-  );
+  const [financialSettingForm, setfinancialSettingForm] = useState(financialSettingFormData);
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+
+  const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
+  const [getAllPaymentMethod, { isFetching: isGetAllPaymentMethodFetching, isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData }] = useLazyGetAllPaymentMethodQuery();
+  const [getAllCities, { isSuccess: isGetAllCitiesSucess, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+  const [getAllStates, { isSuccess: isGetAllStatesSucess, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
+  const [getAllDeliveryAccounts, { isFetching: isGetAllPODeliveryMethodFetching, isSuccess: isGetAllPODeliveryMethodSuccess, data: isGetAllPODeliveryMethodData }] = useLazyGetAllPODeliveryMethodQuery();
+
+  useEffect(() => {
+    getAllPaymentTerms();
+    getAllPaymentMethod();
+    getAllDeliveryAccounts()
+  }, []);
+
+  useEffect(() => {
+    if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
+      setDropDownOptionField(isGetAllPaymentTermsData, "paymentTermId", "paymentTerm", financialSettingFormData, "paymentTermId");
+      setShouldRerenderFormCreator((prevState) => !prevState);
+    }
+    if (!isGetAllPaymentMethodFetching && isGetAllPaymentMethodSuccess && isGetAllPaymentMethodData) {
+      setDropDownOptionField(isGetAllPaymentMethodData, "paymentMethodId", "method", financialSettingFormData, "paymentMethodId");
+      setShouldRerenderFormCreator((prevState) => !prevState);
+    }
+    if (!isGetAllPODeliveryMethodFetching && isGetAllPODeliveryMethodSuccess && isGetAllPODeliveryMethodData) {
+      setDropDownOptionField(isGetAllPODeliveryMethodData, "poDeliveryMethodId", "poDeliveryMethod", financialSettingFormData, "poDeliveryMethodId");
+      setShouldRerenderFormCreator((prevState) => !prevState);
+    }
+  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData, isGetAllPaymentMethodFetching, isGetAllPaymentMethodSuccess, isGetAllPaymentMethodData, isGetAllPODeliveryMethodData, isGetAllPODeliveryMethodSuccess, isGetAllPODeliveryMethodFetching]);
+
+  const addressDetailProps = {
+    financialSettingFormRef,
+    supplierId,
+    getAllCities,
+    getAllStates,
+    getAllCountries,
+    isGetAllCitiesSucess,
+    allGetAllCitiesData,
+    isGetAllStatesSucess,
+    allGetAllStatesData,
+    isGetAllCountriesSucess,
+    allGetAllCountriesData,
+  };
+
   const tabs = [
     {
       sMenuItemCaption: "ACH/Wire",
       component: (
         <div className="mt-2">
-          <ACHWireDetail/>
+          <ACHWireDetail
+            {...addressDetailProps}
+          />
         </div>
       ),
+      tab: SupplierFinancialSettings.ACHWIRE,
     },
     {
       sMenuItemCaption: "Credit Card (CC)",
       component: (
         <div className="mt-2">
-          <CreditCardDetail />
+          <CreditCardDetail
+            financialSettingFormRef={financialSettingFormRef}
+            supplierId={supplierId}
+          />
         </div>
       ),
+      tab: SupplierFinancialSettings.CREDITCARD,
     },
     {
       sMenuItemCaption: "Check",
       component: (
         <div className="mt-2">
-          <CheckDetail />
+          <CheckDetail
+            {...addressDetailProps}
+          />
         </div>
       ),
+      tab: SupplierFinancialSettings.CHECK,
     },
     {
       sMenuItemCaption: "Other",
       component: (
         <div className="mt-2">
-          <OtherDetail />
+          <OtherDetail
+            financialSettingFormRef={financialSettingFormRef}
+            supplierId={supplierId}
+          />
         </div>
       ),
+      tab: SupplierFinancialSettings.OTHER,
     },
   ];
 
@@ -58,7 +120,7 @@ const SupplierSettingGrid = () => {
               config={financialSettingForm}
               ref={financialSettingFormRef}
               {...financialSettingForm}
-              // key={shouldRerenderFormCreatorLogo}
+              key={shouldRerenderFormCreator}
             />
           </div>
         </CardSection>
@@ -67,22 +129,6 @@ const SupplierSettingGrid = () => {
         <CardSection cardTitle="Payment Method">
           <div className="vertical-tab-inner">
             <RenderTabs tabs={tabs} isCollapse={true} />
-          </div>
-          <div className="col-md-12">
-            <div className="d-flex align-item-end justify-content-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText="Save"
-                // onClick={handleAddEdit}
-                // isLoading={isAddLoading || isUpdateLoading}
-                // isDisable={isButtonDisable}
-              />
-              <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-                // onClick={onSidebarClose}
-              />
-            </div>
           </div>
         </CardSection>
       </div>

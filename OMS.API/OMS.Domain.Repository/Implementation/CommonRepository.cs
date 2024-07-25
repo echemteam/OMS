@@ -85,9 +85,13 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetList<GetAllStatesResponse>(GETALLSTATES, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<List<GetAllCitiesResponse>> GetAllCities()
+        public async Task<List<GetAllCitiesResponse>> GetAllCities(int stateId)
         {
-            return await _context.GetList<GetAllCitiesResponse>(GETALLCITIES, commandType: CommandType.StoredProcedure);
+            List<GetAllCitiesResponse> getAllCitiesResponse = await _context.GetList<GetAllCitiesResponse>(GETALLCITIES, new
+            {
+                stateId
+            }, commandType: CommandType.StoredProcedure);
+            return getAllCitiesResponse;
         }
 
         public async Task<List<GetAllContactTypesResponse>> GetAllContactTypes()

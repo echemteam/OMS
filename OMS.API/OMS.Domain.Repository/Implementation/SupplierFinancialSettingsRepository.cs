@@ -1,4 +1,6 @@
-﻿using OMS.Domain.Entities.Entity.CommonEntity;
+﻿using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
+using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.SupplierAccoutingSetting;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -11,6 +13,7 @@ namespace OMS.Domain.Repository.Implementation
     {
         #region SP Name
         const string ADDEDITSUPPLIERFINANCIALSETTINGS = "AddEditSupplierFinancialSettings";
+        const string GETSUPPLIERFINANCIALSETTINGSBYSUPPLIERID = "GetSupplierFinancialSettingsBySupplierId";
         #endregion
 
         public SupplierFinancialSettingsRepository(DapperContext dapperContext) : base(dapperContext)
@@ -30,6 +33,14 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.IsActive,
                 requestData.CreatedBy
             }, CommandType.StoredProcedure);
+        }
+        public async Task<GetSupplierFinancialSettingsBySupplierIdResponse> GetSupplierFinancialSettingsBySupplierId(int supplierId)
+        {
+            GetSupplierFinancialSettingsBySupplierIdResponse getSupplierFinancialSettingsBySupplierIdResponse = await _context.GetFrist<GetSupplierFinancialSettingsBySupplierIdResponse>(GETSUPPLIERFINANCIALSETTINGSBYSUPPLIERID, new
+            {
+                supplierId
+            }, commandType: CommandType.StoredProcedure);
+            return getSupplierFinancialSettingsBySupplierIdResponse;
         }
         #endregion
     }
