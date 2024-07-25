@@ -7,7 +7,7 @@ import { useAddRolesMutation, useUpdateRolesMutation } from '../../../../app/ser
 import ToastService from '../../../../services/toastService/ToastService';
 import { securityKey } from '../../../../data/SecurityKey';
 import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
-
+import PropTypes from 'prop-types';
 
 const AddEditGroup = (props) => {
 
@@ -147,4 +147,10 @@ const AddEditGroup = (props) => {
   )
 }
 
+AddEditGroup.propTypes = {
+  isEdit: PropTypes.bool.isRequired,
+  initData: PropTypes.object,
+  onSuccess: PropTypes.func,
+  onModalClose: PropTypes.func.isRequired,
+};
 export default AddEditGroup

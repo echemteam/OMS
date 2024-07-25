@@ -4,6 +4,7 @@ import changePasswordInfo from '../features/config/ChangePassword.data';
 import ToastService from '../../../../services/toastService/ToastService';
 import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
+import PropTypes from 'prop-types';
 
 const ChangePassword = (props) => {
     const userId = props.descrypteId;
@@ -58,5 +59,10 @@ const ChangePassword = (props) => {
         </div>
     )
 }
+
+ChangePassword.propTypes = {
+    descrypteId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    isButtonDisable: PropTypes.bool.isRequired,
+};
 
 export default ChangePassword

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 //** Component's */
 const PermissionItem = React.lazy(() => import("./PermissionItem"));
 
@@ -17,6 +18,15 @@ const PermissionChildItem = ({ childItems, level, parentItem, onParenetUpdate, .
             ))}
         </ul>
     );
+};
+
+PermissionChildItem.propTypes = {
+    childItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+    level: PropTypes.number.isRequired,
+    parentItem: PropTypes.shape({
+        isActive: PropTypes.bool,
+    }).isRequired,
+    onParenetUpdate: PropTypes.func.isRequired,
 };
 
 export default PermissionChildItem;
