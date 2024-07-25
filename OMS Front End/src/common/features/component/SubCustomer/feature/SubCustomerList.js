@@ -78,11 +78,11 @@ const SubCustomerList = (props) => {
   }, [isGetSubCustomerByCustomerIdSuccess, isGetSubCustomerByCustomerIdData]);
 
 
-  const handleEditClick = (data) => {
+  const handleViewClick = (data) => {
     window.open(`/CustomerDetails/${encryptUrlData(data.subCustomerId)}`, '_blank');
   };
   const actionHandler = {
-    EDIT: handleEditClick,
+    VIEWCUSTOMER: handleViewClick,
     DELETE: handleDeleteClick,
   };
 
