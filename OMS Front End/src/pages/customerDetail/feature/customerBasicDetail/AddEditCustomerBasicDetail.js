@@ -318,10 +318,10 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
 };
 
 AddEditCustomerBasicDetail.propTypes = {
-    keyId: PropTypes.number.isRequired,
-    getCustomerById: PropTypes.func.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    onSidebarClose: PropTypes.func.isRequired,
+    keyId: PropTypes.number ,
+    getCustomerById: PropTypes.func ,
+    isOpen: PropTypes.bool ,
+    onSidebarClose: PropTypes.func ,
     isEditablePage: PropTypes.bool,
   };
 export default AddEditCustomerBasicDetail;

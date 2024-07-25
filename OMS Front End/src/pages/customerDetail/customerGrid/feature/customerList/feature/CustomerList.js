@@ -455,8 +455,8 @@ import PropTypes from 'prop-types';
     search: PropTypes.string.isRequired,
     handleChangeDropdown: PropTypes.func.isRequired,
     statusOptions: PropTypes.arrayOf(PropTypes.shape({
-      value: PropTypes.number.isRequired,
-      label: PropTypes.string.isRequired
+      value: PropTypes.number,
+      label: PropTypes.string
     })).isRequired,
     selectedDrpvalues: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.number),

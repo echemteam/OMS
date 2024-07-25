@@ -226,19 +226,33 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         }
     };
 
+    // const handleValidateTextId = (data, dataField) => {
+    //     if (dataField !== 'countryId') return;
+
+    //     const updatedFormFields = getTaxIdMinMaxLength(data.value, supplierBasicData.formFields, 'taxId');
+    //     const filteredFields = supplierBasicData.formFields.filter(field => {
+    //         if (isOpen) {
+    //             return field.dataField !== "note";
+    //         }
+    //         return field.id !== "name-input" && field.dataField !== "responsibleUserId";
+    //     });
+
+    //     setFormData({ ...formData, formFields: isOpen ? filteredFields : updatedFormFields });
+    // };
+
     const handleValidateTextId = (data, dataField) => {
-        if (dataField !== 'countryId') return;
-
-        const updatedFormFields = getTaxIdMinMaxLength(data.value, supplierBasicData.formFields, 'taxId');
-        const filteredFields = supplierBasicData.formFields.filter(field => {
+        if (dataField === 'countryId') {
+            const { formFields } = getTaxIdMinMaxLength(data.value, supplierBasicData.formFields, 'taxId');
+            const updatedForm = { ...formData };
+            updatedForm.formFields = formFields;
             if (isOpen) {
-                return field.dataField !== "note";
+                updatedForm.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note"  && field.dataField !== "responsibleUserId");
+            } else {
+                updatedForm.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "responsibleUserId");
             }
-            return field.id !== "name-input" && field.dataField !== "responsibleUserId";
-        });
-
-        setFormData({ ...formData, formFields: isOpen ? filteredFields : updatedFormFields });
-    };
+            setFormData(updatedForm);
+        }
+    }
 
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
@@ -320,10 +334,10 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 }
 
 AddEditSupplierBasicDetail.propTypes = {
-    keyId: PropTypes.number.isRequired,
-    getSupplierById: PropTypes.func.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    onSidebarClose: PropTypes.func.isRequired,
-    isEditablePage: PropTypes.bool.isRequired
+    keyId: PropTypes.number,
+    getSupplierById: PropTypes.func,
+    isOpen: PropTypes.bool,
+    onSidebarClose: PropTypes.func,
+    isEditablePage: PropTypes.bool
 };
 export default AddEditSupplierBasicDetail;

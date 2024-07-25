@@ -231,7 +231,7 @@ Input.propTypes = {
   type: PropTypes.oneOf([TextInputType.TEXT, TextInputType.EMAIL, TextInputType.PASSWORD, TextInputType.NUMBER]).isRequired,
   name: PropTypes.string,
   placeholder: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func.isRequired,
   onKeyup: PropTypes.func,
   onBlur: PropTypes.func,
