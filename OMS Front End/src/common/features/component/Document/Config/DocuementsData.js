@@ -117,7 +117,7 @@ export const FileTypeIcons = [
     icon: AppIcons.DocIcon
   },
   {
-    type: 'xls',
+    type: 'xlsx',
     icon: AppIcons.XlsIcon
   },
   {
