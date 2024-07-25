@@ -69,7 +69,7 @@ const SupplierSettingGrid = ({ supplierId }) => {
       };
       setfinancialSettingForm(formData);
     }
-  }, [isGetSupplierFinancialSettingsBySupplierIdFetching, isGetSupplierFinancialSettingsBySupplierIdSuccess, isGetSupplierFinancialSettingsBySupplierIdData,]);
+  }, [isGetSupplierFinancialSettingsBySupplierIdFetching, isGetSupplierFinancialSettingsBySupplierIdSuccess, isGetSupplierFinancialSettingsBySupplierIdData]);
 
   useEffect(() => {
     if (!isGetPaymentSettingsBySupplierIdFetching && isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData) {
@@ -108,7 +108,7 @@ const SupplierSettingGrid = ({ supplierId }) => {
         setGetOtherData(formOtherData);
       }
     }
-  }, [activeTabIndex , isGetPaymentSettingsBySupplierIdFetching, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData,]);
+  }, [activeTabIndex , isGetPaymentSettingsBySupplierIdFetching, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData]);
 
   const addressDetailProps = {
     financialSettingFormRef,
