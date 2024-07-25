@@ -1,6 +1,8 @@
 import React from 'react'
+import { AppIcons } from '../../../../../../../data/appIcons'
+import Image from '../../../../../../../components/image/Image'
 
-const ThirdPartyApiConfigurationInfoCard = () => {
+const ThirdPartyApiConfigurationInfoCard = ({ editClick }) => {
     return (
         <div className="basic-customer-detail">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -70,6 +72,11 @@ const ThirdPartyApiConfigurationInfoCard = () => {
                             <div className="info-desc">NIsarg</div>
                         </div>
                     </div>
+                </div>
+                <div className="edit-icons"
+                    onClick={editClick}
+                >
+                    <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
                 </div>
             </div>
         </div>

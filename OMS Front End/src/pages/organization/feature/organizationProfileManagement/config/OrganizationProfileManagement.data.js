@@ -24,16 +24,18 @@ export const OrganizationProfileManagementdata = {
             id: "logo",
             lable: "Logo ",
             Field_Name: "Logo",
-            fieldType: FormFieldTypes.INPUT,
+            fieldType: FormFieldTypes.IMAGE,
             dataField: "logo",
             fieldSetting: {
-                placeholder: "Enter Logo",
-                allowSpace: true,
-                maxLength: 100,
+                placeholder: "Upload Attachment",
+                isImageUpload: true,
+                isButtonVisible: true,
+                isCustomButtonVisible: false,
+                acceptedFiles: '.png ',
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 custom-file-upload-section",
             },
         },
         {

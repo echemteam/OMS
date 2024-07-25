@@ -1,13 +1,14 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
-export const addressFormData = {
+export const registeredBankAddressForm = {
   // name: "Email From",
   initialState: {
-    addressLine1: "",
-    addressLine2: "",
-    stateId: "",
+    addressLine1Id: "",
+    addressLine2Id: "",
+    stateId: 3707,
     zipCode: "",
-    cityId: "",
+    cityId: 143,
+    countryId:10
   },
   formFields: [
     {
@@ -39,7 +40,7 @@ export const addressFormData = {
         isMultiSelect: false,
         isDisabled: false,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-3",
       },
