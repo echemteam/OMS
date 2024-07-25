@@ -18,8 +18,9 @@ export const customerbasicData = {
         placeholder: "Enter Customer Name",
         allowSpace: true,
         maxLength: 50,
+        exemptBoundarySpaces: true
       },
-      validation: [{ type: "require" }, { type: "uniqueName" }, { type: "invalidBoundarySpaces" }],
+      validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
         containerCss: "col-xxl-8 col-xl-8 col-md-8 col-12 mb-input",
       },
