@@ -111,6 +111,7 @@ const SupplierSettingGrid = ({ supplierId }) => {
   }, [activeTabIndex , isGetPaymentSettingsBySupplierIdFetching, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData]);
 
   const addressDetailProps = {
+    activeTabIndex,
     financialSettingFormRef,
     getCheckData,
     supplierId,

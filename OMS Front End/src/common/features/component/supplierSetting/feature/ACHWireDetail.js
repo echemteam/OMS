@@ -12,7 +12,7 @@ import { registeredBankAddressForm } from "../config/RegisteredBankAddressForm.d
 import ToastService from "../../../../../services/toastService/ToastService";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 
-const ACHWireDetail = ({ supplierId, financialSettingFormRef, getAllCities, getAllStates, getAllCountries, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCountriesSucess, allGetAllCountriesData }) => {
+const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef, getAllCities, getAllStates, getAllCountries, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCountriesSucess, allGetAllCountriesData }) => {
   const aCHWireFormRef = useRef();
   const bankFormRef = useRef();
   const registeredFormRef = useRef();
@@ -30,8 +30,14 @@ const ACHWireDetail = ({ supplierId, financialSettingFormRef, getAllCities, getA
     getAllStates();
     // getAllCities();
     getAllPaymentTerms();
-    getACHWireBySupplierId(supplierId)
+
   }, []);
+
+  useEffect(() => {
+    if (activeTabIndex === 0) {
+      getACHWireBySupplierId(supplierId)
+    }
+  }, [activeTabIndex])
 
   useEffect(() => {
     if (isGetAllCountriesSucess && allGetAllCountriesData) {
@@ -40,11 +46,16 @@ const ACHWireDetail = ({ supplierId, financialSettingFormRef, getAllCities, getA
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
     if (isGetAllStatesSucess && allGetAllStatesData) {
-      handleStateOption(allGetAllStatesData);
+      // handleStateOption(allGetAllStatesData);
+      handleBankStateOption(allGetAllStatesData);
+      handleRegisteredStateOption(allGetAllStatesData);
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
     if (isGetAllCitiesSucess && allGetAllCitiesData) {
-      handleCityOption(allGetAllCitiesData);
+      // handleBankCityOption(allGetAllStatesData);
+      // handleRegisteredCityOption(allGetAllStatesData);
+      setDropDownOptionField(allGetAllCitiesData, 'stateId', 'name', bankAddressFormData, 'stateId');
+      setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
@@ -53,15 +64,26 @@ const ACHWireDetail = ({ supplierId, financialSettingFormRef, getAllCities, getA
     }
   }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData, isGetAllCountriesSucess, allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData]);
 
-  const handleStateOption = (responseData) => {
+  const handleBankStateOption = (responseData) => {
     setDropDownOptionField(responseData, 'stateId', 'name', bankAddressFormData, 'stateId');
+  };
+
+  const handleRegisteredStateOption = (responseData) => {
     setDropDownOptionField(responseData, 'stateId', 'name', registeredBankAddressForm, 'stateId');
   };
 
-  const handleCityOption = (responseData) => {
-    setDropDownOptionField(responseData, 'cityId', 'name', bankAddressFormData, 'cityId');
-    setDropDownOptionField(responseData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
-  };
+  // const handleBankCityOption = (responseData) => {
+  //   setDropDownOptionField(responseData, 'cityId', 'name', bankAddressFormData, 'cityId');
+  // };
+
+  // const handleRegisteredCityOption = (responseData) => {
+  //   setDropDownOptionField(responseData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
+  // };
+
+  // const handleCityOption = (responseData) => {
+  //   setDropDownOptionField(responseData, 'cityId', 'name', bankAddressFormData, 'cityId');
+  //   setDropDownOptionField(responseData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
+  // };
 
   useEffect(() => {
     handleResponse(isAddEditACHWireSuccess, isAddEditACHWireData);
@@ -91,6 +113,20 @@ const ACHWireDetail = ({ supplierId, financialSettingFormRef, getAllCities, getA
       let formDataAchWire = { ...achWireData };
       let formDataBank = { ...bankAddressData };
       let formDataRegister = { ...registeredBankAddressData };
+
+      // if(isGetACHWireBySupplierIdData.bankAddress.countryId){
+      //   getAllCities(isGetACHWireBySupplierIdData.bankAddress.stateId)
+      // }
+      // if(isGetACHWireBySupplierIdData.recipientAddress.stateId){
+      //   getAllCities(isGetACHWireBySupplierIdData.recipientAddress.stateId)
+      // }
+
+      if(isGetACHWireBySupplierIdData.bankAddress.stateId){
+        getAllCities(isGetACHWireBySupplierIdData.bankAddress.stateId)
+      }
+      if(isGetACHWireBySupplierIdData.recipientAddress.stateId){
+        getAllCities(isGetACHWireBySupplierIdData.recipientAddress.stateId)
+      }
       formDataBank.initialState = {
         addressId: isGetACHWireBySupplierIdData.bankAddress.addressId,
         addressLine1Id: isGetACHWireBySupplierIdData.bankAddress.addressLine1,
@@ -205,6 +241,7 @@ const ACHWireDetail = ({ supplierId, financialSettingFormRef, getAllCities, getA
         stateId: null,
       });
     } else if (dataField === "stateId") {
+      getAllCities(data.value)
       setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', item => item.stateId === data.value);
       setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
       bankFormRef.current.updateFormFieldValue({
@@ -224,6 +261,7 @@ const ACHWireDetail = ({ supplierId, financialSettingFormRef, getAllCities, getA
         stateId: null,
       });
     } else if (dataField === "stateId") {
+      getAllCities(data.value)
       setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', item => item.stateId === data.value);
       setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
       registeredFormRef.current.updateFormFieldValue({
