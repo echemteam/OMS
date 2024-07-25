@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import CardSection from "../../../components/ui/card/CardSection";
