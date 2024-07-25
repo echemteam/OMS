@@ -229,7 +229,6 @@ export const achWireFormData = {
       dataField: "isAddressInUs",
       fieldSetting: {
         placeholder: "",
-        isEnableOnChange: true,
       },
       // validation: [{ type: "require" }],
       style: {
