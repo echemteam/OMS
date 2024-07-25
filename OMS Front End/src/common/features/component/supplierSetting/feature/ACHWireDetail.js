@@ -68,6 +68,11 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef, ge
     setDropDownOptionField(responseData, 'stateId', 'name', bankAddressFormData, 'stateId');
   };
 
+  // const handleStateOption = (responseData) => {
+  //   setDropDownOptionField(responseData, 'stateId', 'name', bankAddressFormData, 'stateId');
+  //   setDropDownOptionField(responseData, 'stateId', 'name', registeredBankAddressForm, 'stateId');
+  // };
+
   const handleRegisteredStateOption = (responseData) => {
     setDropDownOptionField(responseData, 'stateId', 'name', registeredBankAddressForm, 'stateId');
   };
@@ -114,19 +119,21 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef, ge
       let formDataBank = { ...bankAddressData };
       let formDataRegister = { ...registeredBankAddressData };
 
-      // if(isGetACHWireBySupplierIdData.bankAddress.countryId){
-      //   getAllCities(isGetACHWireBySupplierIdData.bankAddress.stateId)
-      // }
-      // if(isGetACHWireBySupplierIdData.recipientAddress.stateId){
-      //   getAllCities(isGetACHWireBySupplierIdData.recipientAddress.stateId)
-      // }
+      if (isGetACHWireBySupplierIdData.bankAddress.countryId) {
+        handleBankStateOption(allGetAllStatesData)
+      }
+      if (isGetACHWireBySupplierIdData.recipientAddress.stateId) {
+        handleRegisteredStateOption(allGetAllStatesData)
+      }
 
-      if(isGetACHWireBySupplierIdData.bankAddress.stateId){
+      if (isGetACHWireBySupplierIdData.bankAddress.stateId) {
         getAllCities(isGetACHWireBySupplierIdData.bankAddress.stateId)
       }
-      if(isGetACHWireBySupplierIdData.recipientAddress.stateId){
+
+      if (isGetACHWireBySupplierIdData.recipientAddress.stateId) {
         getAllCities(isGetACHWireBySupplierIdData.recipientAddress.stateId)
       }
+
       formDataBank.initialState = {
         addressId: isGetACHWireBySupplierIdData.bankAddress.addressId,
         addressLine1Id: isGetACHWireBySupplierIdData.bankAddress.addressLine1,
