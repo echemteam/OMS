@@ -8,7 +8,7 @@ import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation"
 import { PagePermissionsProvider } from "../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
 import Image from "../components/image/Image";
 import { AppIcons } from "../data/appIcons";
-import Unauthorize from "../pages/unauthorize/Unauthorize";
+// import Unauthorize from "../pages/unauthorize/Unauthorize";
 
 const Layout = (props) => {
   // Get the current location using React Router's useLocation hook

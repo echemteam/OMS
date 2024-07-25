@@ -6,7 +6,7 @@
       display: flex;
       align-items: center;
       border-bottom: 1px solid var(--linkMenu);
-      padding-bottom: 15px;
+      padding: 8px 12px 24px 12px;
       width: 100%;
 
       .step {
@@ -47,14 +47,16 @@
             flex-direction: column;
 
             span {
-              font-size: var(--commonFont);
-              font-weight: 600;
+              font-size: var(--commonFont-large);
+              font-weight: 500;
               line-height: 125%;
-              color: var(--textColor);
+              color: var(--textColor) !important;
 
               &.small-txt {
-                font-size: var(--commonFont-small);
+                font-size: var(--commonFont-medium);
                 font-weight: normal;
+                margin-top: 2px;
+                font-weight: 400;
                 opacity: 0.8;
               }
             }
@@ -96,7 +98,7 @@
     }
 
     .stepper-content {
-      padding: 10px;
+      padding: 24px 24px 0 24px;
       display: flex;
       flex-direction: column;
       overflow: hidden;

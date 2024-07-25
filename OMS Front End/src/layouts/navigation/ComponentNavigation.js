@@ -14,6 +14,9 @@ const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 //** Dashboard */
 const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
 
+//** Order */
+const Order = React.lazy(() => import('../../pages/order/Order'));
+
 //** MyTask */
 const MyTask = React.lazy(() => import('../../pages/mytask/MyTask'));
 
@@ -60,6 +63,16 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'Dashboard Page',
     securityKey: securityKey.DASHBOARD
+  },
+  {
+    id: "Order",
+    path: "/Order",
+    exact: true,
+    title: 'Add Order',
+    component: Order,
+    hasParams: false,
+    text: 'Add Order',
+    securityKey: securityKey.ORDER
   },
 
   {
@@ -347,6 +360,8 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'ThirdPartyApiConfiguration',
     // securityKey: securityKey.MYTASK
-  }
+  },
+
+
 
 ];
