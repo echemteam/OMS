@@ -7,6 +7,7 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
+import PropTypes from 'prop-types';
 //** Lib's */
 import { logout } from "../../../../app/slice/authSlice";
 import { securityKey } from "../../../../data/SecurityKey";
@@ -150,4 +151,10 @@ const ManagePermission = forwardRef((props, ref) => {
   );
 });
 
+ManagePermission.propTypes = {
+  props: PropTypes.object,
+  ref: PropTypes.shape({
+    current: PropTypes.instanceOf(Element)
+  })
+};
 export default ManagePermission;

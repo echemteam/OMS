@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {  useEffect, useRef, useState } from "react";
+import PropTypes from 'prop-types';
 import FormCreator from "../../../../components/Forms/FormCreator";
 import {
   assignUserFormData,
@@ -245,4 +246,10 @@ const AssignUser = (props) => {
   );
 };
 
+AssignUser.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  initData: PropTypes.shape({
+    roleId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }),
+};
 export default AssignUser;

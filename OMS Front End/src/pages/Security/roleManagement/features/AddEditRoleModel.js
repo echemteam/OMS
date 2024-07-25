@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { addEditRoleFormData } from "./config/AddEditRoleForm.data";
 import Buttons from "../../../../components/ui/button/Buttons";
+import PropTypes from 'prop-types';
 
 const AddEditRoleModel = (props) => {
   const roleFromRef = useRef();
@@ -37,5 +38,7 @@ const AddEditRoleModel = (props) => {
     </div>
   );
 };
-
+AddEditRoleModel.propTypes = {
+  handleToggleModal: PropTypes.func.isRequired,
+};
 export default AddEditRoleModel;
