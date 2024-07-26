@@ -26,7 +26,7 @@ const AssignUser = (props) => {
   const asignUserFormRef = useRef();
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [listData, setListData] = useState();
-  const [userForm, setUserForm] = useState(assignUserFormData);
+  const [userForm] = useState(assignUserFormData);
   const [buttonVisible, setButtonVisible] = useState(false);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
