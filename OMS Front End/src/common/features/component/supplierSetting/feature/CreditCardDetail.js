@@ -86,11 +86,11 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
               isLoading={isAddEditCreditCardLoading}
             // isDisable={isButtonDisable}
             />
-            <Buttons
+            {/* <Buttons
               buttonTypeClassName="dark-btn ml-5"
               buttonText="Cancel"
             // onClick={onSidebarClose}
-            />
+            /> */}
           </div>
           {/* ))} */}
         </div>
