@@ -41,6 +41,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLAPPROVECUSTOMERFORLINKING = "GetAllApproveCustomerForLinking";
         const string GETALLPODELIVERYMETHOD = "GetAllPODeliveryMethod";
         const string GETALLAPIEVENTPARAMETERBYAPIEVENTID = "GetAllApiEventParameterByApiEventId";
+        const string GETALLAPIPARAMETERS = "GetAllAPIParameters";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -212,6 +213,10 @@ namespace OMS.Domain.Repository.Implementation
                 apiEventId
             }, commandType: CommandType.StoredProcedure);
             return getAllApproveCustomerForLinkingResponse;
+        }
+        public async Task<List<GetAllAPIParametersResponse>> GetAllAPIParameters()
+        {
+            return await _context.GetList<GetAllAPIParametersResponse>(GETALLAPIPARAMETERS, commandType: CommandType.StoredProcedure);
         }
     }
 }

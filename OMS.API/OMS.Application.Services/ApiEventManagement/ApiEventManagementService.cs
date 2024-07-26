@@ -3,12 +3,15 @@ using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Request.ApiEventParameter;
+using OMS.Domain.Entities.API.Request.ApiParameterMapping;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventMapping;
 using OMS.Domain.Entities.API.Response.ApiEventParameter;
+using OMS.Domain.Entities.API.Response.ApiParameterMapping;
 using OMS.Domain.Entities.Entity.ApiEvent;
 using OMS.Domain.Entities.Entity.ApiEventMapping;
 using OMS.Domain.Entities.Entity.ApiEventParameter;
+using OMS.Domain.Entities.Entity.ApiParameterMapping;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
 using OMS.Shared.Entities.CommonEntity;
@@ -87,7 +90,22 @@ namespace OMS.Application.Services.ApiEventManagement
             var apiEventParametersDetails = await repositoryManager.apiEventParameter.GetApiEventParameters(requestData);
             return apiEventParametersDetails!;
         }
-
+        public async Task<AddEntityDTO<int>> AddApiParameterMapping(AddApiParameterMappingRequest requestData, short CurrentUserId)
+        {
+            ApiParameterMappingDTO apiParameterMappingDTO = requestData.ToMapp<AddApiParameterMappingRequest, ApiParameterMappingDTO>();
+            apiParameterMappingDTO.CreatedBy = CurrentUserId;
+            return await repositoryManager.apiParameterMapping.AddApiParameterMapping(apiParameterMappingDTO);
+        }
+        public async Task<EntityList<GetApiParameterMappingsResponse>> GetApiParameterMappings(GetApiParameterMappingsRequest requestData)
+        {
+            var apiParameterMappingDetails = await repositoryManager.apiParameterMapping.GetApiParameterMappings(requestData);
+            return apiParameterMappingDetails!;
+        }
+        public async Task<AddEntityDTO<int>> DeleteApiParameterMapping(int apiParameterMappingId, short CurrentUserId)
+        {
+            short deletedBy = CurrentUserId;
+            return await repositoryManager.apiParameterMapping.DeleteApiParameterMapping(apiParameterMappingId, deletedBy);
+        }
         #endregion
     }
 }

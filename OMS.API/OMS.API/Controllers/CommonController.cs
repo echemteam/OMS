@@ -243,5 +243,11 @@ namespace OMS.API.Controllers
             List<GetAllApiEventParameterByApiEventIdResponse> responseData = await _serviceManager.commonServices.GetAllApiEventParameterByApiEventId(apiEventId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpGet("GetAllAPIParameters")]
+        public async Task<IActionResult> GetAllAPIParameters()
+        {
+            List<GetAllAPIParametersResponse> responseData = await _serviceManager.commonServices.GetAllAPIParameters().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

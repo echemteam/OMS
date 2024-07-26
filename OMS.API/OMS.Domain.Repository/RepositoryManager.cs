@@ -46,6 +46,7 @@ namespace OMS.Domain.Repository
         IApiEventRepository _apiEventManagementRepository;
         IApiEventMappingRepository _apiEventMappingRepository;
         IApiEventParameterRepository _apiEventParameterRepository;
+        IApiParameterMappingRepository _apiParameterMappingRepository;
 
         public ITestRepository test
         {
@@ -426,6 +427,18 @@ namespace OMS.Domain.Repository
                     _apiEventParameterRepository = new ApiEventParameterRepository(_context);
                 }
                 return _apiEventParameterRepository;
+            }
+
+        }
+        public IApiParameterMappingRepository apiParameterMapping 
+        {
+            get
+            {
+                if (_apiParameterMappingRepository == null)
+                {
+                    _apiParameterMappingRepository = new ApiParameterMappingRepository(_context);
+                }
+                return _apiParameterMappingRepository;
             }
 
         }

@@ -4,6 +4,7 @@ using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Request.ApiEventParameter;
+using OMS.Domain.Entities.API.Request.ApiParameterMapping;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -120,6 +121,31 @@ namespace OMS.API.Controllers
         {
             var apiEventParameters = await _serviceManager.apiEventManagementService.GetApiEventParameters(requestData);
             return APISucessResponce<object>(apiEventParameters);
+        }
+
+
+        [HttpPost("AddApiParameterMapping")]
+        public async Task<IActionResult> AddApiParameterMapping(AddApiParameterMappingRequest requestData)
+        {
+            var addItem = await _serviceManager.apiEventManagementService.AddApiParameterMapping(requestData, CurrentUserId);
+            return APISucessResponce(addItem);
+        }
+
+        [HttpPost("GetApiParameterMappings")]
+        public async Task<IActionResult> GetApiParameterMappings(GetApiParameterMappingsRequest requestData)
+        {
+            var apiParameterMapping = await _serviceManager.apiEventManagementService.GetApiParameterMappings(requestData);
+            return APISucessResponce<object>(apiParameterMapping);
+        }
+        [HttpDelete("DeleteApiParameterMapping")]
+        public async Task<IActionResult> DeleteApiParameterMapping(int apiParameterMappingId)
+        {
+            if (apiParameterMappingId > 0)
+            {
+                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiParameterMapping(apiParameterMappingId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(apiParameterMappingId);
         }
         #endregion
     }
