@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.ApiConfiguration;
 using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEvent;
-using OMS.Domain.Entities.API.Response.ApiProvider;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
