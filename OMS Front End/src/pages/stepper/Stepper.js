@@ -5,6 +5,8 @@ import Stepper from "bs-stepper";
 import StepperForm from "./features/StepperForm";
 import StepperForm2 from "./features/StepperForm2";
 import StepperForm3 from "./features/StepperForm3";
+import Buttons from "../../components/ui/button/Buttons";
+import { AppIcons } from "../../data/appIcons";
 
 const steps = [
   {
@@ -71,13 +73,8 @@ const StepperComponent = () => {
                         Back
                       </button>
                       {index < steps.length - 1 ? (
-                        <button
-                          type="button"
-                          className="btn theme-button"
-                          onClick={() => stepperRef.current.next()}
-                        >
-                          Next
-                        </button>
+                         <Buttons buttonTypeClassName="back-button btn dark-btn" 
+                         textWithIcon={true} buttonText="Back" imagePath={AppIcons.BackArrowIcon}></Buttons>
                       ) : (
                         <button type="submit" className="btn theme-button">
                           Submit

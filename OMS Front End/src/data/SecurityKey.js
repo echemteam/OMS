@@ -6,6 +6,9 @@ export const securityKey = {
      // My Task 
      MYTASK: "MyTask",
 
+     // Order
+     ORDER: "Order",
+
      //** User Management */
      USERMANAGEMENT: "User Management",
      ADDUSER: "Add User",

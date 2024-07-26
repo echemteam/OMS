@@ -13,6 +13,7 @@ export const Menu = [
         securityKey: securityKey.DASHBOARD,
         children: []
       },
+      
       {
         name: "My Task",
         id: "MyTask",
@@ -151,6 +152,15 @@ export const Menu = [
             securityKey: securityKey.USERMANAGEMENT
           },
         ],
+      },
+      {
+        name: "Order",
+        id: "Order",
+        to: "/Order",
+        iconClass: "bi bi-file-earmark-medical",
+        subMenu: false,
+        securityKey: securityKey.USERMANAGEMENT,
+        children: []
       },
     ]
   }

@@ -3,7 +3,7 @@
   box-shadow: var(--white-card-shadow);
   height: 100%;
   position: relative;
-  width: 280px;
+  width: 300px;
   height: 100vh;
   transition: 0.5s all;
 
@@ -49,10 +49,14 @@
             .menu-group {
               .group-label {
                 color: #acaab1;
-                padding: 3px 2px;
-                font-weight: 500;
-                font-size: var(--commonFont);
+                padding: 3px 10px;
+                font-weight: 400;
+                font-size: var(--commonFont-medium);
                 margin-top: 5px;
+                text-transform: uppercase;
+                // letter-spacing: .2px;
+                white-space: nowrap;
+                color: #acaab1;
               }
               li {
                 &.menu-item {
@@ -115,8 +119,9 @@
 
                     span {
                       padding-left: 10px;
-                      font-size: var(--commonFont-medium);
-                      font-weight: 500;
+                      font-size: var(--commonFont);
+                      font-weight: 400;
+                      line-height: 1.467;
                     }
 
                     &.menu-arrow {
@@ -243,6 +248,8 @@
                           a {
                             color: var(--textColor);
                             box-shadow: none;
+                            font-size: var(--commonFont);
+                            font-weight: 400;
                           }
 
                           &:hover {

@@ -17,15 +17,13 @@
 
   .right-search-section {
     width: 25%;
-
   }
-
 }
 
 .search-part {
   position: relative;
   width: 100%;
-  border: 1px solid var(--inputBorder);
+  // border: 1px solid var(--inputBorder);
   border-radius: 5px;
   overflow: hidden;
 
@@ -33,7 +31,9 @@
     border-radius: 2px !important;
     padding-left: 40px;
     border: none !important;
-    font-size: var(--commonFont-small);
+    font-size: var(--commonFont-large);
+    font-weight: 500 !important;
+    color: #acaab1 !important;
 
     &:focus {
       border: none !important;
@@ -58,7 +58,7 @@
       padding: 0;
       color: var(--textColor);
       font-weight: bolder;
-      font-size: var(--commonFont);
+      font-size: var(--commonFont-large);
 
       img {
         width: 30px;
@@ -67,8 +67,6 @@
         margin-right: 0;
       }
     }
-
-
   }
 }
 
@@ -80,9 +78,9 @@
   }
 }
 
-
 // Card Searchbar
-.card-top-title-btn {}
+.card-top-title-btn {
+}
 
 @media only screen and (max-width: 1560px) {
   .search-input {
@@ -95,7 +93,6 @@
         }
       }
     }
-
   }
 
   .search-part {
