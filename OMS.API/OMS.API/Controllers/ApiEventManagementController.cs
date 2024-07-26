@@ -74,6 +74,16 @@ namespace OMS.API.Controllers
             var apiEventMapping = await _serviceManager.apiEventManagementService.GetApiEventMappings(requestData);
             return APISucessResponce<object>(apiEventMapping);
         }
+        [HttpDelete("DeleteApiEventMapping")]
+        public async Task<IActionResult> DeleteApiEventMapping(int apiEventMappingId)
+        {
+            if (apiEventMappingId > 0)
+            {
+                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiEventMapping(apiEventMappingId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(apiEventMappingId);
+        }
         #endregion
     }
 }

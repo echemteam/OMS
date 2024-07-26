@@ -59,7 +59,11 @@ namespace OMS.Application.Services.ApiEventManagement
             var apiEventMappingsDetails = await repositoryManager.apiEventMapping.GetApiEventMappings(requestData);
             return apiEventMappingsDetails!;
         }
-
+        public async Task<AddEntityDTO<int>> DeleteApiEventMapping(int apiEventMappingId, short CurrentUserId)
+        {
+            short deletedBy = CurrentUserId;
+            return await repositoryManager.apiEventMapping.DeleteApiEventMapping(apiEventMappingId, deletedBy);
+        }
         #endregion
     }
 }

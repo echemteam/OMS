@@ -10,6 +10,6 @@ namespace OMS.Domain.Repository.Contract
     {
         Task<AddEntityDTO<int>> AddApiEventMapping(ApiEventMappingDTO requestData);
         Task<EntityList<GetApiEventMappingsResponse>> GetApiEventMappings(GetApiEventMappingsRequest requestData);
-
+        Task<AddEntityDTO<int>> DeleteApiEventMapping(int apiEventMappingId, int deletedBy);
     }
 }

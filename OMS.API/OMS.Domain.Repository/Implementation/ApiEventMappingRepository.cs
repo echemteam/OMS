@@ -3,6 +3,7 @@ using OMS.Domain.Entities.API.Response.ApiEventMapping;
 using OMS.Domain.Entities.Entity.ApiEventMapping;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
 using OMS.Shared.Entities.CommonEntity;
 using System.Data;
@@ -14,6 +15,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string ADDAPIEVENTMAPPING = "AddApiEventMapping";
         const string GETAPIEVENTMAPPINGS = "GetApiEventMappings";
+        const string DELETEAPIEVENTMAPPING = "DeleteApiEventMapping";
         #endregion
 
         public ApiEventMappingRepository(DapperContext dapperContext) : base(dapperContext)
@@ -43,6 +45,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.Filters?.SearchText,
                 requestData.SortString
             }, true);
+        }
+
+        public async Task<AddEntityDTO<int>> DeleteApiEventMapping(int apiEventMappingId, int deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEAPIEVENTMAPPING, new
+            {
+                apiEventMappingId,
+                deletedBy
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }
