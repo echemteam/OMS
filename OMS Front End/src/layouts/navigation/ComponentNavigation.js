@@ -343,7 +343,7 @@ export const ComponentNavigation = [
   },
   {
     id: 'ThirdPartyApiConfigurationViewDetails',
-    path: '/ThirdPartyApiConfigurationViewDetails',
+    path: '/ThirdPartyApiConfigurationViewDetails/:id',
     exact: true,
     title: 'Third Party Api View Details',
     component: ThirdPartyApiConfigurationViewDetails,

@@ -3,52 +3,24 @@ import { GridColumnType } from "../../../../../../data/gridColumnType";
 export const thirdPartyListConfigurationData = {
     columns: [
         {
-            name: "Provider Name",
-            fieldName: "providerName",
-            width: "15%",
-            allowShort: true,
-        },
-        {
-            name: "AuthKey",
-            fieldName: "authKey",
-            width: "15%",
-            allowShort: true,
-        },
-        {
-            name: "ClientId",
-            fieldName: "clientId",
-            width: "25%",
-            allowShort: true,
-        },
-        {
-            name: "Client Secret",
-            fieldName: "clientSecret",
-            width: "15%",
-            allowShort: true,
-        },
-        {
-            name: "Token Endpoint",
-            fieldName: "tokenEndpoint",
+            name: "Event Name",
+            fieldName: "eventName",
             width: "20%",
             allowShort: true,
         },
         {
-            name: "Token Expires",
-            fieldName: "tokenExpires",
-            width: "20%",
-            colType: GridColumnType.DATE,
+            name: "Description",
+            fieldName: "description",
+            width: "60%",
             allowShort: true,
-            colSettings: {
-                format: "DD/MM/YYYY",
-            },
         },
         {
             name: "Action",
-            width: "10%",
+            width: "20%",
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowEdit: false,
-                allowView : true,
+                allowView: true,
                 allowDelete: true,
             },
         },

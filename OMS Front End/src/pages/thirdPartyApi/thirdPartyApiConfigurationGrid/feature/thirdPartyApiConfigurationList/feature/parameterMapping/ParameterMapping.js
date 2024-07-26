@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ParameterMappingCrud = () => {
+const ParameterMapping = () => {
   return (
     <div>ParameterMappingCrud</div>
   )
 }
 
-export default ParameterMappingCrud
+export default ParameterMapping

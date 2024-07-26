@@ -1,54 +1,54 @@
 import React from 'react'
 import RenderTabs from '../../../../../../../components/ui/tabs/RenderTabs';
-import EventMappingCrud from '../eventMappingCrud/EventMappingCrud';
-import EventParamterCrud from '../eventParamterCrud/EventParamterCrud';
-import ParameterMappingCrud from '../parameterMappingCrud/ParameterMappingCrud';
-import EventRequiredFieldsCrud from '../eventRequiredFieldsCrud/EventRequiredFieldsCrud';
-import RequiredFieldsMappingCrud from '../requiredFieldsMappingCrud/RequiredFieldsMappingCrud';
+import EventMapping from '../eventMapping/EventMapping';
+import EventParamter from '../eventParamter/EventParamter';
+import ParameterMapping from '../parameterMapping/ParameterMapping';
+import EventRequiredFields from '../eventRequiredFields/EventRequiredFields';
+import RequiredFieldsMapping from '../requiredFieldsMapping/RequiredFieldsMapping';
 
 const ThirdPartyApiConfigurationViewTab = () => {
     const tabs = [
         {
-            sMenuItemCaption: "Event Mapping Crud",
+            sMenuItemCaption: "Event Mapping",
             component: (
                 <div className="mt-2">
-                    <EventMappingCrud />
+                    <EventMapping />
                 </div>
             ),
             // isVisible: hasAddressPermission.hasAccess,
         },
         {
-            sMenuItemCaption: "Event Paramter Crud",
+            sMenuItemCaption: "Event Paramter",
             component: (
                 <div className="mt-2">
-                    <EventParamterCrud />
+                    <EventParamter />
                 </div>
             ),
             // isVisible: hasContactPermission.hasAccess,
         },
         {
-            sMenuItemCaption: "Parameter Mapping Crud",
+            sMenuItemCaption: "Parameter Mapping",
             component: (
                 <div className="mt-2">
-                    <ParameterMappingCrud />
+                    <ParameterMapping />
                 </div>
             ),
             // isVisible: hasContactPermission.hasAccess,/
         },
         {
-            sMenuItemCaption: "Event Required Fields Crud",
+            sMenuItemCaption: "Event Required Fields",
             component: (
                 <div className="mt-2">
-                    <EventRequiredFieldsCrud />
+                    <EventRequiredFields />
                 </div>
             ),
             // isVisible: hasDocumentPermission.hasAccess,
         },
         {
-            sMenuItemCaption: "Required Fields Mapping Crud",
+            sMenuItemCaption: "Required Fields Mapping",
             component: (
                 <div className="mt-2">
-                    <RequiredFieldsMappingCrud />
+                    <RequiredFieldsMapping />
                 </div>
             ),
             // isVisible: hasNotePermission.hasAccess,

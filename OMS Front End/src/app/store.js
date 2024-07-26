@@ -33,6 +33,7 @@ import apiAuthenticationAPI from './services/apiAuthenticationAPI';
 import customerSubCustomerAPI from './services/customerSubCustomerAPI';
 import organizationAPI from './services/organizationAPI';
 import supplierFinancialSettingsAPI from './services/supplierFinancialSettingsAPI';
+import thirdPartyAPI from './services/thirdPartyAPI';
 
 export const store = configureStore({
   reducer: {
@@ -65,6 +66,7 @@ export const store = configureStore({
     [apiAuthenticationAPI.reducerPath]:apiAuthenticationAPI.reducer,
     [customerSubCustomerAPI.reducerPath]:customerSubCustomerAPI.reducer,
     [organizationAPI.reducerPath]:organizationAPI.reducer,
+    [thirdPartyAPI.reducerPath]:thirdPartyAPI.reducer,
     [supplierFinancialSettingsAPI.reducerPath]:supplierFinancialSettingsAPI.reducer,
 
   },
@@ -98,6 +100,7 @@ export const store = configureStore({
     customerSubCustomerAPI.middleware,
     organizationAPI.middleware,
     supplierFinancialSettingsAPI.middleware,
+    thirdPartyAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);

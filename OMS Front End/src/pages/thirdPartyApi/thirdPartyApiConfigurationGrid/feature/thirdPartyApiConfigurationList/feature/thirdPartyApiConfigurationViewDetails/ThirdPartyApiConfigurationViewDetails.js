@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CardSection from '../../../../../../../components/ui/card/CardSection'
 import "../../../../../../customerDetail/CustomerSupplier.scss";
 import ThirdPartyApiConfigurationInfoCard from '../thirdPartyApiConfigurationInfoCard/ThirdPartyApiConfigurationInfoCard';
@@ -6,19 +6,42 @@ import ThirdPartyApiConfigurationViewTab from '../thirdPartyApiConfigurationView
 import AddEditThirdPartyApiConfiguration from '../../../addEditThirdPartyApiConfiguration/AddEditThirdPartyApiConfiguration';
 import { AppIcons } from '../../../../../../../data/appIcons';
 import SidebarModel from '../../../../../../../components/ui/sidebarModel/SidebarModel';
+import { useLazyGetApiEventByApiEventIdQuery } from '../../../../../../../app/services/thirdPartyAPI';
+import { useParams } from 'react-router-dom';
+import { decryptUrlData } from '../../../../../../../services/CryptoService';
 
 
 export const ThirdPartyApiConfigurationViewDetails = () => {
+  const { id } = useParams();
+  const keyId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [formData, setFormData] = useState(null);
+  const [viewCardDetails, setViewCsrdDetails] = useState(null);
+
+  const [getApiEventByApiEventId, { isFetching: isGetApiEventByApiEventIdFetching, isSuccess: isGetApiEventByApiEventIdSuccess, data: GetApiEventByApiEventIdData, },] = useLazyGetApiEventByApiEventIdQuery();
+
+  useEffect(() => {
+    if (keyId) {
+      getApiEventByApiEventId(keyId)
+    }
+  }, [keyId])
+
+  useEffect(() => {
+    if (isGetApiEventByApiEventIdSuccess && GetApiEventByApiEventIdData && !isGetApiEventByApiEventIdFetching) {
+      setViewCsrdDetails(GetApiEventByApiEventIdData);
+    }
+  }, [isGetApiEventByApiEventIdSuccess, GetApiEventByApiEventIdData, isGetApiEventByApiEventIdFetching]);
 
   const handleToggleModal = () => {
     setIsModelOpen(true);
   };
+
   const onSidebarClose = () => {
     setIsModelOpen(false);
-
   };
+
+  const onRepetGetData = (id) => {
+    getApiEventByApiEventId(id)
+  }
 
   return (
     <>
@@ -28,6 +51,7 @@ export const ThirdPartyApiConfigurationViewDetails = () => {
             <CardSection>
               <ThirdPartyApiConfigurationInfoCard
                 editClick={handleToggleModal}
+                viewCardDetails={viewCardDetails}
               />
             </CardSection>
           </div>
@@ -37,7 +61,7 @@ export const ThirdPartyApiConfigurationViewDetails = () => {
         </div>
       </div>
       <SidebarModel
-        modalTitle="Update"
+        modalTitle="Update Api Event"
         contentClass="content-35"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
@@ -45,10 +69,11 @@ export const ThirdPartyApiConfigurationViewDetails = () => {
       >
         <AddEditThirdPartyApiConfiguration
           isOpen={isModelOpen}
-          initData={formData}
-          // getCustomerById={onGetData}
           onClose={onSidebarClose}
           isEditablePage={true}
+          viewCardDetails={viewCardDetails}
+          keyId={keyId}
+          onRepetGetData={onRepetGetData}
         />
       </SidebarModel>
     </>
