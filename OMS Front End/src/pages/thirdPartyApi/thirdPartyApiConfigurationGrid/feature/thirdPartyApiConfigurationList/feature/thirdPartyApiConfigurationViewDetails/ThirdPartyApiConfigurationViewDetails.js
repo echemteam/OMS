@@ -56,7 +56,9 @@ export const ThirdPartyApiConfigurationViewDetails = () => {
             </CardSection>
           </div>
           <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
-            <ThirdPartyApiConfigurationViewTab />
+            <ThirdPartyApiConfigurationViewTab 
+              keyId={keyId}
+            />
           </div>
         </div>
       </div>

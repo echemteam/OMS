@@ -5,7 +5,7 @@ import EventMappingList from './feature/EventMappingList'
 import SidebarModel from '../../../../../../../components/ui/sidebarModel/SidebarModel'
 import AddEditEventMapping from './feature/AddEditEventMapping'
 
-const EventMapping = () => {
+const EventMapping = ({ keyId }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
 
   const handleToggleModal = () => {
@@ -28,7 +28,9 @@ const EventMapping = () => {
         iconImg={AppIcons.PlusIcon}
         titleButtonClick={handleToggleModal}
       >
-        <EventMappingList />
+        <EventMappingList
+          // keyId={keyId}
+        />
       </CardSection>
 
       <SidebarModel
@@ -39,8 +41,9 @@ const EventMapping = () => {
         isOpen={isModelOpen}
       >
         <AddEditEventMapping
-        // onClose={onSidebarClose}
-        // isOpen={isModelOpen}
+        onClose={onSidebarClose}
+        isOpen={isModelOpen}
+        keyId={keyId}
         />
       </SidebarModel>
     </>

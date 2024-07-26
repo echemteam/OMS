@@ -1,15 +1,15 @@
-import { FormFieldTypes } from "../../../../../../data/formFieldType";
+import { FormFieldTypes } from "../../../../../../../../data/formFieldType";
 
 export const AddEditMappingData = {
     // name: "Email From"
-    initialState: { apiEventMappingId: 0, providerID: "", endpointID: "", description: "" },
+    initialState: { apiEventMappingId: 0, providerId: "", endpointId: "", description: "" },
     formFields: [
         {
-            id: "providerID",
+            id: "providerId",
             lable: "Provider ",
             Field_Name: "Provider",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "providerID",
+            dataField: "providerId",
             fieldSetting: {
                 placeholder: "Select Provider",
                 isEnableOnChange: true,
@@ -20,11 +20,11 @@ export const AddEditMappingData = {
             },
         },
         {
-            id: "endpointID",
+            id: "endpointId",
             lable: "End point ",
             Field_Name: "End point",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "endpointID",
+            dataField: "endpointId",
             fieldSetting: {
                 placeholder: "Select End point",
                 isEnableOnChange: true,
