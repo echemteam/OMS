@@ -2,10 +2,13 @@
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
+using OMS.Domain.Entities.API.Request.ApiEventParameter;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventMapping;
+using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.Entity.ApiEvent;
 using OMS.Domain.Entities.Entity.ApiEventMapping;
+using OMS.Domain.Entities.Entity.ApiEventParameter;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
 using OMS.Shared.Entities.CommonEntity;
@@ -64,6 +67,27 @@ namespace OMS.Application.Services.ApiEventManagement
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiEventMapping.DeleteApiEventMapping(apiEventMappingId, deletedBy);
         }
+        public async Task<AddEntityDTO<int>> AddEditApiEventParameter(AddEditApiEventParameterRequest requestData, short CurrentUserId)
+        {
+            ApiEventParameterDTO apiEventParameterDTO = requestData.ToMapp<AddEditApiEventParameterRequest, ApiEventParameterDTO>();
+            apiEventParameterDTO.CreatedBy = CurrentUserId;
+            return await repositoryManager.apiEventParameter.AddEditApiEventParameter(apiEventParameterDTO);
+        }
+        public Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventParametersId)
+        {
+            return repositoryManager.apiEventParameter.GetApiEventParameterByApiEventParametersId(apiEventParametersId);
+        }
+        public async Task<AddEntityDTO<int>> DeleteApiEventParameter(int apiEventParametersId, short CurrentUserId)
+        {
+            short deletedBy = CurrentUserId;
+            return await repositoryManager.apiEventParameter.DeleteApiEventParameter(apiEventParametersId, deletedBy);
+        }
+        public async Task<EntityList<GetApiEventParametersResponse>> GetApiEventParameters(GetApiEventParametersRequest requestData)
+        {
+            var apiEventParametersDetails = await repositoryManager.apiEventParameter.GetApiEventParameters(requestData);
+            return apiEventParametersDetails!;
+        }
+
         #endregion
     }
 }

@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
+using OMS.Domain.Entities.API.Request.ApiEventParameter;
 using OMS.Domain.Entities.API.Response.ApiEvent;
+using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -83,6 +85,41 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(deleteItem);
             }
             return APISucessResponce(apiEventMappingId);
+        }
+
+        [HttpPost("AddEditApiEventParameter")]
+        public async Task<IActionResult> AddEditApiEventParameter(AddEditApiEventParameterRequest requestData)
+        {
+            var addEditItem = await _serviceManager.apiEventManagementService.AddEditApiEventParameter(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetApiEventParameterByApiEventParametersId")]
+        public async Task<IActionResult> GetApiEventParameterByApiEventParametersId(int apiEventParametersId)
+        {
+            if (apiEventParametersId > 0)
+            {
+                GetApiEventParameterByApiEventParametersIdResponse responseData = await _serviceManager.apiEventManagementService.GetApiEventParameterByApiEventParametersId(apiEventParametersId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(apiEventParametersId);
+        }
+
+
+        [HttpDelete("DeleteApiEventParameter")]
+        public async Task<IActionResult> DeleteApiEventParameter(int apiEventParametersId)
+        {
+            if (apiEventParametersId > 0)
+            {
+                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiEventParameter(apiEventParametersId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(apiEventParametersId);
+        }
+        [HttpPost("GetApiEventParameters")]
+        public async Task<IActionResult> GetApiEventParameters(GetApiEventParametersRequest requestData)
+        {
+            var apiEventParameters = await _serviceManager.apiEventManagementService.GetApiEventParameters(requestData);
+            return APISucessResponce<object>(apiEventParameters);
         }
         #endregion
     }
