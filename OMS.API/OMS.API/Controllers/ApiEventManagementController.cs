@@ -178,9 +178,9 @@ namespace OMS.API.Controllers
             return APISucessResponce(apiEventRequiredFieldId);
         }
         [HttpPost("GetApiEventRequiredFields")]
-        public async Task<IActionResult> GetApiEventParameters(GetApiEventRequiredFieldsRequest requestData)
+        public async Task<IActionResult> GetApiEventRequiredFields(GetApiEventRequiredFieldsRequest requestData)
         {
-            var apiEventRequiredFields = await _serviceManager.apiEventManagementService.GetApiEventParameters(requestData);
+            var apiEventRequiredFields = await _serviceManager.apiEventManagementService.GetApiEventRequiredFields(requestData);
             return APISucessResponce<object>(apiEventRequiredFields);
         }
 
