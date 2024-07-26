@@ -3,7 +3,6 @@ import { AppIcons } from '../../../../../../../data/appIcons'
 import Image from '../../../../../../../components/image/Image'
 
 const ThirdPartyApiConfigurationInfoCard = ({ editClick, viewCardDetails }) => {
-    console.log("viewCardDetails", viewCardDetails)
     return (
         <div className="basic-customer-detail">
             <div className="d-flex col-xl-12 col-lg-12 col-md-12 col-12">

@@ -1,17 +1,18 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
-import { useDeleteApiEventMappingMutation, useGetApiEventMappingsMutation } from '../../../../../../../../app/services/thirdPartyAPI';
-import { AddEditMappingConfigurationData } from '../config/AddEditMapping.data';
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
 import MolGrid from '../../../../../../../../components/Grid/MolGrid';
+import { AddEditParameterMappingConfigurationData } from '../config/AddEditParameterMapping.data';
+import { useDeleteApiParameterMappingMutation, useGetApiParameterMappingsMutation } from '../../../../../../../../app/services/thirdPartyAPI';
 
-const EventMappingList = (props) => {
+const ParameterMappingList = (props) => {
+
     const molGridRef = useRef();
     const { confirm } = SwalAlert();
     const [listData, setListData] = useState();
     const [totalRowCount, setTotalRowCount] = useState(0);
-    const [getApiEventMappings, { isLoading: isGetApiEventMappingsLoading, isSuccess: isGetApiEventMappingsSuccess, data: isGetApiEventMappingsData }] = useGetApiEventMappingsMutation();
-    const [deleteApiEventMapping, { isSuccess: isDeleteApiEventMappingSuccess, data: isDeleteApiEventMappingData },] = useDeleteApiEventMappingMutation();
+    const [getApiParameterMappings, { isLoading: isGetApiParameterMappingsLoading, isSuccess: isGetApiParameterMappingsSuccess, data: isGetApiParameterMappingsData }] = useGetApiParameterMappingsMutation();
+    const [deleteApiParameterMapping, { isSuccess: isDeleteApiParameterMappingSuccess, data: isDeleteApiParameterMappingData },] = useDeleteApiParameterMappingMutation();
 
     const getLists = (pageObject, sortingString) => {
         const request = {
@@ -23,16 +24,16 @@ const EventMappingList = (props) => {
             sortString: sortingString,
             apiEventId: props.keyId
         };
-        getApiEventMappings(request);
+        getApiParameterMappings(request);
     };
 
     useEffect(() => {
-        if (isDeleteApiEventMappingSuccess && isDeleteApiEventMappingData) {
-            ToastService.success(isDeleteApiEventMappingData.errorMessage);
+        if (isDeleteApiParameterMappingSuccess && isDeleteApiParameterMappingData) {
+            ToastService.success(isDeleteApiParameterMappingData.errorMessage);
             const currentPageObject = molGridRef.current.getCurrentPageObject();
             getLists(currentPageObject, molGridRef.current.generateSortingString());
         }
-    }, [isDeleteApiEventMappingSuccess, isDeleteApiEventMappingData]);
+    }, [isDeleteApiParameterMappingSuccess, isDeleteApiParameterMappingData]);
 
     const handlePageChange = (page) => {
         getLists(page, molGridRef.current.generateSortingString());
@@ -50,21 +51,21 @@ const EventMappingList = (props) => {
     };
 
     useEffect(() => {
-        if (isGetApiEventMappingsSuccess && isGetApiEventMappingsData) {
-            if (isGetApiEventMappingsData) {
-                setListData(isGetApiEventMappingsData.dataSource);
+        if (isGetApiParameterMappingsSuccess && isGetApiParameterMappingsData) {
+            if (isGetApiParameterMappingsData) {
+                setListData(isGetApiParameterMappingsData.dataSource);
             }
-            if (isGetApiEventMappingsData.totalRecord) {
-                setTotalRowCount(isGetApiEventMappingsData.totalRecord);
+            if (isGetApiParameterMappingsData.totalRecord) {
+                setTotalRowCount(isGetApiParameterMappingsData.totalRecord);
             }
         }
-    }, [isGetApiEventMappingsSuccess, isGetApiEventMappingsData]);
+    }, [isGetApiParameterMappingsSuccess, isGetApiParameterMappingsData]);
 
     const handleDeleteClick = (data) => {
         confirm("Delete?", "Are you sure you want to Delete?", "Delete", "Cancel"
         ).then((confirmed) => {
             if (confirmed) {
-                deleteApiEventMapping(data.apiEventMappingId);
+                deleteApiParameterMapping(data.apiParameterMappingId);
             }
         });
     };
@@ -83,7 +84,7 @@ const EventMappingList = (props) => {
                 apiEventId: props.keyId
 
             };
-            getApiEventMappings(request);
+            getApiParameterMappings(request);
         }
     }, []);
 
@@ -100,7 +101,7 @@ const EventMappingList = (props) => {
             <div className="col-md-12 table-striped api-provider">
                 <MolGrid
                     ref={molGridRef}
-                    configuration={AddEditMappingConfigurationData}
+                    configuration={AddEditParameterMappingConfigurationData}
                     dataSource={listData}
                     allowPagination={true}
                     pagination={{
@@ -110,15 +111,12 @@ const EventMappingList = (props) => {
                     }}
                     onPageChange={handlePageChange}
                     onSorting={handleSorting}
-                    isLoading={isGetApiEventMappingsLoading}
+                    isLoading={isGetApiParameterMappingsLoading}
                     onActionChange={actionHandler}
-                // searchTitleButtonClick={handleSearch}
-                // handleChange={handleChange}
-                // handleClear={handleClear}
                 />
             </div>
         </div>
     )
 }
 
-export default EventMappingList
+export default ParameterMappingList

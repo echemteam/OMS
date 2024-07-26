@@ -1,18 +1,18 @@
 import { FormFieldTypes } from "../../../../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../../../../data/gridColumnType";
 
-export const AddEditMappingData = {
+export const AddEditRequireParameterData = {
     // name: "Email From"
-    initialState: { apiEventMappingId: 0, providerId: "", endpointId: "", description: "" },
+    initialState: { apiEventRequiredFieldId: 0, fieldName: "", fieldType: "" , fieldDescription:"" },
     formFields: [
         {
-            id: "providerId",
-            lable: "Provider ",
-            Field_Name: "Provider",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "providerId",
+            id: "fieldName",
+            lable: "Field Name ",
+            Field_Name: "Field Name",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "fieldName",
             fieldSetting: {
-                placeholder: "Select Provider",
+                placeholder: "Select Field Name",
                 isEnableOnChange: true,
             },
             validation: [{ type: "require" }],
@@ -21,65 +21,70 @@ export const AddEditMappingData = {
             },
         },
         {
-            id: "endpointId",
-            lable: "End point ",
-            Field_Name: "End point",
+            id: "fieldType",
+            lable: "Field Type ",
+            Field_Name: "Field Type",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "endpointId",
+            dataField: "fieldType",
             fieldSetting: {
-                placeholder: "Select End point",
-                isEnableOnChange: true,
+                placeholder: "Select Field Type",
+                isEnableOnChange: true
             },
+            
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
+
         {
-            id: "description",
-            lable: "Description",
-            Field_Name: "Description",
+            id: "fieldDescription",
+            lable: "Field Description",
+            Field_Name: "Field Description",
             fieldType: FormFieldTypes.TEXTAREA,
-            dataField: "description",
+            dataField: "fieldDescription",
             fieldSetting: {
-                placeholder: "Please Enter Description",
+                placeholder: "Please Enter Field Description",
             },
             validation: [{ type: "require" }],
             style: {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
+
     ],
     formSetting: {
         isViewOnly: false
     }
 };
 
-export const AddEditMappingConfigurationData = {
+export const AddEditRequireConfigurationData = {
     columns: [
         {
-            name: "Provider",
-            fieldName: "providerName",
+            name: "Field Name",
+            fieldName: "fieldName",
             width: "20%",
             allowShort: true,
         },
         {
-            name: "Endpoint",
-            fieldName: "endpointName",
+            name: "Field Type",
+            fieldName: "fieldType",
             width: "20%",
             allowShort: true,
         },
         {
-            name: "Description",
-            fieldName: "description",
+            name: "Field Description",
+            fieldName: "fieldDescription",
             width: "40%",
             allowShort: true,
         },
+
         {
             name: "Action",
             width: "20%",
             colType: GridColumnType.ACTION,
             defaultAction: {
+                allowEdit: true,
                 allowDelete: true,
             },
         },

@@ -13,7 +13,6 @@ const AddEditThirdPartyApiConfiguration = (props) => {
   const [addEditApiEvent, { isLoading: isAddEditApiEventLoading, isSuccess: isAddEditApiEventSuccess, data: allAddEditApiEventData, },] = useAddEditApiEventMutation();
 
   useEffect(() => {
-    debugger
     if (isAddEditApiEventSuccess && allAddEditApiEventData) {
       if (allAddEditApiEventData.errorMessage.includes("exists")) {
         ToastService.warning(allAddEditApiEventData.errorMessage);
@@ -32,7 +31,6 @@ const AddEditThirdPartyApiConfiguration = (props) => {
   }, [isAddEditApiEventSuccess, allAddEditApiEventData]);
 
   const handleAddEditAPIPRovider = () => {
-    debugger
     const formData = addEditThirdRef.current.getFormData();
     if (formData) {
       let request = {
