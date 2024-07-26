@@ -163,5 +163,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllPODeliveryMethod();
         }
+        public Task<List<GetAllApiEventParameterByApiEventIdResponse>> GetAllApiEventParameterByApiEventId(int apiEventId)
+        {
+            return repositoryManager.commonRepository.GetAllApiEventParameterByApiEventId(apiEventId);
+        }
     }
 }
