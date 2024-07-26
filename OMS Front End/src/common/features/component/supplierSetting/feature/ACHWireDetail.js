@@ -25,6 +25,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
   const [bankStateId, setBankStateId] = useState();
   const [achWireData, setAchWireData] = useState(achWireFormData);
   const [bankAddressData, setBankAddressData] = useState(bankAddressFormData);
+  const [isbankAddressCityAPI, setIsbankAddressCityAPI] = useState(null);
   const [registeredBankAddressData, setRegisteredBankAddressData] = useState(registeredBankAddressForm);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
@@ -61,7 +62,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
       // setShouldRerenderFormCreator((prevState) => !prevState);
     }
     if (isGetAllCitiesSucess && allGetAllCitiesData) {
-      if (isBankAddress) {
+      if (isbankAddressCityAPI) {
         setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', bankAddressFormData, 'cityId');
         // let formDataBank = { ...bankAddressData };
         // formDataBank.initialState = {
@@ -69,7 +70,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
         // };
         // setBankAddressData(formDataBank)
       }
-      if (isRecipient) {
+      else if (!isbankAddressCityAPI) {
         setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
         // let formDataRegister = { ...registeredBankAddressData };
         // formDataRegister.initialState = {
@@ -77,12 +78,12 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
         // };
         // setRegisteredBankAddressData(formDataRegister)
       }
-      if (!isBankAddress) {
-        setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', bankAddressFormData, 'cityId');
-      }
-      if (!isRecipient) {
-        setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
-      }
+      // if (!isBankAddress) {
+      //   setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', bankAddressFormData, 'cityId');
+      // }
+      // if (!isRecipient) {
+      //   setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
+      // }
 
     }
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
@@ -92,19 +93,21 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
   }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData, isGetAllCountriesSucess,
     allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData]);
 
-  useEffect(() => {
-    if (bankStateId) {
-      setIsBankAddress(true)
-      getAllCities(bankStateId)
-    }
-  }, [bankStateId])
+  // useEffect(() => {
+  //   if (bankStateId) {
+  //     setIsbankAddressCityAPI(true);
+  //     setIsBankAddress(true)
+  //     getAllCities(bankStateId)
+  //   }
+  // }, [bankStateId])
 
-  useEffect(() => {
-    if (recipientStateId) {
-      setIsRecipient(true)
-      getAllCities(recipientStateId)
-    }
-  }, [recipientStateId])
+  // useEffect(() => {
+  //   if (recipientStateId) {
+  //     setIsRecipient(true)
+  //     setIsbankAddressCityAPI(false);
+  //     getAllCities(recipientStateId)
+  //   }
+  // }, [recipientStateId])
 
   // const handleStateOption = (responseData) => {
   //   setDropDownOptionField(responseData, 'stateId', 'name', bankAddressFormData, 'stateId');
@@ -142,6 +145,20 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
     }
   }
 
+  const handleGetAllCities = async () => {
+    if (isGetACHWireBySupplierIdData.bankAddress.stateId) {
+      setIsbankAddressCityAPI(true);
+      setBankStateId(isGetACHWireBySupplierIdData.bankAddress.stateId);
+      await getAllCities(isGetACHWireBySupplierIdData.bankAddress.stateId).unwrap();
+    }
+
+    if (isGetACHWireBySupplierIdData.recipientAddress.stateId) {
+      setIsbankAddressCityAPI(false);
+      setRecipientStateId(isGetACHWireBySupplierIdData.recipientAddress.stateId);
+      await getAllCities(isGetACHWireBySupplierIdData.recipientAddress.stateId).unwrap();
+    }
+  };
+
   useEffect(() => {
     if (!isGetACHWireBySupplierIdFetching && isGetACHWireBySupplierIdSuccess && isGetACHWireBySupplierIdData) {
 
@@ -159,14 +176,16 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
 
       if (isGetACHWireBySupplierIdData.bankAddress.stateId) {
         // setIsBankAddress(true)
+        setIsbankAddressCityAPI(true);
         setBankStateId(isGetACHWireBySupplierIdData.bankAddress.stateId)
-        // getAllCities(isGetACHWireBySupplierIdData.bankAddress.stateId)
+        handleGetAllCities();
       }
 
       if (isGetACHWireBySupplierIdData.recipientAddress.stateId) {
         // setIsRecipient(true);
+        setIsbankAddressCityAPI(false);
         setRecipientStateId(isGetACHWireBySupplierIdData.recipientAddress.stateId)
-        // getAllCities(isGetACHWireBySupplierIdData.recipientAddress.stateId)
+        handleGetAllCities();
       }
 
       if (isGetACHWireBySupplierIdData.bankAddress) {
