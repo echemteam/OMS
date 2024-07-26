@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApiEvent;
+using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
@@ -58,6 +59,20 @@ namespace OMS.API.Controllers
         {
             var apiEvents = await _serviceManager.apiEventManagementService.GetApiEvents(requestData);
             return APISucessResponce<object>(apiEvents);
+        }
+
+        [HttpPost("AddApiEventMapping")]
+        public async Task<IActionResult> AddApiEventMapping(AddApiEventMappingRequest requestData)
+        {
+            var addItem = await _serviceManager.apiEventManagementService.AddApiEventMapping(requestData, CurrentUserId);
+            return APISucessResponce(addItem);
+        }
+
+        [HttpPost("GetApiEventMappings")]
+        public async Task<IActionResult> GetApiEventMappings(GetApiEventMappingsRequest requestData)
+        {
+            var apiEventMapping = await _serviceManager.apiEventManagementService.GetApiEventMappings(requestData);
+            return APISucessResponce<object>(apiEventMapping);
         }
         #endregion
     }
