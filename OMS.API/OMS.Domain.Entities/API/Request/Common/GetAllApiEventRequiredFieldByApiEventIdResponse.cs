@@ -2,7 +2,7 @@
 {
     public class GetAllApiEventRequiredFieldByApiEventIdResponse
     {
-        public int? ApiEventRequiredFieldId { get; set; }
-        public string? FieldName { get; set; }
+        public string? RequiredField { get; set; }
+        public int? ApiEventRequiredFieldsMappingId { get; set; }
     }
 }
