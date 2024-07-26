@@ -9,8 +9,6 @@ import CheckDetail from "./feature/CheckDetail";
 import OtherDetail from "./feature/OtherDetail";
 import { useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery } from "../../../../app/services/customerSettingsAPI";
 import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../app/services/addressAPI";
-import { useLazyGetAllCountriesQuery } from "../../../../app/services/basicdetailAPI";
 import { SupplierFinancialSettings } from "../../../../utils/Enums/commonEnums";
 import { useLazyGetAllPODeliveryMethodQuery, useLazyGetPaymentSettingsBySupplierIdQuery, useLazyGetSupplierFinancialSettingsBySupplierIdQuery } from "../../../../app/services/supplierFinancialSettingsAPI";
 import { checkFormData } from "./config/CheckForm.data";
@@ -28,9 +26,6 @@ const SupplierSettingGrid = ({ supplierId }) => {
 
   const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
   const [getAllPaymentMethod, { isFetching: isGetAllPaymentMethodFetching, isSuccess: isGetAllPaymentMethodSuccess, data: isGetAllPaymentMethodData }] = useLazyGetAllPaymentMethodQuery();
-  const [getAllCities, { isSuccess: isGetAllCitiesSucess, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-  const [getAllStates, { isSuccess: isGetAllStatesSucess, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
-  const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllDeliveryAccounts, { isFetching: isGetAllPODeliveryMethodFetching, isSuccess: isGetAllPODeliveryMethodSuccess, data: isGetAllPODeliveryMethodData }] = useLazyGetAllPODeliveryMethodQuery();
   const [getSupplierFinancialSettingsBySupplierId, { isFetching: isGetSupplierFinancialSettingsBySupplierIdFetching, isSuccess: isGetSupplierFinancialSettingsBySupplierIdSuccess, data: isGetSupplierFinancialSettingsBySupplierIdData }] = useLazyGetSupplierFinancialSettingsBySupplierIdQuery();
   const [getPaymentSettingsBySupplierId, { isFetching: isGetPaymentSettingsBySupplierIdFetching, isSuccess: isGetPaymentSettingsBySupplierIdSuccess, data: isGetPaymentSettingsBySupplierIdData }] = useLazyGetPaymentSettingsBySupplierIdQuery();
@@ -39,9 +34,12 @@ const SupplierSettingGrid = ({ supplierId }) => {
     getAllPaymentTerms();
     getAllPaymentMethod();
     getAllDeliveryAccounts()
-    getSupplierFinancialSettingsBySupplierId(supplierId)
     getPaymentSettingsBySupplierId(supplierId)
   }, []);
+
+  useEffect(() => {
+    getSupplierFinancialSettingsBySupplierId(supplierId)
+  },[activeTabIndex])
 
   useEffect(() => {
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
@@ -110,22 +108,6 @@ const SupplierSettingGrid = ({ supplierId }) => {
     }
   }, [activeTabIndex, isGetPaymentSettingsBySupplierIdFetching, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData]);
 
-  const addressDetailProps = {
-    activeTabIndex,
-    financialSettingFormRef,
-    getCheckData,
-    supplierId,
-    getAllCities,
-    getAllStates,
-    getAllCountries,
-    isGetAllCitiesSucess,
-    allGetAllCitiesData,
-    isGetAllStatesSucess,
-    allGetAllStatesData,
-    isGetAllCountriesSucess,
-    allGetAllCountriesData,
-  };
-
   const handleGetById = (id) => {
     getPaymentSettingsBySupplierId(id)
   }
@@ -140,7 +122,9 @@ const SupplierSettingGrid = ({ supplierId }) => {
       component: (
         <div className="mt-2">
           <ACHWireDetail
-            {...addressDetailProps}
+            activeTabIndex={activeTabIndex}
+            financialSettingFormRef={financialSettingFormRef}
+            supplierId={supplierId}
           />
         </div>
       ),
@@ -165,7 +149,9 @@ const SupplierSettingGrid = ({ supplierId }) => {
       component: (
         <div className="mt-2">
           <CheckDetail
-            {...addressDetailProps}
+            financialSettingFormRef={financialSettingFormRef}
+            supplierId={supplierId}
+            getCheckData={getCheckData.initialState}
             onHandleGetById={handleGetById}
           />
         </div>
