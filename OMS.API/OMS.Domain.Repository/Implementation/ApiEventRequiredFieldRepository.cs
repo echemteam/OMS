@@ -28,6 +28,7 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITAPIEVENTREQUIREDFIELD, new
             {
+                requestData.ApiEventRequiredFieldId,
                 requestData.FieldName,
                 requestData.FieldType,
                 requestData.FieldDescription,
