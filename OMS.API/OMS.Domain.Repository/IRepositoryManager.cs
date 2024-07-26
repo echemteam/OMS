@@ -40,5 +40,6 @@ namespace OMS.Domain.Repository
         IApiEventParameterRepository apiEventParameter {  get; }
         IApiParameterMappingRepository apiParameterMapping {  get; }
         IApiEventRequiredFieldRepository apiEventRequiredField { get; }
+        IApiEventRequiredFieldsMappingRepository apiEventRequiredFieldsMapping { get; }
     }
 }

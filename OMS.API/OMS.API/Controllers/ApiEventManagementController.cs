@@ -5,6 +5,7 @@ using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Request.ApiEventParameter;
 using OMS.Domain.Entities.API.Request.ApiEventRequiredField;
+using OMS.Domain.Entities.API.Request.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Request.ApiParameterMapping;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventParameter;
@@ -184,6 +185,29 @@ namespace OMS.API.Controllers
             return APISucessResponce<object>(apiEventRequiredFields);
         }
 
+        [HttpPost("AddApiEventRequiredFieldsMapping")]
+        public async Task<IActionResult> AddApiEventRequiredFieldsMapping(AddApiEventRequiredFieldsMappingRequest requestData)
+        {
+            var addItem = await _serviceManager.apiEventManagementService.AddApiEventRequiredFieldsMapping(requestData, CurrentUserId);
+            return APISucessResponce(addItem);
+        }
+
+        [HttpPost("GetApiEventRequiredFieldsMappings")]
+        public async Task<IActionResult> GetApiEventRequiredFieldsMappings(GetApiEventRequiredFieldsMappingsRequest requestData)
+        {
+            var apiEventRequiredFieldsMappings = await _serviceManager.apiEventManagementService.GetApiEventRequiredFieldsMappings(requestData);
+            return APISucessResponce<object>(apiEventRequiredFieldsMappings);
+        }
+        [HttpDelete("DeleteApiEventRequiredFieldsMapping")]
+        public async Task<IActionResult> DeleteApiEventRequiredFieldsMapping(int apiEventRequiredFieldsMappingId)
+        {
+            if (apiEventRequiredFieldsMappingId > 0)
+            {
+                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiEventRequiredFieldsMapping(apiEventRequiredFieldsMappingId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(apiEventRequiredFieldsMappingId);
+        }
         #endregion
     }
 }

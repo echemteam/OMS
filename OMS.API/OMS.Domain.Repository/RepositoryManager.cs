@@ -48,6 +48,7 @@ namespace OMS.Domain.Repository
         IApiEventParameterRepository _apiEventParameterRepository;
         IApiParameterMappingRepository _apiParameterMappingRepository;
         IApiEventRequiredFieldRepository _apiEventRequiredFieldRepository;
+        IApiEventRequiredFieldsMappingRepository _apiEventRequiredFieldsMappingRepository;
 
         public ITestRepository test
         {
@@ -452,6 +453,18 @@ namespace OMS.Domain.Repository
                     _apiEventRequiredFieldRepository = new ApiEventRequiredFieldRepository(_context);
                 }
                 return _apiEventRequiredFieldRepository;
+            }
+
+        }
+        public IApiEventRequiredFieldsMappingRepository apiEventRequiredFieldsMapping
+        {
+            get
+            {
+                if (_apiEventRequiredFieldsMappingRepository == null)
+                {
+                    _apiEventRequiredFieldsMappingRepository = new ApiEventRequiredFieldsMappingRepository(_context);
+                }
+                return _apiEventRequiredFieldsMappingRepository;
             }
 
         }

@@ -4,19 +4,23 @@ using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Request.ApiEventParameter;
 using OMS.Domain.Entities.API.Request.ApiEventRequiredField;
+using OMS.Domain.Entities.API.Request.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Request.ApiParameterMapping;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventMapping;
 using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredField;
+using OMS.Domain.Entities.API.Response.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Response.ApiParameterMapping;
 using OMS.Domain.Entities.Entity.ApiEvent;
 using OMS.Domain.Entities.Entity.ApiEventMapping;
 using OMS.Domain.Entities.Entity.ApiEventParameter;
 using OMS.Domain.Entities.Entity.ApiEventRequiredField;
+using OMS.Domain.Entities.Entity.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.Entity.ApiParameterMapping;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
@@ -130,6 +134,23 @@ namespace OMS.Application.Services.ApiEventManagement
             var apiEventRequiredFieldsDetails = await repositoryManager.apiEventRequiredField.GetApiEventRequiredFields(requestData);
             return apiEventRequiredFieldsDetails!;
         }
+        public async Task<AddEntityDTO<int>> AddApiEventRequiredFieldsMapping(AddApiEventRequiredFieldsMappingRequest requestData, short CurrentUserId)
+        {
+            ApiEventRequiredFieldsDTO apiEventRequiredFieldsDTO = requestData.ToMapp<AddApiEventRequiredFieldsMappingRequest, ApiEventRequiredFieldsDTO>();
+            apiEventRequiredFieldsDTO.CreatedBy = CurrentUserId;
+            return await repositoryManager.apiEventRequiredFieldsMapping.AddApiEventRequiredFieldsMapping(apiEventRequiredFieldsDTO);
+        }
+        public async Task<EntityList<GetApiEventRequiredFieldsMappingsResponse>> GetApiEventRequiredFieldsMappings(GetApiEventRequiredFieldsMappingsRequest requestData)
+        {
+            var apiParameterMappingDetails = await repositoryManager.apiEventRequiredFieldsMapping.GetApiEventRequiredFieldsMappings(requestData);
+            return apiParameterMappingDetails!;
+        }
+        public async Task<AddEntityDTO<int>> DeleteApiEventRequiredFieldsMapping(int apiEventRequiredFieldsMappingId, short CurrentUserId)
+        {
+            short deletedBy = CurrentUserId;
+            return await repositoryManager.apiEventRequiredFieldsMapping.DeleteApiEventRequiredFieldsMapping(apiEventRequiredFieldsMappingId, deletedBy);
+        }
+
         #endregion
     }
 }
