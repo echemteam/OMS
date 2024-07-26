@@ -22,26 +22,19 @@ const AddEditEventMapping = (props) => {
     }, [])
 
     useEffect(() => {
-        debugger
         if (isAddApiEventMappingSuccess && allAddApiEventMappingData) {
             if (allAddApiEventMappingData.errorMessage.includes("exists")) {
                 ToastService.warning(allAddApiEventMappingData.errorMessage);
                 handleResetAndClose();
                 return;
             }
-            //   if (!props.keyId) {
-            //     ToastService.success(allAddApiEventMappingData.errorMessage);
-            //     handleResetAndClose();
-            //     props.onGetData()
-            //   } else {
-            //     handleResetAndClose()
-            //     props.onRepetGetData(props.keyId)
-            //   }
+            ToastService.success(allAddApiEventMappingData.errorMessage);
+            handleResetAndClose();
+            props.onGetData()
         }
     }, [isAddApiEventMappingSuccess, allAddApiEventMappingData]);
 
     useEffect(() => {
-        debugger
         if (isGetAllAPIProvidersSucess && allGetAllAPIProvidersData) {
             setDropDownOptionField(allGetAllAPIProvidersData, 'providerId', 'name', AddEditMappingData, 'providerId');
         }
@@ -52,19 +45,22 @@ const AddEditEventMapping = (props) => {
     }, [isGetAllAPIProvidersSucess, allGetAllAPIProvidersData, isGetAllAPIEndpointsSucess, allGetAllAPIEndpointsData]);
 
     const handleAddEditAPIPRovider = () => {
-        debugger
         const formData = addEditMappingRef.current.getFormData();
         if (formData) {
             let request = {
                 ...formData,
                 apiEventId: props.keyId ? props.keyId : 0,
                 apiEventMappingId: 0,
-                endpointId : formData.endpointId.value,
-                providerId : formData.providerId.value
+                endpointId: formData.endpointId.value,
+                providerId: formData.providerId.value
             };
             addApiEventMapping(request);
         }
     };
+
+    useEffect(() => {
+        onResetForm(addEditMappingData, setAddEditMappingData, null);
+    }, [props.isOpen])
 
     const handleResetAndClose = () => {
         onResetForm(addEditMappingData, setAddEditMappingData, null);

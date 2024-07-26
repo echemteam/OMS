@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import CardSection from '../../../../../../../components/ui/card/CardSection'
 import { AppIcons } from '../../../../../../../data/appIcons'
 import EventMappingList from './feature/EventMappingList'
@@ -6,6 +6,7 @@ import SidebarModel from '../../../../../../../components/ui/sidebarModel/Sideba
 import AddEditEventMapping from './feature/AddEditEventMapping'
 
 const EventMapping = ({ keyId }) => {
+  const childRef = useRef();
   const [isModelOpen, setIsModelOpen] = useState(false);
 
   const handleToggleModal = () => {
@@ -14,6 +15,12 @@ const EventMapping = ({ keyId }) => {
 
   const onSidebarClose = () => {
     setIsModelOpen(false);
+  };
+
+  const onGetData = () => {
+    if (childRef.current) {
+      childRef.current.callChildFunction();
+    }
   };
 
   return (
@@ -29,7 +36,8 @@ const EventMapping = ({ keyId }) => {
         titleButtonClick={handleToggleModal}
       >
         <EventMappingList
-          // keyId={keyId}
+          keyId={keyId}
+          childRef={childRef}
         />
       </CardSection>
 
@@ -41,9 +49,10 @@ const EventMapping = ({ keyId }) => {
         isOpen={isModelOpen}
       >
         <AddEditEventMapping
-        onClose={onSidebarClose}
-        isOpen={isModelOpen}
-        keyId={keyId}
+          onClose={onSidebarClose}
+          isOpen={isModelOpen}
+          keyId={keyId}
+          onGetData={onGetData}
         />
       </SidebarModel>
     </>
