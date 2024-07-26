@@ -433,23 +433,23 @@
             }
 
             &.badge-endUser {
-              background: var(--pending-theme);
+              background: var(--pending-theme-btn);
             }
 
             &.badge-purchasing {
-              background: var(--submitted-theme);
+              background: var(--submitted-theme-btn);
             }
 
             &.badge-submission {
-              background: var(--submission-color);
+              background: var(--submission-color-btn);
             }
 
             &.badge-followup {
-              background: var(--frozen-theme);
+              background: var(--frozen-theme-btn);
             }
 
             &.badge-ap {
-              background: var(--disabled-theme);
+              background: var(--disabled-theme-btn);
             }
           }
 
@@ -467,23 +467,23 @@
             }
 
             &.badge-endUser {
-              color: var(--pending-theme);
+              color: var(--pending-theme-btn);
             }
 
             &.badge-purchasing {
-              color: var(--submitted-theme);
+              color: var(--submitted-theme-btn);
             }
 
             &.badge-submission {
-              color: var(--submission-color);
+              color: var(--submission-color-btn);
             }
 
             &.badge-followup {
-              color: var(--frozen-theme);
+              color: var(--frozen-theme-btn);
             }
 
             &.badge-ap {
-              color: var(--disabled-theme);
+              color: var(--disabled-theme-btn);
             }
           }
         }

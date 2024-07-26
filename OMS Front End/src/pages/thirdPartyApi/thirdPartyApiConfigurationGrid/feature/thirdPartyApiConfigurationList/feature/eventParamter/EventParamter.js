@@ -1,9 +1,9 @@
 import React from 'react'
 
-const EventParamterCrud = () => {
+const EventParamter = () => {
   return (
     <div>EventParamterCrud</div>
   )
 }
 
-export default EventParamterCrud
+export default EventParamter

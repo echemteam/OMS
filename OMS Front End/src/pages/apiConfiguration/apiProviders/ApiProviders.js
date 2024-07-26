@@ -35,6 +35,7 @@ const ApiProviders = () => {
       childRef.current.callChildFunction();
     }
   };
+  
   const handleChange = (event) => {
     setSearch(event.target.value.trim());
   };

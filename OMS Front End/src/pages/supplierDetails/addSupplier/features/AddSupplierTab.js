@@ -129,10 +129,10 @@ const AddSupplierTab = () => {
                           {index < tabContent.length - 1 ? (
                             <button
                               type="button"
-                              className="btn theme-button"
+                              className="btn theme-button btn-next"
                               onClick={() => addSupplier(step.tab)}
                             >
-                              Next
+                              Next  <Image imagePath={AppIcons.nextArrowIcon} />
                             </button>
                           ) : (
                             <>

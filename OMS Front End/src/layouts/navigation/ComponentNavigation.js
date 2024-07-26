@@ -328,8 +328,8 @@ export const ComponentNavigation = [
     title: 'Tasks',
     component: MyTask,
     hasParams: false,
-    text: 'May Task Page',
-    securityKey: securityKey.MYTASK
+    text: 'My Task Page',
+    securityKey: securityKey.DASHBOARD
   },
   {
     id: 'Organization',
@@ -343,7 +343,7 @@ export const ComponentNavigation = [
   },
   {
     id: 'ThirdPartyApiConfigurationViewDetails',
-    path: '/ThirdPartyApiConfigurationViewDetails',
+    path: '/ThirdPartyApiConfigurationViewDetails/:id',
     exact: true,
     title: 'Third Party Api View Details',
     component: ThirdPartyApiConfigurationViewDetails,

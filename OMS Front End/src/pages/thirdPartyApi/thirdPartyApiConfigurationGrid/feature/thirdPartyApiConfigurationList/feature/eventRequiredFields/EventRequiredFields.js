@@ -1,9 +1,9 @@
 import React from 'react'
 
-const EventRequiredFieldsCrud = () => {
+const EventRequiredFields = () => {
   return (
     <div>EventRequiredFieldsCrud</div>
   )
 }
 
-export default EventRequiredFieldsCrud
+export default EventRequiredFields

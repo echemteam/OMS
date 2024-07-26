@@ -1,5 +1,6 @@
 ﻿using OMS.Application.Services.Address;
 using OMS.Application.Services.APIConfiguration;
+using OMS.Application.Services.ApiEventManagement;
 using OMS.Application.Services.Approval;
 using OMS.Application.Services.ApprovalConfiguration;
 using OMS.Application.Services.Authentication;
@@ -61,6 +62,7 @@ namespace OMS.Application.Services
         IApiConfigurationService _apiConfigurationService;
         IOrganizationService _organizationService;
         ISupplierFinancialSettingsService _supplierFinancialSettingsService;
+        IApiEventManagementService _apiEventManagementService;
 
         public ITestService testService
         {
@@ -345,6 +347,18 @@ namespace OMS.Application.Services
                     _supplierFinancialSettingsService = new SupplierFinancialSettingsService(_repositoryManager, _commonSettingService);
                 }
                 return _supplierFinancialSettingsService;
+
+            }
+        }
+        public IApiEventManagementService apiEventManagementService
+        {
+            get
+            {
+                if (_apiEventManagementService == null)
+                {
+                    _apiEventManagementService = new ApiEventManagementService(_repositoryManager, _commonSettingService);
+                }
+                return _apiEventManagementService;
 
             }
         }

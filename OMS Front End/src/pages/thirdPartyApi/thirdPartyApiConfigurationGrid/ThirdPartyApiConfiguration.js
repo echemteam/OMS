@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { AppIcons } from '../../../data/appIcons'
 import CardSection from '../../../components/ui/card/CardSection'
 import SidebarModel from '../../../components/ui/sidebarModel/SidebarModel'
@@ -8,14 +8,22 @@ const AddEditThirdPartyApiConfiguration = React.lazy(() => import('./feature/add
 
 const ThirdPartyApiConfiguration = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
+  const childRef = useRef();
 
   const handleToggleModal = () => {
-      setIsModelOpen(true);
+    setIsModelOpen(true);
   };
 
   const onSidebarClose = () => {
-      setIsModelOpen(false);
+    setIsModelOpen(false);
   };
+
+  const onGetData = () => {
+    if (childRef.current) {
+      childRef.current.callChildFunction();
+    }
+  };
+
   return (
     <div>
       <CardSection
@@ -28,17 +36,23 @@ const ThirdPartyApiConfiguration = () => {
         iconImg={AppIcons.PlusIcon}
         titleButtonClick={handleToggleModal}
       >
-        <ThirdPartyApiConfigurationList />
+        <ThirdPartyApiConfigurationList
+          childRef={childRef}
+        />
       </CardSection>
 
       <SidebarModel
-        modalTitle="Add Third Party Data"
+        modalTitle="Add Api Event"
         contentClass="content-35"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}
       >
-        <AddEditThirdPartyApiConfiguration />
+        <AddEditThirdPartyApiConfiguration
+          onGetData={onGetData}
+          onClose={onSidebarClose}
+          isOpen={isModelOpen}
+        />
       </SidebarModel>
     </div>
   )

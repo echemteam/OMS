@@ -1,9 +1,9 @@
 import React from 'react'
 
-const RequiredFieldsMappingCrud = () => {
+const RequiredFieldsMapping = () => {
   return (
     <div>RequiredFieldsMappingCrud</div>
   )
 }
 
-export default RequiredFieldsMappingCrud
+export default RequiredFieldsMapping
