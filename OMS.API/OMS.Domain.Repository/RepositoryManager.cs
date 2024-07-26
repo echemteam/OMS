@@ -43,6 +43,7 @@ namespace OMS.Domain.Repository
         ISupplierFinancialSettingsRepository _supplierFinancialSettingsRepository;
         ISuppierBankDetailsRepository _suppierBankDetailsRepository;    
         ISupplierPaymentSettingsRepository _supplierPaymentSettingsRepository;
+        IApiEventRepository _apiEventManagementRepository;
 
         public ITestRepository test
         {
@@ -387,6 +388,18 @@ namespace OMS.Domain.Repository
                     _supplierPaymentSettingsRepository = new SupplierPaymentSettingsRepository(_context);
                 }
                 return _supplierPaymentSettingsRepository;
+            }
+
+        }
+        public IApiEventRepository apiEvent
+        {
+            get
+            {
+                if (_apiEventManagementRepository == null)
+                {
+                    _apiEventManagementRepository = new ApiEventRepository(_context);
+                }
+                return _apiEventManagementRepository;
             }
 
         }
