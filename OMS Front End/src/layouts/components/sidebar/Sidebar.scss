@@ -161,7 +161,7 @@
                       -moz-transition: 0.5s all;
                       -ms-transition: 0.5s all;
                       -o-transition: 0.5s all;
-                      opacity: 0;
+                      // opacity: 0;
 
                       li {
                         a {
@@ -181,7 +181,7 @@
                         &:hover {
                           a {
                             color: var(--themeColor);
-                            opacity: 1;
+                            // opacity: 1;
                           }
                         }
 

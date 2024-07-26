@@ -1,8 +1,11 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.ApiEvent;
+using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Response.ApiEvent;
+using OMS.Domain.Entities.API.Response.ApiEventMapping;
 using OMS.Domain.Entities.Entity.ApiEvent;
+using OMS.Domain.Entities.Entity.ApiEventMapping;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
 using OMS.Shared.Entities.CommonEntity;
@@ -43,6 +46,23 @@ namespace OMS.Application.Services.ApiEventManagement
         {
             var apiEventsDetails = await repositoryManager.apiEvent.GetApiEvents(requestData);
             return apiEventsDetails!;
+        }
+
+        public async Task<AddEntityDTO<int>> AddApiEventMapping(AddApiEventMappingRequest requestData, short CurrentUserId)
+        {
+            ApiEventMappingDTO apiEventMappingDTO = requestData.ToMapp<AddApiEventMappingRequest, ApiEventMappingDTO>();
+            apiEventMappingDTO.CreatedBy = CurrentUserId;
+            return await repositoryManager.apiEventMapping.AddApiEventMapping(apiEventMappingDTO);
+        }
+        public async Task<EntityList<GetApiEventMappingsResponse>> GetApiEventMappings(GetApiEventMappingsRequest requestData)
+        {
+            var apiEventMappingsDetails = await repositoryManager.apiEventMapping.GetApiEventMappings(requestData);
+            return apiEventMappingsDetails!;
+        }
+        public async Task<AddEntityDTO<int>> DeleteApiEventMapping(int apiEventMappingId, short CurrentUserId)
+        {
+            short deletedBy = CurrentUserId;
+            return await repositoryManager.apiEventMapping.DeleteApiEventMapping(apiEventMappingId, deletedBy);
         }
         #endregion
     }
