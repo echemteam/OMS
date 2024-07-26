@@ -72,7 +72,6 @@ const SupplierSettingGrid = ({ supplierId }) => {
   }, [isGetSupplierFinancialSettingsBySupplierIdFetching, isGetSupplierFinancialSettingsBySupplierIdSuccess, isGetSupplierFinancialSettingsBySupplierIdData]);
 
   useEffect(() => {
-    debugger
     if (!isGetPaymentSettingsBySupplierIdFetching && isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData) {
       let formCreditData = { ...getCreditData };
       let formCheckData = { ...getCheckData };
@@ -109,7 +108,7 @@ const SupplierSettingGrid = ({ supplierId }) => {
         setGetOtherData(formOtherData);
       }
     }
-  }, [activeTabIndex , isGetPaymentSettingsBySupplierIdFetching, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData]);
+  }, [activeTabIndex, isGetPaymentSettingsBySupplierIdFetching, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData]);
 
   const addressDetailProps = {
     activeTabIndex,

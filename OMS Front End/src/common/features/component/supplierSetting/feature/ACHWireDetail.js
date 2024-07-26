@@ -16,6 +16,10 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef, ge
   const aCHWireFormRef = useRef();
   const bankFormRef = useRef();
   const registeredFormRef = useRef();
+  const [isRecipient, setIsRecipient] = useState(false);
+  const [isBankAddress, setIsBankAddress] = useState(false);
+  const [recipientStateId, setRecipientStateId] = useState();
+  const [bankStateId, setBankStateId] = useState();
   const [achWireData, setAchWireData] = useState(achWireFormData);
   const [bankAddressData, setBankAddressData] = useState(bankAddressFormData);
   const [registeredBankAddressData, setRegisteredBankAddressData] = useState(registeredBankAddressForm);
@@ -30,6 +34,8 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef, ge
     getAllStates();
     // getAllCities();
     getAllPaymentTerms();
+    getACHWireBySupplierId(supplierId)
+
 
   }, []);
 
@@ -46,49 +52,44 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef, ge
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
     if (isGetAllStatesSucess && allGetAllStatesData) {
-      // handleStateOption(allGetAllStatesData);
-      handleBankStateOption(allGetAllStatesData);
-      handleRegisteredStateOption(allGetAllStatesData);
+      handleStateOption(allGetAllStatesData);
+      // handleBankStateOption(allGetAllStatesData);
+      // handleRegisteredStateOption(allGetAllStatesData);
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
     if (isGetAllCitiesSucess && allGetAllCitiesData) {
-      // handleBankCityOption(allGetAllStatesData);
-      // handleRegisteredCityOption(allGetAllStatesData);
-      setDropDownOptionField(allGetAllCitiesData, 'stateId', 'name', bankAddressFormData, 'stateId');
-      setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
-      setShouldRerenderFormCreator((prevState) => !prevState);
+      if (isBankAddress) {
+        setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', bankAddressFormData, 'cityId');
+      }
+      if (isRecipient) {
+        setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
+      }
     }
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
       setDropDownOptionField(isGetAllPaymentTermsData, "paymentTermId", "paymentTerm", achWireFormData, "paymentTermId");
       setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData, isGetAllCountriesSucess, allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData]);
+  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData, isGetAllCountriesSucess,
+    allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData]);
 
-  const handleBankStateOption = (responseData) => {
+  useEffect(() => {
+    if (bankStateId) {
+      setIsBankAddress(true)
+      getAllCities(bankStateId)
+    }
+  }, [bankStateId])
+
+  useEffect(() => {
+    if (recipientStateId) {
+      setIsRecipient(true)
+      getAllCities(recipientStateId)
+    }
+  }, [recipientStateId])
+
+  const handleStateOption = (responseData) => {
     setDropDownOptionField(responseData, 'stateId', 'name', bankAddressFormData, 'stateId');
-  };
-
-  // const handleStateOption = (responseData) => {
-  //   setDropDownOptionField(responseData, 'stateId', 'name', bankAddressFormData, 'stateId');
-  //   setDropDownOptionField(responseData, 'stateId', 'name', registeredBankAddressForm, 'stateId');
-  // };
-
-  const handleRegisteredStateOption = (responseData) => {
     setDropDownOptionField(responseData, 'stateId', 'name', registeredBankAddressForm, 'stateId');
   };
-
-  // const handleBankCityOption = (responseData) => {
-  //   setDropDownOptionField(responseData, 'cityId', 'name', bankAddressFormData, 'cityId');
-  // };
-
-  // const handleRegisteredCityOption = (responseData) => {
-  //   setDropDownOptionField(responseData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
-  // };
-
-  // const handleCityOption = (responseData) => {
-  //   setDropDownOptionField(responseData, 'cityId', 'name', bankAddressFormData, 'cityId');
-  //   setDropDownOptionField(responseData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
-  // };
 
   useEffect(() => {
     handleResponse(isAddEditACHWireSuccess, isAddEditACHWireData);
@@ -115,64 +116,71 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef, ge
 
   useEffect(() => {
     if (!isGetACHWireBySupplierIdFetching && isGetACHWireBySupplierIdSuccess && isGetACHWireBySupplierIdData) {
+
       let formDataAchWire = { ...achWireData };
       let formDataBank = { ...bankAddressData };
       let formDataRegister = { ...registeredBankAddressData };
-      formDataBank.initialState = {
-        addressId: isGetACHWireBySupplierIdData.bankAddress.addressId,
-        addressLine1Id: isGetACHWireBySupplierIdData.bankAddress.addressLine1,
-        addressLine2Id: isGetACHWireBySupplierIdData.bankAddress.addressLine2,
-        cityId: isGetACHWireBySupplierIdData.bankAddress.cityId,
-        stateId: isGetACHWireBySupplierIdData.bankAddress.stateId,
-        countryId: isGetACHWireBySupplierIdData.bankAddress.countryId,
-        zipCode: isGetACHWireBySupplierIdData.bankAddress.zipCode
-      };
-      setBankAddressData(formDataBank)
-      formDataRegister.initialState = {
-        addressId: isGetACHWireBySupplierIdData.recipientAddress.addressId,
-        addressLine1Id: isGetACHWireBySupplierIdData.recipientAddress.addressLine1,
-        addressLine2Id: isGetACHWireBySupplierIdData.recipientAddress.addressLine2,
-        cityId: isGetACHWireBySupplierIdData.recipientAddress.cityId,
-        stateId: isGetACHWireBySupplierIdData.recipientAddress.stateId,
-        countryId: isGetACHWireBySupplierIdData.recipientAddress.countryId,
-        zipCode: isGetACHWireBySupplierIdData.recipientAddress.zipCode
-      };
-      setRegisteredBankAddressData(formDataRegister)
-      formDataAchWire.initialState = {
-        supplierBankDetailsId: isGetACHWireBySupplierIdData.supplierBankDetailsId,
-        bankAddressId: isGetACHWireBySupplierIdData.bankAddressId,
-        recipientAddressId: isGetACHWireBySupplierIdData.recipientAddressId,
-        supplierId: supplierId,
-        messageToRecipient: isGetACHWireBySupplierIdData.messageToRecipient,
-        isAddressInUs: isGetACHWireBySupplierIdData.isAddressInUs,
-        recipientPhoneNumber: isGetACHWireBySupplierIdData.recipientPhoneNumber,
-        paymentTermId: isGetACHWireBySupplierIdData.paymentTermId,
-        messageToRecipientBank: isGetACHWireBySupplierIdData.messageToRecipientBank,
-        beneficiaryName: isGetACHWireBySupplierIdData.beneficiaryName,
-        bankName: isGetACHWireBySupplierIdData.bankName,
-        accountType: isGetACHWireBySupplierIdData.accountType,
-        accountNumber: isGetACHWireBySupplierIdData.accountNumber,
-        branchCode: isGetACHWireBySupplierIdData.branchCode,
-        ibanNumber: isGetACHWireBySupplierIdData.ibanNumber,
-        swiftCode: isGetACHWireBySupplierIdData.swiftCode,
-        routingNumber: isGetACHWireBySupplierIdData.routingNumber,
-        sortCode: isGetACHWireBySupplierIdData.sortCode,
-        bsbNumber: isGetACHWireBySupplierIdData.bsbNumber,
-      }
-      setAchWireData(formDataAchWire)
-      if (isGetACHWireBySupplierIdData.bankAddress.countryId) {
-        handleBankStateOption(allGetAllStatesData)
-      }
+
       if (isGetACHWireBySupplierIdData.bankAddress.stateId) {
-        getAllCities(isGetACHWireBySupplierIdData.bankAddress.stateId)
-      }
-      if (isGetACHWireBySupplierIdData.recipientAddress.countryId) {
-        handleRegisteredStateOption(allGetAllStatesData)
-      }
-      if (isGetACHWireBySupplierIdData.recipientAddress.stateId) {
-        getAllCities(isGetACHWireBySupplierIdData.recipientAddress.stateId)
+        // setIsBankAddress(true)
+        setBankStateId(isGetACHWireBySupplierIdData.bankAddress.stateId)
+        // getAllCities(isGetACHWireBySupplierIdData.bankAddress.stateId)
       }
 
+      if (isGetACHWireBySupplierIdData.recipientAddress.stateId) {
+        // setIsRecipient(true);
+        setRecipientStateId(isGetACHWireBySupplierIdData.recipientAddress.stateId)
+        // getAllCities(isGetACHWireBySupplierIdData.recipientAddress.stateId)
+      }
+      if (isGetACHWireBySupplierIdData.bankAddress) {
+        formDataBank.initialState = {
+          addressId: isGetACHWireBySupplierIdData.bankAddress.addressId,
+          addressLine1Id: isGetACHWireBySupplierIdData.bankAddress.addressLine1,
+          addressLine2Id: isGetACHWireBySupplierIdData.bankAddress.addressLine2,
+          cityId: isGetACHWireBySupplierIdData.bankAddress.cityId,
+          stateId: isGetACHWireBySupplierIdData.bankAddress.stateId,
+          countryId: isGetACHWireBySupplierIdData.bankAddress.countryId,
+          zipCode: isGetACHWireBySupplierIdData.bankAddress.zipCode
+        };
+        setBankAddressData(formDataBank)
+      }
+      if (isGetACHWireBySupplierIdData.recipientAddress) {
+        formDataRegister.initialState = {
+          addressId: isGetACHWireBySupplierIdData.recipientAddress.addressId,
+          addressLine1Id: isGetACHWireBySupplierIdData.recipientAddress.addressLine1,
+          addressLine2Id: isGetACHWireBySupplierIdData.recipientAddress.addressLine2,
+          cityId: isGetACHWireBySupplierIdData.recipientAddress.cityId,
+          stateId: isGetACHWireBySupplierIdData.recipientAddress.stateId,
+          countryId: isGetACHWireBySupplierIdData.recipientAddress.countryId,
+          zipCode: isGetACHWireBySupplierIdData.recipientAddress.zipCode
+        };
+        setRegisteredBankAddressData(formDataRegister)
+      }
+      if (isGetACHWireBySupplierIdData.supplierBankDetailsId) {
+        formDataAchWire.initialState = {
+          supplierBankDetailsId: isGetACHWireBySupplierIdData.supplierBankDetailsId,
+          bankAddressId: isGetACHWireBySupplierIdData.bankAddressId,
+          recipientAddressId: isGetACHWireBySupplierIdData.recipientAddressId,
+          supplierId: supplierId,
+          messageToRecipient: isGetACHWireBySupplierIdData.messageToRecipient,
+          isAddressInUs: isGetACHWireBySupplierIdData.isAddressInUs,
+          recipientPhoneNumber: isGetACHWireBySupplierIdData.recipientPhoneNumber,
+          paymentTermId: isGetACHWireBySupplierIdData.paymentTermId,
+          messageToRecipientBank: isGetACHWireBySupplierIdData.messageToRecipientBank,
+          beneficiaryName: isGetACHWireBySupplierIdData.beneficiaryName,
+          bankName: isGetACHWireBySupplierIdData.bankName,
+          accountType: isGetACHWireBySupplierIdData.accountType,
+          accountNumber: isGetACHWireBySupplierIdData.accountNumber,
+          branchCode: isGetACHWireBySupplierIdData.branchCode,
+          ibanNumber: isGetACHWireBySupplierIdData.ibanNumber,
+          swiftCode: isGetACHWireBySupplierIdData.swiftCode,
+          routingNumber: isGetACHWireBySupplierIdData.routingNumber,
+          sortCode: isGetACHWireBySupplierIdData.sortCode,
+          bsbNumber: isGetACHWireBySupplierIdData.bsbNumber,
+        }
+        setAchWireData(formDataAchWire)
+      }
+      // setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetACHWireBySupplierIdFetching, isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData,]);
 
