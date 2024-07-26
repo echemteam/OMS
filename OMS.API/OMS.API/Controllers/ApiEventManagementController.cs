@@ -4,9 +4,11 @@ using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Request.ApiEventParameter;
+using OMS.Domain.Entities.API.Request.ApiEventRequiredField;
 using OMS.Domain.Entities.API.Request.ApiParameterMapping;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventParameter;
+using OMS.Domain.Entities.API.Response.ApiEventRequiredField;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -147,6 +149,41 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(apiParameterMappingId);
         }
+        [HttpPost("AddEditApiEventRequiredField")]
+        public async Task<IActionResult> AddEditApiEventRequiredField(AddEditApiEventRequiredFieldRequest requestData)
+        {
+            var addEditItem = await _serviceManager.apiEventManagementService.AddEditApiEventRequiredField(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetApiEventRequiredFieldByApiEventRequiredFieldId")]
+        public async Task<IActionResult> GetApiEventRequiredFieldByApiEventRequiredFieldId(int apiEventRequiredFieldId)
+        {
+            if (apiEventRequiredFieldId > 0)
+            {
+                GetApiEventRequiredFieldByApiEventRequiredFieldIdResponse responseData = await _serviceManager.apiEventManagementService.GetApiEventRequiredFieldByApiEventRequiredFieldId(apiEventRequiredFieldId).ConfigureAwait(true);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(apiEventRequiredFieldId);
+        }
+
+
+        [HttpDelete("DeleteApiEventRequiredField")]
+        public async Task<IActionResult> DeleteApiEventRequiredField(int apiEventRequiredFieldId)
+        {
+            if (apiEventRequiredFieldId > 0)
+            {
+                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiEventRequiredField(apiEventRequiredFieldId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(apiEventRequiredFieldId);
+        }
+        [HttpPost("GetApiEventRequiredFields")]
+        public async Task<IActionResult> GetApiEventParameters(GetApiEventRequiredFieldsRequest requestData)
+        {
+            var apiEventRequiredFields = await _serviceManager.apiEventManagementService.GetApiEventParameters(requestData);
+            return APISucessResponce<object>(apiEventRequiredFields);
+        }
+
         #endregion
     }
 }

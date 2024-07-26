@@ -3,14 +3,17 @@ using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Request.ApiEventParameter;
+using OMS.Domain.Entities.API.Request.ApiEventRequiredField;
 using OMS.Domain.Entities.API.Request.ApiParameterMapping;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventMapping;
 using OMS.Domain.Entities.API.Response.ApiEventParameter;
+using OMS.Domain.Entities.API.Response.ApiEventRequiredField;
 using OMS.Domain.Entities.API.Response.ApiParameterMapping;
 using OMS.Domain.Entities.Entity.ApiEvent;
 using OMS.Domain.Entities.Entity.ApiEventMapping;
 using OMS.Domain.Entities.Entity.ApiEventParameter;
+using OMS.Domain.Entities.Entity.ApiEventRequiredField;
 using OMS.Domain.Entities.Entity.ApiParameterMapping;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
@@ -105,6 +108,27 @@ namespace OMS.Application.Services.ApiEventManagement
         {
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiParameterMapping.DeleteApiParameterMapping(apiParameterMappingId, deletedBy);
+        }
+
+        public async Task<AddEntityDTO<int>> AddEditApiEventRequiredField(AddEditApiEventRequiredFieldRequest requestData, short CurrentUserId)
+        {
+            ApiEventRequiredFieldDTO apiEventRequiredFieldDTO = requestData.ToMapp<AddEditApiEventRequiredFieldRequest, ApiEventRequiredFieldDTO>();
+            apiEventRequiredFieldDTO.CreatedBy = CurrentUserId;
+            return await repositoryManager.apiEventRequiredField.AddEditApiEventRequiredField(apiEventRequiredFieldDTO);
+        }
+        public Task<GetApiEventRequiredFieldByApiEventRequiredFieldIdResponse> GetApiEventRequiredFieldByApiEventRequiredFieldId(int apiEventRequiredFieldId)
+        {
+            return repositoryManager.apiEventRequiredField.GetApiEventRequiredFieldByApiEventRequiredFieldId(apiEventRequiredFieldId);
+        }
+        public async Task<AddEntityDTO<int>> DeleteApiEventRequiredField(int apiEventRequiredFieldId, short CurrentUserId)
+        {
+            short deletedBy = CurrentUserId;
+            return await repositoryManager.apiEventRequiredField.DeleteApiEventRequiredField(apiEventRequiredFieldId, deletedBy);
+        }
+        public async Task<EntityList<GetApiEventRequiredFieldsResponse>> GetApiEventRequiredFields(GetApiEventRequiredFieldsRequest requestData)
+        {
+            var apiEventRequiredFieldsDetails = await repositoryManager.apiEventRequiredField.GetApiEventRequiredFields(requestData);
+            return apiEventRequiredFieldsDetails!;
         }
         #endregion
     }
