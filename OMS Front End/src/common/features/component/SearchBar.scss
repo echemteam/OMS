@@ -23,7 +23,7 @@
 .search-part {
   position: relative;
   width: 100%;
-  // border: 1px solid var(--inputBorder);
+  border: 1px solid var(--inputBorder);
   border-radius: 5px;
   overflow: hidden;
 
@@ -31,7 +31,7 @@
     border-radius: 2px !important;
     padding-left: 40px;
     border: none !important;
-    font-size: var(--commonFont-large);
+    font-size: var(--commonFont);
     font-weight: 500 !important;
     color: #acaab1 !important;
 
@@ -58,7 +58,7 @@
       padding: 0;
       color: var(--textColor);
       font-weight: bolder;
-      font-size: var(--commonFont-large);
+      font-size: var(--commonFont);
 
       img {
         width: 30px;

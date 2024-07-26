@@ -153,12 +153,12 @@ const AddCustomerTab = () => {
                               </button>
                             }
                             <button type="button" className="btn theme-button ml-3" onClick={() => addCustomer(step.tab)}>
-                              Next
+                              Next 
                             </button>
                           </React.Fragment>
                         ) : (
-                          <button type="button" className="btn theme-button" onClick={() => addCustomer(step.tab)} >
-                            Next
+                          <button type="button" className="btn theme-button btn-next" onClick={() => addCustomer(step.tab)} >
+                            Next  <Image imagePath={AppIcons.nextArrowIcon} />
                           </button>
                         )
                       ) : (

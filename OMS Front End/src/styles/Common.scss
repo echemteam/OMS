@@ -278,7 +278,7 @@ a {
     right: -20px;
 
     .click-btn {
-      background: var(--gradient-theme);
+      background: var(--theme-btn-bg);
       height: 100%;
       width: 100%;
       border-radius: 100%;
@@ -386,8 +386,7 @@ a {
                       }
                       &:hover {
                         .sidebar-dropdown {
-                          display: block;
-                          opacity: 1;
+                          display: inherit;
                           opacity: 1;
                           // position: absolute;
                           z-index: 999;
@@ -596,6 +595,7 @@ a {
     justify-content: space-between;
     position: relative;
     min-height: 44px;
+    padding-left: 5px;
 
     &::before {
       position: absolute;
@@ -817,14 +817,15 @@ a {
 .status-btn {
   // color: #ffffff;
   display: inline-block;
-  min-width: 95px;
+  // min-width: 95px;
   border-radius: 4px;
   // box-shadow:
   //   0 4px 8px rgba(126, 126, 126, 0.2),
   //   0 6px 20px rgba(116, 116, 116, 0.19);
   font-weight: 600;
-  padding: 3px 0px;
+  padding: 2px 10px;
   text-align: center;
+  // align-self: flex-start;
   font-size: var(--commonFont);
 }
 
@@ -3014,7 +3015,6 @@ input[type="checkbox"]:disabled {
         margin-bottom: 10px;
         background: var(--theme-btn-bg);
         color: var(--whiteColor);
-        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
       }
     }
   }
@@ -3194,7 +3194,7 @@ input[type="checkbox"]:disabled {
       flex-direction: column;
       border-right: 1px solid var(--linkMenu);
       border-bottom: 0 !important;
-      width: 15%;
+      width: 18%;
       overflow: hidden;
       transition: 0.5s all;
       padding-top: 11px;
@@ -3246,7 +3246,7 @@ input[type="checkbox"]:disabled {
     .collapse-tab {
       position: absolute;
       top: -5px;
-      left: calc(15% - 11px);
+      left: calc(17% - 7px);
       min-height: 22px;
       min-width: 22px;
       max-height: 22px;
