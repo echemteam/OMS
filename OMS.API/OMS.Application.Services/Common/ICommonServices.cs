@@ -38,5 +38,6 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllPODeliveryMethodResponse>> GetAllPODeliveryMethod();
         Task<List<GetAllApiEventParameterByApiEventIdResponse>> GetAllApiEventParameterByApiEventId(int apiEventId);
         Task<List<GetAllAPIParametersResponse>> GetAllAPIParameters();
+        Task<List<GetAllApiEventRequiredFieldByApiEventIdResponse>> GetAllApiEventRequiredFieldByApiEventId(int apiEventId);
     }
 }

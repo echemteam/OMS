@@ -171,5 +171,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllAPIParameters();
         }
+        public Task<List<GetAllApiEventRequiredFieldByApiEventIdResponse>> GetAllApiEventRequiredFieldByApiEventId(int apiEventId)
+        {
+            return repositoryManager.commonRepository.GetAllApiEventRequiredFieldByApiEventId(apiEventId);
+        }
     }
 }
