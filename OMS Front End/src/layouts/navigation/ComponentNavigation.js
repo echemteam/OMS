@@ -328,8 +328,8 @@ export const ComponentNavigation = [
     title: 'Tasks',
     component: MyTask,
     hasParams: false,
-    text: 'May Task Page',
-    securityKey: securityKey.MYTASK
+    text: 'My Task Page',
+    securityKey: securityKey.DASHBOARD
   },
   {
     id: 'Organization',
