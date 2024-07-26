@@ -2,5 +2,7 @@
 {
     public class GetAllAPIParametersResponse
     {
+        public int? ParameterId { get; set; }
+        public string? Name { get; set; }
     }
 }
