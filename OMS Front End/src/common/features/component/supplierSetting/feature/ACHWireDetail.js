@@ -342,7 +342,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
         </div>
       </CardSection>
 
-      <CardSection cardTitle="Registered Bank Address">
+      <CardSection cardTitle="Remit to Address">
         <div className="row">
           <FormCreator
             config={registeredBankAddressData}
