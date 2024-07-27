@@ -237,5 +237,23 @@ namespace OMS.API.Controllers
             List<GetAllPODeliveryMethodResponse> responseData = await _serviceManager.commonServices.GetAllPODeliveryMethod().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpGet("GetAllApiEventParameterByApiEventId")]
+        public async Task<IActionResult> GetAllApiEventParameterByApiEventId(int apiEventId)
+        {
+            List<GetAllApiEventParameterByApiEventIdResponse> responseData = await _serviceManager.commonServices.GetAllApiEventParameterByApiEventId(apiEventId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+        [HttpGet("GetAllAPIParameters")]
+        public async Task<IActionResult> GetAllAPIParameters()
+        {
+            List<GetAllAPIParametersResponse> responseData = await _serviceManager.commonServices.GetAllAPIParameters().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+        [HttpGet("GetAllApiEventRequiredFieldByApiEventId")]
+        public async Task<IActionResult> GetAllApiEventRequiredFieldByApiEventId(int apiEventId)
+        {
+            List<GetAllApiEventRequiredFieldByApiEventIdResponse> responseData = await _serviceManager.commonServices.GetAllApiEventRequiredFieldByApiEventId(apiEventId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

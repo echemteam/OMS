@@ -44,21 +44,29 @@
 
     .profile-icon {
       background-color: #d4d5fb;
-      padding: 8px;
+      // padding: 8px;
       border-radius: 100%;
-      color: #000;
+      color: #000 !important;
       font-weight: 500;
-      font-size: 18px;
+      font-size: var(--commonFont-large) !important;
       margin: 0px 10px;
+      width: 40px !important;
+      height: 40px !important;
+      line-height: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .title {
       display: flex;
       flex-direction: column;
-      font-size: 16px;
+      font-size: var(--commonFont-large);
+      color: var(--blackColor);
 
       .sub-title {
-        font-size: 14px;
+        font-size: var(--commonFont);
+        color: #222;
       }
     }
   }
@@ -88,7 +96,7 @@
     }
 
     .view-customer {
-      font-size: 12px;
+      font-size: var(--commonFont-small);
       color: var(--themeColor);
       font-weight: 600;
       display: flex;
@@ -103,21 +111,27 @@
 
     .profile-icon {
       background-color: #d4d5fb;
-      padding: 8px;
+      // padding: 8px;
       border-radius: 100%;
-      color: #000;
+      color: #000 !important;
       font-weight: 500;
-      font-size: 18px;
+      font-size: var(--commonFont-large) !important;
       margin: 0px 10px;
+      width: 40px !important;
+      height: 40px !important;
+      line-height: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .title {
       display: flex;
       flex-direction: column;
-      font-size: 16px;
+      font-size: var(--commonFont-large);
 
       .sub-title {
-        font-size: 14px;
+        font-size: var(--commonFont);
       }
     }
   }
@@ -141,11 +155,12 @@
     padding: 10px 20px;
 
     .info-title {
-      font-size: 20px;
+      font-size: var(--commonFont-extraLarge);
     }
 
-    .info-detail{
+    .info-detail {
       margin: 0 0 10px 0;
+      font-size: var(--commonFont);
     }
 
     span {
@@ -157,7 +172,7 @@
   }
 
   .detail-head {
-    font-size: 15px;
+    font-size: var(--commonFont);
     margin: 10px 0px;
     color: var(--themeColor);
     font-weight: 600;
@@ -171,11 +186,16 @@
   }
 
   .detail-btn {
-    background: var(--gradient-theme);
+    background: var(--theme-btn-bg);
     color: #fff;
-    padding: 5px 10px;
-    width: 18%;
+    // padding: 4px 10px;
+    width: 70px;
+    display: flex;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    white-space: nowrap;
     cursor: pointer;
   }
 }

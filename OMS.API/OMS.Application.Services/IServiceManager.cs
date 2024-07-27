@@ -1,5 +1,6 @@
 ﻿using OMS.Application.Services.Address;
 using OMS.Application.Services.APIConfiguration;
+using OMS.Application.Services.ApiEventManagement;
 using OMS.Application.Services.Approval;
 using OMS.Application.Services.ApprovalConfiguration;
 using OMS.Application.Services.Authentication;
@@ -48,5 +49,6 @@ namespace OMS.Application.Services
         IApiConfigurationService apiConfigurationService { get; }
         IOrganizationService organizationService { get; }
         ISupplierFinancialSettingsService supplierFinancialSettingsService { get; }
+        IApiEventManagementService apiEventManagementService { get; }   
     }
 }
