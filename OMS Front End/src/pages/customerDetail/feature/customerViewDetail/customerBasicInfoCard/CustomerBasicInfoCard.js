@@ -524,7 +524,7 @@ const CustomerBasicInfoCard = ({
       />
     </div>
   ) : (
-    <DataLoader />
+    <DataLoader/>
   );
 };
 

@@ -321,6 +321,9 @@
               margin-right: 10px;
               // display: none;
               color: #6e839b;
+              i{
+                font-size: var(--commonFont);
+              }
             }
 
             .desc-part {
@@ -334,6 +337,9 @@
                 white-space: normal;
                 text-wrap: wrap;
                 max-width: 83%;
+                @media only screen and (max-width: 1560px) {
+                  font-size: 10.5px;
+                }
               }
 
               .copy-icon {
@@ -376,7 +382,10 @@
                   justify-content: center;
 
                   i {
-                    font-size: var(--commonFont-extraLarge);
+                    font-size: var(--commonFont);
+                    &.fa-mobile{
+                      font-size: var(--commonFont-large);
+                    }
                   }
                 }
               }
@@ -395,6 +404,9 @@
               .card-value {
                 color: #6e839b;
                 font-size: 12px;
+                @media only screen and (max-width: 1560px) {
+                  font-size: 10.5px;
+                }
               }
             }
           }
