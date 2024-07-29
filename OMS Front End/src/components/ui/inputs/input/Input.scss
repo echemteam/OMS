@@ -53,7 +53,7 @@
   .validation-text {
     margin-left: 145px !important;
     margin-top: -8px !important;
-    @media only screen and (max-width: 1560px) {
+    @media only screen and (max-width: 1750px) {
       margin-left: 110px ;
     }
   }
@@ -183,7 +183,7 @@ form {
   margin-left: 3px;
 }
 
-@media only screen and (max-width: 1560px) {
+@media only screen and (max-width: 1750px) {
   .validation-text {
     margin-left: 120px;
     font-size: var(--commonFont-extraSmall);

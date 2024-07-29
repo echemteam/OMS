@@ -108,7 +108,7 @@
             width: 30px;
             transition: 0.5s all;
             filter: brightness(100);
-            @media only screen and (max-width: 1560px) {
+            @media only screen and (max-width: 1750px) {
              width: 21px; 
             }
           }
@@ -142,7 +142,7 @@
 }
 
 
-@media only screen and (max-width: 1560px) {
+@media only screen and (max-width: 1750px) {
   .sidebar-contact-model {
     .sidebar-model {
       .side-model-section {

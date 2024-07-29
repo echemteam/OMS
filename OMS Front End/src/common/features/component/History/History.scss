@@ -165,7 +165,7 @@
         margin-left: 3%;
         margin-right: 2%;
         max-height: calc(100vh - 345px);
-        @media only screen and (max-width: 1560px) {
+        @media only screen and (max-width: 1750px) {
             max-height: calc(100vh - 295px);
         }
         .timeline-item {
@@ -283,7 +283,7 @@
 // New Timeline Sec End
 
 
-@media only screen and (max-width: 1560px) {
+@media only screen and (max-width: 1750px) {
     .new-timeline-sec {
         .timeline {
             .timeline-item {
