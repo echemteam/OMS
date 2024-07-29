@@ -43,6 +43,12 @@ namespace OMS.Domain.Repository
         ISupplierFinancialSettingsRepository _supplierFinancialSettingsRepository;
         ISuppierBankDetailsRepository _suppierBankDetailsRepository;    
         ISupplierPaymentSettingsRepository _supplierPaymentSettingsRepository;
+        IApiEventRepository _apiEventManagementRepository;
+        IApiEventMappingRepository _apiEventMappingRepository;
+        IApiEventParameterRepository _apiEventParameterRepository;
+        IApiParameterMappingRepository _apiParameterMappingRepository;
+        IApiEventRequiredFieldRepository _apiEventRequiredFieldRepository;
+        IApiEventRequiredFieldsMappingRepository _apiEventRequiredFieldsMappingRepository;
 
         public ITestRepository test
         {
@@ -387,6 +393,78 @@ namespace OMS.Domain.Repository
                     _supplierPaymentSettingsRepository = new SupplierPaymentSettingsRepository(_context);
                 }
                 return _supplierPaymentSettingsRepository;
+            }
+
+        }
+        public IApiEventRepository apiEvent
+        {
+            get
+            {
+                if (_apiEventManagementRepository == null)
+                {
+                    _apiEventManagementRepository = new ApiEventRepository(_context);
+                }
+                return _apiEventManagementRepository;
+            }
+
+        }
+        public IApiEventMappingRepository apiEventMapping
+        {
+            get
+            {
+                if (_apiEventMappingRepository == null)
+                {
+                    _apiEventMappingRepository = new ApiEventMappingRepository(_context);
+                }
+                return _apiEventMappingRepository;
+            }
+
+        }
+        public IApiEventParameterRepository apiEventParameter
+        {
+            get
+            {
+                if (_apiEventParameterRepository == null)
+                {
+                    _apiEventParameterRepository = new ApiEventParameterRepository(_context);
+                }
+                return _apiEventParameterRepository;
+            }
+
+        }
+        public IApiParameterMappingRepository apiParameterMapping 
+        {
+            get
+            {
+                if (_apiParameterMappingRepository == null)
+                {
+                    _apiParameterMappingRepository = new ApiParameterMappingRepository(_context);
+                }
+                return _apiParameterMappingRepository;
+            }
+
+        }
+        public IApiEventRequiredFieldRepository apiEventRequiredField
+        {
+            get
+            {
+                if (_apiEventRequiredFieldRepository == null)
+                {
+                    _apiEventRequiredFieldRepository = new ApiEventRequiredFieldRepository(_context);
+                }
+                return _apiEventRequiredFieldRepository;
+            }
+
+        }
+        public IApiEventRequiredFieldsMappingRepository apiEventRequiredFieldsMapping
+        {
+            get
+            {
+                if (_apiEventRequiredFieldsMappingRepository == null)
+                {
+                    _apiEventRequiredFieldsMappingRepository = new ApiEventRequiredFieldsMappingRepository(_context);
+                }
+                return _apiEventRequiredFieldsMappingRepository;
             }
 
         }

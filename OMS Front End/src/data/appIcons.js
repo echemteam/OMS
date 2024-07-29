@@ -81,6 +81,7 @@ import iIcon from "../assets/images/i-icon.svg"
 import blocked from "../assets/images/redblocked.png";
 import pending from "../assets/images/pending.png";
 import active from "../assets/images/checked.png";
+import nextArrowIcon from "../assets/images/NextArrowIcon.svg"
 
 
 export const AppIcons = {
@@ -162,4 +163,5 @@ export const AppIcons = {
   PendingIcon: pending,
   BlockedIcon: blocked,
   ActiveIcon: active,
+  nextArrowIcon: nextArrowIcon, 
 };

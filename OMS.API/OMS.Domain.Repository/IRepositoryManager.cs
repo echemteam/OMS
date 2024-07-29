@@ -35,5 +35,11 @@ namespace OMS.Domain.Repository
         ISupplierFinancialSettingsRepository supplierFinancialSettings { get; }
         ISuppierBankDetailsRepository suppierBankDetails { get; }
         ISupplierPaymentSettingsRepository supplierPaymentSettings { get; }
+        IApiEventRepository apiEvent { get; }
+        IApiEventMappingRepository apiEventMapping { get; }
+        IApiEventParameterRepository apiEventParameter {  get; }
+        IApiParameterMappingRepository apiParameterMapping {  get; }
+        IApiEventRequiredFieldRepository apiEventRequiredField { get; }
+        IApiEventRequiredFieldsMappingRepository apiEventRequiredFieldsMapping { get; }
     }
 }

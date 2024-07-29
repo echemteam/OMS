@@ -5,7 +5,7 @@ import { useAddEditOtherMutation } from "../../../../../app/services/supplierFin
 import ToastService from "../../../../../services/toastService/ToastService";
 import Buttons from "../../../../../components/ui/button/Buttons";
 
-const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId , onHandleGetById}) => {
+const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId, onHandleGetById }) => {
   const otherFormRef = useRef();
   const [otherForm, setOtherForm] = useState(otherFormData);
   const [addEditOther, { isLoading: isAddEditOtherLoading, isSuccess: isAddEditOtherSuccess, data: isAddEditOtherData }] = useAddEditOtherMutation();
@@ -86,11 +86,11 @@ const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId , onHan
                 isLoading={isAddEditOtherLoading}
               // isDisable={isButtonDisable}
               />
-              <Buttons
+              {/* <Buttons
                 buttonTypeClassName="dark-btn ml-5"
                 buttonText="Cancel"
               // onClick={onSidebarClose}
-              />
+              /> */}
             </div>
             {/* ))} */}
           </div>

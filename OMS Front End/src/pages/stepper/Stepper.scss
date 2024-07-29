@@ -98,13 +98,16 @@
     }
 
     .stepper-content {
-      padding: 24px 24px 0 24px;
+      padding: 24px 24px 24px 24px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
       overflow-y: auto;
       width: 100%;
       max-height: calc(100vh - 185px);
+      @media only screen and (max-width: 1750px) {
+        padding: 10px 15px;
+      }
       .content {
         display: none;
 

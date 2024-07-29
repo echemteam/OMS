@@ -7,18 +7,21 @@ import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/Fo
 import ToastService from "../../../../../services/toastService/ToastService";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
+import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
+import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 
-const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSettingFormRef, getAllCities, getAllStates, getAllCountries, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCountriesSucess, allGetAllCountriesData }) => {
+const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSettingFormRef }) => {
   const checkFormRef = useRef();
   const [checkformData, setCheckFormData] = useState(checkFormData);
-  // const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const [addEditCheck, { isLoading: isAddEditCheckLoading, isSuccess: isAddEditCheckSuccess, data: isAddEditCheckData }] = useAddEditCheckMutation();
+  const [getAllCities, { isSuccess: isGetAllCitiesSucess, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+  const [getAllStates, { isSuccess: isGetAllStatesSucess, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
 
   useEffect(() => {
     getAllCountries();
     getAllStates();
-    // getAllCities();
   }, []);
 
   useEffect(() => {
@@ -39,10 +42,6 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
   const handleStateOption = (responseData) => {
     setDropDownOptionField(responseData, 'stateId', 'name', checkFormData, 'stateId');
   };
-
-  // const handleCityOption = (responseData) => {
-  //   setDropDownOptionField(responseData, 'cityId', 'name', checkFormData, 'cityId');
-  // };
 
   useEffect(() => {
     handleResponse(isAddEditCheckSuccess, isAddEditCheckData);
@@ -68,19 +67,19 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
   }
 
   useEffect(() => {
-    if (getCheckData.initialState.addressId > 0) {
-      if (getCheckData.initialState.stateId) {
-        getAllCities(getCheckData.initialState.stateId)
+    if (getCheckData.addressId > 0) {
+      if (getCheckData.stateId) {
+        getAllCities(getCheckData.stateId)
       }
       let formCheckData = { ...checkformData };
       formCheckData.initialState = {
-        // addressId:getCheckData.initialState.addressId,
-        addressLine1Id: getCheckData.initialState.addressLine1Id,
-        addressLine2Id: getCheckData.initialState.addressLine2Id,
-        cityId: getCheckData.initialState.cityId,
-        stateId: getCheckData.initialState.stateId,
-        countryId: getCheckData.initialState.countryId,
-        zipCode: getCheckData.initialState.zipCode,
+        // addressId:getCheckData.addressId,
+        addressLine1Id: getCheckData.addressLine1Id,
+        addressLine2Id: getCheckData.addressLine2Id,
+        cityId: getCheckData.cityId,
+        stateId: getCheckData.stateId,
+        countryId: getCheckData.countryId,
+        zipCode: getCheckData.zipCode,
       };
       setCheckFormData(formCheckData);
     }
@@ -99,11 +98,11 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
           invoiceSubmissionMethod: formsupplierFinancialSettings.paymentMethodId && typeof formsupplierFinancialSettings.paymentMethodId === "object" ? formsupplierFinancialSettings.paymentMethodId.value : formsupplierFinancialSettings.paymentMethodId,
           poDeliveryMethodId: formsupplierFinancialSettings.poDeliveryMethodId && typeof formsupplierFinancialSettings.poDeliveryMethodId === "object" ? formsupplierFinancialSettings.poDeliveryMethodId.value : formsupplierFinancialSettings.poDeliveryMethodId,
         },
-        supplierPaymentSettingId: getCheckData.initialState.supplierPaymentSettingId ? getCheckData.initialState.supplierPaymentSettingId : 0,
+        supplierPaymentSettingId: getCheckData.supplierPaymentSettingId ? getCheckData.supplierPaymentSettingId : 0,
         supplierId: supplierId,
-        checkMailingAddressId: getCheckData.initialState.checkMailingAddressId ? getCheckData.initialState.checkMailingAddressId : 0,
+        checkMailingAddressId: getCheckData.checkMailingAddressId ? getCheckData.checkMailingAddressId : 0,
         mailingAddress: {
-          addressId: getCheckData.initialState.addressId ? getCheckData.initialState.addressId : 0,
+          addressId: getCheckData.addressId ? getCheckData.addressId : 0,
           addressLine1: formcheckForm.addressLine1Id,
           addressLine2: formcheckForm.addressLine2Id,
           cityId: formcheckForm.cityId && typeof formcheckForm.cityId === "object" ? formcheckForm.cityId.value : formcheckForm.cityId,
@@ -164,11 +163,11 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
                   isLoading={isAddEditCheckLoading}
                 // isDisable={isButtonDisable}
                 />
-                <Buttons
+                {/* <Buttons
                   buttonTypeClassName="dark-btn ml-5"
                   buttonText="Cancel"
                 // onClick={onSidebarClose}
-                />
+                /> */}
               </div>
               {/* ))} */}
             </div>
