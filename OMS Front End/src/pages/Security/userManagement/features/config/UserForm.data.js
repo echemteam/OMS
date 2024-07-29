@@ -87,40 +87,40 @@ export const userFormData = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-input mt-3",
       },
     },
-    {
-      id: "addressTypeId",
-      lable: "Address Type ",
-      Field_Name: "Address Type",
-      fieldType: FormFieldTypes.CUSTOMSELECT,
-      dataField: "addressTypeId",
-      fieldSetting: {
-        placeholder: "Select Address Type",
-        isEnableOnChange: true,
-        isMultiSelect: false,
-        isDisabled: false,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
-      },
-      dropdownSettings: {
-        colorMap: {
-          active: "black",
-          pending: "#ffcc00",
-          blocked: "red"
-        },
-        textMap: {
-          active : { "text": "Active" },
-          pending : { "text": "Pending" },
-          blocked : { "text": "Blocked" }
-        },
-        iconMap: {
-           active : AppIcons.ActiveIcon,
-           pending : AppIcons.PendingIcon,
-           blocked : AppIcons.BlockedIcon,
-        }
-      }
-    },
+    // {
+    //   id: "addressTypeId",
+    //   lable: "Address Type ",
+    //   Field_Name: "Address Type",
+    //   fieldType: FormFieldTypes.CUSTOMSELECT,
+    //   dataField: "addressTypeId",
+    //   fieldSetting: {
+    //     placeholder: "Select Address Type",
+    //     isEnableOnChange: true,
+    //     isMultiSelect: false,
+    //     isDisabled: false,
+    //   },
+    //   validation: [{ type: "require" }],
+    //   style: {
+    //     containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
+    //   },
+    //   dropdownSettings: {
+    //     colorMap: {
+    //       active: "black",
+    //       pending: "#ffcc00",
+    //       blocked: "red"
+    //     },
+    //     textMap: {
+    //       active : { "text": "Active" },
+    //       pending : { "text": "Pending" },
+    //       blocked : { "text": "Blocked" }
+    //     },
+    //     iconMap: {
+    //        active : AppIcons.ActiveIcon,
+    //        pending : AppIcons.PendingIcon,
+    //        blocked : AppIcons.BlockedIcon,
+    //     }
+    //   }
+    // },
 
   ],
   formSetting: {

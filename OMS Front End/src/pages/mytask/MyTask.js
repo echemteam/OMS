@@ -10,10 +10,12 @@ import TaskDetail from "./feature/TaskDetail";
 const mainTabs = [
   {
     sMenuItemCaption: "Done",
+    icon: "fa fa-check-circle-o",
     component: <div className="mt-2">{/* <OrganizationLocation /> */}</div>,
   },
   {
     sMenuItemCaption: "Archive",
+    icon: "fa fa-file-archive-o",
     component: <div className="mt-2">{/* <OrganizationLocation /> */}</div>,
   },
 ];
