@@ -3015,7 +3015,7 @@ input[type="checkbox"]:disabled {
       margin: 0 5px;
 
       i{
-        font-size: 14px;
+        font-size: var(--commonFont);
         margin-right: 5px;
       }
 
