@@ -15,7 +15,7 @@ const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
 
 //** Order */
-const Order = React.lazy(() => import('../../pages/order/Order'));
+const Order = React.lazy(() => import('../../pages/order/addOrder/AddOrder'));
 
 //** MyTask */
 const MyTask = React.lazy(() => import('../../pages/mytask/MyTask'));
@@ -328,7 +328,7 @@ export const ComponentNavigation = [
     title: 'Tasks',
     component: MyTask,
     hasParams: false,
-    text: 'May Task Page',
+    text: 'My Task Page',
     securityKey: securityKey.MYTASK
   },
   {

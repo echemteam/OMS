@@ -17,6 +17,7 @@ const ApiproviderViewTab = ({ providerId, providerData }) => {
   const tabs = [
     {
       sMenuItemCaption: "API EndPoints Management",
+      icon: "fa fa-tasks",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
           <ApiEndPoints providerId={providerId} />
@@ -26,6 +27,7 @@ const ApiproviderViewTab = ({ providerId, providerData }) => {
     },
     {
       sMenuItemCaption: "API Authentication Management",
+      icon: "fa fa-tasks",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll contact-card-section-new">
           <ApiAuthentication

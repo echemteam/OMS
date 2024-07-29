@@ -78,6 +78,9 @@ import SearchIcone from "../assets/images/search.png";
 import ClearIcone from "../assets/images/clear.png";
 import ellipsisIcon from "../assets/images/ellipsisIcon.png";
 import iIcon from "../assets/images/i-icon.svg"
+import blocked from "../assets/images/redblocked.png";
+import pending from "../assets/images/pending.png";
+import active from "../assets/images/checked.png";
 
 
 export const AppIcons = {
@@ -155,4 +158,8 @@ export const AppIcons = {
   SearchIcone:SearchIcone,
   EllipsisIcon:ellipsisIcon,
   Iicon:iIcon,
+
+  PendingIcon: pending,
+  BlockedIcon: blocked,
+  ActiveIcon: active,
 };

@@ -41,6 +41,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty }) => {
   const tabs = [
     {
       sMenuItemCaption: "Address",
+      icon: "fa fa-address-book-o",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
           <CustomerAddressDetail isEditablePage={true} />
@@ -50,6 +51,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty }) => {
     },
     {
       sMenuItemCaption: "Contact",
+      icon: "fa fa-phone",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll contact-card-section-new">
           <CustomerContactDetail isEditablePage={true} isSearchFilterShow={true} />
@@ -59,6 +61,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty }) => {
     },
     {
       sMenuItemCaption: "Settings",
+      icon: "fa fa-cog",
       component: (
         <div className="mt-2">
           <CustomerSettingDetails isEditablePage={true} />
@@ -68,6 +71,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty }) => {
     },
     {
       sMenuItemCaption: "Documents",
+      icon: "fa fa-file-text-o",
       component: (
         <div className="mt-2">
           <CustomerDocumentDetail isEditablePage={true} />
@@ -77,6 +81,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty }) => {
     },
     {
       sMenuItemCaption: "Link Customer",
+      icon: "fa fa-link",
       component: (
         <div className="mt-2">
           <CustomerSubCustomerDetail />
@@ -86,6 +91,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty }) => {
     },
     {
       sMenuItemCaption: "Notes",
+      icon: "fa fa-sticky-note-o",
       component: (
         <div className="mt-2">
           <CustomerNoteDetail isEditablePage={true} />
@@ -95,6 +101,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty }) => {
     },
     {
       sMenuItemCaption: "History",
+      icon: "fa fa-history",
       component: (
         <div className="">
           <CustomerHistory isEditablePage={true} />
