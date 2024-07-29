@@ -24,8 +24,6 @@ const FormSelectField = ({
   ...selectFormFieldProps
 }) => {
 
-
-
   const handleChange = (selectedOption) => {
     if (onChange) {
       const value = isMultiSelect ? selectedOption.map((option) => option.value) : selectedOption;

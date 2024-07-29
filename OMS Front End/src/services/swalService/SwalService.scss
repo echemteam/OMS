@@ -40,6 +40,11 @@ div:where(.swal2-icon).swal2-question{
   color: var(--warningColor) !important;
 }
 
+.swal-icon{
+  border: 0;
+  width: 100px;
+}
+
 @media only screen and (max-width: 1750px) {
   .swal2-styled{
     height: 37px;
