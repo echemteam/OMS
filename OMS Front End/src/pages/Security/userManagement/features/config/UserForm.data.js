@@ -105,9 +105,9 @@ export const userFormData = {
       },
       dropdownSettings: {
         colorMap: {
-          active: "black",
-          pending: "#ffcc00",
-          blocked: "red"
+          active: "#00b100",
+          pending: "#ffd500",
+          blocked: "#ff4c51"
         },
         textMap: {
           active : { "text": "Active" },
