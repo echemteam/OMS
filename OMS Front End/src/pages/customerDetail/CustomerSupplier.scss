@@ -226,6 +226,12 @@
   margin-top: 2px;
 }
 
+.main-tab-header{
+.tab-section .tab-header button:hover{
+  background-color: transparent !important;
+}
+}
+
 .contact-accrodiaon-scroll {
   // overflow: hidden;
   width: 100%;
@@ -407,9 +413,9 @@
   border: none;
 }
 
-.tab-section .tab-header button.active {
-  margin: 0;
-}
+// .tab-section .tab-header button.active {
+//   margin: 0;
+// }
 
 .separator{
   position: relative;

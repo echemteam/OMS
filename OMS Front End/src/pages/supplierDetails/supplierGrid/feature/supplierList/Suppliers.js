@@ -256,7 +256,7 @@ const Suppliers = () => {
         <SupplierListContext.Provider value={{ supplierListRef }}>
           <div className="main-customer-grid">
             <div className="row">
-              <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
+              <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab main-tab-header">
                 <CardSection
                 // cardTitle="Other Information"
                 >
