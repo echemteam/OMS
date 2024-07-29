@@ -57,6 +57,17 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationOtherSettings.GetOrganizationOtherSettings();
         }
+        public async Task<AddEntityDTO<int>> AddEditOrganizationContactDetails(AddEditOrganizationContactDetailsRequest requestData, short CurrentUserId)
+        {
+            OrganizationContactDetailsDto organizationContactDetailsDto = requestData.ToMapp<AddEditOrganizationContactDetailsRequest, OrganizationContactDetailsDto>();
+            organizationContactDetailsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationContactDetails.AddEditOrganizationContactDetails(organizationContactDetailsDto);
+
+        }
+        public async Task<GetOrganizationContactDetailsResponse> GetOrganizationContactDetails()
+        {
+            return await repositoryManager.organizationContactDetails.GetOrganizationContactDetails();
+        }
         #endregion
     }
 }
