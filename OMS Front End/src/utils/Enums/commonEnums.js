@@ -36,13 +36,11 @@ export const ListSupplier = { value: 2, label: "Supplier Name" }
 export const AuthenticationTypes = {
     APIKey: "APIKey",
     OAuth: "OAuth"
-
 }
 
 export const ApiEndPointMethods = {
     GET: "GET",
     POST: "POST",
-
 }
 
 export const ApiParametersDataTypes = {
@@ -88,4 +86,9 @@ export const SupplierFinancialSettings = {
     CREDITCARD: 2,
     CHECK: 3,
     OTHER: 4,
+}
+
+export const OrderTabEnum = {
+    BasicInformation: 1,
+    Contact: 2,
 }
