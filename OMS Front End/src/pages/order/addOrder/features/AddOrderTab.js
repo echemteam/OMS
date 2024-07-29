@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
 import OrderDetails from "../../feature/orderDetail/OrderDetails";
@@ -6,13 +6,23 @@ import { OrderTabEnum } from "../../../../utils/Enums/commonEnums";
 
 const ContactDetail = React.lazy(() => import("../../feature/contactDetail/ContactDetail"));
 
-const AddOrderTab = ({ tabContent, activeTab }) => {
+const AddOrderTab = () => {
+
+  const [activeTab, setActiveTab] = useState(0);
+
   const handleTabClick = (index) => {
 
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+  };
+
+  const moveNextPage = () => {
+    setActiveTab((prev) => prev + 1);
+  };
+  const movePreviewPage = () => {
+    setActiveTab((prev) => prev - 1);
   };
 
   const tabContents = [
@@ -73,56 +83,27 @@ const AddOrderTab = ({ tabContent, activeTab }) => {
                 </React.Fragment>
               ))}
             </div>
-            {/* <div className="stepper-content">
-            <form onSubmit={onSubmit}>
-              {tabContent.map((step, index) => (
-                <div key={index} className={`content ${activeTab === index ? "active" : ""}`} >
-                  <div className="">
-                    {step.content}
-                    <div className="d-flex justify-content-end">
-                      {index > 0 && !showSubBackButton && (
-                        <button type="button" className="btn dark-btn mr-3" onClick={movePreviewPage} >
-                          Back
+            <div className="stepper-content">
+              <form onSubmit={onSubmit}>
+                {tabContents.map((step, index) => (
+                  <div key={index} className={`content ${activeTab === index ? "active" : ""}`} >
+                    <div className="">
+                      {step.content}
+                      <div className="d-flex justify-content-end">
+                        {index > 0 && (
+                          <button type="button" className="btn dark-btn mr-3" onClick={movePreviewPage} >
+                            Back
+                          </button>
+                        )}
+                        <button type="button" className="btn theme-button ml-3" onClick={() => moveNextPage(step.tab)}>
+                          Next
                         </button>
-                      )}
-                      {index < tabContent.length - 1 ? (
-                        activeTab === 3 ? (
-                          <React.Fragment>
-                            {!showSubBackButton ?
-                              <button type="button" className="btn theme-button" onClick={saveFinacialSetting}>
-                                Save Financial Settings
-                              </button>
-                              :
-                              <button type="button" className="btn dark-btn mr-3" onClick={() => handleActiveSubTabClick(CustomerSettingEnum.FinancialSettings)} >
-                                Back
-                              </button>
-                            }
-                            <button type="button" className="btn theme-button ml-3" onClick={() => addCustomer(step.tab)}>
-                              Next 
-                            </button>
-                          </React.Fragment>
-                        ) : (
-                          <button type="button" className="btn theme-button btn-next" onClick={() => addCustomer(step.tab)} >
-                            Next  <Image imagePath={AppIcons.nextArrowIcon} />
-                          </button>
-                        )
-                      ) : (
-                        <>
-                          <button type="submit" className="btn theme-button" onClick={handleDraft} >
-                            Save as Draft
-                          </button>
-
-                          <button type="submit" className="btn theme-button ml-3" onClick={handleSubmit} >
-                            Save as Submit
-                          </button>
-                        </>
-                      )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </form>
-          </div> */}
+                ))}
+              </form>
+            </div>
           </div>
         </div>
       </div>
