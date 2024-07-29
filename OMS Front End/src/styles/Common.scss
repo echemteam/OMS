@@ -3384,21 +3384,28 @@ input[type="checkbox"]:disabled {
   // color:var(--whiteColor) !important;
   border-radius: 5px;
   margin: 0px auto !important;
-  width: 97% !important;
+  // width: 97% !important;
 }
 
 .css-10wo9uf-option {
   margin: 0px 0px 0 10px !important;
   margin: 0px auto !important;
-  width: 97% !important;
+  // width: 97% !important;
 }
 .css-1nmdiq5-menu {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
 }
 .css-tr4s17-option {
   margin: 0px auto !important;
-  width: 97% !important;
+  // width: 97% !important;
   background-color: var(--theme-btn-bg) !important;
   color: var(--whiteColor) !important;
   border-radius: 5px;
+}
+.css-1n6sfyn-MenuList{
+    .custom-option{
+      .option-label{
+        font-size: var(--commonFont-small);
+      }
+    }
 }
