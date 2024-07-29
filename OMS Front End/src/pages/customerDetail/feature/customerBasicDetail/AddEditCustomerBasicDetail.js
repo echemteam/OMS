@@ -19,6 +19,8 @@ import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormF
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import PropTypes from 'prop-types'; 
+import SwalAlert from "../../../../services/swalService/SwalService";
+import { SuccessMessage } from "../../../../data/appMessages";
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
 
     //** State */
@@ -28,7 +30,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const { formSetting } = customerbasicData;
     const [customerName, setCustomerName] = useState('');
     const [formData, setFormData] = useState(customerbasicData);
-
+    const { confirm } = SwalAlert();
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser, setCustomerCountryId } = useContext(BasicDetailContext);
 
@@ -175,6 +177,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     }));
 
     const handleAddBasicDetails = () => {
+       
         let data = basicDetailRef.current.getFormData();
         if (data) {
             let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
@@ -227,8 +230,31 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         }
     }
 
+    const handleCheckboxchange=(data,datafield)=>{
+    
+        if(customerId){
+        if(datafield==="isBuyingForThirdParty" && GetCustomersBasicInformationByIdData.isBuyingForThirdParty=== true){
+        confirm(
+          "Warning?",
+          SuccessMessage.Confirm_Update.replace("{0}", "Is Buying For ThirdParty"),
+          "Yes",
+          "Cancel"
+        ).then((confirmed) => {
+          if (confirmed) {
+            let request = {
+             ...formData,
+              isBuyingForThirdParty: data,
+            };
+            setFormData(request);
+          }
+        });
+    }
+    }
+ }
+
     const formActionHandler = {
-        DDL_CHANGED: handleValidateTextId
+        DDL_CHANGED: handleValidateTextId,
+       CHECK_CHANGE:handleCheckboxchange
     };
 
     const handleInputFields = (data, dataField) => {
@@ -237,6 +263,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             setCustomerName(trimCustomerName);
         }
     }
+
+   
     const formInputHandler = {
         INPUT_CHANGED: handleInputFields,
     }
@@ -281,6 +309,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                             ref={basicDetailRef}
                             {...formData}
                             onActionChange={formActionHandler}
+                            onCheckBoxChange={formActionHandler}
                             onInputChange={formInputHandler}
                             handleInputGroupButton={handleInputGroupButton}
                             handleInputShowInfo={handleExistingInfo}

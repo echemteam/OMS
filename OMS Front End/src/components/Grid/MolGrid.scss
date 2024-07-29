@@ -357,7 +357,7 @@ table {
     tbody {
       max-height: calc(100vh - 365px);
 
-      @media only screen and (max-width: 1560px) {
+      @media only screen and (max-width: 1750px) {
         max-height: calc(100vh - 315px);
       }
     }
@@ -368,14 +368,14 @@ table {
   table {
     tbody {
       max-height: calc(100vh - 400px);
-      @media only screen and (max-width: 1560px) {
+      @media only screen and (max-width: 1750px) {
         max-height: calc(100vh - 332px);
       }
     }
   }
 }
 
-@media only screen and (max-width: 1560px) {
+@media only screen and (max-width: 1750px) {
   table {
     thead {
       tr {

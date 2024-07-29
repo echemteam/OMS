@@ -105,6 +105,9 @@
       overflow-y: auto;
       width: 100%;
       max-height: calc(100vh - 185px);
+      @media only screen and (max-width: 1750px) {
+        padding: 10px 15px;
+      }
       .content {
         display: none;
 
@@ -116,7 +119,7 @@
   }
 }
 
-@media only screen and (max-width: 1560px) {
+@media only screen and (max-width: 1750px) {
   .stepper-card {
     .card{
       padding: 0px 5px 5px;

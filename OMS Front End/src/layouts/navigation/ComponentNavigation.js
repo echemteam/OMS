@@ -15,7 +15,7 @@ const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
 
 //** Order */
-const Order = React.lazy(() => import('../../pages/order/Order'));
+const Order = React.lazy(() => import('../../pages/order/addOrder/AddOrder'));
 
 //** MyTask */
 const MyTask = React.lazy(() => import('../../pages/mytask/MyTask'));
@@ -343,7 +343,7 @@ export const ComponentNavigation = [
   },
   {
     id: 'ThirdPartyApiConfigurationViewDetails',
-    path: '/ThirdPartyApiConfigurationViewDetails',
+    path: '/ThirdPartyApiConfigurationViewDetails/:id',
     exact: true,
     title: 'Third Party Api View Details',
     component: ThirdPartyApiConfigurationViewDetails,

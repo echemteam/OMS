@@ -35,5 +35,8 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints();
         Task<List<GetAllApproveCustomerForLinkingResponse>> GetAllApproveCustomerForLinking(int customerId);
         Task<List<GetAllPODeliveryMethodResponse>> GetAllPODeliveryMethod();
+        Task<List<GetAllApiEventParameterByApiEventIdResponse>> GetAllApiEventParameterByApiEventId(int apiEventId);
+        Task<List<GetAllAPIParametersResponse>> GetAllAPIParameters();
+        Task<List<GetAllApiEventRequiredFieldByApiEventIdResponse>> GetAllApiEventRequiredFieldByApiEventId(int apiEventId);
     }
 }

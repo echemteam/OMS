@@ -226,10 +226,6 @@
   margin-top: 2px;
 }
 
-.customer-detail-tab-sec {
-  .card-body-sec {}
-}
-
 .contact-accrodiaon-scroll {
   // overflow: hidden;
   width: 100%;
@@ -240,6 +236,7 @@
     display: flex;
     width: 100%;
     // padding-bottom: 15px;
+    padding-left: 0;
   }
 
   .card-body-sec {

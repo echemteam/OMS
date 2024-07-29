@@ -7,26 +7,26 @@ import FormCreator from "../../../../components/Forms/FormCreator";
 import { useEffect } from "react";
 import { AuthenticationTypes } from "../../../../utils/Enums/commonEnums";
 import { useState } from "react";
-import { useAddEditApiProviderMutation, useLazyGetApiProviderByProviderIdQuery} from "../../../../app/services/apiProviderAPI";
+import { useAddEditApiProviderMutation, useLazyGetApiProviderByProviderIdQuery } from "../../../../app/services/apiProviderAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
 
 const AddEditApiProviders = (props) => {
   const providerId = props.initData?.providerId;
-  const {getCustomerById} =props;
+  const { getCustomerById } = props;
   const apiProviderRef = useRef();
-  const [providerFormData, setProviderFormData] = useState( addEditApiProviderFormData);
-  const [addEditApiProvider, {isLoading: isAddEditApiProviderLoading,isSuccess: isAddEditApiProviderSuccess,data: allAddEditApiProviderData,},] = useAddEditApiProviderMutation();
-const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFetching,isSuccess: isGetApiProviderByProviderSuccess,data: GetApiProviderByProviderIdData, },] = useLazyGetApiProviderByProviderIdQuery();
+  const [providerFormData, setProviderFormData] = useState(addEditApiProviderFormData);
+  const [addEditApiProvider, { isLoading: isAddEditApiProviderLoading, isSuccess: isAddEditApiProviderSuccess, data: allAddEditApiProviderData, },] = useAddEditApiProviderMutation();
+  const [getApiProviderByProviderId, { isFetching: isGetApiProviderByProviderIdFetching, isSuccess: isGetApiProviderByProviderSuccess, data: GetApiProviderByProviderIdData, },] = useLazyGetApiProviderByProviderIdQuery();
 
   useEffect(() => {
-    if (providerId ) {
+    if (providerId) {
       getApiProviderByProviderId(providerId);
     }
   }, [providerId]);
 
   useEffect(() => {
-    if ( isGetApiProviderByProviderSuccess && GetApiProviderByProviderIdData && !isGetApiProviderByProviderIdFetching) {
+    if (isGetApiProviderByProviderSuccess && GetApiProviderByProviderIdData && !isGetApiProviderByProviderIdFetching) {
       const newFrom = { ...providerFormData };
       newFrom.initialState = {
         name: GetApiProviderByProviderIdData.name,
@@ -45,16 +45,16 @@ const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFet
         props.onSuccess();
         props.onClose();
         return;
-    }
+      }
       onResetForm(addEditApiProviderFormData, setProviderFormData, null);
       if (providerId > 0) {
         getCustomerById()
-        ToastService.success(allAddEditApiProviderData.errorMessage);   
-    }else{
-      props.onSuccess();
-      ToastService.success(allAddEditApiProviderData.errorMessage);  
-    }
-    props.onClose();
+        ToastService.success(allAddEditApiProviderData.errorMessage);
+      } else {
+        props.onSuccess();
+        ToastService.success(allAddEditApiProviderData.errorMessage);
+      }
+      props.onClose();
     }
   }, [isAddEditApiProviderSuccess, allAddEditApiProviderData]);
 
@@ -77,7 +77,7 @@ const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFet
         providerId: providerId,
         authenticationType:
           formData.authenticationType &&
-          typeof formData.authenticationType === "object" ? formData.authenticationType.value : formData.authenticationType,
+            typeof formData.authenticationType === "object" ? formData.authenticationType.value : formData.authenticationType,
       };
       addEditApiProvider(requestData);
     }
@@ -87,8 +87,8 @@ const [getApiProviderByProviderId,{  isFetching: isGetApiProviderByProviderIdFet
     const dropdownField = addEditApiProviderFormData.formFields.find(
       (item) => item.dataField === "authenticationType"
     );
-    dropdownField.fieldSetting.options = Object.entries( AuthenticationTypes ).map(([key, value]) => ({
-       label: key,
+    dropdownField.fieldSetting.options = Object.entries(AuthenticationTypes).map(([key, value]) => ({
+      label: key,
       value: value,
     }));
   }, []);

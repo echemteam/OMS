@@ -5,7 +5,13 @@ import Image from "../../image/Image";
 import { AppIcons } from "../../../data/appIcons";
 import PropTypes from "prop-types";
 
-const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization, onTabClick }) => {
+const RenderTabs = ({
+  tabs,
+  isCollapse,
+  onActiveTab,
+  isOrganization,
+  onTabClick,
+}) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [isCollapsediv, setIsCollapsediv] = useState(false);
@@ -19,38 +25,48 @@ const RenderTabs = ({ tabs, isCollapse, onActiveTab, isOrganization, onTabClick 
   };
 
   const handleCollapseClick = () => {
-    setIsCollapsediv(prevState => !prevState);
+    setIsCollapsediv((prevState) => !prevState);
   };
 
   useEffect(() => {
     if (activeTab && isOrganization === true) {
-      onActiveTab(activeTab)
+      onActiveTab(activeTab);
     } else if (activeTab === 0 && isOrganization === true) {
-      onActiveTab(activeTab)
+      onActiveTab(activeTab);
     }
-  }, [activeTab])
+  }, [activeTab]);
 
   return (
     <>
       {tabs && tabs.length > 0 && (
         <div className="row">
           <div className="col-12">
-            <div className={`tab-section mb-0 ${isCollapsediv ? 'collapse-tabs' : ''}`}>
+            <div
+              className={`tab-section mb-0 ${
+                isCollapsediv ? "collapse-tabs" : ""
+              }`}
+            >
               <div className="tab-header">
                 {tabs &&
-                  tabs.map((tab, index) => (
-                    tab &&
-                    <button
-                      key={index}
-                      className={activeTab === index ? "active" : ""}
-                      onClick={() => handleTabClick(index, tab.sPage)}
-                    >
-                      {tab.sMenuItemCaption}
-                    </button>
-                  ))}
+                  tabs.map(
+                    (tab, index) =>
+                      tab && (
+                        <button
+                          key={index}
+                          className={activeTab === index ? "active" : ""}
+                          onClick={() => handleTabClick(index, tab.sPage)}
+                        >
+                          <i className={tab.icon}></i> {tab.sMenuItemCaption}
+                        </button>
+                      )
+                  )}
                 {isCollapse ? (
                   <>
-                    <div className="collapse-tab" onClick={handleCollapseClick} title="Collapse Tabs">
+                    <div
+                      className="collapse-tab"
+                      onClick={handleCollapseClick}
+                      title="Collapse Tabs"
+                    >
                       <Image imagePath={AppIcons.arrowIcon} />
                     </div>
                   </>
@@ -76,12 +92,13 @@ RenderTabs.propTypes = {
     PropTypes.shape({
       sMenuItemCaption: PropTypes.string,
       sPage: PropTypes.string,
-      component: PropTypes.node
+      icon: PropTypes.string,
+      component: PropTypes.node,
     })
   ),
   isCollapse: PropTypes.bool,
   onActiveTab: PropTypes.func,
-  isOrganization: PropTypes.bool
+  isOrganization: PropTypes.bool,
 };
 
 export default RenderTabs;

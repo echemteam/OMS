@@ -139,7 +139,7 @@
           width: 20px !important;
           filter: none !important;
           padding: 0 !important;
-          @media only screen and (max-width: 1560px) {
+          @media only screen and (max-width: 1750px) {
             width: 15px !important;
           }
         }
@@ -149,7 +149,7 @@
 }
 
 
-@media only screen and (max-width: 1560px) {
+@media only screen and (max-width: 1750px) {
   .config-card {
     .card {
       height: calc(100vh - 120px);

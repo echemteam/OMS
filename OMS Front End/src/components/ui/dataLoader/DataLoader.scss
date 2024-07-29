@@ -1,5 +1,5 @@
 .loader-section {
-  padding: 50px 0;
+  padding: 15px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,9 +10,9 @@
   .lds-roller {
     display: inline-block;
     position: relative;
-    width: 80px;
-    height: 80px;
-    margin-bottom: 20px;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
 
     div {
       animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
