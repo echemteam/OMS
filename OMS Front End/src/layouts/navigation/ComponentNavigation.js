@@ -15,7 +15,7 @@ const NotFound = React.lazy(() => import("../../pages/errors/NotFound"));
 const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
 
 //** Order */
-const Order = React.lazy(() => import('../../pages/order/Order'));
+const Order = React.lazy(() => import('../../pages/order/addOrder/AddOrder'));
 
 //** MyTask */
 const MyTask = React.lazy(() => import('../../pages/mytask/MyTask'));

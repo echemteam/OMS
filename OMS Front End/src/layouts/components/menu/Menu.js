@@ -11,7 +11,7 @@ export const Menu = [
         iconClass: "bi bi-file-earmark-medical",
         subMenu: false,
         securityKey: securityKey.DASHBOARD,
-        children: []
+        children: [],
       },
       
     
@@ -22,10 +22,9 @@ export const Menu = [
         iconClass: "fa fa-building-o",
         subMenu: false,
         securityKey: securityKey.DASHBOARD,
-        children: []
+        children: [],
       },
-      
-    ]
+    ],
   },
   {
     groupLabel: "Management",
@@ -42,13 +41,13 @@ export const Menu = [
             id: "User Management",
             submenuName: "User Management",
             to: "/Users",
-            securityKey: securityKey.USERMANAGEMENT
+            securityKey: securityKey.USERMANAGEMENT,
           },
           {
             id: "SecurityRoleManagement",
             submenuName: "Security Roles Management",
             to: "/SecurityRoleManagement",
-            securityKey: securityKey.SECURITYROLEMANAGEMENT
+            securityKey: securityKey.SECURITYROLEMANAGEMENT,
           },
         ],
       },
@@ -126,7 +125,6 @@ export const Menu = [
             to: "/APIProviders",
             securityKey: securityKey.APIPROVIDERS,
           },
-    
         ],
       },
       {
@@ -141,10 +139,15 @@ export const Menu = [
             id: "Api Configuration",
             submenuName: "Api Configuration",
             to: "/ThirdPartyApiConfiguration",
-            securityKey: securityKey.USERMANAGEMENT
+            securityKey: securityKey.USERMANAGEMENT,
           },
         ],
       },
+    ],
+  },
+  {
+    groupLabel: "Orders",
+    items: [
       {
         name: "Order",
         id: "Order",
@@ -152,7 +155,7 @@ export const Menu = [
         iconClass: "bi bi-file-earmark-medical",
         subMenu: false,
         securityKey: securityKey.USERMANAGEMENT,
-        children: []
+        children: [],
       },
       {
         name: "My Task",

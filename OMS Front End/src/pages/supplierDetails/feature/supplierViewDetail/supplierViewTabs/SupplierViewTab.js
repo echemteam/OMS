@@ -26,6 +26,7 @@ const SupplierViewTab = (supplierId) => {
     const tabs = [
         {
             sMenuItemCaption: "Address",
+            icon: "fa fa-address-book-o",
             component: (
                 <div className="mt-2 contact-accrodiaon-scroll">
                     <SuplierAddressDetails isEditablePage={true} />
@@ -35,6 +36,7 @@ const SupplierViewTab = (supplierId) => {
         },
         {
             sMenuItemCaption: "Contact",
+            icon: "fa fa-phone",
             component: (
                 <div className="mt-2 contact-accrodiaon-scroll contact-card-section-new">
                     <SupplierContactDetail isEditablePage={true} isSearchFilterShow={true} />
@@ -44,6 +46,7 @@ const SupplierViewTab = (supplierId) => {
         },
         {
             sMenuItemCaption: "Financial Settings",
+            icon: "fa fa-cog",
             component: (
                 <div className="mt-2 supplier-setting-sec">
                     <SupplierSettingDetail
@@ -55,6 +58,7 @@ const SupplierViewTab = (supplierId) => {
         },
         {
             sMenuItemCaption: "Documents",
+            icon: "fa fa-file-text-o",
             component: (
                 <div className="mt-2">
                     <SupplierDocumentDetail isEditablePage={true} />
@@ -64,6 +68,7 @@ const SupplierViewTab = (supplierId) => {
         },
         {
             sMenuItemCaption: "Notes",
+            icon: "fa fa-sticky-note-o",
             component: (
                 <div className="mt-2">
                     <SupplierNoteDetail isEditablePage={true} />
@@ -73,6 +78,7 @@ const SupplierViewTab = (supplierId) => {
         },
         {
             sMenuItemCaption: "History",
+            icon: "fa fa-history",
             component: (
                 <div className="">
                     <SupplierHistory />

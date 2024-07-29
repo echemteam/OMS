@@ -7,14 +7,33 @@ import CKEditorField from "./formField/FormCkEditorField";
 
 const FormInputFields = React.lazy(() => import("./formField/FormInputFields"));
 const FormSelectField = React.lazy(() => import("./formField/FormSelectField"));
-const FormCheckboxField = React.lazy(() => import("./formField/FormCheckBoxFields"));
-const FormDatePickerField = React.lazy(() => import("./formField/FormDatePickerField"));
-const FormRadioButtonField = React.lazy(() => import("./formField/FormRadioButtonField"));
-const FormTextAreaFields = React.lazy(() => import("./formField/FormTextAreaField"));
-const FormTinyEditorField = React.lazy(() => import("./formField/FormTinyEditorField"));
-const FormFileUploadField = React.lazy(() => import("./formField/FormFileUploadField"));
-const FormImageUploadFields = React.lazy(() => import("./formField/FormImageUploadFields"));
-const FormEditableSelectField = React.lazy(() => import("./formField/FormEditableSelectField"));
+const FormCheckboxField = React.lazy(() =>
+  import("./formField/FormCheckBoxFields")
+);
+const FormDatePickerField = React.lazy(() =>
+  import("./formField/FormDatePickerField")
+);
+const FormRadioButtonField = React.lazy(() =>
+  import("./formField/FormRadioButtonField")
+);
+const FormTextAreaFields = React.lazy(() =>
+  import("./formField/FormTextAreaField")
+);
+const FormTinyEditorField = React.lazy(() =>
+  import("./formField/FormTinyEditorField")
+);
+const FormFileUploadField = React.lazy(() =>
+  import("./formField/FormFileUploadField")
+);
+const FormImageUploadFields = React.lazy(() =>
+  import("./formField/FormImageUploadFields")
+);
+const FormEditableSelectField = React.lazy(() =>
+  import("./formField/FormEditableSelectField")
+);
+const FormCustomSelectField = React.lazy(() =>
+  import("./formField/FormCustomSelectField")
+);
 
 const FormFields = ({
   fields,
@@ -30,9 +49,8 @@ const FormFields = ({
   onInputChange,
   // onInputShowInfo,
   onCheckBoxChange,
-  fieldValiadtionRules
+  fieldValiadtionRules,
 }) => {
-
   const [overRideProps, setOverRideProps] = useState({});
 
   const handleInputChange = (dataField, value) => {
@@ -42,57 +60,61 @@ const FormFields = ({
     onFormFieldChange && onFormFieldChange(dataField, value);
   };
 
-
   const stateChangeAction = (dataField, updatedState) => {
     const formField = selectFormField(dataField);
-    if (formField.changeAction && formField.changeAction.resetValue && formField.changeAction.resetValue.length > 0) {
+    if (
+      formField.changeAction &&
+      formField.changeAction.resetValue &&
+      formField.changeAction.resetValue.length > 0
+    ) {
       formField.changeAction.resetValue.forEach(function (element) {
         updatedState[element["dataField"]] = element["value"];
       });
     }
 
-    if (formField.changeAction && formField.changeAction.resetFieldSetting?.length > 0) {
-
-      var newOverRideProps = { ...overRideProps }
-      formField.changeAction.resetFieldSetting.forEach(setting => {
+    if (
+      formField.changeAction &&
+      formField.changeAction.resetFieldSetting?.length > 0
+    ) {
+      var newOverRideProps = { ...overRideProps };
+      formField.changeAction.resetFieldSetting.forEach((setting) => {
         const { dependancyField: dependancyFields, condition } = setting;
-        if (condition.type === "=" && updatedState[dataField] === condition.value) {
-
+        if (
+          condition.type === "=" &&
+          updatedState[dataField] === condition.value
+        ) {
           if (Array.isArray(dependancyFields)) {
             // Iterate through each data field
-            dependancyFields.forEach(field => {
+            dependancyFields.forEach((field) => {
               newOverRideProps[field.dataField] = {
-                ...field.updateProps
+                ...field.updateProps,
               };
-              updatedState[field.dataField] = field.resetValue
+              updatedState[field.dataField] = field.resetValue;
             });
           }
-
-        }
-        else {
+        } else {
           // Reset the value of newOverRideProps when condition is not met
           if (Array.isArray(dependancyFields)) {
-            dependancyFields.forEach(field => {
+            dependancyFields.forEach((field) => {
               delete newOverRideProps[field.dataField];
             });
           }
         }
-
       });
 
       setOverRideProps(newOverRideProps);
     }
     return updatedState;
-  }
+  };
 
   const selectFormField = (dataField) => {
-    return fields.find(f => f.dataField === dataField);
-  }
-
+    return fields.find((f) => f.dataField === dataField);
+  };
 
   const renderField = (field, index) => {
     const { containerCss } = field?.style || { containerCss: "col-md-6" };
-    const isRequired = fieldValiadtionRules && fieldValiadtionRules[field.dataField]?.length > 0;
+    const isRequired =
+      fieldValiadtionRules && fieldValiadtionRules[field.dataField]?.length > 0;
     switch (field.fieldType) {
       case FormFieldTypes.INPUT:
       case FormFieldTypes.PASSWORD:
@@ -276,7 +298,7 @@ const FormFields = ({
               isRequired={isRequired}
               fileFormate={field.fileFormate}
               {...field.fieldSetting}
-            // isModelOpen={formData.isModelOpen}
+              // isModelOpen={formData.isModelOpen}
             />
           </div>
         );
@@ -300,7 +322,7 @@ const FormFields = ({
               isRequired={isRequired}
               fileFormate={field.fileFormate}
               {...field.fieldSetting}
-            // isModelOpen={formData.isModelOpen}
+              // isModelOpen={formData.isModelOpen}
             />
           </div>
         );
@@ -324,7 +346,7 @@ const FormFields = ({
               {...field.fieldSetting}
             />
           </div>
-        )
+        );
       case FormFieldTypes.SEPARATOR:
         return <Line containerCss={containerCss} />;
 
@@ -350,6 +372,30 @@ const FormFields = ({
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
               isRequired={isRequired}
+              {...field.fieldSetting}
+            />
+          </div>
+        );
+      case FormFieldTypes.CUSTOMSELECT:
+        return (
+          <div className={containerCss} key={field.dataField}>
+            <FormCustomSelectField
+              labelName={field.lable}
+              dataField={field.dataField}
+              selectedOption={field.value}
+              options={field.options}
+              name={field.id}
+              onValidation={onUpdateValidation}
+              value={formData?.[field.dataField] || null}
+              error={validState.error[field.dataField] || ""}
+              onChange={handleInputChange}
+              fieldActions={onActionChange}
+              formSetting={formSetting}
+              formData={formData}
+              changeAction={field.changeAction}
+              overRideProps={overRideProps?.[field.dataField]}
+              isRequired={isRequired}
+              dropDownSettings={field.dropdownSettings}
               {...field.fieldSetting}
             />
           </div>
