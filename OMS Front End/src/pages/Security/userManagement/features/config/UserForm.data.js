@@ -73,21 +73,6 @@ export const userFormData = {
       },
     },
     {
-      id: "isActive",
-      lable: "IsActive",
-      Field_Name: "IsActive",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isActive",
-      fieldSetting: {
-        placeholder: "",
-        allowSpace: true,
-      },
-      // validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-input mt-3",
-      },
-    },
-    {
       id: "addressTypeId",
       lable: "Address Type ",
       Field_Name: "Address Type",
@@ -121,6 +106,22 @@ export const userFormData = {
         }
       }
     },
+    {
+      id: "isActive",
+      lable: "IsActive",
+      Field_Name: "IsActive",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isActive",
+      fieldSetting: {
+        placeholder: "",
+        allowSpace: true,
+      },
+      // validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 mb-input mt-3 pt-1",
+      },
+    },
+    
 
   ],
   formSetting: {
