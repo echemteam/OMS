@@ -142,7 +142,7 @@
                         transition: 0.5s all;
                         filter: brightness(100);
 
-                        @media only screen and (max-width: 1560px) {
+                        @media only screen and (max-width: 1750px) {
                           height: 12px;
                           width: 12px;
                           right: 10px;
@@ -153,7 +153,7 @@
 
                   ul {
                     &.sidebar-dropdown {
-                      padding-left: 30px;
+                      padding-left: 35px;
                       height: 0;
                       overflow: hidden;
                       transition: 0.5s all;
@@ -210,18 +210,6 @@
 
                     ul {
                       position: relative;
-
-                      &::before {
-                        content: "";
-                        position: absolute;
-                        left: 15px;
-                        top: 0%;
-                        transform: translateY(-50%);
-                        height: 100%;
-                        width: 1px;
-                        height: 85%;
-                        background: #606060;
-                      }
 
                       &.sidebar-dropdown {
                         height: auto;
