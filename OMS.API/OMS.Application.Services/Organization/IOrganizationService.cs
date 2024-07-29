@@ -12,6 +12,7 @@ namespace OMS.Application.Services.Organization
         Task<GetSmtpSettingsResponse> GetSmtpSettings();
         Task<AddEntityDTO<int>> AddEditOrganizationOtherSettings(AddEditOrganizationOtherSettingsRequest requestData, short CurrentUserId);
         Task<GetOrganizationOtherSettingsResponse> GetOrganizationOtherSettings();
-
+        Task<AddEntityDTO<int>> AddEditOrganizationContactDetails(AddEditOrganizationContactDetailsRequest requestData, short CurrentUserId);
+        Task<GetOrganizationContactDetailsResponse> GetOrganizationContactDetails();
     }
 }

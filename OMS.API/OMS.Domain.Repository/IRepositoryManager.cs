@@ -32,6 +32,7 @@ namespace OMS.Domain.Repository
         IOrganizationRepository organization { get; }
         IOrganizationOtherSettingsRepository organizationOtherSettings { get; }
         ISmtpSettingsRepository smtpSettings { get; }
+        IOrganizationContactDetailsRepository organizationContactDetails { get; }
         ISupplierFinancialSettingsRepository supplierFinancialSettings { get; }
         ISuppierBankDetailsRepository suppierBankDetails { get; }
         ISupplierPaymentSettingsRepository supplierPaymentSettings { get; }
