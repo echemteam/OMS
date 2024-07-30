@@ -76,6 +76,18 @@ namespace OMS.API.Controllers
             var organizationContactDetails = await _serviceManager.organizationService.GetOrganizationContactDetails().ConfigureAwait(true);
             return APISucessResponce<object>(organizationContactDetails);
         }
+        [HttpPost("AddEditOrganizationLogisticDetails")]
+        public async Task<IActionResult> AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditOrganizationLogisticDetails(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationLogisticDetails")]
+        public async Task<IActionResult> GetOrganizationLogisticDetails()
+        {
+            var organizationLogisticDetails = await _serviceManager.organizationService.GetOrganizationLogisticDetails().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationLogisticDetails);
+        }
         #endregion
     }
 }
