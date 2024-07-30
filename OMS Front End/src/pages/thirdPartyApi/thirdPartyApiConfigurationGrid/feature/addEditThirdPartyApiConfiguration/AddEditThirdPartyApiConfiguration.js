@@ -35,7 +35,7 @@ const AddEditThirdPartyApiConfiguration = (props) => {
     if (formData) {
       let request = {
         ...formData,
-        apiEventId: props.viewCardDetails.apiEventId ? props.viewCardDetails.apiEventId : 0
+        apiEventId: props.isUpdate ? props.viewCardDetails.apiEventId : formData.apiEventId
       };
       addEditApiEvent(request);
     }
