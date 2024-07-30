@@ -97,6 +97,16 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationAccountingDetails.GetOrganizationAccountingDetails();
         }
+        public async Task<AddEntityDTO<int>> AddEditOrganizationShippingCharges(AddEditOrganizationShippingChargesRequest requestData, short CurrentUserId)
+        {
+            OrganizationShippingChargesDto organizationShippingChargesDto = requestData.ToMapp<AddEditOrganizationShippingChargesRequest, OrganizationShippingChargesDto>();
+            organizationShippingChargesDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationShippingCharges.AddEditOrganizationShippingCharges(organizationShippingChargesDto);
+        }
+        public async Task<GetOrganizationShippingChargesResponse> GetOrganizationShippingCharges()
+        {
+            return await repositoryManager.organizationShippingCharges.GetOrganizationShippingCharges();
+        }
         #endregion
     }
 }

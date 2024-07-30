@@ -113,6 +113,18 @@ namespace OMS.API.Controllers
             var organizationAccountingDetails = await _serviceManager.organizationService.GetOrganizationAccountingDetails().ConfigureAwait(true);
             return APISucessResponce<object>(organizationAccountingDetails);
         }
+        [HttpPost("AddEditOrganizationShippingCharges")]
+        public async Task<IActionResult> AddEditOrganizationShippingCharges(AddEditOrganizationShippingChargesRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditOrganizationShippingCharges(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationShippingCharges")]
+        public async Task<IActionResult> GetOrganizationShippingCharges()
+        {
+            var organizationShippingCharges= await _serviceManager.organizationService.GetOrganizationShippingCharges().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationShippingCharges);
+        }
         #endregion
     }
 }
