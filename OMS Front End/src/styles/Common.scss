@@ -278,7 +278,7 @@ a {
     right: -20px;
 
     .click-btn {
-      background: var(--theme-btn-bg);
+      background: var(--themeColor);
       height: 100%;
       width: 100%;
       border-radius: 100%;
@@ -362,6 +362,8 @@ a {
                   }
                   li {
                     &.menu-item {
+                      position: relative;
+
                       a {
                         justify-content: center;
                         padding: 10px;
@@ -385,28 +387,45 @@ a {
                         display: none;
                         opacity: 0;
                         transition: all 1s ease-in-out;
+                        height: 0;
                       }
+                      &.active-menu{
                       &:hover {
                         .sidebar-dropdown {
-                          display: inherit;
+                          display: block;
                           opacity: 1;
-                          // position: absolute;
+                          position: absolute;
                           z-index: 999;
                           transition: all 1s ease-in-out;
                           min-width: 245px;
                           background: transparent;
-                          left: 11px;
+                          left: 40px;
+                          top: 0;
+                          height: auto;
 
                           .collapse-dropdown {
                             background-color: #2f3349af;
-                            // background-color: #4e536b;;
-                            color: #fff !important;
+                            color: var(--whiteColor) !important;
                             border-radius: 8px;
                             backdrop-filter: blur(15px);
+                            // opacity: 0;
 
                             a {
                               padding: 10px 0px 10px 20px !important;
                             }
+                          }
+                        }
+                      }
+                    }
+                    }
+                    &.active-menu{
+                      a::before{
+                        transform: translateY(-50%) rotate(-90deg);
+                      }
+                      ul{
+                        li{
+                          &::before{
+                            display: none;
                           }
                         }
                       }
@@ -758,27 +777,27 @@ a {
 
 .badge-gradient-warning {
   background: var(--gradient-warning);
-  color: #ffffff;
+  color: var(--whiteColor);
 }
 
 .badge-gradient-success {
   background: var(--gradient-success);
-  color: #ffffff;
+  color: var(--whiteColor);
 }
 
 .badge-gradient-info {
   background: var(--gradient-info);
-  color: #ffffff;
+  color: var(--whiteColor);
 }
 
 .badge-gradient-danger {
   background: var(--gradient-danger);
-  color: #ffffff;
+  color: var(--whiteColor);
 }
 
 .badge-gradient-theme {
   background: var(--gradient-theme);
-  color: #ffffff;
+  color: var(--whiteColor);
 }
 
 .badge-gradient-Blocked {
@@ -817,7 +836,7 @@ a {
 }
 
 .status-btn {
-  // color: #ffffff;
+  // color: var(--whiteColor);
   display: inline-block;
   // min-width: 95px;
   border-radius: 4px;
@@ -1551,7 +1570,7 @@ a {
   right: 0;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  font-size: 10px;
+  font-size: var(--commonFont-extraSmall);
   font-weight: 600;
 
   @media only screen and (max-width: 1750px) {
@@ -2347,7 +2366,7 @@ input[type="checkbox"]:disabled {
 
     &.active-green-color {
       background: var(--PrimaryColor);
-      color: #fff !important;
+      color: var(--whiteColor) !important;
     }
   }
 }
@@ -2526,7 +2545,7 @@ input[type="checkbox"]:disabled {
 
   .react-calendar__tile--now {
     background: var(--themeColor) !important;
-    color: #fff !important;
+    color: var(--whiteColor) !important;
   }
 
   .react-calendar {
@@ -3026,7 +3045,7 @@ input[type="checkbox"]:disabled {
 
         &.active {
           // margin-bottom: 10px;
-          background: var(--theme-btn-bg);
+          background: var(--themeColor);
           color: var(--whiteColor);
           // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
         }
@@ -3398,11 +3417,12 @@ input[type="checkbox"]:disabled {
 .css-tr4s17-option {
   margin: 0px auto !important;
   // width: 97% !important;
-  background-color: var(--theme-btn-bg) !important;
+  background-color: var(--themeColor) !important;
   color: var(--whiteColor) !important;
   border-radius: 5px;
 }
 .css-1n6sfyn-MenuList{
+  padding: 0 !important;
     .custom-option{
       .option-label{
         font-size: var(--commonFont-small);

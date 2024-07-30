@@ -166,15 +166,15 @@
   .css-b62m3t-container {
     .css-13cymwt-control {
       .css-1xc3v61-indicatorContainer {
-        color: #fff !important;
+        color: var(--whiteColor) !important;
       }
 
       .css-1xc3v61-indicatorContainer:hover {
-        color: #fff !important;
+        color: var(--whiteColor) !important;
       }
 
       .css-15lsz6c-indicatorContainer {
-        color: #fff !important;
+        color: var(--whiteColor) !important;
         opacity: 0 !important;
         visibility: hidden !important;
       }
@@ -182,15 +182,15 @@
 
     .css-t3ipsp-control {
       .css-1xc3v61-indicatorContainer {
-        color: #fff !important;
+        color: var(--whiteColor) !important;
       }
 
       .css-1xc3v61-indicatorContainer:hover {
-        color: #fff !important;
+        color: var(--whiteColor) !important;
       }
 
       .css-15lsz6c-indicatorContainer {
-        color: #fff !important;
+        color: var(--whiteColor) !important;
         opacity: 0 !important;
         visibility: hidden !important;
       }
@@ -357,13 +357,13 @@
  .fa-envelope , .fa-globe {
     color: var(--themeColor);
     margin-right: 10px;
-    font-size: 12px;
+    font-size: var(--commonFont-small);
     margin-left: 3px;
     margin-top: 3px;
   }
 
   .fa-globe{
-    font-size: 14px !important;
+    font-size: var(--commonFont) !important;
   }
 }
 
@@ -377,7 +377,7 @@
 .profile-icon{
   width: 20px !important;
   margin-left: 9px;
-  font-size: 10px !important;
+  font-size: var(--commonFont-extraSmall) !important;
   height: 20px !important;
 }
 
@@ -387,7 +387,7 @@
     right: -8px;
     // z-index: 999;
     border-radius: 50%;
-    color: #fff !important;
+    color: var(--whiteColor) !important;
     background: var(--gradient-theme);
     width: 30px;
     height: 30px;
