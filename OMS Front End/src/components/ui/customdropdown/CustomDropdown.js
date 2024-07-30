@@ -5,13 +5,14 @@ import StatusDisplay from "./StatusDisplay";
 
 const CustomOption = (props) => {
   const { data, isSelected, selectProps } = props;
-  const { status, label } = data;
+  const { status, label, date } = data;
   const { colorMap, textMap, iconMap } = selectProps.dropDownSettings;
 
   return (
     <components.Option {...props}>
       <div className="custom-option">
         <span className="option-label">{label}</span>
+        <span className="option-date">{date}</span>
         <StatusDisplay
           status={status}
           isSelected={isSelected}

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
-import OrderDetails from "../../feature/orderDetail/OrderDetails";
 import { OrderTabEnum } from "../../../../utils/Enums/commonEnums";
 
-const ContactDetail = React.lazy(() => import("../../feature/contactDetail/ContactDetail"));
+const ContactDetails = React.lazy(() => import("../../feature/contactDetail/ContactDetails"));
+const OrderDetails = React.lazy(() => import("../../feature/orderDetail/OrderDetails"));
+const OrderItemDetail = React.lazy(() => import("../../feature/orderItemDetail/OrderItemDetail"));
+
 
 const AddOrderTab = () => {
 
@@ -35,24 +37,15 @@ const AddOrderTab = () => {
     {
       label: "Add Contact",
       subLabel: "Enter Contact Details",
-      content: < ContactDetail />,
+      content: <ContactDetails />,
       tab: OrderTabEnum.Contact,
     },
-    // {
-    //   label: "Contact",
-    //   subLabel: "Enter Customer Contact Details",
-    //   content: < />
-    // },
-    // {
-    //   label: "Setting",
-    //   subLabel: "Enter Customer Shipping Method",
-    //   content: < />
-    // },
-    // {
-    //   label: "Documents",
-    //   subLabel: "Add Customer Documents Details",
-    //   content: < />
-    // },
+    {
+      label: "Add Order Item",
+      subLabel: "Enter Order Item Details",
+      content: <OrderItemDetail />,
+      tab: OrderTabEnum.OrderItem,
+    },
   ];
 
   return (
