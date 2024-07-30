@@ -15,7 +15,7 @@ namespace OMS.Prisitance.Entities.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public short? OrganizationAccountingDetailId { get; set; }
         [Column("CreditLimit")]
-        public float? CreditLimit { get; set; }
+        public decimal? CreditLimit { get; set; }
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]

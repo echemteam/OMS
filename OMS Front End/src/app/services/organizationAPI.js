@@ -113,6 +113,40 @@ const organizationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        addEditOrganizationAccountingDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationAccountingDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationAccountingDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationAccountingDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        addEditOrganizationShippingCharges: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationShippingCharges',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationShippingCharges: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationShippingCharges'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -129,6 +163,10 @@ export const {
     useLazyGetOrganizationLogisticDetailsQuery,
     useAddEditOrganizationBankDetailsMutation,
     useLazyGetOrganizationBankDetailsQuery,
+    useAddEditOrganizationAccountingDetailsMutation,
+    useLazyGetOrganizationAccountingDetailsQuery,
+    useAddEditOrganizationShippingChargesMutation,
+    useLazyGetOrganizationShippingChargesQuery,
 } = organizationAPI
 
 export default organizationAPI;

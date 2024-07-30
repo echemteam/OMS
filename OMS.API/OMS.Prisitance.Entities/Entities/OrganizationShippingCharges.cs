@@ -15,15 +15,15 @@ namespace OMS.Prisitance.Entities.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public short? OrganizationShippingChargeId { get; set; }
         [Column("DomesticOvernight")]
-        public float? DomesticOvernight { get; set; }
+        public decimal? DomesticOvernight { get; set; }
         [Column("DomesticSecondDay")]
-        public float? DomesticSecondDay { get; set; }
+        public decimal? DomesticSecondDay { get; set; }
         [Column("DomesticGround")]
-        public float? DomesticGround { get; set; }
+        public decimal? DomesticGround { get; set; }
         [Column("InternationalPriority")]
-        public float? InternationalPriority { get; set; }
+        public decimal? InternationalPriority { get; set; }
         [Column("InternationalEconomy")]
-        public float? InternationalEconomy { get; set; }
+        public decimal? InternationalEconomy { get; set; }
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]
         public short? CreatedBy { get; set; }
