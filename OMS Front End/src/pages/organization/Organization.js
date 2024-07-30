@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
+import OrganizationHistory from './feature/organizationHistory/OrganizationHistory';
 const OrganizationContactDetail=React.lazy(() => import("./feature/organizationContactDetail/OrganizationContactDetail"))
 const SMTPSettings = React.lazy(() => import("./feature/smtpSettings/SMTPSettings"));
 const OtherSettings = React.lazy(() => import("./feature/otherSettings/OtherSettings"));
@@ -75,6 +76,14 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
                    <OrganizationContactDetail activeTabId={activeTabId} />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "History",
+            component: (
+                <div className="mt-2">
+                   <OrganizationHistory />
                 </div>
             ),
         },
