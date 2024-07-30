@@ -1,0 +1,25 @@
+.address-group {
+  margin-bottom: 25px;
+  margin-top: 10px;
+}
+
+.address {
+  border: 1px solid var(--themeColor);
+  border-radius: 10px;
+  width: 32%;
+  margin: 0 10px;
+  padding: 8px;
+
+  @media only screen and (max-width: 1860px) {
+    margin: 0 9px;
+  }
+  @media only screen and (max-width: 1675px) {
+    width: 31.5%;
+  }
+  @media only screen and (max-width: 1560px) {
+    width: 31.5%;
+  }
+  @media only screen and (max-width: 1410px) {
+    margin: 0 9px;
+  }
+}

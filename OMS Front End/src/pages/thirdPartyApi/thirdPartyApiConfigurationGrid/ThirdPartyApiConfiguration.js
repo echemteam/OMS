@@ -52,6 +52,7 @@ const ThirdPartyApiConfiguration = () => {
           onGetData={onGetData}
           onClose={onSidebarClose}
           isOpen={isModelOpen}
+          isUpdate={false}
         />
       </SidebarModel>
     </div>

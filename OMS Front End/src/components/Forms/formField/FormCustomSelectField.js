@@ -22,6 +22,7 @@ const FormCustomSelectField = ({
   overRideProps,
   isRequired,
   dropDownSettings,
+  inputButtonGroup,
   ...selectFormFieldProps
 }) => {
 
@@ -63,6 +64,7 @@ const FormCustomSelectField = ({
             isMultiSelect={isMultiSelect}
             isDisabled={formSetting?.isViewOnly || selectFormFieldProps?.isDisable || overRideProps?.isDisable}
             dropDownSettings={dropDownSettings}
+            inputButtonGroup={inputButtonGroup}
             {...selectFormFieldProps}
           />
         </Suspense>
