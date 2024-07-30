@@ -6,7 +6,7 @@ import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigatio
 
 //** Component's */
 import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
-import SupplierSettingDetail from "../../financialSettings/FinancialSettings";
+const SupplierSettingDetail = React.lazy(() => import("../../financialSettings/FinancialSettings"));
 const SupplierHistory = React.lazy(() => import("../../supplierHistoryDetail/SupplierHistory"));
 const SupplierNoteDetail = React.lazy(() => import("../../supplierNoteDetail/SupplierNoteDetail"));
 const SupplierContactDetail = React.lazy(() => import("../../supplierContactDetail/SupplierContactDetail"));

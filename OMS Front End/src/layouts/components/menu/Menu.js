@@ -13,8 +13,8 @@ export const Menu = [
         securityKey: securityKey.DASHBOARD,
         children: [],
       },
-      
-    
+
+
       {
         name: "Organization",
         id: "Organization",
@@ -107,6 +107,12 @@ export const Menu = [
             id: "approvalRules",
             submenuName: "Approval Rules",
             to: "/ApprovalRules",
+            securityKey: securityKey.APPROVALRULES,
+          },
+          {
+            id: "functionalConfiguration",
+            submenuName: "Functional Configuration",
+            to: "/FunctionalConfiguration",
             securityKey: securityKey.APPROVALRULES,
           },
         ],
