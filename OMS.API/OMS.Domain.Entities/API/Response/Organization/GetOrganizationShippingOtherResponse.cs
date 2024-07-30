@@ -9,10 +9,10 @@ namespace OMS.Domain.Entities.API.Response.Organization
     public class GetOrganizationShippingOtherResponse
     {
         public short? OrganizationOtherChargeId { get; set; }
-        public float? HandlingFees { get; set; }
-        public float? BankWireFees { get; set; }
-        public float? CreditCardServiceFees { get; set; }
-        public float? ColdBoxFees { get; set; }
-        public float? ITNFees { get; set; }
+        public decimal? HandlingFees { get; set; }
+        public decimal? BankWireFees { get; set; }
+        public decimal? CreditCardServiceFees { get; set; }
+        public decimal? ColdBoxFees { get; set; }
+        public decimal? ITNFees { get; set; }
     }
 }
