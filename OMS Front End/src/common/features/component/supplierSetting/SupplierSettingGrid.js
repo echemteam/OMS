@@ -15,7 +15,7 @@ import { checkFormData } from "./config/CheckForm.data";
 import { creditCardFormData } from "./config/CreditCardForm.data";
 import { otherFormData } from "./config/OtherForm.data";
 
-const SupplierSettingGrid = ({ supplierId }) => {
+const SupplierSettingGrid = ({ supplierId, isEditablePage }) => {
   const financialSettingFormRef = useRef();
   const [financialSettingForm, setfinancialSettingForm] = useState(financialSettingFormData);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
@@ -34,12 +34,16 @@ const SupplierSettingGrid = ({ supplierId }) => {
     getAllPaymentTerms();
     getAllPaymentMethod();
     getAllDeliveryAccounts()
-    getPaymentSettingsBySupplierId(supplierId)
+    if (isEditablePage) {
+      getPaymentSettingsBySupplierId(supplierId)
+    }
   }, []);
 
   useEffect(() => {
-    getSupplierFinancialSettingsBySupplierId(supplierId)
-  },[activeTabIndex])
+    if (isEditablePage) {
+      getSupplierFinancialSettingsBySupplierId(supplierId)
+    }
+  }, [activeTabIndex])
 
   useEffect(() => {
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
@@ -125,6 +129,7 @@ const SupplierSettingGrid = ({ supplierId }) => {
             activeTabIndex={activeTabIndex}
             financialSettingFormRef={financialSettingFormRef}
             supplierId={supplierId}
+            isEditablePage={isEditablePage}
           />
         </div>
       ),
