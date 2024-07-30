@@ -13,7 +13,7 @@ import SupplierBasicDetail from "../../feature/supplierBasicDetail/SupplierBasic
 import SuplierAddressDetails from "../../feature/supplierAddressDetail/SupplierAddressDetails";
 import SupplierContactDetail from "../../feature/supplierContactDetail/SupplierContactDetail";
 import SupplierDocumentDetail from "../../feature/supplierDocumentDetail/SupplierDocumentDetail";
-
+// import SupplierSettingDetail from "../../feature/financialSettings/FinancialSettings";
 
 const AddSupplierTab = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const AddSupplierTab = () => {
     {
       label: "Basic Information",
       subLabel: "Enter Supplier Basic information",
-      content: <SupplierBasicDetail isEditablePage={false}/>,
+      content: <SupplierBasicDetail isEditablePage={false} />,
       tab: CustomerSupplierTabEnum.BasicInformation
     },
     {
@@ -44,6 +44,11 @@ const AddSupplierTab = () => {
       content: <SupplierContactDetail isEditablePage={false} isSearchFilterShow={false} />,
       tab: CustomerSupplierTabEnum.Contact
     },
+    // {
+    //   label: "Financial Settings",
+    //   subLabel: "Enter Supplier Financial Settings",
+    //   content: <SupplierSettingDetail className="mt-2 supplier-setting-sec" supplierId={supplierId} isEditablePage={false} isSearchFilterShow={false} />,
+    // },
     {
       label: "Documents",
       subLabel: "Add Supplier Documents Details",
@@ -92,7 +97,7 @@ const AddSupplierTab = () => {
                     className={`step ${activeTab === index ? 'active' : ''}`}
                   >
                     <button className="step-button"
-                    // onClick={() => handleTabClick(index)}
+                      // onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">
