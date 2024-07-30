@@ -78,6 +78,41 @@ const organizationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+
+        addEditOrganizationLogisticDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationLogisticDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationLogisticDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationLogisticDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        addEditOrganizationBankDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationBankDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationBankDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationBankDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -90,7 +125,10 @@ export const {
     useLazyGetSmtpSettingsQuery,
     useAddEditOrganizationContactDetailsMutation,
     useLazyGetOrganizationContactDetailsQuery,
-
+    useAddEditOrganizationLogisticDetailsMutation,
+    useLazyGetOrganizationLogisticDetailsQuery,
+    useAddEditOrganizationBankDetailsMutation,
+    useLazyGetOrganizationBankDetailsQuery,
 } = organizationAPI
 
 export default organizationAPI;

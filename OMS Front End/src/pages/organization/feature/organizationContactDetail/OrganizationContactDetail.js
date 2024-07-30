@@ -1,14 +1,13 @@
-import { useRef,useState } from "react";
+import { useRef,useState,useEffect } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { OrganizationContactFormData } from "./config/OrganizationContact.data";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { useAddEditOrganizationContactDetailsMutation, useLazyGetOrganizationContactDetailsQuery } from "../../../../app/services/organizationAPI";
-import { useEffect } from "react";
 import ToastService from "../../../../services/toastService/ToastService";
 
 
 
-const OrganizationContactDetail=(props)=>{
+const OrganizationContactDetail=()=>{
     const organizationContactRef = useRef();
     const [organizationContactData, setOrganizationContactData] = useState(OrganizationContactFormData);
     const [addEditOrganizationContactDetails, { isLoading: isAddEditOrganizationContactDetailsLoading, isSuccess: isAddEditOrganizationContactDetailsSuccess, data: isAddEditOrganizationContactDetailsData }] =useAddEditOrganizationContactDetailsMutation();
@@ -54,17 +53,7 @@ const OrganizationContactDetail=(props)=>{
         if (!isGetOrganizationContactDetailsFetching && isGetOrganizationContactDetailsSuccess && isGetOrganizationContactDetailsData) {
             let formData = { ...organizationContactData };
             formData.initialState = {
-                ...isGetOrganizationContactDetailsData,
-                // organizationContactDetailId: isGetOrganizationContactDetailsData.organizationContactDetailId,
-                // companyWebsite:isGetOrganizationContactDetailsData.companyWebsite,
-                // salesEmail:isGetOrganizationContactDetailsData.salesEmail,
-                // accountsEmail:isGetOrganizationContactDetailsData.accountsEmail,
-                // purchaseEmail:isGetOrganizationContactDetailsData.purchaseEmail,
-                // customerServiceEmail:isGetOrganizationContactDetailsData.customerServiceEmail,
-                // salesPhone :isGetOrganizationContactDetailsData.salesPhone,
-                // accountsPhone:isGetOrganizationContactDetailsData.accountsPhone,
-                // tollFreePhone:isGetOrganizationContactDetailsData.tollFreePhone,
-    
+                ...isGetOrganizationContactDetailsData, 
             };
             setOrganizationContactData(formData);
         }
