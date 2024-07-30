@@ -68,6 +68,17 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationContactDetails.GetOrganizationContactDetails();
         }
+        public async Task<AddEntityDTO<int>>AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData, short CurrentUserId)
+        {
+            OrganizationLogisticDetailsDto organizationLogisticDetailsDto = requestData.ToMapp<AddEditOrganizationLogisticDetailsRequest, OrganizationLogisticDetailsDto>();
+            organizationLogisticDetailsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationLogisticDetails.AddEditOrganizationLogisticDetails(organizationLogisticDetailsDto);
+
+        }
+        public async Task<GetOrganizationLogisticDetailsResponse> GetOrganizationLogisticDetails()
+        {
+            return await repositoryManager.organizationLogisticDetails.GetOrganizationLogisticDetails();
+        }
         #endregion
     }
 }

@@ -76,6 +76,7 @@ export const ThirdPartyApiConfigurationViewDetails = () => {
           viewCardDetails={viewCardDetails}
           keyId={keyId}
           onRepetGetData={onRepetGetData}
+          isUpdate={true}
         />
       </SidebarModel>
     </>

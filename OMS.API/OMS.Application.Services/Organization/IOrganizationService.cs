@@ -14,5 +14,8 @@ namespace OMS.Application.Services.Organization
         Task<GetOrganizationOtherSettingsResponse> GetOrganizationOtherSettings();
         Task<AddEntityDTO<int>> AddEditOrganizationContactDetails(AddEditOrganizationContactDetailsRequest requestData, short CurrentUserId);
         Task<GetOrganizationContactDetailsResponse> GetOrganizationContactDetails();
+        Task<AddEntityDTO<int>> AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData, short CurrentUserId);
+        Task<GetOrganizationLogisticDetailsResponse> GetOrganizationLogisticDetails();
+
     }
 }
