@@ -3,7 +3,7 @@ import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
 const OrganizationLogisticDetail=React.lazy(() => import("./feature/organizationLogisticDetail/OrganizationLogisticDetail"))
 const OrganizationBankDetail=React.lazy(() => import("./feature/organizationBankDetail/OrganizationBankDetail"))
-import OrganizationHistory from './feature/organizationHistory/OrganizationHistory';
+const OrganizationHistory=React.lazy(() => import("./feature/organizationHistory/OrganizationHistory"))
 const OrganizationContactDetail=React.lazy(() => import("./feature/organizationContactDetail/OrganizationContactDetail"))
 const SMTPSettings = React.lazy(() => import("./feature/smtpSettings/SMTPSettings"));
 const OtherSettings = React.lazy(() => import("./feature/otherSettings/OtherSettings"));
