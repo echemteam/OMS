@@ -9,11 +9,11 @@ namespace OMS.Domain.Entities.Entity.Organization
     public class OrganizationShippingChargesDto
     {
         public short? OrganizationShippingChargeId { get; set; }
-        public float? DomesticOvernight { get; set; }
-        public float? DomesticSecondDay { get; set; }
-        public float? DomesticGround { get; set; }
-        public float? InternationalPriority { get; set; }
-        public float? InternationalEconomy { get; set; }
+        public decimal? DomesticOvernight { get; set; }
+        public decimal? DomesticSecondDay { get; set; }
+        public decimal? DomesticGround { get; set; }
+        public decimal? InternationalPriority { get; set; }
+        public decimal? InternationalEconomy { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? CreatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }
