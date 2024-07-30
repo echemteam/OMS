@@ -5,6 +5,7 @@ export const orderItemDetailData = {
   initialState: {
     productSearch: "",
   },
+  
   formFields: [
     {
       id: "productSearch",

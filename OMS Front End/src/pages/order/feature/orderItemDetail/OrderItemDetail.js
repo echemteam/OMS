@@ -13,7 +13,9 @@ const OrderItemDetail = () => {
     <>
       <div className="row">
         <div className="col-6">
+          <div className="row">
           <FormCreator config={formData} ref={orderItemDetail} {...formData} />
+          </div>
         </div>
         <div className="col-6">
           <div className="verify-product-label">Verify Product Details</div>
@@ -42,6 +44,9 @@ const OrderItemDetail = () => {
                 <button className="edit-button">
                   <Image imagePath={AppIcons.editThemeIcon} />
                 </button>
+                <div className="checkbox">
+                  <Checkbox />
+                </div>
               </span>
             </div>
             <div className="detail-row">
@@ -51,10 +56,14 @@ const OrderItemDetail = () => {
                 <button className="edit-button">
                   <Image imagePath={AppIcons.editThemeIcon} />
                 </button>
+                <div className="checkbox">
+                  <Checkbox />
+                </div>
               </span>
             </div>
           </div>
         </div>
+        
       </div>
     </>
   );
