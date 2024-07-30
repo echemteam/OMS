@@ -62,7 +62,6 @@ namespace OMS.Application.Services.Organization
             OrganizationContactDetailsDto organizationContactDetailsDto = requestData.ToMapp<AddEditOrganizationContactDetailsRequest, OrganizationContactDetailsDto>();
             organizationContactDetailsDto.CreatedBy = CurrentUserId;
             return await repositoryManager.organizationContactDetails.AddEditOrganizationContactDetails(organizationContactDetailsDto);
-
         }
         public async Task<GetOrganizationContactDetailsResponse> GetOrganizationContactDetails()
         {
@@ -73,11 +72,20 @@ namespace OMS.Application.Services.Organization
             OrganizationLogisticDetailsDto organizationLogisticDetailsDto = requestData.ToMapp<AddEditOrganizationLogisticDetailsRequest, OrganizationLogisticDetailsDto>();
             organizationLogisticDetailsDto.CreatedBy = CurrentUserId;
             return await repositoryManager.organizationLogisticDetails.AddEditOrganizationLogisticDetails(organizationLogisticDetailsDto);
-
         }
         public async Task<GetOrganizationLogisticDetailsResponse> GetOrganizationLogisticDetails()
         {
             return await repositoryManager.organizationLogisticDetails.GetOrganizationLogisticDetails();
+        }
+        public async Task<AddEntityDTO<int>> AddEditOrganizationBankDetails(AddEditOrganizationBankDetailsRequest requestData, short CurrentUserId)
+        {
+            OrganizationBankDetailsDto organizationBankDetailsDto = requestData.ToMapp<AddEditOrganizationBankDetailsRequest, OrganizationBankDetailsDto>();
+            organizationBankDetailsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationBankDetails.AddEditOrganizationBankDetails(organizationBankDetailsDto);
+        }
+        public async Task<GetOrganizationBankDetailsResponse> GetOrganizationBankDetails()
+        {
+            return await repositoryManager.organizationBankDetails.GetOrganizationBankDetails();
         }
         #endregion
     }
