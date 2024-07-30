@@ -36,6 +36,8 @@ namespace OMS.Domain.Repository
         IOrganizationLogisticDetailsRepository organizationLogisticDetails { get; }
         IOrganizationBankDetailsRepository organizationBankDetails { get; }
         IOrganizationAccountingDetailsRepository organizationAccountingDetails { get; }
+        IOrganizationShippingChargesRepository organizationShippingCharges { get; }
+        IOrganizationOtherChargesRepository organizationOtherCharges { get; }
         ISupplierFinancialSettingsRepository supplierFinancialSettings { get; }
         ISuppierBankDetailsRepository suppierBankDetails { get; }
         ISupplierPaymentSettingsRepository supplierPaymentSettings { get; }

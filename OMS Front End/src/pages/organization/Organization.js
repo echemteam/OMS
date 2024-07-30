@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
-import OrganizationHistory from './feature/organizationHistory/OrganizationHistory';
+const OrganizationLogisticDetail=React.lazy(() => import("./feature/organizationLogisticDetail/OrganizationLogisticDetail"))
+const OrganizationBankDetail=React.lazy(() => import("./feature/organizationBankDetail/OrganizationBankDetail"))
+const OrganizationHistory=React.lazy(() => import("./feature/organizationHistory/OrganizationHistory"))
 const OrganizationContactDetail=React.lazy(() => import("./feature/organizationContactDetail/OrganizationContactDetail"))
 const SMTPSettings = React.lazy(() => import("./feature/smtpSettings/SMTPSettings"));
 const OtherSettings = React.lazy(() => import("./feature/otherSettings/OtherSettings"));
@@ -75,11 +77,27 @@ const Organization = () => {
             sMenuItemCaption: "Contact Details",
             component: (
                 <div className="mt-2">
-                   <OrganizationContactDetail activeTabId={activeTabId} />
+                   <OrganizationContactDetail  />
                 </div>
             ),
         },
         {
+            sMenuItemCaption: "Logistic Details",
+            component: (
+                <div className="mt-2">
+               <OrganizationLogisticDetail />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Bank Details",
+            component: (
+                <div className="mt-2">
+               <OrganizationBankDetail />
+                </div>
+            ),
+        },
+{
             sMenuItemCaption: "History",
             component: (
                 <div className="mt-2">

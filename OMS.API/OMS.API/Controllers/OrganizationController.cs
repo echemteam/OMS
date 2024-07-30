@@ -9,7 +9,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   [Authorize]
+    [Authorize]
     public class OrganizationController : BaseController
     {
         #region private variable
@@ -112,6 +112,30 @@ namespace OMS.API.Controllers
         {
             var organizationAccountingDetails = await _serviceManager.organizationService.GetOrganizationAccountingDetails().ConfigureAwait(true);
             return APISucessResponce<object>(organizationAccountingDetails);
+        }
+        [HttpPost("AddEditOrganizationShippingCharges")]
+        public async Task<IActionResult> AddEditOrganizationShippingCharges(AddEditOrganizationShippingChargesRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditOrganizationShippingCharges(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationShippingCharges")]
+        public async Task<IActionResult> GetOrganizationShippingCharges()
+        {
+            var organizationShippingCharges= await _serviceManager.organizationService.GetOrganizationShippingCharges().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationShippingCharges);
+        }
+        [HttpPost("AddEditOrganizationOtherCharges")]
+        public async Task<IActionResult> AddEditOrganizationOtherCharges(AddEditOrganizationOtherChargesRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditOrganizationOtherCharges(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationOtherCharges")]
+        public async Task<IActionResult> GetOrganizationOtherCharges()
+        {
+            var organizationOtherCharges = await _serviceManager.organizationService.GetOrganizationOtherCharges().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationOtherCharges);
         }
         #endregion
     }
