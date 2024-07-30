@@ -91,4 +91,5 @@ export const SupplierFinancialSettings = {
 export const OrderTabEnum = {
     BasicInformation: 1,
     Contact: 2,
+    OrderItem: 3,
 }
