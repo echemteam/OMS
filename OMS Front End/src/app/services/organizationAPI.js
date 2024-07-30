@@ -60,6 +60,24 @@ const organizationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        
+        addEditOrganizationContactDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationContactDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationContactDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationContactDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -70,6 +88,8 @@ export const {
     useLazyGetOrganizationProfileQuery,
     useLazyGetOrganizationOtherSettingsQuery,
     useLazyGetSmtpSettingsQuery,
+    useAddEditOrganizationContactDetailsMutation,
+    useLazyGetOrganizationContactDetailsQuery,
 
 } = organizationAPI
 

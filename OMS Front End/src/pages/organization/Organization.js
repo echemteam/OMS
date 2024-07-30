@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
+const OrganizationContactDetail=React.lazy(() => import("./feature/organizationContactDetail/OrganizationContactDetail"))
 const SMTPSettings = React.lazy(() => import("./feature/smtpSettings/SMTPSettings"));
 const OtherSettings = React.lazy(() => import("./feature/otherSettings/OtherSettings"));
 const OrganizationProfileManagement = React.lazy(() => import("./feature/organizationProfileManagement/OrganizationProfileManagement"));
@@ -15,6 +16,7 @@ const Organization = () => {
     const handleSetOrganizationId = (id) => {
         setOrganizationId(id)
     }
+
 
     const handleSetSmtpSettingId = (id) => {
         setSmtpSettingId(id)
@@ -65,6 +67,14 @@ const Organization = () => {
                         smtpSettingId={smtpSettingId}
                         organizationOtherSettingId={organizationOtherSettingId}
                         onHandleOrganizationOtherSetting={handleSetOrganizationOtherSettingId} />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Contact Details",
+            component: (
+                <div className="mt-2">
+                   <OrganizationContactDetail activeTabId={activeTabId} />
                 </div>
             ),
         },
