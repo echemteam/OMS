@@ -1,15 +1,15 @@
 import React from "react";
+import FinancialSettingsgGrid from "../../../../common/features/component/supplierSetting/SupplierSettingGrid";
 
-import SupplierSettingGrid from "../../../../common/features/component/supplierSetting/SupplierSettingGrid";
-
-const financialSettings = ({ supplierId }) => {
+const FinancialSettings = ({ supplierId , isEditablePage }) => {
   return (
     <div>
-      <SupplierSettingGrid
+      <FinancialSettingsgGrid
         supplierId={supplierId.supplierId}
+        isEditablePage={isEditablePage}
       />
     </div>
   );
 };
 
-export default financialSettings;
+export default FinancialSettings;

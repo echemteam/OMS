@@ -62,11 +62,60 @@ namespace OMS.Application.Services.Organization
             OrganizationContactDetailsDto organizationContactDetailsDto = requestData.ToMapp<AddEditOrganizationContactDetailsRequest, OrganizationContactDetailsDto>();
             organizationContactDetailsDto.CreatedBy = CurrentUserId;
             return await repositoryManager.organizationContactDetails.AddEditOrganizationContactDetails(organizationContactDetailsDto);
-
         }
         public async Task<GetOrganizationContactDetailsResponse> GetOrganizationContactDetails()
         {
             return await repositoryManager.organizationContactDetails.GetOrganizationContactDetails();
+        }
+        public async Task<AddEntityDTO<int>>AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData, short CurrentUserId)
+        {
+            OrganizationLogisticDetailsDto organizationLogisticDetailsDto = requestData.ToMapp<AddEditOrganizationLogisticDetailsRequest, OrganizationLogisticDetailsDto>();
+            organizationLogisticDetailsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationLogisticDetails.AddEditOrganizationLogisticDetails(organizationLogisticDetailsDto);
+        }
+        public async Task<GetOrganizationLogisticDetailsResponse> GetOrganizationLogisticDetails()
+        {
+            return await repositoryManager.organizationLogisticDetails.GetOrganizationLogisticDetails();
+        }
+        public async Task<AddEntityDTO<int>> AddEditOrganizationBankDetails(AddEditOrganizationBankDetailsRequest requestData, short CurrentUserId)
+        {
+            OrganizationBankDetailsDto organizationBankDetailsDto = requestData.ToMapp<AddEditOrganizationBankDetailsRequest, OrganizationBankDetailsDto>();
+            organizationBankDetailsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationBankDetails.AddEditOrganizationBankDetails(organizationBankDetailsDto);
+        }
+        public async Task<GetOrganizationBankDetailsResponse> GetOrganizationBankDetails()
+        {
+            return await repositoryManager.organizationBankDetails.GetOrganizationBankDetails();
+        }
+        public async Task<AddEntityDTO<int>> AddEditOrganizationAccountingDetails(AddEditOrganizationAccountingDetailsRequest requestData, short CurrentUserId)
+        {
+            OrganizationAccountingDetailsDto organizationAccountingDetailsDto = requestData.ToMapp<AddEditOrganizationAccountingDetailsRequest, OrganizationAccountingDetailsDto>();
+            organizationAccountingDetailsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationAccountingDetails.AddEditOrganizationAccountingDetails(organizationAccountingDetailsDto);
+        }
+        public async Task<GetOrganizationAccountingDetailsResponse> GetOrganizationAccountingDetails()
+        {
+            return await repositoryManager.organizationAccountingDetails.GetOrganizationAccountingDetails();
+        }
+        public async Task<AddEntityDTO<int>> AddEditOrganizationShippingCharges(AddEditOrganizationShippingChargesRequest requestData, short CurrentUserId)
+        {
+            OrganizationShippingChargesDto organizationShippingChargesDto = requestData.ToMapp<AddEditOrganizationShippingChargesRequest, OrganizationShippingChargesDto>();
+            organizationShippingChargesDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationShippingCharges.AddEditOrganizationShippingCharges(organizationShippingChargesDto);
+        }
+        public async Task<GetOrganizationShippingChargesResponse> GetOrganizationShippingCharges()
+        {
+            return await repositoryManager.organizationShippingCharges.GetOrganizationShippingCharges();
+        }
+        public async Task<AddEntityDTO<int>> AddEditOrganizationOtherCharges(AddEditOrganizationOtherChargesRequest requestData, short CurrentUserId)
+        {
+            OrganizationOtherChargesDto organizationOtherChargesDto = requestData.ToMapp<AddEditOrganizationOtherChargesRequest, OrganizationOtherChargesDto>();
+            organizationOtherChargesDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationOtherCharges.AddEditOrganizationOtherCharges(organizationOtherChargesDto);
+        }
+        public async Task<GetOrganizationShippingOtherResponse> GetOrganizationOtherCharges()
+        {
+            return await repositoryManager.organizationOtherCharges.GetOrganizationOtherCharges();
         }
         #endregion
     }

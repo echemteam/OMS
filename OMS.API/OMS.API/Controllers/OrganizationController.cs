@@ -76,6 +76,67 @@ namespace OMS.API.Controllers
             var organizationContactDetails = await _serviceManager.organizationService.GetOrganizationContactDetails().ConfigureAwait(true);
             return APISucessResponce<object>(organizationContactDetails);
         }
+        [HttpPost("AddEditOrganizationLogisticDetails")]
+        public async Task<IActionResult> AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditOrganizationLogisticDetails(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationLogisticDetails")]
+        public async Task<IActionResult> GetOrganizationLogisticDetails()
+        {
+            var organizationLogisticDetails = await _serviceManager.organizationService.GetOrganizationLogisticDetails().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationLogisticDetails);
+        }
+
+        [HttpPost("AddEditOrganizationBankDetails")]
+        public async Task<IActionResult> AddEditOrganizationBankDetails(AddEditOrganizationBankDetailsRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditOrganizationBankDetails(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationBankDetails")]
+        public async Task<IActionResult> GetOrganizationBankDetails()
+        {
+            var organizationBankDetails = await _serviceManager.organizationService.GetOrganizationBankDetails().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationBankDetails);
+        }
+        [HttpPost("AddEditOrganizationAccountingDetails")]
+        public async Task<IActionResult> AddEditOrganizationAccountingDetails(AddEditOrganizationAccountingDetailsRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditOrganizationAccountingDetails(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationAccountingDetails")]
+        public async Task<IActionResult> GetOrganizationAccountingDetails()
+        {
+            var organizationAccountingDetails = await _serviceManager.organizationService.GetOrganizationAccountingDetails().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationAccountingDetails);
+        }
+        [HttpPost("AddEditOrganizationShippingCharges")]
+        public async Task<IActionResult> AddEditOrganizationShippingCharges(AddEditOrganizationShippingChargesRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditOrganizationShippingCharges(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationShippingCharges")]
+        public async Task<IActionResult> GetOrganizationShippingCharges()
+        {
+            var organizationShippingCharges= await _serviceManager.organizationService.GetOrganizationShippingCharges().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationShippingCharges);
+        }
+        [HttpPost("AddEditOrganizationOtherCharges")]
+        public async Task<IActionResult> AddEditOrganizationOtherCharges(AddEditOrganizationOtherChargesRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditOrganizationOtherCharges(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationOtherCharges")]
+        public async Task<IActionResult> GetOrganizationOtherCharges()
+        {
+            var organizationOtherCharges = await _serviceManager.organizationService.GetOrganizationOtherCharges().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationOtherCharges);
+        }
         #endregion
     }
 }

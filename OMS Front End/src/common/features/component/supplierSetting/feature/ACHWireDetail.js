@@ -14,7 +14,7 @@ import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 
-const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) => {
+const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef , isEditablePage }) => {
   const aCHWireFormRef = useRef();
   const bankFormRef = useRef();
   const registeredFormRef = useRef();
@@ -41,7 +41,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
   }, []);
 
   useEffect(() => {
-    if (activeTabIndex === 0) {
+    if (activeTabIndex === 0 && isEditablePage) {
       getACHWireBySupplierId(supplierId)
     }
   }, [activeTabIndex])

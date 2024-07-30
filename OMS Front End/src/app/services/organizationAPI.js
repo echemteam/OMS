@@ -60,6 +60,59 @@ const organizationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        
+        addEditOrganizationContactDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationContactDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationContactDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationContactDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
+        addEditOrganizationLogisticDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationLogisticDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationLogisticDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationLogisticDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        addEditOrganizationBankDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationBankDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationBankDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationBankDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -70,7 +123,12 @@ export const {
     useLazyGetOrganizationProfileQuery,
     useLazyGetOrganizationOtherSettingsQuery,
     useLazyGetSmtpSettingsQuery,
-
+    useAddEditOrganizationContactDetailsMutation,
+    useLazyGetOrganizationContactDetailsQuery,
+    useAddEditOrganizationLogisticDetailsMutation,
+    useLazyGetOrganizationLogisticDetailsQuery,
+    useAddEditOrganizationBankDetailsMutation,
+    useLazyGetOrganizationBankDetailsQuery,
 } = organizationAPI
 
 export default organizationAPI;

@@ -6,7 +6,7 @@ import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigatio
 
 //** Component's */
 import RenderTabs from "../../../../../components/ui/tabs/RenderTabs";
-import SupplierSettingDetail from "../../financialSettings/FinancialSettings";
+const FinancialSettings = React.lazy(() => import("../../financialSettings/FinancialSettings"));
 const SupplierHistory = React.lazy(() => import("../../supplierHistoryDetail/SupplierHistory"));
 const SupplierNoteDetail = React.lazy(() => import("../../supplierNoteDetail/SupplierNoteDetail"));
 const SupplierContactDetail = React.lazy(() => import("../../supplierContactDetail/SupplierContactDetail"));
@@ -49,7 +49,7 @@ const SupplierViewTab = (supplierId) => {
             icon: "fa fa-cog",
             component: (
                 <div className="mt-2 supplier-setting-sec">
-                    <SupplierSettingDetail
+                    <FinancialSettings
                         supplierId={supplierId}
                     />
                 </div>

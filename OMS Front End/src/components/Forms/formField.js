@@ -253,6 +253,7 @@ const FormFields = ({
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
               isRequired={isRequired}
+              inputButtonGroup={field.inputButtonGroup}
               {...field.fieldSetting}
             />
           </div>
