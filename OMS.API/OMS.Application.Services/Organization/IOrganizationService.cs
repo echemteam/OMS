@@ -18,5 +18,7 @@ namespace OMS.Application.Services.Organization
         Task<GetOrganizationLogisticDetailsResponse> GetOrganizationLogisticDetails();
         Task<AddEntityDTO<int>> AddEditOrganizationBankDetails(AddEditOrganizationBankDetailsRequest requestData, short CurrentUserId);
         Task<GetOrganizationBankDetailsResponse> GetOrganizationBankDetails();
+        Task<AddEntityDTO<int>> AddEditOrganizationAccountingDetails(AddEditOrganizationAccountingDetailsRequest requestData, short CurrentUserId);
+        Task<GetOrganizationAccountingDetailsResponse> GetOrganizationAccountingDetails();
     }
 }
