@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Implementation
 {
-    internal class OrganizationAccountingDetailsRepository : BaseRepository<OrganizationBankDetails>, IOrganizationAccountingDetailsRepository
+    internal class OrganizationAccountingDetailsRepository : BaseRepository<OrganizationAccountingDetails>, IOrganizationAccountingDetailsRepository
     {
         const string ADDEDITORGANIZATIONACCOUNTINGDETAILS = "AddEditOrganizationAccountingDetails";
         const string GETORGANIZATIONACCOUNTINGDETAILS = "GetOrganizationAccountingDetails";
