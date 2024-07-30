@@ -15,7 +15,7 @@ import { checkFormData } from "./config/CheckForm.data";
 import { creditCardFormData } from "./config/CreditCardForm.data";
 import { otherFormData } from "./config/OtherForm.data";
 
-const SupplierSettingGrid = ({ supplierId, isEditablePage }) => {
+const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
   const financialSettingFormRef = useRef();
   const [financialSettingForm, setfinancialSettingForm] = useState(financialSettingFormData);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
@@ -204,4 +204,4 @@ const SupplierSettingGrid = ({ supplierId, isEditablePage }) => {
   );
 };
 
-export default SupplierSettingGrid;
+export default FinancialSettingsgGrid;
