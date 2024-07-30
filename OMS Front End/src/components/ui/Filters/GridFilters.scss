@@ -30,12 +30,12 @@
 
     &:hover {
       background: var(--themeColor);
-      color: #fff;
+      color: var(--whiteColor);
     }
 
     &.activeFilter {
       background: var(--themeColor);
-      color: #fff;
+      color: var(--whiteColor);
     }
   }
 
