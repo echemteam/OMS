@@ -9,7 +9,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   [Authorize]
     public class OrganizationController : BaseController
     {
         #region private variable
@@ -100,6 +100,18 @@ namespace OMS.API.Controllers
         {
             var organizationBankDetails = await _serviceManager.organizationService.GetOrganizationBankDetails().ConfigureAwait(true);
             return APISucessResponce<object>(organizationBankDetails);
+        }
+        [HttpPost("AddEditOrganizationAccountingDetails")]
+        public async Task<IActionResult> AddEditOrganizationAccountingDetails(AddEditOrganizationAccountingDetailsRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditOrganizationAccountingDetails(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationAccountingDetails")]
+        public async Task<IActionResult> GetOrganizationAccountingDetails()
+        {
+            var organizationAccountingDetails = await _serviceManager.organizationService.GetOrganizationAccountingDetails().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationAccountingDetails);
         }
         #endregion
     }
