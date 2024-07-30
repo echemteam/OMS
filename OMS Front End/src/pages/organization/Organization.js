@@ -71,7 +71,7 @@ const Organization = () => {
             ),
         },
         {
-            sMenuItemCaption: "Contact Settings",
+            sMenuItemCaption: "Contact Details",
             component: (
                 <div className="mt-2">
                    <OrganizationContactDetail activeTabId={activeTabId} />
