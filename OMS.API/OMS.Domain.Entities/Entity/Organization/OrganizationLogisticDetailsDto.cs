@@ -8,7 +8,7 @@ namespace OMS.Domain.Entities.Entity.Organization
 {
     public class OrganizationLogisticDetailsDto
     {
-        public short? OrganizationLogisticDetailId { get; set; }
+        public byte? OrganizationLogisticDetailId { get; set; }
         public string? FedExAccount { get; set; }
         public string? DHLAccount { get; set; }
         public string? UPSAccount { get; set; }

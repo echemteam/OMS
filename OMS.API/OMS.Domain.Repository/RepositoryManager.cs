@@ -46,6 +46,7 @@ namespace OMS.Domain.Repository
         IOrganizationAccountingDetailsRepository _organizationAccountingDetailsRepository;
         IOrganizationShippingChargesRepository _organizationShippingChargesRepository;
         IOrganizationOtherChargesRepository _organizationOtherChargesRepository;
+        IOrganizationBusinessAddressesRepository _organizationBusinessAddressesRepository;
         ISupplierFinancialSettingsRepository _supplierFinancialSettingsRepository;
         ISuppierBankDetailsRepository _suppierBankDetailsRepository;    
         ISupplierPaymentSettingsRepository _supplierPaymentSettingsRepository;
@@ -435,6 +436,18 @@ namespace OMS.Domain.Repository
                     _organizationOtherChargesRepository = new OrganizationOtherChargesRepository(_context);
                 }
                 return _organizationOtherChargesRepository;
+            }
+
+        }
+        public IOrganizationBusinessAddressesRepository organizationBusinessAddresses
+        {
+            get
+            {
+                if (_organizationBusinessAddressesRepository == null)
+                {
+                    _organizationBusinessAddressesRepository = new OrganizationBusinessAddressesRepository(_context);
+                }
+                return _organizationBusinessAddressesRepository;
             }
 
         }

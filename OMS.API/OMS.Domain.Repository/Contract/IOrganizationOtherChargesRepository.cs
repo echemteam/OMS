@@ -12,6 +12,6 @@ namespace OMS.Domain.Repository.Contract
     public interface IOrganizationOtherChargesRepository
     {
         Task<AddEntityDTO<int>> AddEditOrganizationOtherCharges(OrganizationOtherChargesDto requestData);
-        Task<GetOrganizationShippingOtherResponse> GetOrganizationOtherCharges();
+        Task<GetOrganizationOtherChargesResponse> GetOrganizationOtherCharges();
     }
 }

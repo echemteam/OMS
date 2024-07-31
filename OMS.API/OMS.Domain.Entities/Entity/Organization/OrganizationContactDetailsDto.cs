@@ -12,7 +12,7 @@ namespace OMS.Domain.Entities.Entity.Organization
     {
         [Key ]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public short? OrganizationContactDetailId {  get; set; }
+        public byte? OrganizationContactDetailId {  get; set; }
         public string? CompanyWebsite {  get; set; }
         public string? SalesEmail { get; set; }
         public string? AccountsEmail {  get; set; }

@@ -1,6 +1,8 @@
 ﻿using OMS.Domain.Entities.API.Request.Organization;
 using OMS.Domain.Entities.API.Response.Organization;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.Organization;
+using OMS.Shared.Entities.CommonEntity;
 
 namespace OMS.Application.Services.Organization
 {
@@ -23,6 +25,9 @@ namespace OMS.Application.Services.Organization
         Task<AddEntityDTO<int>> AddEditOrganizationShippingCharges(AddEditOrganizationShippingChargesRequest requestData, short CurrentUserId);
         Task<GetOrganizationShippingChargesResponse> GetOrganizationShippingCharges();
         Task<AddEntityDTO<int>> AddEditOrganizationOtherCharges(AddEditOrganizationOtherChargesRequest requestData, short CurrentUserId);
-        Task<GetOrganizationShippingOtherResponse> GetOrganizationOtherCharges();
+        Task<GetOrganizationOtherChargesResponse> GetOrganizationOtherCharges();
+        Task<AddEntityDTO<int>> AddEditBusinessAddresses(AddEditOrganizationBusinessAddressesRequest requestData, short CurrentUserId);
+        Task<GetOrganizationBusinessAddressesResponse> GetOrganizationBusinessAddresses();
+        Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(ListEntityRequest<BaseFilter> requestData);
     }
 }

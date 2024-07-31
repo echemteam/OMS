@@ -33,7 +33,7 @@ const EventParamter = ({ keyId }) => {
   return (
     <>
       <CardSection
-        cardTitle="Event Mapping"
+        cardTitle="Event Parameter"
         buttonClassName="btn theme-button"
         // rightButton={buttonVisible ? true : false}
         rightButton={true}
@@ -50,7 +50,7 @@ const EventParamter = ({ keyId }) => {
       </CardSection>
 
       <SidebarModel
-        modalTitle="Event Mapping"
+        modalTitle="Event Parameter"
         contentClass="content-35"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}

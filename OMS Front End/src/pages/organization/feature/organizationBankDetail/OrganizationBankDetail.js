@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef,useState ,useEffect} from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -15,6 +16,7 @@ const OrganizationBankDetail=()=>{
     useEffect(() => {
         if (isAddEditOrganizationBankDetailsSuccess && isAddEditOrganizationBankDetailsData) {
           ToastService.success(isAddEditOrganizationBankDetailsData.errorMessage);
+          getOrganizationBankDetails();
         }
       }, [isAddEditOrganizationBankDetailsSuccess, isAddEditOrganizationBankDetailsData]);
 

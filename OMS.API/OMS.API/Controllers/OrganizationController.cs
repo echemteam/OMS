@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Organization;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -9,7 +10,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class OrganizationController : BaseController
     {
         #region private variable
@@ -136,6 +137,24 @@ namespace OMS.API.Controllers
         {
             var organizationOtherCharges = await _serviceManager.organizationService.GetOrganizationOtherCharges().ConfigureAwait(true);
             return APISucessResponce<object>(organizationOtherCharges);
+        }
+        [HttpPost("AddEditBusinessAddresses")]
+        public async Task<IActionResult> AddEditBusinessAddresses(AddEditOrganizationBusinessAddressesRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditBusinessAddresses(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationBusinessAddresses")]
+        public async Task<IActionResult> GetOrganizationBusinessAddresses()
+        {
+            var organizationBusinessAddresses = await _serviceManager.organizationService.GetOrganizationBusinessAddresses().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationBusinessAddresses);
+        }
+        [HttpPost("GetOrganizationHistorys")]
+        public async Task<IActionResult> GetUsers([FromBody] ListEntityRequest<BaseFilter> requestData)
+        {
+            var organizationHistoryList = await _serviceManager.organizationService.GetOrganizationHistorys(requestData);
+            return APISucessResponce<object>(organizationHistoryList);
         }
         #endregion
     }

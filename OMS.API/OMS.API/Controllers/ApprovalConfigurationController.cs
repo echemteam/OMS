@@ -43,6 +43,19 @@ namespace OMS.API.Controllers
             List<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse> responseData = await _serviceManager.approvalConfigurationServices.GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(moduleId, functionalityId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpPost("GetFunctionalities")]
+        public async Task<IActionResult> GetFunctionalities(GetFunctionalitiesRequest requestData)
+        {
+            var functionalities = await _serviceManager.approvalConfigurationServices.GetFunctionalities(requestData);
+            return APISucessResponce<object>(functionalities);
+        }
+        [HttpPost("GetFunctionalityEvents")]
+        public async Task<IActionResult> GetFunctionalityEvents(GetFunctionalityEventsRequest requestData)
+        {
+            var functionalityEvents = await _serviceManager.approvalConfigurationServices.GetFunctionalityEvents(requestData);
+            return APISucessResponce<object>(functionalityEvents);
+        }
         #endregion
     }
 }
+

@@ -8,7 +8,7 @@ namespace OMS.Domain.Entities.API.Request.Organization
 {
     public class AddEditOrganizationBankDetailsRequest
     {
-        public short? OrganizationBankDetailId {  get; set; }
+        public byte? OrganizationBankDetailId {  get; set; }
         public string? BeneficiaryName {  get; set; }
         public string? CheckingAccountNumber {  get; set; }
         public string? RoutingAccountNumber { get; set; }
