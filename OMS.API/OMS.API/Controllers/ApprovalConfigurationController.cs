@@ -63,7 +63,7 @@ namespace OMS.API.Controllers
             var updateItem = await _serviceManager.approvalConfigurationServices.AddFunctionalitiesResponsiblesUser(requestData, CurrentUserId);
             return APISucessResponce(updateItem);
         }
-        [HttpPost("DeleteFunctionalitiesResponsiblesUser")]
+        [HttpDelete("DeleteFunctionalitiesResponsiblesUser")]
         public async Task<IActionResult> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId)
         {
             if (functionalitiesResponsiblesId > 0)
@@ -73,7 +73,7 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(functionalitiesResponsiblesId);
         }
-        [HttpDelete("GetFunctionalitiesResponsibles")]
+        [HttpPost("GetFunctionalitiesResponsibles")]
         public async Task<IActionResult> GetFunctionalitiesResponsibles(GetFunctionalitiesResponsiblesRequest requestData)
         {
             var functionalitiesResponsibles = await _serviceManager.approvalConfigurationServices.GetFunctionalitiesResponsibles(requestData);
