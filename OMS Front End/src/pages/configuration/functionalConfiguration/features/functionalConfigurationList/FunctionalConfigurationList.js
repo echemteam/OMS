@@ -48,12 +48,12 @@ const FunctionalConfigurationList = () => {
     }
 
     const handleEditClick = () => {
-
+        navigate(`/FunctionalConfigurationViewDetail`, "_blank");
     }
 
     const actionHandler = {
         VIEW: handleViewClick,
-        Edit: handleEditClick
+        EDIT: handleEditClick
     }
 
     return (
