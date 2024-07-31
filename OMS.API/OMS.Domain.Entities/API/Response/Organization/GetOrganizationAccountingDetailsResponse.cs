@@ -9,6 +9,6 @@ namespace OMS.Domain.Entities.API.Response.Organization
     public class GetOrganizationAccountingDetailsResponse
     { 
         public short? OrganizationAccountingDetailId { get; set; }
-        public float? CreditLimit { get; set; }
+        public decimal? CreditLimit { get; set; }
     }
 }

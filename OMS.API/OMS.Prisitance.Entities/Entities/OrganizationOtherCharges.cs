@@ -15,15 +15,17 @@ namespace OMS.Prisitance.Entities.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public short? OrganizationOtherChargeId { get; set; }
         [Column("HandlingFees")]
-        public float? HandlingFees { get; set; }
+        public decimal? HandlingFees { get; set; }
         [Column("BankWireFees")]
-        public float? BankWireFees { get; set; }
+        public decimal? BankWireFees { get; set; }
         [Column("CreditCardServiceFees")]
-        public float? CreditCardServiceFees { get; set; }
+        public decimal? CreditCardServiceFees { get; set; }
         [Column("ColdBoxFees")]
-        public float? ColdBoxFees { get; set; }
+        public decimal? ColdBoxFees { get; set; }
         [Column("ITNFees")]
-        public float? ITNFees { get; set; }
+        public decimal? ITNFees { get; set; }
+        [Column("DefaultPaymentTerms")]
+        public byte? DefaultPaymentTerms { get; set; }
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]

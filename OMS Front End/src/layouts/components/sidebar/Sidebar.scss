@@ -71,7 +71,7 @@
                   }
 
                   &:hover {
-                    a {
+                    a {  
                       background: var(--sidebarHoverColor);
                       i {
                         color: var(--sidebarHoverTextColor);
@@ -86,13 +86,13 @@
                     .menu-arrow {
                       background: var(--sidebarActiveMenuColor);
                       box-shadow: none;
-                      color: #fff !important;
+                      color: var(--whiteColor) !important;
                     }
 
                     a {
                       background: var(--gradient-sidebar);
                       box-shadow: 0px 2px 6px 0px rgba(115, 103, 240, 0.3);
-                      color: #fff !important;
+                      color: var(--whiteColor) !important;
 
                       i {
                         color: var(--sidebarActiveTextColor);
@@ -112,7 +112,7 @@
                     align-items: center;
 
                     i {
-                      font-size: 20px;
+                      font-size: var(--commonFont-2extraLarge);
                       line-height: 18px;
                       color: #8291ae; 
                     }
@@ -224,10 +224,10 @@
                             content: "";
                             border: solid #606060;;
                             border-width: 0px 0px 1px 1px;
-                            height: 50px;
+                            height: 55px;
                             width: 15px;
                             border-radius: 0px 0px 0px 8px;
-                            top: -10%;
+                            top: -8%;
                             left: -15px;
                             transform: translateY(-50%);
                             transition: 0.5s all;
@@ -247,6 +247,7 @@
 
                             a {
                               color: var(--themeColor);
+                              background-color: var(--sidebarActiveMenuColor);
                             }
                           }
 
@@ -257,7 +258,7 @@
                               #7367f0 100%
                             );
                             box-shadow: 0px 2px 6px 0px rgba(115, 103, 240, 0.3);
-                            color: #ffffff !important;
+                            color: var(--whiteColor) !important;
                           }
                         } 
                         

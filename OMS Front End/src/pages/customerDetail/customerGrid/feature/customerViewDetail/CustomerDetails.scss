@@ -105,7 +105,7 @@
           .customer-detail-model {
             min-width: 100%;
             padding: 10px;
-            background: #ffffff;
+            background: var(--whiteColor);
             border-radius: 5px;
             border: 1px solid #f2f4f6;
             position: absolute;
@@ -257,7 +257,7 @@
                           justify-content: center;
 
                           i {
-                            font-size: 14px;
+                            font-size: var(--commonFont);
                           }
                         }
 
@@ -409,10 +409,10 @@
 
               .card-value {
                 color: #6e839b;
-                font-size: 12px;
+                font-size: var(--commonFont-small);
 
                 @media only screen and (max-width: 1750px) {
-                  font-size: 10.5px;
+                  font-size: var(--commonFont-extraSmall);
                 }
               }
             }

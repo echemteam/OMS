@@ -29,8 +29,8 @@
     align-items: center;
     padding: 8px 0;
 
-    &:nth-child(even) {
-      background-color: var(--themeColorLight);
+    &:nth-child(odd) {
+      background-color: var(--themeColorLightGridRow);
     }
 
     &:last-child {
@@ -38,7 +38,6 @@
     }
 
     .detail-label {
-      color: #333;
       padding-left: 10px;
       font-size: var(--commonFont-small);
       color: var(--textColor);
@@ -66,7 +65,7 @@
         padding: 0;
 
         img {
-          width: 16px;
+          min-width: 16px;
           height: 16px;
         }
       }

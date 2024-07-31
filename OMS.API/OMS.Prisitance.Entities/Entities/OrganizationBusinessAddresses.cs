@@ -8,14 +8,24 @@ using System.Threading.Tasks;
 
 namespace OMS.Prisitance.Entities.Entities
 {
-    [Table("OrganizationAccountingDetails")]
-    public class OrganizationAccountingDetails
+    [Table("OrganizationBusinessAddresses")]
+    public class OrganizationBusinessAddresses
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public short? OrganizationAccountingDetailId { get; set; }
-        [Column("CreditLimit")]
-        public decimal? CreditLimit { get; set; }
+        public short? OrganizationBusinessAddressId { get; set; }
+        [Column("RegisteredAddressId")]
+        public int? RegisteredAddressId { get; set; }
+        [Column("PhysicalAddressId")]
+        public int? PhysicalAddressId { get; set; }
+        [Column("RemitToAddressId")]
+        public int? RemitToAddressId { get; set; }
+        [Column("BillToAddressId")]
+        public int? BillToAddressId { get; set; }
+        [Column("LabAddressId")]
+        public int? LabAddressId { get; set; }
+        [Column("WarehouseAddressId")]
+        public int? WarehouseAddressId { get; set; }
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]
@@ -29,4 +39,5 @@ namespace OMS.Prisitance.Entities.Entities
         [Column("DeletedBy")]
         public short? DeletedBy { get; set; }
     }
+
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OMS.Domain.Entities.Entity.Organization
+namespace OMS.Domain.Entities.API.Response.Organization
 {
-    public  class OrganizationOtherChargesDto
+    public class GetOrganizationOtherChargesResponse
     {
         public short? OrganizationOtherChargeId { get; set; }
         public decimal? HandlingFees { get; set; }
@@ -15,11 +15,5 @@ namespace OMS.Domain.Entities.Entity.Organization
         public decimal? ColdBoxFees { get; set; }
         public decimal? ITNFees { get; set; }
         public byte? DefaultPaymentTerms { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public short? CreatedBy { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public short? UpdatedBy { get; set; }
-        public DateTime? DeletedAt { get; set; }
-        public short? DeletedBy { get; set; }
     }
 }

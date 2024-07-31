@@ -44,7 +44,7 @@
 
 .validation-text {
   color: #e30000;
-  font-size: 11px;
+  font-size: var(--commonFont-small);
   font-weight: 500;
   margin: 0 !important;
 }
@@ -111,7 +111,7 @@ form {
       visibility: hidden;
       width: 160%;
       background-color: #000000;
-      color: #fff;
+      color: var(--whiteColor);
       text-align: center;
       border-radius: 5px;
       padding: 5px;
@@ -145,7 +145,7 @@ form {
 
   i {
     font-size: var(--commonFont-extraLarge);
-    color: #696cff;
+    color: var(--themeColor);
     cursor: pointer !important;
   }
 
@@ -154,7 +154,7 @@ form {
     visibility: hidden;
     width: 220px;
     background-color: #555;
-    color: #fff;
+    color: var(--whiteColor);
     text-align: center;
     border-radius: 5px;
     padding: 5px;
@@ -212,7 +212,7 @@ form {
         visibility: hidden;
         width: 160%;
         background-color: #555;
-        color: #fff;
+        color: var(--whiteColor);
         text-align: center;
         border-radius: 5px;
         padding: 5px;

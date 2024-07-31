@@ -5,6 +5,7 @@ using OMS.Domain.Entities.API.Response.Organization;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository;
+using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.Application.Services.Organization
@@ -67,7 +68,7 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationContactDetails.GetOrganizationContactDetails();
         }
-        public async Task<AddEntityDTO<int>>AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDTO<int>> AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData, short CurrentUserId)
         {
             OrganizationLogisticDetailsDto organizationLogisticDetailsDto = requestData.ToMapp<AddEditOrganizationLogisticDetailsRequest, OrganizationLogisticDetailsDto>();
             organizationLogisticDetailsDto.CreatedBy = CurrentUserId;
@@ -113,9 +114,23 @@ namespace OMS.Application.Services.Organization
             organizationOtherChargesDto.CreatedBy = CurrentUserId;
             return await repositoryManager.organizationOtherCharges.AddEditOrganizationOtherCharges(organizationOtherChargesDto);
         }
-        public async Task<GetOrganizationShippingOtherResponse> GetOrganizationOtherCharges()
+        public async Task<GetOrganizationOtherChargesResponse> GetOrganizationOtherCharges()
         {
             return await repositoryManager.organizationOtherCharges.GetOrganizationOtherCharges();
+        }
+        public async Task<AddEntityDTO<int>> AddEditBusinessAddresses(AddEditOrganizationBusinessAddressesRequest requestData, short CurrentUserId)
+        {
+            OrganizationBusinessAddressesDto organizationBusinessAddressDto = requestData.ToMapp<AddEditOrganizationBusinessAddressesRequest, OrganizationBusinessAddressesDto>();
+            organizationBusinessAddressDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationBusinessAddresses.AddEditBusinessAddresses(organizationBusinessAddressDto);
+        }
+        public async Task<GetOrganizationBusinessAddressesResponse> GetOrganizationBusinessAddresses()
+        {
+            return await repositoryManager.organizationBusinessAddresses.GetOrganizationBusinessAddresses();
+        }
+        public async Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(ListEntityRequest<BaseFilter> requestData)
+        {
+            return await repositoryManager.organization.GetOrganizationHistorys(requestData);
         }
         #endregion
     }
