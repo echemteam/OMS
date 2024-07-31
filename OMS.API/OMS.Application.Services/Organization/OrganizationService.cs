@@ -1,9 +1,12 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
+using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Organization;
 using OMS.Domain.Entities.API.Response.Organization;
+using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Organization;
+using OMS.Domain.Entities.Entity.SuppierBankDetails;
 using OMS.Domain.Repository;
 using OMS.Shared.Services.Contract;
 
@@ -120,12 +123,54 @@ namespace OMS.Application.Services.Organization
         public async Task<AddEntityDTO<int>> AddEditBusinessAddresses(AddEditOrganizationBusinessAddressesRequest requestData, short CurrentUserId)
         {
             OrganizationBusinessAddressesDto organizationBusinessAddressDto = requestData.ToMapp<AddEditOrganizationBusinessAddressesRequest, OrganizationBusinessAddressesDto>();
+            if (requestData.RegisteredAddress != null)
+            {
+                organizationBusinessAddressDto.RegisteredAddressId = await AddEditAddress(requestData.RegisteredAddress, CurrentUserId);
+            }
+            if (requestData.PhysicalAddress != null)
+            {
+                organizationBusinessAddressDto.PhysicalAddressId= await AddEditAddress(requestData.PhysicalAddress, CurrentUserId);
+            }
+            if (requestData.RemitToAddress != null)
+            {
+                organizationBusinessAddressDto.RemitToAddressId = await AddEditAddress(requestData.RemitToAddress, CurrentUserId);
+            }
+            if (requestData.BillToAddress != null)
+            {
+                organizationBusinessAddressDto.BillToAddressId = await AddEditAddress(requestData.BillToAddress, CurrentUserId);
+            }
+            if (requestData.LabAddress != null)
+            {
+                organizationBusinessAddressDto.LabAddressId = await AddEditAddress(requestData.LabAddress, CurrentUserId);
+            }
+            if (requestData.WarehouseAddress != null)
+            {
+                organizationBusinessAddressDto.WarehouseAddressId = await AddEditAddress(requestData.WarehouseAddress, CurrentUserId);
+            }
             organizationBusinessAddressDto.CreatedBy = CurrentUserId;
             return await repositoryManager.organizationBusinessAddresses.AddEditBusinessAddresses(organizationBusinessAddressDto);
         }
         public async Task<GetOrganizationBusinessAddressesResponse> GetOrganizationBusinessAddresses()
         {
             return await repositoryManager.organizationBusinessAddresses.GetOrganizationBusinessAddresses();
+        }
+        private async Task<int> AddEditAddress(AddEditAddressRequest addressRequest, short currentUserId)
+        {
+            AddressDTO addressDTO = addressRequest.ToMapp<AddEditAddressRequest, AddressDTO>();
+            AddEntityDTO<int> responseData;
+
+            if (addressRequest.AddressId > 0)
+            {
+                addressDTO.UpdatedBy = currentUserId;
+                responseData = await repositoryManager.address.UpdateAddAddress(addressDTO);
+            }
+            else
+            {
+                addressDTO.CreatedBy = currentUserId;
+                responseData = await repositoryManager.address.AddAddress(addressDTO);
+            }
+
+            return responseData.KeyValue;
         }
         #endregion
     }

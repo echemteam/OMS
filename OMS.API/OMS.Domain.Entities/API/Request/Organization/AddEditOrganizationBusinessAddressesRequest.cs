@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OMS.Domain.Entities.API.Request.Address;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,12 @@ namespace OMS.Domain.Entities.API.Request.Organization
     public class AddEditOrganizationBusinessAddressesRequest
     {
         public short? OrganizationBusinessAddressId {  get; set; }
+        public AddEditAddressRequest? RegisteredAddress { get; set; }
+        public AddEditAddressRequest? PhysicalAddress { get; set; }
+        public AddEditAddressRequest? RemitToAddress { get; set; }
+        public AddEditAddressRequest? BillToAddress { get; set; }
+        public AddEditAddressRequest? LabAddress { get; set; }
+        public AddEditAddressRequest? WarehouseAddress { get; set; }
         public int? RegisteredAddressId {  get; set; }
         public int? PhysicalAddressId {  get; set; }
         public int? RemitToAddressId {  get; set; }
