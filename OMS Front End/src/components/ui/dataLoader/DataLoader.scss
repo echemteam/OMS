@@ -108,6 +108,7 @@
   .loader-text {
     font-weight: bold;
     text-align: center;
+    margin-top: 20px;
 
     .typewriter{
       overflow: hidden;
@@ -117,9 +118,6 @@
       animation: typing 2s steps(30, end), blink-caret 1s infinite;
       -webkit-animation: typing 2s steps(30, end), blink-caret 1s infinite;
 }
-
-
-
   }
 }
 

@@ -68,11 +68,13 @@
     }
 
     &.active-button {
-      background-color: var(--themeColor);
+      // background-color: var(--themeColor);
+      background-color: var(--paginationActive);
       color: var(--whiteColor);
       font-size: var(--commonFont);
       font-weight: 600;
       border: unset;
+      box-shadow: 0 .125rem .375rem 0 rgba(115, 103, 240, .3);
     }
   }
 

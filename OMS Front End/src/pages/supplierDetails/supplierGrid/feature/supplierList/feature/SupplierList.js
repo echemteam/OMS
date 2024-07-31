@@ -129,7 +129,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
     }
   }
 
-  const handlePageChange = (page,sortingString) => {
+  const handlePageChange = (page, sortingString) => {
     const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
     const request = {
       pagination: {
@@ -208,7 +208,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
     getSuppliers(request);
   };
 
-  
+
   const handleSorting = (shortString) => {
     getListApi(molGridRef.current.getCurrentPageObject(), shortString);
   }
@@ -294,7 +294,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
       }
       updateSupplierInActiveStatus(req)
       addSupplierNotes(req);
-      if (!assignRUser) {
+      if (!assignRUser && custData.responsibleUserId && custData.responsibleUserId.value) {
         updateRUserData(custData.responsibleUserId.value);
       }
     }
@@ -424,7 +424,7 @@ SupplierList.propTypes = {
     PropTypes.arrayOf(PropTypes.number),
     PropTypes.string
   ]).isRequired,
-  
+
   searchStatusFilter: PropTypes.bool,
   handleSearch: PropTypes.func.isRequired,
   handleClear: PropTypes.func.isRequired,

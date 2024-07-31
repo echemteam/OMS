@@ -21,10 +21,9 @@ const FormSelectField = ({
   fieldActions,
   overRideProps,
   isRequired,
+  inputButtonGroup,
   ...selectFormFieldProps
 }) => {
-
-
 
   const handleChange = (selectedOption) => {
     if (onChange) {
@@ -63,6 +62,7 @@ const FormSelectField = ({
             value={value}
             isMultiSelect={isMultiSelect}
             isDisabled={formSetting?.isViewOnly || selectFormFieldProps?.isDisable || overRideProps?.isDisable}
+            inputButtonGroup={inputButtonGroup}
             {...selectFormFieldProps}
           />
         </Suspense>

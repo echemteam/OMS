@@ -1,0 +1,38 @@
+﻿using OMS.Domain.Entities.API.Response.Organization;
+using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.Organization;
+using OMS.Domain.Repository.Contract;
+using OMS.Prisitance.Entities.Entities;
+using OMS.Shared.DbContext;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OMS.Domain.Repository.Implementation
+{
+    internal class OrganizationAccountingDetailsRepository : BaseRepository<OrganizationAccountingDetails>, IOrganizationAccountingDetailsRepository
+    {
+        const string ADDEDITORGANIZATIONACCOUNTINGDETAILS = "AddEditOrganizationAccountingDetails";
+        const string GETORGANIZATIONACCOUNTINGDETAILS = "GetOrganizationAccountingDetails";
+        public OrganizationAccountingDetailsRepository(DapperContext dapperContext) : base(dapperContext)
+        {
+        }
+        public async Task<AddEntityDTO<int>> AddEditOrganizationAccountingDetails(OrganizationAccountingDetailsDto requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONACCOUNTINGDETAILS, new
+            {
+                requestData.OrganizationAccountingDetailId,
+                requestData.CreditLimit,
+                requestData.CreatedBy
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<GetOrganizationAccountingDetailsResponse> GetOrganizationAccountingDetails()
+        {
+            GetOrganizationAccountingDetailsResponse organizationAccountingDetails = await _context.GetFrist<GetOrganizationAccountingDetailsResponse>(GETORGANIZATIONACCOUNTINGDETAILS, CommandType.StoredProcedure);
+            return organizationAccountingDetails;
+        }
+    }
+}

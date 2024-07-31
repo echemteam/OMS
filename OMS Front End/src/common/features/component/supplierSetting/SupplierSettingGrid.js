@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { financialSettingFormData } from "./config/FinancialSettingForm.data";
-import ACHWireDetail from "./feature/ACHWireDetail";
 import RenderTabs from "../../../../components/ui/tabs/RenderTabs";
 import CreditCardDetail from "./feature/CreditCardDetail";
 import CheckDetail from "./feature/CheckDetail";
@@ -14,8 +13,9 @@ import { useLazyGetAllPODeliveryMethodQuery, useLazyGetPaymentSettingsBySupplier
 import { checkFormData } from "./config/CheckForm.data";
 import { creditCardFormData } from "./config/CreditCardForm.data";
 import { otherFormData } from "./config/OtherForm.data";
+import ACHWireDetail from "./feature/achWireDetail/ACHWireDetail";
 
-const SupplierSettingGrid = ({ supplierId }) => {
+const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
   const financialSettingFormRef = useRef();
   const [financialSettingForm, setfinancialSettingForm] = useState(financialSettingFormData);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
@@ -34,12 +34,16 @@ const SupplierSettingGrid = ({ supplierId }) => {
     getAllPaymentTerms();
     getAllPaymentMethod();
     getAllDeliveryAccounts()
-    getPaymentSettingsBySupplierId(supplierId)
+    if (isEditablePage) {
+      getPaymentSettingsBySupplierId(supplierId)
+    }
   }, []);
 
   useEffect(() => {
-    getSupplierFinancialSettingsBySupplierId(supplierId)
-  },[activeTabIndex])
+    if (isEditablePage) {
+      getSupplierFinancialSettingsBySupplierId(supplierId)
+    }
+  }, [isEditablePage])
 
   useEffect(() => {
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
@@ -125,6 +129,7 @@ const SupplierSettingGrid = ({ supplierId }) => {
             activeTabIndex={activeTabIndex}
             financialSettingFormRef={financialSettingFormRef}
             supplierId={supplierId}
+            isEditablePage={isEditablePage}
           />
         </div>
       ),
@@ -199,4 +204,4 @@ const SupplierSettingGrid = ({ supplierId }) => {
   );
 };
 
-export default SupplierSettingGrid;
+export default FinancialSettingsgGrid;

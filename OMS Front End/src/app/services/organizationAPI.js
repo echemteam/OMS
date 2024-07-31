@@ -60,17 +60,162 @@ const organizationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        
+        addEditOrganizationContactDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationContactDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationContactDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationContactDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
+        addEditOrganizationLogisticDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationLogisticDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationLogisticDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationLogisticDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        addEditOrganizationBankDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationBankDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationBankDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationBankDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        addEditOrganizationAccountingDetails: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationAccountingDetails',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationAccountingDetails: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationAccountingDetails'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        addEditOrganizationShippingCharges: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationShippingCharges',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationShippingCharges: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationShippingCharges'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        addEditOrganizationOtherCharges: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationOtherCharges',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationOtherCharges: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationOtherCharges'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        addEditBusinessAddresses: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditBusinessAddresses',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationBusinessAddresses: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationBusinessAddresses'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationHistorys: builder.mutation({
+            query: (data) => ({
+                url: '/Organization/GetOrganizationHistorys',
+                method: 'POST',
+                body: transformRequest(data)
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
 export const {
     useAddEditOrganizationProfileMutation,
+    useGetOrganizationHistorysMutation,
     useAddEditSmtpSettingsMutation,
     useAddEditOrganizationOtherSettingsMutation,
     useLazyGetOrganizationProfileQuery,
     useLazyGetOrganizationOtherSettingsQuery,
     useLazyGetSmtpSettingsQuery,
-
+    useAddEditOrganizationContactDetailsMutation,
+    useLazyGetOrganizationContactDetailsQuery,
+    useAddEditOrganizationLogisticDetailsMutation,
+    useLazyGetOrganizationLogisticDetailsQuery,
+    useAddEditOrganizationBankDetailsMutation,
+    useLazyGetOrganizationBankDetailsQuery,
+    useAddEditOrganizationAccountingDetailsMutation,
+    useLazyGetOrganizationAccountingDetailsQuery,
+    useAddEditOrganizationShippingChargesMutation,
+    useLazyGetOrganizationShippingChargesQuery,
+    useAddEditOrganizationOtherChargesMutation,
+    useLazyGetOrganizationOtherChargesQuery,
+    useAddEditBusinessAddressesMutation,
+    useLazyGetOrganizationBusinessAddressesQuery,
 } = organizationAPI
 
 export default organizationAPI;

@@ -9,25 +9,25 @@ namespace OMS.Prisitance.Entities.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public byte? OrganizationId { get; set; }
-        [Column("Name")]
-        public string? Name { get; set; }
-        [Column("Logo")]
-        public string? Logo { get; set; }
-        [Column("Base64File")]
-        public string? Base64File { get; set; }
-        [Column("AddressLine1")]
-        public string? AddressLine1 { get; set; }
-        [Column("AddressLine2")]
-        public string? AddressLine2 { get; set; }
-        [Column("CityId")]
-        public int? CityId { get; set; }
-        [Column("StateId")]
-        public int? StateId { get; set; }
-        [Column("CountryId")]
-        public short? CountryId { get; set; }
-        [Column("ZipCode")]
-        public int? ZipCode { get; set; }
+        public byte? OrganizationProfileId { get; set; }
+        [Column("RegisteredName")]
+        public string? RegisteredName { get; set; }
+        [Column("DBAName")]
+        public string? DBAName { get; set; }
+        [Column("DateIncorporated")]
+        public DateTime? DateIncorporated { get; set; }
+        [Column("NAICSCode")]
+        public string? NAICSCode { get; set; }
+        [Column("EIN")]
+        public string? EIN { get; set; }
+        [Column("TXTaxpayerNumber")]
+        public string? TXTaxpayerNumber { get; set; }
+        [Column("SOSFileNumber")]
+        public string? SOSFileNumber { get; set; }
+        [Column("WebFileNumber")]
+        public string? WebFileNumber { get; set; }
+        [Column("TWCTaxAccountNumber")]
+        public string? TWCTaxAccountNumber { get; set; }
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]

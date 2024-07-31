@@ -42,6 +42,8 @@ const SupplierViewDetail = React.lazy(() => import("../../pages/supplierDetails/
 const Organization = React.lazy(() => import("../../pages/organization/Organization"));
 
 const ThirdPartyApiConfiguration = React.lazy(() => import("../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/ThirdPartyApiConfiguration"));
+const FunctionalConfiguration = React.lazy(() => import("../../pages/configuration/functionalConfiguration/FunctionalConfiguration"));
+const FunctionalConfigurationViewDetail = React.lazy(() => import("../../pages/configuration/functionalConfiguration/features/functionalConfigurationList/functionalConfigurationViewDetail/FunctionalConfigurationViewDetail"));
 
 export const ComponentNavigation = [
   {
@@ -302,6 +304,26 @@ export const ComponentNavigation = [
     securityKey: securityKey.APPROVALRULES
   },
   {
+    id: 'FunctionalConfiguration',
+    path: '/FunctionalConfiguration',
+    exact: true,
+    title: 'Functional Configuration',
+    component: FunctionalConfiguration,
+    hasParams: false,
+    text: 'Approval Rules',
+    securityKey: securityKey.APPROVALRULES
+  },
+  {
+    id: 'FunctionalConfigurationViewDetail',
+    path: '/FunctionalConfigurationViewDetail',
+    exact: true,
+    title: 'Functional Configuration View Details',
+    component: FunctionalConfigurationViewDetail,
+    hasParams: false,
+    text: 'Functional Configuration View',
+    securityKey: securityKey.APPROVALRULES
+  },
+  {
     id: 'apiProviders',
     path: '/APIProviders',
     exact: true,
@@ -361,7 +383,5 @@ export const ComponentNavigation = [
     text: 'ThirdPartyApiConfiguration',
     // securityKey: securityKey.MYTASK
   },
-
-
 
 ];

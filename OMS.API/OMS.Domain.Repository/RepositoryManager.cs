@@ -40,6 +40,13 @@ namespace OMS.Domain.Repository
         IOrganizationRepository _organizationRepository;
         IOrganizationOtherSettingsRepository _organizationOtherSettingsRepository;
         ISmtpSettingsRepository _smtpSettingsRepository;
+        IOrganizationContactDetailsRepository _organizationContactDetailsRepository;
+        IOrganizationLogisticDetailsRepository _organizationLogisticDetailsRepository;
+        IOrganizationBankDetailsRepository _organizationBankDetailsRepository;
+        IOrganizationAccountingDetailsRepository _organizationAccountingDetailsRepository;
+        IOrganizationShippingChargesRepository _organizationShippingChargesRepository;
+        IOrganizationOtherChargesRepository _organizationOtherChargesRepository;
+        IOrganizationBusinessAddressesRepository _organizationBusinessAddressesRepository;
         ISupplierFinancialSettingsRepository _supplierFinancialSettingsRepository;
         ISuppierBankDetailsRepository _suppierBankDetailsRepository;    
         ISupplierPaymentSettingsRepository _supplierPaymentSettingsRepository;
@@ -49,6 +56,7 @@ namespace OMS.Domain.Repository
         IApiParameterMappingRepository _apiParameterMappingRepository;
         IApiEventRequiredFieldRepository _apiEventRequiredFieldRepository;
         IApiEventRequiredFieldsMappingRepository _apiEventRequiredFieldsMappingRepository;
+        IFunctionalitiesRepository _functionalitiesRepository;
 
         public ITestRepository test
         {
@@ -360,6 +368,90 @@ namespace OMS.Domain.Repository
             }
 
         }
+        public IOrganizationContactDetailsRepository organizationContactDetails
+        {
+            get
+            {
+                if (_organizationContactDetailsRepository == null)
+                {
+                    _organizationContactDetailsRepository = new OrganizationContactDetailsRepository(_context);
+                }
+                return _organizationContactDetailsRepository;
+            }
+
+        }
+        public IOrganizationLogisticDetailsRepository organizationLogisticDetails
+        {
+            get
+            {
+                if (_organizationLogisticDetailsRepository == null)
+                {
+                    _organizationLogisticDetailsRepository = new OrganizationLogisticDetailsRepository(_context);
+                }
+                return _organizationLogisticDetailsRepository;
+            }
+
+        }
+        public IOrganizationBankDetailsRepository organizationBankDetails
+        {
+            get
+            {
+                if (_organizationBankDetailsRepository == null)
+                {
+                    _organizationBankDetailsRepository = new OrganizationBankDetailsRepository(_context);
+                }
+                return _organizationBankDetailsRepository;
+            }
+
+        }
+        public IOrganizationAccountingDetailsRepository organizationAccountingDetails
+        {
+            get
+            {
+                if (_organizationAccountingDetailsRepository == null)
+                {
+                    _organizationAccountingDetailsRepository = new OrganizationAccountingDetailsRepository(_context);
+                }
+                return _organizationAccountingDetailsRepository;
+            }
+
+        }
+        public IOrganizationShippingChargesRepository organizationShippingCharges
+        {
+            get
+            {
+                if (_organizationShippingChargesRepository == null)
+                {
+                    _organizationShippingChargesRepository = new OrganizationShippingChargesRepository(_context);
+                }
+                return _organizationShippingChargesRepository;
+            }
+
+        }
+        public IOrganizationOtherChargesRepository organizationOtherCharges
+        {
+            get
+            {
+                if (_organizationOtherChargesRepository == null)
+                {
+                    _organizationOtherChargesRepository = new OrganizationOtherChargesRepository(_context);
+                }
+                return _organizationOtherChargesRepository;
+            }
+
+        }
+        public IOrganizationBusinessAddressesRepository organizationBusinessAddresses
+        {
+            get
+            {
+                if (_organizationBusinessAddressesRepository == null)
+                {
+                    _organizationBusinessAddressesRepository = new OrganizationBusinessAddressesRepository(_context);
+                }
+                return _organizationBusinessAddressesRepository;
+            }
+
+        }
         public ISupplierFinancialSettingsRepository supplierFinancialSettings
         {
             get
@@ -465,6 +557,18 @@ namespace OMS.Domain.Repository
                     _apiEventRequiredFieldsMappingRepository = new ApiEventRequiredFieldsMappingRepository(_context);
                 }
                 return _apiEventRequiredFieldsMappingRepository;
+            }
+
+        }
+        public IFunctionalitiesRepository functionalities
+        {
+            get
+            {
+                if (_functionalitiesRepository == null)
+                {
+                    _functionalitiesRepository = new FunctionalitiesRepository(_context);
+                }
+                return _functionalitiesRepository;
             }
 
         }

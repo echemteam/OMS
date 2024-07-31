@@ -1,3 +1,4 @@
+import { EditGridColumnType } from "../../../../../../../data/editGridColumnType";
 import { FormFieldTypes } from "../../../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../../../data/gridColumnType";
 
@@ -77,13 +78,30 @@ export const OurAccountGridConfig = {
             name: "Charge",
             fieldName: "charge",
             colType: GridColumnType.MONEY,
-            width: "20%"
+            width: "20%",
+            allowEditColumn: true,
+            editColumn: {
+                editColType: EditGridColumnType.NUMERIC,
+                editColFieldName: "charge",
+                isDisable: false,
+                editColValidation: [
+                    { type: "required", message: "Charge is required." },
+                ],
+            },
+            colSettings: {},
+            allowShort: false
         },
         {
             name: "Is Primary",
             fieldName: "isPrimary",
             width: "20%",
             colType: GridColumnType.CHECKBOX,
+            allowEditColumn: true,
+            editColumn: {
+                editColType: EditGridColumnType.CHECKBOX,
+                editColFieldName: "isPrimary",
+                editColValidation: [],
+            },
             colSettings: {
                 allowCheckbox: true,
                 allowDisable: true
@@ -97,7 +115,18 @@ export const OurAccountGridConfig = {
             defaultAction: {
                 allowEdit: true,
                 allowDelete: true,
-            }
+            },
+            editColumn: {
+                editColType: EditGridColumnType.ACTION,
+                defaultEditAction: {
+                    allowSave: true,
+                    allowCancel: true,
+                },
+            },
+            allowShort: false
         },
     ],
+    allowEdit: true,
+    handleRowDataUpdate: null,
+    OnColumnChangeEdit: null
 };

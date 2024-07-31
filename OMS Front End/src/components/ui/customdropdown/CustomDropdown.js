@@ -5,16 +5,14 @@ import StatusDisplay from "./StatusDisplay";
 
 const CustomOption = (props) => {
   const { data, isSelected, selectProps } = props;
-  const { status, label } = data;
+  const { status, label, date } = data;
   const { colorMap, textMap, iconMap } = selectProps.dropDownSettings;
-
-
-  console.log("CustomOption props:", props);
 
   return (
     <components.Option {...props}>
       <div className="custom-option">
         <span className="option-label">{label}</span>
+        <span className="option-date">{date}</span>
         <StatusDisplay
           status={status}
           isSelected={isSelected}
@@ -28,7 +26,8 @@ const CustomOption = (props) => {
 };
 
 function CustomDropdown(props) {
-  const { dropDownSettings } = props;
+  const { dropDownSettings, inputButtonGroup } = props;
+  const base64Icon = inputButtonGroup?.icon;
 
   return (
     <span className="d-inline-block custom-input">
@@ -45,6 +44,24 @@ function CustomDropdown(props) {
         components={{ Option: CustomOption }}
         dropDownSettings={dropDownSettings}
       />
+
+      {inputButtonGroup?.isInputButton && (
+        <button
+          className="select-button"
+          disabled={!props.value}
+          type="button"
+          onClick={inputButtonGroup.handleInputGroupButton}
+        >
+          {base64Icon && (
+            <img
+              src={base64Icon}
+              alt="icon"
+              className="input-button-icon"
+            />
+          )}
+          {inputButtonGroup.buttonText}
+        </button>
+      )}
     </span>
   );
 }

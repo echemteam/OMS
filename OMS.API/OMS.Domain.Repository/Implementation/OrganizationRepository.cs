@@ -1,9 +1,11 @@
 ﻿using OMS.Domain.Entities.API.Response.Organization;
+using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
+using OMS.Shared.Entities.CommonEntity;
 using System.Data;
 
 namespace OMS.Domain.Repository.Implementation
@@ -13,6 +15,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string ADDEDITORGANIZATIONPROFILE = "AddEditOrganizationProfile";
         const string GETORGANIZATIONPROFILE = "GetOrganizationProfile";
+        const string GETORGANIZATIONHISTORYS = "GetOrganizationHistorys";
         #endregion
 
         public OrganizationRepository(DapperContext dapperContext) : base(dapperContext)
@@ -24,16 +27,16 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONPROFILE, new
             {
-                requestData.OrganizationId,
-                requestData.Name,
-                requestData.Logo,
-                requestData.Base64File,
-                requestData.AddressLine1,
-                requestData.AddressLine2,
-                requestData.CityId,
-                requestData.StateId,
-                requestData.CountryId,
-                requestData.ZipCode,
+                requestData.OrganizationProfileId,
+                requestData.RegisteredName,
+                requestData.DBAName,
+                requestData.DateIncorporated,
+                requestData.NAICSCode,
+                requestData.EIN,
+                requestData.TXTaxpayerNumber,
+                requestData.SOSFileNumber,
+                requestData.WebFileNumber,
+                requestData.TWCTaxAccountNumber,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
@@ -41,6 +44,16 @@ namespace OMS.Domain.Repository.Implementation
         {
             GetOrganizationProfileResponse organizationProfileDetails = await _context.GetFrist<GetOrganizationProfileResponse>(GETORGANIZATIONPROFILE, CommandType.StoredProcedure);
             return organizationProfileDetails;
+        }
+        public async Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(ListEntityRequest<BaseFilter> requestData)
+        {
+            return await _context.GetListSP<GetOrganizationHistorysResponse>(GETORGANIZATIONHISTORYS, new
+            {
+                requestData.Pagination?.PageNumber,
+                requestData.Pagination?.PageSize,
+                requestData.Filters?.SearchText,
+                requestData.SortString,
+            }, true);
         }
         #endregion
     }

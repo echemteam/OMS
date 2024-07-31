@@ -116,7 +116,7 @@
 }
 
 .css-wsp0cs-MultiValueGeneric {
-  font-size: 11px !important;
+  font-size: var(--commonFont-small) !important;
 }
 
 @media only screen and (max-width: 1750px) {
@@ -175,7 +175,6 @@
   .css-15lsz6c-indicatorContainer {
     padding: 3px 5px !important;
   }
-  
 }
 
 .css-1wy0on6{

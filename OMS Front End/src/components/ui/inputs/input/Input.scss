@@ -44,7 +44,7 @@
 
 .validation-text {
   color: #e30000;
-  font-size: 11px;
+  font-size: var(--commonFont-small);
   font-weight: 500;
   margin: 0 !important;
 }
@@ -93,13 +93,15 @@ form {
     border-bottom-left-radius: 6px !important;
   }
   .input-button {
-    height: 35px;
+    height: 37px;
     color: var(--whiteColor);
   }
   .list-btn-width {
     min-width: 50px;
   }
   .input-seprate-btn {
+    position: relative;
+
     &:hover {
       .tooltip-text {
         visibility: visible;
@@ -111,14 +113,14 @@ form {
       visibility: hidden;
       width: 160%;
       background-color: #000000;
-      color: #fff;
+      color: var(--whiteColor);
       text-align: center;
       border-radius: 5px;
       padding: 5px;
       position: absolute;
       z-index: 1;
       right: 0;
-      bottom: -46px;
+      top: 40px;
       margin-right: -5px;
 
       &::after {
@@ -145,7 +147,7 @@ form {
 
   i {
     font-size: var(--commonFont-extraLarge);
-    color: #696cff;
+    color: var(--themeColor);
     cursor: pointer !important;
   }
 
@@ -154,7 +156,7 @@ form {
     visibility: hidden;
     width: 220px;
     background-color: #555;
-    color: #fff;
+    color: var(--whiteColor);
     text-align: center;
     border-radius: 5px;
     padding: 5px;
@@ -212,25 +214,27 @@ form {
         visibility: hidden;
         width: 160%;
         background-color: #555;
-        color: #fff;
+        color: var(--whiteColor);
         text-align: center;
         border-radius: 5px;
         padding: 5px;
         position: absolute;
         z-index: 1;
-        left: 58px;
+        left: -16px;
         transition: opacity 0.3s;
+        top: 30px;
 
         &::after {
           content: "";
           position: absolute;
-          top: 12px;
-          left: -6px;
+          // top: 12px;
+          right: 35px;
+          // left: -6px;
           margin-left: -5px;
           border-width: 6px;
           border-style: solid;
           border-color: #555 transparent transparent transparent;
-          transform: rotate(90deg);
+          transform: rotate(180deg);
         }
       }
     }

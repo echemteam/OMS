@@ -1,7 +1,8 @@
 // Variable Styling Start
 
 :root {
-  --themeColor: #696cff;
+  // --themeColor: #696cff;
+  --themeColor: #685dd8;
   --themeColorLight: #e7e7ff;
   --themeColorLightGridRow: #696cff08;
   --whiteColor: #ffffff;
@@ -32,6 +33,9 @@
   --sidebarHoverTextColor: #fff;
   --sidebarActiveTextColor: #fff;
   --sidebarActiveMenuColor: #4e536b;
+
+  --tableBorderColor: #e6e6e8;
+  --paginationActive: #7367f0;
 
   // Stiky Background Start
   --lightBlue: #e2f1ff;
@@ -72,7 +76,7 @@
   --reject-theme-btn: #ff4c51;
   --submission-color: #e2ff9f;
   --submission-color-btn: #a1bb2c;
-  --theme-btn-bg:#685dd8;
+  // --theme-btn-bg:#685dd8;
   --theme-btn-hover-bg:#5c52c9;
   --sidebar-btn-hover-bg: #e9e7fd;
 

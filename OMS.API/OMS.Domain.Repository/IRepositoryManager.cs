@@ -32,6 +32,13 @@ namespace OMS.Domain.Repository
         IOrganizationRepository organization { get; }
         IOrganizationOtherSettingsRepository organizationOtherSettings { get; }
         ISmtpSettingsRepository smtpSettings { get; }
+        IOrganizationContactDetailsRepository organizationContactDetails { get; }
+        IOrganizationLogisticDetailsRepository organizationLogisticDetails { get; }
+        IOrganizationBankDetailsRepository organizationBankDetails { get; }
+        IOrganizationAccountingDetailsRepository organizationAccountingDetails { get; }
+        IOrganizationShippingChargesRepository organizationShippingCharges { get; }
+        IOrganizationOtherChargesRepository organizationOtherCharges { get; }
+        IOrganizationBusinessAddressesRepository organizationBusinessAddresses { get; }
         ISupplierFinancialSettingsRepository supplierFinancialSettings { get; }
         ISuppierBankDetailsRepository suppierBankDetails { get; }
         ISupplierPaymentSettingsRepository supplierPaymentSettings { get; }
@@ -41,5 +48,6 @@ namespace OMS.Domain.Repository
         IApiParameterMappingRepository apiParameterMapping {  get; }
         IApiEventRequiredFieldRepository apiEventRequiredField { get; }
         IApiEventRequiredFieldsMappingRepository apiEventRequiredFieldsMapping { get; }
+        IFunctionalitiesRepository functionalities {  get; }  
     }
 }
