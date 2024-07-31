@@ -8,13 +8,13 @@ import CenterModel from "../../../../../../../components/ui/centerModel/CenterMo
 import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import ToastService from "../../../../../../../services/toastService/ToastService";
-import { useAddDeliveryMethodsMutation, useLazyGetCustomerDeliveryMethodByCustomerDeliveryMethodIdQuery, useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
-import { setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
-import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
+import { useAddDeliveryMethodsMutation, useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
+// import { setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+// import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
+// import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
 import PropTypes from 'prop-types';
 
-const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit, deliveryMethodId, onSuccess }) => {
+const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit, onSuccess }) => {
     //** State */
     const ref = useRef();
     const { customerId } = useContext(BasicDetailContext);
@@ -23,7 +23,7 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
     //** API Call's */
     const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateDeliveryMethodsMutation();
     const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = useAddDeliveryMethodsMutation();
-    const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSuccess, data: isGetByIdData }] = useLazyGetCustomerDeliveryMethodByCustomerDeliveryMethodIdQuery();
+    // const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSuccess, data: isGetByIdData }] = useLazyGetCustomerDeliveryMethodByCustomerDeliveryMethodIdQuery();
 
     //** Handle Changes */
     const handleAddEdit = () => {
@@ -68,48 +68,46 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
         }
     }, [isUpdateSuccess, isUpdateData]);
 
-    useEffect(() => {
-        if (!isGetByIdFetching && isGetByIdSuccess && isGetByIdData) {
-            let form = { ...addEditDeliveryFormData };
-            form.initialState = {
-                ...isGetByIdData,
-                charge: isGetByIdData.charge,
-                chargeType: isGetByIdData.deliveryMethodId,
-                isDeliveryMethodPrimary: isGetByIdData.isPrimary
-            }
-            setFormData(form);
-        }
-    }, [isGetByIdFetching, isGetByIdSuccess, isGetByIdData]);
+    // useEffect(() => {
+    //     if (!isGetByIdFetching && isGetByIdSuccess && isGetByIdData) {
+    //         let form = { ...addEditDeliveryFormData };
+    //         form.initialState = {
+    //             ...isGetByIdData,
+    //             charge: isGetByIdData.charge,
+    //             chargeType: isGetByIdData.deliveryMethodId,
+    //             isDeliveryMethodPrimary: isGetByIdData.isPrimary
+    //         }
+    //         setFormData(form);
+    //     }
+    // }, [isGetByIdFetching, isGetByIdSuccess, isGetByIdData]);
 
-    useEffect(() => {
-        if (isEdit && deliveryMethodId) {
-            getById(deliveryMethodId);
-            setFieldSetting(formData, 'chargeType', FieldSettingType.DISABLED, true);
-        } else if (!isEdit) {
-            onResetData();
-            setFieldSetting(formData, 'chargeType', FieldSettingType.DISABLED);
-        }
-    }, [isEdit, deliveryMethodId])
+    // useEffect(() => {
+    //     if (isEdit && deliveryMethodId) {
+    //         getById(deliveryMethodId);
+    //         setFieldSetting(formData, 'chargeType', FieldSettingType.DISABLED, true);
+    //     } else if (!isEdit) {
+    //         onResetData();
+    //         setFieldSetting(formData, 'chargeType', FieldSettingType.DISABLED);
+    //     }
+    // }, [isEdit, deliveryMethodId])
 
     //** Reset Data */
-    const onResetData = () => {
-        let form = { ...addEditDeliveryFormData };
-        form.initialState = { ...addEditDeliveryFormData.initialState };
-        setFormData(form);
-    };
-
-
+    // const onResetData = () => {
+    //     let form = { ...addEditDeliveryFormData };
+    //     form.initialState = { ...addEditDeliveryFormData.initialState };
+    //     setFormData(form);
+    // };
 
     return (
         <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}
             modalTitle="Add/Edit Delivery Method" modelSizeClass="w-30" >
             <div className="row">
                 <div className="col-md-12">
-                    {!isGetByIdFetching ?
+                    {/* {!isGetByIdFetching ? */}
                         <div className="row">
                             <FormCreator config={formData} ref={ref} {...formData} />
                         </div>
-                        : <DataLoader />}
+                        {/* : <DataLoader />} */}
                 </div>
 
                 <div className="col-md-12 mt-3">

@@ -1,3 +1,4 @@
+import { EditGridColumnType } from "../../../../../../../data/editGridColumnType";
 import { FormFieldTypes } from "../../../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../../../data/gridColumnType";
 
@@ -86,19 +87,48 @@ export const AccountGridConfig = {
         {
             name: "Account Number",
             width: "25%",
-            fieldName: "accountNumber"
+            fieldName: "accountNumber",
+            allowEditColumn: true,
+            editColumn: {
+                editColType: EditGridColumnType.NUMERIC,
+                editColFieldName: "accountNumber",
+                isDisable: false,
+                editColValidation: [
+                    { type: "required", message: "Account Number is required." },
+                ],
+            },
+            colSettings: {},
+            allowShort: false
         },
         {
-            name: "Handling Fee",
-            width: "25%",
+            name: "Handling Fee New",
             fieldName: "handlingFee",
+            width: "25%",
             colType: GridColumnType.MONEY,
+            allowEditColumn: true,
+            editColumn: {
+                editColType: EditGridColumnType.NUMERIC,
+                editColFieldName: "handlingFee",
+                isDisable: false,
+                editColValidation: [
+                    { type: "required", message: "Handling Fee is required." },
+                ],
+            },
+            colSettings: {},
+            allowShort: false
         },
+
         {
             name: "Is Primary",
             fieldName: "isPrimary",
             width: "25%",
             colType: GridColumnType.CHECKBOX,
+            allowEditColumn: true,
+            editColumn: {
+                editColType: EditGridColumnType.CHECKBOX,
+                editColFieldName: "isPrimary",
+                editColValidation: [], 
+            },
             colSettings: {
                 allowCheckbox: true,
                 allowDisable: true
@@ -113,7 +143,17 @@ export const AccountGridConfig = {
                 allowEdit: true,
                 allowDelete: true,
             },
-
+            editColumn: {
+                editColType: EditGridColumnType.ACTION,
+                defaultEditAction: {
+                    allowSave: true,
+                    allowCancel: true,
+                },
+            },
+            allowShort: false
         },
     ],
+    allowEdit: true,
+    handleRowDataUpdate: null,
+    OnColumnChangeEdit: null
 };

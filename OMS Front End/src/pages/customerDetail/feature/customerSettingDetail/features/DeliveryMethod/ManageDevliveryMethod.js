@@ -20,8 +20,8 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
     const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [deliveryMethodId, setDeliveryMethodId] = useState();
-    const { deliveryMethodsList } = useContext(BasicDetailContext);
+    // const [deliveryMethodId, setDeliveryMethodId] = useState();
+    const { deliveryMethodsList , customerId } = useContext(BasicDetailContext);
 
     const { data, isFetching, isSuccess } = useGetAllDeliveryMethodsQuery();
     const [deleteDeliveryMethods, { isSuccess: isDeleteSuccess, data: isDeletData }] = useDeleteCustomerDeliveryMethodsByIdMutation();
@@ -57,11 +57,11 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
     };
 
     //** Action Handler */
-    const handleEditModal = (data) => {
-        setShowModal(!showModal);
-        setIsEdit(true);
-        setDeliveryMethodId(data.customerDeliveryMethodId)
-    }
+    // const handleEditModal = (data) => {
+    //     setShowModal(!showModal);
+    //     setIsEdit(true);
+    //     setDeliveryMethodId(data.customerDeliveryMethodId)
+    // }
 
     const handleDeleteClick = (data) => {
         confirm(
@@ -77,16 +77,18 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
     };
 
     const actionHandler = {
-        EDIT: handleEditModal,
+        // EDIT: handleEditModal,
         DELETE: handleDeleteClick,
     };
 
     return (
         <>
             <DeliveryMethodList molGridRef={molGridRef} ourAccountData={deliveryMethodsList} actionHandler={actionHandler} handleToggleModal={handleToggleModal}
-                isGetDataLoading={isGetDataLoading} isShowButton={isShowButton} />
+                isGetDataLoading={isGetDataLoading} isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} customerId={customerId}/>
             {showModal && (
-                <AddEditDeliveryMethod handleToggleModal={handleToggleModal} showModal={showModal} deliveryMethodId={deliveryMethodId} onSuccess={onSuccess}
+                <AddEditDeliveryMethod handleToggleModal={handleToggleModal} showModal={showModal} 
+                // deliveryMethodId={deliveryMethodId} 
+                onSuccess={onSuccess}
                     isEdit={isEdit} />
             )}
         </>
