@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
+const OrganizationOtherChargesDetail = React.lazy(() => import("./feature/organizationOtherChargesDetail/OrganizationOtherChargesDetail"));
 const OrganizationShippingChargesDetail = React.lazy(() => import("./feature/organizationShippingCharges/OrganizationShippingChargesDetail"));
 const OrganizationAccountingDetail = React.lazy(() => import("./feature/organizationAccountingDetail/OrganizationAccountingDetail"));
 const OrganizationLogisticDetail=React.lazy(() => import("./feature/organizationLogisticDetail/OrganizationLogisticDetail"))
@@ -21,7 +22,6 @@ const Organization = () => {
     const handleSetOrganizationId = (id) => {
         setOrganizationId(id)
     }
-
 
     const handleSetSmtpSettingId = (id) => {
         setSmtpSettingId(id)
@@ -112,6 +112,14 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
               <OrganizationShippingChargesDetail/>
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Other Charges",
+            component: (
+                <div className="mt-2">
+             <OrganizationOtherChargesDetail/>
                 </div>
             ),
         },
