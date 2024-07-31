@@ -16,6 +16,7 @@ const OrganizationLogisticDetail=()=>{
     useEffect(() => {
         if (isAddEditOrganizationLogisticDetailsSuccess && isAddEditOrganizationLogisticDetailsData) {
           ToastService.success(isAddEditOrganizationLogisticDetailsData.errorMessage);
+          getOrganizationLogisticDetails();
         }
       }, [isAddEditOrganizationLogisticDetailsSuccess, isAddEditOrganizationLogisticDetailsData]);
 
@@ -50,7 +51,6 @@ const OrganizationLogisticDetail=()=>{
         if (!isGetOrganizationLogisticDetailsFetching && isGetOrganizationLogisticDetailsSuccess && isGetOrganizationLogisticDetailsData) {
             let formData = { ...organizationLogisticData };
             formData.initialState = {
-                ...formData,
                 organizationLogisticDetailId:isGetOrganizationLogisticDetailsData.organizationLogisticDetailId,
                 fedExAccount:isGetOrganizationLogisticDetailsData.fedExAccount,
                 dHLAccount:isGetOrganizationLogisticDetailsData.dhlAccount,

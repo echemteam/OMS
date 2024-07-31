@@ -16,6 +16,7 @@ const OrganizationContactDetail=()=>{
     useEffect(() => {
         if (isAddEditOrganizationContactDetailsSuccess && isAddEditOrganizationContactDetailsData) {
           ToastService.success(isAddEditOrganizationContactDetailsData.errorMessage);
+          getOrganizationContactDetails();
         }
       }, [isAddEditOrganizationContactDetailsSuccess, isAddEditOrganizationContactDetailsData]);
 

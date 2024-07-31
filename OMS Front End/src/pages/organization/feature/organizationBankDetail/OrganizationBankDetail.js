@@ -15,6 +15,7 @@ const OrganizationBankDetail=()=>{
     useEffect(() => {
         if (isAddEditOrganizationBankDetailsSuccess && isAddEditOrganizationBankDetailsData) {
           ToastService.success(isAddEditOrganizationBankDetailsData.errorMessage);
+          getOrganizationBankDetails();
         }
       }, [isAddEditOrganizationBankDetailsSuccess, isAddEditOrganizationBankDetailsData]);
 
