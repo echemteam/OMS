@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 const Dropdown = React.lazy(() => import('../../dropdown/DropDrown'));
 const Label = React.lazy(() => import('../../label/Label'));
 const ValidationText = React.lazy(() => import('../validation/ValidationText.js'))

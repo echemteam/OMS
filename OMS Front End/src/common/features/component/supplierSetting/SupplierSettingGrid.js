@@ -43,7 +43,7 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
     if (isEditablePage) {
       getSupplierFinancialSettingsBySupplierId(supplierId)
     }
-  }, [activeTabIndex])
+  }, [isEditablePage])
 
   useEffect(() => {
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
