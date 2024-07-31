@@ -13,7 +13,7 @@ namespace OMS.Prisitance.Entities.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public short? OrganizationLogisticDetailId { get; set; }
+        public byte? OrganizationLogisticDetailId { get; set; }
         [Column("FedExAccount")]
         public string? FedExAccount { get; set; }
         [Column("DHLAccount")]

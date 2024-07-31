@@ -27,16 +27,16 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONPROFILE, new
             {
-                requestData.OrganizationId,
-                requestData.Name,
-                requestData.Logo,
-                requestData.Base64File,
-                requestData.AddressLine1,
-                requestData.AddressLine2,
-                requestData.CityId,
-                requestData.StateId,
-                requestData.CountryId,
-                requestData.ZipCode,
+                requestData.OrganizationProfileId,
+                requestData.RegisteredName,
+                requestData.DBAName,
+                requestData.DateIncorporated,
+                requestData.NAICSCode,
+                requestData.EIN,
+                requestData.TXTaxpayerNumber,
+                requestData.SOSFileNumber,
+                requestData.WebFileNumber,
+                requestData.TWCTaxAccountNumber,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }

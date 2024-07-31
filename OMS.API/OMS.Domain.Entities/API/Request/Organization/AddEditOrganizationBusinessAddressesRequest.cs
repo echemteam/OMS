@@ -9,7 +9,7 @@ namespace OMS.Domain.Entities.API.Request.Organization
 {
     public class AddEditOrganizationBusinessAddressesRequest
     {
-        public short? OrganizationBusinessAddressId {  get; set; }
+        public byte? OrganizationBusinessAddressId {  get; set; }
         public AddEditAddressRequest? RegisteredAddress { get; set; }
         public AddEditAddressRequest? PhysicalAddress { get; set; }
         public AddEditAddressRequest? RemitToAddress { get; set; }

@@ -8,7 +8,7 @@ namespace OMS.Domain.Entities.Entity.Organization
 {
     public  class OrganizationOtherChargesDto
     {
-        public short? OrganizationOtherChargeId { get; set; }
+        public byte? OrganizationOtherChargeId { get; set; }
         public decimal? HandlingFees { get; set; }
         public decimal? BankWireFees { get; set; }
         public decimal? CreditCardServiceFees { get; set; }

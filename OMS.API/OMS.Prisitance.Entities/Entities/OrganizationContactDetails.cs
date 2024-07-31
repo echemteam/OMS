@@ -13,7 +13,7 @@ namespace OMS.Prisitance.Entities.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public short? OrganizationContactDetailId { get; set; }
+        public byte? OrganizationContactDetailId { get; set; }
         [Column("CompanyWebsite")]
         public string? CompanyWebsite { get; set; }
         [Column("SalesEmail")]

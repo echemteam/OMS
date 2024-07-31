@@ -10,7 +10,7 @@ namespace OMS.Domain.Entities.API.Response.Organization
 {
     public class GetOrganizationBusinessAddressesResponse
     {
-        public short? OrganizationBusinessAddressId { get; set; }
+        public byte? OrganizationBusinessAddressId { get; set; }
         public GetAddressResponse? RegisteredAddress { get; set; }
         public GetAddressResponse? PhysicalAddress { get; set; }
         public GetAddressResponse? RemitToAddress { get; set; }

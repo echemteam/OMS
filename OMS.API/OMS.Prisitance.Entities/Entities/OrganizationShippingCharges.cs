@@ -13,7 +13,7 @@ namespace OMS.Prisitance.Entities.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public short? OrganizationShippingChargeId { get; set; }
+        public byte? OrganizationShippingChargeId { get; set; }
         [Column("DomesticOvernight")]
         public decimal? DomesticOvernight { get; set; }
         [Column("DomesticSecondDay")]

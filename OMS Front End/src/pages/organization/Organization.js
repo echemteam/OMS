@@ -4,10 +4,10 @@ import RenderTabs from '../../components/ui/tabs/RenderTabs';
 const OrganizationOtherChargesDetail = React.lazy(() => import("./feature/organizationOtherChargesDetail/OrganizationOtherChargesDetail"));
 const OrganizationShippingChargesDetail = React.lazy(() => import("./feature/organizationShippingCharges/OrganizationShippingChargesDetail"));
 const OrganizationAccountingDetail = React.lazy(() => import("./feature/organizationAccountingDetail/OrganizationAccountingDetail"));
-const OrganizationLogisticDetail=React.lazy(() => import("./feature/organizationLogisticDetail/OrganizationLogisticDetail"))
-const OrganizationBankDetail=React.lazy(() => import("./feature/organizationBankDetail/OrganizationBankDetail"))
-const OrganizationHistory=React.lazy(() => import("./feature/organizationHistory/OrganizationHistory"))
-const OrganizationContactDetail=React.lazy(() => import("./feature/organizationContactDetail/OrganizationContactDetail"))
+const OrganizationLogisticDetail = React.lazy(() => import("./feature/organizationLogisticDetail/OrganizationLogisticDetail"))
+const OrganizationBankDetail = React.lazy(() => import("./feature/organizationBankDetail/OrganizationBankDetail"))
+const OrganizationHistory = React.lazy(() => import("./feature/organizationHistory/OrganizationHistory"))
+const OrganizationContactDetail = React.lazy(() => import("./feature/organizationContactDetail/OrganizationContactDetail"))
 const SMTPSettings = React.lazy(() => import("./feature/smtpSettings/SMTPSettings"));
 const OtherSettings = React.lazy(() => import("./feature/otherSettings/OtherSettings"));
 const OrganizationProfileManagement = React.lazy(() => import("./feature/organizationProfileManagement/OrganizationProfileManagement"));
@@ -79,7 +79,7 @@ const Organization = () => {
             sMenuItemCaption: "Contact Details",
             component: (
                 <div className="mt-2">
-                   <OrganizationContactDetail  />
+                    <OrganizationContactDetail />
                 </div>
             ),
         },
@@ -87,7 +87,7 @@ const Organization = () => {
             sMenuItemCaption: "Logistic Details",
             component: (
                 <div className="mt-2">
-               <OrganizationLogisticDetail />
+                    <OrganizationLogisticDetail />
                 </div>
             ),
         },
@@ -95,7 +95,7 @@ const Organization = () => {
             sMenuItemCaption: "Bank Details",
             component: (
                 <div className="mt-2">
-               <OrganizationBankDetail />
+                    <OrganizationBankDetail />
                 </div>
             ),
         },
@@ -103,7 +103,7 @@ const Organization = () => {
             sMenuItemCaption: "Accounting Details",
             component: (
                 <div className="mt-2">
-              <OrganizationAccountingDetail/>
+                    <OrganizationAccountingDetail />
                 </div>
             ),
         },
@@ -111,7 +111,7 @@ const Organization = () => {
             sMenuItemCaption: "Shipping Charges",
             component: (
                 <div className="mt-2">
-              <OrganizationShippingChargesDetail/>
+                    <OrganizationShippingChargesDetail />
                 </div>
             ),
         },
@@ -126,8 +126,8 @@ const Organization = () => {
 {
             sMenuItemCaption: "History",
             component: (
-                <div className="mt-2">
-                   <OrganizationHistory />
+                <div className="mt-2 organiazation-history">
+                    <OrganizationHistory />
                 </div>
             ),
         },
@@ -144,8 +144,10 @@ const Organization = () => {
                                 activeTabId === 2 ? "Other Settings" :
                                     ""
                     }>
-                        <div className="vertical-tab-inner">
-                            <RenderTabs tabs={tabs} isCollapse={true} onActiveTab={handleActiveTab} isOrganization={true} />
+                        <div className='main-organiazation-history'>
+                            <div className="vertical-tab-inner">
+                                <RenderTabs tabs={tabs} isCollapse={true} onActiveTab={handleActiveTab} isOrganization={true} />
+                            </div>
                         </div>
                     </CardSection>
                 </div>

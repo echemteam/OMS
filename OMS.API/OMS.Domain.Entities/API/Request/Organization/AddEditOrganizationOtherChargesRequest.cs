@@ -8,7 +8,7 @@ namespace OMS.Domain.Entities.API.Request.Organization
 {
     public class AddEditOrganizationOtherChargesRequest
     {
-        public short? OrganizationOtherChargeId {  get; set; }
+        public byte? OrganizationOtherChargeId {  get; set; }
         public decimal? HandlingFees {  get; set; }
         public decimal? BankWireFees { get; set; }
         public decimal? CreditCardServiceFees { get; set; }

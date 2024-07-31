@@ -8,7 +8,7 @@ const FunctionalConfigurationViewDetail = () => {
     const navigate = useNavigate();
 
     const BackButton = () => {
-        navigate("/FunctionalConfigurationList");
+        navigate("/FunctionalConfiguration");
     }
     return (
         <>

@@ -13,7 +13,7 @@ namespace OMS.Prisitance.Entities.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public short? OrganizationOtherChargeId { get; set; }
+        public byte? OrganizationOtherChargeId { get; set; }
         [Column("HandlingFees")]
         public decimal? HandlingFees { get; set; }
         [Column("BankWireFees")]
