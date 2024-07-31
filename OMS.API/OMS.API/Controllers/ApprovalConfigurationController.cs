@@ -73,7 +73,7 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(functionalitiesResponsiblesId);
         }
-        [HttpPost("GetFunctionalitiesResponsibles")]
+        [HttpDelete("GetFunctionalitiesResponsibles")]
         public async Task<IActionResult> GetFunctionalitiesResponsibles(GetFunctionalitiesResponsiblesRequest requestData)
         {
             var functionalitiesResponsibles = await _serviceManager.approvalConfigurationServices.GetFunctionalitiesResponsibles(requestData);
