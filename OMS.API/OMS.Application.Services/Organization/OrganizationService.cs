@@ -8,6 +8,7 @@ using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Entities.Entity.SuppierBankDetails;
 using OMS.Domain.Repository;
+using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.Application.Services.Organization
@@ -70,7 +71,7 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationContactDetails.GetOrganizationContactDetails();
         }
-        public async Task<AddEntityDTO<int>>AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDTO<int>> AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData, short CurrentUserId)
         {
             OrganizationLogisticDetailsDto organizationLogisticDetailsDto = requestData.ToMapp<AddEditOrganizationLogisticDetailsRequest, OrganizationLogisticDetailsDto>();
             organizationLogisticDetailsDto.CreatedBy = CurrentUserId;
@@ -171,6 +172,10 @@ namespace OMS.Application.Services.Organization
             }
 
             return responseData.KeyValue;
+        }
+        public async Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(ListEntityRequest<BaseFilter> requestData)
+        {
+            return await repositoryManager.organization.GetOrganizationHistorys(requestData);
         }
         #endregion
     }

@@ -14,7 +14,7 @@ export const OrganizationContactFormData = {
               placeholder: "Enter Company Website",
               allowSpace: true,
             },
-            validation: [{ type: "require" }],
+            validation: [{ type: "require" }, { type: "website" }],
             style: {
               containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
             },
@@ -29,7 +29,7 @@ export const OrganizationContactFormData = {
                 placeholder: "Enter Sales Email",
                 allowSpace: true,
             },
-            validation: [{ type: "require" }],
+            validation: [{ type: "require" },{ type: "email" }],
             style: {
                 containerCss: "col-md-6 mb-3",
             },
@@ -44,7 +44,7 @@ export const OrganizationContactFormData = {
                 placeholder: "Enter Accounts Email",
                 allowSpace: true,
             },
-            validation: [{ type: "require" }],
+            validation: [{ type: "require" },{ type: "email" }],
             style: {
                 containerCss: "col-md-6 mb-3",
             },
@@ -59,7 +59,7 @@ export const OrganizationContactFormData = {
                 placeholder: "Enter Purchase Email",
                 allowSpace: true,
             },
-            validation: [{ type: "require" }],
+            validation: [{ type: "require" },{ type: "email" }],
             style: {
                 containerCss: "col-md-6 mb-3",
             },
@@ -74,7 +74,7 @@ export const OrganizationContactFormData = {
                 placeholder: "Enter Customer Service Email",
                 allowSpace: true,
             },
-            validation: [{ type: "require" }],
+            validation: [{ type: "require" },{ type: "email" }],
             style: {
                 containerCss: "col-md-6 mb-3",
             },
@@ -89,6 +89,7 @@ export const OrganizationContactFormData = {
             fieldSetting: {
                 placeholder: "Enter Sales Phone",
                 allowSpace: true,
+                maxLength: 15,
             },
             validation: [{ type: "require" }],
             style: {
@@ -104,6 +105,8 @@ export const OrganizationContactFormData = {
             fieldSetting: {
                 placeholder: "Enter Accounts Phone",
                 allowSpace: true,
+                maxLength: 15,
+                
             },
             validation: [{ type: "require" }],
             style: {
@@ -119,6 +122,7 @@ export const OrganizationContactFormData = {
             fieldSetting: {
                 placeholder: "Enter TollFree Phone",
                 allowSpace: true,
+                maxLength: 15,
             },
             validation: [{ type: "require" }],
             style: {
