@@ -2,6 +2,7 @@
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
 using OMS.Domain.Entities.Entity.ApprovalConfiguration;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
@@ -77,6 +78,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.Filters?.SearchText,
                 requestData.SortString,
             }, true);
+        }
+        public async Task<AddEntityDTO<int>> UpdateCustomerStatus(CustomersDTO customers)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(GETFUNCTIONALITYEVENTS, new
+            {
+                customers.CustomerId,
+                customers.StatusId,
+                customers.UpdatedBy,
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }
