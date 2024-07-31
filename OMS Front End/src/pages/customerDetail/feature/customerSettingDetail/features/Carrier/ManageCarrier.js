@@ -20,8 +20,8 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton })
     const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const { carriersList } = useContext(BasicDetailContext);
-    const [deliveryCarrierId, setDeliveryCarrierId] = useState();
+    const { carriersList, customerId } = useContext(BasicDetailContext);
+    // const [deliveryCarrierId, setDeliveryCarrierId] = useState();
     const { data, isFetching, isSuccess } = useGetAllDeliveryCarriersQuery();
 
     const [deleteCarrier, { isSuccess: isDeleteSuccess, data: isDeletData }] = useDeleteCustomerDeliveryCarriersByIdMutation();
@@ -58,11 +58,11 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton })
     };
 
     //** Action Handler */
-    const handleEditModal = (data) => {
-        setShowModal(!showModal);
-        setIsEdit(true);
-        setDeliveryCarrierId(data.customerDeliveryCarrierId);
-    }
+    // const handleEditModal = (data) => {
+    //     setShowModal(!showModal);
+    //     setIsEdit(true);
+    //     setDeliveryCarrierId(data.customerDeliveryCarrierId);
+    // }
 
     const handleDeleteClick = (data) => {
         confirm(
@@ -78,16 +78,20 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton })
     };
 
     const actionHandler = {
-        EDIT: handleEditModal,
+        // EDIT: handleEditModal,
         DELETE: handleDeleteClick,
     };
 
     return (
         <>
-            <CarrierList molGridRef={molGridRef} collectAccountData={carriersList} actionHandler={actionHandler}
-                handleToggleModal={handleToggleModal} isGetDataLoading={isGetDataLoading} isShowButton={isShowButton} />
+            <CarrierList molGridRef={molGridRef} collectAccountData={carriersList} actionHandler={actionHandler} customerId={customerId}
+                handleToggleModal={handleToggleModal} isGetDataLoading={isGetDataLoading} isShowButton={isShowButton}
+                handleGetDefaultList={handleGetDefaultList}
+            />
             {showModal && (
-                <AddEditCarrier handleToggleModal={handleToggleModal} showModal={showModal} deliveryCarrierId={deliveryCarrierId} onSuccess={onSuccess}
+                <AddEditCarrier handleToggleModal={handleToggleModal} showModal={showModal}
+                    // deliveryCarrierId={deliveryCarrierId}
+                    onSuccess={onSuccess}
                     isEdit={isEdit} />
             )}
         </>

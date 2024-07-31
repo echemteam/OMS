@@ -1,10 +1,47 @@
-import MolGrid from "../../../../../../../components/Grid/MolGrid";
+import { useEffect, useState } from "react";
+import { useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
+import FinalMolGrid from "../../../../../../../components/FinalMolGrid/FinalMolGrid";
+// import MolGrid from "../../../../../../../components/Grid/MolGrid";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import { AccountGridConfig } from "../config/CarrierConfig";
 import PropTypes from 'prop-types';
+import ToastService from "../../../../../../../services/toastService/ToastService";
 
-const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton }) => {
+const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList }) => {
+
+    const [gridConfig, setGridConfig] = useState(AccountGridConfig);
+
+    const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
+
+    const handleEditClick = (data) => {
+        const req = {
+            customerId: customerId,
+            isPrimary: data.isPrimary,
+            accountNumber: data.accountNumber,
+            customerDeliveryCarrierId: data.customerDeliveryCarrierId ? data.customerDeliveryCarrierId : 0,
+            carrierId: data.carrier && typeof data.carrier === "object" ? data.carrier.value : data.carrierId,
+            handlingFee: data.handlingFee
+        }
+        update(req)
+    }
+
+    useEffect(() => {
+        if (isUpdateSuccess && isUpdateData) {
+            if (isUpdateData.errorMessage.includes('EXISTS')) {
+                ToastService.warning(isUpdateData.errorMessage);
+                return;
+            }
+            handleGetDefaultList()
+            ToastService.success(isUpdateData.errorMessage);
+        }
+    }, [isUpdateSuccess, isUpdateData]);
+
+    useState(() => {
+        let configuration = { ...AccountGridConfig }
+        configuration.handleRowDataUpdate = handleEditClick;
+        setGridConfig(configuration);
+    }, [])
 
     return (
         <div className="first-card">
@@ -17,14 +54,22 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
                 iconImg={AppIcons.PlusIcon}
                 titleButtonClick={handleToggleModal}>
                 <div className="account-table table-striped mb-3">
-                    <MolGrid
+                    <FinalMolGrid
+                        ref={molGridRef}
+                        configuration={gridConfig}
+                        dataSource={collectAccountData}
+                        allowPagination={false}
+                        onActionChange={actionHandler}
+                        isLoading={isGetDataLoading}
+                    />
+                    {/* <MolGrid
                         ref={molGridRef}
                         configuration={AccountGridConfig}
                         dataSource={collectAccountData}
                         allowPagination={false}
                         onActionChange={actionHandler}
                         isLoading={isGetDataLoading}
-                    />
+                    /> */}
                 </div>
             </CardSection>
         </div>
