@@ -16,6 +16,7 @@ using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
+using ThirdPartyAPITester;
 
 namespace OMS.Application.Services.APIConfiguration
 {
@@ -115,6 +116,13 @@ namespace OMS.Application.Services.APIConfiguration
         {
             var parametersDetails = await repositoryManager.apiAuthentication.GetApiAuthentications(requestData);
             return parametersDetails!;
+        }
+        public async Task<AddEntityDTO<string>> ApiTester(int providerId)
+        {
+            AddEntityDTO<string> responsData = new();
+            responsData.ErrorMessage = await APITester.ThirdPartyAPITest(providerId);
+
+            return responsData;
         }
         #endregion
     }

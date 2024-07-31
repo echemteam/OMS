@@ -2,6 +2,7 @@
 {
     public class AddEditApiEventRequiredFieldRequest
     {
+        public int? ApiEventId { get; set; }
         public int? ApiEventRequiredFieldId { get; set; }
         public string? FieldName { get; set; }
         public string? FieldType { get; set; }

@@ -5,7 +5,7 @@ import CardSection from '../../../../../../../components/ui/card/CardSection';
 import { AppIcons } from '../../../../../../../data/appIcons';
 import SidebarModel from '../../../../../../../components/ui/sidebarModel/SidebarModel';
 
-const ParameterMapping = ({ keyId }) => {
+const ParameterMapping = ({ keyId, endpointId }) => {
   const childRef = useRef();
   const [isModelOpen, setIsModelOpen] = useState(false);
 
@@ -53,6 +53,7 @@ const ParameterMapping = ({ keyId }) => {
           isOpen={isModelOpen}
           keyId={keyId}
           onGetData={onGetData}
+          endpointId={endpointId}
         />
       </SidebarModel>
     </>

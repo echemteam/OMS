@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -10,6 +10,12 @@
     <ProjectReference Include="..\OMS.Domain.Entities\OMS.Domain.Entities.csproj" />
     <ProjectReference Include="..\OMS.Domain.Repository\OMS.Domain.Repository.csproj" />
     <ProjectReference Include="..\OMS.FileManger.Services\OMS.FileManger.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ThirdPartyAPITester">
+      <HintPath>..\ThirdPartyAPITester.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -29,6 +29,6 @@ namespace OMS.Application.Services.APIConfiguration
         Task<GetApiAuthenticationByAuthIdResponse> GetApiAuthenticationByAuthId(int authId);
         Task<AddEntityDTO<int>> DeleteApiAuthentication(int authId, short CurrentUserId);
         Task<EntityList<GetApiAuthenticationsResponse>> GetApiAuthentications(GetApiAuthenticationsRequest requestData);
-
+        Task<AddEntityDTO<string>> ApiTester(int providerId);
     }
 }

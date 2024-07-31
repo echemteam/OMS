@@ -33,6 +33,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.FieldType,
                 requestData.FieldDescription,
                 requestData.CreatedBy,
+                requestData.ApiEventId,
             }, CommandType.StoredProcedure);
         }
         public async Task<GetApiEventRequiredFieldByApiEventRequiredFieldIdResponse> GetApiEventRequiredFieldByApiEventRequiredFieldId(int apiEventRequiredFieldId)

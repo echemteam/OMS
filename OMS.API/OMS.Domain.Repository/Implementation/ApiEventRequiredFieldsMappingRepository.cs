@@ -1,5 +1,6 @@
 ﻿using OMS.Domain.Entities.API.Request.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredFieldsMapping;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.Entity.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
@@ -16,6 +17,8 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDAPIEVENTREQUIREDFIELDSMAPPING = "AddApiEventRequiredFieldsMapping";
         const string GETAPIEVENTREQUIREDFIELDSMAPPINGS = "GetApiEventRequiredFieldsMappings";
         const string DELETEAPIEVENTREQUIREDFIELDSMAPPING = "DeleteApiEventRequiredFieldsMapping";
+        const string GETALLAPIPARAMETERSBYENDPOINTID = "GetAllAPIParametersByEndpointId";
+        const string GETALLREQUIREDFIELDSBYEVENTID = "GetAllRequiredFieldsByEventId";
         #endregion
 
         public ApiEventRequiredFieldsMappingRepository(DapperContext dapperContext) : base(dapperContext)
@@ -28,9 +31,7 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDAPIEVENTREQUIREDFIELDSMAPPING, new
             {
                 requestData.ApiEventRequiredFieldId,
-                requestData.RequiredField,
                 requestData.ApiEventId,
-                requestData.EndpointId,
                 requestData.APIResponseFieldName,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
@@ -55,6 +56,22 @@ namespace OMS.Domain.Repository.Implementation
                 apiEventRequiredFieldsMappingId,
                 deletedBy
             }, CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllAPIParametersResponse>> GetAllAPIParametersByEndpointId(int endpointId)
+        {
+            return await _context.GetList<GetAllAPIParametersResponse>(GETALLAPIPARAMETERSBYENDPOINTID, new
+            {
+                endpointId
+            },commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllRequiredFieldsResponse>> GetAllRequiredFieldsByEventId(int apiEventId)
+        {
+            return await _context.GetList<GetAllRequiredFieldsResponse>(GETALLREQUIREDFIELDSBYEVENTID, new
+            {
+                apiEventId
+            }, commandType: CommandType.StoredProcedure);
         }
         #endregion
     }
