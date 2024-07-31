@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Organization;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -148,6 +149,12 @@ namespace OMS.API.Controllers
         {
             var organizationBusinessAddresses = await _serviceManager.organizationService.GetOrganizationBusinessAddresses().ConfigureAwait(true);
             return APISucessResponce<object>(organizationBusinessAddresses);
+        }
+        [HttpPost("GetOrganizationHistorys")]
+        public async Task<IActionResult> GetUsers([FromBody] ListEntityRequest<BaseFilter> requestData)
+        {
+            var organizationHistoryList = await _serviceManager.organizationService.GetOrganizationHistorys(requestData);
+            return APISucessResponce<object>(organizationHistoryList);
         }
         #endregion
     }
