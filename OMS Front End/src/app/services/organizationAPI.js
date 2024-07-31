@@ -147,6 +147,23 @@ const organizationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        addEditOrganizationOtherCharges: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationOtherCharges',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationOtherCharges: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationOtherCharges'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
         getOrganizationHistorys: builder.mutation({
             query: (data) => ({
                 url: '/Organization/GetOrganizationHistorys',
@@ -178,6 +195,8 @@ export const {
     useLazyGetOrganizationAccountingDetailsQuery,
     useAddEditOrganizationShippingChargesMutation,
     useLazyGetOrganizationShippingChargesQuery,
+    useAddEditOrganizationOtherChargesMutation,
+    useLazyGetOrganizationOtherChargesQuery,
 } = organizationAPI
 
 export default organizationAPI;
