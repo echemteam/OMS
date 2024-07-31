@@ -118,24 +118,22 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
     }, [isDeleteSucess, isDeleteData]);
 
     const handleDocumentAction = (action, fileName) => {
-        setGetFileType(null);
+        // setGetFileType(null);
         setSelectedDocument(null);
         setIsModalOpen(false);
         setActionType(action);
-
+ 
         let request = {
             folderName: isSupplier ? ModulePathName.Supplier : ModulePathName.Customer,
             keyId: keyId,
             fileName: fileName
         };
-
-        if (action === 'download') {
-            Downalod(request);
-        } else if (action === 'view') {
+ 
+        if (action === 'download' || action === 'view') {
             Downalod(request);
         }
     };
-
+    
     const handleDelete = (documentId) => {
         confirm("Delete?",
             "Are you sure you want to Delete?",
