@@ -1,11 +1,8 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.ApiConfiguration;
 using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
-using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -51,6 +48,12 @@ namespace OMS.API.Controllers
         {
             var functionalities = await _serviceManager.approvalConfigurationServices.GetFunctionalities(requestData);
             return APISucessResponce<object>(functionalities);
+        }
+        [HttpPost("GetFunctionalityEvents")]
+        public async Task<IActionResult> GetFunctionalityEvents(GetFunctionalityEventsRequest requestData)
+        {
+            var functionalityEvents = await _serviceManager.approvalConfigurationServices.GetFunctionalityEvents(requestData);
+            return APISucessResponce<object>(functionalityEvents);
         }
         #endregion
     }

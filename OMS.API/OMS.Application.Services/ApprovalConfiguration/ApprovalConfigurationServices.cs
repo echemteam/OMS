@@ -44,6 +44,10 @@ namespace OMS.Application.Services.ApprovalConfiguration
         {
             return await repositoryManager.approvalConfiguration.GetFunctionalities(requestData);
         }
+        public async Task<EntityList<GetFunctionalityEventsResponse>> GetFunctionalityEvents(GetFunctionalityEventsRequest requestData)
+        {
+            return await repositoryManager.approvalConfiguration.GetFunctionalityEvents(requestData);
+        }
         #endregion
     }
 }

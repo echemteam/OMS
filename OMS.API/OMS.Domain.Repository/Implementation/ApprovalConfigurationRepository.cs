@@ -1,4 +1,4 @@
-﻿using OMS.Domain.Entities.API.Request.ApiConfiguration;
+﻿using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
 using OMS.Domain.Entities.Entity.ApprovalConfiguration;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -17,6 +17,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETAPPROVALCONFIGURATIONBYAPPROVALCONFIGURATIONID = "GetApprovalConfigurationByApprovalConfigurationId";
         const string GETAPPROVALCONFIGURATIONRULESBYMODULEIDANDFUNCTIONALITYID = "GetApprovalConfigurationRulesByModuleIdAndFunctionalityId";
         const string GETFUNCTIONALITIES = "GetFunctionalities";
+        const string GETFUNCTIONALITYEVENTS = "GetFunctionalityEvents";
         #endregion
 
         public ApprovalConfigurationRepository(DapperContext dapperContext) : base(dapperContext)
@@ -60,6 +61,17 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetListSP<GetFunctionalitiesResponse>(GETFUNCTIONALITIES, new
             {
                 requestData.ModuleId,
+                requestData.Pagination?.PageNumber,
+                requestData.Pagination?.PageSize,
+                requestData.Filters?.SearchText,
+                requestData.SortString,
+            }, true);
+        }
+        public async Task<EntityList<GetFunctionalityEventsResponse>> GetFunctionalityEvents(GetFunctionalityEventsRequest requestData)
+        {
+            return await _context.GetListSP<GetFunctionalityEventsResponse>(GETFUNCTIONALITYEVENTS, new
+            {
+                requestData.FunctionalityId,
                 requestData.Pagination?.PageNumber,
                 requestData.Pagination?.PageSize,
                 requestData.Filters?.SearchText,
