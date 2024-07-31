@@ -2,16 +2,16 @@
 {
     public class OrganizationProfileDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
-        public byte? OrganizationId { get; set; }
-        public string? Name { get; set; }
-        public string? Logo { get; set; }
-        public string? Base64File { get; set; }
-        public string? AddressLine1 { get; set; }
-        public string? AddressLine2 { get; set; }
-        public int? CityId { get; set; }
-        public int? StateId { get; set; }
-        public short? CountryId { get; set; }
-        public int? ZipCode { get; set; }
+        public byte? OrganizationProfileId { get; set; }
+        public string? RegisteredName { get; set; }
+        public string? DBAName { get; set; }
+        public DateTime? DateIncorporated { get; set; }
+        public string? NAICSCode { get; set; }
+        public string? EIN { get; set; }
+        public string? TXTaxpayerNumber { get; set; }
+        public string? SOSFileNumber { get; set; }
+        public string? WebFileNumber { get; set; }
+        public string? TWCTaxAccountNumber { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? CreatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }

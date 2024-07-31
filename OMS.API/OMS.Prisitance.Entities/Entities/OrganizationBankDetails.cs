@@ -13,7 +13,7 @@ namespace OMS.Prisitance.Entities.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public short? OrganizationBankDetailId { get; set; }
+        public byte? OrganizationBankDetailId { get; set; }
         [Column("BeneficiaryName")]
         public string? BeneficiaryName { get; set; }
         [Column("CheckingAccountNumber")]

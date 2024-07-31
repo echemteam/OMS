@@ -13,7 +13,7 @@ namespace OMS.Prisitance.Entities.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public short? OrganizationAccountingDetailId { get; set; }
+        public byte? OrganizationAccountingDetailId { get; set; }
         [Column("CreditLimit")]
         public decimal? CreditLimit { get; set; }
         [Column("CreatedAt")]

@@ -8,7 +8,7 @@ namespace OMS.Domain.Entities.Entity.Organization
 {
     public class OrganizationBusinessAddressesDto
     {
-        public short? OrganizationBusinessAddressId { get; set; }
+        public byte? OrganizationBusinessAddressId { get; set; }
         public int? RegisteredAddressId { get; set; }
         public int? PhysicalAddressId { get; set; }
         public int? RemitToAddressId { get; set; }

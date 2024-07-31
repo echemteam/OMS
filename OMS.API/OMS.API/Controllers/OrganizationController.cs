@@ -10,7 +10,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   // [Authorize]
     public class OrganizationController : BaseController
     {
         #region private variable

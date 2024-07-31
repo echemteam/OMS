@@ -8,7 +8,7 @@ namespace OMS.Domain.Entities.API.Request.Organization
 {
     public class AddEditOrganizationAccountingDetailsRequest
     {
-        public short? OrganizationAccountingDetailId {  get; set; }
-        public float? CreditLimit {  get; set; }
+        public byte? OrganizationAccountingDetailId {  get; set; }
+        public decimal? CreditLimit {  get; set; }
     }
 }

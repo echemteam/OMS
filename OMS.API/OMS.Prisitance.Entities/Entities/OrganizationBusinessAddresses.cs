@@ -13,7 +13,7 @@ namespace OMS.Prisitance.Entities.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public short? OrganizationBusinessAddressId { get; set; }
+        public byte? OrganizationBusinessAddressId { get; set; }
         [Column("RegisteredAddressId")]
         public int? RegisteredAddressId { get; set; }
         [Column("PhysicalAddressId")]
