@@ -1,113 +1,83 @@
 import React, { useEffect, useState } from 'react'
 import NoRecordFound from '../../../../components/ui/noRecordFound/NoRecordFound';
 import "./OrganizationHistory.scss";
-import moment from 'moment';
+import { useGetOrganizationHistorysMutation } from '../../../../app/services/organizationAPI';
+import formatDate from '../../../../lib/formatDate';
+import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 
 const OrganizationHistory = () => {
+
+  const [pageNumber, setPageNumber] = useState(1);
   const [historyData, setHistoryData] = useState([]);
+  const [getOrganizationHistorys, { isLoading: isGetOrganizationHistorysLoading, isSuccess: isGetOrganizationHistorysSuccess, data: isGetOrganizationHistorysData }] = useGetOrganizationHistorysMutation();
 
   useEffect(() => {
-    const staticData = [
-      {
-        id: 1,
-        eventStatus: 'Insert',
-        personName: 'Nisarg Patel',
-        organizationName: 'Moltech Solution',
-        date: '2024-07-29T10:30:00Z', // Add a date field for formatting
-      },
-      {
-        id: 2,
-        eventStatus: 'Update',
-        personName: 'John Doe',
-        organizationName: 'Tech Innovators',
-        date: '2024-07-28T09:15:00Z', // Add a date field for formatting
-      },
-      {
-        id: 3,
-        eventStatus: 'Insert',
-        personName: 'Jane Smith',
-        organizationName: 'Future Tech',
-        date: '2024-07-27T08:45:00Z', // Add a date field for formatting
-      },
-      {
-        id: 3,
-        eventStatus: 'Insert',
-        personName: 'Jane Smith',
-        organizationName: 'Future Tech',
-        date: '2024-07-27T08:45:00Z', // Add a date field for formatting
-      },
-      {
-        id: 3,
-        eventStatus: 'Insert',
-        personName: 'Jane Smith',
-        organizationName: 'Future Tech',
-        date: '2024-07-27T08:45:00Z', // Add a date field for formatting
-      },
-      {
-        id: 3,
-        eventStatus: 'Insert',
-        personName: 'Jane Smith',
-        organizationName: 'Future Tech',
-        date: '2024-07-27T08:45:00Z', // Add a date field for formatting
-      },
-      {
-        id: 3,
-        eventStatus: 'Insert',
-        personName: 'Jane Smith',
-        organizationName: 'Future Tech',
-        date: '2024-07-27T08:45:00Z', // Add a date field for formatting
-      },
-      {
-        id: 3,
-        eventStatus: 'Insert',
-        personName: 'Jane Smith',
-        organizationName: 'Future Tech',
-        date: '2024-07-27T08:45:00Z', // Add a date field for formatting
-      },
-      {
-        id: 3,
-        eventStatus: 'Insert',
-        personName: 'Jane Smith',
-        organizationName: 'Future Tech',
-        date: '2024-07-27T08:45:00Z', // Add a date field for formatting
-      },
-    ];
+    getListApi(pageNumber);
+  }, [pageNumber]);
 
-    setHistoryData(staticData);
-  }, []);
+  const getListApi = (page) => {
+    const request = {
+      pagination: {
+        pageNumber: page,
+        pageSize: 25,
+      },
+      filters: {
+        searchText: "",
+      },
+      sortString: ""
+    };
+    getOrganizationHistorys(request);
+  };
+
+  useEffect(() => {
+    if (isGetOrganizationHistorysSuccess && isGetOrganizationHistorysData) {
+      setHistoryData(isGetOrganizationHistorysData.dataSource)
+    }
+  }, [isGetOrganizationHistorysSuccess, isGetOrganizationHistorysData]);
+
+
+  const renderContent = () => {
+    if (isGetOrganizationHistorysLoading) {
+      return <div><DataLoader /></div>; // Replace with a proper loading spinner or component
+    }
+
+    if (historyData.length > 0) {
+      return (
+        <div className="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+          {historyData.map((event, index) => {
+            const formattedDate = event.changeAt ? formatDate(event.changeAt, "MM/DD/YYYY hh:mm A") : '';
+            return (
+              <div className="vertical-timeline-item vertical-timeline-element" key={event.organizationHistoryId || index}>
+                <div>
+                  <span className="vertical-timeline-element-icon bounce-in">
+                    <i className="badge badge-dot badge-dot-xl badge-primary"> </i>
+                  </span>
+                  <div className="vertical-timeline-element-content bounce-in">
+                    <h4 className="timeline-title">
+                      <span className="mr-1">{event.eventName}</span>
+                      <span className="mr-1 font-bold">{event.eventStatus}</span>
+                    </h4>
+                    <p>{event.description}</p>
+                    <span className="vertical-timeline-element-date">
+                      {formattedDate}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    return <NoRecordFound />;
+  };
 
   return (
     <div className="row">
       <div className="col-md-12">
-        <div class="main-card">
-          {historyData.length > 0 ? (
-            <div className="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
-              {historyData.map((event, index) => {
-                const formattedDate = event.date ? moment(event.date).format('DD/MM/YYYY hh:mm:ss A') : '';
-                return (
-                  <div className="vertical-timeline-item vertical-timeline-element" key={index}>
-                    <div>
-                      <span className="vertical-timeline-element-icon bounce-in">
-                        <i className="badge badge-dot badge-dot-xl badge-primary"> </i>
-                      </span>
-                      <div className="vertical-timeline-element-content bounce-in">
-                        <h4 className="timeline-title">
-                          <span className="mr-1">{event.personName}</span>
-                          <span className="mr-1 font-bold">{event.organizationName}</span>
-                        </h4>
-                        <p>Some Etc Text.......... {formattedDate} </p>
-                        {/* <span className="vertical-timeline-element-date">
-                          {formattedDate}
-                        </span> */}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <NoRecordFound />
-          )}
+        <div className="main-card">
+          {renderContent()}
         </div>
       </div>
     </div>

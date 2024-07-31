@@ -33,7 +33,7 @@ const EventRequiredFields = ({ keyId }) => {
   return (
     <>
       <CardSection
-        cardTitle="Event Mapping"
+        cardTitle="Event Required Fields"
         buttonClassName="btn theme-button"
         // rightButton={buttonVisible ? true : false}
         rightButton={true}
@@ -50,7 +50,7 @@ const EventRequiredFields = ({ keyId }) => {
       </CardSection>
 
       <SidebarModel
-        modalTitle="Event Mapping"
+        modalTitle="Add Event Required Fields"
         contentClass="content-35"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
