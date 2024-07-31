@@ -7,10 +7,10 @@ const { Mutex } = require('async-mutex');
 const mutex = new Mutex();
 
 export const IsProdMode = false
-export const IsTestMode = false
+export const IsTestMode = true
 
 const liveURL = ''
-const testURL = process.env.REACT_APP_TESTURLS
+const testURL = process.env.REACT_APP_TESTURLSUSA
 const localHost = process.env.REACT_APP_LOCALURLS
 
 const APIUrl = (IsProdMode) ? liveURL : (IsTestMode) ? testURL : localHost;
