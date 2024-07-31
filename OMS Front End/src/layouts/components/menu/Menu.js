@@ -15,15 +15,15 @@ export const Menu = [
       },
 
 
-      {
-        name: "Organization",
-        id: "Organization",
-        to: "/Organization",
-        iconClass: "fa fa-building-o",
-        subMenu: false,
-        securityKey: securityKey.DASHBOARD,
-        children: [],
-      },
+      // {
+      //   name: "Organization",
+      //   id: "Organization",
+      //   to: "/Organization",
+      //   iconClass: "fa fa-building-o",
+      //   subMenu: false,
+      //   securityKey: securityKey.DASHBOARD,
+      //   children: [],
+      // },
     ],
   },
   {
@@ -95,83 +95,83 @@ export const Menu = [
           },
         ],
       },
-      {
-        id: "configuration",
-        name: "Configuration",
-        iconClass: "fa fa-cog",
-        subMenu: true,
-        to: "#",
-        securityKey: securityKey.CONFIGURATION,
-        children: [
-          {
-            id: "approvalRules",
-            submenuName: "Approval Rules",
-            to: "/ApprovalRules",
-            securityKey: securityKey.APPROVALRULES,
-          },
-          {
-            id: "functionalConfiguration",
-            submenuName: "Functional Configuration",
-            to: "/FunctionalConfiguration",
-            securityKey: securityKey.APPROVALRULES,
-          },
-        ],
-      },
-      {
-        id: "apiconfiguration",
-        name: "API Configuration",
-        iconClass: "fa fa-cog",
-        subMenu: true,
-        to: "#",
-        securityKey: securityKey.APICONFIGURATION,
-        children: [
-          {
-            id: "apiProviders",
-            submenuName: "API Providers",
-            to: "/APIProviders",
-            securityKey: securityKey.APIPROVIDERS,
-          },
-        ],
-      },
-      {
-        id: "ThirdPartyAPI",
-        name: "Third party API",
-        iconClass: "fa fa-building-o",
-        subMenu: true,
-        to: "#",
-        securityKey: securityKey.SECURITY,
-        children: [
-          {
-            id: "Api Configuration",
-            submenuName: "Api Configuration",
-            to: "/ThirdPartyApiConfiguration",
-            securityKey: securityKey.USERMANAGEMENT,
-          },
-        ],
-      },
+      // {
+      //   id: "configuration",
+      //   name: "Configuration",
+      //   iconClass: "fa fa-cog",
+      //   subMenu: true,
+      //   to: "#",
+      //   securityKey: securityKey.CONFIGURATION,
+      //   children: [
+      //     {
+      //       id: "approvalRules",
+      //       submenuName: "Approval Rules",
+      //       to: "/ApprovalRules",
+      //       securityKey: securityKey.APPROVALRULES,
+      //     },
+      //     {
+      //       id: "functionalConfiguration",
+      //       submenuName: "Functional Configuration",
+      //       to: "/FunctionalConfiguration",
+      //       securityKey: securityKey.APPROVALRULES,
+      //     },
+      //   ],
+      // },
+      // {
+      //   id: "apiconfiguration",
+      //   name: "API Configuration",
+      //   iconClass: "fa fa-cog",
+      //   subMenu: true,
+      //   to: "#",
+      //   securityKey: securityKey.APICONFIGURATION,
+      //   children: [
+      //     {
+      //       id: "apiProviders",
+      //       submenuName: "API Providers",
+      //       to: "/APIProviders",
+      //       securityKey: securityKey.APIPROVIDERS,
+      //     },
+      //   ],
+      // },
+      // {
+      //   id: "ThirdPartyAPI",
+      //   name: "Third party API",
+      //   iconClass: "fa fa-building-o",
+      //   subMenu: true,
+      //   to: "#",
+      //   securityKey: securityKey.SECURITY,
+      //   children: [
+      //     {
+      //       id: "Api Configuration",
+      //       submenuName: "Api Configuration",
+      //       to: "/ThirdPartyApiConfiguration",
+      //       securityKey: securityKey.USERMANAGEMENT,
+      //     },
+      //   ],
+      // },
     ],
   },
-  {
-    groupLabel: "Orders",
-    items: [
-      {
-        name: "Order",
-        id: "Order",
-        to: "/Order",
-        iconClass: "bi bi-file-earmark-medical",
-        subMenu: false,
-        securityKey: securityKey.USERMANAGEMENT,
-        children: [],
-      },
-      {
-        name: "My Task",
-        id: "MyTask",
-        to: "/MyTask",
-        iconClass: "fa fa-clipboard",
-        subMenu: false,
-        securityKey: securityKey.DASHBOARD,
-        children: []
-      }
-    ]
-  }
+  // {
+  //   groupLabel: "Orders",
+  //   items: [
+  //     {
+  //       name: "Order",
+  //       id: "Order",
+  //       to: "/Order",
+  //       iconClass: "bi bi-file-earmark-medical",
+  //       subMenu: false,
+  //       securityKey: securityKey.USERMANAGEMENT,
+  //       children: [],
+  //     },
+  //     {
+  //       name: "My Task",
+  //       id: "MyTask",
+  //       to: "/MyTask",
+  //       iconClass: "fa fa-clipboard",
+  //       subMenu: false,
+  //       securityKey: securityKey.DASHBOARD,
+  //       children: []
+  //     }
+  //   ]
+  // }
 ];
