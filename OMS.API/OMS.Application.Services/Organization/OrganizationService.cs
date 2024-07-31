@@ -8,6 +8,7 @@ using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Entities.Entity.SuppierBankDetails;
 using OMS.Domain.Repository;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
@@ -153,7 +154,19 @@ namespace OMS.Application.Services.Organization
         }
         public async Task<GetOrganizationBusinessAddressesResponse> GetOrganizationBusinessAddresses()
         {
-            return await repositoryManager.organizationBusinessAddresses.GetOrganizationBusinessAddresses();
+            var responseData = await repositoryManager.organizationBusinessAddresses.GetOrganizationBusinessAddresses();
+
+            if (responseData != null && responseData.RegisteredAddressId > 0 && responseData.PhysicalAddressId > 0 && responseData.RemitToAddressId > 0
+                && responseData.BillToAddressId > 0 && responseData.LabAddressId > 0 && responseData.WarehouseAddressId > 0)
+            {
+                responseData.RegisteredAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.RegisteredAddressId);
+                responseData.PhysicalAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.PhysicalAddressId);
+                responseData.RemitToAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.RemitToAddressId);
+                responseData.BillToAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.BillToAddressId);
+                responseData.LabAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.LabAddressId);
+                responseData.WarehouseAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.WarehouseAddressId);
+            }
+            return responseData;
         }
         private async Task<int> AddEditAddress(AddEditAddressRequest addressRequest, short currentUserId)
         {

@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.Organization;
+﻿using OMS.Domain.Entities.API.Response.Address;
+using OMS.Domain.Entities.API.Response.Organization;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository.Contract;
@@ -17,6 +18,7 @@ namespace OMS.Domain.Repository.Implementation
     {
         const string ADDEDITORGANIZATIONBUSINESSADDRESSES = "AddEditOrganizationBusinessAddresses";
         const string GETORGANIZATIONBUSINESSADDRESSES = "GetOrganizationBusinessAddresses";
+        const string GETADDRESSBYADDRESSID = "GetAddressByAddressId";
         public OrganizationBusinessAddressesRepository(DapperContext dapperContext) : base(dapperContext)
         {
         }
@@ -38,6 +40,14 @@ namespace OMS.Domain.Repository.Implementation
         {
             GetOrganizationBusinessAddressesResponse organizationBusinessAddress = await _context.GetFrist<GetOrganizationBusinessAddressesResponse>(GETORGANIZATIONBUSINESSADDRESSES, CommandType.StoredProcedure);
             return organizationBusinessAddress;
+        }
+        public async Task<GetAddressResponse> GetAddressByAddressId(int? addressId)
+        {
+            GetAddressResponse getAddressResponse = await _context.GetFrist<GetAddressResponse>(GETADDRESSBYADDRESSID, new
+            {
+                addressId
+            }, commandType: CommandType.StoredProcedure);
+            return getAddressResponse;
         }
     }
 }
