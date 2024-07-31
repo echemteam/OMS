@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Contract
 {
-    public interface IOrganizationOtherChargesRepository
+    public interface IOrganizationBusinessAddressesRepository
     {
-        Task<AddEntityDTO<int>> AddEditOrganizationOtherCharges(OrganizationOtherChargesDto requestData);
-        Task<GetOrganizationOtherChargesResponse> GetOrganizationOtherCharges();
+        Task<AddEntityDTO<int>> AddEditBusinessAddresses(OrganizationBusinessAddressesDto requestData);
+        Task<GetOrganizationBusinessAddressesResponse> GetOrganizationBusinessAddresses();
     }
 }

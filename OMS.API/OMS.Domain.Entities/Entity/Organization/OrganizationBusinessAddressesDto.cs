@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace OMS.Domain.Entities.Entity.Organization
 {
-    public  class OrganizationOtherChargesDto
+    public class OrganizationBusinessAddressesDto
     {
-        public short? OrganizationOtherChargeId { get; set; }
-        public decimal? HandlingFees { get; set; }
-        public decimal? BankWireFees { get; set; }
-        public decimal? CreditCardServiceFees { get; set; }
-        public decimal? ColdBoxFees { get; set; }
-        public decimal? ITNFees { get; set; }
-        public byte? DefaultPaymentTerms { get; set; }
+        public short? OrganizationBusinessAddressId { get; set; }
+        public int? RegisteredAddressId { get; set; }
+        public int? PhysicalAddressId { get; set; }
+        public int? RemitToAddressId { get; set; }
+        public int? BillToAddressId { get; set; }
+        public int? LabAddressId { get; set; }
+        public int? WarehouseAddressId { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? CreatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }

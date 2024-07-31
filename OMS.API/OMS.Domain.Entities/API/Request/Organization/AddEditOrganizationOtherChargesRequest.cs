@@ -14,6 +14,7 @@ namespace OMS.Domain.Entities.API.Request.Organization
         public decimal? CreditCardServiceFees { get; set; }
         public decimal? ColdBoxFees { get; set; }
         public decimal? ITNFees {  get; set; }
+        public byte? DefaultPaymentTerms { get; set; }
 
     }
 }

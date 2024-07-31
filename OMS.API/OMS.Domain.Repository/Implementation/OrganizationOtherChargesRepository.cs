@@ -30,12 +30,13 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.CreditCardServiceFees,
                 requestData.ColdBoxFees,
                 requestData.ITNFees,
+                requestData.DefaultPaymentTerms,
                 requestData.CreatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<GetOrganizationShippingOtherResponse> GetOrganizationOtherCharges()
+        public async Task<GetOrganizationOtherChargesResponse> GetOrganizationOtherCharges()
         {
-            GetOrganizationShippingOtherResponse organizationOtherCharges = await _context.GetFrist<GetOrganizationShippingOtherResponse>(GETORGANIZATIONOTHERCHARGES, CommandType.StoredProcedure);
+            GetOrganizationOtherChargesResponse organizationOtherCharges = await _context.GetFrist<GetOrganizationOtherChargesResponse>(GETORGANIZATIONOTHERCHARGES, CommandType.StoredProcedure);
             return organizationOtherCharges;
         }
     }

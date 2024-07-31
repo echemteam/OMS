@@ -137,6 +137,18 @@ namespace OMS.API.Controllers
             var organizationOtherCharges = await _serviceManager.organizationService.GetOrganizationOtherCharges().ConfigureAwait(true);
             return APISucessResponce<object>(organizationOtherCharges);
         }
+        [HttpPost("AddEditBusinessAddresses")]
+        public async Task<IActionResult> AddEditBusinessAddresses(AddEditOrganizationBusinessAddressesRequest requestData)
+        {
+            var addEditItem = await _serviceManager.organizationService.AddEditBusinessAddresses(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpGet("GetOrganizationBusinessAddresses")]
+        public async Task<IActionResult> GetOrganizationBusinessAddresses()
+        {
+            var organizationBusinessAddresses = await _serviceManager.organizationService.GetOrganizationBusinessAddresses().ConfigureAwait(true);
+            return APISucessResponce<object>(organizationBusinessAddresses);
+        }
         #endregion
     }
 }

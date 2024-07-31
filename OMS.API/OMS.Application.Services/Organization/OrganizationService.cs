@@ -113,9 +113,19 @@ namespace OMS.Application.Services.Organization
             organizationOtherChargesDto.CreatedBy = CurrentUserId;
             return await repositoryManager.organizationOtherCharges.AddEditOrganizationOtherCharges(organizationOtherChargesDto);
         }
-        public async Task<GetOrganizationShippingOtherResponse> GetOrganizationOtherCharges()
+        public async Task<GetOrganizationOtherChargesResponse> GetOrganizationOtherCharges()
         {
             return await repositoryManager.organizationOtherCharges.GetOrganizationOtherCharges();
+        }
+        public async Task<AddEntityDTO<int>> AddEditBusinessAddresses(AddEditOrganizationBusinessAddressesRequest requestData, short CurrentUserId)
+        {
+            OrganizationBusinessAddressesDto organizationBusinessAddressDto = requestData.ToMapp<AddEditOrganizationBusinessAddressesRequest, OrganizationBusinessAddressesDto>();
+            organizationBusinessAddressDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationBusinessAddresses.AddEditBusinessAddresses(organizationBusinessAddressDto);
+        }
+        public async Task<GetOrganizationBusinessAddressesResponse> GetOrganizationBusinessAddresses()
+        {
+            return await repositoryManager.organizationBusinessAddresses.GetOrganizationBusinessAddresses();
         }
         #endregion
     }
