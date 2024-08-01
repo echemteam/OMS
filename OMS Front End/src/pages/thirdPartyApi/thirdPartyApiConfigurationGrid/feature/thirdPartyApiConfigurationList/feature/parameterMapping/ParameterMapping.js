@@ -26,7 +26,7 @@ const ParameterMapping = ({ keyId, endpointId }) => {
   return (
     <>
       <CardSection
-        cardTitle="Parameter Mapping"
+        cardTitle="Event Parameter Map"
         buttonClassName="btn theme-button"
         // rightButton={buttonVisible ? true : false}
         rightButton={true}
@@ -42,7 +42,7 @@ const ParameterMapping = ({ keyId, endpointId }) => {
       </CardSection>
 
       <SidebarModel
-        modalTitle="Add Parameter Mapping"
+        modalTitle="Add Parameter Map"
         contentClass="content-35"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}

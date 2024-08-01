@@ -47,7 +47,6 @@ const EventMappingList = (props) => {
     useEffect(() => {
         if (isGetApiEventMappingsSuccess && isGetApiEventMappingsData) {
             // if (isGetApiEventMappingsData) {
-            console.log(isGetApiEventMappingsData);
             setListData([isGetApiEventMappingsData]);
             props.setEndpointId(isGetApiEventMappingsData?.endpointId);
             props.setProviderId(isGetApiEventMappingsData?.providerId);
