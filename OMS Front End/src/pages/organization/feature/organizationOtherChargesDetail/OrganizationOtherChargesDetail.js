@@ -10,18 +10,15 @@ import { setDropDownOptionField } from '../../../../utils/FormFields/FieldsSetti
 
 const OrganizationOtherChargesDetail=()=>{
     const organizationOtherChargesRef = useRef();
-
     const [organizationOtherChargesData, setOrganizationOtherChargesData] = useState(OrganizationOtherChargesFormData);
     const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
     const [addEditOrganizationOtherCharges, { isLoading: isAddEditOrganizationOtherChargesLoading, isSuccess: isAddEditOrganizationOtherChargesSuccess, data: isAddEditOrganizationOtherChargesData }] =useAddEditOrganizationOtherChargesMutation();
     const [getOrganizationOtherCharges, { isFetching: isGetOrganizationOtherChargesFetching, isSuccess: isGetOrganizationOtherChargesSuccess, data: isGetOrganizationOtherChargesData }] = useLazyGetOrganizationOtherChargesQuery();
-   
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
     
     useEffect(()=>{
         getAllPaymentTerms();
-        getOrganizationOtherCharges();   
-       
+        getOrganizationOtherCharges();      
     },[])
 
     useEffect(() => {
@@ -46,7 +43,7 @@ const OrganizationOtherChargesDetail=()=>{
         let otherChargesData = organizationOtherChargesRef.current.getFormData();
         const request={
             ...otherChargesData,
-            organizationOtherChargeId: otherChargesData.organizationOtherChargeId,
+            organizationOtherChargeId: otherChargesData.organizationOtherChargeId ? otherChargesData.organizationOtherChargeId : 0,
             defaultPaymentTerms: otherChargesData.paymentTermId.value,
             handlingFees:otherChargesData.handlingFees,
             bankWireFees:otherChargesData.bankWireFees,
@@ -55,13 +52,7 @@ const OrganizationOtherChargesDetail=()=>{
             iTNFees:otherChargesData.iTNFees,    
 
         }
-            if(!otherChargesData.organizationOtherChargeId && otherChargesData){
-                addEditOrganizationOtherCharges(request);
-            }
-            else if(otherChargesData.organizationOtherChargeId && otherChargesData ){
-                addEditOrganizationOtherCharges(request);
-            }
-           
+          addEditOrganizationOtherCharges(request);
       }
 
     useEffect(() => {

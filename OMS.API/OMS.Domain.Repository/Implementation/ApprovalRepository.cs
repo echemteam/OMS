@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using OMS.Domain.Entities.API.Response.Approval;
+using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -16,6 +17,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDUSERCHECKLISTRESPONSE = "AddUserCheckListResponse";
         const string VALIDATECUSTOMERDATA = "ValidateCustomerData";
         const string VALIDATESUPPLIERDATA = "ValidateSupplierData";
+        const string ADDAPPROVALREQUESTS = "AddApprovalRequests";
         #endregion
 
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
@@ -66,6 +68,19 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getApprovalCheckList;
 
+        }
+        public async Task<AddEntityDTO<int>> AddApprovalRequests(ApprovalRequestsDTO requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDAPPROVALREQUESTS, new
+            {
+                requestData.ModuleId,
+                requestData.FunctionalityId,
+                requestData.TableId,
+                requestData.FunctionalitiesFieldId,
+                requestData.OldValue,
+                requestData.NewValue,
+                requestData.RequestedByUserId,
+            }, CommandType.StoredProcedure);
         }
     }
 }

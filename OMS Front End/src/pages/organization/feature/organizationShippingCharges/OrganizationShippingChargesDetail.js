@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef,useState,useEffect } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -18,31 +19,24 @@ const OrganizationShippingChargesDetail=()=>{
         }
       }, [isAddEditOrganizationShippingChargesSuccess, isAddEditOrganizationShippingChargesData]);
 
-
     useEffect(()=>{
         getOrganizationShippingCharges();   
     },[])
 
       const handleAddEditShippingChargesDetail=()=>{
-
-        let shippingChargesData = organizationShippingChargesRef.current.getFormData();
-        const request={
-            ...shippingChargesData,
-            organizationShippingChargeId: shippingChargesData.organizationShippingChargeId,
-            domesticOvernight:shippingChargesData.domesticOvernight,
-            domesticSecondDay:shippingChargesData.domesticSecondDay,
-            domesticGround:shippingChargesData.domesticGround,
-            internationalPriority:shippingChargesData.internationalPriority,
-            internationalEconomy:shippingChargesData.internationalEconomy,    
-
-        }
-            if(!shippingChargesData.organizationShippingChargeId && shippingChargesData){
-                addEditOrganizationShippingCharges(request);
-            }
-            else if(shippingChargesData.organizationShippingChargeId && shippingChargesData ){
-                addEditOrganizationShippingCharges(request);
-            }
-           
+         let shippingChargesData = organizationShippingChargesRef.current.getFormData();
+     
+                const request={
+                    ...shippingChargesData,
+                    organizationShippingChargeId: shippingChargesData.organizationShippingChargeId,
+                    domesticOvernight:shippingChargesData.domesticOvernight,
+                    domesticSecondDay:shippingChargesData.domesticSecondDay,
+                    domesticGround:shippingChargesData.domesticGround,
+                    internationalPriority:shippingChargesData.internationalPriority,
+                    internationalEconomy:shippingChargesData.internationalEconomy,    
+        
+                }
+                addEditOrganizationShippingCharges(request);       
       }
 
     useEffect(() => {

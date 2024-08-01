@@ -31,7 +31,7 @@ const OrganizationContactDetail=()=>{
         let contactData = organizationContactRef.current.getFormData();
         const request={
             ...contactData,
-            organizationContactDetailId: contactData.organizationContactDetailId,
+            organizationContactDetailId: contactData.organizationContactDetailId ? contactData.organizationContactDetailId : 0 ,
             companyWebsite:contactData.companyWebsite,
             salesEmail:contactData.salesEmail,
             accountsEmail:contactData.accountsEmail,
@@ -42,12 +42,7 @@ const OrganizationContactDetail=()=>{
             tollFreePhone:contactData.tollFreePhone,
 
         }
-            if(!contactData.organizationContactDetailId && contactData){
-                addEditOrganizationContactDetails(request);
-            }
-            else if(contactData.organizationContactDetailId && contactData ){
-                addEditOrganizationContactDetails(request);
-            }
+        addEditOrganizationContactDetails(request)
            
       }
 
@@ -78,7 +73,7 @@ const OrganizationContactDetail=()=>{
                         buttonText="Save"
                          onClick={handleAddEditContactDetail}
                          isLoading={isAddEditOrganizationContactDetailsLoading}
-                    // isDisable={isButtonDisable} 
+                  
                     />
                 </div>
             </div>
