@@ -18,5 +18,6 @@ namespace OMS.Application.Services.ApprovalConfiguration
         Task<AddEntityDTO<int>> AddFunctionalitiesResponsiblesUser(AddFunctionalitiesResponsiblesUserRequest requestData, short CurrentUserId);
         Task<AddEntityDTO<int>> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId);
         Task<EntityList<GetFunctionalitiesResponsiblesResponse>> GetFunctionalitiesResponsibles(GetFunctionalitiesResponsiblesRequest requestData);
+        Task<AddEntityDTO<int>> AddEditFunctionalities(AddEditFunctionalitiesRequest requestData);
     }
 }
