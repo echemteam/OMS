@@ -53,7 +53,7 @@ namespace OMS.API.Controllers
             var addItem = await _serviceManager.approvalService.AddApprovalRequests(requestData, CurrentUserId);
             return APISucessResponce(addItem);
         }
-        [HttpPost("GetApprovalRequestsListByStatus")]
+        [HttpGet("GetApprovalRequestsListByStatus")]
         public async Task<IActionResult> GetApprovalRequestsListByStatus(string status)
         {
             List<GetApprovalRequestsListByStatusResponse> responseData = await _serviceManager.approvalService.GetApprovalRequestsListByStatus(status).ConfigureAwait(true);
