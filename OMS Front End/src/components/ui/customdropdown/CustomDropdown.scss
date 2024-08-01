@@ -181,6 +181,11 @@
     width: var(--commonFont);
     filter: brightness(10);
   }
+
+  &:hover{
+    box-shadow: 0 5px 15px -4px var(--themeColor);
+    background: var(--theme-btn-hover-bg);
+  }
 }
 
 @media only screen and (max-width: 1750px) {
