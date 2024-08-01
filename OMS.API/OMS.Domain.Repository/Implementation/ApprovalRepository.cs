@@ -18,6 +18,7 @@ namespace OMS.Domain.Repository.Implementation
         const string VALIDATECUSTOMERDATA = "ValidateCustomerData";
         const string VALIDATESUPPLIERDATA = "ValidateSupplierData";
         const string ADDAPPROVALREQUESTS = "AddApprovalRequests";
+        const string GETAPPROVALREQUESTSLISTBYSTATUS = "GetApprovalRequestsListByStatus";
         #endregion
 
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
@@ -81,6 +82,14 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.NewValue,
                 requestData.RequestedByUserId,
             }, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetApprovalRequestsListByStatusResponse>> GetApprovalRequestsListByStatus(string status)
+        {
+            List<GetApprovalRequestsListByStatusResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusResponse>(GETAPPROVALREQUESTSLISTBYSTATUS, new
+            {
+                status
+            }, commandType: CommandType.StoredProcedure);
+            return getAllUsersResponse;
         }
     }
 }
