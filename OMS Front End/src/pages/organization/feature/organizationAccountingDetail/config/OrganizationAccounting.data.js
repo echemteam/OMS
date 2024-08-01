@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const OrganizationAccountingFormData = {
 
-    initialState: { companyWebsite:"" },
+    initialState: { creditLimit:"" },
     formFields: [
         {
             id: "creditLimit",

@@ -154,15 +154,37 @@ namespace OMS.Application.Services.Organization
         {
             var responseData = await repositoryManager.organizationBusinessAddresses.GetOrganizationBusinessAddresses();
 
-            if (responseData != null && responseData.RegisteredAddressId > 0 && responseData.PhysicalAddressId > 0 && responseData.RemitToAddressId > 0
-                && responseData.BillToAddressId > 0 && responseData.LabAddressId > 0 && responseData.WarehouseAddressId > 0)
+            if (responseData != null)
             {
-                responseData.RegisteredAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.RegisteredAddressId);
-                responseData.PhysicalAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.PhysicalAddressId);
-                responseData.RemitToAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.RemitToAddressId);
-                responseData.BillToAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.BillToAddressId);
-                responseData.LabAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.LabAddressId);
-                responseData.WarehouseAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.WarehouseAddressId);
+                if (responseData.RegisteredAddressId > 0 )
+                {
+                    responseData.RegisteredAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.RegisteredAddressId);
+                }
+
+                if (responseData.PhysicalAddressId > 0)
+                {
+                    responseData.PhysicalAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.PhysicalAddressId);
+                }
+
+                if (responseData.RemitToAddressId > 0 )
+                {
+                    responseData.RemitToAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.RemitToAddressId);
+                }
+
+                if (responseData.BillToAddressId > 0 )
+                {
+                    responseData.BillToAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.BillToAddressId);
+                }
+
+                if (responseData.LabAddressId > 0 )
+                {
+                    responseData.LabAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.LabAddressId);
+                }
+
+                if (responseData.WarehouseAddressId > 0 )
+                {
+                    responseData.WarehouseAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.WarehouseAddressId);
+                }
             }
             return responseData;
         }
