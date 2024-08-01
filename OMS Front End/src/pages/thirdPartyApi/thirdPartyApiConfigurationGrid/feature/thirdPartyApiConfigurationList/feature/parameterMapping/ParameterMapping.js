@@ -5,7 +5,7 @@ import CardSection from '../../../../../../../components/ui/card/CardSection';
 import { AppIcons } from '../../../../../../../data/appIcons';
 import SidebarModel from '../../../../../../../components/ui/sidebarModel/SidebarModel';
 
-const ParameterMapping = ({ keyId }) => {
+const ParameterMapping = ({ keyId, endpointId }) => {
   const childRef = useRef();
   const [isModelOpen, setIsModelOpen] = useState(false);
 
@@ -26,7 +26,7 @@ const ParameterMapping = ({ keyId }) => {
   return (
     <>
       <CardSection
-        cardTitle="Parameter Mapping"
+        cardTitle="Event Parameter Map"
         buttonClassName="btn theme-button"
         // rightButton={buttonVisible ? true : false}
         rightButton={true}
@@ -42,7 +42,7 @@ const ParameterMapping = ({ keyId }) => {
       </CardSection>
 
       <SidebarModel
-        modalTitle="Add Parameter Mapping"
+        modalTitle="Add Parameter Map"
         contentClass="content-35"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
@@ -53,6 +53,7 @@ const ParameterMapping = ({ keyId }) => {
           isOpen={isModelOpen}
           keyId={keyId}
           onGetData={onGetData}
+          endpointId={endpointId}
         />
       </SidebarModel>
     </>

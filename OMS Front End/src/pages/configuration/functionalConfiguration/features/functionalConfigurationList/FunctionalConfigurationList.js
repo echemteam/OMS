@@ -1,54 +1,86 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { functionalConfigurationListData } from './config/FunctionalConfigurationList.data';
 import { useNavigate } from 'react-router-dom';
 import MolGrid from '../../../../../components/Grid/MolGrid';
+import { useGetFunctionalitiesMutation } from '../../../../../app/services/configurationAPI';
+import { encryptUrlData } from '../../../../../services/CryptoService';
 
-const FunctionalConfigurationList = () => {
+const FunctionalConfigurationList = (props) => {
     const molGridRef = useRef();
     const navigate = useNavigate();
     const [listData, setListData] = useState();
     const [totalRowCount, setTotalRowCount] = useState(0);
+    const [getFunctionalities, { isLoading: isGetFunctionalitiesLoading, isSuccess: isGetFunctionalitiesSuccess, data: isGetFunctionalitiesData }] = useGetFunctionalitiesMutation();
+
+    const getLists = (pageObject, sortingString) => {
+        const request = {
+            pagination: {
+                pageNumber: pageObject.pageNumber,
+                pageSize: pageObject.pageSize,
+            },
+            filters: { searchText: "" },
+            sortString: sortingString,
+            moduleId: props.moduleId
+        };
+        getFunctionalities(request);
+    };
+
+    const handlePageChange = (page) => {
+        getLists(page, molGridRef.current.generateSortingString());
+    };
+
+    const handleSorting = (shortString) => {
+        getLists(molGridRef.current.getCurrentPageObject(), shortString);
+    };
 
     useEffect(() => {
-        // Sample static data
-        const staticData = [
-            {
-                id: 1,
-                eventName: 'Event 1',
-                description: 'Description for event 1',
-            },
-            {
-                id: 2,
-                eventName: 'Event 2',
-                description: 'Description for event 2',
-            },
-            {
-                id: 3,
-                eventName: 'Event 3',
-                description: 'Description for event 3',
-            },
-            {
-                id: 4,
-                eventName: 'Event 4',
-                description: 'Description for event 4',
-            },
-            {
-                id: 5,
-                eventName: 'Event 5',
-                description: 'Description for event 5',
-            },
-        ];
+        if (isGetFunctionalitiesSuccess && isGetFunctionalitiesData) {
+            if (isGetFunctionalitiesData) {
+                setListData(isGetFunctionalitiesData.dataSource);
+            }
+            if (isGetFunctionalitiesData.totalRecord) {
+                setTotalRowCount(isGetFunctionalitiesData.totalRecord);
+            }
+        }
+    }, [isGetFunctionalitiesSuccess, isGetFunctionalitiesData]);
 
-        setListData(staticData);
-        setTotalRowCount(staticData.length);
-    }, []);
+    useEffect(() => {
+        if (molGridRef.current) {
+            const currentPageObject = molGridRef.current.getCurrentPageObject();
+            const currentsortingString = molGridRef.current.generateSortingString();
+            const request = {
+                pagination: {
+                    pageNumber: currentPageObject.pageNumber,
+                    pageSize: currentPageObject.pageSize,
+                },
+                filters: { searchText: "" },
+                sortString: currentsortingString,
+                moduleId: props.moduleId
+            };
+            getFunctionalities(request);
+        }
+    }, [props.moduleId]);
 
-    const handleViewClick = () => {
-        navigate(`/FunctionalConfigurationViewDetail`, "_blank");
+    const handleViewClick = (data) => {
+        navigate(`/FunctionalConfigurationViewDetail/${encryptUrlData(data.functionalityId)}`, "_blank");
     }
 
-    const handleEditClick = () => {
-        navigate(`/FunctionalConfigurationViewDetail`, "_blank");
+    const onGetData = () => {
+        if (molGridRef.current) {
+            const defaultPageObject = molGridRef.current.getCurrentPageObject();
+            getLists(defaultPageObject, molGridRef.current.generateSortingString());
+        }
+    };
+
+    useImperativeHandle(props.childRef, () => ({
+        callChildFunction: onGetData,
+    }));
+
+
+    const handleEditClick = (data) => {
+        if (props.onEdit) {
+            props.onEdit(data);
+          }
     }
 
     const actionHandler = {
@@ -69,9 +101,9 @@ const FunctionalConfigurationList = () => {
                         pageSize: 20,
                         currentPage: 1,
                     }}
-                    // onPageChange={handlePageChange}
-                    // onSorting={handleSorting}
-                    // isLoading={isGetApiEventsLoading}
+                    onPageChange={handlePageChange}
+                    onSorting={handleSorting}
+                    isLoading={isGetFunctionalitiesLoading}
                     onActionChange={actionHandler}
                 />
             </div>

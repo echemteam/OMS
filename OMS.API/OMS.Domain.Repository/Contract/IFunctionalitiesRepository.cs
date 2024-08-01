@@ -11,5 +11,6 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDTO<int>> AddFunctionalitiesResponsiblesUser(FunctionalitiesResponsiblesDTO requestData);
         Task<AddEntityDTO<int>> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId);
         Task<EntityList<GetFunctionalitiesResponsiblesResponse>> GetFunctionalitiesResponsibles(GetFunctionalitiesResponsiblesRequest requestData);
+        Task<AddEntityDTO<int>> AddEditFunctionalities(FunctionalitiesDTO requestData);
     }
 }

@@ -6,5 +6,6 @@
         public string? FieldName { get; set; }
         public string? FieldType { get; set; }
         public string? FieldDescription { get; set; }
+        public int? ApiEventId { get; set; }
     }
 }

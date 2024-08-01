@@ -6,6 +6,7 @@ using OMS.Domain.Entities.API.Response.ApiAuthentication;
 using OMS.Domain.Entities.API.Response.ApiEndpoint;
 using OMS.Domain.Entities.API.Response.ApiParameter;
 using OMS.Domain.Entities.API.Response.ApiProvider;
+using OMS.Domain.Entities.Entity.ApiAuthentication;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Shared.Entities.CommonEntity;
 
@@ -29,6 +30,6 @@ namespace OMS.Application.Services.APIConfiguration
         Task<GetApiAuthenticationByAuthIdResponse> GetApiAuthenticationByAuthId(int authId);
         Task<AddEntityDTO<int>> DeleteApiAuthentication(int authId, short CurrentUserId);
         Task<EntityList<GetApiAuthenticationsResponse>> GetApiAuthentications(GetApiAuthenticationsRequest requestData);
-
+        Task<ApiTesterResponse> ApiTester(int providerId);
     }
 }

@@ -35,16 +35,12 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<EntityList<GetApiEventMappingsResponse>> GetApiEventMappings(GetApiEventMappingsRequest requestData)
+        public async Task<GetApiEventMappingsResponse> GetApiEventMappings(GetApiEventMappingsRequest requestData)
         {
-            return await _context.GetListSP<GetApiEventMappingsResponse>(GETAPIEVENTMAPPINGS, new
+            return await _context.GetFrist<GetApiEventMappingsResponse>(GETAPIEVENTMAPPINGS, new
             {
                 requestData.ApiEventId,
-                requestData.Pagination?.PageNumber,
-                requestData.Pagination?.PageSize,
-                requestData.Filters?.SearchText,
-                requestData.SortString
-            }, true);
+            }, CommandType.StoredProcedure);
         }
 
         public async Task<AddEntityDTO<int>> DeleteApiEventMapping(int apiEventMappingId, int deletedBy)

@@ -26,7 +26,7 @@ const RequiredFieldsMapping = ({keyId}) => {
   return (
     <>
       <CardSection
-        cardTitle="Required Fields Mapping"
+        cardTitle="Required Fields Map"
         buttonClassName="btn theme-button"
         // rightButton={buttonVisible ? true : false}
         rightButton={true}
@@ -42,7 +42,7 @@ const RequiredFieldsMapping = ({keyId}) => {
       </CardSection>
 
       <SidebarModel
-        modalTitle="Add Required Fields Mapping"
+        modalTitle="Add Required Fields Map"
         contentClass="content-35"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}

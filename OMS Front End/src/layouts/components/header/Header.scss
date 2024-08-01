@@ -200,7 +200,7 @@
             -o-border-radius: 100%;
             top: 0px;
             right: -4px;
-            font-size:  var(--commonFont-extraSmall);
+            font-size: var(--commonFont-extraSmall);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -234,7 +234,7 @@
 
             .title {
               opacity: 0.5;
-              font-size:  var(--commonFont-large);
+              font-size: var(--commonFont-large);
             }
 
             .clear-all {
@@ -511,5 +511,5 @@
 @media only screen and (max-width: 1750px) {
   .header-section {
     height: 51px;
-}
+  }
 }

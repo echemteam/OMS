@@ -16,6 +16,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDFUNCTIONALITIESRESPONSIBLESUSER = "AddFunctionalitiesResponsiblesUser";
         const string DELETEFUNCTIONALITIESRESPONSIBLESUSER = "DeleteFunctionalitiesResponsiblesUser";
         const string GETFUNCTIONALITIESRESPONSIBLES = "GetFunctionalitiesResponsibles";
+        const string ADDEDITFUNCTIONALITIES = "AddEditFunctionalities";
         #endregion
 
         public FunctionalitiesRepository(DapperContext dapperContext) : base(dapperContext)
@@ -48,6 +49,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.Filters?.SearchText,
                 requestData.SortString,
             }, true);
+        }
+        public async Task<AddEntityDTO<int>> AddEditFunctionalities(FunctionalitiesDTO requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITFUNCTIONALITIES, new
+            {
+                requestData.FunctionalityId,
+                requestData.ModuleId,
+                requestData.Name,
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }

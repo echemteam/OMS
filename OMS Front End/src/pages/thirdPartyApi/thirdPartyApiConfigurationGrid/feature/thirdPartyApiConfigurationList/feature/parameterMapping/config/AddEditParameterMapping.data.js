@@ -3,23 +3,8 @@ import { GridColumnType } from "../../../../../../../../data/gridColumnType";
 
 export const AddEditParameterMappingData = {
     // name: "Email From"
-    initialState: { apiEventParametersId: "", parameterId: ""},
+    initialState: { parameterId: "" },
     formFields: [
-        {
-            id: "apiEventParametersId",
-            lable: "Api Event Parameter ",
-            Field_Name: "Api Event Parameter",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "apiEventParametersId",
-            fieldSetting: {
-                placeholder: "Select Api Event Parameter",
-                isEnableOnChange: true,
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
-            },
-        },
         {
             id: "parameterId",
             lable: "Parameter ",
@@ -35,7 +20,7 @@ export const AddEditParameterMappingData = {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
             },
         },
-       
+
     ],
     formSetting: {
         isViewOnly: false
@@ -45,14 +30,14 @@ export const AddEditParameterMappingData = {
 export const AddEditParameterMappingConfigurationData = {
     columns: [
         {
-            name: "Api Event Parameter",
-            fieldName: "eventParameterName",
+            name: "Parameter",
+            fieldName: "parameterName",
             width: "40%",
             allowShort: true,
         },
         {
-            name: "Parameter",
-            fieldName: "parameterName",
+            name: "DataType",
+            fieldName: "dataType",
             width: "40%",
             allowShort: true,
         },

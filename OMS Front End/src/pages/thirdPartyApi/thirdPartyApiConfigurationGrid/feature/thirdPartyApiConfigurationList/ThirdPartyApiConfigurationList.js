@@ -2,7 +2,7 @@ import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import MolGrid from '../../../../../components/Grid/MolGrid';
 import { useNavigate } from 'react-router-dom';
 import { thirdPartyListConfigurationData } from './config/ThirdPartyApiConfigurationList.data';
-import { useDeleteApiEventMutation, useGetApiEventsMutation } from '../../../../../app/services/thirdPartyAPI';
+import { useDeleteApiEventMutation, useGetApiEventsMutation, useLazyApiTesterQuery } from '../../../../../app/services/thirdPartyAPI';
 import ToastService from '../../../../../services/toastService/ToastService';
 import SwalAlert from '../../../../../services/swalService/SwalService';
 import { encryptUrlData } from '../../../../../services/CryptoService';
@@ -13,8 +13,10 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     const { confirm } = SwalAlert();
     const [listData, setListData] = useState();
     const [totalRowCount, setTotalRowCount] = useState(0);
-    const [getApiEvents, { isLoading: isGetApiEventsLoading, isSuccess: isGetApiEventsSuccess, data: isGetApiEventsData, },] = useGetApiEventsMutation();
+
+    const [getApiTester, { isSuccess: isAPITesterSucess, data: isAPITesterData }] = useLazyApiTesterQuery();
     const [deleteApiEvent, { isSuccess: isDeleteApiEventSuccess, data: isDeleteApiEventData },] = useDeleteApiEventMutation();
+    const [getApiEvents, { isLoading: isGetApiEventsLoading, isSuccess: isGetApiEventsSuccess, data: isGetApiEventsData, },] = useGetApiEventsMutation();
 
     const getLists = (pageObject, sortingString) => {
         const request = {
@@ -72,6 +74,15 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     };
 
     useEffect(() => {
+        if (isAPITesterSucess && isAPITesterData) {
+            console.log('isAPITesterData', isAPITesterData);
+            if (isAPITesterData) {
+                ToastService.success("Successfully Worked.");
+            }
+        }
+    }, [isAPITesterSucess, isAPITesterData]);
+
+    useEffect(() => {
         if (molGridRef.current) {
             const currentPageObject = molGridRef.current.getCurrentPageObject();
             const currentsortingString = molGridRef.current.generateSortingString();
@@ -92,7 +103,13 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
         navigate(`/ThirdPartyApiConfigurationViewDetails/${encryptUrlData(data.apiEventId)}`, "_blank");
     }
 
+    const handleEditClick = (data) => {
+        getApiTester(data?.apiEventId);
+    };
+
+
     const actionHandler = {
+        EDIT: handleEditClick,
         VIEW: handleViewClick,
         DELETE: handleDeleteClick
     };

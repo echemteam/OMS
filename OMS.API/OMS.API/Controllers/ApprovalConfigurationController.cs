@@ -79,6 +79,12 @@ namespace OMS.API.Controllers
             var functionalitiesResponsibles = await _serviceManager.approvalConfigurationServices.GetFunctionalitiesResponsibles(requestData);
             return APISucessResponce<object>(functionalitiesResponsibles);
         }
+        [HttpPost("AddEditFunctionalities")]
+        public async Task<IActionResult> AddEditFunctionalities(AddEditFunctionalitiesRequest requestData)
+        {
+            var addEditItem = await _serviceManager.approvalConfigurationServices.AddEditFunctionalities(requestData);
+            return APISucessResponce(addEditItem);
+        }
         #endregion
     }
 }

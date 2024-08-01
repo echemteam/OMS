@@ -17,7 +17,7 @@ const AddEditRequiredFields = (props) => {
     if (isAddEditApiEventRequiredFieldSuccess && allAddEditApiEventRequiredFieldData) {
       if (allAddEditApiEventRequiredFieldData.errorMessage.includes("exists")) {
         ToastService.warning(allAddEditApiEventRequiredFieldData.errorMessage);
-        handleResetAndClose();
+        // handleResetAndClose();
         return;
       }
       ToastService.success(allAddEditApiEventRequiredFieldData.errorMessage);
@@ -36,6 +36,7 @@ const AddEditRequiredFields = (props) => {
         apiEventRequiredFieldId: formData.apiEventRequiredFieldId && typeof formData.apiEventRequiredFieldId === "object" ? formData.apiEventRequiredFieldId.value : formData.apiEventRequiredFieldId,
         fieldDescription: formData.fieldDescription,
         fieldType: formData.fieldType && typeof formData.fieldType === "object" ? formData.fieldType.value : formData.fieldType,
+        apiEventId: props.keyId,
       };
       addEditApiEventRequiredField(request);
     }
@@ -72,7 +73,7 @@ const AddEditRequiredFields = (props) => {
         fieldType: allGetApiEventRequiredFieldByApiEventRequiredFieldIdData.fieldType,
         fieldDescription: allGetApiEventRequiredFieldByApiEventRequiredFieldIdData.fieldDescription,
         fieldName: allGetApiEventRequiredFieldByApiEventRequiredFieldIdData.fieldName,
-        apiEventRequiredFieldId : allGetApiEventRequiredFieldByApiEventRequiredFieldIdData.apiEventRequiredFieldId
+        apiEventRequiredFieldId: allGetApiEventRequiredFieldByApiEventRequiredFieldIdData.apiEventRequiredFieldId
       }
       setAddEditRequireData(setData)
     }
