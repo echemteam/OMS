@@ -16,7 +16,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string ADDEDITAPPROVALCONFIGURATION = "AddEditApprovalConfiguration";
         const string GETAPPROVALCONFIGURATIONBYAPPROVALCONFIGURATIONID = "GetApprovalConfigurationByApprovalConfigurationId";
-        const string GETAPPROVALCONFIGURATIONRULESBYMODULEIDANDFUNCTIONALITYID = "GetApprovalConfigurationRulesByModuleIdAndFunctionalityId";
+        const string GETAPPROVALCONFIGURATIONRULES = "GetApprovalConfigurationRules";
         const string GETFUNCTIONALITIES = "GetFunctionalities";
         const string GETFUNCTIONALITYEVENTS = "GetFunctionalityEvents";
         #endregion
@@ -48,14 +48,15 @@ namespace OMS.Domain.Repository.Implementation
             return getApprovalConfigurationByApprovalConfigurationIdResponse;
         }
 
-        public async Task<List<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse>> GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(int moduleId, int functionalityId)
+        public async Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData)
         {
-            List<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse> getApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse = await _context.GetList<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse>(GETAPPROVALCONFIGURATIONRULESBYMODULEIDANDFUNCTIONALITYID, new
+            return await _context.GetListSP<GetApprovalConfigurationRulesResponse>(GETAPPROVALCONFIGURATIONRULES, new
             {
-                moduleId,
-                functionalityId
-            }, CommandType.StoredProcedure);
-            return getApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse;
+                requestData.Pagination?.PageNumber,
+                requestData.Pagination?.PageSize,
+                requestData.Filters?.SearchText,
+                requestData.SortString,
+            }, true);
         }
         public async Task<EntityList<GetFunctionalitiesResponse>> GetFunctionalities(GetFunctionalitiesRequest requestData)
         {
