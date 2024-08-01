@@ -4,6 +4,7 @@ import EventMapping from '../eventMapping/EventMapping';
 import ParameterMapping from '../parameterMapping/ParameterMapping';
 import EventRequiredFields from '../eventRequiredFields/EventRequiredFields';
 import RequiredFieldsMapping from '../requiredFieldsMapping/RequiredFieldsMapping';
+import EventParamter from '../eventParamter/EventParamter';
 
 const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
 
@@ -24,17 +25,17 @@ const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
             ),
             // isVisible: hasAddressPermission.hasAccess,
         },
-        // {
-        //     sMenuItemCaption: "Event Paramter",
-        //     component: (
-        //         <div className="mt-2">
-        //             <EventParamter
-        //                 keyId={keyId}
-        //             />
-        //         </div>
-        //     ),
-        //     // isVisible: hasContactPermission.hasAccess,
-        // },
+        {
+            sMenuItemCaption: "API Event Paramter",
+            component: (
+                <div className="mt-2">
+                    <EventParamter
+                        keyId={keyId}
+                    />
+                </div>
+            ),
+            // isVisible: hasContactPermission.hasAccess,
+        },
         {
             sMenuItemCaption: "Parameter Mapping",
             component: (
