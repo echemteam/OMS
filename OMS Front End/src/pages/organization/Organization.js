@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
+const OrganizationBusinessAddressDetail = React.lazy(() => import("./feature/organizationBusinessAddressDetail/OrganizationBusinessAddressDetail"));
 const OrganizationOtherChargesDetail = React.lazy(() => import("./feature/organizationOtherChargesDetail/OrganizationOtherChargesDetail"));
 const OrganizationShippingChargesDetail = React.lazy(() => import("./feature/organizationShippingCharges/OrganizationShippingChargesDetail"));
 const OrganizationAccountingDetail = React.lazy(() => import("./feature/organizationAccountingDetail/OrganizationAccountingDetail"));
@@ -9,14 +10,13 @@ const OrganizationBankDetail = React.lazy(() => import("./feature/organizationBa
 const OrganizationHistory = React.lazy(() => import("./feature/organizationHistory/OrganizationHistory"))
 const OrganizationContactDetail = React.lazy(() => import("./feature/organizationContactDetail/OrganizationContactDetail"))
 const SMTPSettings = React.lazy(() => import("./feature/smtpSettings/SMTPSettings"));
-const OtherSettings = React.lazy(() => import("./feature/otherSettings/OtherSettings"));
 const OrganizationProfileManagement = React.lazy(() => import("./feature/organizationProfileManagement/OrganizationProfileManagement"));
 
 const Organization = () => {
 
     const [organizationId, setOrganizationId] = useState(0)
     const [smtpSettingId, setSmtpSettingId] = useState(0)
-    const [organizationOtherSettingId, setOrganizationOtherSettingId] = useState(0)
+
     const [activeTabId, setActiveTabId] = useState(0)
 
     const handleSetOrganizationId = (id) => {
@@ -25,10 +25,6 @@ const Organization = () => {
 
     const handleSetSmtpSettingId = (id) => {
         setSmtpSettingId(id)
-    }
-
-    const handleSetOrganizationOtherSettingId = (id) => {
-        setOrganizationOtherSettingId(id)
     }
 
     const handleActiveTab = (id) => {
@@ -47,31 +43,11 @@ const Organization = () => {
                 </div>
             ),
         },
-        // organizationId > 0 &&
         {
-            sMenuItemCaption: "SMTP Settings",
+            sMenuItemCaption: "Business Address",
             component: (
                 <div className="mt-2">
-                    <SMTPSettings
-                        activeTabId={activeTabId}
-                        organizationId={organizationId}
-                        onHandleSmtp={handleSetSmtpSettingId}
-                        smtpSettingId={smtpSettingId} />
-                </div>
-            ),
-        },
-
-        // smtpSettingId > 0 &&
-        {
-            sMenuItemCaption: "Other Settings",
-            component: (
-                <div className="mt-2">
-                    <OtherSettings
-                        activeTabId={activeTabId}
-                        organizationId={organizationId}
-                        smtpSettingId={smtpSettingId}
-                        organizationOtherSettingId={organizationOtherSettingId}
-                        onHandleOrganizationOtherSetting={handleSetOrganizationOtherSettingId} />
+             <OrganizationBusinessAddressDetail/>
                 </div>
             ),
         },
@@ -83,6 +59,7 @@ const Organization = () => {
                 </div>
             ),
         },
+       
         {
             sMenuItemCaption: "Logistic Details",
             component: (
@@ -123,7 +100,20 @@ const Organization = () => {
                 </div>
             ),
         },
-{
+        // organizationId > 0 &&
+        {
+            sMenuItemCaption: "SMTP Settings",
+            component: (
+                <div className="mt-2">
+                    <SMTPSettings
+                        activeTabId={activeTabId}
+                        organizationId={organizationId}
+                        onHandleSmtp={handleSetSmtpSettingId}
+                        smtpSettingId={smtpSettingId} />
+                </div>
+            ),
+        },        
+        {
             sMenuItemCaption: "History",
             component: (
                 <div className="mt-2 organiazation-history">

@@ -37,9 +37,9 @@ namespace OMS.Application.Services.ApprovalConfiguration
             return repositoryManager.approvalConfiguration.GetApprovalConfigurationByApprovalConfigurationId(approvalConfigurationId);
         }
 
-        public Task<List<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse>> GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(int moduleId, int functionalityId)
+        public Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData)
         {
-            return repositoryManager.approvalConfiguration.GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(moduleId, functionalityId);
+            return repositoryManager.approvalConfiguration.GetApprovalConfigurationRules(requestData);
         }
 
         public async Task<EntityList<GetFunctionalitiesResponse>> GetFunctionalities(GetFunctionalitiesRequest requestData)
@@ -62,6 +62,11 @@ namespace OMS.Application.Services.ApprovalConfiguration
         public async Task<EntityList<GetFunctionalitiesResponsiblesResponse>> GetFunctionalitiesResponsibles(GetFunctionalitiesResponsiblesRequest requestData)
         {
             return await repositoryManager.functionalities.GetFunctionalitiesResponsibles(requestData);
+        }
+        public async Task<AddEntityDTO<int>> AddEditFunctionalities(AddEditFunctionalitiesRequest requestData)
+        {
+            FunctionalitiesDTO functionalitiesDTO = requestData.ToMapp<AddEditFunctionalitiesRequest, FunctionalitiesDTO>();
+            return await repositoryManager.functionalities.AddEditFunctionalities(functionalitiesDTO);
         }
         #endregion
     }

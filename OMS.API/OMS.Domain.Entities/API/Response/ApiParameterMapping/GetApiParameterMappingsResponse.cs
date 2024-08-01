@@ -3,9 +3,9 @@
     public class GetApiParameterMappingsResponse
     {
         public int? ApiParameterMappingId { get; set; }
-        public int? ApiEventParameterId { get; set; }
-        public string? EventParameterName { get; set; }
+        public int? ApiEventId { get; set; }
         public int? ParameterId { get; set; }
         public string? ParameterName { get; set; }
+        public string? DataType { get; set; }
     }
 }

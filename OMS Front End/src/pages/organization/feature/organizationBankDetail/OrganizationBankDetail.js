@@ -29,22 +29,15 @@ const OrganizationBankDetail=()=>{
         let bankData = organizationBankRef.current.getFormData();
         const request={
             ...bankData,
-            organizationBankDetailId:bankData.organizationBankDetailId,
+            organizationBankDetailId:bankData.organizationBankDetailId ? bankData.organizationBankDetailId : 0,
             beneficiaryName:bankData.beneficiaryName,
             checkingAccountNumber:bankData.checkingAccountNumber,
             routingAccountNumber:bankData.routingAccountNumber,
             swiftCode:bankData.swiftCode,
             bankAddress:bankData.bankAddress,
             bankBranch:bankData.bankBranch,
-
         }
-            if(!bankData.organizationBankDetailId && bankData){
-                addEditOrganizationBankDetails(request);
-            }
-            else if(bankData.organizationBankDetailId && bankData ){
-                addEditOrganizationBankDetails(request);
-            }
-           
+          addEditOrganizationBankDetails(request);             
       }
 
     useEffect(() => {
@@ -52,9 +45,8 @@ const OrganizationBankDetail=()=>{
         if (!isGetOrganizationBankDetailsFetching && isGetOrganizationBankDetailsSuccess && isGetOrganizationBankDetailsData) {
             let formData = { ...organizationBankData };
             formData.initialState = {
-                ...isGetOrganizationBankDetailsData,
-    
-            };
+           ...isGetOrganizationBankDetailsData,
+     };
             setOrganizationBankData(formData);
         }
     }, [isGetOrganizationBankDetailsFetching, isGetOrganizationBankDetailsSuccess, isGetOrganizationBankDetailsData,]);
@@ -67,8 +59,7 @@ const OrganizationBankDetail=()=>{
                     ref={organizationBankRef}
                    {...organizationBankData}
    
-                />
-                
+                />  
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons

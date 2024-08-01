@@ -15,12 +15,6 @@ const EventMappingList = (props) => {
 
     const getLists = (pageObject, sortingString) => {
         const request = {
-            pagination: {
-                pageNumber: pageObject.pageNumber,
-                pageSize: pageObject.pageSize,
-            },
-            filters: { searchText: "" },
-            sortString: sortingString,
             apiEventId: props.keyId
         };
         getApiEventMappings(request);
@@ -28,6 +22,7 @@ const EventMappingList = (props) => {
 
     useEffect(() => {
         if (isDeleteApiEventMappingSuccess && isDeleteApiEventMappingData) {
+            props.setIsProviderData(false);
             ToastService.success(isDeleteApiEventMappingData.errorMessage);
             const currentPageObject = molGridRef.current.getCurrentPageObject();
             getLists(currentPageObject, molGridRef.current.generateSortingString());
@@ -51,9 +46,14 @@ const EventMappingList = (props) => {
 
     useEffect(() => {
         if (isGetApiEventMappingsSuccess && isGetApiEventMappingsData) {
-            if (isGetApiEventMappingsData) {
-                setListData(isGetApiEventMappingsData.dataSource);
+            // if (isGetApiEventMappingsData) {
+            setListData([isGetApiEventMappingsData]);
+            props.setEndpointId(isGetApiEventMappingsData?.endpointId);
+            props.setProviderId(isGetApiEventMappingsData?.providerId);
+            if (isGetApiEventMappingsData?.providerId) {
+                props.setIsProviderData(true);
             }
+            // }
             if (isGetApiEventMappingsData.totalRecord) {
                 setTotalRowCount(isGetApiEventMappingsData.totalRecord);
             }

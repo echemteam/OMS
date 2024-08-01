@@ -5,42 +5,43 @@ import { setDropDownOptionField } from '../../../../../../../../utils/FormFields
 import Buttons from '../../../../../../../../components/ui/button/Buttons';
 import FormCreator from '../../../../../../../../components/Forms/FormCreator';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
-import { useAddApiParameterMappingMutation, useLazyGetAllAPIParametersQuery, useLazyGetAllApiEventParameterByApiEventIdQuery} from '../../../../../../../../app/services/thirdPartyAPI';
+import { useAddApiParameterMappingMutation, useLazyGetAllAPIParametersByEndpointIdQuery, useLazyGetAllAPIParametersQuery, useLazyGetAllApiEventParameterByApiEventIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
 
 const AddEditParameterMapping = (props) => {
+
   const addEditParameterMappingRef = useRef();
   const [addEditParameterMappingData, setAddEditParameterMappingData] = useState(AddEditParameterMappingData)
+  const [getParametersByEndPointId, { isSuccess: isGetParametersSucess, data: isGetParametersData }] = useLazyGetAllAPIParametersByEndpointIdQuery();
   const [addApiParameterMapping, { isLoading: isAddApiParameterMappingLoading, isSuccess: isAddApiParameterMappingSuccess, data: allAddApiParameterMappingData, },] = useAddApiParameterMappingMutation();
-  const [getAllAPIParameters, { isSuccess: isGetAllAPIParametersSucess, data: allGetAllAPIParametersData }] = useLazyGetAllAPIParametersQuery();
-  const [getAllApiEventParameterByApiEventId, { isSuccess: isGetAllApiEventParameterByApiEventIdSucess, data: allGetAllApiEventParameterByApiEventIdData }] = useLazyGetAllApiEventParameterByApiEventIdQuery();
+  // const [getAllApiEventParameterByApiEventId, { isSuccess: isGetAllApiEventParameterByApiEventIdSucess, data: allGetAllApiEventParameterByApiEventIdData }] = useLazyGetAllApiEventParameterByApiEventIdQuery();
 
   useEffect(() => {
-      getAllAPIParameters()
-      getAllApiEventParameterByApiEventId(props.keyId)
+    props.endpointId && getParametersByEndPointId(props.endpointId)
+    // getAllApiEventParameterByApiEventId(props.keyId);
   }, [])
 
   useEffect(() => {
-      if (isAddApiParameterMappingSuccess && allAddApiParameterMappingData) {
-          if (allAddApiParameterMappingData.errorMessage.includes("exists")) {
-              ToastService.warning(allAddApiParameterMappingData.errorMessage);
-              handleResetAndClose();
-              return;
-          }
-          ToastService.success(allAddApiParameterMappingData.errorMessage);
-          handleResetAndClose();
-          props.onGetData()
+    if (isAddApiParameterMappingSuccess && allAddApiParameterMappingData) {
+      if (allAddApiParameterMappingData.errorMessage.includes("exists")) {
+        ToastService.warning(allAddApiParameterMappingData.errorMessage);
+        // handleResetAndClose();
+        return;
       }
+      ToastService.success(allAddApiParameterMappingData.errorMessage);
+      handleResetAndClose();
+      props.onGetData()
+    }
   }, [isAddApiParameterMappingSuccess, allAddApiParameterMappingData]);
 
   useEffect(() => {
-      if (isGetAllAPIParametersSucess && allGetAllAPIParametersData) {
-          setDropDownOptionField(allGetAllAPIParametersData, 'parameterId', 'name', AddEditParameterMappingData, 'parameterId');
-      }
-      if (isGetAllApiEventParameterByApiEventIdSucess && allGetAllApiEventParameterByApiEventIdData) {
-          setDropDownOptionField(allGetAllApiEventParameterByApiEventIdData, 'apiEventParametersId', 'parameterName', AddEditParameterMappingData, 'apiEventParametersId');
-      }
+    if (isGetParametersSucess && isGetParametersData) {
+      setDropDownOptionField(isGetParametersData, 'parameterId', 'name', AddEditParameterMappingData, 'parameterId');
+    }
+    // if (isGetAllApiEventParameterByApiEventIdSucess && allGetAllApiEventParameterByApiEventIdData) {
+    //   setDropDownOptionField(allGetAllApiEventParameterByApiEventIdData, 'apiEventParametersId', 'parameterName', AddEditParameterMappingData, 'apiEventParametersId');
+    // }
 
-  }, [isGetAllAPIParametersSucess, allGetAllAPIParametersData , allGetAllApiEventParameterByApiEventIdData , isGetAllApiEventParameterByApiEventIdSucess]);
+  }, [isGetParametersSucess, isGetParametersData]);
 
   const handleAddEditAPIPRovider = () => {
     const formData = addEditParameterMappingRef.current.getFormData();
@@ -48,7 +49,7 @@ const AddEditParameterMapping = (props) => {
       let request = {
         ...formData,
         parameterId: formData.parameterId.value,
-        apiEventParameterId: formData.apiEventParametersId.value,
+        apiEventId: props.keyId,
       };
       addApiParameterMapping(request);
     }
@@ -76,7 +77,7 @@ const AddEditParameterMapping = (props) => {
             buttonTypeClassName="theme-button"
             buttonText="Save"
             onClick={handleAddEditAPIPRovider}
-          isLoading={isAddApiParameterMappingLoading}
+            isLoading={isAddApiParameterMappingLoading}
           />
           <Buttons
             buttonTypeClassName="dark-btn ml-5"

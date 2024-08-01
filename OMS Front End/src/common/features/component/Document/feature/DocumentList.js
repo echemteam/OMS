@@ -13,7 +13,7 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 import FileViewer from 'react-file-viewer';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 
 const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDocumentsById, getDocumentsById, childRef, SecurityKey, isEditablePage }) => {
 
@@ -118,7 +118,7 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
     }, [isDeleteSucess, isDeleteData]);
 
     const handleDocumentAction = (action, fileName) => {
-        setGetFileType(null);
+        // setGetFileType(null);
         setSelectedDocument(null);
         setIsModalOpen(false);
         setActionType(action);
@@ -129,9 +129,7 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
             fileName: fileName
         };
 
-        if (action === 'download') {
-            Downalod(request);
-        } else if (action === 'view') {
+        if (action === 'download' || action === 'view') {
             Downalod(request);
         }
     };
