@@ -11,6 +11,7 @@ const OrganizationAccountingDetail=()=>{
     const [organizationAccountingData, setOrganizationAccountingData] = useState(OrganizationAccountingFormData);
     const [addEditOrganizationAccountingDetails, { isLoading: isAddEditOrganizationAccountingDetailsLoading, isSuccess: isAddEditOrganizationAccountingDetailsSuccess, data: isAddEditOrganizationAccountingDetailsData }] =useAddEditOrganizationAccountingDetailsMutation();
     const [getOrganizationAccountingDetails, { isFetching: isGetOrganizationAccountingDetailsFetching, isSuccess: isGetOrganizationAccountingDetailsSuccess, data: isGetOrganizationAccountingDetailsData }] = useLazyGetOrganizationAccountingDetailsQuery();
+    const [accountingDetailId, setAccountingDetailId] = useState(0);   
 
     useEffect(() => {
         if (isAddEditOrganizationAccountingDetailsSuccess && isAddEditOrganizationAccountingDetailsData) {
@@ -24,16 +25,15 @@ const OrganizationAccountingDetail=()=>{
     },[])
 
       const handleAddEditAccountingDetail=()=>{
-
         let accountingData = organizationAccountingRef.current.getFormData();
-        const request={
-            ...accountingData,
-            organizationAccountingDetailId: accountingData.organizationAccountingDetailId ? accountingData.organizationAccountingDetailId : 0,
-            creditLimit:accountingData.creditLimit,     
-        }
-        
-       addEditOrganizationAccountingDetails(request);
-                  
+        if(accountingData ){
+            const request={
+                ...accountingData,
+                organizationAccountingDetailId: accountingDetailId ,
+                creditLimit:accountingData?.creditLimit,     
+            }
+            addEditOrganizationAccountingDetails(request);
+        }           
       }
 
     useEffect(() => {
@@ -41,11 +41,13 @@ const OrganizationAccountingDetail=()=>{
             let formData = { ...organizationAccountingData };
             formData.initialState = {
                 ...isGetOrganizationAccountingDetailsData, 
+
             };
             setOrganizationAccountingData(formData);
+            setAccountingDetailId(isGetOrganizationAccountingDetailsData.organizationAccountingDetailId);
+            
         }
     }, [isGetOrganizationAccountingDetailsFetching, isGetOrganizationAccountingDetailsSuccess, isGetOrganizationAccountingDetailsData,]);
-
 
     return(<>
     

@@ -11,6 +11,7 @@ const OrganizationProfileManagement = () => {
     const [organizationProfileData, setOrganizationProfileData] = useState(OrganizationProfileManagementdata);
     const [addEditOrganization, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddEditOrganizationProfileMutation();
     const [getOrganizationProfile, { isFetching: isGetOrganizationProfileFetching, isSuccess: isGetOrganizationProfileSuccess, data: isGetOrganizationProfileData }] = useLazyGetOrganizationProfileQuery();
+    const[profileId,setProfileId]=useState(0);
 
     useEffect(() => {
      getOrganizationProfile()
@@ -36,6 +37,7 @@ const OrganizationProfileManagement = () => {
                    tWCTaxAccountNumber:isGetOrganizationProfileData.twcTaxAccountNumber,
             };
             setOrganizationProfileData(formData);
+            setProfileId(isGetOrganizationProfileData.organizationProfileId);
     
         }
     }, [isGetOrganizationProfileFetching, isGetOrganizationProfileSuccess, isGetOrganizationProfileData,]);
@@ -54,7 +56,7 @@ const OrganizationProfileManagement = () => {
         if (profileFormData) {
             let request = {
                 ...profileFormData,
-                organizationProfileId:profileFormData.organizationProfileId ? profileFormData.organizationProfileId :0,
+                organizationProfileId:profileId,
                 registeredName:profileFormData.registeredName ,
                  dBAName: profileFormData.dBAName, 
                  dateIncorporated:profileFormData.dateIncorporated,
@@ -68,8 +70,6 @@ const OrganizationProfileManagement = () => {
             addEditOrganization(request)
         }
     }
-
- 
 
     return (
         <div className="row mt-2 add-address-form">

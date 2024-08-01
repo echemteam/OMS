@@ -13,6 +13,7 @@ const OrganizationContactDetail=()=>{
     const [organizationContactData, setOrganizationContactData] = useState(OrganizationContactFormData);
     const [addEditOrganizationContactDetails, { isLoading: isAddEditOrganizationContactDetailsLoading, isSuccess: isAddEditOrganizationContactDetailsSuccess, data: isAddEditOrganizationContactDetailsData }] =useAddEditOrganizationContactDetailsMutation();
     const [getOrganizationContactDetails, { isFetching: isGetOrganizationContactDetailsFetching, isSuccess: isGetOrganizationContactDetailsSuccess, data: isGetOrganizationContactDetailsData }] = useLazyGetOrganizationContactDetailsQuery();
+    const [contactDetailId, setContactDetailId] = useState(0); 
 
     useEffect(() => {
         if (isAddEditOrganizationContactDetailsSuccess && isAddEditOrganizationContactDetailsData) {
@@ -29,21 +30,22 @@ const OrganizationContactDetail=()=>{
       const handleAddEditContactDetail=()=>{
 
         let contactData = organizationContactRef.current.getFormData();
-        const request={
-            ...contactData,
-            organizationContactDetailId: contactData.organizationContactDetailId ? contactData.organizationContactDetailId : 0 ,
-            companyWebsite:contactData.companyWebsite,
-            salesEmail:contactData.salesEmail,
-            accountsEmail:contactData.accountsEmail,
-            purchaseEmail:contactData.purchaseEmail,
-            customerServiceEmail:contactData.customerServiceEmail,
-            salesPhone :contactData.salesPhone,
-            accountsPhone:contactData.accountsPhone,
-            tollFreePhone:contactData.tollFreePhone,
+        if(contactData){
+            const request={
+                ...contactData,
+                organizationContactDetailId: contactDetailId,
+                companyWebsite:contactData?.companyWebsite,
+                salesEmail:contactData?.salesEmail,
+                accountsEmail:contactData?.accountsEmail,
+                purchaseEmail:contactData?.purchaseEmail,
+                customerServiceEmail:contactData?.customerServiceEmail,
+                salesPhone :contactData?.salesPhone,
+                accountsPhone:contactData?.accountsPhone,
+                tollFreePhone:contactData?.tollFreePhone,
 
-        }
-        addEditOrganizationContactDetails(request)
-           
+            }
+            addEditOrganizationContactDetails(request)
+        }   
       }
 
     useEffect(() => {
@@ -53,6 +55,7 @@ const OrganizationContactDetail=()=>{
                 ...isGetOrganizationContactDetailsData, 
             };
             setOrganizationContactData(formData);
+            setContactDetailId(isGetOrganizationContactDetailsData.organizationContactDetailId);
         }
     }, [isGetOrganizationContactDetailsFetching, isGetOrganizationContactDetailsSuccess, isGetOrganizationContactDetailsData,]);
 

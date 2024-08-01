@@ -12,7 +12,8 @@ const OrganizationBankDetail=()=>{
     const [organizationBankData, setOrganizationBankData] = useState(OrganizationBankFormData);
     const [addEditOrganizationBankDetails, { isLoading: isAddEditOrganizationBankDetailsLoading, isSuccess: isAddEditOrganizationBankDetailsSuccess, data: isAddEditOrganizationBankDetailsData }] =useAddEditOrganizationBankDetailsMutation();
     const [getOrganizationBankDetails, { isFetching: isGetOrganizationBankDetailsFetching, isSuccess: isGetOrganizationBankDetailsSuccess, data: isGetOrganizationBankDetailsData }] = useLazyGetOrganizationBankDetailsQuery();
-
+    const [bankDetailId, setBankDetailId] = useState(0); 
+    
     useEffect(() => {
         if (isAddEditOrganizationBankDetailsSuccess && isAddEditOrganizationBankDetailsData) {
           ToastService.success(isAddEditOrganizationBankDetailsData.errorMessage);
@@ -27,27 +28,28 @@ const OrganizationBankDetail=()=>{
 
       const handleAddEditBankDetail=()=>{
         let bankData = organizationBankRef.current.getFormData();
+        if(bankData){
         const request={
             ...bankData,
-            organizationBankDetailId:bankData.organizationBankDetailId ? bankData.organizationBankDetailId : 0,
-            beneficiaryName:bankData.beneficiaryName,
-            checkingAccountNumber:bankData.checkingAccountNumber,
-            routingAccountNumber:bankData.routingAccountNumber,
-            swiftCode:bankData.swiftCode,
-            bankAddress:bankData.bankAddress,
-            bankBranch:bankData.bankBranch,
+            organizationBankDetailId:bankDetailId,
+            beneficiaryName:bankData?.beneficiaryName,
+            checkingAccountNumber:bankData?.checkingAccountNumber,
+            routingAccountNumber:bankData?.routingAccountNumber,
+            swiftCode:bankData?.swiftCode,
+            bankAddress:bankData?.bankAddress,
+            bankBranch:bankData?.bankBranch,
         }
           addEditOrganizationBankDetails(request);             
       }
-
+    } 
     useEffect(() => {
-   
         if (!isGetOrganizationBankDetailsFetching && isGetOrganizationBankDetailsSuccess && isGetOrganizationBankDetailsData) {
             let formData = { ...organizationBankData };
             formData.initialState = {
            ...isGetOrganizationBankDetailsData,
      };
             setOrganizationBankData(formData);
+            setBankDetailId(isGetOrganizationBankDetailsData.organizationBankDetailId);
         }
     }, [isGetOrganizationBankDetailsFetching, isGetOrganizationBankDetailsSuccess, isGetOrganizationBankDetailsData,]);
 

@@ -15,6 +15,7 @@ const OrganizationOtherChargesDetail=()=>{
     const [addEditOrganizationOtherCharges, { isLoading: isAddEditOrganizationOtherChargesLoading, isSuccess: isAddEditOrganizationOtherChargesSuccess, data: isAddEditOrganizationOtherChargesData }] =useAddEditOrganizationOtherChargesMutation();
     const [getOrganizationOtherCharges, { isFetching: isGetOrganizationOtherChargesFetching, isSuccess: isGetOrganizationOtherChargesSuccess, data: isGetOrganizationOtherChargesData }] = useLazyGetOrganizationOtherChargesQuery();
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+    const [otherChargeId , setOtherChargeId ] = useState(0); 
     
     useEffect(()=>{
         getAllPaymentTerms();
@@ -41,20 +42,21 @@ const OrganizationOtherChargesDetail=()=>{
       const handleAddEditShippingChargesDetail=()=>{
 
         let otherChargesData = organizationOtherChargesRef.current.getFormData();
+        if(otherChargesData){
         const request={
             ...otherChargesData,
-            organizationOtherChargeId: otherChargesData.organizationOtherChargeId ? otherChargesData.organizationOtherChargeId : 0,
-            defaultPaymentTerms: otherChargesData.paymentTermId.value,
-            handlingFees:otherChargesData.handlingFees,
-            bankWireFees:otherChargesData.bankWireFees,
-            creditCardServiceFees:otherChargesData.creditCardServiceFees,
-            coldBoxFees:otherChargesData.coldBoxFees,
-            iTNFees:otherChargesData.iTNFees,    
+            organizationOtherChargeId: otherChargeId,
+            defaultPaymentTerms: otherChargesData?.paymentTermId.value,
+            handlingFees:otherChargesData?.handlingFees,
+            bankWireFees:otherChargesData?.bankWireFees,
+            creditCardServiceFees:otherChargesData?.creditCardServiceFees,
+            coldBoxFees:otherChargesData?.coldBoxFees,
+            iTNFees:otherChargesData?.iTNFees,    
 
         }
           addEditOrganizationOtherCharges(request);
       }
-
+    }
     useEffect(() => {
       
         if (!isGetOrganizationOtherChargesFetching && isGetOrganizationOtherChargesSuccess && isGetOrganizationOtherChargesData) {
@@ -69,6 +71,7 @@ const OrganizationOtherChargesDetail=()=>{
                 iTNFees:isGetOrganizationOtherChargesData.itnFees,
             };
             setOrganizationOtherChargesData(formData);
+            setOtherChargeId(isGetOrganizationOtherChargesData.organizationOtherChargeId);
         }
     }, [isGetOrganizationOtherChargesFetching, isGetOrganizationOtherChargesSuccess, isGetOrganizationOtherChargesData,]);
 
