@@ -13,6 +13,7 @@ export const OrganizationShippingChargesFormData = {
             fieldSetting: {
               placeholder: "Enter Domestic Overnight",
               allowSpace: true,
+              maxLength:18
             },
             validation: [{ type: "require" }],
             style: {
@@ -29,6 +30,7 @@ export const OrganizationShippingChargesFormData = {
             fieldSetting: {
               placeholder: "Enter Domestic SecondDay",
               allowSpace: true,
+              maxLength:18
             },
             validation: [{ type: "require" }],
             style: {
@@ -44,6 +46,7 @@ export const OrganizationShippingChargesFormData = {
             fieldSetting: {
               placeholder: "Enter Domestic Ground",
               allowSpace: true,
+              maxLength:18
             },
             validation: [{ type: "require" }],
             style: {
@@ -59,6 +62,7 @@ export const OrganizationShippingChargesFormData = {
             fieldSetting: {
               placeholder: "Enter International Priority",
               allowSpace: true,
+              maxLength:18
             },
             validation: [{ type: "require" }],
             style: {
@@ -74,6 +78,7 @@ export const OrganizationShippingChargesFormData = {
             fieldSetting: {
               placeholder: "Enter International Economy",
               allowSpace: true,
+              maxLength:18
             },
             validation: [{ type: "require" }],
             style: {

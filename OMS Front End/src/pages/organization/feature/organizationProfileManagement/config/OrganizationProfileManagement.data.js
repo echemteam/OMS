@@ -13,7 +13,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Enter Registered Name",
                 allowSpace: true,
-                maxLength: 100,
+                maxLength: 255,
             },
             validation: [{ type: "require" }],
             style: {
@@ -47,7 +47,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Enter DBA Name",
                 allowSpace: true,
-    
+                maxLength: 255,
             },
             validation: [{ type: "require" }],
             style: {
@@ -94,6 +94,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Select EIN",
                 allowSpace: true,
+                maxLength: 9,
             },
             validation: [{ type: "require" }],
             style: {
@@ -109,6 +110,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Select TXTaxpayer Number",
                 allowSpace: true,
+                maxLength:20,
             },
             validation: [{ type: "require" }],
             style: {
@@ -124,8 +126,8 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Enter SOS File Number",
                 allowSpace: true,
-    
-            },
+                maxLength:20,
+             },
             validation: [{ type: "require" }],
             style: {
                 containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
@@ -140,7 +142,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Enter Web File Number",
                 allowSpace: true,
-    
+                maxLength:20,
             },
             validation: [{ type: "require" }],
             style: {
@@ -156,6 +158,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Enter TWC Tax Account Number",
                 allowSpace: true,
+                maxLength:20,
             },
             validation: [{ type: "require" }],
             style: {

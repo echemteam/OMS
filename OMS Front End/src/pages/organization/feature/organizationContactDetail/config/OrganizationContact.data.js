@@ -13,6 +13,7 @@ export const OrganizationContactFormData = {
             fieldSetting: {
               placeholder: "Enter Company Website",
               allowSpace: true,
+              maxLength:255,
             },
             validation: [{ type: "require" }, { type: "website" }],
             style: {
@@ -28,6 +29,7 @@ export const OrganizationContactFormData = {
             fieldSetting: {
                 placeholder: "Enter Sales Email",
                 allowSpace: true,
+                maxLength:255,
             },
             validation: [{ type: "require" },{ type: "email" }],
             style: {
@@ -43,6 +45,7 @@ export const OrganizationContactFormData = {
             fieldSetting: {
                 placeholder: "Enter Accounts Email",
                 allowSpace: true,
+                maxLength:255,
             },
             validation: [{ type: "require" },{ type: "email" }],
             style: {
@@ -58,6 +61,7 @@ export const OrganizationContactFormData = {
             fieldSetting: {
                 placeholder: "Enter Purchase Email",
                 allowSpace: true,
+                maxLength:255,
             },
             validation: [{ type: "require" },{ type: "email" }],
             style: {
@@ -73,6 +77,7 @@ export const OrganizationContactFormData = {
             fieldSetting: {
                 placeholder: "Enter Customer Service Email",
                 allowSpace: true,
+                maxLength:255,
             },
             validation: [{ type: "require" },{ type: "email" }],
             style: {

@@ -22,6 +22,7 @@ export const BillToAddressForm = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
+        maxLength:250,
       },
       validation: [{ type: "require" }],
       style: {
@@ -39,6 +40,7 @@ export const BillToAddressForm = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
+        maxLength:250
       },
       // validation: [{ type: "require" }],
       style: {
@@ -53,7 +55,8 @@ export const BillToAddressForm = {
       dataField: "countryId",
       fieldSetting: {
         placeholder: "Select Country",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        maxLength:20,
       },
       validation: [{ type: "require" }],
       style: {
@@ -69,7 +72,8 @@ export const BillToAddressForm = {
       fieldSetting: {
         isDisabled: false,
         placeholder: "Select State",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        maxLength:20,
       },
       validation: [{ type: "require" }],
       style: {
@@ -85,7 +89,8 @@ export const BillToAddressForm = {
       fieldSetting: {
         isDisabled: false,
         placeholder: "Select City",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        maxLength:9
       },
       validation: [{ type: "require" }],
       style: {

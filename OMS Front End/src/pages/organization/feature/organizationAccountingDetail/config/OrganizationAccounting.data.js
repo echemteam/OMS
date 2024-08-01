@@ -13,6 +13,7 @@ export const OrganizationAccountingFormData = {
             fieldSetting: {
               placeholder: "Enter Credit Limit",
               allowSpace: true,
+              maxLength:5
             },
             validation: [{ type: "require" }],
             style: {
