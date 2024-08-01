@@ -75,33 +75,6 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
         getAuditHistoryByCustomerId(request);
     };
 
-    // useEffect(() => {
-    //     if (isGetHistorySuccess && isGetHistoryData) {
-    //         if (
-    //             isGetHistoryData.dataSource &&
-    //             isGetHistoryData.dataSource.length > 0
-    //         ) {
-    //             const modifyData = modifyTimeLineData(isGetHistoryData.dataSource);
-    //             if (refreshData) {
-    //                 setRefreshData(false);
-    //                 setHistoryData(modifyData);
-    //             } else {
-    //                 if (selectedEventName || selectedUserName || selectedDateRange) {
-    //                     setHistoryData(modifyData);
-    //                 } else {
-    //                     setHistoryData((prevData) => [...prevData, ...modifyData]);
-    //                 }
-    //             }
-    //             setNoRecordFound(false);
-    //         } else if (isGetHistoryData.dataSource.length === 0) {
-    //             setNoRecordFound(true);
-    //         } else {
-    //             setHasMore(false);
-    //             ToastService.warning("No Data Found");
-    //         }
-    //     }
-    // }, [isGetHistorySuccess, isGetHistoryData]);
-
     useEffect(() => {
         if (isGetHistorySuccess && isGetHistoryData) {
             if (

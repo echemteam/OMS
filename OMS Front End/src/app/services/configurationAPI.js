@@ -57,6 +57,63 @@ const configurationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        addFunctionalitiesResponsiblesUser: builder.mutation({
+            query: (Details) => ({
+                url: '/ApprovalConfiguration/AddFunctionalitiesResponsiblesUser',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        addEditFunctionalities: builder.mutation({
+            query: (Details) => ({
+                url: '/ApprovalConfiguration/AddEditFunctionalities',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getFunctionalities: builder.mutation({
+            query: (data) => ({
+                url: '/ApprovalConfiguration/GetFunctionalities',
+                method: 'POST',
+                body: transformRequest(data)
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getFunctionalityEvents: builder.mutation({
+            query: (data) => ({
+                url: '/ApprovalConfiguration/GetFunctionalityEvents',
+                method: 'POST',
+                body: transformRequest(data)
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getFunctionalitiesResponsibles: builder.mutation({
+            query: (data) => ({
+                url: '/ApprovalConfiguration/GetFunctionalitiesResponsibles',
+                method: 'POST',
+                body: transformRequest(data)
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        deleteFunctionalitiesResponsiblesUser: builder.mutation({
+            query: (id) => ({
+                url: encryptQueryString(`/ApprovalConfiguration/DeleteFunctionalitiesResponsiblesUser/?functionalitiesResponsiblesId=${id}`),
+                method: 'DELETE',
+                body: transformRequest(id)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -66,9 +123,13 @@ export const {
     useLazyGetAllFunctionalitiesFieldsQuery,
     useLazyGetApprovalConfigurationRulesByModuleIdAndFunctionalityIdQuery,
     useLazyGetApprovalConfigurationByApprovalConfigurationIdQuery,
-    useAddEditApprovalConfigurationMutation
-
-
+    useAddEditApprovalConfigurationMutation,
+    useAddFunctionalitiesResponsiblesUserMutation,
+    useGetFunctionalitiesMutation,
+    useAddEditFunctionalitiesMutation,
+    useGetFunctionalitiesResponsiblesMutation,
+    useGetFunctionalityEventsMutation,
+    useDeleteFunctionalitiesResponsiblesUserMutation,
 } = configurationAPI
 
 export default configurationAPI;
