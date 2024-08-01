@@ -40,7 +40,6 @@ const AddEditFunctionalConfiguration = (props) => {
   useEffect(() => {
     onResetForm(functionalData, setFunctionalData, null);
     if (props.initData) {
-      debugger
       let UpdateData = { ...AddEditFunctionalData };
       UpdateData.initialState = {
         name: props.initData.functionalityName,
