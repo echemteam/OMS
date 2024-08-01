@@ -246,10 +246,10 @@ const OrganizationBusinessAddressDetail = () => {
 };
 
 OrganizationBusinessAddressDetail.propTypes = {
-  registeredAddressData: PropTypes.object.isRequired,
-  physicalAddressData: PropTypes.object.isRequired,
-  billToAddressData: PropTypes.object.isRequired,
-  labAddressData: PropTypes.object.isRequired,
-  warehouseAddressData: PropTypes.object.isRequired
+  registeredAddressData: PropTypes.object,
+  physicalAddressData: PropTypes.object,
+  billToAddressData: PropTypes.object,
+  labAddressData: PropTypes.object,
+  warehouseAddressData: PropTypes.object
 };
 export default OrganizationBusinessAddressDetail;
