@@ -5,7 +5,7 @@
         public int? CustomerAddressId { get; set; }
         public int? AddressId { get; set; }
         public short? AddressTypeId { get; set; }
-        public string? Type{ get; set; }
+        public string? Type { get; set; }
         public string? AddressLine1 { get; set; }
         public string? AddressLine2 { get; set; }
         public string? AddressLine3 { get; set; }

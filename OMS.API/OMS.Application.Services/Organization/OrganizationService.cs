@@ -6,9 +6,7 @@ using OMS.Domain.Entities.API.Response.Organization;
 using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Organization;
-using OMS.Domain.Entities.Entity.SuppierBankDetails;
 using OMS.Domain.Repository;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
@@ -131,7 +129,7 @@ namespace OMS.Application.Services.Organization
             }
             if (requestData.PhysicalAddress != null)
             {
-                organizationBusinessAddressDto.PhysicalAddressId= await AddEditAddress(requestData.PhysicalAddress, CurrentUserId);
+                organizationBusinessAddressDto.PhysicalAddressId = await AddEditAddress(requestData.PhysicalAddress, CurrentUserId);
             }
             if (requestData.RemitToAddress != null)
             {

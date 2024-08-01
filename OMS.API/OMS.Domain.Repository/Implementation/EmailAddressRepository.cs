@@ -63,15 +63,14 @@ namespace OMS.Domain.Repository.Implementation
 
         public async Task<AddEntityDTO<int>> AddEditContactEmail(DataTable emailList, int contactId)
         {
-            AddEntityDTO<int> responceData = new();
             var parameters = new
             {
                 emailList = emailList.AsTableValuedParameter("[dbo].[EmailTypeTable]"),
                 contactId
             };
-            responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTEMAIL,
+            AddEntityDTO<int> responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTEMAIL,
             parameters
-            ,CommandType.StoredProcedure);
+            , CommandType.StoredProcedure);
             return responceData;
         }
     }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
-using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Functionalities;
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
 using OMS.Framework;

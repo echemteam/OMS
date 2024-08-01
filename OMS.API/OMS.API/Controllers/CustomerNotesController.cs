@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.CustomerNotes;
-using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.API.Response.CustomerNotes;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
@@ -19,7 +18,7 @@ namespace OMS.API.Controllers
         #endregion
 
         #region Constructor
-        public CustomerNotesController(ICommonSettingService commonSettingService,IServiceManager serviceManager) : base(commonSettingService)
+        public CustomerNotesController(ICommonSettingService commonSettingService, IServiceManager serviceManager) : base(commonSettingService)
         {
             _serviceManager = serviceManager;
         }

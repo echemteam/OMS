@@ -48,7 +48,7 @@ namespace OMS.Domain.Repository
         IOrganizationOtherChargesRepository _organizationOtherChargesRepository;
         IOrganizationBusinessAddressesRepository _organizationBusinessAddressesRepository;
         ISupplierFinancialSettingsRepository _supplierFinancialSettingsRepository;
-        ISuppierBankDetailsRepository _suppierBankDetailsRepository;    
+        ISuppierBankDetailsRepository _suppierBankDetailsRepository;
         ISupplierPaymentSettingsRepository _supplierPaymentSettingsRepository;
         IApiEventRepository _apiEventManagementRepository;
         IApiEventMappingRepository _apiEventMappingRepository;
@@ -356,7 +356,7 @@ namespace OMS.Domain.Repository
             }
         }
 
-        public ISmtpSettingsRepository smtpSettings 
+        public ISmtpSettingsRepository smtpSettings
         {
             get
             {
@@ -524,7 +524,7 @@ namespace OMS.Domain.Repository
             }
 
         }
-        public IApiParameterMappingRepository apiParameterMapping 
+        public IApiParameterMappingRepository apiParameterMapping
         {
             get
             {

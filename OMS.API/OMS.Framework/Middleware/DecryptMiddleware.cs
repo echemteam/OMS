@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using OMS.Shared.Services.Contract;
-using System.Text;
 
 namespace OMS.Framework.Middleware
 {

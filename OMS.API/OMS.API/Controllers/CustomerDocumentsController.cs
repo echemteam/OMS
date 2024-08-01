@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Response.CustomerDocuments;
-using OMS.FileManger.Services;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 

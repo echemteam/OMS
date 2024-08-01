@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMS.Prisitance.Entities.Entities
 {
-    [Table("User")] 
+    [Table("User")]
     public class User
     {
-        [Key] 
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
 
@@ -15,7 +15,7 @@ namespace OMS.Prisitance.Entities.Entities
 
         [Column("HashedPassword")]
         public string? HashedPassword { get; set; }
-        
+
         [Column("PasswordSalt")]
         public string? PasswordSalt { get; set; }
 
@@ -29,10 +29,10 @@ namespace OMS.Prisitance.Entities.Entities
         [Column("IsResetPassword ")]
         public bool? IsResetPassword { get; set; }
 
-        [Column("FirstName")] 
+        [Column("FirstName")]
         public string? FirstName { get; set; }
 
-        [Column("LastName")] 
+        [Column("LastName")]
         public string? LastName { get; set; }
 
         [Column("CreatedAt")]

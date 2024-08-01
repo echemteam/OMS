@@ -26,9 +26,7 @@ namespace OMS.Application.Services.CustomerDocuments
         #region Customer Documents Services
         public async Task<AddEntityDTO<int>> AddCustomerDocuments(AddCustomerDocumentsRequest requestData, short CurrentUserId)
         {
-            AddEntityDTO<int> responseData = new();
-
-            responseData = await repositoryManager.customerDocuments.CheckDocumentsExistOrNot(requestData.DocumentTypeId, requestData.Name, requestData.CustomerId);
+            AddEntityDTO<int> responseData = await repositoryManager.customerDocuments.CheckDocumentsExistOrNot(requestData.DocumentTypeId, requestData.Name, requestData.CustomerId);
 
             if (responseData.KeyValue > 0)
             {

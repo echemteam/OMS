@@ -1,5 +1,4 @@
-﻿using OMS.Domain.Entities.API.Request.User;
-using OMS.Domain.Entities.API.Response.User;
+﻿using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.User;
 using OMS.Shared.Entities.CommonEntity;

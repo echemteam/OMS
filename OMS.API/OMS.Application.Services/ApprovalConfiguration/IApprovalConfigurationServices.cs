@@ -1,5 +1,4 @@
-﻿using OMS.Domain.Entities.API.Request.ApiConfiguration;
-using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
+﻿using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Request.Functionalities;
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Response.Functionalities;

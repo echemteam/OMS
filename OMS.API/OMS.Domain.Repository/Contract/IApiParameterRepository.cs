@@ -1,5 +1,4 @@
-﻿using OMS.Domain.Entities.API.Request.ApiAuthentication;
-using OMS.Domain.Entities.API.Request.ApiParameter;
+﻿using OMS.Domain.Entities.API.Request.ApiParameter;
 using OMS.Domain.Entities.API.Response.ApiParameter;
 using OMS.Domain.Entities.Entity.ApiParameter;
 using OMS.Domain.Entities.Entity.CommonEntity;

@@ -67,15 +67,14 @@ namespace OMS.Domain.Repository.Implementation
 
         public async Task<AddEntityDTO<int>> AddEditContactPhone(DataTable phoneList, int contactId)
         {
-            AddEntityDTO<int> responceData = new();
             var parameters = new
             {
                 phoneList = phoneList.AsTableValuedParameter("[dbo].[PhoneTypeTable]"),
                 contactId
             };
-            responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTPHONE,
+            AddEntityDTO<int> responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTPHONE,
             parameters
-            ,CommandType.StoredProcedure);
+            , CommandType.StoredProcedure);
             return responceData;
         }
     }

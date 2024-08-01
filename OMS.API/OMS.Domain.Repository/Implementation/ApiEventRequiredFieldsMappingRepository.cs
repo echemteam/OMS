@@ -63,7 +63,7 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetList<GetAllAPIParametersResponse>(GETALLAPIPARAMETERSBYENDPOINTID, new
             {
                 endpointId
-            },commandType: CommandType.StoredProcedure);
+            }, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<List<GetAllRequiredFieldsResponse>> GetAllRequiredFieldsByEventId(int apiEventId)

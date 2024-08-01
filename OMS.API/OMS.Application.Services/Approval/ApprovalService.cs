@@ -36,8 +36,6 @@ namespace OMS.Application.Services.Approval
         }
         public async Task<AddEntityDTO<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData, int CurrentUserId)
         {
-            //UserCheckListDTO userCheckListDTO = requestData.ToMapp<AddUserChecklistRequest, UserCheckListDTO>();
-            //userCheckListDTO.UserId = CurrentUserId;
             DataTable CheckListDataTable = ExportHelper.ListToDataTable(requestData.CheckListRequest);
             CheckListDataTable.Columns.Add("UserId", typeof(int));
             foreach (DataRow row in CheckListDataTable.Rows)

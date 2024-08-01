@@ -5,7 +5,6 @@ using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using OMS.Shared.Entities.CommonEntity;
 using System.Data;
 
 namespace OMS.Domain.Repository.Implementation

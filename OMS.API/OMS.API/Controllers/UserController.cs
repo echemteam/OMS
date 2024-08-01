@@ -38,7 +38,7 @@ namespace OMS.API.Controllers
             AddEntityDTO<int> responseData = new();
             if (requestData != null)
             {
-                responseData = await _serviceManager.userService.UpdateUser(requestData,CurrentUserId);
+                responseData = await _serviceManager.userService.UpdateUser(requestData, CurrentUserId);
                 return APISucessResponce(responseData);
             }
             return APISucessResponce<object>(responseData);

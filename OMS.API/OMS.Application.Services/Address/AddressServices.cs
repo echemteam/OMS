@@ -104,10 +104,9 @@ namespace OMS.Application.Services.Address
 
         public async Task<AddEntityDTO<int>> UpdateAddAddress(UpdateAddressRequest requestData, short CurrentUserId)
         {
-            AddEntityDTO<int> responceData = new();
             AddressDTO addressDTO = requestData.ToMapp<UpdateAddressRequest, AddressDTO>();
             addressDTO.UpdatedBy = CurrentUserId;
-            responceData = await repositoryManager.address.UpdateAddAddress(addressDTO);
+            AddEntityDTO<int> responceData = await repositoryManager.address.UpdateAddAddress(addressDTO);
 
             if (requestData.CustomerId > 0 && responceData.KeyValue > 0)
             {
@@ -135,6 +134,7 @@ namespace OMS.Application.Services.Address
             }
             return responceData;
         }
+
 
         public Task<List<GetAddresssBySupplierIdResponse>> GetAddresssBySupplierId(int supplierId)
         {

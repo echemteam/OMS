@@ -1,5 +1,4 @@
-﻿using OMS.Domain.Entities.API.Request.Address;
-using OMS.Domain.Entities.API.Response.Address;
+﻿using OMS.Domain.Entities.API.Response.Address;
 
 namespace OMS.Domain.Entities.API.Response.SuppierBankDetails
 {

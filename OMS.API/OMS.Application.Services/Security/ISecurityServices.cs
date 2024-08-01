@@ -1,6 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Request.Security;
 using OMS.Domain.Entities.API.Response.Security;
-using OMS.Domain.Entities.Entity.CommonEntity;
 
 namespace OMS.Application.Services.Security
 {

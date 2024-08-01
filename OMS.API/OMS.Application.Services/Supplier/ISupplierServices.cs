@@ -1,6 +1,4 @@
-﻿using OMS.Domain.Entities.API.Request.Customers;
-using OMS.Domain.Entities.API.Request.Supplier;
-using OMS.Domain.Entities.API.Response.Customers;
+﻿using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Shared.Entities.CommonEntity;

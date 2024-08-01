@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace OMS.Domain.Entities.API.Response.Organization
+﻿namespace OMS.Domain.Entities.API.Response.Organization
 {
     public class GetSmtpSettingsResponse
     {

@@ -47,13 +47,6 @@ namespace OMS.Domain.Repository.Implementation
             };
             AddEntityDTO<int> responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, parameters, CommandType.StoredProcedure);
             return responceData;
-
-            //return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, new
-            //{
-            //    addUserCheckList.UserId,
-            //    addUserCheckList.IsApproved,
-            //    addUserCheckList.ChecklistItemId,
-            //}, CommandType.StoredProcedure);
         }
         public async Task<List<GetValidateCheckListResponse>> GetValidateCustomer(int customerId, bool? isSubCustomer)
         {

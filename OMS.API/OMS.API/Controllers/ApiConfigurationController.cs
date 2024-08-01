@@ -61,7 +61,7 @@ namespace OMS.API.Controllers
         }
         [HttpPost("GetApiProviders")]
         public async Task<IActionResult> GetApiProviders([FromBody] ListEntityRequest<BaseFilter> requestData)
-       {
+        {
             var providers = await _serviceManager.apiConfigurationService.GetApiProviders(requestData);
             return APISucessResponce<object>(providers);
         }

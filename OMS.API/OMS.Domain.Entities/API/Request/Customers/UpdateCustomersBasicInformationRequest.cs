@@ -2,8 +2,8 @@
 
 namespace OMS.Domain.Entities.API.Request.Customers
 {
-    public class UpdateCustomersBasicInformationRequest: BaseCustomersDTO
-    {   
-        public short? ResponsibleUserId {  get; set; }
+    public class UpdateCustomersBasicInformationRequest : BaseCustomersDTO
+    {
+        public short? ResponsibleUserId { get; set; }
     }
 }

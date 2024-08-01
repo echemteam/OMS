@@ -5,7 +5,7 @@ using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
 using System.Data;
- 
+
 
 namespace OMS.Domain.Repository.Implementation
 {

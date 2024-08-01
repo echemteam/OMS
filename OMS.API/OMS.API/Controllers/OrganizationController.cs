@@ -123,7 +123,7 @@ namespace OMS.API.Controllers
         [HttpGet("GetOrganizationShippingCharges")]
         public async Task<IActionResult> GetOrganizationShippingCharges()
         {
-            var organizationShippingCharges= await _serviceManager.organizationService.GetOrganizationShippingCharges().ConfigureAwait(true);
+            var organizationShippingCharges = await _serviceManager.organizationService.GetOrganizationShippingCharges().ConfigureAwait(true);
             return APISucessResponce<object>(organizationShippingCharges);
         }
         [HttpPost("AddEditOrganizationOtherCharges")]

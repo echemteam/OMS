@@ -1,5 +1,4 @@
 ﻿using OMS.Domain.Entities.API.Response.Organization;
-using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository.Contract;

@@ -21,7 +21,6 @@ using OMS.Domain.Entities.Entity.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.Entity.ApiParameterMapping;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 

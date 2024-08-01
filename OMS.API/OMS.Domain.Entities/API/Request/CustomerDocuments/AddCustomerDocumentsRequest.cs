@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace OMS.Domain.Entities.API.Request.CustomerDocuments
+﻿namespace OMS.Domain.Entities.API.Request.CustomerDocuments
 {
     public class AddCustomerDocumentsRequest
     {
