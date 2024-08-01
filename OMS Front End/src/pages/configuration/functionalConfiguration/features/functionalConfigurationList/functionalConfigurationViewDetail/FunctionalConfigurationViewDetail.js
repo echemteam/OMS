@@ -13,7 +13,7 @@ const FunctionalConfigurationViewDetail = () => {
     const BackButton = () => {
         navigate("/FunctionalConfiguration");
     }
-    
+
     return (
         <>
             <div className='mt-3'>
