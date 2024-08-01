@@ -4,6 +4,7 @@ using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
 using OMS.Domain.Entities.API.Response.Approval;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
@@ -70,6 +71,10 @@ namespace OMS.Application.Services.Approval
         public Task<List<GetApprovalRequestsListByStatusResponse>> GetApprovalRequestsListByStatus(string status)
         {
             return repositoryManager.approval.GetApprovalRequestsListByStatus(status);
+        }
+        public async Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId)
+        {
+            return await repositoryManager.approval.GetApprovalRequestsByApprovalRequestId(approvalRequestId);
         }
     }
 

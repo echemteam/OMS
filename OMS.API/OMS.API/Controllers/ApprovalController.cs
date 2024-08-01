@@ -59,6 +59,16 @@ namespace OMS.API.Controllers
             List<GetApprovalRequestsListByStatusResponse> responseData = await _serviceManager.approvalService.GetApprovalRequestsListByStatus(status).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpGet("GetApprovalRequestsByApprovalRequestId")]
+        public async Task<IActionResult> GetApprovalRequestsByApprovalRequestId(int approvalRequestId)
+        {
+            if (approvalRequestId > 0)
+            {
+                var approvalRequestsDetails = await _serviceManager.approvalService.GetApprovalRequestsByApprovalRequestId(approvalRequestId).ConfigureAwait(true);
+                return APISucessResponce<object>(approvalRequestsDetails);
+            }
+            return APISucessResponce(approvalRequestId);
+        }
         #endregion
     }
 }

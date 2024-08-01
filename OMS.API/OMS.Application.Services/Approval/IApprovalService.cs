@@ -13,5 +13,6 @@ namespace OMS.Application.Services.Approval
         Task<List<GetValidateCheckListResponse>> GetValidateCheckList(ValidateRequest requestData);
         Task<AddEntityDTO<int>> AddApprovalRequests(AddApprovalRequests requestData, short CurrentUserId);
         Task<List<GetApprovalRequestsListByStatusResponse>> GetApprovalRequestsListByStatus(string status);
+        Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId);
     }
 }

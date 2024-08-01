@@ -14,5 +14,6 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetValidateCheckListResponse>> GetValidateSupplier(int mainId);
         Task<AddEntityDTO<int>> AddApprovalRequests(ApprovalRequestsDTO requestData);
         Task<List<GetApprovalRequestsListByStatusResponse>> GetApprovalRequestsListByStatus(string status);
+        Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId);
     }
 }
