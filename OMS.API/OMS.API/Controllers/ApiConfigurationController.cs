@@ -177,14 +177,14 @@ namespace OMS.API.Controllers
         }
 
         [HttpGet("ApiTester")]
-        public async Task<IActionResult> ApiTester(int providerId)
+        public async Task<IActionResult> ApiTester(int apiEventId)
         {
-            if (providerId > 0)
+            if (apiEventId > 0)
             {
-                var item = await _serviceManager.apiConfigurationService.ApiTester(providerId).ConfigureAwait(true);
+                var item = await _serviceManager.apiConfigurationService.ApiTester(apiEventId).ConfigureAwait(true);
                 return APISucessResponce<object>(item);
             }
-            return APISucessResponce(providerId);
+            return APISucessResponce(apiEventId);
         }
         #endregion
     }
