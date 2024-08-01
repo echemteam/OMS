@@ -63,6 +63,11 @@ namespace OMS.Application.Services.ApprovalConfiguration
         {
             return await repositoryManager.functionalities.GetFunctionalitiesResponsibles(requestData);
         }
+        public async Task<AddEntityDTO<int>> AddEditFunctionalities(AddEditFunctionalitiesRequest requestData)
+        {
+            FunctionalitiesDTO functionalitiesDTO = requestData.ToMapp<AddEditFunctionalitiesRequest, FunctionalitiesDTO>();
+            return await repositoryManager.functionalities.AddEditFunctionalities(functionalitiesDTO);
+        }
         #endregion
     }
 }
