@@ -45,6 +45,13 @@ namespace OMS.API.Controllers
             List<GetValidateCheckListResponse> responseData = await _serviceManager.approvalService.GetValidateCheckList(requestData).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+
+        [HttpPost("AddApprovalRequests")]
+        public async Task<IActionResult> AddApprovalRequests(AddApprovalRequests requestData)
+        {
+            var addItem = await _serviceManager.approvalService.AddApprovalRequests(requestData, CurrentUserId);
+            return APISucessResponce(addItem);
+        }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Response.Approval;
+using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,6 @@ namespace OMS.Domain.Repository.Contract
          Task<AddEntityDTO<int>> AddUserChecklistResponse(DataTable CheckListDataTable);
          Task<List<GetValidateCheckListResponse>> GetValidateCustomer(int mainId,bool? IsSubCustomer);
          Task<List<GetValidateCheckListResponse>> GetValidateSupplier(int mainId);
+        Task<AddEntityDTO<int>> AddApprovalRequests(ApprovalRequestsDTO requestData);
     }
 }
