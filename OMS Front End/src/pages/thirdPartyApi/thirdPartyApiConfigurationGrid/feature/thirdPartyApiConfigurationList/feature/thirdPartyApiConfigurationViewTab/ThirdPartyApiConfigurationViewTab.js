@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import RenderTabs from '../../../../../../../components/ui/tabs/RenderTabs';
 import EventMapping from '../eventMapping/EventMapping';
-import EventParamter from '../eventParamter/EventParamter';
 import ParameterMapping from '../parameterMapping/ParameterMapping';
 import EventRequiredFields from '../eventRequiredFields/EventRequiredFields';
 import RequiredFieldsMapping from '../requiredFieldsMapping/RequiredFieldsMapping';
@@ -13,7 +12,7 @@ const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
 
     const tabs = [
         {
-            sMenuItemCaption: "Event Mapping",
+            sMenuItemCaption: "Provider Mapping",
             component: (
                 <div className="mt-2">
                     <EventMapping
@@ -49,7 +48,7 @@ const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
             // isVisible: hasContactPermission.hasAccess,/
         },
         {
-            sMenuItemCaption: "Event Required Fields",
+            sMenuItemCaption: "Required Fields",
             component: (
                 <div className="mt-2">
                     <EventRequiredFields

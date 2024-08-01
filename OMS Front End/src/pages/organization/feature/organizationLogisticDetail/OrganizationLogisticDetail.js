@@ -31,20 +31,14 @@ const OrganizationLogisticDetail=()=>{
         let logisticData = organizationLogisticRef.current.getFormData();
         const request={
             ...logisticData,
-            organizationLogisticDetailId:logisticData.organizationLogisticDetailId,
+            organizationLogisticDetailId:logisticData.organizationLogisticDetailId ? logisticData.organizationLogisticDetailId :0 ,
             fedExAccount:logisticData.fedExAccount,
             dHLAccount:logisticData.dHLAccount,
             uPSAccount:logisticData.uPSAccount,
             uSPSAccount:logisticData.uSPSAccount,
 
         }
-            if(!logisticData.OrganizationLogisticDetailId && logisticData){
-                addEditOrganizationLogisticDetails(request);
-            }
-            else if(logisticData.OrganizationLogisticDetailId && logisticData ){
-                addEditOrganizationLogisticDetails(request);
-            }
-           
+          addEditOrganizationLogisticDetails(request);     
       }
 
     useEffect(() => {
@@ -70,8 +64,7 @@ const OrganizationLogisticDetail=()=>{
                     ref={organizationLogisticRef}
                    {...organizationLogisticData}
    
-                />
-                
+                />   
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons

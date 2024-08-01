@@ -3,15 +3,15 @@ import { GridColumnType } from "../../../../../../data/gridColumnType";
 export const functionalConfigurationListData = {
     columns: [
         {
-            name: "Event Name",
-            fieldName: "eventName",
-            width: "20%",
+            name: "Module Name",
+            fieldName: "moduleName",
+            width: "40%",
             allowShort: true,
         },
         {
-            name: "Description",
-            fieldName: "description",
-            width: "60%",
+            name: "Functionality Name",
+            fieldName: "functionalityName",
+            width: "40%",
             allowShort: true,
         },
         {

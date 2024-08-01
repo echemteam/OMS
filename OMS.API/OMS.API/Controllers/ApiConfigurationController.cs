@@ -181,8 +181,8 @@ namespace OMS.API.Controllers
         {
             if (apiEventId > 0)
             {
-                //var item = await _serviceManager.apiConfigurationService.ApiTester(apiEventId).ConfigureAwait(true);
-                //return APISucessResponce<object>(item);
+                var item = await _serviceManager.apiConfigurationService.ApiTester(apiEventId).ConfigureAwait(true);
+                return APISucessResponce<object>(item);
             }
             return APISucessResponce(apiEventId);
         }

@@ -1,73 +1,63 @@
-import React, { useEffect, useRef, useState } from 'react';
-import MolGrid from '../../../../../../components/Grid/MolGrid';
-import { functionalConfigurationListData } from '../config/FunctionalConfigurationList.data';
+import React, { useRef, useState } from 'react'
+import AddEditManageResponsibleUser from './feature/AddEditManageResponsibleUser'
+import ManageResponsibleUserList from './feature/ManageResponsibleUserList'
+import CardSection from '../../../../../../components/ui/card/CardSection'
+import { AppIcons } from '../../../../../../data/appIcons'
+import SidebarModel from '../../../../../../components/ui/sidebarModel/SidebarModel'
 
+const ManageResponsibleUsers = (props) => {
 
-const ManageResponsibleUsers = () => {
-  const molGridRef = useRef();
-  const [listData, setListData] = useState();
-  const [totalRowCount, setTotalRowCount] = useState(0);
+    const childRef = useRef();
+    const [isModelOpen, setIsModelOpen] = useState(false);
 
-  useEffect(() => {
-      // Sample static data
-      const staticData = [
-          {
-              id: 1,
-              eventName: 'Event 1',
-              description: 'Description for event 1',
-          },
-          {
-              id: 2,
-              eventName: 'Event 2',
-              description: 'Description for event 2',
-          },
-          {
-              id: 3,
-              eventName: 'Event 3',
-              description: 'Description for event 3',
-          },
-          {
-              id: 4,
-              eventName: 'Event 4',
-              description: 'Description for event 4',
-          },
-          {
-              id: 5,
-              eventName: 'Event 5',
-              description: 'Description for event 5',
-          },
-      ];
+    const handleToggleModal = () => {
+        setIsModelOpen(true);
+    };
 
-      setListData(staticData);
-      setTotalRowCount(staticData.length);
-  }, []);
+    const onSidebarClose = () => {
+        setIsModelOpen(false);
+    };
 
-  // const actionHandler = {
-  //     VIEW: handleViewClick,
-  //     Edit: handleEditClick
-  // }
+    const onGetData = () => {
+        if (childRef.current) {
+            childRef.current.callChildFunction();
+        }
+    };
 
-  return (
-      <div className="row">
-          <div className="col-md-12 table-striped api-provider">
-              <MolGrid
-                  ref={molGridRef}
-                  configuration={functionalConfigurationListData}
-                  dataSource={listData}
-                  allowPagination={true}
-                  pagination={{
-                      totalCount: totalRowCount,
-                      pageSize: 20,
-                      currentPage: 1,
-                  }}
-                  // onPageChange={handlePageChange}
-                  // onSorting={handleSorting}
-                  // isLoading={isGetApiEventsLoading}
-                  // onActionChange={actionHandler}
-              />
-          </div>
-      </div>
-  )
+    return (
+        <div>
+            <CardSection
+                cardTitle="Manage Responsible Users"
+                buttonClassName="btn theme-button"
+                // rightButton={buttonVisible ? true : false}
+                rightButton={true}
+                buttonText="Add"
+                textWithIcon={true}
+                iconImg={AppIcons.PlusIcon}
+                titleButtonClick={handleToggleModal}
+            >
+                <ManageResponsibleUserList
+                    functionalityId={props.functionalityId}
+                    childRef={childRef}
+                />
+            </CardSection>
+
+            <SidebarModel
+                modalTitle="Add Responsible User"
+                contentClass="content-35"
+                onClose={onSidebarClose}
+                modalTitleIcon={AppIcons.AddIcon}
+                isOpen={isModelOpen}
+            >
+                <AddEditManageResponsibleUser
+                    onClose={onSidebarClose}
+                    isOpen={isModelOpen}
+                    functionalityId={props.functionalityId}
+                    onGetData={onGetData}
+                />
+            </SidebarModel>
+        </div>
+    )
 }
 
 export default ManageResponsibleUsers

@@ -27,7 +27,7 @@ const EventMapping = ({ keyId, setEndpointId, setProviderId }) => {
   return (
     <>
       <CardSection
-        cardTitle="Event Mapping"
+        cardTitle="API Provider Map"
         buttonClassName="btn theme-button"
         // rightButton={buttonVisible ? true : false}
         rightButton={isProviderData ? false : true}

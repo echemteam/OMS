@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef,useState,useEffect } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -27,16 +28,12 @@ const OrganizationAccountingDetail=()=>{
         let accountingData = organizationAccountingRef.current.getFormData();
         const request={
             ...accountingData,
-            organizationAccountingDetailId: accountingData.organizationAccountingDetailId,
-            creditLimit:accountingData.creditLimit,
-           
+            organizationAccountingDetailId: accountingData.organizationAccountingDetailId ? accountingData.organizationAccountingDetailId : 0,
+            creditLimit:accountingData.creditLimit,     
         }
-            if(!accountingData.organizationAccountingDetailId && accountingData){
-                addEditOrganizationAccountingDetails(request);
-            }
-            else if(accountingData.organizationAccountingDetailId && accountingData ){
-                addEditOrganizationAccountingDetails(request);
-        }          
+        
+       addEditOrganizationAccountingDetails(request);
+                  
       }
 
     useEffect(() => {
