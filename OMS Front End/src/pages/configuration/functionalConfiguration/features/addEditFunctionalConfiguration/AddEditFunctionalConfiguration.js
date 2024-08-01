@@ -48,7 +48,7 @@ const AddEditFunctionalConfiguration = (props) => {
       };
       setFunctionalData(UpdateData)
     }
-  }, [props.isEdit])
+  }, [props.isOpen])
 
   const handleResetAndClose = () => {
     onResetForm(functionalData, setFunctionalData, null);

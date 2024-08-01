@@ -1,111 +1,107 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from 'prop-types';
-import CardSection from "../../../../components/ui/card/CardSection";
-import { AppIcons } from "../../../../data/appIcons";
-import Image from "../../../../components/image/Image";
-import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
-import AddEditRules from "./AddEditRules";
-import { useLazyGetApprovalConfigurationByApprovalConfigurationIdQuery } from "../../../../app/services/configurationAPI";
-import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { useGetApprovalConfigurationRulesMutation } from "../../../../app/services/configurationAPI";
+import MolGrid from "../../../../components/Grid/MolGrid";
+import { rulesListData } from "./config/RulesForm.data";
 
 const Rules = (props) => {
-  const [isModelOpen, setisModelOpen] = useState(false);
-  const [getApprovedConfigData, setGetApprovedConfigData] = useState()
+  const molGridRef = useRef();
+  const [listData, setListData] = useState();
+  const [totalRowCount, setTotalRowCount] = useState(0);
+  const [getApprovalConfigurationRules, { isLoading: isGetApprovalConfigurationRulesLoading, isSuccess: isGetApprovalConfigurationRulesSuccess, data: isGetApprovalConfigurationRulesData }] = useGetApprovalConfigurationRulesMutation();
 
-  const [
-    getApprovalConfigurationByApprovalConfigurationId,
-    {
-      isSuccess: isGetApprovalConfigurationByApprovalConfigurationIdSucess,
-      data: allGetApprovalConfigurationByApprovalConfigurationIdData,
-    },
-  ] = useLazyGetApprovalConfigurationByApprovalConfigurationIdQuery();
+  const getLists = (pageObject, sortingString) => {
+    const request = {
+      pagination: {
+        pageNumber: pageObject.pageNumber,
+        pageSize: pageObject.pageSize,
+      },
+      filters: { searchText: "" },
+      sortString: sortingString,
+    };
+    getApprovalConfigurationRules(request);
+  };
 
-  const handleToggleModal = () => {
-    setGetApprovedConfigData("")
-    setisModelOpen(true);
+  const handlePageChange = (page) => {
+    getLists(page, molGridRef.current.generateSortingString());
+  };
+
+  const handleSorting = (shortString) => {
+    getLists(molGridRef.current.getCurrentPageObject(), shortString);
   };
 
   useEffect(() => {
-    if (isGetApprovalConfigurationByApprovalConfigurationIdSucess && allGetApprovalConfigurationByApprovalConfigurationIdData) {
-      setGetApprovedConfigData(allGetApprovalConfigurationByApprovalConfigurationIdData)
-      setisModelOpen(true);
+    if (isGetApprovalConfigurationRulesSuccess && isGetApprovalConfigurationRulesData) {
+      if (isGetApprovalConfigurationRulesData) {
+        setListData(isGetApprovalConfigurationRulesData.dataSource);
+      }
+      if (isGetApprovalConfigurationRulesData.totalRecord) {
+        setTotalRowCount(isGetApprovalConfigurationRulesData.totalRecord);
+      }
     }
-  }, [isGetApprovalConfigurationByApprovalConfigurationIdSucess, allGetApprovalConfigurationByApprovalConfigurationIdData])
+  }, [isGetApprovalConfigurationRulesSuccess, isGetApprovalConfigurationRulesData]);
 
-  const handleEditModal = (data) => {
-    getApprovalConfigurationByApprovalConfigurationId(data.approvalConfigurationId)
+  useEffect(() => {
+    if (molGridRef.current) {
+      const currentPageObject = molGridRef.current.getCurrentPageObject();
+      const currentsortingString = molGridRef.current.generateSortingString();
+      const request = {
+        pagination: {
+          pageNumber: currentPageObject.pageNumber,
+          pageSize: currentPageObject.pageSize,
+        },
+        filters: { searchText: "" },
+        sortString: currentsortingString,
+      };
+      getApprovalConfigurationRules(request);
+    }
+  }, []);
+
+
+  const onGetData = () => {
+    if (molGridRef.current) {
+      const defaultPageObject = molGridRef.current.getCurrentPageObject();
+      getLists(defaultPageObject, molGridRef.current.generateSortingString());
+    }
   };
 
-  const onSidebarClose = () => {
-    onResetForm(props.rulesFormData, props.setFormData, null);
-    setisModelOpen(false);
-  };
+  useImperativeHandle(props.childRef, () => ({
+    callChildFunction: onGetData,
+  }));
 
+
+  const handleEditClick = (data) => {
+    if (props.onEdit) {
+      props.onEdit(data);
+    }
+  }
+
+  const actionHandler = {
+    EDIT: handleEditClick
+  }
 
   return (
     <>
-      <div className="config-card">
-        <CardSection
-          cardTitle="Rules"
-          buttonClassName="btn theme-button"
-          rightButton={true}
-          buttonText="Add Rules"
-          textWithIcon={true}
-          iconImg={AppIcons.PlusIcon}
-          titleButtonClick={handleToggleModal}
-        >
-          <div className="config-content">
-            {props.getRules &&
-              props.getRules.map((rule) => (
-                <div
-                  key={rule.approvalConfigurationId}
-                  className={`config-rule-info ${props.selectedRule === rule.approvalConfigurationId ? "selected" : ""}`}
-                >
-                  <span>{rule.ruleName}</span>
-                  <div className="edit-icons" onClick={() => handleEditModal(rule)}>
-                    <Image imagePath={AppIcons.editThemeIcon} altText="Edit Icon" />
-                  </div>
-                </div>
-              ))}
-          </div>
-        </CardSection>
+      <div className="row">
+        <div className="col-md-12 table-striped api-provider">
+          <MolGrid
+            ref={molGridRef}
+            configuration={rulesListData}
+            dataSource={listData}
+            allowPagination={true}
+            pagination={{
+              totalCount: totalRowCount,
+              pageSize: 20,
+              currentPage: 1,
+            }}
+            onPageChange={handlePageChange}
+            onSorting={handleSorting}
+            isLoading={isGetApprovalConfigurationRulesLoading}
+            onActionChange={actionHandler}
+          />
+        </div>
       </div>
-      <SidebarModel
-        modalTitle={getApprovedConfigData ? "Update Rule" : "Add Rule"}
-        contentClass="content-35"
-        onClose={onSidebarClose}
-        modalTitleIcon={AppIcons.AddIcon}
-        isOpen={isModelOpen}
-      >
-        <AddEditRules
-          onClose={onSidebarClose}
-          allGetAllModulesData={props.allGetAllModulesData}
-          selectedModuleId={props.selectedModuleId}
-          selectedFunctionalityId={props.selectedFunctionalityId}
-          allGetAllFunctionalitiesData={props.allGetAllFunctionalitiesData}
-          getApprovedConfigData={getApprovedConfigData}
-          handleRepeatCallRule={props.onRepeatCall}
-          rulesFormData={props.rulesFormData}
-          setFormData={props.setFormData}
-          formData={props.formData}
-          allGetAllFunctionalitiesFieldsData={props.allGetAllFunctionalitiesFieldsData}
-        />
-      </SidebarModel>
     </>
   );
-};
-
-Rules.propTypes = {
-  getRules: PropTypes.any.isRequired,
-  selectedModuleId: PropTypes.number.isRequired,
-  selectedFunctionalityId: PropTypes.number.isRequired,
-  allGetAllModulesData: PropTypes.array.isRequired,
-  allGetAllFunctionalitiesData: PropTypes.array.isRequired,
-  allGetAllFunctionalitiesFieldsData: PropTypes.array.isRequired,
-  onRepeatCall: PropTypes.func.isRequired,
-  rulesFormData: PropTypes.object.isRequired,
-  setFormData: PropTypes.func.isRequired,
-  formData: PropTypes.object.isRequired,
 };
 
 export default Rules;

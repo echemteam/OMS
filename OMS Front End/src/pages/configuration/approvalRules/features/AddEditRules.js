@@ -1,35 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
-import PropTypes from 'prop-types';
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
-import {
-  useAddEditApprovalConfigurationMutation,
-  useLazyGetAllFunctionalitiesFieldsQuery,
-  useLazyGetAllFunctionalitiesQuery,
-  useLazyGetAllModulesQuery,
-} from "../../../../app/services/configurationAPI";
+
 import { CommansDataField } from "../../../../utils/Enums/DropdownEnums";
-import { useLazyGetAllRolesQuery } from "../../../../app/services/securityPermissionsAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
-import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { rulesFormData } from "./config/RulesForm.data";
+import { useAddEditApprovalConfigurationMutation, useLazyGetAllFunctionalitiesFieldsQuery, useLazyGetAllFunctionalitiesQuery, useLazyGetAllModulesQuery, useLazyGetApprovalConfigurationByApprovalConfigurationIdQuery } from "../../../../app/services/configurationAPI";
+import { useLazyGetAllRolesQuery } from "../../../../app/services/securityPermissionsAPI";
+import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 
 const AddEditRules = (props) => {
   const ruleFormRef = useRef();
-  const [approvalConfigurationId, setApprovalConfigurationId] = useState(0);
-  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] =
-    useState(false);
-  const [moduleId, setModuleID] = useState("");
-  const [functionalityId, setFunctionalityID] = useState("");
+  const [ruleData, setRuleData] = useState(rulesFormData)
+  const [moduleId, setModuleID] = useState(0)
+  const [functionalityID, setFunctionalityID] = useState(0)
+  const [ApprovalConfigurationId, setApprovalConfigurationId] = useState(0)
 
-  const [
-    // getAllModules,
-    { isSuccess: isgetAllModulesSucess, data: allGetAllModulesData },
+  const [getAllModules,
+    {
+      isSuccess: isgetAllModulesSucess,
+      data: allGetAllModulesData,
+    },
   ] = useLazyGetAllModulesQuery();
 
-  const [
-    getAllFunctionalities,
+  const [getAllFunctionalities,
     {
       isSuccess: isGetAllFunctionalitiesSucess,
       data: allGetAllFunctionalitiesData,
@@ -37,7 +34,7 @@ const AddEditRules = (props) => {
   ] = useLazyGetAllFunctionalitiesQuery();
 
   const [
-    // getAllFunctionalitiesFields,
+    getAllFunctionalitiesFields,
     {
       isSuccess: isGetAllFunctionalitiesFieldsSucess,
       data: allGetAllFunctionalitiesFieldsData,
@@ -58,7 +55,10 @@ const AddEditRules = (props) => {
     },
   ] = useAddEditApprovalConfigurationMutation();
 
+  const [getApprovalConfigurationByApprovalConfigurationId, { isFetching: isGetApprovalConfigurationByApprovalConfigurationIdFetching, isSuccess: isGetApprovalConfigurationByApprovalConfigurationIdSuccess, data: isGetApprovalConfigurationByApprovalConfigurationIdData }] = useLazyGetApprovalConfigurationByApprovalConfigurationIdQuery();
+
   useEffect(() => {
+    getAllModules();
     getAllRoles();
   }, []);
 
@@ -69,154 +69,116 @@ const AddEditRules = (props) => {
   }, [moduleId]);
 
   useEffect(() => {
-    if (
-      isGetAllFunctionalitiesFieldsSucess &&
-      allGetAllFunctionalitiesFieldsData
-    ) {
-      handleFunctionalityFieldOption(allGetAllFunctionalitiesFieldsData);
-      setShouldRerenderFormCreator((prevState) => !prevState);
+    if (functionalityID > 0) {
+      getAllFunctionalitiesFields(functionalityID);
     }
-    if (isGetAllRolesSucess && allGetAllRolesData) {
-      handleRoleOption(allGetAllRolesData);
-      setShouldRerenderFormCreator((prevState) => !prevState);
-    }
+  }, [functionalityID]);
+
+  useEffect(() => {
     if (isgetAllModulesSucess && allGetAllModulesData) {
       handleModuleOption(allGetAllModulesData);
-      setModuleID(allGetAllModulesData);
-      setShouldRerenderFormCreator((prevState) => !prevState);
     }
     if (isGetAllFunctionalitiesSucess && allGetAllFunctionalitiesData) {
       handleFunctionalityOption(allGetAllFunctionalitiesData);
-      setFunctionalityID(allGetAllFunctionalitiesData);
-      setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  }, [
-    isGetAllFunctionalitiesFieldsSucess,
-    allGetAllFunctionalitiesFieldsData,
-    allGetAllRolesData,
-    isGetAllRolesSucess,
-    isgetAllModulesSucess,
-    allGetAllModulesData,
-    isGetAllFunctionalitiesSucess,
-    allGetAllFunctionalitiesData,
-  ]);
-
-  useEffect(() => {
+    if (isGetAllRolesSucess && allGetAllRolesData) {
+      handleRoleOption(allGetAllRolesData);
+    }
     if (
-      isAddEditApprovalConfigurationSucess &&
-      allAddEditApprovalConfigurationData
+      isGetAllFunctionalitiesFieldsSucess && allGetAllFunctionalitiesFieldsData
     ) {
-      handleAddEditRulesResponse(
-        isAddEditApprovalConfigurationSucess,
-        allAddEditApprovalConfigurationData
-      );
+      handleFunctionalityFieldOption(allGetAllFunctionalitiesFieldsData);
     }
-  }, [
-    isAddEditApprovalConfigurationSucess,
-    allAddEditApprovalConfigurationData,
-  ]);
-
-  useEffect(() => {
-    if (props.getApprovedConfigData && props.getApprovedConfigData.length > 0) {
-      const configData = props.getApprovedConfigData[0];
-      setApprovalConfigurationId(configData.approvalConfigurationId);
-      let data = { ...props.rulesFormData };
-      data.initialState = {
-        ...props.rulesFormData.initialState,
-        approvalAction: configData.approvalAction,
-        functionalitiesFieldId: configData.functionalitiesFieldId,
-        functionalityId: configData.functionalityId,
-        moduleId: configData.moduleId,
-        roleId: configData.approverRoleId,
-        ruleName: configData.ruleName,
-      };
-      props.setFormData(data);
-    }
-  }, [props.getApprovedConfigData]);
+  }, [isgetAllModulesSucess, allGetAllModulesData,
+    allGetAllFunctionalitiesData, isGetAllFunctionalitiesSucess,
+    isGetAllRolesSucess, allGetAllRolesData,
+    isGetAllFunctionalitiesFieldsSucess, allGetAllFunctionalitiesFieldsData
+  ])
 
   const handleModuleOption = (responseData) => {
-    setDropDownOptionField(
-      responseData,
-      CommansDataField.ModuleId,
-      "moduleName",
-      props.rulesFormData,
-      CommansDataField.ModuleId
-    );
-  };
+    setDropDownOptionField(responseData, CommansDataField.ModuleId, 'moduleName', rulesFormData, CommansDataField.ModuleId);
+  }
 
   const handleFunctionalityOption = (responseData) => {
-    setDropDownOptionField(
-      responseData,
-      CommansDataField.FunctionalityId,
-      "name",
-      props.rulesFormData,
-      CommansDataField.FunctionalityId
+    setDropDownOptionField(responseData, CommansDataField.FunctionalityId, 'name', rulesFormData, CommansDataField.FunctionalityId);
+  }
+
+  const handleRoleOption = (responseData) => {
+    setDropDownOptionField(responseData, "roleId", "roleName", rulesFormData, "roleId"
     );
   };
 
   const handleFunctionalityFieldOption = (responseData) => {
-    setDropDownOptionField(
-      responseData,
-      "functionalitiesFieldId",
-      "fieldName",
-      props.rulesFormData,
-      "functionalitiesFieldId"
+    setDropDownOptionField(responseData, "functionalitiesFieldId", "fieldName", rulesFormData, "functionalitiesFieldId"
     );
   };
 
-  const handleRoleOption = (responseData) => {
-    setDropDownOptionField(
-      responseData,
-      "roleId",
-      "roleName",
-      props.rulesFormData,
-      "roleId"
-    );
-  };
 
-  const handleAddEditRulesResponse = (isSuccess, responseData) => {
-    if (isSuccess && responseData) {
-      if (responseData.errorMessage.includes("exists")) {
-        ToastService.warning(responseData.errorMessage);
+  useEffect(() => {
+    if (isAddEditApprovalConfigurationSucess && allAddEditApprovalConfigurationData) {
+      if (allAddEditApprovalConfigurationData.errorMessage.includes("exists")) {
+        ToastService.warning(allAddEditApprovalConfigurationData.errorMessage);
+        handleResetAndClose();
         return;
       }
-      onResetForm(props.rulesFormData, props.setFormData, null);
-      ToastService.success(responseData.errorMessage);
-      let req = {
-        functionalityId: props.selectedFunctionalityId,
-        moduleId: props.selectedModuleId,
-      };
-      props.handleRepeatCallRule(req);
-      props.onClose();
+      ToastService.success(allAddEditApprovalConfigurationData.errorMessage);
+      handleResetAndClose();
+      props.onGetData()
     }
-  };
+  }, [isAddEditApprovalConfigurationSucess, allAddEditApprovalConfigurationData]);
+
+  useEffect(() => {
+    onResetForm(rulesFormData, setRuleData, null);
+    if (props.initData.approvalConfigurationId) {
+      getApprovalConfigurationByApprovalConfigurationId(props.initData.approvalConfigurationId)
+    }
+  }, [props.isOpen]);
+
+  useEffect(() => {
+    if (!isGetApprovalConfigurationByApprovalConfigurationIdFetching && isGetApprovalConfigurationByApprovalConfigurationIdSuccess && isGetApprovalConfigurationByApprovalConfigurationIdData) {
+      if (isGetApprovalConfigurationByApprovalConfigurationIdData.moduleId > 0) {
+        getAllFunctionalities(isGetApprovalConfigurationByApprovalConfigurationIdData.moduleId);
+      }
+      if (isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId) {
+        getAllFunctionalitiesFields(isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId);
+      }
+      // const configData = isGetApprovalConfigurationByApprovalConfigurationIdData;
+      setApprovalConfigurationId(isGetApprovalConfigurationByApprovalConfigurationIdData.approvalConfigurationId);
+      let form = { ...rulesFormData };
+      setFieldSetting(form, 'functionalityId', FieldSettingType.DISABLED, false);
+      setFieldSetting(form, 'functionalitiesFieldId', FieldSettingType.DISABLED, false);
+      
+      form.initialState = {
+        ...rulesFormData.initialState,
+        approvalAction: isGetApprovalConfigurationByApprovalConfigurationIdData.approvalAction,
+        functionalitiesFieldId: isGetApprovalConfigurationByApprovalConfigurationIdData.functionalitiesFieldId,
+        functionalityId: isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId,
+        moduleId: isGetApprovalConfigurationByApprovalConfigurationIdData.moduleId,
+        roleId: isGetApprovalConfigurationByApprovalConfigurationIdData.approverRoleId,
+        ruleName: isGetApprovalConfigurationByApprovalConfigurationIdData.ruleName,
+      };
+      setRuleData(form);
+    }
+  }, [isGetApprovalConfigurationByApprovalConfigurationIdFetching, isGetApprovalConfigurationByApprovalConfigurationIdSuccess, isGetApprovalConfigurationByApprovalConfigurationIdData]);
+
 
   const handleChangeDropdownList = (data, dataField) => {
-    const manageData = { ...props.formData };
+    const manageData = { ...ruleData };
     if (dataField === CommansDataField.ModuleId) {
       setModuleID(data.value);
-      setDropDownOptionField(
-        props.allGetAllFunctionalitiesData,
-        "functionalityId",
-        "name",
-        manageData,
-        "functionalityId"
-      );
+      setDropDownOptionField(allGetAllFunctionalitiesData, "functionalityId", "name", manageData, "functionalityId");
+      setFieldSetting(manageData, 'functionalityId', FieldSettingType.DISABLED, false);
       ruleFormRef.current.updateFormFieldValue({
         moduleId: data.value,
         functionalityId: null,
       });
-    } else if (dataField === CommansDataField.FunctionalityId) {
+    }
+    else if (dataField === CommansDataField.FunctionalityId) {
       setFunctionalityID(data.value);
-      setDropDownOptionField(
-        props.allGetAllFunctionalitiesFieldsData,
-        "functionalitiesFieldId",
-        "fieldName",
-        manageData,
-        "functionalitiesFieldId"
-      );
+      setDropDownOptionField(allGetAllFunctionalitiesFieldsData, "functionalitiesFieldId", "fieldName", manageData, "functionalitiesFieldId");
+      setFieldSetting(manageData, 'functionalitiesFieldId', FieldSettingType.DISABLED, false);
       ruleFormRef.current.updateFormFieldValue({
-        functionalityId: functionalityId[0].functionalityId,
+        functionalityId: data.value,
         functionalitiesFieldId: null,
       });
     }
@@ -227,9 +189,7 @@ const AddEditRules = (props) => {
     if (data) {
       const requestData = {
         ...data,
-        approvalConfigurationId: approvalConfigurationId
-          ? approvalConfigurationId
-          : 0,
+        approvalConfigurationId: ApprovalConfigurationId ? ApprovalConfigurationId : 0,
         ruleName: data.ruleName,
         moduleId:
           data.moduleId && typeof data.moduleId === "object"
@@ -241,7 +201,7 @@ const AddEditRules = (props) => {
             : data.functionalityId,
         functionalitiesFieldId:
           data.functionalitiesFieldId &&
-          typeof data.functionalitiesFieldId === "object"
+            typeof data.functionalitiesFieldId === "object"
             ? data.functionalitiesFieldId.value
             : data.functionalitiesFieldId,
         approverRoleId:
@@ -251,8 +211,6 @@ const AddEditRules = (props) => {
         approvalAction: data.approvalAction,
       };
       addEditApprovalConfiguration(requestData);
-      setFunctionalityID(requestData.functionalityId);
-      setModuleID(requestData.moduleId);
     }
   };
 
@@ -261,27 +219,28 @@ const AddEditRules = (props) => {
   };
 
   const handleResetAndClose = () => {
-    onResetForm(props.rulesFormData, props.setFormData, null);
+    onResetForm(rulesFormData, setRuleData, null);
     props.onClose();
   };
 
   return (
-    <div className="row mt-2 add-address-form">
+    <div className="row mt-2">
       <FormCreator
-        config={props.formData}
+        config={ruleData}
         ref={ruleFormRef}
-        {...props.formData}
+        {...ruleData}
         onActionChange={formActionHandler}
-        key={shouldRerenderFormCreator}
+      // key={shouldRerenderFormCreator}
       />
       <div className="col-md-12">
         <div className="d-flex align-item-end justify-content-end">
           <Buttons
             buttonTypeClassName="theme-button"
-            buttonText={approvalConfigurationId ? "Update" : "Save"}
+            buttonText="Save"
+            // buttonText={approvalConfigurationId ? "Update" : "Save"}
             onClick={handleAddEditRule}
             isLoading={isAddEditApprovalConfigurationLoading}
-            // isDisable={isButtonDisable}
+          // isDisable={isButtonDisable}
           />
           <Buttons
             buttonTypeClassName="dark-btn ml-5"
@@ -292,29 +251,6 @@ const AddEditRules = (props) => {
       </div>
     </div>
   );
-};
-
-AddEditRules.propTypes = {
-  getApprovedConfigData: PropTypes.arrayOf(
-    PropTypes.shape({
-      approvalConfigurationId: PropTypes.number.isRequired,
-      approvalAction: PropTypes.string.isRequired,
-      functionalitiesFieldId: PropTypes.number.isRequired,
-      functionalityId: PropTypes.number.isRequired,
-      moduleId: PropTypes.number.isRequired,
-      approverRoleId: PropTypes.number.isRequired,
-      ruleName: PropTypes.string.isRequired,
-    })
-  ),
-  rulesFormData: PropTypes.object.isRequired,
-  setFormData: PropTypes.func.isRequired,
-  selectedFunctionalityId: PropTypes.number.isRequired,
-  selectedModuleId: PropTypes.number.isRequired,
-  handleRepeatCallRule: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  formData: PropTypes.object.isRequired,
-  allGetAllFunctionalitiesData: PropTypes.array,
-  allGetAllFunctionalitiesFieldsData: PropTypes.array,
 };
 
 export default AddEditRules;

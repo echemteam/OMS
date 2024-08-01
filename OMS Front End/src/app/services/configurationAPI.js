@@ -114,6 +114,16 @@ const configurationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getApprovalConfigurationRules: builder.mutation({
+            query: (data) => ({
+                url: '/ApprovalConfiguration/GetApprovalConfigurationRules',
+                method: 'POST',
+                body: transformRequest(data)
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -127,6 +137,7 @@ export const {
     useAddFunctionalitiesResponsiblesUserMutation,
     useGetFunctionalitiesMutation,
     useAddEditFunctionalitiesMutation,
+    useGetApprovalConfigurationRulesMutation,
     useGetFunctionalitiesResponsiblesMutation,
     useGetFunctionalityEventsMutation,
     useDeleteFunctionalitiesResponsiblesUserMutation,
