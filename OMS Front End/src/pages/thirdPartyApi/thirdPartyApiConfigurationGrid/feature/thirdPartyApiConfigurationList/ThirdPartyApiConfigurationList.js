@@ -103,15 +103,15 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
         navigate(`/ThirdPartyApiConfigurationViewDetails/${encryptUrlData(data.apiEventId)}`, "_blank");
     }
 
-    const handleEditClick = (data) => {
+    const handleTestClick = (data) => {
         getApiTester(data?.apiEventId);
     };
 
 
     const actionHandler = {
-        EDIT: handleEditClick,
         VIEW: handleViewClick,
-        DELETE: handleDeleteClick
+        DELETE: handleDeleteClick,
+        TESTAPI: handleTestClick
     };
 
     useImperativeHandle(childRef, () => ({

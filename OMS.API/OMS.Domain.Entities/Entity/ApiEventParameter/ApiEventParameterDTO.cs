@@ -6,6 +6,7 @@
         public int? ApiEventId { get; set; }
         public string? ParameterName { get; set; }
         public string? ParameterType { get; set; }
+        public string? DefaultValue { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }

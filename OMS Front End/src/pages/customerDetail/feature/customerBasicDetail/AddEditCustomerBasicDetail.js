@@ -18,7 +18,7 @@ import ExistingCustomerSupplierInfo from "../../../../common/features/component/
 import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import SwalAlert from "../../../../services/swalService/SwalService";
 import { SuccessMessage } from "../../../../data/appMessages";
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
@@ -177,7 +177,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     }));
 
     const handleAddBasicDetails = () => {
-       
         let data = basicDetailRef.current.getFormData();
         if (data) {
             let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
@@ -196,7 +195,11 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                     ...req,
                     responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                 }
-                addEditCustomersBasicInformation(value);
+                let request = {
+                    newValue: value,
+                    oldValue: formData.initialState
+                }
+                addEditCustomersBasicInformation(request);
             } else {
                 if (data.taxId) {
                     const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, customerbasicData.formFields, 'taxId');
@@ -205,7 +208,11 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                             ...req,
                             responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                         }
-                        addEditCustomersBasicInformation(value);
+                        let request = {
+                            newValue: value,
+                            oldValue: formData.initialState
+                        }
+                        addEditCustomersBasicInformation(request);
                     } else {
                         ToastService.warning(validateTaxIdMessage);
                     }
@@ -230,31 +237,31 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         }
     }
 
-    const handleCheckboxchange=(data,datafield)=>{
-    
-        if(customerId){
-        if(datafield==="isBuyingForThirdParty" && GetCustomersBasicInformationByIdData.isBuyingForThirdParty=== true){
-        confirm(
-          "Warning?",
-          SuccessMessage.Confirm_Update.replace("{0}", "Is Buying For ThirdParty"),
-          "Yes",
-          "Cancel"
-        ).then((confirmed) => {
-          if (confirmed) {
-            let request = {
-             ...formData,
-              isBuyingForThirdParty: data,
-            };
-            setFormData(request);
-          }
-        });
+    const handleCheckboxchange = (data, datafield) => {
+
+        if (customerId) {
+            if (datafield === "isBuyingForThirdParty" && GetCustomersBasicInformationByIdData.isBuyingForThirdParty === true) {
+                confirm(
+                    "Warning?",
+                    SuccessMessage.Confirm_Update.replace("{0}", "Is Buying For ThirdParty"),
+                    "Yes",
+                    "Cancel"
+                ).then((confirmed) => {
+                    if (confirmed) {
+                        let request = {
+                            ...formData,
+                            isBuyingForThirdParty: data,
+                        };
+                        setFormData(request);
+                    }
+                });
+            }
+        }
     }
-    }
- }
 
     const formActionHandler = {
         DDL_CHANGED: handleValidateTextId,
-       CHECK_CHANGE:handleCheckboxchange
+        CHECK_CHANGE: handleCheckboxchange
     };
 
     const handleInputFields = (data, dataField) => {
@@ -264,7 +271,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         }
     }
 
-   
+
     const formInputHandler = {
         INPUT_CHANGED: handleInputFields,
     }
@@ -347,10 +354,10 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
 };
 
 AddEditCustomerBasicDetail.propTypes = {
-    keyId: PropTypes.number ,
-    getCustomerById: PropTypes.func ,
-    isOpen: PropTypes.bool ,
-    onSidebarClose: PropTypes.func ,
+    keyId: PropTypes.number,
+    getCustomerById: PropTypes.func,
+    isOpen: PropTypes.bool,
+    onSidebarClose: PropTypes.func,
     isEditablePage: PropTypes.bool,
-  };
+};
 export default AddEditCustomerBasicDetail;
