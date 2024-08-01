@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
  * @returns {Object|null} - The field data object if found, otherwise null.
  */
 export const getFieldData = (formFieldsData, fieldId) => {
-    return formFieldsData.formFields.find((item) => item.dataField === fieldId) || null;
+    return formFieldsData.formFields?.find((item) => item.dataField === fieldId) || null;
 };
 // Define propTypes for the function parameters
 getFieldData.propTypes = {
@@ -33,7 +33,6 @@ getFieldData.propTypes = {
  * setDropDownOptionField(apiResponseData, 'id', 'name', formFieldsData, 'countryDropdown', filterCondition);
  */
 export const setDropDownOptionField = (apiResponseData, valueField, labelField, formFieldsData, fieldId, filterCondition = null) => {
-
     // Filter the API response data if a filter condition is provided
     const filteredData = filterCondition ? apiResponseData?.filter(filterCondition) : apiResponseData;
 

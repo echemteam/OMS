@@ -1,7 +1,8 @@
-import { FormFieldTypes } from "../../../../data/formFieldType";
+import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const rulesFormData = {
-    initialState: { ruleName: "", moduleId: "" , functionalityId:"", functionalitiesFieldId:"" , roleId: "" , approvalAction:""},
+    initialState: { approvalConfigurationId : 0 ,ruleName: "", moduleId: "", functionalityId: "", functionalitiesFieldId: "", roleId: "", approvalAction: "" },
     formFields: [
         {
             id: "ruleName",
@@ -40,7 +41,7 @@ export const rulesFormData = {
             fieldType: FormFieldTypes.SELECT,
             dataField: "functionalityId",
             fieldSetting: {
-                // isDisabled: true,
+                isDisabled: true,
                 placeholder: "Select Functionality",
                 isEnableOnChange: true
             },
@@ -56,7 +57,7 @@ export const rulesFormData = {
             fieldType: FormFieldTypes.SELECT,
             dataField: "functionalitiesFieldId",
             fieldSetting: {
-                // isDisabled: true,
+                isDisabled: true,
                 placeholder: "Select Module",
                 isEnableOnChange: true
             },
@@ -100,3 +101,48 @@ export const rulesFormData = {
         isViewOnly: false
     }
 };
+
+export const rulesListData = {
+    columns: [
+        {
+            name: "Module Name",
+            fieldName: "moduleName",
+            width: "20%",
+            allowShort: true,
+        },
+        {
+            name: "Functionality Name",
+            fieldName: "functionalityName",
+            width: "20%",
+            allowShort: true,
+        },
+        {
+            name: "Rule Name",
+            fieldName: "ruleName",
+            width: "20%",
+            allowShort: true,
+        },
+        {
+            name: "Role Name",
+            fieldName: "roleName",
+            width: "20%",
+            allowShort: true,
+        },
+        {
+            name: "Approval",
+            fieldName: "approvalAction",
+            width: "20%",
+            allowShort: true,
+        },
+        {
+            name: "Action",
+            width: "10%",
+            colType: GridColumnType.ACTION,
+            defaultAction: {
+                allowEdit: true,
+            },
+        },
+    ],
+
+};
+
