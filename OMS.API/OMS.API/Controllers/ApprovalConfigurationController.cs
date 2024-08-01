@@ -37,8 +37,12 @@ namespace OMS.API.Controllers
         [HttpGet("GetApprovalConfigurationByApprovalConfigurationId")]
         public async Task<IActionResult> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId)
         {
-            List<GetApprovalConfigurationByApprovalConfigurationIdResponse> responseData = await _serviceManager.approvalConfigurationServices.GetApprovalConfigurationByApprovalConfigurationId(approvalConfigurationId).ConfigureAwait(true);
-            return APISucessResponce(responseData);
+            if (approvalConfigurationId > 0)
+            {
+                var approvalConfigurationDetails = await _serviceManager.approvalConfigurationServices.GetApprovalConfigurationByApprovalConfigurationId(approvalConfigurationId).ConfigureAwait(true);
+                return APISucessResponce(approvalConfigurationDetails);
+            }
+            return APISucessResponce(approvalConfigurationId);
         }
         [HttpPost("GetApprovalConfigurationRules")]
         public async Task<IActionResult> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData)

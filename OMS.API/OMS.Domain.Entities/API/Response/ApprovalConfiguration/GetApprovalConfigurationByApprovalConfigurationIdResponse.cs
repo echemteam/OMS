@@ -11,6 +11,7 @@
         public int? FunctionalitiesFieldId { get; set; }
         public string? FieldName { get; set; }
         public byte? ApproverRoleId { get; set; }
+        public string? RoleName { get; set; }
         public string? ApprovalAction { get; set; }
     }
 }

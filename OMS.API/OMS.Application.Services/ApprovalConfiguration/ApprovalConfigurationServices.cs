@@ -32,7 +32,7 @@ namespace OMS.Application.Services.ApprovalConfiguration
             ApprovalConfigurationDTO approvalConfigurationDTO = requestData.ToMapp<AddEditApprovalConfigurationRequest, ApprovalConfigurationDTO>();
             return await repositoryManager.approvalConfiguration.AddEditApprovalConfiguration(approvalConfigurationDTO);
         }
-        public Task<List<GetApprovalConfigurationByApprovalConfigurationIdResponse>> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId)
+        public Task<GetApprovalConfigurationByApprovalConfigurationIdResponse> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId)
         {
             return repositoryManager.approvalConfiguration.GetApprovalConfigurationByApprovalConfigurationId(approvalConfigurationId);
         }

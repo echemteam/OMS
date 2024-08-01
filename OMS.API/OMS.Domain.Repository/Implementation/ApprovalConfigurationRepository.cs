@@ -39,9 +39,9 @@ namespace OMS.Domain.Repository.Implementation
                 addEditApprovalConfiguration.ApprovalAction
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetApprovalConfigurationByApprovalConfigurationIdResponse>> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId)
+        public async Task<GetApprovalConfigurationByApprovalConfigurationIdResponse> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId)
         {
-            List<GetApprovalConfigurationByApprovalConfigurationIdResponse> getApprovalConfigurationByApprovalConfigurationIdResponse = await _context.GetList<GetApprovalConfigurationByApprovalConfigurationIdResponse>(GETAPPROVALCONFIGURATIONBYAPPROVALCONFIGURATIONID, new
+            GetApprovalConfigurationByApprovalConfigurationIdResponse getApprovalConfigurationByApprovalConfigurationIdResponse = await _context.GetFrist<GetApprovalConfigurationByApprovalConfigurationIdResponse>(GETAPPROVALCONFIGURATIONBYAPPROVALCONFIGURATIONID, new
             {
                 approvalConfigurationId
             }, CommandType.StoredProcedure);
