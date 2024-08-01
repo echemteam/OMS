@@ -47,7 +47,7 @@ const Organization = () => {
             sMenuItemCaption: "Business Address",
             component: (
                 <div className="mt-2">
-             <OrganizationBusinessAddressDetail/>
+                    <OrganizationBusinessAddressDetail />
                 </div>
             ),
         },
@@ -59,7 +59,7 @@ const Organization = () => {
                 </div>
             ),
         },
-       
+
         {
             sMenuItemCaption: "Logistic Details",
             component: (
@@ -96,7 +96,7 @@ const Organization = () => {
             sMenuItemCaption: "Other Charges",
             component: (
                 <div className="mt-2">
-             <OrganizationOtherChargesDetail/>
+                    <OrganizationOtherChargesDetail />
                 </div>
             ),
         },
@@ -112,7 +112,7 @@ const Organization = () => {
                         smtpSettingId={smtpSettingId} />
                 </div>
             ),
-        },        
+        },
         {
             sMenuItemCaption: "History",
             component: (
@@ -132,7 +132,8 @@ const Organization = () => {
                         activeTabId === 0 ? "Organization Profile Management" :
                             activeTabId === 1 ? "SMTP Settings" :
                                 activeTabId === 2 ? "Other Settings" :
-                                    ""
+                                    activeTabId === 9 ? "History" :
+                                        ""
                     }>
                         <div className='main-organiazation-history'>
                             <div className="vertical-tab-inner">
