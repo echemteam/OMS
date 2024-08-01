@@ -16,11 +16,11 @@
   table {
     tbody {
       tr {
-        border: none !important;
-
-        &:nth-child(even) {
-          background: var(--themeColorLightGridRow);
-        }
+        // border: none;
+        border-bottom: 1px solid var(--tableBorderColor) !important;
+        // &:nth-child(even) {
+        //   background: var(--themeColorLightGridRow);
+        // }
       }
     }
   }
@@ -64,6 +64,8 @@ table {
     width: 100%;
     color: white !important;
     background: var(--themeColorLight);
+    border-bottom: 1px solid var(--tableBorderColor);
+
 
     tr {
       display: flex;
@@ -93,10 +95,10 @@ table {
 
               span {
                 margin-right: 10px;
-                font-weight: bold;
+                font-weight: 500;
                 padding: 0;
                 text-align: left;
-                text-transform: capitalize;
+                text-transform: uppercase;
                 color: var(--blackColor);
               }
 
@@ -380,7 +382,8 @@ table {
     thead {
       tr {
         th {
-          padding: 8px 10px 8px 15px;
+          // padding: 8px 10px 8px 15px;
+          padding: 13px 20px;
         }
       }
     }
@@ -388,7 +391,8 @@ table {
     tbody {
       tr {
         td {
-          padding: 7px 10px 7px 15px;
+          // padding: 7px 10px 7px 15px;
+          padding: 13px 20px;
 
           &:last-child {
             a {

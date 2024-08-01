@@ -10,6 +10,8 @@ using OMS.Domain.Entities.API.Request.ApiParameterMapping;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredField;
+using OMS.Domain.Entities.API.Response.ApiEventRequiredFieldsMapping;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -78,7 +80,7 @@ namespace OMS.API.Controllers
         public async Task<IActionResult> GetApiEventMappings(GetApiEventMappingsRequest requestData)
         {
             var apiEventMapping = await _serviceManager.apiEventManagementService.GetApiEventMappings(requestData);
-            return APISucessResponce<object>(apiEventMapping);
+            return APISucessResponce(apiEventMapping);
         }
         [HttpDelete("DeleteApiEventMapping")]
         public async Task<IActionResult> DeleteApiEventMapping(int apiEventMappingId)
@@ -207,6 +209,20 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(deleteItem);
             }
             return APISucessResponce(apiEventRequiredFieldsMappingId);
+        }
+
+        [HttpGet("GetAllAPIParametersByEndpointId")]
+        public async Task<IActionResult> GetAllAPIParametersByEndpointId(int endpointId)
+        {
+            List<GetAllAPIParametersResponse> responseData = await _serviceManager.apiEventManagementService.GetAllAPIParametersByEndpointId(endpointId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllRequiredFieldsByEventId")]
+        public async Task<IActionResult> GetAllRequiredFieldsByEventId(int apiEventId)
+        {
+            List<GetAllRequiredFieldsResponse> responseData = await _serviceManager.apiEventManagementService.GetAllRequiredFieldsByEventId(apiEventId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
         }
         #endregion
     }

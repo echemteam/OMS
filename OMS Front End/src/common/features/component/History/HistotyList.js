@@ -44,7 +44,7 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
     useEffect(() => {
         getListApi(pageNumber);
         getSearchFilter(keyId);
-    }, [keyId]);
+    }, [keyId, pageNumber]);
 
     const getListApi = (page) => {
         const eventNameParam = Array.isArray(selectedEventName)
@@ -75,6 +75,33 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
         getAuditHistoryByCustomerId(request);
     };
 
+    // useEffect(() => {
+    //     if (isGetHistorySuccess && isGetHistoryData) {
+    //         if (
+    //             isGetHistoryData.dataSource &&
+    //             isGetHistoryData.dataSource.length > 0
+    //         ) {
+    //             const modifyData = modifyTimeLineData(isGetHistoryData.dataSource);
+    //             if (refreshData) {
+    //                 setRefreshData(false);
+    //                 setHistoryData(modifyData);
+    //             } else {
+    //                 if (selectedEventName || selectedUserName || selectedDateRange) {
+    //                     setHistoryData(modifyData);
+    //                 } else {
+    //                     setHistoryData((prevData) => [...prevData, ...modifyData]);
+    //                 }
+    //             }
+    //             setNoRecordFound(false);
+    //         } else if (isGetHistoryData.dataSource.length === 0) {
+    //             setNoRecordFound(true);
+    //         } else {
+    //             setHasMore(false);
+    //             ToastService.warning("No Data Found");
+    //         }
+    //     }
+    // }, [isGetHistorySuccess, isGetHistoryData]);
+
     useEffect(() => {
         if (isGetHistorySuccess && isGetHistoryData) {
             if (
@@ -86,18 +113,19 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
                     setRefreshData(false);
                     setHistoryData(modifyData);
                 } else {
-                    if (selectedEventName || selectedUserName || selectedDateRange) {
+                    if (selectedEventName.length || selectedUserName.length || selectedDateRange.startDate || selectedDateRange.endDate) {
                         setHistoryData(modifyData);
                     } else {
                         setHistoryData((prevData) => [...prevData, ...modifyData]);
                     }
                 }
                 setNoRecordFound(false);
-            } else if (isGetHistoryData.dataSource.length === 0) {
-                setNoRecordFound(true);
+                if (modifyData.length < 25) {
+                    setHasMore(false); // No more data to load
+                }
             } else {
-                setHasMore(false);
-                ToastService.warning("No Data Found");
+                setNoRecordFound(true);
+                setHasMore(false); // No more data to load
             }
         }
     }, [isGetHistorySuccess, isGetHistoryData]);
@@ -272,7 +300,7 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
             </div>
             {!noRecordFound ? (
                 <div className="col-md-12">
-                    <div className="main-card mt-2" id="scrollableDiv">
+                    <div className="history-scroll-class mt-2" id="scrollableDiv">
                         <InfiniteScroll
                             dataLength={historyData.length}
                             next={fetchMoreData}

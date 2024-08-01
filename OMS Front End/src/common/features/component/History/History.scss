@@ -1,4 +1,11 @@
 // New Timeline Start
+
+.history-scroll-class {
+    height: calc(100vh - 295px);
+    overflow: hidden;
+    overflow-y: auto;
+}
+
 .main-card {
     max-height: calc(100vh - 295px);
     overflow: hidden;
@@ -151,7 +158,6 @@
 
 // New Timeline End
 
-
 // New Timeline Sec Start
 
 .new-timeline-sec {
@@ -164,9 +170,9 @@
         border-left: 3px dashed var(--textColor);
         margin-left: 3%;
         margin-right: 2%;
-        max-height: calc(100vh - 345px);
+        // max-height: calc(100vh - 345px);
         @media only screen and (max-width: 1750px) {
-            max-height: calc(100vh - 295px);
+            // max-height: calc(100vh - 295px);
         }
         .timeline-item {
             display: flex;
@@ -263,10 +269,8 @@
                     }
                 }
             }
-
         }
     }
-
 }
 
 .history-part {
@@ -281,7 +285,6 @@
 }
 
 // New Timeline Sec End
-
 
 @media only screen and (max-width: 1750px) {
     .new-timeline-sec {

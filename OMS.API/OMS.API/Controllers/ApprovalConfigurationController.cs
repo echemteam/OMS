@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
+using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Request.Functionalities;
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -54,6 +56,28 @@ namespace OMS.API.Controllers
         {
             var functionalityEvents = await _serviceManager.approvalConfigurationServices.GetFunctionalityEvents(requestData);
             return APISucessResponce<object>(functionalityEvents);
+        }
+        [HttpPost("AddFunctionalitiesResponsiblesUser")]
+        public async Task<IActionResult> AddFunctionalitiesResponsiblesUser(AddFunctionalitiesResponsiblesUserRequest requestData)
+        {
+            var updateItem = await _serviceManager.approvalConfigurationServices.AddFunctionalitiesResponsiblesUser(requestData, CurrentUserId);
+            return APISucessResponce(updateItem);
+        }
+        [HttpDelete("DeleteFunctionalitiesResponsiblesUser")]
+        public async Task<IActionResult> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId)
+        {
+            if (functionalitiesResponsiblesId > 0)
+            {
+                var deleteItem = await _serviceManager.approvalConfigurationServices.DeleteFunctionalitiesResponsiblesUser(functionalitiesResponsiblesId);
+                return APISucessResponce(deleteItem);
+            }
+            return APISucessResponce(functionalitiesResponsiblesId);
+        }
+        [HttpPost("GetFunctionalitiesResponsibles")]
+        public async Task<IActionResult> GetFunctionalitiesResponsibles(GetFunctionalitiesResponsiblesRequest requestData)
+        {
+            var functionalitiesResponsibles = await _serviceManager.approvalConfigurationServices.GetFunctionalitiesResponsibles(requestData);
+            return APISucessResponce<object>(functionalitiesResponsibles);
         }
         #endregion
     }

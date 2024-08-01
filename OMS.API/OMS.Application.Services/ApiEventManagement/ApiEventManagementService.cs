@@ -12,6 +12,7 @@ using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredField;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Response.ApiParameterMapping;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.Entity.ApiEvent;
 using OMS.Domain.Entities.Entity.ApiEventMapping;
 using OMS.Domain.Entities.Entity.ApiEventParameter;
@@ -67,7 +68,7 @@ namespace OMS.Application.Services.ApiEventManagement
             apiEventMappingDTO.CreatedBy = CurrentUserId;
             return await repositoryManager.apiEventMapping.AddApiEventMapping(apiEventMappingDTO);
         }
-        public async Task<EntityList<GetApiEventMappingsResponse>> GetApiEventMappings(GetApiEventMappingsRequest requestData)
+        public async Task<GetApiEventMappingsResponse> GetApiEventMappings(GetApiEventMappingsRequest requestData)
         {
             var apiEventMappingsDetails = await repositoryManager.apiEventMapping.GetApiEventMappings(requestData);
             return apiEventMappingsDetails!;
@@ -149,6 +150,15 @@ namespace OMS.Application.Services.ApiEventManagement
         {
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiEventRequiredFieldsMapping.DeleteApiEventRequiredFieldsMapping(apiEventRequiredFieldsMappingId, deletedBy);
+        }
+        public Task<List<GetAllAPIParametersResponse>> GetAllAPIParametersByEndpointId(int endpointId)
+        {
+            return repositoryManager.apiEventRequiredFieldsMapping.GetAllAPIParametersByEndpointId(endpointId);
+        }
+
+        public Task<List<GetAllRequiredFieldsResponse>> GetAllRequiredFieldsByEventId(int apiEventId)
+        {
+            return repositoryManager.apiEventRequiredFieldsMapping.GetAllRequiredFieldsByEventId(apiEventId);
         }
 
         #endregion
