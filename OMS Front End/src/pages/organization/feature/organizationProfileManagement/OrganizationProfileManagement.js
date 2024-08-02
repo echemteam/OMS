@@ -37,7 +37,7 @@ const OrganizationProfileManagement = () => {
                    tWCTaxAccountNumber:isGetOrganizationProfileData.twcTaxAccountNumber,
             };
             setOrganizationProfileData(formData);
-            setProfileId(isGetOrganizationProfileData.organizationProfileId);
+            setProfileId(isGetOrganizationProfileData.organizationProfileId);    
     
         }
     }, [isGetOrganizationProfileFetching, isGetOrganizationProfileSuccess, isGetOrganizationProfileData,]);
@@ -68,6 +68,7 @@ const OrganizationProfileManagement = () => {
                    tWCTaxAccountNumber:profileFormData.tWCTaxAccountNumber,
             }
             addEditOrganization(request)
+
         }
     }
 
@@ -77,7 +78,6 @@ const OrganizationProfileManagement = () => {
                 <FormCreator
                     config={organizationProfileData}
                     ref={organizationProfileRef}
-                    // key={shouldRerenderFormCreator}
                 />
                
           

@@ -24,7 +24,6 @@ namespace OMS.Domain.Repository.Implementation
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITSMTPSETTINGS, new
             {
                 requestData.SmtpSettingId,
-                requestData.OrganizationId,
                 requestData.EmailProvider,
                 requestData.SmtpServer,
                 requestData.SmtpPort,
