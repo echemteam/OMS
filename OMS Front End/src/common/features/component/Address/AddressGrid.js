@@ -35,7 +35,7 @@ const AddressGrid = ({
   const [showEditIcon, setShowEditIcon] = useState(true);
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const [tabAddresstType, setTabAddressType] = useState([]);
+  const [tabAddressType, setTabAddressType] = useState([]);
 
   const [
     getAllAddressTypes,
@@ -190,7 +190,7 @@ const AddressGrid = ({
   ];
 
  
-  const filteredTabs = tabAddresstType?.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers);
+  const filteredTabs = tabAddressType?.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers);
 
   const tabs = filteredTabs?.map((data, index) => {
     const component = components[index] ? components[index]([data.addressTypeId]) : <div className="mt-2">Default Tab</div>;
