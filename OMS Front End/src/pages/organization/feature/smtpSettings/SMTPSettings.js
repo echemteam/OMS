@@ -43,7 +43,7 @@ const SMTPSettings = (props) => {
 
     useEffect(() => {
         if (!isGetSmtpSettingsFetching && isGetSmtpSettingsSuccess && isGetSmtpSettingsData) {
-            debugger
+
             let formData = { ...smtpSettingData };
             formData.initialState = {
                 emailProvider: decryptUrlData(isGetSmtpSettingsData.emailProvider),
