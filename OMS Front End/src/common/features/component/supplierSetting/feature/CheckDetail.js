@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { checkFormData } from "../config/CheckForm.data";
 import FormCreator from "../../../../../components/Forms/FormCreator";
@@ -178,4 +179,24 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
   );
 };
 
+CheckDetail.propTypes = {
+  onHandleGetById: PropTypes.func.isRequired,
+  getCheckData: PropTypes.shape({
+    addressId: PropTypes.number,
+    addressLine1Id: PropTypes.string,
+    addressLine2Id: PropTypes.string,
+    cityId: PropTypes.string,
+    stateId: PropTypes.string,
+    countryId: PropTypes.string,
+    zipCode: PropTypes.string,
+    supplierPaymentSettingId: PropTypes.number,
+    checkMailingAddressId: PropTypes.number,
+  }).isRequired,
+  supplierId: PropTypes.number.isRequired,
+  financialSettingFormRef: PropTypes.shape({
+    current: PropTypes.shape({
+      getFormData: PropTypes.func
+    })
+  }).isRequired,
+};
 export default CheckDetail;

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { creditCardFormData } from "../config/CreditCardForm.data";
 import Buttons from "../../../../../components/ui/button/Buttons";
@@ -97,6 +98,21 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
       </div>
     </div>
   );
+};
+
+CreditCardDetail.propTypes = {
+  onHandleGetById: PropTypes.func.isRequired,
+  getCreditData: PropTypes.shape({
+    supplierPaymentSettingId: PropTypes.number,
+    ccNote: PropTypes.string,
+    isCCExistsOnFile: PropTypes.string,
+  }).isRequired,
+  supplierId: PropTypes.number.isRequired,
+  financialSettingFormRef: PropTypes.shape({
+    current: PropTypes.shape({
+      getFormData: PropTypes.func
+    })
+  }).isRequired,
 };
 
 export default CreditCardDetail;
