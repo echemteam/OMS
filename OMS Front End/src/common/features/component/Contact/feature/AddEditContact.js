@@ -39,30 +39,37 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSucess, data: isGetByIdData }] = getContactById();
     const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
 
-    //** Handle Changes */
-    const handleAddEdit = () => {
-        let data = ref.current.getFormData();
-        if (data) {
-            let contactTypeId = null;
-            if (isEdit) {
-                contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
-            } else {
-                contactTypeId = Array.isArray(data.contactTypeId) ? data.contactTypeId.map(String).join(",") : data.contactTypeId;
-            }
 
-            let request = {
-                ...data,
-                contactId: contactId,
-                contactTypeId: contactTypeId,
-                [isSupplier ? 'supplierId' : 'customerId']: keyId,
-                emailList: emailAddressList.length > 0 ? emailAddressList : null,
-                phoneList: phoneNumberList.length > 0 ? modifyPhoneNumberData(phoneNumberList) : null,
-                [isSupplier ? 'supplierContactId' : 'customerContactId']: isSupplier ? supplierContactId : customerContactId,
-            }
-            addEdit(request);
+    const handleAddEdit = () => {
+        const data = ref.current.getFormData();
+        if (!data) return;
+    
+        const contactTypeId = getContactTypeId(data.contactTypeId, isEdit);
+        const request = requestData(data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
+    
+        addEdit(request);
+    };
+    
+    const getContactTypeId = (contactTypeId, isEdit) => {
+        if (isEdit) {
+            return contactTypeId && typeof contactTypeId === "object" ? String(contactTypeId.value) : String(contactTypeId);
+        } else {
+            return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId;
         }
     };
-
+    
+    const requestData = (data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId) => {
+        return {
+            ...data,
+            contactId: contactId,
+            contactTypeId: contactTypeId,
+            [isSupplier ? 'supplierId' : 'customerId']: keyId,
+            emailList: emailAddressList.length > 0 ? emailAddressList : null,
+            phoneList: phoneNumberList.length > 0 ? modifyPhoneNumberData(phoneNumberList) : null,
+            [isSupplier ? 'supplierContactId' : 'customerContactId']: isSupplier ? supplierContactId : customerContactId,
+        };
+    };
+    
     //** UseEffect */
     useEffect(() => {
         if (isAddEditSuccess && isAddEditData) {
@@ -146,7 +153,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     useEffect(() => {
         if (!isEdit) {
             let form = { ...contactDetailFormData };
-            // setFieldSetting(form, 'contactTypeId', FieldSettingType.MULTISELECT, isSupplier ? false : true);
+             
             setFormData(form);
             if (isOpen) {
                 setContactId(0);

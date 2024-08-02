@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,forwardRef } from "react";
 import ContactEmailsDropdown from "./ContactEmailsDropdown";
 import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
 import { AppIcons } from "../../../../../data/appIcons";
-import { forwardRef } from "react";
+//import { forwardRef } from "react";
 import Image from "../../../../../components/image/Image";
 import PropTypes from "prop-types";
 
