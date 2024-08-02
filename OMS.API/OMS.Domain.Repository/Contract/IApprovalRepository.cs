@@ -13,7 +13,7 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetValidateCheckListResponse>> GetValidateCustomer(int mainId, bool? IsSubCustomer);
         Task<List<GetValidateCheckListResponse>> GetValidateSupplier(int mainId);
         Task<AddEntityDTO<int>> AddApprovalRequests(ApprovalRequestsDTO requestData);
-        Task<List<GetApprovalRequestsListByStatusResponse>> GetApprovalRequestsListByStatus(string status);
+        Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId);
         Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId);
     }
 }

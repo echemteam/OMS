@@ -12,7 +12,7 @@ namespace OMS.Application.Services.Approval
         Task<AddEntityDTO<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData, int CurrentUserId);
         Task<List<GetValidateCheckListResponse>> GetValidateCheckList(ValidateRequest requestData);
         Task<AddEntityDTO<int>> AddApprovalRequests(AddApprovalRequests requestData, short CurrentUserId);
-        Task<List<GetApprovalRequestsListByStatusResponse>> GetApprovalRequestsListByStatus(string status);
+        Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId);
         Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId);
     }
 }
