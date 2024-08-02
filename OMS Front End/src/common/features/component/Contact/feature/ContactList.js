@@ -53,6 +53,7 @@ const ContactList = forwardRef(({ keyId, handleEdit, showEditIcon, getListRef, g
       id: keyId,
       searchText: "", // Initial call: no search text provided.
       contactType: selectedContactTypeId ? selectedContactTypeId : ""
+     //contactType: selectedContactTypeId || ""
     };
     contactList(req);
   };
