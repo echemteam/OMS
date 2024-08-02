@@ -89,7 +89,7 @@ const SubCustomerList = (props) => {
     callChildFunction: onGetData
   }));
   return (
-    <>
+     
       <div className="row">
         <div className="col-md-12 table-striped p-3">
           <MolGrid
@@ -109,7 +109,7 @@ const SubCustomerList = (props) => {
           />
         </div>
       </div>
-    </>
+  
   );
 };
 SubCustomerList.propTypes = {

@@ -56,7 +56,7 @@ const LabAddressDetail=({labAddressRef,labAddressData,LabAddressForm})=>{
     const formAddressActionHandler = {
         DDL_CHANGED: handleChangeAddressDropdownList,
       };
-    return(<>
+    return( 
         <CardSection cardTitle="Lab Address">
             <div className="row">
               <FormCreator
@@ -68,6 +68,6 @@ const LabAddressDetail=({labAddressRef,labAddressData,LabAddressForm})=>{
             </div>
           </CardSection>
     
-      </>)
+       )
 }
 export default LabAddressDetail;

@@ -68,7 +68,7 @@ const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId, onHand
   }
 
   return (
-    <>
+    
       <div className="ach-wire-section">
         <div className="sub-card-sec-add">
           <div className="row">
@@ -97,7 +97,7 @@ const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId, onHand
           </div>
         </div>
       </div>
-    </>
+    
   );
 };
 OtherDetail.propTypes = {

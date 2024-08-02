@@ -56,7 +56,7 @@ const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,regis
         DDL_CHANGED: handleChangeAddressDropdownList,
       };
     
-    return(<>
+    return( 
         <CardSection cardTitle="Registered Address">
             <div className="row">
               <FormCreator
@@ -68,6 +68,6 @@ const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,regis
             </div>
           </CardSection>
     
-      </>)
+       )
 }
 export default RegisteredAddressDetail;

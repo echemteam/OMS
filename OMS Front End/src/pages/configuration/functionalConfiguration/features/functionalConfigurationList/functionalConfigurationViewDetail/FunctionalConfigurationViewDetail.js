@@ -16,7 +16,7 @@ const FunctionalConfigurationViewDetail = () => {
     }
 
     return (
-        <>
+         
             <div className='mt-3'>
                 <CardSection
                     cardTitle={moduleName}
@@ -30,7 +30,7 @@ const FunctionalConfigurationViewDetail = () => {
                     <FunctionalConfigurationViewTabs functionalityId={functionalityId} />
                 </CardSection>
             </div>
-        </>
+        
     )
 }
 

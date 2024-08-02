@@ -54,7 +54,7 @@ const OrganizationBankDetail=()=>{
     }, [isGetOrganizationBankDetailsFetching, isGetOrganizationBankDetailsSuccess, isGetOrganizationBankDetailsData,]);
 
 
-    return(<>
+    return( 
     
     <div className="row mt-2 add-address-form">
                 <FormCreator config={organizationBankData}
@@ -74,6 +74,6 @@ const OrganizationBankDetail=()=>{
                 </div>
             </div>
         </div>
-    </>)
+     )
 }
 export default OrganizationBankDetail;

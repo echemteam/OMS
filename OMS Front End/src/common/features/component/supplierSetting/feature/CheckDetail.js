@@ -142,7 +142,7 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
 
 
   return (
-    <>
+     
       <div className="ach-wire-section">
         <div className="sub-card-sec-add">
           <CardSection cardTitle="Mailing Address">
@@ -175,7 +175,7 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
           </CardSection>
         </div>
       </div>
-    </>
+     
   );
 };
 

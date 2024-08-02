@@ -80,7 +80,7 @@ const Rules = (props) => {
   }
 
   return (
-    <>
+     
       <div className="row">
         <div className="col-md-12 table-striped api-provider">
           <MolGrid
@@ -100,7 +100,7 @@ const Rules = (props) => {
           />
         </div>
       </div>
-    </>
+     
   );
 };
 

@@ -55,7 +55,7 @@ const ContactEmailsDropdown = ({
       {isOptionsOpen ? (
         <>
           {emailAddresses.map((emaildata, index) => (
-            <>
+             
               <span className="contact-list d-flex flex-row" key={index}>
                 <span>{emaildata?.emailAddress}</span>
                 <span
@@ -67,7 +67,7 @@ const ContactEmailsDropdown = ({
                   <Image imagePath={AppIcons.copyIcon} altText="Icon" />
                 </span>
               </span>
-            </>
+            
           ))}
         </>
       ) : null}

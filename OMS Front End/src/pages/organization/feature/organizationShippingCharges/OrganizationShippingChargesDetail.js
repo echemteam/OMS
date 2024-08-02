@@ -52,7 +52,7 @@ const OrganizationShippingChargesDetail=()=>{
     }, [isGetOrganizationShippingChargesFetching, isGetOrganizationShippingChargesSuccess, isGetOrganizationShippingChargesData,]);
 
 
-    return(<>
+    return(
     
     <div className="row mt-2 add-address-form">
                 <FormCreator config={organizationShippingChargesData}
@@ -71,6 +71,6 @@ const OrganizationShippingChargesDetail=()=>{
                 </div>
             </div>
         </div>
-    </>)
+    )
 }
 export default OrganizationShippingChargesDetail;

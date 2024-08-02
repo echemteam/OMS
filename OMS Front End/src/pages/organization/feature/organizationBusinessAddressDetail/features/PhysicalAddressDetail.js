@@ -58,7 +58,7 @@ const PhysicalAddressDetail=({physicalAddressData,physicalAddressRef,PhysicalAdd
         DDL_CHANGED: handleChangeAddressDropdownList,
       };
     
-    return(<>
+    return( 
         <CardSection cardTitle="Physical Address">
             <div className="row">
               <FormCreator
@@ -70,6 +70,6 @@ const PhysicalAddressDetail=({physicalAddressData,physicalAddressRef,PhysicalAdd
             </div>
           </CardSection>
     
-      </>)
+       )
 }
 export default PhysicalAddressDetail;

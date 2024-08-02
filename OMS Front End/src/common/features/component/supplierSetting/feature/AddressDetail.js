@@ -4,11 +4,10 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import { addressFormData } from "../config/BankAddressForm.data";
 import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useAddEditACHWireMutation } from "../../../../../app/services/supplierFinancialSettingsAPI";
-import Buttons from "../../../../../components/ui/button/Buttons";
 
 const AddressDetail = ({ aCHWireFormRef, getAllCities, getAllStates, getAllCountries, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCountriesSucess, allGetAllCountriesData }) => {
   const addressFormRef = useRef();
-  const [addressForm, setaddressForm] = useState(addressFormData);
+  const [addressForm] = useState(addressFormData);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const [addEditACHWire, { isLoading: isAddEditACHWireing, isSuccess: isAddEditACHWireSuccess, data: isAddEditACHWireData }] = useAddEditACHWireMutation();

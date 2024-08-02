@@ -63,7 +63,7 @@ const AddEditSubCustomer = (props) => {
     callChildFunction: getAllLinkCustomer
   }));
 
-  return (<>
+  return (
     <div className="row">
 
       <FormCreator
@@ -81,7 +81,7 @@ const AddEditSubCustomer = (props) => {
         />
       </div>
     </div>
-  </>)
+  )
 }
 
 AddEditSubCustomer.propTypes = {

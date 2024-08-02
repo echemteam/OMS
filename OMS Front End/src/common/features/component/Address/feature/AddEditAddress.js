@@ -93,9 +93,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const handleStateOption = (responseData) => {
         setDropDownOptionField(responseData, 'stateId', 'name', addressFormData, 'stateId');
     }
-    // const handleCityOption = (responseData) => {
-    //     setDropDownOptionField(responseData, 'cityId', 'name', addressFormData, 'cityId');
-    // }
 
     useEffect(() => {
         if (isGetAllCountriesSucess && allGetAllCountriesData) {
@@ -108,7 +105,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         }
         if (isGetAllCitiesSucess && allGetAllCitiesData) {
             setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', addressFormData, 'cityId');
-            // handleCityOption(allGetAllCitiesData);
             setShouldRerenderFormCreator((prevState) => !prevState);
         }
         if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
@@ -125,7 +121,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         if (!isGetByIdFetching && isGetByIdSuccess && isGetByIdData) {
             let form = { ...formData };
             let data = isGetByIdData;
-        
             if (!isButtonDisable) {
                 setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED);
                 setFieldSetting(formData, 'stateId', FieldSettingType.DISABLED);
@@ -315,7 +310,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         } else if (dataField === "stateId") {
             // setStateChange(data.value)
             getAllCities(data.value)
-            // setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', item => item.stateId === data.value);
             setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
             ref.current.updateFormFieldValue({
                 stateId: data.value,
@@ -387,13 +381,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         CHECK_CHANGE: handleCheckboxChanges
     };
 
-    //** Reset  */
-    // const onResetSupplier = () => {
-    //     let updatedFormData;
-    //     onResetForm(addressFormData, setFormData, null);
-    //     updatedFormData = removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
-    //     setFormData(updatedFormData)
-    // };
 
     return (
         <div className="row mt-2 add-address-form">

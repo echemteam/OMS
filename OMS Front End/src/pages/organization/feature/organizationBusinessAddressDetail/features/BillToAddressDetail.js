@@ -59,7 +59,7 @@ const BillToAddressDetail=({billToAddressRef,billToAddressData,BillToAddressForm
         DDL_CHANGED: handleChangeAddressDropdownList,
       };
    
-    return(<>
+    return( 
         <CardSection cardTitle="Bill To Address">
             <div className="row">
               <FormCreator
@@ -71,6 +71,6 @@ const BillToAddressDetail=({billToAddressRef,billToAddressData,BillToAddressForm
             </div>
           </CardSection>
     
-      </>)
+       )
 }
 export default BillToAddressDetail;

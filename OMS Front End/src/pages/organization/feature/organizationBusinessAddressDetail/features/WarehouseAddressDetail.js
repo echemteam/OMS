@@ -60,7 +60,7 @@ const WarehouseAddressDetail=({warehouseAddressData,warehouseAddressRef,Warehous
   const formAddressActionHandler = {
       DDL_CHANGED: handleChangeAddressDropdownList,
     };
-    return(<>
+    return( 
         <CardSection cardTitle="Warehouse Address">
             <div className="row">
               <FormCreator
@@ -72,6 +72,6 @@ const WarehouseAddressDetail=({warehouseAddressData,warehouseAddressRef,Warehous
             </div>
           </CardSection>
     
-      </>)
+       )
 }
 export default WarehouseAddressDetail;
