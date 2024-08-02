@@ -35,7 +35,7 @@ const SMTPSettings = () => {
                 smtpServer: encryptAES(data.smtpServer),
                 smtpUserName: encryptAES(data.smtpUserName),
                 smtpPassword: encryptAES(data.smtpPassword),
-                smtpSettingId: props.smtpSettingId ? props.smtpSettingId : data.smtpSettingId
+                smtpSettingId: data.smtpSettingId ? data.smtpSettingId : data.smtpSettingId
             }
                 addEditSmtpSetting(request)
         }
