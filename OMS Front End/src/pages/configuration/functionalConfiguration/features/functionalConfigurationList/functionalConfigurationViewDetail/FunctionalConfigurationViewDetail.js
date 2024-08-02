@@ -6,8 +6,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { decryptUrlData } from '../../../../../../services/CryptoService'
 
 const FunctionalConfigurationViewDetail = () => {
-    const { id } = useParams();
+    const { id , data } = useParams();
     const functionalityId = id ? decryptUrlData(id) : 0;
+    const moduleName = data ? decryptUrlData(data) : '';
     const navigate = useNavigate();
 
     const BackButton = () => {
@@ -18,7 +19,7 @@ const FunctionalConfigurationViewDetail = () => {
         <>
             <div className='mt-3'>
                 <CardSection
-                    // cardTitle={functionalityId === 1 ? "Customer" : "Supplier"}
+                    cardTitle={moduleName}
                     rightButton={true}
                     buttonText="Back"
                     buttonClassName="btn dark-btn"

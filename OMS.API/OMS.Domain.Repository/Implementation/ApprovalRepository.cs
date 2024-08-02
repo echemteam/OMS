@@ -18,7 +18,7 @@ namespace OMS.Domain.Repository.Implementation
         const string VALIDATECUSTOMERDATA = "ValidateCustomerData";
         const string VALIDATESUPPLIERDATA = "ValidateSupplierData";
         const string ADDAPPROVALREQUESTS = "AddApprovalRequests";
-        const string GETAPPROVALREQUESTSLISTBYSTATUS = "GetApprovalRequestsListByStatus";
+        const string GETAPPROVALREQUESTSLISTBYSTATUSANDREQUESTEDBYUSERID = "GetApprovalRequestsListByStatusAndRequestedByUserId";
         const string GETAPPROVALREQUESTSBYAPPROVALREQUESTID = "GetApprovalRequestsByApprovalRequestId";
         #endregion
 
@@ -84,10 +84,11 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.RequestedByUserId,
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetApprovalRequestsListByStatusResponse>> GetApprovalRequestsListByStatus(string status)
+        public async Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId)
         {
-            List<GetApprovalRequestsListByStatusResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusResponse>(GETAPPROVALREQUESTSLISTBYSTATUS, new
+            List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>(GETAPPROVALREQUESTSLISTBYSTATUSANDREQUESTEDBYUSERID, new
             {
+                requestedByUserId,
                 status
             }, commandType: CommandType.StoredProcedure);
             return getAllUsersResponse;

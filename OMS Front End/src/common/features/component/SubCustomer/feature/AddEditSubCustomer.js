@@ -1,12 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useImperativeHandle, useState } from "react";
+import { useImperativeHandle, useState,useRef,useEffect } from "react";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { SubCustomerFormData } from "../config/SubCustomer.data";
-import { useRef } from "react";
 import PropTypes from "prop-types";
 import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { useEffect } from "react";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { useAddSubCustomerMutation, useLazyGetAllApproveCustomerForLinkingQuery } from "../../../../../app/services/customerSubCustomerAPI";

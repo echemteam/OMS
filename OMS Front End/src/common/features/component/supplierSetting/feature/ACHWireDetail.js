@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from 'prop-types'; 
 import CardSection from "../../../../../components/ui/card/CardSection";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { achWireFormData } from "../config/ACHWireForm.data";
@@ -355,5 +356,10 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef , i
     </div>
   );
 };
-
+ACHWireDetail.propTypes = {
+  activeTabIndex: PropTypes.number.isRequired,
+  supplierId: PropTypes.number.isRequired,
+  financialSettingFormRef: PropTypes.object,
+  isEditablePage: PropTypes.bool
+};
 export default ACHWireDetail;

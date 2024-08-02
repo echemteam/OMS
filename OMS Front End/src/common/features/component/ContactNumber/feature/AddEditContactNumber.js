@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from 'prop-types';
 //** Lib's */
 import { Message } from "../../EmailAddress/utils/ContactMessages";
 import Buttons from "../../../../../components/ui/button/Buttons";
@@ -120,5 +121,31 @@ const AddEditContactNumber = ({
     </CenterModel>
   );
 };
-
+AddEditContactNumber.propTypes = {
+  contactId: PropTypes.number.isRequired,
+  phoneNumberList: PropTypes.arrayOf(PropTypes.shape({
+    phoneNumber: PropTypes.string.isRequired,
+    phoneCode: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    phoneTypeId: PropTypes.number,
+    phoneType: PropTypes.string,
+    isPrimary: PropTypes.bool,
+    extension: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  })).isRequired,
+  setPhoneNumberList: PropTypes.func.isRequired,
+  editFormData: PropTypes.shape({
+    extension: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    id: PropTypes.number,
+    isPrimary: PropTypes.bool,
+    phoneCode: PropTypes.string,
+    phoneId: PropTypes.number,
+    phoneNumber: PropTypes.string,
+    phoneType: PropTypes.string,
+    phoneTypeId: PropTypes.number
+  }),
+  handleToggleModal: PropTypes.func.isRequired,
+  showModal: PropTypes.bool.isRequired,
+  isEdit: PropTypes.bool.isRequired,
+  onSuccess: PropTypes.func.isRequired
+};
 export default AddEditContactNumber;

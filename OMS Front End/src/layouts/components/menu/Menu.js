@@ -173,5 +173,5 @@ export const Menu = [
         children: []
       }
     ]
-  }
+  },
 ];

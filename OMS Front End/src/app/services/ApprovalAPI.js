@@ -34,11 +34,30 @@ const approvalAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getApprovalRequestsListByStatusAndRequestedByUserId: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Approval/GetApprovalRequestsListByStatusAndRequestedByUserId/?status=${data.status}&requestedByUserId=${data.requestedByUserId}`),
+                method: 'GET',
+            }),
+            // providesTags: ['User'],
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getApprovalRequestsByApprovalRequestId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Approval/GetApprovalRequestsByApprovalRequestId/?approvalRequestId=${Number(id)}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
     })
 })
 
 export const {
     useLazyGetUserCheckListQuery,
+    useLazyGetApprovalRequestsListByStatusAndRequestedByUserIdQuery,
+    useLazyGetApprovalRequestsByApprovalRequestIdQuery,
     useAddUserChecklistResponseMutation,
     useGetValidateCheckListMutation
 } = approvalAPI;

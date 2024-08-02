@@ -4,7 +4,7 @@ import { AppIcons } from "../../../../../data/appIcons";
 import MolGrid from "../../../../../components/Grid/MolGrid";
 import { phoneNumberConfig } from "../config/AddEditContactsForm.data";
 import CardSection from "../../../../../components/ui/card/CardSection";
-
+import PropTypes from 'prop-types';
 const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
 
     return (
@@ -32,5 +32,19 @@ const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, act
         </div>
     )
 }
-
+ContactNumberList.propTypes = {
+    phoneNumberList: PropTypes.arrayOf(PropTypes.shape({
+        phoneNumber: PropTypes.string.isRequired,
+        phoneCode: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        phoneTypeId: PropTypes.number,
+        phoneType: PropTypes.string,
+        isPrimary: PropTypes.bool,
+        extension: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    })).isRequired,
+    molGridRef: PropTypes.object,
+    handleToggleModal: PropTypes.func.isRequired,
+    actionHandler: PropTypes.object.isRequired,
+    isButtonDisable: PropTypes.bool.isRequired
+};
 export default ContactNumberList;
