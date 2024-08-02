@@ -20,9 +20,7 @@ import PropTypes from "prop-types";
 //** Component's */
 const ContactList = React.lazy(() => import("./feature/ContactList"));
 const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
-// const ContactDetailCard = React.lazy(() =>
-//   import("./feature/ContactDetailCard")
-// );
+ 
 
 const ContactGrid = ({
   keyId,
@@ -41,7 +39,7 @@ const ContactGrid = ({
   const [search, setSearch] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [contactType, setContactType] = useState("");
-  const [isModelOpen, setisModelOpen] = useState(false);
+  const [isModelOpen, setIsModelOpen] = useState(false);
   const [showEditIcon, setShowEditIcon] = useState(true);
   const [tabContactType, setTabContactType] = useState([]);
   const [buttonVisible, setButtonVisible] = useState(true);
@@ -125,7 +123,7 @@ const ContactGrid = ({
   };
   const handleToggleModal = () => {
     setIsEdit(false);
-    setisModelOpen(true);
+    setIsModelOpen(true);
     if (childRef.current) {
       childRef.current.callChildFunction();
     }
@@ -142,7 +140,7 @@ const ContactGrid = ({
 
   const handleEdit = (contactId) => {
     setIsEdit(true);
-    setisModelOpen(!isModelOpen);
+    setIsModelOpen(!isModelOpen);
     if (editRef.current) {
       editRef.current.callEditFunction(contactId);
     }
@@ -167,11 +165,11 @@ const ContactGrid = ({
   //** Success */
   const onSuccess = () => {
     onGetContactList();
-    setisModelOpen(!isModelOpen);
+    setIsModelOpen(!isModelOpen);
   };
 
   const onSidebarClose = () => {
-    setisModelOpen(false);
+    setIsModelOpen(false);
     onGetContactList();
   };
 
@@ -269,14 +267,19 @@ const ContactGrid = ({
       </div>
     </div>
   ];
+   
 
-  const tabs = tabContactType && tabContactType.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers)
-    .map((data, index) => ({
+  const filteredTabs = tabContactType?.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers);
+
+  const tabs = filteredTabs?.map((data, index) => {
+    const component = components[index] ? components[index]([data.contactTypeId]) : <div className="mt-2">Default Tab</div>;
+    return {
       sMenuItemCaption: data.type,
-      component: components[index] ? components[index]([data.contactTypeId]) : <div className="mt-2">Default Tab</div>
-    }));
+      component
+    };
+  });
 
-
+ 
   return (
     <div className="contact-main-card-section vertical-tab-card">
       <CardSection

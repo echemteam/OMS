@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { viewFunctionalEventsData } from './config/ViewFunctionalEvents.data'
 import MolGrid from '../../../../../../components/Grid/MolGrid'
 import { useGetFunctionalityEventsMutation } from '../../../../../../app/services/configurationAPI';
+import CardSection from '../../../../../../components/ui/card/CardSection';
 
 const ViewFunctionalEvents = (props) => {
   const molGridRef = useRef();
@@ -61,21 +62,25 @@ const ViewFunctionalEvents = (props) => {
   return (
     <div className="row">
       <div className="col-md-12 table-striped api-provider">
-        <MolGrid
-          ref={molGridRef}
-          configuration={viewFunctionalEventsData}
-          dataSource={listData}
-          allowPagination={true}
-          pagination={{
-            totalCount: totalRowCount,
-            pageSize: 20,
-            currentPage: 1,
-          }}
-          onPageChange={handlePageChange}
-          onSorting={handleSorting}
-          isLoading={isGetFunctionalityEventsLoading}
-        // onActionChange={actionHandler}
-        />
+        <CardSection
+          cardTitle="View Functional Events"
+          buttonClassName="btn theme-button"
+        >
+          <MolGrid
+            ref={molGridRef}
+            configuration={viewFunctionalEventsData}
+            dataSource={listData}
+            allowPagination={true}
+            pagination={{
+              totalCount: totalRowCount,
+              pageSize: 20,
+              currentPage: 1,
+            }}
+            onPageChange={handlePageChange}
+            onSorting={handleSorting}
+            isLoading={isGetFunctionalityEventsLoading}
+          />
+        </CardSection>
       </div>
     </div>
   )

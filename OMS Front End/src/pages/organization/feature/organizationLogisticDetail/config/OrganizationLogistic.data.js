@@ -13,6 +13,7 @@ export const OrganizationLogisticFormData = {
             fieldSetting: {
               placeholder: "Enter FedEx Account",
               allowSpace: true,
+              maxLength:50,
             },
             validation: [{ type: "require" }],
             style: {
@@ -28,6 +29,7 @@ export const OrganizationLogisticFormData = {
             fieldSetting: {
                 placeholder: "Enter DHL Account",
                 allowSpace: true,
+                maxLength:50,
             },
             validation: [{ type: "require" }],
             style: {
@@ -43,6 +45,7 @@ export const OrganizationLogisticFormData = {
             fieldSetting: {
                 placeholder: "Enter UPS Account",
                 allowSpace: true,
+                maxLength:50,
             },
             validation: [{ type: "require" }],
             style: {
@@ -58,6 +61,7 @@ export const OrganizationLogisticFormData = {
             fieldSetting: {
                 placeholder: "Enter USPS Account",
                 allowSpace: true,
+                maxLength:50,
             },
             validation: [{ type: "require" }],
             style: {

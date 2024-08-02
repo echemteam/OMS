@@ -23,7 +23,7 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
     const [showDeleteButton, setShowDeleteButton] = useState(true);
     const [showDownalodButton, setShowDownalodButton] = useState(true);
     const [selectedDocument, setSelectedDocument] = useState(null);
-    const [getfileType, setGetFileType] = useState([]);
+    const [getFileType, setGetFileType] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [actionType, setActionType] = useState(null);
 
@@ -93,8 +93,6 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
             const fileURL = URL.createObjectURL(blob);
 
             if (actionType === 'download') {
-                // window.open(fileURL, "_blank");
-                // URL.revokeObjectURL(fileURL);
                 const link = document.createElement('a');
                 link.href = fileURL;
                 link.download = isDownalodData.fileName;
@@ -118,7 +116,6 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
     }, [isDeleteSucess, isDeleteData]);
 
     const handleDocumentAction = (action, fileName) => {
-        // setGetFileType(null);
         setSelectedDocument(null);
         setIsModalOpen(false);
         setActionType(action);
@@ -171,7 +168,6 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
 
     const handleToggleModal = () => {
         setIsModalOpen(false);
-        // setGetFileType(null);
         setSelectedDocument(null);
         setActionType(null);
     };
@@ -200,7 +196,7 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
                                                             </div>
                                                             <div className="document-action">
                                                                 {
-                                                                    getfileType && getfileType.length > 0 &&
+                                                                    getFileType && getFileType.length > 0 &&
                                                                     (["pdf", "csv", "docx", "xlsx"].includes(determineFileType(data.attachment))) &&
                                                                     <span className="action-icon" onClick={() => handleDocumentAction('view', data.attachment)}>
                                                                         <Image imagePath={AppIcons.EyeIcon} alt="View Icon" />
@@ -233,9 +229,9 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
             <CenterModel showModal={isModalOpen} handleToggleModal={handleToggleModal}
                 modalTitle="File Preview" modelSizeClass="w-40">
                 <div className="model-hight-fix">
-                    {selectedDocument && getfileType &&
+                    {selectedDocument && getFileType &&
                         <FileViewer
-                            fileType={getfileType}
+                            fileType={getFileType}
                             filePath={selectedDocument}
                             onError={(error) => console.error("Error:", error)}
                         />

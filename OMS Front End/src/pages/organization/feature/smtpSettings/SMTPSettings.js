@@ -6,39 +6,25 @@ import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import { useAddEditSmtpSettingsMutation, useLazyGetSmtpSettingsQuery } from '../../../../app/services/organizationAPI';
 import ToastService from '../../../../services/toastService/ToastService';
-import { ErrorMessage } from '../../../../data/appMessages';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 import { decryptUrlData, encryptAES } from '../../../../services/CryptoService';
 
-const SMTPSettings = (props) => {
+const SMTPSettings = () => {
     const smtpRef = useRef();
     const [smtpSettingData, setSmtpSettingData] = useState(SMTPSettingsData);
-    const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-
     const [addEditSmtpSetting, { isLoading: isAddEditSmtpSettingLoading, isSuccess: isAddEditSmtpSettingSuccess, data: isAddEditSmtpSettingData }] = useAddEditSmtpSettingsMutation();
     const [getSmtpSettings, { isFetching: isGetSmtpSettingsFetching, isSuccess: isGetSmtpSettingsSuccess, data: isGetSmtpSettingsData }] = useLazyGetSmtpSettingsQuery();
+    
+    useEffect(()=>{
+        getSmtpSettings();
+        },[])
 
     useEffect(() => {
-        handleResponse(isAddEditSmtpSettingSuccess, isAddEditSmtpSettingData);
-    }, [isAddEditSmtpSettingSuccess, isAddEditSmtpSettingData]);
-
-    const handleResponse = (success, data) => {
-        if (success && data) {
-            handleAddResponse(success, data);
+        if (isAddEditSmtpSettingSuccess && isAddEditSmtpSettingData) {
+          ToastService.success(isAddEditSmtpSettingData.errorMessage);
+          getSmtpSettings();
         }
-    };
-
-    const handleAddResponse = (isSuccess, responseData) => {
-        if (isSuccess && responseData) {
-            if (responseData.errorMessage.includes("exists")) {
-                ToastService.warning(responseData.errorMessage);
-                return;
-            }
-            ToastService.success(responseData.errorMessage);
-            // setOrganizationId(responseData.keyValue)
-            props.onHandleSmtp(responseData.keyValue)
-        }
-    }
+      }, [isAddEditSmtpSettingSuccess, isAddEditSmtpSettingData]);
 
     const handleAddEditSmtpSettings = () => {
         let data = smtpRef.current.getFormData();
@@ -49,28 +35,16 @@ const SMTPSettings = (props) => {
                 smtpServer: encryptAES(data.smtpServer),
                 smtpUserName: encryptAES(data.smtpUserName),
                 smtpPassword: encryptAES(data.smtpPassword),
-                organizationId: props.organizationId ? props.organizationId : data.organizationId,
-                smtpSettingId: props.smtpSettingId ? props.smtpSettingId : data.smtpSettingId
+                smtpSettingId: data.smtpSettingId ? data.smtpSettingId : data.smtpSettingId
             }
-            if (props.organizationId > 0) {
                 addEditSmtpSetting(request)
-            } else {
-                ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "Organization Profile Management Data"))
-            }
         }
     }
 
     useEffect(() => {
-        if (props.organizationId > 0) {
-            getSmtpSettings()
-        } else if (props.organizationId === 0 && props.activeTabId === 1) {
-            ToastService.warning(ErrorMessage.FieldRequired.replace("{0}", "Organization Profile Management Data"))
-        }
-    }, [props.activeTabId])
-
-    useEffect(() => {
         if (!isGetSmtpSettingsFetching && isGetSmtpSettingsSuccess && isGetSmtpSettingsData) {
-            let formData = { ...SMTPSettingsData };
+
+            let formData = { ...smtpSettingData };
             formData.initialState = {
                 emailProvider: decryptUrlData(isGetSmtpSettingsData.emailProvider),
                 smtpServer: decryptUrlData(isGetSmtpSettingsData.smtpServer),
@@ -78,23 +52,23 @@ const SMTPSettings = (props) => {
                 smtpUserName: decryptUrlData(isGetSmtpSettingsData.smtpUserName),
                 smtpPassword: decryptUrlData(isGetSmtpSettingsData.smtpPassword),
                 useSsl: isGetSmtpSettingsData.useSsl,
+                smtpSettingId:isGetSmtpSettingsData.smtpSettingId,
+
             };
             setSmtpSettingData(formData);
-            props.onHandleSmtp(isGetSmtpSettingsData.smtpSettingId)
-            setShouldRerenderFormCreator((prevState) => !prevState);
+
         }
     }, [isGetSmtpSettingsFetching, isGetSmtpSettingsSuccess, isGetSmtpSettingsData,]);
 
     return (
         <div className="row mt-2 add-address-form">
-            {!isGetSmtpSettingsFetching ?
+          
                 <FormCreator config={smtpSettingData}
                     ref={smtpRef}
                     {...smtpSettingData}
-                    key={shouldRerenderFormCreator}
+                
                 />
-                : <DataLoader />
-            }
+                
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -102,7 +76,7 @@ const SMTPSettings = (props) => {
                         buttonText="Save"
                         onClick={handleAddEditSmtpSettings}
                         isLoading={isAddEditSmtpSettingLoading}
-                    // isDisable={isButtonDisable} 
+                 
                     />
                 </div>
             </div>

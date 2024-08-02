@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,forwardRef } from "react";
 import ContactEmailsDropdown from "./ContactEmailsDropdown";
 import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
 import { AppIcons } from "../../../../../data/appIcons";
-import { forwardRef } from "react";
 import Image from "../../../../../components/image/Image";
 import PropTypes from "prop-types";
 
@@ -187,7 +186,12 @@ const ContactDetailCard = forwardRef(
                       </button>
                     ) : null}
                   </div>
-                  <span className="option-icon" onClick={handleOptionsClick}>
+                {/* <span className="option-icon" onClick={handleOptionsClick}> */}
+                <span
+                    className="option-icon"
+                    role="button"
+                    tabIndex="0"
+                    onClick={handleOptionsClick}>
                     <Image
                       imagePath={AppIcons.EllipsisIcon}
                       altText="EllipsisIcon"

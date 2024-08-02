@@ -85,12 +85,15 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
                 if (refreshData) {
                     setRefreshData(false);
                     setHistoryData(modifyData);
+                } else if (
+                    selectedEventName.length ||
+                    selectedUserName.length ||
+                    selectedDateRange.startDate ||
+                    selectedDateRange.endDate
+                ) {
+                    setHistoryData(modifyData);
                 } else {
-                    if (selectedEventName.length || selectedUserName.length || selectedDateRange.startDate || selectedDateRange.endDate) {
-                        setHistoryData(modifyData);
-                    } else {
-                        setHistoryData((prevData) => [...prevData, ...modifyData]);
-                    }
+                    setHistoryData((prevData) => [...prevData, ...modifyData]);
                 }
                 setNoRecordFound(false);
                 if (modifyData.length < 25) {
@@ -102,6 +105,7 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
             }
         }
     }, [isGetHistorySuccess, isGetHistoryData]);
+    
 
     useEffect(() => {
         if (isGetSearchFilterSuccess && isGetSearchFilterData) {

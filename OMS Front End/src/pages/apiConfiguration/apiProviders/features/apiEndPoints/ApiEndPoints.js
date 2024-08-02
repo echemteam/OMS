@@ -35,7 +35,7 @@ const ApiEndPoints=({providerId})=>{
           childRef.current.callChildFunction();
       }
   };
-return(<>
+return(
   <div>
       <CardSection
         cardTitle="API EndPoints"
@@ -64,7 +64,7 @@ return(<>
         onSuccess={onSuccess}
           />
         </SidebarModel>
-    </div></>)
+    </div>)
 }
 
 ApiEndPoints.propTypes = {

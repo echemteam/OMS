@@ -22,8 +22,9 @@ export const PhysicalAddressForm = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
+        maxLength:250,
       },
-      validation: [{ type: "require" }],
+      //validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-3",
       },
@@ -39,6 +40,7 @@ export const PhysicalAddressForm = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
+        maxLength:250,
       },
       // validation: [{ type: "require" }],
       style: {
@@ -53,9 +55,10 @@ export const PhysicalAddressForm = {
       dataField: "countryId",
       fieldSetting: {
         placeholder: "Select Country",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        maxLength:20,
       },
-      validation: [{ type: "require" }],
+      //validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },
@@ -69,9 +72,10 @@ export const PhysicalAddressForm = {
       fieldSetting: {
         isDisabled: false,
         placeholder: "Select State",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        maxLength:20,
       },
-      validation: [{ type: "require" }],
+      //validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },
@@ -85,9 +89,10 @@ export const PhysicalAddressForm = {
       fieldSetting: {
         isDisabled: false,
         placeholder: "Select City",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        maxLength:9
       },
-      validation: [{ type: "require" }],
+    //  validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },
@@ -103,7 +108,7 @@ export const PhysicalAddressForm = {
         allowSpace: true,
         maxLength: 9,
       },
-      validation: [{ type: "require" }],
+      //validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },

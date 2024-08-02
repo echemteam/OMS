@@ -84,6 +84,7 @@ import active from "../assets/images/checked.png";
 import nextArrowIcon from "../assets/images/NextArrowIcon.svg"
 import doneIcon from "../assets/images/done.png";
 import cancelIcon from "../assets/images/cancel.png";
+import testApiIcon from "../assets/images/testApi.png";
 
 export const AppIcons = {
   // Menus & Header Images
@@ -167,4 +168,5 @@ export const AppIcons = {
   nextArrowIcon: nextArrowIcon, 
   DoneIcon: doneIcon,
   CancelIcon: cancelIcon,
+  TestApiIcon: testApiIcon,
 };

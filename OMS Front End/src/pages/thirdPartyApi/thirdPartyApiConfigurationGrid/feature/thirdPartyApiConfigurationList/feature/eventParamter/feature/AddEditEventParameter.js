@@ -73,6 +73,7 @@ const AddEditEventParameter = (props) => {
         parameterType: allGetApiEventParameterByApiEventParametersIdData.parameterType,
         apiEventParametersId: allGetApiEventParameterByApiEventParametersIdData.apiEventParametersId,
         apiEventId: allGetApiEventParameterByApiEventParametersIdData.apiEventId,
+        defaultValue: allGetApiEventParameterByApiEventParametersIdData.defaultValue
       }
       setAddEditParameterData(setData)
     }

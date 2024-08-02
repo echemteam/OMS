@@ -37,7 +37,7 @@ const OrderItemDetail = () => {
   };
 
   return (
-    <>
+   
       <div className="row">
         <div className="col-6">
           <FormCreator
@@ -85,7 +85,7 @@ const OrderItemDetail = () => {
           <AddOrderItem />
         </SidebarModel>
       </div>
-    </>
+     
   );
 };
 

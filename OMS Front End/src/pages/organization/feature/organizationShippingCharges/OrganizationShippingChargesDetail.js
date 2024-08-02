@@ -11,6 +11,7 @@ const OrganizationShippingChargesDetail=()=>{
     const [organizationShippingChargesData, setOrganizationShippingChargesData] = useState(OrganizationShippingChargesFormData);
     const [addEditOrganizationShippingCharges, { isLoading: isAddEditOrganizationShippingChargesLoading, isSuccess: isAddEditOrganizationShippingChargesSuccess, data: isAddEditOrganizationShippingChargesData }] =useAddEditOrganizationShippingChargesMutation();
     const [getOrganizationShippingCharges, { isFetching: isGetOrganizationShippingChargesFetching, isSuccess: isGetOrganizationShippingChargesSuccess, data: isGetOrganizationShippingChargesData }] = useLazyGetOrganizationShippingChargesQuery();
+    const[shippingChargeId,setShippingChargeId]=useState(0);
 
     useEffect(() => {
         if (isAddEditOrganizationShippingChargesSuccess && isAddEditOrganizationShippingChargesData) {
@@ -25,20 +26,20 @@ const OrganizationShippingChargesDetail=()=>{
 
       const handleAddEditShippingChargesDetail=()=>{
          let shippingChargesData = organizationShippingChargesRef.current.getFormData();
-     
+        if(shippingChargesData){
                 const request={
                     ...shippingChargesData,
-                    organizationShippingChargeId: shippingChargesData.organizationShippingChargeId,
-                    domesticOvernight:shippingChargesData.domesticOvernight,
-                    domesticSecondDay:shippingChargesData.domesticSecondDay,
-                    domesticGround:shippingChargesData.domesticGround,
-                    internationalPriority:shippingChargesData.internationalPriority,
-                    internationalEconomy:shippingChargesData.internationalEconomy,    
+                    organizationShippingChargeId: shippingChargeId,
+                    domesticOvernight:shippingChargesData?.domesticOvernight,
+                    domesticSecondDay:shippingChargesData?.domesticSecondDay,
+                    domesticGround:shippingChargesData?.domesticGround,
+                    internationalPriority:shippingChargesData?.internationalPriority,
+                    internationalEconomy:shippingChargesData?.internationalEconomy,    
         
                 }
                 addEditOrganizationShippingCharges(request);       
       }
-
+    }
     useEffect(() => {
         if (!isGetOrganizationShippingChargesFetching && isGetOrganizationShippingChargesSuccess && isGetOrganizationShippingChargesData) {
             let formData = { ...organizationShippingChargesData };
@@ -46,11 +47,12 @@ const OrganizationShippingChargesDetail=()=>{
                 ...isGetOrganizationShippingChargesData, 
             };
             setOrganizationShippingChargesData(formData);
+            setShippingChargeId(isGetOrganizationShippingChargesData.organizationShippingChargeId);
         }
     }, [isGetOrganizationShippingChargesFetching, isGetOrganizationShippingChargesSuccess, isGetOrganizationShippingChargesData,]);
 
 
-    return(<>
+    return(
     
     <div className="row mt-2 add-address-form">
                 <FormCreator config={organizationShippingChargesData}
@@ -69,6 +71,6 @@ const OrganizationShippingChargesDetail=()=>{
                 </div>
             </div>
         </div>
-    </>)
+    )
 }
 export default OrganizationShippingChargesDetail;

@@ -115,7 +115,13 @@ const AddressDetailCard = forwardRef(
           return "badge-default";
       }
     };
-
+    const getStatusDescription = (address) => {
+      return address.isPreferredBilling && address.addressTypeId === 1
+        ? "Preferred Billing"
+        : address.isPreferredShipping && address.addressTypeId === 2
+        ? "Preferred Shipping"
+        : "";
+    };
     return (
       <React.Fragment>
         {!isGetAddresssByCustomerIdFetching ? (
@@ -131,13 +137,7 @@ const AddressDetailCard = forwardRef(
                           address.addressTypeId === 2)) && (
                         <div className="status-desc">
                           <span className="field-info active-green-color">
-                            {address.isPreferredBilling &&
-                            address.addressTypeId === 1
-                              ? "Preferred Billing"
-                              : address.isPreferredShipping &&
-                                address.addressTypeId === 2
-                              ? "Preferred Shipping"
-                              : ""}
+                              {getStatusDescription(address)}
                           </span>
                         </div>
                       )}
@@ -201,7 +201,7 @@ AddressDetailCard.propTypes = {
   getAddresssByCustomerId: PropTypes.func.isRequired,
   getByIdRef: PropTypes.object.isRequired,
   selectedAddressTypeId: PropTypes.oneOfType([
-    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.number),
   ]).isRequired,
 };

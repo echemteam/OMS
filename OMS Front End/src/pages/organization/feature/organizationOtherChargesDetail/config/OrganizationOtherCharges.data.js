@@ -13,6 +13,7 @@ export const OrganizationOtherChargesFormData = {
             fieldSetting: {
               placeholder: "Enter Handling Fees",
               allowSpace: true,
+              maxLength:18
             },
             validation: [{ type: "require" }],
             style: {
@@ -29,6 +30,7 @@ export const OrganizationOtherChargesFormData = {
             fieldSetting: {
               placeholder: "Enter Bank Wire Fees",
               allowSpace: true,
+              maxLength:18
             },
             validation: [{ type: "require" }],
             style: {
@@ -44,6 +46,7 @@ export const OrganizationOtherChargesFormData = {
             fieldSetting: {
               placeholder: "Enter Credit Card Service Fees",
               allowSpace: true,
+              maxLength:18
             },
             validation: [{ type: "require" }],
             style: {
@@ -59,6 +62,7 @@ export const OrganizationOtherChargesFormData = {
             fieldSetting: {
               placeholder: "Enter Cold Box Fees",
               allowSpace: true,
+              maxLength:18
             },
             validation: [{ type: "require" }],
             style: {
@@ -74,6 +78,7 @@ export const OrganizationOtherChargesFormData = {
             fieldSetting: {
               placeholder: "Enter ITN Fees",
               allowSpace: true,
+              maxLength:18
             },
             validation: [{ type: "require" }],
             style: {

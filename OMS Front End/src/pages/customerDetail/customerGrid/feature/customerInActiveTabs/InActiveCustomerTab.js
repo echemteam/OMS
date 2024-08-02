@@ -221,7 +221,7 @@ const InActiveCustomerTab = ({ statusId }) => {
               <CardSection
               //   cardTitle="Other Information"
               >
-                <>
+                
                   {tabs && tabs.length > 0 &&
                     <div className="row">
                       <div className="col-12">
@@ -248,7 +248,7 @@ const InActiveCustomerTab = ({ statusId }) => {
                       </div>
                     </div>
                   }
-                </>
+                
               </CardSection>
             </div>
           </div>

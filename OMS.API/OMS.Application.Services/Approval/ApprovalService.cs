@@ -4,6 +4,7 @@ using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
 using OMS.Domain.Entities.API.Response.Approval;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
@@ -66,6 +67,14 @@ namespace OMS.Application.Services.Approval
             ApprovalRequestsDTO approvalRequestsDTO = requestData.ToMapp<AddApprovalRequests, ApprovalRequestsDTO>();
             approvalRequestsDTO.RequestedByUserId = CurrentUserId;
             return await repositoryManager.approval.AddApprovalRequests(approvalRequestsDTO);
+        }
+        public Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId)
+        {
+            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRequestedByUserId(status, requestedByUserId);
+        }
+        public async Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId)
+        {
+            return await repositoryManager.approval.GetApprovalRequestsByApprovalRequestId(approvalRequestId);
         }
     }
 

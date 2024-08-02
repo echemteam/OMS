@@ -32,6 +32,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.ApiEventId,
                 requestData.ParameterName,
                 requestData.ParameterType,
+                requestData.DefaultValue,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }

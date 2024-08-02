@@ -1,18 +1,14 @@
-import React, { useRef } from "react";
+import React from "react";
 import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import PropTypes from "prop-types";
 
-const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, phoneNumberList,isOptionsOpen }) => {
+const ContactPhoneNumberDropdown = ({  phoneNumberList,isOptionsOpen }) => {
 
-  const ref = useRef(null);
-  const togglePhoneDropdown = () => {
-    setShowPhoneDropdown(!showPhoneDropdown);
-  };
+  let phoneNumbers =   phoneNumberList.filter((data) => data.isPrimary === false);
+   let primaryPhoneNumber =   phoneNumberList.find((data) => data.isPrimary === true);
 
-  let phoneNumbers = phoneNumberList && phoneNumberList.filter((data) => data.isPrimary === false);
-  let primaryPhoneNumber = phoneNumberList && phoneNumberList.find((data) => data.isPrimary === true);
 
   if (!primaryPhoneNumber && phoneNumberList && phoneNumberList.length > 0) {
     primaryPhoneNumber = phoneNumberList[0];
@@ -56,8 +52,7 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
               <div className={`card-value ml-0 ${primaryPhoneNumber?.isPrimary ? "primary-phone" : ""}`}>
                 {`(${primaryPhoneNumber?.phoneCode}) ${primaryPhoneNumber?.phoneNumber}`}
               </div>
-              {/* <span className="title">Ext.</span> */}
-              {/* { */}
+           
               <div className={`card-value ${primaryPhoneNumber?.isPrimary ? "primary-phone" : ""}`} >
                 {`${primaryPhoneNumber?.extension > 0 ? "," + primaryPhoneNumber?.extension : ""}`}
               </div>
@@ -65,7 +60,7 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
                 <div className="primary-icon" title="Is Primary"></div>
               ) : null}
               <span className="copy-icon" title="Copy" onClick={() => CopyText(`(${primaryPhoneNumber.phoneCode}) ${primaryPhoneNumber.phoneNumber} 
-              ${primaryPhoneNumber.extension > 0 ? primaryPhoneNumber.extension : ""}`, "phone")}>
+                ${primaryPhoneNumber.extension > 0 ? primaryPhoneNumber.extension : ""}`, "phone")}>
                 <Image imagePath={AppIcons.copyIcon} altText="Icon" />
                 {/* <i className="fa fa-files-o"></i> */}
               </span>
@@ -97,8 +92,7 @@ const ContactPhoneNumberDropdown = ({ showPhoneDropdown, setShowPhoneDropdown, p
 };
 
 ContactPhoneNumberDropdown.propTypes = {
-  showPhoneDropdown: PropTypes.bool,
-  setShowPhoneDropdown: PropTypes.func,
+ 
   phoneNumberList: PropTypes.arrayOf(
     PropTypes.shape({
       phoneCode: PropTypes.string,

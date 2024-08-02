@@ -14,10 +14,11 @@ import { checkFormData } from "./config/CheckForm.data";
 import { creditCardFormData } from "./config/CreditCardForm.data";
 import { otherFormData } from "./config/OtherForm.data";
 import ACHWireDetail from "./feature/achWireDetail/ACHWireDetail";
+import PropTypes from 'prop-types';
 
 const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
   const financialSettingFormRef = useRef();
-  const [financialSettingForm, setfinancialSettingForm] = useState(financialSettingFormData);
+  const [financialSettingForm, setFinancialSettingForm] = useState(financialSettingFormData);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [getCheckData, setGetCheckData] = useState(checkFormData)
   const [getCreditData, setGetCreditData] = useState(creditCardFormData)
@@ -69,7 +70,7 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
         poDeliveryMethodId: isGetSupplierFinancialSettingsBySupplierIdData.poDeliveryMethodId,
         supplierAccountingSettingId: isGetSupplierFinancialSettingsBySupplierIdData.supplierAccountingSettingId
       };
-      setfinancialSettingForm(formData);
+      setFinancialSettingForm(formData);
     }
   }, [isGetSupplierFinancialSettingsBySupplierIdFetching, isGetSupplierFinancialSettingsBySupplierIdSuccess, isGetSupplierFinancialSettingsBySupplierIdData]);
 
@@ -202,6 +203,11 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
       </div>
     </div>
   );
+};
+
+FinancialSettingsgGrid.propTypes = {
+  supplierId: PropTypes.number.isRequired,
+  isEditablePage: PropTypes.bool.isRequired,
 };
 
 export default FinancialSettingsgGrid;

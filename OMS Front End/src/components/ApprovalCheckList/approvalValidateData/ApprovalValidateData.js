@@ -99,7 +99,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }));
 
   return (
-    <>
+     
       <CenterModel modalTitle="Validate Customer Information" showModal={showModal} handleToggleModal={handleShowValidateModal}
         modelSizeClass="w-40 validation-center-model" isApprovalValidate={true}>
         {!isGetCheckListLoading ? (
@@ -139,7 +139,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
           <DataLoader />
         )}
       </CenterModel>
-    </>
+     
   );
 };
 
