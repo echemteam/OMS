@@ -9,7 +9,7 @@ import ToastService from '../../../../services/toastService/ToastService';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 import { decryptUrlData, encryptAES } from '../../../../services/CryptoService';
 
-const SMTPSettings = (props) => {
+const SMTPSettings = () => {
     const smtpRef = useRef();
     const [smtpSettingData, setSmtpSettingData] = useState(SMTPSettingsData);
     const [addEditSmtpSetting, { isLoading: isAddEditSmtpSettingLoading, isSuccess: isAddEditSmtpSettingSuccess, data: isAddEditSmtpSettingData }] = useAddEditSmtpSettingsMutation();
