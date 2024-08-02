@@ -93,3 +93,8 @@ export const OrderTabEnum = {
     Contact: 2,
     OrderItem: 3,
 }
+
+export const MyTaskStatus = {
+    Pending : "Pending",
+    Accept : "Accept"
+}
