@@ -43,11 +43,11 @@ const AddEditRequiredFields = (props) => {
   };
 
   useEffect(() => {
-    onResetForm(addEditRequireData, setAddEditRequireData, null);
+    onResetForm(AddEditRequireParameterData, setAddEditRequireData, null);
   }, [props.isOpen])
 
   const handleResetAndClose = () => {
-    onResetForm(addEditRequireData, setAddEditRequireData, null);
+    onResetForm(AddEditRequireParameterData, setAddEditRequireData, null);
     props.onClose();
   };
 

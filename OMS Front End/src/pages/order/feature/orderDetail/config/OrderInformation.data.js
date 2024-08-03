@@ -147,6 +147,11 @@ export const orderInformationData = {
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-4 mb-input",
       },
+      inputButtonGroup: {
+        isInputButton: true,
+        buttonText: 'Add',
+        icon: AppIcons.PlusIcon,
+      }
     },
   ],
 };

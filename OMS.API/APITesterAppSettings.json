@@ -2,5 +2,11 @@
   "ConnectionStrings": {
     "OMS": "server=47.190.78.205; database=OmsLite;user id=sa;password=Swami@86;integrated security=false;Connect Timeout=1000;TrustServerCertificate=True;MultipleActiveResultSets=True;",
     "providerName": "System.Data.EntityClient"
+  },
+  "JWTTokenSettings": {
+    "Secret": "3!auam%wdk1jvwx_0#&e_%295su%s9zoxm@hr6++jhsllo+16+,",
+    //"Secret": "XxAKCz?b&3LWj#MYCOuDQ?fGL%4hKHdeErEBG9DarZ+Ga%H@CNMOAc",
+    "Issuer": "https://localhost:44318",
+    "SessionTimeOut": 60
   }
 }

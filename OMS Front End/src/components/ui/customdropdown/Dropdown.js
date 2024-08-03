@@ -35,6 +35,7 @@ const DropDown = (props) => {
           isDropdownDisabled={props.isDisabled}
           dropDownSettings={props.dropDownSettings}
           inputButtonGroup={props.inputButtonGroup}
+          handleInputGroupButton={props.handleInputGroupButton}
         />
       </span>
     </>

@@ -100,6 +100,16 @@ const thirdPartyAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
+        getAllEventParameterByEventId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/ApiEventManagement/GetAllEventParameterByEventId?apiEventId=${id}`),
+                method: 'GET',
+            }),
+            // providesTags: ['User'],
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
         deleteApiEventMapping: builder.mutation({
             query: (id) => ({
                 url: encryptQueryString(`/ApiEventManagement/DeleteApiEventMapping/?apiEventMappingId=${id}`),
@@ -123,7 +133,7 @@ const thirdPartyAPI = createApi({
 
         getApiEventParameterByApiEventParametersId: builder.query({
             query: (id) => ({
-                url: encryptQueryString(`/ApiEventManagement/GetApiEventParameterByApiEventParametersId/?apiEventParametersId=${Number(id)}`),
+                url: encryptQueryString(`/ApiEventManagement/GetApiEventParameterByApiEventParametersId/?apiEventId=${Number(id)}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
@@ -133,7 +143,7 @@ const thirdPartyAPI = createApi({
 
         deleteApiEventParameter: builder.mutation({
             query: (id) => ({
-                url: encryptQueryString(`/ApiEventManagement/DeleteApiEventParameter/?apiEventParametersId=${id}`),
+                url: encryptQueryString(`/ApiEventManagement/DeleteApiEventParameter/?parameterId=${id}`),
                 method: 'DELETE',
                 body: transformRequest(id)
             }),
@@ -291,6 +301,7 @@ export const {
     useGetApiEventsMutation,
     useGetApiEventRequiredFieldsMutation,
     useLazyGetAllAPIParametersByEndpointIdQuery,
+    useLazyGetAllEventParameterByEventIdQuery,
     useGetApiParameterMappingsMutation,
     useGetApiEventMappingsMutation,
 

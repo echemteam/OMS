@@ -95,6 +95,11 @@ export const OrderTabEnum = {
 }
 
 export const MyTaskStatus = {
-    Pending : "Pending",
-    Accept : "Accept"
+    Pending: "Pending",
+    Accept: "Accept"
+}
+
+export const ParameterType = {
+    EVENT: "Event",
+    PROVIDER: "Provider"
 }

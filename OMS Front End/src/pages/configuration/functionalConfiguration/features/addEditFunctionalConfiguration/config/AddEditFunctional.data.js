@@ -13,7 +13,7 @@ export const AddEditFunctionalData = {
             fieldSetting: {
                 placeholder: "Enter name",
                 allowSpace: true,
-                maxLength: 20,
+                maxLength: 100,
             },
             validation: [{ type: "require" }],
             style: {
