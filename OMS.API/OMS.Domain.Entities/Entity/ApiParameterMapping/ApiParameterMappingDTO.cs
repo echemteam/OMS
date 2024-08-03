@@ -4,7 +4,8 @@
     {
         public int? ApiEventId { get; set; }
         public int? ApiEventParameterId { get; set; }
-        public int? ParameterId { get; set; }
+        public int? EventParameterId { get; set; }
+        public int? ProviderParameterId { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }

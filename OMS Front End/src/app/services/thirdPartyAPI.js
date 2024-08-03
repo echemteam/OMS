@@ -123,7 +123,7 @@ const thirdPartyAPI = createApi({
 
         getApiEventParameterByApiEventParametersId: builder.query({
             query: (id) => ({
-                url: encryptQueryString(`/ApiEventManagement/GetApiEventParameterByApiEventParametersId/?apiEventParametersId=${Number(id)}`),
+                url: encryptQueryString(`/ApiEventManagement/GetApiEventParameterByApiEventParametersId/?apiEventId=${Number(id)}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
@@ -133,7 +133,7 @@ const thirdPartyAPI = createApi({
 
         deleteApiEventParameter: builder.mutation({
             query: (id) => ({
-                url: encryptQueryString(`/ApiEventManagement/DeleteApiEventParameter/?apiEventParametersId=${id}`),
+                url: encryptQueryString(`/ApiEventManagement/DeleteApiEventParameter/?parameterId=${id}`),
                 method: 'DELETE',
                 body: transformRequest(id)
             }),
