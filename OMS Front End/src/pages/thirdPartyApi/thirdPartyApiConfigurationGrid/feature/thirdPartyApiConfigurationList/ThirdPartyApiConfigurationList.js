@@ -75,7 +75,9 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
 
     useEffect(() => {
         if (isAPITesterSucess && isAPITesterData) {
-            console.log('isAPITesterData', isAPITesterData);
+            const data = JSON.parse(isAPITesterData.apiResponse);
+            const responseData = JSON.parse(data.responseData);
+            console.log('isAPITesterData =>', responseData);
             if (isAPITesterData) {
                 ToastService.success("Successfully Worked.");
             }

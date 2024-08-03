@@ -100,6 +100,16 @@ const thirdPartyAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
+        getAllEventParameterByEventId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/ApiEventManagement/GetAllEventParameterByEventId?apiEventId=${id}`),
+                method: 'GET',
+            }),
+            // providesTags: ['User'],
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
         deleteApiEventMapping: builder.mutation({
             query: (id) => ({
                 url: encryptQueryString(`/ApiEventManagement/DeleteApiEventMapping/?apiEventMappingId=${id}`),
@@ -291,6 +301,7 @@ export const {
     useGetApiEventsMutation,
     useGetApiEventRequiredFieldsMutation,
     useLazyGetAllAPIParametersByEndpointIdQuery,
+    useLazyGetAllEventParameterByEventIdQuery,
     useGetApiParameterMappingsMutation,
     useGetApiEventMappingsMutation,
 

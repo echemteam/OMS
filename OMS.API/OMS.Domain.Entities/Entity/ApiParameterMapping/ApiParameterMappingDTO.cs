@@ -3,7 +3,6 @@
     public class ApiParameterMappingDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? ApiEventId { get; set; }
-        public int? ApiEventParameterId { get; set; }
         public int? EventParameterId { get; set; }
         public int? ProviderParameterId { get; set; }
         public DateTime? CreatedAt { get; set; }

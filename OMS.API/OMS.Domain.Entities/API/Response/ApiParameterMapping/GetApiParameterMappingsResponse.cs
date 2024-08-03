@@ -4,8 +4,9 @@
     {
         public int? ApiParameterMappingId { get; set; }
         public int? ApiEventId { get; set; }
-        public int? ParameterId { get; set; }
-        public string? ParameterName { get; set; }
-        public string? DataType { get; set; }
+        public int? ProviderParameterId { get; set; }
+        public string? ProviderParameterName { get; set; }
+        public int? EventParameterId { get; set; }
+        public string? EventParameterName { get; set; }
     }
 }
