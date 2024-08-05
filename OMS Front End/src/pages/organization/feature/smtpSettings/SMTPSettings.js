@@ -25,8 +25,8 @@ const SMTPSettings = () => {
       }, [isAddEditSmtpSettingSuccess, isAddEditSmtpSettingData]);
 
     const handleAddEditSmtpSettings = () => {
+   
         let data = smtpRef.current.getFormData();
-        if (data) {
             let request = {
                 ...data,
                 emailProvider: encryptAES(data.emailProvider),
@@ -36,7 +36,7 @@ const SMTPSettings = () => {
                 smtpSettingId: data.smtpSettingId ? data.smtpSettingId : data.smtpSettingId
             }
                 addEditSmtpSetting(request)
-        }
+    
     }
 
     useEffect(() => {
