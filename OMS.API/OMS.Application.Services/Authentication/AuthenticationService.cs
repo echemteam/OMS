@@ -3,6 +3,7 @@ using Common.Helper.Utility;
 using Microsoft.IdentityModel.Tokens;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Authentication;
+using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.API.Response.Authentication;
 using OMS.Domain.Entities.API.Response.SecuritySetting;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -59,6 +60,9 @@ namespace OMS.Application.Services.Authentication
                 SecurityKeyParentId = a.SecurityKeyParentId,
                 SecuritySettingId = a.SecuritySettingId
             }).ToList();
+
+            //List<GetApprovalConfigurationResponse> approvalConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
+            authResponce.ApprovalRulesConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
 
             UserDetails userDetails = user.ToMapp<UserDTO, UserDetails>();
             authResponce.User = userDetails;

@@ -173,5 +173,13 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllApiEventRequiredFieldByApiEventId(apiEventId);
         }
+        public Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId)
+        {
+            return repositoryManager.commonRepository.GetAllAddressesByCustomerIdAndAddressTypeId(customerId,addressTypeId);
+        }
+        public Task<List<GetAllContactsByCustomerIdAndContactTypeIdResponse>> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId)
+        {
+            return repositoryManager.commonRepository.GetAllContactsByCustomerIdAndContactTypeId(customerId,contactTypeId);
+        }
     }
 }
