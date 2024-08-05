@@ -27,16 +27,17 @@ const SMTPSettings = () => {
     const handleAddEditSmtpSettings = () => {
    
         let data = smtpRef.current.getFormData();
+        if(data){
             let request = {
                 ...data,
-                emailProvider: encryptAES(data.emailProvider),
-                smtpServer: encryptAES(data.smtpServer),
-                smtpUserName: encryptAES(data.smtpUserName),
-                smtpPassword: encryptAES(data.smtpPassword),
-                smtpSettingId: data.smtpSettingId ? data.smtpSettingId : data.smtpSettingId
+                emailProvider: encryptAES(data?.emailProvider),
+                smtpServer: encryptAES(data?.smtpServer),
+                smtpUserName: encryptAES(data?.smtpUserName),
+                smtpPassword: encryptAES(data?.smtpPassword),
+                smtpSettingId: data?.smtpSettingId ? data.smtpSettingId : data.smtpSettingId
             }
                 addEditSmtpSetting(request)
-    
+        }
     }
 
     useEffect(() => {
