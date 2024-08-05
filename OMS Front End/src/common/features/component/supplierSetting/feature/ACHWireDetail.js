@@ -349,7 +349,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef , i
             buttonText="Save"
             onClick={handleACHWireAdd}
             isLoading={isAddEditACHWireLoading}
-          // isDisable={isButtonDisable}
+          
           />
         </div>
       </div>
