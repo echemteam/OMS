@@ -78,6 +78,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.ModuleId,
                 requestData.FunctionalityId,
                 requestData.TableId,
+                requestData.FunctionalityEventId,
                 requestData.FunctionalitiesFieldId,
                 requestData.OldValue,
                 requestData.NewValue,
