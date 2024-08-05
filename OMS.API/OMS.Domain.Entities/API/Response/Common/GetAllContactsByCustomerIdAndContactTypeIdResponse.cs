@@ -4,5 +4,7 @@
     {
         public int? ContactId { get; set; }
         public string? FullName { get; set; }
+        public short? ContactTypeId { get; set; }
+        public string? ContactType { get; set; }
     }
 }
