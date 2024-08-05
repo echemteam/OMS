@@ -2,7 +2,7 @@ import Image from "../../../../../../components/image/Image";
 import { AppIcons } from "../../../../../../data/appIcons";
 import PropTypes from "prop-types";
  const ApiProviderBasicInfoCard = ({providerFormData,editClick}) => {
-  return (    <>
+  return (     
        <div className="basic-customer-detail">
       <div className="col-xl-12 col-lg-12 col-md-12 col-12">
         <div className="d-flex gap-5 profile-info  justify-content-between col-11">
@@ -41,7 +41,7 @@ import PropTypes from "prop-types";
         </div>     
       </div>
     </div>
-         </>
+        
     )
 }
 

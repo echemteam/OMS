@@ -51,7 +51,7 @@ namespace OMS.Application.Services.Contact
                     List<AddContactPhoneRequest> PhoneDT = requestData.PhoneList!;
 
                     int contactId = responceData.KeyValue;
-                    OwnerType ownerTypeId = 0; ;
+                    OwnerType ownerTypeId = 0;
                     if (requestData.CustomerId > 0 && responceData.KeyValue > 0)
                     {
                         ownerTypeId = OwnerType.CustomerContact;
@@ -129,7 +129,7 @@ namespace OMS.Application.Services.Contact
             }
             var ownerTypeId = (short)OwnerType.CustomerContact;
 
-            var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contactId,ownerTypeId);
+            var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contactId, ownerTypeId);
             var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
 
             await Task.WhenAll(emailTask, phoneTask);
@@ -149,7 +149,7 @@ namespace OMS.Application.Services.Contact
             var ownerTypeId = (short)OwnerType.CustomerContact;
             var tasks = contactList.Select(async contact =>
             {
-                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId,ownerTypeId);
+                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
                 var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
 
                 var emailAddresses = await emailTask;

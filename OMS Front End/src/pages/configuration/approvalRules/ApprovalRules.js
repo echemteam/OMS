@@ -1,168 +1,75 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import Modules from "./features/Modules";
-import Functionalities from "./features/Functionalities";
+import React, { useRef, useState } from "react";
 import Rules from "./features/Rules";
 import "./Configuration.scss";
-import { useLazyGetAllFunctionalitiesFieldsQuery, useLazyGetAllFunctionalitiesQuery, useLazyGetAllModulesQuery, useLazyGetApprovalConfigurationRulesByModuleIdAndFunctionalityIdQuery } from "../../../app/services/configurationAPI";
-import { rulesFormData } from "./config/RulesForm.data";
-import { CommansDataField } from "../../../utils/Enums/DropdownEnums";
-import { setDropDownOptionField } from "../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { rulesFormData } from "./features/config/RulesForm.data";
+import { AppIcons } from "../../../data/appIcons";
+import CardSection from "../../../components/ui/card/CardSection";
+import SidebarModel from "../../../components/ui/sidebarModel/SidebarModel";
+import AddEditRules from "./features/AddEditRules";
 
 const ApprovalRules = () => {
+  const childRef = useRef();
+  const [formData, setFormData] = useState(rulesFormData.initialState);
+  const [isModelOpen, setIsModelOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false)
 
-  const [selectedModule, setSelectedModule] = useState(1);
-  const [moduleData, setModuleData] = useState()
-  const [functionalityData, setFunctionalityData] = useState()
-  const [selectedFunctionality, setSelectedFunctionality] = useState(1);
-  const [getRules, setGetRules] = useState("");
-  const [formData, setFormData] = useState(rulesFormData);
-
-  const [getAllModules,
-    {
-      isSuccess: isgetAllModulesSucess,
-      data: allGetAllModulesData,
-    },
-  ] = useLazyGetAllModulesQuery();
-
-  const [getAllFunctionalities,
-    {
-      isSuccess: isGetAllFunctionalitiesSucess,
-      data: allGetAllFunctionalitiesData,
-    },
-  ] = useLazyGetAllFunctionalitiesQuery();
-
-  const [getModuleandfunctionalityId,
-    {
-      isFetching: isGetModuleandfunctionalityIdFetching,
-      isSuccess: isGetModuleandfunctionalityIdSucess,
-      data: allGetModuleandfunctionalityIdData,
-    },
-  ] = useLazyGetApprovalConfigurationRulesByModuleIdAndFunctionalityIdQuery();
-
-  const [
-    getAllFunctionalitiesFields,
-    {
-      isSuccess: isGetAllFunctionalitiesFieldsSucess,
-      data: allGetAllFunctionalitiesFieldsData,
-    },
-  ] = useLazyGetAllFunctionalitiesFieldsQuery();
-
-  useEffect(() => {
-    getAllModules();
-  }, []);
-
-  useEffect(() => {
-    if (selectedModule) {
-      getAllFunctionalities(selectedModule);
-    }
-  }, [selectedModule]);
-
-  useEffect(() => {
-    if (selectedModule && selectedFunctionality) {
-      let req = {
-        moduleId: selectedModule,
-        functionalityId: selectedFunctionality
-      }
-      getModuleandfunctionalityId(req)
-    }
-  }, [selectedFunctionality]);
-
-  useEffect(() => {
-    if (selectedFunctionality) {
-      getAllFunctionalitiesFields(selectedFunctionality);
-    }
-  }, [selectedFunctionality]);
-
-  useEffect(() => {
-    if (isgetAllModulesSucess && allGetAllModulesData) {
-      handleModuleOption(allGetAllModulesData);
-      setModuleData(allGetAllModulesData)
-    }
-    if (isGetAllFunctionalitiesSucess && allGetAllFunctionalitiesData) {
-      handleFunctionalityOption(allGetAllFunctionalitiesData);
-      setFunctionalityData(allGetAllFunctionalitiesData)
-    }
-    if (isGetModuleandfunctionalityIdSucess && allGetModuleandfunctionalityIdData && !isGetModuleandfunctionalityIdFetching) {
-      handleGetRules(allGetModuleandfunctionalityIdData);
-    }
-    if (isGetAllFunctionalitiesFieldsSucess && allGetAllFunctionalitiesFieldsData) {
-      handleFunctionalitiesFields(allGetAllFunctionalitiesFieldsData);
-    }
-  }, [isGetAllFunctionalitiesFieldsSucess, allGetAllFunctionalitiesFieldsData, isgetAllModulesSucess, allGetAllModulesData, isGetAllFunctionalitiesSucess, allGetAllFunctionalitiesData, isGetModuleandfunctionalityIdSucess, allGetModuleandfunctionalityIdData, isGetModuleandfunctionalityIdFetching])
-
-  const handleModuleOption = (responseData) => {
-    setDropDownOptionField(responseData, CommansDataField.ModuleId, 'moduleName', rulesFormData, CommansDataField.ModuleId);
-  }
-
-  const handleFunctionalityOption = (responseData) => {
-    setDropDownOptionField(responseData, CommansDataField.FunctionalityId, 'name', rulesFormData, CommansDataField.FunctionalityId);
-  }
-
-  const handleFunctionalitiesFields = (responseData) => {
-    setDropDownOptionField(responseData, CommansDataField.FunctionalityFieldId, 'fieldName', rulesFormData, CommansDataField.FunctionalityFieldId);
-  }
-
-  const handleGetRules = (responseData) => {
-    setGetRules(responseData)
-  }
-
-  const handleModuleClick = (module) => {
-    setSelectedModule(module);
+  const handleToggleModal = () => {
+    setIsModelOpen(true);
+    setIsEdit(false)
   };
 
-  const handleFunctionalityClick = (functionality) => {
-    setSelectedFunctionality(functionality);
+  const onSidebarClose = () => {
+    setIsModelOpen(false);
+    resetForm()
   };
 
-  const handleRepeatCallRule = (data) => {
-    let req = {
-      moduleId: data.moduleId,
-      functionalityId: data.functionalityId
+  const onGetData = () => {
+    if (childRef.current) {
+      childRef.current.callChildFunction();
     }
-    getModuleandfunctionalityId(req)
-  }
+  };
 
-  useEffect(() => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      initialState: {
-        ...prevFormData.initialState,
-        moduleId: selectedModule,
-        functionalityId : selectedFunctionality
-      }
-    }));
-  }, [selectedModule , selectedFunctionality]);
+  const resetForm = () => {
+    let form = { ...rulesFormData.initialState };
+    setFormData(form);
+  };
+
+  const handleEdit = (data) => {
+    resetForm()
+    setFormData(data);
+    setIsEdit(true);
+    setIsModelOpen(true);
+  };
 
   return (
     <div className="row">
-      <div className="col-2">
-        <Modules
-          modules={moduleData}
-          selectedModuleId={selectedModule}
-          onModuleClick={handleModuleClick}
-        />
-      </div>
-      <div className="col-3">
-        <Functionalities
-          functionalities={functionalityData}
-          selectedFunctionalityId={selectedFunctionality}
-          onFunctionalityClick={handleFunctionalityClick}
-        />
-      </div>
-      <div className="col-7">
-        <Rules
-          getRules={getRules}
-          selectedModuleId={selectedModule}
-          selectedFunctionalityId={selectedFunctionality}
-          allGetAllModulesData={allGetAllModulesData}
-          allGetAllFunctionalitiesData={allGetAllFunctionalitiesData}
-          allGetAllFunctionalitiesFieldsData={allGetAllFunctionalitiesFieldsData}
-          onRepeatCall={handleRepeatCallRule}
-          rulesFormData={rulesFormData}
-          setFormData={setFormData}
-          formData={formData}
-        />
+      <div>
+        <CardSection
+          cardTitle="Rules"
+          buttonClassName="btn theme-button"
+          rightButton={true}
+          buttonText="Add"
+          textWithIcon={true}
+          iconImg={AppIcons.PlusIcon}
+          titleButtonClick={handleToggleModal}
+        >
+          <Rules
+            childRef={childRef} onEdit={handleEdit}
+          />
+        </CardSection>
+
+        <SidebarModel
+          modalTitle={`${isEdit ? "Update" : "Add"} Rules`}
+          contentClass="content-35"
+          onClose={onSidebarClose}
+          modalTitleIcon={AppIcons.AddIcon}
+          isOpen={isModelOpen}
+        >
+          <AddEditRules
+            initData={formData} isEdit={isEdit} onGetData={onGetData} isOpen={isModelOpen} onClose={onSidebarClose}
+          />
+        </SidebarModel>
       </div>
     </div>
   );

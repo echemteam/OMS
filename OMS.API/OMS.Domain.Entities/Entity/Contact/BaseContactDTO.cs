@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace OMS.Domain.Entities.Entity.Contact
+﻿namespace OMS.Domain.Entities.Entity.Contact
 {
     public class BaseContactDTO
     {

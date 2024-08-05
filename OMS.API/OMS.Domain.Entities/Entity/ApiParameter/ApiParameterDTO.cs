@@ -8,6 +8,7 @@
         public string? DataType { get; set; }
         public string? DefaultValue { get; set; }
         public bool? IsRequired { get; set; }
+        public string? ParameterType { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? CreatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }

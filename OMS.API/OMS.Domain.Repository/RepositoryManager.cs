@@ -46,8 +46,9 @@ namespace OMS.Domain.Repository
         IOrganizationAccountingDetailsRepository _organizationAccountingDetailsRepository;
         IOrganizationShippingChargesRepository _organizationShippingChargesRepository;
         IOrganizationOtherChargesRepository _organizationOtherChargesRepository;
+        IOrganizationBusinessAddressesRepository _organizationBusinessAddressesRepository;
         ISupplierFinancialSettingsRepository _supplierFinancialSettingsRepository;
-        ISuppierBankDetailsRepository _suppierBankDetailsRepository;    
+        ISuppierBankDetailsRepository _suppierBankDetailsRepository;
         ISupplierPaymentSettingsRepository _supplierPaymentSettingsRepository;
         IApiEventRepository _apiEventManagementRepository;
         IApiEventMappingRepository _apiEventMappingRepository;
@@ -55,6 +56,7 @@ namespace OMS.Domain.Repository
         IApiParameterMappingRepository _apiParameterMappingRepository;
         IApiEventRequiredFieldRepository _apiEventRequiredFieldRepository;
         IApiEventRequiredFieldsMappingRepository _apiEventRequiredFieldsMappingRepository;
+        IFunctionalitiesRepository _functionalitiesRepository;
 
         public ITestRepository test
         {
@@ -354,7 +356,7 @@ namespace OMS.Domain.Repository
             }
         }
 
-        public ISmtpSettingsRepository smtpSettings 
+        public ISmtpSettingsRepository smtpSettings
         {
             get
             {
@@ -438,6 +440,18 @@ namespace OMS.Domain.Repository
             }
 
         }
+        public IOrganizationBusinessAddressesRepository organizationBusinessAddresses
+        {
+            get
+            {
+                if (_organizationBusinessAddressesRepository == null)
+                {
+                    _organizationBusinessAddressesRepository = new OrganizationBusinessAddressesRepository(_context);
+                }
+                return _organizationBusinessAddressesRepository;
+            }
+
+        }
         public ISupplierFinancialSettingsRepository supplierFinancialSettings
         {
             get
@@ -510,7 +524,7 @@ namespace OMS.Domain.Repository
             }
 
         }
-        public IApiParameterMappingRepository apiParameterMapping 
+        public IApiParameterMappingRepository apiParameterMapping
         {
             get
             {
@@ -543,6 +557,18 @@ namespace OMS.Domain.Repository
                     _apiEventRequiredFieldsMappingRepository = new ApiEventRequiredFieldsMappingRepository(_context);
                 }
                 return _apiEventRequiredFieldsMappingRepository;
+            }
+
+        }
+        public IFunctionalitiesRepository functionalities
+        {
+            get
+            {
+                if (_functionalitiesRepository == null)
+                {
+                    _functionalitiesRepository = new FunctionalitiesRepository(_context);
+                }
+                return _functionalitiesRepository;
             }
 
         }

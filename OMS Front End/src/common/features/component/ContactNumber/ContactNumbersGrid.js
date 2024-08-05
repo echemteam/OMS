@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from 'prop-types';
 //** Lib's */
 import { Message } from "../EmailAddress/utils/ContactMessages";
 import { deleteData } from "../EmailAddress/utils/ContactEmailAddressUtil";
@@ -116,5 +117,18 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
     )
 
 }
+
+ContactNumbersGrid.propTypes = {
+    contactId: PropTypes.number.isRequired,  
+    phoneNumberList: PropTypes.arrayOf(
+        PropTypes.shape({
+            phoneId: PropTypes.number, 
+            id: PropTypes.number,
+            
+        })
+    ).isRequired,
+    setPhoneNumberList: PropTypes.func.isRequired,
+    isButtonDisable: PropTypes.bool.isRequired,
+};
 
 export default ContactNumbersGrid;

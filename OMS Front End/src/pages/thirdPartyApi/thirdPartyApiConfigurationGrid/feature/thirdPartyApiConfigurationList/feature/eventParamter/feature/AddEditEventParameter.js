@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AddEditParameterData } from '../config/AddEditParameter.data';
 import { useAddEditApiEventParameterMutation, useLazyGetApiEventParameterByApiEventParametersIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
-import { ApiParametersDataTypes } from '../../../../../../../../utils/Enums/commonEnums';
+import { ApiParametersDataTypes, ParameterType } from '../../../../../../../../utils/Enums/commonEnums';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
 import { onResetForm } from '../../../../../../../../utils/FormFields/ResetForm/handleResetForm';
 import FormCreator from '../../../../../../../../components/Forms/FormCreator';
@@ -14,7 +14,7 @@ const AddEditEventParameter = (props) => {
   const [getApiEventParameterByApiEventParametersId, { isFetching: isGetApiEventParameterByApiEventParametersIdFetching, isSuccess: isGetApiEventParameterByApiEventParametersIdSucess, data: allGetApiEventParameterByApiEventParametersIdData }] = useLazyGetApiEventParameterByApiEventParametersIdQuery();
 
   useEffect(() => {
-    const dropdownField = AddEditParameterData.formFields.find((item) => item.dataField === "parameterType");
+    const dropdownField = AddEditParameterData.formFields.find((item) => item.dataField === "dataType");
     dropdownField.fieldSetting.options = Object.entries(ApiParametersDataTypes).map(([key, value]) => ({
       label: key,
       value: value,
@@ -24,9 +24,9 @@ const AddEditEventParameter = (props) => {
 
   useEffect(() => {
     if (isAddEditApiEventParameterSuccess && allAddEditApiEventParameterData) {
-      if (allAddEditApiEventParameterData.errorMessage.includes("exists")) {
+      if (allAddEditApiEventParameterData.errorMessage.includes("EXISTS")) {
         ToastService.warning(allAddEditApiEventParameterData.errorMessage);
-        handleResetAndClose();
+        // handleResetAndClose();
         return;
       }
       ToastService.success(allAddEditApiEventParameterData.errorMessage);
@@ -42,26 +42,31 @@ const AddEditEventParameter = (props) => {
       let request = {
         ...formData,
         apiEventId: props.keyId ? props.keyId : 0,
-        apiEventParametersId: formData.apiEventParametersId && typeof formData.apiEventParametersId === "object" ? formData.apiEventParametersId.value : formData.apiEventParametersId,
+        // apiEventParametersId: formData.apiEventParametersId && typeof formData.apiEventParametersId === "object" ? formData.apiEventParametersId.value : formData.apiEventParametersId,
         parameterName: formData.parameterName,
-        parameterType: formData.parameterType && typeof formData.parameterType === "object" ? formData.parameterType.value : formData.parameterType,
+        dataType: formData.dataType && typeof formData.dataType === "object" ? formData.dataType.value : formData.dataType,
+        parameterType: ParameterType.EVENT,
+        isRequired: formData.isRequired,
+        defaultValue: formData.defaultValue,
       };
       addEditApiEventParameter(request);
     }
   };
 
   useEffect(() => {
-    onResetForm(addEditParameterData, setAddEditParameterData, null);
+    if (props.isOpen && !props.getData) {
+      onResetForm(AddEditParameterData, setAddEditParameterData, null);
+    }
   }, [props.isOpen])
 
   const handleResetAndClose = () => {
-    onResetForm(addEditParameterData, setAddEditParameterData, null);
+    onResetForm(AddEditParameterData, setAddEditParameterData, null);
     props.onClose();
   };
 
   useEffect(() => {
     if (props.getData) {
-      getApiEventParameterByApiEventParametersId(props.getData.apiEventParametersId)
+      getApiEventParameterByApiEventParametersId(props.getData.apiEventId)
     }
   }, [props.getData])
 
@@ -69,10 +74,14 @@ const AddEditEventParameter = (props) => {
     if (!isGetApiEventParameterByApiEventParametersIdFetching && isGetApiEventParameterByApiEventParametersIdSucess && allGetApiEventParameterByApiEventParametersIdData) {
       let setData = { ...addEditParameterData }
       setData.initialState = {
+        ...allGetApiEventParameterByApiEventParametersIdData,
         parameterName: allGetApiEventParameterByApiEventParametersIdData.parameterName,
-        parameterType: allGetApiEventParameterByApiEventParametersIdData.parameterType,
+        dataType: allGetApiEventParameterByApiEventParametersIdData.dataType,
         apiEventParametersId: allGetApiEventParameterByApiEventParametersIdData.apiEventParametersId,
         apiEventId: allGetApiEventParameterByApiEventParametersIdData.apiEventId,
+        defaultValue: allGetApiEventParameterByApiEventParametersIdData.defaultValue,
+        parameterType: ParameterType.EVENT,
+        isRequired: allGetApiEventParameterByApiEventParametersIdData.isRequired
       }
       setAddEditParameterData(setData)
     }

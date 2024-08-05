@@ -1,5 +1,4 @@
 ﻿using OMS.Domain.Entities.API.Request.CustomerNotes;
-using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.API.Response.CustomerNotes;
 using OMS.Domain.Entities.Entity.CommonEntity;
 

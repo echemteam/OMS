@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.CustomerNotes;
 using OMS.Domain.Entities.API.Request.SupplierNotes;
-using OMS.Domain.Entities.API.Response.CustomerNotes;
 using OMS.Domain.Entities.API.Response.SupplierNotes;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;

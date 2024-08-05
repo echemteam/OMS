@@ -10,6 +10,7 @@ using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredField;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Response.ApiParameterMapping;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Shared.Entities.CommonEntity;
 
@@ -22,11 +23,11 @@ namespace OMS.Application.Services.ApiEventManagement
         Task<AddEntityDTO<int>> DeleteApiEvent(int apiEventId, short CurrentUserId);
         Task<EntityList<GetApiEventsResponse>> GetApiEvents(ListEntityRequest<BaseFilter> requestData);
         Task<AddEntityDTO<int>> AddApiEventMapping(AddApiEventMappingRequest requestData, short CurrentUserId);
-        Task<EntityList<GetApiEventMappingsResponse>> GetApiEventMappings(GetApiEventMappingsRequest requestData);
+        Task<GetApiEventMappingsResponse> GetApiEventMappings(GetApiEventMappingsRequest requestData);
         Task<AddEntityDTO<int>> DeleteApiEventMapping(int apiEventMappingId, short CurrentUserId);
         Task<AddEntityDTO<int>> AddEditApiEventParameter(AddEditApiEventParameterRequest requestData, short CurrentUserId);
-        Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventParametersId);
-        Task<AddEntityDTO<int>> DeleteApiEventParameter(int apiEventParametersId, short CurrentUserId);
+        Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventId);
+        Task<AddEntityDTO<int>> DeleteApiEventParameter(int parameterId, short CurrentUserId);
         Task<EntityList<GetApiEventParametersResponse>> GetApiEventParameters(GetApiEventParametersRequest requestData);
         Task<AddEntityDTO<int>> AddApiParameterMapping(AddApiParameterMappingRequest requestData, short CurrentUserId);
         Task<EntityList<GetApiParameterMappingsResponse>> GetApiParameterMappings(GetApiParameterMappingsRequest requestData);
@@ -38,6 +39,8 @@ namespace OMS.Application.Services.ApiEventManagement
         Task<AddEntityDTO<int>> AddApiEventRequiredFieldsMapping(AddApiEventRequiredFieldsMappingRequest requestData, short CurrentUserId);
         Task<EntityList<GetApiEventRequiredFieldsMappingsResponse>> GetApiEventRequiredFieldsMappings(GetApiEventRequiredFieldsMappingsRequest requestData);
         Task<AddEntityDTO<int>> DeleteApiEventRequiredFieldsMapping(int apiEventRequiredFieldsMappingId, short CurrentUserId);
-
+        Task<List<GetAllAPIParametersResponse>> GetAllAPIParametersByEndpointId(int endpointId);
+        Task<List<GetAllRequiredFieldsResponse>> GetAllRequiredFieldsByEventId(int apiEventId);
+        Task<List<GetAllEventParameterResponse>> GetAllEventParameterByEventId(int apiEventId);
     }
 }

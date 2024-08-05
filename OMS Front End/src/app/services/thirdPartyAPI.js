@@ -90,9 +90,19 @@ const thirdPartyAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
-        getAllAPIParameters: builder.query({
+        getAllAPIParametersByEndpointId: builder.query({
             query: (id) => ({
-                url: '/Common/GetAllAPIParameters',
+                url: encryptQueryString(`/ApiEventManagement/GetAllAPIParametersByEndpointId?endpointId=${id}`),
+                method: 'GET',
+            }),
+            // providesTags: ['User'],
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
+        getAllEventParameterByEventId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/ApiEventManagement/GetAllEventParameterByEventId?apiEventId=${id}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
@@ -123,7 +133,7 @@ const thirdPartyAPI = createApi({
 
         getApiEventParameterByApiEventParametersId: builder.query({
             query: (id) => ({
-                url: encryptQueryString(`/ApiEventManagement/GetApiEventParameterByApiEventParametersId/?apiEventParametersId=${Number(id)}`),
+                url: encryptQueryString(`/ApiEventManagement/GetApiEventParameterByApiEventParametersId/?apiEventId=${Number(id)}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
@@ -133,7 +143,7 @@ const thirdPartyAPI = createApi({
 
         deleteApiEventParameter: builder.mutation({
             query: (id) => ({
-                url: encryptQueryString(`/ApiEventManagement/DeleteApiEventParameter/?apiEventParametersId=${id}`),
+                url: encryptQueryString(`/ApiEventManagement/DeleteApiEventParameter/?parameterId=${id}`),
                 method: 'DELETE',
                 body: transformRequest(id)
             }),
@@ -203,6 +213,16 @@ const thirdPartyAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
+        getAllRequiredFieldsByEventId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/ApiEventManagement/GetAllRequiredFieldsByEventId/?apiEventId=${Number(id)}`),
+                method: 'GET',
+            }),
+            // providesTags: ['User'],
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
         deleteApiEventRequiredField: builder.mutation({
             query: (id) => ({
                 url: encryptQueryString(`/ApiEventManagement/DeleteApiEventRequiredField/?apiEventRequiredFieldId=${id}`),
@@ -256,6 +276,16 @@ const thirdPartyAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
+        apiTester: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/ApiConfiguration/ApiTester/?apiEventId=${Number(id)}`),
+                method: 'GET',
+            }),
+            // providesTags: ['User'],
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
     })
 })
 
@@ -270,7 +300,8 @@ export const {
     useAddEditApiEventParameterMutation,
     useGetApiEventsMutation,
     useGetApiEventRequiredFieldsMutation,
-    useLazyGetAllAPIParametersQuery,
+    useLazyGetAllAPIParametersByEndpointIdQuery,
+    useLazyGetAllEventParameterByEventIdQuery,
     useGetApiParameterMappingsMutation,
     useGetApiEventMappingsMutation,
 
@@ -281,6 +312,7 @@ export const {
     useLazyGetApiEventParameterByApiEventParametersIdQuery,
     useLazyGetApiEventRequiredFieldByApiEventRequiredFieldIdQuery,
     useLazyGetAllApiEventRequiredFieldByApiEventIdQuery,
+    useLazyGetAllRequiredFieldsByEventIdQuery,
 
 
     useLazyGetAllApiEventParameterByApiEventIdQuery,
@@ -290,6 +322,8 @@ export const {
     useDeleteApiParameterMappingMutation,
     useDeleteApiEventRequiredFieldMutation,
     useDeleteApiEventRequiredFieldsMappingMutation,
+
+    useLazyApiTesterQuery,
 } = thirdPartyAPI
 
 export default thirdPartyAPI;

@@ -10,6 +10,6 @@
         public string? EmailAddress { get; set; }
         public string? Website { get; set; }
         public string? TaxId { get; set; }
-        public bool? IsBuyingForThirdParty {  get; set; }
+        public bool? IsBuyingForThirdParty { get; set; }
     }
 }

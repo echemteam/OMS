@@ -71,7 +71,7 @@ const DocumentGrid = ({ keyId, isSupplier, addDocuments, downloadDocument, delet
         <React.Fragment>
             <div className="document-section">
                 <CardSection cardTitle="Attachments" buttonClassName="theme-button"
-                    textWithIcon={true} iconImg={AppIcons.PlusIcon} rightButton={buttonVisible ? true : false}
+                    textWithIcon={true} iconImg={AppIcons.PlusIcon} rightButton={buttonVisible}
                     buttonText="Add" titleButtonClick={handleToggleModal}>
                     <DocumentList childRef={childRef} isEditablePage={isEditablePage} SecurityKey={SecurityKey} keyId={keyId} isSupplier={isSupplier} showModal={showModal}
                         downloadDocument={downloadDocument} deleteDocumentsById={deleteDocumentsById} getDocumentsById={getDocumentsById} setShowModal={setShowModal} />

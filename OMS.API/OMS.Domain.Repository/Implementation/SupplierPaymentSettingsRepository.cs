@@ -1,6 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Response.Address;
 using OMS.Domain.Entities.API.Response.SuppierBankDetails;
-using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
 using OMS.Domain.Entities.API.Response.supplierPaymentSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.SupplierPaymentSettings;

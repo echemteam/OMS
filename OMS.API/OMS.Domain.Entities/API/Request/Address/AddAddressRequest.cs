@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace OMS.Domain.Entities.API.Request.Address
+﻿namespace OMS.Domain.Entities.API.Request.Address
 {
     public class AddAddressRequest
     {

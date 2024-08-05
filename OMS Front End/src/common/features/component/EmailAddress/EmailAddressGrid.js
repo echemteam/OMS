@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from 'prop-types';
 //** Lib's */
 import { emailConfig } from "./config/AddEditEmailForm.data";
 import { Message } from "./utils/ContactMessages";
@@ -97,4 +98,15 @@ const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, 
 
 }
 
+ManageEmailAddress.propTypes = {
+    contactId: PropTypes.number.isRequired,
+    emailAddressList: PropTypes.arrayOf(
+        PropTypes.shape({
+            emailId: PropTypes.number,
+            id: PropTypes.number,
+        })
+    ).isRequired,
+    setEmailAddressList: PropTypes.func.isRequired,
+    isButtonDisable: PropTypes.bool.isRequired,
+};
 export default ManageEmailAddress

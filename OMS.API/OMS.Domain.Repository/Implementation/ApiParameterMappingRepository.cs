@@ -27,8 +27,9 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDAPIPARAMETERMAPPING, new
             {
-                requestData.ApiEventParameterId,
-                requestData.ParameterId,
+                requestData.ApiEventId,
+                requestData.EventParameterId,
+                requestData.ProviderParameterId,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }

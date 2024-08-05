@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef,useState,useEffect } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -12,10 +13,12 @@ const OrganizationLogisticDetail=()=>{
     const [organizationLogisticData, setOrganizationLogisticData] = useState(OrganizationLogisticFormData);
     const [addEditOrganizationLogisticDetails, { isLoading: isAddEditOrganizationLogisticDetailsLoading, isSuccess: isAddEditOrganizationLogisticDetailsSuccess, data: isAddEditOrganizationLogisticDetailsData }] =useAddEditOrganizationLogisticDetailsMutation();
     const [getOrganizationLogisticDetails, { isFetching: isGetOrganizationLogisticDetailsFetching, isSuccess: isGetOrganizationLogisticDetailsSuccess, data: isGetOrganizationLogisticDetailsData }] = useLazyGetOrganizationLogisticDetailsQuery();
+    const [logisticDetailId, setLogisticDetailId] = useState(0); 
 
     useEffect(() => {
         if (isAddEditOrganizationLogisticDetailsSuccess && isAddEditOrganizationLogisticDetailsData) {
           ToastService.success(isAddEditOrganizationLogisticDetailsData.errorMessage);
+          getOrganizationLogisticDetails();
         }
       }, [isAddEditOrganizationLogisticDetailsSuccess, isAddEditOrganizationLogisticDetailsData]);
 
@@ -27,30 +30,23 @@ const OrganizationLogisticDetail=()=>{
       const handleAddEditLogisticDetail=()=>{
 
         let logisticData = organizationLogisticRef.current.getFormData();
-        const request={
-            ...logisticData,
-            organizationLogisticDetailId:logisticData.organizationLogisticDetailId,
-            fedExAccount:logisticData.fedExAccount,
-            dHLAccount:logisticData.dHLAccount,
-            uPSAccount:logisticData.uPSAccount,
-            uSPSAccount:logisticData.uSPSAccount,
-
+        if(logisticData){
+            const request={
+                    ...logisticData,
+                    organizationLogisticDetailId:logisticDetailId,
+                    fedExAccount:logisticData?.fedExAccount,
+                    dHLAccount:logisticData?.dHLAccount,
+                    uPSAccount:logisticData?.uPSAccount,
+                    uSPSAccount:logisticData?.uSPSAccount,
+                }
+            addEditOrganizationLogisticDetails(request);     
         }
-            if(!logisticData.OrganizationLogisticDetailId && logisticData){
-                addEditOrganizationLogisticDetails(request);
-            }
-            else if(logisticData.OrganizationLogisticDetailId && logisticData ){
-                addEditOrganizationLogisticDetails(request);
-            }
-           
-      }
-
+    }
     useEffect(() => {
 
         if (!isGetOrganizationLogisticDetailsFetching && isGetOrganizationLogisticDetailsSuccess && isGetOrganizationLogisticDetailsData) {
             let formData = { ...organizationLogisticData };
             formData.initialState = {
-                ...formData,
                 organizationLogisticDetailId:isGetOrganizationLogisticDetailsData.organizationLogisticDetailId,
                 fedExAccount:isGetOrganizationLogisticDetailsData.fedExAccount,
                 dHLAccount:isGetOrganizationLogisticDetailsData.dhlAccount,
@@ -58,19 +54,19 @@ const OrganizationLogisticDetail=()=>{
                 uSPSAccount:isGetOrganizationLogisticDetailsData.uspsAccount,
             };
             setOrganizationLogisticData(formData);
+            setLogisticDetailId(isGetOrganizationLogisticDetailsData.organizationLogisticDetailId);
         }
     }, [isGetOrganizationLogisticDetailsFetching, isGetOrganizationLogisticDetailsSuccess, isGetOrganizationLogisticDetailsData,]);
 
 
-    return(<>
+    return( 
     
     <div className="row mt-2 add-address-form">
                 <FormCreator config={organizationLogisticData}
                     ref={organizationLogisticRef}
                    {...organizationLogisticData}
    
-                />
-                
+                />   
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -82,6 +78,6 @@ const OrganizationLogisticDetail=()=>{
                 </div>
             </div>
         </div>
-    </>)
+     )
 }
 export default OrganizationLogisticDetail;

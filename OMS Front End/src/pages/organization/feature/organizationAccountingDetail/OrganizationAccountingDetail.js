@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef,useState,useEffect } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -10,6 +11,7 @@ const OrganizationAccountingDetail=()=>{
     const [organizationAccountingData, setOrganizationAccountingData] = useState(OrganizationAccountingFormData);
     const [addEditOrganizationAccountingDetails, { isLoading: isAddEditOrganizationAccountingDetailsLoading, isSuccess: isAddEditOrganizationAccountingDetailsSuccess, data: isAddEditOrganizationAccountingDetailsData }] =useAddEditOrganizationAccountingDetailsMutation();
     const [getOrganizationAccountingDetails, { isFetching: isGetOrganizationAccountingDetailsFetching, isSuccess: isGetOrganizationAccountingDetailsSuccess, data: isGetOrganizationAccountingDetailsData }] = useLazyGetOrganizationAccountingDetailsQuery();
+    const [accountingDetailId, setAccountingDetailId] = useState(0);   
 
     useEffect(() => {
         if (isAddEditOrganizationAccountingDetailsSuccess && isAddEditOrganizationAccountingDetailsData) {
@@ -23,20 +25,15 @@ const OrganizationAccountingDetail=()=>{
     },[])
 
       const handleAddEditAccountingDetail=()=>{
-
         let accountingData = organizationAccountingRef.current.getFormData();
-        const request={
-            ...accountingData,
-            organizationAccountingDetailId: accountingData.organizationAccountingDetailId,
-            creditLimit:accountingData.creditLimit,
-           
-        }
-            if(!accountingData.organizationAccountingDetailId && accountingData){
-                addEditOrganizationAccountingDetails(request);
+        if(accountingData ){
+            const request={
+                ...accountingData,
+                organizationAccountingDetailId: accountingDetailId ,
+                creditLimit:accountingData?.creditLimit,     
             }
-            else if(accountingData.organizationAccountingDetailId && accountingData ){
-                addEditOrganizationAccountingDetails(request);
-        }          
+            addEditOrganizationAccountingDetails(request);
+        }           
       }
 
     useEffect(() => {
@@ -44,13 +41,15 @@ const OrganizationAccountingDetail=()=>{
             let formData = { ...organizationAccountingData };
             formData.initialState = {
                 ...isGetOrganizationAccountingDetailsData, 
+
             };
             setOrganizationAccountingData(formData);
+            setAccountingDetailId(isGetOrganizationAccountingDetailsData.organizationAccountingDetailId);
+            
         }
     }, [isGetOrganizationAccountingDetailsFetching, isGetOrganizationAccountingDetailsSuccess, isGetOrganizationAccountingDetailsData,]);
 
-
-    return(<>
+    return( 
     
     <div className="row mt-2 add-address-form">
                 <FormCreator config={organizationAccountingData}
@@ -70,6 +69,6 @@ const OrganizationAccountingDetail=()=>{
                 </div>
             </div>
         </div>
-    </>)
+     )
 }
 export default OrganizationAccountingDetail;

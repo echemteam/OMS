@@ -39,10 +39,6 @@ namespace OMS.Application.Services.EmailAddress
             return await repositoryManager.emailAddress.DeleteContactEmail(emailId, deletedBy);
         }
 
-        //public async Task<List<GetEmailByContactIdResponse>> GetEmailByContactId(int contactId)
-        //{
-        //    List<GetEmailByContactIdResponse> emailList = await repositoryManager.emailAddress.GetEmailByContactId(contactId);
-        //    return emailList;
-        //}
+
     }
 }

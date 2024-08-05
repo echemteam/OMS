@@ -1,6 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Request.RoleMapping;
 using OMS.Domain.Entities.API.Response.RoleMapping;
-using OMS.Domain.Entities.API.Response.Roles;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.RoleMapping;
 using OMS.Domain.Repository.Contract;

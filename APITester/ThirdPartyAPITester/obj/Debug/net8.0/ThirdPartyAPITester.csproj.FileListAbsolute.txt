@@ -1,0 +1,13 @@
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\obj\Debug\net8.0\ThirdPartyAPITester.csproj.AssemblyReference.cache
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\obj\Debug\net8.0\ThirdPartyAPITester.GeneratedMSBuildEditorConfig.editorconfig
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\obj\Debug\net8.0\ThirdPartyAPITester.AssemblyInfoInputs.cache
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\obj\Debug\net8.0\ThirdPartyAPITester.AssemblyInfo.cs
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\obj\Debug\net8.0\ThirdPartyAPITester.csproj.CoreCompileInputs.cache
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\bin\Debug\net8.0\ThirdPartyAPITester.deps.json
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\bin\Debug\net8.0\ThirdPartyAPITester.dll
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\bin\Debug\net8.0\ThirdPartyAPITester.pdb
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\obj\Debug\net8.0\ThirdPartyAPITester.dll
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\obj\Debug\net8.0\refint\ThirdPartyAPITester.dll
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\obj\Debug\net8.0\ThirdPartyAPITester.pdb
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\obj\Debug\net8.0\ref\ThirdPartyAPITester.dll
+D:\Git Projects\Git-PreProduction\ThirdPartyAPITester\ThirdPartyAPITester\bin\Debug\net8.0\APITesterAppSettings.json

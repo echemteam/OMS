@@ -11,8 +11,8 @@
         public string? Website { get; set; }
         public string? Note { get; set; }
         public string? TaxId { get; set; }
-        public bool? IsBuyingForThirdParty {  get; set; }
-        public short? ResponsibleUserId {  get; set; }
+        public bool? IsBuyingForThirdParty { get; set; }
+        public short? ResponsibleUserId { get; set; }
         public long? CustomerNoteId { get; set; }
         public bool? IsSubCustomer { get; set; }
     }

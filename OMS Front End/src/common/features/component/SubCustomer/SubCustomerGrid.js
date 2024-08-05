@@ -20,13 +20,13 @@ const SubCustomerGrid = ({ customerId }) => {
         }
     };
 
-    return (<>
+    return (
 
         <CardSection cardTitle="Link Customer" buttonClassName="theme-button">
             <AddEditSubCustomer customerId={customerId} onSuccess={onSuccess} getLinkCustomerRef={getLinkCustomerRef} />
             <SubCustomerList customerId={customerId} childRef={childRef} onGetLinkCustomer={onGetLinkCustomer} />
         </CardSection>
-    </>)
+    )
 }
 
 SubCustomerGrid.propTypes = {

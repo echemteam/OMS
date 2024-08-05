@@ -239,13 +239,7 @@ namespace Common.Helper.Utility
             return code.ToString();
         }
 
-        //public static string GenerateListCode(string taxid, string name)
-        //{
-        //    string last4Digits = taxid.Substring(taxid.Length - 4);
-        //    string cleanedName = name.Trim();
-        //    string combinedString = last4Digits + "_" + cleanedName;
-        //    return combinedString;
-        //}
+
         public static string GenerateListCode(string taxid, string name)
         {
             string last4Digits = taxid.Length >= 4 ? taxid[^4..] : taxid;

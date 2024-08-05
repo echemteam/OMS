@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.API.Request.Organization
+﻿namespace OMS.Domain.Entities.API.Request.Organization
 {
     public class AddEditOrganizationContactDetailsRequest
     {
-        public short? OrganizationContactDetailId { get; set; }
+        public byte? OrganizationContactDetailId { get; set; }
         public string? CompanyWebsite { get; set; }
         public string? SalesEmail { get; set; }
         public string? AccountsEmail { get; set; }

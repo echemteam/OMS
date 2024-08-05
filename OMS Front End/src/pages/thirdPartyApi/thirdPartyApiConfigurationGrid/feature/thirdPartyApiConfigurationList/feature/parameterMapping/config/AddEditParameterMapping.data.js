@@ -3,16 +3,16 @@ import { GridColumnType } from "../../../../../../../../data/gridColumnType";
 
 export const AddEditParameterMappingData = {
     // name: "Email From"
-    initialState: { apiEventParametersId: "", parameterId: ""},
+    initialState: { eventParameterId: "", providerParameterId: "" },
     formFields: [
         {
-            id: "apiEventParametersId",
-            lable: "Api Event Parameter ",
-            Field_Name: "Api Event Parameter",
+            id: "eventParameterId",
+            lable: "Event Parameters",
+            Field_Name: "eventParameterId",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "apiEventParametersId",
+            dataField: "eventParameterId",
             fieldSetting: {
-                placeholder: "Select Api Event Parameter",
+                placeholder: "Select Event Parameters",
                 isEnableOnChange: true,
             },
             validation: [{ type: "require" }],
@@ -21,13 +21,13 @@ export const AddEditParameterMappingData = {
             },
         },
         {
-            id: "parameterId",
-            lable: "Parameter ",
-            Field_Name: "Parameter",
+            id: "providerParameterId",
+            lable: "Provider Parameters",
+            Field_Name: "providerParameterId",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "parameterId",
+            dataField: "providerParameterId",
             fieldSetting: {
-                placeholder: "Select Parameter",
+                placeholder: "Select Provider Parameters",
                 isEnableOnChange: true,
             },
             validation: [{ type: "require" }],
@@ -35,7 +35,7 @@ export const AddEditParameterMappingData = {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
             },
         },
-       
+
     ],
     formSetting: {
         isViewOnly: false
@@ -45,14 +45,14 @@ export const AddEditParameterMappingData = {
 export const AddEditParameterMappingConfigurationData = {
     columns: [
         {
-            name: "Api Event Parameter",
+            name: "Event Parameter",
             fieldName: "eventParameterName",
             width: "40%",
             allowShort: true,
         },
         {
-            name: "Parameter",
-            fieldName: "parameterName",
+            name: "Provider Parameter",
+            fieldName: "providerParameterName",
             width: "40%",
             allowShort: true,
         },

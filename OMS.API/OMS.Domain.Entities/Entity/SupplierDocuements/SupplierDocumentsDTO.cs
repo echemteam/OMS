@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.Entity.SupplierDocuements
+﻿namespace OMS.Domain.Entities.Entity.SupplierDocuements
 {
-    public class SupplierDocumentsDTO: IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class SupplierDocumentsDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
-        public int? SupplierDocumentId  { get; set; }
+        public int? SupplierDocumentId { get; set; }
         public string? Name { get; set; }
         public byte? DocumentTypeId { get; set; }
         public int? SupplierId { get; set; }

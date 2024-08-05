@@ -10,6 +10,8 @@ using OMS.Domain.Entities.API.Request.ApiParameterMapping;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredField;
+using OMS.Domain.Entities.API.Response.ApiEventRequiredFieldsMapping;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -78,7 +80,7 @@ namespace OMS.API.Controllers
         public async Task<IActionResult> GetApiEventMappings(GetApiEventMappingsRequest requestData)
         {
             var apiEventMapping = await _serviceManager.apiEventManagementService.GetApiEventMappings(requestData);
-            return APISucessResponce<object>(apiEventMapping);
+            return APISucessResponce(apiEventMapping);
         }
         [HttpDelete("DeleteApiEventMapping")]
         public async Task<IActionResult> DeleteApiEventMapping(int apiEventMappingId)
@@ -91,6 +93,9 @@ namespace OMS.API.Controllers
             return APISucessResponce(apiEventMappingId);
         }
 
+
+        //------------------ ------------------ ------------------ ------------------ ------------------ ------------------ ------------------ ------------------ //
+
         [HttpPost("AddEditApiEventParameter")]
         public async Task<IActionResult> AddEditApiEventParameter(AddEditApiEventParameterRequest requestData)
         {
@@ -98,33 +103,35 @@ namespace OMS.API.Controllers
             return APISucessResponce(addEditItem);
         }
         [HttpGet("GetApiEventParameterByApiEventParametersId")]
-        public async Task<IActionResult> GetApiEventParameterByApiEventParametersId(int apiEventParametersId)
+        public async Task<IActionResult> GetApiEventParameterByApiEventParametersId(int apiEventId)
         {
-            if (apiEventParametersId > 0)
+            if (apiEventId > 0)
             {
-                GetApiEventParameterByApiEventParametersIdResponse responseData = await _serviceManager.apiEventManagementService.GetApiEventParameterByApiEventParametersId(apiEventParametersId).ConfigureAwait(true);
+                GetApiEventParameterByApiEventParametersIdResponse responseData = await _serviceManager.apiEventManagementService.GetApiEventParameterByApiEventParametersId(apiEventId).ConfigureAwait(true);
                 return APISucessResponce(responseData);
             }
-            return APISucessResponce(apiEventParametersId);
+            return APISucessResponce(apiEventId);
         }
-
 
         [HttpDelete("DeleteApiEventParameter")]
-        public async Task<IActionResult> DeleteApiEventParameter(int apiEventParametersId)
+        public async Task<IActionResult> DeleteApiEventParameter(int parameterId)
         {
-            if (apiEventParametersId > 0)
+            if (parameterId > 0)
             {
-                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiEventParameter(apiEventParametersId, CurrentUserId).ConfigureAwait(true);
+                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiEventParameter(parameterId, CurrentUserId).ConfigureAwait(true);
                 return APISucessResponce<object>(deleteItem);
             }
-            return APISucessResponce(apiEventParametersId);
+            return APISucessResponce(parameterId);
         }
+
         [HttpPost("GetApiEventParameters")]
         public async Task<IActionResult> GetApiEventParameters(GetApiEventParametersRequest requestData)
         {
             var apiEventParameters = await _serviceManager.apiEventManagementService.GetApiEventParameters(requestData);
             return APISucessResponce<object>(apiEventParameters);
         }
+
+        //------------------ ------------------ ------------------ ------------------ ------------------ ------------------ ------------------ ------------------ //
 
 
         [HttpPost("AddApiParameterMapping")]
@@ -208,6 +215,28 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(apiEventRequiredFieldsMappingId);
         }
+
+        [HttpGet("GetAllAPIParametersByEndpointId")]
+        public async Task<IActionResult> GetAllAPIParametersByEndpointId(int endpointId)
+        {
+            List<GetAllAPIParametersResponse> responseData = await _serviceManager.apiEventManagementService.GetAllAPIParametersByEndpointId(endpointId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllRequiredFieldsByEventId")]
+        public async Task<IActionResult> GetAllRequiredFieldsByEventId(int apiEventId)
+        {
+            List<GetAllRequiredFieldsResponse> responseData = await _serviceManager.apiEventManagementService.GetAllRequiredFieldsByEventId(apiEventId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllEventParameterByEventId")]
+        public async Task<IActionResult> GetAllEventParameterByEventId(int apiEventId)
+        {
+            List<GetAllEventParameterResponse> responseData = await _serviceManager.apiEventManagementService.GetAllEventParameterByEventId(apiEventId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
         #endregion
     }
 }

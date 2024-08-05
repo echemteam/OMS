@@ -91,7 +91,7 @@ const ApiAuthenticationList=({handleEditClick, getDataRef,providerId})=>{
       callChildFunction: onGetData
   }));
     return(
-    <>
+     
       <div className="row">
         <div className="col-md-12 table-striped api-provider">
           <MolGrid
@@ -111,7 +111,7 @@ const ApiAuthenticationList=({handleEditClick, getDataRef,providerId})=>{
           />
         </div>
       </div>
-    </>
+     
 )
 }
 ApiAuthenticationList.propTypes = {

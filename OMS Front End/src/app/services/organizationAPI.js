@@ -147,11 +147,56 @@ const organizationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        addEditOrganizationOtherCharges: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditOrganizationOtherCharges',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationOtherCharges: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationOtherCharges'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        addEditBusinessAddresses: builder.mutation({
+            query: (Details) => ({
+                url: '/Organization/AddEditBusinessAddresses',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationBusinessAddresses: builder.query({
+            query: () => ({
+                url: encryptQueryString('/Organization/GetOrganizationBusinessAddresses'),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getOrganizationHistorys: builder.mutation({
+            query: (data) => ({
+                url: '/Organization/GetOrganizationHistorys',
+                method: 'POST',
+                body: transformRequest(data)
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
 export const {
     useAddEditOrganizationProfileMutation,
+    useGetOrganizationHistorysMutation,
     useAddEditSmtpSettingsMutation,
     useAddEditOrganizationOtherSettingsMutation,
     useLazyGetOrganizationProfileQuery,
@@ -167,6 +212,10 @@ export const {
     useLazyGetOrganizationAccountingDetailsQuery,
     useAddEditOrganizationShippingChargesMutation,
     useLazyGetOrganizationShippingChargesQuery,
+    useAddEditOrganizationOtherChargesMutation,
+    useLazyGetOrganizationOtherChargesQuery,
+    useAddEditBusinessAddressesMutation,
+    useLazyGetOrganizationBusinessAddressesQuery,
 } = organizationAPI
 
 export default organizationAPI;

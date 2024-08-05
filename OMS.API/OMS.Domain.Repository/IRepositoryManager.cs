@@ -38,14 +38,16 @@ namespace OMS.Domain.Repository
         IOrganizationAccountingDetailsRepository organizationAccountingDetails { get; }
         IOrganizationShippingChargesRepository organizationShippingCharges { get; }
         IOrganizationOtherChargesRepository organizationOtherCharges { get; }
+        IOrganizationBusinessAddressesRepository organizationBusinessAddresses { get; }
         ISupplierFinancialSettingsRepository supplierFinancialSettings { get; }
         ISuppierBankDetailsRepository suppierBankDetails { get; }
         ISupplierPaymentSettingsRepository supplierPaymentSettings { get; }
         IApiEventRepository apiEvent { get; }
         IApiEventMappingRepository apiEventMapping { get; }
-        IApiEventParameterRepository apiEventParameter {  get; }
-        IApiParameterMappingRepository apiParameterMapping {  get; }
+        IApiEventParameterRepository apiEventParameter { get; }
+        IApiParameterMappingRepository apiParameterMapping { get; }
         IApiEventRequiredFieldRepository apiEventRequiredField { get; }
         IApiEventRequiredFieldsMappingRepository apiEventRequiredFieldsMapping { get; }
+        IFunctionalitiesRepository functionalities { get; }
     }
 }

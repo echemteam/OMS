@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace OMS.Domain.Entities.Entity.Contact
+﻿namespace OMS.Domain.Entities.Entity.Contact
 {
     public class PhoneDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {

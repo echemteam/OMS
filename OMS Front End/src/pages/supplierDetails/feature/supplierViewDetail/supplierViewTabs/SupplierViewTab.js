@@ -51,6 +51,7 @@ const SupplierViewTab = (supplierId) => {
                 <div className="mt-2 supplier-setting-sec">
                     <FinancialSettings
                         supplierId={supplierId}
+                        isEditablePage={true}
                     />
                 </div>
             ),

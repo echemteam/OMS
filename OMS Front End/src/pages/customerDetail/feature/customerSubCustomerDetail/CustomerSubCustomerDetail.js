@@ -7,8 +7,8 @@ const CustomerSubCustomerDetail = () => {
 
     const { customerId } = useContext(BasicDetailContext);
 
-    return (<>
+    return (
         <SubCustomerGrid customerId={customerId} />
-    </>)
+    )
 }
 export default CustomerSubCustomerDetail;

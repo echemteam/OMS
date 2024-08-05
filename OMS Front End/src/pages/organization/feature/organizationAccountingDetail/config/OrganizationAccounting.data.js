@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const OrganizationAccountingFormData = {
 
-    initialState: { companyWebsite:"" },
+    initialState: { creditLimit:"" },
     formFields: [
         {
             id: "creditLimit",
@@ -13,6 +13,7 @@ export const OrganizationAccountingFormData = {
             fieldSetting: {
               placeholder: "Enter Credit Limit",
               allowSpace: true,
+              maxLength:5
             },
             validation: [{ type: "require" }],
             style: {

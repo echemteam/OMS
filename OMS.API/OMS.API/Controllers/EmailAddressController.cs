@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Contact;
-using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -56,12 +55,6 @@ namespace OMS.API.Controllers
             return APISucessResponce(emailId);
         }
 
-        //[HttpGet("GetEmailByContactId")]
-        //public async Task<IActionResult> GetEmailByContactId(int contactId)
-        //{
-        //    List<GetEmailByContactIdResponse> responseData = await _serviceManager.emailAddressService.GetEmailByContactId(contactId).ConfigureAwait(true);
-        //    return APISucessResponce(responseData);
-        //}
 
     }
 }

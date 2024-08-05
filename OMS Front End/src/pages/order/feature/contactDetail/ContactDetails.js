@@ -7,7 +7,7 @@ const ContactDetails = () => {
   const [formData, setFormData] = useState(contactInformationData);
 
   return (
-    <>
+    
       <div className="row">
         <FormCreator
           config={formData}
@@ -15,7 +15,7 @@ const ContactDetails = () => {
           {...formData}
         />
       </div>
-    </>
+    
   );
 };
 

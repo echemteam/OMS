@@ -14,7 +14,6 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDEDITCONTACT = "AddEditContact";
         const string GETCONTACTBYCUSTOMERID = "GetContactByCustomerId";
         const string GETCONTACTBYSUPPLIERID = "GetContactBySupplierId";
-        const string ADDEDITCONTACTWITHDATATABLE = "AddEditContactWithDataTable";
         const string GETCUSTOMERCONTACTBYCONTACTID = "GetCustomerContactByContactId";
         const string GETSUPLLIERCONTACTBYCONTACTID = "GetSupllierContactByContactId";
 

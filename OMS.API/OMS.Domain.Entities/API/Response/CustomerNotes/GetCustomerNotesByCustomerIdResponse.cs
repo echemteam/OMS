@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.API.Response.CustomerNotes
+﻿namespace OMS.Domain.Entities.API.Response.CustomerNotes
 {
     public class GetCustomerNotesByCustomerIdResponse
     {
@@ -14,8 +8,8 @@ namespace OMS.Domain.Entities.API.Response.CustomerNotes
         public short? CreatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public short? UpdatedBy { get; set; }
-        public DateTime? NoteDate {  get; set; }
-        public string? FullName {  get; set; }
+        public DateTime? NoteDate { get; set; }
+        public string? FullName { get; set; }
 
     }
 }

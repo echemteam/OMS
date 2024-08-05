@@ -3,6 +3,7 @@ using Common.Helper.Utility;
 using Microsoft.IdentityModel.Tokens;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Authentication;
+using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.API.Response.Authentication;
 using OMS.Domain.Entities.API.Response.SecuritySetting;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -37,13 +38,13 @@ namespace OMS.Application.Services.Authentication
                 IsAuthenticated = true
             };
             UserDTO user = await repositoryManager.authentication.UserLogin(authenticationRequest.UserName);
-            if (user == null || (user != null && user.IsActive == false))
+            if (user == null || !user.IsActive)
             {
                 authResponce.Message = (user == null ? "User details not found" : "User is not active");
                 authResponce.IsAuthenticated = false;
                 return authResponce;
             }
-            string enCriptedPassword = EncryptionUtil.GenerateHashKeyUsingSalt(authenticationRequest.Password!.Trim(), user?.PasswordSalt!);
+            string enCriptedPassword = EncryptionUtil.GenerateHashKeyUsingSalt(authenticationRequest.Password!.Trim(), user.PasswordSalt!);
             if (user!.HashedPassword != enCriptedPassword)
             {
                 authResponce.IsAuthenticated = false;
@@ -52,20 +53,20 @@ namespace OMS.Application.Services.Authentication
             }
             BaseRolesDTO role = await repositoryManager.authentication.GetUserRoles(user.UserId);
             List<GetSecurityPermissionByUserIdResponse> response = await repositoryManager.securityPermission.GetSecurityPermissionByUserId(user.UserId);
-            //List<SecurityPermissions> res = response.ToMapp<List<GetSecurityPermissionByUserIdResponse>, List<SecurityPermissions>>();
             authResponce.securityPermissions = response.Select(a => new SecurityPermissionsDetails()
             {
                 SecurityKeyName = a.SecurityKeyName,
                 IsMenu = a.IsMenu,
                 SecurityKeyParentId = a.SecurityKeyParentId,
                 SecuritySettingId = a.SecuritySettingId
-                //SecuritySettingName = a.SecuritySettingName,
             }).ToList();
+
+            //List<GetApprovalConfigurationResponse> approvalConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
+            authResponce.ApprovalRulesConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
 
             UserDetails userDetails = user.ToMapp<UserDTO, UserDetails>();
             authResponce.User = userDetails;
             authResponce.Roles = role;
-            //authResponce.securityPermissions = response.ToList();
             authResponce.SessionTimeout = Convert.ToInt32((commonSettingService.ApplicationSettings.SessionTimeOut != null) ? Convert.ToInt32(commonSettingService.ApplicationSettings.SessionTimeOut) : 60);
             authResponce.Token = GenerateToken(user.UserId, Convert.ToDouble((commonSettingService.ApplicationSettings.SessionTimeOut != null) ? Convert.ToInt32(commonSettingService.ApplicationSettings.SessionTimeOut) : 60));
             authResponce.Message = "User successfully authenticated";

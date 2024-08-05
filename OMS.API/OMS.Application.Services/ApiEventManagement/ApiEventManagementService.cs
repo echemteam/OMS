@@ -12,6 +12,7 @@ using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredField;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Response.ApiParameterMapping;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.Entity.ApiEvent;
 using OMS.Domain.Entities.Entity.ApiEventMapping;
 using OMS.Domain.Entities.Entity.ApiEventParameter;
@@ -20,7 +21,6 @@ using OMS.Domain.Entities.Entity.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.Entity.ApiParameterMapping;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
@@ -67,7 +67,7 @@ namespace OMS.Application.Services.ApiEventManagement
             apiEventMappingDTO.CreatedBy = CurrentUserId;
             return await repositoryManager.apiEventMapping.AddApiEventMapping(apiEventMappingDTO);
         }
-        public async Task<EntityList<GetApiEventMappingsResponse>> GetApiEventMappings(GetApiEventMappingsRequest requestData)
+        public async Task<GetApiEventMappingsResponse> GetApiEventMappings(GetApiEventMappingsRequest requestData)
         {
             var apiEventMappingsDetails = await repositoryManager.apiEventMapping.GetApiEventMappings(requestData);
             return apiEventMappingsDetails!;
@@ -83,14 +83,14 @@ namespace OMS.Application.Services.ApiEventManagement
             apiEventParameterDTO.CreatedBy = CurrentUserId;
             return await repositoryManager.apiEventParameter.AddEditApiEventParameter(apiEventParameterDTO);
         }
-        public Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventParametersId)
+        public Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventId)
         {
-            return repositoryManager.apiEventParameter.GetApiEventParameterByApiEventParametersId(apiEventParametersId);
+            return repositoryManager.apiEventParameter.GetApiEventParameterByApiEventParametersId(apiEventId);  
         }
-        public async Task<AddEntityDTO<int>> DeleteApiEventParameter(int apiEventParametersId, short CurrentUserId)
+        public async Task<AddEntityDTO<int>> DeleteApiEventParameter(int parameterId, short CurrentUserId)
         {
             short deletedBy = CurrentUserId;
-            return await repositoryManager.apiEventParameter.DeleteApiEventParameter(apiEventParametersId, deletedBy);
+            return await repositoryManager.apiEventParameter.DeleteApiEventParameter(parameterId, deletedBy);
         }
         public async Task<EntityList<GetApiEventParametersResponse>> GetApiEventParameters(GetApiEventParametersRequest requestData)
         {
@@ -149,6 +149,20 @@ namespace OMS.Application.Services.ApiEventManagement
         {
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiEventRequiredFieldsMapping.DeleteApiEventRequiredFieldsMapping(apiEventRequiredFieldsMappingId, deletedBy);
+        }
+        public Task<List<GetAllAPIParametersResponse>> GetAllAPIParametersByEndpointId(int endpointId)
+        {
+            return repositoryManager.apiEventRequiredFieldsMapping.GetAllAPIParametersByEndpointId(endpointId);
+        }
+
+        public Task<List<GetAllRequiredFieldsResponse>> GetAllRequiredFieldsByEventId(int apiEventId)
+        {
+            return repositoryManager.apiEventRequiredFieldsMapping.GetAllRequiredFieldsByEventId(apiEventId);
+        }
+
+        public Task<List<GetAllEventParameterResponse>> GetAllEventParameterByEventId(int apiEventId)
+        {
+            return repositoryManager.apiEventRequiredFieldsMapping.GetAllEventParameterByEventId(apiEventId);
         }
 
         #endregion

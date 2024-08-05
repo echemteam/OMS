@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.SqlTypes;
 
 namespace OMS.Prisitance.Entities.Entities
 {
@@ -8,22 +7,22 @@ namespace OMS.Prisitance.Entities.Entities
 
     public class Roles
     {
-        [Key] 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public byte? RoleId { get; set; }
 
-        [Column("RoleName")] 
+        [Column("RoleName")]
         public string? RoleName { get; set; }
 
-        [Column("CreatedAt")] 
+        [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]
         public short? CreatedBy { get; set; }
-        [Column("UpdatedAt")] 
+        [Column("UpdatedAt")]
         public DateTime? UpdatedAt { get; set; }
         [Column("UpdatedBy")]
         public short? UpdatedBy { get; set; }
-        [Column("DeletedAt")] 
+        [Column("DeletedAt")]
         public DateTime? DeletedAt { get; set; }
         [Column("DeletedBy")]
         public short? DeletedBy { get; set; }

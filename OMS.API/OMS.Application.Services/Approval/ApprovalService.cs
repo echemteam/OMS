@@ -1,8 +1,11 @@
 ﻿using Common.Helper.Export;
+using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
 using OMS.Domain.Entities.API.Response.Approval;
+using OMS.Domain.Entities.API.Response.Customers;
+using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
 using OMS.Shared.Services.Contract;
@@ -36,8 +39,6 @@ namespace OMS.Application.Services.Approval
         }
         public async Task<AddEntityDTO<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData, int CurrentUserId)
         {
-            //UserCheckListDTO userCheckListDTO = requestData.ToMapp<AddUserChecklistRequest, UserCheckListDTO>();
-            //userCheckListDTO.UserId = CurrentUserId;
             DataTable CheckListDataTable = ExportHelper.ListToDataTable(requestData.CheckListRequest);
             CheckListDataTable.Columns.Add("UserId", typeof(int));
             foreach (DataRow row in CheckListDataTable.Rows)
@@ -60,6 +61,20 @@ namespace OMS.Application.Services.Approval
 
             }
             return responses;
+        }
+        public async Task<AddEntityDTO<int>> AddApprovalRequests(AddApprovalRequests requestData, short CurrentUserId)
+        {
+            ApprovalRequestsDTO approvalRequestsDTO = requestData.ToMapp<AddApprovalRequests, ApprovalRequestsDTO>();
+            approvalRequestsDTO.RequestedByUserId = CurrentUserId;
+            return await repositoryManager.approval.AddApprovalRequests(approvalRequestsDTO);
+        }
+        public Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId)
+        {
+            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRequestedByUserId(status, requestedByUserId);
+        }
+        public async Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId)
+        {
+            return await repositoryManager.approval.GetApprovalRequestsByApprovalRequestId(approvalRequestId);
         }
     }
 

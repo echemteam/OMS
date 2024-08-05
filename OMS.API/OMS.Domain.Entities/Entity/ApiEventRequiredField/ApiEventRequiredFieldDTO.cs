@@ -12,5 +12,6 @@
         public short? CreatedBy { get; set; }
         public short? UpdatedBy { get; set; }
         public short? DeletedBy { get; set; }
+        public int? ApiEventId { get; set; }
     }
 }

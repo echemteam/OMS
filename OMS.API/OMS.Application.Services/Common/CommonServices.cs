@@ -128,9 +128,7 @@ namespace OMS.Application.Services.Common
 
         public async Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
         {
-            AddEntityDTO<int> responceData = new();
-            responceData = await repositoryManager.commonRepository.UpdateResponsibleUser(requestData);
-            return responceData;
+            return await repositoryManager.commonRepository.UpdateResponsibleUser(requestData);
         }
 
         public async Task<byte[]> DownloadDocument(string folderName, string fileName, int keyId)
@@ -174,6 +172,14 @@ namespace OMS.Application.Services.Common
         public Task<List<GetAllApiEventRequiredFieldByApiEventIdResponse>> GetAllApiEventRequiredFieldByApiEventId(int apiEventId)
         {
             return repositoryManager.commonRepository.GetAllApiEventRequiredFieldByApiEventId(apiEventId);
+        }
+        public Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId)
+        {
+            return repositoryManager.commonRepository.GetAllAddressesByCustomerIdAndAddressTypeId(customerId,addressTypeId);
+        }
+        public Task<List<GetAllContactsByCustomerIdAndContactTypeIdResponse>> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId)
+        {
+            return repositoryManager.commonRepository.GetAllContactsByCustomerIdAndContactTypeId(customerId,contactTypeId);
         }
     }
 }

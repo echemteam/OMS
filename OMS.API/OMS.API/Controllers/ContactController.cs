@@ -34,9 +34,9 @@ namespace OMS.API.Controllers
         }
 
         [HttpGet("GetContactByCustomerId")]
-        public async Task<IActionResult> GetContactByCustomerId(int customerId,string? searchText,string? searchContactType)
-        {                                                                             
-            List<GetContactByCustomerIdResponse> responseData = await _serviceManager.contactService.GetContactByCustomerId(customerId,searchText!,searchContactType!).ConfigureAwait(true);
+        public async Task<IActionResult> GetContactByCustomerId(int customerId, string? searchText, string? searchContactType)
+        {
+            List<GetContactByCustomerIdResponse> responseData = await _serviceManager.contactService.GetContactByCustomerId(customerId, searchText!, searchContactType!).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
 
@@ -54,7 +54,7 @@ namespace OMS.API.Controllers
         [HttpGet("GetContactBySupplierId")]
         public async Task<IActionResult> GetContactBySupplierId(int supplierId, string? searchText, string? searchContactType)
         {
-            List<GetContactBySupplierIdResponse> responseData = await _serviceManager.contactService.GetContactBySupplierId(supplierId,searchText,searchContactType).ConfigureAwait(true);
+            List<GetContactBySupplierIdResponse> responseData = await _serviceManager.contactService.GetContactBySupplierId(supplierId, searchText, searchContactType).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
 

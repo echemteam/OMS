@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.Entity.Organization
+﻿namespace OMS.Domain.Entities.Entity.Organization
 {
     public class OrganizationShippingChargesDto
     {
-        public short? OrganizationShippingChargeId { get; set; }
+        public byte? OrganizationShippingChargeId { get; set; }
         public decimal? DomesticOvernight { get; set; }
         public decimal? DomesticSecondDay { get; set; }
         public decimal? DomesticGround { get; set; }

@@ -4,12 +4,7 @@ using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Implementation
 {

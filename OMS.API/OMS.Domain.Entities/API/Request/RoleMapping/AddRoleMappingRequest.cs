@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace OMS.Domain.Entities.API.Request.RoleMapping
+﻿namespace OMS.Domain.Entities.API.Request.RoleMapping
 {
     public class AddRoleMappingRequest
     {

@@ -83,12 +83,9 @@ const InActiveCustomerTab = ({ statusId }) => {
   };
 
   const handleChange = (event) => {
-    // if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
+   
       setSearch(event.target.value.trim());
-    // } else {
-    //   setSearch("");
-    //   setSelectedDrpvalues("");
-    // }
+    
   };
 
   useEffect(() => {
@@ -221,7 +218,7 @@ const InActiveCustomerTab = ({ statusId }) => {
               <CardSection
               //   cardTitle="Other Information"
               >
-                <>
+                
                   {tabs && tabs.length > 0 &&
                     <div className="row">
                       <div className="col-12">
@@ -248,7 +245,7 @@ const InActiveCustomerTab = ({ statusId }) => {
                       </div>
                     </div>
                   }
-                </>
+                
               </CardSection>
             </div>
           </div>

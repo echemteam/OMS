@@ -7,6 +7,7 @@ import FormCreator from '../../../../../components/Forms/FormCreator';
 import { addEditEmailFormData } from '../config/AddEditEmailForm.data';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
 import { addData, updateData } from '../utils/ContactEmailAddressUtil';
+import PropTypes from 'prop-types';
 
 const AddEditEmailModal = ({ contactId, emailAddressList, setEmailAddressList, editFormData, handleToggleModal, showModal, isEdit, onSuccess }) => {
 
@@ -23,7 +24,7 @@ const AddEditEmailModal = ({ contactId, emailAddressList, setEmailAddressList, e
                 isPrimary: data.isEmailPrimary
             }
             addData(req, contactId, emailAddressList, setEmailAddressList, Message.EmailAdded, Message.EmailMaxLength, Message.DuplicateEmail, onResetData, onSuccess);
-        } else if (data && data.id) {
+        } else if ( data?.id) {
             let req = {
                 ...data,
                 isPrimary: data.isEmailPrimary
@@ -76,5 +77,25 @@ const AddEditEmailModal = ({ contactId, emailAddressList, setEmailAddressList, e
         </CenterModel>
     )
 }
-
+AddEditEmailModal.propTypes = {
+    contactId: PropTypes.number.isRequired,
+    emailAddressList: PropTypes.arrayOf(
+        PropTypes.shape({
+            emailId: PropTypes.number,
+            id: PropTypes.number,
+          
+        })
+    ).isRequired,
+    setEmailAddressList: PropTypes.func.isRequired,
+    editFormData: PropTypes.shape({
+        emailAddress: PropTypes.string,
+        emailId: PropTypes.number,
+        id: PropTypes.number,
+        isPrimary: PropTypes.bool,
+    }),
+    handleToggleModal: PropTypes.func.isRequired,
+    showModal: PropTypes.bool.isRequired,
+    isEdit: PropTypes.bool.isRequired,
+    onSuccess: PropTypes.func.isRequired,
+};
 export default AddEditEmailModal

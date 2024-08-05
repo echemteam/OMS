@@ -4,12 +4,7 @@ using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Implementation
 {
@@ -30,12 +25,13 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.CreditCardServiceFees,
                 requestData.ColdBoxFees,
                 requestData.ITNFees,
+                requestData.DefaultPaymentTerms,
                 requestData.CreatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<GetOrganizationShippingOtherResponse> GetOrganizationOtherCharges()
+        public async Task<GetOrganizationOtherChargesResponse> GetOrganizationOtherCharges()
         {
-            GetOrganizationShippingOtherResponse organizationOtherCharges = await _context.GetFrist<GetOrganizationShippingOtherResponse>(GETORGANIZATIONOTHERCHARGES, CommandType.StoredProcedure);
+            GetOrganizationOtherChargesResponse organizationOtherCharges = await _context.GetFrist<GetOrganizationOtherChargesResponse>(GETORGANIZATIONOTHERCHARGES, CommandType.StoredProcedure);
             return organizationOtherCharges;
         }
     }

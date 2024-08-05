@@ -1,5 +1,4 @@
-﻿using OMS.Domain.Entities.Entity.Customers;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMS.Domain.Entities.Entity.Address
 {
@@ -8,7 +7,7 @@ namespace OMS.Domain.Entities.Entity.Address
         public int? AddressId { get; set; }
         [Column("CustomerId")]
         public int? CustomerId { get; set; }
-      
+
         [Column("IsVerified")]
         public bool? IsVerified { get; set; }
         [Column("VerifiedBy")]

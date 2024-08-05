@@ -58,7 +58,7 @@ const AccordionCollapse = ({
     return Object.entries(accordionList).map(([type, items], index) => (
       <>
         {items.map((childData, childIndex) => (
-          <>
+           
             <div className={customCardDetails?.cardClassName} key={childIndex}>
               <ContactCard
                 type={type}
@@ -69,7 +69,7 @@ const AccordionCollapse = ({
                 showEditIcon={showEditIcon}
               />
             </div>
-          </>
+          
         ))}
       </>
 

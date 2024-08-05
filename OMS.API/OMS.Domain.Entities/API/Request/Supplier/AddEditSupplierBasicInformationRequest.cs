@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace OMS.Domain.Entities.API.Request.Supplier
+﻿namespace OMS.Domain.Entities.API.Request.Supplier
 {
     public class AddEditSupplierBasicInformationRequest
     {

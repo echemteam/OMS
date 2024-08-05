@@ -3,6 +3,6 @@
     public class GetValidateCheckListResponse
     {
         public bool? IsValid { get; set; }
-        public string? Messages {  get; set; }
+        public string? Messages { get; set; }
     }
 }

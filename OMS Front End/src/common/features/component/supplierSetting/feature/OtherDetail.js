@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { otherFormData } from "../config/OtherForm.data";
 import { useAddEditOtherMutation } from "../../../../../app/services/supplierFinancialSettingsAPI";
@@ -67,7 +68,7 @@ const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId, onHand
   }
 
   return (
-    <>
+    
       <div className="ach-wire-section">
         <div className="sub-card-sec-add">
           <div className="row">
@@ -96,8 +97,20 @@ const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId, onHand
           </div>
         </div>
       </div>
-    </>
+    
   );
 };
-
+OtherDetail.propTypes = {
+  getOtherData: PropTypes.shape({
+    supplierPaymentSettingId: PropTypes.number,
+    otherNote: PropTypes.string,
+  }).isRequired,
+  financialSettingFormRef: PropTypes.shape({
+    current: PropTypes.shape({
+      getFormData: PropTypes.func
+    })
+  }).isRequired,
+  supplierId: PropTypes.number.isRequired,
+  onHandleGetById: PropTypes.func.isRequired,
+};
 export default OtherDetail;

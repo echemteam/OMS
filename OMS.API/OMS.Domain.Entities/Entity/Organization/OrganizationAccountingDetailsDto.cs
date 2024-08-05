@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.Entity.Organization
+﻿namespace OMS.Domain.Entities.Entity.Organization
 {
     public class OrganizationAccountingDetailsDto
     {
-        public short? OrganizationAccountingDetailId { get; set; }
+        public byte? OrganizationAccountingDetailId { get; set; }
         public decimal? CreditLimit { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? CreatedBy { get; set; }

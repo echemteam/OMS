@@ -30,6 +30,7 @@ namespace OMS.API.Controllers
             _serviceManager = serviceManager;
         }
         #endregion
+
         #region API Configuration API
         [HttpPost("AddEditApiProvider")]
         public async Task<IActionResult> AddEditApiProvider(AddEditApiProviderRequest requestData)
@@ -48,7 +49,6 @@ namespace OMS.API.Controllers
             return APISucessResponce(providerId);
         }
 
-
         [HttpDelete("DeleteApiProvider")]
         public async Task<IActionResult> DeleteApiProvider(int providerId)
         {
@@ -61,7 +61,7 @@ namespace OMS.API.Controllers
         }
         [HttpPost("GetApiProviders")]
         public async Task<IActionResult> GetApiProviders([FromBody] ListEntityRequest<BaseFilter> requestData)
-       {
+        {
             var providers = await _serviceManager.apiConfigurationService.GetApiProviders(requestData);
             return APISucessResponce<object>(providers);
         }
@@ -174,6 +174,17 @@ namespace OMS.API.Controllers
         {
             var authentication = await _serviceManager.apiConfigurationService.GetApiAuthentications(requestData);
             return APISucessResponce<object>(authentication);
+        }
+
+        [HttpGet("ApiTester")]
+        public async Task<IActionResult> ApiTester(int apiEventId)
+        {
+            if (apiEventId > 0)
+            {
+                var item = await _serviceManager.apiConfigurationService.ApiTester(apiEventId).ConfigureAwait(true);
+                return APISucessResponce<object>(item);
+            }
+            return APISucessResponce(apiEventId);
         }
         #endregion
     }

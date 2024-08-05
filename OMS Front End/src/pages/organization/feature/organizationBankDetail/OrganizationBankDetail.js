@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef,useState ,useEffect} from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -11,10 +12,12 @@ const OrganizationBankDetail=()=>{
     const [organizationBankData, setOrganizationBankData] = useState(OrganizationBankFormData);
     const [addEditOrganizationBankDetails, { isLoading: isAddEditOrganizationBankDetailsLoading, isSuccess: isAddEditOrganizationBankDetailsSuccess, data: isAddEditOrganizationBankDetailsData }] =useAddEditOrganizationBankDetailsMutation();
     const [getOrganizationBankDetails, { isFetching: isGetOrganizationBankDetailsFetching, isSuccess: isGetOrganizationBankDetailsSuccess, data: isGetOrganizationBankDetailsData }] = useLazyGetOrganizationBankDetailsQuery();
-
+    const [bankDetailId, setBankDetailId] = useState(0); 
+    
     useEffect(() => {
         if (isAddEditOrganizationBankDetailsSuccess && isAddEditOrganizationBankDetailsData) {
           ToastService.success(isAddEditOrganizationBankDetailsData.errorMessage);
+          getOrganizationBankDetails();
         }
       }, [isAddEditOrganizationBankDetailsSuccess, isAddEditOrganizationBankDetailsData]);
 
@@ -25,48 +28,40 @@ const OrganizationBankDetail=()=>{
 
       const handleAddEditBankDetail=()=>{
         let bankData = organizationBankRef.current.getFormData();
+        if(bankData){
         const request={
             ...bankData,
-            organizationBankDetailId:bankData.organizationBankDetailId,
-            beneficiaryName:bankData.beneficiaryName,
-            checkingAccountNumber:bankData.checkingAccountNumber,
-            routingAccountNumber:bankData.routingAccountNumber,
-            swiftCode:bankData.swiftCode,
-            bankAddress:bankData.bankAddress,
-            bankBranch:bankData.bankBranch,
-
+            organizationBankDetailId:bankDetailId,
+            beneficiaryName:bankData?.beneficiaryName,
+            checkingAccountNumber:bankData?.checkingAccountNumber,
+            routingAccountNumber:bankData?.routingAccountNumber,
+            swiftCode:bankData?.swiftCode,
+            bankAddress:bankData?.bankAddress,
+            bankBranch:bankData?.bankBranch,
         }
-            if(!bankData.organizationBankDetailId && bankData){
-                addEditOrganizationBankDetails(request);
-            }
-            else if(bankData.organizationBankDetailId && bankData ){
-                addEditOrganizationBankDetails(request);
-            }
-           
+          addEditOrganizationBankDetails(request);             
       }
-
+    } 
     useEffect(() => {
-   
         if (!isGetOrganizationBankDetailsFetching && isGetOrganizationBankDetailsSuccess && isGetOrganizationBankDetailsData) {
             let formData = { ...organizationBankData };
             formData.initialState = {
-                ...isGetOrganizationBankDetailsData,
-    
-            };
+           ...isGetOrganizationBankDetailsData,
+     };
             setOrganizationBankData(formData);
+            setBankDetailId(isGetOrganizationBankDetailsData.organizationBankDetailId);
         }
     }, [isGetOrganizationBankDetailsFetching, isGetOrganizationBankDetailsSuccess, isGetOrganizationBankDetailsData,]);
 
 
-    return(<>
+    return( 
     
     <div className="row mt-2 add-address-form">
                 <FormCreator config={organizationBankData}
                     ref={organizationBankRef}
                    {...organizationBankData}
    
-                />
-                
+                />  
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -79,6 +74,6 @@ const OrganizationBankDetail=()=>{
                 </div>
             </div>
         </div>
-    </>)
+     )
 }
 export default OrganizationBankDetail;

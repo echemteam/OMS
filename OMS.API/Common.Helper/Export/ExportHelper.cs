@@ -23,7 +23,8 @@ namespace Common.Helper.Export
                 {
                     for (int i = 0; i < values.Length; i++)
                     {
-                        values[i] = properties[i].GetValue(item);
+                        object? v = properties[i]?.GetValue(item);
+                        values[i] = v ?? DBNull.Value; // Handle null by assigning DBNull.Value
                     }
 
                     dataTable.Rows.Add(values);
@@ -32,7 +33,7 @@ namespace Common.Helper.Export
             }
             catch (Exception ex)
             {
-                throw ex!;
+                throw new InvalidOperationException("Something wrong while converting dataTable to list", ex);
             }
         }
     }

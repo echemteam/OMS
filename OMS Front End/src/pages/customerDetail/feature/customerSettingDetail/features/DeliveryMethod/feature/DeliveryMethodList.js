@@ -1,12 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import MolGrid from "../../../../../../../components/Grid/MolGrid";
+import { useEffect, useState } from "react";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import { OurAccountGridConfig } from "../config/DevliveryConfig";
 import PropTypes from 'prop-types';
+import FinalMolGrid from "../../../../../../../components/FinalMolGrid/FinalMolGrid";
+import { useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
+import ToastService from "../../../../../../../services/toastService/ToastService";
 
-const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton }) => {
-   
+const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList }) => {
+
+    const [gridConfig, setGridConfig] = useState(OurAccountGridConfig);
+    const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateDeliveryMethodsMutation();
+
+    useEffect(() => {
+        if (isUpdateSuccess && isUpdateData) {
+            if (isUpdateData.errorMessage.includes('EXISTS')) {
+                ToastService.warning(isUpdateData.errorMessage);
+                return;
+            }
+            handleGetDefaultList()
+            ToastService.success(isUpdateData.errorMessage);
+        }
+    }, [isUpdateSuccess, isUpdateData]);
+
+    const handleEditClick = (data) => {
+        const req = {
+            charge: data.charge,
+            customerId: customerId,
+            isPrimary: data.isPrimary,
+            customerDeliveryMethodId: data.customerDeliveryMethodId ? data.customerDeliveryMethodId : 0,
+            deliveryMethodId: data.deliveryMethodId && typeof data.deliveryMethodId === "object" ? data.deliveryMethodId.value : data.deliveryMethodId,
+        }
+        update(req)
+    }
+
+    useState(() => {
+        let configuration = { ...OurAccountGridConfig }
+        configuration.handleRowDataUpdate = handleEditClick;
+        setGridConfig(configuration);
+    }, [])
+
     return (
         <div className="first-card">
             <CardSection
@@ -18,9 +52,17 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
                 iconImg={AppIcons.PlusIcon}
                 titleButtonClick={handleToggleModal}>
                 <div className="account-table table-striped mb-3">
-                    <MolGrid
+                    {/* <MolGrid
                         ref={molGridRef}
-                        configuration={OurAccountGridConfig}
+                        configuration={gridConfig}
+                        dataSource={ourAccountData}
+                        allowPagination={false}
+                        onActionChange={actionHandler}
+                        isLoading={isGetDataLoading}
+                    /> */}
+                    <FinalMolGrid
+                        ref={molGridRef}
+                        configuration={gridConfig}
                         dataSource={ourAccountData}
                         allowPagination={false}
                         onActionChange={actionHandler}

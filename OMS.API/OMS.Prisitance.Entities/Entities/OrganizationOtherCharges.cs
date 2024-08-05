@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Prisitance.Entities.Entities
 {
@@ -13,7 +8,7 @@ namespace OMS.Prisitance.Entities.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public short? OrganizationOtherChargeId { get; set; }
+        public byte? OrganizationOtherChargeId { get; set; }
         [Column("HandlingFees")]
         public decimal? HandlingFees { get; set; }
         [Column("BankWireFees")]
@@ -24,6 +19,8 @@ namespace OMS.Prisitance.Entities.Entities
         public decimal? ColdBoxFees { get; set; }
         [Column("ITNFees")]
         public decimal? ITNFees { get; set; }
+        [Column("DefaultPaymentTerms")]
+        public byte? DefaultPaymentTerms { get; set; }
         [Column("CreatedAt")]
         public DateTime? CreatedAt { get; set; }
         [Column("CreatedBy")]

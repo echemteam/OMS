@@ -1,39 +1,24 @@
 import React, { useState } from 'react'
 import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
+const OrganizationBusinessAddressDetail = React.lazy(() => import("./feature/organizationBusinessAddressDetail/OrganizationBusinessAddressDetail"));
+const OrganizationOtherChargesDetail = React.lazy(() => import("./feature/organizationOtherChargesDetail/OrganizationOtherChargesDetail"));
 const OrganizationShippingChargesDetail = React.lazy(() => import("./feature/organizationShippingCharges/OrganizationShippingChargesDetail"));
 const OrganizationAccountingDetail = React.lazy(() => import("./feature/organizationAccountingDetail/OrganizationAccountingDetail"));
-const OrganizationLogisticDetail=React.lazy(() => import("./feature/organizationLogisticDetail/OrganizationLogisticDetail"))
-const OrganizationBankDetail=React.lazy(() => import("./feature/organizationBankDetail/OrganizationBankDetail"))
-const OrganizationHistory=React.lazy(() => import("./feature/organizationHistory/OrganizationHistory"))
-const OrganizationContactDetail=React.lazy(() => import("./feature/organizationContactDetail/OrganizationContactDetail"))
+const OrganizationLogisticDetail = React.lazy(() => import("./feature/organizationLogisticDetail/OrganizationLogisticDetail"))
+const OrganizationBankDetail = React.lazy(() => import("./feature/organizationBankDetail/OrganizationBankDetail"))
+const OrganizationHistory = React.lazy(() => import("./feature/organizationHistory/OrganizationHistory"))
+const OrganizationContactDetail = React.lazy(() => import("./feature/organizationContactDetail/OrganizationContactDetail"))
 const SMTPSettings = React.lazy(() => import("./feature/smtpSettings/SMTPSettings"));
-const OtherSettings = React.lazy(() => import("./feature/otherSettings/OtherSettings"));
 const OrganizationProfileManagement = React.lazy(() => import("./feature/organizationProfileManagement/OrganizationProfileManagement"));
 
 const Organization = () => {
 
-    const [organizationId, setOrganizationId] = useState(0)
-    const [smtpSettingId, setSmtpSettingId] = useState(0)
-    const [organizationOtherSettingId, setOrganizationOtherSettingId] = useState(0)
     const [activeTabId, setActiveTabId] = useState(0)
+  const handleActiveTab=(id)=>{
+    setActiveTabId(id);
+  }
 
-    const handleSetOrganizationId = (id) => {
-        setOrganizationId(id)
-    }
-
-
-    const handleSetSmtpSettingId = (id) => {
-        setSmtpSettingId(id)
-    }
-
-    const handleSetOrganizationOtherSettingId = (id) => {
-        setOrganizationOtherSettingId(id)
-    }
-
-    const handleActiveTab = (id) => {
-        setActiveTabId(id)
-    }
 
     const tabs = [
         {
@@ -41,9 +26,66 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
                     <OrganizationProfileManagement
-                        activeTabId={activeTabId}
-                        onHandleOrganization={handleSetOrganizationId}
-                        organizationId={organizationId} />
+                       
+                       />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Business Address",
+            component: (
+                <div className="mt-2">
+
+                    <OrganizationBusinessAddressDetail   />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Contact Details",
+            component: (
+                <div className="mt-2">
+                    <OrganizationContactDetail   />
+                </div>
+            ),
+        },
+
+        {
+            sMenuItemCaption: "Logistic Details",
+            component: (
+                <div className="mt-2">
+                    <OrganizationLogisticDetail  />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Bank Details",
+            component: (
+                <div className="mt-2">
+                    <OrganizationBankDetail  />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Accounting Details",
+            component: (
+                <div className="mt-2">
+                    <OrganizationAccountingDetail  />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Shipping Charges",
+            component: (
+                <div className="mt-2">
+                    <OrganizationShippingChargesDetail  />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Other Charges",
+            component: (
+                <div className="mt-2">
+                    <OrganizationOtherChargesDetail />
                 </div>
             ),
         },
@@ -53,91 +95,31 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
                     <SMTPSettings
-                        activeTabId={activeTabId}
-                        organizationId={organizationId}
-                        onHandleSmtp={handleSetSmtpSettingId}
-                        smtpSettingId={smtpSettingId} />
-                </div>
-            ),
-        },
-
-        // smtpSettingId > 0 &&
-        {
-            sMenuItemCaption: "Other Settings",
-            component: (
-                <div className="mt-2">
-                    <OtherSettings
-                        activeTabId={activeTabId}
-                        organizationId={organizationId}
-                        smtpSettingId={smtpSettingId}
-                        organizationOtherSettingId={organizationOtherSettingId}
-                        onHandleOrganizationOtherSetting={handleSetOrganizationOtherSettingId} />
+                       />
                 </div>
             ),
         },
         {
-            sMenuItemCaption: "Contact Details",
-            component: (
-                <div className="mt-2">
-                   <OrganizationContactDetail  />
-                </div>
-            ),
-        },
-        {
-            sMenuItemCaption: "Logistic Details",
-            component: (
-                <div className="mt-2">
-               <OrganizationLogisticDetail />
-                </div>
-            ),
-        },
-        {
-            sMenuItemCaption: "Bank Details",
-            component: (
-                <div className="mt-2">
-               <OrganizationBankDetail />
-                </div>
-            ),
-        },
-        {
-            sMenuItemCaption: "Accounting Details",
-            component: (
-                <div className="mt-2">
-              <OrganizationAccountingDetail/>
-                </div>
-            ),
-        },
-        {
-            sMenuItemCaption: "Shipping Charges",
-            component: (
-                <div className="mt-2">
-              <OrganizationShippingChargesDetail/>
-                </div>
-            ),
-        },
-{
             sMenuItemCaption: "History",
             component: (
-                <div className="mt-2">
-                   <OrganizationHistory />
+                <div className="mt-2 organiazation-history">
+                    <OrganizationHistory />
                 </div>
             ),
+
         },
 
     ];
-
+  
     return (
         <div className="vertical-tab-card">
             <div className="row">
                 <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
-                    <CardSection cardTitle={
-                        activeTabId === 0 ? "Organization Profile Management" :
-                            activeTabId === 1 ? "SMTP Settings" :
-                                activeTabId === 2 ? "Other Settings" :
-                                    ""
-                    }>
-                        <div className="vertical-tab-inner">
-                            <RenderTabs tabs={tabs} isCollapse={true} onActiveTab={handleActiveTab} isOrganization={true} />
+                    <CardSection  >
+                        <div className='main-organiazation-history'>
+                            <div className="vertical-tab-inner">
+                                <RenderTabs tabs={tabs} isCollapse={true} onActiveTab={handleActiveTab} isOrganization={true}  />
+                            </div>
                         </div>
                     </CardSection>
                 </div>

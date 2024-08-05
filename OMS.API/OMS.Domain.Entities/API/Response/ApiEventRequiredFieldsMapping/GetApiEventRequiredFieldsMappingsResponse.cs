@@ -8,5 +8,6 @@
         public int? ApiEventId { get; set; }
         public int? EndpointId { get; set; }
         public string? APIResponseFieldName { get; set; }
+        public string? FieldName { get; set; }
     }
 }

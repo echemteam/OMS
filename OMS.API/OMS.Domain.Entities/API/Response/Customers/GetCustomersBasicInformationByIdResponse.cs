@@ -12,11 +12,11 @@
         public string? EmailAddress { get; set; }
         public string? Website { get; set; }
         public string? TaxId { get; set; }
-        public bool? IsBuyingForThirdParty {  get; set; }
+        public bool? IsBuyingForThirdParty { get; set; }
         public short? StatusId { get; set; }
         public string? Status { get; set; }
-        public short? ResponsibleUserId {  get; set; }
-        public string? ResponsibleUserName {  get; set; }
+        public short? ResponsibleUserId { get; set; }
+        public string? ResponsibleUserName { get; set; }
         public bool? IsSubCustomer { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace OMS.Domain.Entities.API.Request.Contact
+﻿namespace OMS.Domain.Entities.API.Request.Contact
 {
     public class AddEditContactRequest
     {
@@ -13,7 +11,7 @@ namespace OMS.Domain.Entities.API.Request.Contact
         public bool? IsPrimary { get; set; }
         public int? SupplierId { get; set; }
         public int? SupplierContactId { get; set; }
-        public List<AddContactEmailRequest>? EmailList {get;set;}
+        public List<AddContactEmailRequest>? EmailList { get; set; }
         public List<AddContactPhoneRequest>? PhoneList { get; set; }
 
     }

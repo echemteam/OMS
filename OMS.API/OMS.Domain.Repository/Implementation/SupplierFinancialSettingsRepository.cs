@@ -1,5 +1,4 @@
-﻿using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
-using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
+﻿using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.SupplierAccoutingSetting;
 using OMS.Domain.Repository.Contract;

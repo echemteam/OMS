@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.Entity.Organization
+﻿namespace OMS.Domain.Entities.Entity.Organization
 {
     public class OrganizationBankDetailsDto
     {
-        public short? OrganizationBankDetailId { get; set; }
+        public byte? OrganizationBankDetailId { get; set; }
         public string? BeneficiaryName { get; set; }
         public string? CheckingAccountNumber { get; set; }
         public string? RoutingAccountNumber { get; set; }

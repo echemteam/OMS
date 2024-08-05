@@ -49,6 +49,6 @@ namespace OMS.Application.Services
         IApiConfigurationService apiConfigurationService { get; }
         IOrganizationService organizationService { get; }
         ISupplierFinancialSettingsService supplierFinancialSettingsService { get; }
-        IApiEventManagementService apiEventManagementService { get; }   
+        IApiEventManagementService apiEventManagementService { get; }
     }
 }
