@@ -2,5 +2,7 @@
 {
     public class GetAllContactsByCustomerIdAndContactTypeIdResponse
     {
+        public int? ContactId { get; set; }
+        public string? FullName { get; set; }
     }
 }
