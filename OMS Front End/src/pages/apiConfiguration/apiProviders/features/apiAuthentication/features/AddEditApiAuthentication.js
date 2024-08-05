@@ -36,7 +36,7 @@ const AddEditApiAuthentication = (props) => {
     if (isGetApiAuthenticationByAuthIdSuccess && apiAuthenticationData && !isGetApiAuthenticationByAuthIdFetching) {
       const authFieldsMap = {
         [AuthenticationTypes.OAuth]: ['authKey'],
-        [AuthenticationTypes.APIKey]: ['clientSecret', 'clientId']
+        [AuthenticationTypes.APIKey]: ['clientSecret', 'clientId','tokenExpires','tokenEndpoint']
       };
 
       let formData = { ...authenticationFormData };
@@ -86,7 +86,7 @@ const handlePageLoad=() => {
 
       const authFieldsMap = {
         [AuthenticationTypes.OAuth]: ['authKey'],
-        [AuthenticationTypes.APIKey]: ['clientSecret', 'clientId']
+        [AuthenticationTypes.APIKey]: ['clientSecret', 'clientId','tokenExpires','tokenEndpoint']
       };
 
       const fieldsToRemove = authFieldsMap[selectedProvider.authenticationType];
@@ -104,6 +104,7 @@ const handlePageLoad=() => {
       const requestData = {
         ...formData,
         providerId: props.providerId,
+        tokenExpires: formData.tokenExpires ? formData.tokenExpires :null,
         ...(authId && { authId }),
       };
       addEditApiAuthentication(requestData);
