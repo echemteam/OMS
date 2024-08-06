@@ -13,6 +13,7 @@ const ApiAuthentication = ({ providerId, providerObject }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [authId, setAuthId] = useState(false);
+  const [listData , setListData] = useState(0)
 
   const handleToggleModal = () => {
     setIsModelOpen(true);
@@ -39,12 +40,16 @@ const ApiAuthentication = ({ providerId, providerObject }) => {
     setIsModelOpen(false);
   };
 
+  const handleListData = (data) => {
+    setListData(data)
+  }
+
   return (
     <div>
       <CardSection
         cardTitle="API Authentication"
         buttonClassName="btn theme-button"
-        rightButton={true}
+        rightButton={listData !== 1 && true}
         buttonText="Add"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
@@ -54,6 +59,7 @@ const ApiAuthentication = ({ providerId, providerObject }) => {
           providerId={providerId}
           getDataRef={getDataRef}
           handleEditClick={handleEditClick}
+          handleListData={handleListData}
         />
       </CardSection>
 

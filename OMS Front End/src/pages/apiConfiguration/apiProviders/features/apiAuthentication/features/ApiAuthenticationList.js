@@ -8,7 +8,7 @@ import SwalAlert from "../../../../../../services/swalService/SwalService";
 import { useImperativeHandle } from "react";
 import { useDeleteApiAuthenticationMutation, useGetApiAuthenticationsMutation } from "../../../../../../app/services/apiAuthenticationAPI";
 
-const ApiAuthenticationList = ({ handleEditClick, getDataRef, providerId }) => {
+const ApiAuthenticationList = ({ handleEditClick, getDataRef, providerId , handleListData }) => {
 
   const molGridRef = useRef();
   const [listData, setListData] = useState();
@@ -24,8 +24,10 @@ const ApiAuthenticationList = ({ handleEditClick, getDataRef, providerId }) => {
 
   useEffect(() => {
     if (isApiAuthenticationSuccess && isApiAuthenticationeData) {
+      
       if (isApiAuthenticationeData) {
         setListData(isApiAuthenticationeData.dataSource);
+        handleListData(isApiAuthenticationeData.dataSource.length)
 
       }
       if (isApiAuthenticationeData.totalRecord) {
