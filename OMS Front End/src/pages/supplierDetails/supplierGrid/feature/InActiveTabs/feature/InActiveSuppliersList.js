@@ -192,12 +192,12 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
     return (
         <div>
             <div className="row">
-                <div className="col-xxl-12 col-xl-12 col-md-12 col-12" kry={shouldRerenderFormCreator}>
+                <div className="col-xxl-12 col-xl-12 col-md-12 col-12" key={shouldRerenderFormCreator}>
                     <CardSection
                         searchInput={true}
                         handleChange={handleChange}
                         searchInputName="Search By Supplier Name, Tax Id , Email Address"
-                        searchFilter={searchStatusFilter ? true : false}
+                        searchFilter={searchStatusFilter }
                         handleChangeDropdown={handleChangeDropdown}
                         selectedOptions={selectedDrpvalues}
                         optionsValue={statusOptions}

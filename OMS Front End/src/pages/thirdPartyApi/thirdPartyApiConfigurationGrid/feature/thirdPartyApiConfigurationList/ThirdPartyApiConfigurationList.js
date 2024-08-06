@@ -137,9 +137,7 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
                     onSorting={handleSorting}
                     isLoading={isGetApiEventsLoading}
                     onActionChange={actionHandler}
-                // searchTitleButtonClick={handleSearch}
-                // handleChange={handleChange}
-                // handleClear={handleClear}
+               
                 />
             </div>
         </div>

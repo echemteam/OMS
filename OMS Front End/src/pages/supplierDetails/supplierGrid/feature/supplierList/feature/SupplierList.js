@@ -130,7 +130,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   }
 
   const handlePageChange = (page, sortingString) => {
-    const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
+    const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
     const request = {
       pagination: {
         pageNumber: page.pageNumber,
@@ -173,12 +173,6 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
     }
   }, [isSuccessUpdateSupplier, updateSupplierData]);
 
-  // useEffect(() => {
-  //   if (molGridRef.current) {
-  //     const currentPageObject = molGridRef.current.getCurrentPageObject();
-  //     getListApi(currentPageObject);
-  //   }
-  // }, [search, selectedStatusOptions]);
 
   useEffect(() => {
     if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
@@ -194,8 +188,8 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   }));
 
   const getListApi = (pageObject, sortingString) => {
-    const currentPageObject = pageObject ? pageObject : molGridRef.current.getCurrentPageObject();
-    const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
+    const currentPageObject = pageObject || molGridRef.current.getCurrentPageObject();
+    const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
     const request = {
       pagination: {
         pageNumber: currentPageObject.pageNumber,
@@ -325,7 +319,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
             searchInput={true}
             handleChange={handleChange}
             searchInputName="Search By Supplier Name, Tax Id , Email Address"
-            searchFilter={searchStatusFilter ? true : false}
+            searchFilter={searchStatusFilter }
             handleChangeDropdown={handleChangeDropdown}
             selectedOptions={selectedDrpvalues}
             optionsValue={statusOptions}

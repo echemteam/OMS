@@ -46,13 +46,13 @@ const EventMappingList = (props) => {
 
     useEffect(() => {
         if (isGetApiEventMappingsSuccess && isGetApiEventMappingsData) {
-            // if (isGetApiEventMappingsData) {
+          
             setListData([isGetApiEventMappingsData]);
             props.setEndpointId(isGetApiEventMappingsData?.endpointId);
             if (isGetApiEventMappingsData?.providerId) {
                 props.setIsProviderData(true);
             }
-            // }
+          
             if (isGetApiEventMappingsData.totalRecord) {
                 setTotalRowCount(isGetApiEventMappingsData.totalRecord);
             }
@@ -111,9 +111,7 @@ const EventMappingList = (props) => {
                     onSorting={handleSorting}
                     isLoading={isGetApiEventMappingsLoading}
                     onActionChange={actionHandler}
-                // searchTitleButtonClick={handleSearch}
-                // handleChange={handleChange}
-                // handleClear={handleClear}
+               
                 />
             </div>
         </div>

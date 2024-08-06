@@ -15,11 +15,7 @@ export const CommonContextProvider = ({ children }) => {
 
     const [isResponsibleCustomerUser, setIsResponsibleCustomerUser] = useState(true);
     const [isResponsibleSupplierUser, setIsResponsibleSupplierUser] = useState(true);
-
-    //** Using for Contact  */
-    const [phoneNumberData, setPhoneNumberData] = useState();
-    const [emailAddressData, setEmailAddressData] = useState();
-    //** */
+ 
 
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);

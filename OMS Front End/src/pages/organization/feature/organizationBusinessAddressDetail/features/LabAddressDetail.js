@@ -37,7 +37,7 @@ const LabAddressDetail=({labAddressRef,labAddressData,LabAddressForm})=>{
         const manageData = { ...labAddressData };
         if (dataField === "countryId") {
            getAllStates(data.value);
-        //  setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+      
           setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
           labAddressRef.current.updateFormFieldValue({
             countryId: data.value,

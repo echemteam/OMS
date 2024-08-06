@@ -2,7 +2,7 @@ import React from "react";
 import "./Dashboard.scss";
 import Image from "../../components/image/Image";
 import { AppIcons } from "../../data/appIcons";
-// import TestImagesUploading from "../../components/TestImagesUploader/TestImagesUploading";
+
 
 function Dashboard() {
 

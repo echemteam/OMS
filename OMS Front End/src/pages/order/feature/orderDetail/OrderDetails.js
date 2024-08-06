@@ -85,7 +85,6 @@ const OrderDetails = () => {
         status: item.statusName,
         isBuyingForThirdParty: item.isBuyingForThirdParty
       }));
-      console.log(customerData)
       const dropdownField = orderInformationData?.formFields?.find(item => item.dataField === "customerId");
 
       dropdownField.fieldSetting.options = customerData
@@ -120,7 +119,7 @@ const OrderDetails = () => {
 
 
   const handleChangeDropdownList = (data, dataField) => {
-    if (dataField === "customerId") {
+        if (dataField === "customerId") {
       if (data.isBuyingForThirdParty === true) {
         getAllSubCustomerByCustomerId(data.value);
         setOrderCustomerId(data.value)
@@ -131,9 +130,8 @@ const OrderDetails = () => {
         setFormData(manageData)
         basicInformation.current.updateFormFieldValue({
           customerId: data.value,
-          subCustomerMainCustomerId: null
-        });
-        setFormData(manageData);
+          subCustomerMainCustomerId:null
+      });
       }
     }
 

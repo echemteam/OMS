@@ -112,9 +112,6 @@ const RequiredMappingList = (props) => {
           onSorting={handleSorting}
           isLoading={isGetApiEventRequiredFieldsMappingsLoading}
           onActionChange={actionHandler}
-        // searchTitleButtonClick={handleSearch}
-        // handleChange={handleChange}
-        // handleClear={handleClear}
         />
       </div>
     </div>

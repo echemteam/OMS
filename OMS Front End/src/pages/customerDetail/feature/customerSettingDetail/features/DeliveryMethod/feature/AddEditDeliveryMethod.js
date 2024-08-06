@@ -9,9 +9,6 @@ import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/
 //** Service's */
 import ToastService from "../../../../../../../services/toastService/ToastService";
 import { useAddDeliveryMethodsMutation, useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
-// import { setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-// import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
-// import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
 import PropTypes from 'prop-types';
 
 const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit, onSuccess }) => {

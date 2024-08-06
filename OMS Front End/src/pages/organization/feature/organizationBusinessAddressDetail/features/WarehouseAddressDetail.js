@@ -41,7 +41,6 @@ const WarehouseAddressDetail=({warehouseAddressData,warehouseAddressRef,Warehous
       const manageData = { ...warehouseAddressData };
       if (dataField === "countryId") {
          getAllStates(data.value);
-      //  setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
         setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
         warehouseAddressRef.current.updateFormFieldValue({
           countryId: data.value,

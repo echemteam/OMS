@@ -21,7 +21,6 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton })
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const { carriersList, customerId } = useContext(BasicDetailContext);
-    // const [deliveryCarrierId, setDeliveryCarrierId] = useState();
     const { data, isFetching, isSuccess } = useGetAllDeliveryCarriersQuery();
 
     const [deleteCarrier, { isSuccess: isDeleteSuccess, data: isDeletData }] = useDeleteCustomerDeliveryCarriersByIdMutation();

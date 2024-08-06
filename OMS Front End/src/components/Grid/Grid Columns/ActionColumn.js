@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { AppIcons } from "../../../data/appIcons";
 import Image from "../../image/Image";
+import TooltipColumn from "../../ui/tooltip/Tooltip";
 
 export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
   if (!col.defaultAction) {
@@ -9,7 +10,6 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
       allowDelete: true,
     };
   }
-
 
   if (col.renderCustomAction) {
     col?.renderCustomAction(rowData, col);
@@ -56,10 +56,11 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("EDIT", rowData);
           }}
-          className="mr-4"
-          title="Edit"
+          className="mr-4 tooltip"
+          // title="Edit"
         >
           <Image imagePath={AppIcons.editIcon} altText="Edit Icon" />
+          <TooltipColumn text="Edit" />
         </Link>
       )}
 
@@ -69,10 +70,10 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("DELETE", rowData);
           }}
-          className="mr-4"
-          title="Delete"
+          className="mr-4 tooltip"
         >
           <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" />
+          <TooltipColumn text="Delete" />
         </Link>
       )}
 
@@ -82,12 +83,13 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("UNFREEZE", rowData);
           }}
-          className="mr-4 view-icon"
-          title="Un Freeze"
+          className="mr-4 view-icon tooltip"
         >
           <Image
             imagePath={AppIcons.unfreezeIcone}
-            altText="unfreezeIcone Icon" />
+            altText="unfreezeIcone Icon"
+          />
+          <TooltipColumn text="Un Freeze" />
         </Link>
       )}
       {col.defaultAction.allowActiveCustomer && (
@@ -96,12 +98,13 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("ACTIVECUSTOMER", rowData);
           }}
-          className="mr-4 view-icon"
-          title="Active Customer"
+          className="mr-4 view-icon tooltip"
         >
           <Image
             imagePath={AppIcons.aciveCustomerIcone}
-            altText="ACTIVECUSTOMER Icon" />
+            altText="ACTIVECUSTOMER Icon"
+          />
+          <TooltipColumn text="Active Customer" />
         </Link>
       )}
       {col.defaultAction.allowActiveSupplier && (
@@ -110,12 +113,13 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("ACTIVESUPPLIER", rowData);
           }}
-          className="mr-4 view-icon"
-          title="Active Supplier"
+          className="mr-4 view-icon tooltip"
         >
           <Image
             imagePath={AppIcons.aciveCustomerIcone}
-            altText="ACTIVESUPPLIER Icon" />
+            altText="ACTIVESUPPLIER Icon"
+          />
+          <TooltipColumn text="Active Supplier" />
         </Link>
       )}
 
@@ -125,12 +129,10 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("UNBLOCKED", rowData);
           }}
-          className="mr-4 view-icon"
-          title="Un Block"
+          className="mr-4 view-icon tooltip"
         >
-          <Image
-            imagePath={AppIcons.unblokedIcone}
-            altText="UNBLOCKED Icon" />
+          <Image imagePath={AppIcons.unblokedIcone} altText="UNBLOCKED Icon" />
+          <TooltipColumn text="Un Block" />
         </Link>
       )}
 
@@ -140,12 +142,10 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("BLOCKED", rowData);
           }}
-          className="mr-4 view-icon"
-          title="Block"
+          className="mr-4 view-icon tooltip"
         >
-          <Image
-            imagePath={AppIcons.blockredIcone}
-            altText="BLOCKED Icon" />
+          <Image imagePath={AppIcons.blockredIcone} altText="BLOCKED Icon" />
+          <TooltipColumn text="Block" />
         </Link>
       )}
 
@@ -155,12 +155,10 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("FREEZE", rowData);
           }}
-          className="mr-4 view-icon"
-          title="Freeze"
+          className="mr-4 view-icon tooltip"
         >
-          <Image
-            imagePath={AppIcons.freezeblueIcone}
-            altText="FREEZE Icon" />
+          <Image imagePath={AppIcons.freezeblueIcone} altText="FREEZE Icon" />
+          <TooltipColumn text="Freeze" />
         </Link>
       )}
 
@@ -170,12 +168,13 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("DISABLE", rowData);
           }}
-          className="mr-4 view-icon"
-          title="Disable"
+          className="mr-4 view-icon tooltip"
         >
           <Image
             imagePath={AppIcons.disablethemeIcone}
-            altText="DISABLE Icon" />
+            altText="DISABLE Icon"
+          />
+          <TooltipColumn text="Disable" />
         </Link>
       )}
 
@@ -185,12 +184,10 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("PERMISSION", rowData);
           }}
-          className="mr-4 view-icon"
-          title="Permission"
+          className="mr-4 view-icon tooltip"
         >
-          <Image
-            imagePath={AppIcons.permissionIcon}
-            altText="DISABLE Icon" />
+          <Image imagePath={AppIcons.permissionIcon} altText="DISABLE Icon" />
+          <TooltipColumn text="Permission" />
         </Link>
       )}
 
@@ -200,12 +197,10 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("USER", rowData);
           }}
-          className="mr-4 view-icon"
-          title="User"
+          className="mr-4 view-icon tooltip"
         >
-          <Image
-            imagePath={AppIcons.userIcon}
-            altText="DISABLE Icon" />
+          <Image imagePath={AppIcons.userIcon} altText="DISABLE Icon" />
+          <TooltipColumn text="User" />
         </Link>
       )}
       {rowData.status === "Approved" && col.defaultAction.allowReject && (
@@ -214,12 +209,10 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("REJECT", rowData);
           }}
-          className="mr-4 view-icon"
-          title="Reject"
+          className="mr-4 view-icon tooltip"
         >
-          <Image
-            imagePath={AppIcons.RejectedIcon}
-            altText="Reject Icon" />
+          <Image imagePath={AppIcons.RejectedIcon} altText="Reject Icon" />
+          <TooltipColumn text="Reject" />
         </Link>
       )}
       {rowData.status !== "Approved" && col.defaultAction.allowReject && (
@@ -231,16 +224,12 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler) => {
             e.preventDefault();
             handleAction("VIEW", rowData);
           }}
-          className="mr-4 view-icon"
-          title="VIEW"
+          className="mr-4 view-icon tooltip"
         >
-          <Image
-            imagePath={AppIcons.EyeIcon}
-            altText="Delete Icon" />
+          <Image imagePath={AppIcons.EyeIcon} altText="Delete Icon" />
+          <TooltipColumn text="View" />
         </Link>
       )}
-
     </div>
   );
 };
-
