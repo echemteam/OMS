@@ -50,7 +50,22 @@ const commonAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-
+        getAllCustomers: builder.query({
+            query: () => ({
+                url: `/Common/GetAllCustomers`,
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getAllSubCustomerByCustomerId: builder.mutation({
+            query: (id) => ({
+                url: `/Common/GetAllSubCustomerByCustomerId?customerId=${(id)}`,
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
         getAllContactsByCustomerIdAndContactTypeId: builder.query({
             query: (data) => ({
                 url: encryptQueryString(`/Common/GetAllContactsByCustomerIdAndContactTypeId/?customerId=${data.customerId}&contactTypeId=${data.contactTypeId}`),
@@ -74,7 +89,8 @@ const commonAPI = createApi({
 
 export const {
     useGetAllDeliveryCarriersQuery, useGetAllDeliveryMethodsQuery, useLazyGetAllDeliveryAccountsQuery, useLazyGetAllUserQuery,
-    useUpdateResponsibleUserMutation, useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery
+    useUpdateResponsibleUserMutation,useLazyGetAllCustomersQuery,useGetAllSubCustomerByCustomerIdMutation
+    , useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery
 
 } = commonAPI
 

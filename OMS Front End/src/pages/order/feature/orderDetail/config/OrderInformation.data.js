@@ -4,18 +4,18 @@ import { AddressType } from "../../../../../utils/Enums/commonEnums";
 
 export const orderInformationData = {
   initialState: {
-    name: "",
-    subName: "",
+    customerId: "",
+    subCustomerMainCustomerId: "",
     poNumber: "",
     addressId:""
   },
   formFields: [
     {
-      id: "name",
+      id: "customerId",
       lable: "Customer Name ",
       Field_Name: "Customer Name",
       fieldType: FormFieldTypes.CUSTOMSELECT,
-      dataField: "name",
+      dataField: "customerId",
       fieldSetting: {
         placeholder: "Enter Customer Name",
         allowSpace: true,
@@ -51,11 +51,11 @@ export const orderInformationData = {
       }
     },
     {
-      id: "subName",
+      id: "subCustomerMainCustomerId",
       lable: "Sub-Customer Name",
       Field_Name: "Sub-Customer Name",
       fieldType: FormFieldTypes.CUSTOMSELECT,
-      dataField: "name",
+      dataField: "subCustomerMainCustomerId",
       fieldSetting: {
         placeholder: "Enter Sub-Customer Name",
         allowSpace: true,

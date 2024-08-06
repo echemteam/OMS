@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { orderInformationData } from "./config/OrderInformation.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import SwalAlert from "../../../../services/swalService/SwalService";
+import { useGetAllSubCustomerByCustomerIdMutation,useLazyGetAllCustomersQuery } from "../../../../app/services/commonAPI";
+import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../data/appIcons";
 import Buttons from "../../../../components/ui/button/Buttons";
@@ -16,8 +19,12 @@ import { modifyAddressType } from "../../../../utils/TransformData/TransformAPID
 
 const OrderDetails = () => {
   const basicInformation = useRef();
+
   const [formData, setFormData] = useState(orderInformationData);
+   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const { blocked } = SwalAlert();
+  const [getAllCustomers, { isFetching:isGetAllCustomersFetching,isSuccess: isGetAllCustomersSuccess, data: isGetAllCustomersData }] = useLazyGetAllCustomersQuery();
+  const [getAllSubCustomerByCustomerId, { isFetching:isGetAllSubCustomersFetching,isSuccess: isGetAllSubCustomersSuccess, data: isGetAllSubCustomersData }] = useGetAllSubCustomerByCustomerIdMutation();
   const [isModelOpen, setIsModelOpen] = useState(false);
   const ref = useRef();
   const [formAddressData, setFormAddressData] = useState(addressFormData);
@@ -65,7 +72,71 @@ const OrderDetails = () => {
   //   setIsModelOpen(true);
   // };
 
+  useEffect(() => {
+    getAllCustomers();
+  },[]);
+
+  useEffect(() => {
+    if (!isGetAllCustomersFetching && isGetAllCustomersSuccess && isGetAllCustomersData) {
+      const customerData = isGetAllCustomersData.map((item) => ({
+        value: item.customerId,
+        label: item.name,
+        date:item.createdAt,
+        status:item.statusName,
+        isBuyingForThirdParty: item.isBuyingForThirdParty
+      }));
+      console.log(customerData)
+      const dropdownField = orderInformationData?.formFields?.find(item => item.dataField === "customerId");
+       
+      dropdownField.fieldSetting.options = customerData
+    
+     // setShouldRerenderFormCreator((prevState) => !prevState);
+     }
+  }, [isGetAllCustomersFetching,isGetAllCustomersSuccess,isGetAllCustomersData]);
+
+  useEffect(() => {
+  debugger
+    if (!isGetAllSubCustomersFetching && isGetAllSubCustomersSuccess && isGetAllSubCustomersData) {
+      const subcustomerData = isGetAllSubCustomersData.map((item) => ({
+        value: item.subCustomerMainCustomerId,
+        label: item.subCustomerName,
+         date:item.createdAt,
+         status:item.statusName
+      }));
+      const dropdownField = orderInformationData?.formFields?.find(item => item.dataField === "subCustomerMainCustomerId");
+
+      dropdownField.fieldSetting.options = subcustomerData;
+    //setShouldRerenderFormCreator((prevState) => !prevState);
+    }
+  },  [isGetAllSubCustomersFetching,isGetAllSubCustomersSuccess,isGetAllSubCustomersData]);
+
+
+  useEffect(()=>{
+   
+    let newFrom = { ...orderInformationData };
+    newFrom.formFields = newFrom.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId" );
+    setFormData(newFrom);
+
+  },[])
+ 
+
   const handleChangeDropdownList = (data, dataField) => {
+    if (dataField === "customerId") {
+      if (data.isBuyingForThirdParty === true) {
+        getAllSubCustomerByCustomerId(data.value);
+       const manageData = { ...formData };
+        let filteredFormFields;
+        filteredFormFields = orderInformationData.formFields
+        manageData.formFields = filteredFormFields;
+        setFormData(manageData)
+        basicInformation.current.updateFormFieldValue({
+          customerId: data.value,
+          subCustomerMainCustomerId:null
+      });
+      setFormData(manageData);
+      }
+   }
+   
     const blockedOptionValue = "blocked";
 
     if (data.status === blockedOptionValue) {
@@ -104,6 +175,7 @@ const OrderDetails = () => {
           config={formData}
           ref={basicInformation}
           {...formData}
+           key={shouldRerenderFormCreator}
           onActionChange={formActionHandler}
           handleInputGroupButton={handleInputGroupButton}
         />

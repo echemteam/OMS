@@ -43,6 +43,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLAPIEVENTPARAMETERBYAPIEVENTID = "GetAllApiEventParameterByApiEventId";
         const string GETALLAPIPARAMETERS = "GetAllAPIParameters";
         const string GETALLAPIEVENTREQUIREDFIELDBYAPIEVENTID = "GetAllApiEventRequiredFieldByApiEventId";
+        const string GETALLCUSTOMERS = "GetAllCustomers";
+        const string GETALLSUBCUSTOMERBYCUSTOMERID = "GetAllSubCustomerByCustomerId";
         const string GETALLADDRESSESBYCUSTOMERIDANDADDRESSTYPEID = "GetAllAddressesByCustomerIdAndAddressTypeId";
         const string GETALLCONTACTSBYCUSTOMERIDANDCONTACTTYPEID = "GetAllContactsByCustomerIdAndContactTypeId";
         #endregion
@@ -228,6 +230,18 @@ namespace OMS.Domain.Repository.Implementation
                 apiEventId
             }, commandType: CommandType.StoredProcedure);
             return getAllApproveCustomerForLinkingResponse;
+        }
+        public async Task<List<GetAllCustomerResponse>> GetAllCustomers()
+        {
+            return await _context.GetList<GetAllCustomerResponse>(GETALLCUSTOMERS, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllSubCustomerByCustomerIdResponse>> GetAllSubCustomerByCustomerId(int customerId)
+        {
+            List<GetAllSubCustomerByCustomerIdResponse> getOrderSubCustomerByCustomerIdResponse = await _context.GetList<GetAllSubCustomerByCustomerIdResponse>(GETALLSUBCUSTOMERBYCUSTOMERID, new
+            {
+                customerId
+            }, commandType: CommandType.StoredProcedure);
+            return getOrderSubCustomerByCustomerIdResponse;
         }
         public async Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId)
         {
