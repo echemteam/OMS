@@ -43,14 +43,17 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
 
 
     const handleAddEdit = () => {
-        // debugger
         const data = ref.current.getFormData();
         if (!data) return;
 
         const contactTypeId = getContactTypeId(data.contactTypeId, isEdit);
         const request = requestData(data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
 
-        addEdit(request);
+        let req = {
+            ...request,
+            customerId : customerId ? customerId : request.customerId
+        }
+        addEdit(req);
     };
 
     const getContactTypeId = (contactTypeId, isEdit) => {
@@ -65,9 +68,9 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         return {
             ...data,
             contactId: contactId,
-            customerId: 1093,
+            // customerId: 1093,
             contactTypeId: String(contactTypeId),
-            // [isSupplier ? 'supplierId' : 'customerId']: keyId,
+            [isSupplier ? 'supplierId' : 'customerId']: keyId,
             emailList: emailAddressList.length > 0 ? emailAddressList : null,
             phoneList: phoneNumberList.length > 0 ? modifyPhoneNumberData(phoneNumberList) : null,
             [isSupplier ? 'supplierContactId' : 'customerContactId']: isSupplier ? supplierContactId : customerContactId,
@@ -86,7 +89,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 setContactId(isAddEditData?.keyValue);
                 ToastService.success(isAddEditData.errorMessage);
                 if (isOrderManage) {
-                    onhandleApiCall()
+                    onhandleApiCall(getContectTypeId)
                 }
             }
         }
@@ -94,7 +97,6 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
 
     useEffect(() => {
         if (!isGetByIdFetching && isGetByIdSucess && isGetByIdData) {
-            // debugger
             let data = isGetByIdData;
             let form = { ...contactDetailFormData };
             form.initialState = {
@@ -159,7 +161,6 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     }
 
     useEffect(() => {
-        // debugger
         if (!isEdit && !isOrderManage) {
             if (isSupplier) {
                 setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, false);
@@ -181,6 +182,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, false);
             let form = { ...contactDetailFormData };
             form.initialState = {
+                ...form.initialState,
                 contactTypeId: getContectTypeId,
             }
             setFormData(form);

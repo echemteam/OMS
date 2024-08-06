@@ -1,13 +1,13 @@
-// import { AddSupplierContextProvider } from "../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import AddOrderTab from "./features/AddOrderTab";
 import "../Order.scss";
+import { AddOrderContextProvider } from "../../../utils/Order/AddOrderContext";
 
 const AddOrder = () => {
 
     return (
-        // <AddSupplierContextProvider>
+        <AddOrderContextProvider>
             <AddOrderTab />
-        // </AddSupplierContextProvider>
+        </AddOrderContextProvider>
     )
 }
 

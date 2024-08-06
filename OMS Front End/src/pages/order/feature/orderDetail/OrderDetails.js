@@ -1,40 +1,34 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { orderInformationData } from "./config/OrderInformation.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import SwalAlert from "../../../../services/swalService/SwalService";
-import { useGetAllSubCustomerByCustomerIdMutation,useLazyGetAllCustomersQuery } from "../../../../app/services/commonAPI";
-import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
+import { useGetAllSubCustomerByCustomerIdMutation, useLazyGetAllCustomersQuery } from "../../../../app/services/commonAPI";
+import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../data/appIcons";
-import Buttons from "../../../../components/ui/button/Buttons";
 import { addressFormData } from "../../../../../src/common/features/component/Address/config/AddressForm.data";
 import { useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery } from "../../../../app/services/commonAPI";
 import { AddressType } from "../../../../utils/Enums/commonEnums";
-import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import NoRecordFound from "../../../../components/ui/noRecordFound/NoRecordFound";
 import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
 import { useAddAddressMutation, useLazyGetAllAddressTypesQuery, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from "../../../../app/services/addressAPI";
-import { modifyAddressType } from "../../../../utils/TransformData/TransformAPIData";
+import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 
 const OrderDetails = () => {
   const basicInformation = useRef();
 
   const [formData, setFormData] = useState(orderInformationData);
-   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const { blocked } = SwalAlert();
-  const [getAllCustomers, { isFetching:isGetAllCustomersFetching,isSuccess: isGetAllCustomersSuccess, data: isGetAllCustomersData }] = useLazyGetAllCustomersQuery();
-  const [getAllSubCustomerByCustomerId, { isFetching:isGetAllSubCustomersFetching,isSuccess: isGetAllSubCustomersSuccess, data: isGetAllSubCustomersData }] = useGetAllSubCustomerByCustomerIdMutation();
+  const [getAllCustomers, { isFetching: isGetAllCustomersFetching, isSuccess: isGetAllCustomersSuccess, data: isGetAllCustomersData }] = useLazyGetAllCustomersQuery();
+  const [getAllSubCustomerByCustomerId, { isFetching: isGetAllSubCustomersFetching, isSuccess: isGetAllSubCustomersSuccess, data: isGetAllSubCustomersData }] = useGetAllSubCustomerByCustomerIdMutation();
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const ref = useRef();
-  const [formAddressData, setFormAddressData] = useState(addressFormData);
   const [getAddressData, setGetAddressData] = useState(null)
   const [getAddressTypeId, setGetAddressTypeId] = useState(null)
-
+  
+  const { orderCustomerId , setOrderCustomerId} = useContext(AddOrderContext);
 
   const [getAllAddressesByCustomerIdAndAddressTypeId, { isFetching: isGetAllAddressesByCustomerIdAndAddressTypeIdFetching, isSuccess: isGetAllAddressesByCustomerIdAndAddressTypeIdSuccess, data: isGetAllAddressesByCustomerIdAndAddressTypeIdData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
   const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
-
 
   useEffect(() => {
     if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
@@ -47,12 +41,14 @@ const OrderDetails = () => {
   }, [isGetAllAddressTypesSucess, allGetAllAddressTypesData]);
 
   useEffect(() => {
-    let req = {
-      customerId: 1093,
-      addressTypeId: AddressType.Shipping
+    if (orderCustomerId) {
+      let req = {
+        customerId: orderCustomerId,
+        addressTypeId: AddressType.Shipping
+      }
+      getAllAddressesByCustomerIdAndAddressTypeId(req)
     }
-    getAllAddressesByCustomerIdAndAddressTypeId(req)
-  }, [1093])
+  }, [orderCustomerId])
 
   useEffect(() => {
     getAllAddressTypes();
@@ -68,75 +64,79 @@ const OrderDetails = () => {
     setIsModelOpen(false);
   };
 
-  // const handleToggleModal = () => {
-  //   setIsModelOpen(true);
-  // };
+  const handleOrderInfoRepeatCall = () => {
+    let req = {
+      customerId: orderCustomerId,
+      addressTypeId: AddressType.Shipping
+    }
+    getAllAddressesByCustomerIdAndAddressTypeId(req)
+  };
 
   useEffect(() => {
     getAllCustomers();
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (!isGetAllCustomersFetching && isGetAllCustomersSuccess && isGetAllCustomersData) {
       const customerData = isGetAllCustomersData.map((item) => ({
         value: item.customerId,
         label: item.name,
-        date:item.createdAt,
-        status:item.statusName,
+        date: item.createdAt,
+        status: item.statusName,
         isBuyingForThirdParty: item.isBuyingForThirdParty
       }));
       console.log(customerData)
       const dropdownField = orderInformationData?.formFields?.find(item => item.dataField === "customerId");
-       
+
       dropdownField.fieldSetting.options = customerData
-    
-     // setShouldRerenderFormCreator((prevState) => !prevState);
-     }
-  }, [isGetAllCustomersFetching,isGetAllCustomersSuccess,isGetAllCustomersData]);
+
+      // setShouldRerenderFormCreator((prevState) => !prevState);
+    }
+  }, [isGetAllCustomersFetching, isGetAllCustomersSuccess, isGetAllCustomersData]);
 
   useEffect(() => {
-  debugger
     if (!isGetAllSubCustomersFetching && isGetAllSubCustomersSuccess && isGetAllSubCustomersData) {
       const subcustomerData = isGetAllSubCustomersData.map((item) => ({
         value: item.subCustomerMainCustomerId,
         label: item.subCustomerName,
-         date:item.createdAt,
-         status:item.statusName
+        date: item.createdAt,
+        status: item.statusName
       }));
       const dropdownField = orderInformationData?.formFields?.find(item => item.dataField === "subCustomerMainCustomerId");
 
       dropdownField.fieldSetting.options = subcustomerData;
-    //setShouldRerenderFormCreator((prevState) => !prevState);
+      //setShouldRerenderFormCreator((prevState) => !prevState);
     }
-  },  [isGetAllSubCustomersFetching,isGetAllSubCustomersSuccess,isGetAllSubCustomersData]);
+  }, [isGetAllSubCustomersFetching, isGetAllSubCustomersSuccess, isGetAllSubCustomersData]);
 
 
-  useEffect(()=>{
-   
+  useEffect(() => {
+
     let newFrom = { ...orderInformationData };
-    newFrom.formFields = newFrom.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId" );
+    newFrom.formFields = newFrom.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId");
     setFormData(newFrom);
 
-  },[])
- 
+  }, [])
+
 
   const handleChangeDropdownList = (data, dataField) => {
     if (dataField === "customerId") {
       if (data.isBuyingForThirdParty === true) {
         getAllSubCustomerByCustomerId(data.value);
-       const manageData = { ...formData };
+        setOrderCustomerId(data.value)
+        const manageData = { ...formData };
         let filteredFormFields;
         filteredFormFields = orderInformationData.formFields
         manageData.formFields = filteredFormFields;
         setFormData(manageData)
         basicInformation.current.updateFormFieldValue({
           customerId: data.value,
-          subCustomerMainCustomerId:null
-      });
-      setFormData(manageData);
+          subCustomerMainCustomerId: null
+        });
+        setFormData(manageData);
       }
-   }
-   
+    }
+
     const blockedOptionValue = "blocked";
 
     if (data.status === blockedOptionValue) {
@@ -151,7 +151,7 @@ const OrderDetails = () => {
         }
       });
     }
-    if (data.value) {
+    if (data.value && dataField === "addressId") {
       const finalData = isGetAllAddressesByCustomerIdAndAddressTypeIdData?.filter((item) => item.addressId === data.value);
       setGetAddressData(finalData.length ? finalData[0] : null);
     }
@@ -175,7 +175,6 @@ const OrderDetails = () => {
           config={formData}
           ref={basicInformation}
           {...formData}
-           key={shouldRerenderFormCreator}
           onActionChange={formActionHandler}
           handleInputGroupButton={handleInputGroupButton}
         />
@@ -203,11 +202,11 @@ const OrderDetails = () => {
         </div>
       </div>
 
-      <Buttons
+      {/* <Buttons
         buttonTypeClassName="theme-button"
         buttonText="Cancel"
       // onClick={handleToggleModal}
-      />
+      /> */}
 
       <SidebarModel
         modalTitle="Add/Edit Address"
@@ -236,6 +235,8 @@ const OrderDetails = () => {
           getAddresssById={useLazyGetCustomerAddresssByAddressIdQuery}
           onSidebarClose={onSidebarClose}
           getAddressTypeIdOrder={getAddressTypeId}
+          orderCustomerId={orderCustomerId}
+          onHandleOrderInfoRepeatCall={handleOrderInfoRepeatCall}
         />
       </SidebarModel>
     </>

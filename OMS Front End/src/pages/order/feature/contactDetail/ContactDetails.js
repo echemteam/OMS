@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { contactInformationData } from "./config/ContactDetail.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery } from '../../../../app/services/commonAPI';
@@ -11,6 +11,7 @@ import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetCu
 import { contactDetailFormData } from "../../../../common/features/component/Contact/config/ContactDetailForm.data";
 import { modifyContactType } from "../../../../utils/TransformData/TransformAPIData";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 
 
 const ContactDetails = (props) => {
@@ -19,6 +20,8 @@ const ContactDetails = (props) => {
   // const [isSidebarModal, setIsSidebarModal] = useState(null)
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [getContectTypeId, setContactTypeId] = useState(null)
+
+  const { orderCustomerId } = useContext(AddOrderContext);
 
   const [
     getAllContactTypes,
@@ -30,28 +33,34 @@ const ContactDetails = (props) => {
   const [getAllPurchasingId, { isFetching: isGetAllPurchasingFetching, isSuccess: isgetAllPurchasingSuccess, data: isgetAllPurchasingData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
 
   useEffect(() => {
-    let req = {
-      customerId: 1093,
-      contactTypeId: ContactType.EndUser
+    if (orderCustomerId) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.EndUser
+      }
+      getAllEndUserId(req)
     }
-    getAllEndUserId(req)
-  }, [])
+  }, [orderCustomerId])
 
   useEffect(() => {
-    let req = {
-      customerId: 1093,
-      contactTypeId: ContactType.InvoiceSubmission
+    if (orderCustomerId) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.InvoiceSubmission
+      }
+      getAllInvoiceSubmissionId(req)
     }
-    getAllInvoiceSubmissionId(req)
-  }, [])
+  }, [orderCustomerId])
 
   useEffect(() => {
-    let req = {
-      customerId: 1093,
-      contactTypeId: ContactType.Purchasing
+    if (orderCustomerId) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.Purchasing
+      }
+      getAllPurchasingId(req)
     }
-    getAllPurchasingId(req)
-  }, [])
+  }, [orderCustomerId])
 
   useEffect(() => {
     if (!isGetAllEndUserFetching && isgetAllEndUserSuccess && isgetAllEndUserData) {
@@ -69,12 +78,27 @@ const ContactDetails = (props) => {
     }
   }, [isGetAllPurchasingFetching, isgetAllPurchasingSuccess, isgetAllPurchasingData])
 
-  const handleDropdownApiCall = () => {
-    let req = {
-      customerId: 1093,
-      contactTypeId: ContactType.EndUser
+  const handleDropdownApiCall = (data) => {
+    debugger
+    if (data === 2) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.EndUser
+      }
+      getAllEndUserId(req)
+    } else if (data === 3) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.Purchasing
+      }
+      getAllPurchasingId(req)
+    } else if (data === 4) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.InvoiceSubmission
+      }
+      getAllInvoiceSubmissionId(req)
     }
-    // getAllContactsByCustomerIdAndContactTypeId(req)
   }
 
   useEffect(() => {
@@ -224,7 +248,7 @@ const ContactDetails = (props) => {
             isOpen={isModelOpen}
             getContactById={useLazyGetCustomerContactByContactIdQuery}
             getContectTypeId={getContectTypeId}
-            customerId={1093}
+            customerId={orderCustomerId}
             onhandleApiCall={handleDropdownApiCall}
           />
         </SidebarModel>
