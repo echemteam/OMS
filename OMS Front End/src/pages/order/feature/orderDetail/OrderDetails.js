@@ -79,7 +79,7 @@ const OrderDetails = () => {
  
 
   const handleChangeDropdownList = (data, dataField) => {
-    if (dataField === "customerId") {
+        if (dataField === "customerId") {
       if (data.isBuyingForThirdParty === true) {
         getAllSubCustomerByCustomerId(data.value);
        const manageData = { ...formData };
@@ -91,7 +91,6 @@ const OrderDetails = () => {
           customerId: data.value,
           subCustomerMainCustomerId:null
       });
-      setFormData(manageData);
       }
    }
    
