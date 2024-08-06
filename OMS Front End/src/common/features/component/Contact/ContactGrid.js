@@ -328,6 +328,7 @@ const ContactGrid = ({
         >
           {/* Add-Edit Contact */}
           <AddEditContact
+            isOrderManage={false}
             isSupplier={isSupplier}
             onSidebarClose={onSidebarClose}
             childRef={childRef}
@@ -341,6 +342,7 @@ const ContactGrid = ({
             isEditablePage={isEditablePage}
             isOpen={isModelOpen}
             getContactById={getContactById}
+            getContectTypeId={null}
           />
         </SidebarModel>
       </div>

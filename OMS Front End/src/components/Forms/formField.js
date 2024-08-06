@@ -254,6 +254,7 @@ const FormFields = ({
               overRideProps={overRideProps?.[field.dataField]}
               isRequired={isRequired}
               inputButtonGroup={field.inputButtonGroup}
+              handleInputGroupButton={handleInputGroupButton}
               {...field.fieldSetting}
             />
           </div>
@@ -398,6 +399,7 @@ const FormFields = ({
               isRequired={isRequired}
               dropDownSettings={field.dropdownSettings}
               inputButtonGroup={field.inputButtonGroup}
+              handleInputGroupButton={handleInputGroupButton}
               {...field.fieldSetting}
             />
           </div>

@@ -97,7 +97,7 @@ const EventMappingList = (props) => {
 
     return (
         <div className="row">
-            <div className="col-md-12 table-striped api-provider">
+            <div className="col-md-12 table-striped api-provider pagination-none">
                 <MolGrid
                     ref={molGridRef}
                     configuration={AddEditMappingConfigurationData}

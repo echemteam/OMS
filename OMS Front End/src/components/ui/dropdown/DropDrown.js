@@ -12,6 +12,8 @@ const DropDown = (props) => {
   const defaultSelectedOptionMultiSelect = Array.isArray(props.value) ?
     props.options.filter(option => props.value.includes(option.value)) : [];
 
+  console.log("props" , props)
+
   return (
     <>
       <span className="d-inline-block custom-input">
@@ -24,6 +26,7 @@ const DropDown = (props) => {
           handleDropdownBlur={props.onBlur}
           isDropdownDisabled={props.isDisabled}
           inputButtonGroup={props.inputButtonGroup}
+          handleInputGroupButton={props.handleInputGroupButton}
         />
       </span>
     </>
