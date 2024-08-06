@@ -40,6 +40,7 @@ const commonAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+
         updateResponsibleUser: builder.mutation({
             query: (requestData) => ({
                 url: '/Common/UpdateResponsibleUser',
@@ -58,12 +59,39 @@ const commonAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getAllCustomers: builder.query({
+            query: () => ({
+                url: `/Common/GetAllCustomers`,
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getAllSubCustomerByCustomerId: builder.mutation({
+            query: (id) => ({
+                url: `/Common/GetAllSubCustomerByCustomerId?customerId=${(id)}`,
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getAllContactsByCustomerIdAndContactTypeId: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Common/GetAllContactsByCustomerIdAndContactTypeId/?customerId=${data.customerId}&contactTypeId=${data.contactTypeId}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
     })
 })
 
 export const {
     useGetAllDeliveryCarriersQuery, useGetAllDeliveryMethodsQuery, useLazyGetAllDeliveryAccountsQuery, useLazyGetAllUserQuery,
-    useUpdateResponsibleUserMutation, useAddApprovalRequestsMutation
+    useUpdateResponsibleUserMutation, useAddApprovalRequestsMutation,
+    useUpdateResponsibleUserMutation,useLazyGetAllCustomersQuery,useGetAllSubCustomerByCustomerIdMutation
+    , useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery,
 } = commonAPI
 
 export default commonAPI;

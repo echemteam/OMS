@@ -60,7 +60,7 @@ export const AddEditMappingConfigurationData = {
         {
             name: "Provider",
             fieldName: "providerName",
-            width: "20%",
+            width: "30%",
             allowShort: true,
         },
         {
@@ -72,7 +72,7 @@ export const AddEditMappingConfigurationData = {
         {
             name: "Description",
             fieldName: "description",
-            width: "40%",
+            width: "30%",
             allowShort: true,
         },
         {

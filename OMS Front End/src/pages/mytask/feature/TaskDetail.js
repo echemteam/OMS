@@ -8,6 +8,7 @@ import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
 import { getLabelClass } from "../../../utils/StatusColors/StatusColors";
 import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
 import { encryptUrlData } from "../../../services/CryptoService";
+import DataLoader from "../../../components/ui/dataLoader/DataLoader";
 
 const parseJson = (jsonStr) => {
   try {
@@ -42,9 +43,13 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
 
 const formatBoolean = (value) => (value ? "True" : "False");
 
-const TaskDetail = ({ approvedData }) => {
+const TaskDetail = ({ approvedData, isFetching }) => {
 
   const navigate = useNavigate();
+
+  if (isFetching) {
+    return <DataLoader />; // Display loader while loading
+  }
 
   if (!approvedData) {
     return <div><NoRecordFound /></div>;
