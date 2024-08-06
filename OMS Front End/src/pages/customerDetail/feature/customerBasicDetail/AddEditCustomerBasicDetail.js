@@ -190,8 +190,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 territoryId: data.territoryId && typeof data.territoryId === "object" ? data.territoryId.value : data.territoryId,
                 countryId: data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId,
                 responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
-                customerId: keyId || customerId,
-                customerNoteId: noteId || 0
+                customerId: keyId ? keyId : customerId,
+                customerNoteId: noteId ? noteId : 0
             };
 
             if (data.taxId === "") {
@@ -210,7 +210,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 }
             } else {
                 if (data.taxId) {
-                    const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId || 0, customerbasicData.formFields, 'taxId');
+                    const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, customerbasicData.formFields, 'taxId');
                     if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
                         let value = {
                             ...req,
