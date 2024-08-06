@@ -99,7 +99,7 @@ const commonAPI = createApi({
 export const {
     useGetAllDeliveryCarriersQuery, useGetAllDeliveryMethodsQuery, useLazyGetAllDeliveryAccountsQuery, useLazyGetAllUserQuery,
     useUpdateResponsibleUserMutation,useLazyGetAllCustomersQuery,useGetAllSubCustomerByCustomerIdMutation
-    , useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery
+    , useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery,useAddApprovalRequestsMutation
 } = commonAPI
 
 export default commonAPI;
