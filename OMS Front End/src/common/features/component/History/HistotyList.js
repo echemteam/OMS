@@ -288,8 +288,8 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
                             <div className="new-timeline-sec">
                                 <ol className="timeline">
                                     {historyData.length > 0 ? (
-                                        historyData.map((item, index) => (
-                                            <li className="timeline-item" key={index}>
+                                        historyData.map((item) => (
+                                            <li className="timeline-item" key={item.customerAuditHistoryId}>
                                                 <span className="timeline-item-icon">
                                                     {item.eventStatus === "Insert" ? (
                                                         <>

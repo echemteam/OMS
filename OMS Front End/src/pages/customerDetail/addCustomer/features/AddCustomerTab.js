@@ -82,9 +82,7 @@ const AddCustomerTab = () => {
     },
   ];
 
-  // const handleTabClick = (index) => {
-  //   setActiveTab(index);
-  // };
+ 
 
   const handleSubmit = () => {
     let req = {

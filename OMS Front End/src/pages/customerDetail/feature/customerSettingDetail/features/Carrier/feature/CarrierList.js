@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import FinalMolGrid from "../../../../../../../components/FinalMolGrid/FinalMolGrid";
-// import MolGrid from "../../../../../../../components/Grid/MolGrid";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import { AccountGridConfig } from "../config/CarrierConfig";
@@ -47,7 +46,7 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
         <div className="first-card">
             <CardSection
                 cardTitle="Carrier Details"
-                rightButton={isShowButton ? true : false}
+                rightButton={isShowButton}
                 buttonClassName="theme-button "
                 buttonText="Add"
                 textWithIcon={true}

@@ -183,8 +183,8 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
                                     Object.entries(documentListData).map(([type, items], index) => (
                                         <React.Fragment key={index}>
                                             <div className="col-xl-4 col-lg-4 col-md-4 col-12">
-                                                {items.map((data, childIndex) => (
-                                                    <div className="documents" key={childIndex}>
+                                                {items.map((data ) => (
+                                                    <div className="documents" key={data.customerDocumentId}>
                                                         <div className="left-icons">
                                                             <Image imagePath={data.documentIcon} alt="Document Icon" />
                                                         </div>

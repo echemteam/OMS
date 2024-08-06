@@ -13,7 +13,6 @@ import SupplierBasicDetail from "../../feature/supplierBasicDetail/SupplierBasic
 import SuplierAddressDetails from "../../feature/supplierAddressDetail/SupplierAddressDetails";
 import SupplierContactDetail from "../../feature/supplierContactDetail/SupplierContactDetail";
 import SupplierDocumentDetail from "../../feature/supplierDocumentDetail/SupplierDocumentDetail";
-// import SupplierSettingDetail from "../../feature/financialSettings/FinancialSettings";
 
 const AddSupplierTab = () => {
   const navigate = useNavigate();
@@ -63,10 +62,6 @@ const AddSupplierTab = () => {
       navigate("/Suppliers");
     }
   }, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
-
-  // const handleTabClick = (index) => {
-  //   setActiveTab(index);
-  // };
 
   const handleSubmit = () => {
     let req = {

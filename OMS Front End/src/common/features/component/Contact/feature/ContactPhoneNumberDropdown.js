@@ -70,8 +70,8 @@ const ContactPhoneNumberDropdown = ({  phoneNumberList,isOptionsOpen }) => {
       </div>
       {isOptionsOpen ? 
       <>
-     {phoneNumbers.map((phoneData, index) => (
-              <span className="contact-list d-flex flex-row" key={index}>
+     {phoneNumbers.map((phoneData) => (
+              <span className="contact-list d-flex flex-row" key={phoneData.id}>
                 <span className="number-list">
                   {phoneTypesIcon(phoneData?.phoneTypeId)}
                   <span className="">

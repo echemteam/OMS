@@ -128,8 +128,8 @@ const AddressDetailCard = forwardRef(
           <div className="address-card-section">
             <div className="add-desc-part">
               <div className="address-card-list">
-                {addressData.map((address, addrIndex) => (
-                  <div className="address-main-card-section" key={addrIndex}>
+                {addressData.map((address) => (
+                  <div className="address-main-card-section" key={address.addressId}>
                     <div className="address-card">
                       {((address.isPreferredBilling &&
                         address.addressTypeId === 1) ||

@@ -63,8 +63,7 @@ const AddEditThirdPartyApiConfiguration = (props) => {
       <FormCreator
         config={addEditeThirdData}
         ref={addEditThirdRef}
-      // key={shouldRerenderFormCreator}
-      // onActionChange={formActionHandler}
+    
       />
       <div className="col-md-12 mt-2">
         <div className="d-flex align-item-end justify-content-end">

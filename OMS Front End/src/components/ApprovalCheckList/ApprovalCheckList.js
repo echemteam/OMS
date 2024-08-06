@@ -76,9 +76,9 @@ const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSucces
                 onClose={onSidebarClose} modalTitleIcon={AppIcons.AddIcon} isOpen={isModelOpen} >
                 {!isGetCheckListFetching ?
                     <React.Fragment>
-                        {checkListData.map((item, mainIndex) => (
+                        {checkListData.map((item) => (
                             <div className="checklist-section">
-                                <div className="row mt-3" key={mainIndex}>
+                                <div className="row mt-3" key={item.id}>
                                     <div className="col-12 main-check-title mb-2">
                                         <CheckListItem itemList={item} handleCheckChange={handleCheckChange} />
                                     </div>
@@ -86,7 +86,7 @@ const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSucces
                                         <div className="sub-checklist">
                                             <div className="row">
                                                 {item.checkListRequest.map((childItem, subIndex) => (
-                                                    <div className="col-12 sub-check-list mb-2" key={subIndex}>
+                                                    <div className="col-12 sub-check-list mb-2" key={childItem.checklistItemId  }>
                                                         <CheckListItem itemList={childItem} handleCheckChange={handleCheckChange} checkItemListId={childItem.checklistItemId} />
                                                     </div>
                                                 ))}

@@ -25,7 +25,7 @@ const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow }) => {
       <ContactGrid
         isSupplier={false}
         isEditablePage={isEditablePage}
-        keyId={customerId ? customerId : 0}
+        keyId={customerId || 0}
         isSearchFilterShow={isSearchFilterShow}
         getContactByKeyId={useLazyGetContactByCustomerIdQuery}
         addEditContactMutation={useAddEditContactMutation}
