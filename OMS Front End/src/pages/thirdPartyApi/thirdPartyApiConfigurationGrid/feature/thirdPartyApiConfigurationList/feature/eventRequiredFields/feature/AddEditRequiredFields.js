@@ -17,7 +17,7 @@ const AddEditRequiredFields = (props) => {
     if (isAddEditApiEventRequiredFieldSuccess && allAddEditApiEventRequiredFieldData) {
       if (allAddEditApiEventRequiredFieldData.errorMessage.includes("exists")) {
         ToastService.warning(allAddEditApiEventRequiredFieldData.errorMessage);
-        // handleResetAndClose();
+      
         return;
       }
       ToastService.success(allAddEditApiEventRequiredFieldData.errorMessage);
