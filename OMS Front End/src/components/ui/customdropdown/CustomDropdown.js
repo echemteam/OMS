@@ -2,6 +2,7 @@ import React from "react";
 import Select, { components } from "react-select";
 import "./CustomDropdown.scss";
 import StatusDisplay from "./StatusDisplay";
+import formatDate from "../../../lib/formatDate";
 
 const CustomOption = (props) => {
   const { data, isSelected, selectProps } = props;
@@ -12,7 +13,7 @@ const CustomOption = (props) => {
     <components.Option {...props}>
       <div className="custom-option">
         <span className="option-label">{label}</span>
-        <span className="option-date">{date}</span>
+        <span className="option-date">{date ? formatDate(date, 'MM/DD/YYYY') : null}</span>
         <StatusDisplay
           status={status}
           isSelected={isSelected}

@@ -8,12 +8,16 @@ const StatusDisplay = ({ status, isSelected, colorMap, textMap, iconMap }) => {
 
   return (
     <div className="status-container">
-      <span className="status-icon" style={{ color }}>
-        <img src={iconSrc} alt={status} className="status-image" />
-      </span>
-      <span className="status-text" style={{ color }}>
-        {text}
-      </span>
+      {iconSrc && (
+        <span className="status-icon" style={{ color }}>
+          <img src={iconSrc} alt={status} className="status-image" />
+        </span>
+      )}
+      {text && (
+        <span className="status-text" style={{ color }}>
+          {text}
+        </span>
+      )}
     </div>
   );
 };

@@ -85,7 +85,7 @@ const OrderDetails = () => {
         status: item.statusName,
         isBuyingForThirdParty: item.isBuyingForThirdParty
       }));
-      const dropdownField = orderInformationData?.formFields?.find(item => item.dataField === "customerId");
+      const dropdownField = formData?.formFields?.find(item => item.dataField === "customerId");
 
       dropdownField.fieldSetting.options = customerData
 
@@ -96,25 +96,22 @@ const OrderDetails = () => {
   useEffect(() => {
     if (!isGetAllSubCustomersFetching && isGetAllSubCustomersSuccess && isGetAllSubCustomersData) {
       const subcustomerData = isGetAllSubCustomersData.map((item) => ({
-        value: item.subCustomerMainCustomerId,
+        value: item.subCustomerId,
         label: item.subCustomerName,
         date: item.createdAt,
         status: item.statusName
       }));
-      const dropdownField = orderInformationData?.formFields?.find(item => item.dataField === "subCustomerMainCustomerId");
+      const dropdownField = formData?.formFields?.find(item => item.dataField === "subCustomerMainCustomerId");
 
       dropdownField.fieldSetting.options = subcustomerData;
-      //setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetAllSubCustomersFetching, isGetAllSubCustomersSuccess, isGetAllSubCustomersData]);
 
 
   useEffect(() => {
-
-    let newFrom = { ...orderInformationData };
+    let newFrom = { ...formData };
     newFrom.formFields = newFrom.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId");
     setFormData(newFrom);
-
   }, [])
 
 
@@ -122,7 +119,6 @@ const OrderDetails = () => {
     if (dataField === "customerId") {
       if (data.isBuyingForThirdParty === true) {
         getAllSubCustomerByCustomerId(data.value);
-        setOrderCustomerId(data.value)
         const manageData = { ...formData };
         let filteredFormFields;
         filteredFormFields = orderInformationData.formFields
@@ -135,7 +131,7 @@ const OrderDetails = () => {
       }
     }
 
-    const blockedOptionValue = "blocked";
+    const blockedOptionValue = "Blocked";
 
     if (data.status === blockedOptionValue) {
       blocked(
