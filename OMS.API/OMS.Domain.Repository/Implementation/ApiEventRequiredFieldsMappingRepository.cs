@@ -1,4 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Request.ApiEventRequiredFieldsMapping;
+using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.Entity.ApiEventRequiredFieldsMapping;
@@ -19,6 +20,7 @@ namespace OMS.Domain.Repository.Implementation
         const string DELETEAPIEVENTREQUIREDFIELDSMAPPING = "DeleteApiEventRequiredFieldsMapping";
         const string GETALLAPIPARAMETERSBYENDPOINTID = "GetAllAPIParametersByEndpointId";
         const string GETALLREQUIREDFIELDSBYEVENTID = "GetAllRequiredFieldsByEventId";
+        const string GETALLEVENTPARAMETERBYEVENTID = "GetAllEventParameterByEventId";
         #endregion
 
         public ApiEventRequiredFieldsMappingRepository(DapperContext dapperContext) : base(dapperContext)
@@ -69,6 +71,14 @@ namespace OMS.Domain.Repository.Implementation
         public async Task<List<GetAllRequiredFieldsResponse>> GetAllRequiredFieldsByEventId(int apiEventId)
         {
             return await _context.GetList<GetAllRequiredFieldsResponse>(GETALLREQUIREDFIELDSBYEVENTID, new
+            {
+                apiEventId
+            }, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllEventParameterResponse>> GetAllEventParameterByEventId(int apiEventId)
+        {
+            return await _context.GetList<GetAllEventParameterResponse>(GETALLEVENTPARAMETERBYEVENTID, new
             {
                 apiEventId
             }, commandType: CommandType.StoredProcedure);

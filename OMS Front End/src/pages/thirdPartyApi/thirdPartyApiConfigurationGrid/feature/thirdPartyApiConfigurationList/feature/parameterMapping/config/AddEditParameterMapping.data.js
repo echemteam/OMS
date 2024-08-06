@@ -3,16 +3,31 @@ import { GridColumnType } from "../../../../../../../../data/gridColumnType";
 
 export const AddEditParameterMappingData = {
     // name: "Email From"
-    initialState: { parameterId: "" },
+    initialState: { eventParameterId: "", providerParameterId: "" },
     formFields: [
         {
-            id: "parameterId",
-            lable: "Parameter ",
-            Field_Name: "Parameter",
+            id: "eventParameterId",
+            lable: "Event Parameters",
+            Field_Name: "eventParameterId",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "parameterId",
+            dataField: "eventParameterId",
             fieldSetting: {
-                placeholder: "Select Parameter",
+                placeholder: "Select Event Parameters",
+                isEnableOnChange: true,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
+            },
+        },
+        {
+            id: "providerParameterId",
+            lable: "Provider Parameters",
+            Field_Name: "providerParameterId",
+            fieldType: FormFieldTypes.SELECT,
+            dataField: "providerParameterId",
+            fieldSetting: {
+                placeholder: "Select Provider Parameters",
                 isEnableOnChange: true,
             },
             validation: [{ type: "require" }],
@@ -30,14 +45,14 @@ export const AddEditParameterMappingData = {
 export const AddEditParameterMappingConfigurationData = {
     columns: [
         {
-            name: "Parameter",
-            fieldName: "parameterName",
+            name: "Event Parameter",
+            fieldName: "eventParameterName",
             width: "40%",
             allowShort: true,
         },
         {
-            name: "DataType",
-            fieldName: "dataType",
+            name: "Provider Parameter",
+            fieldName: "providerParameterName",
             width: "40%",
             allowShort: true,
         },

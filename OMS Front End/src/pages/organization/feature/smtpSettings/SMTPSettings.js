@@ -1,12 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
-import PropTypes from 'prop-types';
 import { SMTPSettingsData } from './config/SMTPSettings.data';
 import FormCreator from '../../../../components/Forms/FormCreator';
 import Buttons from '../../../../components/ui/button/Buttons';
 import { useAddEditSmtpSettingsMutation, useLazyGetSmtpSettingsQuery } from '../../../../app/services/organizationAPI';
 import ToastService from '../../../../services/toastService/ToastService';
-import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 import { decryptUrlData, encryptAES } from '../../../../services/CryptoService';
 
 const SMTPSettings = () => {
@@ -27,15 +25,16 @@ const SMTPSettings = () => {
       }, [isAddEditSmtpSettingSuccess, isAddEditSmtpSettingData]);
 
     const handleAddEditSmtpSettings = () => {
+   
         let data = smtpRef.current.getFormData();
-        if (data) {
+        if(data){
             let request = {
                 ...data,
-                emailProvider: encryptAES(data.emailProvider),
-                smtpServer: encryptAES(data.smtpServer),
-                smtpUserName: encryptAES(data.smtpUserName),
-                smtpPassword: encryptAES(data.smtpPassword),
-                smtpSettingId: data.smtpSettingId ? data.smtpSettingId : data.smtpSettingId
+                emailProvider: encryptAES(data?.emailProvider),
+                smtpServer: encryptAES(data?.smtpServer),
+                smtpUserName: encryptAES(data?.smtpUserName),
+                smtpPassword: encryptAES(data?.smtpPassword),
+                smtpSettingId: data?.smtpSettingId ? data.smtpSettingId : 0
             }
                 addEditSmtpSetting(request)
         }
@@ -84,11 +83,5 @@ const SMTPSettings = () => {
     )
 }
 
-SMTPSettings.propTypes = {
-    activeTabId: PropTypes.number.isRequired,
-    organizationId: PropTypes.number,
-    smtpSettingId: PropTypes.number,
-    onHandleSmtp: PropTypes.func.isRequired
-};
 
 export default SMTPSettings

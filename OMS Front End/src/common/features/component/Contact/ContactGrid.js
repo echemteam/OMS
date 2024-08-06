@@ -92,11 +92,6 @@ const ContactGrid = ({
     }
   }, [isGetAllContactTypesSucess, allGetAllContactTypesData]);
 
-  // useEffect(() => {
-  //   if (search === "") {
-  //     onGetContactList();
-  //   }
-  // }, [search]);
 
   //** Handle Change's */
   const handleChange = (event) => {
@@ -286,17 +281,17 @@ const ContactGrid = ({
         cardTitle={isSearchFilterShow ? "" : "Contact"}
         handleChange={handleChange}
         searchInputName="Search By Name and Email"
-        searchInput={isSearchFilterShow ? true : false}
+        searchInput={isSearchFilterShow }
         buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
-        rightButton={buttonVisible ? true : false}
+        rightButton={buttonVisible }
         buttonText="Add"
         titleButtonClick={handleToggleModal}
-        clearButton={isSearchFilterShow ? true : false}
+        clearButton={isSearchFilterShow }
         clearTitleButtonClick={onhandleClear}
         clearButtonText="Clear"
-        searchButton={isSearchFilterShow ? true : false}
+        searchButton={isSearchFilterShow }
         searchbuttonText="Search"
         searchTitleButtonClick={onhandleSearch}
         searchFilter={false}
@@ -328,6 +323,7 @@ const ContactGrid = ({
         >
           {/* Add-Edit Contact */}
           <AddEditContact
+            isOrderManage={false}
             isSupplier={isSupplier}
             onSidebarClose={onSidebarClose}
             childRef={childRef}
@@ -341,6 +337,7 @@ const ContactGrid = ({
             isEditablePage={isEditablePage}
             isOpen={isModelOpen}
             getContactById={getContactById}
+            getContectTypeId={null}
           />
         </SidebarModel>
       </div>

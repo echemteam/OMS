@@ -3,7 +3,7 @@ import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
 import { OrderTabEnum } from "../../../../utils/Enums/commonEnums";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
-import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
+// import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
 
 const ContactDetails = React.lazy(() =>
   import("../../feature/contactDetail/ContactDetails")
@@ -18,7 +18,7 @@ const OrderItemDetail = React.lazy(() =>
 const AddOrderTab = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [editMode, setEditMode] = useState(false); 
+  const [editMode, setEditMode] = useState(false);
   // const [editRef, setEditRef] = useState(null);
   // const [keyId, setKeyId] = useState(null); 
   // const [isButtonDisable, setIsButtonDisable] = useState(false); 
@@ -148,7 +148,7 @@ const AddOrderTab = () => {
                   onClose={onSidebarClose}
                   modalTitleIcon={AppIcons.AddIcon}
                   isOpen={isModelOpen}
-                >     
+                >
                 </SidebarModel>
               </div>
 

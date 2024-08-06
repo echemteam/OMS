@@ -50,3 +50,10 @@ OMS.API/OMS.FileManger.Services/bin/Release/net8.0/*
 OMS.API/OMS.Framework/bin/Release/net8.0/*
 OMS.API/.sonarqube/*
 OMS Front End/.scannerwork/*
+OMS.ThirdPartyAPIIntegrator/ThirdPartyAPITester/bin/*
+OMS.ThirdPartyAPIIntegrator/ThirdPartyAPITester/Properties/*
+OMS.ThirdPartyAPIIntegrator/.vs/ProjectEvaluation/*
+OMS.ThirdPartyAPIIntegrator/.vs/ThirdPartyAPITester/DesignTimeBuild/.dtbcache.v2
+OMS.ThirdPartyAPIIntegrator/.vs/ThirdPartyAPITester/FileContentIndex/*
+OMS.ThirdPartyAPIIntegrator/.vs/ThirdPartyAPITester/v17/*
+OMS.ThirdPartyAPIIntegrator/ThirdPartyAPITester/obj/*

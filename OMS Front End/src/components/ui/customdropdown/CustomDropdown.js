@@ -26,8 +26,10 @@ const CustomOption = (props) => {
 };
 
 function CustomDropdown(props) {
-  const { dropDownSettings, inputButtonGroup } = props;
+  const { dropDownSettings, inputButtonGroup, handleInputGroupButton } = props;
   const base64Icon = inputButtonGroup?.icon;
+
+  console.log(props.handleInputGroupButton);
 
   return (
     <span className="d-inline-block custom-input">
@@ -50,7 +52,7 @@ function CustomDropdown(props) {
           className="select-button"
           disabled={!props.value}
           type="button"
-          onClick={inputButtonGroup.handleInputGroupButton}
+          onClick={props.handleInputGroupButton}
         >
           {base64Icon && (
             <img

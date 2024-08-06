@@ -41,5 +41,8 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllApiEventRequiredFieldByApiEventIdResponse>> GetAllApiEventRequiredFieldByApiEventId(int apiEventId);
         Task<List<GetAllCustomerResponse>> GetAllCustomers();
         Task<List<GetAllSubCustomerByCustomerIdResponse>> GetAllSubCustomerByCustomerId(int customerId);
+        Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId);
+        Task<List<GetAllContactsByCustomerIdAndContactTypeIdResponse>> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId);
+
     }
 }

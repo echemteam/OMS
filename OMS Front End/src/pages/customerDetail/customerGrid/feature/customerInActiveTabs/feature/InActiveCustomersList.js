@@ -126,21 +126,9 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
     getCustomers(request);
   };
 
-  // useEffect(() => {
-  //   if (molGridRef.current) {
-  //     const currentPageObject = molGridRef.current.getCurrentPageObject();
-  //     getListApi(currentPageObject);
-  //   }
-  // }, [search , selectedStatusOptions]);
-
-  // const approvalCheckList = (data) => {
-  //   if (childRef.current) {
-  //     childRef.current.callChildFunction(data.customerId);
-  //   }
-  // }
 
   const handleUnfreeze = (data) => {
-    // approvalCheckList(data);
+
     confirm(
       "Warning?",
       `Are you sure you want to unfreeze and change the status to approved?`,
@@ -158,7 +146,7 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
   }
 
   const handleUnBlock = (data) => {
-    // approvalCheckList(data);
+    
     confirm(
       "Warning?",
       `Are you sure you want to unblock and change the status to approved?`,
@@ -198,7 +186,7 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
             searchInput={true}
             handleChange={handleChange}
             searchInputName="Search By Customer Name, Tax Id , Email Address"
-            searchFilter={searchStatusFilter ? true : false}
+            searchFilter={searchStatusFilter}
             handleChangeDropdown={handleChangeDropdown}
             selectedOptions={selectedDrpvalues}
             optionsValue={statusOptions}

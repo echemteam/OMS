@@ -5,6 +5,7 @@ import ParameterMapping from '../parameterMapping/ParameterMapping';
 import EventRequiredFields from '../eventRequiredFields/EventRequiredFields';
 import RequiredFieldsMapping from '../requiredFieldsMapping/RequiredFieldsMapping';
 import EventParamter from '../eventParamter/EventParamter';
+// import CardSection from '../../../../../../../components/ui/card/CardSection';
 
 const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
 
@@ -72,9 +73,15 @@ const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
         },
     ];
     return (
+        // <CardSection
+        //     cardTitle="Address"
+        //     buttonClassName="theme-button"
+
+        // >
         <div className='vertical-tab-inner'>
-            <RenderTabs tabs={tabs} />
+            <RenderTabs tabs={tabs} isCollapse={true} />
         </div>
+        // </CardSection>
     )
 }
 

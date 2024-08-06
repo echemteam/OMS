@@ -5,18 +5,21 @@ import { setDropDownOptionField } from '../../../../../../../../utils/FormFields
 import Buttons from '../../../../../../../../components/ui/button/Buttons';
 import FormCreator from '../../../../../../../../components/Forms/FormCreator';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
-import { useAddApiParameterMappingMutation, useLazyGetAllAPIParametersByEndpointIdQuery, useLazyGetAllAPIParametersQuery, useLazyGetAllApiEventParameterByApiEventIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
+import { useAddApiParameterMappingMutation, useLazyGetAllAPIParametersByEndpointIdQuery, useLazyGetAllAPIParametersQuery, useLazyGetAllApiEventParameterByApiEventIdQuery, useLazyGetAllEventParameterByEventIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
 
 const AddEditParameterMapping = (props) => {
 
   const addEditParameterMappingRef = useRef();
   const [addEditParameterMappingData, setAddEditParameterMappingData] = useState(AddEditParameterMappingData)
   const [getParametersByEndPointId, { isSuccess: isGetParametersSucess, data: isGetParametersData }] = useLazyGetAllAPIParametersByEndpointIdQuery();
+  const [getEventParameterByEventId, { isSuccess: isGetEventParametersSucess, data: isGetEventParametersData }] = useLazyGetAllEventParameterByEventIdQuery();
   const [addApiParameterMapping, { isLoading: isAddApiParameterMappingLoading, isSuccess: isAddApiParameterMappingSuccess, data: allAddApiParameterMappingData, },] = useAddApiParameterMappingMutation();
   // const [getAllApiEventParameterByApiEventId, { isSuccess: isGetAllApiEventParameterByApiEventIdSucess, data: allGetAllApiEventParameterByApiEventIdData }] = useLazyGetAllApiEventParameterByApiEventIdQuery();
 
   useEffect(() => {
     props.endpointId && getParametersByEndPointId(props.endpointId)
+    props.keyId && getEventParameterByEventId(props.keyId);
+    console.log(props.endpointId);
     // getAllApiEventParameterByApiEventId(props.keyId);
   }, [])
 
@@ -35,20 +38,21 @@ const AddEditParameterMapping = (props) => {
 
   useEffect(() => {
     if (isGetParametersSucess && isGetParametersData) {
-      setDropDownOptionField(isGetParametersData, 'parameterId', 'name', AddEditParameterMappingData, 'parameterId');
+      setDropDownOptionField(isGetParametersData, 'parameterId', 'name', AddEditParameterMappingData, 'providerParameterId');
     }
-    // if (isGetAllApiEventParameterByApiEventIdSucess && allGetAllApiEventParameterByApiEventIdData) {
-    //   setDropDownOptionField(allGetAllApiEventParameterByApiEventIdData, 'apiEventParametersId', 'parameterName', AddEditParameterMappingData, 'apiEventParametersId');
-    // }
+    if (isGetEventParametersSucess && isGetEventParametersData) {
+      setDropDownOptionField(isGetEventParametersData, 'parameterId', 'name', AddEditParameterMappingData, 'eventParameterId');
+    }
 
-  }, [isGetParametersSucess, isGetParametersData]);
+  }, [isGetParametersSucess, isGetParametersData, isGetEventParametersSucess, isGetEventParametersData]);
 
   const handleAddEditAPIPRovider = () => {
     const formData = addEditParameterMappingRef.current.getFormData();
     if (formData) {
       let request = {
         ...formData,
-        parameterId: formData.parameterId.value,
+        eventParameterId: formData.eventParameterId.value,
+        providerParameterId: formData.providerParameterId.value,
         apiEventId: props.keyId,
       };
       addApiParameterMapping(request);

@@ -45,6 +45,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLAPIEVENTREQUIREDFIELDBYAPIEVENTID = "GetAllApiEventRequiredFieldByApiEventId";
         const string GETALLCUSTOMERS = "GetAllCustomers";
         const string GETALLSUBCUSTOMERBYCUSTOMERID = "GetAllSubCustomerByCustomerId";
+        const string GETALLADDRESSESBYCUSTOMERIDANDADDRESSTYPEID = "GetAllAddressesByCustomerIdAndAddressTypeId";
+        const string GETALLCONTACTSBYCUSTOMERIDANDCONTACTTYPEID = "GetAllContactsByCustomerIdAndContactTypeId";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -240,6 +242,24 @@ namespace OMS.Domain.Repository.Implementation
                 customerId
             }, commandType: CommandType.StoredProcedure);
             return getOrderSubCustomerByCustomerIdResponse;
+        }
+        public async Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId)
+        {
+            List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse> getAllAddressesByCustomerIdAndAddressTypeIdResponse = await _context.GetList<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>(GETALLADDRESSESBYCUSTOMERIDANDADDRESSTYPEID, new
+            {
+                customerId,
+                addressTypeId
+            }, commandType: CommandType.StoredProcedure);
+            return getAllAddressesByCustomerIdAndAddressTypeIdResponse;
+        }
+        public async Task<List<GetAllContactsByCustomerIdAndContactTypeIdResponse>> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId)
+        {
+            List<GetAllContactsByCustomerIdAndContactTypeIdResponse> getAllContactsByCustomerIdAndContactTypeIdResponse = await _context.GetList<GetAllContactsByCustomerIdAndContactTypeIdResponse>(GETALLCONTACTSBYCUSTOMERIDANDCONTACTTYPEID, new
+            {
+                customerId,
+                contactTypeId
+            }, commandType: CommandType.StoredProcedure);
+            return getAllContactsByCustomerIdAndContactTypeIdResponse;
         }
     }
 }

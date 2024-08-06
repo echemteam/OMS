@@ -11,6 +11,8 @@
         public string? TableName { get; set; }
         public int? FunctionalitiesFieldId { get; set; }
         public string? FieldName { get; set; }
+        public int? FunctionalityEventId { get; set; }
+        public string? EventName { get; set; }
         public string? OldValue { get; set; }
         public string? NewValue { get; set; }
         public short? RequestedByUserId { get; set; }

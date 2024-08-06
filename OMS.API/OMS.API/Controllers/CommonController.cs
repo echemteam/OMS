@@ -249,10 +249,17 @@ namespace OMS.API.Controllers
             List<GetAllAPIParametersResponse> responseData = await _serviceManager.commonServices.GetAllAPIParameters().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
-        [HttpGet("GetAllApiEventRequiredFieldByApiEventId")]
-        public async Task<IActionResult> GetAllApiEventRequiredFieldByApiEventId(int apiEventId)
+        [HttpGet("GetAllAddressesByCustomerIdAndAddressTypeId")]
+        public async Task<IActionResult> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId,short addressTypeId)
         {
-            List<GetAllApiEventRequiredFieldByApiEventIdResponse> responseData = await _serviceManager.commonServices.GetAllApiEventRequiredFieldByApiEventId(apiEventId).ConfigureAwait(true);
+            List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse> responseData = await _serviceManager.commonServices.GetAllAddressesByCustomerIdAndAddressTypeId(customerId,addressTypeId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllContactsByCustomerIdAndContactTypeId")]
+        public async Task<IActionResult> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId)
+        {
+            List<GetAllContactsByCustomerIdAndContactTypeIdResponse> responseData = await _serviceManager.commonServices.GetAllContactsByCustomerIdAndContactTypeId(customerId,contactTypeId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
         [HttpGet("GetAllCustomers")]

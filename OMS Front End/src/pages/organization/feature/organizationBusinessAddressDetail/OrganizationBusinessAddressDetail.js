@@ -16,7 +16,7 @@ import { useAddEditBusinessAddressesMutation, useLazyGetOrganizationBusinessAddr
 import ToastService from "../../../../services/toastService/ToastService";
 
 const OrganizationBusinessAddressDetail = () => {
-//  const businessAddressRef=useRef();
+
   const physicalAddressRef = useRef();
   const billToAddressRef = useRef();
   const labAddressRef = useRef();

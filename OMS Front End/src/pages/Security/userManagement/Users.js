@@ -157,7 +157,7 @@ const Users = () => {
         searchInputName="Search By User Name"
         titleButtonClick={AddUser}
         buttonClassName="btn theme-button"
-        rightButton={buttonVisible ? true : false}
+        rightButton={buttonVisible }
         buttonText="Add User"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}

@@ -3,7 +3,7 @@ import { GridColumnType } from "../../../../../../../../data/gridColumnType";
 
 export const AddEditParameterData = {
     // name: "Email From"
-    initialState: { apiEventParametersId: 0, parameterName: "", parameterType: "" ,defaultValue:""},
+    initialState: { apiEventParametersId: 0, parameterName: "", parameterType: "", defaultValue: "", isRequired: false },
     formFields: [
         {
             id: "parameterName",
@@ -21,13 +21,13 @@ export const AddEditParameterData = {
             },
         },
         {
-            id: "parameterType",
-            lable: "Parameter Type ",
-            Field_Name: "Parameter Type",
+            id: "dataType",
+            lable: "Data Type",
+            Field_Name: "Data Type",
             fieldType: FormFieldTypes.SELECT,
-            dataField: "parameterType",
+            dataField: "dataType",
             fieldSetting: {
-                placeholder: "Select Parameter Type",
+                placeholder: "Select Data Type",
                 isEnableOnChange: true
             },
 
@@ -51,6 +51,20 @@ export const AddEditParameterData = {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
+        {
+            id: "isRequired",
+            lable: "Is Required",
+            Field_Name: "Is Required",
+            fieldType: FormFieldTypes.CHECKBOX,
+            dataField: "isRequired",
+            fieldSetting: {
+                placeholder: "",
+            },
+            style: {
+                containerCss:
+                    "col-xxl-6 col-xl-6 col-md-6 col-6 col-6 mb-input margin-left0-checkbox mt-2",
+            },
+        },
     ],
     formSetting: {
         isViewOnly: false
@@ -66,8 +80,8 @@ export const AddEditParameterConfigurationData = {
             allowShort: true,
         },
         {
-            name: "Parameter Type",
-            fieldName: "parameterType",
+            name: "Data Type",
+            fieldName: "dataType",
             width: "35%",
             allowShort: true,
         },
@@ -76,6 +90,16 @@ export const AddEditParameterConfigurationData = {
             fieldName: "defaultValue",
             width: "20%",
             allowShort: true,
+        },
+        {
+            name: "Is Required",
+            fieldName: "isRequired",
+            width: "20%",
+            colType: GridColumnType.CHECKBOX,
+            colSettings: {
+                allowCheckbox: true,
+                allowDisable: true
+            },
         },
         {
             name: "Action",

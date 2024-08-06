@@ -5,6 +5,10 @@ import SwalAlert from "../../../../services/swalService/SwalService";
 import { useGetAllSubCustomerByCustomerIdMutation,useLazyGetAllCustomersQuery } from "../../../../app/services/commonAPI";
 import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
+import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
+import { AppIcons } from "../../../../data/appIcons";
+import Buttons from "../../../../components/ui/button/Buttons";
+import { addressFormData } from "../../../../../src/common/features/component/Address/config/AddressForm.data";
 
 const OrderDetails = () => {
   const basicInformation = useRef();
@@ -14,7 +18,17 @@ const OrderDetails = () => {
   const { blocked } = SwalAlert();
   const [getAllCustomers, { isFetching:isGetAllCustomersFetching,isSuccess: isGetAllCustomersSuccess, data: isGetAllCustomersData }] = useLazyGetAllCustomersQuery();
   const [getAllSubCustomerByCustomerId, { isFetching:isGetAllSubCustomersFetching,isSuccess: isGetAllSubCustomersSuccess, data: isGetAllSubCustomersData }] = useGetAllSubCustomerByCustomerIdMutation();
-  
+  const [isModelOpen, setIsModelOpen] = useState(false);
+  const ref = useRef();
+  const [formAddressData, setFormAddressData] = useState(addressFormData);
+
+  const onSidebarClose = () => {
+    setIsModelOpen(false);
+  };
+
+  const handleToggleModal = () => {
+    setIsModelOpen(true);
+  };
 
   useEffect(() => {
     getAllCustomers();
@@ -62,6 +76,7 @@ const OrderDetails = () => {
     setFormData(newFrom);
 
   },[])
+ 
 
   const handleChangeDropdownList = (data, dataField) => {
     if (dataField === "customerId") {
@@ -81,6 +96,7 @@ const OrderDetails = () => {
    }
    
     const blockedOptionValue = "blocked";
+
     if (data.status === blockedOptionValue) {
       blocked(
         "Blocked !",
@@ -99,6 +115,10 @@ const OrderDetails = () => {
     DDL_CHANGED: handleChangeDropdownList,
   };
 
+  const handleInputGroupButton = () => {
+    setIsModelOpen(true);
+  };
+
   return (
     <>
       <div className="row">
@@ -108,6 +128,7 @@ const OrderDetails = () => {
           {...formData}
            key={shouldRerenderFormCreator}
           onActionChange={formActionHandler}
+          handleInputGroupButton={handleInputGroupButton}
         />
       </div>
       <div className="row address-group">
@@ -125,6 +146,28 @@ const OrderDetails = () => {
           <div>United Kingdom, Oxfordshire OX1 3TA</div>
         </div>
       </div>
+
+      <Buttons
+        buttonTypeClassName="theme-button"
+        buttonText="Cancel"
+        onClick={handleToggleModal}
+      />
+
+      <SidebarModel
+        modalTitle="Shipping Address"
+        contentClass="content-35"
+        onClose={onSidebarClose}
+        modalTitleIcon={AppIcons.AddIcon}
+        isOpen={isModelOpen}
+      >
+        <div className="mt-2">
+          <FormCreator
+            config={formAddressData}
+            ref={ref}
+            {...formAddressData}
+          />
+        </div>
+      </SidebarModel>
     </>
   );
 };
