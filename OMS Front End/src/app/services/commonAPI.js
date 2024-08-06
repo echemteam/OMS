@@ -40,6 +40,7 @@ const commonAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+
         updateResponsibleUser: builder.mutation({
             query: (requestData) => ({
                 url: '/Common/UpdateResponsibleUser',
@@ -49,12 +50,56 @@ const commonAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        addApprovalRequests: builder.mutation({
+            query: (requestData) => ({
+                url: '/Approval/AddApprovalRequests',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getAllCustomers: builder.query({
+            query: () => ({
+                url: `/Common/GetAllCustomers`,
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getAllSubCustomerByCustomerId: builder.mutation({
+            query: (id) => ({
+                url: `/Common/GetAllSubCustomerByCustomerId?customerId=${(id)}`,
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getAllContactsByCustomerIdAndContactTypeId: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Common/GetAllContactsByCustomerIdAndContactTypeId/?customerId=${data.customerId}&contactTypeId=${data.contactTypeId}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
+        getAllAddressesByCustomerIdAndAddressTypeId: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Common/GetAllAddressesByCustomerIdAndAddressTypeId/?customerId=${data.customerId}&addressTypeId=${data.addressTypeId}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
     })
 })
 
 export const {
     useGetAllDeliveryCarriersQuery, useGetAllDeliveryMethodsQuery, useLazyGetAllDeliveryAccountsQuery, useLazyGetAllUserQuery,
-    useUpdateResponsibleUserMutation
+    useUpdateResponsibleUserMutation,useLazyGetAllCustomersQuery,useGetAllSubCustomerByCustomerIdMutation
+    , useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery
 } = commonAPI
 
 export default commonAPI;

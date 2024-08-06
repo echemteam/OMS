@@ -1,19 +1,21 @@
 import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { AddressType } from "../../../../../utils/Enums/commonEnums";
 
 export const orderInformationData = {
   initialState: {
-    name: "",
-    subName: "",
+    customerId: "",
+    subCustomerMainCustomerId: "",
     poNumber: "",
+    addressId:""
   },
   formFields: [
     {
-      id: "name",
+      id: "customerId",
       lable: "Customer Name ",
       Field_Name: "Customer Name",
       fieldType: FormFieldTypes.CUSTOMSELECT,
-      dataField: "name",
+      dataField: "customerId",
       fieldSetting: {
         placeholder: "Enter Customer Name",
         allowSpace: true,
@@ -49,11 +51,11 @@ export const orderInformationData = {
       }
     },
     {
-      id: "subName",
+      id: "subCustomerMainCustomerId",
       lable: "Sub-Customer Name",
       Field_Name: "Sub-Customer Name",
       fieldType: FormFieldTypes.CUSTOMSELECT,
-      dataField: "name",
+      dataField: "subCustomerMainCustomerId",
       fieldSetting: {
         placeholder: "Enter Sub-Customer Name",
         allowSpace: true,
@@ -136,7 +138,7 @@ export const orderInformationData = {
       lable: "Shipping Address ",
       Field_Name: "shipping Address ",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "shippingAddress",
+      dataField: "addressId",
       fieldSetting: {
         placeholder: "Select Shipping Address",
         isEnableOnChange: true,
@@ -151,6 +153,7 @@ export const orderInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
+        GetByID: AddressType.Shipping
       }
     },
   ],

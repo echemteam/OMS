@@ -22,6 +22,7 @@ const FormSelectField = ({
   overRideProps,
   isRequired,
   inputButtonGroup,
+  handleInputGroupButton,
   ...selectFormFieldProps
 }) => {
 
@@ -63,6 +64,7 @@ const FormSelectField = ({
             isMultiSelect={isMultiSelect}
             isDisabled={formSetting?.isViewOnly || selectFormFieldProps?.isDisable || overRideProps?.isDisable}
             inputButtonGroup={inputButtonGroup}
+            handleInputGroupButton={handleInputGroupButton}
             {...selectFormFieldProps}
           />
         </Suspense>

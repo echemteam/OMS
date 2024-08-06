@@ -17,6 +17,7 @@ const MyTask = () => {
   const userId = authData.user.userID
 
   const [approvedData, setApprovedData] = useState(null)
+  // const [tabId , setTabId] = useState(null)
 
   const [getApprovalRequestsByApprovalRequestId, { isFetching: isGetApprovalRequestsByApprovalRequestIdFetching, isSuccess: isGetApprovalRequestsByApprovalRequestIdSuccess, data: isGetApprovalRequestsByApprovalRequestIdData }] = useLazyGetApprovalRequestsByApprovalRequestIdQuery();
 
@@ -26,6 +27,11 @@ const MyTask = () => {
 
   const handleGetArchiveId = (data) => {
     getApprovalRequestsByApprovalRequestId(data)
+  }
+
+  const handleSetTab = (data) => {
+    // setTabId(data)
+    setApprovedData(null)
   }
 
   useEffect(() => {
@@ -38,7 +44,7 @@ const MyTask = () => {
     {
       sMenuItemCaption: "Pending",
       icon: "fa fa-check-circle-o",
-      component: <div className="mt-3"><PendingTask Pending={MyTaskStatus.Pending} onGetById={handleGetPendingId} userId={userId} /></div>,
+      component: <div className="mt-3"><PendingTask Pending={MyTaskStatus.Pending} onGetById={handleGetPendingId} onTabChange={handleSetTab} userId={userId} /></div>,
     },
     {
       sMenuItemCaption: "Archive",
@@ -53,11 +59,11 @@ const MyTask = () => {
         <div className="d-flex">
           <div className="col-4 task-tab">
             <div className="task-title">
-              <RenderTabs tabs={mainTabs} />
+              <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
             </div>
           </div>
           <div className="col-8">
-            <TaskDetail approvedData={approvedData} />
+            <TaskDetail approvedData={approvedData} isFetching={isGetApprovalRequestsByApprovalRequestIdFetching} />
           </div>
         </div>
       </div>

@@ -49,7 +49,6 @@ const EventMappingList = (props) => {
             // if (isGetApiEventMappingsData) {
             setListData([isGetApiEventMappingsData]);
             props.setEndpointId(isGetApiEventMappingsData?.endpointId);
-            props.setProviderId(isGetApiEventMappingsData?.providerId);
             if (isGetApiEventMappingsData?.providerId) {
                 props.setIsProviderData(true);
             }
@@ -97,7 +96,7 @@ const EventMappingList = (props) => {
 
     return (
         <div className="row">
-            <div className="col-md-12 table-striped api-provider">
+            <div className="col-md-12 table-striped api-provider pagination-none">
                 <MolGrid
                     ref={molGridRef}
                     configuration={AddEditMappingConfigurationData}

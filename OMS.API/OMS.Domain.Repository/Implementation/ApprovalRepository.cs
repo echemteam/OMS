@@ -104,7 +104,6 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return approvalRequestsDetails;
         }
-
         public async Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration()
         {
             List<GetApprovalConfigurationResponse> approvalConfigurationList = await _context.GetList<GetApprovalConfigurationResponse>(GETAPPROVALCONFIGURATION, commandType: CommandType.StoredProcedure);
