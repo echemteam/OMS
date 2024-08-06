@@ -33,7 +33,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const { confirm } = SwalAlert();
     const [noteId, setNoteId] = useState(0);
     const { formSetting } = customerbasicData;
-    const [approvalList, setApprovalList] = useState([]);
     const [customerName, setCustomerName] = useState('');
     const [formData, setFormData] = useState(customerbasicData);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
