@@ -60,12 +60,21 @@ const commonAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
+        getAllAddressesByCustomerIdAndAddressTypeId: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Common/GetAllAddressesByCustomerIdAndAddressTypeId/?customerId=${data.customerId}&addressTypeId=${data.addressTypeId}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
     })
 })
 
 export const {
     useGetAllDeliveryCarriersQuery, useGetAllDeliveryMethodsQuery, useLazyGetAllDeliveryAccountsQuery, useLazyGetAllUserQuery,
-    useUpdateResponsibleUserMutation, useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery,
+    useUpdateResponsibleUserMutation, useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery
 
 } = commonAPI
 

@@ -4,7 +4,7 @@ import { ContactType } from "../../../../../utils/Enums/commonEnums";
 
 export const contactInformationData = {
   initialState: {
-    contactId:"",
+    endUserId:"",
     isEndUser: true,
     isPurchasingGiven: true,
     endUser: "",
@@ -12,6 +12,8 @@ export const contactInformationData = {
     isInvoiceSubmission: true,
     invoiceSubmission: "",
     purchasing: "",
+    invoiceSubmissionId: "",
+    purchasingId: "",
   },
   formFields: [
     {
@@ -30,11 +32,11 @@ export const contactInformationData = {
       },
     },
     {
-      id: "contactId",
+      id: "endUserId",
       lable: "End User ",
       Field_Name: "End Name",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "contactId",
+      dataField: "endUserId",
       fieldSetting: {
         placeholder: "Enter End User",
         allowSpace: true,
@@ -50,7 +52,7 @@ export const contactInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        ContactTypeId : ContactType.EndUser
+        GetByID : ContactType.EndUser
       }
     },
     {
@@ -102,11 +104,11 @@ export const contactInformationData = {
       },
     },
     {
-      id: "contactId",
+      id: "invoiceSubmissionId",
       lable: "Invoice Submission ",
       Field_Name: "Invoice Submission",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "contactIdd",
+      dataField: "invoiceSubmissionId",
       fieldSetting: {
         placeholder: "Enter Invoice Submission",
         allowSpace: true,
@@ -122,16 +124,16 @@ export const contactInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        ContactTypeId : ContactType.InvoiceSubmission
+        GetByID : ContactType.InvoiceSubmission
 
       }
     },
     {
-      id: "contactId",
+      id: "purchasingId",
       lable: "Purchasing ",
       Field_Name: "Purchasing",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "contactIddd",
+      dataField: "purchasingId",
       fieldSetting: {
         placeholder: "Enter Purchasing",
         allowSpace: true,
@@ -147,7 +149,7 @@ export const contactInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        ContactTypeId : ContactType.Purchasing
+        GetByID : ContactType.Purchasing
       }
     },
   ],

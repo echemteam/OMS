@@ -20,35 +20,61 @@ const ContactDetails = (props) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [getContectTypeId, setContactTypeId] = useState(null)
 
-  const [getAllContactsByCustomerIdAndContactTypeId, { isFetching: isGetAllContactsByCustomerIdAndContactTypeIdFetching, isSuccess: isgetAllContactsByCustomerIdAndContactTypeIdSuccess, data: isgetAllContactsByCustomerIdAndContactTypeIdData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [
     getAllContactTypes,
     { isSuccess: isGetAllContactTypesSucess, data: allGetAllContactTypesData },
   ] = useLazyGetAllContactTypesQuery();
 
+  const [getAllEndUserId, { isFetching: isGetAllEndUserFetching, isSuccess: isgetAllEndUserSuccess, data: isgetAllEndUserData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
+  const [getAllInvoiceSubmissionId, { isFetching: isGetAllInvoiceSubmissionFetching, isSuccess: isgetAllInvoiceSubmissionSuccess, data: isgetAllInvoiceSubmissionData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
+  const [getAllPurchasingId, { isFetching: isGetAllPurchasingFetching, isSuccess: isgetAllPurchasingSuccess, data: isgetAllPurchasingData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
+
   useEffect(() => {
-    // if(){
     let req = {
       customerId: 1093,
       contactTypeId: ContactType.EndUser
     }
-    getAllContactsByCustomerIdAndContactTypeId(req)
-    // }
-    //  
-  }, [1093])
+    getAllEndUserId(req)
+  }, [])
 
   useEffect(() => {
-    if (!isGetAllContactsByCustomerIdAndContactTypeIdFetching && isgetAllContactsByCustomerIdAndContactTypeIdSuccess && isgetAllContactsByCustomerIdAndContactTypeIdData) {
-      setDropDownOptionField(isgetAllContactsByCustomerIdAndContactTypeIdData, 'contactId', 'fullName', contactInformationData, 'contactId');
+    let req = {
+      customerId: 1093,
+      contactTypeId: ContactType.InvoiceSubmission
     }
-  }, [isGetAllContactsByCustomerIdAndContactTypeIdFetching, isgetAllContactsByCustomerIdAndContactTypeIdSuccess, isgetAllContactsByCustomerIdAndContactTypeIdData])
+    getAllInvoiceSubmissionId(req)
+  }, [])
+
+  useEffect(() => {
+    let req = {
+      customerId: 1093,
+      contactTypeId: ContactType.Purchasing
+    }
+    getAllPurchasingId(req)
+  }, [])
+
+  useEffect(() => {
+    if (!isGetAllEndUserFetching && isgetAllEndUserSuccess && isgetAllEndUserData) {
+      setDropDownOptionField(isgetAllEndUserData, 'contactId', 'fullName', contactInformationData, 'endUserId');
+    }
+  }, [isGetAllEndUserFetching, isgetAllEndUserSuccess, isgetAllEndUserData])
+  useEffect(() => {
+    if (!isGetAllInvoiceSubmissionFetching && isgetAllInvoiceSubmissionSuccess && isgetAllInvoiceSubmissionData) {
+      setDropDownOptionField(isgetAllInvoiceSubmissionData, 'contactId', 'fullName', contactInformationData, 'invoiceSubmissionId');
+    }
+  }, [isGetAllInvoiceSubmissionFetching, isgetAllInvoiceSubmissionSuccess, isgetAllInvoiceSubmissionData])
+  useEffect(() => {
+    if (!isGetAllPurchasingFetching && isgetAllPurchasingSuccess && isgetAllPurchasingData) {
+      setDropDownOptionField(isgetAllPurchasingData, 'contactId', 'fullName', contactInformationData, 'purchasingId');
+    }
+  }, [isGetAllPurchasingFetching, isgetAllPurchasingSuccess, isgetAllPurchasingData])
 
   const handleDropdownApiCall = () => {
     let req = {
       customerId: 1093,
       contactTypeId: ContactType.EndUser
     }
-    getAllContactsByCustomerIdAndContactTypeId(req)
+    // getAllContactsByCustomerIdAndContactTypeId(req)
   }
 
   useEffect(() => {
@@ -62,9 +88,6 @@ const ContactDetails = (props) => {
         return condition;
       };
       setDropDownOptionField(allGetAllContactTypesData, "contactTypeId", "type", contactDetailFormData, "contactTypeId", filterCondition);
-      // const contactOption = getFieldData(contactDetailFormData, "contactTypeId");
-      // setContactType(contactOption?.fieldSetting?.options);
-      // setTabContactType(modifyContactType(allGetAllContactTypesData));
     }
   }, [isGetAllContactTypesSucess, allGetAllContactTypesData]);
 
@@ -124,50 +147,50 @@ const ContactDetails = (props) => {
 
   const handleCheckboxChanges = (data, dataField) => {
     let updatedFormData = { ...formData };
-  
+
     switch (dataField) {
       case "isEndUser":
         if (data) {
           // Add only the field related to "isEndUser"
-          const endUserField = contactInformationData.formFields.find(field => field.dataField === "contactId");
+          const endUserField = contactInformationData.formFields.find(field => field.dataField === "endUserId");
           updatedFormData.formFields = [...updatedFormData.formFields, endUserField];
         } else {
-          updatedFormData = removeFormFields(updatedFormData, ["contactId"]);
+          updatedFormData = removeFormFields(updatedFormData, ["endUserId"]);
         }
         break;
-  
+
       case "isInvoiceSubmission":
         if (data) {
           // Add only the field related to "isInvoiceSubmission"
-          const invoiceSubmissionField = contactInformationData.formFields.find(field => field.dataField === "contactIdd");
+          const invoiceSubmissionField = contactInformationData.formFields.find(field => field.dataField === "invoiceSubmissionId");
           updatedFormData.formFields = [...updatedFormData.formFields, invoiceSubmissionField];
         } else {
-          updatedFormData = removeFormFields(updatedFormData, ["contactIdd"]);
+          updatedFormData = removeFormFields(updatedFormData, ["invoiceSubmissionId"]);
         }
         break;
-  
+
       case "isPurchasingGiven":
         if (data) {
           // Add only the field related to "isPurchasingGiven"
-          const purchasingField = contactInformationData.formFields.find(field => field.dataField === "contactIddd");
+          const purchasingField = contactInformationData.formFields.find(field => field.dataField === "purchasingId");
           updatedFormData.formFields = [...updatedFormData.formFields, purchasingField];
         } else {
-          updatedFormData = removeFormFields(updatedFormData, ["contactIddd"]);
+          updatedFormData = removeFormFields(updatedFormData, ["purchasingId"]);
         }
         break;
-  
+
       default:
         break;
     }
-  
+
     // Remove any undefined or duplicate fields
     updatedFormData.formFields = updatedFormData.formFields.filter((field, index, self) =>
       field && index === self.findIndex(f => f.dataField === field.dataField)
     );
-  
+
     setFormData(updatedFormData);
   };
-  
+
 
   const formActionHandler = {
     CHECK_CHANGE: handleCheckboxChanges
