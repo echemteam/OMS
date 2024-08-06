@@ -7,7 +7,7 @@ import AddEditEventMapping from './feature/AddEditEventMapping'
 import "../../../../../../customerDetail/CustomerSupplier.scss";
 
 
-const EventMapping = ({ keyId, setEndpointId, setProviderId }) => {
+const EventMapping = ({ keyId, setEndpointId }) => {
   const childRef = useRef();
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [isProviderData, setIsProviderData] = useState(false);
@@ -44,7 +44,6 @@ const EventMapping = ({ keyId, setEndpointId, setProviderId }) => {
             keyId={keyId}
             childRef={childRef}
             setEndpointId={setEndpointId}
-            setProviderId={setProviderId}
             setIsProviderData={setIsProviderData}
           />
         </CardSection>
