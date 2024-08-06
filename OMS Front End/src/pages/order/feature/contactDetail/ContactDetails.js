@@ -131,90 +131,112 @@ const ContactDetails = (props) => {
     // onGetContactList();
   };
 
+
   // const handleCheckboxChanges = (data, dataField) => {
-  //   if (dataField === "isEndUser" && data === false) {
-  //     let updatedFormData;
-  //     updatedFormData = removeFormFields(formData, ['contactId']);
-  //     setFormData(updatedFormData)
-  //   } else if (dataField === "isEndUser" && data === true) {
-  //     const manageData = { ...formData };
-  //     let filteredFormFields;
-  //     filteredFormFields = contactInformationData.formFields
-  //     manageData.formFields = filteredFormFields;
-  //     setFormData(manageData)
-  //   }
-  //   else if (dataField === "isInvoiceSubmission" && data === false) {
-  //     let updatedFormData;
-  //     updatedFormData = removeFormFields(formData, ['contactIdd']);
-  //     setFormData(updatedFormData)
-  //   } else if (dataField === "isInvoiceSubmission" && data === true) {
-  //     const manageData = { ...formData };
-  //     let filteredFormFields;
-  //     filteredFormFields = contactInformationData.formFields
-  //     manageData.formFields = filteredFormFields;
-  //     setFormData(manageData)
-  //   }
-  //   else if (dataField === "isPurchasingGiven" && data === false) {
-  //     let updatedFormData;
-  //     updatedFormData = removeFormFields(formData, ['contactIddd']);
-  //     setFormData(updatedFormData)
-  //   } else if (dataField === "isPurchasingGiven" && data === true) {
-  //     const manageData = { ...formData };
-  //     let filteredFormFields;
-  //     filteredFormFields = contactInformationData.formFields
-  //     manageData.formFields = filteredFormFields;
-  //     setFormData(manageData)
+  //   let updatedFormData = { ...formData };
+  //   debugger
+  //   switch (dataField) {
+  //     case "isEndUser":
+  //       if (data) {
+  //         // Add only the field related to "isEndUser"
+  //         const endUserField = contactInformationData.formFields.find(field => field.dataField === "endUserId");
+  //         updatedFormData.formFields = [...updatedFormData.formFields, endUserField];
+  //       } else {
+  //         updatedFormData = removeFormFields(updatedFormData, ["endUserId"]);
+  //       }
+  //       break;
+
+  //     case "isInvoiceSubmission":
+  //       if (data) {
+  //         // Add only the field related to "isInvoiceSubmission"
+  //         const invoiceSubmissionField = contactInformationData.formFields.find(field => field.dataField === "invoiceSubmissionId");
+  //         updatedFormData.formFields = [...updatedFormData.formFields, invoiceSubmissionField];
+  //       } else {
+  //         updatedFormData = removeFormFields(updatedFormData, ["invoiceSubmissionId"]);
+  //       }
+  //       break;
+
+  //     case "isPurchasingGiven":
+  //       if (data) {
+  //         // Add only the field related to "isPurchasingGiven"
+  //         const purchasingField = contactInformationData.formFields.find(field => field.dataField === "purchasingId");
+  //         updatedFormData.formFields = [...updatedFormData.formFields, purchasingField];
+  //       } else {
+  //         updatedFormData = removeFormFields(updatedFormData, ["purchasingId"]);
+  //       }
+  //       break;
+
+  //     default:
+  //       break;
   //   }
 
+  //   // Remove any undefined or duplicate fields
+  //   updatedFormData.formFields = updatedFormData.formFields.filter((field, index, self) =>
+  //     field && index === self.findIndex(f => f.dataField === field.dataField)
+  //   );
+
+  //   setFormData(updatedFormData);
   // };
 
   const handleCheckboxChanges = (data, dataField) => {
     let updatedFormData = { ...formData };
-
+  
+    const addFieldAfterCheckbox = (checkboxFieldId, fieldToAdd) => {
+      const checkboxIndex = updatedFormData.formFields.findIndex(field => field.dataField === checkboxFieldId);
+      if (checkboxIndex !== -1) {
+        // Add field after the checkbox
+        updatedFormData.formFields = [
+          ...updatedFormData.formFields.slice(0, checkboxIndex + 3),
+          fieldToAdd,
+          ...updatedFormData.formFields.slice(checkboxIndex + 3)
+        ];
+      }
+    };
+  
+    const removeField = (fieldToRemove) => {
+      updatedFormData.formFields = updatedFormData.formFields.filter(field => field.dataField !== fieldToRemove);
+    };
+  
     switch (dataField) {
       case "isEndUser":
         if (data) {
-          // Add only the field related to "isEndUser"
           const endUserField = contactInformationData.formFields.find(field => field.dataField === "endUserId");
-          updatedFormData.formFields = [...updatedFormData.formFields, endUserField];
+          addFieldAfterCheckbox("isEndUser", endUserField);
         } else {
-          updatedFormData = removeFormFields(updatedFormData, ["endUserId"]);
+          removeField("endUserId");
         }
         break;
-
+  
       case "isInvoiceSubmission":
         if (data) {
-          // Add only the field related to "isInvoiceSubmission"
           const invoiceSubmissionField = contactInformationData.formFields.find(field => field.dataField === "invoiceSubmissionId");
-          updatedFormData.formFields = [...updatedFormData.formFields, invoiceSubmissionField];
+          addFieldAfterCheckbox("isInvoiceSubmission", invoiceSubmissionField);
         } else {
-          updatedFormData = removeFormFields(updatedFormData, ["invoiceSubmissionId"]);
+          removeField("invoiceSubmissionId");
         }
         break;
-
+  
       case "isPurchasingGiven":
         if (data) {
-          // Add only the field related to "isPurchasingGiven"
           const purchasingField = contactInformationData.formFields.find(field => field.dataField === "purchasingId");
-          updatedFormData.formFields = [...updatedFormData.formFields, purchasingField];
+          addFieldAfterCheckbox("isPurchasingGiven", purchasingField);
         } else {
-          updatedFormData = removeFormFields(updatedFormData, ["purchasingId"]);
+          removeField("purchasingId");
         }
         break;
-
+  
       default:
         break;
     }
-
+  
     // Remove any undefined or duplicate fields
     updatedFormData.formFields = updatedFormData.formFields.filter((field, index, self) =>
       field && index === self.findIndex(f => f.dataField === field.dataField)
     );
-
+  
     setFormData(updatedFormData);
   };
-
-
+  
   const formActionHandler = {
     CHECK_CHANGE: handleCheckboxChanges
   };
