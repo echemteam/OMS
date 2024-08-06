@@ -49,7 +49,6 @@ const EventMappingList = (props) => {
             // if (isGetApiEventMappingsData) {
             setListData([isGetApiEventMappingsData]);
             props.setEndpointId(isGetApiEventMappingsData?.endpointId);
-            props.setProviderId(isGetApiEventMappingsData?.providerId);
             if (isGetApiEventMappingsData?.providerId) {
                 props.setIsProviderData(true);
             }

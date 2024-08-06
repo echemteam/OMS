@@ -2,7 +2,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Lib's */
 import Buttons from "../../../../../components/ui/button/Buttons";
-import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
+import { AddressType, FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
@@ -19,7 +19,7 @@ const SetInitialCountry = {
     value: 233
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef }) => {
+const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder }) => {
 
     //** States */
     const ref = useRef();
@@ -45,7 +45,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     useEffect(() => {
         const fetchData = async () => {
-            if (editMode || isModelOpen) {
+            if (editMode || isModelOpen || !isOrderManage) {
                 await Promise.all([
                     getAllStates(),
                     // getAllCities(),
@@ -54,9 +54,24 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 ]);
             }
         };
-
         fetchData();
     }, [editMode, isModelOpen]);
+
+    useEffect(() => {
+        if (isOrderManage) {
+            setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
+            let form = { ...addressFormData };
+            if (getAddressTypeIdOrder === AddressType.Billing) {
+                form = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredShipping']);
+            } else if (getAddressTypeIdOrder === AddressType.Shipping) {
+                form = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling']);
+            }
+            form.initialState = {
+                addressTypeId: getAddressTypeIdOrder,
+            }
+            setFormData(form);
+        }
+    }, [isOrderManage, isModelOpen])
 
     const handleResponse = (success, data) => {
         if (success && data) {
@@ -81,9 +96,9 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, false);
                 setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
             }
-        } else if (!isModelOpen) {
+        } else if (!isModelOpen && !isOrderManage) {
             onResetForm(addressFormData, setFormData, null);
-        } else if (!isSupplier) {
+        } else if (!isSupplier && !isOrderManage) {
             setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, false);
             setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, false);
         }
@@ -171,13 +186,15 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     }
 
     useEffect(() => {
-        setInitialValue()
+        if (!isOrderManage) {
+            setInitialValue()
+        }
     }, [allGetAllStatesData, isModelOpen])
 
     useEffect(() => {
         if (isGetByIdData) {
             let updatedFormData = { ...formData };
-             
+
             if (isGetByIdData.type === "Billing") {
                 updatedFormData = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredShipping']);
             } else if (isGetByIdData.type === "Shipping") {
@@ -237,10 +254,10 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 : String(data.addressTypeId);
         }
     };
-    
+
     const buildTransformedData = (data, isSupplier, keyId, editMode) => {
         const addressTypeIdValue = getAddressTypeId(data, isSupplier, editMode);
-    
+
         return {
             ...data,
             [isSupplier ? 'supplierId' : 'customerId']: keyId,
@@ -250,23 +267,23 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             cityId: extractValue(data.cityId),
         };
     };
-    
+
     const getCustomerAddressId = (isSupplier, isGetByIdData) => {
         return isSupplier === false
             ? isGetByIdData ? isGetByIdData.customerAddressId : 0
             : 0;
     };
-    
+
     const getSupplierAddressId = (isSupplier, isGetByIdData) => {
         return isSupplier === true
             ? isGetByIdData ? isGetByIdData.supplierAddressId : 0
             : 0;
     };
-    
+
     const buildUpdateData = (transformedData, isGetByIdData, isSupplier) => {
         const customerAddressId = getCustomerAddressId(isSupplier, isGetByIdData);
         const supplierAddressId = getSupplierAddressId(isSupplier, isGetByIdData);
-    
+
         return {
             ...transformedData,
             addressId: isGetByIdData.addressId,
@@ -274,13 +291,13 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             supplierAddressId,
         };
     };
-    
+
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
         if (!data) return;
-    
+
         const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
-    
+
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
             update(updateData);

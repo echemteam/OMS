@@ -25,7 +25,7 @@ function DropdownSelect(props) {
             <button
               className="select-button"
               type="button"
-              onClick={() => props.handleInputGroupButton(props.inputButtonGroup?.ContactTypeId)}
+              onClick={() => props.handleInputGroupButton(props.inputButtonGroup?.GetByID)}
             >
               {base64Icon && (
                 <img src={base64Icon} alt="icon" className="input-button-icon" />
