@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
 const OrganizationBusinessAddressDetail = React.lazy(() => import("./feature/organizationBusinessAddressDetail/OrganizationBusinessAddressDetail"));

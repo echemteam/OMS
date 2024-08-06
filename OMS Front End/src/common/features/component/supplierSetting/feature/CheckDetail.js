@@ -28,15 +28,15 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
   useEffect(() => {
     if (isGetAllCountriesSucess && allGetAllCountriesData) {
       setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', checkFormData, 'countryId');
-      // setShouldRerenderFormCreator((prevState) => !prevState);
+      
     }
     if (isGetAllStatesSucess && allGetAllStatesData) {
       handleStateOption(allGetAllStatesData);
-      // setShouldRerenderFormCreator((prevState) => !prevState);
+      
     }
     if (isGetAllCitiesSucess && allGetAllCitiesData) {
       setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', checkFormData, 'cityId');
-      // setShouldRerenderFormCreator((prevState) => !prevState);
+      
     }
   }, [isGetAllCountriesSucess, allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData]);
 
@@ -127,7 +127,7 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
       });
     } else if (dataField === "stateId") {
       getAllCities(data.value)
-      // setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', item => item.stateId === data.value);
+   
       setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
       checkFormRef.current.updateFormFieldValue({
         stateId: data.value,

@@ -24,7 +24,7 @@ const AddEditEmailModal = ({ contactId, emailAddressList, setEmailAddressList, e
                 isPrimary: data.isEmailPrimary
             }
             addData(req, contactId, emailAddressList, setEmailAddressList, Message.EmailAdded, Message.EmailMaxLength, Message.DuplicateEmail, onResetData, onSuccess);
-        } else if (data && data.id) {
+        } else if ( data?.id) {
             let req = {
                 ...data,
                 isPrimary: data.isEmailPrimary

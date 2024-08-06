@@ -98,12 +98,9 @@ const Customers = () => {
   };
 
   const handleChange = (event) => {
-    // if (event.target.value.length >= 3 || selectedDrpvalues.length > 0) {
+ 
       setSearch(event.target.value.trim());
-    // } else {
-    //   setSearch("");
-    //   setSelectedDrpvalues("");
-    // }
+  
   };
 
   useEffect(() => {

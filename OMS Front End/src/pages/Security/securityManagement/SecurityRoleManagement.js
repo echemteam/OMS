@@ -220,7 +220,7 @@ const SecurityRoleManagement = () => {
         cardTitle="Security Roles"
         // cardSubTitle="Sub title add hear"
         buttonClassName="btn theme-button"
-        rightButton={buttonVisible ? true : false}
+        rightButton={buttonVisible }
         buttonText="Add"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}

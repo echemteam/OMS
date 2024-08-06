@@ -15,6 +15,5 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDTO<int>> AddApprovalRequests(ApprovalRequestsDTO requestData);
         Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId);
         Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId);
-        Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration();
     }
 }
