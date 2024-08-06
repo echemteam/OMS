@@ -37,7 +37,7 @@ const basicdetailAPI = createApi({
             query: (request) => ({
                 url: '/Customers/AddEditCustomersBasicInformation',
                 method: 'POST',
-                body: transformRequest(request.newValue)
+                body: transformRequest(request)
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse

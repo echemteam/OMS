@@ -20,6 +20,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDAPPROVALREQUESTS = "AddApprovalRequests";
         const string GETAPPROVALREQUESTSLISTBYSTATUSANDREQUESTEDBYUSERID = "GetApprovalRequestsListByStatusAndRequestedByUserId";
         const string GETAPPROVALREQUESTSBYAPPROVALREQUESTID = "GetApprovalRequestsByApprovalRequestId";
+        const string GETAPPROVALCONFIGURATION = "GetApprovalConfiguration";
         #endregion
 
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
@@ -102,6 +103,11 @@ namespace OMS.Domain.Repository.Implementation
                 approvalRequestId
             }, CommandType.StoredProcedure);
             return approvalRequestsDetails;
+        }
+        public async Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration()
+        {
+            List<GetApprovalConfigurationResponse> approvalConfigurationList = await _context.GetList<GetApprovalConfigurationResponse>(GETAPPROVALCONFIGURATION, commandType: CommandType.StoredProcedure);
+            return approvalConfigurationList;
         }
     }
 }

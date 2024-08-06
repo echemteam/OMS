@@ -21,17 +21,22 @@ import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/hand
 import PropTypes from 'prop-types';
 import SwalAlert from "../../../../services/swalService/SwalService";
 import { SuccessMessage } from "../../../../data/appMessages";
+import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
+import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
+
+
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
 
     //** State */
     const parentRef = useRef();
     const basicDetailRef = useRef();
+    const { confirm } = SwalAlert();
     const [noteId, setNoteId] = useState(0);
     const { formSetting } = customerbasicData;
     const [customerName, setCustomerName] = useState('');
     const [formData, setFormData] = useState(customerbasicData);
-    const { confirm } = SwalAlert();
     const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
     const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser, setCustomerCountryId } = useContext(BasicDetailContext);
 
     //** API Call's */
@@ -170,13 +175,13 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         if (isOpen) {
             customerId && getCustomersBasicInformationById(customerId);
         }
-    }, [isOpen])
+    }, [isOpen]);
 
     useImperativeHandle(nextRef, () => ({
         handleAddBasicDetails,
     }));
 
-    const handleAddBasicDetails = () => {
+    const handleAddBasicDetails = async () => {
         let data = basicDetailRef.current.getFormData();
         if (data) {
             let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
@@ -197,9 +202,13 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 }
                 let request = {
                     newValue: value,
-                    oldValue: formData.initialState
+                    oldValue: formData.initialState,
+                    functionalityName: FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION
                 }
-                addEditCustomersBasicInformation(request);
+                const modifyData = await ValidateRequestByApprovalRules(request);
+                if (modifyData.newValue) {
+                    addEditCustomersBasicInformation(modifyData.newValue);
+                }
             } else {
                 if (data.taxId) {
                     const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, customerbasicData.formFields, 'taxId');
@@ -210,9 +219,13 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                         }
                         let request = {
                             newValue: value,
-                            oldValue: formData.initialState
+                            oldValue: formData.initialState,
+                            functionalityName: FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION
                         }
-                        addEditCustomersBasicInformation(request);
+                        const modifyData = await ValidateRequestByApprovalRules(request);
+                        if (modifyData.newValue) {
+                            addEditCustomersBasicInformation(modifyData.newValue);
+                        }
                     } else {
                         ToastService.warning(validateTaxIdMessage);
                     }
