@@ -38,5 +38,7 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetAllApiEventParameterByApiEventIdResponse>> GetAllApiEventParameterByApiEventId(int apiEventId);
         Task<List<GetAllAPIParametersResponse>> GetAllAPIParameters();
         Task<List<GetAllApiEventRequiredFieldByApiEventIdResponse>> GetAllApiEventRequiredFieldByApiEventId(int apiEventId);
+        Task<List<GetAllCustomerResponse>> GetAllCustomers();
+        Task<List<GetAllSubCustomerByCustomerIdResponse>> GetAllSubCustomerByCustomerId(int customerId);
     }
 }

@@ -255,5 +255,17 @@ namespace OMS.API.Controllers
             List<GetAllApiEventRequiredFieldByApiEventIdResponse> responseData = await _serviceManager.commonServices.GetAllApiEventRequiredFieldByApiEventId(apiEventId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpGet("GetAllCustomers")]
+        public async Task<IActionResult> GetAllCustomers()
+        {
+            List<GetAllCustomerResponse> responseData = await _serviceManager.commonServices.GetAllCustomers().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+        [HttpGet("GetAllSubCustomerByCustomerId")]
+        public async Task<IActionResult> GetAllSubCustomerByCustomerId(int customerId)
+        {
+            List<GetAllSubCustomerByCustomerIdResponse> responseData = await _serviceManager.commonServices.GetAllSubCustomerByCustomerId(customerId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }
