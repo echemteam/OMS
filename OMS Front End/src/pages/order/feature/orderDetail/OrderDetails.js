@@ -24,8 +24,8 @@ const OrderDetails = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [getAddressData, setGetAddressData] = useState(null)
   const [getAddressTypeId, setGetAddressTypeId] = useState(null)
-  
-  const { orderCustomerId , setOrderCustomerId} = useContext(AddOrderContext);
+
+  const { orderCustomerId, setOrderCustomerId } = useContext(AddOrderContext);
 
   const [getAllAddressesByCustomerIdAndAddressTypeId, { isFetching: isGetAllAddressesByCustomerIdAndAddressTypeIdFetching, isSuccess: isGetAllAddressesByCustomerIdAndAddressTypeIdSuccess, data: isGetAllAddressesByCustomerIdAndAddressTypeIdData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
   const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
@@ -119,7 +119,7 @@ const OrderDetails = () => {
 
 
   const handleChangeDropdownList = (data, dataField) => {
-        if (dataField === "customerId") {
+    if (dataField === "customerId") {
       if (data.isBuyingForThirdParty === true) {
         getAllSubCustomerByCustomerId(data.value);
         setOrderCustomerId(data.value)
@@ -130,8 +130,8 @@ const OrderDetails = () => {
         setFormData(manageData)
         basicInformation.current.updateFormFieldValue({
           customerId: data.value,
-          subCustomerMainCustomerId:null
-      });
+          subCustomerMainCustomerId: null
+        });
       }
     }
 

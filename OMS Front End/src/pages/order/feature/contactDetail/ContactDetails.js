@@ -79,7 +79,6 @@ const ContactDetails = (props) => {
   }, [isGetAllPurchasingFetching, isgetAllPurchasingSuccess, isgetAllPurchasingData])
 
   const handleDropdownApiCall = (data) => {
-    debugger
     if (data === 2) {
       let req = {
         customerId: orderCustomerId,
