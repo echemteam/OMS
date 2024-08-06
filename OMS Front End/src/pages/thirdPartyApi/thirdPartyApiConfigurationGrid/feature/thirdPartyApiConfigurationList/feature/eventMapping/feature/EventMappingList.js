@@ -26,6 +26,7 @@ const EventMappingList = (props) => {
             ToastService.success(isDeleteApiEventMappingData.errorMessage);
             const currentPageObject = molGridRef.current.getCurrentPageObject();
             getLists(currentPageObject, molGridRef.current.generateSortingString());
+            setListData(null)
         }
     }, [isDeleteApiEventMappingSuccess, isDeleteApiEventMappingData]);
 
