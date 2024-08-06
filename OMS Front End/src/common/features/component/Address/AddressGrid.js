@@ -45,15 +45,15 @@ const AddressGrid = ({
 
   useEffect(() => {
     if (!isEditablePage || !SecurityKey) return;
-  
+
     const addPermission = hasFunctionalPermission(SecurityKey.ADD);
     const editPermission = hasFunctionalPermission(SecurityKey.EDIT);
-  
+
     handleAddPermission(addPermission);
     handleEditPermission(editPermission);
-  
+
   }, [isEditablePage, isSupplier, SecurityKey, editMode]);
-  
+
   const handleAddPermission = (permission) => {
     if (permission?.hasAccess) {
       setButtonVisible(true);
@@ -61,7 +61,7 @@ const AddressGrid = ({
       setButtonVisible(false);
     }
   };
-  
+
   const handleEditPermission = (permission) => {
     if (formSetting) {
       if (editMode) {
@@ -77,20 +77,20 @@ const AddressGrid = ({
       }
     }
   };
-  
+
   const handleNonEditModePermissions = (permission) => {
     if (permission?.hasAccess) {
       formSetting.isViewOnly = false;
       setIsButtonDisable(false);
     }
-    
+
     if (permission?.isViewOnly || permission?.isEditable) {
       setShowEditIcon(true);
     } else {
       setShowEditIcon(false);
     }
   };
-  
+
 
   useEffect(() => {
     getAllAddressTypes();
@@ -189,7 +189,7 @@ const AddressGrid = ({
     ),
   ];
 
- 
+
   const filteredTabs = tabAddressType?.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers);
 
   const tabs = filteredTabs?.map((data, index) => {
@@ -202,44 +202,46 @@ const AddressGrid = ({
 
   return (
     //<React.Fragment>
-      <div className="address-main-card-sec vertical-tab-card">
-        <CardSection
-          cardTitle="Address"
-          buttonClassName="theme-button"
-          textWithIcon={true}
-          iconImg={AppIcons.PlusIcon}
-          rightButton={buttonVisible ? true : false}
-           
-          buttonText="Add"
-          titleButtonClick={handleToggleModal}
-        >
-          <div className="vertical-tab-inner">
-            <RenderTabs tabs={tabs} isCollapse={true} />
-          </div>
-        </CardSection>
-        <div className="address-model">
-          <SidebarModel
-            modalTitle={editMode ? "Update Address" : "Add Address"}
-            contentClass="content-35"
-            onClose={onSidebarClose}
-            modalTitleIcon={AppIcons.AddIcon}
-            isOpen={isModelOpen}
-          >
-            <AddEditAddress
-              editRef={editRef}
-              isSupplier={isSupplier}
-              isModelOpen={isModelOpen}
-              editMode={editMode}
-              keyId={keyId}
-              isButtonDisable={isButtonDisable}
-              updateAddress={updateAddress}
-              addAddress={addAddress}
-              getAddresssById={getAddresssById}
-              onSidebarClose={onSidebarClose}
-            />
-          </SidebarModel>
+    <div className="address-main-card-sec vertical-tab-card">
+      <CardSection
+        cardTitle="Address"
+        buttonClassName="theme-button"
+        textWithIcon={true}
+        iconImg={AppIcons.PlusIcon}
+        rightButton={buttonVisible ? true : false}
+
+        buttonText="Add"
+        titleButtonClick={handleToggleModal}
+      >
+        <div className="vertical-tab-inner">
+          <RenderTabs tabs={tabs} isCollapse={true} />
         </div>
+      </CardSection>
+      <div className="address-model">
+        <SidebarModel
+          modalTitle={editMode ? "Update Address" : "Add Address"}
+          contentClass="content-35"
+          onClose={onSidebarClose}
+          modalTitleIcon={AppIcons.AddIcon}
+          isOpen={isModelOpen}
+        >
+          <AddEditAddress
+            isOrderManage={false}
+            editRef={editRef}
+            isSupplier={isSupplier}
+            isModelOpen={isModelOpen}
+            editMode={editMode}
+            keyId={keyId}
+            isButtonDisable={isButtonDisable}
+            updateAddress={updateAddress}
+            addAddress={addAddress}
+            getAddresssById={getAddresssById}
+            onSidebarClose={onSidebarClose}
+            getAddressTypeIdOrder={null}
+          />
+        </SidebarModel>
       </div>
+    </div>
     //</React.Fragment>
   );
 };

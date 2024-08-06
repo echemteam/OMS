@@ -10,7 +10,6 @@ import EventParamter from '../eventParamter/EventParamter';
 const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
 
     const [endpointId, setEndpointId] = useState(0);
-    const [providerId, setProviderId] = useState(0);
 
     const tabs = [
         {
@@ -20,7 +19,6 @@ const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
                     <EventMapping
                         keyId={keyId}
                         setEndpointId={setEndpointId}
-                        setProviderId={setProviderId}
                     />
                 </div>
             ),

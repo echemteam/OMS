@@ -1,11 +1,13 @@
 import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { AddressType } from "../../../../../utils/Enums/commonEnums";
 
 export const orderInformationData = {
   initialState: {
     customerId: "",
     subCustomerMainCustomerId: "",
     poNumber: "",
+    addressId:""
   },
   formFields: [
     {
@@ -136,7 +138,7 @@ export const orderInformationData = {
       lable: "Shipping Address ",
       Field_Name: "shipping Address ",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "shippingAddress",
+      dataField: "addressId",
       fieldSetting: {
         placeholder: "Select Shipping Address",
         isEnableOnChange: true,
@@ -151,6 +153,7 @@ export const orderInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
+        GetByID: AddressType.Shipping
       }
     },
   ],

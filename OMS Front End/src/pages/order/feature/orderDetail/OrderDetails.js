@@ -9,6 +9,13 @@ import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../data/appIcons";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { addressFormData } from "../../../../../src/common/features/component/Address/config/AddressForm.data";
+import { useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery } from "../../../../app/services/commonAPI";
+import { AddressType } from "../../../../utils/Enums/commonEnums";
+import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import NoRecordFound from "../../../../components/ui/noRecordFound/NoRecordFound";
+import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
+import { useAddAddressMutation, useLazyGetAllAddressTypesQuery, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from "../../../../app/services/addressAPI";
+import { modifyAddressType } from "../../../../utils/TransformData/TransformAPIData";
 
 const OrderDetails = () => {
   const basicInformation = useRef();
@@ -21,14 +28,49 @@ const OrderDetails = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const ref = useRef();
   const [formAddressData, setFormAddressData] = useState(addressFormData);
+  const [getAddressData, setGetAddressData] = useState(null)
+  const [getAddressTypeId, setGetAddressTypeId] = useState(null)
+
+
+  const [getAllAddressesByCustomerIdAndAddressTypeId, { isFetching: isGetAllAddressesByCustomerIdAndAddressTypeIdFetching, isSuccess: isGetAllAddressesByCustomerIdAndAddressTypeIdSuccess, data: isGetAllAddressesByCustomerIdAndAddressTypeIdData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
+  const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
+
+
+  useEffect(() => {
+    if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
+      const filterCondition = (item) => {
+        let condition = item.isForCustomers
+        return condition;
+      };
+      setDropDownOptionField(allGetAllAddressTypesData, 'addressTypeId', 'type', addressFormData, 'addressTypeId', filterCondition);
+    }
+  }, [isGetAllAddressTypesSucess, allGetAllAddressTypesData]);
+
+  useEffect(() => {
+    let req = {
+      customerId: 1093,
+      addressTypeId: AddressType.Shipping
+    }
+    getAllAddressesByCustomerIdAndAddressTypeId(req)
+  }, [1093])
+
+  useEffect(() => {
+    getAllAddressTypes();
+  }, []);
+
+  useEffect(() => {
+    if (!isGetAllAddressesByCustomerIdAndAddressTypeIdFetching && isGetAllAddressesByCustomerIdAndAddressTypeIdSuccess && isGetAllAddressesByCustomerIdAndAddressTypeIdData) {
+      setDropDownOptionField(isGetAllAddressesByCustomerIdAndAddressTypeIdData, 'addressId', 'addressLine1', orderInformationData, 'addressId');
+    }
+  }, [isGetAllAddressesByCustomerIdAndAddressTypeIdFetching, isGetAllAddressesByCustomerIdAndAddressTypeIdSuccess, isGetAllAddressesByCustomerIdAndAddressTypeIdData])
 
   const onSidebarClose = () => {
     setIsModelOpen(false);
   };
 
-  const handleToggleModal = () => {
-    setIsModelOpen(true);
-  };
+  // const handleToggleModal = () => {
+  //   setIsModelOpen(true);
+  // };
 
   useEffect(() => {
     getAllCustomers();
@@ -108,14 +150,21 @@ const OrderDetails = () => {
         }
       });
     }
+    if (data.value) {
+      const finalData = isGetAllAddressesByCustomerIdAndAddressTypeIdData?.filter((item) => item.addressId === data.value);
+      setGetAddressData(finalData.length ? finalData[0] : null);
+    }
   };
 
   const formActionHandler = {
     DDL_CHANGED: handleChangeDropdownList,
   };
 
-  const handleInputGroupButton = () => {
-    setIsModelOpen(true);
+  const handleInputGroupButton = (id) => {
+    if (id > 0) {
+      setGetAddressTypeId(id)
+      setIsModelOpen(!isModelOpen);
+    }
   };
 
   return (
@@ -139,33 +188,54 @@ const OrderDetails = () => {
           <div>United Kingdom, Oxfordshire OX1 3TA</div>
         </div>
         <div className="col-4 address">
-          <div>Chemistry Research Laboratory</div>
-          <div>MansField Road</div>
-          <div>Oxford</div>
-          <div>United Kingdom, Oxfordshire OX1 3TA</div>
+          {getAddressData ? (
+            <>
+              <div>{getAddressData.addressLine1}</div>
+              <div>{getAddressData.addressLine2}</div>
+              <div>{getAddressData.cityName}</div>
+              <div>{getAddressData.stateName}</div>
+              <div>{getAddressData.countryName}, {getAddressData.zipCode}</div>
+            </>
+          ) : (
+            <NoRecordFound />
+          )}
         </div>
       </div>
 
       <Buttons
         buttonTypeClassName="theme-button"
         buttonText="Cancel"
-        onClick={handleToggleModal}
+      // onClick={handleToggleModal}
       />
 
       <SidebarModel
-        modalTitle="Shipping Address"
+        modalTitle="Add/Edit Address"
         contentClass="content-35"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
         isOpen={isModelOpen}
       >
-        <div className="mt-2">
+        {/* <div className="mt-2">
           <FormCreator
             config={formAddressData}
             ref={ref}
             {...formAddressData}
           />
-        </div>
+        </div> */}
+        <AddEditAddress
+          // editRef={editRef}
+          // isSupplier={isSupplier}
+          isModelOpen={isModelOpen}
+          // editMode={editMode}
+          // keyId={keyId}
+          // isButtonDisable={isButtonDisable}
+          isOrderManage={true}
+          updateAddress={useUpdateAddAddressMutation}
+          addAddress={useAddAddressMutation}
+          getAddresssById={useLazyGetCustomerAddresssByAddressIdQuery}
+          onSidebarClose={onSidebarClose}
+          getAddressTypeIdOrder={getAddressTypeId}
+        />
       </SidebarModel>
     </>
   );
