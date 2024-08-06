@@ -238,6 +238,7 @@ const AddressGrid = ({
             getAddresssById={getAddresssById}
             onSidebarClose={onSidebarClose}
             getAddressTypeIdOrder={null}
+            orderCustomerId={null}
           />
         </SidebarModel>
       </div>

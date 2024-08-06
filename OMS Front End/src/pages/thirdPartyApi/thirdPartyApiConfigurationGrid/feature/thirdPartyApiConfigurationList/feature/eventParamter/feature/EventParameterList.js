@@ -118,9 +118,7 @@ const EventParameterList = (props) => {
           onSorting={handleSorting}
           isLoading={isGetApiEventParametersLoading}
           onActionChange={actionHandler}
-        // searchTitleButtonClick={handleSearch}
-        // handleChange={handleChange}
-        // handleClear={handleClear}
+        
         />
       </div>
     </div>

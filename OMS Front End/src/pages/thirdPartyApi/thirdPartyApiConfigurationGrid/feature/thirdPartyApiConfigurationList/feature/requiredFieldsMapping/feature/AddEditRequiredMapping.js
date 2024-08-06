@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useAddApiEventRequiredFieldsMappingMutation, useLazyGetAllApiEventRequiredFieldByApiEventIdQuery, useLazyGetAllRequiredFieldsByEventIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
+import { useAddApiEventRequiredFieldsMappingMutation, useLazyGetAllRequiredFieldsByEventIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
 import { AddEditRequiredMappingData } from '../config/AddEditRequiredMapping.data';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
 import { setDropDownOptionField } from '../../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
@@ -25,7 +25,7 @@ const AddEditRequiredMapping = (props) => {
     if (isAddApiEventRequiredFieldsMappingSuccess && allAddApiEventRequiredFieldsMappingData) {
       if (allAddApiEventRequiredFieldsMappingData.errorMessage.includes("exists")) {
         ToastService.warning(allAddApiEventRequiredFieldsMappingData.errorMessage);
-        // handleResetAndClose();
+     
         return;
       }
       ToastService.success(allAddApiEventRequiredFieldsMappingData.errorMessage);

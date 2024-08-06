@@ -1,39 +1,34 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { orderInformationData } from "./config/OrderInformation.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import SwalAlert from "../../../../services/swalService/SwalService";
 import { useGetAllSubCustomerByCustomerIdMutation, useLazyGetAllCustomersQuery } from "../../../../app/services/commonAPI";
-import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
+import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../data/appIcons";
-import Buttons from "../../../../components/ui/button/Buttons";
 import { addressFormData } from "../../../../../src/common/features/component/Address/config/AddressForm.data";
 import { useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery } from "../../../../app/services/commonAPI";
 import { AddressType } from "../../../../utils/Enums/commonEnums";
-import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import NoRecordFound from "../../../../components/ui/noRecordFound/NoRecordFound";
 import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
 import { useAddAddressMutation, useLazyGetAllAddressTypesQuery, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from "../../../../app/services/addressAPI";
-import { modifyAddressType } from "../../../../utils/TransformData/TransformAPIData";
+import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 
 const OrderDetails = () => {
   const basicInformation = useRef();
 
   const [formData, setFormData] = useState(orderInformationData);
-  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const { blocked } = SwalAlert();
   const [getAllCustomers, { isFetching: isGetAllCustomersFetching, isSuccess: isGetAllCustomersSuccess, data: isGetAllCustomersData }] = useLazyGetAllCustomersQuery();
   const [getAllSubCustomerByCustomerId, { isFetching: isGetAllSubCustomersFetching, isSuccess: isGetAllSubCustomersSuccess, data: isGetAllSubCustomersData }] = useGetAllSubCustomerByCustomerIdMutation();
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const ref = useRef();
-  const [formAddressData, setFormAddressData] = useState(addressFormData);
   const [getAddressData, setGetAddressData] = useState(null)
   const [getAddressTypeId, setGetAddressTypeId] = useState(null)
 
+  const { orderCustomerId, setOrderCustomerId } = useContext(AddOrderContext);
 
   const [getAllAddressesByCustomerIdAndAddressTypeId, { isFetching: isGetAllAddressesByCustomerIdAndAddressTypeIdFetching, isSuccess: isGetAllAddressesByCustomerIdAndAddressTypeIdSuccess, data: isGetAllAddressesByCustomerIdAndAddressTypeIdData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
   const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
-
 
   useEffect(() => {
     if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
@@ -46,12 +41,14 @@ const OrderDetails = () => {
   }, [isGetAllAddressTypesSucess, allGetAllAddressTypesData]);
 
   useEffect(() => {
-    let req = {
-      customerId: 1093,
-      addressTypeId: AddressType.Shipping
+    if (orderCustomerId) {
+      let req = {
+        customerId: orderCustomerId,
+        addressTypeId: AddressType.Shipping
+      }
+      getAllAddressesByCustomerIdAndAddressTypeId(req)
     }
-    getAllAddressesByCustomerIdAndAddressTypeId(req)
-  }, [1093])
+  }, [orderCustomerId])
 
   useEffect(() => {
     getAllAddressTypes();
@@ -67,9 +64,13 @@ const OrderDetails = () => {
     setIsModelOpen(false);
   };
 
-  // const handleToggleModal = () => {
-  //   setIsModelOpen(true);
-  // };
+  const handleOrderInfoRepeatCall = () => {
+    let req = {
+      customerId: orderCustomerId,
+      addressTypeId: AddressType.Shipping
+    }
+    getAllAddressesByCustomerIdAndAddressTypeId(req)
+  };
 
   useEffect(() => {
     getAllCustomers();
@@ -93,7 +94,6 @@ const OrderDetails = () => {
   }, [isGetAllCustomersFetching, isGetAllCustomersSuccess, isGetAllCustomersData]);
 
   useEffect(() => {
-
     if (!isGetAllSubCustomersFetching && isGetAllSubCustomersSuccess && isGetAllSubCustomersData) {
       const subcustomerData = isGetAllSubCustomersData.map((item) => ({
         value: item.subCustomerId,
@@ -145,7 +145,7 @@ const OrderDetails = () => {
         }
       });
     }
-    if (data.value) {
+    if (data.value && dataField === "addressId") {
       const finalData = isGetAllAddressesByCustomerIdAndAddressTypeIdData?.filter((item) => item.addressId === data.value);
       setGetAddressData(finalData.length ? finalData[0] : null);
     }
@@ -169,7 +169,6 @@ const OrderDetails = () => {
           config={formData}
           ref={basicInformation}
           {...formData}
-          key={shouldRerenderFormCreator}
           onActionChange={formActionHandler}
           handleInputGroupButton={handleInputGroupButton}
         />
@@ -197,11 +196,11 @@ const OrderDetails = () => {
         </div>
       </div>
 
-      <Buttons
+      {/* <Buttons
         buttonTypeClassName="theme-button"
         buttonText="Cancel"
       // onClick={handleToggleModal}
-      />
+      /> */}
 
       <SidebarModel
         modalTitle="Add/Edit Address"
@@ -230,6 +229,8 @@ const OrderDetails = () => {
           getAddresssById={useLazyGetCustomerAddresssByAddressIdQuery}
           onSidebarClose={onSidebarClose}
           getAddressTypeIdOrder={getAddressTypeId}
+          orderCustomerId={orderCustomerId}
+          onHandleOrderInfoRepeatCall={handleOrderInfoRepeatCall}
         />
       </SidebarModel>
     </>

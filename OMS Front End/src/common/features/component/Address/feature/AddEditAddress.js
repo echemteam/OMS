@@ -19,7 +19,7 @@ const SetInitialCountry = {
     value: 233
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder }) => {
+const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId }) => {
 
     //** States */
     const ref = useRef();
@@ -67,6 +67,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 form = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling']);
             }
             form.initialState = {
+                ...form.initialState,
                 addressTypeId: getAddressTypeIdOrder,
             }
             setFormData(form);
@@ -232,8 +233,15 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             }
             onResetForm(addressFormData, setFormData, null);
             ToastService.success(responseData.errorMessage);
-            getById(keyId);
+            if (!isOrderManage) {
+                getById(keyId);
+                onSidebarClose();
+            } else {
+                onHandleOrderInfoRepeatCall()
+            }
             onSidebarClose();
+
+
         }
     }
 
@@ -302,7 +310,11 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
             update(updateData);
         } else {
-            add(transformedData);
+            let req = {
+                ...transformedData,
+                customerId: orderCustomerId ? orderCustomerId : transformedData.customerId
+            }
+            add(req);
         }
     };
 
