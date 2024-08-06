@@ -84,7 +84,6 @@ const OrderDetails = () => {
         status:item.statusName,
         isBuyingForThirdParty: item.isBuyingForThirdParty
       }));
-      console.log(customerData)
       const dropdownField = orderInformationData?.formFields?.find(item => item.dataField === "customerId");
        
       dropdownField.fieldSetting.options = customerData
@@ -94,7 +93,7 @@ const OrderDetails = () => {
   }, [isGetAllCustomersFetching,isGetAllCustomersSuccess,isGetAllCustomersData]);
 
   useEffect(() => {
-  debugger
+
     if (!isGetAllSubCustomersFetching && isGetAllSubCustomersSuccess && isGetAllSubCustomersData) {
       const subcustomerData = isGetAllSubCustomersData.map((item) => ({
         value: item.subCustomerMainCustomerId,
