@@ -49,12 +49,21 @@ const commonAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        addApprovalRequests: builder.mutation({
+            query: (requestData) => ({
+                url: '/Approval/AddApprovalRequests',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
 export const {
     useGetAllDeliveryCarriersQuery, useGetAllDeliveryMethodsQuery, useLazyGetAllDeliveryAccountsQuery, useLazyGetAllUserQuery,
-    useUpdateResponsibleUserMutation
+    useUpdateResponsibleUserMutation, useAddApprovalRequestsMutation
 } = commonAPI
 
 export default commonAPI;
