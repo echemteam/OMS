@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="APIClientAppSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="APITesterAppSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

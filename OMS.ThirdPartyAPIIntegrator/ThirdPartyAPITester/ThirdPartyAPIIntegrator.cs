@@ -1,49 +1,32 @@
-﻿using ThirdPartyAPIClientLibrary.Enums;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using System.Web;
+using ThirdPartyAPIClientLibrary.Enums;
 using ThirdPartyAPIClientLibrary.Helper;
 using ThirdPartyAPIClientLibrary.Model;
 using ThirdPartyAPIClientLibrary.Services;
 using ThirdPartyAPIClientLibrary.ThirdPartyResponseProvider;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using System.Web;
 
 namespace ThirdPartyAPIClientLibrary
 {
-    //class Program
+    //public class Program
     //{
-    //    static async Task Main(string[] args)
+    //    public static async Task Main(string[] args)
     //    {
-    //        // Set up configuration
-    //        var configuration = new ConfigurationBuilder()
-    //            .AddJsonFile("APITesterAppSettings.json") // or other configuration sources
-    //            .Build();
-
-    //        // Instantiate necessary services
-    //        var tokenManagementService = new TokenManagementService(); // Replace with actual instantiation
-
-    //        // Instantiate the APITester and call the instance method
-    //        var apiTester = new ThirdPartyAPIIntegrator(tokenManagementService, configuration);
-    //        await apiTester.Run(args);
+    //        ThirdPartyAPIIntegrator integrator = new();
+    //        await integrator.Run(args);
     //    }
     //}
 
     public class ThirdPartyAPIIntegrator
     {
-        private readonly TokenManagementService _tokenManagementService;
-        private readonly IConfiguration _configuration;
         private static readonly HttpClient HttpClient = new();
-
-        public ThirdPartyAPIIntegrator(TokenManagementService tokenManagementService, IConfiguration configuration)
-        {
-            _tokenManagementService = tokenManagementService;
-            _configuration = configuration;
-        }
 
         //public async Task Run(string[] args)
         //{
         //    Console.WriteLine("Starting API Test...");
         //    int apiEventId = 14; // Example providerId
-        //    string testResult = await ThirdPartyAPITest(apiEventId);
+        //    string testResult = await GetThirdPartyApiResponse(apiEventId);
         //    Console.WriteLine($"API Test Result: {testResult}");
         //}
 
@@ -88,13 +71,15 @@ namespace ThirdPartyAPIClientLibrary
                     accessTokenObj.IsSuccess = false;
                     return results = "Invalid Authentication Key";
                 }
-                
+
             }
             else if (getApiEvent.AuthenticationType == AuthenticationType.OAUTH)
             {
+                var tokenManagementService = new TokenManagementService();
+
                 // Configure TokenManagementService with API Event details
-                _tokenManagementService.Configure(getApiEvent.ClientId, getApiEvent.ClientSecret, getApiEvent.EndPointName, getApiEvent.Token, getApiEvent.TokenExpiryTime, getApiEvent.TokenExpireDate);
-                accessTokenObj = await _tokenManagementService.GetAccessTokenAsync();
+                tokenManagementService.Configure(getApiEvent.ClientId, getApiEvent.ClientSecret, getApiEvent.EndPointName, getApiEvent.Token, getApiEvent.TokenExpiryTime, getApiEvent.TokenExpireDate);
+                accessTokenObj = await tokenManagementService.GetAccessTokenAsync();
                 if (accessTokenObj.IsSuccess == true && accessTokenObj.Token != null && accessTokenObj.Token != "")
                 {
                     await helper.UpdateAPIAuthticationToken(accessTokenObj.Token, accessTokenObj.ExpiryTime, getApiEvent.AuthId);
@@ -181,7 +166,7 @@ namespace ThirdPartyAPIClientLibrary
         //    tokenObj.Message = "Token successfully generated.";
         //    return tokenObj;
         //}
-   
+
     }
 
 }

@@ -16,7 +16,7 @@ using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
-using ThirdPartyAPITester;
+using ThirdPartyAPIClientLibrary;
 
 namespace OMS.Application.Services.APIConfiguration
 {
@@ -120,7 +120,7 @@ namespace OMS.Application.Services.APIConfiguration
         public async Task<ApiTesterResponse> ThirdPartyAPICall(int apiEventId)
         {
             ApiTesterResponse responsData = new();
-            responsData.ApiResponse = await ThirdPartyAPIIntegrator.ThirdPartyAPITest(apiEventId);
+            responsData.ApiResponse = await ThirdPartyAPIIntegrator.GetThirdPartyApiResponse(apiEventId);
 
             return responsData;
         }

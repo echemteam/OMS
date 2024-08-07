@@ -7,13 +7,6 @@ namespace ThirdPartyAPIClientLibrary.Services
 {
     public class TokenManagementService
     {
-        private readonly HttpClient _httpClient;
-
-        public TokenManagementService()
-        {
-            _httpClient = new HttpClient();
-        }
-
         private TokenDetails tokenObj;
         private DateTime _expiryTime;
         private string _clientId;
