@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="ThirdPartyAPIClientLibrary">
-      <HintPath>..\ThirdPartyAPIClientLibrary.dll</HintPath>
+    <Reference Include="ThirdPartyAPILibrary">
+      <HintPath>..\ThirdPartyAPILibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
 

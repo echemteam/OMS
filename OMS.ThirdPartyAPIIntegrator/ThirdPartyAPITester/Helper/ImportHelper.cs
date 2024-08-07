@@ -1,8 +1,8 @@
 ﻿using Dapper;
 using System.Data;
-using ThirdPartyAPIClientLibrary.Model;
+using ThirdPartyAPILibrary.Model;
 
-namespace ThirdPartyAPIClientLibrary.Helper
+namespace ThirdPartyAPILibrary.Helper
 {
     public class ImportHelper : BaseImport
     {

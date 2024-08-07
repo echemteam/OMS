@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace ThirdPartyAPIClientLibrary.Helper
+namespace ThirdPartyAPILibrary.Helper
 {
     public class BaseImport
     {

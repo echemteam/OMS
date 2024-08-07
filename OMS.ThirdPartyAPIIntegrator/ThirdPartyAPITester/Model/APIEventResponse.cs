@@ -1,4 +1,4 @@
-﻿namespace ThirdPartyAPIClientLibrary.Model
+﻿namespace ThirdPartyAPILibrary.Model
 {
     public class APIEventResponse
     {

@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Web;
-using ThirdPartyAPIClientLibrary.Enums;
-using ThirdPartyAPIClientLibrary.Helper;
-using ThirdPartyAPIClientLibrary.Model;
-using ThirdPartyAPIClientLibrary.Services;
-using ThirdPartyAPIClientLibrary.ThirdPartyResponseProvider;
+using ThirdPartyAPILibrary.Enums;
+using ThirdPartyAPILibrary.Helper;
+using ThirdPartyAPILibrary.Model;
+using ThirdPartyAPILibrary.Services;
+using ThirdPartyAPILibrary.ThirdPartyResponseProvider;
 
-namespace ThirdPartyAPIClientLibrary
+namespace ThirdPartyAPILibrary
 {
     //public class Program
     //{
@@ -30,9 +30,9 @@ namespace ThirdPartyAPIClientLibrary
         //    Console.WriteLine($"API Test Result: {testResult}");
         //}
 
-        private async Task<string> GetThirdPartyApiResponse(int apiEventId)
+        public static async Task<string> GetThirdPartyApiResponse(int apiEventId)
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("APITesterAppSettings.json").Build();
+            var configuration = new ConfigurationBuilder().AddJsonFile("APIClientAppSettings.json").Build();
             string OMSConnection = configuration["ConnectionStrings:OMS"] ?? "";
 
             ImportHelper helper = new(new APIClientDapperContext(OMSConnection));

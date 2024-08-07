@@ -2,9 +2,9 @@
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
-using ThirdPartyAPIClientLibrary.Model;
+using ThirdPartyAPILibrary.Model;
 
-namespace ThirdPartyAPIClientLibrary.ThirdPartyResponseProvider
+namespace ThirdPartyAPILibrary.ThirdPartyResponseProvider
 {
     public class APIResponseProvider
     {

@@ -1,4 +1,4 @@
-﻿namespace ThirdPartyAPIClientLibrary.Enums
+﻿namespace ThirdPartyAPILibrary.Enums
 {
     public class AuthenticationType
     {

@@ -2,7 +2,7 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace ThirdPartyAPIClientLibrary.Helper
+namespace ThirdPartyAPILibrary.Helper
 {
     public class APIClientDapperContext
     {

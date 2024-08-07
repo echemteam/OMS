@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyAPIClientLibrary", "ThirdPartyAPITester\ThirdPartyAPIClientLibrary.csproj", "{BDF85654-4ED9-4B44-8CD0-44F45708205D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyAPILibrary", "ThirdPartyAPITester\ThirdPartyAPILibrary.csproj", "{BDF85654-4ED9-4B44-8CD0-44F45708205D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
