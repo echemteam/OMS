@@ -83,6 +83,8 @@ namespace OMS.Domain.Repository.Implementation
                 apiEventId
             }, commandType: CommandType.StoredProcedure);
         }
+
+       
         #endregion
     }
 }

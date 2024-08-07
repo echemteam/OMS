@@ -46,7 +46,7 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getApiEventParameterByApiEventParametersIdResponse;
         }
-        public async Task<AddEntityDto<int>> DeleteApiEventParameter(int apiEventParametersId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteApiEventParameter(int parameterId, int deletedBy)
         {
             return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEAPIEVENTPARAMETER, new
             {

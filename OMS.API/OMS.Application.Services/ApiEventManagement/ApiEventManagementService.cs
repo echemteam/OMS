@@ -87,8 +87,8 @@ namespace OMS.Application.Services.ApiEventManagement
         {
             return repositoryManager.apiEventParameter.GetApiEventParameterByApiEventParametersId(apiEventId);  
         }
-        public async Task<AddEntityDto<int>> DeleteApiEventParameter(int apiEventParametersId, short CurrentUserId)
-        public async Task<AddEntityDTO<int>> DeleteApiEventParameter(int parameterId, short CurrentUserId)
+
+        public async Task<AddEntityDto<int>> DeleteApiEventParameter(int parameterId, short CurrentUserId)
         {
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiEventParameter.DeleteApiEventParameter(parameterId, deletedBy);
