@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using Dapper;
+using System.Data;
 using ThirdPartyAPITester.Model;
 
 namespace ThirdPartyAPITester.Helper
@@ -17,9 +18,9 @@ namespace ThirdPartyAPITester.Helper
                 APIEvent config = await _context.GetFrist<APIEvent>(sql, new { apiEventId }, CommandType.StoredProcedure);
                 return config;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw (Exception)ex;
             }
         }
 
@@ -31,9 +32,24 @@ namespace ThirdPartyAPITester.Helper
                 List<APIRequiredFields> config = await _context.GetList<APIRequiredFields>(sql, new { apiEventId }, CommandType.StoredProcedure);
                 return config;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw (Exception)ex;
+            }
+        }
+
+        public async Task<bool> UpdateAPIAuthticationToken(string token, DateTime tokenExpires, int authId)
+        {
+            try
+            {
+                string sql = "UPDATE [dbo].[APIAuthentication] SET Token=" + token + ",TokenExpiryTime='" + tokenExpires + "' WHERE AuthId=" + authId;
+                var result = await _connection.QuerySingleOrDefaultAsync(sql, commandType: CommandType.Text).ConfigureAwait(false);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw (Exception)ex;
             }
         }
     }
