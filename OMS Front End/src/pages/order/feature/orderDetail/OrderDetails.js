@@ -200,12 +200,6 @@ const OrderDetails = () => {
         </div>
       </div>
 
-      <Buttons
-        buttonTypeClassName="theme-button"
-        buttonText="Cancel"
-      // onClick={handleToggleModal}
-      />
-
       <SidebarModel
         modalTitle="Add/Edit Address"
         contentClass="content-35"
