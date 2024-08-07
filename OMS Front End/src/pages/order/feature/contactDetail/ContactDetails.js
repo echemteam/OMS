@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { contactInformationData } from "./config/ContactDetail.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery } from '../../../../app/services/commonAPI';
@@ -11,6 +11,7 @@ import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetCu
 import { contactDetailFormData } from "../../../../common/features/component/Contact/config/ContactDetailForm.data";
 import { modifyContactType } from "../../../../utils/TransformData/TransformAPIData";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 
 
 const ContactDetails = (props) => {
@@ -19,6 +20,8 @@ const ContactDetails = (props) => {
   // const [isSidebarModal, setIsSidebarModal] = useState(null)
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [getContectTypeId, setContactTypeId] = useState(null)
+
+  const { orderCustomerId } = useContext(AddOrderContext);
 
   const [
     getAllContactTypes,
@@ -30,28 +33,34 @@ const ContactDetails = (props) => {
   const [getAllPurchasingId, { isFetching: isGetAllPurchasingFetching, isSuccess: isgetAllPurchasingSuccess, data: isgetAllPurchasingData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
 
   useEffect(() => {
-    let req = {
-      customerId: 1093,
-      contactTypeId: ContactType.EndUser
+    if (orderCustomerId) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.EndUser
+      }
+      getAllEndUserId(req)
     }
-    getAllEndUserId(req)
-  }, [])
+  }, [orderCustomerId])
 
   useEffect(() => {
-    let req = {
-      customerId: 1093,
-      contactTypeId: ContactType.InvoiceSubmission
+    if (orderCustomerId) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.InvoiceSubmission
+      }
+      getAllInvoiceSubmissionId(req)
     }
-    getAllInvoiceSubmissionId(req)
-  }, [])
+  }, [orderCustomerId])
 
   useEffect(() => {
-    let req = {
-      customerId: 1093,
-      contactTypeId: ContactType.Purchasing
+    if (orderCustomerId) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.Purchasing
+      }
+      getAllPurchasingId(req)
     }
-    getAllPurchasingId(req)
-  }, [])
+  }, [orderCustomerId])
 
   useEffect(() => {
     if (!isGetAllEndUserFetching && isgetAllEndUserSuccess && isgetAllEndUserData) {
@@ -69,12 +78,26 @@ const ContactDetails = (props) => {
     }
   }, [isGetAllPurchasingFetching, isgetAllPurchasingSuccess, isgetAllPurchasingData])
 
-  const handleDropdownApiCall = () => {
-    let req = {
-      customerId: 1093,
-      contactTypeId: ContactType.EndUser
+  const handleDropdownApiCall = (data) => {
+    if (data === 2) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.EndUser
+      }
+      getAllEndUserId(req)
+    } else if (data === 3) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.Purchasing
+      }
+      getAllPurchasingId(req)
+    } else if (data === 4) {
+      let req = {
+        customerId: orderCustomerId,
+        contactTypeId: ContactType.InvoiceSubmission
+      }
+      getAllInvoiceSubmissionId(req)
     }
-    // getAllContactsByCustomerIdAndContactTypeId(req)
   }
 
   useEffect(() => {
@@ -108,90 +131,112 @@ const ContactDetails = (props) => {
     // onGetContactList();
   };
 
+
   // const handleCheckboxChanges = (data, dataField) => {
-  //   if (dataField === "isEndUser" && data === false) {
-  //     let updatedFormData;
-  //     updatedFormData = removeFormFields(formData, ['contactId']);
-  //     setFormData(updatedFormData)
-  //   } else if (dataField === "isEndUser" && data === true) {
-  //     const manageData = { ...formData };
-  //     let filteredFormFields;
-  //     filteredFormFields = contactInformationData.formFields
-  //     manageData.formFields = filteredFormFields;
-  //     setFormData(manageData)
-  //   }
-  //   else if (dataField === "isInvoiceSubmission" && data === false) {
-  //     let updatedFormData;
-  //     updatedFormData = removeFormFields(formData, ['contactIdd']);
-  //     setFormData(updatedFormData)
-  //   } else if (dataField === "isInvoiceSubmission" && data === true) {
-  //     const manageData = { ...formData };
-  //     let filteredFormFields;
-  //     filteredFormFields = contactInformationData.formFields
-  //     manageData.formFields = filteredFormFields;
-  //     setFormData(manageData)
-  //   }
-  //   else if (dataField === "isPurchasingGiven" && data === false) {
-  //     let updatedFormData;
-  //     updatedFormData = removeFormFields(formData, ['contactIddd']);
-  //     setFormData(updatedFormData)
-  //   } else if (dataField === "isPurchasingGiven" && data === true) {
-  //     const manageData = { ...formData };
-  //     let filteredFormFields;
-  //     filteredFormFields = contactInformationData.formFields
-  //     manageData.formFields = filteredFormFields;
-  //     setFormData(manageData)
+  //   let updatedFormData = { ...formData };
+  //   debugger
+  //   switch (dataField) {
+  //     case "isEndUser":
+  //       if (data) {
+  //         // Add only the field related to "isEndUser"
+  //         const endUserField = contactInformationData.formFields.find(field => field.dataField === "endUserId");
+  //         updatedFormData.formFields = [...updatedFormData.formFields, endUserField];
+  //       } else {
+  //         updatedFormData = removeFormFields(updatedFormData, ["endUserId"]);
+  //       }
+  //       break;
+
+  //     case "isInvoiceSubmission":
+  //       if (data) {
+  //         // Add only the field related to "isInvoiceSubmission"
+  //         const invoiceSubmissionField = contactInformationData.formFields.find(field => field.dataField === "invoiceSubmissionId");
+  //         updatedFormData.formFields = [...updatedFormData.formFields, invoiceSubmissionField];
+  //       } else {
+  //         updatedFormData = removeFormFields(updatedFormData, ["invoiceSubmissionId"]);
+  //       }
+  //       break;
+
+  //     case "isPurchasingGiven":
+  //       if (data) {
+  //         // Add only the field related to "isPurchasingGiven"
+  //         const purchasingField = contactInformationData.formFields.find(field => field.dataField === "purchasingId");
+  //         updatedFormData.formFields = [...updatedFormData.formFields, purchasingField];
+  //       } else {
+  //         updatedFormData = removeFormFields(updatedFormData, ["purchasingId"]);
+  //       }
+  //       break;
+
+  //     default:
+  //       break;
   //   }
 
+  //   // Remove any undefined or duplicate fields
+  //   updatedFormData.formFields = updatedFormData.formFields.filter((field, index, self) =>
+  //     field && index === self.findIndex(f => f.dataField === field.dataField)
+  //   );
+
+  //   setFormData(updatedFormData);
   // };
 
   const handleCheckboxChanges = (data, dataField) => {
     let updatedFormData = { ...formData };
-
+  
+    const addFieldAfterCheckbox = (checkboxFieldId, fieldToAdd) => {
+      const checkboxIndex = updatedFormData.formFields.findIndex(field => field.dataField === checkboxFieldId);
+      if (checkboxIndex !== -1) {
+        // Add field after the checkbox
+        updatedFormData.formFields = [
+          ...updatedFormData.formFields.slice(0, checkboxIndex + 3),
+          fieldToAdd,
+          ...updatedFormData.formFields.slice(checkboxIndex + 3)
+        ];
+      }
+    };
+  
+    const removeField = (fieldToRemove) => {
+      updatedFormData.formFields = updatedFormData.formFields.filter(field => field.dataField !== fieldToRemove);
+    };
+  
     switch (dataField) {
       case "isEndUser":
         if (data) {
-          // Add only the field related to "isEndUser"
           const endUserField = contactInformationData.formFields.find(field => field.dataField === "endUserId");
-          updatedFormData.formFields = [...updatedFormData.formFields, endUserField];
+          addFieldAfterCheckbox("isEndUser", endUserField);
         } else {
-          updatedFormData = removeFormFields(updatedFormData, ["endUserId"]);
+          removeField("endUserId");
         }
         break;
-
+  
       case "isInvoiceSubmission":
         if (data) {
-          // Add only the field related to "isInvoiceSubmission"
           const invoiceSubmissionField = contactInformationData.formFields.find(field => field.dataField === "invoiceSubmissionId");
-          updatedFormData.formFields = [...updatedFormData.formFields, invoiceSubmissionField];
+          addFieldAfterCheckbox("isInvoiceSubmission", invoiceSubmissionField);
         } else {
-          updatedFormData = removeFormFields(updatedFormData, ["invoiceSubmissionId"]);
+          removeField("invoiceSubmissionId");
         }
         break;
-
+  
       case "isPurchasingGiven":
         if (data) {
-          // Add only the field related to "isPurchasingGiven"
           const purchasingField = contactInformationData.formFields.find(field => field.dataField === "purchasingId");
-          updatedFormData.formFields = [...updatedFormData.formFields, purchasingField];
+          addFieldAfterCheckbox("isPurchasingGiven", purchasingField);
         } else {
-          updatedFormData = removeFormFields(updatedFormData, ["purchasingId"]);
+          removeField("purchasingId");
         }
         break;
-
+  
       default:
         break;
     }
-
+  
     // Remove any undefined or duplicate fields
     updatedFormData.formFields = updatedFormData.formFields.filter((field, index, self) =>
       field && index === self.findIndex(f => f.dataField === field.dataField)
     );
-
+  
     setFormData(updatedFormData);
   };
-
-
+  
   const formActionHandler = {
     CHECK_CHANGE: handleCheckboxChanges
   };
@@ -224,7 +269,7 @@ const ContactDetails = (props) => {
             isOpen={isModelOpen}
             getContactById={useLazyGetCustomerContactByContactIdQuery}
             getContectTypeId={getContectTypeId}
-            customerId={1093}
+            customerId={orderCustomerId}
             onhandleApiCall={handleDropdownApiCall}
           />
         </SidebarModel>

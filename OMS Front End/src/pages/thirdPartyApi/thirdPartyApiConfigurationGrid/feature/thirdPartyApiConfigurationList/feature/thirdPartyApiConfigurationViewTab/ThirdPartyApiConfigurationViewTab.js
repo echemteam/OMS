@@ -5,7 +5,7 @@ import ParameterMapping from '../parameterMapping/ParameterMapping';
 import EventRequiredFields from '../eventRequiredFields/EventRequiredFields';
 import RequiredFieldsMapping from '../requiredFieldsMapping/RequiredFieldsMapping';
 import EventParamter from '../eventParamter/EventParamter';
-// import CardSection from '../../../../../../../components/ui/card/CardSection';
+
 
 const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
 

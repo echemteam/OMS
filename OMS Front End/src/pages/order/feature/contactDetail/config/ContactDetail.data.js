@@ -27,8 +27,35 @@ export const contactInformationData = {
         isEnableOnChange: true
       },
       style: {
-        containerCss:
-          "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mt-3",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12",
+      },
+    },
+    {
+      id: "isInvoiceSubmission",
+      lable: "Is Invoice Submission given on Purchase order",
+      Field_Name: "Exempt Sales Tax",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isInvoiceSubmission",
+      fieldSetting: {
+        placeholder: "",
+        isEnableOnChange: true
+      },
+      style: {
+        containerCss:"col-xxl-4 col-xl-4 col-md-4 col-12 col-12",
+      },
+    },
+    {
+      id: "isPurchasingGiven",
+      lable: "Is Purchasing given on Purchase order",
+      Field_Name: "Is Purchasing Given",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isPurchasingGiven",
+      fieldSetting: {
+        placeholder: "",
+        isEnableOnChange: true
+      },
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12",
       },
     },
     {
@@ -46,7 +73,7 @@ export const contactInformationData = {
         isEnableOnChange: true,
       },
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
       },
       inputButtonGroup: {
         isInputButton: true,
@@ -55,54 +82,7 @@ export const contactInformationData = {
         GetByID : ContactType.EndUser
       }
     },
-    {
-      id: "refNumber",
-      lable: "Reference Number",
-      Field_Name: "Reference Number",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "refNumber",
-      fieldSetting: {
-        placeholder: "Enter Reference Number",
-        allowSpace: true,
-        maxLength: 50,
-        exemptBoundarySpaces: true,
-        validation: [{ type: "require" }],
-        isEnableOnChange: true,
-      },
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
-      },
-    },
-    {
-      id: "isInvoiceSubmission",
-      lable: "Is Invoice Submission given on Purchase order",
-      Field_Name: "Exempt Sales Tax",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isInvoiceSubmission",
-      fieldSetting: {
-        placeholder: "",
-        isEnableOnChange: true
-      },
-      style: {
-        containerCss:
-          "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mt-3",
-      },
-    },
-    {
-      id: "isPurchasingGiven",
-      lable: "Is Purchasing given on Purchase order",
-      Field_Name: "Is Purchasing Given",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isPurchasingGiven",
-      fieldSetting: {
-        placeholder: "",
-        isEnableOnChange: true
-      },
-      style: {
-        containerCss:
-          "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mt-3",
-      },
-    },
+  
     {
       id: "invoiceSubmissionId",
       lable: "Invoice Submission ",
@@ -118,7 +98,7 @@ export const contactInformationData = {
         isEnableOnChange: true,
       },
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
       },
       inputButtonGroup: {
         isInputButton: true,
@@ -143,7 +123,7 @@ export const contactInformationData = {
         isEnableOnChange: true,
       },
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
       },
       inputButtonGroup: {
         isInputButton: true,
@@ -152,5 +132,24 @@ export const contactInformationData = {
         GetByID : ContactType.Purchasing
       }
     },
+    {
+      id: "refNumber",
+      lable: "Reference Number",
+      Field_Name: "Reference Number",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "refNumber",
+      fieldSetting: {
+        placeholder: "Enter Reference Number",
+        allowSpace: true,
+        maxLength: 50,
+        exemptBoundarySpaces: true,
+        validation: [{ type: "require" }],
+        isEnableOnChange: true,
+      },
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
+      },
+    },
+    
   ],
 };
