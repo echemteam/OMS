@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.ApiProvider
 {
-    public class ApiProviderDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class ApiProviderDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? ProviderId { get; set; }
         public string? Name { get; set; }

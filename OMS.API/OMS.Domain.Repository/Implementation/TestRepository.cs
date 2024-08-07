@@ -17,9 +17,9 @@ namespace OMS.Domain.Repository.Implementation
         {
         }
 
-        public async Task<AddEntityDTO<int>> AddTest(AddTestRequest addTest)
+        public async Task<AddEntityDto<int>> AddTest(AddTestRequest addTest)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDTEST, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDTEST, new
             {
                 addTest.Name,
                 addTest.City,
@@ -27,9 +27,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<List<TestDTO>> GetTestList()
+        public async Task<List<TestDto>> GetTestList()
         {
-            return await _context.GetList<TestDTO>(GETTEST, commandType: CommandType.StoredProcedure);
+            return await _context.GetList<TestDto>(GETTEST, commandType: CommandType.StoredProcedure);
         }
     }
 }

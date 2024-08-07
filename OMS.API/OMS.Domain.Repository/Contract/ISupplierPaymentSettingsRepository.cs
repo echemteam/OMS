@@ -8,9 +8,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ISupplierPaymentSettingsRepository
     {
-        Task<AddEntityDTO<int>> AddEditCreditCard(SupplierPaymentSettingsDTO requestData);
-        Task<AddEntityDTO<int>> AddEditCheck(SupplierPaymentSettingsDTO requestData);
-        Task<AddEntityDTO<int>> AddEditOther(SupplierPaymentSettingsDTO requestData);
+        Task<AddEntityDto<int>> AddEditCreditCard(SupplierPaymentSettingsDto requestData);
+        Task<AddEntityDto<int>> AddEditCheck(SupplierPaymentSettingsDto requestData);
+        Task<AddEntityDto<int>> AddEditOther(SupplierPaymentSettingsDto requestData);
         Task<GetACHWireBySupplierIdResponse> GetACHWireBySupplierId(int supplierId);
         Task<GetPaymentSettingsBySupplierIdResponse> GetPaymentSettingsBySupplierId(int supplierId);
         Task<GetAddressResponse> GetAddressByAddressId(int? addressId);

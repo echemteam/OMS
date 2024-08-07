@@ -126,7 +126,7 @@ namespace OMS.Application.Services.Common
             return repositoryManager.commonRepository.GetAllFunctionalitiesFields(functionalityId);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
+        public async Task<AddEntityDto<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
         {
             return await repositoryManager.commonRepository.UpdateResponsibleUser(requestData);
         }
@@ -172,6 +172,14 @@ namespace OMS.Application.Services.Common
         public Task<List<GetAllApiEventRequiredFieldByApiEventIdResponse>> GetAllApiEventRequiredFieldByApiEventId(int apiEventId)
         {
             return repositoryManager.commonRepository.GetAllApiEventRequiredFieldByApiEventId(apiEventId);
+        }
+        public Task<List<GetAllCustomerResponse>> GetAllCustomers()
+        {
+            return repositoryManager.commonRepository.GetAllCustomers();
+        }
+        public Task<List<GetAllSubCustomerByCustomerIdResponse>> GetAllSubCustomerByCustomerId(int customerId)
+        {
+            return repositoryManager.commonRepository.GetAllSubCustomerByCustomerId(customerId);
         }
         public Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId)
         {

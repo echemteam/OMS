@@ -24,6 +24,7 @@ const DropDown = (props) => {
           handleDropdownBlur={props.onBlur}
           isDropdownDisabled={props.isDisabled}
           inputButtonGroup={props.inputButtonGroup}
+          handleInputGroupButton={props.handleInputGroupButton}
         />
       </span>
     </>

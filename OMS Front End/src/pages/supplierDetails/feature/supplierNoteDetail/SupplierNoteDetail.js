@@ -23,7 +23,7 @@ const SupplierNoteDetail = ({ isEditablePage }) => {
             * This component displays an NoteGrid for the supplier module.
             * This hook dynamically sets the API call based on the module (customer or supplier).
         */
-        <NoteGrid keyId={supplierId ? supplierId : 0} isEditablePage={isEditablePage} SecurityKey={!isResponsibleUser ? supplierSecurityKey : null} isSupplier={true}
+        <NoteGrid keyId={supplierId || 0} isEditablePage={isEditablePage} SecurityKey={!isResponsibleUser ? supplierSecurityKey : null} isSupplier={true}
             onAddNotes={useAddSupplierNotesMutation} onUpdateNotes={useUpdateSupplierNotesMutation} onGetByIdNotes={useLazyGetSupplierNotesBySupplierIdQuery} />
     )
 }

@@ -26,6 +26,7 @@ const EventMappingList = (props) => {
             ToastService.success(isDeleteApiEventMappingData.errorMessage);
             const currentPageObject = molGridRef.current.getCurrentPageObject();
             getLists(currentPageObject, molGridRef.current.generateSortingString());
+            setListData(null)
         }
     }, [isDeleteApiEventMappingSuccess, isDeleteApiEventMappingData]);
 
@@ -46,14 +47,13 @@ const EventMappingList = (props) => {
 
     useEffect(() => {
         if (isGetApiEventMappingsSuccess && isGetApiEventMappingsData) {
-            // if (isGetApiEventMappingsData) {
+          
             setListData([isGetApiEventMappingsData]);
             props.setEndpointId(isGetApiEventMappingsData?.endpointId);
-            props.setProviderId(isGetApiEventMappingsData?.providerId);
             if (isGetApiEventMappingsData?.providerId) {
                 props.setIsProviderData(true);
             }
-            // }
+          
             if (isGetApiEventMappingsData.totalRecord) {
                 setTotalRowCount(isGetApiEventMappingsData.totalRecord);
             }
@@ -97,7 +97,7 @@ const EventMappingList = (props) => {
 
     return (
         <div className="row">
-            <div className="col-md-12 table-striped api-provider">
+            <div className="col-md-12 table-striped api-provider pagination-none">
                 <MolGrid
                     ref={molGridRef}
                     configuration={AddEditMappingConfigurationData}
@@ -112,9 +112,7 @@ const EventMappingList = (props) => {
                     onSorting={handleSorting}
                     isLoading={isGetApiEventMappingsLoading}
                     onActionChange={actionHandler}
-                // searchTitleButtonClick={handleSearch}
-                // handleChange={handleChange}
-                // handleClear={handleClear}
+               
                 />
             </div>
         </div>

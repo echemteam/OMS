@@ -239,7 +239,8 @@ namespace OMS.FileManger.Services
         /// <returns></returns>
         private static IDictionary<string, string> BuildMappings()
         {
-            var mappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {
+            var mappings = new Dictionary<string, string>
+                (StringComparer.OrdinalIgnoreCase) {
                 #region Big freaking list of mime types
                 {".323", "text/h323"},
                 {".3g2", "video/3gpp2"},
@@ -911,7 +912,7 @@ namespace OMS.FileManger.Services
             {
                 extension = "." + extension;
             }
-            string mime;
+            string? mime;
             return _mappings.Value.TryGetValue(extension, out mime) ? mime : "application/octet-stream";
         }
 
@@ -1000,7 +1001,7 @@ namespace OMS.FileManger.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception($"An error occurred while executing the query: {ex.Message}", ex);
             }
         }
 
@@ -1031,7 +1032,7 @@ namespace OMS.FileManger.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception($"An error occurred while executing the query: {ex.Message}", ex);
             }
         }
 

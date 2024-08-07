@@ -176,12 +176,12 @@ namespace OMS.API.Controllers
             return APISucessResponce<object>(authentication);
         }
 
-        [HttpGet("ApiTester")]
-        public async Task<IActionResult> ApiTester(int apiEventId)
+        [HttpGet("ThirdPartyAPICall")]
+        public async Task<IActionResult> ThirdPartyAPICall(int apiEventId)
         {
             if (apiEventId > 0)
             {
-                var item = await _serviceManager.apiConfigurationService.ApiTester(apiEventId).ConfigureAwait(true);
+                var item = await _serviceManager.apiConfigurationService.ThirdPartyAPICall(apiEventId).ConfigureAwait(true);
                 return APISucessResponce<object>(item);
             }
             return APISucessResponce(apiEventId);

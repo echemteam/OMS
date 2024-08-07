@@ -26,7 +26,7 @@ const AddEditEventParameter = (props) => {
     if (isAddEditApiEventParameterSuccess && allAddEditApiEventParameterData) {
       if (allAddEditApiEventParameterData.errorMessage.includes("EXISTS")) {
         ToastService.warning(allAddEditApiEventParameterData.errorMessage);
-        // handleResetAndClose();
+       
         return;
       }
       ToastService.success(allAddEditApiEventParameterData.errorMessage);
@@ -92,8 +92,7 @@ const AddEditEventParameter = (props) => {
       <FormCreator
         config={addEditParameterData}
         ref={addEditParameterRef}
-      // key={shouldRerenderFormCreator}
-      // onActionChange={formActionHandler}
+     
       />
       <div className="col-md-12 mt-2">
         <div className="d-flex align-item-end justify-content-end">

@@ -6,18 +6,18 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ICustomerAccountingSettingsRepository
     {
-        Task<AddEntityDTO<int>> AddEditCustomerSettings(CustomerAccountingSettingsDTO requestData);
+        Task<AddEntityDto<int>> AddEditCustomerSettings(CustomerAccountingSettingsDto requestData);
         Task<GetDetailsByCustomerIdResponse> GetDetailsbyCustomerID(int customerId);
-        Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDTO requestData);
-        Task<AddEntityDTO<int>> UpdateShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDTO requestData);
+        Task<AddEntityDto<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDto requestData);
+        Task<AddEntityDto<int>> UpdateShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDto requestData);
         Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId);
         Task<List<GetShppingDeliveryCarriersByCustomerIdResponse>> GetShppingDeliveryCarriersByCustomerId(int customerId);
         Task<List<GetDeliveryMethodsCustomerIdResponse>> GetDeliveryMethodsCustomerId(int customerId);
-        Task<AddEntityDTO<int>> UpdateDeliveryMethods(CustomerDeliveryMethodsDTO requestData);
-        Task<AddEntityDTO<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy);
-        Task<AddEntityDTO<int>> DeleteCustomerDeliveryMethodsById(int customerDeliveryMethodId, int deletedBy);
-        Task<AddEntityDTO<int>> AddShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDTO requestData);
-        Task<AddEntityDTO<int>> AddDeliveryMethods(CustomerDeliveryMethodsDTO requestData);
+        Task<AddEntityDto<int>> UpdateDeliveryMethods(CustomerDeliveryMethodsDto requestData);
+        Task<AddEntityDto<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteCustomerDeliveryMethodsById(int customerDeliveryMethodId, int deletedBy);
+        Task<AddEntityDto<int>> AddShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDto requestData);
+        Task<AddEntityDto<int>> AddDeliveryMethods(CustomerDeliveryMethodsDto requestData);
         Task<GetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse> GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(int customerDeliveryCarrierId);
         Task<GetCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse> GetCustomerDeliveryMethodByCustomerDeliveryMethodId(int customerDeliveryMethodId);
     }

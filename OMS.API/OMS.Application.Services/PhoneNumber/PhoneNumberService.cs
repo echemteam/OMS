@@ -22,21 +22,21 @@ namespace OMS.Application.Services.PhoneNumber
         }
         #endregion
 
-        public async Task<AddEntityDTO<int>> AddContactPhone(AddContactPhoneRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddContactPhone(AddContactPhoneRequest requestData, short CurrentUserId)
         {
-            PhoneDTO phoneDTO = requestData.ToMapp<AddContactPhoneRequest, PhoneDTO>();
-            phoneDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.phoneNumber.AddContactPhone(phoneDTO);
+            PhoneDto phoneDto = requestData.ToMapp<AddContactPhoneRequest, PhoneDto>();
+            phoneDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.phoneNumber.AddContactPhone(phoneDto);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateContactPhone(UpdateContactPhoneRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateContactPhone(UpdateContactPhoneRequest requestData, short CurrentUserId)
         {
-            PhoneDTO phoneDTO = requestData.ToMapp<UpdateContactPhoneRequest, PhoneDTO>();
-            phoneDTO.UpdatedBy = CurrentUserId;
-            return await repositoryManager.phoneNumber.UpdateContactPhone(phoneDTO);
+            PhoneDto phoneDto = requestData.ToMapp<UpdateContactPhoneRequest, PhoneDto>();
+            phoneDto.UpdatedBy = CurrentUserId;
+            return await repositoryManager.phoneNumber.UpdateContactPhone(phoneDto);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteContactPhone(int phoneId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteContactPhone(int phoneId, int deletedBy)
         {
             return await repositoryManager.phoneNumber.DeleteContactPhone(phoneId, deletedBy);
         }

@@ -36,7 +36,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateRoles")]
         public async Task<IActionResult> UpdateRoles(UpdateRolesRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.rolesServices.UpdateRoles(requestData, CurrentUserId);

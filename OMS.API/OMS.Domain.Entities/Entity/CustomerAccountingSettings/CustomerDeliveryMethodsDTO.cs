@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.CustomerAccountingSettings
 {
-    public class CustomerDeliveryMethodsDTO : BaseCustomerDeliveryMethodsDTO, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class CustomerDeliveryMethodsDto : BaseCustomerDeliveryMethodsDto, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? CustomerDeliveryMethodId { get; set; }
         public int? CustomerId { get; set; }

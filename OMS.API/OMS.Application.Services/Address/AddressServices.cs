@@ -19,24 +19,24 @@ namespace OMS.Application.Services.Address
         #endregion
 
         #region Constructor
-        public AddressServices(IRepositoryManager _repoManager, ICommonSettingService commonSettingServices) : base(_repoManager, commonSettingServices)
+        public  AddressServices(IRepositoryManager _repoManager, ICommonSettingService commonSettingServices) : base(_repoManager, commonSettingServices)
         {
 
         }
         #endregion
 
         #region Address Services
-        public async Task<AddEntityDTO<int>> AddAddress(AddAddressRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddAddress(AddAddressRequest requestData, short CurrentUserId)
         {
-            AddEntityDTO<int> responceData = new();
+            AddEntityDto<int> responceData = new();
             string[] addressTypeIds = requestData.AddressTypeId!.Split(',');
 
             foreach (var singleAddressTypeId in addressTypeIds)
             {
                 requestData.AddressTypeId = singleAddressTypeId;
-                AddressDTO addressDTO = requestData.ToMapp<AddAddressRequest, AddressDTO>();
-                addressDTO.CreatedBy = CurrentUserId;
-                responceData = await repositoryManager.address.AddAddress(addressDTO);
+                AddressDto addressDto = requestData.ToMapp<AddAddressRequest, AddressDto>();
+                addressDto.CreatedBy = CurrentUserId;
+                responceData = await repositoryManager.address.AddAddress(addressDto);
 
                 if (responceData.KeyValue > 0)
                 {
@@ -58,7 +58,7 @@ namespace OMS.Application.Services.Address
                                 break;
                         }
                     }
-                    var duplicateResponseData = await repositoryManager.address.AddAddress(addressDTO);
+                    var duplicateResponseData = await repositoryManager.address.AddAddress(addressDto);
                     await LinkSameAddress(requestData, duplicateResponseData.KeyValue, CurrentUserId);
                 }
             }
@@ -102,11 +102,11 @@ namespace OMS.Application.Services.Address
         }
 
 
-        public async Task<AddEntityDTO<int>> UpdateAddAddress(UpdateAddressRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateAddAddress(UpdateAddressRequest requestData, short CurrentUserId)
         {
-            AddressDTO addressDTO = requestData.ToMapp<UpdateAddressRequest, AddressDTO>();
-            addressDTO.UpdatedBy = CurrentUserId;
-            AddEntityDTO<int> responceData = await repositoryManager.address.UpdateAddAddress(addressDTO);
+            AddressDto addressDto = requestData.ToMapp<UpdateAddressRequest, AddressDto>();
+            addressDto.UpdatedBy = CurrentUserId;
+            AddEntityDto<int> responceData = await repositoryManager.address.UpdateAddAddress(addressDto);
 
             if (requestData.CustomerId > 0 && responceData.KeyValue > 0)
             {
@@ -115,7 +115,7 @@ namespace OMS.Application.Services.Address
                     CustomerAddressId = requestData.CustomerAddressId,
                     CustomerId = requestData.CustomerId,
                     AddressId = requestData.AddressId,
-                    AddressTypeId = addressDTO.AddressTypeId,
+                    AddressTypeId = addressDto.AddressTypeId,
                     IsPreferredShipping = requestData.IsPreferredShipping,
                     IsPreferredBilling = requestData.IsPreferredBilling
                 };
@@ -128,7 +128,7 @@ namespace OMS.Application.Services.Address
                 {
                     SupplierId = requestData.SupplierId,
                     AddressId = requestData.AddressId,
-                    AddressTypeId = addressDTO.AddressTypeId
+                    AddressTypeId = addressDto.AddressTypeId
                 };
                 _ = await repositoryManager.supplier.UpdateAddressForSupplier(updateAddressForCustomerRequest, CurrentUserId);
             }

@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.Contact
 {
-    public class PhoneDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class PhoneDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? PhoneId { get; set; }
         public string? PhoneNumber { get; set; }

@@ -27,23 +27,23 @@ namespace OMS.Application.Services.Contact
         #endregion
 
         #region  Contact Service
-        public async Task<AddEntityDTO<int>> AddEditContact(AddEditContactRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditContact(AddEditContactRequest requestData, short CurrentUserId)
         {
             const string? OwnerTypeIdColumnName = "OwnerTypeId";
             const string? CreatedByColumnName = "CreatedBy";
 
             string[] contactTypeIds = requestData.ContactTypeId!.Split(',');
 
-            AddEntityDTO<int> responceData = new();
+            AddEntityDto<int> responceData = new();
             foreach (var singleContactTypeId in contactTypeIds)
             {
                 short contactTypeId = short.Parse(singleContactTypeId);
 
                 requestData.ContactTypeId = singleContactTypeId;
-                ContactDTO contactDTO = requestData.ToMapp<AddEditContactRequest, ContactDTO>();
-                contactDTO.CreatedBy = CurrentUserId;
+                ContactDto contactDto = requestData.ToMapp<AddEditContactRequest, ContactDto>();
+                contactDto.CreatedBy = CurrentUserId;
 
-                responceData = await repositoryManager.contact.AddEditContact(contactDTO);
+                responceData = await repositoryManager.contact.AddEditContact(contactDto);
 
                 if (responceData.KeyValue > 0)
                 {

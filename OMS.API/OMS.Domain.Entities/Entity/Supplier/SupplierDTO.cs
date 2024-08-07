@@ -2,7 +2,7 @@
 
 namespace OMS.Domain.Entities.Entity.Supplier
 {
-    public class SupplierDTO : BaseSuppliersDTO, ISupplier, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class SupplierDto : BaseSuppliersDto, ISupplier, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
 
         [Column("GroupTypeId")]

@@ -16,7 +16,7 @@ const SupplierHistory = () => {
          * This hook dynamically sets the API call based on the module (customer or supplier).
         */
         <div className="history-part">
-            <HistotyList isSupplier={true} keyId={supplierId ? supplierId : 0}
+            <HistotyList isSupplier={true} keyId={supplierId || 0}
                 getAuditHistory={useGetSupplierAuditHistoryBySupplierIdMutation}
                 getSearchFilterBindHistory={useLazyGetEventNameAndUserNameBySupplierIdQuery} />
         </div>

@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.Approval
 {
-    public class ApprovalRequestsDTO
+    public class ApprovalRequestsDto
     {
         public int? ApprovalRequestId { get; set; }
         public int? ModuleId { get; set; }

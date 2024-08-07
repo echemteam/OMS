@@ -24,6 +24,12 @@ namespace Common.Helper.EmailHelper
             Cc = string.Empty;
             Bcc = string.Empty;
             To = string.Empty;
+            FromEmail = string.Empty;
+            Subject = string.Empty;
+            Body = string.Empty;
+            HostName = string.Empty;
+            UserName = string.Empty;
+            Password = string.Empty;
         }
 
         public bool SendEmail()

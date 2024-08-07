@@ -24,9 +24,9 @@ namespace OMS.Application.Services.RolesMapping
         #endregion
 
         #region Roles Mapping Service 
-        public async Task<AddEntityDTO<int>> AddRoleMapping(AddRoleMappingRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddRoleMapping(AddRoleMappingRequest requestData, short CurrentUserId)
         {
-            RoleMappingDTO user = requestData.ToMapp<AddRoleMappingRequest, RoleMappingDTO>();
+            RoleMappingDto user = requestData.ToMapp<AddRoleMappingRequest, RoleMappingDto>();
             user.CreatedBy = CurrentUserId;
             return await repositoryManager.rolesMapping.AddRoleMapping(user);
         }
@@ -37,7 +37,7 @@ namespace OMS.Application.Services.RolesMapping
             return rolesDetails;
         }
 
-        public async Task<AddEntityDTO<int>> DeleteRolesMapping(int userRoleId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteRolesMapping(int userRoleId, int deletedBy)
         {
             return await repositoryManager.rolesMapping.DeleteRolesMapping(userRoleId, deletedBy);
         }

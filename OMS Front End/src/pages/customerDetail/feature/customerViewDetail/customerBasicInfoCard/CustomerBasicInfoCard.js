@@ -53,7 +53,6 @@ const CustomerBasicInfoCard = ({
   const [customerID, setcustomerId] = useState();
   const [statusId, setStatusId] = useState();
   const [rUserValue, setRUserValue] = useState([]);
-  // const [showEditIcon, setShowEditIcon] = useState(true);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
   const [
     updateCustomerSubCustomer,
@@ -94,12 +93,12 @@ const CustomerBasicInfoCard = ({
   useEffect(() => {
     if (!isResponsibleUser) {
       if (hasEditPermission && hasEditPermission.isViewOnly === true) {
-        // setShowEditIcon(true);
+       
         setIsButtonDisable(true);
       } else if (hasEditPermission.isEditable === true) {
         // setShowEditIcon(true);
       } else {
-        // setShowEditIcon(false);
+     
         setIsButtonDisable(true);
       }
     }
@@ -159,7 +158,7 @@ const CustomerBasicInfoCard = ({
         default:
           setOptions([]);
       }
-      // setSelectedStatus(StatusValue[statusId - 1].label);
+      
     }
   }, [customerData]);
 
@@ -358,7 +357,7 @@ const CustomerBasicInfoCard = ({
             </div>
 
             <div className="field-desc col-span-3">
-              <i class="fa fa-envelope"></i>
+              <i className="fa fa-envelope"></i>
               <a
                 className="email-link"
                 href={`mailto:${customerData?.emailAddress}`}
@@ -374,7 +373,7 @@ const CustomerBasicInfoCard = ({
             </div>
 
             <div className="field-desc ">
-              <i class="fa fa-globe"></i>
+              <i className="fa fa-globe"></i>
               <div className="info-desc">{customerData?.website}</div>
 
               <span

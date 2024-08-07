@@ -24,9 +24,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Api Event Parameter Repository
-        public async Task<AddEntityDTO<int>> AddEditApiEventRequiredField(ApiEventRequiredFieldDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditApiEventRequiredField(ApiEventRequiredFieldDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITAPIEVENTREQUIREDFIELD, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITAPIEVENTREQUIREDFIELD, new
             {
                 requestData.ApiEventRequiredFieldId,
                 requestData.FieldName,
@@ -44,9 +44,9 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getApiEventParameterByApiEventParametersIdResponse;
         }
-        public async Task<AddEntityDTO<int>> DeleteApiEventRequiredField(int apiEventRequiredFieldId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteApiEventRequiredField(int apiEventRequiredFieldId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEAPIEVENTREQUIREDFIELD, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEAPIEVENTREQUIREDFIELD, new
             {
                 apiEventRequiredFieldId,
                 deletedBy

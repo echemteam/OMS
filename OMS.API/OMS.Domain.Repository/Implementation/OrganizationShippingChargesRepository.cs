@@ -16,9 +16,9 @@ namespace OMS.Domain.Repository.Implementation
         {
 
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationShippingCharges(OrganizationShippingChargesDto requestData)
+        public async Task<AddEntityDto<int>> AddEditOrganizationShippingCharges(OrganizationShippingChargesDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONSHIPPINGCHARGES, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORGANIZATIONSHIPPINGCHARGES, new
             {
                 requestData.OrganizationShippingChargeId,
                 requestData.DomesticOvernight,

@@ -28,9 +28,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Api Event Repository
-        public async Task<AddEntityDTO<int>> AddApiEventRequiredFieldsMapping(ApiEventRequiredFieldsDTO requestData)
+        public async Task<AddEntityDto<int>> AddApiEventRequiredFieldsMapping(ApiEventRequiredFieldsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDAPIEVENTREQUIREDFIELDSMAPPING, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDAPIEVENTREQUIREDFIELDSMAPPING, new
             {
                 requestData.ApiEventRequiredFieldId,
                 requestData.ApiEventId,
@@ -51,9 +51,9 @@ namespace OMS.Domain.Repository.Implementation
             }, true);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteApiEventRequiredFieldsMapping(int apiEventRequiredFieldsMappingId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteApiEventRequiredFieldsMapping(int apiEventRequiredFieldsMappingId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEAPIEVENTREQUIREDFIELDSMAPPING, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEAPIEVENTREQUIREDFIELDSMAPPING, new
             {
                 apiEventRequiredFieldsMappingId,
                 deletedBy
@@ -83,6 +83,8 @@ namespace OMS.Domain.Repository.Implementation
                 apiEventId
             }, commandType: CommandType.StoredProcedure);
         }
+
+       
         #endregion
     }
 }

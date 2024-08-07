@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.SuppierBankDetails
 {
-    public class SuppierBankDetailsDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class SuppierBankDetailsDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? SupplierBankDetailsId { get; set; }
         public int? BankAddressId { get; set; }

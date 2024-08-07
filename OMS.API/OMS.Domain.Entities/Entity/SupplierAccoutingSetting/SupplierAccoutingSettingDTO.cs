@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.SupplierAccoutingSetting
 {
-    public class SupplierAccoutingSettingDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class SupplierAccoutingSettingDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? SupplierAccountingSettingId { get; set; }
         public byte? PaymentTermId { get; set; }

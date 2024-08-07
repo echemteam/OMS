@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.SupplierDocuements
 {
-    public class SupplierDocumentsDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class SupplierDocumentsDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? SupplierDocumentId { get; set; }
         public string? Name { get; set; }

@@ -21,18 +21,18 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region CustomerNotes Repository
-        public async Task<AddEntityDTO<long>> AddCustomerNotes(CustomerNotesDTO addCustomerNotes)
+        public async Task<AddEntityDto<long>> AddCustomerNotes(CustomerNotesDto addCustomerNotes)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<long>>(ADDCUSTOMERNOTES, new
+            return await _context.GetSingleAsync<AddEntityDto<long>>(ADDCUSTOMERNOTES, new
             {
                 addCustomerNotes.CustomerId,
                 addCustomerNotes.Note,
                 addCustomerNotes.CreatedBy,
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<long>> UpdateCustomerNotes(CustomerNotesDTO updateCustomerNotes)
+        public async Task<AddEntityDto<long>> UpdateCustomerNotes(CustomerNotesDto updateCustomerNotes)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<long>>(UPDATECUSTOMERNOTES, new
+            return await _context.GetSingleAsync<AddEntityDto<long>>(UPDATECUSTOMERNOTES, new
             {
                 updateCustomerNotes.CustomerNoteId,
                 updateCustomerNotes.CustomerId,

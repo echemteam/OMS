@@ -7,7 +7,7 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IOrganizationRepository
     {
-        Task<AddEntityDTO<int>> AddEditOrganizationProfile(OrganizationProfileDTO requestData);
+        Task<AddEntityDto<int>> AddEditOrganizationProfile(OrganizationProfileDto requestData);
         Task<GetOrganizationProfileResponse> GetOrganizationProfile();
         Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(ListEntityRequest<BaseFilter> requestData);
     }

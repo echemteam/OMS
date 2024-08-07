@@ -37,7 +37,7 @@ const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,regis
         const manageData = { ...registeredAddressData };
         if (dataField === "countryId") {
            getAllStates(data.value);
-        //  setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+        
           setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
           registeredAddressRef.current.updateFormFieldValue({
             countryId: data.value,

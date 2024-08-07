@@ -11,8 +11,8 @@ namespace OMS.Domain.Entities.API.Response.Authentication
         public bool IsAuthenticated { get; set; }
         public string? Message { get; set; }
         public int? SessionTimeout { get; set; }
-        public List<SecurityPermissionsDetails> securityPermissions { get; set; }
-        public List<GetApprovalConfigurationResponse> ApprovalRulesConfiguration { get; set; }
-        public BaseRolesDTO? Roles { get; set; }
+        public List<SecurityPermissionsDetails>? securityPermissions { get; set; }
+        public List<GetApprovalConfigurationResponse>? ApprovalRulesConfiguration { get; set; }
+        public BaseRolesDto? Roles { get; set; }
     }
 }

@@ -21,11 +21,11 @@ namespace OMS.Application.Services.SupplierNotes
         }
         #endregion
 
-        public async Task<AddEntityDTO<long>> AddSupplierNotes(AddSupplierNotesRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<long>> AddSupplierNotes(AddSupplierNotesRequest requestData, short CurrentUserId)
         {
-            SupplierNoteDTO supplierNoteDTO = requestData.ToMapp<AddSupplierNotesRequest, SupplierNoteDTO>();
-            supplierNoteDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.supplierNotes.AddSupplierNotes(supplierNoteDTO);
+            SupplierNoteDto supplierNoteDto = requestData.ToMapp<AddSupplierNotesRequest, SupplierNoteDto>();
+            supplierNoteDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.supplierNotes.AddSupplierNotes(supplierNoteDto);
         }
 
         public Task<List<GetSupplierNotesBySupplierIdResponse>> GetSupplierNotesBySupplierId(int supplierId)
@@ -34,9 +34,9 @@ namespace OMS.Application.Services.SupplierNotes
         }
 
 
-        public async Task<AddEntityDTO<long>> UpdateSupplierNotes(UpdateSupplierNotesRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<long>> UpdateSupplierNotes(UpdateSupplierNotesRequest requestData, short CurrentUserId)
         {
-            SupplierNoteDTO supplierNotesUpdate = requestData.ToMapp<UpdateSupplierNotesRequest, SupplierNoteDTO>();
+            SupplierNoteDto supplierNotesUpdate = requestData.ToMapp<UpdateSupplierNotesRequest, SupplierNoteDto>();
             supplierNotesUpdate.UpdatedBy = CurrentUserId;
             return await repositoryManager.supplierNotes.UpdateSupplierNotes(supplierNotesUpdate);
         }

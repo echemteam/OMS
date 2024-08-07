@@ -6,9 +6,9 @@ namespace OMS.Application.Services.Address
 {
     public interface IAddressServices
     {
-        Task<AddEntityDTO<int>> AddAddress(AddAddressRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddAddress(AddAddressRequest requestData, short CurrentUserId);
         Task<List<GetAddresssByCustomerIdResponse>> GetAddresssByCustomerId(int customerId);
-        Task<AddEntityDTO<int>> UpdateAddAddress(UpdateAddressRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> UpdateAddAddress(UpdateAddressRequest requestData, short CurrentUserId);
         Task<List<GetAddresssBySupplierIdResponse>> GetAddresssBySupplierId(int supplierId);
         Task<GetCustomerAddresssByAddressIdResponse> GetCustomerAddresssByAddressId(int addressId);
         Task<GetSupplierAddresssByAddressIdResponse> GetSupplierAddresssByAddressId(int addressId);

@@ -40,9 +40,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return customerDetails;
         }
-        public async Task<AddEntityDTO<int>> AddEditCustomerSettings(CustomerAccountingSettingsDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditCustomerSettings(CustomerAccountingSettingsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCUSTOMERSETTINGS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITCUSTOMERSETTINGS, new
             {
                 requestData.CustomerAccountingSettingId,
                 requestData.CustomerId,
@@ -59,9 +59,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDTO requestData)
+        public async Task<AddEntityDto<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(CustomerShppingDeliveryCarriersDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERSHPPINGDELIVERYCARRIERSANDDELIVERYMETHODS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDCUSTOMERSHPPINGDELIVERYCARRIERSANDDELIVERYMETHODS, new
             {
                 requestData.DeliveryAccountId,
                 requestData.CustomerId,
@@ -70,9 +70,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDTO requestData)
+        public async Task<AddEntityDto<int>> UpdateShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATESHPPINGDELIVERYCARRIERS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATESHPPINGDELIVERYCARRIERS, new
             {
                 requestData.CustomerId,
                 requestData.CustomerDeliveryCarrierId,
@@ -110,9 +110,9 @@ namespace OMS.Domain.Repository.Implementation
             return getDeliveryMethodsList;
         }
 
-        public async Task<AddEntityDTO<int>> UpdateDeliveryMethods(CustomerDeliveryMethodsDTO requestData)
+        public async Task<AddEntityDto<int>> UpdateDeliveryMethods(CustomerDeliveryMethodsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEDELIVERYMETHODS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEDELIVERYMETHODS, new
             {
                 requestData.CustomerId,
                 requestData.CustomerDeliveryMethodId,
@@ -123,27 +123,27 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETECUSTOMERDELIVERYCARRIERSBYID, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETECUSTOMERDELIVERYCARRIERSBYID, new
             {
                 customerDeliveryCarrierId,
                 deletedBy
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteCustomerDeliveryMethodsById(int customerDeliveryMethodId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteCustomerDeliveryMethodsById(int customerDeliveryMethodId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETECUSTOMERDELIVERYMETHODSBYID, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETECUSTOMERDELIVERYMETHODSBYID, new
             {
                 customerDeliveryMethodId,
                 deletedBy
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> AddShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDTO requestData)
+        public async Task<AddEntityDto<int>> AddShppingDeliveryCarriers(CustomerShppingDeliveryCarriersDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDSHPPINGDELIVERYCARRIERS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDSHPPINGDELIVERYCARRIERS, new
             {
                 requestData.CustomerId,
                 requestData.CarrierId,
@@ -153,9 +153,9 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.HandlingFee
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> AddDeliveryMethods(CustomerDeliveryMethodsDTO requestData)
+        public async Task<AddEntityDto<int>> AddDeliveryMethods(CustomerDeliveryMethodsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDDELIVERYMETHODS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDDELIVERYMETHODS, new
             {
                 requestData.CustomerId,
                 requestData.DeliveryMethodId,

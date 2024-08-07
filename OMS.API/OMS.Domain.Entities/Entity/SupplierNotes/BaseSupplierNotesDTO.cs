@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMS.Domain.Entities.Entity.SupplierNotes
 {
-    public class BaseSupplierNotesDTO
+    public class BaseSupplierNotesDto
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -24,8 +24,8 @@ namespace Common.Helper.IO
         public static int GetQueryInt(this string apiData)
         {
             var decryptedData = EncryptionUtil.AesDecrypt(EncryptionUtil.HexStringToBase64String(apiData),
-                                                           AESKey,
-                                                           AESIV,
+                                                            AESKey ?? string.Empty,
+                                                           AESIV ?? string.Empty,
                                                            IsEncrypt);
             int data = Convert.ToInt32(decryptedData);
             return data;

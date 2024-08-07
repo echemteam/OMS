@@ -36,7 +36,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateCustomersBasicInformation")]
         public async Task<IActionResult> UpdateCustomersBasicInformation(UpdateCustomersBasicInformationRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.customersServices.UpdateCustomersBasicInformation(requestData, CurrentUserId);

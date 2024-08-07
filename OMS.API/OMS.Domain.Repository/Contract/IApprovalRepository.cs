@@ -9,12 +9,12 @@ namespace OMS.Domain.Repository.Contract
     {
         Task<List<GetUserCheckListByEventIdResponse>> GetUserCheckList(int eventId);
         Task<List<GetCheckListItemResponse>> GetCheckListItemByListId(int ChecklistId);
-        Task<AddEntityDTO<int>> AddUserChecklistResponse(DataTable CheckListDataTable);
+        Task<AddEntityDto<int>> AddUserChecklistResponse(DataTable CheckListDataTable);
         Task<List<GetValidateCheckListResponse>> GetValidateCustomer(int mainId, bool? IsSubCustomer);
         Task<List<GetValidateCheckListResponse>> GetValidateSupplier(int mainId);
-        Task<AddEntityDTO<int>> AddApprovalRequests(ApprovalRequestsDTO requestData);
-        Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId);
+        Task<AddEntityDto<int>> AddApprovalRequests(ApprovalRequestsDto requestData);
         Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId);
         Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration();
+        Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId);
     }
 }

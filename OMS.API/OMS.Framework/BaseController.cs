@@ -19,18 +19,24 @@ namespace OMS.Framework
             ModelExtention.AESIV = _commonSettingService.EncryptionSettings.AESIV!;
             ModelExtention.IsEncrypt = _commonSettingService.EncryptionSettings.IsEnableEncryption!;
         }
+
         public short CurrentUserId
         {
             get
             {
-
-                if (User.Identity.IsAuthenticated)
+                var userIdentity = User?.Identity;
+                if (userIdentity?.IsAuthenticated == true)
                 {
-                    return Convert.ToInt16(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                    var claimValue = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                    if (short.TryParse(claimValue, out var userId))
+                    {
+                        return userId;
+                    }
                 }
                 return 0;
             }
         }
+
 
         [NonAction]
         public IActionResult APISucessResponce<T>(T itemResponce, string message = "", APIResponceCode responseCode = APIResponceCode.OK)

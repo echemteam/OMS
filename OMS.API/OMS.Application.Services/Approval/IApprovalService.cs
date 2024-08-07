@@ -9,9 +9,9 @@ namespace OMS.Application.Services.Approval
     public interface IApprovalService
     {
         Task<List<GetUserCheckListByEventIdResponse>> GetUserCheckList(int eventId);
-        Task<AddEntityDTO<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData, int CurrentUserId);
+        Task<AddEntityDto<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData, int CurrentUserId);
         Task<List<GetValidateCheckListResponse>> GetValidateCheckList(ValidateRequest requestData);
-        Task<AddEntityDTO<int>> AddApprovalRequests(AddApprovalRequests requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddApprovalRequests(AddApprovalRequests requestData, short CurrentUserId);
         Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId);
         Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId);
     }

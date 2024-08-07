@@ -7,8 +7,8 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IApiEventMappingRepository
     {
-        Task<AddEntityDTO<int>> AddApiEventMapping(ApiEventMappingDTO requestData);
+        Task<AddEntityDto<int>> AddApiEventMapping(ApiEventMappingDto requestData);
         Task<GetApiEventMappingsResponse> GetApiEventMappings(GetApiEventMappingsRequest requestData);
-        Task<AddEntityDTO<int>> DeleteApiEventMapping(int apiEventMappingId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteApiEventMapping(int apiEventMappingId, int deletedBy);
     }
 }

@@ -8,12 +8,22 @@ body {
   padding: 0;
   margin: 0;
   background-color: #0004430d;
-  font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family:
+    "Public Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
   font-size: var(--commonFont);
   color: var(--textColor);
   overflow: hidden;
 }
-
 
 a {
   transition: 0.5s all;
@@ -3452,4 +3462,48 @@ input[type="checkbox"]:disabled {
       transition: 0.5s all;
     }
   }
+}
+
+.configuration-seprations {
+  .separator::after {
+    height: 30px;
+  }
+}
+
+.configuration-Icon {
+  .edit-icons {
+    position: absolute;
+    top: -9px;
+    right: 0px;
+    border-radius: 50%;
+    color: var(--whiteColor) !important;
+    background: var(--gradient-theme);
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+}
+
+.pagination-none {
+  .table-pagination {
+    display: none;
+  }
+  table {
+    tbody {
+      tr {
+        &:last-child {
+          // Remove border from the last row
+          border-bottom: none !important;
+        }
+      }
+    }
+  }
+}
+
+
+.relative{
+  position: relative;
 }

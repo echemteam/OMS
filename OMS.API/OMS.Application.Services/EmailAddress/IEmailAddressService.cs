@@ -5,8 +5,8 @@ namespace OMS.Application.Services.EmailAddress
 {
     public interface IEmailAddressService
     {
-        Task<AddEntityDTO<int>> AddContactEmail(AddContactEmailRequest requestData, short CurrentUserId);
-        Task<AddEntityDTO<int>> UpdateContactEmail(UpdateContactEmailRequest requestData, short CurrentUserId);
-        Task<AddEntityDTO<int>> DeleteContactEmail(int emailId, int deletedBy);
+        Task<AddEntityDto<int>> AddContactEmail(AddContactEmailRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> UpdateContactEmail(UpdateContactEmailRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> DeleteContactEmail(int emailId, int deletedBy);
     }
 }

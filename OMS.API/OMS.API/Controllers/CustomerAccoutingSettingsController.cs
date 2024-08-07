@@ -55,7 +55,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateShppingDeliveryCarriers")]
         public async Task<IActionResult> UpdateShppingDeliveryCarriers(UpdateShppingDeliveryCarriersRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.customerAccoutingSettingsService.UpdateShppingDeliveryCarriers(requestData, CurrentUserId);
@@ -78,7 +78,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateDeliveryMethods")]
         public async Task<IActionResult> UpdateDeliveryMethods(UpdateDeliveryMethodsRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.customerAccoutingSettingsService.UpdateDeliveryMethods(requestData, CurrentUserId);

@@ -7,9 +7,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IRolesRepository
     {
-        Task<AddEntityDTO<int>> AddRoles(RolesDTO roles);
-        Task<AddEntityDTO<int>> UpdateRoles(RolesDTO updateRoles);
-        Task<AddEntityDTO<int>> DeleteRoles(int roleId, int deletedBy);
+        Task<AddEntityDto<int>> AddRoles(RolesDto roles);
+        Task<AddEntityDto<int>> UpdateRoles(RolesDto updateRoles);
+        Task<AddEntityDto<int>> DeleteRoles(int roleId, int deletedBy);
         Task<EntityList<GetRolesListResponse>> GetRoles(ListEntityRequest<BaseFilter> requestData);
         Task<GetRolesResponse> GetRoleByRoleId(int roleId);
     }

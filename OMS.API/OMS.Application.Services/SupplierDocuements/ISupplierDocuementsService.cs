@@ -6,8 +6,8 @@ namespace OMS.Application.Services.SupplierDocuements
 {
     public interface ISupplierDocuementsService
     {
-        Task<AddEntityDTO<int>> AddSupplierDocuments(AddSupplierDocumentsRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddSupplierDocuments(AddSupplierDocumentsRequest requestData, short CurrentUserId);
         Task<List<GetSupplierDocumentsByIdResponse>> GetSupplierDocumentsById(int supplierId);
-        Task<AddEntityDTO<int>> DeleteSupplierDocumentsById(int supplierDocumentId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteSupplierDocumentsById(int supplierDocumentId, int deletedBy);
     }
 }

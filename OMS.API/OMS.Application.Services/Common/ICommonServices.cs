@@ -30,7 +30,7 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllModulesResponse>> GetAllModules();
         Task<List<GetAllFunctionalitiesResponse>> GetAllFunctionalities(int moduleId);
         Task<List<GetAllFunctionalitiesFieldsResponse>> GetAllFunctionalitiesFields(int functionalityId);
-        Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData);
+        Task<AddEntityDto<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData);
         Task<byte[]> DownloadDocument(string folderName, string fileName, int keyId);
         Task<List<GetAllAPIProvidersResponse>> GetAllAPIProviders();
         Task<List<GetAllAPIEndpointsResponse>> GetAllAPIEndpoints();
@@ -39,6 +39,8 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllApiEventParameterByApiEventIdResponse>> GetAllApiEventParameterByApiEventId(int apiEventId);
         Task<List<GetAllAPIParametersResponse>> GetAllAPIParameters();
         Task<List<GetAllApiEventRequiredFieldByApiEventIdResponse>> GetAllApiEventRequiredFieldByApiEventId(int apiEventId);
+        Task<List<GetAllCustomerResponse>> GetAllCustomers();
+        Task<List<GetAllSubCustomerByCustomerIdResponse>> GetAllSubCustomerByCustomerId(int customerId);
         Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId);
         Task<List<GetAllContactsByCustomerIdAndContactTypeIdResponse>> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId);
 

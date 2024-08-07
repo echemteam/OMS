@@ -6,9 +6,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ISupplierdocuementsRepositery
     {
-        Task<AddEntityDTO<int>> AddSupplierDocuments(SupplierDocumentsDTO supplierDocuements);
+        Task<AddEntityDto<int>> AddSupplierDocuments(SupplierDocumentsDto supplierDocuements);
         Task<List<GetSupplierDocumentsByIdResponse>> GetSupplierDocumentsById(int supplierId);
-        Task<AddEntityDTO<int>> DeleteSupplierDocumentsById(int supplierDocumentId, int deletedBy);
-        Task<AddEntityDTO<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? supplierId);
+        Task<AddEntityDto<int>> DeleteSupplierDocumentsById(int supplierDocumentId, int deletedBy);
+        Task<AddEntityDto<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? supplierId);
     }
 }

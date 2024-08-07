@@ -5,7 +5,7 @@ import { setDropDownOptionField } from '../../../../../../../../utils/FormFields
 import Buttons from '../../../../../../../../components/ui/button/Buttons';
 import FormCreator from '../../../../../../../../components/Forms/FormCreator';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
-import { useAddApiParameterMappingMutation, useLazyGetAllAPIParametersByEndpointIdQuery, useLazyGetAllAPIParametersQuery, useLazyGetAllApiEventParameterByApiEventIdQuery, useLazyGetAllEventParameterByEventIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
+import { useAddApiParameterMappingMutation, useLazyGetAllAPIParametersByEndpointIdQuery,  useLazyGetAllEventParameterByEventIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
 
 const AddEditParameterMapping = (props) => {
 
@@ -14,20 +14,19 @@ const AddEditParameterMapping = (props) => {
   const [getParametersByEndPointId, { isSuccess: isGetParametersSucess, data: isGetParametersData }] = useLazyGetAllAPIParametersByEndpointIdQuery();
   const [getEventParameterByEventId, { isSuccess: isGetEventParametersSucess, data: isGetEventParametersData }] = useLazyGetAllEventParameterByEventIdQuery();
   const [addApiParameterMapping, { isLoading: isAddApiParameterMappingLoading, isSuccess: isAddApiParameterMappingSuccess, data: allAddApiParameterMappingData, },] = useAddApiParameterMappingMutation();
-  // const [getAllApiEventParameterByApiEventId, { isSuccess: isGetAllApiEventParameterByApiEventIdSucess, data: allGetAllApiEventParameterByApiEventIdData }] = useLazyGetAllApiEventParameterByApiEventIdQuery();
-
+ 
   useEffect(() => {
     props.endpointId && getParametersByEndPointId(props.endpointId)
     props.keyId && getEventParameterByEventId(props.keyId);
     console.log(props.endpointId);
-    // getAllApiEventParameterByApiEventId(props.keyId);
+ 
   }, [])
 
   useEffect(() => {
     if (isAddApiParameterMappingSuccess && allAddApiParameterMappingData) {
       if (allAddApiParameterMappingData.errorMessage.includes("exists")) {
         ToastService.warning(allAddApiParameterMappingData.errorMessage);
-        // handleResetAndClose();
+       
         return;
       }
       ToastService.success(allAddApiParameterMappingData.errorMessage);

@@ -3,7 +3,6 @@ using Common.Helper.Utility;
 using Microsoft.IdentityModel.Tokens;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Authentication;
-using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.API.Response.Authentication;
 using OMS.Domain.Entities.API.Response.SecuritySetting;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -37,7 +36,7 @@ namespace OMS.Application.Services.Authentication
             {
                 IsAuthenticated = true
             };
-            UserDTO user = await repositoryManager.authentication.UserLogin(authenticationRequest.UserName);
+            UserDto user = await repositoryManager.authentication.UserLogin(authenticationRequest.UserName);
             if (user == null || !user.IsActive)
             {
                 authResponce.Message = (user == null ? "User details not found" : "User is not active");
@@ -51,7 +50,7 @@ namespace OMS.Application.Services.Authentication
                 authResponce.Message = "Invalid credentials !!";
                 return authResponce;
             }
-            BaseRolesDTO role = await repositoryManager.authentication.GetUserRoles(user.UserId);
+            BaseRolesDto role = await repositoryManager.authentication.GetUserRoles(user.UserId);
             List<GetSecurityPermissionByUserIdResponse> response = await repositoryManager.securityPermission.GetSecurityPermissionByUserId(user.UserId);
             authResponce.securityPermissions = response.Select(a => new SecurityPermissionsDetails()
             {
@@ -61,10 +60,9 @@ namespace OMS.Application.Services.Authentication
                 SecuritySettingId = a.SecuritySettingId
             }).ToList();
 
-            //List<GetApprovalConfigurationResponse> approvalConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
             authResponce.ApprovalRulesConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
 
-            UserDetails userDetails = user.ToMapp<UserDTO, UserDetails>();
+            UserDetails userDetails = user.ToMapp<UserDto, UserDetails>();
             authResponce.User = userDetails;
             authResponce.Roles = role;
             authResponce.SessionTimeout = Convert.ToInt32((commonSettingService.ApplicationSettings.SessionTimeOut != null) ? Convert.ToInt32(commonSettingService.ApplicationSettings.SessionTimeOut) : 60);

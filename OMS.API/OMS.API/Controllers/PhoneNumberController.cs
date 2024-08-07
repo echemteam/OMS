@@ -44,7 +44,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateContactPhone")]
         public async Task<IActionResult> UpdateContactPhone(UpdateContactPhoneRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.phoneNumberService.UpdateContactPhone(requestData, CurrentUserId);

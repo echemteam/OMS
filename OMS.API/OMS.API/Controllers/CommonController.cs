@@ -262,5 +262,17 @@ namespace OMS.API.Controllers
             List<GetAllContactsByCustomerIdAndContactTypeIdResponse> responseData = await _serviceManager.commonServices.GetAllContactsByCustomerIdAndContactTypeId(customerId,contactTypeId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpGet("GetAllCustomers")]
+        public async Task<IActionResult> GetAllCustomers()
+        {
+            List<GetAllCustomerResponse> responseData = await _serviceManager.commonServices.GetAllCustomers().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+        [HttpGet("GetAllSubCustomerByCustomerId")]
+        public async Task<IActionResult> GetAllSubCustomerByCustomerId(int customerId)
+        {
+            List<GetAllSubCustomerByCustomerIdResponse> responseData = await _serviceManager.commonServices.GetAllSubCustomerByCustomerId(customerId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }
