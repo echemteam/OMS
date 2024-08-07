@@ -38,7 +38,7 @@ const PhysicalAddressDetail=({physicalAddressData,physicalAddressRef,PhysicalAdd
         const manageData = { ...physicalAddressData };
         if (dataField === "countryId") {
            getAllStates(data.value);
-        //  setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+      
           setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
           physicalAddressRef.current.updateFormFieldValue({
             countryId: data.value,
@@ -58,7 +58,7 @@ const PhysicalAddressDetail=({physicalAddressData,physicalAddressRef,PhysicalAdd
         DDL_CHANGED: handleChangeAddressDropdownList,
       };
     
-    return(<>
+    return( 
         <CardSection cardTitle="Physical Address">
             <div className="row">
               <FormCreator
@@ -70,6 +70,6 @@ const PhysicalAddressDetail=({physicalAddressData,physicalAddressRef,PhysicalAdd
             </div>
           </CardSection>
     
-      </>)
+       )
 }
 export default PhysicalAddressDetail;

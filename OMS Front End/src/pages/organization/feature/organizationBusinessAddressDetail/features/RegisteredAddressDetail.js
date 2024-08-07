@@ -37,7 +37,7 @@ const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,regis
         const manageData = { ...registeredAddressData };
         if (dataField === "countryId") {
            getAllStates(data.value);
-        //  setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+        
           setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
           registeredAddressRef.current.updateFormFieldValue({
             countryId: data.value,
@@ -56,7 +56,7 @@ const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,regis
         DDL_CHANGED: handleChangeAddressDropdownList,
       };
     
-    return(<>
+    return( 
         <CardSection cardTitle="Registered Address">
             <div className="row">
               <FormCreator
@@ -68,6 +68,6 @@ const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,regis
             </div>
           </CardSection>
     
-      </>)
+       )
 }
 export default RegisteredAddressDetail;

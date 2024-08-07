@@ -2,7 +2,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Lib's */
 import Buttons from "../../../../../components/ui/button/Buttons";
-import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
+import { AddressType, FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
@@ -19,14 +19,12 @@ const SetInitialCountry = {
     value: 233
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef }) => {
+const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId }) => {
 
     //** States */
     const ref = useRef();
     const [formData, setFormData] = useState(addressFormData);
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-    // const [getByIdValue, setGetByIdValue] = useState();
-    // const [addressDataField, setAddressDataField] = useState();
     const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
     const [selectedCheckbox, setSelectedCheckbox] = useState(null);
     // const [stateChage, setStateChange] = useState(null)
@@ -47,7 +45,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     useEffect(() => {
         const fetchData = async () => {
-            if (editMode || isModelOpen) {
+            if (editMode || isModelOpen || !isOrderManage) {
                 await Promise.all([
                     getAllStates(),
                     // getAllCities(),
@@ -56,9 +54,25 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 ]);
             }
         };
-
         fetchData();
     }, [editMode, isModelOpen]);
+
+    useEffect(() => {
+        if (isOrderManage) {
+            setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
+            let form = { ...addressFormData };
+            if (getAddressTypeIdOrder === AddressType.Billing) {
+                form = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredShipping']);
+            } else if (getAddressTypeIdOrder === AddressType.Shipping) {
+                form = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling']);
+            }
+            form.initialState = {
+                ...form.initialState,
+                addressTypeId: getAddressTypeIdOrder,
+            }
+            setFormData(form);
+        }
+    }, [isOrderManage, isModelOpen])
 
     const handleResponse = (success, data) => {
         if (success && data) {
@@ -76,7 +90,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     useEffect(() => {
         if (isSupplier && isModelOpen) {
-            // onResetSupplier();
             setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
             setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, false);
             setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, true);
@@ -84,9 +97,9 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, false);
                 setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
             }
-        } else if (!isModelOpen) {
+        } else if (!isModelOpen && !isOrderManage) {
             onResetForm(addressFormData, setFormData, null);
-        } else if (!isSupplier) {
+        } else if (!isSupplier && !isOrderManage) {
             setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, false);
             setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, false);
         }
@@ -96,9 +109,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const handleStateOption = (responseData) => {
         setDropDownOptionField(responseData, 'stateId', 'name', addressFormData, 'stateId');
     }
-    // const handleCityOption = (responseData) => {
-    //     setDropDownOptionField(responseData, 'cityId', 'name', addressFormData, 'cityId');
-    // }
 
     useEffect(() => {
         if (isGetAllCountriesSucess && allGetAllCountriesData) {
@@ -111,7 +121,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         }
         if (isGetAllCitiesSucess && allGetAllCitiesData) {
             setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', addressFormData, 'cityId');
-            // handleCityOption(allGetAllCitiesData);
             setShouldRerenderFormCreator((prevState) => !prevState);
         }
         if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
@@ -128,8 +137,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         if (!isGetByIdFetching && isGetByIdSuccess && isGetByIdData) {
             let form = { ...formData };
             let data = isGetByIdData;
-            // setGetByIdValue(data);
-
             if (!isButtonDisable) {
                 setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED);
                 setFieldSetting(formData, 'stateId', FieldSettingType.DISABLED);
@@ -164,11 +171,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             };
 
             setFormData(form);
-            // let removeData;
-            // if (!isSupplier) {
-            //     removeData = removeFormFields(addressFormData, ['isShippingAndBilling']);
-            //     setFormData(removeData)
-            // }
         }
     }, [isGetByIdFetching, isGetByIdSuccess, isGetByIdData]);
 
@@ -181,18 +183,19 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
             }
             setFormData(updatedFormData)
-            // onResetForm(updatedFormData, setFormData, null);
         }
     }
 
     useEffect(() => {
-        setInitialValue()
+        if (!isOrderManage) {
+            setInitialValue()
+        }
     }, [allGetAllStatesData, isModelOpen])
 
     useEffect(() => {
         if (isGetByIdData) {
             let updatedFormData = { ...formData };
-            // let updatedFormData;
+
             if (isGetByIdData.type === "Billing") {
                 updatedFormData = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredShipping']);
             } else if (isGetByIdData.type === "Shipping") {
@@ -230,47 +233,88 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             }
             onResetForm(addressFormData, setFormData, null);
             ToastService.success(responseData.errorMessage);
-            getById(keyId);
+            if (!isOrderManage) {
+                getById(keyId);
+                onSidebarClose();
+            } else {
+                onHandleOrderInfoRepeatCall()
+            }
             onSidebarClose();
+
+
         }
     }
 
+    const getAddressTypeId = (data, isSupplier, editMode) => {
+        if (isSupplier) {
+            if (editMode) {
+                return data.addressTypeId && typeof data.addressTypeId === "object"
+                    ? String(data.addressTypeId.value)
+                    : String(data.addressTypeId);
+            } else {
+                return Array.isArray(data.addressTypeId)
+                    ? data.addressTypeId.map(String).join(",")
+                    : data.addressTypeId;
+            }
+        } else {
+            return data.addressTypeId && typeof data.addressTypeId === "object"
+                ? String(data.addressTypeId.value)
+                : String(data.addressTypeId);
+        }
+    };
+
+    const buildTransformedData = (data, isSupplier, keyId, editMode) => {
+        const addressTypeIdValue = getAddressTypeId(data, isSupplier, editMode);
+
+        return {
+            ...data,
+            [isSupplier ? 'supplierId' : 'customerId']: keyId,
+            addressTypeId: extractValue(addressTypeIdValue),
+            countryId: extractValue(data.countryId),
+            stateId: extractValue(data.stateId),
+            cityId: extractValue(data.cityId),
+        };
+    };
+
+    const getCustomerAddressId = (isSupplier, isGetByIdData) => {
+        return isSupplier === false
+            ? isGetByIdData ? isGetByIdData.customerAddressId : 0
+            : 0;
+    };
+
+    const getSupplierAddressId = (isSupplier, isGetByIdData) => {
+        return isSupplier === true
+            ? isGetByIdData ? isGetByIdData.supplierAddressId : 0
+            : 0;
+    };
+
+    const buildUpdateData = (transformedData, isGetByIdData, isSupplier) => {
+        const customerAddressId = getCustomerAddressId(isSupplier, isGetByIdData);
+        const supplierAddressId = getSupplierAddressId(isSupplier, isGetByIdData);
+
+        return {
+            ...transformedData,
+            addressId: isGetByIdData.addressId,
+            customerAddressId,
+            supplierAddressId,
+        };
+    };
+
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
-        if (data) {
+        if (!data) return;
 
-            let addressTypeId = null;
+        const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
 
-            if (isSupplier === true) {
-                if (editMode) {
-                    addressTypeId = data.addressTypeId && typeof data.addressTypeId === "object" ? String(data.addressTypeId.value) : String(data.addressTypeId);
-                } else {
-                    addressTypeId = Array.isArray(data.addressTypeId) ? data.addressTypeId.map(String).join(",") : data.addressTypeId;
-                }
-            } else {
-                addressTypeId = data.addressTypeId && typeof data.addressTypeId === "object" ? String(data.addressTypeId.value) : String(data.addressTypeId);
+        if (editMode) {
+            const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
+            update(updateData);
+        } else {
+            let req = {
+                ...transformedData,
+                customerId: orderCustomerId ? orderCustomerId : transformedData.customerId
             }
-
-            let transformedData = {
-                ...data,
-                [isSupplier ? 'supplierId' : 'customerId']: keyId,
-                addressTypeId: extractValue(addressTypeId),
-                countryId: extractValue(data.countryId),
-                stateId: extractValue(data.stateId),
-                cityId: extractValue(data.cityId)
-            };
-
-            if (editMode) {
-                let updateData = {
-                    ...transformedData,
-                    addressId: isGetByIdData.addressId,
-                    customerAddressId: isSupplier === false ? (isGetByIdData ? isGetByIdData.customerAddressId : isGetByIdData.customerAddressId) : 0,
-                    supplierAddressId: isSupplier === true ? (isGetByIdData ? isGetByIdData.supplierAddressId : isGetByIdData.supplierAddressId) : 0,
-                }
-                update(updateData);
-            } else {
-                add(transformedData);
-            }
+            add(req);
         }
     };
 
@@ -295,7 +339,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         } else if (dataField === "stateId") {
             // setStateChange(data.value)
             getAllCities(data.value)
-            // setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', manageData, 'cityId', item => item.stateId === data.value);
             setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
             ref.current.updateFormFieldValue({
                 stateId: data.value,
@@ -367,13 +410,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         CHECK_CHANGE: handleCheckboxChanges
     };
 
-    //** Reset  */
-    // const onResetSupplier = () => {
-    //     let updatedFormData;
-    //     onResetForm(addressFormData, setFormData, null);
-    //     updatedFormData = removeFormFields(formData, ['isPreferredShipping', 'isShippingAndBilling', 'isPreferredBilling']);
-    //     setFormData(updatedFormData)
-    // };
 
     return (
         <div className="row mt-2 add-address-form">

@@ -9,8 +9,6 @@ namespace OMS.Domain.Entities.Entity.Organization
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("SmtpSettingId")]
         public short? SmtpSettingId { get; set; }
-        [Column("OrganizationId")]
-        public byte? OrganizationId { get; set; }
         [Column("EmailProvider")]
         public string? EmailProvider { get; set; }
         [Column("SmtpServer")]

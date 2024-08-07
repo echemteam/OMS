@@ -34,7 +34,7 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
         onSuccess();
         return;
     }
-    const isDuplicate = listData && listData.some(item => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase());
+    const isDuplicate =  listData?.some(item => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase());
     if (!isDuplicate) {
         let addData;
         if (listData) {
@@ -51,9 +51,7 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
             ToastService.success(successMessage);
             onResetData();
             onSuccess();
-        } else {
-
-        }
+        } 
     } else {
         ToastService.warning(duplicateMessage);
     }

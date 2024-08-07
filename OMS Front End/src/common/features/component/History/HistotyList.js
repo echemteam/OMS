@@ -85,12 +85,15 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
                 if (refreshData) {
                     setRefreshData(false);
                     setHistoryData(modifyData);
+                } else if (
+                    selectedEventName.length ||
+                    selectedUserName.length ||
+                    selectedDateRange.startDate ||
+                    selectedDateRange.endDate
+                ) {
+                    setHistoryData(modifyData);
                 } else {
-                    if (selectedEventName.length || selectedUserName.length || selectedDateRange.startDate || selectedDateRange.endDate) {
-                        setHistoryData(modifyData);
-                    } else {
-                        setHistoryData((prevData) => [...prevData, ...modifyData]);
-                    }
+                    setHistoryData((prevData) => [...prevData, ...modifyData]);
                 }
                 setNoRecordFound(false);
                 if (modifyData.length < 25) {
@@ -102,6 +105,7 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
             }
         }
     }, [isGetHistorySuccess, isGetHistoryData]);
+    
 
     useEffect(() => {
         if (isGetSearchFilterSuccess && isGetSearchFilterData) {
@@ -121,7 +125,7 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
             }));
             setEventNameOptions(eventOptions);
             setUserNameOptions(userOptions);
-            // setShouldRerenderFormCreator((prevState) => !prevState);
+           
         }
     }, [isGetSearchFilterSuccess, isGetSearchFilterData]);
 
@@ -284,8 +288,8 @@ const HistotyList = ({ keyId, isSupplier, getAuditHistory, getSearchFilterBindHi
                             <div className="new-timeline-sec">
                                 <ol className="timeline">
                                     {historyData.length > 0 ? (
-                                        historyData.map((item, index) => (
-                                            <li className="timeline-item" key={index}>
+                                        historyData.map((item) => (
+                                            <li className="timeline-item" key={item.customerAuditHistoryId}>
                                                 <span className="timeline-item-icon">
                                                     {item.eventStatus === "Insert" ? (
                                                         <>

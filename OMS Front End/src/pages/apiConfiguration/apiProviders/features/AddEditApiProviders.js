@@ -94,7 +94,7 @@ const AddEditApiProviders = (props) => {
   }, []);
 
   return (
-    <>
+     
       <div>
         <div className="row">
           <div className="col-md-12">
@@ -123,7 +123,7 @@ const AddEditApiProviders = (props) => {
           </div>
         </div>
       </div>
-    </>
+     
   );
 };
 

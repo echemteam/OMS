@@ -37,7 +37,7 @@ const LabAddressDetail=({labAddressRef,labAddressData,LabAddressForm})=>{
         const manageData = { ...labAddressData };
         if (dataField === "countryId") {
            getAllStates(data.value);
-        //  setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+      
           setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
           labAddressRef.current.updateFormFieldValue({
             countryId: data.value,
@@ -56,7 +56,7 @@ const LabAddressDetail=({labAddressRef,labAddressData,LabAddressForm})=>{
     const formAddressActionHandler = {
         DDL_CHANGED: handleChangeAddressDropdownList,
       };
-    return(<>
+    return( 
         <CardSection cardTitle="Lab Address">
             <div className="row">
               <FormCreator
@@ -68,6 +68,6 @@ const LabAddressDetail=({labAddressRef,labAddressData,LabAddressForm})=>{
             </div>
           </CardSection>
     
-      </>)
+       )
 }
 export default LabAddressDetail;

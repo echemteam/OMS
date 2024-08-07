@@ -61,6 +61,9 @@ namespace OMS.Application.Services.Authentication
             }).ToList();
 
             UserDetails userDetails = user.ToMapp<UserDto, UserDetails>();
+            authResponce.ApprovalRulesConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
+
+            UserDetails userDetails = user.ToMapp<UserDTO, UserDetails>();
             authResponce.User = userDetails;
             authResponce.Roles = role;
             authResponce.SessionTimeout = Convert.ToInt32((commonSettingService.ApplicationSettings.SessionTimeOut != null) ? Convert.ToInt32(commonSettingService.ApplicationSettings.SessionTimeOut) : 60);

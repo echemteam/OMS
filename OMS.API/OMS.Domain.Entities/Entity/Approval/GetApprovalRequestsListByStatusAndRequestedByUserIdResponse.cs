@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.Approval
 {
-    public class GetApprovalRequestsListByStatusResponse
+    public class GetApprovalRequestsListByStatusAndRequestedByUserIdResponse
     {
         public int? ApprovalRequestId { get; set; }
         public int? FunctionalityId { get; set; }

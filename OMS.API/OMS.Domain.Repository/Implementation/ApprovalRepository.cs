@@ -18,8 +18,9 @@ namespace OMS.Domain.Repository.Implementation
         const string VALIDATECUSTOMERDATA = "ValidateCustomerData";
         const string VALIDATESUPPLIERDATA = "ValidateSupplierData";
         const string ADDAPPROVALREQUESTS = "AddApprovalRequests";
-        const string GETAPPROVALREQUESTSLISTBYSTATUS = "GetApprovalRequestsListByStatus";
+        const string GETAPPROVALREQUESTSLISTBYSTATUSANDREQUESTEDBYUSERID = "GetApprovalRequestsListByStatusAndRequestedByUserId";
         const string GETAPPROVALREQUESTSBYAPPROVALREQUESTID = "GetApprovalRequestsByApprovalRequestId";
+        const string GETAPPROVALCONFIGURATION = "GetApprovalConfiguration";
         #endregion
 
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
@@ -78,16 +79,18 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.ModuleId,
                 requestData.FunctionalityId,
                 requestData.TableId,
+                requestData.FunctionalityEventId,
                 requestData.FunctionalitiesFieldId,
                 requestData.OldValue,
                 requestData.NewValue,
                 requestData.RequestedByUserId,
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetApprovalRequestsListByStatusResponse>> GetApprovalRequestsListByStatus(string status)
+        public async Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId)
         {
-            List<GetApprovalRequestsListByStatusResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusResponse>(GETAPPROVALREQUESTSLISTBYSTATUS, new
+            List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>(GETAPPROVALREQUESTSLISTBYSTATUSANDREQUESTEDBYUSERID, new
             {
+                requestedByUserId,
                 status
             }, commandType: CommandType.StoredProcedure);
             return getAllUsersResponse;
@@ -100,6 +103,11 @@ namespace OMS.Domain.Repository.Implementation
                 approvalRequestId
             }, CommandType.StoredProcedure);
             return approvalRequestsDetails;
+        }
+        public async Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration()
+        {
+            List<GetApprovalConfigurationResponse> approvalConfigurationList = await _context.GetList<GetApprovalConfigurationResponse>(GETAPPROVALCONFIGURATION, commandType: CommandType.StoredProcedure);
+            return approvalConfigurationList;
         }
     }
 }

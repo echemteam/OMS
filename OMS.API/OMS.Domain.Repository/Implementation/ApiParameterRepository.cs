@@ -34,6 +34,7 @@ namespace OMS.Domain.Repository.Implementation
                 apiParameter.DataType,
                 apiParameter.DefaultValue,
                 apiParameter.IsRequired,
+                apiParameter.ParameterType,
                 apiParameter.CreatedBy
             }, CommandType.StoredProcedure);
         }

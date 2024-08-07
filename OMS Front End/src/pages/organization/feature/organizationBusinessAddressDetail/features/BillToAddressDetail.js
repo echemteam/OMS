@@ -39,7 +39,7 @@ const BillToAddressDetail=({billToAddressRef,billToAddressData,BillToAddressForm
         const manageData = { ...billToAddressData };
         if (dataField === "countryId") {
            getAllStates(data.value);
-        //  setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+      
           setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
           billToAddressRef.current.updateFormFieldValue({
             countryId: data.value,
@@ -59,7 +59,7 @@ const BillToAddressDetail=({billToAddressRef,billToAddressData,BillToAddressForm
         DDL_CHANGED: handleChangeAddressDropdownList,
       };
    
-    return(<>
+    return( 
         <CardSection cardTitle="Bill To Address">
             <div className="row">
               <FormCreator
@@ -71,6 +71,6 @@ const BillToAddressDetail=({billToAddressRef,billToAddressData,BillToAddressForm
             </div>
           </CardSection>
     
-      </>)
+       )
 }
 export default BillToAddressDetail;

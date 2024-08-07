@@ -62,7 +62,9 @@ const FunctionalConfigurationList = (props) => {
     }, [props.moduleId]);
 
     const handleViewClick = (data) => {
-        navigate(`/FunctionalConfigurationViewDetail/${encryptUrlData(data.functionalityId)}`, "_blank");
+        const encryptedFunctionalityId = encryptUrlData(data.functionalityId);
+        const encryptedModuleName = encryptUrlData(data.moduleName);
+        navigate(`/FunctionalConfigurationViewDetail/${encryptedFunctionalityId}/${encryptedModuleName}`, "_blank");
     }
 
     const onGetData = () => {
@@ -80,7 +82,7 @@ const FunctionalConfigurationList = (props) => {
     const handleEditClick = (data) => {
         if (props.onEdit) {
             props.onEdit(data);
-          }
+        }
     }
 
     const actionHandler = {

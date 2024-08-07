@@ -6,10 +6,10 @@ import EventRequiredFields from '../eventRequiredFields/EventRequiredFields';
 import RequiredFieldsMapping from '../requiredFieldsMapping/RequiredFieldsMapping';
 import EventParamter from '../eventParamter/EventParamter';
 
+
 const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
 
     const [endpointId, setEndpointId] = useState(0);
-    const [providerId, setProviderId] = useState(0);
 
     const tabs = [
         {
@@ -19,7 +19,6 @@ const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
                     <EventMapping
                         keyId={keyId}
                         setEndpointId={setEndpointId}
-                        setProviderId={setProviderId}
                     />
                 </div>
             ),
@@ -72,9 +71,15 @@ const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
         },
     ];
     return (
+        // <CardSection
+        //     cardTitle="Address"
+        //     buttonClassName="theme-button"
+
+        // >
         <div className='vertical-tab-inner'>
-            <RenderTabs tabs={tabs} />
+            <RenderTabs tabs={tabs} isCollapse={true} />
         </div>
+        // </CardSection>
     )
 }
 

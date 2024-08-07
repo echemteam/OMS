@@ -68,7 +68,6 @@ export const addEditApiParameterFormData ={
             dataField: "isRequired",
             fieldSetting: {
               placeholder: "",
-              allowSpace: true,
             },
            // validation: [{ type: "require" }],
             style: {

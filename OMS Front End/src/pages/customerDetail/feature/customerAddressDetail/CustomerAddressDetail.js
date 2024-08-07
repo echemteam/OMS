@@ -21,7 +21,7 @@ const CustomerAddressDetail = ({ isEditablePage }) => {
         <AddressGrid
             isSupplier={false}
             isEditablePage={isEditablePage}
-            keyId={customerId ? customerId : 0}
+            keyId={customerId || 0}
             SecurityKey={!isResponsibleUser ? customerSecurityKey : null}
             getAddresssByCustomerId={useLazyGetAddresssByCustomerIdQuery}
             getAddresssById={useLazyGetCustomerAddresssByAddressIdQuery}

@@ -285,7 +285,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
               </div>
 
               <div className="field-desc col-span-3">
-                <i class="fa fa-envelope"></i>
+                <i className="fa fa-envelope"></i>
                 <a
                   className="email-link"
                   href={`mailto:${supplierData?.emailAddress}`}
@@ -308,7 +308,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
               </div>
 
               <div className="field-desc ">
-                <i class="fa fa-globe"></i>
+                <i className="fa fa-globe"></i>
                 <div className="info-desc">{supplierData?.website}</div>
 
                 <span

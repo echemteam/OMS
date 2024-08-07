@@ -1,50 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MyTask.scss";
-import { Button } from "react-bootstrap";
-import Buttons from "../../components/ui/button/Buttons";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
-import SearchBar from "../../common/features/component/SearchBar";
 import CardSection from "../../components/ui/card/CardSection";
 import TaskDetail from "./feature/TaskDetail";
+import PendingTask from "./feature/PendingTask";
+import ArchiveTask from "./feature/ArchiveTask";
+import { MyTaskStatus } from "../../utils/Enums/commonEnums";
+import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
+import { getAuthProps } from "../../lib/authenticationLibrary";
 
-const mainTabs = [
-  {
-    sMenuItemCaption: "Done",
-    icon: "fa fa-check-circle-o",
-    component: <div className="mt-2">{/* <OrganizationLocation /> */}</div>,
-  },
-  {
-    sMenuItemCaption: "Archive",
-    icon: "fa fa-file-archive-o",
-    component: <div className="mt-2">{/* <OrganizationLocation /> */}</div>,
-  },
-];
-
-const customerTabs = [ 
-  {
-    label: "Praful Desai",
-    subtitle: "Customer Information Update",
-    content: <div>Content for Tab One</div>,
-    date:"24 June, 2024"
-  },
-  {
-    label: "Praful Desai",
-    subtitle: "Customer Information Update",
-    content: <div>Content for Tab Two</div>,
-    date:"24 June, 2024"
-
-  },
-  {
-    label: "Praful Desai",
-    subtitle: "Customer Information Update",
-    content: <div>Content for Tab Three</div>,
-    date:"24 June, 2024"
-
-  },
-];
 
 const MyTask = () => {
-  const [activeCustomerTab, setActiveCustomerTab] = useState(0);
+
+  const authData = getAuthProps();
+
+  const userId = authData.user.userID
+
+  const [approvedData, setApprovedData] = useState(null)
+  // const [tabId , setTabId] = useState(null)
+
+  const [getApprovalRequestsByApprovalRequestId, { isFetching: isGetApprovalRequestsByApprovalRequestIdFetching, isSuccess: isGetApprovalRequestsByApprovalRequestIdSuccess, data: isGetApprovalRequestsByApprovalRequestIdData }] = useLazyGetApprovalRequestsByApprovalRequestIdQuery();
+
+  const handleGetPendingId = (data) => {
+    getApprovalRequestsByApprovalRequestId(data)
+  }
+
+  const handleGetArchiveId = (data) => {
+    getApprovalRequestsByApprovalRequestId(data)
+  }
+
+  const handleSetTab = (data) => {
+    // setTabId(data)
+    setApprovedData(null)
+  }
+
+  useEffect(() => {
+    if (!isGetApprovalRequestsByApprovalRequestIdFetching && isGetApprovalRequestsByApprovalRequestIdSuccess && isGetApprovalRequestsByApprovalRequestIdData) {
+      setApprovedData(isGetApprovalRequestsByApprovalRequestIdData)
+    }
+  }, [isGetApprovalRequestsByApprovalRequestIdFetching, isGetApprovalRequestsByApprovalRequestIdSuccess, isGetApprovalRequestsByApprovalRequestIdData])
+
+  const mainTabs = [
+    {
+      sMenuItemCaption: "Pending",
+      icon: "fa fa-check-circle-o",
+      component: <div className="mt-3"><PendingTask Pending={MyTaskStatus.Pending} onGetById={handleGetPendingId} onTabChange={handleSetTab} userId={userId} /></div>,
+    },
+    {
+      sMenuItemCaption: "Archive",
+      icon: "fa fa-file-archive-o",
+      component: <div className="mt-3"><ArchiveTask Accept={MyTaskStatus.Accept} onGetById={handleGetArchiveId} userId={userId} /></div>,
+    },
+  ];
 
   return (
     <CardSection>
@@ -52,36 +59,11 @@ const MyTask = () => {
         <div className="d-flex">
           <div className="col-4 task-tab">
             <div className="task-title">
-              <div className="d-flex">
-                <RenderTabs tabs={mainTabs} />
-              </div>
-              {/* <SearchBar /> */}
-            </div>
-            <div className="customer-info">
-              <div className="tabs">
-                {customerTabs.map((tab, index) => (
-                  <button
-                    key={index}
-                    className={`tab-button ${
-                      activeCustomerTab === index ? "active" : ""
-                    }`}
-                    onClick={() => setActiveCustomerTab(index)}
-                  >
-                    <div className="d-flex align-items-center">
-                      <span className="profile-icon">PD</span>
-                      <div className="title">
-                        {tab.label}
-                        <span className="sub-title">{tab.subtitle}</span>
-                      </div>
-                    </div>
-                    <span className="date">{tab.date}</span>
-                  </button>
-                ))}
-              </div>
+              <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
             </div>
           </div>
           <div className="col-8">
-            <TaskDetail />
+            <TaskDetail approvedData={approvedData} isFetching={isGetApprovalRequestsByApprovalRequestIdFetching} />
           </div>
         </div>
       </div>

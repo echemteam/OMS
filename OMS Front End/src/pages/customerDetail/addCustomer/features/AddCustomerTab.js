@@ -66,11 +66,11 @@ const AddCustomerTab = () => {
       label: "Setting",
       subLabel: "Enter Customer Shipping Method",
       content: (
-        <>
+         
           <div className="mt-0">
             <CustomerSettingDetails isEditablePage={false} />
           </div>
-        </>
+         
       ),
       tab: CustomerSupplierTabEnum.Setting,
     },
@@ -82,9 +82,7 @@ const AddCustomerTab = () => {
     },
   ];
 
-  // const handleTabClick = (index) => {
-  //   setActiveTab(index);
-  // };
+ 
 
   const handleSubmit = () => {
     let req = {

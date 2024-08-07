@@ -2,6 +2,7 @@ import React from "react";
 import Select, { components } from "react-select";
 import "./CustomDropdown.scss";
 import StatusDisplay from "./StatusDisplay";
+import formatDate from "../../../lib/formatDate";
 
 const CustomOption = (props) => {
   const { data, isSelected, selectProps } = props;
@@ -12,7 +13,7 @@ const CustomOption = (props) => {
     <components.Option {...props}>
       <div className="custom-option">
         <span className="option-label">{label}</span>
-        <span className="option-date">{date}</span>
+        <span className="option-date">{date ? formatDate(date, 'MM/DD/YYYY') : null}</span>
         <StatusDisplay
           status={status}
           isSelected={isSelected}
@@ -26,8 +27,10 @@ const CustomOption = (props) => {
 };
 
 function CustomDropdown(props) {
-  const { dropDownSettings, inputButtonGroup } = props;
+  const { dropDownSettings, inputButtonGroup, handleInputGroupButton } = props;
   const base64Icon = inputButtonGroup?.icon;
+
+  console.log(props.handleInputGroupButton);
 
   return (
     <span className="d-inline-block custom-input">
@@ -50,7 +53,7 @@ function CustomDropdown(props) {
           className="select-button"
           disabled={!props.value}
           type="button"
-          onClick={inputButtonGroup.handleInputGroupButton}
+          onClick={props.handleInputGroupButton}
         >
           {base64Icon && (
             <img

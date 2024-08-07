@@ -83,7 +83,7 @@ const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange
     callChildFunction: onGetData,
   }));
   return (
-    <>
+     
       <div className="row">
         <div className="col-md-12 table-striped api-provider">
           <MolGrid
@@ -107,7 +107,7 @@ const ApiProvidersList = ({ handleEditClick, childRef ,handleSearch,handleChange
           />
         </div>
       </div>
-    </>
+     
   );
 };
 

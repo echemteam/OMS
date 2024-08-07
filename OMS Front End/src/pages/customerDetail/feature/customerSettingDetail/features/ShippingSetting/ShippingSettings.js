@@ -69,11 +69,8 @@ const ShippingSettings = ({ isEditablePage }) => {
 
   useEffect(() => {
     if (isAddDefaultShippingsSuccess && isAddDefaultShippingsData) {
-      // if (isDefaultValue) {
-      handleGetDefaultList();
-      // }else{
-      //   getDefaultList()
-      // }
+     
+        handleGetDefaultList();
       ToastService.success(isAddDefaultShippingsData.errorMessage);
     }
   }, [isAddDefaultShippingsSuccess, isAddDefaultShippingsData]);

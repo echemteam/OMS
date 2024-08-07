@@ -115,15 +115,21 @@ const AddressDetailCard = forwardRef(
           return "badge-default";
       }
     };
-
+    const getStatusDescription = (address) => {
+      return address.isPreferredBilling && address.addressTypeId === 1
+        ? "Preferred Billing"
+        : address.isPreferredShipping && address.addressTypeId === 2
+        ? "Preferred Shipping"
+        : "";
+    };
     return (
       <React.Fragment>
         {!isGetAddresssByCustomerIdFetching ? (
           <div className="address-card-section">
             <div className="add-desc-part">
               <div className="address-card-list">
-                {addressData.map((address, addrIndex) => (
-                  <div className="address-main-card-section" key={addrIndex}>
+                {addressData.map((address) => (
+                  <div className="address-main-card-section" key={address.addressId}>
                     <div className="address-card">
                       {((address.isPreferredBilling &&
                         address.addressTypeId === 1) ||
@@ -131,13 +137,7 @@ const AddressDetailCard = forwardRef(
                           address.addressTypeId === 2)) && (
                         <div className="status-desc">
                           <span className="field-info active-green-color">
-                            {address.isPreferredBilling &&
-                            address.addressTypeId === 1
-                              ? "Preferred Billing"
-                              : address.isPreferredShipping &&
-                                address.addressTypeId === 2
-                              ? "Preferred Shipping"
-                              : ""}
+                              {getStatusDescription(address)}
                           </span>
                         </div>
                       )}
@@ -201,7 +201,7 @@ AddressDetailCard.propTypes = {
   getAddresssByCustomerId: PropTypes.func.isRequired,
   getByIdRef: PropTypes.object.isRequired,
   selectedAddressTypeId: PropTypes.oneOfType([
-    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.number),
   ]).isRequired,
 };

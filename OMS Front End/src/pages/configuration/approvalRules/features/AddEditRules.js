@@ -142,7 +142,7 @@ const AddEditRules = (props) => {
       if (isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId) {
         getAllFunctionalitiesFields(isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId);
       }
-      // const configData = isGetApprovalConfigurationByApprovalConfigurationIdData;
+    
       setApprovalConfigurationId(isGetApprovalConfigurationByApprovalConfigurationIdData.approvalConfigurationId);
       let form = { ...rulesFormData };
       setFieldSetting(form, 'functionalityId', FieldSettingType.DISABLED, false);

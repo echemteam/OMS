@@ -57,7 +57,6 @@ const AddEditApiParameters = (props) => {
       onResetForm(addEditApiParameterFormData, setApiParameterFormData, null);
       onGetData();
       ToastService.success(allAddEditApiParameterData.errorMessage);
-    //  props.onClose();
     }
   }, [isAddEditApiParameterSucess, allAddEditApiParameterData]);
 

@@ -7,7 +7,6 @@ import { useAddEditOrganizationContactDetailsMutation, useLazyGetOrganizationCon
 import ToastService from "../../../../services/toastService/ToastService";
 
 
-
 const OrganizationContactDetail=()=>{
     const organizationContactRef = useRef();
     const [organizationContactData, setOrganizationContactData] = useState(OrganizationContactFormData);
@@ -15,6 +14,7 @@ const OrganizationContactDetail=()=>{
     const [getOrganizationContactDetails, { isFetching: isGetOrganizationContactDetailsFetching, isSuccess: isGetOrganizationContactDetailsSuccess, data: isGetOrganizationContactDetailsData }] = useLazyGetOrganizationContactDetailsQuery();
     const [contactDetailId, setContactDetailId] = useState(0); 
 
+        
     useEffect(() => {
         if (isAddEditOrganizationContactDetailsSuccess && isAddEditOrganizationContactDetailsData) {
           ToastService.success(isAddEditOrganizationContactDetailsData.errorMessage);

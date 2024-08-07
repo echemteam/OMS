@@ -3,7 +3,6 @@
     public class GetSmtpSettingsResponse
     {
         public short? SmtpSettingId { get; set; }
-        public byte? OrganizationId { get; set; }
         public string? Name { get; set; }
         public string? EmailProvider { get; set; }
         public string? SmtpServer { get; set; }

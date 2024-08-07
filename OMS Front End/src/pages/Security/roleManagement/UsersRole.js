@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { GridColumnType } from "../../../data/gridColumnType";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
@@ -9,7 +8,6 @@ import AddEditRoleModel from "./features/AddEditRoleModel";
 
 const UsersRole = () => {
   const molGridRef = useRef();
-  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const handleToggleModal = () => {
     setShowModal(!showModal);

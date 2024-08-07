@@ -59,7 +59,7 @@ const OrganizationLogisticDetail=()=>{
     }, [isGetOrganizationLogisticDetailsFetching, isGetOrganizationLogisticDetailsSuccess, isGetOrganizationLogisticDetailsData,]);
 
 
-    return(<>
+    return( 
     
     <div className="row mt-2 add-address-form">
                 <FormCreator config={organizationLogisticData}
@@ -78,6 +78,6 @@ const OrganizationLogisticDetail=()=>{
                 </div>
             </div>
         </div>
-    </>)
+     )
 }
 export default OrganizationLogisticDetail;

@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState,useImperativeHandle } from "react";
 import MolGrid from "../../../../../components/Grid/MolGrid";
 import { SubCustomerGridConfig } from "../config/SubCustomer.data";
 import ToastService from "../../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../../services/swalService/SwalService";
-import { useImperativeHandle } from "react";
 import { encryptUrlData } from "../../../../../services/CryptoService";
 import { useDeleteSubCustomerMutation, useGetSubCustomerByCustomerIdMutation } from "../../../../../app/services/customerSubCustomerAPI";
 import PropTypes from 'prop-types';
@@ -90,7 +89,7 @@ const SubCustomerList = (props) => {
     callChildFunction: onGetData
   }));
   return (
-    <>
+     
       <div className="row">
         <div className="col-md-12 table-striped p-3">
           <MolGrid
@@ -110,7 +109,7 @@ const SubCustomerList = (props) => {
           />
         </div>
       </div>
-    </>
+  
   );
 };
 SubCustomerList.propTypes = {

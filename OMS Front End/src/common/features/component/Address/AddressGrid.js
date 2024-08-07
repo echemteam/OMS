@@ -35,52 +35,62 @@ const AddressGrid = ({
   const [showEditIcon, setShowEditIcon] = useState(true);
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const [tabAddresstType, setTabAddressType] = useState([]);
+  const [tabAddressType, setTabAddressType] = useState([]);
 
   const [
     getAllAddressTypes,
     { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData },
   ] = useLazyGetAllAddressTypesQuery();
 
-  //** Use Effect */
+
   useEffect(() => {
-    if (isEditablePage) {
-      if (SecurityKey) {
-        const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
-        const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
-        if (hasAddPermission) {
-          if (hasAddPermission.hasAccess === true) {
-            setButtonVisible(true);
-          } else {
-            setButtonVisible(false);
-          }
+    if (!isEditablePage || !SecurityKey) return;
+
+    const addPermission = hasFunctionalPermission(SecurityKey.ADD);
+    const editPermission = hasFunctionalPermission(SecurityKey.EDIT);
+
+    handleAddPermission(addPermission);
+    handleEditPermission(editPermission);
+
+  }, [isEditablePage, isSupplier, SecurityKey, editMode]);
+
+  const handleAddPermission = (permission) => {
+    if (permission?.hasAccess) {
+      setButtonVisible(true);
+    } else {
+      setButtonVisible(false);
+    }
+  };
+
+  const handleEditPermission = (permission) => {
+    if (formSetting) {
+      if (editMode) {
+        if (permission?.isViewOnly) {
+          formSetting.isViewOnly = true;
+          setIsButtonDisable(true);
+        } else {
+          formSetting.isViewOnly = false;
+          setIsButtonDisable(false);
         }
-        if (hasEditPermission && formSetting) {
-          if (editMode) {
-            if (hasEditPermission.isViewOnly === true) {
-              formSetting.isViewOnly = true;
-              setIsButtonDisable(true);
-            } else {
-              formSetting.isViewOnly = false;
-              setIsButtonDisable(false);
-            }
-          } else if (!editMode) {
-            if (hasAddPermission.hasAccess === true) {
-              formSetting.isViewOnly = false;
-              setIsButtonDisable(false);
-            }
-            if (hasEditPermission && hasEditPermission.isViewOnly === true) {
-              setShowEditIcon(true);
-            } else if (hasEditPermission.isEditable === true) {
-              setShowEditIcon(true);
-            } else {
-              setShowEditIcon(false);
-            }
-          }
-        }
+      } else {
+        handleNonEditModePermissions(permission);
       }
     }
-  }, [isEditablePage, isSupplier, SecurityKey, editMode]);
+  };
+
+  const handleNonEditModePermissions = (permission) => {
+    if (permission?.hasAccess) {
+      formSetting.isViewOnly = false;
+      setIsButtonDisable(false);
+    }
+
+    if (permission?.isViewOnly || permission?.isEditable) {
+      setShowEditIcon(true);
+    } else {
+      setShowEditIcon(false);
+    }
+  };
+
 
   useEffect(() => {
     getAllAddressTypes();
@@ -179,61 +189,61 @@ const AddressGrid = ({
     ),
   ];
 
-  const tabs =
-    tabAddresstType &&
-    tabAddresstType
-      .filter((item) =>
-        isSupplier ? item.isForSuppliers : item.isForCustomers
-      )
-      .map((data, index) => ({
-        sMenuItemCaption: data.type,
-        component: components[index] ? (
-          components[index](data.addressTypeId ? [data.addressTypeId] : "")
-        ) : (
-          <div className="mt-2">Default Tab</div>
-        ),
-      }));
+
+  const filteredTabs = tabAddressType?.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers);
+
+  const tabs = filteredTabs?.map((data, index) => {
+    const component = components[index] ? components[index]([data.addressTypeId]) : <div className="mt-2">Default Tab</div>;
+    return {
+      sMenuItemCaption: data.type,
+      component
+    };
+  });
 
   return (
-    <React.Fragment>
-      <div className="address-main-card-sec vertical-tab-card">
-        <CardSection
-          cardTitle="Address"
-          buttonClassName="theme-button"
-          textWithIcon={true}
-          iconImg={AppIcons.PlusIcon}
-          rightButton={buttonVisible ? true : false}
-          buttonText="Add"
-          titleButtonClick={handleToggleModal}
-        >
-          <div className="vertical-tab-inner">
-            <RenderTabs tabs={tabs} isCollapse={true} />
-          </div>
-        </CardSection>
-        <div className="address-model">
-          <SidebarModel
-            modalTitle={editMode ? "Update Address" : "Add Address"}
-            contentClass="content-35"
-            onClose={onSidebarClose}
-            modalTitleIcon={AppIcons.AddIcon}
-            isOpen={isModelOpen}
-          >
-            <AddEditAddress
-              editRef={editRef}
-              isSupplier={isSupplier}
-              isModelOpen={isModelOpen}
-              editMode={editMode}
-              keyId={keyId}
-              isButtonDisable={isButtonDisable}
-              updateAddress={updateAddress}
-              addAddress={addAddress}
-              getAddresssById={getAddresssById}
-              onSidebarClose={onSidebarClose}
-            />
-          </SidebarModel>
+    //<React.Fragment>
+    <div className="address-main-card-sec vertical-tab-card">
+      <CardSection
+        cardTitle="Address"
+        buttonClassName="theme-button"
+        textWithIcon={true}
+        iconImg={AppIcons.PlusIcon}
+        rightButton={buttonVisible ? true : false}
+
+        buttonText="Add"
+        titleButtonClick={handleToggleModal}
+      >
+        <div className="vertical-tab-inner">
+          <RenderTabs tabs={tabs} isCollapse={true} />
         </div>
+      </CardSection>
+      <div className="address-model">
+        <SidebarModel
+          modalTitle={editMode ? "Update Address" : "Add Address"}
+          contentClass="content-35"
+          onClose={onSidebarClose}
+          modalTitleIcon={AppIcons.AddIcon}
+          isOpen={isModelOpen}
+        >
+          <AddEditAddress
+            isOrderManage={false}
+            editRef={editRef}
+            isSupplier={isSupplier}
+            isModelOpen={isModelOpen}
+            editMode={editMode}
+            keyId={keyId}
+            isButtonDisable={isButtonDisable}
+            updateAddress={updateAddress}
+            addAddress={addAddress}
+            getAddresssById={getAddresssById}
+            onSidebarClose={onSidebarClose}
+            getAddressTypeIdOrder={null}
+            orderCustomerId={null}
+          />
+        </SidebarModel>
       </div>
-    </React.Fragment>
+    </div>
+    //</React.Fragment>
   );
 };
 

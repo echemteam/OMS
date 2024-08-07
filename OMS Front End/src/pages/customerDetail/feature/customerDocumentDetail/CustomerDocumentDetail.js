@@ -22,7 +22,7 @@ const CustomerDocumentDetail = ({ isEditablePage }) => {
             * This component displays an DocumentGrid for the supplier module.
             * This hook dynamically sets the API call based on the module (customer or supplier).
         */
-        <DocumentGrid keyId={customerId ? customerId : 0} isSupplier={false} isEditablePage={isEditablePage}
+        <DocumentGrid keyId={customerId || 0} isSupplier={false} isEditablePage={isEditablePage}
             SecurityKey={!isResponsibleUser ? customerSecurityKey : null}
             addDocuments={useAddCustomerDocumentsMutation} downloadDocument={useLazyDownloadDocumentQuery}
             deleteDocumentsById={useDeleteCustomerDocumentsByIdMutation} getDocumentsById={useLazyGetCustomerDocumentsByIdQuery} />

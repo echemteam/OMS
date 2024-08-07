@@ -14,22 +14,11 @@ const OrganizationProfileManagement = React.lazy(() => import("./feature/organiz
 
 const Organization = () => {
 
-    const [organizationId, setOrganizationId] = useState(0)
-    const [smtpSettingId, setSmtpSettingId] = useState(0)
-
     const [activeTabId, setActiveTabId] = useState(0)
+  const handleActiveTab=(id)=>{
+    setActiveTabId(id);
+  }
 
-    const handleSetOrganizationId = (id) => {
-        setOrganizationId(id)
-    }
-
-    const handleSetSmtpSettingId = (id) => {
-        setSmtpSettingId(id)
-    }
-
-    const handleActiveTab = (id) => {
-        setActiveTabId(id)
-    }
 
     const tabs = [
         {
@@ -37,9 +26,8 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
                     <OrganizationProfileManagement
-                        activeTabId={activeTabId}
-                        onHandleOrganization={handleSetOrganizationId}
-                        organizationId={organizationId} />
+                       
+                       />
                 </div>
             ),
         },
@@ -47,7 +35,8 @@ const Organization = () => {
             sMenuItemCaption: "Business Address",
             component: (
                 <div className="mt-2">
-                    <OrganizationBusinessAddressDetail />
+
+                    <OrganizationBusinessAddressDetail   />
                 </div>
             ),
         },
@@ -55,7 +44,7 @@ const Organization = () => {
             sMenuItemCaption: "Contact Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationContactDetail />
+                    <OrganizationContactDetail   />
                 </div>
             ),
         },
@@ -64,7 +53,7 @@ const Organization = () => {
             sMenuItemCaption: "Logistic Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationLogisticDetail />
+                    <OrganizationLogisticDetail  />
                 </div>
             ),
         },
@@ -72,7 +61,7 @@ const Organization = () => {
             sMenuItemCaption: "Bank Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationBankDetail />
+                    <OrganizationBankDetail  />
                 </div>
             ),
         },
@@ -80,7 +69,7 @@ const Organization = () => {
             sMenuItemCaption: "Accounting Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationAccountingDetail />
+                    <OrganizationAccountingDetail  />
                 </div>
             ),
         },
@@ -88,7 +77,7 @@ const Organization = () => {
             sMenuItemCaption: "Shipping Charges",
             component: (
                 <div className="mt-2">
-                    <OrganizationShippingChargesDetail />
+                    <OrganizationShippingChargesDetail  />
                 </div>
             ),
         },
@@ -106,10 +95,7 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
                     <SMTPSettings
-                        activeTabId={activeTabId}
-                        organizationId={organizationId}
-                        onHandleSmtp={handleSetSmtpSettingId}
-                        smtpSettingId={smtpSettingId} />
+                       />
                 </div>
             ),
         },
@@ -120,24 +106,19 @@ const Organization = () => {
                     <OrganizationHistory />
                 </div>
             ),
+
         },
 
     ];
-
+  
     return (
         <div className="vertical-tab-card">
             <div className="row">
                 <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
-                    <CardSection cardTitle={
-                        activeTabId === 0 ? "Organization Profile Management" :
-                            activeTabId === 1 ? "SMTP Settings" :
-                                activeTabId === 2 ? "Other Settings" :
-                                    activeTabId === 9 ? "History" :
-                                        ""
-                    }>
+                    <CardSection  >
                         <div className='main-organiazation-history'>
                             <div className="vertical-tab-inner">
-                                <RenderTabs tabs={tabs} isCollapse={true} onActiveTab={handleActiveTab} isOrganization={true} />
+                                <RenderTabs tabs={tabs} isCollapse={true} onActiveTab={handleActiveTab} isOrganization={true}  />
                             </div>
                         </div>
                     </CardSection>

@@ -28,19 +28,21 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITAPIEVENTPARAMETER, new
             {
-                requestData.ApiEventParametersId,
                 requestData.ApiEventId,
+                requestData.ParameterId,
                 requestData.ParameterName,
                 requestData.ParameterType,
                 requestData.DefaultValue,
+                requestData.IsRequired,
+                requestData.DataType,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
-        public async Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventParametersId)
+        public async Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventId)
         {
             GetApiEventParameterByApiEventParametersIdResponse getApiEventParameterByApiEventParametersIdResponse = await _context.GetFrist<GetApiEventParameterByApiEventParametersIdResponse>(GETAPIEVENTPARAMETERBYAPIEVENTPARAMETERSID, new
             {
-                apiEventParametersId
+                apiEventId
             }, commandType: CommandType.StoredProcedure);
             return getApiEventParameterByApiEventParametersIdResponse;
         }
@@ -48,7 +50,7 @@ namespace OMS.Domain.Repository.Implementation
         {
             return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEAPIEVENTPARAMETER, new
             {
-                apiEventParametersId,
+                parameterId,
                 deletedBy
             }, CommandType.StoredProcedure);
         }

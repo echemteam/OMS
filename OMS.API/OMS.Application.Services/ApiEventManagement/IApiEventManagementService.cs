@@ -41,5 +41,6 @@ namespace OMS.Application.Services.ApiEventManagement
         Task<AddEntityDto<int>> DeleteApiEventRequiredFieldsMapping(int apiEventRequiredFieldsMappingId, short CurrentUserId);
         Task<List<GetAllAPIParametersResponse>> GetAllAPIParametersByEndpointId(int endpointId);
         Task<List<GetAllRequiredFieldsResponse>> GetAllRequiredFieldsByEventId(int apiEventId);
+        Task<List<GetAllEventParameterResponse>> GetAllEventParameterByEventId(int apiEventId);
     }
 }

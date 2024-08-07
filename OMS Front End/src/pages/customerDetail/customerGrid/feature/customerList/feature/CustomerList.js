@@ -163,7 +163,7 @@ import PropTypes from 'prop-types';
     }
   
     const handlePageChange = (page,sortingString) => {
-      const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
+      const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
       const request = {
         pagination: {
           pageNumber: page.pageNumber,
@@ -223,8 +223,8 @@ import PropTypes from 'prop-types';
     }));
   
     const getListApi = (pageObject, sortingString) => { 
-      const currentPageObject = pageObject ? pageObject : molGridRef.current.getCurrentPageObject();
-      const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
+      const currentPageObject = pageObject || molGridRef.current.getCurrentPageObject();
+      const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
       const request = {
         pagination: {
           pageNumber: currentPageObject.pageNumber,
@@ -354,7 +354,7 @@ import PropTypes from 'prop-types';
               searchInput={true}
               handleChange={handleChange}
               searchInputName="Search By Customer Name, Tax Id , Email Address"
-              searchFilter={searchStatusFilter ? true : false}
+              searchFilter={searchStatusFilter }
               handleChangeDropdown={handleChangeDropdown}
               selectedOptions={selectedDrpvalues}
               optionsValue={statusOptions}

@@ -1,4 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Request.ApiEventRequiredFieldsMapping;
+using OMS.Domain.Entities.API.Response.ApiEventParameter;
 using OMS.Domain.Entities.API.Response.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.Entity.ApiEventRequiredFieldsMapping;
@@ -14,6 +15,7 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDto<int>> DeleteApiEventRequiredFieldsMapping(int apiEventRequiredFieldsMappingId, int deletedBy);
         Task<List<GetAllAPIParametersResponse>> GetAllAPIParametersByEndpointId(int endpointId);
         Task<List<GetAllRequiredFieldsResponse>> GetAllRequiredFieldsByEventId(int apiEventId);
+        Task<List<GetAllEventParameterResponse>> GetAllEventParameterByEventId(int apiEventId);
 
     }
 }
