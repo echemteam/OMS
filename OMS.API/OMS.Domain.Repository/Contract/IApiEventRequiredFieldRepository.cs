@@ -8,9 +8,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IApiEventRequiredFieldRepository
     {
-        Task<AddEntityDTO<int>> AddEditApiEventRequiredField(ApiEventRequiredFieldDTO requestData);
+        Task<AddEntityDto<int>> AddEditApiEventRequiredField(ApiEventRequiredFieldDto requestData);
         Task<GetApiEventRequiredFieldByApiEventRequiredFieldIdResponse> GetApiEventRequiredFieldByApiEventRequiredFieldId(int apiEventRequiredFieldId);
-        Task<AddEntityDTO<int>> DeleteApiEventRequiredField(int apiEventRequiredFieldId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteApiEventRequiredField(int apiEventRequiredFieldId, int deletedBy);
         Task<EntityList<GetApiEventRequiredFieldsResponse>> GetApiEventRequiredFields(GetApiEventRequiredFieldsRequest requestData);
 
     }

@@ -178,9 +178,9 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getAllFunctionalitiesFieldsResponse;
         }
-        public async Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
+        public async Task<AddEntityDto<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATERESPONSIBLEUSER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATERESPONSIBLEUSER, new
             {
                 requestData.OwnerId,
                 requestData.OwnerType,

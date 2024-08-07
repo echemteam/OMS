@@ -9,14 +9,14 @@ namespace OMS.Application.Services.ApprovalConfiguration
 {
     public interface IApprovalConfigurationServices
     {
-        Task<AddEntityDTO<int>> AddEditApprovalConfiguration(AddEditApprovalConfigurationRequest requestData);
+        Task<AddEntityDto<int>> AddEditApprovalConfiguration(AddEditApprovalConfigurationRequest requestData);
         Task<GetApprovalConfigurationByApprovalConfigurationIdResponse> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId);
         Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData);
         Task<EntityList<GetFunctionalitiesResponse>> GetFunctionalities(GetFunctionalitiesRequest requestData);
         Task<EntityList<GetFunctionalityEventsResponse>> GetFunctionalityEvents(GetFunctionalityEventsRequest requestData);
-        Task<AddEntityDTO<int>> AddFunctionalitiesResponsiblesUser(AddFunctionalitiesResponsiblesUserRequest requestData, short CurrentUserId);
-        Task<AddEntityDTO<int>> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId);
+        Task<AddEntityDto<int>> AddFunctionalitiesResponsiblesUser(AddFunctionalitiesResponsiblesUserRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId);
         Task<EntityList<GetFunctionalitiesResponsiblesResponse>> GetFunctionalitiesResponsibles(GetFunctionalitiesResponsiblesRequest requestData);
-        Task<AddEntityDTO<int>> AddEditFunctionalities(AddEditFunctionalitiesRequest requestData);
+        Task<AddEntityDto<int>> AddEditFunctionalities(AddEditFunctionalitiesRequest requestData);
     }
 }

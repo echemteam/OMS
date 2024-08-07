@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMS.Domain.Entities.Entity.Test
 {
-    public class TestDTO : ITest
+    public class TestDto : ITest
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

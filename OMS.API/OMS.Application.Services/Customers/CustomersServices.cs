@@ -28,43 +28,43 @@ namespace OMS.Application.Services.Customers
         #region Customers Services
         public async Task<AddEditResponse> AddEditCustomersBasicInformation(AddEditCustomersBasicInformationRequest requestData, short CurrentUserId)
         {
-            CustomersDTO customersDTO = requestData.ToMapp<AddEditCustomersBasicInformationRequest, CustomersDTO>();
-            customersDTO.CreatedBy = CurrentUserId;
-            AddEditResponse responseData = await repositoryManager.customers.AddEditCustomersBasicInformation(customersDTO);
+            CustomersDto customersDto = requestData.ToMapp<AddEditCustomersBasicInformationRequest, CustomersDto>();
+            customersDto.CreatedBy = CurrentUserId;
+            AddEditResponse responseData = await repositoryManager.customers.AddEditCustomersBasicInformation(customersDto);
 
             if (!string.IsNullOrEmpty(requestData.Note) && responseData.KeyValue > 0)
             {
-                _ = new AddEntityDTO<long>();
-                CustomerNotesDTO customerNotes = new()
+                _ = new AddEntityDto<long>();
+                CustomerNotesDto customerNotes = new()
                 {
                     CustomerNoteId = requestData.CustomerNoteId,
                     Note = requestData.Note,
                     CustomerId = responseData.KeyValue,
                     CreatedBy = CurrentUserId
                 };
-                AddEntityDTO<long> addEntityDTO;
+                AddEntityDto<long> addEntityDto;
                 if (requestData.CustomerNoteId > 0)
                 {
                     // Update existing customer note
                     customerNotes.UpdatedBy = CurrentUserId;
-                    addEntityDTO = await repositoryManager.customerNotes.UpdateCustomerNotes(customerNotes);
-                    responseData.NoteId = addEntityDTO.KeyValue;
+                    addEntityDto = await repositoryManager.customerNotes.UpdateCustomerNotes(customerNotes);
+                    responseData.NoteId = addEntityDto.KeyValue;
                 }
                 else
                 {
                     // Add new customer note
-                    addEntityDTO = await repositoryManager.customerNotes.AddCustomerNotes(customerNotes);
-                    responseData.NoteId = addEntityDTO.KeyValue;
+                    addEntityDto = await repositoryManager.customerNotes.AddCustomerNotes(customerNotes);
+                    responseData.NoteId = addEntityDto.KeyValue;
                 }
             }
             return responseData;
         }
 
-        public async Task<AddEntityDTO<int>> UpdateCustomersBasicInformation(UpdateCustomersBasicInformationRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateCustomersBasicInformation(UpdateCustomersBasicInformationRequest requestData, short CurrentUserId)
         {
-            CustomersDTO customersDTO = requestData.ToMapp<UpdateCustomersBasicInformationRequest, CustomersDTO>();
-            customersDTO.UpdatedBy = CurrentUserId;
-            return await repositoryManager.customers.UpdateCustomersBasicInformation(customersDTO);
+            CustomersDto customersDto = requestData.ToMapp<UpdateCustomersBasicInformationRequest, CustomersDto>();
+            customersDto.UpdatedBy = CurrentUserId;
+            return await repositoryManager.customers.UpdateCustomersBasicInformation(customersDto);
         }
 
         public async Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId)
@@ -77,31 +77,31 @@ namespace OMS.Application.Services.Customers
             return customersDetails!;
         }
 
-        public async Task<AddEntityDTO<int>> CheckCustomerNameExist(CheckCustomerNameExistRequest requestData)
+        public async Task<AddEntityDto<int>> CheckCustomerNameExist(CheckCustomerNameExistRequest requestData)
         {
-            CustomersDTO customersDTO = requestData.ToMapp<CheckCustomerNameExistRequest, CustomersDTO>();
-            return await repositoryManager.customers.CheckCustomerNameExist(customersDTO);
+            CustomersDto customersDto = requestData.ToMapp<CheckCustomerNameExistRequest, CustomersDto>();
+            return await repositoryManager.customers.CheckCustomerNameExist(customersDto);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(UpdateCustomerApproveStatusRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateCustomerApproveStatus(UpdateCustomerApproveStatusRequest requestData, short CurrentUserId)
         {
-            CustomersDTO customersDTO = requestData.ToMapp<UpdateCustomerApproveStatusRequest, CustomersDTO>();
-            customersDTO.ApprovedBy = CurrentUserId;
-            return await repositoryManager.customers.UpdateCustomerApproveStatus(customersDTO);
+            CustomersDto customersDto = requestData.ToMapp<UpdateCustomerApproveStatusRequest, CustomersDto>();
+            customersDto.ApprovedBy = CurrentUserId;
+            return await repositoryManager.customers.UpdateCustomerApproveStatus(customersDto);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateCustomerInActiveStatus(UpdateCustomerInActiveStatusRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateCustomerInActiveStatus(UpdateCustomerInActiveStatusRequest requestData, short CurrentUserId)
         {
-            CustomersDTO customersDTO = requestData.ToMapp<UpdateCustomerInActiveStatusRequest, CustomersDTO>();
-            customersDTO.UpdatedBy = CurrentUserId;
-            return await repositoryManager.customers.UpdateCustomerInActiveStatus(customersDTO);
+            CustomersDto customersDto = requestData.ToMapp<UpdateCustomerInActiveStatusRequest, CustomersDto>();
+            customersDto.UpdatedBy = CurrentUserId;
+            return await repositoryManager.customers.UpdateCustomerInActiveStatus(customersDto);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateCustomerStatus(UpdateCustomerStatusRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateCustomerStatus(UpdateCustomerStatusRequest requestData, short CurrentUserId)
         {
-            CustomersDTO customersDTO = requestData.ToMapp<UpdateCustomerStatusRequest, CustomersDTO>();
-            customersDTO.UpdatedBy = CurrentUserId;
-            return await repositoryManager.customers.UpdateCustomerStatus(customersDTO);
+            CustomersDto customersDto = requestData.ToMapp<UpdateCustomerStatusRequest, CustomersDto>();
+            customersDto.UpdatedBy = CurrentUserId;
+            return await repositoryManager.customers.UpdateCustomerStatus(customersDto);
         }
 
         public async Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest)
@@ -113,15 +113,15 @@ namespace OMS.Application.Services.Customers
         {
             return await repositoryManager.customers.GetCustomersDetailsByCutomerName(customerName);
         }
-        public async Task<AddEntityDTO<bool>> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData)
+        public async Task<AddEntityDto<bool>> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData)
         {
             return await repositoryManager.customers.UpdateCustomerSubCustomer(requestData);
         }
-        public async Task<AddEntityDTO<int>> AddSubCustomer(AddSubCustomerRequest requestData)
+        public async Task<AddEntityDto<int>> AddSubCustomer(AddSubCustomerRequest requestData)
         {
             string[] subCustomerId = requestData.SubCustomerId!.Split(',');
 
-            AddEntityDTO<int> responceData = new();
+            AddEntityDto<int> responceData = new();
             foreach (var singleSubCustomerId in subCustomerId)
             {
                 if (!string.IsNullOrEmpty(singleSubCustomerId))
@@ -138,7 +138,7 @@ namespace OMS.Application.Services.Customers
             return subCustomerDetails!;
         }
 
-        public async Task<AddEntityDTO<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short CurrentUserId)
+        public async Task<AddEntityDto<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short CurrentUserId)
         {
             short deletedBy = CurrentUserId;
             return await repositoryManager.customers.DeleteSubCustomer(subCustomerMainCustomerId, deletedBy);

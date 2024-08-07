@@ -20,9 +20,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Organization Other Settings Repository
-        public async Task<AddEntityDTO<int>> AddEditOrganizationOtherSettings(OrganizationOtherSettingsDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditOrganizationOtherSettings(OrganizationOtherSettingsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONOTHERSETTINGS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORGANIZATIONOTHERSETTINGS, new
             {
                 requestData.OrganizationOtherSettingId,
                 requestData.OrganizationId,

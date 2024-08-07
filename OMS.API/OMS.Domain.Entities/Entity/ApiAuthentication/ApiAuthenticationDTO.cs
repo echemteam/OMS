@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.ApiAuthentication
 {
-    public class ApiAuthenticationDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class ApiAuthenticationDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? AuthId { get; set; }
         public int? ProviderId { get; set; }

@@ -2,7 +2,7 @@
 
 namespace OMS.Domain.Entities.API.Request
 {
-    public class AddTestRequest : BaseTestDTO
+    public class AddTestRequest : BaseTestDto
     {
     }
 }

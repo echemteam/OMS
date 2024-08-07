@@ -126,7 +126,7 @@ namespace OMS.Application.Services.Common
             return repositoryManager.commonRepository.GetAllFunctionalitiesFields(functionalityId);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
+        public async Task<AddEntityDto<int>> UpdateResponsibleUser(UpdateResponsibleUserRequest requestData)
         {
             return await repositoryManager.commonRepository.UpdateResponsibleUser(requestData);
         }

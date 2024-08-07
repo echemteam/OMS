@@ -17,9 +17,9 @@ namespace OMS.Domain.Repository.Implementation
         public OrganizationBusinessAddressesRepository(DapperContext dapperContext) : base(dapperContext)
         {
         }
-        public async Task<AddEntityDTO<int>> AddEditBusinessAddresses(OrganizationBusinessAddressesDto requestData)
+        public async Task<AddEntityDto<int>> AddEditBusinessAddresses(OrganizationBusinessAddressesDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONBUSINESSADDRESSES, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORGANIZATIONBUSINESSADDRESSES, new
             {
                 requestData.OrganizationBusinessAddressId,
                 requestData.RegisteredAddressId,

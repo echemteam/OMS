@@ -6,8 +6,8 @@ namespace OMS.Application.Services.CustomerNotes
 {
     public interface ICustomerNotesService
     {
-        Task<AddEntityDTO<long>> AddCustomerNotes(AddCustomerNotesRequest requestData, short CurrentUserId);
-        Task<AddEntityDTO<long>> UpdateCustomerNotes(UpdateCustomerNotesRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<long>> AddCustomerNotes(AddCustomerNotesRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<long>> UpdateCustomerNotes(UpdateCustomerNotesRequest requestData, short CurrentUserId);
         Task<List<GetCustomerNotesByCustomerIdResponse>> GetCustomerNoteByCustomerId(int customerId);
     }
 }

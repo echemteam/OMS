@@ -99,7 +99,7 @@ namespace OMS.API
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<JwtTokenSetting>();
-            var key = Encoding.ASCII.GetBytes(appSettings?.Secret);
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
             services.AddAuthentication(x =>
             {

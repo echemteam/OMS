@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.SupplierPaymentSettings
 {
-    public class SupplierPaymentSettingsDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class SupplierPaymentSettingsDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? SupplierPaymentSettingId { get; set; }
         public int? SupplierId { get; set; }

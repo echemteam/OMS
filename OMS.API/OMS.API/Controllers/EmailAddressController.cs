@@ -34,7 +34,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateContactEmail")]
         public async Task<IActionResult> UpdateContactEmail(UpdateContactEmailRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.emailAddressService.UpdateContactEmail(requestData, CurrentUserId);

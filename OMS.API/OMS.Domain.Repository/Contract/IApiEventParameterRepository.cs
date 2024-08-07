@@ -8,9 +8,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IApiEventParameterRepository
     {
-        Task<AddEntityDTO<int>> AddEditApiEventParameter(ApiEventParameterDTO requestData);
+        Task<AddEntityDto<int>> AddEditApiEventParameter(ApiEventParameterDto requestData);
         Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventParametersId);
-        Task<AddEntityDTO<int>> DeleteApiEventParameter(int apiEventParametersId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteApiEventParameter(int apiEventParametersId, int deletedBy);
         Task<EntityList<GetApiEventParametersResponse>> GetApiEventParameters(GetApiEventParametersRequest requestData);
 
     }

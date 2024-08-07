@@ -22,18 +22,18 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Customer Documents Repository 
-        public async Task<AddEntityDTO<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? customerId)
+        public async Task<AddEntityDto<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? customerId)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(CHECKDOCUMENTSEXISTORNOT, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(CHECKDOCUMENTSEXISTORNOT, new
             {
                 documentTypeId,
                 name,
                 customerId
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> AddCustomerDocuments(CustomerDocumentsDTO customerDocuments)
+        public async Task<AddEntityDto<int>> AddCustomerDocuments(CustomerDocumentsDto customerDocuments)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCUSTOMERDOCUMENTS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDCUSTOMERDOCUMENTS, new
             {
                 customerDocuments.Name,
                 customerDocuments.DocumentTypeId,
@@ -51,9 +51,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return customerDetails;
         }
-        public async Task<AddEntityDTO<int>> DeleteCustomerDocumentsById(int customerDocumentId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteCustomerDocumentsById(int customerDocumentId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETECUSTOMERDOCUMENTSBYID, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETECUSTOMERDOCUMENTSBYID, new
             {
                 customerDocumentId,
                 deletedBy

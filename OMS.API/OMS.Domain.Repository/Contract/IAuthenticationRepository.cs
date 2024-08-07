@@ -5,7 +5,7 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IAuthenticationRepository
     {
-        Task<UserDTO> UserLogin(string? userName);
-        Task<BaseRolesDTO> GetUserRoles(short? userId);
+        Task<UserDto> UserLogin(string? userName);
+        Task<BaseRolesDto> GetUserRoles(short? userId);
     }
 }

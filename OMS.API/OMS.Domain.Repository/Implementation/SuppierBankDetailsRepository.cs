@@ -18,9 +18,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Supplier Accouting Setting Repository
-        public async Task<AddEntityDTO<int>> AddEditACHWire(SuppierBankDetailsDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditACHWire(SuppierBankDetailsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITACHWIRE, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITACHWIRE, new
             {
                 requestData.SupplierBankDetailsId,
                 requestData.BankAddressId,

@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.Customers
 {
-    public class BaseCustomersDTO
+    public class BaseCustomersDto
     {
         public int? CustomerId { get; set; }
         public string? Name { get; set; }

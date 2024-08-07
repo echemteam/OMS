@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.CustomerAccountingSettings
 {
-    public class CustomerAccountingSettingsDTO
+    public class CustomerAccountingSettingsDto
     {
         public int? CustomerAccountingSettingId { get; set; }
         public short? PaymentTermId { get; set; }

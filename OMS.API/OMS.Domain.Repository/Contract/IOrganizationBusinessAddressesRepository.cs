@@ -7,7 +7,7 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IOrganizationBusinessAddressesRepository
     {
-        Task<AddEntityDTO<int>> AddEditBusinessAddresses(OrganizationBusinessAddressesDto requestData);
+        Task<AddEntityDto<int>> AddEditBusinessAddresses(OrganizationBusinessAddressesDto requestData);
         Task<GetOrganizationBusinessAddressesResponse> GetOrganizationBusinessAddresses();
         Task<GetAddressResponse> GetAddressByAddressId(int? addressId);
     }

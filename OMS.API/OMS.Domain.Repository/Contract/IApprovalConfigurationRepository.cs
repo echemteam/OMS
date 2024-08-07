@@ -8,7 +8,7 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IApprovalConfigurationRepository
     {
-        Task<AddEntityDTO<int>> AddEditApprovalConfiguration(ApprovalConfigurationDTO addEditApprovalConfiguration);
+        Task<AddEntityDto<int>> AddEditApprovalConfiguration(ApprovalConfigurationDto addEditApprovalConfiguration);
         Task<GetApprovalConfigurationByApprovalConfigurationIdResponse> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId);
         Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData);
         Task<EntityList<GetFunctionalitiesResponse>> GetFunctionalities(GetFunctionalitiesRequest requestData);

@@ -26,22 +26,22 @@ namespace OMS.Application.Services.Organization
         #endregion
 
         #region  Organization Service
-        public async Task<AddEntityDTO<int>> AddEditOrganizationProfile(AddEditOrganizationProfileRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditOrganizationProfile(AddEditOrganizationProfileRequest requestData, short CurrentUserId)
         {
-            OrganizationProfileDTO organizationProfileDTO = requestData.ToMapp<AddEditOrganizationProfileRequest, OrganizationProfileDTO>();
-            organizationProfileDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.organization.AddEditOrganizationProfile(organizationProfileDTO);
+            OrganizationProfileDto organizationProfileDto = requestData.ToMapp<AddEditOrganizationProfileRequest, OrganizationProfileDto>();
+            organizationProfileDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organization.AddEditOrganizationProfile(organizationProfileDto);
 
         }
         public async Task<GetOrganizationProfileResponse> GetOrganizationProfile()
         {
             return await repositoryManager.organization.GetOrganizationProfile();
         }
-        public async Task<AddEntityDTO<int>> AddEditSmtpSettings(AddEditSmtpSettingsRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditSmtpSettings(AddEditSmtpSettingsRequest requestData, short CurrentUserId)
         {
-            SmtpSettingsDTO smtpSettingsDTO = requestData.ToMapp<AddEditSmtpSettingsRequest, SmtpSettingsDTO>();
-            smtpSettingsDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.smtpSettings.AddEditSmtpSettings(smtpSettingsDTO);
+            SmtpSettingsDto smtpSettingsDto = requestData.ToMapp<AddEditSmtpSettingsRequest, SmtpSettingsDto>();
+            smtpSettingsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.smtpSettings.AddEditSmtpSettings(smtpSettingsDto);
 
         }
         public async Task<GetSmtpSettingsResponse> GetSmtpSettings()
@@ -49,18 +49,18 @@ namespace OMS.Application.Services.Organization
             return await repositoryManager.smtpSettings.GetSmtpSettings();
         }
 
-        public async Task<AddEntityDTO<int>> AddEditOrganizationOtherSettings(AddEditOrganizationOtherSettingsRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditOrganizationOtherSettings(AddEditOrganizationOtherSettingsRequest requestData, short CurrentUserId)
         {
-            OrganizationOtherSettingsDTO organizationOtherSettingsDTO = requestData.ToMapp<AddEditOrganizationOtherSettingsRequest, OrganizationOtherSettingsDTO>();
-            organizationOtherSettingsDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.organizationOtherSettings.AddEditOrganizationOtherSettings(organizationOtherSettingsDTO);
+            OrganizationOtherSettingsDto organizationOtherSettingsDto = requestData.ToMapp<AddEditOrganizationOtherSettingsRequest, OrganizationOtherSettingsDto>();
+            organizationOtherSettingsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.organizationOtherSettings.AddEditOrganizationOtherSettings(organizationOtherSettingsDto);
 
         }
         public async Task<GetOrganizationOtherSettingsResponse> GetOrganizationOtherSettings()
         {
             return await repositoryManager.organizationOtherSettings.GetOrganizationOtherSettings();
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationContactDetails(AddEditOrganizationContactDetailsRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditOrganizationContactDetails(AddEditOrganizationContactDetailsRequest requestData, short CurrentUserId)
         {
             OrganizationContactDetailsDto organizationContactDetailsDto = requestData.ToMapp<AddEditOrganizationContactDetailsRequest, OrganizationContactDetailsDto>();
             organizationContactDetailsDto.CreatedBy = CurrentUserId;
@@ -70,7 +70,7 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationContactDetails.GetOrganizationContactDetails();
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditOrganizationLogisticDetails(AddEditOrganizationLogisticDetailsRequest requestData, short CurrentUserId)
         {
             OrganizationLogisticDetailsDto organizationLogisticDetailsDto = requestData.ToMapp<AddEditOrganizationLogisticDetailsRequest, OrganizationLogisticDetailsDto>();
             organizationLogisticDetailsDto.CreatedBy = CurrentUserId;
@@ -80,7 +80,7 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationLogisticDetails.GetOrganizationLogisticDetails();
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationBankDetails(AddEditOrganizationBankDetailsRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditOrganizationBankDetails(AddEditOrganizationBankDetailsRequest requestData, short CurrentUserId)
         {
             OrganizationBankDetailsDto organizationBankDetailsDto = requestData.ToMapp<AddEditOrganizationBankDetailsRequest, OrganizationBankDetailsDto>();
             organizationBankDetailsDto.CreatedBy = CurrentUserId;
@@ -90,7 +90,7 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationBankDetails.GetOrganizationBankDetails();
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationAccountingDetails(AddEditOrganizationAccountingDetailsRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditOrganizationAccountingDetails(AddEditOrganizationAccountingDetailsRequest requestData, short CurrentUserId)
         {
             OrganizationAccountingDetailsDto organizationAccountingDetailsDto = requestData.ToMapp<AddEditOrganizationAccountingDetailsRequest, OrganizationAccountingDetailsDto>();
             organizationAccountingDetailsDto.CreatedBy = CurrentUserId;
@@ -100,7 +100,7 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationAccountingDetails.GetOrganizationAccountingDetails();
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationShippingCharges(AddEditOrganizationShippingChargesRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditOrganizationShippingCharges(AddEditOrganizationShippingChargesRequest requestData, short CurrentUserId)
         {
             OrganizationShippingChargesDto organizationShippingChargesDto = requestData.ToMapp<AddEditOrganizationShippingChargesRequest, OrganizationShippingChargesDto>();
             organizationShippingChargesDto.CreatedBy = CurrentUserId;
@@ -110,7 +110,7 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationShippingCharges.GetOrganizationShippingCharges();
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationOtherCharges(AddEditOrganizationOtherChargesRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditOrganizationOtherCharges(AddEditOrganizationOtherChargesRequest requestData, short CurrentUserId)
         {
             OrganizationOtherChargesDto organizationOtherChargesDto = requestData.ToMapp<AddEditOrganizationOtherChargesRequest, OrganizationOtherChargesDto>();
             organizationOtherChargesDto.CreatedBy = CurrentUserId;
@@ -120,7 +120,7 @@ namespace OMS.Application.Services.Organization
         {
             return await repositoryManager.organizationOtherCharges.GetOrganizationOtherCharges();
         }
-        public async Task<AddEntityDTO<int>> AddEditBusinessAddresses(AddEditOrganizationBusinessAddressesRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditBusinessAddresses(AddEditOrganizationBusinessAddressesRequest requestData, short CurrentUserId)
         {
             OrganizationBusinessAddressesDto organizationBusinessAddressDto = requestData.ToMapp<AddEditOrganizationBusinessAddressesRequest, OrganizationBusinessAddressesDto>();
             if (requestData.RegisteredAddress != null)
@@ -156,7 +156,7 @@ namespace OMS.Application.Services.Organization
 
             if (responseData != null)
             {
-                if (responseData.RegisteredAddressId > 0 )
+                if (responseData.RegisteredAddressId > 0)
                 {
                     responseData.RegisteredAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.RegisteredAddressId);
                 }
@@ -166,22 +166,22 @@ namespace OMS.Application.Services.Organization
                     responseData.PhysicalAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.PhysicalAddressId);
                 }
 
-                if (responseData.RemitToAddressId > 0 )
+                if (responseData.RemitToAddressId > 0)
                 {
                     responseData.RemitToAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.RemitToAddressId);
                 }
 
-                if (responseData.BillToAddressId > 0 )
+                if (responseData.BillToAddressId > 0)
                 {
                     responseData.BillToAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.BillToAddressId);
                 }
 
-                if (responseData.LabAddressId > 0 )
+                if (responseData.LabAddressId > 0)
                 {
                     responseData.LabAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.LabAddressId);
                 }
 
-                if (responseData.WarehouseAddressId > 0 )
+                if (responseData.WarehouseAddressId > 0)
                 {
                     responseData.WarehouseAddress = await repositoryManager.organizationBusinessAddresses.GetAddressByAddressId(responseData.WarehouseAddressId);
                 }
@@ -190,18 +190,18 @@ namespace OMS.Application.Services.Organization
         }
         private async Task<int> AddEditAddress(AddEditAddressRequest addressRequest, short currentUserId)
         {
-            AddressDTO addressDTO = addressRequest.ToMapp<AddEditAddressRequest, AddressDTO>();
-            AddEntityDTO<int> responseData;
+            AddressDto addressDto = addressRequest.ToMapp<AddEditAddressRequest, AddressDto>();
+            AddEntityDto<int> responseData;
 
             if (addressRequest.AddressId > 0)
             {
-                addressDTO.UpdatedBy = currentUserId;
-                responseData = await repositoryManager.address.UpdateAddAddress(addressDTO);
+                addressDto.UpdatedBy = currentUserId;
+                responseData = await repositoryManager.address.UpdateAddAddress(addressDto);
             }
             else
             {
-                addressDTO.CreatedBy = currentUserId;
-                responseData = await repositoryManager.address.AddAddress(addressDTO);
+                addressDto.CreatedBy = currentUserId;
+                responseData = await repositoryManager.address.AddAddress(addressDto);
             }
 
             return responseData.KeyValue;

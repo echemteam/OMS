@@ -15,9 +15,9 @@ namespace OMS.Domain.Repository.Implementation
         public OrganizationOtherChargesRepository(DapperContext dapperContext) : base(dapperContext)
         {
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationOtherCharges(OrganizationOtherChargesDto requestData)
+        public async Task<AddEntityDto<int>> AddEditOrganizationOtherCharges(OrganizationOtherChargesDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONOTHERCHARGES, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORGANIZATIONOTHERCHARGES, new
             {
                 requestData.OrganizationOtherChargeId,
                 requestData.HandlingFees,

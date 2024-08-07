@@ -40,7 +40,7 @@ namespace OMS.Framework.Middleware
                     _errorResponce.InnerExceptionStackTrace = exception.InnerException.StackTrace;
                 }
 
-                ExceptionLogDTO errorLog = new()
+                ExceptionLogDto errorLog = new()
                 {
                     ModuleName = context.Request.Path.Value,
                     SystemErrorMessage = exception.Message,

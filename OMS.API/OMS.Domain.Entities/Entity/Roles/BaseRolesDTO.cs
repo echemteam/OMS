@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMS.Domain.Entities.Entity.Roles
 {
-    public class BaseRolesDTO
+    public class BaseRolesDto
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

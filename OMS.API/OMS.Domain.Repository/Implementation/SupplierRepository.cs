@@ -33,7 +33,7 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Supplier Repository
-        public async Task<AddEditResponse> AddEditSupplierBasicInformation(SupplierDTO supplier)
+        public async Task<AddEditResponse> AddEditSupplierBasicInformation(SupplierDto supplier)
         {
             return await _context.GetSingleAsync<AddEditResponse>(ADDEDITSUPPLIERBASICINFORMATION, new
             {
@@ -74,9 +74,9 @@ namespace OMS.Domain.Repository.Implementation
             }, true);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateSupplierInActiveStatus(SupplierDTO supplier)
+        public async Task<AddEntityDto<int>> UpdateSupplierInActiveStatus(SupplierDto supplier)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECUSTOMERINACTIVESTATUS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATECUSTOMERINACTIVESTATUS, new
             {
                 supplier.SupplierId,
                 supplier.StatusId,
@@ -84,18 +84,18 @@ namespace OMS.Domain.Repository.Implementation
                 supplier.UpdatedBy,
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> UpdateSupplierApproveStatus(SupplierDTO supplier)
+        public async Task<AddEntityDto<int>> UpdateSupplierApproveStatus(SupplierDto supplier)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATESUPPLIERAPPROVESTATUS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATESUPPLIERAPPROVESTATUS, new
             {
                 supplier.SupplierId,
                 supplier.ApprovedBy,
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> AddAddressForSupplier(AddAddressForSupplierRequest requestData, short createdBy)
+        public async Task<AddEntityDto<int>> AddAddressForSupplier(AddAddressForSupplierRequest requestData, short createdBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDADDRESSFORSUPPLIER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDADDRESSFORSUPPLIER, new
             {
                 requestData.SupplierId,
                 requestData.AddressId,
@@ -104,9 +104,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateAddressForSupplier(UpdateAddressForSupplierRequest requestData, short updatedBy)
+        public async Task<AddEntityDto<int>> UpdateAddressForSupplier(UpdateAddressForSupplierRequest requestData, short updatedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEADDRESSFORSUPPLIER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEADDRESSFORSUPPLIER, new
             {
                 requestData.SupplierId,
                 requestData.AddressId,
@@ -114,18 +114,18 @@ namespace OMS.Domain.Repository.Implementation
                 updatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> UpdateSupplierStatus(SupplierDTO supplier)
+        public async Task<AddEntityDto<int>> UpdateSupplierStatus(SupplierDto supplier)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATESUPPLIERSTATUS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATESUPPLIERSTATUS, new
             {
                 supplier.SupplierId,
                 supplier.StatusId,
                 supplier.UpdatedBy,
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> CheckSupplierNameExist(SupplierDTO supplier)
+        public async Task<AddEntityDto<int>> CheckSupplierNameExist(SupplierDto supplier)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(CHECKSUPPLIERNAMEEXIST, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(CHECKSUPPLIERNAMEEXIST, new
             {
                 supplier.Name,
             }, CommandType.StoredProcedure);
@@ -145,9 +145,9 @@ namespace OMS.Domain.Repository.Implementation
             }, true);
         }
 
-        public async Task<AddEntityDTO<int>> AddEditContactForSupplier(AddEditContactForSupplierRequest requestData, short createdBy)
+        public async Task<AddEntityDto<int>> AddEditContactForSupplier(AddEditContactForSupplierRequest requestData, short createdBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTFORSUPPLIER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITCONTACTFORSUPPLIER, new
             {
                 requestData.SupplierContactId,
                 requestData.SupplierId,

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMS.Domain.Entities.Entity.User
 {
-    public class UserDTO : IUser, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class UserDto : IUser, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

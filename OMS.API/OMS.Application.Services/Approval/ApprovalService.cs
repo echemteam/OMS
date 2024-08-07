@@ -4,7 +4,6 @@ using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
 using OMS.Domain.Entities.API.Response.Approval;
-using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
@@ -37,7 +36,7 @@ namespace OMS.Application.Services.Approval
             }
             return checkList!;
         }
-        public async Task<AddEntityDTO<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData, int CurrentUserId)
+        public async Task<AddEntityDto<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData, int CurrentUserId)
         {
             DataTable CheckListDataTable = ExportHelper.ListToDataTable(requestData.CheckListRequest);
             CheckListDataTable.Columns.Add("UserId", typeof(int));
@@ -62,11 +61,11 @@ namespace OMS.Application.Services.Approval
             }
             return responses;
         }
-        public async Task<AddEntityDTO<int>> AddApprovalRequests(AddApprovalRequests requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddApprovalRequests(AddApprovalRequests requestData, short CurrentUserId)
         {
-            ApprovalRequestsDTO approvalRequestsDTO = requestData.ToMapp<AddApprovalRequests, ApprovalRequestsDTO>();
-            approvalRequestsDTO.RequestedByUserId = CurrentUserId;
-            return await repositoryManager.approval.AddApprovalRequests(approvalRequestsDTO);
+            ApprovalRequestsDto approvalRequestsDto = requestData.ToMapp<AddApprovalRequests, ApprovalRequestsDto>();
+            approvalRequestsDto.RequestedByUserId = CurrentUserId;
+            return await repositoryManager.approval.AddApprovalRequests(approvalRequestsDto);
         }
         public Task<List<GetApprovalRequestsListByStatusResponse>> GetApprovalRequestsListByStatus(string status)
         {

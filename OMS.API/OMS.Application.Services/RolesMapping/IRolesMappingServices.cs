@@ -7,8 +7,8 @@ namespace OMS.Application.Services.RolesMapping
 {
     public interface IRolesMappingServices
     {
-        Task<AddEntityDTO<int>> AddRoleMapping(AddRoleMappingRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddRoleMapping(AddRoleMappingRequest requestData, short CurrentUserId);
         Task<EntityList<GetRolesMappingByRoleIdResponse>> GetRolesMappingByRoleId(GetRolesMappingByRoleIdRequest requestData);
-        Task<AddEntityDTO<int>> DeleteRolesMapping(int userRoleId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteRolesMapping(int userRoleId, int deletedBy);
     }
 }

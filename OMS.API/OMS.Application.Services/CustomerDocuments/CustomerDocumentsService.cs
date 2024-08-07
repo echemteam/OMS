@@ -24,9 +24,9 @@ namespace OMS.Application.Services.CustomerDocuments
         #endregion
 
         #region Customer Documents Services
-        public async Task<AddEntityDTO<int>> AddCustomerDocuments(AddCustomerDocumentsRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddCustomerDocuments(AddCustomerDocumentsRequest requestData, short CurrentUserId)
         {
-            AddEntityDTO<int> responseData = await repositoryManager.customerDocuments.CheckDocumentsExistOrNot(requestData.DocumentTypeId, requestData.Name, requestData.CustomerId);
+            AddEntityDto<int> responseData = await repositoryManager.customerDocuments.CheckDocumentsExistOrNot(requestData.DocumentTypeId, requestData.Name, requestData.CustomerId);
 
             if (responseData.KeyValue > 0)
             {
@@ -37,9 +37,9 @@ namespace OMS.Application.Services.CustomerDocuments
                     requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File!, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.CustomerId, requestData.Attachment!, AESKey, AESIV);
 
                 }
-                CustomerDocumentsDTO customerDocumentsDTO = requestData.ToMapp<AddCustomerDocumentsRequest, CustomerDocumentsDTO>();
-                customerDocumentsDTO.CreatedBy = CurrentUserId;
-                responseData = await repositoryManager.customerDocuments.AddCustomerDocuments(customerDocumentsDTO);
+                CustomerDocumentsDto customerDocumentsDto = requestData.ToMapp<AddCustomerDocumentsRequest, CustomerDocumentsDto>();
+                customerDocumentsDto.CreatedBy = CurrentUserId;
+                responseData = await repositoryManager.customerDocuments.AddCustomerDocuments(customerDocumentsDto);
             }
             return responseData!;
         }
@@ -50,7 +50,7 @@ namespace OMS.Application.Services.CustomerDocuments
             return documentList;
         }
 
-        public async Task<AddEntityDTO<int>> DeleteCustomerDocumentsById(int customerDocumentId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteCustomerDocumentsById(int customerDocumentId, int deletedBy)
         {
             return await repositoryManager.customerDocuments.DeleteCustomerDocumentsById(customerDocumentId, deletedBy);
         }

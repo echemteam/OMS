@@ -2,7 +2,7 @@
 
 namespace OMS.Domain.Entities.Entity.Address
 {
-    public class AddressDTO : BaseAddressDTO, IAddress, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class AddressDto : BaseAddressDto, IAddress, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? AddressId { get; set; }
         [Column("CustomerId")]

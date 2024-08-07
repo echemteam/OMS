@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.ApiEvent
 {
-    public class ApiEventDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class ApiEventDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? ApiEventId { get; set; }
         public string? EventName { get; set; }

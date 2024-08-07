@@ -8,10 +8,10 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IApiAuthenticationRepository
     {
-        Task<AddEntityDTO<int>> AddEditApiAuthentication(ApiAuthenticationDTO apiAuthentication);
+        Task<AddEntityDto<int>> AddEditApiAuthentication(ApiAuthenticationDto apiAuthentication);
 
         Task<GetApiAuthenticationByAuthIdResponse> GetApiAuthenticationByAuthId(int authId);
-        Task<AddEntityDTO<int>> DeleteApiAuthentication(int authId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteApiAuthentication(int authId, int deletedBy);
         Task<EntityList<GetApiAuthenticationsResponse>> GetApiAuthentications(GetApiAuthenticationsRequest requestData);
 
     }

@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.ApiParameter
 {
-    public class ApiParameterDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class ApiParameterDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? ParameterId { get; set; }
         public int? EndpointId { get; set; }

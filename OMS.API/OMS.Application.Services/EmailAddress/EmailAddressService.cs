@@ -21,20 +21,20 @@ namespace OMS.Application.Services.EmailAddress
         }
         #endregion
 
-        public async Task<AddEntityDTO<int>> AddContactEmail(AddContactEmailRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddContactEmail(AddContactEmailRequest requestData, short CurrentUserId)
         {
-            EmailDTO emailDTO = requestData.ToMapp<AddContactEmailRequest, EmailDTO>();
-            emailDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.emailAddress.AddContactEmail(emailDTO);
+            EmailDto emailDto = requestData.ToMapp<AddContactEmailRequest, EmailDto>();
+            emailDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.emailAddress.AddContactEmail(emailDto);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateContactEmail(UpdateContactEmailRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateContactEmail(UpdateContactEmailRequest requestData, short CurrentUserId)
         {
-            EmailDTO emailDTO = requestData.ToMapp<UpdateContactEmailRequest, EmailDTO>();
-            emailDTO.UpdatedBy = CurrentUserId;
-            return await repositoryManager.emailAddress.UpdateContactEmail(emailDTO);
+            EmailDto emailDto = requestData.ToMapp<UpdateContactEmailRequest, EmailDto>();
+            emailDto.UpdatedBy = CurrentUserId;
+            return await repositoryManager.emailAddress.UpdateContactEmail(emailDto);
         }
-        public async Task<AddEntityDTO<int>> DeleteContactEmail(int emailId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteContactEmail(int emailId, int deletedBy)
         {
             return await repositoryManager.emailAddress.DeleteContactEmail(emailId, deletedBy);
         }

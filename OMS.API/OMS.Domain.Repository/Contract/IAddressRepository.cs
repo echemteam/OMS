@@ -6,9 +6,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IAddressRepository
     {
-        Task<AddEntityDTO<int>> AddAddress(AddressDTO address);
+        Task<AddEntityDto<int>> AddAddress(AddressDto address);
         Task<List<GetAddresssByCustomerIdResponse>> GetAddresssByCustomerId(int customerId);
-        Task<AddEntityDTO<int>> UpdateAddAddress(AddressDTO address);
+        Task<AddEntityDto<int>> UpdateAddAddress(AddressDto address);
         Task<List<GetAddresssBySupplierIdResponse>> GetAddresssBySupplierId(int supplierId);
         Task<GetCustomerAddresssByAddressIdResponse> GetCustomerAddresssByAddressId(int addressId);
         Task<GetSupplierAddresssByAddressIdResponse> GetSupplierAddresssByAddressId(int addressId);

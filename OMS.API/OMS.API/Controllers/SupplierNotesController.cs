@@ -37,7 +37,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateSupplierNotes")]
         public async Task<IActionResult> UpdateSupplierNotes(UpdateSupplierNotesRequest requestData)
         {
-            AddEntityDTO<long> responseData = new();
+            AddEntityDto<long> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.supplierNotesService.UpdateSupplierNotes(requestData, CurrentUserId);

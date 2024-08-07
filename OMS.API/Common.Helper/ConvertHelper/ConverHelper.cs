@@ -142,7 +142,7 @@ namespace Common.Helper.ConvertHelper
         /// <returns></returns>
         public static string ConvertDBNullToString(object obj)
         {
-            return obj is DBNull ? string.Empty : obj.ToString();
+            return obj is DBNull ? string.Empty : obj?.ToString() ?? string.Empty;
         }
     }
 }

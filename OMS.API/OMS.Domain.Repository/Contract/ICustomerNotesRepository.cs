@@ -6,8 +6,8 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ICustomerNotesRepository
     {
-        Task<AddEntityDTO<long>> AddCustomerNotes(CustomerNotesDTO addCustomerNotes);
-        Task<AddEntityDTO<long>> UpdateCustomerNotes(CustomerNotesDTO updateCustomerNotes);
+        Task<AddEntityDto<long>> AddCustomerNotes(CustomerNotesDto addCustomerNotes);
+        Task<AddEntityDto<long>> UpdateCustomerNotes(CustomerNotesDto updateCustomerNotes);
         Task<List<GetCustomerNotesByCustomerIdResponse>> GetCustomerNoteByCustomerId(int customerId);
 
     }

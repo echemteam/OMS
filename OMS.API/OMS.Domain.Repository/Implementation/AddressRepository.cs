@@ -14,7 +14,6 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDADDRESS = "AddAddress";
         const string GETADDRESSSBYCUSTOMERID = "GetAddresssByCustomerId";
         const string UPDATEADDADDRESS = "UpdateAddAddress";
-        const string ADDADDRESSFORCUSTOMER = "AddAddressForCustomer";
         const string GETADDRESSSBYSUPPLIERID = "GetAddresssBySupplierId";
         const string GETCUSTOMERADDRESSSBYADDRESSID = "GetCustomerAddresssByAddressId";
         const string GETSUPPLIERADDRESSSBYADDRESSID = "GetSupplierAddresssByAddressId";
@@ -25,9 +24,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Address Repository
-        public async Task<AddEntityDTO<int>> AddAddress(AddressDTO address)
+        public async Task<AddEntityDto<int>> AddAddress(AddressDto address)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDADDRESS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDADDRESS, new
             {
                 address.CustomerId,
                 address.AddressTypeId,
@@ -63,9 +62,9 @@ namespace OMS.Domain.Repository.Implementation
             return getCustomerAddresssByAddressIdResponse;
 
         }
-        public async Task<AddEntityDTO<int>> UpdateAddAddress(AddressDTO address)
+        public async Task<AddEntityDto<int>> UpdateAddAddress(AddressDto address)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEADDADDRESS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEADDADDRESS, new
             {
                 address.AddressId,
                 address.CustomerId,

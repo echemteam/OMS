@@ -23,27 +23,27 @@ namespace OMS.Domain.Repository.Implementation
         {
         }
 
-        public async Task<AddEntityDTO<int>> AddContactEmail(EmailDTO email)
+        public async Task<AddEntityDto<int>> AddContactEmail(EmailDto email)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCONTACTEMAIL, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDCONTACTEMAIL, new
             {
                 email.EmailAddress,
                 email.ContactId,
                 email.CreatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> UpdateContactEmail(EmailDTO email)
+        public async Task<AddEntityDto<int>> UpdateContactEmail(EmailDto email)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECONTACTEMAIL, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATECONTACTEMAIL, new
             {
                 email.EmailId,
                 email.EmailAddress,
                 email.UpdatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> DeleteContactEmail(int emailId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteContactEmail(int emailId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETECONTACTEMAIL, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETECONTACTEMAIL, new
             {
                 emailId,
                 deletedBy
@@ -61,14 +61,14 @@ namespace OMS.Domain.Repository.Implementation
 
         }
 
-        public async Task<AddEntityDTO<int>> AddEditContactEmail(DataTable emailList, int contactId)
+        public async Task<AddEntityDto<int>> AddEditContactEmail(DataTable emailList, int contactId)
         {
             var parameters = new
             {
                 emailList = emailList.AsTableValuedParameter("[dbo].[EmailTypeTable]"),
                 contactId
             };
-            AddEntityDTO<int> responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTEMAIL,
+            AddEntityDto<int> responceData = await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITCONTACTEMAIL,
             parameters
             , CommandType.StoredProcedure);
             return responceData;

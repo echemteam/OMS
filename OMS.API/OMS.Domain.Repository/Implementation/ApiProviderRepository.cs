@@ -23,9 +23,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region API Configuration Repository
-        public async Task<AddEntityDTO<int>> AddEditApiProvider(ApiProviderDTO apiProvider)
+        public async Task<AddEntityDto<int>> AddEditApiProvider(ApiProviderDto apiProvider)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITAPIPROVIDER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITAPIPROVIDER, new
             {
                 apiProvider.ProviderId,
                 apiProvider.Name,
@@ -42,9 +42,9 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getCustomerAddresssByAddressIdResponse;
         }
-        public async Task<AddEntityDTO<int>> DeleteApiProvider(int providerId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteApiProvider(int providerId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEAPIPROVIDER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEAPIPROVIDER, new
             {
                 providerId,
                 deletedBy

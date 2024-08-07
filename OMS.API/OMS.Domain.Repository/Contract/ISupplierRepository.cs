@@ -9,17 +9,17 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ISupplierRepository
     {
-        Task<AddEditResponse> AddEditSupplierBasicInformation(SupplierDTO supplier);
+        Task<AddEditResponse> AddEditSupplierBasicInformation(SupplierDto supplier);
         Task<GetSupplierBasicInformationByIdResponse> GetSupplierBasicInformationById(int supplierId);
         Task<EntityList<GetSuppliersResponse>> GetSuppliers(GetSuppliersRequest queryRequest);
-        Task<AddEntityDTO<int>> UpdateSupplierInActiveStatus(SupplierDTO supplier);
-        Task<AddEntityDTO<int>> UpdateSupplierApproveStatus(SupplierDTO supplier);
-        Task<AddEntityDTO<int>> AddAddressForSupplier(AddAddressForSupplierRequest requestData, short createdBy);
-        Task<AddEntityDTO<int>> UpdateAddressForSupplier(UpdateAddressForSupplierRequest requestData, short updatedBy);
-        Task<AddEntityDTO<int>> UpdateSupplierStatus(SupplierDTO supplier);
-        Task<AddEntityDTO<int>> CheckSupplierNameExist(SupplierDTO supplier);
+        Task<AddEntityDto<int>> UpdateSupplierInActiveStatus(SupplierDto supplier);
+        Task<AddEntityDto<int>> UpdateSupplierApproveStatus(SupplierDto supplier);
+        Task<AddEntityDto<int>> AddAddressForSupplier(AddAddressForSupplierRequest requestData, short createdBy);
+        Task<AddEntityDto<int>> UpdateAddressForSupplier(UpdateAddressForSupplierRequest requestData, short updatedBy);
+        Task<AddEntityDto<int>> UpdateSupplierStatus(SupplierDto supplier);
+        Task<AddEntityDto<int>> CheckSupplierNameExist(SupplierDto supplier);
         Task<EntityList<GetSupplierAuditHistoryBySupplierIdResponse>> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest);
-        Task<AddEntityDTO<int>> AddEditContactForSupplier(AddEditContactForSupplierRequest requestData, short createdBy);
+        Task<AddEntityDto<int>> AddEditContactForSupplier(AddEditContactForSupplierRequest requestData, short createdBy);
         Task<List<GetSupplierDetailsBySupplierNameResponse>> GetSupplierDetailsBySupplierName(string supplierName);
 
     }

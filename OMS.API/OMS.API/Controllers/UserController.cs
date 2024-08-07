@@ -35,7 +35,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UpdateUserRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.userService.UpdateUser(requestData, CurrentUserId);
@@ -76,7 +76,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateUserPassword")]
         public async Task<IActionResult> UpdateUserPassword(UpdateUserPasswordRequest updateUserPassword)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (updateUserPassword != null)
             {
                 responseData = await _serviceManager.userService.UpdateUserPassword(updateUserPassword, CurrentUserId);

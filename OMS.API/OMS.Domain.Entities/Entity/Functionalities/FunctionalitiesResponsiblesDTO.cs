@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.Functionalities
 {
-    public class FunctionalitiesResponsiblesDTO
+    public class FunctionalitiesResponsiblesDto
     {
         public int? FunctionalitiesResponsiblesId { get; set; }
         public int? FunctionalityId { get; set; }

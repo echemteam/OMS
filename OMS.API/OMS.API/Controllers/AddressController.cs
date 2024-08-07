@@ -55,7 +55,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateAddAddress")]
         public async Task<IActionResult> UpdateAddAddress(UpdateAddressRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.addressServices.UpdateAddAddress(requestData, CurrentUserId);

@@ -34,17 +34,17 @@ namespace OMS.Application.Services.APIConfiguration
         #endregion
 
         #region Approval Configuration Services
-        public async Task<AddEntityDTO<int>> AddEditApiProvider(AddEditApiProviderRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditApiProvider(AddEditApiProviderRequest requestData, short CurrentUserId)
         {
-            ApiProviderDTO apiProviderDTO = requestData.ToMapp<AddEditApiProviderRequest, ApiProviderDTO>();
-            apiProviderDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.apiProvider.AddEditApiProvider(apiProviderDTO);
+            ApiProviderDto apiProviderDto = requestData.ToMapp<AddEditApiProviderRequest, ApiProviderDto>();
+            apiProviderDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.apiProvider.AddEditApiProvider(apiProviderDto);
         }
         public Task<GetApiProviderByProviderIdResponse> GetApiProviderByProviderId(int providerId)
         {
             return repositoryManager.apiProvider.GetApiProviderByProviderId(providerId);
         }
-        public async Task<AddEntityDTO<int>> DeleteApiProvider(int providerId, short CurrentUserId)
+        public async Task<AddEntityDto<int>> DeleteApiProvider(int providerId, short CurrentUserId)
         {
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiProvider.DeleteApiProvider(providerId, deletedBy);
@@ -55,18 +55,18 @@ namespace OMS.Application.Services.APIConfiguration
             return apiProvidersDetails!;
         }
 
-        public async Task<AddEntityDTO<int>> AddEditApiEndpoint(AddEditApiEndpointRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditApiEndpoint(AddEditApiEndpointRequest requestData, short CurrentUserId)
         {
-            ApiEndpointDTO apiEndpointDTO = requestData.ToMapp<AddEditApiEndpointRequest, ApiEndpointDTO>();
-            apiEndpointDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.apiEndpoint.AddEditApiEndpoint(apiEndpointDTO);
+            ApiEndpointDto apiEndpointDto = requestData.ToMapp<AddEditApiEndpointRequest, ApiEndpointDto>();
+            apiEndpointDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.apiEndpoint.AddEditApiEndpoint(apiEndpointDto);
         }
 
         public Task<GetApiEndpointByEndpointIdResponse> GetApiEndpointByEndpointId(int endpointId)
         {
             return repositoryManager.apiEndpoint.GetApiEndpointByEndpointId(endpointId);
         }
-        public async Task<AddEntityDTO<int>> DeleteApiEndpoint(int endpointId, short CurrentUserId)
+        public async Task<AddEntityDto<int>> DeleteApiEndpoint(int endpointId, short CurrentUserId)
         {
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiEndpoint.DeleteApiEndpoint(endpointId, deletedBy);
@@ -77,17 +77,17 @@ namespace OMS.Application.Services.APIConfiguration
             return endpointsDetails!;
         }
 
-        public async Task<AddEntityDTO<int>> AddEditApiParameter(AddEditApiParameterRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditApiParameter(AddEditApiParameterRequest requestData, short CurrentUserId)
         {
-            ApiParameterDTO apiParameterDTO = requestData.ToMapp<AddEditApiParameterRequest, ApiParameterDTO>();
-            apiParameterDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.apiParameter.AddEditApiParameter(apiParameterDTO);
+            ApiParameterDto apiParameterDto = requestData.ToMapp<AddEditApiParameterRequest, ApiParameterDto>();
+            apiParameterDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.apiParameter.AddEditApiParameter(apiParameterDto);
         }
         public Task<GetApiParameterByParameterIdResponse> GetApiParameterByParameterId(int parameterId)
         {
             return repositoryManager.apiParameter.GetApiParameterByParameterId(parameterId);
         }
-        public async Task<AddEntityDTO<int>> DeleteApiParameter(int parameterId, short CurrentUserId)
+        public async Task<AddEntityDto<int>> DeleteApiParameter(int parameterId, short CurrentUserId)
         {
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiParameter.DeleteApiParameter(parameterId, deletedBy);
@@ -97,17 +97,17 @@ namespace OMS.Application.Services.APIConfiguration
             var parametersDetails = await repositoryManager.apiParameter.GetApiParameters(requestData);
             return parametersDetails!;
         }
-        public async Task<AddEntityDTO<int>> AddEditApiAuthentication(AddEditApiAuthenticationRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditApiAuthentication(AddEditApiAuthenticationRequest requestData, short CurrentUserId)
         {
-            ApiAuthenticationDTO apiAuthenticationDTO = requestData.ToMapp<AddEditApiAuthenticationRequest, ApiAuthenticationDTO>();
-            apiAuthenticationDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.apiAuthentication.AddEditApiAuthentication(apiAuthenticationDTO);
+            ApiAuthenticationDto apiAuthenticationDto = requestData.ToMapp<AddEditApiAuthenticationRequest, ApiAuthenticationDto>();
+            apiAuthenticationDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.apiAuthentication.AddEditApiAuthentication(apiAuthenticationDto);
         }
         public Task<GetApiAuthenticationByAuthIdResponse> GetApiAuthenticationByAuthId(int authId)
         {
             return repositoryManager.apiAuthentication.GetApiAuthenticationByAuthId(authId);
         }
-        public async Task<AddEntityDTO<int>> DeleteApiAuthentication(int authId, short CurrentUserId)
+        public async Task<AddEntityDto<int>> DeleteApiAuthentication(int authId, short CurrentUserId)
         {
             short deletedBy = CurrentUserId;
             return await repositoryManager.apiAuthentication.DeleteApiAuthentication(authId, deletedBy);

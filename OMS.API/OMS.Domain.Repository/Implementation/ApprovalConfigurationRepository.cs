@@ -26,9 +26,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Approval Configuration Repository
-        public async Task<AddEntityDTO<int>> AddEditApprovalConfiguration(ApprovalConfigurationDTO addEditApprovalConfiguration)
+        public async Task<AddEntityDto<int>> AddEditApprovalConfiguration(ApprovalConfigurationDto addEditApprovalConfiguration)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITAPPROVALCONFIGURATION, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITAPPROVALCONFIGURATION, new
             {
                 addEditApprovalConfiguration.ApprovalConfigurationId,
                 addEditApprovalConfiguration.RuleName,
@@ -80,9 +80,9 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SortString,
             }, true);
         }
-        public async Task<AddEntityDTO<int>> UpdateCustomerStatus(CustomersDTO customers)
+        public async Task<AddEntityDto<int>> UpdateCustomerStatus(CustomersDto customers)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(GETFUNCTIONALITYEVENTS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(GETFUNCTIONALITYEVENTS, new
             {
                 customers.CustomerId,
                 customers.StatusId,

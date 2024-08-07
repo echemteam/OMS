@@ -24,27 +24,27 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Roles Repository
-        public async Task<AddEntityDTO<int>> AddRoles(RolesDTO roles)
+        public async Task<AddEntityDto<int>> AddRoles(RolesDto roles)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDROLES, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDROLES, new
             {
                 roles.RoleName,
                 roles.CreatedBy
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateRoles(RolesDTO updateRoles)
+        public async Task<AddEntityDto<int>> UpdateRoles(RolesDto updateRoles)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEROLES, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEROLES, new
             {
                 updateRoles.RoleId,
                 updateRoles.RoleName,
                 updateRoles.UpdatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> DeleteRoles(int roleId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteRoles(int roleId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEROLES, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEROLES, new
             {
                 roleId,
                 deletedBy
