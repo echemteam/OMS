@@ -21,7 +21,7 @@ export const orderItemDetailData = {
       },
       validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
+        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input relative",
       },
       inputButtonGroup: {
         isInputButton: true,
