@@ -117,10 +117,10 @@ namespace OMS.Application.Services.APIConfiguration
             var parametersDetails = await repositoryManager.apiAuthentication.GetApiAuthentications(requestData);
             return parametersDetails!;
         }
-        public async Task<ApiTesterResponse> ApiTester(int apiEventId)
+        public async Task<ApiTesterResponse> ThirdPartyAPICall(int apiEventId)
         {
             ApiTesterResponse responsData = new();
-            responsData.ApiResponse = await APITester.ThirdPartyAPITest(apiEventId);
+            responsData.ApiResponse = await ThirdPartyAPIIntegrator.ThirdPartyAPITest(apiEventId);
 
             return responsData;
         }

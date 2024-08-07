@@ -1,6 +1,6 @@
-﻿namespace ThirdPartyAPITester.Model
+﻿namespace ThirdPartyAPIClientLibrary.Model
 {
-    public class APIEvent
+    public class APIEventResponse
     {
         public int? ProviderId { get; set; }
         public string? ProviderName { get; set; }

@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using Polly;
 using System.Net.Http.Headers;
-using ThirdPartyAPITester.Model;
+using ThirdPartyAPIClientLibrary.Model;
 
-namespace ThirdPartyAPITester.Services
+namespace ThirdPartyAPIClientLibrary.Services
 {
     public class TokenManagementService
     {

@@ -1,13 +1,13 @@
 ﻿using System.Data;
 
-namespace ThirdPartyAPITester.Helper
+namespace ThirdPartyAPIClientLibrary.Helper
 {
     public class BaseImport
     {
-        public readonly APITesterDapperContext _context;
+        public readonly APIClientDapperContext _context;
         public readonly IDbConnection _connection;
 
-        public BaseImport(APITesterDapperContext apiTesterDapperContext)
+        public BaseImport(APIClientDapperContext apiTesterDapperContext)
         {
             _context = apiTesterDapperContext;
             _connection = _context.CreateConnection();

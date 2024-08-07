@@ -1,13 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ThirdPartyAPIClientLibrary.Enums;
+using ThirdPartyAPIClientLibrary.Helper;
+using ThirdPartyAPIClientLibrary.Model;
+using ThirdPartyAPIClientLibrary.Services;
+using ThirdPartyAPIClientLibrary.ThirdPartyResponseProvider;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Web;
-using ThirdPartyAPITester.Enums;
-using ThirdPartyAPITester.Helper;
-using ThirdPartyAPITester.Model;
-using ThirdPartyAPITester.Services;
-using ThirdPartyAPITester.ThirdPartyResponseProvider;
 
-namespace ThirdPartyAPITester
+namespace ThirdPartyAPIClientLibrary
 {
     //class Program
     //{
@@ -47,15 +47,15 @@ namespace ThirdPartyAPITester
         //    Console.WriteLine($"API Test Result: {testResult}");
         //}
 
-        private async Task<string> ThirdPartyAPITest(int apiEventId)
+        private async Task<string> GetThirdPartyApiResponse(int apiEventId)
         {
             var configuration = new ConfigurationBuilder().AddJsonFile("APITesterAppSettings.json").Build();
             string OMSConnection = configuration["ConnectionStrings:OMS"] ?? "";
 
-            ImportHelper helper = new(new APITesterDapperContext(OMSConnection));
+            ImportHelper helper = new(new APIClientDapperContext(OMSConnection));
 
             // Get the list of API providers based on apiEventId
-            APIEvent getApiEvent = await helper.GetAPIEndPointByApiEventId(apiEventId);
+            APIEventResponse getApiEvent = await helper.GetAPIEndPointByApiEventId(apiEventId);
 
             string results = "";
             if (getApiEvent == null)
