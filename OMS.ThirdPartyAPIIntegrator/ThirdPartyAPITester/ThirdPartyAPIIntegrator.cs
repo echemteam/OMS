@@ -9,43 +9,43 @@ using ThirdPartyAPITester.ThirdPartyResponseProvider;
 
 namespace ThirdPartyAPITester
 {
-    class Program
-    {
-        static async Task Main(string[] args)
-        {
-            // Set up configuration
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("APITesterAppSettings.json") // or other configuration sources
-                .Build();
+    //class Program
+    //{
+    //    static async Task Main(string[] args)
+    //    {
+    //        // Set up configuration
+    //        var configuration = new ConfigurationBuilder()
+    //            .AddJsonFile("APITesterAppSettings.json") // or other configuration sources
+    //            .Build();
 
-            // Instantiate necessary services
-            var tokenManagementService = new TokenManagementService(); // Replace with actual instantiation
+    //        // Instantiate necessary services
+    //        var tokenManagementService = new TokenManagementService(); // Replace with actual instantiation
 
-            // Instantiate the APITester and call the instance method
-            var apiTester = new APITester(tokenManagementService, configuration);
-            await apiTester.Run(args);
-        }
-    }
+    //        // Instantiate the APITester and call the instance method
+    //        var apiTester = new ThirdPartyAPIIntegrator(tokenManagementService, configuration);
+    //        await apiTester.Run(args);
+    //    }
+    //}
 
-    public class APITester
+    public class ThirdPartyAPIIntegrator
     {
         private readonly TokenManagementService _tokenManagementService;
         private readonly IConfiguration _configuration;
         private static readonly HttpClient HttpClient = new();
 
-        public APITester(TokenManagementService tokenManagementService, IConfiguration configuration)
+        public ThirdPartyAPIIntegrator(TokenManagementService tokenManagementService, IConfiguration configuration)
         {
             _tokenManagementService = tokenManagementService;
             _configuration = configuration;
         }
 
-        public async Task Run(string[] args)
-        {
-            Console.WriteLine("Starting API Test...");
-            int apiEventId = 14; // Example providerId
-            string testResult = await ThirdPartyAPITest(apiEventId);
-            Console.WriteLine($"API Test Result: {testResult}");
-        }
+        //public async Task Run(string[] args)
+        //{
+        //    Console.WriteLine("Starting API Test...");
+        //    int apiEventId = 14; // Example providerId
+        //    string testResult = await ThirdPartyAPITest(apiEventId);
+        //    Console.WriteLine($"API Test Result: {testResult}");
+        //}
 
         private async Task<string> ThirdPartyAPITest(int apiEventId)
         {
