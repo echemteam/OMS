@@ -117,11 +117,19 @@ namespace OMS.Application.Services.APIConfiguration
             var parametersDetails = await repositoryManager.apiAuthentication.GetApiAuthentications(requestData);
             return parametersDetails!;
         }
-        public async Task<ThirdPartyAPICallResponse> ThirdPartyAPICall(int apiEventId)
+        public async Task<ThirdPartyAPICallResponse> ThirdPartyAPICall(ThirdPartyAPICallRequest requestData)
         {
+            // Map OMS request to ThirdPartyAPI request
+            var apiRequest = new ThirdPartyAPILibrary.Model.ThirdPartyAPICallRequest
+            {
+                EventName = requestData.EventName,
+                Parameters = requestData.Parameters,
+                IsDynamicParameter = requestData.IsDynamicParameter
+            };
+
             ThirdPartyAPICallResponse responseData = new()
             {
-                ApiResponse = await ThirdPartyAPIIntegrator.GetThirdPartyApiResponse(apiEventId)
+                ApiResponse = await ThirdPartyAPIIntegrator.GetThirdPartyApiResponse(apiRequest)
             };
             return responseData;
         }

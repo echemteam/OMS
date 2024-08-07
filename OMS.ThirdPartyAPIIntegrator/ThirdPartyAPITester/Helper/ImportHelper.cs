@@ -10,12 +10,12 @@ namespace ThirdPartyAPILibrary.Helper
         {
         }
 
-        public async Task<APIEventResponse> GetAPIEndPointByApiEventId(int apiEventId)
+        public async Task<APIEventResponse> GetAPIEndPointByApiEventId(string eventName)
         {
             try
             {
                 string sql = "GetAPIEndPointByApiEventId";
-                APIEventResponse config = await _context.GetFrist<APIEventResponse>(sql, new { apiEventId }, CommandType.StoredProcedure);
+                APIEventResponse config = await _context.GetFrist<APIEventResponse>(sql, new { eventName }, CommandType.StoredProcedure);
                 return config;
             }
             catch (Exception ex)

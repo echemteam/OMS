@@ -25,12 +25,26 @@ namespace ThirdPartyAPILibrary
         //public async Task Run(string[] args)
         //{
         //    Console.WriteLine("Starting API Test...");
-        //    int apiEventId = 14; // Example providerId
-        //    string testResult = await GetThirdPartyApiResponse(apiEventId);
+        //    var parameters = new
+        //    {
+        //        pageNo = 1,
+        //        pageSize = 25,
+        //        orderByColumn = "ProductName",
+        //        orderFlag = 0,
+        //        searchText = "acid"
+        //    };
+
+        //    ThirdPartyAPICallRequest requestData = new()
+        //    {
+        //        EventName = "Get Search product List",
+        //        IsDynamicParameter = true,
+        //        Parameters = JsonConvert.SerializeObject(parameters)
+        //    };
+        //    string testResult = await GetThirdPartyApiResponse(requestData);
         //    Console.WriteLine($"API Test Result: {testResult}");
         //}
 
-        public static async Task<string> GetThirdPartyApiResponse(int apiEventId)
+        public static async Task<string> GetThirdPartyApiResponse(ThirdPartyAPICallRequest requestData)
         {
             var configuration = new ConfigurationBuilder().AddJsonFile("APIClientAppSettings.json").Build();
             string OMSConnection = configuration["ConnectionStrings:OMS"] ?? "";
@@ -38,7 +52,7 @@ namespace ThirdPartyAPILibrary
             ImportHelper helper = new(new APIClientDapperContext(OMSConnection));
 
             // Get the list of API providers based on apiEventId
-            APIEventResponse getApiEvent = await helper.GetAPIEndPointByApiEventId(apiEventId);
+            APIEventResponse getApiEvent = await helper.GetAPIEndPointByApiEventId(requestData.EventName);
 
             string results = "";
             if (getApiEvent == null)
@@ -49,7 +63,7 @@ namespace ThirdPartyAPILibrary
             {
                 return results = $"Invalid API Event BaseURL {getApiEvent.BaseURL}.";
             }
-            if (getApiEvent.Parameters == null)
+            if (getApiEvent.Parameters == null && !requestData.IsDynamicParameter)
             {
                 return results = $"Invalid API Event Parameter {getApiEvent.Parameters}.";
             }
@@ -60,7 +74,7 @@ namespace ThirdPartyAPILibrary
 
             if (getApiEvent.AuthenticationType == AuthenticationType.APIKEY)
             {
-                if (getApiEvent.AuthKey != null || getApiEvent.AuthKey != "")
+                if (getApiEvent.AuthKey != null && getApiEvent.AuthKey != "")
                 {
                     accessTokenObj.IsSuccess = true;
                     accessTokenObj.Token = getApiEvent.AuthKey;
@@ -93,11 +107,11 @@ namespace ThirdPartyAPILibrary
 
             if (accessTokenObj.IsSuccess == true && accessTokenObj.Token != null && accessTokenObj.Token != "")
             {
-                List<APIRequiredFields> getRequiredField = await helper.GetAPIRequiredFieldsByEventId(apiEventId);
+                List<APIRequiredFields> getRequiredField = await helper.GetAPIRequiredFieldsByEventId(getApiEvent.ApiEventId);
 
                 if (getApiEvent.Method == "GET")
                 {
-                    var parameters = JsonConvert.DeserializeObject<Dictionary<string, string>>(getApiEvent.Parameters);
+                    var parameters = JsonConvert.DeserializeObject<Dictionary<string, string>>(requestData.IsDynamicParameter ? requestData.Parameters : getApiEvent.Parameters);
 
                     var uriBuilder = new UriBuilder(getApiEvent.BaseURL);
                     var query = HttpUtility.ParseQueryString(uriBuilder.Query);
@@ -112,11 +126,12 @@ namespace ThirdPartyAPILibrary
                 }
                 else if (getApiEvent.Method == "POST")
                 {
-                    response = await APIResponseProvider.PostMethod(url, accessTokenObj.Token, getApiEvent.Parameters, getRequiredField);
+                    string parameters = requestData.IsDynamicParameter ? requestData.Parameters : getApiEvent.Parameters;
+                    response = await APIResponseProvider.PostMethod(url, accessTokenObj.Token, parameters, getRequiredField);
                 }
                 else
                 {
-                    response = $"Unsupported HTTP method: {getApiEvent.Method} for apiEventId {apiEventId}.";
+                    response = $"Unsupported HTTP method: {getApiEvent.Method} for apiEventId {getApiEvent.ApiEventId}.";
                 }
             }
             else
