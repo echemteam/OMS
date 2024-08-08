@@ -114,11 +114,11 @@ namespace OMS.API.Controllers
         }
 
         [HttpDelete("DeleteApiEventParameter")]
-        public async Task<IActionResult> DeleteApiEventParameter(int parameterId)
+        public async Task<IActionResult> DeleteApiEventParameter(int parameterId,int apiEventParametersId)
         {
-            if (parameterId > 0)
+            if (parameterId > 0 && apiEventParametersId > 0)
             {
-                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiEventParameter(parameterId, CurrentUserId).ConfigureAwait(true);
+                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiEventParameter(parameterId, apiEventParametersId, CurrentUserId).ConfigureAwait(true);
                 return APISucessResponce<object>(deleteItem);
             }
             return APISucessResponce(parameterId);

@@ -10,7 +10,7 @@ namespace OMS.Domain.Repository.Contract
     {
         Task<AddEntityDto<int>> AddEditApiEventParameter(ApiEventParameterDto requestData);
         Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventId);
-        Task<AddEntityDto<int>> DeleteApiEventParameter(int parameterId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteApiEventParameter(int parameterId,int apiEventParametersId, int deletedBy);
         Task<EntityList<GetApiEventParametersResponse>> GetApiEventParameters(GetApiEventParametersRequest requestData);
 
     }

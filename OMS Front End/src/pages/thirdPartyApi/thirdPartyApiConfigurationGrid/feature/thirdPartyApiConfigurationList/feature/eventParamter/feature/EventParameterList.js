@@ -64,7 +64,11 @@ const EventParameterList = (props) => {
     confirm("Delete?", "Are you sure you want to Delete?", "Delete", "Cancel"
     ).then((confirmed) => {
       if (confirmed) {
-        deleteApiEventParameter(data.parameterId);
+        let request = {
+          apiEventParametersId: data.apiEventParametersId,
+          parameterId: data.parameterId
+        }
+        deleteApiEventParameter(request);
       }
     });
   };
@@ -118,7 +122,7 @@ const EventParameterList = (props) => {
           onSorting={handleSorting}
           isLoading={isGetApiEventParametersLoading}
           onActionChange={actionHandler}
-        
+
         />
       </div>
     </div>

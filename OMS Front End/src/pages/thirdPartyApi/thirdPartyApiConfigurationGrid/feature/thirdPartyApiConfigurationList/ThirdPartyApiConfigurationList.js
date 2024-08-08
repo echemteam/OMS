@@ -116,7 +116,7 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
         }
         let request = {
             eventName: 'Get Search product List',
-            isDynamicParameter: true,
+            isDynamicParameter: false,
             parameters : JSON.stringify(parameter)
         }
         getThirdPartyApiResponse(request);
