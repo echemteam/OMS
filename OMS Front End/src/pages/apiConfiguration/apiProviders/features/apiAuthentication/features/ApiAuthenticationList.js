@@ -95,7 +95,7 @@ const ApiAuthenticationList = ({ handleEditClick, getDataRef, providerId , handl
   return (
 
     <div className="row">
-      <div className="col-md-12 table-striped api-provider pagination-none">
+      <div className="col-md-12 table-striped api-provider pagination-none first-word-break">
         <MolGrid
           ref={molGridRef}
           configuration={ApiAuthenticationtGridConfig}
