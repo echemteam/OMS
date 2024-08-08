@@ -44,7 +44,7 @@ import PropTypes from 'prop-types';
     const [dataSource, setDataSource] = useState();
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState(reasonData);
-    const [customerID, setcustomerId] = useState();
+    const [customerID, setCustomerId] = useState();
     const [staticId, setStaticId] = useState();
     const [statusFeild, setStatusFeild] = useState();
     const { listRef } = useContext(CustomerListContext);
@@ -249,7 +249,7 @@ import PropTypes from 'prop-types';
       if (childRef.current) {
         childRef.current.callChildFunction(rowData.customerId,rowData.isSubCustomer? rowData.isSubCustomer : false);
       }
-      setcustomerId(rowData.customerId);
+      setCustomerId(rowData.customerId);
     };
   
     const updateCustomerApproval = () => {
@@ -274,7 +274,7 @@ import PropTypes from 'prop-types';
     const handlefreeze = (data) => {
       removeFields();
       setShowModal(true);
-      setcustomerId(data.customerId);
+      setCustomerId(data.customerId);
       setStaticId(StatusEnums.Freeze);
       setStatusFeild(StatusFeild.Freeze);
     };
@@ -282,7 +282,7 @@ import PropTypes from 'prop-types';
     const handleDiseble = (data) => {
       removeFields();
       setShowModal(true);
-      setcustomerId(data.customerId);
+      setCustomerId(data.customerId);
       setStaticId(StatusEnums.Disable);
       setStatusFeild(StatusFeild.Disable);
     };
@@ -290,7 +290,7 @@ import PropTypes from 'prop-types';
     const handleBlock = (data) => {
       removeFields();
       setShowModal(true);
-      setcustomerId(data.customerId);
+      setCustomerId(data.customerId);
       setStaticId(StatusEnums.Block);
       setStatusFeild(StatusFeild.Block);
     };
@@ -298,7 +298,7 @@ import PropTypes from 'prop-types';
       const customerData = dataSource.find(customerItem => customerItem.customerId === data.customerId);
       setShowModal(true);
       setAssignRUser(false);
-      setcustomerId(data.customerId);
+      setCustomerId(data.customerId);
       setStaticId(StatusEnums.Reject);
       setStatusFeild(StatusFeild.Reject);
       if (customerData.responsibleUserId) {

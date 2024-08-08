@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 //** Lib's */
 import "./SettingDetails.scss"
 import FinancialSettings from "./FinancialSettings";

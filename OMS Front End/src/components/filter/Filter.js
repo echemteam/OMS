@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import "./Filter.scss";
 import Image from "../image/Image";
 import { AppIcons } from "../../data/appIcons";
@@ -147,6 +148,11 @@ const Filter = (props) => {
       </div>
     </div>
   );
+};
+
+Filter.propTypes = {
+  headerTitle: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default Filter;

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import SwalAlert from "../../../../services/swalService/SwalService";
 
 const Label = React.lazy(() => import('../../label/Label'));
@@ -130,5 +131,20 @@ const FormFileUploadField = ({
         </>
     )
 }
-
+FormFileUploadField.propTypes = {
+    labelName: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onValidation: PropTypes.func,
+    dataField: PropTypes.string.isRequired,
+    error: PropTypes.string,
+    formSetting: PropTypes.shape({
+        isViewOnly: PropTypes.bool,
+    }),
+    fieldActions: PropTypes.func,
+    acceptedFiles: PropTypes.string,
+    isDownloadable: PropTypes.bool,
+    isDisable: PropTypes.bool,
+    isRequired: PropTypes.bool,
+};
 export default FormFileUploadField;

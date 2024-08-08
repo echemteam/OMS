@@ -2,6 +2,7 @@ import React from "react";
 import Input from "../../../components/ui/inputs/input/Input";
 import "./SearchBar.scss";
 import { Button } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 function SearchBar(props) {
   return (
@@ -30,5 +31,12 @@ function SearchBar(props) {
     </React.Fragment>
   );
 }
+
+SearchBar.propTypes = {
+  searchValue: PropTypes.string,  
+  searchText: PropTypes.string,  
+  handleChange: PropTypes.func,  
+};
+
 
 export default SearchBar;

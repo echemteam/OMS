@@ -3,7 +3,7 @@ import FormCreator from "../../../../../../../components/Forms/FormCreator"
 import CardSection from "../../../../../../../components/ui/card/CardSection"
 import { setDropDownOptionField, setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useEffect, useRef, useState } from "react";
-
+import PropTypes from 'prop-types';
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../../../app/services/addressAPI";
 import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
 import { useLazyGetAllCountriesQuery } from "../../../../../../../app/services/basicdetailAPI";
@@ -135,4 +135,25 @@ const RegisteredBankAddressDetail = ({ registeredBankAddressData, registeredBank
   );
 };
 
+RegisteredBankAddressDetail.propTypes = {
+  registeredBankAddressData: PropTypes.object,  
+  registeredBankAddressForm: PropTypes.object.isRequired,  
+  registeredFormRef: PropTypes.shape({
+    current: PropTypes.shape({
+      updateFormFieldValue: PropTypes.func
+    })
+  }).isRequired,  
+  isGetACHWireBySupplierIdSuccess: PropTypes.bool.isRequired, 
+  isGetACHWireBySupplierIdData: PropTypes.shape({
+    recipientAddress: PropTypes.shape({
+      addressId: PropTypes.number,
+      addressLine1: PropTypes.string,
+      addressLine2: PropTypes.string,
+      countryId: PropTypes.number,
+      zipCode: PropTypes.number,
+      stateId: PropTypes.number,
+      cityId: PropTypes.number,
+    })
+  })
+};
 export default RegisteredBankAddressDetail;

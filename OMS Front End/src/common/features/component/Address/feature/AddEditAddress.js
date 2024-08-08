@@ -442,8 +442,12 @@ AddEditAddress.propTypes = {
     isModelOpen: PropTypes.bool.isRequired,
     editMode: PropTypes.bool.isRequired,
     isButtonDisable: PropTypes.bool.isRequired,
-    onSidebarClose: PropTypes.func.isRequired,
-    editRef: PropTypes.object
+    onSidebarClose: PropTypes.func,
+    editRef: PropTypes.object,
+    orderCustomerId: PropTypes.number,
+    isOrderManage: PropTypes.bool,
+    getAddressTypeIdOrder: PropTypes.string,
+    onHandleOrderInfoRepeatCall: PropTypes.func,
 };
 
 export default AddEditAddress;

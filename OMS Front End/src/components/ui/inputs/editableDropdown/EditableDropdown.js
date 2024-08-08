@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import Image from "../../../image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import "./EditableDropdown.scss";
-import { useEffect } from "react";
+import PropTypes from "prop-types";
 
 const Input = React.lazy(() => import("../../inputs/input/Input"));
 const Dropdown = React.lazy(() => import("../../dropdown/DropDrown"));
@@ -104,6 +104,29 @@ const EditableDropdown = ({
       </div>
     </div>
   );
+};
+
+EditableDropdown.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
+  dataField: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
+  formSetting: PropTypes.shape({
+    isViewOnly: PropTypes.bool
+  }),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string
+    })
+  ),
+  placeholder: PropTypes.string,
+  fieldActions: PropTypes.func,
+  isMultiSelect: PropTypes.bool,
+  isText: PropTypes.bool
 };
 
 export default EditableDropdown;

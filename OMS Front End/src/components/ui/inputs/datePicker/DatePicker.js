@@ -43,12 +43,11 @@ const DatePicker = ({
 };
 
 DatePicker.propTypes = {
-    name: PropTypes.string,
-    label: PropTypes.string.isRequired,
-    onClick: PropTypes.func, // Use onClick for handling the button click
-    cssClass: PropTypes.string,
+    selected: PropTypes.instanceOf(Date), 
+    onChange: PropTypes.func, 
     placeholder: PropTypes.string,
-    disabled: PropTypes.bool,
+    onBlur: PropTypes.func, 
+    isDisable: PropTypes.bool, 
 };
 
 export default DatePicker;

@@ -19,7 +19,7 @@ const ContactDetails = (props) => {
   const [formData, setFormData] = useState(contactInformationData);
   // const [isSidebarModal, setIsSidebarModal] = useState(null)
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [getContectTypeId, setContactTypeId] = useState(null)
+  const [getContectTypeId, setContectTypeId] = useState(null)
 
   const { orderCustomerId } = useContext(AddOrderContext);
 
@@ -116,7 +116,7 @@ const ContactDetails = (props) => {
 
   const handleInputGroupButton = (id) => {
     if (id > 0) {
-      setContactTypeId(id)
+      setContectTypeId(id)
       setIsModelOpen(!isModelOpen);
     }
   }

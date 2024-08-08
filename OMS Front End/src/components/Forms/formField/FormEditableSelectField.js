@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 const Label = React.lazy(() => import('../../ui/label/Label'));
 const ValidationText = React.lazy(() => import('../../ui/inputs/validation/ValidationText.js'));
 const EditableDropdown = React.lazy(() => import('../../ui/inputs/editableDropdown/EditableDropdown'));
@@ -58,5 +59,34 @@ const FormEditableSelectField = ({
         </>
     )
 }
-
+FormEditableSelectField.propTypes = {
+    labelName: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func,
+    onValidation: PropTypes.func,
+    dataField: PropTypes.string.isRequired,
+    error: PropTypes.string,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.object  
+    ]),
+    formSetting: PropTypes.shape({
+        isViewOnly: PropTypes.bool,
+    }),
+    options: PropTypes.arrayOf(
+        PropTypes.shape({
+            value: PropTypes.string.isRequired,
+            label: PropTypes.string
+        })
+    ),
+    placeholder: PropTypes.string,
+    fieldActions: PropTypes.func,
+    isMultiSelect: PropTypes.bool,
+    overRideProps: PropTypes.shape({
+        isText: PropTypes.bool,
+        isDisable: PropTypes.bool
+    }),
+    oteherProps: PropTypes.object  
+};
 export default FormEditableSelectField

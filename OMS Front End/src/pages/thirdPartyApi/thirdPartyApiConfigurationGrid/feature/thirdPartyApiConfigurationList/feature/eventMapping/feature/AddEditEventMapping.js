@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types'; 
 import { useAddApiEventMappingMutation } from '../../../../../../../../app/services/thirdPartyAPI';
 import { AddEditMappingData } from '../config/AddEditMapping.data';
 import { useLazyGetAllAPIProvidersQuery } from '../../../../../../../../app/services/apiEndPointsAPI';
@@ -92,5 +93,10 @@ const AddEditEventMapping = (props) => {
         </div>
     )
 }
-
+AddEditEventMapping.propTypes = {
+    keyId: PropTypes.number,
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onGetData: PropTypes.func.isRequired
+};
 export default AddEditEventMapping

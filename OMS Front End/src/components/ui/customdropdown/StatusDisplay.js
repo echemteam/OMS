@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const StatusDisplay = ({ status, isSelected, colorMap, textMap, iconMap }) => {
 
@@ -21,5 +22,8 @@ const StatusDisplay = ({ status, isSelected, colorMap, textMap, iconMap }) => {
     </div>
   );
 };
-
+StatusDisplay.propTypes = {
+  status: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool,
+};
 export default StatusDisplay;

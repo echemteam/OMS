@@ -29,7 +29,7 @@ import { reasonData } from '../../../../../../common/features/component/Customer
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
 
 
-const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
+const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
@@ -413,12 +413,11 @@ SupplierList.propTypes = {
   handleChange: PropTypes.func.isRequired,
   search: PropTypes.string.isRequired,
   handleChangeDropdown: PropTypes.func.isRequired,
-  //selectedStatusOptions: PropTypes.array.isRequired,
+  statusOptions: PropTypes.array.isRequired,
   selectedDrpvalues: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.number),
     PropTypes.string
   ]).isRequired,
-
   searchStatusFilter: PropTypes.bool,
   handleSearch: PropTypes.func.isRequired,
   handleClear: PropTypes.func.isRequired,
