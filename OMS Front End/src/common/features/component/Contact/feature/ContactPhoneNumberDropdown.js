@@ -49,7 +49,7 @@ const ContactPhoneNumberDropdown = ({  phoneNumberList,isOptionsOpen }) => {
               <div className="number-type">
                 {phoneTypesIcon(primaryPhoneNumber?.phoneTypeId)}
               </div>
-              <div className={`card-value ml-0 ${primaryPhoneNumber?.isPrimary ? "primary-phone" : ""}`}>
+              <div className={`card-value ml-0 ${primaryPhoneNumber?.isPrimary ? "" : ""}`}>
                 {`(${primaryPhoneNumber?.phoneCode}) ${primaryPhoneNumber?.phoneNumber}`}
               </div>
            

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
 
     return (
-        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-0 card-email-sec">
+        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-1 card-email-sec">
             <CardSection
                 cardTitle="Email Address"
                 buttonClassName="theme-button"

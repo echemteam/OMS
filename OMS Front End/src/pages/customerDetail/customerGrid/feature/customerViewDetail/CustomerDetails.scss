@@ -1,6 +1,5 @@
 // Contact Card New UI Start
 .custom-contact-card {
-
   display: flex;
   flex-wrap: wrap;
 
@@ -37,7 +36,11 @@
             min-height: 25px;
             max-width: 25px;
             max-height: 25px;
-            background: linear-gradient(to right, rgba(45, 54, 65, 0.8588235294), rgba(0, 0, 0, 0.8588235294));
+            background: linear-gradient(
+              to right,
+              rgba(45, 54, 65, 0.8588235294),
+              rgba(0, 0, 0, 0.8588235294)
+            );
             display: flex;
             align-items: center;
             justify-content: center;
@@ -55,7 +58,6 @@
         }
 
         .right-action-icon {
-
           cursor: pointer;
 
           img {
@@ -143,8 +145,11 @@
                 align-items: center;
                 justify-content: center;
                 border-radius: 100%;
-                background: linear-gradient(to right, rgba(45, 54, 65, 0.8588235294), rgba(0, 0, 0, 0.8588235294));
-
+                background: linear-gradient(
+                  to right,
+                  rgba(45, 54, 65, 0.8588235294),
+                  rgba(0, 0, 0, 0.8588235294)
+                );
 
                 .profile-text {
                   color: var(--whiteColor);
@@ -227,6 +232,45 @@
                     li {
                       margin-bottom: 0;
                       font-size: var(--commonFont-medium);
+
+                      .values{
+                        &.primary-email {
+                          position: relative;
+                          cursor: pointer;
+                          &::after {
+                            content: "\f00c";
+                            font-family: FontAwesome;
+                            font-style: normal;
+                            font-weight: normal;
+                            text-decoration: inherit;
+                            margin-left: 5px;
+                            padding: 3px;
+                            border-radius: 100%;
+                            color: #fff;
+                            background-color: var(--PrimaryColorBright);
+                            font-size: var(--commonFont-extraSmall);
+                          }
+                        }
+                      }
+                      .card-value{
+                        &.primary-phone {
+                          position: relative;
+                          cursor: pointer;
+                          &::after {
+                            content: "\f00c";
+                            font-family: FontAwesome;
+                            font-style: normal;
+                            font-weight: normal;
+                            text-decoration: inherit;
+                            margin-left: 5px;
+                            padding: 3px;
+                            border-radius: 100%;
+                            color: #fff;
+                            background-color: var(--PrimaryColorBright);
+                            font-size: var(--commonFont-extraSmall);
+                          }
+                        }
+                      }
 
                       .dropdown-desc-sec {
                         .icon-part {
@@ -342,6 +386,24 @@
                 text-wrap: wrap;
                 max-width: 83%;
 
+                &.primary-email {
+                  position: relative;
+                  cursor: pointer;
+                  &::after {
+                    content: "\f00c";
+                    font-family: FontAwesome;
+                    font-style: normal;
+                    font-weight: normal;
+                    text-decoration: inherit;
+                    margin-left: 5px;
+                    padding: 3px;
+                    border-radius: 100%;
+                    color: #fff;
+                    background-color: var(--PrimaryColorBright);
+                    font-size: var(--commonFont-extraSmall);
+                  }
+                }
+
                 @media only screen and (max-width: 1750px) {
                   font-size: 10.5px;
                 }
@@ -356,11 +418,8 @@
                   font-size: var(--commonFont);
                   font-weight: bold;
                 }
-
               }
             }
-
-
           }
 
           .drop-down {
@@ -376,7 +435,6 @@
               width: 100%;
 
               .number-type {
-
                 .contact-type-icon {
                   margin-right: 10px;
                   // display: none;
@@ -410,6 +468,24 @@
               .card-value {
                 color: #6e839b;
                 font-size: var(--commonFont-small);
+
+                &.primary-phone {
+                  position: relative;
+                  cursor: pointer;
+                  &::after {
+                    content: "\f00c";
+                    font-family: FontAwesome;
+                    font-style: normal;
+                    font-weight: normal;
+                    text-decoration: inherit;
+                    margin-left: 5px;
+                    padding: 3px;
+                    border-radius: 100%;
+                    color: #fff;
+                    background-color: var(--PrimaryColorBright);
+                    font-size: var(--commonFont-extraSmall);
+                  }
+                }
 
                 @media only screen and (max-width: 1750px) {
                   font-size: var(--commonFont-extraSmall);

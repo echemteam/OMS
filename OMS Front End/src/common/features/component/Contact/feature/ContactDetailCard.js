@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState,forwardRef } from "react";
+import React, { useEffect, useRef, useState, forwardRef } from "react";
 import ContactEmailsDropdown from "./ContactEmailsDropdown";
 import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
 import { AppIcons } from "../../../../../data/appIcons";
@@ -119,7 +119,7 @@ const ContactDetailCard = forwardRef(
                     <b>{contactItem.firstName + " " + contactItem.lastName}</b>
                   </span>
                   {contactItem.isPrimary && (
-                    <span className="primary-label"> ( Primary ) </span>
+                    <span className="primary-card"> Primary </span>
                   )}
                 </div>
               </div>
@@ -173,6 +173,9 @@ const ContactDetailCard = forwardRef(
                 <span className="contact-name">
                   {contactItem.firstName + " " + contactItem.lastName}
                 </span>
+                {contactItem.isPrimary && (
+                  <span className="primary-card"> Primary </span>
+                )}
               </div>
               <div className="right-action-icon">
                 <div className="edit-view-icon">
@@ -186,12 +189,13 @@ const ContactDetailCard = forwardRef(
                       </button>
                     ) : null}
                   </div>
-                {/* <span className="option-icon" onClick={handleOptionsClick}> */}
-                <span
+                  {/* <span className="option-icon" onClick={handleOptionsClick}> */}
+                  <span
                     className="option-icon"
                     role="button"
                     tabIndex="0"
-                    onClick={handleOptionsClick}>
+                    onClick={handleOptionsClick}
+                  >
                     <Image
                       imagePath={AppIcons.EllipsisIcon}
                       altText="EllipsisIcon"
@@ -313,21 +317,21 @@ ContactDetailCard.propTypes = {
     firstName: PropTypes.string,
     lastName: PropTypes.string,
     isPrimary: PropTypes.bool,
-     emailAddressList: PropTypes.arrayOf(
+    emailAddressList: PropTypes.arrayOf(
       PropTypes.shape({
-        value: PropTypes.string,    
+        value: PropTypes.string,
       })
     ),
-    phoneNumberList:PropTypes.arrayOf(
+    phoneNumberList: PropTypes.arrayOf(
       PropTypes.shape({
-        value: PropTypes.string,    
+        value: PropTypes.string,
       })
     ),
     type: PropTypes.string,
-    contactId: PropTypes.number
+    contactId: PropTypes.number,
   }).isRequired,
   handleEdit: PropTypes.func.isRequired,
-  showEditIcon: PropTypes.bool.isRequired
+  showEditIcon: PropTypes.bool.isRequired,
 };
 
 export default ContactDetailCard;

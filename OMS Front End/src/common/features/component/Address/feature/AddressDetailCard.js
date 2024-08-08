@@ -157,10 +157,10 @@ const AddressDetailCard = forwardRef(
                         <span className="label-txt">
                           {address.addressLine2}
                         </span>
-                        <span className="label-txt">{address.cityName}</span>
-                        <span className="label-txt">{address.stateName}</span>
+                        <span className="label-txt">{address.cityName}, {address.stateName} {address.zipCode}</span>
+                        {/* <span className="label-txt">{address.stateName}</span> */}
                         <span className="label-txt">
-                          {address.countryName} - <span>{address.zipCode}</span>
+                          {address.countryName}
                         </span>
                       </div>
                       <div className="edit-delete-button">
