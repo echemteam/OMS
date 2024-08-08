@@ -17,7 +17,7 @@ const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddres
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
 const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey,
-    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, enableDisableButton }) => {
+    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall }) => {
 
     //** State */
     const ref = useRef();
@@ -225,14 +225,14 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             <div className="col-md-12 mt-3">
                 <div className="d-flex align-item-end justify-content-end">
                     <div className="d-flex align-item-end">
-                        {!enableDisableButton &&
+                        {/* {!enableDisableButton && */}
                             <Buttons
                                 buttonTypeClassName="theme-button"
                                 buttonText='Save'
                                 isLoading={isAddEditLoading}
                                 onClick={handleAddEdit}
                                 isDisable={isButtonDisable} />
-                        }
+                        {/* } */}
                         <Buttons
                             buttonTypeClassName="dark-btn ml-5"
                             buttonText="Cancel"

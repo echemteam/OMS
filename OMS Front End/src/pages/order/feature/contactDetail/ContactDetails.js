@@ -20,7 +20,9 @@ const ContactDetails = (props) => {
   // const [isSidebarModal, setIsSidebarModal] = useState(null)
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [getContectTypeId, setContactTypeId] = useState(null)
-  const [enableDisableButton, setEnableDisableButton] = useState(null)
+  const [endUserEnableDisableButton, setEndUserEnableDisableButton] = useState(true)
+  const [invoicerEnableDisableButton, setInvoiceEnableDisableButton] = useState(true)
+  const [purchasingEnableDisableButton, setPurchasingEnableDisableButton] = useState(true)
 
   const { orderCustomerId } = useContext(AddOrderContext);
 
@@ -116,9 +118,18 @@ const ContactDetails = (props) => {
   }, [isGetAllContactTypesSucess, allGetAllContactTypesData]);
 
   const handleInputGroupButton = (id) => {
+    debugger
     if (id > 0) {
       setContactTypeId(id)
-      setIsModelOpen(!isModelOpen);
+      if (endUserEnableDisableButton && ContactType.EndUser === id) {
+        setIsModelOpen(!isModelOpen);
+      }
+      if (invoicerEnableDisableButton && ContactType.InvoiceSubmission === id) {
+        setIsModelOpen(!isModelOpen);
+      }
+      if (purchasingEnableDisableButton && ContactType.Purchasing === id) {
+        setIsModelOpen(!isModelOpen);
+      }
     }
   }
 
@@ -134,35 +145,36 @@ const ContactDetails = (props) => {
 
 
   const handleCheckboxChanges = (data, dataField) => {
+    debugger
     let updatedFormData = { ...formData };
     switch (dataField) {
       case "isEndUser":
         if (data) {
           setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, false);
-          setEnableDisableButton(false)
+          setEndUserEnableDisableButton(true)
         } else {
           setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, true);
-          setEnableDisableButton(true)
+          setEndUserEnableDisableButton(false)
         }
         break;
 
       case "isInvoiceSubmission":
         if (data) {
           setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, false);
-          setEnableDisableButton(false)
+          setInvoiceEnableDisableButton(true)
         } else {
           setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, true);
-          setEnableDisableButton(true)
+          setInvoiceEnableDisableButton(false)
         }
         break;
 
       case "isPurchasingGiven":
         if (data) {
           setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, false);
-          setEnableDisableButton(false)
+          setPurchasingEnableDisableButton(true)
         } else {
           setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, true);
-          setEnableDisableButton(true)
+          setPurchasingEnableDisableButton(false)
         }
         break;
 
@@ -207,7 +219,8 @@ const ContactDetails = (props) => {
             getContectTypeId={getContectTypeId}
             customerId={orderCustomerId}
             onhandleApiCall={handleDropdownApiCall}
-            enableDisableButton={enableDisableButton}
+            onSidebarClose={onSidebarClose}
+          // enableDisableButton={enableDisableButton}
           />
         </SidebarModel>
       </div>
