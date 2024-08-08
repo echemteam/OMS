@@ -1,19 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using Polly;
 using System.Net.Http.Headers;
-using ThirdPartyAPITester.Model;
+using ThirdPartyAPILibrary.Model;
 
-namespace ThirdPartyAPITester.Services
+namespace ThirdPartyAPILibrary.Services
 {
     public class TokenManagementService
     {
-        private readonly HttpClient _httpClient;
-
-        public TokenManagementService()
-        {
-            _httpClient = new HttpClient();
-        }
-
         private TokenDetails tokenObj;
         private DateTime _expiryTime;
         private string _clientId;

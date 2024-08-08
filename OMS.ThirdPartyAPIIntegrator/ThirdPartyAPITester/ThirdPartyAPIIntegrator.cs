@@ -1,61 +1,58 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Web;
-using ThirdPartyAPITester.Enums;
-using ThirdPartyAPITester.Helper;
-using ThirdPartyAPITester.Model;
-using ThirdPartyAPITester.Services;
-using ThirdPartyAPITester.ThirdPartyResponseProvider;
+using ThirdPartyAPILibrary.Enums;
+using ThirdPartyAPILibrary.Helper;
+using ThirdPartyAPILibrary.Model;
+using ThirdPartyAPILibrary.Services;
+using ThirdPartyAPILibrary.ThirdPartyResponseProvider;
 
-namespace ThirdPartyAPITester
+namespace ThirdPartyAPILibrary
 {
-    class Program
+    //public class Program
+    //{
+    //    public static async Task Main(string[] args)
+    //    {
+    //        ThirdPartyAPIIntegrator integrator = new();
+    //        await integrator.Run(args);
+    //    }
+    //}
+
+    public class ThirdPartyAPIIntegrator
     {
-        static async Task Main(string[] args)
-        {
-            // Set up configuration
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("APITesterAppSettings.json") // or other configuration sources
-                .Build();
-
-            // Instantiate necessary services
-            var tokenManagementService = new TokenManagementService(); // Replace with actual instantiation
-
-            // Instantiate the APITester and call the instance method
-            var apiTester = new APITester(tokenManagementService, configuration);
-            await apiTester.Run(args);
-        }
-    }
-
-    public class APITester
-    {
-        private readonly TokenManagementService _tokenManagementService;
-        private readonly IConfiguration _configuration;
         private static readonly HttpClient HttpClient = new();
 
-        public APITester(TokenManagementService tokenManagementService, IConfiguration configuration)
-        {
-            _tokenManagementService = tokenManagementService;
-            _configuration = configuration;
-        }
+        //public async Task Run(string[] args)
+        //{
+        //    Console.WriteLine("Starting API Test...");
+        //    var parameters = new
+        //    {
+        //        pageNo = 1,
+        //        pageSize = 25,
+        //        orderByColumn = "ProductName",
+        //        orderFlag = 0,
+        //        searchText = "acid"
+        //    };
 
-        public async Task Run(string[] args)
-        {
-            Console.WriteLine("Starting API Test...");
-            int apiEventId = 14; // Example providerId
-            string testResult = await ThirdPartyAPITest(apiEventId);
-            Console.WriteLine($"API Test Result: {testResult}");
-        }
+        //    ThirdPartyAPICallRequest requestData = new()
+        //    {
+        //        EventName = "Get Search product List",
+        //        IsDynamicParameter = true,
+        //        Parameters = JsonConvert.SerializeObject(parameters)
+        //    };
+        //    string testResult = await GetThirdPartyApiResponse(requestData);
+        //    Console.WriteLine($"API Test Result: {testResult}");
+        //}
 
-        private async Task<string> ThirdPartyAPITest(int apiEventId)
+        public static async Task<string> GetThirdPartyApiResponse(ThirdPartyAPICallRequest requestData)
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("APITesterAppSettings.json").Build();
+            var configuration = new ConfigurationBuilder().AddJsonFile("APIClientAppSettings.json").Build();
             string OMSConnection = configuration["ConnectionStrings:OMS"] ?? "";
 
-            ImportHelper helper = new(new APITesterDapperContext(OMSConnection));
+            ImportHelper helper = new(new APIClientDapperContext(OMSConnection));
 
             // Get the list of API providers based on apiEventId
-            APIEvent getApiEvent = await helper.GetAPIEndPointByApiEventId(apiEventId);
+            APIEventResponse getApiEvent = await helper.GetAPIEndPointByApiEventId(requestData.EventName);
 
             string results = "";
             if (getApiEvent == null)
@@ -66,7 +63,7 @@ namespace ThirdPartyAPITester
             {
                 return results = $"Invalid API Event BaseURL {getApiEvent.BaseURL}.";
             }
-            if (getApiEvent.Parameters == null)
+            if (getApiEvent.Parameters == null && !requestData.IsDynamicParameter)
             {
                 return results = $"Invalid API Event Parameter {getApiEvent.Parameters}.";
             }
@@ -77,7 +74,7 @@ namespace ThirdPartyAPITester
 
             if (getApiEvent.AuthenticationType == AuthenticationType.APIKEY)
             {
-                if (getApiEvent.AuthKey != null || getApiEvent.AuthKey != "")
+                if (getApiEvent.AuthKey != null && getApiEvent.AuthKey != "")
                 {
                     accessTokenObj.IsSuccess = true;
                     accessTokenObj.Token = getApiEvent.AuthKey;
@@ -88,13 +85,15 @@ namespace ThirdPartyAPITester
                     accessTokenObj.IsSuccess = false;
                     return results = "Invalid Authentication Key";
                 }
-                
+
             }
             else if (getApiEvent.AuthenticationType == AuthenticationType.OAUTH)
             {
+                var tokenManagementService = new TokenManagementService();
+
                 // Configure TokenManagementService with API Event details
-                _tokenManagementService.Configure(getApiEvent.ClientId, getApiEvent.ClientSecret, getApiEvent.EndPointName, getApiEvent.Token, getApiEvent.TokenExpiryTime, getApiEvent.TokenExpireDate);
-                accessTokenObj = await _tokenManagementService.GetAccessTokenAsync();
+                tokenManagementService.Configure(getApiEvent.ClientId, getApiEvent.ClientSecret, getApiEvent.EndPointName, getApiEvent.Token, getApiEvent.TokenExpiryTime, getApiEvent.TokenExpireDate);
+                accessTokenObj = await tokenManagementService.GetAccessTokenAsync();
                 if (accessTokenObj.IsSuccess == true && accessTokenObj.Token != null && accessTokenObj.Token != "")
                 {
                     await helper.UpdateAPIAuthticationToken(accessTokenObj.Token, accessTokenObj.ExpiryTime, getApiEvent.AuthId);
@@ -108,11 +107,11 @@ namespace ThirdPartyAPITester
 
             if (accessTokenObj.IsSuccess == true && accessTokenObj.Token != null && accessTokenObj.Token != "")
             {
-                List<APIRequiredFields> getRequiredField = await helper.GetAPIRequiredFieldsByEventId(apiEventId);
+                List<APIRequiredFields> getRequiredField = await helper.GetAPIRequiredFieldsByEventId(getApiEvent.ApiEventId);
 
                 if (getApiEvent.Method == "GET")
                 {
-                    var parameters = JsonConvert.DeserializeObject<Dictionary<string, string>>(getApiEvent.Parameters);
+                    var parameters = JsonConvert.DeserializeObject<Dictionary<string, string>>(requestData.IsDynamicParameter ? requestData.Parameters : getApiEvent.Parameters);
 
                     var uriBuilder = new UriBuilder(getApiEvent.BaseURL);
                     var query = HttpUtility.ParseQueryString(uriBuilder.Query);
@@ -127,11 +126,12 @@ namespace ThirdPartyAPITester
                 }
                 else if (getApiEvent.Method == "POST")
                 {
-                    response = await APIResponseProvider.PostMethod(url, accessTokenObj.Token, getApiEvent.Parameters, getRequiredField);
+                    string parameters = requestData.IsDynamicParameter ? requestData.Parameters : getApiEvent.Parameters;
+                    response = await APIResponseProvider.PostMethod(url, accessTokenObj.Token, parameters, getRequiredField);
                 }
                 else
                 {
-                    response = $"Unsupported HTTP method: {getApiEvent.Method} for apiEventId {apiEventId}.";
+                    response = $"Unsupported HTTP method: {getApiEvent.Method} for apiEventId {getApiEvent.ApiEventId}.";
                 }
             }
             else
@@ -181,7 +181,7 @@ namespace ThirdPartyAPITester
         //    tokenObj.Message = "Token successfully generated.";
         //    return tokenObj;
         //}
-   
+
     }
 
 }

@@ -2,15 +2,15 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { contactInformationData } from "./config/ContactDetail.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery } from '../../../../app/services/commonAPI';
-import { ContactType } from "../../../../utils/Enums/commonEnums";
-import { getFieldData, setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { ContactType, FieldSettingType } from "../../../../utils/Enums/commonEnums";
+import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../data/appIcons";
 import AddEditContact from "../../../../common/features/component/Contact/feature/AddEditContact";
 import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetCustomerContactByContactIdQuery } from "../../../../app/services/contactAPI";
 import { contactDetailFormData } from "../../../../common/features/component/Contact/config/ContactDetailForm.data";
-import { modifyContactType } from "../../../../utils/TransformData/TransformAPIData";
-import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+// import { modifyContactType } from "../../../../utils/TransformData/TransformAPIData";
+// import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 
 
@@ -20,6 +20,7 @@ const ContactDetails = (props) => {
   // const [isSidebarModal, setIsSidebarModal] = useState(null)
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [getContectTypeId, setContactTypeId] = useState(null)
+  const [enableDisableButton, setEnableDisableButton] = useState(null)
 
   const { orderCustomerId } = useContext(AddOrderContext);
 
@@ -132,111 +133,46 @@ const ContactDetails = (props) => {
   };
 
 
-  // const handleCheckboxChanges = (data, dataField) => {
-  //   let updatedFormData = { ...formData };
-  //   debugger
-  //   switch (dataField) {
-  //     case "isEndUser":
-  //       if (data) {
-  //         // Add only the field related to "isEndUser"
-  //         const endUserField = contactInformationData.formFields.find(field => field.dataField === "endUserId");
-  //         updatedFormData.formFields = [...updatedFormData.formFields, endUserField];
-  //       } else {
-  //         updatedFormData = removeFormFields(updatedFormData, ["endUserId"]);
-  //       }
-  //       break;
-
-  //     case "isInvoiceSubmission":
-  //       if (data) {
-  //         // Add only the field related to "isInvoiceSubmission"
-  //         const invoiceSubmissionField = contactInformationData.formFields.find(field => field.dataField === "invoiceSubmissionId");
-  //         updatedFormData.formFields = [...updatedFormData.formFields, invoiceSubmissionField];
-  //       } else {
-  //         updatedFormData = removeFormFields(updatedFormData, ["invoiceSubmissionId"]);
-  //       }
-  //       break;
-
-  //     case "isPurchasingGiven":
-  //       if (data) {
-  //         // Add only the field related to "isPurchasingGiven"
-  //         const purchasingField = contactInformationData.formFields.find(field => field.dataField === "purchasingId");
-  //         updatedFormData.formFields = [...updatedFormData.formFields, purchasingField];
-  //       } else {
-  //         updatedFormData = removeFormFields(updatedFormData, ["purchasingId"]);
-  //       }
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-
-  //   // Remove any undefined or duplicate fields
-  //   updatedFormData.formFields = updatedFormData.formFields.filter((field, index, self) =>
-  //     field && index === self.findIndex(f => f.dataField === field.dataField)
-  //   );
-
-  //   setFormData(updatedFormData);
-  // };
-
   const handleCheckboxChanges = (data, dataField) => {
     let updatedFormData = { ...formData };
-  
-    const addFieldAfterCheckbox = (checkboxFieldId, fieldToAdd) => {
-      const checkboxIndex = updatedFormData.formFields.findIndex(field => field.dataField === checkboxFieldId);
-      if (checkboxIndex !== -1) {
-        // Add field after the checkbox
-        updatedFormData.formFields = [
-          ...updatedFormData.formFields.slice(0, checkboxIndex + 3),
-          fieldToAdd,
-          ...updatedFormData.formFields.slice(checkboxIndex + 3)
-        ];
-      }
-    };
-  
-    const removeField = (fieldToRemove) => {
-      updatedFormData.formFields = updatedFormData.formFields.filter(field => field.dataField !== fieldToRemove);
-    };
-  
     switch (dataField) {
       case "isEndUser":
         if (data) {
-          const endUserField = contactInformationData.formFields.find(field => field.dataField === "endUserId");
-          addFieldAfterCheckbox("isEndUser", endUserField);
+          setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, false);
+          setEnableDisableButton(false)
         } else {
-          removeField("endUserId");
+          setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, true);
+          setEnableDisableButton(true)
         }
         break;
-  
+
       case "isInvoiceSubmission":
         if (data) {
-          const invoiceSubmissionField = contactInformationData.formFields.find(field => field.dataField === "invoiceSubmissionId");
-          addFieldAfterCheckbox("isInvoiceSubmission", invoiceSubmissionField);
+          setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, false);
+          setEnableDisableButton(false)
         } else {
-          removeField("invoiceSubmissionId");
+          setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, true);
+          setEnableDisableButton(true)
         }
         break;
-  
+
       case "isPurchasingGiven":
         if (data) {
-          const purchasingField = contactInformationData.formFields.find(field => field.dataField === "purchasingId");
-          addFieldAfterCheckbox("isPurchasingGiven", purchasingField);
+          setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, false);
+          setEnableDisableButton(false)
         } else {
-          removeField("purchasingId");
+          setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, true);
+          setEnableDisableButton(true)
         }
         break;
-  
+
       default:
         break;
     }
-  
-    // Remove any undefined or duplicate fields
-    updatedFormData.formFields = updatedFormData.formFields.filter((field, index, self) =>
-      field && index === self.findIndex(f => f.dataField === field.dataField)
-    );
-  
+
     setFormData(updatedFormData);
   };
-  
+
   const formActionHandler = {
     CHECK_CHANGE: handleCheckboxChanges
   };
@@ -271,6 +207,7 @@ const ContactDetails = (props) => {
             getContectTypeId={getContectTypeId}
             customerId={orderCustomerId}
             onhandleApiCall={handleDropdownApiCall}
+            enableDisableButton={enableDisableButton}
           />
         </SidebarModel>
       </div>

@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="ThirdPartyAPITester">
-      <HintPath>..\ThirdPartyAPITester.dll</HintPath>
+    <Reference Include="ThirdPartyAPILibrary">
+      <HintPath>..\ThirdPartyAPILibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
 

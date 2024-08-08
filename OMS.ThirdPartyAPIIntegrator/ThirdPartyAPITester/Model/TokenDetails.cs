@@ -1,4 +1,4 @@
-﻿namespace ThirdPartyAPITester.Model
+﻿namespace ThirdPartyAPILibrary.Model
 {
     public class TokenDetails
     {

@@ -1,4 +1,4 @@
-﻿namespace ThirdPartyAPITester.Enums
+﻿namespace ThirdPartyAPILibrary.Enums
 {
     public class AuthenticationType
     {

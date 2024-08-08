@@ -276,12 +276,12 @@ const thirdPartyAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
-        apiTester: builder.query({
-            query: (id) => ({
-                url: encryptQueryString(`/ApiConfiguration/ApiTester/?apiEventId=${Number(id)}`),
-                method: 'GET',
+        thirdPartyAPICall: builder.mutation({
+            query: (data) => ({
+                url: '/ApiConfiguration/ThirdPartyAPICall',
+                method: 'POST',
+                body: transformRequest(data)
             }),
-            // providesTags: ['User'],
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
@@ -323,7 +323,7 @@ export const {
     useDeleteApiEventRequiredFieldMutation,
     useDeleteApiEventRequiredFieldsMappingMutation,
 
-    useLazyApiTesterQuery,
+    useThirdPartyAPICallMutation,
 } = thirdPartyAPI
 
 export default thirdPartyAPI;

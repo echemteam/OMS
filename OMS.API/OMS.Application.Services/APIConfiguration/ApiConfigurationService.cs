@@ -16,7 +16,7 @@ using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
-using ThirdPartyAPITester;
+using ThirdPartyAPILibrary;
 
 namespace OMS.Application.Services.APIConfiguration
 {
@@ -117,12 +117,21 @@ namespace OMS.Application.Services.APIConfiguration
             var parametersDetails = await repositoryManager.apiAuthentication.GetApiAuthentications(requestData);
             return parametersDetails!;
         }
-        public async Task<ApiTesterResponse> ApiTester(int apiEventId)
+        public async Task<ThirdPartyAPICallResponse> ThirdPartyAPICall(ThirdPartyAPICallRequest requestData)
         {
-            ApiTesterResponse responsData = new();
-            responsData.ApiResponse = await APITester.ThirdPartyAPITest(apiEventId);
+            // Map OMS request to ThirdPartyAPI request
+            var apiRequest = new ThirdPartyAPILibrary.Model.ThirdPartyAPICallRequest
+            {
+                EventName = requestData.EventName,
+                Parameters = requestData.Parameters,
+                IsDynamicParameter = requestData.IsDynamicParameter
+            };
 
-            return responsData;
+            ThirdPartyAPICallResponse responseData = new()
+            {
+                ApiResponse = await ThirdPartyAPIIntegrator.GetThirdPartyApiResponse(apiRequest)
+            };
+            return responseData;
         }
         #endregion
     }

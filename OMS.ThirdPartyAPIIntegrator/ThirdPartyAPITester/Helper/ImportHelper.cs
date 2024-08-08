@@ -1,21 +1,21 @@
 ﻿using Dapper;
 using System.Data;
-using ThirdPartyAPITester.Model;
+using ThirdPartyAPILibrary.Model;
 
-namespace ThirdPartyAPITester.Helper
+namespace ThirdPartyAPILibrary.Helper
 {
     public class ImportHelper : BaseImport
     {
-        public ImportHelper(APITesterDapperContext apiTesterDapperContext) : base(apiTesterDapperContext)
+        public ImportHelper(APIClientDapperContext apiTesterDapperContext) : base(apiTesterDapperContext)
         {
         }
 
-        public async Task<APIEvent> GetAPIEndPointByApiEventId(int apiEventId)
+        public async Task<APIEventResponse> GetAPIEndPointByApiEventId(string eventName)
         {
             try
             {
                 string sql = "GetAPIEndPointByApiEventId";
-                APIEvent config = await _context.GetFrist<APIEvent>(sql, new { apiEventId }, CommandType.StoredProcedure);
+                APIEventResponse config = await _context.GetFrist<APIEventResponse>(sql, new { eventName }, CommandType.StoredProcedure);
                 return config;
             }
             catch (Exception ex)
