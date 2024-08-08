@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.SupplierNotes;
 using OMS.Domain.Entities.API.Response.SupplierNotes;
@@ -10,6 +11,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [CheckClientIpActionFilter]
     public class SupplierNotesController : BaseController
     {
         #region private variable

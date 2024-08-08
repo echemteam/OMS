@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Customers;
@@ -12,6 +13,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class CustomersController : BaseController
     {
         #region private variable
@@ -55,7 +57,6 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(customerId);
         }
-
         [HttpPost("GetCustomers")]
         public async Task<IActionResult> GetCustomers(GetCustomersRequest queryRequest)
         {

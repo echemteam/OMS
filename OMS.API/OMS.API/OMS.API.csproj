@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ClientIPAuthentication\ClientIPAuthentication.csproj" />
     <ProjectReference Include="..\OMS.Application.Services\OMS.Application.Services.csproj" />
     <ProjectReference Include="..\OMS.Domain.Repository\OMS.Domain.Repository.csproj" />
     <ProjectReference Include="..\OMS.Framework\OMS.Framework.csproj" />
