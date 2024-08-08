@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import FormCreator from "../../../../../components/Forms/FormCreator";
@@ -73,4 +75,10 @@ const BillToAddressDetail=({billToAddressRef,billToAddressData,BillToAddressForm
     
        )
 }
+// PropTypes for the component
+BillToAddressDetail.propTypes = {
+  billToAddressRef: PropTypes.object.isRequired,
+  billToAddressData: PropTypes.object.isRequired,
+  BillToAddressForm: PropTypes.object.isRequired,
+};
 export default BillToAddressDetail;

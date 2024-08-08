@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
@@ -70,4 +72,10 @@ const LabAddressDetail=({labAddressRef,labAddressData,LabAddressForm})=>{
     
        )
 }
+// PropTypes for the component
+LabAddressDetail.propTypes = {
+  labAddressRef: PropTypes.object.isRequired,
+  labAddressData: PropTypes.object.isRequired,
+  LabAddressForm: PropTypes.object.isRequired,
+};
 export default LabAddressDetail;

@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
@@ -73,4 +75,10 @@ const WarehouseAddressDetail=({warehouseAddressData,warehouseAddressRef,Warehous
     
        )
 }
+
+WarehouseAddressDetail.propTypes = {
+  warehouseAddressData: PropTypes.object.isRequired,
+  warehouseAddressRef: PropTypes.object.isRequired,
+  WarehouseAddressForm: PropTypes.object.isRequired,
+};
 export default WarehouseAddressDetail;
