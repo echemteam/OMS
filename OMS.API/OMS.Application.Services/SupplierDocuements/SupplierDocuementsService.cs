@@ -24,9 +24,9 @@ namespace OMS.Application.Services.SupplierDocuements
         #endregion
 
         #region Services
-        public async Task<AddEntityDTO<int>> AddSupplierDocuments(AddSupplierDocumentsRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddSupplierDocuments(AddSupplierDocumentsRequest requestData, short CurrentUserId)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
 
             responseData = await repositoryManager.supplierdocuements.CheckDocumentsExistOrNot(requestData.DocumentTypeId, requestData.Name, requestData.SupplierId);
 
@@ -38,9 +38,9 @@ namespace OMS.Application.Services.SupplierDocuements
                     string AESIV = commonSettingService.EncryptionSettings.AESIV!;
                     requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File!, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.SupplierId, requestData.Attachment!, AESKey, AESIV);
                 }
-                SupplierDocumentsDTO supplierDocumentsDTO = requestData.ToMapp<AddSupplierDocumentsRequest, SupplierDocumentsDTO>();
-                supplierDocumentsDTO.CreatedBy = CurrentUserId;
-                responseData = await repositoryManager.supplierdocuements.AddSupplierDocuments(supplierDocumentsDTO);
+                SupplierDocumentsDto supplierDocumentsDto = requestData.ToMapp<AddSupplierDocumentsRequest, SupplierDocumentsDto>();
+                supplierDocumentsDto.CreatedBy = CurrentUserId;
+                responseData = await repositoryManager.supplierdocuements.AddSupplierDocuments(supplierDocumentsDto);
             }
             return responseData;
         }
@@ -49,7 +49,7 @@ namespace OMS.Application.Services.SupplierDocuements
             List<GetSupplierDocumentsByIdResponse> documentList = await repositoryManager.supplierdocuements.GetSupplierDocumentsById(supplierId);
             return documentList;
         }
-        public async Task<AddEntityDTO<int>> DeleteSupplierDocumentsById(int supplierDocumentId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteSupplierDocumentsById(int supplierDocumentId, int deletedBy)
         {
             return await repositoryManager.supplierdocuements.DeleteSupplierDocumentsById(supplierDocumentId, deletedBy);
         }

@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.CommonEntity
 {
-    public class ExceptionLogDTO
+    public class ExceptionLogDto
     {
         public long ErrorLogId { get; set; }
         public string? ModuleName { get; set; }

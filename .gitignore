@@ -57,3 +57,5 @@ OMS.ThirdPartyAPIIntegrator/.vs/ThirdPartyAPITester/DesignTimeBuild/.dtbcache.v2
 OMS.ThirdPartyAPIIntegrator/.vs/ThirdPartyAPITester/FileContentIndex/*
 OMS.ThirdPartyAPIIntegrator/.vs/ThirdPartyAPITester/v17/*
 OMS.ThirdPartyAPIIntegrator/ThirdPartyAPITester/obj/*
+/OMS.API/ClientIPAuthentication/bin/Debug/net8.0
+/OMS.API/ClientIPAuthentication/obj

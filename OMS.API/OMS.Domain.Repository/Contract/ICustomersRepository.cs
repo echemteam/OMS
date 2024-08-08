@@ -9,22 +9,22 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ICustomersRepository
     {
-        Task<AddEditResponse> AddEditCustomersBasicInformation(CustomersDTO customers);
-        Task<AddEntityDTO<int>> UpdateCustomersBasicInformation(CustomersDTO customers);
+        Task<AddEditResponse> AddEditCustomersBasicInformation(CustomersDto customers);
+        Task<AddEntityDto<int>> UpdateCustomersBasicInformation(CustomersDto customers);
         Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId);
         Task<EntityList<GetCustomersResponse>> GetCustomers(GetCustomersRequest queryRequest);
-        Task<AddEntityDTO<int>> CheckCustomerNameExist(CustomersDTO customers);
-        Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(CustomersDTO customers);
-        Task<AddEntityDTO<int>> UpdateCustomerInActiveStatus(CustomersDTO customers);
-        Task<AddEntityDTO<int>> UpdateCustomerStatus(CustomersDTO customers);
-        Task<AddEntityDTO<int>> AddAddressForCustomer(AddAddressForCustomerRequest requestData, short createdBy);
-        Task<AddEntityDTO<int>> UpdateAddressForCustomer(UpdateAddressForCustomerRequest requestData, short updatedBy);
+        Task<AddEntityDto<int>> CheckCustomerNameExist(CustomersDto customers);
+        Task<AddEntityDto<int>> UpdateCustomerApproveStatus(CustomersDto customers);
+        Task<AddEntityDto<int>> UpdateCustomerInActiveStatus(CustomersDto customers);
+        Task<AddEntityDto<int>> UpdateCustomerStatus(CustomersDto customers);
+        Task<AddEntityDto<int>> AddAddressForCustomer(AddAddressForCustomerRequest requestData, short createdBy);
+        Task<AddEntityDto<int>> UpdateAddressForCustomer(UpdateAddressForCustomerRequest requestData, short updatedBy);
         Task<EntityList<GetCustomerAuditHistoryByCustomerIdResponse>> GetCustomerAuditHistoryByCustomerId(GetCustomerAuditHistoryByCustomerIdRequest queryRequest);
-        Task<AddEntityDTO<int>> AddEditContactForCustomer(AddEditContactForCustomerRequest requestData, short createdBy);
+        Task<AddEntityDto<int>> AddEditContactForCustomer(AddEditContactForCustomerRequest requestData, short createdBy);
         Task<List<GetCustomersDetailsByCutomerNameResponse>> GetCustomersDetailsByCutomerName(string customerName);
-        Task<AddEntityDTO<bool>> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData);
-        Task<AddEntityDTO<int>> AddSubCustomer(AddSubCustomerRequest requestData);
+        Task<AddEntityDto<bool>> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData);
+        Task<AddEntityDto<int>> AddSubCustomer(AddSubCustomerRequest requestData);
         Task<EntityList<GetSubCustomerByCustomerIdResponse>> GetSubCustomerByCustomerId(GetSubCustomerByCustomerIdRequest requestData);
-        Task<AddEntityDTO<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short deletedBy);
+        Task<AddEntityDto<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short deletedBy);
     }
 }

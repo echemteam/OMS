@@ -2,15 +2,15 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace ThirdPartyAPITester.Helper
+namespace ThirdPartyAPILibrary.Helper
 {
-    public class APITesterDapperContext
+    public class APIClientDapperContext
     {
         private readonly string _connectionString;
 
         private readonly IDbConnection _connection;
 
-        public APITesterDapperContext(string connectionString)
+        public APIClientDapperContext(string connectionString)
         {
             _connectionString = connectionString;
             _connection = CreateConnection();

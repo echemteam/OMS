@@ -8,9 +8,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IApiEndpointRepository
     {
-        Task<AddEntityDTO<int>> AddEditApiEndpoint(ApiEndpointDTO apiEndpoint);
+        Task<AddEntityDto<int>> AddEditApiEndpoint(ApiEndpointDto apiEndpoint);
         Task<GetApiEndpointByEndpointIdResponse> GetApiEndpointByEndpointId(int endpointId);
-        Task<AddEntityDTO<int>> DeleteApiEndpoint(int endpointId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteApiEndpoint(int endpointId, int deletedBy);
         Task<EntityList<GetApiEndpointsResponse>> GetApiEndpoints(GetApiEndpointsRequest requestData);
 
     }

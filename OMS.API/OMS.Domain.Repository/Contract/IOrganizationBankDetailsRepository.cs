@@ -6,7 +6,7 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IOrganizationBankDetailsRepository
     {
-        Task<AddEntityDTO<int>> AddEditOrganizationBankDetails(OrganizationBankDetailsDto requestData);
+        Task<AddEntityDto<int>> AddEditOrganizationBankDetails(OrganizationBankDetailsDto requestData);
         Task<GetOrganizationBankDetailsResponse> GetOrganizationBankDetails();
     }
 }

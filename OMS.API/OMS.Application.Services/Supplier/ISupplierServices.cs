@@ -10,10 +10,10 @@ namespace OMS.Application.Services.Supplier
         Task<AddEditResponse> AddEditSupplierBasicInformation(AddEditSupplierBasicInformationRequest requestData, short CurrentUserId);
         Task<GetSupplierBasicInformationByIdResponse> GetSupplierBasicInformationById(int supplierId);
         Task<EntityList<GetSuppliersResponse>> GetSuppliers(GetSuppliersRequest queryRequest);
-        Task<AddEntityDTO<int>> UpdateSupplierInActiveStatus(UpdateSupplierInActiveStatusRequest requestData, short CurrentUserId);
-        Task<AddEntityDTO<int>> UpdateSupplierApproveStatus(UpdateSupplierApproveStatusRequest requestData, short CurrentUserId);
-        Task<AddEntityDTO<int>> UpdateSupplierStatus(UpdateSupplierStatusRequest requestData, short CurrentUserId);
-        Task<AddEntityDTO<int>> CheckSupplierNameExist(CheckSupplierNameExistRequest requestData);
+        Task<AddEntityDto<int>> UpdateSupplierInActiveStatus(UpdateSupplierInActiveStatusRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> UpdateSupplierApproveStatus(UpdateSupplierApproveStatusRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> UpdateSupplierStatus(UpdateSupplierStatusRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> CheckSupplierNameExist(CheckSupplierNameExistRequest requestData);
         Task<EntityList<GetSupplierAuditHistoryBySupplierIdResponse>> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest);
         Task<List<GetSupplierDetailsBySupplierNameResponse>> GetSupplierDetailsBySupplierName(string supplierName);
     }

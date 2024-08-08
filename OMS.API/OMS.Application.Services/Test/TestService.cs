@@ -22,12 +22,12 @@ namespace OMS.Application.Services.Test
             return data;
         }
 
-        public async Task<List<TestDTO>> GetTestList()
+        public async Task<List<TestDto>> GetTestList()
         {
             return await repositoryManager.test.GetTestList();
         }
 
-        public async Task<AddEntityDTO<int>> AddTest(AddTestRequest addTest)
+        public async Task<AddEntityDto<int>> AddTest(AddTestRequest addTest)
         {
             return await repositoryManager.test.AddTest(addTest);
         }

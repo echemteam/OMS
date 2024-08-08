@@ -34,8 +34,8 @@ const AddEditApiAuthentication = (props) => {
   useEffect(() => {
     if (isGetApiAuthenticationByAuthIdSuccess && apiAuthenticationData && !isGetApiAuthenticationByAuthIdFetching) {
       const authFieldsMap = {
-        [AuthenticationTypes.OAuth]: ['authKey'],
-        [AuthenticationTypes.APIKey]: ['clientSecret', 'clientId','tokenExpires','tokenEndpoint']
+        [AuthenticationTypes?.OAuth]: ['authKey'],
+        [AuthenticationTypes?.APIKey]: ['clientSecret', 'clientId','tokenExpires','tokenEndpoint']
       };
 
       let formData = { ...authenticationFormData };

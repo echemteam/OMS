@@ -2,7 +2,7 @@
 {
     public class AddUserChecklistRequest
     {
-        public List<UserChecklistRequest> CheckListRequest { get; set; }
+        public List<UserChecklistRequest>? CheckListRequest { get; set; }
 
     }
     public class UserChecklistRequest

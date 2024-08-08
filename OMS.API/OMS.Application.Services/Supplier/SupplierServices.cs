@@ -27,14 +27,14 @@ namespace OMS.Application.Services.Supplier
         #region Supplier Services
         public async Task<AddEditResponse> AddEditSupplierBasicInformation(AddEditSupplierBasicInformationRequest requestData, short CurrentUserId)
         {
-            SupplierDTO supplierDTO = requestData.ToMapp<AddEditSupplierBasicInformationRequest, SupplierDTO>();
-            supplierDTO.CreatedBy = CurrentUserId;
-            AddEditResponse responseData = await repositoryManager.supplier.AddEditSupplierBasicInformation(supplierDTO);
+            SupplierDto supplierDto = requestData.ToMapp<AddEditSupplierBasicInformationRequest, SupplierDto>();
+            supplierDto.CreatedBy = CurrentUserId;
+            AddEditResponse responseData = await repositoryManager.supplier.AddEditSupplierBasicInformation(supplierDto);
 
             if (!string.IsNullOrEmpty(requestData.Note) && responseData.KeyValue > 0)
             {
-                AddEntityDTO<long> addEntityDTO = new();
-                SupplierNoteDTO supplierNotes = new()
+                AddEntityDto<long> addEntityDto = new();
+                SupplierNoteDto supplierNotes = new()
                 {
                     SupplierNoteId = requestData.SupplierNoteId,
                     Note = requestData.Note,
@@ -46,14 +46,14 @@ namespace OMS.Application.Services.Supplier
                 {
                     // Update existing supplier note
                     supplierNotes.UpdatedBy = CurrentUserId;
-                    addEntityDTO = await repositoryManager.supplierNotes.UpdateSupplierNotes(supplierNotes);
-                    responseData.NoteId = addEntityDTO.KeyValue;
+                    addEntityDto = await repositoryManager.supplierNotes.UpdateSupplierNotes(supplierNotes);
+                    responseData.NoteId = addEntityDto.KeyValue;
                 }
                 else
                 {
                     // Add new supplier note
-                    addEntityDTO = await repositoryManager.supplierNotes.AddSupplierNotes(supplierNotes);
-                    responseData.NoteId = addEntityDTO.KeyValue;
+                    addEntityDto = await repositoryManager.supplierNotes.AddSupplierNotes(supplierNotes);
+                    responseData.NoteId = addEntityDto.KeyValue;
                 }
             }
             return responseData;
@@ -70,29 +70,29 @@ namespace OMS.Application.Services.Supplier
             return supplierList!;
         }
 
-        public async Task<AddEntityDTO<int>> UpdateSupplierInActiveStatus(UpdateSupplierInActiveStatusRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateSupplierInActiveStatus(UpdateSupplierInActiveStatusRequest requestData, short CurrentUserId)
         {
-            SupplierDTO supplierDTO = requestData.ToMapp<UpdateSupplierInActiveStatusRequest, SupplierDTO>();
-            supplierDTO.UpdatedBy = CurrentUserId;
-            return await repositoryManager.supplier.UpdateSupplierInActiveStatus(supplierDTO);
+            SupplierDto supplierDto = requestData.ToMapp<UpdateSupplierInActiveStatusRequest, SupplierDto>();
+            supplierDto.UpdatedBy = CurrentUserId;
+            return await repositoryManager.supplier.UpdateSupplierInActiveStatus(supplierDto);
         }
-        public async Task<AddEntityDTO<int>> UpdateSupplierApproveStatus(UpdateSupplierApproveStatusRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateSupplierApproveStatus(UpdateSupplierApproveStatusRequest requestData, short CurrentUserId)
         {
-            SupplierDTO supplierDTO = requestData.ToMapp<UpdateSupplierApproveStatusRequest, SupplierDTO>();
-            supplierDTO.ApprovedBy = CurrentUserId;
-            return await repositoryManager.supplier.UpdateSupplierApproveStatus(supplierDTO);
+            SupplierDto supplierDto = requestData.ToMapp<UpdateSupplierApproveStatusRequest, SupplierDto>();
+            supplierDto.ApprovedBy = CurrentUserId;
+            return await repositoryManager.supplier.UpdateSupplierApproveStatus(supplierDto);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateSupplierStatus(UpdateSupplierStatusRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateSupplierStatus(UpdateSupplierStatusRequest requestData, short CurrentUserId)
         {
-            SupplierDTO supplierDTO = requestData.ToMapp<UpdateSupplierStatusRequest, SupplierDTO>();
-            supplierDTO.UpdatedBy = CurrentUserId;
-            return await repositoryManager.supplier.UpdateSupplierStatus(supplierDTO);
+            SupplierDto supplierDto = requestData.ToMapp<UpdateSupplierStatusRequest, SupplierDto>();
+            supplierDto.UpdatedBy = CurrentUserId;
+            return await repositoryManager.supplier.UpdateSupplierStatus(supplierDto);
         }
-        public async Task<AddEntityDTO<int>> CheckSupplierNameExist(CheckSupplierNameExistRequest requestData)
+        public async Task<AddEntityDto<int>> CheckSupplierNameExist(CheckSupplierNameExistRequest requestData)
         {
-            SupplierDTO supplierDTO = requestData.ToMapp<CheckSupplierNameExistRequest, SupplierDTO>();
-            return await repositoryManager.supplier.CheckSupplierNameExist(supplierDTO);
+            SupplierDto supplierDto = requestData.ToMapp<CheckSupplierNameExistRequest, SupplierDto>();
+            return await repositoryManager.supplier.CheckSupplierNameExist(supplierDto);
         }
 
         public async Task<EntityList<GetSupplierAuditHistoryBySupplierIdResponse>> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest)

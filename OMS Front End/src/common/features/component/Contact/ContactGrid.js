@@ -338,6 +338,7 @@ const ContactGrid = ({
             isOpen={isModelOpen}
             getContactById={getContactById}
             getContectTypeId={null}
+            enableDisableButton={false}
           />
         </SidebarModel>
       </div>

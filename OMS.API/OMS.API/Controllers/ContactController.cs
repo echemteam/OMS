@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Contact;
@@ -11,6 +12,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class ContactController : BaseController
     {
         #region private variable
@@ -52,7 +54,7 @@ namespace OMS.API.Controllers
         }
 
         [HttpGet("GetContactBySupplierId")]
-        public async Task<IActionResult> GetContactBySupplierId(int supplierId, string? searchText, string? searchContactType)
+        public async Task<IActionResult> GetContactBySupplierId(int supplierId, string searchText, string searchContactType)
         {
             List<GetContactBySupplierIdResponse> responseData = await _serviceManager.contactService.GetContactBySupplierId(supplierId, searchText, searchContactType).ConfigureAwait(true);
             return APISucessResponce(responseData);

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMS.Domain.Entities.Entity.CustomerNotes
 {
-    public class CustomerNotesDTO : ICustomerNotes, IBaseCreateEntity, IBaseUpdateEntity
+    public class CustomerNotesDto : ICustomerNotes, IBaseCreateEntity, IBaseUpdateEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

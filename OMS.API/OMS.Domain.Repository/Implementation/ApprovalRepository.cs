@@ -44,13 +44,13 @@ namespace OMS.Domain.Repository.Implementation
             return getEmailByContactIdResponse;
 
         }
-        public async Task<AddEntityDTO<int>> AddUserChecklistResponse(DataTable CheckListDataTable)
+        public async Task<AddEntityDto<int>> AddUserChecklistResponse(DataTable CheckListDataTable)
         {
             var parameters = new
             {
                 CheckListResponse = CheckListDataTable.AsTableValuedParameter("[dbo].[CheckListResponseTypeTable]")
             };
-            AddEntityDTO<int> responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, parameters, CommandType.StoredProcedure);
+            AddEntityDto<int> responceData = await _context.GetSingleAsync<AddEntityDto<int>>(ADDUSERCHECKLISTRESPONSE, parameters, CommandType.StoredProcedure);
             return responceData;
         }
         public async Task<List<GetValidateCheckListResponse>> GetValidateCustomer(int customerId, bool? isSubCustomer)
@@ -72,9 +72,9 @@ namespace OMS.Domain.Repository.Implementation
             return getApprovalCheckList;
 
         }
-        public async Task<AddEntityDTO<int>> AddApprovalRequests(ApprovalRequestsDTO requestData)
+        public async Task<AddEntityDto<int>> AddApprovalRequests(ApprovalRequestsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDAPPROVALREQUESTS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDAPPROVALREQUESTS, new
             {
                 requestData.ModuleId,
                 requestData.FunctionalityId,

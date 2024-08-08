@@ -25,9 +25,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region User Repsitory
-        public async Task<AddEntityDTO<int>> AddUser(UserDTO addUser)
+        public async Task<AddEntityDto<int>> AddUser(UserDto addUser)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDUSERS, new
             {
                 addUser.FirstName,
                 addUser.LastName,
@@ -39,9 +39,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateUser(UserDTO updateUser)
+        public async Task<AddEntityDto<int>> UpdateUser(UserDto updateUser)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEUSER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEUSER, new
             {
                 updateUser.UserId,
                 updateUser.FirstName,
@@ -61,9 +61,9 @@ namespace OMS.Domain.Repository.Implementation
             return user;
         }
 
-        public async Task<AddEntityDTO<int>> DeleteUser(short userId, short deletedBy)
+        public async Task<AddEntityDto<int>> DeleteUser(short userId, short deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEUSER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEUSER, new
             {
                 userId,
                 deletedBy
@@ -81,9 +81,9 @@ namespace OMS.Domain.Repository.Implementation
             }, true);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateUserPassword(UserDTO updateUserPassword)
+        public async Task<AddEntityDto<int>> UpdateUserPassword(UserDto updateUserPassword)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEUSERPASSWORD, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEUSERPASSWORD, new
             {
                 updateUserPassword.UserId,
                 updateUserPassword.HashedPassword,

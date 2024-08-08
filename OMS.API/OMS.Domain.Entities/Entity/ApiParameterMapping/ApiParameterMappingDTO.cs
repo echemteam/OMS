@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.ApiParameterMapping
 {
-    public class ApiParameterMappingDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class ApiParameterMappingDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? ApiEventId { get; set; }
         public int? EventParameterId { get; set; }

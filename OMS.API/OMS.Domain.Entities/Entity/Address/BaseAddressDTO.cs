@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.Address
 {
-    public class BaseAddressDTO
+    public class BaseAddressDto
     {
         public short? AddressTypeId { get; set; }
         public string? Title { get; set; }

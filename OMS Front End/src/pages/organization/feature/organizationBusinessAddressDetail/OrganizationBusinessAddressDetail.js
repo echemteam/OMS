@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { PhysicalAddressForm } from "./config/PhysicalAddressForm.data";
 import PhysicalAddressDetail from "./features/PhysicalAddressDetail";
 import { BillToAddressForm } from "./config/BillToAddressForm.data";
@@ -244,12 +244,28 @@ const OrganizationBusinessAddressDetail = () => {
  
   );
 };
-
 OrganizationBusinessAddressDetail.propTypes = {
   registeredAddressData: PropTypes.object,
+  RegisteredAddressForm: PropTypes.object,
+  registeredAddressRef: PropTypes.object,
   physicalAddressData: PropTypes.object,
+  PhysicalAddressForm: PropTypes.object,
+  physicalAddressRef: PropTypes.object,
   billToAddressData: PropTypes.object,
+  BillToAddressForm: PropTypes.object,
+  billToAddressRef: PropTypes.object,
   labAddressData: PropTypes.object,
-  warehouseAddressData: PropTypes.object
+  LabAddressForm: PropTypes.object,
+  labAddressRef: PropTypes.object,
+  warehouseAddressData: PropTypes.object,
+  WarehouseAddressForm: PropTypes.object,
+  warehouseAddressRef: PropTypes.object,
+  remitToAddressData: PropTypes.object,
+  remitToAddressRef: PropTypes.object,
+  isAddEditBusinessAddressLoading: PropTypes.bool,
+  handleAddEditBusinessAddress: PropTypes.func,
+  addEditBusinessAddresses: PropTypes.func,
+  addressIds: PropTypes.object,
 };
+
 export default OrganizationBusinessAddressDetail;

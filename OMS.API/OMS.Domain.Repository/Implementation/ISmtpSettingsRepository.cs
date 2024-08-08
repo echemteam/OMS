@@ -6,7 +6,7 @@ namespace OMS.Domain.Repository.Implementation
 {
     public interface ISmtpSettingsRepository
     {
-        Task<AddEntityDTO<int>> AddEditSmtpSettings(SmtpSettingsDTO requestData);
+        Task<AddEntityDto<int>> AddEditSmtpSettings(SmtpSettingsDto requestData);
         Task<GetSmtpSettingsResponse> GetSmtpSettings();
 
     }

@@ -27,10 +27,10 @@ namespace OMS.Application.Services.ApprovalConfiguration
         #endregion
 
         #region Approval Configuration Services
-        public async Task<AddEntityDTO<int>> AddEditApprovalConfiguration(AddEditApprovalConfigurationRequest requestData)
+        public async Task<AddEntityDto<int>> AddEditApprovalConfiguration(AddEditApprovalConfigurationRequest requestData)
         {
-            ApprovalConfigurationDTO approvalConfigurationDTO = requestData.ToMapp<AddEditApprovalConfigurationRequest, ApprovalConfigurationDTO>();
-            return await repositoryManager.approvalConfiguration.AddEditApprovalConfiguration(approvalConfigurationDTO);
+            ApprovalConfigurationDto approvalConfigurationDto = requestData.ToMapp<AddEditApprovalConfigurationRequest, ApprovalConfigurationDto>();
+            return await repositoryManager.approvalConfiguration.AddEditApprovalConfiguration(approvalConfigurationDto);
         }
         public Task<GetApprovalConfigurationByApprovalConfigurationIdResponse> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId)
         {
@@ -50,12 +50,12 @@ namespace OMS.Application.Services.ApprovalConfiguration
         {
             return await repositoryManager.approvalConfiguration.GetFunctionalityEvents(requestData);
         }
-        public async Task<AddEntityDTO<int>> AddFunctionalitiesResponsiblesUser(AddFunctionalitiesResponsiblesUserRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddFunctionalitiesResponsiblesUser(AddFunctionalitiesResponsiblesUserRequest requestData, short CurrentUserId)
         {
-            FunctionalitiesResponsiblesDTO functionalitiesResponsiblesDTO = requestData.ToMapp<AddFunctionalitiesResponsiblesUserRequest, FunctionalitiesResponsiblesDTO>();
-            return await repositoryManager.functionalities.AddFunctionalitiesResponsiblesUser(functionalitiesResponsiblesDTO);
+            FunctionalitiesResponsiblesDto functionalitiesResponsiblesDto = requestData.ToMapp<AddFunctionalitiesResponsiblesUserRequest, FunctionalitiesResponsiblesDto>();
+            return await repositoryManager.functionalities.AddFunctionalitiesResponsiblesUser(functionalitiesResponsiblesDto);
         }
-        public async Task<AddEntityDTO<int>> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId)
+        public async Task<AddEntityDto<int>> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId)
         {
             return await repositoryManager.functionalities.DeleteFunctionalitiesResponsiblesUser(functionalitiesResponsiblesId);
         }
@@ -63,10 +63,10 @@ namespace OMS.Application.Services.ApprovalConfiguration
         {
             return await repositoryManager.functionalities.GetFunctionalitiesResponsibles(requestData);
         }
-        public async Task<AddEntityDTO<int>> AddEditFunctionalities(AddEditFunctionalitiesRequest requestData)
+        public async Task<AddEntityDto<int>> AddEditFunctionalities(AddEditFunctionalitiesRequest requestData)
         {
-            FunctionalitiesDTO functionalitiesDTO = requestData.ToMapp<AddEditFunctionalitiesRequest, FunctionalitiesDTO>();
-            return await repositoryManager.functionalities.AddEditFunctionalities(functionalitiesDTO);
+            FunctionalitiesDto functionalitiesDto = requestData.ToMapp<AddEditFunctionalitiesRequest, FunctionalitiesDto>();
+            return await repositoryManager.functionalities.AddEditFunctionalities(functionalitiesDto);
         }
         #endregion
     }

@@ -2,7 +2,7 @@
 
 namespace OMS.Domain.Entities.Entity.Test
 {
-    public class BaseTestDTO
+    public class BaseTestDto
     {
 
 

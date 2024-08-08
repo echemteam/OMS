@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Contact;
@@ -11,6 +12,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class EmailAddressController : BaseController
     {
         #region private variable
@@ -34,7 +36,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateContactEmail")]
         public async Task<IActionResult> UpdateContactEmail(UpdateContactEmailRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.emailAddressService.UpdateContactEmail(requestData, CurrentUserId);

@@ -22,9 +22,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Organization Repository
-        public async Task<AddEntityDTO<int>> AddEditOrganizationProfile(OrganizationProfileDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditOrganizationProfile(OrganizationProfileDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONPROFILE, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORGANIZATIONPROFILE, new
             {
                 requestData.OrganizationProfileId,
                 requestData.RegisteredName,

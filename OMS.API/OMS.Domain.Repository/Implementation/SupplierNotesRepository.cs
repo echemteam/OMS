@@ -19,9 +19,9 @@ namespace OMS.Domain.Repository.Implementation
         {
         }
         #region SupplierNotes Repository
-        public async Task<AddEntityDTO<long>> AddSupplierNotes(SupplierNoteDTO addSupplierNotes)
+        public async Task<AddEntityDto<long>> AddSupplierNotes(SupplierNoteDto addSupplierNotes)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<long>>(ADDSUPPLIERNOTES, new
+            return await _context.GetSingleAsync<AddEntityDto<long>>(ADDSUPPLIERNOTES, new
             {
                 addSupplierNotes.SupplierId,
                 addSupplierNotes.Note,
@@ -38,9 +38,9 @@ namespace OMS.Domain.Repository.Implementation
             return getSupplierNotesBySupplierIdResponse;
         }
 
-        public async Task<AddEntityDTO<long>> UpdateSupplierNotes(SupplierNoteDTO supplierNotesUpdate)
+        public async Task<AddEntityDto<long>> UpdateSupplierNotes(SupplierNoteDto supplierNotesUpdate)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<long>>(UPDATESUPPLIERNOTES, new
+            return await _context.GetSingleAsync<AddEntityDto<long>>(UPDATESUPPLIERNOTES, new
             {
                 supplierNotesUpdate.SupplierNoteId,
                 supplierNotesUpdate.SupplierId,

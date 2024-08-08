@@ -24,9 +24,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region API Configuration Repository
-        public async Task<AddEntityDTO<int>> AddEditApiAuthentication(ApiAuthenticationDTO apiAuthentication)
+        public async Task<AddEntityDto<int>> AddEditApiAuthentication(ApiAuthenticationDto apiAuthentication)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITAPIAUTHENTICATION, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITAPIAUTHENTICATION, new
             {
                 apiAuthentication.AuthId,
                 apiAuthentication.ProviderId,
@@ -46,9 +46,9 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getApiApiParameterByParameterIdResponse;
         }
-        public async Task<AddEntityDTO<int>> DeleteApiAuthentication(int authId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteApiAuthentication(int authId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEAPIAUTHENTICATION, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEAPIAUTHENTICATION, new
             {
                 authId,
                 deletedBy

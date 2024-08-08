@@ -9,10 +9,10 @@ namespace OMS.Application.Services.SupplierAccoutingSetting
 {
     public interface ISupplierFinancialSettingsService
     {
-        Task<AddEntityDTO<int>> AddEditACHWire(AddEditACHWireRequest requestData, short CurrentUserId);
-        Task<AddEntityDTO<int>> AddEditCreditCard(AddEditCreditCardRequest requestData, short CurrentUserId);
-        Task<AddEntityDTO<int>> AddEditCheck(AddEditCheckRequest requestData, short CurrentUserId);
-        Task<AddEntityDTO<int>> AddEditOther(AddEditOtherRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddEditACHWire(AddEditACHWireRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddEditCreditCard(AddEditCreditCardRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddEditCheck(AddEditCheckRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddEditOther(AddEditOtherRequest requestData, short CurrentUserId);
         Task<GetSupplierFinancialSettingsBySupplierIdResponse> GetSupplierFinancialSettingsBySupplierId(int supplierId);
         Task<GetACHWireBySupplierIdResponse> GetACHWireBySupplierId(int supplierId);
         Task<GetPaymentSettingsBySupplierIdResponse> GetPaymentSettingsBySupplierId(int supplierId);

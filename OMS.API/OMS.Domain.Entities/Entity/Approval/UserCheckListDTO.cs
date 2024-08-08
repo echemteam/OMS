@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.Approval
 {
-    public class UserCheckListDTO
+    public class UserCheckListDto
     {
         public List<UserChecklistRequest>? CheckListRequest { get; set; }
     }

@@ -33,16 +33,16 @@ namespace OMS.Shared.Services.Implementation
                 bool mail = objEmail.SendEmail();
                 return mail;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception("An error occurred while sending the email.", ex);
             }
         }
 
-        public void SendErrorEmail(ExceptionLogDTO exception)
+        public void SendErrorEmail(ExceptionLogDto exceptionLog)
         {
             string? subject = $@"Error in OMS Project";
-            string? body = $"SystemErrorMessage :{exception.SystemErrorMessage}{Environment.NewLine}TrackTrace :-{exception.TrackTrace}{Environment.NewLine}InnerSystemErrorMessage :- {exception.InnerSystemErrorMessage}";
+            string? body = $"SystemErrorMessage :{exceptionLog.SystemErrorMessage}{Environment.NewLine}TrackTrace :-{exceptionLog.TrackTrace}{Environment.NewLine}InnerSystemErrorMessage :- {exceptionLog.InnerSystemErrorMessage}";
             SendEmailAsync(subject, body);
         }
     }

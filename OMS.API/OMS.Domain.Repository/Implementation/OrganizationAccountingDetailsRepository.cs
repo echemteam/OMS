@@ -15,9 +15,9 @@ namespace OMS.Domain.Repository.Implementation
         public OrganizationAccountingDetailsRepository(DapperContext dapperContext) : base(dapperContext)
         {
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationAccountingDetails(OrganizationAccountingDetailsDto requestData)
+        public async Task<AddEntityDto<int>> AddEditOrganizationAccountingDetails(OrganizationAccountingDetailsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONACCOUNTINGDETAILS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORGANIZATIONACCOUNTINGDETAILS, new
             {
                 requestData.OrganizationAccountingDetailId,
                 requestData.CreditLimit,

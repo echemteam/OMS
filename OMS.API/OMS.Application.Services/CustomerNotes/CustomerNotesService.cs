@@ -22,17 +22,17 @@ namespace OMS.Application.Services.CustomerNotes
         #endregion
 
         #region CustomerNotesServices
-        public async Task<AddEntityDTO<long>> AddCustomerNotes(AddCustomerNotesRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<long>> AddCustomerNotes(AddCustomerNotesRequest requestData, short CurrentUserId)
         {
-            CustomerNotesDTO customerNotesDTO = requestData.ToMapp<AddCustomerNotesRequest, CustomerNotesDTO>();
-            customerNotesDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.customerNotes.AddCustomerNotes(customerNotesDTO);
+            CustomerNotesDto customerNotesDto = requestData.ToMapp<AddCustomerNotesRequest, CustomerNotesDto>();
+            customerNotesDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.customerNotes.AddCustomerNotes(customerNotesDto);
         }
 
 
-        public async Task<AddEntityDTO<long>> UpdateCustomerNotes(UpdateCustomerNotesRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<long>> UpdateCustomerNotes(UpdateCustomerNotesRequest requestData, short CurrentUserId)
         {
-            CustomerNotesDTO customerNotes = requestData.ToMapp<UpdateCustomerNotesRequest, CustomerNotesDTO>();
+            CustomerNotesDto customerNotes = requestData.ToMapp<UpdateCustomerNotesRequest, CustomerNotesDto>();
             customerNotes.UpdatedBy = CurrentUserId;
             return await repositoryManager.customerNotes.UpdateCustomerNotes(customerNotes);
         }

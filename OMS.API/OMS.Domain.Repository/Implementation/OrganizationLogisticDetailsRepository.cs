@@ -16,9 +16,9 @@ namespace OMS.Domain.Repository.Implementation
         {
 
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationLogisticDetails(OrganizationLogisticDetailsDto requestData)
+        public async Task<AddEntityDto<int>> AddEditOrganizationLogisticDetails(OrganizationLogisticDetailsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONALOGISTICDETAILS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORGANIZATIONALOGISTICDETAILS, new
             {
                 requestData.OrganizationLogisticDetailId,
                 requestData.FedExAccount,

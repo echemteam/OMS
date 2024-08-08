@@ -7,9 +7,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IApiEventRepository
     {
-        Task<AddEntityDTO<int>> AddEditApiEvent(ApiEventDTO requestData);
+        Task<AddEntityDto<int>> AddEditApiEvent(ApiEventDto requestData);
         Task<GetApiEventByApiEventIdResponse> GetApiEventByApiEventId(int apiEventId);
-        Task<AddEntityDTO<int>> DeleteApiEvent(int apiEventId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteApiEvent(int apiEventId, int deletedBy);
         Task<EntityList<GetApiEventsResponse>> GetApiEvents(ListEntityRequest<BaseFilter> requestData);
 
     }

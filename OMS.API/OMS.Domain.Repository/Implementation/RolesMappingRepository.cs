@@ -23,9 +23,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Roles Mapping Repsitory
-        public async Task<AddEntityDTO<int>> AddRoleMapping(RoleMappingDTO roleMapping)
+        public async Task<AddEntityDto<int>> AddRoleMapping(RoleMappingDto roleMapping)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDROLEMAPPING, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDROLEMAPPING, new
             {
                 roleMapping.UserId,
                 roleMapping.RoleId,
@@ -45,9 +45,9 @@ namespace OMS.Domain.Repository.Implementation
             }, true);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteRolesMapping(int userRoleId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteRolesMapping(int userRoleId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEROLESMAPPING, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEROLESMAPPING, new
             {
                 userRoleId,
                 deletedBy

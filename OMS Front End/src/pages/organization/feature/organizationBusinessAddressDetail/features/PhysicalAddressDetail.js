@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
@@ -72,4 +74,11 @@ const PhysicalAddressDetail=({physicalAddressData,physicalAddressRef,PhysicalAdd
     
        )
 }
+
+// PropTypes for the component
+PhysicalAddressDetail.propTypes = {
+  physicalAddressData: PropTypes.object.isRequired,
+  physicalAddressRef: PropTypes.object.isRequired,
+  PhysicalAddressForm: PropTypes.object.isRequired,
+};
 export default PhysicalAddressDetail;

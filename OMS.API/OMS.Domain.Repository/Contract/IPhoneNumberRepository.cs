@@ -7,10 +7,10 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IPhoneNumberRepository
     {
-        Task<AddEntityDTO<int>> AddContactPhone(PhoneDTO phone);
-        Task<AddEntityDTO<int>> UpdateContactPhone(PhoneDTO phone);
-        Task<AddEntityDTO<int>> DeleteContactPhone(int phoneId, int deletedBy);
+        Task<AddEntityDto<int>> AddContactPhone(PhoneDto phone);
+        Task<AddEntityDto<int>> UpdateContactPhone(PhoneDto phone);
+        Task<AddEntityDto<int>> DeleteContactPhone(int phoneId, int deletedBy);
         Task<List<GetPhoneByContactIdResponse>> GetPhoneByContactId(int contactId);
-        Task<AddEntityDTO<int>> AddEditContactPhone(DataTable phoneList, int contactId);
+        Task<AddEntityDto<int>> AddEditContactPhone(DataTable phoneList, int contactId);
     }
 }

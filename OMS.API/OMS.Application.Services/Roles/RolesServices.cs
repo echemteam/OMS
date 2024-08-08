@@ -24,22 +24,22 @@ namespace OMS.Application.Services.Roles
         #endregion
 
         #region Roles Services
-        public async Task<AddEntityDTO<int>> AddRoles(AddRolesRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddRoles(AddRolesRequest requestData, short CurrentUserId)
         {
-            RolesDTO rolesDTO = requestData.ToMapp<AddRolesRequest, RolesDTO>();
-            rolesDTO.CreatedBy = CurrentUserId;
+            RolesDto rolesDto = requestData.ToMapp<AddRolesRequest, RolesDto>();
+            rolesDto.CreatedBy = CurrentUserId;
 
-            return await repositoryManager.roles.AddRoles(rolesDTO);
+            return await repositoryManager.roles.AddRoles(rolesDto);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateRoles(UpdateRolesRequest updateRolesRequest, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateRoles(UpdateRolesRequest updateRolesRequest, short CurrentUserId)
         {
-            RolesDTO rolesDTO = updateRolesRequest.ToMapp<UpdateRolesRequest, RolesDTO>();
-            rolesDTO.UpdatedBy = CurrentUserId;
-            return await repositoryManager.roles.UpdateRoles(rolesDTO);
+            RolesDto rolesDto = updateRolesRequest.ToMapp<UpdateRolesRequest, RolesDto>();
+            rolesDto.UpdatedBy = CurrentUserId;
+            return await repositoryManager.roles.UpdateRoles(rolesDto);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteRoles(int roleId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteRoles(int roleId, int deletedBy)
         {
             return await repositoryManager.roles.DeleteRoles(roleId, deletedBy);
         }
