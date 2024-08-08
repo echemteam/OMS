@@ -8,17 +8,8 @@ body {
   padding: 0;
   margin: 0;
   background-color: #0004430d;
-  font-family:
-    "Public Sans",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "Oxygen",
-    "Ubuntu",
-    "Cantarell",
-    "Fira Sans",
-    "Droid Sans",
-    "Helvetica Neue",
+  font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   font-size: var(--commonFont);
   color: var(--textColor);
@@ -1149,12 +1140,28 @@ a {
   }
 }
 
+.border-left-r-0-contactform {
+  .input-label-part {
+    input {
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      margin-top: 7px;
+      height: 37px;
+
+      @media only screen and (max-width: 1750px) {
+        margin-top: 4px;
+        height: 28px;
+      }
+    }
+  }
+}
+
 .extension {
   input {
-    margin-top: 5px;
+    margin-top: 7px;
 
     @media only screen and (max-width: 1750px) {
-      margin-top: 2px;
+      margin-top: 5px;
     }
   }
 }
@@ -1558,7 +1565,7 @@ a {
                   }
 
                   &.primary-phone {
-                    // color: var(--themeColor);
+                    color: var(--themeColor);
                     color: #5e6470;
                   }
                 }
@@ -1569,6 +1576,17 @@ a {
       }
     }
   }
+}
+
+.primary-card {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 3px 5px;
+  border-bottom-right-radius: 5px;
+  font-size: var(--commonFont-small);
+  background: var(--PrimaryColor);
+  color: var(--whiteColor) !important;
 }
 
 // Contact card End
@@ -2652,6 +2670,30 @@ input[type="checkbox"]:disabled {
 //   }
 // }
 
+.first-word-break {
+  table {
+    tbody {
+      tr {
+        td:nth-child(1) {
+          word-break: break-all;
+        }
+      }
+    }
+  }
+}
+
+.margin-top-checkbox {
+  .input-field-sec {
+    .checkbox-label-part {
+      margin-top: 14px;
+
+      @media only screen and (max-width: 1750px) {
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1750px) {
   .status-dropdown {
     .css-t3ipsp-control,
@@ -3503,7 +3545,6 @@ input[type="checkbox"]:disabled {
   }
 }
 
-
-.relative{
+.relative {
   position: relative;
 }
