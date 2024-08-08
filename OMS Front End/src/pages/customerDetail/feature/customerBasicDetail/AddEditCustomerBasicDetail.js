@@ -181,6 +181,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     }));
 
     const handleAddBasicDetails = async () => {
+        debugger
         let data = basicDetailRef.current.getFormData();
         if (data) {
             let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
@@ -205,9 +206,14 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                     functionalityName: FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION
                 }
                 const modifyData = await ValidateRequestByApprovalRules(request);
-                if (modifyData.newValue) {
-                    addEditCustomersBasicInformation(modifyData.newValue);
+                if (isOpen) {
+                    if (modifyData.newValue) {
+                        addEditCustomersBasicInformation(modifyData.newValue);
+                    }
+                } else {
+                    addEditCustomersBasicInformation(value);
                 }
+
             } else {
                 if (data.taxId) {
                     const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, customerbasicData.formFields, 'taxId');
@@ -222,8 +228,12 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                             functionalityName: FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION
                         }
                         const modifyData = await ValidateRequestByApprovalRules(request);
-                        if (modifyData.newValue) {
-                            addEditCustomersBasicInformation(modifyData.newValue);
+                        if (isOpen) {
+                            if (modifyData.newValue) {
+                                addEditCustomersBasicInformation(modifyData.newValue);
+                            }
+                        } else {
+                            addEditCustomersBasicInformation(value);
                         }
                     } else {
                         ToastService.warning(validateTaxIdMessage);
