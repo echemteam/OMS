@@ -30,6 +30,6 @@ namespace OMS.Application.Services.APIConfiguration
         Task<GetApiAuthenticationByAuthIdResponse> GetApiAuthenticationByAuthId(int authId);
         Task<AddEntityDto<int>> DeleteApiAuthentication(int authId, short CurrentUserId);
         Task<EntityList<GetApiAuthenticationsResponse>> GetApiAuthentications(GetApiAuthenticationsRequest requestData);
-        Task<ThirdPartyAPICallResponse> ThirdPartyAPICall(int providerId);
+        Task<ThirdPartyAPICallResponse> ThirdPartyAPICall(ThirdPartyAPICallRequest requestData);
     }
 }
