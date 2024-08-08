@@ -27,7 +27,7 @@ namespace OMS.Application.Services.ApiEventManagement
         Task<AddEntityDto<int>> DeleteApiEventMapping(int apiEventMappingId, short CurrentUserId);
         Task<AddEntityDto<int>> AddEditApiEventParameter(AddEditApiEventParameterRequest requestData, short CurrentUserId);
         Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventParametersId);
-        Task<AddEntityDto<int>> DeleteApiEventParameter(int apiEventParametersId, short CurrentUserId);
+        Task<AddEntityDto<int>> DeleteApiEventParameter(int parameterId, int apiEventParametersId, short CurrentUserId);
         Task<EntityList<GetApiEventParametersResponse>> GetApiEventParameters(GetApiEventParametersRequest requestData);
         Task<AddEntityDto<int>> AddApiParameterMapping(AddApiParameterMappingRequest requestData, short CurrentUserId);
         Task<EntityList<GetApiParameterMappingsResponse>> GetApiParameterMappings(GetApiParameterMappingsRequest requestData);

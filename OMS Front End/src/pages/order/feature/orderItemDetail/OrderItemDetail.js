@@ -1,120 +1,27 @@
-import React, { useRef, useState } from "react";
-import FormCreator from "../../../../components/Forms/FormCreator";
-import {
-  orderItemDetailData,
-  orderItemList,
-  orderItemSelectList,
-  orderItemPriceList,
-} from "./config/OrderItemDetail.data";
-import { AppIcons } from "../../../../data/appIcons";
-import CenterModel from "../../../../components/ui/centerModel/CenterModel";
-import MolGrid from "../../../../components/Grid/MolGrid";
-import CardSection from "../../../../components/ui/card/CardSection";
-import Image from "../../../../components/image/Image";
-import Checkbox from "../../../../components/ui/inputs/checkBox/CheckBox";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState } from "react";
+
+//** Component's */
+const OrderItemsList = React.lazy(() => import("./feature/OrderItemDetails/OrderItemsList"));
+const ProductDetailsList = React.lazy(() => import("./feature/ProductDetails/ProductDetailsList"));
+const ProductPriceList = React.lazy(() => import("./feature/ProductPriceDetails/ProductPriceList"));
+const VerifyProductDetail = React.lazy(() => import("./feature/VerifyProductInfo/VerifyProductDetail"));
+
 
 const OrderItemDetail = () => {
-  const molGridRef = useRef();
-  const orderItemDetail = useRef();
-  const [formData, setFormData] = useState(orderItemDetailData);
-  const [showModal, setShowModal] = useState(false);
 
-  const handleToggleCenterModal = () => {
-    setShowModal(!showModal);
-  };
-
-  const handleInputGroupButton = () => {
-    handleToggleCenterModal();
-  };
+  const [productId, setProductId] = useState(2);
 
   return (
     <div className="row">
+      <ProductDetailsList setProductId={setProductId} />
       <div className="col-6">
-        <FormCreator
-          config={formData}
-          ref={orderItemDetail}
-          {...formData}
-          handleInputGroupButton={handleInputGroupButton}
-        />
+        <VerifyProductDetail productId={productId} />
       </div>
-      <div className="col-6">
-        <div className="verify-product-group">
-          <div className="verify-product-label">Verify Product Details</div>
-          <div className="verify-product-details">
-            <div className="detail-row">
-              <span className="detail-label">Catalog ID</span>
-              <span className="detail-value">B-5015</span>
-              <span className="detail-action"></span>
-            </div>
-            <div className="detail-row">
-              <span className="detail-label">Chemical Name</span>
-              <span className="detail-value">2-Amino-3-fluorobenzoic acid</span>
-              <span className="detail-action">
-                <button className="edit-button">
-                  <Image imagePath={AppIcons.editThemeIcon} />
-                </button>
-                <div className="checkbox">
-                  <Checkbox />
-                </div>
-              </span>
-            </div>
-            <div className="detail-row">
-              <span className="detail-label">CAS Number</span>
-              <span className="detail-value">825-22-9</span>
-              <span className="detail-action">
-                <button className="edit-button">
-                  <Image imagePath={AppIcons.editThemeIcon} />
-                </button>
-                <div className="checkbox">
-                  <Checkbox />
-                </div>
-              </span>
-            </div>
-            <div className="detail-row">
-              <span className="detail-label">MDL Number</span>
-              <span className="detail-value">MFCD01569395</span>
-              <span className="detail-action">
-                <button className="edit-button">
-                  <Image imagePath={AppIcons.editThemeIcon} />
-                </button>
-                <div className="checkbox">
-                  <Checkbox />
-                </div>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <CardSection cardTitle="Order Item Details">
-        <MolGrid
-          ref={molGridRef}
-          configuration={orderItemPriceList}
-          allowPagination={false}
-        />
-      </CardSection>
+      <ProductPriceList productId={productId} />
       <div className="col-12 mt-3">
-        <CardSection cardTitle="Order Item List">
-          <div className="col-md-12 table-striped p-0 mb-3">
-            <MolGrid
-              ref={molGridRef}
-              configuration={orderItemList}
-              allowPagination={false}
-            />
-          </div>
-        </CardSection>
+        <OrderItemsList />
       </div>
-      <CenterModel
-        showModal={showModal}
-        handleToggleModal={handleToggleCenterModal}
-        modalTitle="Product Details"
-        modelSizeClass="w-60"
-      >
-        <MolGrid
-          ref={molGridRef}
-          configuration={orderItemSelectList}
-          allowPagination={false}
-        />
-      </CenterModel>
     </div>
   );
 };

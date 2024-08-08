@@ -142,10 +142,10 @@ const thirdPartyAPI = createApi({
         }),
 
         deleteApiEventParameter: builder.mutation({
-            query: (id) => ({
-                url: encryptQueryString(`/ApiEventManagement/DeleteApiEventParameter/?parameterId=${id}`),
+            query: (request) => ({
+                url: encryptQueryString(`/ApiEventManagement/DeleteApiEventParameter/?parameterId=${request.parameterId}&apiEventParametersId=${request.apiEventParametersId}`),
                 method: 'DELETE',
-                body: transformRequest(id)
+                body: transformRequest(request)
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse

@@ -127,10 +127,17 @@ namespace OMS.Application.Services.APIConfiguration
                 IsDynamicParameter = requestData.IsDynamicParameter
             };
 
+            // Get the API response
+            var apiResponse = await ThirdPartyAPIIntegrator.GetThirdPartyApiResponse(apiRequest);
+
+            // Create a ThirdPartyAPICallResponse with individual properties
             ThirdPartyAPICallResponse responseData = new()
             {
-                ApiResponse = await ThirdPartyAPIIntegrator.GetThirdPartyApiResponse(apiRequest)
+                Data = apiResponse.Data,
+                Message = apiResponse.Message,
+                IsSuccess = apiResponse.IsSuccess
             };
+
             return responseData;
         }
         #endregion
