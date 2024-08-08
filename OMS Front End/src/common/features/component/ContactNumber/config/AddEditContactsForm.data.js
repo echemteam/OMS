@@ -5,7 +5,7 @@ import { GridColumnType } from "../../../../../data/gridColumnType";
 export const addEditContactsFormData = {
   name: "Add Edit Role Form",
   initialState: {
-    phoneCode: '+1',
+    phoneCode: '',
     phoneNumber: '',
     phoneTypeId: '',
     extension: 0,

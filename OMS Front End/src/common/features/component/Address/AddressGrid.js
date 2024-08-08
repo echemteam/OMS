@@ -25,6 +25,7 @@ const AddressGrid = ({
   updateAddress,
   addAddress,
   getAddresssById,
+  deleteAddress
 }) => {
   //** States */
   const editRef = useRef();
@@ -132,6 +133,7 @@ const AddressGrid = ({
           showEditIcon={showEditIcon}
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
+          deleteAddress={deleteAddress}
         />
       </div>
     ),
@@ -145,6 +147,7 @@ const AddressGrid = ({
           showEditIcon={showEditIcon}
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
+          deleteAddress={deleteAddress}
         />
       </div>
     ),
@@ -158,6 +161,7 @@ const AddressGrid = ({
           showEditIcon={showEditIcon}
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
+          deleteAddress={deleteAddress}
         />
       </div>
     ),
@@ -171,6 +175,7 @@ const AddressGrid = ({
           showEditIcon={showEditIcon}
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
+          deleteAddress={deleteAddress}
         />
       </div>
     ),
@@ -184,6 +189,7 @@ const AddressGrid = ({
           showEditIcon={showEditIcon}
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
+          deleteAddress={deleteAddress}
         />
       </div>
     ),
@@ -258,6 +264,7 @@ AddressGrid.propTypes = {
   getAddresssByCustomerId: PropTypes.func.isRequired,
   updateAddress: PropTypes.func.isRequired,
   addAddress: PropTypes.func.isRequired,
+  deleteAddress: PropTypes.func.isRequired,
   getAddresssById: PropTypes.func.isRequired,
 };
 export default AddressGrid;

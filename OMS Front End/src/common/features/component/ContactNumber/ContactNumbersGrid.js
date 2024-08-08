@@ -15,7 +15,7 @@ import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery } from "../
 const ContactNumberList = React.lazy(() => import("./feature/ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./feature/AddEditContactNumber"));
 
-const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, isButtonDisable }) => {
+const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, isButtonDisable , contryIdCode}) => {
 
     //** State */
     const molGridRef = useRef();
@@ -23,6 +23,7 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
+    const [newPhoneCode, setNewPhoneCode] = useState("");
 
     //** API Call's */
     const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: isCountriesData }] = useLazyGetAllCountriesQuery();
@@ -47,10 +48,15 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
     }, [isButtonDisable]);
 
     useEffect(() => {
-        if (isGetAllCountriesSucess && isCountriesData) {
+        if (isGetAllCountriesSucess && isCountriesData && contryIdCode) {
             setDropDownOptionField(isCountriesData, 'countryId', 'phoneCode', addEditContactsFormData, 'phoneCode');
+            const selectedCountry = isCountriesData.find(country => country.countryId === contryIdCode);
+            if (selectedCountry) {
+                setNewPhoneCode(selectedCountry.phoneCode);
+            }
         }
-    }, [isGetAllCountriesSucess, isCountriesData]);
+    }, [isGetAllCountriesSucess, isCountriesData , contryIdCode]);
+
 
     useEffect(() => {
         if (isGetAllPhoneTypesSucess && isPhoneTypesData) {
@@ -111,7 +117,7 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
                 isButtonDisable={isButtonDisable} phoneNumberList={phoneNumberList} />
             {showModal && (
                 <AddEditContactNumber handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal}
-                    editFormData={editFormData} isEdit={isEdit} contactId={contactId} phoneNumberList={phoneNumberList} setPhoneNumberList={setPhoneNumberList} />
+                    editFormData={editFormData} isEdit={isEdit} contactId={contactId} phoneNumberList={phoneNumberList} setPhoneNumberList={setPhoneNumberList} newPhoneCode={newPhoneCode} />
             )}
         </React.Fragment>
     )

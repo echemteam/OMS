@@ -68,6 +68,15 @@ const addressAPI = createApi({
             transformErrorResponse: transformErrorResponse
 
         }),
+        deleteAddress: builder.mutation({
+            query: (id) => ({
+                url: encryptQueryString(`/Address/DeleteAddress/?addressId=${id}`),
+                method: 'DELETE',
+                body: transformRequest(id)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
 
     })
 })
@@ -80,6 +89,7 @@ export const {
     useLazyGetAddresssByCustomerIdQuery,
     useLazyGetCustomerAddresssByAddressIdQuery,
     useUpdateAddAddressMutation,
+    useDeleteAddressMutation,
 
 } = addressAPI
 

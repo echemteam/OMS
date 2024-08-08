@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { orderInformationData } from "./config/OrderInformation.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import SwalAlert from "../../../../services/swalService/SwalService";
-import { useGetAllSubCustomerByCustomerIdMutation, useLazyGetAllCustomersQuery,useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery } from "../../../../app/services/commonAPI";
+import { useGetAllSubCustomerByCustomerIdMutation, useLazyGetAllCustomersQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery } from "../../../../app/services/commonAPI";
 import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../data/appIcons";
@@ -95,16 +95,16 @@ const OrderDetails = () => {
 
   useEffect(() => {
     if (!isGetAllSubCustomersFetching && isGetAllSubCustomersSuccess && isGetAllSubCustomersData) {
-        const subcustomerData = isGetAllSubCustomersData.map((item) => ({
-          value: item.subCustomerId,
-          label: item.subCustomerName,
-          date: item.createdAt,
-          status: item.statusName
-        }));
-        const dropdownField = formData?.formFields?.find(item => item.dataField === "subCustomerMainCustomerId");
+      const subcustomerData = isGetAllSubCustomersData.map((item) => ({
+        value: item.subCustomerId,
+        label: item.subCustomerName,
+        date: item.createdAt,
+        status: item.statusName
+      }));
+      const dropdownField = formData?.formFields?.find(item => item.dataField === "subCustomerMainCustomerId");
 
       dropdownField.fieldSetting.options = subcustomerData;
-      }
+    }
   }, [isGetAllSubCustomersFetching, isGetAllSubCustomersSuccess, isGetAllSubCustomersData]);
 
 
@@ -119,6 +119,7 @@ const OrderDetails = () => {
 
   const handleChangeDropdownList = (data, dataField) => {
     if (dataField === "customerId") {
+      setOrderCustomerId(data.value)
       if (data.isBuyingForThirdParty === true) {
         setIsSubCustomerDropdownVisible(true);
         getAllSubCustomerByCustomerId(data.value);
@@ -132,7 +133,7 @@ const OrderDetails = () => {
           subCustomerMainCustomerId: null
         });
       }
-      else{
+      else {
         setIsSubCustomerDropdownVisible(false);
       }
     }
