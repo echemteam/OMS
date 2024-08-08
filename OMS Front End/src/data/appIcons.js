@@ -85,6 +85,7 @@ import nextArrowIcon from "../assets/images/NextArrowIcon.svg"
 import doneIcon from "../assets/images/done.png";
 import cancelIcon from "../assets/images/cancel.png";
 import testApiIcon from "../assets/images/testApi.png";
+import backArrow from "../assets/images/BackArrow.svg"
 
 export const AppIcons = {
   // Menus & Header Images
@@ -107,6 +108,7 @@ export const AppIcons = {
   ShortcutIcon: shortcutIcon,
   arrowIcon: arrow,
   BackArrowIcon: backArrowIcon,
+  BackArrow: backArrow,
   PlusIcon: plusIcon,
   settingIcon: setting,
   logoutIcon: logout,

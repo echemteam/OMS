@@ -100,7 +100,7 @@ const AddCustomerTab = () => {
   };
 
   return (
-    <div className="stepper-card">
+    <div className="stepper-card stepper-view">
       <CardSection>
         <div className="stepper-section">
           <div className="stepper-header">
@@ -133,8 +133,8 @@ const AddCustomerTab = () => {
                     {step.content}
                     <div className="d-flex justify-content-end">
                       {index > 0 && !showSubBackButton && (
-                        <button type="button" className="btn dark-btn mr-3" onClick={movePreviewPage} >
-                          Back
+                        <button type="button" className="btn dark-btn mr-3 btn-prev" onClick={movePreviewPage} >
+                           <Image imagePath={AppIcons.nextArrowIcon} /> Back
                         </button>
                       )}
                       {index < tabContent.length - 1 ? (
@@ -145,12 +145,12 @@ const AddCustomerTab = () => {
                                 Save Financial Settings
                               </button>
                               :
-                              <button type="button" className="btn dark-btn mr-3" onClick={() => handleActiveSubTabClick(CustomerSettingEnum.FinancialSettings)} >
-                                Back
+                              <button type="button" className="btn dark-btn mr-3 btn-prev" onClick={() => handleActiveSubTabClick(CustomerSettingEnum.FinancialSettings)} >
+                                <Image imagePath={AppIcons.nextArrowIcon} /> Back
                               </button>
                             }
-                            <button type="button" className="btn theme-button ml-3" onClick={() => addCustomer(step.tab)}>
-                              Next 
+                            <button type="button" className="btn theme-button btn-next ml-3" onClick={() => addCustomer(step.tab)}>
+                              Next <Image imagePath={AppIcons.nextArrowIcon} />
                             </button>
                           </React.Fragment>
                         ) : (

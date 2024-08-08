@@ -166,3 +166,32 @@
     }
   }
 }
+
+.stepper-view .stepper-section .stepper-content {
+  max-height: calc(100vh - 185px);
+}
+
+.stepper-view {
+  .supplier-contacts {
+    .card-body-sec {
+      max-height: calc(100vh - 195px);
+    }
+  }
+  .vertical-tab-inner {
+    .tab-section .tab-content {
+      max-height: calc(100vh - 400px);
+    }
+  }
+}
+
+// .stepper-view {
+//   .setting-tab-sec {
+//     .card {
+//       .tab-section {
+//         .tab-sub-content {
+//           max-height: calc(100vh - 258px);
+//         }
+//       }
+//     }
+//   }
+// }

@@ -11,14 +11,14 @@
   border: none;
   font-size: var(--commonFont);
   background-size: 180% 100%;
-  transition: all .4s ease-in-out;
+  transition: all 0.4s ease-in-out;
   font-weight: 700 !important;
   color: var(--whiteColor);
   // margin: 0 3px;
 
   &:hover {
     background-position: 100% 0;
-    transition: all .4s ease-in-out;
+    transition: all 0.4s ease-in-out;
     color: var(--whiteColor);
   }
 
@@ -35,18 +35,15 @@
     &:hover {
       box-shadow: 0 5px 15px -4px var(--themeColor);
       background: var(--theme-btn-hover-bg);
-
     }
   }
 
   &.dark-btn {
     background: linear-gradient(to right, #2d3641db, #000000db);
 
-
     &:hover {
       box-shadow: 0 5px 15px -4px hsla(210, 22%, 4%, 0.75);
     }
-
   }
 
   &.danger-btn {
@@ -71,7 +68,6 @@
     &:hover {
       box-shadow: 0 5px 15px -4px hsla(171, 93%, 42%, 0.75);
     }
-
   }
 
   &.info-btn {
@@ -86,15 +82,13 @@
     border: 1px solid var(--inputBorder);
     color: var(--textColor);
     border-radius: 5px;
-    img{
+    img {
       filter: unset;
     }
     &:hover {
       box-shadow: 0 5px 15px -4px var(--inputBorder);
     }
   }
-
-
 
   &.disable-btn {
     min-width: 100px;
@@ -126,23 +120,35 @@
   }
 }
 
-.btn-next img{
+.btn-next img {
   margin-left: 8px !important;
   margin-right: 0 !important;
 }
 
+.btn-prev img {
+  margin-right: 8px !important;
+  margin-left: 0 !important;
+  rotate: 180deg;
+}
+
 @media only screen and (max-width: 1750px) {
-  .btn{
+  .btn {
     height: 28px;
     font-size: var(--commonFont-small);
     min-width: 60px;
-    img{
+    img {
       width: 10px;
       margin-right: 4px;
     }
   }
-  .btn-next img{
+  .btn-next img {
     margin-left: 5px !important;
     margin-right: 0 !important;
+  }
+
+  .btn-prev img {
+    margin-right: 5px !important;
+    margin-left: 0 !important;
+    rotate: 90deg;
   }
 }
