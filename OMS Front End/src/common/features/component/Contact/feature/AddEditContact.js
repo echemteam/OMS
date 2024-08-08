@@ -17,7 +17,7 @@ const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddres
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
 const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey,
-    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall }) => {
+    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall , contryIdCode}) => {
 
     //** State */
     const ref = useRef();
@@ -31,7 +31,6 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-
 
     //** API Call's */
     /**
@@ -217,7 +216,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                         <EmailAddressGrid isButtonDisable={isButtonDisable} emailAddressList={emailAddressList}
                             setEmailAddressList={setEmailAddressList} contactId={contactId} />
                         <ContactNumbersGrid isButtonDisable={isButtonDisable} phoneNumberList={phoneNumberList}
-                            setPhoneNumberList={setPhoneNumberList} contactId={contactId} />
+                            setPhoneNumberList={setPhoneNumberList} contactId={contactId} contryIdCode={contryIdCode} />
                     </div>
                 </React.Fragment>
                 : <DataLoader />

@@ -31,6 +31,7 @@ const ContactGrid = ({
   SecurityKey,
   getContactById,
   isSearchFilterShow,
+  contryIdCode
 }) => {
   //** State */
   const editRef = useRef();
@@ -338,6 +339,7 @@ const ContactGrid = ({
             isOpen={isModelOpen}
             getContactById={getContactById}
             getContectTypeId={null}
+            contryIdCode={contryIdCode}
           />
         </SidebarModel>
       </div>

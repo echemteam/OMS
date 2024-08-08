@@ -83,6 +83,16 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(addressId);
         }
+        [HttpDelete("DeleteAddress")]
+        public async Task<IActionResult> DeleteAddress(int addressId)
+        {
+            if (addressId > 0)
+            {
+                var deleteItem = await _serviceManager.addressServices.DeleteAddress(addressId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
+            }
+            return APISucessResponce(addressId);
+        }
         #endregion
     }
 }
