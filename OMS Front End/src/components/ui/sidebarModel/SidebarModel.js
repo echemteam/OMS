@@ -1,4 +1,5 @@
 import { AppIcons } from "../../../data/appIcons";
+import PropTypes from 'prop-types';
 import Image from "../../image/Image";
 import "./SidebarModel.scss";
 
@@ -28,5 +29,12 @@ const SidebarModel = ({ children, modalTitleIcon, ...props }) => {
     </div>
   );
 };
-
+SidebarModel.propTypes = {
+  children: PropTypes.node,  
+  modalTitleIcon: PropTypes.string,  
+  modalTitle: PropTypes.string,  
+  contentClass: PropTypes.string,  
+  isOpen: PropTypes.bool,  
+  onClose: PropTypes.func,  
+};
 export default SidebarModel;

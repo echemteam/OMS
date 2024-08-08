@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Accordion } from "react-bootstrap";
 import { CardSectionDetails } from "./AccordionCollapse.Data";
+import PropTypes from 'prop-types';
 
 const ContactCard = React.lazy(() =>
   import(
@@ -128,4 +129,10 @@ const AccordionCollapse = ({
   );
 };
 
+AccordionCollapse.propTypes = {
+  accordionList: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.object)).isRequired,  
+  contentTypeId: PropTypes.number.isRequired,  
+  handleEdit: PropTypes.func.isRequired,  
+  showEditIcon: PropTypes.bool.isRequired,  
+};
 export default React.memo(AccordionCollapse);

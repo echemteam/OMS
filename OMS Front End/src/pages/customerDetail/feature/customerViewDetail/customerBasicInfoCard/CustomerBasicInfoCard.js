@@ -50,7 +50,7 @@ const CustomerBasicInfoCard = ({
   const [staticId, setStaticId] = useState("");
   const [statusFeild, setStatusFeild] = useState("");
   const [options, setOptions] = useState([]);
-  const [customerID, setcustomerId] = useState();
+  const [customerID, setCustomerId] = useState();
   const [statusId, setStatusId] = useState();
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
@@ -227,7 +227,7 @@ const CustomerBasicInfoCard = ({
             customerData.isSubCustomer ? customerData.isSubCustomer : false
           );
         }
-        setcustomerId(customerId);
+        setCustomerId(customerId);
         setStatusId(selectedOption.value);
       }
     }

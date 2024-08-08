@@ -1,4 +1,5 @@
-import React, { Suspense } from 'react'
+import React, { Suspense } from 'react';
+import PropTypes from 'prop-types';
 const Dropdown = React.lazy(() => import('../../dropdown/DropDrown'));
 const Label = React.lazy(() => import('../../label/Label'));
 const ValidationText = React.lazy(() => import('../validation/ValidationText.js'))
@@ -70,5 +71,24 @@ const FormSelectField = ({
     </>
   )
 }
-
+FormSelectField.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.any,  
+  error: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.any, 
+    label: PropTypes.string,
+  })),
+  onChange: PropTypes.func.isRequired,
+  dataField: PropTypes.string.isRequired,
+  labelName: PropTypes.string,
+  placeholder: PropTypes.string,
+  formSetting: PropTypes.shape({
+    isViewOnly: PropTypes.bool,
+  }),
+  isMultiSelect: PropTypes.bool,
+  onValidation: PropTypes.func,
+  fieldSetting: PropTypes.object, 
+  fieldActions: PropTypes.func,
+};
 export default FormSelectField;

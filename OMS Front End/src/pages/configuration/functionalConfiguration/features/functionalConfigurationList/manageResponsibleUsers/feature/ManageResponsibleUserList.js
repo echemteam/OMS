@@ -1,4 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
+import PropTypes from 'prop-types'; 
 import MolGrid from '../../../../../../../components/Grid/MolGrid';
 import { manageResponsibleUsersData } from '../config/ManageResponsibleUsers.data';
 import { useDeleteFunctionalitiesResponsiblesUserMutation, useGetFunctionalitiesResponsiblesMutation } from '../../../../../../../app/services/configurationAPI';
@@ -119,5 +120,12 @@ const ManageResponsibleUserList = (props) => {
     </div>
   )
 }
-
+ManageResponsibleUserList.propTypes = {
+  functionalityId: PropTypes.number.isRequired,
+  childRef: PropTypes.shape({
+    current: PropTypes.shape({
+      callChildFunction: PropTypes.func,
+    }),
+  }),
+};
 export default ManageResponsibleUserList

@@ -1,4 +1,8 @@
 export const FunctionalitiesName = {
     UPDATECUSTOMERBASICINFOMATION: "Update Customer Basic Infomation",
-    UPDATESUPPLIER: "Update Supplier"
+    ADDCUSTOMER: "Add Customer",
+    UPDATESUPPLIER: "Update Supplier",
+    ADDSUPPLIER: "Add Supplier",
+    
+
 }

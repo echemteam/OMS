@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './CkEditor.scss';
@@ -31,6 +32,14 @@ const CKEditorComponent = ({
       />
     </div>
   );
+};
+
+CKEditorComponent.propTypes = {
+  onCKEditorChange: PropTypes.func.isRequired,  
+  data: PropTypes.string,  
+  isDisable: PropTypes.bool,  
+  placeholder: PropTypes.string,  
+  config: PropTypes.object,  
 };
 
 export default CKEditorComponent;

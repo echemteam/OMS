@@ -2,12 +2,11 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { orderInformationData } from "./config/OrderInformation.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import SwalAlert from "../../../../services/swalService/SwalService";
-import { useGetAllSubCustomerByCustomerIdMutation, useLazyGetAllCustomersQuery } from "../../../../app/services/commonAPI";
+import { useGetAllSubCustomerByCustomerIdMutation, useLazyGetAllCustomersQuery,useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery } from "../../../../app/services/commonAPI";
 import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../data/appIcons";
 import { addressFormData } from "../../../../../src/common/features/component/Address/config/AddressForm.data";
-import { useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery } from "../../../../app/services/commonAPI";
 import { AddressType } from "../../../../utils/Enums/commonEnums";
 import NoRecordFound from "../../../../components/ui/noRecordFound/NoRecordFound";
 import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
@@ -18,6 +17,7 @@ const OrderDetails = () => {
   const basicInformation = useRef();
 
   const [formData, setFormData] = useState(orderInformationData);
+  const [isSubCustomerDropdownVisible, setIsSubCustomerDropdownVisible] = useState(false);
   const { blocked } = SwalAlert();
   const [getAllCustomers, { isFetching: isGetAllCustomersFetching, isSuccess: isGetAllCustomersSuccess, data: isGetAllCustomersData }] = useLazyGetAllCustomersQuery();
   const [getAllSubCustomerByCustomerId, { isFetching: isGetAllSubCustomersFetching, isSuccess: isGetAllSubCustomersSuccess, data: isGetAllSubCustomersData }] = useGetAllSubCustomerByCustomerIdMutation();
@@ -95,29 +95,32 @@ const OrderDetails = () => {
 
   useEffect(() => {
     if (!isGetAllSubCustomersFetching && isGetAllSubCustomersSuccess && isGetAllSubCustomersData) {
-      const subcustomerData = isGetAllSubCustomersData.map((item) => ({
-        value: item.subCustomerId,
-        label: item.subCustomerName,
-        date: item.createdAt,
-        status: item.statusName
-      }));
-      const dropdownField = formData?.formFields?.find(item => item.dataField === "subCustomerMainCustomerId");
+        const subcustomerData = isGetAllSubCustomersData.map((item) => ({
+          value: item.subCustomerId,
+          label: item.subCustomerName,
+          date: item.createdAt,
+          status: item.statusName
+        }));
+        const dropdownField = formData?.formFields?.find(item => item.dataField === "subCustomerMainCustomerId");
 
       dropdownField.fieldSetting.options = subcustomerData;
-    }
+      }
   }, [isGetAllSubCustomersFetching, isGetAllSubCustomersSuccess, isGetAllSubCustomersData]);
 
 
   useEffect(() => {
-    let newFrom = { ...formData };
-    newFrom.formFields = newFrom.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId");
-    setFormData(newFrom);
-  }, [])
+    if (!isSubCustomerDropdownVisible) {
+      const newFrom = { ...formData };
+      newFrom.formFields = newFrom.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId");
+      setFormData(newFrom);
+    }
+  }, [isSubCustomerDropdownVisible]);
 
 
   const handleChangeDropdownList = (data, dataField) => {
     if (dataField === "customerId") {
       if (data.isBuyingForThirdParty === true) {
+        setIsSubCustomerDropdownVisible(true);
         getAllSubCustomerByCustomerId(data.value);
         const manageData = { ...formData };
         let filteredFormFields;
@@ -129,10 +132,12 @@ const OrderDetails = () => {
           subCustomerMainCustomerId: null
         });
       }
+      else{
+        setIsSubCustomerDropdownVisible(false);
+      }
     }
 
     const blockedOptionValue = "Blocked";
-
     if (data.status === blockedOptionValue) {
       blocked(
         "Blocked !",
@@ -161,6 +166,10 @@ const OrderDetails = () => {
       setIsModelOpen(!isModelOpen);
     }
   };
+  const updatedFormData = { ...formData };
+  if (!isSubCustomerDropdownVisible) {
+    updatedFormData.formFields = updatedFormData.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId");
+  }
 
   return (
     <>

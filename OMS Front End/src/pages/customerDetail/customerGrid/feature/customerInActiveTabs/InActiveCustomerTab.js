@@ -21,7 +21,7 @@ const InActiveCustomerTab = ({ statusId }) => {
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const [allManageData, setAllManageData] = useState(AllInActiveCustomerGridConfig);
-  const [freezeManageData, setFrezzeManageData] = useState(FreezedInActiveCustomerGridConfig);
+  const [freezeManageData, setFreezeManageData] = useState(FreezedInActiveCustomerGridConfig);
   const [blockManageData, setBlockManageData] = useState(BlockedInActiveCustomerGridConfig);
   const [disableManageData, setDisableManageData] = useState(DisabledInActiveCustomerGridConfig);
   const debouncedSearch = useDebounce(search, 300);
@@ -48,7 +48,7 @@ const InActiveCustomerTab = ({ statusId }) => {
           });
           break;
         case "1":
-          setFrezzeManageData({
+          setFreezeManageData({
             ...FreezedInActiveCustomerGridConfig,
             columns: FreezedInActiveCustomerGridConfig.columns.filter(column => column.id !== ListSupplier.value)
           });

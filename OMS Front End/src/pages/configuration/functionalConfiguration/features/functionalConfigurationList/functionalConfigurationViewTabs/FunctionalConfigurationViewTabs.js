@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'; 
 import RenderTabs from '../../../../../../components/ui/tabs/RenderTabs';
 import ManageResponsibleUsers from '../manageResponsibleUsers/ManageResponsibleUsers';
 import ViewFunctionalEvents from '../viewFunctionalEvents/ViewFunctionalEvents';
@@ -32,5 +33,7 @@ const FunctionalConfigurationViewTabs = (props) => {
         </div>
     )
 }
-
+FunctionalConfigurationViewTabs.propTypes = {
+    functionalityId: PropTypes.number.isRequired,
+};
 export default FunctionalConfigurationViewTabs

@@ -139,16 +139,26 @@ const FileUpload = ({
   );
 };
 
+
 FileUpload.propTypes = {
-  type: TextInputType.FILE.isRequired,
+  type: PropTypes.oneOf([TextInputType.FILE]),
   name: PropTypes.string,
   placeholder: PropTypes.string,
-  // value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  filename: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      name: PropTypes.string,
+      fileName: PropTypes.string,
+    })
+  ]),
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func,
   onClear: PropTypes.func,
+  onBlur: PropTypes.func,
+  onActionClick: PropTypes.func,
   cssClass: PropTypes.string,
   isDisable: PropTypes.bool,
+  isButtonVisible: PropTypes.bool,
+  acceptedFiles: PropTypes.string,
+  isCustomButtonVisible: PropTypes.bool,
 };
-
 export default FileUpload;

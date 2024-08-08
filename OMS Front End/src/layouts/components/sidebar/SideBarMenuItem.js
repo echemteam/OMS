@@ -1,6 +1,6 @@
 import Image from "../../../components/image/Image";
 import { AppIcons } from "../../../data/appIcons";
-
+import PropTypes from 'prop-types';
 const SideBarMenuItem = (props) => {
   return (
     <>
@@ -18,5 +18,9 @@ const SideBarMenuItem = (props) => {
     </>
   );
 };
-
+SideBarMenuItem.propTypes = {
+  image: PropTypes.string.isRequired,    
+  name: PropTypes.string.isRequired,    
+  childLength: PropTypes.number.isRequired, 
+};
 export default SideBarMenuItem;

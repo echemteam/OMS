@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import { ActionFlag } from "../../components/SecurityPermission/EditDeletePermissions.Data";
 import { hasFunctionalPermission } from "../../utils/AuthorizeNavigation/authorizeNavigation";
 import { AddPagePermissionsContext } from "../../utils/ContextAPIs/AddPagePermissions/AddPagePermissionsContext";
@@ -98,3 +99,25 @@ export const SecurityPermissionsHOC = ({ permissionConfig, children }) => {
         </AddPagePermissionsContext.Provider>
     );
 }
+
+SecurityPermissionsHOC.propTypes = {
+    permissionConfig: PropTypes.arrayOf(
+        PropTypes.shape({
+            keyName: PropTypes.string.isRequired,
+            value: PropTypes.string,
+            gridConfig: PropTypes.shape({
+                columns: PropTypes.arrayOf(
+                    PropTypes.shape({
+                        name: PropTypes.string
+                    })
+                )
+            }),
+            formConfig: PropTypes.shape({
+                formSetting: PropTypes.shape({
+                    isViewOnly: PropTypes.bool
+                })
+            })
+        })
+    ),
+    children: PropTypes.node.isRequired
+};

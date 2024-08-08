@@ -42,4 +42,17 @@ const FormTextEditorField = ({
     )
 }
 
+FormTextEditorField.propTypes = {
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    labelName: PropTypes.string,
+    onChange: PropTypes.func,
+    onValidation: PropTypes.func,
+    dataField: PropTypes.string.isRequired,
+    error: PropTypes.string,
+    formSetting: PropTypes.shape({
+        isViewOnly: PropTypes.bool
+    }),
+    editorProps: PropTypes.object
+};
 export default FormTextEditorField

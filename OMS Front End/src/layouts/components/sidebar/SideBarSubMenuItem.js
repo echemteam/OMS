@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types'; 
 // import { hasPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
 
 const SideBarSubMenuItem = (props) => {
@@ -25,4 +26,17 @@ const SideBarSubMenuItem = (props) => {
         </>
     )
 }
+SideBarSubMenuItem.propTypes = {
+    children: PropTypes.arrayOf(
+        PropTypes.shape({
+            to: PropTypes.string,  
+            name: PropTypes.string,  
+        })
+    ).isRequired,  
+    clickedValueSubMenu: PropTypes.shape({
+        to: PropTypes.string,
+        name: PropTypes.string,
+    }),  
+    handleSubItemClick: PropTypes.func.isRequired,  
+};
 export default SideBarSubMenuItem;

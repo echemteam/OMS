@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types"
 import CustomDropdown from "./CustomDropdown";
 import { options } from "./data";
 
@@ -41,5 +42,32 @@ const DropDown = (props) => {
     </>
   );
 };
-
+DropDown.propTypes = {
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.number.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
+  placeholder: PropTypes.string,
+  isMultiSelect: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  dropDownSettings: PropTypes.shape({
+    colorMap: PropTypes.object.isRequired,
+    textMap: PropTypes.object.isRequired,
+    iconMap: PropTypes.object.isRequired
+  }),
+  inputButtonGroup: PropTypes.shape({
+    icon: PropTypes.string,
+    buttonText: PropTypes.string,
+    isInputButton: PropTypes.bool,
+  }),
+  handleInputGroupButton: PropTypes.func,
+};
 export default DropDown;

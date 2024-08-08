@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import FormCreator from "../../../../../components/Forms/FormCreator";
@@ -70,4 +72,11 @@ const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,regis
     
        )
 }
+
+// PropTypes for the component
+RegisteredAddressDetail.propTypes = {
+  registeredAddressRef: PropTypes.object.isRequired,
+  RegisteredAddressForm: PropTypes.object.isRequired,
+  registeredAddressData: PropTypes.object.isRequired,
+};
 export default RegisteredAddressDetail;

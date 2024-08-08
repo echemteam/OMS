@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { AppIcons } from "../../../data/appIcons";
 import { useNavigate } from "react-router-dom";
@@ -186,5 +187,16 @@ const TaskDetail = ({ approvedData, isFetching }) => {
     </div>
   );
 };
-
+TaskDetail.propTypes = {
+  approvedData: PropTypes.shape({
+    requestedByUserName: PropTypes.string,
+    functionalityName: PropTypes.string,
+    requestedDate: PropTypes.string,
+    fieldName: PropTypes.string,
+    status: PropTypes.string,
+    oldValue: PropTypes.string,
+    newValue: PropTypes.string,
+  }),
+  isFetching: PropTypes.bool.isRequired,
+};
 export default TaskDetail;

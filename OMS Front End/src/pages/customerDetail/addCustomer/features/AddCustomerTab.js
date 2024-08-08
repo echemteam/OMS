@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext } from "react";
-import React, { useEffect } from "react";
+import React, { useEffect,useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { useUpdateCustomerStatusMutation } from "../../../../app/services/basicdetailAPI";

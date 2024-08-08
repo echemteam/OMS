@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const RenderTabs2 = ({ tabs }) => {
   const navigate = useNavigate();
@@ -52,5 +53,14 @@ const RenderTabs2 = ({ tabs }) => {
     </>
   );
 };
-
+RenderTabs2.propTypes = {
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      sMenuItemCaption: PropTypes.string.isRequired,  
+      sPage: PropTypes.string.isRequired,  
+      component: PropTypes.node, 
+      isDynemic: PropTypes.bool,  
+    })
+  ).isRequired,  
+};
 export default RenderTabs2;

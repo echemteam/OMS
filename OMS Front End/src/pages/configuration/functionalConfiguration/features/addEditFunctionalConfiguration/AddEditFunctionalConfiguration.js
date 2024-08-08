@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types';
 import { AddEditFunctionalData } from './config/AddEditFunctional.data';
 import Buttons from '../../../../../components/ui/button/Buttons';
 import FormCreator from '../../../../../components/Forms/FormCreator';
@@ -80,4 +81,15 @@ const AddEditFunctionalConfiguration = (props) => {
   )
 }
 
+AddEditFunctionalConfiguration.propTypes = {
+  initData: PropTypes.shape({
+    functionalityId: PropTypes.number,
+    functionalityName: PropTypes.string,
+    moduleId: PropTypes.number,
+  }),
+  moduleId: PropTypes.number.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onGetData: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 export default AddEditFunctionalConfiguration

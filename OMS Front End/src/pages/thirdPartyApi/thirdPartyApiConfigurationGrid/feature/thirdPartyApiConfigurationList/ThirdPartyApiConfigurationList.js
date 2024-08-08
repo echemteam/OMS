@@ -1,8 +1,9 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
+import PropTypes from 'prop-types';
 import MolGrid from '../../../../../components/Grid/MolGrid';
 import { useNavigate } from 'react-router-dom';
 import { thirdPartyListConfigurationData } from './config/ThirdPartyApiConfigurationList.data';
-import { useDeleteApiEventMutation, useGetApiEventsMutation, useLazyApiTesterQuery } from '../../../../../app/services/thirdPartyAPI';
+import { useDeleteApiEventMutation, useGetApiEventsMutation, useLazyThirdPartyAPICallQuery, useThirdPartyAPICallMutation } from '../../../../../app/services/thirdPartyAPI';
 import ToastService from '../../../../../services/toastService/ToastService';
 import SwalAlert from '../../../../../services/swalService/SwalService';
 import { encryptUrlData } from '../../../../../services/CryptoService';
@@ -14,8 +15,8 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     const [listData, setListData] = useState();
     const [totalRowCount, setTotalRowCount] = useState(0);
 
-    const [getApiTester, { isSuccess: isAPITesterSucess, data: isAPITesterData }] = useLazyApiTesterQuery();
     const [deleteApiEvent, { isSuccess: isDeleteApiEventSuccess, data: isDeleteApiEventData },] = useDeleteApiEventMutation();
+    const [getThirdPartyApiResponse, { isSuccess: isAPITesterSucess, data: isAPITesterData }] = useThirdPartyAPICallMutation();
     const [getApiEvents, { isLoading: isGetApiEventsLoading, isSuccess: isGetApiEventsSuccess, data: isGetApiEventsData, },] = useGetApiEventsMutation();
 
     const getLists = (pageObject, sortingString) => {
@@ -106,7 +107,20 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     }
 
     const handleTestClick = (data) => {
-        getApiTester(data?.apiEventId);
+        let parameter = {
+            pageNo: 1,
+            pageSize: 25,
+            orderByColumn: "ProductName",
+            orderFlag: 0,
+            searchText: "acid",
+            isActive: true
+        }
+        let request = {
+            eventName: 'Get Search product List',
+            isDynamicParameter: true,
+            parameters : JSON.stringify(parameter)
+        }
+        getThirdPartyApiResponse(request);
     };
 
 
@@ -137,11 +151,18 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
                     onSorting={handleSorting}
                     isLoading={isGetApiEventsLoading}
                     onActionChange={actionHandler}
-               
+
                 />
             </div>
         </div>
     )
 }
 
+ThirdPartyApiConfigurationList.propTypes = {
+    childRef: PropTypes.shape({
+        current: PropTypes.shape({
+            callChildFunction: PropTypes.func
+        })
+    })
+};
 export default ThirdPartyApiConfigurationList

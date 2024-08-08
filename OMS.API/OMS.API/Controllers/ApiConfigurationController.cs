@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApiAuthentication;
@@ -18,6 +19,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class ApiConfigurationController : BaseController
     {
         #region private variable
@@ -176,15 +178,15 @@ namespace OMS.API.Controllers
             return APISucessResponce<object>(authentication);
         }
 
-        [HttpGet("ThirdPartyAPICall")]
-        public async Task<IActionResult> ThirdPartyAPICall(int apiEventId)
+        [HttpPost("ThirdPartyAPICall")]
+        public async Task<IActionResult> ThirdPartyAPICall(ThirdPartyAPICallRequest requestData)
         {
-            if (apiEventId > 0)
+            if (requestData != null)
             {
-                var item = await _serviceManager.apiConfigurationService.ThirdPartyAPICall(apiEventId).ConfigureAwait(true);
+                var item = await _serviceManager.apiConfigurationService.ThirdPartyAPICall(requestData).ConfigureAwait(true);
                 return APISucessResponce<object>(item);
             }
-            return APISucessResponce(apiEventId);
+            return APISucessResponce(requestData);
         }
         #endregion
     }

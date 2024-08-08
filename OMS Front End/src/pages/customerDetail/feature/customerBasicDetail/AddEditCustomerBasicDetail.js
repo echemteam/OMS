@@ -202,7 +202,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 let request = {
                     newValue: value,
                     oldValue: formData.initialState,
-                    functionalityName: FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION
+                    functionalityName: isOpen ? FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION : FunctionalitiesName.ADDCUSTOMER
                 }
                 const modifyData = await ValidateRequestByApprovalRules(request);
                 if (modifyData.newValue) {
@@ -219,11 +219,15 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                         let request = {
                             newValue: value,
                             oldValue: formData.initialState,
-                            functionalityName: FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION
+                            functionalityName: isOpen ? FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION : FunctionalitiesName.ADDCUSTOMER
                         }
                         const modifyData = await ValidateRequestByApprovalRules(request);
-                        if (modifyData.newValue) {
-                            addEditCustomersBasicInformation(modifyData.newValue);
+                        if (isOpen) {
+                            if (modifyData.newValue) {
+                                addEditCustomersBasicInformation(modifyData.newValue);
+                            }
+                        } else {
+                            addEditCustomersBasicInformation(value);
                         }
                     } else {
                         ToastService.warning(validateTaxIdMessage);
