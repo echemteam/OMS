@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import SwalAlert from "../../../services/swalService/SwalService";
 
 const Label = React.lazy(() => import("../../ui/label/Label"));
@@ -145,4 +146,24 @@ const FormImageUploadFields = ({
     );
 };
 
+FormImageUploadFields.propTypes = {
+    labelName: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onValidation: PropTypes.func,
+    dataField: PropTypes.string.isRequired,
+    error: PropTypes.string,
+    formSetting: PropTypes.shape({
+        isViewOnly: PropTypes.bool,
+    }),
+    overRideProps: PropTypes.shape({
+        isDisable: PropTypes.bool,
+    }),
+    fieldActions: PropTypes.func,
+    isRequired: PropTypes.bool,
+    fileFormate: PropTypes.string,
+    acceptedFiles: PropTypes.string,
+    isDownloadable: PropTypes.bool,
+    isDisable: PropTypes.bool,
+};
 export default FormImageUploadFields;

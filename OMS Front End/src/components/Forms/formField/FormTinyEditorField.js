@@ -1,5 +1,7 @@
 import React from "react";
 import Label from "../../ui/label/Label";
+import PropTypes from "prop-types";
+
 const TinyEditor = React.lazy(() => import("../../ui/inputs/TinyEditor/TinyEditor"));
 const ValidationText = React.lazy(() => import("../../ui/inputs/validation/ValidationText"));
 
@@ -43,4 +45,20 @@ const FormTextEditorField = ({
   )
 }
 
+FormTextEditorField.propTypes = {
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    labelName: PropTypes.string,
+    onChange: PropTypes.func,
+    onValidation: PropTypes.func,
+    dataField: PropTypes.string.isRequired,
+    error: PropTypes.string,
+    formSetting: PropTypes.shape({
+      isViewOnly: PropTypes.bool,
+    }),
+    overRideProps: PropTypes.shape({
+      isDisable: PropTypes.bool,
+    }),
+    editorProps: PropTypes.object,
+  };
 export default FormTextEditorField;

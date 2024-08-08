@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import SearchBar from "../../../common/features/component/SearchBar";
 import Buttons from "../button/Buttons";
 import Filter from "../../filter/Filter";
@@ -156,5 +157,47 @@ function CardSection({
     </div>
   );
 }
+
+CardSection.propTypes = {
+  children: PropTypes.node.isRequired,
+  cardTitle: PropTypes.string,
+  cardSubTitle: PropTypes.string,
+  rightButton: PropTypes.bool,
+  buttonClassName: PropTypes.string,
+  titleButtonClick: PropTypes.func,
+  buttonText: PropTypes.string,
+  buttonTextBack: PropTypes.string,
+  searchInput: PropTypes.bool,
+  searchInputName: PropTypes.string,
+  textWithIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  textWithIconBack: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  iconImg: PropTypes.string,
+  iconImgBack: PropTypes.string,
+  handleChange: PropTypes.func,
+  isLoading: PropTypes.bool,
+  titleText: PropTypes.string,
+  isFilter: PropTypes.bool,
+  filterHeaderTitle: PropTypes.string,
+  optionsValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  handleChangeDropdown: PropTypes.func,
+  searchFilter: PropTypes.bool,
+  selectedOptions: PropTypes.string,
+  isMultiSelect: PropTypes.bool,
+  isCardSection: PropTypes.bool,
+  isdropdownOpen: PropTypes.bool,
+  placeholder: PropTypes.string,
+  clearButton: PropTypes.bool,
+  clearTitleButtonClick: PropTypes.func,
+  clearButtonText: PropTypes.string,
+  searchTitleButtonClick: PropTypes.func,
+  searchButton: PropTypes.bool,
+  searchbuttonText: PropTypes.string,
+  clearButtonClassName: PropTypes.string,
+  searchIconImg: PropTypes.string,
+  searchTextWithIcon: PropTypes.bool,
+  clearTextWithIcon: PropTypes.bool,
+  clearIconImg: PropTypes.string,
+  searchValue: PropTypes.string,
+};
 
 export default CardSection;

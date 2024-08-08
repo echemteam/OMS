@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types';
 import { viewFunctionalEventsData } from './config/ViewFunctionalEvents.data'
 import MolGrid from '../../../../../../components/Grid/MolGrid'
 import { useGetFunctionalityEventsMutation } from '../../../../../../app/services/configurationAPI';
@@ -86,4 +87,7 @@ const ViewFunctionalEvents = (props) => {
   )
 }
 
+ViewFunctionalEvents.propTypes = {
+  functionalityId: PropTypes.number.isRequired,
+};
 export default ViewFunctionalEvents

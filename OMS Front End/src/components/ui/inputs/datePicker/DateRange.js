@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import DateRangePicker from "react-bootstrap-daterangepicker";
 import "./DateRange.scss";
 import { AppIcons } from "../../../../data/appIcons";
@@ -35,4 +36,7 @@ function DateRange(props) {
   );
 }
 
+DateRange.propTypes = {
+  isDateRange: PropTypes.bool,  
+};
 export default DateRange;

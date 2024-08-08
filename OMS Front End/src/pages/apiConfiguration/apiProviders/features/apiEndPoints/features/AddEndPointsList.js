@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState ,useRef ,useEffect} from "react";
+import { useState ,useRef ,useEffect,useImperativeHandle} from "react";
 import PropTypes from "prop-types";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 import MolGrid from "../../../../../../components/Grid/MolGrid";
 import SidebarModel from "../../../../../../components/ui/sidebarModel/SidebarModel";
 import { ApiEndPointGridConfig } from "../config/ApiEndPoints.data";
-import { useImperativeHandle } from "react";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { AppIcons } from "../../../../../../data/appIcons";
 import { useDeleteApiEndpointMutation,useGetApiEndpointsMutation,} from "../../../../../../app/services/apiEndPointsAPI";
@@ -155,5 +154,10 @@ ApiEndPointsList.propTypes = {
   initData: PropTypes.shape({
       endpointId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }).isRequired,
+  childRef: PropTypes.shape({
+    current: PropTypes.shape({
+      callChildFunction: PropTypes.func,
+    }),
+  }),
 };
 export default ApiEndPointsList;

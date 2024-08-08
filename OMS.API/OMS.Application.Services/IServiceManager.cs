@@ -10,6 +10,7 @@ using OMS.Application.Services.CustomerDocuments;
 using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.EmailAddress;
+using OMS.Application.Services.Order;
 using OMS.Application.Services.Organization;
 using OMS.Application.Services.PhoneNumber;
 using OMS.Application.Services.Roles;
@@ -50,5 +51,6 @@ namespace OMS.Application.Services
         IOrganizationService organizationService { get; }
         ISupplierFinancialSettingsService supplierFinancialSettingsService { get; }
         IApiEventManagementService apiEventManagementService { get; }
+        IOrderServices orderServices { get; }
     }
 }

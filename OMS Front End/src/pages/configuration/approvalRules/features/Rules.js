@@ -1,4 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import { useGetApprovalConfigurationRulesMutation } from "../../../../app/services/configurationAPI";
 import MolGrid from "../../../../components/Grid/MolGrid";
 import { rulesListData } from "./config/RulesForm.data";
@@ -103,5 +104,12 @@ const Rules = (props) => {
      
   );
 };
-
+Rules.propTypes = {
+  childRef: PropTypes.shape({
+    current: PropTypes.shape({
+      callChildFunction: PropTypes.func,
+    }),
+  }),
+  onEdit: PropTypes.func,
+};
 export default Rules;

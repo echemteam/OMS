@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Image from "../../image/Image";
 import "./Breadcome.scss";
 import { useLocation } from "react-router-dom";
@@ -48,4 +49,14 @@ function Breadcome(props) {
     </>
   );
 }
+
+Breadcome.propTypes = {
+  componentRoutes: PropTypes.arrayOf(
+    PropTypes.shape({
+      path: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired
+    })
+  ),
+  brcimg: PropTypes.string
+};
 export default Breadcome;

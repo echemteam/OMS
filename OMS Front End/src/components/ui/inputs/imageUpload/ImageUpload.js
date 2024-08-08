@@ -121,14 +121,25 @@ const ImageUpload = ({
 };
 
 ImageUpload.propTypes = {
-    type: TextInputType.FILE.isRequired,
+    type: PropTypes.oneOf([TextInputType.FILE]),
     name: PropTypes.string,
     placeholder: PropTypes.string,
+    filename: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+            base64Data: PropTypes.string,
+            name: PropTypes.string,
+            fileName: PropTypes.string
+        })
+    ]),
     onChange: PropTypes.func.isRequired,
-    onBlur: PropTypes.func,
     onClear: PropTypes.func,
+    onBlur: PropTypes.func,
     cssClass: PropTypes.string,
     isDisable: PropTypes.bool,
+    isButtonVisible: PropTypes.bool,
+    acceptedFiles: PropTypes.string,
+    isCustomButtonVisible: PropTypes.bool
 };
 
 export default ImageUpload;

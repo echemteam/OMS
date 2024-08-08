@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
+import PropTypes from 'prop-types';
 import Checkbox from "../../ui/inputs/checkBox/CheckBox";
 import ValidationText from "../../ui/inputs/validation/ValidationText";
 
@@ -56,6 +57,23 @@ const FormCheckboxField = ({
       </div>
     </>
   );
+};
+FormCheckboxField.propTypes = {
+  labelName: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  dataField: PropTypes.string.isRequired,
+  onValidation: PropTypes.func,
+  checked: PropTypes.bool.isRequired,
+  formSetting: PropTypes.shape({
+    isViewOnly: PropTypes.bool,
+  }),
+  error: PropTypes.string,
+  overRideProps: PropTypes.shape({
+    isDisable: PropTypes.bool,
+  }),
+  fieldActions: PropTypes.func,
+  checkboxProps: PropTypes.object,
 };
 
 export default FormCheckboxField;

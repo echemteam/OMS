@@ -30,6 +30,7 @@ const SupplierContactDetail = ({ isEditablePage, isSearchFilterShow }) => {
         addEditContactMutation={useAddEditContactMutation}
         SecurityKey={!isResponsibleUser ? supplierSecurityKey : null}
         getContactById={useLazyGetSupllierContactByContactQuery}
+        contryIdCode={null}
       />
     </div>
   );

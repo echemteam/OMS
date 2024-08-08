@@ -19,7 +19,7 @@ const SetInitialCountry = {
     value: 233
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId }) => {
+const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId , deleteAddress}) => {
 
     //** States */
     const ref = useRef();
@@ -442,8 +442,12 @@ AddEditAddress.propTypes = {
     isModelOpen: PropTypes.bool.isRequired,
     editMode: PropTypes.bool.isRequired,
     isButtonDisable: PropTypes.bool.isRequired,
-    onSidebarClose: PropTypes.func.isRequired,
-    editRef: PropTypes.object
+    onSidebarClose: PropTypes.func,
+    editRef: PropTypes.object,
+    orderCustomerId: PropTypes.number,
+    isOrderManage: PropTypes.bool,
+    getAddressTypeIdOrder: PropTypes.string,
+    onHandleOrderInfoRepeatCall: PropTypes.func,
 };
 
 export default AddEditAddress;

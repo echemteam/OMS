@@ -49,5 +49,6 @@ namespace OMS.Domain.Repository
         IApiEventRequiredFieldRepository apiEventRequiredField { get; }
         IApiEventRequiredFieldsMappingRepository apiEventRequiredFieldsMapping { get; }
         IFunctionalitiesRepository functionalities { get; }
+        IOrderRepository order { get; }
     }
 }

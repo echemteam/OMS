@@ -5,7 +5,7 @@ import { GridColumnType } from "../../../../../data/gridColumnType";
 export const addEditContactsFormData = {
   name: "Add Edit Role Form",
   initialState: {
-    phoneCode: '+1',
+    phoneCode: '',
     phoneNumber: '',
     phoneTypeId: '',
     extension: 0,
@@ -56,7 +56,7 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-7 col-xl-7 col-md-6 mt-3 mb-input pl-0 border-left-r-0",
+        containerCss: "col-xxl-7 col-xl-7 col-md-6 mt-3 mb-input pl-0 border-left-r-0-contactform",
       },
     },
     {
@@ -72,7 +72,7 @@ export const addEditContactsFormData = {
         maxLength: 6,
       },
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-md-2 mt-3 mb-input pl-0 extension",
+        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-md-2 mt-3 mb-input pl-0 extension ",
       },
     },
     {

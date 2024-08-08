@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState , useImperativeHandle} from "react";
 import PropTypes from "prop-types";
 import MolGrid from "../../../../../../components/Grid/MolGrid";
 import { ApiAuthenticationtGridConfig, } from "../config/ApiAuthentication.data";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
-import { useImperativeHandle } from "react";
 import { useDeleteApiAuthenticationMutation, useGetApiAuthenticationsMutation } from "../../../../../../app/services/apiAuthenticationAPI";
 
 const ApiAuthenticationList = ({ handleEditClick, getDataRef, providerId , handleListData }) => {
@@ -95,7 +94,7 @@ const ApiAuthenticationList = ({ handleEditClick, getDataRef, providerId , handl
   return (
 
     <div className="row">
-      <div className="col-md-12 table-striped api-provider pagination-none">
+      <div className="col-md-12 table-striped api-provider pagination-none first-word-break">
         <MolGrid
           ref={molGridRef}
           configuration={ApiAuthenticationtGridConfig}
@@ -123,5 +122,6 @@ ApiAuthenticationList.propTypes = {
     }),
   }),
   providerId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  handleListData: PropTypes.func,
 };
 export default ApiAuthenticationList;

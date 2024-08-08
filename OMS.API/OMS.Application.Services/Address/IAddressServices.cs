@@ -12,5 +12,6 @@ namespace OMS.Application.Services.Address
         Task<List<GetAddresssBySupplierIdResponse>> GetAddresssBySupplierId(int supplierId);
         Task<GetCustomerAddresssByAddressIdResponse> GetCustomerAddresssByAddressId(int addressId);
         Task<GetSupplierAddresssByAddressIdResponse> GetSupplierAddresssByAddressId(int addressId);
+        Task<AddEntityDto<int>> DeleteAddress(int addressId, short CurrentUserId);
     }
 }

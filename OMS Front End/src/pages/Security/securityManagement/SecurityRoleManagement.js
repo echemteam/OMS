@@ -22,7 +22,7 @@ const SecurityRoleManagement = () => {
   // const [search, setSearch] = useState("");
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [listData, setListData] = useState();
-  const [isModelOpen, setisModelOpen] = useState(false);
+  const [isModelOpen, setIsModelOpen] = useState(false);
 
   // const debouncedSearch = useDebounce(search, 300);
   const [addRoleModal, setAddRoleModal] = useState(false);
@@ -118,7 +118,7 @@ const SecurityRoleManagement = () => {
     navigate(`/EditPermissions/${encryptUrlData(data.roleId)}`);
   };
   const handleUser = (data) => {
-    setisModelOpen(true);
+    setIsModelOpen(true);
     setFormData(data);
   };
 
@@ -211,7 +211,7 @@ const SecurityRoleManagement = () => {
   };
 
   const onSidebarClose = () => {
-    setisModelOpen(false);
+    setIsModelOpen(false);
   };
 
   return (

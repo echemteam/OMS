@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 //** Service */
 import BasicDetailContext from '../../../../utils/ContextAPIs/Customer/BasicDetailContext';
-import { useAddAddressMutation, useLazyGetAddresssByCustomerIdQuery, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from '../../../../app/services/addressAPI';
+import { useAddAddressMutation, useDeleteAddressMutation, useLazyGetAddresssByCustomerIdQuery, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from '../../../../app/services/addressAPI';
 import { securityKey } from '../../../../data/SecurityKey';
 import PropTypes from 'prop-types';
 //** Component's */
@@ -26,7 +26,9 @@ const CustomerAddressDetail = ({ isEditablePage }) => {
             getAddresssByCustomerId={useLazyGetAddresssByCustomerIdQuery}
             getAddresssById={useLazyGetCustomerAddresssByAddressIdQuery}
             addAddress={useAddAddressMutation}
-            updateAddress={useUpdateAddAddressMutation} />
+            updateAddress={useUpdateAddAddressMutation}
+            deleteAddress={useDeleteAddressMutation}
+        />
     )
 }
 

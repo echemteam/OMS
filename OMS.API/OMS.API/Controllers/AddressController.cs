@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Address;
@@ -12,6 +13,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class AddressController : BaseController
     {
         #region private variable
@@ -78,6 +80,16 @@ namespace OMS.API.Controllers
             {
                 GetSupplierAddresssByAddressIdResponse responseData = await _serviceManager.addressServices.GetSupplierAddresssByAddressId(addressId).ConfigureAwait(true);
                 return APISucessResponce(responseData);
+            }
+            return APISucessResponce(addressId);
+        }
+        [HttpDelete("DeleteAddress")]
+        public async Task<IActionResult> DeleteAddress(int addressId)
+        {
+            if (addressId > 0)
+            {
+                var deleteItem = await _serviceManager.addressServices.DeleteAddress(addressId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deleteItem);
             }
             return APISucessResponce(addressId);
         }

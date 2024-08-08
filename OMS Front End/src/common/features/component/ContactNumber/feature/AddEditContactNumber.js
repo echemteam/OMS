@@ -21,6 +21,7 @@ const AddEditContactNumber = ({
   showModal,
   isEdit,
   onSuccess,
+  newPhoneCode
 }) => {
   //** State */
   const ref = useRef();
@@ -78,6 +79,13 @@ const AddEditContactNumber = ({
         phoneNumber: editFormData.phoneNumber,
         phoneType: editFormData.phoneType,
         phoneTypeId: editFormData.phoneTypeId,
+      };
+      setFormData(form);
+    } else if (isEdit === false && newPhoneCode) {
+      let form = { ...addEditContactsFormData };
+      form.initialState = {
+        ...form.initialState,
+        phoneCode: newPhoneCode,
       };
       setFormData(form);
     }

@@ -81,7 +81,9 @@ DeliveryMethodList.propTypes = {
     actionHandler: PropTypes.object.isRequired,
     handleToggleModal: PropTypes.func.isRequired,
     isGetDataLoading: PropTypes.bool.isRequired,
-    isShowButton: PropTypes.bool.isRequired
+    isShowButton: PropTypes.bool.isRequired,
+    customerId: PropTypes.number.isRequired,
+    handleGetDefaultList: PropTypes.func.isRequired
 };
 
 export default DeliveryMethodList;

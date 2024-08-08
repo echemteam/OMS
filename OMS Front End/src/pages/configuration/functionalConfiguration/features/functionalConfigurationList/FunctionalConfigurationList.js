@@ -1,4 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
+import PropTypes from 'prop-types';
 import { functionalConfigurationListData } from './config/FunctionalConfigurationList.data';
 import { useNavigate } from 'react-router-dom';
 import MolGrid from '../../../../../components/Grid/MolGrid';
@@ -112,5 +113,11 @@ const FunctionalConfigurationList = (props) => {
         </div>
     )
 }
-
+FunctionalConfigurationList.propTypes = {
+    moduleId: PropTypes.number.isRequired,  
+    childRef: PropTypes.shape({  
+        current: PropTypes.object
+    }),
+    onEdit: PropTypes.func  
+};
 export default FunctionalConfigurationList

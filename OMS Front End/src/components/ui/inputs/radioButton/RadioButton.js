@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./RadioButton.scss";
 
 const RadioButton = ({
@@ -59,5 +60,27 @@ const RadioButton = ({
     </>
   );
 }
+
+RadioButton.propTypes = {
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  formSetting: PropTypes.shape({
+    isViewOnly: PropTypes.bool
+  }),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      optionClass: PropTypes.string,
+      isDisable: PropTypes.bool
+    })
+  ),
+  selectedOption: PropTypes.string,
+  radioId: PropTypes.string,
+  isChecked: PropTypes.bool,
+  radioName: PropTypes.string,
+  valueName: PropTypes.string
+};
 
 export default RadioButton;

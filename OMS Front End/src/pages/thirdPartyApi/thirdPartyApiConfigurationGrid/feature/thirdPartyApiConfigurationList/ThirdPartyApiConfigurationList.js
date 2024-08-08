@@ -1,4 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
+import PropTypes from 'prop-types';
 import MolGrid from '../../../../../components/Grid/MolGrid';
 import { useNavigate } from 'react-router-dom';
 import { thirdPartyListConfigurationData } from './config/ThirdPartyApiConfigurationList.data';
@@ -157,4 +158,11 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     )
 }
 
+ThirdPartyApiConfigurationList.propTypes = {
+    childRef: PropTypes.shape({
+        current: PropTypes.shape({
+            callChildFunction: PropTypes.func
+        })
+    })
+};
 export default ThirdPartyApiConfigurationList

@@ -24,7 +24,7 @@ const Permissions = () => {
   const location = useLocation();
   const roleId = id ? decryptUrlData(id) : 0;
   const [rolesList, setRolesList] = useState([]);
-  const [selectedRoleId, setselectedRoleId] = useState(roleId);
+  const [selectedRoleId, setSelectedRoleId] = useState(roleId);
   const [selecteRoleId, setSelecteRoleId] = useState(roleId);
   const [togglePermissionCard, setTogglePermissionCard] = useState(false);
 
@@ -60,13 +60,13 @@ const Permissions = () => {
   }, [isSuccessAllRoles, isAllRolesData, isFetchingAllRoles]);
   useEffect(() => {
     if (!id) {
-      setselectedRoleId(0);
+      setSelectedRoleId(0);
       setTogglePermissionCard(false);
     }
   }, [id, location.pathname]);
   useEffect(() => {
     if (roleId > 0) {
-      setselectedRoleId(roleId);
+      setSelectedRoleId(roleId);
       setTogglePermissionCard(true);
     }
   }, [roleId]);

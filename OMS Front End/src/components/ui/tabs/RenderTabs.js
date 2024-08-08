@@ -99,6 +99,7 @@ RenderTabs.propTypes = {
   isCollapse: PropTypes.bool,
   onActiveTab: PropTypes.func,
   isOrganization: PropTypes.bool,
+  onTabClick: PropTypes.func,
 };
 
 export default RenderTabs;

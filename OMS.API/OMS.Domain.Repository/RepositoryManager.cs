@@ -57,6 +57,7 @@ namespace OMS.Domain.Repository
         IApiEventRequiredFieldRepository _apiEventRequiredFieldRepository;
         IApiEventRequiredFieldsMappingRepository _apiEventRequiredFieldsMappingRepository;
         IFunctionalitiesRepository _functionalitiesRepository;
+        IOrderRepository _orderRepository;
 
         public ITestRepository test
         {
@@ -569,6 +570,18 @@ namespace OMS.Domain.Repository
                     _functionalitiesRepository = new FunctionalitiesRepository(_context);
                 }
                 return _functionalitiesRepository;
+            }
+
+        }
+        public IOrderRepository order
+        {
+            get
+            {
+                if (_orderRepository == null)
+                {
+                    _orderRepository = new OrderRepository(_context);
+                }
+                return _orderRepository;
             }
 
         }
