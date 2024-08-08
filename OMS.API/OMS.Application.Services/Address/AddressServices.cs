@@ -145,6 +145,11 @@ namespace OMS.Application.Services.Address
         {
             return repositoryManager.address.GetSupplierAddresssByAddressId(addressId);
         }
+        public async Task<AddEntityDto<int>> DeleteAddress(int addressId, short CurrentUserId)
+        {
+            short deletedBy = CurrentUserId;
+            return await repositoryManager.address.DeleteAddress(addressId, deletedBy);
+        }
         #endregion
     }
 }

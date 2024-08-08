@@ -17,6 +17,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETADDRESSSBYSUPPLIERID = "GetAddresssBySupplierId";
         const string GETCUSTOMERADDRESSSBYADDRESSID = "GetCustomerAddresssByAddressId";
         const string GETSUPPLIERADDRESSSBYADDRESSID = "GetSupplierAddresssByAddressId";
+        const string DELETEADDRESS = "DeleteAddress";
         #endregion
 
         public AddressRepository(DapperContext dapperContext) : base(dapperContext)
@@ -100,6 +101,14 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getSupplierAddresssByAddressIdResponse;
 
+        }
+        public async Task<AddEntityDto<int>> DeleteAddress(int addressId, short deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEADDRESS, new
+            {
+                addressId,
+                deletedBy
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }
