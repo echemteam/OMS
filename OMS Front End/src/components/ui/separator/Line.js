@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types';
 const Line = (props) => {
     return (
         <div className={props.containerCss}>
@@ -7,5 +7,7 @@ const Line = (props) => {
         </div>
     )
 }
-
+Line.propTypes = {
+    containerCss: PropTypes.string,  
+};
 export default Line

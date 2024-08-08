@@ -1,4 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
+import PropTypes from 'prop-types'; 
 import { useDeleteApiEventMappingMutation, useGetApiEventMappingsMutation } from '../../../../../../../../app/services/thirdPartyAPI';
 import { AddEditMappingConfigurationData } from '../config/AddEditMapping.data';
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
@@ -118,5 +119,12 @@ const EventMappingList = (props) => {
         </div>
     )
 }
+
+EventMappingList.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    setIsProviderData: PropTypes.func.isRequired,
+    setEndpointId: PropTypes.func.isRequired,
+    setIsProviderData: PropTypes.func.isRequired,  
+};
 
 export default EventMappingList

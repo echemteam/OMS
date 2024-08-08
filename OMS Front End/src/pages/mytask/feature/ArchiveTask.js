@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types';
 import { useLazyGetApprovalRequestsListByStatusAndRequestedByUserIdQuery } from '../../../app/services/ApprovalAPI';
 import "../../mytask/MyTask.scss";
 import NoRecordFound from '../../../components/ui/noRecordFound/NoRecordFound';
@@ -64,5 +65,9 @@ const ArchiveTask = (props) => {
         </div>
     )
 }
-
+ArchiveTask.propTypes = {
+    Accept: PropTypes.string,  
+    userId: PropTypes.number.isRequired,  
+    onGetById: PropTypes.func
+};
 export default ArchiveTask

@@ -245,9 +245,9 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
 });
 
 AddEditContact.propTypes = {
-    keyId: PropTypes.number.isRequired,
+    keyId: PropTypes.number,
     addEditContactMutation: PropTypes.func.isRequired,
-    onSidebarClose: PropTypes.func.isRequired,
+    onSidebarClose: PropTypes.func,
     onSuccess: PropTypes.func,
     childRef: PropTypes.shape({
         current: PropTypes.object
@@ -263,7 +263,11 @@ AddEditContact.propTypes = {
     isSupplier: PropTypes.bool,
     isEdit: PropTypes.bool,
     isOpen: PropTypes.bool,
-    getContactById: PropTypes.func.isRequired
+    getContactById: PropTypes.func.isRequired,
+    getContectTypeId: PropTypes.string, 
+    customerId: PropTypes.number, 
+    isOrderManage: PropTypes.bool,
+    onhandleApiCall: PropTypes.func
 };
 
 export default AddEditContact;

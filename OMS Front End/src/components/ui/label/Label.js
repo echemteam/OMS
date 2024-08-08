@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "../inputs/input/Input.scss";
 
 const Label = (props) => {
@@ -13,5 +14,9 @@ const Label = (props) => {
     </div>
   );
 };
-
+Label.propTypes = {
+  labelName: PropTypes.string,  
+  isLabelRightAligned: PropTypes.bool,  
+  isRequired: PropTypes.bool,  
+};
 export default Label;

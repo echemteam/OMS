@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "react-datepicker/dist/react-datepicker.css"; // Import the DatePicker CSS
 const Label = React.lazy(() => import('../../label/Label'));
 const ValidationText = React.lazy(() => import('../validation/ValidationText'));
@@ -64,5 +65,18 @@ const FormDatePickerFields = ({
         </>
     );
 };
-
+FormDatePickerFields.propTypes = {
+    labelName: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onValidation: PropTypes.func,
+    dataField: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    selectedDate: PropTypes.instanceOf(Date),
+    error: PropTypes.string,
+    formSetting: PropTypes.shape({
+        isViewOnly: PropTypes.bool,
+    }),
+    ...DatePicker.propTypes,
+};
 export default FormDatePickerFields;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 const Label = React.lazy(() => import('../../label/Label'));
 const Input = React.lazy(() => import('../input/Input'));
 const ValidationText = React.lazy(() => import('../validation/ValidationText'));
@@ -60,6 +61,20 @@ const FormInputFields = ({
       <ValidationText error={error || ""} />
     </>
   );
+};
+
+FormInputFields.propTypes = {
+  labelName: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onValidation: PropTypes.func,
+  dataField: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  formSetting: PropTypes.shape({
+    isViewOnly: PropTypes.bool,
+  }),
+  isDisable: PropTypes.bool,
+  isRequired: PropTypes.bool,
 };
 
 export default FormInputFields;

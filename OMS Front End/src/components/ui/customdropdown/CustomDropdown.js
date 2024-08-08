@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Select, { components } from "react-select";
 import "./CustomDropdown.scss";
 import StatusDisplay from "./StatusDisplay";
@@ -69,4 +70,27 @@ function CustomDropdown(props) {
   );
 }
 
+CustomDropdown.propTypes = {
+  dropDownSettings: PropTypes.shape({
+    colorMap: PropTypes.object,
+    textMap: PropTypes.object,
+    iconMap: PropTypes.object
+  }).isRequired,
+  inputButtonGroup: PropTypes.shape({
+    icon: PropTypes.string,
+    buttonText: PropTypes.string.isRequired,
+    isInputButton: PropTypes.bool.isRequired
+  }),
+  handleInputGroupButton: PropTypes.func,
+  value: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
+  handleDropdownChange: PropTypes.func.isRequired,
+  handleDropdownBlur: PropTypes.func,
+  optionsValue: PropTypes.array,
+  isMultiSelect: PropTypes.bool,
+  placeholder: PropTypes.string,
+  isDropdownDisabled: PropTypes.bool
+};
 export default CustomDropdown;

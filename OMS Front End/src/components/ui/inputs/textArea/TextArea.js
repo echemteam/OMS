@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import "./TextArea.scss"
 
 const TextArea = ({
@@ -66,5 +67,18 @@ const TextArea = ({
     </div>
   );
 }
+TextArea.propTypes = {
+  name: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.string.isRequired,  
+  onChange: PropTypes.func,
+  textareaRows: PropTypes.number,
+  textareaCols: PropTypes.number,
+  onBlur: PropTypes.func,
+  minLength: PropTypes.number,
+  maxLength: PropTypes.number,
+  isDisable: PropTypes.bool,
+  isReadOnly: PropTypes.bool,
+};
 
 export default TextArea;

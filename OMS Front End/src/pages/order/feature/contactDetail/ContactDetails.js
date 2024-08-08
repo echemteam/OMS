@@ -19,7 +19,7 @@ const ContactDetails = (props) => {
   const [formData, setFormData] = useState(contactInformationData);
   // const [isSidebarModal, setIsSidebarModal] = useState(null)
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [getContectTypeId, setContactTypeId] = useState(null)
+  const [getContectTypeId, setContectTypeId] = useState(null)
   const [endUserEnableDisableButton, setEndUserEnableDisableButton] = useState(true)
   const [invoicerEnableDisableButton, setInvoiceEnableDisableButton] = useState(true)
   const [purchasingEnableDisableButton, setPurchasingEnableDisableButton] = useState(true)
@@ -118,9 +118,8 @@ const ContactDetails = (props) => {
   }, [isGetAllContactTypesSucess, allGetAllContactTypesData]);
 
   const handleInputGroupButton = (id) => {
-    debugger
     if (id > 0) {
-      setContactTypeId(id)
+      setContectTypeId(id)
       if (endUserEnableDisableButton && ContactType.EndUser === id) {
         setIsModelOpen(!isModelOpen);
       }
@@ -145,7 +144,6 @@ const ContactDetails = (props) => {
 
 
   const handleCheckboxChanges = (data, dataField) => {
-    debugger
     let updatedFormData = { ...formData };
     switch (dataField) {
       case "isEndUser":

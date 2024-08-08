@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import { FormFieldTypes } from "../../data/formFieldType";
 import { TextInputType } from "../../data/formControlTypes";
 import Line from "../ui/separator/Line";
@@ -439,5 +440,59 @@ const fieldTypeToInputType = (fieldtype) => {
     default:
       return TextInputType.TEXT;
   }
+};
+
+FormFields.propTypes = {
+  fields: PropTypes.arrayOf(
+    PropTypes.shape({
+      dataField: PropTypes.string.isRequired,
+      fieldType: PropTypes.oneOf(Object.values(FormFieldTypes)).isRequired,
+      lable: PropTypes.string,
+      id: PropTypes.string,
+      value: PropTypes.any,
+      options: PropTypes.array,
+      inputButtonGroup: PropTypes.object,
+      inputIcon: PropTypes.element,
+      fieldSetting: PropTypes.object,
+      changeAction: PropTypes.shape({
+        resetValue: PropTypes.arrayOf(
+          PropTypes.shape({
+            dataField: PropTypes.string.isRequired,
+            value: PropTypes.any,
+          })
+        ),
+        resetFieldSetting: PropTypes.arrayOf(
+          PropTypes.shape({
+            dependancyField: PropTypes.arrayOf(
+              PropTypes.shape({
+                dataField: PropTypes.string.isRequired,
+                updateProps: PropTypes.object,
+                resetValue: PropTypes.any,
+              })
+            ),
+            condition: PropTypes.shape({
+              type: PropTypes.string,
+              value: PropTypes.any,
+            }).isRequired,
+          })
+        ),
+      }),
+    })
+  ).isRequired,
+  formData: PropTypes.object.isRequired,
+  validState: PropTypes.shape({
+    isValid: PropTypes.bool,
+    error: PropTypes.objectOf(PropTypes.string),
+  }).isRequired,
+  onFormStateChange: PropTypes.func,
+  onUpdateValidation: PropTypes.func,
+  formSetting: PropTypes.object,
+  onActionChange: PropTypes.func,
+  onFormFieldChange: PropTypes.func,
+  handleInputGroupButton: PropTypes.func,
+  handleInputShowInfo: PropTypes.func,
+  onInputChange: PropTypes.func,
+  onCheckBoxChange: PropTypes.func,
+  fieldValiadtionRules: PropTypes.objectOf(PropTypes.array),
 };
 export default FormFields;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'; 
 import "react-datepicker/dist/react-datepicker.css"; // Import the DatePicker CSS
 const DatePicker = React.lazy(() => import('../../ui/inputs/datePicker/DatePicker'));
 
@@ -72,6 +73,27 @@ const FormDatePickerFields = ({
             <ValidationText error={error || ""} />
         </>
     );
+};
+FormDatePickerFields.propTypes = {
+    labelName: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func,
+    onValidation: PropTypes.func,
+    dataField: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    selectedDate: PropTypes.oneOfType([
+        PropTypes.instanceOf(Date),
+        PropTypes.string
+    ]),
+    error: PropTypes.string,
+    formSetting: PropTypes.shape({
+        isViewOnly: PropTypes.bool,
+    }),
+    overRideProps: PropTypes.shape({
+        isDisable: PropTypes.bool,
+    }),
+    isRequired: PropTypes.bool,
+    datePickerProps: PropTypes.object, 
 };
 
 export default FormDatePickerFields;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 const TextArea = React.lazy(() => import("../../ui/inputs/textArea/TextArea.js"));
 
 const Label = React.lazy(() => import('../../ui/label/Label'));
@@ -51,6 +52,22 @@ const FormTextAreaFields = ({
       </div>
     </>
   );
+};
+
+FormTextAreaFields.propTypes = {
+  labelName: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  onValidation: PropTypes.func,
+  dataField: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  formSetting: PropTypes.shape({
+    isViewOnly: PropTypes.bool,
+  }),
+  overRideProps: PropTypes.shape({
+    isDisable: PropTypes.bool,
+  }),
+  inputProps: PropTypes.object,
 };
 
 export default FormTextAreaFields;

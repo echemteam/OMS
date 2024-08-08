@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import PropTypes from 'prop-types';
 import CardSection from '../../../../../../../components/ui/card/CardSection'
 import { AppIcons } from '../../../../../../../data/appIcons'
 import EventMappingList from './feature/EventMappingList'
@@ -66,5 +67,8 @@ const EventMapping = ({ keyId, setEndpointId }) => {
     </>
   )
 }
-
+EventMapping.propTypes = {
+  keyId: PropTypes.number.isRequired,
+  setEndpointId: PropTypes.func.isRequired,
+};
 export default EventMapping

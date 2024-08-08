@@ -49,11 +49,13 @@ const Checkbox = ({
 };
 
 Checkbox.propTypes = {
-  name: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  checked: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  cssClass: PropTypes.string,
+  name: PropTypes.string,  
+  label: PropTypes.string,  
+  checked: PropTypes.bool,  
+  onChange: PropTypes.func,  
+  isDisable: PropTypes.bool,  
+  dataField: PropTypes.string,  
+  cssClass: PropTypes.string,  
+  showColomns: PropTypes.bool,  
 };
-
 export default Checkbox;

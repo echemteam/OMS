@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Select from "react-select";
 import "./DropdownSelect.scss";
 
@@ -53,5 +54,34 @@ function DropdownSelect(props) {
       </>
   );
 }
+
+DropdownSelect.propTypes = {
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.array,
+  ]),
+  optionsValue: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]).isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ),
+  handleDropdownChange: PropTypes.func.isRequired,
+  handleDropdownBlur: PropTypes.func,
+  placeholder: PropTypes.string,
+  isMultiSelect: PropTypes.bool,
+  isDropdownDisabled: PropTypes.bool,
+  inputButtonGroup: PropTypes.shape({
+    icon: PropTypes.string,
+    buttonText: PropTypes.string,
+    isInputButton: PropTypes.bool,
+    GetByID: PropTypes.string,
+  }),
+  handleInputGroupButton: PropTypes.func,
+};
 
 export default DropdownSelect;

@@ -31,7 +31,7 @@ const ManagePermission = forwardRef((props, ref) => {
   //** State */
   const dispatch = useDispatch();
   const { confirm } = SwalAlert();
-  const [permissionItem, setpermissionItem] = useState([]);
+  const [permissionItem, setPermissionItem] = useState([]);
   const [buttonVisible, setButtonVisible] = useState(true);
   const [permissionsData, setPermissionsData] = useState([]);
   const { togglePermissionCard, selectedRoleId, childRef } = useContext(
@@ -61,7 +61,7 @@ const ManagePermission = forwardRef((props, ref) => {
     onPermissionItemSet(data);
   };
   const onPermissionItemSet = (permissionTreeItem) => {
-    setpermissionItem(permissionTreeItem);
+    setPermissionItem(permissionTreeItem);
   };
   const handleSavePermission = () => {
     if (permissionItem && permissionItem.length > 0) {

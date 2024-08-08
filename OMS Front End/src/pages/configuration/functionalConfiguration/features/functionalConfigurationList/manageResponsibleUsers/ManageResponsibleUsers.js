@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import PropTypes from 'prop-types';
 import AddEditManageResponsibleUser from './feature/AddEditManageResponsibleUser'
 import ManageResponsibleUserList from './feature/ManageResponsibleUserList'
 import CardSection from '../../../../../../components/ui/card/CardSection'
@@ -59,5 +60,7 @@ const ManageResponsibleUsers = (props) => {
         </div>
     )
 }
-
+ManageResponsibleUsers.propTypes = {
+    functionalityId: PropTypes.number.isRequired,
+};
 export default ManageResponsibleUsers

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import FormCreator from "../../../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { setDropDownOptionField, setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
@@ -133,6 +134,28 @@ const BankAddressDetail = ({ bankAddressData, bankAddressFormData, bankFormRef, 
       </div>
     </CardSection>
   );
+};
+ 
+BankAddressDetail.propTypes = {
+  bankAddressData: PropTypes.object, 
+  bankAddressFormData: PropTypes.object.isRequired,  
+  bankFormRef: PropTypes.shape({
+    current: PropTypes.shape({
+      updateFormFieldValue: PropTypes.func
+    })
+  }).isRequired,  
+  isGetACHWireBySupplierIdSuccess: PropTypes.bool.isRequired,  
+  isGetACHWireBySupplierIdData: PropTypes.shape({
+    bankAddress: PropTypes.shape({
+      addressId: PropTypes.number,
+      addressLine1: PropTypes.string,
+      addressLine2: PropTypes.string,
+      countryId: PropTypes.number,
+      zipCode: PropTypes.number,
+      stateId: PropTypes.number,
+      cityId: PropTypes.number,
+    })
+  })
 };
 
 export default BankAddressDetail;

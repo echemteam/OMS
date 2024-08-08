@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FormFields from "./formField";
 import { getValidationRules } from "../../utils/Validation/GetValidationRule";
 import { ValidateAll, Validate } from "../../utils/Validation/Validation";
+import { FormFieldTypes } from "../../data/formFieldType";
 
 const FormCreator = forwardRef((props, ref) => {
   const [formData, setFormData] = useState(props.config.initialState);
@@ -164,12 +165,64 @@ useImperativeHandle(
   );
 });
 
+// FormCreator.propTypes = {
+//   name: PropTypes.string,
+//   initialState: PropTypes.object,
+//   formFields: PropTypes.array,
+//   onFormDataChange: PropTypes.func,
+//   onFormFieldValueChange: PropTypes.func,
+// };
+
 FormCreator.propTypes = {
-  name: PropTypes.string,
-  initialState: PropTypes.object,
-  formFields: PropTypes.array,
+  config: PropTypes.shape({
+    initialState: PropTypes.object,
+    formFields: PropTypes.arrayOf(
+      PropTypes.shape({
+        dataField: PropTypes.string.isRequired,
+        fieldType: PropTypes.oneOf(Object.values(FormFieldTypes)).isRequired,
+        lable: PropTypes.string,
+        id: PropTypes.string,
+        value: PropTypes.any,
+        options: PropTypes.array,
+        inputButtonGroup: PropTypes.object,  
+        inputIcon: PropTypes.element,
+        fieldSetting: PropTypes.object,
+        changeAction: PropTypes.shape({
+          resetValue: PropTypes.arrayOf(
+            PropTypes.shape({
+              dataField: PropTypes.string.isRequired,
+              value: PropTypes.any,
+            })
+          ),
+          resetFieldSetting: PropTypes.arrayOf(
+            PropTypes.shape({
+              dependancyField: PropTypes.arrayOf(
+                PropTypes.shape({
+                  dataField: PropTypes.string.isRequired,
+                  updateProps: PropTypes.object,
+                  resetValue: PropTypes.any,
+                })
+              ),
+              condition: PropTypes.shape({
+                type: PropTypes.string,
+                value: PropTypes.any,
+              }).isRequired,
+            })
+          ),
+        }),
+      })
+    ).isRequired,
+    formSetting: PropTypes.shape({
+      isViewOnly: PropTypes.bool,
+    }),
+  }).isRequired,
   onFormDataChange: PropTypes.func,
   onFormFieldValueChange: PropTypes.func,
+  onActionChange: PropTypes.object,   
+  onInputChange: PropTypes.object, 
+  onCheckBoxChange: PropTypes.object,  
+  handleInputGroupButton: PropTypes.func,
+  handleInputShowInfo: PropTypes.func,
 };
 
 export default FormCreator;

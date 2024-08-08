@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-
+import PropTypes from 'prop-types';
 const Dropdown = React.lazy(() => import('../../ui/customdropdown/Dropdown'));
 const Label = React.lazy(() => import('../../ui/label/Label'));
 const ValidationText = React.lazy(() => import('../../ui/inputs/validation/ValidationText.js'))
@@ -75,5 +75,37 @@ const FormCustomSelectField = ({
     </>
   )
 }
-
+FormCustomSelectField.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.array,
+  ]),  
+  error: PropTypes.string,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.number,
+      label: PropTypes.string,
+    })
+  ),
+  onChange: PropTypes.func,
+  dataField: PropTypes.string.isRequired,
+  labelName: PropTypes.string,
+  placeholder: PropTypes.string,
+  formSetting: PropTypes.shape({
+    isViewOnly: PropTypes.bool,
+  }),
+  isMultiSelect: PropTypes.bool,
+  onValidation: PropTypes.func,
+  fieldSetting: PropTypes.object,
+  fieldActions: PropTypes.func,
+  overRideProps: PropTypes.shape({
+    isDisable: PropTypes.bool,
+  }),
+  isRequired: PropTypes.bool,
+  dropDownSettings: PropTypes.object,
+  inputButtonGroup: PropTypes.object,
+  selectFormFieldProps: PropTypes.object,  
+};
 export default FormCustomSelectField;
