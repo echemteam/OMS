@@ -94,7 +94,7 @@ const AddOrderTab = () => {
                   >
                     <div className="">
                       {step.content}
-                      <div className="d-flex justify-content-end">
+                      <div className="d-flex justify-content-end  mt-3">
                         {index > 0 && (
                           <button
                             type="button"
