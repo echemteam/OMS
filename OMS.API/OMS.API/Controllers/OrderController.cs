@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Orders;
-using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -44,6 +42,18 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(responseData);
             }
             return APISucessResponce(poNumber);
+        }
+        [HttpPost("AddEditOrderInformation")]
+        public async Task<IActionResult> AddEditOrderInformation(AddEditOrderInformationRequest requestData)
+        {
+            var addEditItem = await _serviceManager.orderServices.AddEditOrderInformation(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
+        }
+        [HttpPost("AddEditOrderContactInformation")]
+        public async Task<IActionResult> AddEditOrderContactInformation(AddEditOrderContactInformationRequest requestData)
+        {
+            var addEditItem = await _serviceManager.orderServices.AddEditOrderContactInformation(requestData, CurrentUserId);
+            return APISucessResponce(addEditItem);
         }
         #endregion
     }

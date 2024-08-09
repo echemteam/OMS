@@ -8,5 +8,8 @@ namespace OMS.Domain.Repository.Contract
     {
         Task<AddEntityDto<int>> CheckPoNumberExistOrNot(OrderDto requestData);
         Task<List<GetPoNumberDetailsByPoNumberResponse>> GetPoNumberDetailsByPoNumber(string poNumber);
+        Task<AddEntityDto<int>> AddEditOrderInformation(OrderDto requestData);
+        Task<AddEntityDto<int>> AddEditOrderContactInformation(OrderDto requestData);
+        Task<AddEntityDto<int>> AddEditOrderAddressInformation(OrderAddressDto requestData);
     }
 }
