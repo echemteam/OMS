@@ -19,7 +19,7 @@ const ProductDetailsList = () => {
     const [productSearch, setProductSearch] = useState('');
     const [productDetailList, setProductDetailList] = useState([]);
 
-    const [getThirdPartyApiResponse, { isSuccess: isApiResponseSucess, data: isApiResponseData }] = useThirdPartyAPICallMutation();
+    const [getThirdPartyApiResponse, { isLoading: isApiResponseLoading, isSuccess: isApiResponseSucess, data: isApiResponseData }] = useThirdPartyAPICallMutation();
 
     useEffect(() => {
         if (isApiResponseSucess && isApiResponseData) {
@@ -27,7 +27,6 @@ const ProductDetailsList = () => {
                 const responseData = JSON.parse(isApiResponseData.data);
                 let productDetail = responseData?.data;
                 setProductDetailList(productDetail);
-                setShowModal(!showModal);
             } else if (!isApiResponseData.isSuccess) {
                 ToastService.warning(isApiResponseData.message);
             } else {
@@ -43,6 +42,7 @@ const ProductDetailsList = () => {
     const handleInputGroupButton = () => {
         if (productSearch.trim() !== '') {
             if (productSearch.length > 3) {
+                setShowModal(!showModal);
                 let dynamicParameters = {
                     searchText: productSearch
                 };
@@ -96,7 +96,8 @@ const ProductDetailsList = () => {
                         ref={molGridRef}
                         dataSource={productDetailList}
                         configuration={productListConfig}
-                        allowPagination={false} />
+                        allowPagination={false}
+                        isLoading={isApiResponseLoading} />
                 </CenterModel>
             </div>
         </>
