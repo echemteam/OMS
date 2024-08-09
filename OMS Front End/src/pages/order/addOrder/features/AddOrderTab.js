@@ -98,18 +98,18 @@ const AddOrderTab = () => {
                         {index > 0 && (
                           <button
                             type="button"
-                            className="btn dark-btn mr-3"
+                            className="btn dark-btn mr-3 btn-prev"
                             onClick={movePreviewPage}
                           >
-                            Back
+                            <Image imagePath={AppIcons.nextArrowIcon} /> Back
                           </button>
                         )}
                         <button
                           type="button"
-                          className="btn theme-button ml-3"
+                          className="btn theme-button ml-3 btn-next"
                           onClick={() => addOrder(step.tab)}
                         >
-                          Next
+                          Next<Image imagePath={AppIcons.nextArrowIcon} /> 
                         </button>
                         {/* <button
                           type="button"

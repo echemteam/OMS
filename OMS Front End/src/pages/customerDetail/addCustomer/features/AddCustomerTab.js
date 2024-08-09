@@ -129,7 +129,6 @@ const AddCustomerTab = () => {
             <form onSubmit={onSubmit}>
               {tabContent.map((step, index) => (
                 <div key={index} className={`content ${activeTab === index ? "active" : ""}`} >
-                  <div className="">
                     {step.content}
                     <div className="d-flex justify-content-end">
                       {index > 0 && !showSubBackButton && (
@@ -170,7 +169,6 @@ const AddCustomerTab = () => {
                         </>
                       )}
                     </div>
-                  </div>
                 </div>
               ))}
             </form>
