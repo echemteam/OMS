@@ -60,24 +60,32 @@ export const AddEditMappingConfigurationData = {
         {
             name: "Provider",
             fieldName: "providerName",
-            width: "30%",
+            colStyle: {
+                width: "30%",
+            },
             allowShort: true,
         },
         {
             name: "Endpoint",
             fieldName: "endpointName",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             allowShort: true,
         },
         {
             name: "Description",
             fieldName: "description",
-            width: "30%",
+            colStyle: {
+                width: "30%",
+            },
             allowShort: true,
         },
         {
             name: "Action",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowDelete: true,

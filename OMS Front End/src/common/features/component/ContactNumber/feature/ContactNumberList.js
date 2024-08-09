@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 //** Lib's */
 import { AppIcons } from "../../../../../data/appIcons";
-import MolGrid from "../../../../../components/Grid/MolGrid";
+// import MolGrid from "../../../../../components/Grid/MolGrid";
 import { phoneNumberConfig } from "../config/AddEditContactsForm.data";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import PropTypes from 'prop-types';
+import FinalMolGrid from "../../../../../components/FinalMolGrid/FinalMolGrid";
 const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
 
     return (
@@ -19,7 +20,7 @@ const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, act
                 titleButtonClick={handleToggleModal}>
                 <div className="row">
                     <div className="col-md-12 table-striped p-0">
-                        <MolGrid
+                        <FinalMolGrid
                             ref={molGridRef}
                             configuration={phoneNumberConfig}
                             dataSource={phoneNumberList}

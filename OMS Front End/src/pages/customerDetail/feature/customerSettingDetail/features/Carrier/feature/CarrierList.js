@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import { useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import FinalMolGrid from "../../../../../../../components/FinalMolGrid/FinalMolGrid";
 import CardSection from "../../../../../../../components/ui/card/CardSection";

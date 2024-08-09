@@ -47,7 +47,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
   }, []);
 
   useEffect(() => {
-    if (activeTabIndex === 0) {
+    if (activeTabIndex === 0 && supplierId > 0) {
       getACHWireBySupplierId(supplierId)
     }
   }, [activeTabIndex])

@@ -100,7 +100,9 @@ export const phoneNumberConfig = {
     {
       name: "Type",
       fieldName: "phoneType",
-      width: "15%",
+      colStyle: {
+        width: "15%",
+      },
       renderCustomCol: (rowData) => {
         return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
       },
@@ -109,20 +111,26 @@ export const phoneNumberConfig = {
       name: "Phone Number",
       fieldName: "phoneCode,phoneNumber",
       colType: GridColumnType.CUSTOM,
-      width: "30%",
+      colStyle: {
+        width: "30%",
+      },
       renderCustomCol: (rowData) => {
         return `(${rowData?.["phoneCode"]}) ${rowData?.["phoneNumber"]}`;
       },
     },
     {
       name: "Extension",
-      width: "20%",
+      colStyle: {
+        width: "20%",
+      },
       fieldName: "extension"
     },
     {
       name: "Is Primary",
       fieldName: "isPrimary",
-      width: "15%",
+      colStyle: {
+        width: "15%",
+      },
       colType: GridColumnType.CHECKBOX,
       colSettings: {
         allowCheckbox: true,
@@ -131,7 +139,9 @@ export const phoneNumberConfig = {
     },
     {
       name: "Action",
-      width: "15%",
+      colStyle: {
+        width: "15%",
+      },
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

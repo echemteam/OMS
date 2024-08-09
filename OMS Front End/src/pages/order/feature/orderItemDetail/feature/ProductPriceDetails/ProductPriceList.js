@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 //** Lib's */
-import MolGrid from "../../../../../../components/Grid/MolGrid";
+// import MolGrid from "../../../../../../components/Grid/MolGrid";
 import { priceListConfig } from "./config/ProductPriceList.data";
 import { ErrorMessage } from "../../../../../../data/appMessages";
 import { EventName } from "../../../../../../utils/Enums/APIEventEnums";
@@ -9,6 +9,7 @@ import CardSection from "../../../../../../components/ui/card/CardSection";
 //** Service's */
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useThirdPartyAPICallMutation } from "../../../../../../app/services/thirdPartyAPI";
+import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 
 const ProductPriceList = ({ productId }) => {
 
@@ -50,7 +51,7 @@ const ProductPriceList = ({ productId }) => {
 
     return (
         <CardSection cardTitle="Product Price List">
-            <MolGrid
+            <FinalMolGrid
                 ref={molGridRef}
                 dataSource={priceList}
                 configuration={priceListConfig}

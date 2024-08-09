@@ -48,12 +48,16 @@ export const emailConfig = {
     {
       name: "Email Address",
       fieldName: "emailAddress",
-      width: "40%",
+      colStyle: {
+        width: "40%",
+      },
     },
     {
       name: "Is Primary",
       fieldName: "isPrimary",
-      width: "20%",
+      colStyle: {
+        width: "20%",
+      },
       colType: GridColumnType.CHECKBOX,
       colSettings: {
         allowCheckbox: true,
@@ -62,7 +66,9 @@ export const emailConfig = {
     },
     {
       name: "Action",
-      width: "40%",
+      colStyle: {
+        width: "40%",
+      },
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import { viewFunctionalEventsData } from './config/ViewFunctionalEvents.data'
-import MolGrid from '../../../../../../components/Grid/MolGrid'
+// import MolGrid from '../../../../../../components/Grid/MolGrid'
 import { useGetFunctionalityEventsMutation } from '../../../../../../app/services/configurationAPI';
 import CardSection from '../../../../../../components/ui/card/CardSection';
+import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const ViewFunctionalEvents = (props) => {
   const molGridRef = useRef();
@@ -67,7 +69,7 @@ const ViewFunctionalEvents = (props) => {
           cardTitle="View Functional Events"
           buttonClassName="btn theme-button"
         >
-          <MolGrid
+          <FinalMolGrid
             ref={molGridRef}
             configuration={viewFunctionalEventsData}
             dataSource={listData}

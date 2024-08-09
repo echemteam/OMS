@@ -3,7 +3,7 @@ import { GridColumnType } from "../../../../../../../../data/gridColumnType";
 
 export const AddEditRequireParameterData = {
     // name: "Email From"
-    initialState: { apiEventRequiredFieldId: 0, fieldName: "", fieldType: "" , fieldDescription:"" },
+    initialState: { apiEventRequiredFieldId: 0, fieldName: "", fieldType: "", fieldDescription: "" },
     formFields: [
         {
             id: "fieldName",
@@ -30,7 +30,7 @@ export const AddEditRequireParameterData = {
                 placeholder: "Select Field Type",
                 isEnableOnChange: true
             },
-            
+
             validation: [{ type: "require" }],
             style: {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
@@ -63,25 +63,33 @@ export const AddEditRequireConfigurationData = {
         {
             name: "Field Name",
             fieldName: "fieldName",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             allowShort: true,
         },
         {
             name: "Field Type",
             fieldName: "fieldType",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             allowShort: true,
         },
         {
             name: "Field Description",
             fieldName: "fieldDescription",
-            width: "40%",
+            colStyle: {
+                width: "40%",
+            },
             allowShort: true,
         },
 
         {
             name: "Action",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowEdit: true,

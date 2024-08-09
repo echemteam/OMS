@@ -1,8 +1,9 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useGetApprovalConfigurationRulesMutation } from "../../../../app/services/configurationAPI";
-import MolGrid from "../../../../components/Grid/MolGrid";
+// import MolGrid from "../../../../components/Grid/MolGrid";
 import { rulesListData } from "./config/RulesForm.data";
+import FinalMolGrid from "../../../../components/FinalMolGrid/FinalMolGrid";
 
 const Rules = (props) => {
   const molGridRef = useRef();
@@ -84,7 +85,7 @@ const Rules = (props) => {
      
       <div className="row">
         <div className="col-md-12 table-striped api-provider">
-          <MolGrid
+          <FinalMolGrid
             ref={molGridRef}
             configuration={rulesListData}
             dataSource={listData}

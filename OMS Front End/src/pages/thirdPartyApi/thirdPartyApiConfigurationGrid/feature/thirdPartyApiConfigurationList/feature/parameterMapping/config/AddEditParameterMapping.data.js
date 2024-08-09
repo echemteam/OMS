@@ -47,18 +47,24 @@ export const AddEditParameterMappingConfigurationData = {
         {
             name: "Event Parameter",
             fieldName: "eventParameterName",
-            width: "40%",
+            colStyle: {
+                width: "40%",
+            },
             allowShort: true,
         },
         {
             name: "Provider Parameter",
             fieldName: "providerParameterName",
-            width: "40%",
+            colStyle: {
+                width: "40%",
+            },
             allowShort: true,
         },
         {
             name: "Action",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowDelete: true,

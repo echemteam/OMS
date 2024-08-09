@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { useDeleteApiEventRequiredFieldsMappingMutation, useGetApiEventRequiredFieldsMappingsMutation } from '../../../../../../../../app/services/thirdPartyAPI';
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
-import MolGrid from '../../../../../../../../components/Grid/MolGrid';
+// import MolGrid from '../../../../../../../../components/Grid/MolGrid';
 import { AddEditRequiredMappingConfigurationData } from '../config/AddEditRequiredMapping.data';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
+import FinalMolGrid from '../../../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const RequiredMappingList = (props) => {
   const molGridRef = useRef();
@@ -98,7 +100,7 @@ const RequiredMappingList = (props) => {
   return (
     <div className="row">
       <div className="col-md-12 table-striped api-provider">
-        <MolGrid
+        <FinalMolGrid
           ref={molGridRef}
           configuration={AddEditRequiredMappingConfigurationData}
           dataSource={listData}

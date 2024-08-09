@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import PropTypes from 'prop-types'; 
 import { useDeleteApiEventMappingMutation, useGetApiEventMappingsMutation } from '../../../../../../../../app/services/thirdPartyAPI';
 import { AddEditMappingConfigurationData } from '../config/AddEditMapping.data';
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
-import MolGrid from '../../../../../../../../components/Grid/MolGrid';
+// import MolGrid from '../../../../../../../../components/Grid/MolGrid';
+import FinalMolGrid from '../../../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const EventMappingList = (props) => {
     const molGridRef = useRef();
@@ -99,7 +101,7 @@ const EventMappingList = (props) => {
     return (
         <div className="row">
             <div className="col-md-12 table-striped api-provider pagination-none">
-                <MolGrid
+                <FinalMolGrid
                     ref={molGridRef}
                     configuration={AddEditMappingConfigurationData}
                     dataSource={listData}

@@ -2,15 +2,15 @@ import { AppIcons } from "../../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../../data/gridColumnType";
 
-export const addEditApiEndPointsFormData ={
-    initialState:{
+export const addEditApiEndPointsFormData = {
+    initialState: {
         name: "",
-        path:"",
-        method:"",
-        description:"",
+        path: "",
+        method: "",
+        description: "",
     },
     formFields: [
-   
+
         {
             id: "name",
             lable: "Name ",
@@ -51,7 +51,7 @@ export const addEditApiEndPointsFormData ={
                 placeholder: "Select Method",
                 isEnableOnChange: true
             },
-            
+
             validation: [{ type: "require" }],
             style: {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
@@ -72,7 +72,7 @@ export const addEditApiEndPointsFormData ={
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
-       
+
     ],
     formSetting: {
         isViewOnly: false
@@ -81,47 +81,57 @@ export const addEditApiEndPointsFormData ={
 }
 export const ApiEndPointGridConfig = {
     columns: [
-      
-      {
-        name: "End Point Name",
-        fieldName: "endpointName",
-        width: "20%",
-        allowShort: true,
-      },
-      {
-        name: "End Point Path",
-        fieldName: "path",
-        width: "25%",
-        allowShort: true,
-      },
-      {
-        name: "End Point Method",
-        fieldName: "method",
-        width: "20%",
-        allowShort: true,
-      },
-      {
-        name: "Description",
-        fieldName: "description",
-        width: "20%",
-        allowShort: true,
-      },
-      {
-        name: "Action",
-        width: "15%",
-        colType: GridColumnType.ACTION,
-        defaultAction: {
-          allowEdit: true,
-          allowDelete: true,
-        },
-        customAction: [
-            {
-                name: "ADDPARAMETERS",
-                iconName: AppIcons.PlusIcon,
-                title :"Add Parameter"
+
+        {
+            name: "End Point Name",
+            fieldName: "endpointName",
+            colStyle: {
+                width: "20%",
             },
-        ],
-      },
+            allowShort: true,
+        },
+        {
+            name: "End Point Path",
+            fieldName: "path",
+            colStyle: {
+                width: "25%",
+            },
+            allowShort: true,
+        },
+        {
+            name: "End Point Method",
+            fieldName: "method",
+            colStyle: {
+                width: "20%",
+            },
+            allowShort: true,
+        },
+        {
+            name: "Description",
+            fieldName: "description",
+            colStyle: {
+                width: "20%",
+            },
+            allowShort: true,
+        },
+        {
+            name: "Action",
+            colStyle: {
+                width: "15%",
+            },
+            colType: GridColumnType.ACTION,
+            defaultAction: {
+                allowEdit: true,
+                allowDelete: true,
+            },
+            customAction: [
+                {
+                    name: "ADDPARAMETERS",
+                    iconName: AppIcons.PlusIcon,
+                    title: "Add Parameter"
+                },
+            ],
+        },
     ],
-  
-  };
+
+};

@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import { functionalConfigurationListData } from './config/FunctionalConfigurationList.data';
 import { useNavigate } from 'react-router-dom';
-import MolGrid from '../../../../../components/Grid/MolGrid';
+// import MolGrid from '../../../../../components/Grid/MolGrid';
 import { useGetFunctionalitiesMutation } from '../../../../../app/services/configurationAPI';
 import { encryptUrlData } from '../../../../../services/CryptoService';
+import FinalMolGrid from '../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const FunctionalConfigurationList = (props) => {
     const molGridRef = useRef();
@@ -87,14 +89,14 @@ const FunctionalConfigurationList = (props) => {
     }
 
     const actionHandler = {
-        VIEW: handleViewClick,
+        VIEWCONFIGURATION: handleViewClick,
         EDIT: handleEditClick
     }
 
     return (
         <div className="row">
             <div className="col-md-12 table-striped api-provider">
-                <MolGrid
+                <FinalMolGrid
                     ref={molGridRef}
                     configuration={functionalConfigurationListData}
                     dataSource={listData}

@@ -1,11 +1,11 @@
 import { GridColumnType } from "../../../../data/gridColumnType";
 import { FormFieldTypes } from "../../../../data/formFieldType";
 
-export const addEditApiProviderFormData ={
-    initialState:{
+export const addEditApiProviderFormData = {
+    initialState: {
         name: "",
-        baseURL:"",
-        authenticationType:"",
+        baseURL: "",
+        authenticationType: "",
     },
     formFields: [
         {
@@ -48,14 +48,14 @@ export const addEditApiProviderFormData ={
                 placeholder: "Select Authentication Type",
                 isEnableOnChange: true
             },
-            
+
             validation: [{ type: "require" }],
             style: {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
-      
-       
+
+
     ],
     formSetting: {
         isViewOnly: false
@@ -66,34 +66,42 @@ export const addEditApiProviderFormData ={
 export const ApiProvidersGridConfig = {
     columns: [
 
-      {
-        name: "Name",
-        fieldName: "name",
-        width: "20%",
-        allowShort: true,
-      },
-      {
-        name: "Base URL",
-        fieldName: "baseURL",
-        width: "35%",
-        allowShort: true,
-      },
-      {
-        name: "Authentication Type",
-        fieldName: "authenticationType",
-        width: "35%",
-        allowShort: true,
-      },
-     
-      {
-        name: "Action",
-        width: "10%",
-        colType: GridColumnType.ACTION,
-        defaultAction: {
-          allowEdit: true,
-          allowDelete: true,
+        {
+            name: "Name",
+            fieldName: "name",
+            colStyle: {
+                width: "20%",
+            },
+            allowShort: true,
         },
-      },
+        {
+            name: "Base URL",
+            fieldName: "baseURL",
+            colStyle: {
+                width: "35%",
+            },
+            allowShort: true,
+        },
+        {
+            name: "Authentication Type",
+            fieldName: "authenticationType",
+            colStyle: {
+                width: "35%",
+            },
+            allowShort: true,
+        },
+
+        {
+            name: "Action",
+            colStyle: {
+                width: "10%",
+            },
+            colType: GridColumnType.ACTION,
+            defaultAction: {
+                allowEdit: true,
+                allowDelete: true,
+            },
+        },
     ],
-  
-  };
+
+};

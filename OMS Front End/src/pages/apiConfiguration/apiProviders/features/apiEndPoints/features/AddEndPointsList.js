@@ -3,13 +3,14 @@
 import { useState ,useRef ,useEffect,useImperativeHandle} from "react";
 import PropTypes from "prop-types";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
-import MolGrid from "../../../../../../components/Grid/MolGrid";
+// import MolGrid from "../../../../../../components/Grid/MolGrid";
 import SidebarModel from "../../../../../../components/ui/sidebarModel/SidebarModel";
 import { ApiEndPointGridConfig } from "../config/ApiEndPoints.data";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { AppIcons } from "../../../../../../data/appIcons";
 import { useDeleteApiEndpointMutation,useGetApiEndpointsMutation,} from "../../../../../../app/services/apiEndPointsAPI";
 import AddEditApiParameters from "./apiParameters/features/AddEditApiParameters";
+import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 
 let parameterData = {};
 const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
@@ -113,7 +114,7 @@ const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
  return(<>
   <div className="row">
           <div className="col-md-12 table-striped api-provider">
-            <MolGrid
+            <FinalMolGrid
               ref={molGridRef}
               configuration={ApiEndPointGridConfig}
               dataSource={listData}

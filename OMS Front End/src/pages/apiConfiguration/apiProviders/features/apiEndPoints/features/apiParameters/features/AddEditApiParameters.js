@@ -8,9 +8,10 @@ import { onResetForm } from "../../../../../../../../utils/FormFields/ResetForm/
 import ToastService from "../../../../../../../../services/toastService/ToastService";
 import FormCreator from "../../../../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../../../../components/ui/button/Buttons";
-import MolGrid from "../../../../../../../../components/Grid/MolGrid";
+// import MolGrid from "../../../../../../../../components/Grid/MolGrid";
 import { ApiParametersDataTypes } from "../../../../../../../../utils/Enums/commonEnums";
 import { useAddEditApiParameterMutation, useDeleteApiParameterMutation, useGetApiParametersMutation, useLazyGetApiParameterByParameterIdQuery } from "../../../../../../../../app/services/apiParametersAPI";
+import FinalMolGrid from "../../../../../../../../components/FinalMolGrid/FinalMolGrid";
 
 const AddEditApiParameters = (props) => {
   
@@ -202,7 +203,7 @@ const AddEditApiParameters = (props) => {
         </div>
         <div className="row">
           <div className="col-md-12 table-striped api-provider">
-            <MolGrid
+            <FinalMolGrid
               ref={molGridRef}
             configuration={ApiParameterGridConfig}
               dataSource={listData}

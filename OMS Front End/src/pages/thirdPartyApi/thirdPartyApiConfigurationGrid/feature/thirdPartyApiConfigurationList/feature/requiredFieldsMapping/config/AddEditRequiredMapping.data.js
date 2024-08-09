@@ -46,18 +46,24 @@ export const AddEditRequiredMappingConfigurationData = {
         {
             name: "Api Event Required Field",
             fieldName: "fieldName",
-            width: "40%",
+            colStyle: {
+                width: "40%",
+            },
             allowShort: true,
         },
         {
             name: "API Response Field Name",
             fieldName: "apiResponseFieldName",
-            width: "40%",
+            colStyle: {
+                width: "40%",
+            },
             allowShort: true,
         },
         {
             name: "Action",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowDelete: true,

@@ -1,10 +1,11 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import PropTypes from 'prop-types'; 
-import MolGrid from '../../../../../../../components/Grid/MolGrid';
+// import MolGrid from '../../../../../../../components/Grid/MolGrid';
 import { manageResponsibleUsersData } from '../config/ManageResponsibleUsers.data';
 import { useDeleteFunctionalitiesResponsiblesUserMutation, useGetFunctionalitiesResponsiblesMutation } from '../../../../../../../app/services/configurationAPI';
 import ToastService from '../../../../../../../services/toastService/ToastService';
 import SwalAlert from '../../../../../../../services/swalService/SwalService';
+import FinalMolGrid from '../../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const ManageResponsibleUserList = (props) => {
 
@@ -101,7 +102,7 @@ const ManageResponsibleUserList = (props) => {
   return (
     <div className="row">
       <div className="col-md-12 table-striped api-provider">
-        <MolGrid
+        <FinalMolGrid
           ref={molGridRef}
           configuration={manageResponsibleUsersData}
           dataSource={listData}

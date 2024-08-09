@@ -7,6 +7,7 @@ import SwalAlert from "../../../../../services/swalService/SwalService";
 import { encryptUrlData } from "../../../../../services/CryptoService";
 import { useDeleteSubCustomerMutation, useGetSubCustomerByCustomerIdMutation } from "../../../../../app/services/customerSubCustomerAPI";
 import PropTypes from 'prop-types';
+import FinalMolGrid from "../../../../../components/FinalMolGrid/FinalMolGrid";
 
 const SubCustomerList = (props) => {
   const molGridRef = useRef();
@@ -92,7 +93,7 @@ const SubCustomerList = (props) => {
      
       <div className="row">
         <div className="col-md-12 table-striped p-3">
-          <MolGrid
+          <FinalMolGrid
             ref={molGridRef}
             configuration={SubCustomerGridConfig}
             dataSource={listData}

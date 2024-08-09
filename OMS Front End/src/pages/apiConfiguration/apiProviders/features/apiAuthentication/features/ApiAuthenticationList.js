@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState , useImperativeHandle} from "react";
 import PropTypes from "prop-types";
-import MolGrid from "../../../../../../components/Grid/MolGrid";
+// import MolGrid from "../../../../../../components/Grid/MolGrid";
 import { ApiAuthenticationtGridConfig, } from "../config/ApiAuthentication.data";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../../../services/swalService/SwalService";
 import { useDeleteApiAuthenticationMutation, useGetApiAuthenticationsMutation } from "../../../../../../app/services/apiAuthenticationAPI";
+import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 
 const ApiAuthenticationList = ({ handleEditClick, getDataRef, providerId , handleListData }) => {
 
@@ -95,7 +96,7 @@ const ApiAuthenticationList = ({ handleEditClick, getDataRef, providerId , handl
 
     <div className="row">
       <div className="col-md-12 table-striped api-provider pagination-none first-word-break">
-        <MolGrid
+        <FinalMolGrid
           ref={molGridRef}
           configuration={ApiAuthenticationtGridConfig}
           dataSource={listData}

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../../components/ui/card/CardSection";
 import FormCreator from "../../../../components/Forms/FormCreator";
@@ -35,13 +36,13 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
     getAllPaymentTerms();
     getAllPaymentMethod();
     getAllDeliveryAccounts()
-    if (isEditablePage) {
+    if (isEditablePage && supplierId > 0) {
       getPaymentSettingsBySupplierId(supplierId)
     }
   }, []);
 
   useEffect(() => {
-    if (isEditablePage) {
+    if (isEditablePage && supplierId > 0) {
       getSupplierFinancialSettingsBySupplierId(supplierId)
     }
   }, [isEditablePage])

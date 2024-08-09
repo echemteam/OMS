@@ -76,25 +76,33 @@ export const AddEditParameterConfigurationData = {
         {
             name: "Parameter Name",
             fieldName: "parameterName",
-            width: "35%",
+            colStyle: {
+                width: "35%",
+            },
             allowShort: true,
         },
         {
             name: "Data Type",
             fieldName: "dataType",
-            width: "35%",
+            colStyle: {
+                width: "35%",
+            },
             allowShort: true,
         },
         {
             name: "Default Value ",
             fieldName: "defaultValue",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             allowShort: true,
         },
         {
             name: "Is Required",
             fieldName: "isRequired",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             colType: GridColumnType.CHECKBOX,
             colSettings: {
                 allowCheckbox: true,
@@ -103,7 +111,9 @@ export const AddEditParameterConfigurationData = {
         },
         {
             name: "Action",
-            width: "10%",
+            colStyle: {
+                width: "10%",
+            },
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowEdit: true,

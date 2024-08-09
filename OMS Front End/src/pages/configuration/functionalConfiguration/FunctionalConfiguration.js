@@ -37,7 +37,7 @@ const FunctionalConfiguration = () => {
     const resetForm = () => {
         let form = { ...AddEditFunctionalData.initialState };
         setFormData(form);
-      };
+    };
 
     const handleEdit = (data) => {
         resetForm()

@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
-import MolGrid from '../../../../../components/Grid/MolGrid';
+// import MolGrid from '../../../../../components/Grid/MolGrid';
 import { useNavigate } from 'react-router-dom';
 import { thirdPartyListConfigurationData } from './config/ThirdPartyApiConfigurationList.data';
 import { useDeleteApiEventMutation, useGetApiEventsMutation, useThirdPartyAPICallMutation } from '../../../../../app/services/thirdPartyAPI';
 import ToastService from '../../../../../services/toastService/ToastService';
 import SwalAlert from '../../../../../services/swalService/SwalService';
 import { encryptUrlData } from '../../../../../services/CryptoService';
+import FinalMolGrid from '../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const ThirdPartyApiConfigurationList = ({ childRef }) => {
     const molGridRef = useRef();
@@ -119,14 +120,14 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
         let request = {
             eventName: 'Get Search product List',
             isDynamicParameter: false,
-            parameters : JSON.stringify(parameter)
+            parameters: JSON.stringify(parameter)
         }
         getThirdPartyApiResponse(request);
     };
 
 
     const actionHandler = {
-        VIEW: handleViewClick,
+        VIEWCONFIGURATION: handleViewClick,
         DELETE: handleDeleteClick,
         TESTAPI: handleTestClick
     };
@@ -138,7 +139,7 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     return (
         <div className="row">
             <div className="col-md-12 table-striped api-provider">
-                <MolGrid
+                <FinalMolGrid
                     ref={molGridRef}
                     configuration={thirdPartyListConfigurationData}
                     dataSource={listData}

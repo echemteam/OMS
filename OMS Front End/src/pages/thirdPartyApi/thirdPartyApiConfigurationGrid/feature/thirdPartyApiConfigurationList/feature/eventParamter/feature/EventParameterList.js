@@ -4,7 +4,8 @@ import { useDeleteApiEventParameterMutation, useGetApiEventParametersMutation } 
 import { AddEditParameterConfigurationData } from '../config/AddEditParameter.data';
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
-import MolGrid from '../../../../../../../../components/Grid/MolGrid';
+// import MolGrid from '../../../../../../../../components/Grid/MolGrid';
+import FinalMolGrid from '../../../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const EventParameterList = (props) => {
   const molGridRef = useRef();
@@ -109,7 +110,7 @@ const EventParameterList = (props) => {
   return (
     <div className="row">
       <div className="col-md-12 table-striped api-provider">
-        <MolGrid
+        <FinalMolGrid
           ref={molGridRef}
           configuration={AddEditParameterConfigurationData}
           dataSource={listData}
