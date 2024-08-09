@@ -167,14 +167,16 @@
   }
 }
 
-.stepper-view .stepper-section .stepper-content {
-  max-height: calc(100vh - 185px);
-}
+// .stepper-view .stepper-section .stepper-content {
+//   max-height: calc(100vh - 185px);
+//   overflow-y: visible !important;
+// }
 
 .stepper-view {
   .supplier-contacts {
     .card-body-sec {
       max-height: calc(100vh - 195px);
+      overflow: hidden;
     }
   }
   .vertical-tab-inner {
@@ -182,16 +184,59 @@
       max-height: calc(100vh - 400px);
     }
   }
+
+  .card{
+    height: calc(100vh - 145px);
+
+    .card{
+      height: calc(100vh - 310px);
+    }
+  }
 }
 
-// .stepper-view {
-//   .setting-tab-sec {
-//     .card {
-//       .tab-section {
-//         .tab-sub-content {
-//           max-height: calc(100vh - 258px);
-//         }
-//       }
-//     }
-//   }
-// }
+
+@media only screen and (max-width: 1750px) {
+  .stepper-view {
+    .card{
+      height: calc(100vh - 145px);
+  
+      .card{
+        height: calc(100vh - 265px);
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1750px) {
+  .stepper-view-supplier {
+    .card{
+      height: calc(100vh - 145px);
+  
+      .card{
+        height: calc(100vh - 265px);
+      }
+    }
+  }
+}
+.stepper-view-supplier {
+  .supplier-contacts {
+    .card-body-sec {
+      max-height: calc(100vh - 195px);
+    }
+  }
+  .vertical-tab-inner {
+    .tab-section {
+      height: calc(100vh - 395px);
+      .tab-content {
+      max-height: calc(100vh - 400px);
+    }}
+  }
+
+  .card{
+    height: calc(100vh - 325px);
+
+    .card{
+      height: calc(100vh - 310px);
+    }
+  }
+}

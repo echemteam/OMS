@@ -109,7 +109,7 @@ const AddSupplierTab = () => {
                 </React.Fragment>
               ))}
             </div>
-            <div className="stepper-content stepper-view">
+            <div className="stepper-content stepper-view-supplier">
               <form onSubmit={onSubmit}>
                 {tabContent.map((step, index) => (
                   <div key={index}

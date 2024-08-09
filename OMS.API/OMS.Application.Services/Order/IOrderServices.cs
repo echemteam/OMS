@@ -8,5 +8,7 @@ namespace OMS.Application.Services.Order
     {
         Task<AddEntityDto<int>> CheckPoNumberExistOrNot(CheckPoNumberExistOrNotRequest requestData);
         Task<List<GetPoNumberDetailsByPoNumberResponse>> GetPoNumberDetailsByPoNumber(string poNumber);
+        Task<AddEntityDto<int>> AddEditOrderInformation(AddEditOrderInformationRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddEditOrderContactInformation(AddEditOrderContactInformationRequest requestData, short CurrentUserId);
     }
 }
