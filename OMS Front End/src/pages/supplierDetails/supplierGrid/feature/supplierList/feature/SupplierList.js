@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 //** Lib's */
 import { AppIcons } from '../../../../../../data/appIcons';
-import MolGrid from '../../../../../../components/Grid/MolGrid';
+// import MolGrid from '../../../../../../components/Grid/MolGrid';
 import { OwnerType } from '../../../../../../utils/Enums/commonEnums';
 import { securityKey } from '../../../../../../data/SecurityKey';
 import Buttons from '../../../../../../components/ui/button/Buttons';
@@ -24,6 +24,7 @@ import { useUpdateResponsibleUserMutation } from '../../../../../../app/services
 import { useAddSupplierNotesMutation } from '../../../../../../app/services/supplierNotesAPI';
 import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../../../app/services/supplierAPI';
 import { reasonData } from '../../../../../../common/features/component/CustomerSupplierReason/Reason.data';
+import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
@@ -305,10 +306,10 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
 
   const actionHandler = {
     EDIT: handleEditClick,
-    FREEZE: handlefreeze,
-    DISABLE: handleDiseble,
-    BLOCKED: handleBlock,
-    REJECT: handleReject,
+    ALLOWFREEZE: handlefreeze,
+    ALLOWDISABLE: handleDiseble,
+    ALLOWBLOCKED: handleBlock,
+    ALLOREJECT: handleReject,
   };
 
   return (
@@ -319,7 +320,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
             searchInput={true}
             handleChange={handleChange}
             searchInputName="Search By Supplier Name, Tax Id , Email Address"
-            searchFilter={searchStatusFilter }
+            searchFilter={searchStatusFilter}
             handleChangeDropdown={handleChangeDropdown}
             selectedOptions={selectedDrpvalues}
             optionsValue={statusOptions}
@@ -343,7 +344,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
             <div className="row">
               <div className="col-md-12 table-striped">
                 {/* <div className='customer-list'> */}
-                <MolGrid
+                <FinalMolGrid
                   ref={molGridRef}
                   configuration={configFile}
                   dataSource={dataSource}

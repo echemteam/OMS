@@ -11,11 +11,12 @@ import ToastService from '../../../../../../services/toastService/ToastService';
 import { AppIcons } from '../../../../../../data/appIcons';
 import { StatusEnums } from '../../../../../../utils/Enums/StatusEnums';
 import { encryptUrlData } from '../../../../../../services/CryptoService';
-import MolGrid from '../../../../../../components/Grid/MolGrid';
+// import MolGrid from '../../../../../../components/Grid/MolGrid';
 import CardSection from '../../../../../../components/ui/card/CardSection';
 import CustomerListContext from '../../../../../../utils/ContextAPIs/Customer/CustomerListContext';
 import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../../../app/services/basicdetailAPI';
 import PropTypes from 'prop-types';
+import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const InActiveCustomersList = ({ statusId, configFile, handleChange, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
 
@@ -172,9 +173,9 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
   };
 
   const actionHandler = {
-    UNFREEZE: handleUnfreeze,
+    ALLOWUNFREEZE: handleUnfreeze,
     ACTIVECUSTOMER: handleActiveCustomer,
-    UNBLOCKED: handleUnBlock,
+    ALLOWUNBLOCKED: handleUnBlock,
     EDIT: handleEditClick,
   };
 
@@ -210,7 +211,7 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
             <div className="row">
               <div className="col-md-12 table-striped">
                 <div className='inactive-scroll-bar'>
-                  <MolGrid
+                  <FinalMolGrid
                     ref={molGridRef}
                     configuration={configFile}
                     dataSource={dataSource}

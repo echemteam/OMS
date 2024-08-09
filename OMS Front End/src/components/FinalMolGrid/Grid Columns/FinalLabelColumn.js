@@ -16,6 +16,8 @@ export const renderGridLabelColumn = (rowData, col, rowIndex) => {
   }
 
   return (
-    <span className={cssClass}>{labelText}</span>
+    <span className={cssClass}>{columnValue}</span>
   );
+
+  
 };

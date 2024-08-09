@@ -2,13 +2,14 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } f
 import PropTypes from 'prop-types';
 //** Libs's */
 import { basicInfoData } from './Config/Existing.data';
-import MolGrid from '../../../../components/Grid/MolGrid';
+// import MolGrid from '../../../../components/Grid/MolGrid';
 import CardSection from '../../../../components/ui/card/CardSection';
 import SidebarModel from '../../../../components/ui/sidebarModel/SidebarModel';
 //** Service's */
 import { encryptUrlData } from '../../../../services/CryptoService';
 import ToastService from '../../../../services/toastService/ToastService';
 import { ErrorMessage } from '../../../../data/appMessages';
+import FinalMolGrid from '../../../../components/FinalMolGrid/FinalMolGrid';
 
 const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExistingInfoByName }) => {
 
@@ -68,7 +69,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
                 <CardSection>
                     <div className="row input-list-button">
                         <div className="col-lg-12 table-striped">
-                            <MolGrid
+                            <FinalMolGrid
                                 ref={molGridRef}
                                 configuration={basicInfoData}
                                 dataSource={existingInfoData}
