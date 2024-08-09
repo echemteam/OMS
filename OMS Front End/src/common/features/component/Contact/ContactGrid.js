@@ -273,6 +273,7 @@ const ContactGrid = ({
       sMenuItemCaption: data.type,
       component
     };
+    
   });
 
  
@@ -340,6 +341,8 @@ const ContactGrid = ({
             getContactById={getContactById}
             getContectTypeId={null}
             contryIdCode={contryIdCode}
+            customerId={null}
+            onhandleApiCall={null}
           />
         </SidebarModel>
       </div>

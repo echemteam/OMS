@@ -101,7 +101,7 @@ const SupplierDetails = () => {
             <Buttons buttonTypeClassName="back-button btn dark-btn" onClick={handleBackClick}
               textWithIcon={true} buttonText="Back" imagePath={AppIcons.BackArrowIcon}></Buttons>
             {/* Supplier Tab's */}
-            <SupplierViewTab supplierId={supplierId} />
+            <SupplierViewTab supplierId={supplierId} contryIdCode={supplierData?.countryId} />
           </div>
         </div>
       </div>
