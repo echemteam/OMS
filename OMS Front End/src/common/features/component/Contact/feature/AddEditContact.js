@@ -30,7 +30,6 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const [phoneNumberList, setPhoneNumberList] = useState([]);
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
-    const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
     //** API Call's */
     /**
@@ -212,7 +211,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             {!isGetByIdFetching ?
                 <React.Fragment>
                     <div className="row mt-2 addEditContact-form">
-                        <FormCreator config={formData} ref={ref} {...formData} key={shouldRerenderFormCreator} />
+                        <FormCreator config={formData} ref={ref} {...formData} />
                     </div>
                     <div className="row">
                         <EmailAddressGrid isButtonDisable={isButtonDisable} emailAddressList={emailAddressList}

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
     forwardRef,
     useEffect,
@@ -7,19 +6,19 @@ import React, {
 } from "react";
 import PropTypes from "prop-types";
 
-import DataLoader from "../ui/dataLoader/DataLoader";
+import DataLoader from "./ui/dataLoader/DataLoader";
 import MolGridHeader from "./Final-MolGrid-Header";
 import MolGridDataRows from "./Final-MolGrid-data-row";
-import MolPagination from "./Pagination/FinalMolPagination";
-import NoRecordFound from "../ui/noRecordFound/NoRecordFound";
+import MolPagination from "./pagination/FinalMolPagination";
+import NoRecordFound from "./ui/noRecordFound/NoRecordFound";
 
 import "./FinalMolGrid.scss";
 
 const FinalMolGrid = forwardRef((props, ref) => {
     // Initialize state for currentPage, pageSize, and totalPageCount
     const [sorting, setSorting] = useState([]);
-    const [editRowData, setEditRowData] = useState([]);
-    const [editRowIndex, setEditRowIndex] = useState([]);
+    const [selectedRow, setSelectedRow] = useState({});
+    const [selectedRowIndex, setSelectedRowIndex] = useState(-1);
     const [totalPageCount, setTotalPageCount] = useState(1);
     const [pageSize, setPageSize] = useState(props.pagination?.pageSize || 10);
     const [currentPage, setCurrentPage] = useState(props.pagination?.currentPage || 1);
@@ -71,6 +70,13 @@ const FinalMolGrid = forwardRef((props, ref) => {
         }).join(',');
     };
 
+    const getSelectedRow = () => {
+        return {
+                row:selectedRow,
+                rowIndex:selectedRowIndex
+        }
+    };
+
     const generateSortingString = () => {
         return getSortingString(sorting);
     };
@@ -111,59 +117,73 @@ const FinalMolGrid = forwardRef((props, ref) => {
     // Handle Save Click after data Update
 
     const handleUpdateSaveClick = (updateData, rowIndexToUpdate) => {
-        if (props?.configuration?.handleRowDataUpdate) {
-            props.configuration.handleRowDataUpdate(updateData, rowIndexToUpdate)
+        if (props?.onRowDataUpdate) {
+            props?.onRowDataUpdate(updateData, rowIndexToUpdate)
         }
     }
+
+    const handleRowSelect = (e,rowData, rowIndex) => {
+    //    e.preventDefault(); // Prevent the default action (e.g., following a link)
+        setSelectedRow(rowData);
+        setSelectedRowIndex(rowIndex);
+        if(props.onRowSelect)
+        {
+            props.onRowSelect(rowData,rowIndex);
+        }
+        // Add any additional logic here
+    };
 
     // Use useImperativeHandle to make the getCurrentPageObject function accessible via the ref
     useImperativeHandle(ref, () => ({
         getCurrentPageObject,
         getDefulatPageObject,
-        generateSortingString
+        generateSortingString,
+        getSelectedRow
     }));
 
-    const renderDataRow = (prop) => {
-        const isRenderRow = !!(prop.dataSource && prop.dataSource.length > 0);
+    const renderDataRow = () => {
+        if (props.isLoading) {
+            return (
+                <tr className="no-address">
+                    {/* <td colSpan={100}> */}
+                        <DataLoader />
+                    {/* </td> */}
+                </tr>
+            );
+        }
+
+        if (props.dataSource?.length > 0) {
+            return (
+                <MolGridDataRows
+                    dataSource={props.dataSource}
+                    columns={props.configuration.columns}
+                    onActionChange={props.onActionChange}
+                    customColumnClass={props.configuration.customColumnClass}
+                    customHeaderClass={props.configuration.customHeaderClass}
+                    allowEditGrid={props.configuration.allowEdit}
+                    editGridSettings={props.configuration.editSettings}
+                    slectedRowIndex={selectedRowIndex}
+                    onRowDataUpdateSaving={handleUpdateSaveClick}
+                    onColumnDataChange={props.onColumnChange}
+                    onRowDataDelete = {props.onRowDataDelete}
+                    onRowSelect={handleRowSelect} // Pass the handler here
+                    {...props}
+                />
+            );
+        }
 
         return (
-            <>
-                {prop.isLoading ? (
-                    <tr>
-                        <td colSpan={100}>
-                            <DataLoader />
-                        </td>
-                    </tr>
-                ) : isRenderRow ? (
-                    <MolGridDataRows
-                        dataSource={prop.dataSource}
-                        columns={prop.configuration.columns}
-                        onActionChange={prop.onActionChange}
-                        allowEditGrid={props.configuration.allowEdit}
-                        editRowIndex={editRowIndex}
-                        onRowEditRowIndexChange={setEditRowIndex}
-                        onRowDataUpdate={setEditRowData}
-                        // onRowDataUpdateSaving={props.configuration.handleRowDataUpdate}
-                        onRowDataUpdateSaving={handleUpdateSaveClick}
-                        OnColumnChangeEdit={props.configuration.OnColumnChangeEdit}
-                        editedRowData={editRowData}
-                        onRowUpadateDataSave={prop.configuration.OnRowEdit}
-                        {...prop}
-                    />
-                ) : (
-                    <tr>
-                        <td colSpan={100}>
-                            <NoRecordFound />
-                        </td>
-                    </tr>
-                )}
-            </>
+            <tr className="no-address">
+                {/* <td colSpan={100}> */}
+                    <NoRecordFound />
+                {/* </td> */}
+            </tr>
         );
     };
 
     return (
-        <div className={`molgrid-2 ${props.configuration.hasChildGridTable ? "table-custom" : null}`}>
-            <table className="border-table-simple">
+        <div className={`molgrid-2 ${props.configuration.hasChildGridTable ? "table-custom" : ""}`}>
+            <table className={props.configuration?.gridStyle?.tableClass}>
                 <thead>
                     <MolGridHeader
                         columns={props.configuration.columns}
@@ -172,7 +192,7 @@ const FinalMolGrid = forwardRef((props, ref) => {
                         hasChildGridTable={props.configuration.hasChildGridTable}
                     />
                 </thead>
-                <tbody>{renderDataRow(props)}</tbody>
+                <tbody>{renderDataRow()}</tbody>
             </table>
             {props.allowPagination && (
                 <MolPagination
@@ -190,6 +210,8 @@ const FinalMolGrid = forwardRef((props, ref) => {
 FinalMolGrid.propTypes = {
     configuration: PropTypes.shape({
         columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+        allowEdit: PropTypes.bool,
+        hasChildGridTable: PropTypes.bool,
     }).isRequired,
     dataSource: PropTypes.arrayOf(PropTypes.object),
     allowPagination: PropTypes.bool,
@@ -198,6 +220,13 @@ FinalMolGrid.propTypes = {
         totalCount: PropTypes.number,
         pageSize: PropTypes.number,
     }),
+    onPageChange: PropTypes.func,
+    onSorting: PropTypes.func,
+    onRowDataEdit:PropTypes.func,
+    onColumnChange:PropTypes.func,
+    onRowDataUpdate:PropTypes.func,
+    onRowDataDelete:PropTypes.func,
+    onRowSelect: PropTypes.func
 };
 
 FinalMolGrid.defaultProps = {
@@ -210,3 +239,4 @@ FinalMolGrid.defaultProps = {
 };
 
 export default FinalMolGrid;
+

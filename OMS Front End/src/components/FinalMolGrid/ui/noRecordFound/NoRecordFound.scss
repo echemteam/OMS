@@ -1,0 +1,14 @@
+.record-not-found{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px 0;
+  position: relative;
+  img{
+    width: 140px;
+  }
+  h5{
+    margin-top: 20px;
+  }
+}

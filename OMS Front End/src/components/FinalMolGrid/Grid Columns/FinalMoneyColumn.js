@@ -1,10 +1,16 @@
-import { formatMoney } from "../../../lib/formatNumber";
+import { formatMoney } from "./../libs/formatNumber"
 
 export const renderGridMoneyColumn = (rowData, col, ) => {
-    const { currency } = col.colSettings || { currency: '$' }; // Provide a default format if colSettings is not defined
+  const { 
+    currency = '$', 
+    decimalPlaces = 2, 
+    thousandSeparator = ',',
+    decimalSeparator = '.'
+  } = col.colSettings || {};
   
+
       const dateValue = rowData?.[col.fieldName]
     return (
-        formatMoney(dateValue,currency)
+        formatMoney(dateValue,currency,decimalPlaces,thousandSeparator,decimalSeparator)
     );
   };

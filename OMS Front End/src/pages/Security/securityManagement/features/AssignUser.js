@@ -7,7 +7,7 @@ import {
   assignUserListData,
 } from "./config/AssignUserForm.data";
 import Buttons from "../../../../components/ui/button/Buttons";
-import MolGrid from "../../../../components/Grid/MolGrid";
+// import MolGrid from "../../../../components/Grid/MolGrid";
 import {
   useAddRoleMappingMutation,
   useDeleteRolesMappingMutation,
@@ -19,6 +19,7 @@ import SwalAlert from "../../../../services/swalService/SwalService";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import FinalMolGrid from "../../../../components/FinalMolGrid/FinalMolGrid";
 
 
 const AssignUser = (props) => {
@@ -224,7 +225,7 @@ const AssignUser = (props) => {
           cardTitle="Users"
         >
           <div className="col-md-12 table-striped">
-            <MolGrid
+            <FinalMolGrid
               ref={molGridRef}
               configuration={assignUserListData}
               dataSource={listData}

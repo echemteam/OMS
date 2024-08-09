@@ -9,7 +9,7 @@ import ToastService from "../../../../../../../services/toastService/ToastServic
 
 const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList }) => {
 
-    const [gridConfig, setGridConfig] = useState(AccountGridConfig);
+    // const [gridConfig, setGridConfig] = useState(AccountGridConfig);
 
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
 
@@ -36,12 +36,6 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
         }
     }, [isUpdateSuccess, isUpdateData]);
 
-    useState(() => {
-        let configuration = { ...AccountGridConfig }
-        configuration.handleRowDataUpdate = handleEditClick;
-        setGridConfig(configuration);
-    }, [])
-
     return (
         <div className="first-card">
             <CardSection
@@ -55,11 +49,12 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
                 <div className="account-table table-striped mb-3">
                     <FinalMolGrid
                         ref={molGridRef}
-                        configuration={gridConfig}
+                        configuration={AccountGridConfig}
                         dataSource={collectAccountData}
                         allowPagination={false}
                         onActionChange={actionHandler}
                         isLoading={isGetDataLoading}
+                        onRowDataUpdate={handleEditClick}
                     />
                     {/* <MolGrid
                         ref={molGridRef}

@@ -1,8 +1,9 @@
 import React from "react";
-import { AppIcons } from "../../data/appIcons";
-import Image from "../image/Image";
-import "./FinalMolGrid.scss";
+import PropTypes from "prop-types";  // Import PropTypes
 
+import { AppIcons } from "../../data/appIcons";
+import "./FinalMolGrid.scss";
+import Image from "../../components/image/Image";
 
 const FinalMolGridHeader = (props) => {
 
@@ -103,11 +104,8 @@ const FinalMolGridHeader = (props) => {
             {props.hasChildGridTable ?
                 <th></th> : null
             }
-            {props.columns.map((col, index) => (
-                <th key={`col_${index}`} className={`whitespace-nowrap ${props.customHeaderClass || ''}`}
-                    // style={col.colStyle?.width ? { width: col.colStyle.width } : null}
-                    style={{ width: col.width }}
-                >
+            {props.columns.map((col) => (
+                <th key={`col_${col.name}`} className={`whitespace-nowrap ${props.customHeaderClass || ''}`} style={col.colStyle?.width ? { width: col.colStyle.width } : null}>
                     {col.allowShort ?
                         <span className="heading-shorting">{renderShortColumn(col)}</span>
                         :
@@ -117,6 +115,20 @@ const FinalMolGridHeader = (props) => {
             ))}
         </tr>
     );
+};
+
+
+
+FinalMolGridHeader.propTypes = {
+    selectedSorting: PropTypes.arrayOf(PropTypes.shape({
+        fieldName: PropTypes.string.isRequired,
+        isAsc: PropTypes.bool.isRequired,
+        sortNumber: PropTypes.number.isRequired
+    })).isRequired,
+    onSortingUpdate: PropTypes.func,
+    hasChildGridTable: PropTypes.bool,
+    columns: PropTypes.any,  // Allow any type for columns
+    customHeaderClass: PropTypes.string
 };
 
 export default FinalMolGridHeader;

@@ -1,0 +1,24 @@
+.text-area {
+    width: 100%;
+
+    .text-area-input {
+        box-shadow: none !important;
+        border: 1px solid var(--inputBorder) !important;
+        border-radius: 7px !important;
+        -webkit-border-radius: 7px !important;
+        -moz-border-radius: 7px !important;
+        -ms-border-radius: 7px !important;
+        -o-border-radius: 7px !important;
+        box-shadow: none !important;
+        padding: 10px 15px;
+        outline: none;
+        width: 100%;
+        font-size: var(--commonFont);
+
+        &:focus-visible,
+        &:focus {
+            box-shadow: none !important;
+            border: 1px solid var(--inputBorderHover) !important;
+        }
+    }
+}

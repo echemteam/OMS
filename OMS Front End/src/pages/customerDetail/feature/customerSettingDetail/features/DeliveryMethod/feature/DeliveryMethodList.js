@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import { OurAccountGridConfig } from "../config/DevliveryConfig";
@@ -10,7 +10,7 @@ import ToastService from "../../../../../../../services/toastService/ToastServic
 
 const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList }) => {
 
-    const [gridConfig, setGridConfig] = useState(OurAccountGridConfig);
+    // const [gridConfig, setGridConfig] = useState(OurAccountGridConfig);
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateDeliveryMethodsMutation();
 
     useEffect(() => {
@@ -35,11 +35,11 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
         update(req)
     }
 
-    useState(() => {
-        let configuration = { ...OurAccountGridConfig }
-        configuration.handleRowDataUpdate = handleEditClick;
-        setGridConfig(configuration);
-    }, [])
+    // useState(() => {
+    //     let configuration = { ...OurAccountGridConfig }
+    //     configuration.handleRowDataUpdate = handleEditClick;
+    //     setGridConfig(configuration);
+    // }, [])
 
     return (
         <div className="first-card">
@@ -62,11 +62,12 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
                     /> */}
                     <FinalMolGrid
                         ref={molGridRef}
-                        configuration={gridConfig}
+                        configuration={OurAccountGridConfig}
                         dataSource={ourAccountData}
                         allowPagination={false}
                         onActionChange={actionHandler}
                         isLoading={isGetDataLoading}
+                        onRowDataUpdate={handleEditClick}
                     />
                 </div>
             </CardSection>

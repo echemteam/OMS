@@ -1,13 +1,37 @@
 import React, { useState } from 'react';
-import DropDown from '../../../ui/dropdown/DropDrown';
+import PropTypes from 'prop-types';
 
-const EditDropdownColumn = ({ rowData, col, editColumn, rowIndex, onChange, updatedData, errors }) => {
+import GridDropDown from '../../ui/dropdown/GridDropdown';
 
+/**
+ * EditDropdownColumn component for rendering a dropdown with editable functionality.
+ * @param {object} props - Component props.
+ * @param {object} props.rowData - Data for the current row.
+ * @param {object} props.col - Column configuration.
+ * @param {object} props.editColumn - Editable column configuration.
+ * @param {number} props.rowIndex - Index of the current row.
+ * @param {function} props.onChange - Function to handle changes.
+ * @param {object} props.updatedData - Updated row data.
+ * @param {object} props.errors - Validation errors.
+ */
+const EditDropdownColumn = ({
+  rowData,
+  col,
+  editColumn,
+  rowIndex,
+  onChange,
+  updatedData,
+  errors,
+}) => {
   const [value, setValue] = useState(rowData[col.fieldName]);
 
+  /**
+   * Handles change in dropdown selection.
+   * @param {object|string} selectedOption - The selected option.
+   */
   const handleOnChange = (selectedOption) => {
     let selectedValue;
-    // Check if selectedOption is an object with a 'value' property
+
     if (typeof selectedOption === 'object' && selectedOption !== null && 'value' in selectedOption) {
       selectedValue = selectedOption.value;
     } else {
@@ -17,18 +41,15 @@ const EditDropdownColumn = ({ rowData, col, editColumn, rowIndex, onChange, upda
     setValue(selectedValue);
 
     if (onChange) {
-      // Merge the new value into a copy of rowData or updatedData if it exists
-      const newRowData = updatedData ? { ...updatedData, [col.fieldName]: selectedValue } : { ...rowData, [col.fieldName]: selectedValue };
+      const newRowData = updatedData
+        ? { ...updatedData, [col.fieldName]: selectedValue }
+        : { ...rowData, [col.fieldName]: selectedValue };
       onChange(rowIndex, newRowData);
     }
-  }
-
-  const hasError = errors && errors[rowIndex] && errors[rowIndex][col.fieldName] ? true : false;
-  const errorMessage = hasError && errors[rowIndex] && errors[rowIndex][col.fieldName] ? errors[rowIndex][col.fieldName] : '';
-
+  };
 
   return (
-    <DropDown
+    <GridDropDown
       placeholder={`Please Enter ${col.fieldName}`}
       isMultiSelect={editColumn.isMultiSelect}
       options={editColumn.options}
@@ -37,7 +58,31 @@ const EditDropdownColumn = ({ rowData, col, editColumn, rowIndex, onChange, upda
       onBlur={editColumn.handleOnBlur}
       isDisabled={editColumn.isDisable}
     />
-  )
-}
+  );
+};
+
+EditDropdownColumn.propTypes = {
+  /** Data for the current row */
+  rowData: PropTypes.object.isRequired,
+  /** Column configuration */
+  col: PropTypes.shape({
+    fieldName: PropTypes.string.isRequired,
+  }).isRequired,
+  /** Editable column configuration */
+  editColumn: PropTypes.shape({
+    isMultiSelect: PropTypes.bool,
+    options: PropTypes.array,
+    handleOnBlur: PropTypes.func,
+    isDisable: PropTypes.bool,
+  }).isRequired,
+  /** Index of the current row */
+  rowIndex: PropTypes.number.isRequired,
+  /** Function to handle changes */
+  onChange: PropTypes.func.isRequired,
+  /** Updated row data */
+  updatedData: PropTypes.object,
+  /** Validation errors */
+  errors: PropTypes.object,
+};
 
 export default EditDropdownColumn;

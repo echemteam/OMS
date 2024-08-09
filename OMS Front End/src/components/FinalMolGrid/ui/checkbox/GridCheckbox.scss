@@ -1,0 +1,95 @@
+// Checkbox Start
+.checkbox-label-part {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+
+    .input-label {
+        word-break: normal;
+        white-space: nowrap;
+    }
+}
+
+.checkbox-part {
+    display: flex;
+    align-items: center;
+
+    .checkbox {
+        margin-right: 7px;
+        display: flex;
+
+        .form-checkbox {
+            position: absolute;
+            opacity: 0;
+
+            +.checkbox-label {
+                border-radius: 4px;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                -ms-border-radius: 4px;
+                -o-border-radius: 4px;
+                overflow: hidden;
+                border: 1px solid var(--grayColor);
+                min-height: 20px;
+                min-width: 20px;
+                max-height: 20px;
+                max-width: 20px;
+
+                &:before {
+                    content: '';
+                    background-color: var(--whiteColor);
+                    display: inline-block;
+                    min-height: 20px;
+                    min-width: 20px;
+                    max-height: 20px;
+                    max-width: 20px;
+                    position: relative;
+                    top: -1px;
+                    margin-right: 0;
+                    vertical-align: top;
+                    cursor: pointer;
+                    text-align: center;
+                    transition: all 250ms ease;
+                }
+            }
+
+            &:checked {
+
+                +.checkbox-label {
+                    min-height: 20px;
+                    min-width: 20px;
+                    max-height: 20px;
+                    max-width: 20px;
+                    background: var(--themeColor);
+                    border: 1px solid var(--themeColor);
+
+                    &:before {
+                        top: -1px;
+                        background: url(../../../../assets/images/righttike-white.png);
+                        background-position: center;
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                    }
+                }
+            }
+
+            &:focus {
+                +.checkbox-label {
+                    &:before {
+                        outline: none;
+                    }
+                }
+            }
+
+
+
+            +.checkbox-label {
+                &:empty {
+                    &:before {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}

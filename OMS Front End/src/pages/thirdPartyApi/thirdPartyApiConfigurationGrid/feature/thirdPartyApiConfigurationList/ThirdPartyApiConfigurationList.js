@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import MolGrid from '../../../../../components/Grid/MolGrid';
 import { useNavigate } from 'react-router-dom';
 import { thirdPartyListConfigurationData } from './config/ThirdPartyApiConfigurationList.data';
-import { useDeleteApiEventMutation, useGetApiEventsMutation, useLazyThirdPartyAPICallQuery, useThirdPartyAPICallMutation } from '../../../../../app/services/thirdPartyAPI';
+import { useDeleteApiEventMutation, useGetApiEventsMutation, useThirdPartyAPICallMutation } from '../../../../../app/services/thirdPartyAPI';
 import ToastService from '../../../../../services/toastService/ToastService';
 import SwalAlert from '../../../../../services/swalService/SwalService';
 import { encryptUrlData } from '../../../../../services/CryptoService';

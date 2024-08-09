@@ -35,7 +35,7 @@ export const addEditDeliveryFormData = {
             fieldSetting: {
                 placeholder: "Enter Charge",
                 allowSpace: true,
-                maxLength: 8,
+                maxLength: 3,
             },
             validation: [{ type: "require" }],
             style: {
@@ -67,18 +67,24 @@ export const OurAccountGridConfig = {
         {
             name: "Zone",
             fieldName: "zone",
-            width: "20%"
+            colStyle: {
+                width: "20%",
+            },
         },
         {
             name: "Charge Type",
             fieldName: "name",
-            width: "20%"
+            colStyle: {
+                width: "20%",
+            },
         },
         {
             name: "Charge",
             fieldName: "charge",
             colType: GridColumnType.MONEY,
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             allowEditColumn: true,
             editColumn: {
                 editColType: EditGridColumnType.NUMERIC,
@@ -86,31 +92,55 @@ export const OurAccountGridConfig = {
                 isDisable: false,
                 editColValidation: [
                     { type: "required", message: "Charge is required." },
+                    { type: "maxLength", value: 3, message: "Charge Fee must be at least 3 characters long." }
                 ],
             },
             colSettings: {},
             allowShort: false
         },
+        // {
+        //     name: "Is Primary",
+        //     fieldName: "isPrimary",
+        //     colStyle: {
+        //         width: "20%",
+        //     },
+        //     colType: GridColumnType.CHECKBOX,
+        //     allowEditColumn: true,
+        //     editColumn: {
+        //         editColType: EditGridColumnType.CHECKBOX,
+        //         editColFieldName: "isPrimary",
+        //         editColValidation: [],
+        //     },
+        //     colSettings: {
+        //         allowCheckbox: true,
+        //         allowDisable: true
+        //     }
+        // },
         {
             name: "Is Primary",
             fieldName: "isPrimary",
-            width: "20%",
             colType: GridColumnType.CHECKBOX,
+            colStyle: {
+                width: "20%",
+            },
+            colSettings: {
+                isDisabled: false,
+                allowEdit: true
+            },
             allowEditColumn: true,
             editColumn: {
                 editColType: EditGridColumnType.CHECKBOX,
                 editColFieldName: "isPrimary",
+                isDisable: false,
                 editColValidation: [],
             },
-            colSettings: {
-                allowCheckbox: true,
-                allowDisable: true
-            }
+            allowShort: false
         },
-
         {
             name: "Action",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowEdit: true,
@@ -126,6 +156,13 @@ export const OurAccountGridConfig = {
             allowShort: false
         },
     ],
+    editSettings: {
+        defualtEditableView: false,
+        buttons: {
+            save: true,
+            cancel: true,
+        }
+    },
     allowEdit: true,
     handleRowDataUpdate: null,
     OnColumnChangeEdit: null
