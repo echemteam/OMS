@@ -12,7 +12,7 @@ const supplierSecurityKey = {
   EDIT: securityKey.EDITSUPPLIERCONTACT,
 };
 
-const SupplierContactDetail = ({ isEditablePage, isSearchFilterShow }) => {
+const SupplierContactDetail = ({ isEditablePage, isSearchFilterShow , contryIdCode }) => {
   const { supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
   return (
@@ -30,7 +30,7 @@ const SupplierContactDetail = ({ isEditablePage, isSearchFilterShow }) => {
         addEditContactMutation={useAddEditContactMutation}
         SecurityKey={!isResponsibleUser ? supplierSecurityKey : null}
         getContactById={useLazyGetSupllierContactByContactQuery}
-        contryIdCode={null}
+        contryIdCode={contryIdCode}
       />
     </div>
   );

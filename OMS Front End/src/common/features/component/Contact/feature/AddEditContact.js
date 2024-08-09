@@ -68,7 +68,8 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             ...data,
             contactId: contactId,
             // customerId: 1093,
-            contactTypeId: String(contactTypeId),
+            // contactTypeId: String(contactTypeId),
+            contactTypeId: contactTypeId && typeof contactTypeId === "object" ? String(contactTypeId.value) : String(contactTypeId),
             [isSupplier ? 'supplierId' : 'customerId']: keyId,
             emailList: emailAddressList.length > 0 ? emailAddressList : null,
             phoneList: phoneNumberList.length > 0 ? modifyPhoneNumberData(phoneNumberList) : null,
@@ -79,6 +80,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     //** UseEffect */
     useEffect(() => {
         if (isAddEditSuccess && isAddEditData) {
+            
             if (isAddEditData.errorMessage.includes('EXISTS')) {
                 ToastService.warning(isAddEditData.errorMessage);
                 return;
