@@ -182,8 +182,7 @@ const ContactGrid = ({
           search={search}
         />
       </div>
-    </div>
-    ,
+    </div>,
     (contactTypeId) => <div className="mt-2">
       <div className="mt-2">
         <ContactList

@@ -6,7 +6,7 @@ const LoginFormData = {
     formFields: [
         {
             id: "email",
-            lable: "User Name / Email Address",
+            lable: "Email Address",
             Field_Name: "Email Address",
             fieldType: FormFieldTypes.INPUT,
             dataField: "email",

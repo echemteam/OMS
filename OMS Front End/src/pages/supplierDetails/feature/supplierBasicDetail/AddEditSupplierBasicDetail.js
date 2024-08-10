@@ -274,7 +274,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            setSupplierName(data.trim());
+            const trimCustomerName = data.replace(/\s+/g, '');
+            setSupplierName(trimCustomerName);
         }
     };
 

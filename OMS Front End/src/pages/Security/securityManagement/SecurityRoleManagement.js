@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
-import MolGrid from "../../../components/Grid/MolGrid";
+// import MolGrid from "../../../components/Grid/MolGrid";
 import { useNavigate } from "react-router-dom";
 import CenterModel from "../../../components/ui/centerModel/CenterModel";
 import AddEditRole from "./features/AddEditRole";
@@ -15,6 +15,7 @@ import SidebarModel from "../../../components/ui/sidebarModel/SidebarModel";
 import { encryptUrlData } from "../../../services/CryptoService";
 import { securityKey } from "../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
+import FinalMolGrid from "../../../components/FinalMolGrid/FinalMolGrid";
 
 
 const SecurityRoleManagement = () => {
@@ -228,7 +229,7 @@ const SecurityRoleManagement = () => {
       >
         <div className="row">
           <div className="col-md-12 table-striped">
-            <MolGrid
+            <FinalMolGrid
               ref={molGridRef}
               configuration={SecurityRoleGridConfig}
               dataSource={listData}
