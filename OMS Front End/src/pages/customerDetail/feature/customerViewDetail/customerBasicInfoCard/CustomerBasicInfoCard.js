@@ -27,7 +27,7 @@ import {
 import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDetail.data";
 import { AppIcons } from "../../../../../data/appIcons";
 import CopyText from "../../../../../utils/CopyText/CopyText";
-import { ErrorMessage,SuccessMessage } from "../../../../../data/appMessages";
+import { ErrorMessage, SuccessMessage } from "../../../../../data/appMessages";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
@@ -49,7 +49,7 @@ const CustomerBasicInfoCard = ({
   const [showModal, setShowModal] = useState(false);
   const [staticId, setStaticId] = useState("");
   const [statusFeild, setStatusFeild] = useState("");
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState(StatusValue);
   const [customerID, setCustomerId] = useState();
   const [statusId, setStatusId] = useState();
   const [rUserValue, setRUserValue] = useState([]);
@@ -93,12 +93,12 @@ const CustomerBasicInfoCard = ({
   useEffect(() => {
     if (!isResponsibleUser) {
       if (hasEditPermission && hasEditPermission.isViewOnly === true) {
-       
+
         setIsButtonDisable(true);
       } else if (hasEditPermission.isEditable === true) {
         // setShowEditIcon(true);
       } else {
-     
+
         setIsButtonDisable(true);
       }
     }
@@ -121,46 +121,46 @@ const CustomerBasicInfoCard = ({
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
-  useEffect(() => {
-    if (customerData) {
-      const statusId = customerData.statusId;
-      switch (statusId) {
-        case 1:
-        case 2:
-        case 3:
-          setOptions(StaticStatus[StatusValue[statusId - 1].label]);
-          break;
-        case 4:
-          setOptions([
-            { value: "4", label: "Freeze" },
-            { value: "3", label: "Approved" },
-            { value: "1", label: "Pending" },
-          ]);
-          break;
-        case 5:
-          setOptions([
-            { value: "5", label: "Block" },
-            { value: "3", label: "Approved" },
-            { value: "1", label: "Pending" },
-          ]);
-          break;
-        case 6:
-          setOptions(
-            StaticStatus.Approved.filter(
-              (option) => option.label === StatusValue[statusId - 1].label
-            )
-          );
-          break;
-        case 7:
-          setOptions(StaticStatus[StatusValue[statusId - 1].label]);
-          break;
+  // useEffect(() => {
+  //   setOptions(StatusValue);
+  //   if (customerData) {
+  //     // const statusId = customerData.statusId;
+  //     // switch (statusId) {
+  //     //   case 1:
+  //     //   case 2:
+  //     //   case 3:
+  //     //     setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+  //     //     break;
+  //     //   case 4:
+  //     //     setOptions([
+  //     //       { value: "4", label: "Freeze" },
+  //     //       { value: "3", label: "Approved" },
+  //     //       { value: "1", label: "Pending" },
+  //     //     ]);
+  //     //     break;
+  //     //   case 5:
+  //     //     setOptions([
+  //     //       { value: "5", label: "Block" },
+  //     //       { value: "3", label: "Approved" },
+  //     //       { value: "1", label: "Pending" },
+  //     //     ]);
+  //     //     break;
+  //     //   case 6:
+  //     //     setOptions(
+  //     //       StaticStatus.Approved.filter(
+  //     //         (option) => option.label === StatusValue[statusId - 1].label
+  //     //       )
+  //     //     );
+  //     //     break;
+  //     //   case 7:
+  //     //     setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+  //     //     break;
 
-        default:
-          setOptions([]);
-      }
-      
-    }
-  }, [customerData]);
+  //     //   default:
+  //     //     setOptions([]);
+  //     // }
+  //   }
+  // }, [customerData]);
 
   useEffect(() => {
     if (customerData) {
@@ -189,14 +189,12 @@ const CustomerBasicInfoCard = ({
   }, [isGetAllUserSucess, allGetAlluserData]);
 
   const handleStatusChange = (selectedOption) => {
-    setStaticId(selectedOption.value);
-    setStatusFeild(selectedOption.label);
     if (selectedOption.label === customerData.status) {
       ToastService.warning(
         "You can't change the status of the customer to currect customer status."
       );
     } else {
-      if (selectedOption.value === "1" || selectedOption.value === "2") {
+      if (selectedOption.value === 1 || selectedOption.value === 2) {
         confirm(
           "Warning?",
           `Are you sure you want to change the customer status to ${selectedOption.label}?`,
@@ -213,14 +211,17 @@ const CustomerBasicInfoCard = ({
           }
         });
       } else if (
-        selectedOption.value === "4" ||
-        selectedOption.value === "5" ||
-        selectedOption.value === "6" ||
-        selectedOption.value === "7"
+        selectedOption.value === 4 ||
+        selectedOption.value === 5 ||
+        selectedOption.value === 6 ||
+        selectedOption.value === 7
       ) {
+        if (selectedOption.value !== 7) {
+          removeFields();
+        }
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
-      } else if (selectedOption.value === "3") {
+      } else if (selectedOption.value === 3) {
         if (childRef.current) {
           childRef.current.callChildFunction(
             customerId,
@@ -232,6 +233,14 @@ const CustomerBasicInfoCard = ({
       }
     }
   };
+
+  const removeFields = () => {
+    const removeFields = ['ResponsibleUserId']
+    const newFrom = { ...formData };
+    newFrom.formFields = formData.formFields.filter(field => !removeFields.includes(field.id));
+    setFormData(newFrom);
+  }
+
 
   //** Responsible User  */
   const handleRUserChange = (selectedValue) => {
@@ -282,7 +291,7 @@ const CustomerBasicInfoCard = ({
       let req = {
         ...custData,
         customerId: customerId,
-        statusId: staticId,
+        statusId: selectedStatus ? selectedStatus : 0,
       };
       updateCustomerInActiveStatus(req);
     }
@@ -340,6 +349,11 @@ const CustomerBasicInfoCard = ({
       getCustomerById();
     }
   }, [isSuccessUpdateCustomerSubCustomer, isUpdateCustomerSubCustomerData]);
+
+  const getStatusLabel = (value) => {
+    const status = StatusValue.find(item => item.value === value);
+    return status ? status.label : 'Unknown'; // Returns 'Unknown' if value not found
+  };
 
   return !isLoading ? (
     <div className="basic-customer-detail">
@@ -479,7 +493,7 @@ const CustomerBasicInfoCard = ({
                     className="checkbox-label"
                   ></label>
                 </div>
-                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -491,7 +505,7 @@ const CustomerBasicInfoCard = ({
         <CenterModel
           showModal={showModal}
           handleToggleModal={handleToggleModal}
-          modalTitle={`${statusFeild} Reason`}
+          modalTitle={`${getStatusLabel(selectedStatus)} Reason`}
           modelSizeClass="w-50s"
         >
           <div className="row horizontal-form">
@@ -523,7 +537,7 @@ const CustomerBasicInfoCard = ({
       />
     </div>
   ) : (
-    <DataLoader/>
+    <DataLoader />
   );
 };
 
