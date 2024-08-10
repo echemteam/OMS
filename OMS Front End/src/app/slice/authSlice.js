@@ -28,7 +28,7 @@ const authSlice = createSlice({
     // },
     authentication: (state, action) => {
       //Use to create cookie.
-      const { securityPermissions, approvalRulesConfiguration, ...newAuthProps } = action.payload;
+      const { securityPermissions, approvalRulesConfiguration, smtpSettings, ...newAuthProps } = action.payload;
       setAuthProps(newAuthProps);
       const { isAuthenticated, message, token, user, sessionTimeout, fullname, roles, ...permissionList } = action.payload;
       state.user = user;
@@ -36,6 +36,7 @@ const authSlice = createSlice({
       state.userPermissions = permissionList;
       saveData('SecurityPermission', permissionList);
       saveData('approvalRules', approvalRulesConfiguration);
+      saveData('smtpSettings', smtpSettings);
       state.isLogedin = true;
       state.isPasswordResetRequired = action.payload.user.passwordResetRequired ? action.payload.user.passwordResetRequired : false
     },
