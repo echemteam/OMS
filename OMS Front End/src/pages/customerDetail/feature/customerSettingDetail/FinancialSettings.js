@@ -297,11 +297,12 @@ const FinancialSettings = ({ isEditablePage }) => {
   }
 
   const handleExcludeCardValue = (dropdownValue, isHandleChange) => {
+    let value = isHandleChange ? dropdownValue.value : dropdownValue;
     const findCreditFields = getFieldData(SettingFormData, 'bankWireFee');
     let formData = { ...customerSettingFormData };
     formData.formFields = formData.formFields.filter((field) => field.dataField !== 'cardProcessingCharges');
     const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankWireFee');
-    if (!isBankFeePresent) {
+    if (!isBankFeePresent && value !== PaymentMethodTypes.ACHECHECK) {
       const insertIndex = formData.formFields.length - 1;
       let updatedFormFields = [...formData.formFields];
       if (customerCountryId !== CountryId.USA) {
@@ -309,14 +310,13 @@ const FinancialSettings = ({ isEditablePage }) => {
       }
       formData.formFields = updatedFormFields;
     } else if (isBankFeePresent) {
-      if (customerCountryId === CountryId.USA) {
+      if (customerCountryId === CountryId.USA || value === PaymentMethodTypes.ACHECHECK) {
         let updatedFormFields = [...formData.formFields];
         formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
         updatedFormFields = [...formData.formFields];
         formData.formFields = updatedFormFields;
       }
     }
-    let value = isHandleChange ? dropdownValue.value : dropdownValue;
     if (customerCountryId !== CountryId.USA && value === PaymentMethodTypes.CREDITCARD) {
       formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
     }

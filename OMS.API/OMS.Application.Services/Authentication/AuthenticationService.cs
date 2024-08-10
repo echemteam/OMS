@@ -61,6 +61,7 @@ namespace OMS.Application.Services.Authentication
             }).ToList();
 
             authResponce.ApprovalRulesConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
+            authResponce.smtpSettings = await repositoryManager.smtpSettings.GetSmtpSettings();
 
             UserDetails userDetails = user.ToMapp<UserDto, UserDetails>();
             authResponce.User = userDetails;
