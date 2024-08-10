@@ -50,3 +50,9 @@ div:where(.swal2-icon).swal2-question{
     height: 37px;
   }
 }
+
+.swal2-actions{
+  button{
+    font-size: var(--commonFont-large);
+  }
+}
