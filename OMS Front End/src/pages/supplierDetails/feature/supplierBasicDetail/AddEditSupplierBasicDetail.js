@@ -210,29 +210,31 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         };
 
         if (!data.taxId) {
-            let request = {
-                newValue: req,
-                oldValue: formData.initialState,
-                functionalityName: isOpen ? FunctionalitiesName.UPDATESUPPLIER : FunctionalitiesName.ADDSUPPLIER
-            }
-            const modifyData = await ValidateRequestByApprovalRules(request);
-            if (modifyData.newValue) {
-                addEditSupplierBasicInformation(modifyData.newValue);
-            }
+            addEditSupplierBasicInformation(req);
+            // let request = {
+            //     newValue: req,
+            //     oldValue: formData.initialState,
+            //     functionalityName: isOpen ? FunctionalitiesName.UPDATESUPPLIER : FunctionalitiesName.ADDSUPPLIER
+            // }
+            // const modifyData = await ValidateRequestByApprovalRules(request);
+            // if (modifyData.newValue) {
+            //     addEditSupplierBasicInformation(modifyData.newValue);
+            // }
             return;
         }
 
         const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(req.countryId || 0, supplierBasicData.formFields, 'taxId');
         if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
-            let request = {
-                newValue: req,
-                oldValue: formData.initialState,
-                functionalityName: isOpen ? FunctionalitiesName.UPDATESUPPLIER : FunctionalitiesName.ADDSUPPLIER
-            }
-            const modifyData = await ValidateRequestByApprovalRules(request);
-            if (modifyData.newValue) {
-                addEditSupplierBasicInformation(modifyData.newValue);
-            }
+            addEditSupplierBasicInformation(req);
+            // let request = {
+            //     newValue: req,
+            //     oldValue: formData.initialState,
+            //     functionalityName: isOpen ? FunctionalitiesName.UPDATESUPPLIER : FunctionalitiesName.ADDSUPPLIER
+            // }
+            // const modifyData = await ValidateRequestByApprovalRules(request);
+            // if (modifyData.newValue) {
+            //     addEditSupplierBasicInformation(modifyData.newValue);
+            // }
         } else {
             ToastService.warning(validateTaxIdMessage);
         }
