@@ -114,13 +114,12 @@ namespace OMS.Shared.DbContext
                 {
                     _connection.Open();
                 }
-
                 var result = await _connection.QuerySingleOrDefaultAsync<T>(query, parameters, commandType: commandType);
-                if (result == null)
-                {
-                    throw new InvalidOperationException("Query execution returned a null result.");
-                }
-                return result;
+                //if (result == null)
+                //{
+                //    throw new InvalidOperationException("Query execution returned a null result.");
+                //}
+                return result!;
             }
             catch (Exception ex)
             {
@@ -142,13 +141,11 @@ namespace OMS.Shared.DbContext
                     _connection.Open();
                 }
                 var result = await _connection.QueryFirstOrDefaultAsync<T>(query, parameters, commandType: commandType);
-
-                if (result == null)
-                {
-                    throw new InvalidOperationException("Query execution returned a null result.");
-                }
-
-                return result;
+                //if (result == null)
+                //{
+                //    throw new InvalidOperationException("Query execution returned a null result.");
+                //}
+                return result!;
 
             }
             catch (Exception ex)
