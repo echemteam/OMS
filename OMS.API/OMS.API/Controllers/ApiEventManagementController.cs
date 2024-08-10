@@ -22,7 +22,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    [CheckClientIpActionFilter]
+    //[CheckClientIpActionFilter]
     public class ApiEventManagementController : BaseController
     {
         #region private variable
