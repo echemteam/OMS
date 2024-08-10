@@ -108,123 +108,123 @@ const Input = ({
     }
   };
   return (
-      <>
-        {maskFormat ? (
-          <PatternFormat
-            mask="_"
-            id={name}
-            value={value}
-            name={name}
-            type={type}
-            className={cssClass}
-            placeholder={placeholder}
-            onChange={handleInputChange}
-            onKeyUp={onKeyup}
-            onKeyDown={handleKeyDown}
-            onBlur={onBlur}
-            disabled={isDisable}
-            format={format}
-            pattern={pattern}
-            {...inputAttributes}
-          />
-        ) : (
-          <>
-            {/* {(inputButtonGroup?.isMultiButton ||
+    <>
+      {maskFormat ? (
+        <PatternFormat
+          mask="_"
+          id={name}
+          value={value}
+          name={name}
+          type={type}
+          className={cssClass}
+          placeholder={placeholder}
+          onChange={handleInputChange}
+          onKeyUp={onKeyup}
+          onKeyDown={handleKeyDown}
+          onBlur={onBlur}
+          disabled={isDisable}
+          format={format}
+          pattern={pattern}
+          {...inputAttributes}
+        />
+      ) : (
+        <>
+          {/* {(inputButtonGroup?.isMultiButton ||
               inputButtonGroup?.isInputButton ||
               inputButtonGroup?.showInformation.showInputButton) ? ( */}
-              
-              {(inputButtonGroup?.isInputButton ||
-              inputButtonGroup?.showInformation?.showInputButton) ? (
-              <div className="input-group">
-                <input
-                  id={name}
-                  value={value}
-                  name={name}
-                  type={type}
-                  className={`${cssClass} inputWithButton`}
-                  placeholder={placeholder}
-                  onChange={handleInputChange}
-                  onKeyUp={onKeyup}
-                  onKeyDown={handleKeyDown}
-                  onBlur={onBlur}
-                  disabled={isDisable}
-                  min={min}
-                  max={max}
-                  {...inputAttributes}
-                />
-                <div className="input-group-append">
-                  {inputButtonGroup?.isInputButton && (
-                    <div>
-                      <button
-                        className="input-button btn theme-button"
-                        disabled={!value}
-                        type="button"
-                        onClick={handleInputGroupButton}
-                      >
-                        {inputButtonGroup?.buttonText}
-                      </button>
-                    </div>
-                  )}
-                  <div className="input-seprate-btn">
-                    {inputButtonGroup?.showInformation?.showInputButton && (
-                      <button
-                        className="input-button btn theme-button list-btn-width ml-1 border-fix"
-                        disabled={!value}
-                        type="button"
-                        onClick={handleInputShowInfo}
-                      >
-                        <i className={`fa ${inputButtonGroup?.showInformation?.faIcon}`} />
-                        <span className="tooltip-text">
-                          {inputButtonGroup?.showInformation?.title}
-                        </span>
-                      </button>
-                    )}
+
+          {(inputButtonGroup?.isInputButton ||
+            inputButtonGroup?.showInformation?.showInputButton) ? (
+            <div className="input-group">
+              <input
+                id={name}
+                value={value}
+                name={name}
+                type={type}
+                className={`${cssClass} inputWithButton`}
+                placeholder={placeholder}
+                onChange={handleInputChange}
+                onKeyUp={onKeyup}
+                onKeyDown={handleKeyDown}
+                onBlur={onBlur}
+                disabled={isDisable}
+                min={min}
+                max={max}
+                {...inputAttributes}
+              />
+              <div className="input-group-append">
+                {inputButtonGroup?.isInputButton && (
+                  <div>
+                    <button
+                      className="input-button btn theme-button"
+                      disabled={!value}
+                      type="button"
+                      onClick={handleInputGroupButton}
+                    >
+                      {inputButtonGroup?.buttonText}
+                    </button>
                   </div>
+                )}
+                <div className="input-seprate-btn">
+                  {inputButtonGroup?.showInformation?.showInputButton && (
+                    <button
+                      className="input-button btn theme-button list-btn-width ml-1 border-fix"
+                      disabled={!value}
+                      type="button"
+                      onClick={handleInputShowInfo}
+                    >
+                      <i className={`fa ${inputButtonGroup?.showInformation?.faIcon}`} />
+                      <span className="tooltip-text">
+                        {inputButtonGroup?.showInformation?.title}
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
-            ) : (
-              <div className={`input-group ${type === TextInputType.PASSWORD ? 'custom-pass-sec' : ''}`}>
-                <input
-                  id={name}
-                  value={value}
-                  name={name}
-                  type={showPassword && type === TextInputType.PASSWORD ? TextInputType.TEXT : type}
-                  className={cssClass}
-                  placeholder={placeholder}
-                  onChange={handleInputChange}
-                  onKeyUp={onKeyup}
-                  onKeyDown={handleKeyDown}
-                  onBlur={onBlur}
-                  disabled={isDisable}
-                  min={min}
-                  max={max}
-                  {...inputAttributes}
-                />
-                {type === TextInputType.PASSWORD && (
-                  <div type="button" className="password-hide-show" onClick={toggleShowPassword}>
-                    {/* {showPassword ? (
-                      <Image imagePath={AppIcons.EyeSlashIcon} altText="Password Hide" />
-                    ) : (
-                      <Image imagePath={AppIcons.EyeIcon} altText="Password Show" />
-                    )} */}
+            </div>
+          ) : (
+            <div className={`input-group ${type === TextInputType.PASSWORD ? 'custom-pass-sec' : ''}`}>
+              <input
+                id={name}
+                value={value}
+                name={name}
+                type={showPassword && type === TextInputType.PASSWORD ? TextInputType.TEXT : type}
+                className={cssClass}
+                placeholder={placeholder}
+                onChange={handleInputChange}
+                onKeyUp={onKeyup}
+                onKeyDown={handleKeyDown}
+                onBlur={onBlur}
+                disabled={isDisable}
+                min={min}
+                max={max}
+                {...inputAttributes}
+              />
+              {type === TextInputType.PASSWORD && (
+                <div type="button" className="password-hide-show" onClick={toggleShowPassword}>
+                  {showPassword ? (
+                    <Image imagePath={AppIcons.EyeSlashIcon} altText="Password Hide" />
+                  ) : (
+                    <Image imagePath={AppIcons.EyeIcon} altText="Password Show" />
+                  )}
+                </div>
+              )}
+              {inputIcon?.isIconShow && (
+                <div className="icon-fix">
+                  <div className="input-icon">
+                    <i className={`fa ${inputIcon?.faIcon}`} />
+                    <span className="tooltip-text">
+                      {inputIcon?.message}
+                    </span>
                   </div>
-                )}
-                {inputIcon?.isIconShow && (
-                  <div className="icon-fix">
-                    <div className="input-icon">
-                      <i className={`fa ${inputIcon?.faIcon}`} />
-                      <span className="tooltip-text">
-                        {inputIcon?.message}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </>
-        )}
-      </>
-    );
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      )}
+    </>
+  );
 };
 
 Input.propTypes = {
