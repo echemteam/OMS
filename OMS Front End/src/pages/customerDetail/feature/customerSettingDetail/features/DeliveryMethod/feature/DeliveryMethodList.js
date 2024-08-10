@@ -52,14 +52,6 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
                 iconImg={AppIcons.PlusIcon}
                 titleButtonClick={handleToggleModal}>
                 <div className="account-table table-striped mb-3">
-                    {/* <MolGrid
-                        ref={molGridRef}
-                        configuration={gridConfig}
-                        dataSource={ourAccountData}
-                        allowPagination={false}
-                        onActionChange={actionHandler}
-                        isLoading={isGetDataLoading}
-                    /> */}
                     <FinalMolGrid
                         ref={molGridRef}
                         configuration={OurAccountGridConfig}

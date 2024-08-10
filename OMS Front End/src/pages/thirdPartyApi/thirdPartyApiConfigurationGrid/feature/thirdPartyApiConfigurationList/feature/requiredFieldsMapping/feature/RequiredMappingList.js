@@ -2,7 +2,6 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { useDeleteApiEventRequiredFieldsMappingMutation, useGetApiEventRequiredFieldsMappingsMutation } from '../../../../../../../../app/services/thirdPartyAPI';
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
-// import MolGrid from '../../../../../../../../components/Grid/MolGrid';
 import { AddEditRequiredMappingConfigurationData } from '../config/AddEditRequiredMapping.data';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
 import FinalMolGrid from '../../../../../../../../components/FinalMolGrid/FinalMolGrid';

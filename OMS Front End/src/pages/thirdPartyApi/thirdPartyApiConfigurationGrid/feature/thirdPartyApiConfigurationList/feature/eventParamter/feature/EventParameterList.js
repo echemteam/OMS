@@ -4,7 +4,6 @@ import { useDeleteApiEventParameterMutation, useGetApiEventParametersMutation } 
 import { AddEditParameterConfigurationData } from '../config/AddEditParameter.data';
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
-// import MolGrid from '../../../../../../../../components/Grid/MolGrid';
 import FinalMolGrid from '../../../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const EventParameterList = (props) => {
