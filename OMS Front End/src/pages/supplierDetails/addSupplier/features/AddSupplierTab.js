@@ -120,10 +120,10 @@ const AddSupplierTab = () => {
                         {step.content}
                         <div className="d-flex justify-content-end">
                           {index > 0 && (
-                            <button type="button" className="btn dark-btn mr-3"
+                            <button type="button" className="btn dark-btn mr-3 btn-prev"
                               onClick={movePreviewPage}
                             >
-                              Back
+                            <Image imagePath={AppIcons.nextArrowIcon} />  Back
                             </button>
                           )}
                           {index < tabContent.length - 1 ? (

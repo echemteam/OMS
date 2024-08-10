@@ -233,7 +233,7 @@ const OrganizationBusinessAddressDetail = () => {
       <div className="col-md-12">
         <div className="d-flex align-item-end justify-content-end" >
           <Buttons
-            buttonTypeClassName="theme-button"
+            buttonTypeClassName="theme-button mr-2"
             buttonText="Save"
             isLoading={isAddEditBusinessAddressLoading}
             onClick={handleAddEditBusinessAddress}

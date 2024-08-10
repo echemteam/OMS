@@ -202,11 +202,11 @@ const Input = ({
                 />
                 {type === TextInputType.PASSWORD && (
                   <div type="button" className="password-hide-show" onClick={toggleShowPassword}>
-                    {showPassword ? (
+                    {/* {showPassword ? (
                       <Image imagePath={AppIcons.EyeSlashIcon} altText="Password Hide" />
                     ) : (
                       <Image imagePath={AppIcons.EyeIcon} altText="Password Show" />
-                    )}
+                    )} */}
                   </div>
                 )}
                 {inputIcon?.isIconShow && (

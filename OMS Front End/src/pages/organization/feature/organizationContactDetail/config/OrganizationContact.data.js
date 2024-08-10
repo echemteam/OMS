@@ -33,7 +33,7 @@ export const OrganizationContactFormData = {
             },
             validation: [{ type: "require" },{ type: "email" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {
@@ -49,7 +49,7 @@ export const OrganizationContactFormData = {
             },
             validation: [{ type: "require" },{ type: "email" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
           {
@@ -65,7 +65,7 @@ export const OrganizationContactFormData = {
             },
             validation: [{ type: "require" },{ type: "email" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {
@@ -81,7 +81,7 @@ export const OrganizationContactFormData = {
             },
             validation: [{ type: "require" },{ type: "email" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
        
@@ -98,7 +98,7 @@ export const OrganizationContactFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {
@@ -115,7 +115,7 @@ export const OrganizationContactFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {
@@ -131,7 +131,7 @@ export const OrganizationContactFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         

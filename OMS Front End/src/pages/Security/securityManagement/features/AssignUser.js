@@ -202,7 +202,7 @@ const AssignUser = (props) => {
     <div>
       <div className="row">
         <div className="col-12 col-md-11 assign-user-form">
-          <div className="row mt-2">
+          <div className="row mt-2 align-items-end">
             <FormCreator
               ref={asignUserFormRef}
               config={userForm}

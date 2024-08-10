@@ -576,6 +576,9 @@ a {
         min-width: 100px;
         max-width: 100px;
       }
+      .input-group{
+        flex-wrap: nowrap;
+      }
     }
 
     .validation-text {

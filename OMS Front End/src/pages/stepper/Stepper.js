@@ -69,6 +69,7 @@ const StepperComponent = () => {
                         type="button"
                         className="btn dark-btn mr-3"
                         onClick={() => stepperRef.current.previous()}
+                        imagePath={AppIcons.BackArrowIcon}
                       >
                         Back
                       </button>
