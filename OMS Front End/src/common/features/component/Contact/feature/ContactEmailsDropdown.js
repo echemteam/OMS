@@ -32,14 +32,14 @@ const ContactEmailsDropdown = ({
           {primaryEmailAddress?.emailAddress ? (
             <>
               <div
-                className={`values ${
-                  primaryEmailAddress?.isPrimary ? "primary-email" : ""
-                }`}
+                className={`values`}
               >
                 {primaryEmailAddress?.emailAddress}
               </div>
               <span
-                className="copy-icon"
+                className={`copy-icon ${
+                  primaryEmailAddress?.isPrimary ? "primary-email" : ""
+                }`}
                 title="Copy"
                 onClick={() =>
                   CopyText(primaryEmailAddress?.emailAddress, "email")

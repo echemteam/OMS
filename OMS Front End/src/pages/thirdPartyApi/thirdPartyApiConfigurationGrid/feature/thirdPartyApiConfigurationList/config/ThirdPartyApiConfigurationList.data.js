@@ -37,7 +37,7 @@ export const thirdPartyListConfigurationData = {
                 {
                     name: "VIEWCONFIGURATION",
                     iconName: AppIcons.EyeIcon,
-                    title: "View Configuration"
+                    title: "View"
                 },
             ],
         },
