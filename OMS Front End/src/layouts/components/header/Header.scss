@@ -11,6 +11,15 @@
 
   .left-section {
     width: 40%;
+
+    .search-bar{
+      .search-section{
+        border: none !important;
+        .search-part{
+          border: none !important;
+        }
+      }
+    }
   }
 
   .right-section {
