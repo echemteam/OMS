@@ -56,6 +56,9 @@ export const AllCustomerGridConfig = {
       colStyle: {
         width: "15%",
       },
+      defaultAction: {
+        allowEdit: true,
+      },
       customAction: [
         {
           name: "ALLOWDISABLE",
@@ -78,9 +81,7 @@ export const AllCustomerGridConfig = {
           title: "Reject"
         },
       ],
-      defaultAction: {
-        allowEdit: true,
-      },
+     
     },
   ],
 };
