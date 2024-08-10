@@ -291,6 +291,7 @@ const CustomerBasicInfoCard = ({
         statusId: selectedStatus ? selectedStatus : 0,
       };
       updateCustomerInActiveStatus(req);
+      updateRUserData(custData?.responsibleUserId?.value);
     }
   };
 
