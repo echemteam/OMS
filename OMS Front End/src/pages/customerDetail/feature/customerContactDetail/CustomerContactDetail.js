@@ -8,13 +8,13 @@ import PropTypes from "prop-types";
 const ContactGrid = React.lazy(() => import("../../../../common/features/component/Contact/ContactGrid"));
 
 const customerSecurityKey = {
-    ADD: securityKey.ADDCUSTOMERCONTACT,
-    EDIT: securityKey.EDITCUSTOMERCONTACT,
+  ADD: securityKey.ADDCUSTOMERCONTACT,
+  EDIT: securityKey.EDITCUSTOMERCONTACT,
 }
 
-const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow }) => {
-    
-    const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
+const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow , contryIdCode}) => {
+
+  const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
 
   return (
     /**
@@ -25,12 +25,13 @@ const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow }) => {
       <ContactGrid
         isSupplier={false}
         isEditablePage={isEditablePage}
-        keyId={customerId ? customerId : 0}
+        keyId={customerId || 0}
         isSearchFilterShow={isSearchFilterShow}
         getContactByKeyId={useLazyGetContactByCustomerIdQuery}
         addEditContactMutation={useAddEditContactMutation}
         SecurityKey={!isResponsibleUser ? customerSecurityKey : null}
         getContactById={useLazyGetCustomerContactByContactIdQuery}
+        contryIdCode={contryIdCode}
       />
     </div>
   );

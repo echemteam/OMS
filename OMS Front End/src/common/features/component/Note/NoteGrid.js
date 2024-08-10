@@ -85,7 +85,7 @@ const NoteGrid = ({
         buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
-        rightButton={buttonVisible ? true : false}
+        rightButton={buttonVisible }
         buttonText="Add"
         titleButtonClick={handleToggleModal}
       >

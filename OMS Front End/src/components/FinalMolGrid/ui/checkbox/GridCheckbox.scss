@@ -1,0 +1,124 @@
+// Checkbox Start
+.checkbox-label-part {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+  
+    .input-label {
+      word-break: normal;
+      white-space: nowrap;
+    }
+  }
+  
+  .checkbox-part {
+    display: flex;
+    align-items: center;
+  
+    .checkbox {
+      margin-right: 7px;
+      display: flex;
+  
+      input {
+        position: absolute;
+        opacity: 0;
+  
+        +.checkbox-label {
+          border-radius: 0px;
+          overflow: hidden;
+          border: 1px solid var(--inputBorder);
+          width: 20px;
+          height: 20px;
+  
+          &:before {
+            content: '';
+            background-color: var(--whiteColor);
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            position: relative;
+            top: -1px;
+            margin-right: 0;
+            vertical-align: top;
+            cursor: pointer;
+            text-align: center;
+            transition: all 250ms ease;
+          }
+        }
+  
+        &:checked {
+  
+          +.checkbox-label {
+            height: 20px;
+            width: 20px;
+            background: var(--gradient-theme);
+            border: 1px solid var(--gradient-theme);
+  
+            &:before {
+              top: -1px;
+              background: url(../../../../assets/images/righttike-white.png);
+              background-position: center;
+              background-size: contain;
+              background-repeat: no-repeat;
+              // box-shadow: inset 0 0 0 4px var(--whiteColor);
+            }
+          }
+        }
+  
+        &:focus {
+          +.checkbox-label {
+            &:before {
+              outline: none;
+              // border-color: var(--themeColor);
+            }
+          }
+        }
+  
+        &:disabled {
+          +.checkbox-label {
+            &:before {
+              // box-shadow: inset 0 0 0 4px var(--whiteColor);
+              // border-color: var(--whiteColor);
+              // background: var(--whiteColor);
+            }
+          }
+        }
+  
+        +.checkbox-label {
+          &:empty {
+            &:before {
+              margin-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .customDatePickerWidth,
+  .customDatePickerWidth>div.react-datepicker-wrapper,
+  .customDatePickerWidth>div>div.react-datepicker__input-container .customDatePickerWidth>div>div.react-datepicker__input-container input {
+    width: 100%;
+  }
+  
+  
+  // Checkbox End
+  
+  @media only screen and (max-width: 1750px) {
+    .checkbox-part {
+      .checkbox {
+        input {
+          .checkbox-label {
+            height: 15px;
+            width: 15px;
+  
+            &:checked {
+              .checkbox-label {
+                height: 15px;
+                width: 15px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }

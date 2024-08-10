@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.Organization
 {
-    public class OrganizationProfileDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class OrganizationProfileDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public byte? OrganizationProfileId { get; set; }
         public string? RegisteredName { get; set; }

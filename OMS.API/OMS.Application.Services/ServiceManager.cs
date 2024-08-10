@@ -11,6 +11,7 @@ using OMS.Application.Services.CustomerDocuments;
 using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.EmailAddress;
+using OMS.Application.Services.Order;
 using OMS.Application.Services.Organization;
 using OMS.Application.Services.PhoneNumber;
 using OMS.Application.Services.Roles;
@@ -63,6 +64,7 @@ namespace OMS.Application.Services
         IOrganizationService _organizationService;
         ISupplierFinancialSettingsService _supplierFinancialSettingsService;
         IApiEventManagementService _apiEventManagementService;
+        IOrderServices _orderServices;
 
         public ITestService testService
         {
@@ -359,6 +361,18 @@ namespace OMS.Application.Services
                     _apiEventManagementService = new ApiEventManagementService(_repositoryManager, _commonSettingService);
                 }
                 return _apiEventManagementService;
+
+            }
+        }
+        public IOrderServices orderServices
+        {
+            get
+            {
+                if (_orderServices == null)
+                {
+                    _orderServices = new OrderServices(_repositoryManager, _commonSettingService);
+                }
+                return _orderServices;
 
             }
         }

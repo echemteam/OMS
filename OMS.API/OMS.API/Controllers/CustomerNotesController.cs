@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.CustomerNotes;
-using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.API.Response.CustomerNotes;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
@@ -12,6 +12,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class CustomerNotesController : BaseController
     {
         #region private variable
@@ -19,7 +20,7 @@ namespace OMS.API.Controllers
         #endregion
 
         #region Constructor
-        public CustomerNotesController(ICommonSettingService commonSettingService,IServiceManager serviceManager) : base(commonSettingService)
+        public CustomerNotesController(ICommonSettingService commonSettingService, IServiceManager serviceManager) : base(commonSettingService)
         {
             _serviceManager = serviceManager;
         }
@@ -37,7 +38,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateCustomerNotes")]
         public async Task<IActionResult> UpdateCustomerNotes(UpdateCustomerNotesRequest requestData)
         {
-            AddEntityDTO<long> responseData = new();
+            AddEntityDto<long> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.customerNotesService.UpdateCustomerNotes(requestData, CurrentUserId);

@@ -1,4 +1,4 @@
-import { AppIcons } from "../../../../../data/appIcons";
+
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
@@ -98,25 +98,33 @@ export const UserGridConfig = {
     {
       name: "User Name",
       fieldName: "userName",
-      width: "20%",
+      colStyle: {
+        width: "20%",
+      },
       allowShort: true,
     },
     {
       name: "First Name",
       fieldName: "firstName",
-      width: "20%",
+      colStyle: {
+        width: "20%",
+      },
       allowShort: true,
     },
     {
       name: "Last Name",
       fieldName: "lastName",
-      width: "20%",
+      colStyle: {
+        width: "20%",
+      },
       allowShort: true,
     },
     {
       name: "IsActive",
       fieldName: "isActive",
-      width: "20%",
+      colStyle: {
+        width: "20%",
+      },
       colType: GridColumnType.CHECKBOX,
       colSettings: {
         allowCheckbox: true,
@@ -125,7 +133,9 @@ export const UserGridConfig = {
     },
     {
       name: "Action",
-      width: "20%",
+      colStyle: {
+        width: "20%",
+      },
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,

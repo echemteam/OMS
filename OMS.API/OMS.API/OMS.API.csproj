@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ClientIPAuthentication\ClientIPAuthentication.csproj" />
     <ProjectReference Include="..\OMS.Application.Services\OMS.Application.Services.csproj" />
     <ProjectReference Include="..\OMS.Domain.Repository\OMS.Domain.Repository.csproj" />
     <ProjectReference Include="..\OMS.Framework\OMS.Framework.csproj" />
@@ -20,9 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="ThirdPartyAPITester">
-      <HintPath>..\ThirdPartyAPITester.dll</HintPath>
+    <Reference Include="ThirdPartyAPILibrary">
+      <HintPath>..\ThirdPartyAPILibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
+
 
 </Project>

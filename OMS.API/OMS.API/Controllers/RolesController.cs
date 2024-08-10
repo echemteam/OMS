@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Roles;
@@ -11,6 +12,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class RolesController : BaseController
     {
         #region private variable
@@ -36,7 +38,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateRoles")]
         public async Task<IActionResult> UpdateRoles(UpdateRolesRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.rolesServices.UpdateRoles(requestData, CurrentUserId);

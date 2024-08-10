@@ -315,7 +315,7 @@ export const ComponentNavigation = [
   },
   {
     id: 'FunctionalConfigurationViewDetail',
-    path: '/FunctionalConfigurationViewDetail',
+    path: '/FunctionalConfigurationViewDetail/:id/:data',
     exact: true,
     title: 'Functional Configuration View Details',
     component: FunctionalConfigurationViewDetail,

@@ -1,14 +1,13 @@
-﻿using OMS.Domain.Entities.Entity.Customers;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMS.Domain.Entities.Entity.Address
 {
-    public class AddressDTO : BaseAddressDTO, IAddress, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class AddressDto : BaseAddressDto, IAddress, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? AddressId { get; set; }
         [Column("CustomerId")]
         public int? CustomerId { get; set; }
-      
+
         [Column("IsVerified")]
         public bool? IsVerified { get; set; }
         [Column("VerifiedBy")]

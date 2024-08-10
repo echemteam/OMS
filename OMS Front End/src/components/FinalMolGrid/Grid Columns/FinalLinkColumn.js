@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import { parseDynamicURL } from "../../../lib/parseWebURL";
+import { parseDynamicURL } from "./../libs/parseWebURL";
 
-export const renderGridLinkColumn = (rowData, col, rowIndex) => {
-    const { url, isOpenNewTab } = col.colSettings|| {url:'',isOpenNewTab:false};
-    const navigationURL = url ? parseDynamicURL(url, rowData) : rowData[col.fieldName];
-    const target = isOpenNewTab ? "_blank" : "_self";
+export const renderGridLinkColumn = (rowData, col) => {
+  const { baseUrl = '', target = '_self' } = col.colSettings || {};
   
-    return (
-      <Link to={navigationURL} target={target}>
-        {rowData[col.fieldName]}
-      </Link>
-    );
-  };
-  
+  // Parse the dynamic URL if provided, otherwise use the field value
+  const navigationURL = baseUrl ? parseDynamicURL(baseUrl, rowData) : rowData[col.fieldName];
+
+  return (
+    <Link to={navigationURL} target={target}>
+      {rowData[col.fieldName]}
+    </Link>
+  );
+};

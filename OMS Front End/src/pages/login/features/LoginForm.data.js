@@ -6,15 +6,15 @@ const LoginFormData = {
     formFields: [
         {
             id: "email",
-            lable: "User Name / Email Address",
+            lable: "User Name",
             Field_Name: "Email Address",
             fieldType: FormFieldTypes.INPUT,
             dataField: "email",
             fieldSetting: {
-                placeholder: "Email Address",
+                placeholder: "User Name",
                 allowSpace: false,
             },
-            validation: [{ type: "require" }, { type: "email" }],
+            validation: [{ type: "require" }],
             style: {
                 containerCss: "col-md-12 mb-3"
             }

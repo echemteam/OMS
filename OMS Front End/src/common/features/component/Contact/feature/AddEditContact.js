@@ -17,7 +17,7 @@ const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddres
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
 const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey,
-    isEditablePage, isSupplier, isEdit, isOpen, getContactById }) => {
+    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall , contryIdCode}) => {
 
     //** State */
     const ref = useRef();
@@ -39,33 +39,47 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSucess, data: isGetByIdData }] = getContactById();
     const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
 
-    //** Handle Changes */
-    const handleAddEdit = () => {
-        let data = ref.current.getFormData();
-        if (data) {
-            let contactTypeId = null;
-            if (isEdit) {
-                contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
-            } else {
-                contactTypeId = Array.isArray(data.contactTypeId) ? data.contactTypeId.map(String).join(",") : data.contactTypeId;
-            }
 
-            let request = {
-                ...data,
-                contactId: contactId,
-                contactTypeId: contactTypeId,
-                [isSupplier ? 'supplierId' : 'customerId']: keyId,
-                emailList: emailAddressList.length > 0 ? emailAddressList : null,
-                phoneList: phoneNumberList.length > 0 ? modifyPhoneNumberData(phoneNumberList) : null,
-                [isSupplier ? 'supplierContactId' : 'customerContactId']: isSupplier ? supplierContactId : customerContactId,
-            }
-            addEdit(request);
+    const handleAddEdit = () => {
+        const data = ref.current.getFormData();
+        if (!data) return;
+
+        const contactTypeId = getContactTypeId(data.contactTypeId, isEdit);
+        const request = requestData(data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
+
+        let req = {
+            ...request,
+            customerId: customerId ? customerId : request.customerId
         }
+        addEdit(req);
+    };
+
+    const getContactTypeId = (contactTypeId, isEdit) => {
+        if (isEdit) {
+            return contactTypeId && typeof contactTypeId === "object" ? String(contactTypeId.value) : String(contactTypeId);
+        } else {
+            return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId;
+        }
+    };
+
+    const requestData = (data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId) => {
+        return {
+            ...data,
+            contactId: contactId,
+            // customerId: 1093,
+            // contactTypeId: String(contactTypeId),
+            contactTypeId: contactTypeId && typeof contactTypeId === "object" ? String(contactTypeId.value) : String(contactTypeId),
+            [isSupplier ? 'supplierId' : 'customerId']: keyId,
+            emailList: emailAddressList.length > 0 ? emailAddressList : null,
+            phoneList: phoneNumberList.length > 0 ? modifyPhoneNumberData(phoneNumberList) : null,
+            [isSupplier ? 'supplierContactId' : 'customerContactId']: isSupplier ? supplierContactId : customerContactId,
+        };
     };
 
     //** UseEffect */
     useEffect(() => {
         if (isAddEditSuccess && isAddEditData) {
+            
             if (isAddEditData.errorMessage.includes('EXISTS')) {
                 ToastService.warning(isAddEditData.errorMessage);
                 return;
@@ -74,6 +88,9 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 onSuccess();
                 setContactId(isAddEditData?.keyValue);
                 ToastService.success(isAddEditData.errorMessage);
+                if (isOrderManage) {
+                    onhandleApiCall(getContectTypeId)
+                }
             }
         }
     }, [isAddEditSuccess, isAddEditData]);
@@ -140,13 +157,18 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const handleEditMode = (contactId) => {
         setEditMode(true);
         contactId && getById(contactId);
-        setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
+        // setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
     }
 
     useEffect(() => {
-        if (!isEdit) {
+        if (!isEdit && !isOrderManage) {
+            if (isSupplier) {
+                setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, false);
+            } else {
+                setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, true);
+            }
             let form = { ...contactDetailFormData };
-            // setFieldSetting(form, 'contactTypeId', FieldSettingType.MULTISELECT, isSupplier ? false : true);
+
             setFormData(form);
             if (isOpen) {
                 setContactId(0);
@@ -154,6 +176,17 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 setPhoneNumberList([]);
                 setEmailAddressList([])
             }
+        }
+        if (isOrderManage) {
+            setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
+            setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.MULTISELECT, false);
+            let form = { ...contactDetailFormData };
+            form.initialState = {
+                ...form.initialState,
+                contactTypeId: getContectTypeId,
+            }
+            setFormData(form);
+            // setShouldRerenderFormCreator((prevState) => !prevState);
         }
     }, [isOpen])
 
@@ -184,7 +217,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                         <EmailAddressGrid isButtonDisable={isButtonDisable} emailAddressList={emailAddressList}
                             setEmailAddressList={setEmailAddressList} contactId={contactId} />
                         <ContactNumbersGrid isButtonDisable={isButtonDisable} phoneNumberList={phoneNumberList}
-                            setPhoneNumberList={setPhoneNumberList} contactId={contactId} />
+                            setPhoneNumberList={setPhoneNumberList} contactId={contactId} contryIdCode={contryIdCode} />
                     </div>
                 </React.Fragment>
                 : <DataLoader />
@@ -192,12 +225,14 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             <div className="col-md-12 mt-3">
                 <div className="d-flex align-item-end justify-content-end">
                     <div className="d-flex align-item-end">
-                        <Buttons
-                            buttonTypeClassName="theme-button"
-                            buttonText='Save'
-                            isLoading={isAddEditLoading}
-                            onClick={handleAddEdit}
-                            isDisable={isButtonDisable} />
+                        {/* {!enableDisableButton && */}
+                            <Buttons
+                                buttonTypeClassName="theme-button"
+                                buttonText='Save'
+                                isLoading={isAddEditLoading}
+                                onClick={handleAddEdit}
+                                isDisable={isButtonDisable} />
+                        {/* } */}
                         <Buttons
                             buttonTypeClassName="dark-btn ml-5"
                             buttonText="Cancel"
@@ -210,25 +245,29 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
 });
 
 AddEditContact.propTypes = {
-    keyId: PropTypes.number.isRequired,
-    addEditContactMutation: PropTypes.func.isRequired, 
-    onSidebarClose: PropTypes.func.isRequired,
+    keyId: PropTypes.number,
+    addEditContactMutation: PropTypes.func.isRequired,
+    onSidebarClose: PropTypes.func,
     onSuccess: PropTypes.func,
     childRef: PropTypes.shape({
-      current: PropTypes.object
+        current: PropTypes.object
     }),
     editRef: PropTypes.shape({
-      current: PropTypes.object
+        current: PropTypes.object
     }),
     SecurityKey: PropTypes.shape({
-      EDIT: PropTypes.string,
-      ADD: PropTypes.string
+        EDIT: PropTypes.string,
+        ADD: PropTypes.string
     }),
     isEditablePage: PropTypes.bool,
     isSupplier: PropTypes.bool,
     isEdit: PropTypes.bool,
     isOpen: PropTypes.bool,
-    getContactById: PropTypes.func.isRequired
-  };
+    getContactById: PropTypes.func.isRequired,
+    getContectTypeId: PropTypes.string, 
+    customerId: PropTypes.number, 
+    isOrderManage: PropTypes.bool,
+    onhandleApiCall: PropTypes.func
+};
 
 export default AddEditContact;

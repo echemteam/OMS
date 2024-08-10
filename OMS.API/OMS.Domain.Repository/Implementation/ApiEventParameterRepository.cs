@@ -24,29 +24,33 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Api Event Parameter Repository
-        public async Task<AddEntityDTO<int>> AddEditApiEventParameter(ApiEventParameterDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditApiEventParameter(ApiEventParameterDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITAPIEVENTPARAMETER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITAPIEVENTPARAMETER, new
             {
-                requestData.ApiEventParametersId,
                 requestData.ApiEventId,
+                requestData.ParameterId,
                 requestData.ParameterName,
                 requestData.ParameterType,
+                requestData.DefaultValue,
+                requestData.IsRequired,
+                requestData.DataType,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
-        public async Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventParametersId)
+        public async Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventId)
         {
             GetApiEventParameterByApiEventParametersIdResponse getApiEventParameterByApiEventParametersIdResponse = await _context.GetFrist<GetApiEventParameterByApiEventParametersIdResponse>(GETAPIEVENTPARAMETERBYAPIEVENTPARAMETERSID, new
             {
-                apiEventParametersId
+                apiEventId
             }, commandType: CommandType.StoredProcedure);
             return getApiEventParameterByApiEventParametersIdResponse;
         }
-        public async Task<AddEntityDTO<int>> DeleteApiEventParameter(int apiEventParametersId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteApiEventParameter(int parameterId,int apiEventParametersId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEAPIEVENTPARAMETER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEAPIEVENTPARAMETER, new
             {
+                parameterId,
                 apiEventParametersId,
                 deletedBy
             }, CommandType.StoredProcedure);

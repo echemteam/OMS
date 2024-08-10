@@ -70,7 +70,7 @@ export const contactDetailFormData = {
       },
       style: {
         containerCss:
-          "col-xxl-4 col-xl-4 col-md-12 col-12 col-12 mb-input mt-3 margin-left0-checkbox",
+          "col-xxl-4 col-xl-4 col-md-12 col-12 col-12 mb-input mt-3 margin-left0-checkbox margin-top-checkbox",
       },
     },
   ],

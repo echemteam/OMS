@@ -1,5 +1,4 @@
-﻿using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
-using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
+﻿using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.SupplierAccoutingSetting;
 using OMS.Domain.Repository.Contract;
@@ -21,9 +20,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Supplier Accouting Setting Repository
-        public async Task<AddEntityDTO<int>> AddEditSupplierFinancialSettings(SupplierAccoutingSettingDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditSupplierFinancialSettings(SupplierAccoutingSettingDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITSUPPLIERFINANCIALSETTINGS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITSUPPLIERFINANCIALSETTINGS, new
             {
                 requestData.SupplierAccountingSettingId,
                 requestData.PaymentTermId,

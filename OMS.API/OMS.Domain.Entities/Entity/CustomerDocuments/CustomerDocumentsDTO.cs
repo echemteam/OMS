@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.CustomerDocuments
 {
-    public class CustomerDocumentsDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class CustomerDocumentsDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? CustomerDocumentId { get; set; }
         public string? Name { get; set; }

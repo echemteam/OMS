@@ -1,10 +1,4 @@
-﻿using OMS.Domain.Entities.API.Request.Address;
-using OMS.Domain.Entities.API.Response.Address;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OMS.Domain.Entities.API.Response.Address;
 
 namespace OMS.Domain.Entities.API.Response.Organization
 {

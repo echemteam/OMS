@@ -1,17 +1,10 @@
-﻿using OMS.Domain.Entities.API.Response.CustomerNotes;
-using OMS.Domain.Entities.API.Response.SupplierNotes;
+﻿using OMS.Domain.Entities.API.Response.SupplierNotes;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.CustomerNotes;
 using OMS.Domain.Entities.Entity.SupplierNotes;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Implementation
 {
@@ -26,9 +19,9 @@ namespace OMS.Domain.Repository.Implementation
         {
         }
         #region SupplierNotes Repository
-        public async Task<AddEntityDTO<long>> AddSupplierNotes(SupplierNoteDTO addSupplierNotes)
+        public async Task<AddEntityDto<long>> AddSupplierNotes(SupplierNoteDto addSupplierNotes)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<long>>(ADDSUPPLIERNOTES, new
+            return await _context.GetSingleAsync<AddEntityDto<long>>(ADDSUPPLIERNOTES, new
             {
                 addSupplierNotes.SupplierId,
                 addSupplierNotes.Note,
@@ -45,9 +38,9 @@ namespace OMS.Domain.Repository.Implementation
             return getSupplierNotesBySupplierIdResponse;
         }
 
-        public async Task<AddEntityDTO<long>> UpdateSupplierNotes(SupplierNoteDTO supplierNotesUpdate)
+        public async Task<AddEntityDto<long>> UpdateSupplierNotes(SupplierNoteDto supplierNotesUpdate)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<long>>(UPDATESUPPLIERNOTES, new
+            return await _context.GetSingleAsync<AddEntityDto<long>>(UPDATESUPPLIERNOTES, new
             {
                 supplierNotesUpdate.SupplierNoteId,
                 supplierNotesUpdate.SupplierId,

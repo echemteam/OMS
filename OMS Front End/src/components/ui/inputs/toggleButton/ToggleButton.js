@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types"; 
 import "./ToggleButton.scss";
 
 function ToggleButton(props) {
@@ -11,5 +12,7 @@ function ToggleButton(props) {
     </>
   );
 }
-
+ToggleButton.propTypes = {
+  isChecked: PropTypes.bool.isRequired, 
+};
 export default ToggleButton;

@@ -137,10 +137,12 @@ namespace Common.Helper.Utility
 
         public static string GenerateSalt(int length)
         {
-            var rng = new RNGCryptoServiceProvider();
-            var buffer = new byte[length];
-            rng.GetBytes(buffer);
-            return Convert.ToBase64String(buffer);
+            byte[] randomBytes = new byte[length];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomBytes);
+            }
+            return Convert.ToBase64String(randomBytes);
         }
 
         public static string GenerateHashKeyUsingSalt(string value, string saltKey, string passwordFormat = "SHA1")
@@ -239,13 +241,7 @@ namespace Common.Helper.Utility
             return code.ToString();
         }
 
-        //public static string GenerateListCode(string taxid, string name)
-        //{
-        //    string last4Digits = taxid.Substring(taxid.Length - 4);
-        //    string cleanedName = name.Trim();
-        //    string combinedString = last4Digits + "_" + cleanedName;
-        //    return combinedString;
-        //}
+
         public static string GenerateListCode(string taxid, string name)
         {
             string last4Digits = taxid.Length >= 4 ? taxid[^4..] : taxid;

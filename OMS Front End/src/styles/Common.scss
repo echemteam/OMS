@@ -8,12 +8,13 @@ body {
   padding: 0;
   margin: 0;
   background-color: #0004430d;
-  font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   font-size: var(--commonFont);
   color: var(--textColor);
   overflow: hidden;
 }
-
 
 a {
   transition: 0.5s all;
@@ -575,6 +576,9 @@ a {
         min-width: 100px;
         max-width: 100px;
       }
+      .input-group{
+        flex-wrap: nowrap;
+      }
     }
 
     .validation-text {
@@ -1085,7 +1089,7 @@ a {
         max-height: calc(100vh - 300px);
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 265px);
+          max-height: calc(100vh - 310px);
         }
       }
     }
@@ -1139,12 +1143,28 @@ a {
   }
 }
 
+.border-left-r-0-contactform {
+  .input-label-part {
+    input {
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      margin-top: 7px;
+      height: 37px;
+
+      @media only screen and (max-width: 1750px) {
+        margin-top: 4px;
+        height: 28px;
+      }
+    }
+  }
+}
+
 .extension {
   input {
-    margin-top: 5px;
+    margin-top: 7px;
 
     @media only screen and (max-width: 1750px) {
-      margin-top: 2px;
+      margin-top: 5px;
     }
   }
 }
@@ -1195,7 +1215,7 @@ a {
           border-radius: 5px;
           margin-top: 2px;
           position: relative;
-          min-height: 70px;
+          min-height: 95px;
           height: 100%;
 
           .add-line {
@@ -1215,7 +1235,7 @@ a {
 
           .edit-delete-button {
             position: absolute;
-            top: 5px;
+            top: 10px;
             right: 5px;
 
             .edit-btn {
@@ -1548,7 +1568,7 @@ a {
                   }
 
                   &.primary-phone {
-                    // color: var(--themeColor);
+                    color: var(--themeColor);
                     color: #5e6470;
                   }
                 }
@@ -1559,6 +1579,17 @@ a {
       }
     }
   }
+}
+
+.primary-card {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 3px 5px;
+  border-bottom-right-radius: 5px;
+  font-size: var(--commonFont-small);
+  background: var(--PrimaryColor);
+  color: var(--whiteColor) !important;
 }
 
 // Contact card End
@@ -2642,6 +2673,30 @@ input[type="checkbox"]:disabled {
 //   }
 // }
 
+.first-word-break {
+  table {
+    tbody {
+      tr {
+        td:nth-child(1) {
+          word-break: break-all;
+        }
+      }
+    }
+  }
+}
+
+.margin-top-checkbox {
+  .input-field-sec {
+    .checkbox-label-part {
+      margin-top: 14px;
+
+      @media only screen and (max-width: 1750px) {
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1750px) {
   .status-dropdown {
     .css-t3ipsp-control,
@@ -3452,4 +3507,116 @@ input[type="checkbox"]:disabled {
       transition: 0.5s all;
     }
   }
+}
+
+.configuration-seprations {
+  .separator::after {
+    height: 30px;
+  }
+}
+
+.configuration-Icon {
+  .edit-icons {
+    position: absolute;
+    top: -9px;
+    right: 0px;
+    border-radius: 50%;
+    color: var(--whiteColor) !important;
+    background: var(--gradient-theme);
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+}
+
+.pagination-none {
+  .table-pagination {
+    display: none;
+  }
+  table {
+    tbody {
+      tr {
+        &:last-child {
+          // Remove border from the last row
+          border-bottom: none !important;
+        }
+      }
+    }
+  }
+}
+
+.relative {
+  position: relative;
+}
+
+.grid-over-flow {
+  .vertical-tab-inner {
+    .tab-section {
+      height: calc(100vh - 200px) !important;
+
+      .tab-content {
+        height: calc(100vh - 200px) !important;
+      }
+    }
+  }
+  .api-provider table tbody {
+    max-height: calc(100vh - 325px) !important;
+  }
+}
+
+@media only screen and (max-width: 1750px) {
+  .grid-over-flow {
+    .vertical-tab-inner {
+      .tab-section {
+        height: calc(100vh - 80px) !important;
+
+        .tab-content{
+          height: calc(100vh - 80px) !important;
+        }
+      }
+    }
+    .api-provider table tbody {
+      max-height: calc(100vh - 325px) !important;
+    }
+  }
+}
+
+.stepper-view {
+  .vertical-tab-inner {
+    .tab-section {
+      max-height: calc(100vh - 400px);
+    }
+  }
+  .document-section {
+    .card-body-sec {
+      height: calc(100vh - 348px);
+    }
+  }
+
+}
+@media only screen and (max-width: 1750px) {
+  .stepper-view {
+    .vertical-tab-inner {
+      .tab-section {
+        // max-height: calc(100vh - 200px);
+      }
+    }
+  }
+}
+
+
+.table-email-sec {
+    margin-bottom: 0;
+    width: 97%;
+    margin: 0 auto;
+    box-shadow: 0px 0px 17px -10px var(--textColorLight);
+
+    .card {
+      .card-top-title-btn{
+        padding: 10px 0;
+      } 
+    }
 }

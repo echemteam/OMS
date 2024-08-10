@@ -23,9 +23,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Api Event Repository
-        public async Task<AddEntityDTO<int>> AddEditApiEvent(ApiEventDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditApiEvent(ApiEventDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITAPIEVENT, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITAPIEVENT, new
             {
                 requestData.ApiEventId,
                 requestData.EventName,
@@ -41,9 +41,9 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getApiEventByApiEventIdResponse;
         }
-        public async Task<AddEntityDTO<int>> DeleteApiEvent(int apiEventId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteApiEvent(int apiEventId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEAPIEVENT, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEAPIEVENT, new
             {
                 apiEventId,
                 deletedBy

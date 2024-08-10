@@ -48,6 +48,8 @@ export const getTokenProps = () => {
 export const signOut = () => {
     removeAllCookies();
     //sessionStorage.removeItem('SecurityPermission');
-    removeData("SecurityPermission")
+    removeData("SecurityPermission");
+    removeData("approvalRules");
+    removeData("smtpSettings");
     window.location.href = "/login";
 }

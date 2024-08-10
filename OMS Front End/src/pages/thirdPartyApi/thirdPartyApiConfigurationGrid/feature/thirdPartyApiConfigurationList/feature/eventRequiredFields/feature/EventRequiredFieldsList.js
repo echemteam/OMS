@@ -1,9 +1,9 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
-import MolGrid from '../../../../../../../../components/Grid/MolGrid';
 import { useDeleteApiEventRequiredFieldMutation, useGetApiEventRequiredFieldsMutation} from '../../../../../../../../app/services/thirdPartyAPI';
 import { AddEditRequireConfigurationData } from '../config/AddEventRequiredFields.data';
+import FinalMolGrid from '../../../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const EventRequiredFieldsList = (props) => {
   const molGridRef = useRef();
@@ -104,7 +104,7 @@ const EventRequiredFieldsList = (props) => {
   return (
     <div className="row">
       <div className="col-md-12 table-striped api-provider">
-        <MolGrid
+        <FinalMolGrid
           ref={molGridRef}
           configuration={AddEditRequireConfigurationData}
           dataSource={listData}

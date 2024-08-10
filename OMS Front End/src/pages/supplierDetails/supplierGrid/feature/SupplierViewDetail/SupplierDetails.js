@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom/dist";
+import { useNavigate, useParams } from "react-router-dom";
+
 import React, { useContext, useEffect, useState } from "react";
 //** Lib's */
 import "../../../../customerDetail/CustomerSupplier.scss";
@@ -101,7 +101,7 @@ const SupplierDetails = () => {
             <Buttons buttonTypeClassName="back-button btn dark-btn" onClick={handleBackClick}
               textWithIcon={true} buttonText="Back" imagePath={AppIcons.BackArrowIcon}></Buttons>
             {/* Supplier Tab's */}
-            <SupplierViewTab supplierId={supplierId} />
+            <SupplierViewTab supplierId={supplierId} contryIdCode={supplierData?.countryId} />
           </div>
         </div>
       </div>

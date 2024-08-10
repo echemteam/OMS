@@ -48,7 +48,7 @@ namespace OMS.Domain.Repository
         IOrganizationOtherChargesRepository _organizationOtherChargesRepository;
         IOrganizationBusinessAddressesRepository _organizationBusinessAddressesRepository;
         ISupplierFinancialSettingsRepository _supplierFinancialSettingsRepository;
-        ISuppierBankDetailsRepository _suppierBankDetailsRepository;    
+        ISuppierBankDetailsRepository _suppierBankDetailsRepository;
         ISupplierPaymentSettingsRepository _supplierPaymentSettingsRepository;
         IApiEventRepository _apiEventManagementRepository;
         IApiEventMappingRepository _apiEventMappingRepository;
@@ -57,6 +57,7 @@ namespace OMS.Domain.Repository
         IApiEventRequiredFieldRepository _apiEventRequiredFieldRepository;
         IApiEventRequiredFieldsMappingRepository _apiEventRequiredFieldsMappingRepository;
         IFunctionalitiesRepository _functionalitiesRepository;
+        IOrderRepository _orderRepository;
 
         public ITestRepository test
         {
@@ -356,7 +357,7 @@ namespace OMS.Domain.Repository
             }
         }
 
-        public ISmtpSettingsRepository smtpSettings 
+        public ISmtpSettingsRepository smtpSettings
         {
             get
             {
@@ -524,7 +525,7 @@ namespace OMS.Domain.Repository
             }
 
         }
-        public IApiParameterMappingRepository apiParameterMapping 
+        public IApiParameterMappingRepository apiParameterMapping
         {
             get
             {
@@ -569,6 +570,18 @@ namespace OMS.Domain.Repository
                     _functionalitiesRepository = new FunctionalitiesRepository(_context);
                 }
                 return _functionalitiesRepository;
+            }
+
+        }
+        public IOrderRepository order
+        {
+            get
+            {
+                if (_orderRepository == null)
+                {
+                    _orderRepository = new OrderRepository(_context);
+                }
+                return _orderRepository;
             }
 
         }

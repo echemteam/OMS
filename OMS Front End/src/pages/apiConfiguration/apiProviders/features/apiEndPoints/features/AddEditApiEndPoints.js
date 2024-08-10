@@ -93,7 +93,7 @@ const AddEditApiEndPoints = (props) => {
   };
 
   return (
-    <>
+   
       <div>
         <div className="row">
           <div className="col-md-12">
@@ -123,7 +123,7 @@ const AddEditApiEndPoints = (props) => {
           </div>
         </div>
       </div>
-    </>
+    
   );
 };
 

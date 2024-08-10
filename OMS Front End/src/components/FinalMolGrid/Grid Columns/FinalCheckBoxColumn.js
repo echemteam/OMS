@@ -1,24 +1,42 @@
-// Function for rendering the checkbox column
-export const renderGridCheckboxColumn = (rowData, col, rowIndex, parentRowData, onCellDataChange) => {
-  const isDisabled = col.colSettings ? !col.colSettings.allowEdit : false;
-  const isChecked = rowData[col.fieldName];
+import { useEffect, useState } from "react";
+import GridCheckbox from "../ui/checkbox/GridCheckbox";
 
-  const handleCheckboxChange = (e) => {
-    // Handle checkbox change here, if needed
-    if (col.onChange) {
-      col.onChange(rowData, col.fieldName, rowIndex, e.target.checked, parentRowData);
-    }
-    if (onCellDataChange) {
-      onCellDataChange(rowData, col.fieldName, rowIndex, e.target.checked, parentRowData)
+// Function for rendering the checkbox column
+const RenderGridCheckboxColumn = ({
+  rowData,
+  col,
+  rowIndex,
+  onColumnDataChange
+}) => {
+
+  const { colSettings, fieldName } = col;
+  const isDisabled = colSettings?.isDisabled === false;
+  
+  const [value, setValue] = useState(rowData[col.fieldName]);
+
+  useEffect(() => {
+    setValue(rowData[fieldName]);
+  }, [rowData, fieldName]);
+
+  const handleCheckboxChange = () => {
+    const newValue = !value;
+    setValue(newValue);
+
+    if (onColumnDataChange) {
+      const newRowData = { ...rowData, [fieldName]: newValue };
+      onColumnDataChange(fieldName, newRowData, rowIndex);
     }
   };
 
   return (
-    <input
+    <GridCheckbox
       type="checkbox"
-      checked={isChecked}
+      checked={value}
       disabled={isDisabled}
       onChange={(handleCheckboxChange)}
     />
   );
 };
+
+
+export default RenderGridCheckboxColumn

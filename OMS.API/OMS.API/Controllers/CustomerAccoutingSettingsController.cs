@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
@@ -12,6 +13,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class CustomerAccoutingSettingsController : BaseController
     {
         #region Private Variable
@@ -55,7 +57,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateShppingDeliveryCarriers")]
         public async Task<IActionResult> UpdateShppingDeliveryCarriers(UpdateShppingDeliveryCarriersRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.customerAccoutingSettingsService.UpdateShppingDeliveryCarriers(requestData, CurrentUserId);
@@ -78,7 +80,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateDeliveryMethods")]
         public async Task<IActionResult> UpdateDeliveryMethods(UpdateDeliveryMethodsRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.customerAccoutingSettingsService.UpdateDeliveryMethods(requestData, CurrentUserId);

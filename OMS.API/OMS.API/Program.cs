@@ -23,7 +23,7 @@ builder.Services.AddCors(
                 policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
     });
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+
 builder.Services.AddSwaggerGen(opt =>
 {
     opt.SwaggerDoc("v1", new OpenApiInfo { Title = "OMS", Version = "v1" });
@@ -54,39 +54,16 @@ builder.Services.AddSwaggerGen(opt =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-/*if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}*/
-
-/*app.UseSwagger();
-app.UseSwaggerUI();
-
-app.UseMiddleware<DecryptMiddleware>();
-app.UseMiddleware<CustomErrorMiddleware>();
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-*/
-
-
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseMiddleware<DecryptMiddleware>();
 app.UseMiddleware<CustomErrorMiddleware>();
 app.UseHttpsRedirection();
 app.UseResponseCompression();
-//app.UseRouting();
+
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

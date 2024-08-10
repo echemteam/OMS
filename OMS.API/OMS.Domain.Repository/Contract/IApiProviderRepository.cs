@@ -7,9 +7,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IApiProviderRepository
     {
-        Task<AddEntityDTO<int>> AddEditApiProvider(ApiProviderDTO apiProvider);
+        Task<AddEntityDto<int>> AddEditApiProvider(ApiProviderDto apiProvider);
         Task<GetApiProviderByProviderIdResponse> GetApiProviderByProviderId(int providerId);
-        Task<AddEntityDTO<int>> DeleteApiProvider(int providerId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteApiProvider(int providerId, int deletedBy);
         Task<EntityList<GetApiProvidersResponse>> GetApiProviders(ListEntityRequest<BaseFilter> requestData);
     }
 }

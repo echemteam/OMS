@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef, useEffect, useState } from "react";
-import MolGrid from "../../../../../components/Grid/MolGrid";
+import { useRef, useEffect, useState,useImperativeHandle } from "react";
 import { SubCustomerGridConfig } from "../config/SubCustomer.data";
 import ToastService from "../../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../../services/swalService/SwalService";
-import { useImperativeHandle } from "react";
 import { encryptUrlData } from "../../../../../services/CryptoService";
 import { useDeleteSubCustomerMutation, useGetSubCustomerByCustomerIdMutation } from "../../../../../app/services/customerSubCustomerAPI";
 import PropTypes from 'prop-types';
+import FinalMolGrid from "../../../../../components/FinalMolGrid/FinalMolGrid";
 
 const SubCustomerList = (props) => {
   const molGridRef = useRef();
@@ -90,10 +89,10 @@ const SubCustomerList = (props) => {
     callChildFunction: onGetData
   }));
   return (
-    <>
+     
       <div className="row">
         <div className="col-md-12 table-striped p-3">
-          <MolGrid
+          <FinalMolGrid
             ref={molGridRef}
             configuration={SubCustomerGridConfig}
             dataSource={listData}
@@ -110,7 +109,7 @@ const SubCustomerList = (props) => {
           />
         </div>
       </div>
-    </>
+  
   );
 };
 SubCustomerList.propTypes = {

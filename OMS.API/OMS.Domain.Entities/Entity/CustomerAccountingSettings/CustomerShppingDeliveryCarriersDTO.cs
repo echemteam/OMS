@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.CustomerAccountingSettings
 {
-    public class CustomerShppingDeliveryCarriersDTO :BaseCustomerShppingDeliveryCarriersDTO, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class CustomerShppingDeliveryCarriersDto : BaseCustomerShppingDeliveryCarriersDto, IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? DeliveryAccountId { get; set; }
         public string? Name { get; set; }

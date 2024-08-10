@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Entities.Entity.SupplierNotes
 {
-    public class SupplierNoteDTO:IBaseCreateEntity,IBaseUpdateEntity,ISupplierNotes
+    public class SupplierNoteDto : IBaseCreateEntity, IBaseUpdateEntity, ISupplierNotes
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import PropTypes from 'prop-types';
 const Input = React.lazy(() => import("../../ui/inputs/input/Input"));
 const Label = React.lazy(() => import("../../ui/label/Label"));
 const ValidationText = React.lazy(() =>
@@ -115,4 +115,27 @@ const FormInputFields = ({
   );
 };
 
+FormInputFields.propTypes = {
+  labelName: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  onValidation: PropTypes.func,
+  dataField: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  formSetting: PropTypes.object,
+  changeAction: PropTypes.func,
+  formData: PropTypes.object,
+  overRideProps: PropTypes.object,
+  inputButtonGroup: PropTypes.node,
+  handleInputGroupButton: PropTypes.func,
+  handleInputShowInfo: PropTypes.func,
+  inputField: PropTypes.func,
+  inputIcon: PropTypes.node,
+  inputshowField: PropTypes.bool,
+  exemptBoundarySpaces: PropTypes.bool,
+  isRequired: PropTypes.bool,
+  isDisable: PropTypes.bool,
+  formSaparateTitle: PropTypes.string,
+   
+};
 export default FormInputFields;

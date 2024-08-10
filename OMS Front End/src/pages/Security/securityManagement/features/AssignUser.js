@@ -7,7 +7,6 @@ import {
   assignUserListData,
 } from "./config/AssignUserForm.data";
 import Buttons from "../../../../components/ui/button/Buttons";
-import MolGrid from "../../../../components/Grid/MolGrid";
 import {
   useAddRoleMappingMutation,
   useDeleteRolesMappingMutation,
@@ -19,6 +18,7 @@ import SwalAlert from "../../../../services/swalService/SwalService";
 import CardSection from "../../../../components/ui/card/CardSection";
 import { securityKey } from "../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
+import FinalMolGrid from "../../../../components/FinalMolGrid/FinalMolGrid";
 
 
 const AssignUser = (props) => {
@@ -201,14 +201,14 @@ const AssignUser = (props) => {
     <div>
       <div className="row">
         <div className="col-12 col-md-11 assign-user-form">
-          <div className="row mt-2">
+          <div className="row mt-2 align-items-end">
             <FormCreator
               ref={asignUserFormRef}
               config={userForm}
               {...userForm}
               key={shouldRerenderFormCreator}
             />
-            <div className="col-xxl-2 col-xl-2 col-md-2 mt-3">
+            <div className="col-xxl-2 col-xl-2 col-md-2">
               {buttonVisible ?
                 <Buttons
                   buttonTypeClassName="theme-button"
@@ -224,7 +224,7 @@ const AssignUser = (props) => {
           cardTitle="Users"
         >
           <div className="col-md-12 table-striped">
-            <MolGrid
+            <FinalMolGrid
               ref={molGridRef}
               configuration={assignUserListData}
               dataSource={listData}

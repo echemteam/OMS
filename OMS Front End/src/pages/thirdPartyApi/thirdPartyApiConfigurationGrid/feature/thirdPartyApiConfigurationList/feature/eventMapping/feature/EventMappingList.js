@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
+import PropTypes from 'prop-types'; 
 import { useDeleteApiEventMappingMutation, useGetApiEventMappingsMutation } from '../../../../../../../../app/services/thirdPartyAPI';
 import { AddEditMappingConfigurationData } from '../config/AddEditMapping.data';
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
-import MolGrid from '../../../../../../../../components/Grid/MolGrid';
+import FinalMolGrid from '../../../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const EventMappingList = (props) => {
     const molGridRef = useRef();
@@ -26,6 +28,7 @@ const EventMappingList = (props) => {
             ToastService.success(isDeleteApiEventMappingData.errorMessage);
             const currentPageObject = molGridRef.current.getCurrentPageObject();
             getLists(currentPageObject, molGridRef.current.generateSortingString());
+            setListData(null)
         }
     }, [isDeleteApiEventMappingSuccess, isDeleteApiEventMappingData]);
 
@@ -46,15 +49,13 @@ const EventMappingList = (props) => {
 
     useEffect(() => {
         if (isGetApiEventMappingsSuccess && isGetApiEventMappingsData) {
-            // if (isGetApiEventMappingsData) {
-            console.log(isGetApiEventMappingsData);
+          
             setListData([isGetApiEventMappingsData]);
             props.setEndpointId(isGetApiEventMappingsData?.endpointId);
-            props.setProviderId(isGetApiEventMappingsData?.providerId);
             if (isGetApiEventMappingsData?.providerId) {
                 props.setIsProviderData(true);
             }
-            // }
+          
             if (isGetApiEventMappingsData.totalRecord) {
                 setTotalRowCount(isGetApiEventMappingsData.totalRecord);
             }
@@ -98,8 +99,8 @@ const EventMappingList = (props) => {
 
     return (
         <div className="row">
-            <div className="col-md-12 table-striped api-provider">
-                <MolGrid
+            <div className="col-md-12 table-striped api-provider pagination-none">
+                <FinalMolGrid
                     ref={molGridRef}
                     configuration={AddEditMappingConfigurationData}
                     dataSource={listData}
@@ -113,13 +114,18 @@ const EventMappingList = (props) => {
                     onSorting={handleSorting}
                     isLoading={isGetApiEventMappingsLoading}
                     onActionChange={actionHandler}
-                // searchTitleButtonClick={handleSearch}
-                // handleChange={handleChange}
-                // handleClear={handleClear}
+               
                 />
             </div>
         </div>
     )
 }
+
+EventMappingList.propTypes = {
+    keyId: PropTypes.number.isRequired,
+    setIsProviderData: PropTypes.func.isRequired,
+    setEndpointId: PropTypes.func.isRequired,
+    setIsProviderData: PropTypes.func.isRequired,  
+};
 
 export default EventMappingList

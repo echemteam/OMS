@@ -100,6 +100,16 @@ const thirdPartyAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
+        getAllEventParameterByEventId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/ApiEventManagement/GetAllEventParameterByEventId?apiEventId=${id}`),
+                method: 'GET',
+            }),
+            // providesTags: ['User'],
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
         deleteApiEventMapping: builder.mutation({
             query: (id) => ({
                 url: encryptQueryString(`/ApiEventManagement/DeleteApiEventMapping/?apiEventMappingId=${id}`),
@@ -123,7 +133,7 @@ const thirdPartyAPI = createApi({
 
         getApiEventParameterByApiEventParametersId: builder.query({
             query: (id) => ({
-                url: encryptQueryString(`/ApiEventManagement/GetApiEventParameterByApiEventParametersId/?apiEventParametersId=${Number(id)}`),
+                url: encryptQueryString(`/ApiEventManagement/GetApiEventParameterByApiEventParametersId/?apiEventId=${Number(id)}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
@@ -132,10 +142,10 @@ const thirdPartyAPI = createApi({
         }),
 
         deleteApiEventParameter: builder.mutation({
-            query: (id) => ({
-                url: encryptQueryString(`/ApiEventManagement/DeleteApiEventParameter/?apiEventParametersId=${id}`),
+            query: (request) => ({
+                url: encryptQueryString(`/ApiEventManagement/DeleteApiEventParameter/?parameterId=${request.parameterId}&apiEventParametersId=${request.apiEventParametersId}`),
                 method: 'DELETE',
-                body: transformRequest(id)
+                body: transformRequest(request)
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
@@ -266,6 +276,16 @@ const thirdPartyAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
+        thirdPartyAPICall: builder.mutation({
+            query: (data) => ({
+                url: '/ApiConfiguration/ThirdPartyAPICall',
+                method: 'POST',
+                body: transformRequest(data)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
     })
 })
 
@@ -281,6 +301,7 @@ export const {
     useGetApiEventsMutation,
     useGetApiEventRequiredFieldsMutation,
     useLazyGetAllAPIParametersByEndpointIdQuery,
+    useLazyGetAllEventParameterByEventIdQuery,
     useGetApiParameterMappingsMutation,
     useGetApiEventMappingsMutation,
 
@@ -301,6 +322,8 @@ export const {
     useDeleteApiParameterMappingMutation,
     useDeleteApiEventRequiredFieldMutation,
     useDeleteApiEventRequiredFieldsMappingMutation,
+
+    useThirdPartyAPICallMutation,
 } = thirdPartyAPI
 
 export default thirdPartyAPI;

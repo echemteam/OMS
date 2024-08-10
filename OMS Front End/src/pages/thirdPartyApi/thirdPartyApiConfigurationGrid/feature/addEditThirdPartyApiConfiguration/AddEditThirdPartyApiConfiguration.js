@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types'; 
 import { AddEditThirdPartyApiData } from './config/AddEditThirdPartyApiConfiguration.data';
 import Buttons from '../../../../../components/ui/button/Buttons';
 import FormCreator from '../../../../../components/Forms/FormCreator';
@@ -63,8 +64,7 @@ const AddEditThirdPartyApiConfiguration = (props) => {
       <FormCreator
         config={addEditeThirdData}
         ref={addEditThirdRef}
-      // key={shouldRerenderFormCreator}
-      // onActionChange={formActionHandler}
+    
       />
       <div className="col-md-12 mt-2">
         <div className="d-flex align-item-end justify-content-end">
@@ -85,4 +85,17 @@ const AddEditThirdPartyApiConfiguration = (props) => {
   )
 }
 
+AddEditThirdPartyApiConfiguration.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onGetData: PropTypes.func,
+  onRepetGetData: PropTypes.func,
+  viewCardDetails: PropTypes.shape({
+    apiEventId: PropTypes.number,
+    eventName: PropTypes.string,
+    description: PropTypes.string,
+  }),
+  isUpdate: PropTypes.bool,
+  keyId: PropTypes.number,
+};
 export default AddEditThirdPartyApiConfiguration

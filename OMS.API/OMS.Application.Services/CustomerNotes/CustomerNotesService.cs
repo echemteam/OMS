@@ -1,7 +1,6 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.CustomerNotes;
-using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.API.Response.CustomerNotes;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerNotes;
@@ -23,17 +22,17 @@ namespace OMS.Application.Services.CustomerNotes
         #endregion
 
         #region CustomerNotesServices
-        public async Task<AddEntityDTO<long>> AddCustomerNotes(AddCustomerNotesRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<long>> AddCustomerNotes(AddCustomerNotesRequest requestData, short CurrentUserId)
         {
-            CustomerNotesDTO customerNotesDTO= requestData.ToMapp<AddCustomerNotesRequest, CustomerNotesDTO>();
-            customerNotesDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.customerNotes.AddCustomerNotes(customerNotesDTO);
+            CustomerNotesDto customerNotesDto = requestData.ToMapp<AddCustomerNotesRequest, CustomerNotesDto>();
+            customerNotesDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.customerNotes.AddCustomerNotes(customerNotesDto);
         }
 
 
-        public async Task<AddEntityDTO<long>> UpdateCustomerNotes(UpdateCustomerNotesRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<long>> UpdateCustomerNotes(UpdateCustomerNotesRequest requestData, short CurrentUserId)
         {
-             CustomerNotesDTO customerNotes = requestData.ToMapp<UpdateCustomerNotesRequest, CustomerNotesDTO>();
+            CustomerNotesDto customerNotes = requestData.ToMapp<UpdateCustomerNotesRequest, CustomerNotesDto>();
             customerNotes.UpdatedBy = CurrentUserId;
             return await repositoryManager.customerNotes.UpdateCustomerNotes(customerNotes);
         }

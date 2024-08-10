@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types';
 import DropDown from '../../../../components/ui/dropdown/DropDrown'
 import { useLazyGetAllModulesQuery } from '../../../../app/services/configurationAPI';
 import Buttons from '../../../../components/ui/button/Buttons';
 
-const ModuleSelection = () => {
+const ModuleSelection = (props) => {
     const [moduleData, setModuleData] = useState([])
     const [selectedModule, setSelectedModule] = useState(null);
     const [getAllModules, { isSuccess: isgetAllModulesSucess, data: allGetAllModulesData, }] = useLazyGetAllModulesQuery();
@@ -24,9 +25,8 @@ const ModuleSelection = () => {
 
     const handleModuleNameChange = (selectedOption) => {
         setSelectedModule(selectedOption);
+        props.handleModuleID(selectedOption.value)
     };
-
-    console.log("moduleData", moduleData)
 
     return (
         <div className='row'>
@@ -40,16 +40,19 @@ const ModuleSelection = () => {
                     closeMenuOnSelect={false}
                 />
             </div>
-            <div className="col-md-8">
+            {/* <div className="col-md-8">
                 <div className=''>
                     <Buttons buttonTypeClassName="theme-button"
                         buttonText="Save"
                     // onClick={handleAddEdit}
                     />
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
+ModuleSelection.propTypes = {
+    handleModuleID: PropTypes.func.isRequired,  
+};
 
 export default ModuleSelection

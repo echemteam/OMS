@@ -1,6 +1,5 @@
 ﻿using OMS.Domain.Entities.API.Response.Address;
 using OMS.Domain.Entities.API.Response.SuppierBankDetails;
-using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
 using OMS.Domain.Entities.API.Response.supplierPaymentSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.SupplierPaymentSettings;
@@ -27,9 +26,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Supplier Accouting Setting Repository
-        public async Task<AddEntityDTO<int>> AddEditCreditCard(SupplierPaymentSettingsDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditCreditCard(SupplierPaymentSettingsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCREDITCARD, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITCREDITCARD, new
             {
                 requestData.SupplierPaymentSettingId,
                 requestData.SupplierId,
@@ -38,9 +37,9 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.CreatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> AddEditCheck(SupplierPaymentSettingsDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditCheck(SupplierPaymentSettingsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCHECK, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITCHECK, new
             {
                 requestData.SupplierPaymentSettingId,
                 requestData.SupplierId,
@@ -48,9 +47,9 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.CreatedBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> AddEditOther(SupplierPaymentSettingsDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditOther(SupplierPaymentSettingsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITOTHER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITOTHER, new
             {
                 requestData.SupplierPaymentSettingId,
                 requestData.SupplierId,

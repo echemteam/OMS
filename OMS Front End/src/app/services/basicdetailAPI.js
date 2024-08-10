@@ -34,10 +34,10 @@ const basicdetailAPI = createApi({
         }),
 
         addEditCustomersBasicInformation: builder.mutation({
-            query: (Details) => ({
+            query: (request) => ({
                 url: '/Customers/AddEditCustomersBasicInformation',
                 method: 'POST',
-                body: transformRequest(Details)
+                body: transformRequest(request)
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
@@ -108,7 +108,7 @@ const basicdetailAPI = createApi({
                 url: '/Customers/UpdateCustomerSubCustomer',
                 method: 'POST',
                 body: transformRequest(requestData)
-            }), 
+            }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),

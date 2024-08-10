@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types"
 import CustomDropdown from "./CustomDropdown";
 import { options } from "./data";
 
@@ -17,14 +18,14 @@ const DropDown = (props) => {
   const defaultSelectedOptionMultiSelect = Array.isArray(props.value)
     ? props.options.filter((option) => props.value.includes(option.value))
     : [];
-
+ 
   return (
     <>
       <span className="d-inline-block custom-input">
         <CustomDropdown
           placeholder={props.placeholder}
           isMultiSelect={props.isMultiSelect}
-          optionsValue={options}
+          optionsValue={props.options}
           value={
             props.isMultiSelect
               ? defaultSelectedOptionMultiSelect
@@ -35,10 +36,38 @@ const DropDown = (props) => {
           isDropdownDisabled={props.isDisabled}
           dropDownSettings={props.dropDownSettings}
           inputButtonGroup={props.inputButtonGroup}
+          handleInputGroupButton={props.handleInputGroupButton}
         />
       </span>
     </>
   );
 };
-
+DropDown.propTypes = {
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.number.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
+  placeholder: PropTypes.string,
+  isMultiSelect: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  dropDownSettings: PropTypes.shape({
+    colorMap: PropTypes.object.isRequired,
+    textMap: PropTypes.object.isRequired,
+    iconMap: PropTypes.object.isRequired
+  }),
+  inputButtonGroup: PropTypes.shape({
+    icon: PropTypes.string,
+    buttonText: PropTypes.string,
+    isInputButton: PropTypes.bool,
+  }),
+  handleInputGroupButton: PropTypes.func,
+};
 export default DropDown;

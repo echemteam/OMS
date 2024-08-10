@@ -13,6 +13,7 @@ export const OrganizationBankFormData = {
             fieldSetting: {
               placeholder: "Enter Beneficiary Name",
               allowSpace: true,
+              maxLength:255,
             },
             validation: [{ type: "require" }],
             style: {
@@ -28,10 +29,11 @@ export const OrganizationBankFormData = {
             fieldSetting: {
                 placeholder: "Enter Checking Account Number",
                 allowSpace: true,
+                maxLength:50,
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {
@@ -43,10 +45,11 @@ export const OrganizationBankFormData = {
             fieldSetting: {
                 placeholder: "Enter Routing Account Number",
                 allowSpace: true,
+                 maxLength:50,
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
           {
@@ -58,10 +61,11 @@ export const OrganizationBankFormData = {
             fieldSetting: {
                 placeholder: "Enter Swift Code",
                 allowSpace: true,
+                maxLength:50,
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {
@@ -73,10 +77,11 @@ export const OrganizationBankFormData = {
             fieldSetting: {
                 placeholder: "Enter Bank Address",
                 allowSpace: true,
+                maxLength:255,
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {
@@ -88,10 +93,11 @@ export const OrganizationBankFormData = {
             fieldSetting: {
                 placeholder: "Enter Bank Branch",
                 allowSpace: true,
+                maxLength:100,
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
     ],

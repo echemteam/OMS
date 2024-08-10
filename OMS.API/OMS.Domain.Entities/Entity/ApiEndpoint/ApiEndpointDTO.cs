@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.ApiEndpoint
 {
-    public class ApiEndpointDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class ApiEndpointDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? EndpointId { get; set; }
         public int? ProviderId { get; set; }

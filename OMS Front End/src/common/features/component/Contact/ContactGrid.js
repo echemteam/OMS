@@ -20,9 +20,7 @@ import PropTypes from "prop-types";
 //** Component's */
 const ContactList = React.lazy(() => import("./feature/ContactList"));
 const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
-// const ContactDetailCard = React.lazy(() =>
-//   import("./feature/ContactDetailCard")
-// );
+ 
 
 const ContactGrid = ({
   keyId,
@@ -33,6 +31,7 @@ const ContactGrid = ({
   SecurityKey,
   getContactById,
   isSearchFilterShow,
+  contryIdCode
 }) => {
   //** State */
   const editRef = useRef();
@@ -41,7 +40,7 @@ const ContactGrid = ({
   const [search, setSearch] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [contactType, setContactType] = useState("");
-  const [isModelOpen, setisModelOpen] = useState(false);
+  const [isModelOpen, setIsModelOpen] = useState(false);
   const [showEditIcon, setShowEditIcon] = useState(true);
   const [tabContactType, setTabContactType] = useState([]);
   const [buttonVisible, setButtonVisible] = useState(true);
@@ -94,11 +93,6 @@ const ContactGrid = ({
     }
   }, [isGetAllContactTypesSucess, allGetAllContactTypesData]);
 
-  // useEffect(() => {
-  //   if (search === "") {
-  //     onGetContactList();
-  //   }
-  // }, [search]);
 
   //** Handle Change's */
   const handleChange = (event) => {
@@ -125,7 +119,7 @@ const ContactGrid = ({
   };
   const handleToggleModal = () => {
     setIsEdit(false);
-    setisModelOpen(true);
+    setIsModelOpen(true);
     if (childRef.current) {
       childRef.current.callChildFunction();
     }
@@ -142,7 +136,7 @@ const ContactGrid = ({
 
   const handleEdit = (contactId) => {
     setIsEdit(true);
-    setisModelOpen(!isModelOpen);
+    setIsModelOpen(!isModelOpen);
     if (editRef.current) {
       editRef.current.callEditFunction(contactId);
     }
@@ -167,11 +161,11 @@ const ContactGrid = ({
   //** Success */
   const onSuccess = () => {
     onGetContactList();
-    setisModelOpen(!isModelOpen);
+    setIsModelOpen(!isModelOpen);
   };
 
   const onSidebarClose = () => {
-    setisModelOpen(false);
+    setIsModelOpen(false);
     onGetContactList();
   };
 
@@ -188,8 +182,7 @@ const ContactGrid = ({
           search={search}
         />
       </div>
-    </div>
-    ,
+    </div>,
     (contactTypeId) => <div className="mt-2">
       <div className="mt-2">
         <ContactList
@@ -269,31 +262,37 @@ const ContactGrid = ({
       </div>
     </div>
   ];
+   
 
-  const tabs = tabContactType && tabContactType.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers)
-    .map((data, index) => ({
+  const filteredTabs = tabContactType?.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers);
+
+  const tabs = filteredTabs?.map((data, index) => {
+    const component = components[index] ? components[index]([data.contactTypeId]) : <div className="mt-2">Default Tab</div>;
+    return {
       sMenuItemCaption: data.type,
-      component: components[index] ? components[index]([data.contactTypeId]) : <div className="mt-2">Default Tab</div>
-    }));
+      component
+    };
+    
+  });
 
-
+ 
   return (
     <div className="contact-main-card-section vertical-tab-card">
       <CardSection
         cardTitle={isSearchFilterShow ? "" : "Contact"}
         handleChange={handleChange}
         searchInputName="Search By Name and Email"
-        searchInput={isSearchFilterShow ? true : false}
+        searchInput={isSearchFilterShow }
         buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
-        rightButton={buttonVisible ? true : false}
+        rightButton={buttonVisible }
         buttonText="Add"
         titleButtonClick={handleToggleModal}
-        clearButton={isSearchFilterShow ? true : false}
+        clearButton={isSearchFilterShow }
         clearTitleButtonClick={onhandleClear}
         clearButtonText="Clear"
-        searchButton={isSearchFilterShow ? true : false}
+        searchButton={isSearchFilterShow }
         searchbuttonText="Search"
         searchTitleButtonClick={onhandleSearch}
         searchFilter={false}
@@ -325,6 +324,7 @@ const ContactGrid = ({
         >
           {/* Add-Edit Contact */}
           <AddEditContact
+            isOrderManage={false}
             isSupplier={isSupplier}
             onSidebarClose={onSidebarClose}
             childRef={childRef}
@@ -338,6 +338,10 @@ const ContactGrid = ({
             isEditablePage={isEditablePage}
             isOpen={isModelOpen}
             getContactById={getContactById}
+            getContectTypeId={null}
+            contryIdCode={contryIdCode}
+            customerId={null}
+            onhandleApiCall={null}
           />
         </SidebarModel>
       </div>

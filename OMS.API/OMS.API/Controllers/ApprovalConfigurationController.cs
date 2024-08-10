@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
-using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Functionalities;
-using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -13,6 +13,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class ApprovalConfigurationController : BaseController
     {
         #region private variable
@@ -36,14 +37,18 @@ namespace OMS.API.Controllers
         [HttpGet("GetApprovalConfigurationByApprovalConfigurationId")]
         public async Task<IActionResult> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId)
         {
-            List<GetApprovalConfigurationByApprovalConfigurationIdResponse> responseData = await _serviceManager.approvalConfigurationServices.GetApprovalConfigurationByApprovalConfigurationId(approvalConfigurationId).ConfigureAwait(true);
-            return APISucessResponce(responseData);
+            if (approvalConfigurationId > 0)
+            {
+                var approvalConfigurationDetails = await _serviceManager.approvalConfigurationServices.GetApprovalConfigurationByApprovalConfigurationId(approvalConfigurationId).ConfigureAwait(true);
+                return APISucessResponce(approvalConfigurationDetails);
+            }
+            return APISucessResponce(approvalConfigurationId);
         }
-        [HttpGet("GetApprovalConfigurationRulesByModuleIdAndFunctionalityId")]
-        public async Task<IActionResult> GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(int moduleId, int functionalityId)
+        [HttpPost("GetApprovalConfigurationRules")]
+        public async Task<IActionResult> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData)
         {
-            List<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse> responseData = await _serviceManager.approvalConfigurationServices.GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(moduleId, functionalityId).ConfigureAwait(true);
-            return APISucessResponce(responseData);
+            var approvalConfigurationRulesList = await _serviceManager.approvalConfigurationServices.GetApprovalConfigurationRules(requestData).ConfigureAwait(true);
+            return APISucessResponce(approvalConfigurationRulesList);
         }
         [HttpPost("GetFunctionalities")]
         public async Task<IActionResult> GetFunctionalities(GetFunctionalitiesRequest requestData)
@@ -78,6 +83,12 @@ namespace OMS.API.Controllers
         {
             var functionalitiesResponsibles = await _serviceManager.approvalConfigurationServices.GetFunctionalitiesResponsibles(requestData);
             return APISucessResponce<object>(functionalitiesResponsibles);
+        }
+        [HttpPost("AddEditFunctionalities")]
+        public async Task<IActionResult> AddEditFunctionalities(AddEditFunctionalitiesRequest requestData)
+        {
+            var addEditItem = await _serviceManager.approvalConfigurationServices.AddEditFunctionalities(requestData);
+            return APISucessResponce(addEditItem);
         }
         #endregion
     }

@@ -121,6 +121,10 @@ export const FileTypeIcons = [
     icon: AppIcons.XlsIcon
   },
   {
+    type: 'xls',
+    icon: AppIcons.XlsIcon
+  },
+  {
     type: 'ppt',
     icon: AppIcons.PptIcon
   },

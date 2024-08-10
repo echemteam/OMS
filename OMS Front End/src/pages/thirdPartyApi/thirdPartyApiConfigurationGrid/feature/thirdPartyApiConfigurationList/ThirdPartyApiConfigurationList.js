@@ -1,11 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
-import MolGrid from '../../../../../components/Grid/MolGrid';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { thirdPartyListConfigurationData } from './config/ThirdPartyApiConfigurationList.data';
-import { useDeleteApiEventMutation, useGetApiEventsMutation } from '../../../../../app/services/thirdPartyAPI';
+import { useDeleteApiEventMutation, useGetApiEventsMutation, useThirdPartyAPICallMutation } from '../../../../../app/services/thirdPartyAPI';
 import ToastService from '../../../../../services/toastService/ToastService';
 import SwalAlert from '../../../../../services/swalService/SwalService';
 import { encryptUrlData } from '../../../../../services/CryptoService';
+import FinalMolGrid from '../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const ThirdPartyApiConfigurationList = ({ childRef }) => {
     const molGridRef = useRef();
@@ -13,8 +15,10 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     const { confirm } = SwalAlert();
     const [listData, setListData] = useState();
     const [totalRowCount, setTotalRowCount] = useState(0);
-    const [getApiEvents, { isLoading: isGetApiEventsLoading, isSuccess: isGetApiEventsSuccess, data: isGetApiEventsData, },] = useGetApiEventsMutation();
+
     const [deleteApiEvent, { isSuccess: isDeleteApiEventSuccess, data: isDeleteApiEventData },] = useDeleteApiEventMutation();
+    const [getThirdPartyApiResponse, { isSuccess: isAPITesterSucess, data: isAPITesterData }] = useThirdPartyAPICallMutation();
+    const [getApiEvents, { isLoading: isGetApiEventsLoading, isSuccess: isGetApiEventsSuccess, data: isGetApiEventsData, },] = useGetApiEventsMutation();
 
     const getLists = (pageObject, sortingString) => {
         const request = {
@@ -72,6 +76,17 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     };
 
     useEffect(() => {
+        if (isAPITesterSucess && isAPITesterData) {
+            const data = JSON.parse(isAPITesterData.apiResponse);
+            const responseData = JSON.parse(data.responseData);
+            console.log('isAPITesterData =>', responseData);
+            if (isAPITesterData) {
+                ToastService.success("Successfully Worked.");
+            }
+        }
+    }, [isAPITesterSucess, isAPITesterData]);
+
+    useEffect(() => {
         if (molGridRef.current) {
             const currentPageObject = molGridRef.current.getCurrentPageObject();
             const currentsortingString = molGridRef.current.generateSortingString();
@@ -92,9 +107,28 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
         navigate(`/ThirdPartyApiConfigurationViewDetails/${encryptUrlData(data.apiEventId)}`, "_blank");
     }
 
+    const handleTestClick = (data) => {
+        let parameter = {
+            pageNo: 1,
+            pageSize: 25,
+            orderByColumn: "ProductName",
+            orderFlag: 0,
+            searchText: "acid",
+            isActive: true
+        }
+        let request = {
+            eventName: 'Get Search product List',
+            isDynamicParameter: false,
+            parameters: JSON.stringify(parameter)
+        }
+        getThirdPartyApiResponse(request);
+    };
+
+
     const actionHandler = {
-        VIEW: handleViewClick,
-        DELETE: handleDeleteClick
+        VIEWCONFIGURATION: handleViewClick,
+        DELETE: handleDeleteClick,
+        TESTAPI: handleTestClick
     };
 
     useImperativeHandle(childRef, () => ({
@@ -104,7 +138,7 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     return (
         <div className="row">
             <div className="col-md-12 table-striped api-provider">
-                <MolGrid
+                <FinalMolGrid
                     ref={molGridRef}
                     configuration={thirdPartyListConfigurationData}
                     dataSource={listData}
@@ -118,13 +152,18 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
                     onSorting={handleSorting}
                     isLoading={isGetApiEventsLoading}
                     onActionChange={actionHandler}
-                // searchTitleButtonClick={handleSearch}
-                // handleChange={handleChange}
-                // handleClear={handleClear}
+
                 />
             </div>
         </div>
     )
 }
 
+ThirdPartyApiConfigurationList.propTypes = {
+    childRef: PropTypes.shape({
+        current: PropTypes.shape({
+            callChildFunction: PropTypes.func
+        })
+    })
+};
 export default ThirdPartyApiConfigurationList

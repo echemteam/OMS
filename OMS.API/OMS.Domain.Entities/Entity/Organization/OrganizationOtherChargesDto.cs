@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.Entity.Organization
+﻿namespace OMS.Domain.Entities.Entity.Organization
 {
-    public  class OrganizationOtherChargesDto
+    public class OrganizationOtherChargesDto
     {
         public byte? OrganizationOtherChargeId { get; set; }
         public decimal? HandlingFees { get; set; }

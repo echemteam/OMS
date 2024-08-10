@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Contact;
-using OMS.Domain.Entities.API.Response.Contact;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -12,6 +12,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class EmailAddressController : BaseController
     {
         #region private variable
@@ -35,7 +36,7 @@ namespace OMS.API.Controllers
         [HttpPost("UpdateContactEmail")]
         public async Task<IActionResult> UpdateContactEmail(UpdateContactEmailRequest requestData)
         {
-            AddEntityDTO<int> responseData = new();
+            AddEntityDto<int> responseData = new();
             if (requestData != null)
             {
                 responseData = await _serviceManager.emailAddressService.UpdateContactEmail(requestData, CurrentUserId);
@@ -56,12 +57,6 @@ namespace OMS.API.Controllers
             return APISucessResponce(emailId);
         }
 
-        //[HttpGet("GetEmailByContactId")]
-        //public async Task<IActionResult> GetEmailByContactId(int contactId)
-        //{
-        //    List<GetEmailByContactIdResponse> responseData = await _serviceManager.emailAddressService.GetEmailByContactId(contactId).ConfigureAwait(true);
-        //    return APISucessResponce(responseData);
-        //}
 
     }
 }

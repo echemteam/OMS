@@ -127,7 +127,7 @@ const AddEditGroup = (props) => {
           </div>
         </div>
         <div className="col-md-12">
-          <div className="d-flex align-item-center justify-content-end">
+          <div className="d-flex align-item-center justify-content-end mt-3">
             <Buttons
               buttonTypeClassName="theme-button"
               onClick={handleUser}

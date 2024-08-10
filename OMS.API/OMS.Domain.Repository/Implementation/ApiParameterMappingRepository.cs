@@ -23,12 +23,13 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Api Event Repository
-        public async Task<AddEntityDTO<int>> AddApiParameterMapping(ApiParameterMappingDTO requestData)
+        public async Task<AddEntityDto<int>> AddApiParameterMapping(ApiParameterMappingDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDAPIPARAMETERMAPPING, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDAPIPARAMETERMAPPING, new
             {
                 requestData.ApiEventId,
-                requestData.ParameterId,
+                requestData.EventParameterId,
+                requestData.ProviderParameterId,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
@@ -45,9 +46,9 @@ namespace OMS.Domain.Repository.Implementation
             }, true);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteApiParameterMapping(int apiParameterMappingId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteApiParameterMapping(int apiParameterMappingId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEAPIPARAMETERMAPPING, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEAPIPARAMETERMAPPING, new
             {
                 apiParameterMappingId,
                 deletedBy

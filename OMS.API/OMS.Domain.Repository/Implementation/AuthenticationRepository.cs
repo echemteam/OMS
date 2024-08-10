@@ -21,21 +21,21 @@ namespace OMS.Domain.Repository.Implementation
         #endregion
 
         #region User Login Repository
-        public async Task<UserDTO> UserLogin(string? userName)
+        public async Task<UserDto> UserLogin(string? userName)
         {
-            UserDTO userDTO = await _context.GetFrist<UserDTO>(GETUSERBYUSERNAME, new
+            UserDto userDto = await _context.GetFrist<UserDto>(GETUSERBYUSERNAME, new
             {
                 userName
             }, CommandType.StoredProcedure);
-            return userDTO;
+            return userDto;
         }
-        public async Task<BaseRolesDTO> GetUserRoles(short? userId)
+        public async Task<BaseRolesDto> GetUserRoles(short? userId)
         {
-            BaseRolesDTO userDTO = await _context.GetFrist<BaseRolesDTO>(GETUSERROLES, new
+            BaseRolesDto userDto = await _context.GetFrist<BaseRolesDto>(GETUSERROLES, new
             {
                 userId
             }, CommandType.StoredProcedure);
-            return userDTO;
+            return userDto;
         }
         #endregion
     }

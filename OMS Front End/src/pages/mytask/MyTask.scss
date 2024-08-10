@@ -73,6 +73,16 @@
 
   .task-tab {
     border-right: 1px solid #e8eae8;
+
+    .tab-section{
+      .tab-content{
+        max-height: calc(100vh - 220px);
+        overflow-x: auto;
+      }
+      .tab-header{
+        padding-bottom: 10px;
+      }
+    }
   }
 }
 
@@ -151,23 +161,97 @@
     }
   }
 
+  // .customer-information {
+  //   padding: 10px 20px;
+
+  //   .info-title {
+  //     font-size: var(--commonFont-extraLarge);
+  //   }
+
+  //   .info-detail {
+  //     margin: 0 0 10px 0;
+  //     font-size: var(--commonFont);
+  //   }
+
+  //   span {
+  //     font-weight: 600;
+  //   }
+
+  //   .customer-id {
+  //     margin-right: 70px;
+  //     span {
+  //       color: var(--themeColor);
+  //     }
+  //   }
+
+  //   .old-detail,
+  //   .new-detail {
+  //     .detail {
+  //       .customer-details {
+  //         span {
+  //           color: var(--themeColor);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
   .customer-information {
-    padding: 10px 20px;
+    padding: 15px 20px 0;
 
-    .info-title {
-      font-size: var(--commonFont-extraLarge);
-    }
+    .info-row {
+      display: flex;
+      // justify-content: space-between;
+      margin-bottom: 10px;
 
-    .info-detail {
-      margin: 0 0 10px 0;
-      font-size: var(--commonFont);
-    }
+      .info-label {
+        font-weight: 600;
+        // color: #555;
+      }
 
-    span {
-      font-weight: 600;
+      .info-value {
+        color: var(--themeColor);
+        font-weight: 600;
+
+        &.info-value {
+          font-weight: 600;
+        }
+      }
     }
-    .customer-id {
-      margin-right: 70px;
+  }
+
+  .value-comparison {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+
+    .value-block {
+      width: 48%;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+
+      .value-title {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #333;
+        font-weight: 700;
+      }
+
+      .value-content {
+        .value-label {
+          font-weight: 600;
+        }
+
+        .value-data {
+          color: var(--themeColor);
+          font-weight: 600;
+        }
+      }
+
+      .no-value {
+        font-style: italic;
+      }
     }
   }
 
@@ -183,13 +267,14 @@
     border-radius: 10px;
     margin: 0 20px 0 0px;
     padding: 8px;
+    width: 98%;
   }
 
   .detail-btn {
     background: var(--themeColor);
     color: var(--whiteColor);
-    // padding: 4px 10px;
-    width: 70px;
+    padding: 0 10px;
+    width: 170px;
     display: flex;
     height: 25px;
     align-items: center;

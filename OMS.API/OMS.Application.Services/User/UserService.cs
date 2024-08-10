@@ -6,7 +6,6 @@ using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.User;
 using OMS.Domain.Repository;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Entities.CommonEntity;
 using OMS.Shared.Services.Contract;
 
@@ -26,17 +25,17 @@ namespace OMS.Application.Services.User
         #endregion
 
         #region User Service 
-        public async Task<AddEntityDTO<int>> AddUser(AddUserRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddUser(AddUserRequest requestData, short CurrentUserId)
         {
-            UserDTO user = requestData.ToMapp<AddUserRequest, UserDTO>();
+            UserDto user = requestData.ToMapp<AddUserRequest, UserDto>();
             user.CreatedBy = CurrentUserId;
             user.PasswordSalt = EncryptionUtil.GenerateSalt(8);
             user.HashedPassword = EncryptionUtil.GenerateHashKeyUsingSalt(user.Password!.Trim(), user.PasswordSalt);
             return await repositoryManager.user.AddUser(user);
         }
-        public async Task<AddEntityDTO<int>> UpdateUser(UpdateUserRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateUser(UpdateUserRequest requestData, short CurrentUserId)
         {
-            UserDTO user = requestData.ToMapp<UpdateUserRequest, UserDTO>();
+            UserDto user = requestData.ToMapp<UpdateUserRequest, UserDto>();
             user.UpdatedBy = CurrentUserId;
             return await repositoryManager.user.UpdateUser(user);
         }
@@ -45,7 +44,7 @@ namespace OMS.Application.Services.User
             return await repositoryManager.user.GetUserByUserId(userId);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteUser(short userId, short CurrentUserId)
+        public async Task<AddEntityDto<int>> DeleteUser(short userId, short CurrentUserId)
         {
             short deletedBy = CurrentUserId;
             return await repositoryManager.user.DeleteUser(userId, deletedBy);
@@ -56,13 +55,13 @@ namespace OMS.Application.Services.User
             return await repositoryManager.user.GetUsers(requestData);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateUserPassword(UpdateUserPasswordRequest updateUserPassword, short CurrentUserId)
+        public async Task<AddEntityDto<int>> UpdateUserPassword(UpdateUserPasswordRequest updateUserPassword, short CurrentUserId)
         {
-            UserDTO userDTO = updateUserPassword.ToMapp<UpdateUserPasswordRequest, UserDTO>();
-            userDTO.UpdatedBy = CurrentUserId;
-            userDTO.PasswordSalt = EncryptionUtil.GenerateSalt(8);
-            userDTO.HashedPassword = EncryptionUtil.GenerateHashKeyUsingSalt(userDTO.Password!.Trim(), userDTO.PasswordSalt);
-            return await repositoryManager.user.UpdateUserPassword(userDTO);
+            UserDto userDto = updateUserPassword.ToMapp<UpdateUserPasswordRequest, UserDto>();
+            userDto.UpdatedBy = CurrentUserId;
+            userDto.PasswordSalt = EncryptionUtil.GenerateSalt(8);
+            userDto.HashedPassword = EncryptionUtil.GenerateHashKeyUsingSalt(userDto.Password!.Trim(), userDto.PasswordSalt);
+            return await repositoryManager.user.UpdateUserPassword(userDto);
         }
         #endregion
     }

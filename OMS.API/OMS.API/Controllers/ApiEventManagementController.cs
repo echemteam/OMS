@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.ApiEvent;
@@ -21,6 +22,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class ApiEventManagementController : BaseController
     {
         #region private variable
@@ -93,6 +95,9 @@ namespace OMS.API.Controllers
             return APISucessResponce(apiEventMappingId);
         }
 
+
+        //------------------ ------------------ ------------------ ------------------ ------------------ ------------------ ------------------ ------------------ //
+
         [HttpPost("AddEditApiEventParameter")]
         public async Task<IActionResult> AddEditApiEventParameter(AddEditApiEventParameterRequest requestData)
         {
@@ -100,33 +105,35 @@ namespace OMS.API.Controllers
             return APISucessResponce(addEditItem);
         }
         [HttpGet("GetApiEventParameterByApiEventParametersId")]
-        public async Task<IActionResult> GetApiEventParameterByApiEventParametersId(int apiEventParametersId)
+        public async Task<IActionResult> GetApiEventParameterByApiEventParametersId(int apiEventId)
         {
-            if (apiEventParametersId > 0)
+            if (apiEventId > 0)
             {
-                GetApiEventParameterByApiEventParametersIdResponse responseData = await _serviceManager.apiEventManagementService.GetApiEventParameterByApiEventParametersId(apiEventParametersId).ConfigureAwait(true);
+                GetApiEventParameterByApiEventParametersIdResponse responseData = await _serviceManager.apiEventManagementService.GetApiEventParameterByApiEventParametersId(apiEventId).ConfigureAwait(true);
                 return APISucessResponce(responseData);
             }
-            return APISucessResponce(apiEventParametersId);
+            return APISucessResponce(apiEventId);
         }
-
 
         [HttpDelete("DeleteApiEventParameter")]
-        public async Task<IActionResult> DeleteApiEventParameter(int apiEventParametersId)
+        public async Task<IActionResult> DeleteApiEventParameter(int parameterId,int apiEventParametersId)
         {
-            if (apiEventParametersId > 0)
+            if (parameterId > 0 && apiEventParametersId > 0)
             {
-                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiEventParameter(apiEventParametersId, CurrentUserId).ConfigureAwait(true);
+                var deleteItem = await _serviceManager.apiEventManagementService.DeleteApiEventParameter(parameterId, apiEventParametersId, CurrentUserId).ConfigureAwait(true);
                 return APISucessResponce<object>(deleteItem);
             }
-            return APISucessResponce(apiEventParametersId);
+            return APISucessResponce(parameterId);
         }
+
         [HttpPost("GetApiEventParameters")]
         public async Task<IActionResult> GetApiEventParameters(GetApiEventParametersRequest requestData)
         {
             var apiEventParameters = await _serviceManager.apiEventManagementService.GetApiEventParameters(requestData);
             return APISucessResponce<object>(apiEventParameters);
         }
+
+        //------------------ ------------------ ------------------ ------------------ ------------------ ------------------ ------------------ ------------------ //
 
 
         [HttpPost("AddApiParameterMapping")]
@@ -224,6 +231,14 @@ namespace OMS.API.Controllers
             List<GetAllRequiredFieldsResponse> responseData = await _serviceManager.apiEventManagementService.GetAllRequiredFieldsByEventId(apiEventId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+
+        [HttpGet("GetAllEventParameterByEventId")]
+        public async Task<IActionResult> GetAllEventParameterByEventId(int apiEventId)
+        {
+            List<GetAllEventParameterResponse> responseData = await _serviceManager.apiEventManagementService.GetAllEventParameterByEventId(apiEventId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+
         #endregion
     }
 }

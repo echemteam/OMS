@@ -1,27 +1,40 @@
+import { AppIcons } from "../../../../../../data/appIcons";
 import { GridColumnType } from "../../../../../../data/gridColumnType";
 
 export const functionalConfigurationListData = {
     columns: [
         {
-            name: "Event Name",
-            fieldName: "eventName",
-            width: "20%",
+            name: "Module Name",
+            fieldName: "moduleName",
+            colStyle: {
+                width: "40%",
+            },
             allowShort: true,
         },
         {
-            name: "Description",
-            fieldName: "description",
-            width: "60%",
+            name: "Functionality Name",
+            fieldName: "functionalityName",
+            colStyle: {
+                width: "40%",
+            },
             allowShort: true,
         },
         {
             name: "Action",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowEdit: true,
-                allowView: true,
             },
+            customAction: [
+                {
+                    name: "VIEWCONFIGURATION",
+                    iconName: AppIcons.EyeIcon,
+                    title: "View"
+                },
+            ],
         },
     ],
 

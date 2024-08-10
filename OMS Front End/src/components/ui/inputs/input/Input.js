@@ -202,11 +202,11 @@ const Input = ({
                 />
                 {type === TextInputType.PASSWORD && (
                   <div type="button" className="password-hide-show" onClick={toggleShowPassword}>
-                    {showPassword ? (
+                    {/* {showPassword ? (
                       <Image imagePath={AppIcons.EyeSlashIcon} altText="Password Hide" />
                     ) : (
                       <Image imagePath={AppIcons.EyeIcon} altText="Password Show" />
-                    )}
+                    )} */}
                   </div>
                 )}
                 {inputIcon?.isIconShow && (
@@ -228,22 +228,47 @@ const Input = ({
 };
 
 Input.propTypes = {
-  type: PropTypes.oneOf([TextInputType.TEXT, TextInputType.EMAIL, TextInputType.PASSWORD, TextInputType.NUMBER]).isRequired,
+  type: PropTypes.oneOf([
+    TextInputType.TEXT,
+    TextInputType.EMAIL,
+    TextInputType.PASSWORD,
+    TextInputType.NUMBER
+  ]).isRequired,
   name: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  min: PropTypes.number,
+  max: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   onKeyup: PropTypes.func,
   onBlur: PropTypes.func,
   minLength: PropTypes.number,
   maxLength: PropTypes.number,
   pattern: PropTypes.instanceOf(RegExp),
-  format: PropTypes.string,
+  maskFormat: PropTypes.string,
+  extendedFormat: PropTypes.string,
+  minValueLength: PropTypes.number,
   cssClass: PropTypes.string,
   allowSpace: PropTypes.bool,
   isDisable: PropTypes.bool,
+  isReadOnly: PropTypes.bool,
   valueType: PropTypes.oneOf([NumberValueType.INT, NumberValueType.DECIMAL]),
-  step: PropTypes.number,
+  inputButtonGroup: PropTypes.shape({
+    isInputButton: PropTypes.bool,
+    showInformation: PropTypes.shape({
+      showInputButton: PropTypes.bool,
+      title: PropTypes.string,
+      faIcon: PropTypes.string
+    }),
+    buttonText: PropTypes.string
+  }),
+  handleInputGroupButton: PropTypes.func,
+  handleInputShowInfo: PropTypes.func,
+  inputIcon: PropTypes.shape({
+    isIconShow: PropTypes.bool,
+    faIcon: PropTypes.string,
+    message: PropTypes.string
+  })
 };
 
 export default Input;

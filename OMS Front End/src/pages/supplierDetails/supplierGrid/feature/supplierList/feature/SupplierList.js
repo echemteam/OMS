@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 //** Lib's */
 import { AppIcons } from '../../../../../../data/appIcons';
-import MolGrid from '../../../../../../components/Grid/MolGrid';
 import { OwnerType } from '../../../../../../utils/Enums/commonEnums';
 import { securityKey } from '../../../../../../data/SecurityKey';
 import Buttons from '../../../../../../components/ui/button/Buttons';
@@ -24,12 +23,13 @@ import { useUpdateResponsibleUserMutation } from '../../../../../../app/services
 import { useAddSupplierNotesMutation } from '../../../../../../app/services/supplierNotesAPI';
 import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../../../app/services/supplierAPI';
 import { reasonData } from '../../../../../../common/features/component/CustomerSupplierReason/Reason.data';
+import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
 
 
-const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
+const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
@@ -130,7 +130,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   }
 
   const handlePageChange = (page, sortingString) => {
-    const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
+    const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
     const request = {
       pagination: {
         pageNumber: page.pageNumber,
@@ -173,12 +173,6 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
     }
   }, [isSuccessUpdateSupplier, updateSupplierData]);
 
-  // useEffect(() => {
-  //   if (molGridRef.current) {
-  //     const currentPageObject = molGridRef.current.getCurrentPageObject();
-  //     getListApi(currentPageObject);
-  //   }
-  // }, [search, selectedStatusOptions]);
 
   useEffect(() => {
     if (isSuccessUpdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
@@ -194,8 +188,8 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   }));
 
   const getListApi = (pageObject, sortingString) => {
-    const currentPageObject = pageObject ? pageObject : molGridRef.current.getCurrentPageObject();
-    const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
+    const currentPageObject = pageObject || molGridRef.current.getCurrentPageObject();
+    const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
     const request = {
       pagination: {
         pageNumber: currentPageObject.pageNumber,
@@ -311,10 +305,10 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
 
   const actionHandler = {
     EDIT: handleEditClick,
-    FREEZE: handlefreeze,
-    DISABLE: handleDiseble,
-    BLOCKED: handleBlock,
-    REJECT: handleReject,
+    ALLOWFREEZE: handlefreeze,
+    ALLOWDISABLE: handleDiseble,
+    ALLOWBLOCKED: handleBlock,
+    ALLOREJECT: handleReject,
   };
 
   return (
@@ -325,7 +319,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
             searchInput={true}
             handleChange={handleChange}
             searchInputName="Search By Supplier Name, Tax Id , Email Address"
-            searchFilter={searchStatusFilter ? true : false}
+            searchFilter={searchStatusFilter}
             handleChangeDropdown={handleChangeDropdown}
             selectedOptions={selectedDrpvalues}
             optionsValue={statusOptions}
@@ -349,7 +343,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
             <div className="row">
               <div className="col-md-12 table-striped">
                 {/* <div className='customer-list'> */}
-                <MolGrid
+                <FinalMolGrid
                   ref={molGridRef}
                   configuration={configFile}
                   dataSource={dataSource}
@@ -419,12 +413,11 @@ SupplierList.propTypes = {
   handleChange: PropTypes.func.isRequired,
   search: PropTypes.string.isRequired,
   handleChangeDropdown: PropTypes.func.isRequired,
-  //selectedStatusOptions: PropTypes.array.isRequired,
+  statusOptions: PropTypes.array.isRequired,
   selectedDrpvalues: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.number),
     PropTypes.string
   ]).isRequired,
-
   searchStatusFilter: PropTypes.bool,
   handleSearch: PropTypes.func.isRequired,
   handleClear: PropTypes.func.isRequired,

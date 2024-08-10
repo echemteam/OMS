@@ -1,41 +1,40 @@
 import React, { useState } from 'react'
 import RenderTabs from '../../../../../../../components/ui/tabs/RenderTabs';
 import EventMapping from '../eventMapping/EventMapping';
-import EventParamter from '../eventParamter/EventParamter';
 import ParameterMapping from '../parameterMapping/ParameterMapping';
 import EventRequiredFields from '../eventRequiredFields/EventRequiredFields';
 import RequiredFieldsMapping from '../requiredFieldsMapping/RequiredFieldsMapping';
+import EventParamter from '../eventParamter/EventParamter';
+
 
 const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
 
     const [endpointId, setEndpointId] = useState(0);
-    const [providerId, setProviderId] = useState(0);
 
     const tabs = [
         {
-            sMenuItemCaption: "Event Mapping",
+            sMenuItemCaption: "Provider Mapping",
             component: (
                 <div className="mt-2">
                     <EventMapping
                         keyId={keyId}
                         setEndpointId={setEndpointId}
-                        setProviderId={setProviderId}
                     />
                 </div>
             ),
             // isVisible: hasAddressPermission.hasAccess,
         },
-        // {
-        //     sMenuItemCaption: "Event Paramter",
-        //     component: (
-        //         <div className="mt-2">
-        //             <EventParamter
-        //                 keyId={keyId}
-        //             />
-        //         </div>
-        //     ),
-        //     // isVisible: hasContactPermission.hasAccess,
-        // },
+        {
+            sMenuItemCaption: "API Event Paramter",
+            component: (
+                <div className="mt-2">
+                    <EventParamter
+                        keyId={keyId}
+                    />
+                </div>
+            ),
+            // isVisible: hasContactPermission.hasAccess,
+        },
         {
             sMenuItemCaption: "Parameter Mapping",
             component: (
@@ -49,7 +48,7 @@ const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
             // isVisible: hasContactPermission.hasAccess,/
         },
         {
-            sMenuItemCaption: "Event Required Fields",
+            sMenuItemCaption: "Required Fields",
             component: (
                 <div className="mt-2">
                     <EventRequiredFields
@@ -72,9 +71,15 @@ const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
         },
     ];
     return (
+        // <CardSection
+        //     cardTitle="Address"
+        //     buttonClassName="theme-button"
+
+        // >
         <div className='vertical-tab-inner'>
-            <RenderTabs tabs={tabs} />
+            <RenderTabs tabs={tabs} isCollapse={true} />
         </div>
+        // </CardSection>
     )
 }
 

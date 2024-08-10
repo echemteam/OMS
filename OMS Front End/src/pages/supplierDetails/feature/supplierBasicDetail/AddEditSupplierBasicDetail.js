@@ -24,6 +24,8 @@ import { supplierBasicData } from "./config/SupplierBasicDetail.data";
 import { excludingRoles } from "../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { getTaxIdMinMaxLength } from "../../../customerDetail/feature/customerBasicDetail/config/TaxIdValidator";
 import PropTypes from 'prop-types';
+import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
+import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
@@ -37,8 +39,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const { formSetting } = supplierBasicData;
     const [supplierName, setSupplierName] = useState('');
     const [formData, setFormData] = useState(supplierBasicData);
-
     const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
     const { nextStepRef, setSupplierId, moveNextPage, supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
     //** API Call's */
@@ -185,7 +187,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     }, [isSupplierNameExistSucess, isSupplierNameExistData]);
 
     //** Handle Function's */
-    const handleAddEditSupplier = () => {
+    const handleAddEditSupplier = async () => {
         let data = basicDetailRef.current.getFormData();
         if (!data) {
             ToastService.warning('Please enter supplier basic information');
@@ -208,13 +210,29 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         };
 
         if (!data.taxId) {
-            addEditSupplierBasicInformation(req);
+            let request = {
+                newValue: req,
+                oldValue: formData.initialState,
+                functionalityName: isOpen ? FunctionalitiesName.UPDATESUPPLIER : FunctionalitiesName.ADDSUPPLIER
+            }
+            const modifyData = await ValidateRequestByApprovalRules(request);
+            if (modifyData.newValue) {
+                addEditSupplierBasicInformation(modifyData.newValue);
+            }
             return;
         }
 
         const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(req.countryId || 0, supplierBasicData.formFields, 'taxId');
         if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
-            addEditSupplierBasicInformation(req);
+            let request = {
+                newValue: req,
+                oldValue: formData.initialState,
+                functionalityName: isOpen ? FunctionalitiesName.UPDATESUPPLIER : FunctionalitiesName.ADDSUPPLIER
+            }
+            const modifyData = await ValidateRequestByApprovalRules(request);
+            if (modifyData.newValue) {
+                addEditSupplierBasicInformation(modifyData.newValue);
+            }
         } else {
             ToastService.warning(validateTaxIdMessage);
         }
@@ -246,7 +264,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             const updatedForm = { ...formData };
             updatedForm.formFields = formFields;
             if (isOpen) {
-                updatedForm.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note"  && field.dataField !== "responsibleUserId");
+                updatedForm.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "responsibleUserId");
             } else {
                 updatedForm.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "responsibleUserId");
             }
@@ -256,7 +274,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            setSupplierName(data.trim());
+            const trimCustomerName = data.replace(/\s+/g, '');
+            setSupplierName(trimCustomerName);
         }
     };
 

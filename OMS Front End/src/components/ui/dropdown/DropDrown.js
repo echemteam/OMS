@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import DropdownSelect from "./DropdownSelect"
 
 const DropDown = (props) => {
@@ -24,10 +25,38 @@ const DropDown = (props) => {
           handleDropdownBlur={props.onBlur}
           isDropdownDisabled={props.isDisabled}
           inputButtonGroup={props.inputButtonGroup}
+          handleInputGroupButton={props.handleInputGroupButton}
         />
       </span>
     </>
   );
 }
+
+DropDown.propTypes = {
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.oneOfType([  
+      PropTypes.string,
+      PropTypes.number,
+    ]).isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ),
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
+  placeholder: PropTypes.string,
+  isMultiSelect: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  inputButtonGroup: PropTypes.shape({
+    icon: PropTypes.string,
+    buttonText: PropTypes.string,
+    isInputButton: PropTypes.bool,
+  }),
+  handleInputGroupButton: PropTypes.func,
+};
 
 export default DropDown

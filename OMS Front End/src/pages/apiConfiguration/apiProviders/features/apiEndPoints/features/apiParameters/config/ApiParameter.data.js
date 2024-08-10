@@ -68,7 +68,6 @@ export const addEditApiParameterFormData ={
             dataField: "isRequired",
             fieldSetting: {
               placeholder: "",
-              allowSpace: true,
             },
            // validation: [{ type: "require" }],
             style: {
@@ -89,25 +88,33 @@ export const ApiParameterGridConfig = {
       {
         name: "Parameter Name",
         fieldName: "name",
-        width: "20%",
+        colStyle: {
+          width: "20%",
+        },
         allowShort: true,
       },
       {
         name: "Data Type ",
         fieldName: "dataType",
-        width: "20%",
+        colStyle: {
+          width: "20%",
+        },
         allowShort: true,
       },
       {
         name: "Default Value ",
         fieldName: "defaultValue",
-        width: "20%",
+        colStyle: {
+          width: "20%",
+        },
         allowShort: true,
       },
       {
         name: "Is Required",
         fieldName: "isRequired",
-        width: "20%",
+        colStyle: {
+          width: "20%",
+        },
         colType: GridColumnType.CHECKBOX,
         colSettings: {
           allowCheckbox: true,
@@ -116,7 +123,9 @@ export const ApiParameterGridConfig = {
       },
       {
         name: "Action",
-        width: "20%",
+        colStyle: {
+          width: "20%",
+        },
         colType: GridColumnType.ACTION,
         defaultAction: {
           allowEdit: true,

@@ -3,14 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OMS.Domain.Entities.Entity.Organization
 {
-    public class SmtpSettingsDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class SmtpSettingsDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("SmtpSettingId")]
         public short? SmtpSettingId { get; set; }
-        [Column("OrganizationId")]
-        public byte? OrganizationId { get; set; }
         [Column("EmailProvider")]
         public string? EmailProvider { get; set; }
         [Column("SmtpServer")]

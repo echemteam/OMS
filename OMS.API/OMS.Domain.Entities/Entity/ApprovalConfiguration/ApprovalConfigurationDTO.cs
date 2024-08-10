@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.ApprovalConfiguration
 {
-    public class ApprovalConfigurationDTO
+    public class ApprovalConfigurationDto
     {
         public int ApprovalConfigurationId { get; set; }
         public string? RuleName { get; set; }

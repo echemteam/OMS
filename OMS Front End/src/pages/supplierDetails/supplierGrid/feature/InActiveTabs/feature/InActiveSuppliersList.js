@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 //** Lib's */
 import { AppIcons } from '../../../../../../data/appIcons';
-import MolGrid from '../../../../../../components/Grid/MolGrid';
 import { securityKey } from '../../../../../../data/SecurityKey';
 import { StatusEnums } from '../../../../../../utils/Enums/StatusEnums';
 import CardSection from '../../../../../../components/ui/card/CardSection';
@@ -17,6 +16,7 @@ import { encryptUrlData } from '../../../../../../services/CryptoService';
 import SwalAlert from '../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../services/toastService/ToastService';
 import { useGetSuppliersMutation, useUpdateSupplierStatusMutation } from '../../../../../../app/services/supplierAPI';
+import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid';
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
 
@@ -183,21 +183,21 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
     }
 
     const actionHandler = {
-        UNFREEZE: handleUnfreeze,
-        ACTIVESUPPLIER: handleActiveSupplier,
-        UNBLOCKED: handleUnBlock,
+        ALLOWUNFREEZE: handleUnfreeze,
+        ACTIVECUSTOMER: handleActiveSupplier,
+        ALLOWUNBLOCKED: handleUnBlock,
         EDIT: handleEditClick,
     };
 
     return (
         <div>
             <div className="row">
-                <div className="col-xxl-12 col-xl-12 col-md-12 col-12" kry={shouldRerenderFormCreator}>
+                <div className="col-xxl-12 col-xl-12 col-md-12 col-12" key={shouldRerenderFormCreator}>
                     <CardSection
                         searchInput={true}
                         handleChange={handleChange}
                         searchInputName="Search By Supplier Name, Tax Id , Email Address"
-                        searchFilter={searchStatusFilter ? true : false}
+                        searchFilter={searchStatusFilter }
                         handleChangeDropdown={handleChangeDropdown}
                         selectedOptions={selectedDrpvalues}
                         optionsValue={statusOptions}
@@ -221,7 +221,7 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
                         <div className="row">
                             <div className="col-md-12 table-striped">
                                 <div className='inactive-scroll-bar'>
-                                    <MolGrid
+                                    <FinalMolGrid
                                         ref={molGridRef}
                                         configuration={configFile}
                                         dataSource={dataSource}

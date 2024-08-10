@@ -4,12 +4,7 @@ using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Implementation
 {
@@ -20,9 +15,9 @@ namespace OMS.Domain.Repository.Implementation
         public OrganizationAccountingDetailsRepository(DapperContext dapperContext) : base(dapperContext)
         {
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationAccountingDetails(OrganizationAccountingDetailsDto requestData)
+        public async Task<AddEntityDto<int>> AddEditOrganizationAccountingDetails(OrganizationAccountingDetailsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONACCOUNTINGDETAILS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORGANIZATIONACCOUNTINGDETAILS, new
             {
                 requestData.OrganizationAccountingDetailId,
                 requestData.CreditLimit,

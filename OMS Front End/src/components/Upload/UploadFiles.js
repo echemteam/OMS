@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import FormCreator from "../Forms/FormCreator";
 import Buttons from "../ui/button/Buttons";
 import { UploadFilesInfo } from "./UploadFile.Data";
@@ -59,4 +60,8 @@ const UploadFiles = ({ uploadFilesTypeId, handleToggleModal }) => {
     );
 };
 
+UploadFiles.propTypes = {
+    uploadFilesTypeId: PropTypes.number.isRequired,
+    handleToggleModal: PropTypes.func.isRequired,
+};
 export default UploadFiles;

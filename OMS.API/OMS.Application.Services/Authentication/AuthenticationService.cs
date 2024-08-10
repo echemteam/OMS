@@ -36,36 +36,36 @@ namespace OMS.Application.Services.Authentication
             {
                 IsAuthenticated = true
             };
-            UserDTO user = await repositoryManager.authentication.UserLogin(authenticationRequest.UserName);
-            if (user == null || (user != null && user.IsActive == false))
+            UserDto user = await repositoryManager.authentication.UserLogin(authenticationRequest.UserName);
+            if (user == null || !user.IsActive)
             {
                 authResponce.Message = (user == null ? "User details not found" : "User is not active");
                 authResponce.IsAuthenticated = false;
                 return authResponce;
             }
-            string enCriptedPassword = EncryptionUtil.GenerateHashKeyUsingSalt(authenticationRequest.Password!.Trim(), user?.PasswordSalt!);
+            string enCriptedPassword = EncryptionUtil.GenerateHashKeyUsingSalt(authenticationRequest.Password!.Trim(), user.PasswordSalt!);
             if (user!.HashedPassword != enCriptedPassword)
             {
                 authResponce.IsAuthenticated = false;
                 authResponce.Message = "Invalid credentials !!";
                 return authResponce;
             }
-            BaseRolesDTO role = await repositoryManager.authentication.GetUserRoles(user.UserId);
+            BaseRolesDto role = await repositoryManager.authentication.GetUserRoles(user.UserId);
             List<GetSecurityPermissionByUserIdResponse> response = await repositoryManager.securityPermission.GetSecurityPermissionByUserId(user.UserId);
-            //List<SecurityPermissions> res = response.ToMapp<List<GetSecurityPermissionByUserIdResponse>, List<SecurityPermissions>>();
             authResponce.securityPermissions = response.Select(a => new SecurityPermissionsDetails()
             {
                 SecurityKeyName = a.SecurityKeyName,
                 IsMenu = a.IsMenu,
                 SecurityKeyParentId = a.SecurityKeyParentId,
                 SecuritySettingId = a.SecuritySettingId
-                //SecuritySettingName = a.SecuritySettingName,
             }).ToList();
 
-            UserDetails userDetails = user.ToMapp<UserDTO, UserDetails>();
+            authResponce.ApprovalRulesConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
+            authResponce.smtpSettings = await repositoryManager.smtpSettings.GetSmtpSettings();
+
+            UserDetails userDetails = user.ToMapp<UserDto, UserDetails>();
             authResponce.User = userDetails;
             authResponce.Roles = role;
-            //authResponce.securityPermissions = response.ToList();
             authResponce.SessionTimeout = Convert.ToInt32((commonSettingService.ApplicationSettings.SessionTimeOut != null) ? Convert.ToInt32(commonSettingService.ApplicationSettings.SessionTimeOut) : 60);
             authResponce.Token = GenerateToken(user.UserId, Convert.ToDouble((commonSettingService.ApplicationSettings.SessionTimeOut != null) ? Convert.ToInt32(commonSettingService.ApplicationSettings.SessionTimeOut) : 60));
             authResponce.Message = "User successfully authenticated";

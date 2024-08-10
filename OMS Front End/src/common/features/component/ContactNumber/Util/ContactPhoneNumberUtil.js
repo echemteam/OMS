@@ -1,5 +1,5 @@
 import ToastService from "../../../../../services/toastService/ToastService";
-
+import PropTypes from 'prop-types';
 export const addPhoneNumberData = (data, contactId, listData, setListData, successMessage, maxLengthMessage, duplicateMessage, onResetData, onSuccess) => {
     let request = {
         ...data,
@@ -17,7 +17,9 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
         onSuccess();
         return;
     }
-    const isDuplicate = listData && listData.some(item => item.phoneNumber === request.phoneNumber && item.phoneCode === request.phoneCode);
+   
+    const isDuplicate = listData?.some(item => item.phoneNumber === request.phoneNumber && item.phoneCode === request.phoneCode);
+
 
     if (!isDuplicate) {
         let addData;
@@ -36,7 +38,7 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
             onResetData();
             onSuccess();
         } else {
-
+            ToastService.warning("Cannot add more than 5 items.");
         }
     } else {
         ToastService.warning(duplicateMessage);
@@ -50,7 +52,8 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
         const phoneTypeId = data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId
         const phoneType = data.phoneTypeId.label ? data.phoneTypeId.label : data.phoneType
         const isPrimary = data.isPrimaryPhoneNumber
-        const isDuplicate = listData && listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === phoneCode && item.id !== data.id);
+        
+        const isDuplicate =  listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === phoneCode && item.id !== data.id);
         if (!isDuplicate) {
             let updatedData = listData.map(item => {
                 if (item.id === data.id) {
@@ -88,3 +91,57 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
         onSuccess();
     }
 }
+
+
+addPhoneNumberData.propTypes = {
+    data: PropTypes.shape({
+        phoneCode: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+        phoneTypeId: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+        phoneType: PropTypes.string,
+        isPrimaryPhoneNumber: PropTypes.bool,
+        extension: PropTypes.number,
+        phoneNumber: PropTypes.string.isRequired
+    }).isRequired,
+    contactId: PropTypes.number.isRequired,
+    listData: PropTypes.arrayOf(PropTypes.shape({
+        phoneNumber: PropTypes.string.isRequired,
+        phoneCode: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        phoneTypeId: PropTypes.string,
+        phoneType: PropTypes.string,
+        isPrimary: PropTypes.bool,
+        extension: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    })),
+    setListData: PropTypes.func.isRequired,
+    successMessage: PropTypes.string.isRequired,
+    maxLengthMessage: PropTypes.string.isRequired,
+    duplicateMessage: PropTypes.string.isRequired,
+    onResetData: PropTypes.func.isRequired,
+    onSuccess: PropTypes.func.isRequired
+};
+updatePhoneNumberData.propTypes = {
+    data: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        phoneCode: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+        phoneTypeId: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+        phoneType: PropTypes.string,
+        isPrimaryPhoneNumber: PropTypes.bool,
+        extension: PropTypes.number,
+        phoneNumber: PropTypes.string.isRequired
+    }).isRequired,
+    listData: PropTypes.arrayOf(PropTypes.shape({
+        phoneNumber: PropTypes.string.isRequired,
+        phoneCode: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        phoneTypeId: PropTypes.string,
+        phoneType: PropTypes.string,
+        isPrimary: PropTypes.bool,
+        extension: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    })),
+    setListData: PropTypes.func.isRequired,
+    successMessage: PropTypes.string.isRequired,
+    duplicateMessage: PropTypes.string.isRequired,
+    inValidDate: PropTypes.string.isRequired,
+    onResetData: PropTypes.func.isRequired,
+    onSuccess: PropTypes.func.isRequired
+};

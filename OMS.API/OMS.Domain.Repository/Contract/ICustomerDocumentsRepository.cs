@@ -6,9 +6,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ICustomerDocumentsRepository
     {
-        Task<AddEntityDTO<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? customerId);
-        Task<AddEntityDTO<int>> AddCustomerDocuments(CustomerDocumentsDTO customerDocuments);
+        Task<AddEntityDto<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? customerId);
+        Task<AddEntityDto<int>> AddCustomerDocuments(CustomerDocumentsDto customerDocuments);
         Task<List<GetCustomerDocumentsByIdResponse>> GetCustomerDocumentsById(int customerId);
-        Task<AddEntityDTO<int>> DeleteCustomerDocumentsById(int customerDocumentId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteCustomerDocumentsById(int customerDocumentId, int deletedBy);
     }
 }

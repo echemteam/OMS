@@ -4,14 +4,11 @@ import { forwardRef, useContext, useEffect, useRef, useState } from "react";
 import { addEditCarrierFormData } from "../config/CarrierConfig";
 import Buttons from "../../../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../../../components/Forms/FormCreator";
-// import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
 import CenterModel from "../../../../../../../components/ui/centerModel/CenterModel";
 import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 //** Service's */
 import ToastService from "../../../../../../../services/toastService/ToastService";
 import { useAddShppingDeliveryCarriersMutation, useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
-// import { setFieldSetting } from "../../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-// import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
 import PropTypes from 'prop-types';
 
 const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, onSuccess }) => {
@@ -24,8 +21,7 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, onSuc
     //** API Call's */
     const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
     const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = useAddShppingDeliveryCarriersMutation();
-    // const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSuccess, data: isGetByIdData }] = useLazyGetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdQuery();
-
+  
     //** Handle Changes */
     const handleAddEdit = () => {
         let data = ref.current.getFormData();
@@ -70,35 +66,6 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, onSuc
         }
     }, [isUpdateSuccess, isUpdateData]);
 
-    // useEffect(() => {
-    //     if (!isGetByIdFetching && isGetByIdSuccess && isGetByIdData) {
-    //         let form = { ...addEditCarrierFormData };
-    //         form.initialState = {
-    //             ...isGetByIdData,
-    //             handlingFee: isGetByIdData.handlingFee ? isGetByIdData.handlingFee : 10, // Default handling fee set to 10
-    //             isCarrierPrimary: isGetByIdData.isPrimary
-    //         }
-    //         setFormData(form);
-
-    //     }
-    // }, [isGetByIdFetching, isGetByIdSuccess, isGetByIdData]);
-
-    // useEffect(() => {
-    //     if (isEdit && deliveryCarrierId) {
-    //         getById(deliveryCarrierId);
-    //         setFieldSetting(formData, 'carrier', FieldSettingType.DISABLED, true);
-    //     } else if (!isEdit) {
-    //         onResetData();
-    //         setFieldSetting(formData, 'carrier', FieldSettingType.DISABLED);
-    //     }
-    // }, [isEdit, deliveryCarrierId]);
-
-    //** Reset Data */
-    // const onResetData = () => {
-    //     let form = { ...addEditCarrierFormData };
-    //     form.initialState = { ...addEditCarrierFormData.initialState };
-    //     setFormData(form);
-    // };
 
     return (
         <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}

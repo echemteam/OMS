@@ -76,7 +76,7 @@ form {
 
 .input-group {
   position: relative;
-
+  flex-wrap: nowrap !important;
   .icon-fix {
     position: absolute;
     right: 6px;
@@ -198,7 +198,7 @@ form {
 
   .input-group-append {
     .input-button {
-      height: 28px;
+      height: 30px;
       padding: 0 5px;
       color: var(--whiteColor);
     }

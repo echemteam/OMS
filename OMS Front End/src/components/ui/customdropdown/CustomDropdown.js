@@ -1,7 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Select, { components } from "react-select";
 import "./CustomDropdown.scss";
 import StatusDisplay from "./StatusDisplay";
+import formatDate from "../../../lib/formatDate";
 
 const CustomOption = (props) => {
   const { data, isSelected, selectProps } = props;
@@ -12,7 +14,7 @@ const CustomOption = (props) => {
     <components.Option {...props}>
       <div className="custom-option">
         <span className="option-label">{label}</span>
-        <span className="option-date">{date}</span>
+        <span className="option-date">{date ? formatDate(date, 'MM/DD/YYYY') : null}</span>
         <StatusDisplay
           status={status}
           isSelected={isSelected}
@@ -26,8 +28,10 @@ const CustomOption = (props) => {
 };
 
 function CustomDropdown(props) {
-  const { dropDownSettings, inputButtonGroup } = props;
+  const { dropDownSettings, inputButtonGroup, handleInputGroupButton } = props;
   const base64Icon = inputButtonGroup?.icon;
+
+  console.log(props.handleInputGroupButton);
 
   return (
     <span className="d-inline-block custom-input">
@@ -50,7 +54,7 @@ function CustomDropdown(props) {
           className="select-button"
           disabled={!props.value}
           type="button"
-          onClick={inputButtonGroup.handleInputGroupButton}
+          onClick={props.handleInputGroupButton}
         >
           {base64Icon && (
             <img
@@ -66,4 +70,27 @@ function CustomDropdown(props) {
   );
 }
 
+CustomDropdown.propTypes = {
+  dropDownSettings: PropTypes.shape({
+    colorMap: PropTypes.object,
+    textMap: PropTypes.object,
+    iconMap: PropTypes.object
+  }).isRequired,
+  inputButtonGroup: PropTypes.shape({
+    icon: PropTypes.string,
+    buttonText: PropTypes.string.isRequired,
+    isInputButton: PropTypes.bool.isRequired
+  }),
+  handleInputGroupButton: PropTypes.func,
+  value: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
+  handleDropdownChange: PropTypes.func.isRequired,
+  handleDropdownBlur: PropTypes.func,
+  optionsValue: PropTypes.array,
+  isMultiSelect: PropTypes.bool,
+  placeholder: PropTypes.string,
+  isDropdownDisabled: PropTypes.bool
+};
 export default CustomDropdown;

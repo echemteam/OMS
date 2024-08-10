@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from 'prop-types';
 const RadioButton = React.lazy(() =>
   import("../../ui/inputs/radioButton/RadioButton")
 );
@@ -65,6 +65,23 @@ const FormRadioButtonField = ({
       </div>
     </>
   );
+};
+
+FormRadioButtonField.propTypes = {
+  labelName: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  onValidation: PropTypes.func,
+  dataField: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  selectedOption: PropTypes.string,
+  error: PropTypes.string,
+  formSetting: PropTypes.object,
+  hasMainTitle: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string,
+    label: PropTypes.string
+  })),
 };
 
 export default FormRadioButtonField;

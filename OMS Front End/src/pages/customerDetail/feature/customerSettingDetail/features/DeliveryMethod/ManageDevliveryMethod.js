@@ -20,7 +20,7 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
     const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    // const [deliveryMethodId, setDeliveryMethodId] = useState();
+
     const { deliveryMethodsList , customerId } = useContext(BasicDetailContext);
 
     const { data, isFetching, isSuccess } = useGetAllDeliveryMethodsQuery();

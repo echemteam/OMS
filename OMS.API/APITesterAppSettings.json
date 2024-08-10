@@ -1,6 +1,0 @@
-{
-  "ConnectionStrings": {
-    "OMS": "server=47.190.78.205; database=OmsLite;user id=sa;password=Swami@86;integrated security=false;Connect Timeout=1000;TrustServerCertificate=True;MultipleActiveResultSets=True;",
-    "providerName": "System.Data.EntityClient"
-  }
-}

@@ -18,28 +18,29 @@ namespace OMS.Application.Services.ApiEventManagement
 {
     public interface IApiEventManagementService
     {
-        Task<AddEntityDTO<int>> AddEditApiEvent(AddEditApiEventRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddEditApiEvent(AddEditApiEventRequest requestData, short CurrentUserId);
         Task<GetApiEventByApiEventIdResponse> GetApiEventByApiEventId(int apiEventId);
-        Task<AddEntityDTO<int>> DeleteApiEvent(int apiEventId, short CurrentUserId);
+        Task<AddEntityDto<int>> DeleteApiEvent(int apiEventId, short CurrentUserId);
         Task<EntityList<GetApiEventsResponse>> GetApiEvents(ListEntityRequest<BaseFilter> requestData);
-        Task<AddEntityDTO<int>> AddApiEventMapping(AddApiEventMappingRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddApiEventMapping(AddApiEventMappingRequest requestData, short CurrentUserId);
         Task<GetApiEventMappingsResponse> GetApiEventMappings(GetApiEventMappingsRequest requestData);
-        Task<AddEntityDTO<int>> DeleteApiEventMapping(int apiEventMappingId, short CurrentUserId);
-        Task<AddEntityDTO<int>> AddEditApiEventParameter(AddEditApiEventParameterRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> DeleteApiEventMapping(int apiEventMappingId, short CurrentUserId);
+        Task<AddEntityDto<int>> AddEditApiEventParameter(AddEditApiEventParameterRequest requestData, short CurrentUserId);
         Task<GetApiEventParameterByApiEventParametersIdResponse> GetApiEventParameterByApiEventParametersId(int apiEventParametersId);
-        Task<AddEntityDTO<int>> DeleteApiEventParameter(int apiEventParametersId, short CurrentUserId);
+        Task<AddEntityDto<int>> DeleteApiEventParameter(int parameterId, int apiEventParametersId, short CurrentUserId);
         Task<EntityList<GetApiEventParametersResponse>> GetApiEventParameters(GetApiEventParametersRequest requestData);
-        Task<AddEntityDTO<int>> AddApiParameterMapping(AddApiParameterMappingRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddApiParameterMapping(AddApiParameterMappingRequest requestData, short CurrentUserId);
         Task<EntityList<GetApiParameterMappingsResponse>> GetApiParameterMappings(GetApiParameterMappingsRequest requestData);
-        Task<AddEntityDTO<int>> DeleteApiParameterMapping(int apiParameterMappingId, short CurrentUserId);
-        Task<AddEntityDTO<int>> AddEditApiEventRequiredField(AddEditApiEventRequiredFieldRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> DeleteApiParameterMapping(int apiParameterMappingId, short CurrentUserId);
+        Task<AddEntityDto<int>> AddEditApiEventRequiredField(AddEditApiEventRequiredFieldRequest requestData, short CurrentUserId);
         Task<GetApiEventRequiredFieldByApiEventRequiredFieldIdResponse> GetApiEventRequiredFieldByApiEventRequiredFieldId(int apiEventRequiredFieldId);
-        Task<AddEntityDTO<int>> DeleteApiEventRequiredField(int apiEventRequiredFieldId, short CurrentUserId);
+        Task<AddEntityDto<int>> DeleteApiEventRequiredField(int apiEventRequiredFieldId, short CurrentUserId);
         Task<EntityList<GetApiEventRequiredFieldsResponse>> GetApiEventRequiredFields(GetApiEventRequiredFieldsRequest requestData);
-        Task<AddEntityDTO<int>> AddApiEventRequiredFieldsMapping(AddApiEventRequiredFieldsMappingRequest requestData, short CurrentUserId);
+        Task<AddEntityDto<int>> AddApiEventRequiredFieldsMapping(AddApiEventRequiredFieldsMappingRequest requestData, short CurrentUserId);
         Task<EntityList<GetApiEventRequiredFieldsMappingsResponse>> GetApiEventRequiredFieldsMappings(GetApiEventRequiredFieldsMappingsRequest requestData);
-        Task<AddEntityDTO<int>> DeleteApiEventRequiredFieldsMapping(int apiEventRequiredFieldsMappingId, short CurrentUserId);
+        Task<AddEntityDto<int>> DeleteApiEventRequiredFieldsMapping(int apiEventRequiredFieldsMappingId, short CurrentUserId);
         Task<List<GetAllAPIParametersResponse>> GetAllAPIParametersByEndpointId(int endpointId);
         Task<List<GetAllRequiredFieldsResponse>> GetAllRequiredFieldsByEventId(int apiEventId);
+        Task<List<GetAllEventParameterResponse>> GetAllEventParameterByEventId(int apiEventId);
     }
 }

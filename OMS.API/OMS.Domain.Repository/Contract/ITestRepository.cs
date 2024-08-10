@@ -6,7 +6,7 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ITestRepository
     {
-        Task<AddEntityDTO<int>> AddTest(AddTestRequest addTest);
-        Task<List<TestDTO>> GetTestList();
+        Task<AddEntityDto<int>> AddTest(AddTestRequest addTest);
+        Task<List<TestDto>> GetTestList();
     }
 }

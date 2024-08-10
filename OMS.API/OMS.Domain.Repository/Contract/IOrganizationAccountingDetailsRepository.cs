@@ -1,17 +1,12 @@
 ﻿using OMS.Domain.Entities.API.Response.Organization;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Organization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Contract
 {
     public interface IOrganizationAccountingDetailsRepository
     {
-        Task<AddEntityDTO<int>> AddEditOrganizationAccountingDetails(OrganizationAccountingDetailsDto requestData);
+        Task<AddEntityDto<int>> AddEditOrganizationAccountingDetails(OrganizationAccountingDetailsDto requestData);
         Task<GetOrganizationAccountingDetailsResponse> GetOrganizationAccountingDetails();
     }
 }

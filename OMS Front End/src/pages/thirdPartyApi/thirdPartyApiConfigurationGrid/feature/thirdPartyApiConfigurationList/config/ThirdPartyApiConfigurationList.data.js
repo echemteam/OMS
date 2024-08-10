@@ -1,3 +1,4 @@
+import { AppIcons } from "../../../../../../data/appIcons";
 import { GridColumnType } from "../../../../../../data/gridColumnType";
 
 export const thirdPartyListConfigurationData = {
@@ -5,24 +6,40 @@ export const thirdPartyListConfigurationData = {
         {
             name: "Event Name",
             fieldName: "eventName",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             allowShort: true,
         },
         {
             name: "Description",
             fieldName: "description",
-            width: "60%",
+            colStyle: {
+                width: "60%",
+            },
             allowShort: true,
         },
         {
             name: "Action",
-            width: "20%",
+            colStyle: {
+                width: "20%",
+            },
             colType: GridColumnType.ACTION,
             defaultAction: {
-                allowEdit: false,
-                allowView: true,
                 allowDelete: true,
             },
+            customAction: [
+                {
+                    name: "TESTAPI",
+                    iconName: AppIcons.TestApiIcon,
+                    title: "Test Api"
+                },
+                {
+                    name: "VIEWCONFIGURATION",
+                    iconName: AppIcons.EyeIcon,
+                    title: "View"
+                },
+            ],
         },
     ],
 

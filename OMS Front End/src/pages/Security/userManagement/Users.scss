@@ -3,8 +3,22 @@
     margin-bottom: 0;
   }
   table {
+    thead{
+      tr{
+        th:nth-child(4){
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
     tbody{
       max-height: calc(100vh - 280px);
+      tr{
+        td:nth-child(4){
+          display: flex;
+          justify-content: center;
+        }
+      }
     }
   }
 }

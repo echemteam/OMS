@@ -6,7 +6,7 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ISupplierFinancialSettingsRepository
     {
-        Task<AddEntityDTO<int>> AddEditSupplierFinancialSettings(SupplierAccoutingSettingDTO requestData);
+        Task<AddEntityDto<int>> AddEditSupplierFinancialSettings(SupplierAccoutingSettingDto requestData);
         Task<GetSupplierFinancialSettingsBySupplierIdResponse> GetSupplierFinancialSettingsBySupplierId(int supplierId);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.ApiEventRequiredFieldsMapping
 {
-    public class ApiEventRequiredFieldsDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class ApiEventRequiredFieldsDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? ApiEventRequiredFieldsMappingId { get; set; }
         public int? ApiEventRequiredFieldId { get; set; }

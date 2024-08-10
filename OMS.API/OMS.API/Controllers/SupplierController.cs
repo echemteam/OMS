@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Supplier;
-using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -12,6 +12,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class SupplierController : BaseController
     {
         #region private variable
@@ -24,7 +25,7 @@ namespace OMS.API.Controllers
             _serviceManager = serviceManager;
         }
         #endregion
-            
+
         #region Suppliers API
         [HttpPost("AddEditSupplierBasicInformation")]
         public async Task<IActionResult> AddEditSupplierBasicInformation(AddEditSupplierBasicInformationRequest requestData)
@@ -81,7 +82,7 @@ namespace OMS.API.Controllers
             return APISucessResponce(checkItem);
         }
 
- 
+
         [HttpPost("GetSupplierAuditHistoryBySupplierId")]
         public async Task<IActionResult> GetSupplierAuditHistoryBySupplierId(GetSupplierAuditHistoryBySupplierIdRequest queryRequest)
         {

@@ -88,7 +88,7 @@ namespace OMS.Shared.DbContext
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception($"An error occurred while executing the query: {ex.Message}", ex);
             }
             finally
             {
@@ -114,12 +114,16 @@ namespace OMS.Shared.DbContext
                 {
                     _connection.Open();
                 }
-
-                return await _connection.QuerySingleOrDefaultAsync<T>(query, parameters, commandType: commandType);
+                var result = await _connection.QuerySingleOrDefaultAsync<T>(query, parameters, commandType: commandType);
+                //if (result == null)
+                //{
+                //    throw new InvalidOperationException("Query execution returned a null result.");
+                //}
+                return result!;
             }
             catch (Exception ex)
             {
-                throw;
+                throw new Exception($"An error occurred while executing the query: {ex.Message}", ex);
             }
             finally
             {
@@ -136,11 +140,17 @@ namespace OMS.Shared.DbContext
                 {
                     _connection.Open();
                 }
-                return await _connection.QueryFirstOrDefaultAsync<T>(query, parameters, commandType: commandType);
+                var result = await _connection.QueryFirstOrDefaultAsync<T>(query, parameters, commandType: commandType);
+                //if (result == null)
+                //{
+                //    throw new InvalidOperationException("Query execution returned a null result.");
+                //}
+                return result!;
+
             }
             catch (Exception ex)
             {
-                throw;
+                throw new Exception($"An error occurred while executing the query: {ex.Message}", ex);
             }
             finally
             {
@@ -160,13 +170,10 @@ namespace OMS.Shared.DbContext
             }
             catch (Exception ex)
             {
-                throw;
-            }
-            finally
-            {
-                // _connection.Close();
+                throw new Exception("An error occurred while updating the list.", ex);
             }
         }
+
 
         /// <summary>
         /// Get List from Query 
@@ -188,7 +195,7 @@ namespace OMS.Shared.DbContext
             }
             catch (Exception ex)
             {
-                throw;
+                throw new Exception($"An error occurred while executing the query: {ex.Message}", ex);
             }
             finally
             {

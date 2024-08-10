@@ -38,7 +38,7 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Customers Repository
-        public async Task<AddEditResponse> AddEditCustomersBasicInformation(CustomersDTO customers)
+        public async Task<AddEditResponse> AddEditCustomersBasicInformation(CustomersDto customers)
         {
             return await _context.GetSingleAsync<AddEditResponse>(ADDEDITCUSTOMERSBASICINFORMATION, new
             {
@@ -58,9 +58,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateCustomersBasicInformation(CustomersDTO customers)
+        public async Task<AddEntityDto<int>> UpdateCustomersBasicInformation(CustomersDto customers)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECUSTOMERSBASICINFORMATION, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATECUSTOMERSBASICINFORMATION, new
             {
                 customers.CustomerId,
                 customers.Name,
@@ -97,25 +97,25 @@ namespace OMS.Domain.Repository.Implementation
             }, true);
         }
 
-        public async Task<AddEntityDTO<int>> CheckCustomerNameExist(CustomersDTO customers)
+        public async Task<AddEntityDto<int>> CheckCustomerNameExist(CustomersDto customers)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(CHECKCUSTOMERNAMEEXIST, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(CHECKCUSTOMERNAMEEXIST, new
             {
                 customers.Name,
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateCustomerApproveStatus(CustomersDTO customers)
+        public async Task<AddEntityDto<int>> UpdateCustomerApproveStatus(CustomersDto customers)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECUSTOMERAPPROVESTATUS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATECUSTOMERAPPROVESTATUS, new
             {
                 customers.CustomerId,
                 customers.ApprovedBy,
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> UpdateCustomerInActiveStatus(CustomersDTO customers)
+        public async Task<AddEntityDto<int>> UpdateCustomerInActiveStatus(CustomersDto customers)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECUSTOMERINACTIVESTATUS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATECUSTOMERINACTIVESTATUS, new
             {
                 customers.CustomerId,
                 customers.StatusId,
@@ -124,9 +124,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateCustomerStatus(CustomersDTO customers)
+        public async Task<AddEntityDto<int>> UpdateCustomerStatus(CustomersDto customers)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECUSTOMERSTATUS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATECUSTOMERSTATUS, new
             {
                 customers.CustomerId,
                 customers.StatusId,
@@ -134,9 +134,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> AddAddressForCustomer(AddAddressForCustomerRequest requestData, short createdBy)
+        public async Task<AddEntityDto<int>> AddAddressForCustomer(AddAddressForCustomerRequest requestData, short createdBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDADDRESSFORCUSTOMER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDADDRESSFORCUSTOMER, new
             {
                 requestData.CustomerId,
                 requestData.AddressId,
@@ -146,9 +146,9 @@ namespace OMS.Domain.Repository.Implementation
                 createdBy
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> UpdateAddressForCustomer(UpdateAddressForCustomerRequest requestData, short updatedBy)
+        public async Task<AddEntityDto<int>> UpdateAddressForCustomer(UpdateAddressForCustomerRequest requestData, short updatedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEADDRESSFORCUSTOMER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEADDRESSFORCUSTOMER, new
             {
                 requestData.CustomerAddressId,
                 requestData.CustomerId,
@@ -174,9 +174,9 @@ namespace OMS.Domain.Repository.Implementation
             }, true);
         }
 
-        public async Task<AddEntityDTO<int>> AddEditContactForCustomer(AddEditContactForCustomerRequest requestData, short createdBy)
+        public async Task<AddEntityDto<int>> AddEditContactForCustomer(AddEditContactForCustomerRequest requestData, short createdBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTFORCUSTOMER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITCONTACTFORCUSTOMER, new
             {
                 requestData.CustomerContactId,
                 requestData.CustomerId,
@@ -195,17 +195,17 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return customerDetails;
         }
-        public async Task<AddEntityDTO<bool>> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData)
+        public async Task<AddEntityDto<bool>> UpdateCustomerSubCustomer(UpdateCustomerSubCustomerRequest requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<bool>>(UPDATECUSTOMERSUBCUSTOMER, new
+            return await _context.GetSingleAsync<AddEntityDto<bool>>(UPDATECUSTOMERSUBCUSTOMER, new
             {
                 requestData.CustomerId,
                 requestData.IsSubCustomer
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> AddSubCustomer(AddSubCustomerRequest requestData)
+        public async Task<AddEntityDto<int>> AddSubCustomer(AddSubCustomerRequest requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDSUBCUSTOMER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDSUBCUSTOMER, new
             {
                 requestData.CustomerId,
                 requestData.SubCustomerId
@@ -223,9 +223,9 @@ namespace OMS.Domain.Repository.Implementation
             }, true);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short deletedBy)
+        public async Task<AddEntityDto<int>> DeleteSubCustomer(int subCustomerMainCustomerId, short deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETESUBCUSTOMER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETESUBCUSTOMER, new
             {
                 subCustomerMainCustomerId,
                 deletedBy

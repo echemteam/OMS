@@ -19,7 +19,7 @@ export const assignUserFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-10 col-xl-10 col-md-10 mb-input",
+        containerCss: "col-xxl-10 col-xl-10 col-md-10",
       },
     },
   ],
@@ -33,12 +33,16 @@ export const assignUserListData = {
     {
       name: "User Name",
       fieldName: "userName",
-      width:"80%",
+      colStyle: {
+        width: "80%",
+      },
       allowShort: true,
     },
     {
       name: "Action",
-      width:"20%",
+      colStyle: {
+        width: "20%",
+      },
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: false,

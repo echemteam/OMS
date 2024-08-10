@@ -51,7 +51,7 @@ export const addEditCarrierFormData = {
             fieldSetting: {
                 placeholder: "Enter Handling Fee",
                 allowSpace: true,
-                maxLength: 25,
+                maxLength: 3,
             },
             validation: [{ type: "require" }],
             style: {
@@ -82,15 +82,19 @@ export const AccountGridConfig = {
         {
             name: "Carrier",
             fieldName: "carrier",
-            width: "25%"
+            colStyle: {
+                width: "25%",
+            }
         },
         {
             name: "Account Number",
-            width: "25%",
+            colStyle: {
+                width: "25%",
+            },
             fieldName: "accountNumber",
             allowEditColumn: true,
             editColumn: {
-                editColType: EditGridColumnType.NUMERIC,
+                editColType: EditGridColumnType.INPUT,
                 editColFieldName: "accountNumber",
                 isDisable: false,
                 editColValidation: [
@@ -103,7 +107,9 @@ export const AccountGridConfig = {
         {
             name: "Handling Fee New",
             fieldName: "handlingFee",
-            width: "25%",
+            colStyle: {
+                width: "25%",
+            },
             colType: GridColumnType.MONEY,
             allowEditColumn: true,
             editColumn: {
@@ -112,6 +118,7 @@ export const AccountGridConfig = {
                 isDisable: false,
                 editColValidation: [
                     { type: "required", message: "Handling Fee is required." },
+                    { type: "maxLength", value: 3, message: "Handling Fee must be at least 3 characters long." }
                 ],
             },
             colSettings: {},
@@ -121,13 +128,15 @@ export const AccountGridConfig = {
         {
             name: "Is Primary",
             fieldName: "isPrimary",
-            width: "25%",
+            colStyle: {
+                width: "25%",
+            },
             colType: GridColumnType.CHECKBOX,
             allowEditColumn: true,
             editColumn: {
                 editColType: EditGridColumnType.CHECKBOX,
                 editColFieldName: "isPrimary",
-                editColValidation: [], 
+                editColValidation: [],
             },
             colSettings: {
                 allowCheckbox: true,
@@ -137,22 +146,31 @@ export const AccountGridConfig = {
 
         {
             name: "Action",
-            width: "25%",
+            colStyle: {
+                width: "25%",
+            },
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowEdit: true,
                 allowDelete: true,
             },
-            editColumn: {
-                editColType: EditGridColumnType.ACTION,
-                defaultEditAction: {
-                    allowSave: true,
-                    allowCancel: true,
-                },
-            },
-            allowShort: false
+            // editColumn: {
+            //     editColType: EditGridColumnType.ACTION,
+            //     defaultEditAction: {
+            //         allowSave: true,
+            //         allowCancel: true,
+            //     },
+            // },
+            // allowShort: false
         },
     ],
+    editSettings: {
+        defualtEditableView: false,
+        buttons: {
+            save: true,
+            cancel: true,
+        }
+    },
     allowEdit: true,
     handleRowDataUpdate: null,
     OnColumnChangeEdit: null

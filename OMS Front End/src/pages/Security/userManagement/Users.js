@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
-import MolGrid from "../../../components/Grid/MolGrid";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
 import { UserGridConfig, userFormData } from "./features/config/UserForm.data";
@@ -13,6 +12,7 @@ import useDebounce from "../../../app/customHooks/useDebouce";
 import { securityKey } from "../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
 import "./Users.scss"
+import FinalMolGrid from "../../../components/FinalMolGrid/FinalMolGrid";
 const Users = () => {
 
   const molGridRef = useRef();
@@ -157,7 +157,7 @@ const Users = () => {
         searchInputName="Search By User Name"
         titleButtonClick={AddUser}
         buttonClassName="btn theme-button"
-        rightButton={buttonVisible ? true : false}
+        rightButton={buttonVisible}
         buttonText="Add User"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
@@ -165,7 +165,7 @@ const Users = () => {
         searchInput={true}>
         <div className="row">
           <div className="col-md-12 table-striped ">
-            <MolGrid
+            <FinalMolGrid
               ref={molGridRef}
               configuration={UserGridConfig}
               dataSource={listData}

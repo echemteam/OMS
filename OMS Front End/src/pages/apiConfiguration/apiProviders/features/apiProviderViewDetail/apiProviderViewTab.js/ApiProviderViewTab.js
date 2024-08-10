@@ -43,9 +43,9 @@ const ApiproviderViewTab = ({ providerId, providerData }) => {
   const visibleTabs = !providerId ? tabs.filter((tab) => tab.isVisible) : tabs;
 
   return (
-    <>
+     
       <RenderTabs tabs={providerId ? visibleTabs : null} />
-    </>
+    
   );
 };
 

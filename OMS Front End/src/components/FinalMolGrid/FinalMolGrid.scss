@@ -199,6 +199,8 @@ table {
         &:last-child {
           width: 150px;
           text-align: center;
+          display: flex;
+          justify-content: center;
 
           div {
             justify-content: center;

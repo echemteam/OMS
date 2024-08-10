@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace OMS.Domain.Entities.API.Request.Roles
+﻿namespace OMS.Domain.Entities.API.Request.Roles
 {
     public class UpdateRolesRequest
     {

@@ -1,19 +1,21 @@
 import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { AddressType } from "../../../../../utils/Enums/commonEnums";
 
 export const orderInformationData = {
   initialState: {
-    name: "",
-    subName: "",
+    customerId: "",
+    subCustomerMainCustomerId: "",
     poNumber: "",
+    addressId: ""
   },
   formFields: [
     {
-      id: "name",
+      id: "customerId",
       lable: "Customer Name ",
       Field_Name: "Customer Name",
       fieldType: FormFieldTypes.CUSTOMSELECT,
-      dataField: "name",
+      dataField: "customerId",
       fieldSetting: {
         placeholder: "Enter Customer Name",
         allowSpace: true,
@@ -27,19 +29,30 @@ export const orderInformationData = {
       },
       dropdownSettings: {
         colorMap: {
-          active: "#00b100",
-          pending: "#ffd500",
-          blocked: "#ff4c51"
+          Approved: "#00b100",
+          Pending: "#ffd500",
+          Block: "#6444d8",
+          Disable: "#808080",
+          Freeze: "#867bf2",
+          Reject: "#ff4c51",
+          Submitted: "#06bcd2"
         },
         textMap: {
-          active : { text: "Active" },
-          pending : { text: "Pending" },
-          blocked : { text: "Blocked" }
+          Approved: { text: "Approved" },
+          Pending: { text: "Pending" },
+          Block: { text: "Blocked" },
+          Disable: { text: "Disabled" },
+          Freeze: { text: "Freezed" },
+          Reject: { text: "Rejected" },
+          Submitted: { text: "Submitted" },
         },
         iconMap: {
-          active : AppIcons.ActiveIcon,
-          pending : AppIcons.PendingIcon,
-          blocked : AppIcons.BlockedIcon,
+          Approved: AppIcons.ActiveIcon,
+          Pending: AppIcons.PendingIcon,
+          Block: AppIcons.BlockedIcon,
+          Disable: AppIcons.disablethemeIcone,
+          Freeze: AppIcons.freezeblueIcone,
+          Reject: AppIcons.RejectedIcon,
         }
       },
       inputButtonGroup: {
@@ -49,11 +62,11 @@ export const orderInformationData = {
       }
     },
     {
-      id: "subName",
+      id: "subCustomerMainCustomerId",
       lable: "Sub-Customer Name",
       Field_Name: "Sub-Customer Name",
       fieldType: FormFieldTypes.CUSTOMSELECT,
-      dataField: "name",
+      dataField: "subCustomerMainCustomerId",
       fieldSetting: {
         placeholder: "Enter Sub-Customer Name",
         allowSpace: true,
@@ -67,19 +80,30 @@ export const orderInformationData = {
       },
       dropdownSettings: {
         colorMap: {
-          active: "#00b100",
-          pending: "#ffd500",
-          blocked: "#ff4c51"
+          Approved: "#00b100",
+          Pending: "#ffd500",
+          Block: "#6444d8",
+          Disable: "#808080",
+          Freeze: "#867bf2",
+          Reject: "#ff4c51",
+          Submitted: "#06bcd2"
         },
         textMap: {
-          active : { text: "Active" },
-          pending : { text: "Pending" },
-          blocked : { text: "Blocked" }
+          Approved: { text: "Approved" },
+          Pending: { text: "Pending" },
+          Block: { text: "Blocked" },
+          Disable: { text: "Disabled" },
+          Freeze: { text: "Freezed" },
+          Reject: { text: "Rejected" },
+          Submitted: { text: "Submitted" },
         },
         iconMap: {
-          active : AppIcons.ActiveIcon,
-          pending : AppIcons.PendingIcon,
-          blocked : AppIcons.BlockedIcon,
+          Approved: AppIcons.ActiveIcon,
+          Pending: AppIcons.PendingIcon,
+          Block: AppIcons.BlockedIcon,
+          Disable: AppIcons.disablethemeIcone,
+          Freeze: AppIcons.freezeblueIcone,
+          Reject: AppIcons.RejectedIcon,
         }
       },
       inputButtonGroup: {
@@ -136,7 +160,7 @@ export const orderInformationData = {
       lable: "Shipping Address ",
       Field_Name: "shipping Address ",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "shippingAddress",
+      dataField: "addressId",
       fieldSetting: {
         placeholder: "Select Shipping Address",
         isEnableOnChange: true,
@@ -147,6 +171,12 @@ export const orderInformationData = {
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-4 mb-input",
       },
+      inputButtonGroup: {
+        isInputButton: true,
+        buttonText: 'Add',
+        icon: AppIcons.PlusIcon,
+        GetByID: AddressType.Shipping
+      }
     },
   ],
 };

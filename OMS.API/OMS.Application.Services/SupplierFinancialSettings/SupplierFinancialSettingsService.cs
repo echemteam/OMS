@@ -31,79 +31,79 @@ namespace OMS.Application.Services.SupplierFinancialSettings
         #endregion
 
         #region Supplier Financial Settings Service
-        public async Task<AddEntityDTO<int>> AddEditACHWire(AddEditACHWireRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditACHWire(AddEditACHWireRequest requestData, short CurrentUserId)
         {
-            SuppierBankDetailsDTO suppierBankDetailsDTO = new();
+            SuppierBankDetailsDto suppierBankDetailsDto = new();
 
             var responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
-            suppierBankDetailsDTO = requestData.ToMapp<AddEditACHWireRequest, SuppierBankDetailsDTO>();
+            suppierBankDetailsDto = requestData.ToMapp<AddEditACHWireRequest, SuppierBankDetailsDto>();
             if (requestData.BankAddress != null)
             {
-                suppierBankDetailsDTO.BankAddressId = await AddEditAddress(requestData.BankAddress, CurrentUserId);
+                suppierBankDetailsDto.BankAddressId = await AddEditAddress(requestData.BankAddress, CurrentUserId);
             }
             if (requestData.RecipientAddress != null)
             {
-                suppierBankDetailsDTO.RecipientAddressId = await AddEditAddress(requestData.RecipientAddress, CurrentUserId);
+                suppierBankDetailsDto.RecipientAddressId = await AddEditAddress(requestData.RecipientAddress, CurrentUserId);
             }
-            suppierBankDetailsDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.suppierBankDetails.AddEditACHWire(suppierBankDetailsDTO);
+            suppierBankDetailsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.suppierBankDetails.AddEditACHWire(suppierBankDetailsDto);
         }
-        public async Task<AddEntityDTO<int>> AddEditCreditCard(AddEditCreditCardRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditCreditCard(AddEditCreditCardRequest requestData, short CurrentUserId)
         {
-            SupplierAccoutingSettingDTO supplierAccoutingSettingDTO = requestData.SupplierFinancialSettings!.ToMapp<SupplierFinancialSettingsRequest, SupplierAccoutingSettingDTO>();
-            supplierAccoutingSettingDTO.CreatedBy = CurrentUserId;
+            SupplierAccoutingSettingDto supplierAccoutingSettingDto = requestData.SupplierFinancialSettings!.ToMapp<SupplierFinancialSettingsRequest, SupplierAccoutingSettingDto>();
+            supplierAccoutingSettingDto.CreatedBy = CurrentUserId;
             var responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
 
-            SupplierPaymentSettingsDTO supplierPaymentSettingsDTO = requestData.ToMapp<AddEditCreditCardRequest, SupplierPaymentSettingsDTO>();
-            supplierPaymentSettingsDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.supplierPaymentSettings.AddEditCreditCard(supplierPaymentSettingsDTO);
+            SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditCreditCardRequest, SupplierPaymentSettingsDto>();
+            supplierPaymentSettingsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.supplierPaymentSettings.AddEditCreditCard(supplierPaymentSettingsDto);
         }
 
-        public async Task<AddEntityDTO<int>> AddEditCheck(AddEditCheckRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditCheck(AddEditCheckRequest requestData, short CurrentUserId)
         {
             var responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
 
-            SupplierPaymentSettingsDTO supplierPaymentSettingsDTO = requestData.ToMapp<AddEditCheckRequest, SupplierPaymentSettingsDTO>();
+            SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditCheckRequest, SupplierPaymentSettingsDto>();
             if (requestData.MailingAddress != null)
             {
-                supplierPaymentSettingsDTO.CheckMailingAddressId = await AddEditAddress(requestData.MailingAddress, CurrentUserId);
+                supplierPaymentSettingsDto.CheckMailingAddressId = await AddEditAddress(requestData.MailingAddress, CurrentUserId);
             }
-            supplierPaymentSettingsDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.supplierPaymentSettings.AddEditCheck(supplierPaymentSettingsDTO);
+            supplierPaymentSettingsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.supplierPaymentSettings.AddEditCheck(supplierPaymentSettingsDto);
         }
-        public async Task<AddEntityDTO<int>> AddEditOther(AddEditOtherRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditOther(AddEditOtherRequest requestData, short CurrentUserId)
         {
             var responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
 
-            SupplierPaymentSettingsDTO supplierPaymentSettingsDTO = requestData.ToMapp<AddEditOtherRequest, SupplierPaymentSettingsDTO>();
-            supplierPaymentSettingsDTO.CreatedBy = CurrentUserId;
-            return await repositoryManager.supplierPaymentSettings.AddEditOther(supplierPaymentSettingsDTO);
+            SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditOtherRequest, SupplierPaymentSettingsDto>();
+            supplierPaymentSettingsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.supplierPaymentSettings.AddEditOther(supplierPaymentSettingsDto);
         }
 
         private async Task<int> AddEditAddress(AddEditAddressRequest addressRequest, short currentUserId)
         {
-            AddressDTO addressDTO = addressRequest.ToMapp<AddEditAddressRequest, AddressDTO>();
-            AddEntityDTO<int> responseData;
+            AddressDto addressDto = addressRequest.ToMapp<AddEditAddressRequest, AddressDto>();
+            AddEntityDto<int> responseData;
 
             if (addressRequest.AddressId > 0)
             {
-                addressDTO.UpdatedBy = currentUserId;
-                responseData = await repositoryManager.address.UpdateAddAddress(addressDTO);
+                addressDto.UpdatedBy = currentUserId;
+                responseData = await repositoryManager.address.UpdateAddAddress(addressDto);
             }
             else
             {
-                addressDTO.CreatedBy = currentUserId;
-                responseData = await repositoryManager.address.AddAddress(addressDTO);
+                addressDto.CreatedBy = currentUserId;
+                responseData = await repositoryManager.address.AddAddress(addressDto);
             }
 
             return responseData.KeyValue;
         }
 
-        private async Task<AddEntityDTO<int>> AddEditSupplierFinancialSettings(SupplierFinancialSettingsRequest requestData, short currentUserId)
+        private async Task<AddEntityDto<int>> AddEditSupplierFinancialSettings(SupplierFinancialSettingsRequest requestData, short currentUserId)
         {
-            SupplierAccoutingSettingDTO supplierAccoutingSettingDTO = requestData.ToMapp<SupplierFinancialSettingsRequest, SupplierAccoutingSettingDTO>();
-            supplierAccoutingSettingDTO.CreatedBy = currentUserId;
-            return await repositoryManager.supplierFinancialSettings.AddEditSupplierFinancialSettings(supplierAccoutingSettingDTO);
+            SupplierAccoutingSettingDto supplierAccoutingSettingDto = requestData.ToMapp<SupplierFinancialSettingsRequest, SupplierAccoutingSettingDto>();
+            supplierAccoutingSettingDto.CreatedBy = currentUserId;
+            return await repositoryManager.supplierFinancialSettings.AddEditSupplierFinancialSettings(supplierAccoutingSettingDto);
         }
 
         public Task<GetSupplierFinancialSettingsBySupplierIdResponse> GetSupplierFinancialSettingsBySupplierId(int supplierId)

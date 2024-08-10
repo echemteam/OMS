@@ -10,4 +10,10 @@
     <Folder Include="API\Request\SuppierBankDetails\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="ThirdPartyAPILibrary">
+      <HintPath>..\ThirdPartyAPILibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

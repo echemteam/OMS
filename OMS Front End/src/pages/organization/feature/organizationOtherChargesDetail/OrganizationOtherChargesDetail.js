@@ -10,18 +10,16 @@ import { setDropDownOptionField } from '../../../../utils/FormFields/FieldsSetti
 
 const OrganizationOtherChargesDetail=()=>{
     const organizationOtherChargesRef = useRef();
-
     const [organizationOtherChargesData, setOrganizationOtherChargesData] = useState(OrganizationOtherChargesFormData);
     const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
     const [addEditOrganizationOtherCharges, { isLoading: isAddEditOrganizationOtherChargesLoading, isSuccess: isAddEditOrganizationOtherChargesSuccess, data: isAddEditOrganizationOtherChargesData }] =useAddEditOrganizationOtherChargesMutation();
     const [getOrganizationOtherCharges, { isFetching: isGetOrganizationOtherChargesFetching, isSuccess: isGetOrganizationOtherChargesSuccess, data: isGetOrganizationOtherChargesData }] = useLazyGetOrganizationOtherChargesQuery();
-   
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+    const [otherChargeId , setOtherChargeId ] = useState(0); 
     
     useEffect(()=>{
         getAllPaymentTerms();
-        getOrganizationOtherCharges();   
-       
+        getOrganizationOtherCharges();      
     },[])
 
     useEffect(() => {
@@ -44,26 +42,21 @@ const OrganizationOtherChargesDetail=()=>{
       const handleAddEditShippingChargesDetail=()=>{
 
         let otherChargesData = organizationOtherChargesRef.current.getFormData();
+        if(otherChargesData){
         const request={
             ...otherChargesData,
-            organizationOtherChargeId: otherChargesData.organizationOtherChargeId,
-            defaultPaymentTerms: otherChargesData.paymentTermId.value,
-            handlingFees:otherChargesData.handlingFees,
-            bankWireFees:otherChargesData.bankWireFees,
-            creditCardServiceFees:otherChargesData.creditCardServiceFees,
-            coldBoxFees:otherChargesData.coldBoxFees,
-            iTNFees:otherChargesData.iTNFees,    
+            organizationOtherChargeId: otherChargeId,
+            defaultPaymentTerms: otherChargesData?.paymentTermId.value,
+            handlingFees:otherChargesData?.handlingFees,
+            bankWireFees:otherChargesData?.bankWireFees,
+            creditCardServiceFees:otherChargesData?.creditCardServiceFees,
+            coldBoxFees:otherChargesData?.coldBoxFees,
+            iTNFees:otherChargesData?.iTNFees,    
 
         }
-            if(!otherChargesData.organizationOtherChargeId && otherChargesData){
-                addEditOrganizationOtherCharges(request);
-            }
-            else if(otherChargesData.organizationOtherChargeId && otherChargesData ){
-                addEditOrganizationOtherCharges(request);
-            }
-           
+          addEditOrganizationOtherCharges(request);
       }
-
+    }
     useEffect(() => {
       
         if (!isGetOrganizationOtherChargesFetching && isGetOrganizationOtherChargesSuccess && isGetOrganizationOtherChargesData) {
@@ -78,11 +71,12 @@ const OrganizationOtherChargesDetail=()=>{
                 iTNFees:isGetOrganizationOtherChargesData.itnFees,
             };
             setOrganizationOtherChargesData(formData);
+            setOtherChargeId(isGetOrganizationOtherChargesData.organizationOtherChargeId);
         }
     }, [isGetOrganizationOtherChargesFetching, isGetOrganizationOtherChargesSuccess, isGetOrganizationOtherChargesData,]);
 
 
-    return(<>
+    return( 
     
     <div className="row mt-2 add-address-form">
                 <FormCreator config={organizationOtherChargesData}
@@ -101,6 +95,6 @@ const OrganizationOtherChargesDetail=()=>{
                 </div>
             </div>
         </div>
-    </>)
+     )
 }
 export default OrganizationOtherChargesDetail;

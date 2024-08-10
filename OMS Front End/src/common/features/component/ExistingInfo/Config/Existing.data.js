@@ -6,32 +6,42 @@ export const basicInfoData = {
         {
             name: "Name",
             fieldName: "name",
-            width: "15%",
+            colStyle: {
+                width: "15%",
+            },
             // allowShort: true,
         },
         {
             name: "Tax Id",
             fieldName: "taxId",
-            width: "15%",
+            colStyle: {
+                width: "15%",
+            },
             // allowShort: true,
         },
         {
             name: "Country",
             fieldName: "countryName",
-            width: "15%",
+            colStyle: {
+                width: "15%",
+            },
             // allowShort: true,
         },
 
         {
             name: "Email",
             fieldName: "emailAddress",
-            width: "15%",
+            colStyle: {
+                width: "15%",
+            },
             // allowShort: true,
         },
         {
             name: "Group Type",
             fieldName: "groupType",
-            width: "15%",
+            colStyle: {
+                width: "15%",
+            },
             // allowShort: true,
         },
         {
@@ -39,7 +49,9 @@ export const basicInfoData = {
             fieldName: "status",
             allowShort: false,
             colType: GridColumnType.LABLE,
-            width: "15%",
+            colStyle: {
+                width: "15%",
+            },
             colSettings: {
                 valueField: "status",
                 getLableClass: getLabelClass,
@@ -47,7 +59,9 @@ export const basicInfoData = {
         },
         {
             name: "Action",
-            width: "10%",
+            colStyle: {
+                width: "10%",
+            },
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowEdit: true,

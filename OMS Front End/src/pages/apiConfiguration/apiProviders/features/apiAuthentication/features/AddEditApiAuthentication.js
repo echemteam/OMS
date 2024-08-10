@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState ,useRef,useEffect} from "react";
+import { useState ,useRef,useEffect,useImperativeHandle} from "react";
 import PropTypes from "prop-types";
 import { addEditApiAuthenticationFormData } from "../config/ApiAuthentication.data";
 import { removeFormFields } from "../../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
@@ -10,7 +10,6 @@ import Buttons from "../../../../../../components/ui/button/Buttons";
 import { AuthenticationTypes, FieldSettingType } from "../../../../../../utils/Enums/commonEnums";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { onResetForm } from "../../../../../../utils/FormFields/ResetForm/handleResetForm";
-import { useImperativeHandle } from "react";
 import { useAddEditApiAuthenticationMutation, useLazyGetApiAuthenticationByAuthIdQuery,  } from "../../../../../../app/services/apiAuthenticationAPI";
 
 
@@ -35,8 +34,8 @@ const AddEditApiAuthentication = (props) => {
   useEffect(() => {
     if (isGetApiAuthenticationByAuthIdSuccess && apiAuthenticationData && !isGetApiAuthenticationByAuthIdFetching) {
       const authFieldsMap = {
-        [AuthenticationTypes.OAuth]: ['authKey'],
-        [AuthenticationTypes.APIKey]: ['clientSecret', 'clientId']
+        [AuthenticationTypes?.OAuth]: ['authKey'],
+        [AuthenticationTypes?.APIKey]: ['clientSecret', 'clientId','tokenExpires','tokenEndpoint']
       };
 
       let formData = { ...authenticationFormData };
@@ -86,7 +85,7 @@ const handlePageLoad=() => {
 
       const authFieldsMap = {
         [AuthenticationTypes.OAuth]: ['authKey'],
-        [AuthenticationTypes.APIKey]: ['clientSecret', 'clientId']
+        [AuthenticationTypes.APIKey]: ['clientSecret', 'clientId','tokenExpires','tokenEndpoint']
       };
 
       const fieldsToRemove = authFieldsMap[selectedProvider.authenticationType];
@@ -104,6 +103,7 @@ const handlePageLoad=() => {
       const requestData = {
         ...formData,
         providerId: props.providerId,
+        tokenExpires: formData.tokenExpires ? formData.tokenExpires :null,
         ...(authId && { authId }),
       };
       addEditApiAuthentication(requestData);
@@ -123,7 +123,7 @@ const handlePageLoad=() => {
 
 
   return (
-    <>
+     
       <div>
         <div className="row">
           <div className="col-md-12">
@@ -153,7 +153,7 @@ const handlePageLoad=() => {
           </div>
         </div>
       </div>
-    </>
+     
   );
 };
 

@@ -27,23 +27,23 @@ namespace OMS.Application.Services.Contact
         #endregion
 
         #region  Contact Service
-        public async Task<AddEntityDTO<int>> AddEditContact(AddEditContactRequest requestData, short CurrentUserId)
+        public async Task<AddEntityDto<int>> AddEditContact(AddEditContactRequest requestData, short CurrentUserId)
         {
             const string? OwnerTypeIdColumnName = "OwnerTypeId";
             const string? CreatedByColumnName = "CreatedBy";
 
             string[] contactTypeIds = requestData.ContactTypeId!.Split(',');
 
-            AddEntityDTO<int> responceData = new();
+            AddEntityDto<int> responceData = new();
             foreach (var singleContactTypeId in contactTypeIds)
             {
                 short contactTypeId = short.Parse(singleContactTypeId);
 
                 requestData.ContactTypeId = singleContactTypeId;
-                ContactDTO contactDTO = requestData.ToMapp<AddEditContactRequest, ContactDTO>();
-                contactDTO.CreatedBy = CurrentUserId;
+                ContactDto contactDto = requestData.ToMapp<AddEditContactRequest, ContactDto>();
+                contactDto.CreatedBy = CurrentUserId;
 
-                responceData = await repositoryManager.contact.AddEditContact(contactDTO);
+                responceData = await repositoryManager.contact.AddEditContact(contactDto);
 
                 if (responceData.KeyValue > 0)
                 {
@@ -51,7 +51,7 @@ namespace OMS.Application.Services.Contact
                     List<AddContactPhoneRequest> PhoneDT = requestData.PhoneList!;
 
                     int contactId = responceData.KeyValue;
-                    OwnerType ownerTypeId = 0; ;
+                    OwnerType ownerTypeId = 0;
                     if (requestData.CustomerId > 0 && responceData.KeyValue > 0)
                     {
                         ownerTypeId = OwnerType.CustomerContact;
@@ -129,7 +129,7 @@ namespace OMS.Application.Services.Contact
             }
             var ownerTypeId = (short)OwnerType.CustomerContact;
 
-            var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contactId,ownerTypeId);
+            var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contactId, ownerTypeId);
             var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contactId);
 
             await Task.WhenAll(emailTask, phoneTask);
@@ -149,7 +149,7 @@ namespace OMS.Application.Services.Contact
             var ownerTypeId = (short)OwnerType.CustomerContact;
             var tasks = contactList.Select(async contact =>
             {
-                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId,ownerTypeId);
+                var emailTask = repositoryManager.emailAddress.GetEmailByContactId(contact.ContactId, ownerTypeId);
                 var phoneTask = repositoryManager.phoneNumber.GetPhoneByContactId(contact.ContactId);
 
                 var emailAddresses = await emailTask;

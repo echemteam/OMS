@@ -16,7 +16,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string ADDEDITAPPROVALCONFIGURATION = "AddEditApprovalConfiguration";
         const string GETAPPROVALCONFIGURATIONBYAPPROVALCONFIGURATIONID = "GetApprovalConfigurationByApprovalConfigurationId";
-        const string GETAPPROVALCONFIGURATIONRULESBYMODULEIDANDFUNCTIONALITYID = "GetApprovalConfigurationRulesByModuleIdAndFunctionalityId";
+        const string GETAPPROVALCONFIGURATIONRULES = "GetApprovalConfigurationRules";
         const string GETFUNCTIONALITIES = "GetFunctionalities";
         const string GETFUNCTIONALITYEVENTS = "GetFunctionalityEvents";
         #endregion
@@ -26,9 +26,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Approval Configuration Repository
-        public async Task<AddEntityDTO<int>> AddEditApprovalConfiguration(ApprovalConfigurationDTO addEditApprovalConfiguration)
+        public async Task<AddEntityDto<int>> AddEditApprovalConfiguration(ApprovalConfigurationDto addEditApprovalConfiguration)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITAPPROVALCONFIGURATION, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITAPPROVALCONFIGURATION, new
             {
                 addEditApprovalConfiguration.ApprovalConfigurationId,
                 addEditApprovalConfiguration.RuleName,
@@ -39,23 +39,24 @@ namespace OMS.Domain.Repository.Implementation
                 addEditApprovalConfiguration.ApprovalAction
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetApprovalConfigurationByApprovalConfigurationIdResponse>> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId)
+        public async Task<GetApprovalConfigurationByApprovalConfigurationIdResponse> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId)
         {
-            List<GetApprovalConfigurationByApprovalConfigurationIdResponse> getApprovalConfigurationByApprovalConfigurationIdResponse = await _context.GetList<GetApprovalConfigurationByApprovalConfigurationIdResponse>(GETAPPROVALCONFIGURATIONBYAPPROVALCONFIGURATIONID, new
+            GetApprovalConfigurationByApprovalConfigurationIdResponse getApprovalConfigurationByApprovalConfigurationIdResponse = await _context.GetFrist<GetApprovalConfigurationByApprovalConfigurationIdResponse>(GETAPPROVALCONFIGURATIONBYAPPROVALCONFIGURATIONID, new
             {
                 approvalConfigurationId
             }, CommandType.StoredProcedure);
             return getApprovalConfigurationByApprovalConfigurationIdResponse;
         }
 
-        public async Task<List<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse>> GetApprovalConfigurationRulesByModuleIdAndFunctionalityId(int moduleId, int functionalityId)
+        public async Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData)
         {
-            List<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse> getApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse = await _context.GetList<GetApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse>(GETAPPROVALCONFIGURATIONRULESBYMODULEIDANDFUNCTIONALITYID, new
+            return await _context.GetListSP<GetApprovalConfigurationRulesResponse>(GETAPPROVALCONFIGURATIONRULES, new
             {
-                moduleId,
-                functionalityId
-            }, CommandType.StoredProcedure);
-            return getApprovalConfigurationRulesByModuleIdAndFunctionalityIdResponse;
+                requestData.Pagination?.PageNumber,
+                requestData.Pagination?.PageSize,
+                requestData.Filters?.SearchText,
+                requestData.SortString,
+            }, true);
         }
         public async Task<EntityList<GetFunctionalitiesResponse>> GetFunctionalities(GetFunctionalitiesRequest requestData)
         {
@@ -79,9 +80,9 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SortString,
             }, true);
         }
-        public async Task<AddEntityDTO<int>> UpdateCustomerStatus(CustomersDTO customers)
+        public async Task<AddEntityDto<int>> UpdateCustomerStatus(CustomersDto customers)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(GETFUNCTIONALITYEVENTS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(GETFUNCTIONALITYEVENTS, new
             {
                 customers.CustomerId,
                 customers.StatusId,

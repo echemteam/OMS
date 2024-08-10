@@ -93,3 +93,31 @@ export const OrderTabEnum = {
     Contact: 2,
     OrderItem: 3,
 }
+
+export const MyTaskStatus = {
+    Pending: "Pending",
+    Accept: "Accept"
+}
+
+export const ParameterType = {
+    EVENT: "Event",
+    PROVIDER: "Provider"
+}
+
+export const AddressType = {
+    Billing: 1,
+    Shipping: 2
+}
+
+export const ContactType = {
+    Primary: 1,
+    EndUser: 2,
+    Purchasing: 3,
+    InvoiceSubmission: 4,
+    InvoiceFollowup: 5,
+    AP: 6,
+    AccountsReceivable: 7,
+    PurchaseOrder: 8,
+    SalesDepartment: 9,
+    QCDepartment: 10
+}

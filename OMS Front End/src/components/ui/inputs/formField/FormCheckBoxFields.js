@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 const Checkbox = React.lazy(() => import("../checkBox/CheckBox"));
 
 const FormCheckboxField = ({
@@ -33,4 +34,15 @@ const FormCheckboxField = ({
   );
 };
 
+FormCheckboxField.propTypes = {
+  labelName: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  dataField: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired,
+  formSetting: PropTypes.shape({
+    isViewOnly: PropTypes.bool,
+  }),
+  ...Checkbox.propTypes, 
+};
 export default FormCheckboxField;

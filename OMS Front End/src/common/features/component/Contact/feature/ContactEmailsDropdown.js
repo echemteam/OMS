@@ -1,26 +1,17 @@
-import React, { useRef } from "react";
+import React  from "react";
 import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import PropTypes from "prop-types";
 
 const ContactEmailsDropdown = ({
-  showEmailDropdown,
-  setShowEmailDropdown,
+  
   emailAddressesList,
   isOptionsOpen,
 }) => {
-  const ref = useRef(null);
-  const toggleEmailDropdown = () => {
-    setShowEmailDropdown(!showEmailDropdown);
-  };
+  let emailAddresses = emailAddressesList?.filter(data => data.isPrimary === false);
+  let primaryEmailAddress = emailAddressesList?.find(data => data.isPrimary === true);
 
-  let emailAddresses =
-    emailAddressesList &&
-    emailAddressesList.filter((data) => data.isPrimary === false);
-  let primaryEmailAddress =
-    emailAddressesList &&
-    emailAddressesList.find((data) => data.isPrimary === true);
 
   if (
     !primaryEmailAddress &&
@@ -41,14 +32,14 @@ const ContactEmailsDropdown = ({
           {primaryEmailAddress?.emailAddress ? (
             <>
               <div
-                className={`values ${
-                  primaryEmailAddress?.isPrimary ? "primary-email" : ""
-                }`}
+                className={`values`}
               >
                 {primaryEmailAddress?.emailAddress}
               </div>
               <span
-                className="copy-icon"
+                className={`copy-icon ${
+                  primaryEmailAddress?.isPrimary ? "primary-email" : ""
+                }`}
                 title="Copy"
                 onClick={() =>
                   CopyText(primaryEmailAddress?.emailAddress, "email")
@@ -64,7 +55,7 @@ const ContactEmailsDropdown = ({
       {isOptionsOpen ? (
         <>
           {emailAddresses.map((emaildata, index) => (
-            <>
+             
               <span className="contact-list d-flex flex-row" key={index}>
                 <span>{emaildata?.emailAddress}</span>
                 <span
@@ -76,7 +67,7 @@ const ContactEmailsDropdown = ({
                   <Image imagePath={AppIcons.copyIcon} altText="Icon" />
                 </span>
               </span>
-            </>
+            
           ))}
         </>
       ) : null}
@@ -85,8 +76,7 @@ const ContactEmailsDropdown = ({
 };
 
 ContactEmailsDropdown.propTypes = {
-  showEmailDropdown: PropTypes.bool,
-  setShowEmailDropdown: PropTypes.func,
+
   emailAddressesList: PropTypes.arrayOf(
     PropTypes.shape({
       emailAddress: PropTypes.string ,

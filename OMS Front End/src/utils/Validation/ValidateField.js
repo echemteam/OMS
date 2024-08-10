@@ -27,7 +27,13 @@ export const uniqueIdentifier = (value) => !!(value && String(value).trim().leng
 
 export const isvalidPassword = (value) => !!(value && String(value).trim().length && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.{8,})/.test(value));
 
-export const isWebsite = (value) => !!(value && String(value).trim().length && /^(https?|ftp):\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\S*)$/.test(value));
+// export const isWebsite = (value) => !!(value && String(value).trim().length && /^(https?|ftp):\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\S*)$/.test(value));
+
+export const isWebsite = (value) => !!(
+    value &&
+    String(value).trim().length &&
+    /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\S*)$/.test(value)
+);
 
 export const isValidEIN = (value) => {
     const unmaskedValue = value.replace(/\D/g, '')

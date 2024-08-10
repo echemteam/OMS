@@ -16,6 +16,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDFUNCTIONALITIESRESPONSIBLESUSER = "AddFunctionalitiesResponsiblesUser";
         const string DELETEFUNCTIONALITIESRESPONSIBLESUSER = "DeleteFunctionalitiesResponsiblesUser";
         const string GETFUNCTIONALITIESRESPONSIBLES = "GetFunctionalitiesResponsibles";
+        const string ADDEDITFUNCTIONALITIES = "AddEditFunctionalities";
         #endregion
 
         public FunctionalitiesRepository(DapperContext dapperContext) : base(dapperContext)
@@ -23,17 +24,17 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Functionalities Repository
-        public async Task<AddEntityDTO<int>> AddFunctionalitiesResponsiblesUser(FunctionalitiesResponsiblesDTO requestData)
+        public async Task<AddEntityDto<int>> AddFunctionalitiesResponsiblesUser(FunctionalitiesResponsiblesDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDFUNCTIONALITIESRESPONSIBLESUSER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDFUNCTIONALITIESRESPONSIBLESUSER, new
             {
                 requestData.FunctionalityId,
                 requestData.ResponsibleUserId,
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId)
+        public async Task<AddEntityDto<int>> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEFUNCTIONALITIESRESPONSIBLESUSER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEFUNCTIONALITIESRESPONSIBLESUSER, new
             {
                 functionalitiesResponsiblesId
             }, CommandType.StoredProcedure);
@@ -48,6 +49,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.Filters?.SearchText,
                 requestData.SortString,
             }, true);
+        }
+        public async Task<AddEntityDto<int>> AddEditFunctionalities(FunctionalitiesDto requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITFUNCTIONALITIES, new
+            {
+                requestData.FunctionalityId,
+                requestData.ModuleId,
+                requestData.Name,
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }

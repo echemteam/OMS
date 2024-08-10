@@ -38,7 +38,7 @@ namespace OMS.Framework.Filters
                 response.ResponseType = ResponseType.Object;
                 if (isEncryptionEnable)
                 {
-                    data = AesEcnryption.AesEncrypt(data, _commonSettingService.EncryptionSettings.AESKey, _commonSettingService.EncryptionSettings.AESIV);
+                    data = AesEcnryption.AesEncrypt(data, _commonSettingService.EncryptionSettings.AESKey ?? string.Empty, _commonSettingService.EncryptionSettings.AESIV ?? string.Empty);
                 }
                 response.ResponseData = data;
                 GetResponseResutl(context, response);

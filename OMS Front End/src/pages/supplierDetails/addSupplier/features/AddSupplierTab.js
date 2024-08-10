@@ -13,7 +13,6 @@ import SupplierBasicDetail from "../../feature/supplierBasicDetail/SupplierBasic
 import SuplierAddressDetails from "../../feature/supplierAddressDetail/SupplierAddressDetails";
 import SupplierContactDetail from "../../feature/supplierContactDetail/SupplierContactDetail";
 import SupplierDocumentDetail from "../../feature/supplierDocumentDetail/SupplierDocumentDetail";
-// import SupplierSettingDetail from "../../feature/financialSettings/FinancialSettings";
 
 const AddSupplierTab = () => {
   const navigate = useNavigate();
@@ -64,10 +63,6 @@ const AddSupplierTab = () => {
     }
   }, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
 
-  // const handleTabClick = (index) => {
-  //   setActiveTab(index);
-  // };
-
   const handleSubmit = () => {
     let req = {
       supplierId: supplierId,
@@ -114,7 +109,7 @@ const AddSupplierTab = () => {
                 </React.Fragment>
               ))}
             </div>
-            <div className="stepper-content">
+            <div className="stepper-content stepper-view-supplier">
               <form onSubmit={onSubmit}>
                 {tabContent.map((step, index) => (
                   <div key={index}
@@ -125,10 +120,10 @@ const AddSupplierTab = () => {
                         {step.content}
                         <div className="d-flex justify-content-end">
                           {index > 0 && (
-                            <button type="button" className="btn dark-btn mr-3"
+                            <button type="button" className="btn dark-btn mr-3 btn-prev"
                               onClick={movePreviewPage}
                             >
-                              Back
+                            <Image imagePath={AppIcons.nextArrowIcon} />  Back
                             </button>
                           )}
                           {index < tabContent.length - 1 ? (

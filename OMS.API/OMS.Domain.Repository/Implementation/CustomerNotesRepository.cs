@@ -1,18 +1,10 @@
-﻿using OMS.Domain.Entities.API.Response.Contact;
-using OMS.Domain.Entities.API.Response.CustomerNotes;
-using OMS.Domain.Entities.API.Response.User;
+﻿using OMS.Domain.Entities.API.Response.CustomerNotes;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.Contact;
 using OMS.Domain.Entities.Entity.CustomerNotes;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Implementation
 {
@@ -21,7 +13,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string ADDCUSTOMERNOTES = "AddCustomerNotes";
         const string UPDATECUSTOMERNOTES = "UpdateCustomerNotes";
-        const string GETCUSTOMERNOTESBYCUSTOMERID= "GetCustomerNotesByCustomerId";
+        const string GETCUSTOMERNOTESBYCUSTOMERID = "GetCustomerNotesByCustomerId";
         #endregion
 
         public CustomerNotesRepository(DapperContext dapperContext) : base(dapperContext)
@@ -29,18 +21,18 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region CustomerNotes Repository
-        public async Task<AddEntityDTO<long>> AddCustomerNotes(CustomerNotesDTO addCustomerNotes)
+        public async Task<AddEntityDto<long>> AddCustomerNotes(CustomerNotesDto addCustomerNotes)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<long>>(ADDCUSTOMERNOTES, new
+            return await _context.GetSingleAsync<AddEntityDto<long>>(ADDCUSTOMERNOTES, new
             {
                 addCustomerNotes.CustomerId,
                 addCustomerNotes.Note,
                 addCustomerNotes.CreatedBy,
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<long>> UpdateCustomerNotes(CustomerNotesDTO updateCustomerNotes)
+        public async Task<AddEntityDto<long>> UpdateCustomerNotes(CustomerNotesDto updateCustomerNotes)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<long>>(UPDATECUSTOMERNOTES, new
+            return await _context.GetSingleAsync<AddEntityDto<long>>(UPDATECUSTOMERNOTES, new
             {
                 updateCustomerNotes.CustomerNoteId,
                 updateCustomerNotes.CustomerId,

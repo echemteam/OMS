@@ -14,10 +14,10 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDADDRESS = "AddAddress";
         const string GETADDRESSSBYCUSTOMERID = "GetAddresssByCustomerId";
         const string UPDATEADDADDRESS = "UpdateAddAddress";
-        const string ADDADDRESSFORCUSTOMER = "AddAddressForCustomer";
         const string GETADDRESSSBYSUPPLIERID = "GetAddresssBySupplierId";
         const string GETCUSTOMERADDRESSSBYADDRESSID = "GetCustomerAddresssByAddressId";
         const string GETSUPPLIERADDRESSSBYADDRESSID = "GetSupplierAddresssByAddressId";
+        const string DELETEADDRESS = "DeleteAddress";
         #endregion
 
         public AddressRepository(DapperContext dapperContext) : base(dapperContext)
@@ -25,9 +25,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Address Repository
-        public async Task<AddEntityDTO<int>> AddAddress(AddressDTO address)
+        public async Task<AddEntityDto<int>> AddAddress(AddressDto address)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDADDRESS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDADDRESS, new
             {
                 address.CustomerId,
                 address.AddressTypeId,
@@ -63,9 +63,9 @@ namespace OMS.Domain.Repository.Implementation
             return getCustomerAddresssByAddressIdResponse;
 
         }
-        public async Task<AddEntityDTO<int>> UpdateAddAddress(AddressDTO address)
+        public async Task<AddEntityDto<int>> UpdateAddAddress(AddressDto address)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATEADDADDRESS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEADDADDRESS, new
             {
                 address.AddressId,
                 address.CustomerId,
@@ -101,6 +101,14 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getSupplierAddresssByAddressIdResponse;
 
+        }
+        public async Task<AddEntityDto<int>> DeleteAddress(int addressId, short deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEADDRESS, new
+            {
+                addressId,
+                deletedBy
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }

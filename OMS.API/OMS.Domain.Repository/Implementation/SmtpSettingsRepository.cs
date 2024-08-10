@@ -19,12 +19,11 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region SmtpSettings Repository
-        public async Task<AddEntityDTO<int>> AddEditSmtpSettings(SmtpSettingsDTO requestData)
+        public async Task<AddEntityDto<int>> AddEditSmtpSettings(SmtpSettingsDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITSMTPSETTINGS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITSMTPSETTINGS, new
             {
                 requestData.SmtpSettingId,
-                requestData.OrganizationId,
                 requestData.EmailProvider,
                 requestData.SmtpServer,
                 requestData.SmtpPort,

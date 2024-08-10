@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.API.Request.SupplierNotes
+﻿namespace OMS.Domain.Entities.API.Request.SupplierNotes
 {
     public class AddSupplierNotesRequest
     {

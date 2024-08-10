@@ -5,7 +5,6 @@ using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using OMS.Shared.Entities.CommonEntity;
 using System.Data;
 
 namespace OMS.Domain.Repository.Implementation
@@ -23,9 +22,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Api Event Repository
-        public async Task<AddEntityDTO<int>> AddApiEventMapping(ApiEventMappingDTO requestData)
+        public async Task<AddEntityDto<int>> AddApiEventMapping(ApiEventMappingDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDAPIEVENTMAPPING, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDAPIEVENTMAPPING, new
             {
                 requestData.ApiEventId,
                 requestData.ProviderId,
@@ -43,9 +42,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteApiEventMapping(int apiEventMappingId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteApiEventMapping(int apiEventMappingId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETEAPIEVENTMAPPING, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEAPIEVENTMAPPING, new
             {
                 apiEventMappingId,
                 deletedBy

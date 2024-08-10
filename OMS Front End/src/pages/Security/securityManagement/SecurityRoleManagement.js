@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import CardSection from "../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../data/appIcons";
-import MolGrid from "../../../components/Grid/MolGrid";
 import { useNavigate } from "react-router-dom";
 import CenterModel from "../../../components/ui/centerModel/CenterModel";
 import AddEditRole from "./features/AddEditRole";
@@ -15,6 +14,7 @@ import SidebarModel from "../../../components/ui/sidebarModel/SidebarModel";
 import { encryptUrlData } from "../../../services/CryptoService";
 import { securityKey } from "../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
+import FinalMolGrid from "../../../components/FinalMolGrid/FinalMolGrid";
 
 
 const SecurityRoleManagement = () => {
@@ -22,7 +22,7 @@ const SecurityRoleManagement = () => {
   // const [search, setSearch] = useState("");
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [listData, setListData] = useState();
-  const [isModelOpen, setisModelOpen] = useState(false);
+  const [isModelOpen, setIsModelOpen] = useState(false);
 
   // const debouncedSearch = useDebounce(search, 300);
   const [addRoleModal, setAddRoleModal] = useState(false);
@@ -118,7 +118,7 @@ const SecurityRoleManagement = () => {
     navigate(`/EditPermissions/${encryptUrlData(data.roleId)}`);
   };
   const handleUser = (data) => {
-    setisModelOpen(true);
+    setIsModelOpen(true);
     setFormData(data);
   };
 
@@ -211,7 +211,7 @@ const SecurityRoleManagement = () => {
   };
 
   const onSidebarClose = () => {
-    setisModelOpen(false);
+    setIsModelOpen(false);
   };
 
   return (
@@ -220,7 +220,7 @@ const SecurityRoleManagement = () => {
         cardTitle="Security Roles"
         // cardSubTitle="Sub title add hear"
         buttonClassName="btn theme-button"
-        rightButton={buttonVisible ? true : false}
+        rightButton={buttonVisible }
         buttonText="Add"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
@@ -228,7 +228,7 @@ const SecurityRoleManagement = () => {
       >
         <div className="row">
           <div className="col-md-12 table-striped">
-            <MolGrid
+            <FinalMolGrid
               ref={molGridRef}
               configuration={SecurityRoleGridConfig}
               dataSource={listData}

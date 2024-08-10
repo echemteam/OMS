@@ -5,7 +5,7 @@ using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
 using System.Data;
- 
+
 
 namespace OMS.Domain.Repository.Implementation
 {
@@ -24,18 +24,18 @@ namespace OMS.Domain.Repository.Implementation
 
         #region Repositery
 
-        public async Task<AddEntityDTO<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? supplierId)
+        public async Task<AddEntityDto<int>> CheckDocumentsExistOrNot(byte? documentTypeId, string? name, int? supplierId)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(CHECKDOCUMENTSEXISTORNOTFORSUPPLIER, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(CHECKDOCUMENTSEXISTORNOTFORSUPPLIER, new
             {
                 documentTypeId,
                 name,
                 supplierId
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDTO<int>> AddSupplierDocuments(SupplierDocumentsDTO supplierDocuements)
+        public async Task<AddEntityDto<int>> AddSupplierDocuments(SupplierDocumentsDto supplierDocuements)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDSUPPLIERDOCUMENTS, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDSUPPLIERDOCUMENTS, new
             {
                 supplierDocuements.Name,
                 supplierDocuements.DocumentTypeId,
@@ -52,9 +52,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return customerDetails;
         }
-        public async Task<AddEntityDTO<int>> DeleteSupplierDocumentsById(int supplierDocumentId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteSupplierDocumentsById(int supplierDocumentId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETESUPPLIERDOCUMENTSBYID, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETESUPPLIERDOCUMENTSBYID, new
             {
                 supplierDocumentId,
                 deletedBy

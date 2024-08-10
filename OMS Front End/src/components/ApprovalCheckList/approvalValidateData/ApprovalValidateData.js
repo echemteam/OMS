@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef } from "react";
-import React, { useEffect, useImperativeHandle, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState ,useRef} from "react";
 //** Lib's */
 import "./ApprovalValidateData.scss";
 import Image from "../../image/Image";
@@ -99,7 +98,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }));
 
   return (
-    <>
+     
       <CenterModel modalTitle="Validate Customer Information" showModal={showModal} handleToggleModal={handleShowValidateModal}
         modelSizeClass="w-40 validation-center-model" isApprovalValidate={true}>
         {!isGetCheckListLoading ? (
@@ -139,7 +138,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
           <DataLoader />
         )}
       </CenterModel>
-    </>
+     
   );
 };
 

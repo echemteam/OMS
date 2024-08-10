@@ -8,9 +8,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IApiParameterMappingRepository
     {
-        Task<AddEntityDTO<int>> AddApiParameterMapping(ApiParameterMappingDTO requestData);
+        Task<AddEntityDto<int>> AddApiParameterMapping(ApiParameterMappingDto requestData);
         Task<EntityList<GetApiParameterMappingsResponse>> GetApiParameterMappings(GetApiParameterMappingsRequest requestData);
-        Task<AddEntityDTO<int>> DeleteApiParameterMapping(int apiParameterMappingId, int deletedBy);
+        Task<AddEntityDto<int>> DeleteApiParameterMapping(int apiParameterMappingId, int deletedBy);
 
     }
 }

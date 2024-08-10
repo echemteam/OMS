@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
 import { OrderTabEnum } from "../../../../utils/Enums/commonEnums";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
-import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
+import AddOrderContext from "../../../../utils/Order/AddOrderContext";
+// import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
 
 const ContactDetails = React.lazy(() =>
   import("../../feature/contactDetail/ContactDetails")
@@ -16,23 +17,13 @@ const OrderItemDetail = React.lazy(() =>
 );
 
 const AddOrderTab = () => {
-  const [activeTab, setActiveTab] = useState(0);
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [editMode, setEditMode] = useState(false); 
-  // const [editRef, setEditRef] = useState(null);
-  // const [keyId, setKeyId] = useState(null); 
-  // const [isButtonDisable, setIsButtonDisable] = useState(false); 
-  // const [isSupplier, setIsSupplier] = useState(false); 
-  // const [updateAddress, setUpdateAddress] = useState(null);
-  // const [addAddress, setAddAddress] = useState(null); 
-  // const [getAddresssById, setGetAddresssById] = useState(null); 
+  const [editMode, setEditMode] = useState(false);
+
+  const { activeTab, movePreviewPage, addOrder, orderCustomerId , setActiveTab} = useContext(AddOrderContext);
 
   const handleTabClick = (index) => {
     setActiveTab(index);
-  };
-
-  const handleSaveClick = () => {
-    setIsModelOpen(true);
   };
 
   const onSidebarClose = () => {
@@ -41,14 +32,6 @@ const AddOrderTab = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-  };
-
-  const moveNextPage = () => {
-    setActiveTab((prev) => prev + 1);
-  };
-
-  const movePreviewPage = () => {
-    setActiveTab((prev) => prev - 1);
   };
 
   const tabContents = [
@@ -111,30 +94,30 @@ const AddOrderTab = () => {
                   >
                     <div className="">
                       {step.content}
-                      <div className="d-flex justify-content-end">
+                      <div className="d-flex justify-content-end  mt-3">
                         {index > 0 && (
                           <button
                             type="button"
-                            className="btn dark-btn mr-3"
+                            className="btn dark-btn mr-3 btn-prev"
                             onClick={movePreviewPage}
                           >
-                            Back
+                            <Image imagePath={AppIcons.nextArrowIcon} /> Back
                           </button>
                         )}
                         <button
                           type="button"
-                          className="btn theme-button ml-3"
-                          onClick={moveNextPage}
+                          className="btn theme-button ml-3 btn-next"
+                          onClick={() => addOrder(step.tab)}
                         >
-                          Next
+                          Next<Image imagePath={AppIcons.nextArrowIcon} /> 
                         </button>
-                        <button
+                        {/* <button
                           type="button"
                           className="btn theme-button ml-3"
                           onClick={handleSaveClick}
                         >
                           Save
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                   </div>
@@ -148,7 +131,7 @@ const AddOrderTab = () => {
                   onClose={onSidebarClose}
                   modalTitleIcon={AppIcons.AddIcon}
                   isOpen={isModelOpen}
-                >     
+                >
                 </SidebarModel>
               </div>
 

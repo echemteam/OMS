@@ -7,12 +7,14 @@ import AddEditThirdPartyApiConfiguration from '../../../addEditThirdPartyApiConf
 import { AppIcons } from '../../../../../../../data/appIcons';
 import SidebarModel from '../../../../../../../components/ui/sidebarModel/SidebarModel';
 import { useLazyGetApiEventByApiEventIdQuery } from '../../../../../../../app/services/thirdPartyAPI';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { decryptUrlData } from '../../../../../../../services/CryptoService';
+import Buttons from '../../../../../../../components/ui/button/Buttons';
 
 
 export const ThirdPartyApiConfigurationViewDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const keyId = id ? decryptUrlData(id) : 0;
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [viewCardDetails, setViewCsrdDetails] = useState(null);
@@ -43,6 +45,10 @@ export const ThirdPartyApiConfigurationViewDetails = () => {
     getApiEventByApiEventId(id)
   }
 
+  const handleBackClick = () => {
+    navigate("/ThirdPartyApiConfiguration");
+  }
+
   return (
     <>
       <div className="card-bottom-m-0">
@@ -55,8 +61,17 @@ export const ThirdPartyApiConfigurationViewDetails = () => {
               />
             </CardSection>
           </div>
-          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
-            <ThirdPartyApiConfigurationViewTab 
+          <div className='d-flex justify-content-end'> 
+            <Buttons
+              buttonTypeClassName="btn dark-btn"
+              onClick={handleBackClick}
+              textWithIcon={true}
+              buttonText="Back"
+              imagePath={AppIcons.BackArrowIcon}
+            ></Buttons>
+          </div>
+          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab grid-over-flow">
+            <ThirdPartyApiConfigurationViewTab
               keyId={keyId}
             />
           </div>

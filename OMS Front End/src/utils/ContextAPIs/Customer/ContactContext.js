@@ -1,11 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRef } from 'react';
 import { createContext } from 'react';
-import SwalAlert from '../../../services/swalService/SwalService';
 import { addEditEmailFormData } from '../../../pages/customerDetail/features/contactDetail/EmailAddress/config/AddEditEmailForm.data';
-import { useAddContactEmailMutation, useUpdateContactEmailMutation } from '../../../app/services/contactAPI';
-import ToastService from '../../../services/toastService/ToastService';
-import BasicDetailContext from './BasicDetailContext';
 
 const ContactContext = createContext();
 
@@ -26,29 +22,6 @@ export const ContactContextProvider = ({ children }) => {
     const [showModal, setShowModal] = useState(false);
     const [showSubModal, setShowSubModal] = useState(false);
     const [editFormData, setEditFormData] = useState();
-
-    //** API Call's */
-    // const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddContactEmailMutation();
-    // const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateContactEmailMutation();
-
-
-    // useEffect(() => {
-    //     if (isAddSuccess && isAddData) {
-    //         handleSubToggleModal();
-    //         ToastService.success(isAddData.errorMessage);
-    //         onResetData();
-    //     }
-    // }, [isAddSuccess, isAddData]);
-
-    // useEffect(() => {
-    //     if (isUpdateSuccess && isUpdateData) {
-    //         handleSubToggleModal();
-    //         console.log('contactNumbers',emailAddressData);
-    //         ToastService.success(isUpdateData.errorMessage);
-    //         onResetData();
-    //     }
-    // }, [isUpdateSuccess, isUpdateData]);
-
 
     //** Reset Data */
     const onResetData = () => {

@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using OMS.Domain.Entities.API.Response.Approval;
+using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -16,6 +17,10 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDUSERCHECKLISTRESPONSE = "AddUserCheckListResponse";
         const string VALIDATECUSTOMERDATA = "ValidateCustomerData";
         const string VALIDATESUPPLIERDATA = "ValidateSupplierData";
+        const string ADDAPPROVALREQUESTS = "AddApprovalRequests";
+        const string GETAPPROVALREQUESTSLISTBYSTATUSANDREQUESTEDBYUSERID = "GetApprovalRequestsListByStatusAndRequestedByUserId";
+        const string GETAPPROVALREQUESTSBYAPPROVALREQUESTID = "GetApprovalRequestsByApprovalRequestId";
+        const string GETAPPROVALCONFIGURATION = "GetApprovalConfiguration";
         #endregion
 
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
@@ -39,21 +44,14 @@ namespace OMS.Domain.Repository.Implementation
             return getEmailByContactIdResponse;
 
         }
-        public async Task<AddEntityDTO<int>> AddUserChecklistResponse(DataTable CheckListDataTable)
+        public async Task<AddEntityDto<int>> AddUserChecklistResponse(DataTable CheckListDataTable)
         {
             var parameters = new
             {
                 CheckListResponse = CheckListDataTable.AsTableValuedParameter("[dbo].[CheckListResponseTypeTable]")
             };
-            AddEntityDTO<int> responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, parameters, CommandType.StoredProcedure);
+            AddEntityDto<int> responceData = await _context.GetSingleAsync<AddEntityDto<int>>(ADDUSERCHECKLISTRESPONSE, parameters, CommandType.StoredProcedure);
             return responceData;
-
-            //return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDUSERCHECKLISTRESPONSE, new
-            //{
-            //    addUserCheckList.UserId,
-            //    addUserCheckList.IsApproved,
-            //    addUserCheckList.ChecklistItemId,
-            //}, CommandType.StoredProcedure);
         }
         public async Task<List<GetValidateCheckListResponse>> GetValidateCustomer(int customerId, bool? isSubCustomer)
         {
@@ -73,6 +71,43 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getApprovalCheckList;
 
+        }
+        public async Task<AddEntityDto<int>> AddApprovalRequests(ApprovalRequestsDto requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDAPPROVALREQUESTS, new
+            {
+                requestData.ModuleId,
+                requestData.FunctionalityId,
+                requestData.TableId,
+                requestData.FunctionalityEventId,
+                requestData.FunctionalitiesFieldId,
+                requestData.OldValue,
+                requestData.NewValue,
+                requestData.RequestedByUserId,
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId)
+        {
+            List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>(GETAPPROVALREQUESTSLISTBYSTATUSANDREQUESTEDBYUSERID, new
+            {
+                requestedByUserId,
+                status
+            }, commandType: CommandType.StoredProcedure);
+            return getAllUsersResponse;
+        }
+
+        public async Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId)
+        {
+            GetApprovalRequestsByApprovalRequestIdResponse approvalRequestsDetails = await _context.GetFrist<GetApprovalRequestsByApprovalRequestIdResponse>(GETAPPROVALREQUESTSBYAPPROVALREQUESTID, new
+            {
+                approvalRequestId
+            }, CommandType.StoredProcedure);
+            return approvalRequestsDetails;
+        }
+        public async Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration()
+        {
+            List<GetApprovalConfigurationResponse> approvalConfigurationList = await _context.GetList<GetApprovalConfigurationResponse>(GETAPPROVALCONFIGURATION, commandType: CommandType.StoredProcedure);
+            return approvalConfigurationList;
         }
     }
 }

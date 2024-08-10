@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "../../../../customerDetail/CustomerSupplier.scss";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom/dist";
 import { useSelector } from "react-redux";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import CustomerBasicDetail from "../../../feature/customerBasicDetail/CustomerBasicDetail";
@@ -15,13 +14,14 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import CustomerViewTab from "../../../feature/customerViewDetail/customerViewTab/CustomerViewTab";
 import CustomerBasicInfoCard from "../../../feature/customerViewDetail/customerBasicInfoCard/CustomerBasicInfoCard";
 import "./CustomerDetails.scss"
+
 const CustomerDetails = () => {
 
   const navigate = useNavigate();
   const { id } = useParams();
   const authState = useSelector((state) => state.auth);
   const keyId = id ? decryptUrlData(id) : 0;
-  const [isModelOpen, setisModelOpen] = useState(false);
+  const [isModelOpen, setIsModelOpen] = useState(false);
   const [customerData, setCustomerData] = useState(null);
   const [isBuyingForThirdParty, setIsBuyingForThirdParty] = useState(false);
 
@@ -71,10 +71,10 @@ const CustomerDetails = () => {
   };
 
   const handleToggleModal = () => {
-    setisModelOpen(true);
+    setIsModelOpen(true);
   };
   const onSidebarClose = () => {
-    setisModelOpen(false);
+    setIsModelOpen(false);
   };
   const handleBackClick = () => {
     navigate("/Customers");
@@ -104,7 +104,7 @@ const CustomerDetails = () => {
               imagePath={AppIcons.BackArrowIcon}
             ></Buttons>
             <div className="customer-detail-tab-sec">
-              <CustomerViewTab customerId={customerId} isBuyingForThirdParty={isBuyingForThirdParty} />
+              <CustomerViewTab customerId={customerId} isBuyingForThirdParty={isBuyingForThirdParty} contryIdCode={customerData?.countryId} />
             </div>
           </div>
         </div>

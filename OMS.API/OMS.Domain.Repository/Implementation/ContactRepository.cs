@@ -14,7 +14,6 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDEDITCONTACT = "AddEditContact";
         const string GETCONTACTBYCUSTOMERID = "GetContactByCustomerId";
         const string GETCONTACTBYSUPPLIERID = "GetContactBySupplierId";
-        const string ADDEDITCONTACTWITHDATATABLE = "AddEditContactWithDataTable";
         const string GETCUSTOMERCONTACTBYCONTACTID = "GetCustomerContactByContactId";
         const string GETSUPLLIERCONTACTBYCONTACTID = "GetSupllierContactByContactId";
 
@@ -25,9 +24,9 @@ namespace OMS.Domain.Repository.Implementation
         }
 
         #region Contact Repository
-        public async Task<AddEntityDTO<int>> AddEditContact(ContactDTO contact)
+        public async Task<AddEntityDto<int>> AddEditContact(ContactDto contact)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACT, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITCONTACT, new
             {
                 contact.ContactId,
                 contact.CustomerContactId,

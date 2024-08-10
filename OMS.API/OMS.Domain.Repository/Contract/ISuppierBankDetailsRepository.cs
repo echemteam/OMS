@@ -5,6 +5,6 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface ISuppierBankDetailsRepository
     {
-        Task<AddEntityDTO<int>> AddEditACHWire(SuppierBankDetailsDTO requestData);
+        Task<AddEntityDto<int>> AddEditACHWire(SuppierBankDetailsDto requestData);
     }
 }

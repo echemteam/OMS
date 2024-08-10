@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OMS.Domain.Entities.Entity.CustomerAccountingSettings
+﻿namespace OMS.Domain.Entities.Entity.CustomerAccountingSettings
 {
-    public class BaseCustomerAccountingSettingsDTO
+    public class BaseCustomerAccountingSettingsDto
     {
         public int? CustomerAccountingSettingId { get; set; }
         public short? PaymentTermId { get; set; }

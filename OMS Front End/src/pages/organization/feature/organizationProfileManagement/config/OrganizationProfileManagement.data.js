@@ -2,18 +2,52 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const OrganizationProfileManagementdata = {
     // name: "Email From"
-    initialState: { organizationId:0 , name: "", logo:"", addressLine1: "", addressLine2: "", countryId: "", stateId: "", zipCode: "", cityId: "" , base64File : ""},
+    initialState: { registeredName:"" , dBAName: "", dateIncorporated:"", nAICSCode: "", eIN: "", tXTaxpayerNumber: "", sOSFileNumber: "", webFileNumber: "",tWCTaxAccountNumber:""},
     formFields: [
         {
-            id: "name",
-            lable: "Name ",
-            Field_Name: "Name",
+            id: "registeredName",
+            lable: "Registered Name ",
+            Field_Name: "Registered Name",
             fieldType: FormFieldTypes.INPUT,
-            dataField: "name",
+            dataField: "registeredName",
             fieldSetting: {
-                placeholder: "Enter Name",
+                placeholder: "Enter Registered Name",
                 allowSpace: true,
-                maxLength: 100,
+                maxLength: 255,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+            },
+        },
+        // {
+        //     id: "logo",
+        //     lable: "Logo ",
+        //     Field_Name: "Logo",
+        //     fieldType: FormFieldTypes.IMAGE,
+        //     dataField: "logo",
+        //     fieldSetting: {
+        //         placeholder: "Upload Attachment",
+        //         isImageUpload: true,
+        //         isButtonVisible: true,
+        //         isCustomButtonVisible: false,
+        //         acceptedFiles: '.png ',
+        //     },
+        //     validation: [{ type: "require" }],
+        //     style: {
+        //         containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 custom-file-upload-section",
+        //     },
+        // },
+        {
+            id: "dBAName",
+            lable: "DBA Name ",
+            Field_Name: "DBA Name",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "dBAName",
+            fieldSetting: {
+                placeholder: "Enter DBA Name",
+                allowSpace: true,
+                maxLength: 255,
             },
             validation: [{ type: "require" }],
             style: {
@@ -21,33 +55,30 @@ export const OrganizationProfileManagementdata = {
             },
         },
         {
-            id: "logo",
-            lable: "Logo ",
-            Field_Name: "Logo",
-            fieldType: FormFieldTypes.IMAGE,
-            dataField: "logo",
+            id: "dateIncorporated",
+            lable: "Date Incorporated ",
+            Field_Name: "Date Incorporated",
+            fieldType: FormFieldTypes.DATEPICKER,
+            dataField: "dateIncorporated",
             fieldSetting: {
-                placeholder: "Upload Attachment",
-                isImageUpload: true,
-                isButtonVisible: true,
-                isCustomButtonVisible: false,
-                acceptedFiles: '.png ',
+                placeholder: "Select Date Incorporated",
+                allowSpace: true,
             },
-            validation: [{ type: "require" }],
+             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 custom-file-upload-section",
+                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
             },
         },
         {
-            id: "addressLine1",
-            lable: "Address Line 1 ",
-            Field_Name: "Address Line 1",
+            id: "nAICSCode",
+            lable: "NAICS Code ",
+            Field_Name: "NAICS Code",
             fieldType: FormFieldTypes.INPUT,
-            dataField: "addressLine1",
+            dataField: "nAICSCode",
             fieldSetting: {
-                placeholder: "Enter Address Line 1",
+                placeholder: "Select NAICS Code",
                 allowSpace: true,
-                maxLength: 100,
+                maxLength:6
             },
             validation: [{ type: "require" }],
             style: {
@@ -55,82 +86,83 @@ export const OrganizationProfileManagementdata = {
             },
         },
         {
-            id: "addressLine2",
-            lable: "Address Line 2 ",
-            Field_Name: "Address Line 2",
+            id: "eIN",
+            lable: "EIN ",
+            Field_Name: "EIN",
             fieldType: FormFieldTypes.INPUT,
-            dataField: "addressLine2",
+            dataField: "eIN",
             fieldSetting: {
-                placeholder: "Enter Address Line 2",
-                allowSpace: true,
-                maxLength: 100,
-            },
-            // validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
-            },
-        },
-        {
-            id: "countryId",
-            lable: "Country ",
-            Field_Name: "Country",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "countryId",
-            fieldSetting: {
-                placeholder: "Select Country",
-                isEnableOnChange: true
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input label-name-small",
-            },
-        },
-        {
-            id: "stateId",
-            lable: "State ",
-            Field_Name: "State",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "stateId",
-            fieldSetting: {
-                isDisabled: true,
-                placeholder: "Select State",
-                isEnableOnChange: true
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input label-name-small",
-            },
-        },
-        {
-            id: "cityId",
-            lable: "City ",
-            Field_Name: "City",
-            fieldType: FormFieldTypes.SELECT,
-            dataField: "cityId",
-            fieldSetting: {
-                isDisabled: true,
-                placeholder: "Select City",
-                isEnableOnChange: true
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input label-name-small",
-            },
-        },
-        {
-            id: "zipCode",
-            lable: "Zip Code ",
-            Field_Name: "Zip Code",
-            fieldType: FormFieldTypes.NUMERIC,
-            dataField: "zipCode",
-            fieldSetting: {
-                placeholder: "Enter Zip Code",
+                placeholder: "Select EIN",
                 allowSpace: true,
                 maxLength: 9,
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input label-name-small",
+                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+            },
+        },
+        {
+            id: "tXTaxpayerNumber",
+            lable: "TXTaxpayer Number ",
+            Field_Name: "TXTaxpayer Number",
+            fieldType: FormFieldTypes.NUMERIC,
+            dataField: "tXTaxpayerNumber",
+            fieldSetting: {
+                placeholder: "Select TXTaxpayer Number",
+                allowSpace: true,
+                maxLength:20,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+            },
+        },
+        {
+            id: "sOSFileNumber",
+            lable: "SOS File Number ",
+            Field_Name: "SOS File Number",
+            fieldType: FormFieldTypes.NUMERIC,
+            dataField: "sOSFileNumber",
+            fieldSetting: {
+                placeholder: "Enter SOS File Number",
+                allowSpace: true,
+                maxLength:20,
+             },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+            },
+        },
+        {
+            id: "webFileNumber",
+            lable: "Web File Number ",
+            Field_Name: "Web File Number",
+            fieldType: FormFieldTypes.NUMERIC,
+            dataField: "webFileNumber",
+            fieldSetting: {
+                placeholder: "Enter Web File Number",
+                allowSpace: true,
+                maxLength:20,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+            },
+        },
+        {
+            id: "tWCTaxAccountNumber",
+            lable: "TWC Tax Account Number ",
+            Field_Name: "TWC Tax Account Number",
+            fieldType: FormFieldTypes.NUMERIC,
+            dataField: "tWCTaxAccountNumber",
+            fieldSetting: {
+                placeholder: "Enter TWC Tax Account Number",
+                allowSpace: true,
+                maxLength:20,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
             },
         },
     ],

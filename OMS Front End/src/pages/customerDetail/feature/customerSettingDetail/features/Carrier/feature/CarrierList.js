@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import { useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import FinalMolGrid from "../../../../../../../components/FinalMolGrid/FinalMolGrid";
-// import MolGrid from "../../../../../../../components/Grid/MolGrid";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import { AccountGridConfig } from "../config/CarrierConfig";
@@ -10,7 +10,7 @@ import ToastService from "../../../../../../../services/toastService/ToastServic
 
 const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList }) => {
 
-    const [gridConfig, setGridConfig] = useState(AccountGridConfig);
+    // const [gridConfig, setGridConfig] = useState(AccountGridConfig);
 
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
 
@@ -37,17 +37,11 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
         }
     }, [isUpdateSuccess, isUpdateData]);
 
-    useState(() => {
-        let configuration = { ...AccountGridConfig }
-        configuration.handleRowDataUpdate = handleEditClick;
-        setGridConfig(configuration);
-    }, [])
-
     return (
         <div className="first-card">
             <CardSection
                 cardTitle="Carrier Details"
-                rightButton={isShowButton ? true : false}
+                rightButton={isShowButton}
                 buttonClassName="theme-button "
                 buttonText="Add"
                 textWithIcon={true}
@@ -56,20 +50,13 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
                 <div className="account-table table-striped mb-3">
                     <FinalMolGrid
                         ref={molGridRef}
-                        configuration={gridConfig}
-                        dataSource={collectAccountData}
-                        allowPagination={false}
-                        onActionChange={actionHandler}
-                        isLoading={isGetDataLoading}
-                    />
-                    {/* <MolGrid
-                        ref={molGridRef}
                         configuration={AccountGridConfig}
                         dataSource={collectAccountData}
                         allowPagination={false}
                         onActionChange={actionHandler}
                         isLoading={isGetDataLoading}
-                    /> */}
+                        onRowDataUpdate={handleEditClick}
+                    />
                 </div>
             </CardSection>
         </div>
@@ -83,6 +70,8 @@ CarrierList.propTypes = {
     handleToggleModal: PropTypes.func.isRequired,
     isGetDataLoading: PropTypes.bool.isRequired,
     isShowButton: PropTypes.bool.isRequired,
+    customerId: PropTypes.number.isRequired,
+    handleGetDefaultList: PropTypes.func.isRequired
 };
 
 export default CarrierList;

@@ -10,7 +10,6 @@ import React, {
 import { useNavigate } from "react-router-dom";
 
 import CardSection from "../../../../../../components/ui/card/CardSection";
-import MolGrid from "../../../../../../components/Grid/MolGrid";
 import { useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from "../../../../../../app/services/basicdetailAPI";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import CustomerListContext from "../../../../../../utils/ContextAPIs/Customer/CustomerListContext";
@@ -32,6 +31,7 @@ import Buttons from "../../../../../../components/ui/button/Buttons";
 import CustomerApproval from "../../../../feature/cutomerApproval/CustomerApproval";
 import { reasonData } from "../../../../../../common/features/component/CustomerSupplierReason/Reason.data";
 import PropTypes from 'prop-types';
+import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 
   
   export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
@@ -44,7 +44,7 @@ import PropTypes from 'prop-types';
     const [dataSource, setDataSource] = useState();
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState(reasonData);
-    const [customerID, setcustomerId] = useState();
+    const [customerID, setCustomerId] = useState();
     const [staticId, setStaticId] = useState();
     const [statusFeild, setStatusFeild] = useState();
     const { listRef } = useContext(CustomerListContext);
@@ -163,7 +163,7 @@ import PropTypes from 'prop-types';
     }
   
     const handlePageChange = (page,sortingString) => {
-      const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
+      const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
       const request = {
         pagination: {
           pageNumber: page.pageNumber,
@@ -223,8 +223,8 @@ import PropTypes from 'prop-types';
     }));
   
     const getListApi = (pageObject, sortingString) => { 
-      const currentPageObject = pageObject ? pageObject : molGridRef.current.getCurrentPageObject();
-      const sortingStringObject = sortingString ? sortingString : molGridRef.current.generateSortingString();
+      const currentPageObject = pageObject || molGridRef.current.getCurrentPageObject();
+      const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
       const request = {
         pagination: {
           pageNumber: currentPageObject.pageNumber,
@@ -249,7 +249,7 @@ import PropTypes from 'prop-types';
       if (childRef.current) {
         childRef.current.callChildFunction(rowData.customerId,rowData.isSubCustomer? rowData.isSubCustomer : false);
       }
-      setcustomerId(rowData.customerId);
+      setCustomerId(rowData.customerId);
     };
   
     const updateCustomerApproval = () => {
@@ -274,7 +274,7 @@ import PropTypes from 'prop-types';
     const handlefreeze = (data) => {
       removeFields();
       setShowModal(true);
-      setcustomerId(data.customerId);
+      setCustomerId(data.customerId);
       setStaticId(StatusEnums.Freeze);
       setStatusFeild(StatusFeild.Freeze);
     };
@@ -282,7 +282,7 @@ import PropTypes from 'prop-types';
     const handleDiseble = (data) => {
       removeFields();
       setShowModal(true);
-      setcustomerId(data.customerId);
+      setCustomerId(data.customerId);
       setStaticId(StatusEnums.Disable);
       setStatusFeild(StatusFeild.Disable);
     };
@@ -290,7 +290,7 @@ import PropTypes from 'prop-types';
     const handleBlock = (data) => {
       removeFields();
       setShowModal(true);
-      setcustomerId(data.customerId);
+      setCustomerId(data.customerId);
       setStaticId(StatusEnums.Block);
       setStatusFeild(StatusFeild.Block);
     };
@@ -298,7 +298,7 @@ import PropTypes from 'prop-types';
       const customerData = dataSource.find(customerItem => customerItem.customerId === data.customerId);
       setShowModal(true);
       setAssignRUser(false);
-      setcustomerId(data.customerId);
+      setCustomerId(data.customerId);
       setStaticId(StatusEnums.Reject);
       setStatusFeild(StatusFeild.Reject);
       if (customerData.responsibleUserId) {
@@ -340,10 +340,10 @@ import PropTypes from 'prop-types';
   
     const actionHandler = {
       EDIT: handleEditClick,
-      FREEZE: handlefreeze,
-      DISABLE: handleDiseble,
-      BLOCKED: handleBlock,
-      REJECT: handleReject,
+      ALLOWFREEZE: handlefreeze,
+      ALLOWDISABLE: handleDiseble,
+      ALLOWBLOCKED: handleBlock,
+      ALLOREJECT: handleReject,
     };
   
     return (
@@ -354,7 +354,7 @@ import PropTypes from 'prop-types';
               searchInput={true}
               handleChange={handleChange}
               searchInputName="Search By Customer Name, Tax Id , Email Address"
-              searchFilter={searchStatusFilter ? true : false}
+              searchFilter={searchStatusFilter }
               handleChangeDropdown={handleChangeDropdown}
               selectedOptions={selectedDrpvalues}
               optionsValue={statusOptions}
@@ -378,7 +378,7 @@ import PropTypes from 'prop-types';
               <div className="row">
                 <div className="col-md-12 table-striped">
                   {/* <div className="customer-list"> */}
-                  <MolGrid
+                  <FinalMolGrid
                     ref={molGridRef}
                     configuration={configFile}
                     dataSource={dataSource}

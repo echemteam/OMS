@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClientIPAuthentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Organization;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -10,6 +12,7 @@ namespace OMS.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [CheckClientIpActionFilter]
     public class OrganizationController : BaseController
     {
         #region private variable
@@ -122,7 +125,7 @@ namespace OMS.API.Controllers
         [HttpGet("GetOrganizationShippingCharges")]
         public async Task<IActionResult> GetOrganizationShippingCharges()
         {
-            var organizationShippingCharges= await _serviceManager.organizationService.GetOrganizationShippingCharges().ConfigureAwait(true);
+            var organizationShippingCharges = await _serviceManager.organizationService.GetOrganizationShippingCharges().ConfigureAwait(true);
             return APISucessResponce<object>(organizationShippingCharges);
         }
         [HttpPost("AddEditOrganizationOtherCharges")]
@@ -148,6 +151,12 @@ namespace OMS.API.Controllers
         {
             var organizationBusinessAddresses = await _serviceManager.organizationService.GetOrganizationBusinessAddresses().ConfigureAwait(true);
             return APISucessResponce<object>(organizationBusinessAddresses);
+        }
+        [HttpPost("GetOrganizationHistorys")]
+        public async Task<IActionResult> GetUsers([FromBody] ListEntityRequest<BaseFilter> requestData)
+        {
+            var organizationHistoryList = await _serviceManager.organizationService.GetOrganizationHistorys(requestData);
+            return APISucessResponce<object>(organizationHistoryList);
         }
         #endregion
     }

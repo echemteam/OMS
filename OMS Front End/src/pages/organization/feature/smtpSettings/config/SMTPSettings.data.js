@@ -33,7 +33,7 @@ export const SMTPSettingsData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {
@@ -48,7 +48,7 @@ export const SMTPSettingsData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {
@@ -63,7 +63,7 @@ export const SMTPSettingsData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-md-6 mb-3",
+                containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
         {

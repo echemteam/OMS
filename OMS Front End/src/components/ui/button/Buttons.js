@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Image from "../../image/Image";
 import "./Buttons.scss";
 
@@ -28,5 +29,16 @@ function Buttons(props) {
     </button>
   );
 }
+
+Buttons.propTypes = {
+  titleText: PropTypes.string,
+  isLoading: PropTypes.bool,
+  buttonTypeClassName: PropTypes.string,
+  onClick: PropTypes.func,
+  textWithIcon: PropTypes.bool,
+  buttonText: PropTypes.string,
+  imagePath: PropTypes.string,
+  isDisable: PropTypes.bool
+};
 
 export default Buttons;

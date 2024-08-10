@@ -4,12 +4,7 @@ using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OMS.Domain.Repository.Implementation
 {
@@ -21,9 +16,9 @@ namespace OMS.Domain.Repository.Implementation
         {
 
         }
-        public async Task<AddEntityDTO<int>> AddEditOrganizationShippingCharges(OrganizationShippingChargesDto requestData)
+        public async Task<AddEntityDto<int>> AddEditOrganizationShippingCharges(OrganizationShippingChargesDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITORGANIZATIONSHIPPINGCHARGES, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORGANIZATIONSHIPPINGCHARGES, new
             {
                 requestData.OrganizationShippingChargeId,
                 requestData.DomesticOvernight,

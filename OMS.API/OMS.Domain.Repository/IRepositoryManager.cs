@@ -44,10 +44,11 @@ namespace OMS.Domain.Repository
         ISupplierPaymentSettingsRepository supplierPaymentSettings { get; }
         IApiEventRepository apiEvent { get; }
         IApiEventMappingRepository apiEventMapping { get; }
-        IApiEventParameterRepository apiEventParameter {  get; }
-        IApiParameterMappingRepository apiParameterMapping {  get; }
+        IApiEventParameterRepository apiEventParameter { get; }
+        IApiParameterMappingRepository apiParameterMapping { get; }
         IApiEventRequiredFieldRepository apiEventRequiredField { get; }
         IApiEventRequiredFieldsMappingRepository apiEventRequiredFieldsMapping { get; }
-        IFunctionalitiesRepository functionalities {  get; }  
+        IFunctionalitiesRepository functionalities { get; }
+        IOrderRepository order { get; }
     }
 }

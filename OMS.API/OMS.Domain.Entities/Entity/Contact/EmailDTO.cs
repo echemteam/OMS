@@ -1,6 +1,6 @@
 ﻿namespace OMS.Domain.Entities.Entity.Contact
 {
-    public class EmailDTO : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
+    public class EmailDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? EmailId { get; set; }
         public string? EmailAddress { get; set; }

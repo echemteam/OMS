@@ -1,14 +1,19 @@
 import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
+import { ContactType } from "../../../../../utils/Enums/commonEnums";
 
 export const contactInformationData = {
   initialState: {
-    isEndUser: false,
+    endUserId:"",
+    isEndUser: true,
+    isPurchasingGiven: true,
     endUser: "",
     refNumber: "",
-    isInvoiceSubmission: false,
+    isInvoiceSubmission: true,
     invoiceSubmission: "",
     purchasing: "",
+    invoiceSubmissionId: "",
+    purchasingId: "",
   },
   formFields: [
     {
@@ -22,16 +27,43 @@ export const contactInformationData = {
         isEnableOnChange: true
       },
       style: {
-        containerCss:
-          "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mt-3",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12",
       },
     },
     {
-      id: "endUser",
+      id: "isInvoiceSubmission",
+      lable: "Is Invoice Submission given on Purchase order",
+      Field_Name: "Exempt Sales Tax",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isInvoiceSubmission",
+      fieldSetting: {
+        placeholder: "",
+        isEnableOnChange: true
+      },
+      style: {
+        containerCss:"col-xxl-4 col-xl-4 col-md-4 col-12 col-12",
+      },
+    },
+    {
+      id: "isPurchasingGiven",
+      lable: "Is Purchasing given on Purchase order",
+      Field_Name: "Is Purchasing Given",
+      fieldType: FormFieldTypes.CHECKBOX,
+      dataField: "isPurchasingGiven",
+      fieldSetting: {
+        placeholder: "",
+        isEnableOnChange: true
+      },
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 col-12",
+      },
+    },
+    {
+      id: "endUserId",
       lable: "End User ",
       Field_Name: "End Name",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "name",
+      dataField: "endUserId",
       fieldSetting: {
         placeholder: "Enter End User",
         allowSpace: true,
@@ -41,12 +73,63 @@ export const contactInformationData = {
         isEnableOnChange: true,
       },
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
       },
       inputButtonGroup: {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
+        GetByID : ContactType.EndUser
+      }
+    },
+  
+    {
+      id: "invoiceSubmissionId",
+      lable: "Invoice Submission ",
+      Field_Name: "Invoice Submission",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "invoiceSubmissionId",
+      fieldSetting: {
+        placeholder: "Enter Invoice Submission",
+        allowSpace: true,
+        maxLength: 50,
+        exemptBoundarySpaces: true,
+        validation: [{ type: "require" }],
+        isEnableOnChange: true,
+      },
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
+      },
+      inputButtonGroup: {
+        isInputButton: true,
+        buttonText: 'Add',
+        icon: AppIcons.PlusIcon,
+        GetByID : ContactType.InvoiceSubmission
+
+      }
+    },
+    {
+      id: "purchasingId",
+      lable: "Purchasing ",
+      Field_Name: "Purchasing",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "purchasingId",
+      fieldSetting: {
+        placeholder: "Enter Purchasing",
+        allowSpace: true,
+        maxLength: 50,
+        exemptBoundarySpaces: true,
+        validation: [{ type: "require" }],
+        isEnableOnChange: true,
+      },
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
+      },
+      inputButtonGroup: {
+        isInputButton: true,
+        buttonText: 'Add',
+        icon: AppIcons.PlusIcon,
+        GetByID : ContactType.Purchasing
       }
     },
     {
@@ -64,84 +147,9 @@ export const contactInformationData = {
         isEnableOnChange: true,
       },
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-6 mb-input",
       },
     },
-    {
-      id: "isInvoiceSubmission",
-      lable: "Is Invoice Submission given on Purchase order",
-      Field_Name: "Exempt Sales Tax",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "exemptSalesTax",
-      fieldSetting: {
-        placeholder: "",
-        isEnableOnChange: true
-      },
-      style: {
-        containerCss:
-          "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mt-3",
-      },
-    },
-    {
-      id: "isPurchasingGiven",
-      lable: "Is Purchasing given on Purchase order",
-      Field_Name: "Is Purchasing Given",
-      fieldType: FormFieldTypes.CHECKBOX,
-      dataField: "isPurchasingGiven",
-      fieldSetting: {
-        placeholder: "",
-        isEnableOnChange: true
-      },
-      style: {
-        containerCss:
-          "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mt-3",
-      },
-    },
-    {
-      id: "invoiceSubmission",
-      lable: "Invoice Submission ",
-      Field_Name: "Invoice Submission",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "invoiceSubmission",
-      fieldSetting: {
-        placeholder: "Enter Invoice Submission",
-        allowSpace: true,
-        maxLength: 50,
-        exemptBoundarySpaces: true,
-        validation: [{ type: "require" }],
-        isEnableOnChange: true,
-      },
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
-      },
-      inputButtonGroup: {
-        isInputButton: true,
-        buttonText: 'Add',
-        icon: AppIcons.PlusIcon,
-      }
-    },
-    {
-      id: "purchasing",
-      lable: "Purchasing",
-      Field_Name: "Purchasing",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "name",
-      fieldSetting: {
-        placeholder: "Enter Purchasing",
-        allowSpace: true,
-        maxLength: 50,
-        exemptBoundarySpaces: true,
-        validation: [{ type: "require" }],
-        isEnableOnChange: true,
-      },
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
-      },
-      inputButtonGroup: {
-        isInputButton: true,
-        buttonText: 'Add',
-        icon: AppIcons.PlusIcon,
-      }
-    },
+    
   ],
 };

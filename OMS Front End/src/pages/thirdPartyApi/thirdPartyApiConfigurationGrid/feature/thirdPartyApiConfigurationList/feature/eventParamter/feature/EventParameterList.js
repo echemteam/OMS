@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { useDeleteApiEventParameterMutation, useGetApiEventParametersMutation } from '../../../../../../../../app/services/thirdPartyAPI';
 import { AddEditParameterConfigurationData } from '../config/AddEditParameter.data';
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../../../services/toastService/ToastService';
-import MolGrid from '../../../../../../../../components/Grid/MolGrid';
+import FinalMolGrid from '../../../../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const EventParameterList = (props) => {
   const molGridRef = useRef();
@@ -64,7 +65,11 @@ const EventParameterList = (props) => {
     confirm("Delete?", "Are you sure you want to Delete?", "Delete", "Cancel"
     ).then((confirmed) => {
       if (confirmed) {
-        deleteApiEventParameter(data.apiEventParametersId);
+        let request = {
+          apiEventParametersId: data.apiEventParametersId,
+          parameterId: data.parameterId
+        }
+        deleteApiEventParameter(request);
       }
     });
   };
@@ -104,7 +109,7 @@ const EventParameterList = (props) => {
   return (
     <div className="row">
       <div className="col-md-12 table-striped api-provider">
-        <MolGrid
+        <FinalMolGrid
           ref={molGridRef}
           configuration={AddEditParameterConfigurationData}
           dataSource={listData}
@@ -118,9 +123,7 @@ const EventParameterList = (props) => {
           onSorting={handleSorting}
           isLoading={isGetApiEventParametersLoading}
           onActionChange={actionHandler}
-        // searchTitleButtonClick={handleSearch}
-        // handleChange={handleChange}
-        // handleClear={handleClear}
+
         />
       </div>
     </div>

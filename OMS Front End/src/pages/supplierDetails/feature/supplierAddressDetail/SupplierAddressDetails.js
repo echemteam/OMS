@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { securityKey } from '../../../../data/SecurityKey';
 import AddSupplierContext from '../../../../utils/ContextAPIs/Supplier/AddSupplierContext';
 //** Service */
-import { useAddAddressMutation, useUpdateAddAddressMutation } from '../../../../app/services/addressAPI';
+import { useAddAddressMutation, useDeleteAddressMutation, useUpdateAddAddressMutation } from '../../../../app/services/addressAPI';
 import { useLazyGetAddresssBySupplierIdQuery, useLazyGetSupplierAddresssByAddressIdQuery } from '../../../../app/services/supplierAddressAPI';
 
 const AddressGrid = React.lazy(() => import("../../../../common/features/component/Address/AddressGrid"));
@@ -29,12 +29,14 @@ const SuplierAddressDetails = ({ isEditablePage }) => {
         <AddressGrid
             isSupplier={true}
             isEditablePage={isEditablePage}
-            keyId={supplierId ? supplierId : 0}
+            keyId={supplierId || 0}
             SecurityKey={!isResponsibleUser ? supplierSecurityKey : null}
             getAddresssByCustomerId={useLazyGetAddresssBySupplierIdQuery}
             getAddresssById={useLazyGetSupplierAddresssByAddressIdQuery}
             addAddress={useAddAddressMutation}
-            updateAddress={useUpdateAddAddressMutation} />
+            updateAddress={useUpdateAddAddressMutation} 
+            deleteAddress={useDeleteAddressMutation}
+            />
     )
 }
 

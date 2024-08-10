@@ -3,6 +3,7 @@ import React from "react";
 import Label from "../../ui/label/Label";
 import ValidationText from "../../ui/inputs/validation/ValidationText";
 import CKEditorComponent from "../../ui/inputs/ckEditor/CkEditor";
+import PropTypes from 'prop-types'; 
 
 const CKEditorField = ({
     name,
@@ -48,5 +49,21 @@ const CKEditorField = ({
         </>
     );
 };
-
+CKEditorField.propTypes = {
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    labelName: PropTypes.string,
+    onChange: PropTypes.func,
+    onValidation: PropTypes.func,
+    dataField: PropTypes.string.isRequired,
+    error: PropTypes.string,
+    formSetting: PropTypes.shape({
+        isViewOnly: PropTypes.bool,
+    }),
+    overRideProps: PropTypes.shape({
+        isDisable: PropTypes.bool,
+    }),
+    isRequired: PropTypes.bool,
+    editorProps: PropTypes.object,
+};
 export default CKEditorField;

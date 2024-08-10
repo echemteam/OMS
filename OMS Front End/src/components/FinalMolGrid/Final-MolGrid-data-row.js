@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, memo } from "react";
+import PropTypes from "prop-types";
 
-import { GridColumnType } from "../../data/gridColumnType";
-import { EditGridColumnType } from "../../data/editGridColumnType";
+import { validateColumns } from "../FinalMolGrid/libs/Validation/gridValidation";
+import { GridColumnType } from "./libs/data/gridColumnType";
+import { EditGridColumnType } from "./libs/data/editGridColumnType";
 
 import { renderGridAction } from "./Grid Columns/FinalActionColumn";
+import { renderMaskedColumn } from "./Grid Columns/MaskedColumn";
 import { renderGridLinkColumn } from "./Grid Columns/FinalLinkColumn";
 import { renderGridDateColumn } from "./Grid Columns/FinalDateColumn";
-import { renderGridLableColumn } from "./Grid Columns/FinalLabelColumn";
+import { renderGridLabelColumn } from "./Grid Columns/FinalLabelColumn";
 import { renderGridMoneyColumn } from "./Grid Columns/FinalMoneyColumn";
-import { renderGridCheckboxColumn } from "./Grid Columns/FinalCheckBoxColumn";
+import RenderGridCheckboxColumn from "./Grid Columns/FinalCheckBoxColumn";
+import RenderGridToggleColumn from "./Grid Columns/FinalToggleColumn";
+import RenderDropdownColumn from "./Grid Columns/FinalDropdownColumn";
+import RenderGridRadioButtonColumn from "./Grid Columns/FinalRadioButtonColumn";
 
 // Edit Columns
 import EditInputColumn from "./Grid Columns/FinalEditColumns/EditInputColumn";
@@ -18,351 +24,403 @@ import EditDatepickerColumn from "./Grid Columns/FinalEditColumns/EditDatepicker
 import { renderEditGridAction } from "./Grid Columns/FinalEditColumns/EditActionColumn";
 
 // Function for rendering the action column
-const MolGridDataRows = (props) => {
+const MolGridDataRows = ({
+  dataSource,
+  childTableDataSource,
+  columns,
+  configuration,
+  customColumnClass,
+  customHeaderClass,
+  allowEditGrid,
+  editGridSettings,
+  slectedRowIndex,
+  onColumnDataChange,
+  onRowDataUpdateSaving,
+  onActionChange,
+  onRowDataDelete,
+  onRowSelect,
+}) => {
 
-    const [errors, setErrors] = useState([]);
-    const [collapsedRows, setCollapsedRows] = useState({});
+  const [editRowData, setEditRowData] = useState([]);
+  const [editRowIndex, setEditRowIndex] = useState([]);
 
-    const toggleRow = (rowId) => {
-        setCollapsedRows((prevState) => ({
-            ...prevState,
-            [rowId]: !prevState[rowId],
-        }));
-    };
+  const [errors, setErrors] = useState([]);
+  const [collapsedRows, setCollapsedRows] = useState({});
 
-    const validateField = (value, validations) => {
-        for (let validation of validations) {
-            switch (validation.type) {
-                case 'required':
-                    if (!value || (typeof value === 'string' && value.trim() === '')) {
-                        return validation.message;
-                    }
-                    break;
-                case 'minLength':
-                    if (typeof value === 'string' && value.length < validation.value) {
-                        return validation.message;
-                    }
-                    break;
-                case 'min':
-                    if (typeof value === 'number' && value < validation.value) {
-                        return validation.message;
-                    }
-                    break;
-                // Add more validation types as needed
-                default:
-                    break;
-            }
-        }
-        return null;
+  const toggleRow = useCallback((rowId) => {
+    setCollapsedRows((prevState) => ({
+      ...prevState,
+      [rowId]: !prevState[rowId],
+    }));
+  }, []);
+
+  // Handle Row Click
+  const handleRowClick = (e, rowData, rowIndex) => {
+    if (onRowSelect) {
+      onRowSelect(rowData, rowIndex);
     }
+  };
 
-    /**
-     * Handles saving the edited row data.
-    * @param {number} rowIndex - The index of the row being saved.
-    */
-    const handleRowEditSave = (rowIndex) => {
+  /**
+   * Handles saving the edited row data.
+   * @param {number} rowIndex - The index of the row being saved.
+   */
+  const handleRowEditSave = useCallback(
+    (rowIndex) => {
+      if (editRowIndex.includes(rowIndex) ||  editGridSettings?.defualtEditableView) {
+        const updatedRowData = editRowData[rowIndex];
+        if(updatedRowData)
+        {
+        const newErrors = validateColumns(columns, updatedRowData);
 
-        const newErrors = {};
-
-        if (props.editRowIndex.includes(rowIndex)) {
-            const updatedRowData = props.editedRowData[rowIndex];
-
-            props.columns.forEach(col => {
-                if (col.allowEditColumn && col.editColumn?.editColValidation?.length > 0) {
-                    const error = validateField(updatedRowData[col.fieldName], col.editColumn.editColValidation);
-                    if (error) {
-                        newErrors[col.fieldName] = error;
-                    }
-                }
-            });
-
-            if (Object.keys(newErrors).length === 0) {
-                // No validation errors, update the row data
-                if (props.onRowDataUpdateSaving) {
-                    props.onRowDataUpdateSaving(updatedRowData, rowIndex);
-                }
-                handleCancelEdit(rowIndex);
-            } else {
-                // Set validation errors
-                setErrors(prevErrors => ({ ...prevErrors, [rowIndex]: newErrors }));
-            }
-        }
-
-    };
-
-    /**
-     * Handles updating the row data.
-     * @param {number} rowIndex - The index of the row being updated.
-     * @param {object} updatedData - The updated data for the row.
-     */
-    const handleRowDataUpdate = (rowIndex, newRowData) => {
-        const updatedRowData = [...props.editedRowData];
-
-        // Create a new object to store validation errors
-        const newErrors = {};
-
-        // Perform validation on the newRowData
-        props.columns.forEach(col => {
-            if (col.allowEditColumn && col.editColumn?.editColValidation?.length > 0) {
-                const error = validateField(newRowData[col.fieldName], col.editColumn.editColValidation);
-                if (error) {
-                    newErrors[col.fieldName] = error;
-                }
-            }
-        });
-
-        // Check if there are any validation errors
         if (Object.keys(newErrors).length === 0) {
-            // No validation errors, update the row data
-            // Clear errors for this row index
-            setErrors(prevErrors => {
-                const { [rowIndex]: _, ...restErrors } = prevErrors;
-                return restErrors;
-            });
+          if (onRowDataUpdateSaving) {
+            onRowDataUpdateSaving(updatedRowData, rowIndex);
+          }
+          handleCancelEdit(rowIndex);
         } else {
-            // Set validation errors
-            setErrors(prevErrors => ({ ...prevErrors, [rowIndex]: newErrors }));
+          setErrors((prevErrors) => ({ ...prevErrors, [rowIndex]: newErrors }));
         }
+      }
+    }
+    },
+    [editRowData, columns, onRowDataUpdateSaving]
+  );
 
-        updatedRowData[rowIndex] = { ...updatedRowData[rowIndex], ...newRowData };
+  /**
+   * Handles updating the row data.
+   * @param {number} rowIndex - The index of the row being updated.
+   * @param {object} updatedData - The updated data for the row.
+   */
+  const handleRowDataUpdate = useCallback(
+    (rowIndex, newRowData, fieldName) => {
 
-        // Update the parent component with the new row data
-        props.onRowDataUpdate(updatedRowData);
-    };
+      const updatedRowData = [...editRowData];
+      
 
-    /**
+     if(newRowData)
+     {
+      const newErrors = validateColumns(columns, newRowData);
+
+      if (Object.keys(newErrors).length === 0) {
+        setErrors((prevErrors) => {
+          const updatedErrors = { ...prevErrors };
+          delete updatedErrors[rowIndex];
+          return updatedErrors;
+        });
+      } else {
+        setErrors((prevErrors) => ({ ...prevErrors, [rowIndex]: newErrors }));
+      }
+
+     }
+
+      
+      updatedRowData[rowIndex] = { ...updatedRowData[rowIndex], ...newRowData };
+      setEditRowData(updatedRowData);
+
+      if (onColumnDataChange) {
+        onColumnDataChange(fieldName, newRowData, rowIndex);
+      }
+    },
+    [editRowData, columns, setEditRowData]
+  );
+
+  /**
    * Cancels the edit mode for a row.
    * @param {number} rowIndex - The index of the row to cancel edit mode for.
    */
-    const handleCancelEdit = (rowIndex) => {
-        if (props.editRowIndex.includes(rowIndex)) {
-            // Filter out the row index to remove it from the list of edited rows
-            const newEditRowIndex = [...props.editRowIndex].filter(index => index !== rowIndex);
+  const handleCancelEdit = useCallback(
+    (rowIndex) => {
+      if (editRowIndex.includes(rowIndex)) {
+        const newEditRowIndex = editRowIndex.filter(
+          (index) => index !== rowIndex
+        );
+        const newErrors = { ...errors };
+        delete newErrors[rowIndex];
+        setErrors(newErrors);
+        setEditRowIndex(newEditRowIndex);
+      }
+    },
+    [editRowIndex, errors, setEditRowIndex]
+  );
 
-            const newErrors = { ...errors };
-            delete newErrors[rowIndex];
-            setErrors(newErrors);
-            // Update the parent component with the new list of edited row indices
-            props.onRowEditRowIndexChange(newEditRowIndex);
-        }
-    };
+  /**
+   * Initiates the edit mode for a row.
+   * @param {number} rowIndex - The index of the row to edit.
+   * @param {object} data - The initial data for the row being edited.
+   */
+  const handleEditRow = useCallback(
+    (rowIndex, data) => {
+      const editRowIndexes = [...editRowIndex];
 
-    /**
-     * Initiates the edit mode for a row.
-     * @param {number} rowIndex - The index of the row to edit.
-     * @param {object} data - The initial data for the row being edited.
-     */
-    const handleEditRow = (rowIndex, data) => {
-        // Create a copy of the current editRowIndex array
-        const editRowIndexes = [...props.editRowIndex];
+      if (!editRowIndexes.includes(rowIndex)) {
+        editRowIndexes.push(rowIndex);
+      }
 
-        // Add the row index to the list of edited rows if it's not already present
-        if (!editRowIndexes.includes(rowIndex)) {
-            editRowIndexes.push(rowIndex);
-        }
+      const editedData = [...editRowData];
+      editedData[rowIndex] = data;
 
-        // Create a copy of the current editedRowData array
-        const editedRowData = [...props.editedRowData];
+      setEditRowData(editedData);
+      setEditRowIndex(editRowIndexes);
+    },
+    [editRowIndex, editRowData, setEditRowIndex]
+  );
 
-        // Set the data for the row being edited
-        editedRowData[rowIndex] = data;
+  const renderGridCol = (rowData, col, rowIndex) => {
+    const isRowEdited = editRowIndex.includes(rowIndex);
+    const editedData = editRowData[rowIndex] || null;
 
-        // Update the parent component with the new row data and edited row indices
-        props.onRowDataUpdate(editedRowData);
-        props.onRowEditRowIndexChange(editRowIndexes);
-    };
-
-    const renderGridCol = (rowData, col, rowIndex, parentRowData) => {
-
-        // Check if the current row is being edited
-        const isRowEdited = props?.editRowIndex?.includes(rowIndex) || false;
-
-        // Get the edited row data if it exists, otherwise set to null
-        const editedRowData = props?.editedRowData?.[rowIndex] || null;
-
-        if (col?.colType !== GridColumnType.ACTION && (!isRowEdited || !col?.allowEditColumn)) {
-            switch (col?.colType) {
-                case GridColumnType.DATE:
-                    return renderGridDateColumn(rowData, col, rowIndex);
-                case GridColumnType.MONEY:
-                    return renderGridMoneyColumn(rowData, col, rowIndex);
-                case GridColumnType.LABLE:
-                    return renderGridLableColumn(rowData, col, rowIndex);
-                case GridColumnType.LINK:
-                    return renderGridLinkColumn(rowData, col, rowIndex);
-                case GridColumnType.CHECKBOX:
-                    return renderGridCheckboxColumn(rowData, col, rowIndex, parentRowData, props.onCellDataChange);
-                case GridColumnType.ACTION:
-                    return renderGridAction(rowData, col, rowIndex, props.onActionChange);
-                case GridColumnType.CUSTOM:
-                    return col.renderCustomCol
-                        ? col.renderCustomCol(rowData, rowIndex)
-                        : "";
-                default:
-                    return rowData[col.fieldName];
-            }
-        }
-        // Handle editable columns when the row is being edited
-        else if (col?.allowEditColumn && isRowEdited) {
-            switch (col?.editColumn?.editColType) {
-                case EditGridColumnType.INPUT:
-                case EditGridColumnType.NUMERIC:
-                    return (
-                        <EditInputColumn
-                            rowData={rowData}
-                            col={col}
-                            editColumn={col.editColumn}
-                            rowIndex={rowIndex}
-                            onChange={handleRowDataUpdate}
-                            updatedData={editedRowData}
-                            errors={errors}
-                        />
-                    )
-                case EditGridColumnType.DROPDOWN:
-                    return (
-                        <EditDropdownColumn
-                            rowData={rowData}
-                            col={col}
-                            editColumn={col.editColumn}
-                            rowIndex={rowIndex}
-                            onChange={handleRowDataUpdate}
-                            updatedData={editedRowData}
-                            errors={errors}
-                        />
-                    )
-                case EditGridColumnType.DATEPICKER:
-                    return (
-                        <EditDatepickerColumn
-                            rowData={rowData}
-                            col={col}
-                            editColumn={col.editColumn}
-                            rowIndex={rowIndex}
-                            onChange={handleRowDataUpdate}
-                            updatedData={editedRowData}
-                            errors={errors}
-                        />
-                    )
-                case EditGridColumnType.CHECKBOX:
-                    return (
-                        <EditCheckBoxColumn
-                            rowData={rowData}
-                            col={col}
-                            editColumn={col.editColumn}
-                            rowIndex={rowIndex}
-                            onChange={handleRowDataUpdate}
-                            updatedData={editedRowData}
-                            errors={errors}
-                        />
-                    )
-                default:
-                    return rowData?.[col?.fieldName];
-            }
-        }
-        // Handle action columns separately
-        else if (col?.colType === GridColumnType.ACTION) {
-            // Render editable action columns if the grid allows editing and the row is being edited
-            if (props?.allowEditGrid && isRowEdited) {
-                return renderEditGridAction(rowData, col, rowIndex, props.allowEditGrid, handleRowEditSave, isRowEdited, handleCancelEdit);
-            }
-            // Render non-editable action columns
-            else {
-                return renderGridAction(rowData, col, rowIndex, props?.onActionChange, props.allowEditGrid, isRowEdited, handleEditRow);
-            }
-        }
+    if (
+      col.colType !== GridColumnType.ACTION &&
+      ( (!isRowEdited && !editGridSettings?.defualtEditableView) || !col.allowEditColumn )
+    ) {
+      return renderNonEditableColumn(rowData, col, rowIndex);
     }
 
-    const renderChildGridHeader = () => {
-        return !props.configuration.childGridSetting.hideChildHeader ? (
+    if ((col.allowEditColumn && isRowEdited) || (col.allowEditColumn && editGridSettings?.defualtEditableView)) {
+      return renderEditableColumn(rowData, col, rowIndex, editedData);
+    }
+
+    if (col.colType === GridColumnType.ACTION) {
+      return renderActionColumn(rowData, col, rowIndex, isRowEdited);
+    }
+
+    return rowData[col.fieldName];
+  };
+
+  const renderNonEditableColumn = (rowData, col, rowIndex) => {
+    switch (col.colType) {
+      case GridColumnType.DATE:
+        return renderGridDateColumn(rowData, col, rowIndex);
+      case GridColumnType.MONEY:
+        return renderGridMoneyColumn(rowData, col, rowIndex);
+      case GridColumnType.LABLE:
+        return renderGridLabelColumn(rowData, col, rowIndex);
+      case GridColumnType.LINK:
+        return renderGridLinkColumn(rowData, col, rowIndex);
+      case GridColumnType.MASKED:
+        return renderMaskedColumn(rowData, col, rowIndex);
+      case GridColumnType.RADIO:
+        return (
+          <RenderGridRadioButtonColumn
+            rowData={rowData}
+            col={col}
+            rowIndex={rowIndex}
+            onColumnDataChange={onColumnDataChange}
+          />
+        );
+      case GridColumnType.CHECKBOX:
+        return (
+          <RenderGridCheckboxColumn
+            rowData={rowData}
+            col={col}
+            rowIndex={rowIndex}
+            onColumnDataChange={onColumnDataChange}
+          />
+        );
+      case GridColumnType.TOGGLE:
+        return (
+          <RenderGridToggleColumn
+            rowData={rowData}
+            col={col}
+            rowIndex={rowIndex}
+            onColumnDataChange={onColumnDataChange}
+          />
+        );
+      case GridColumnType.DROPDOWN:
+        return (
+          <RenderDropdownColumn
+            rowData={rowData}
+            col={col}
+            rowIndex={rowIndex}
+            onColumnDataChange={onColumnDataChange}
+          />
+        );
+      case GridColumnType.CUSTOM:
+        return col.renderCustomCol
+          ? col.renderCustomCol(rowData, rowIndex, onColumnDataChange)
+          : "";
+      default:
+        return rowData[col.fieldName];
+    }
+  };
+
+  const renderEditableColumn = (rowData, col, rowIndex, editRowData) => {
+    const commonProps = {
+      rowData,
+      col,
+      editColumn: col.editColumn,
+      rowIndex,
+      onChange: handleRowDataUpdate,
+      updatedData: editRowData,
+      errors,
+      onColumnDataChange: onColumnDataChange,
+    };
+
+    switch (col.editColumn.editColType) {
+      case EditGridColumnType.INPUT:
+      case EditGridColumnType.NUMERIC:
+        return <EditInputColumn {...commonProps} />;
+      case EditGridColumnType.DROPDOWN:
+        return <EditDropdownColumn {...commonProps} />;
+      case EditGridColumnType.DATEPICKER:
+        return <EditDatepickerColumn {...commonProps} />;
+      case EditGridColumnType.CHECKBOX:
+        return <EditCheckBoxColumn {...commonProps} />;
+      default:
+        return rowData[col.fieldName];
+    }
+  };
+
+  const renderActionColumn = (rowData, col, rowIndex, isRowEdited) => {
+    if ((allowEditGrid && isRowEdited) || (allowEditGrid &&editGridSettings?.defualtEditableView)) {
+      return renderEditGridAction(
+        rowData,
+        col,
+        rowIndex,
+        allowEditGrid,
+        handleRowEditSave,
+        isRowEdited || editGridSettings?.defualtEditableView,
+        handleCancelEdit,
+        editGridSettings,
+        onRowDataDelete
+      );
+    } else {
+      return renderGridAction(
+        rowData,
+        col,
+        rowIndex,
+        onActionChange,
+        allowEditGrid,
+        isRowEdited,
+        handleEditRow
+      );
+    }
+  };
+
+  const renderChildGridHeader = () =>
+    !configuration.childGridSetting.hideChildHeader ? (
+      <tr>
+        {configuration.ChildTableColumn.map((col) => (
+          <th
+            key={`childcol_${col.name}`}
+            className={customHeaderClass || ""}
+            style={{
+              width: col.colStyle?.width || "auto",
+              textAlign: col.colStyle?.textAlign || "left",
+              ...col.colStyle,
+            }}
+          >
+            {col.name}
+          </th>
+        ))}
+      </tr>
+    ) : null;
+
+  const renderChildGridRow = (childDataSource, parentRow) => (
+    <>
+      {childDataSource
+        .filter(
+          (childRow) =>
+            childRow[configuration.childGridSetting.childKeyDataField] ===
+            parentRow[configuration.childGridSetting.parentKeyDataField]
+        )
+        .map((row, rowIndex) => (
+          <React.Fragment key={`row_${rowIndex}`}>
             <tr>
-                {props.configuration.ChildTableColumn.map((col, index) => (
-                    <th
-                        key={`childcol_${index}`}
-                        className={` ${props.customHeaderClass || ""}`}
-                        style={col.colStyle?.width ? { width: col.colStyle.width } : null}
-                    >
-                        {col.name}
-                    </th>
-                ))}
+              {configuration.ChildTableColumn.map((col) => (
+                <td
+                  key={col.name}
+                  className={customColumnClass || ""}
+                  style={
+                    col.colStyle?.width ? { width: col.colStyle.width } : null
+                  }
+                >
+                  {renderGridCol(row, col, rowIndex, parentRow)}
+                </td>
+              ))}
             </tr>
-        ) : null;
-    };
+          </React.Fragment>
+        ))}
+    </>
+  );
 
-    const renderChildGridRow = (childDataSource, parentRow) => {
-        return (
-            <>
-                {childDataSource?.filter((childRow) => {
-                    return (
-                        childRow[props.configuration.childGridSetting.childKeyDataField] ===
-                        parentRow[props.configuration.childGridSetting.parentKeyDataField]
-                    );
-                }).map((row, rowIndex) => (
-                    <React.Fragment key={`row_${rowIndex}`}>
-                        <tr>
-                            {props.configuration.ChildTableColumn.map((col, index) => (
-                                <td
-                                    key={index}
-                                    className={`${props.customColumnClass || ""}`}
-                                    style={
-                                        col.colStyle?.width
-                                            ? { width: col.colStyle.width }
-                                            : null
-                                    }
-                                >
-                                    {renderGridCol(row, col, rowIndex, parentRow)}
-                                </td>
-                            ))}
-                        </tr>
-                    </React.Fragment>
-                    //Need to render child grid and it's data
-                ))}
-            </>
-        );
-    };
+  const renderChildGrid = (
+    configuration,
+    parentRow,
+    childDataSource,
+    rowIndex
+  ) =>
+    collapsedRows[rowIndex] ? (
+      <tr>
+        <td className="first-td"></td>
+        <td colSpan={configuration.columns.length} className="sub-table">
+          <table>
+            {renderChildGridHeader()}
+            {renderChildGridRow(childDataSource, parentRow)}
+          </table>
+        </td>
+      </tr>
+    ) : null;
 
-    const renderChildGrid = (configuration, parentRow, childDataSource, rowIndex) => {
-        return (
-            <>
-                {collapsedRows[rowIndex] ? (
-                    <tr>
-                        <td className="first-td"></td>
-                        <td colSpan={configuration.columns.length} className="sub-table">
-                            <table>
-                                {renderChildGridHeader()}
-                                {renderChildGridRow(childDataSource, parentRow)}
-                            </table>
-                        </td>
-                    </tr>
-                ) : (
-                    ""
-                )}
-            </>
-        );
-    };
-
-    return (
-        <>
-            {props?.dataSource?.map((row, rowIndex) => (
-                <React.Fragment key={`row_${rowIndex}`}>
-                    <tr className={`parent-row ${collapsedRows[rowIndex] ? "collapsed" : ""}`}>
-                        {props?.configuration?.hasChildGridTable ? (
-                            <td className="first-td" onClick={() => toggleRow(rowIndex)}>
-                                <span className={`bi bi-chevron-${collapsedRows[rowIndex] ? "down" : "right"}`}>
-                                </span>
-                            </td>
-                        ) : null}
-                        {props.columns.map((col, colIndex) => (
-                            <td key={`col_${colIndex}`} style={{ width: col.width }} className={`whitespace-nowrap ${props.customColumnClass || ""}`}>
-                                {renderGridCol(row, col, rowIndex)}
-                            </td>
-                        ))}
-                    </tr>
-                    {props?.configuration?.hasChildGridTable &&
-                        renderChildGrid(props.configuration, row, props.childTableDataSource, rowIndex)}
-                </React.Fragment>
-                //Need to render child grid and it's data
+  return (
+    <>
+      {dataSource.map((row, rowIndex) => (
+        <React.Fragment key={`row_${rowIndex}`}>
+          <tr
+            key={`row_${rowIndex}`}
+            className={`parent-row ${
+              collapsedRows[rowIndex] ? "collapsed" : ""
+            }`}
+            onClick={(e) => handleRowClick(e, row, rowIndex)}
+          >
+            {configuration.hasChildGridTable ? (
+              <td className="first-td" onClick={() => toggleRow(rowIndex)}>
+                <span
+                  className={`bi bi-chevron-${
+                    collapsedRows[rowIndex] ? "down" : "right"
+                  }`}
+                ></span>
+              </td>
+            ) : null}
+            {columns.map((col) => (
+              <td
+                key={`col_${col.name}_${rowIndex}`}
+                className={`whitespace-nowrap ${customColumnClass || ""}`}
+                style={{
+                  width: col.colStyle?.width || "auto",
+                  textAlign: col.colStyle?.textAlign || "center",
+                  ...col.colStyle,
+                }}
+              >
+                <div className="input-validation">
+                  {renderGridCol(row, col, rowIndex)}
+                </div>
+              </td>
             ))}
-        </>
-    );
+          </tr>
+          {configuration.hasChildGridTable &&
+            renderChildGrid(configuration, row, childTableDataSource, rowIndex)}
+        </React.Fragment>
+      ))}
+    </>
+  );
 };
 
-export default MolGridDataRows;
+MolGridDataRows.propTypes = {
+  dataSource: PropTypes.array.isRequired,
+  childTableDataSource: PropTypes.array.isRequired,
+  columns: PropTypes.array.isRequired,
+  configuration: PropTypes.object.isRequired,
+  customColumnClass: PropTypes.string,
+  customHeaderClass: PropTypes.string,
+  allowEditGrid: PropTypes.bool,
+  editGridSettings:PropTypes.object,
+  slectedRowIndex: PropTypes.number,
+  onColumnDataChange: PropTypes.func,
+  onRowDataUpdateSaving: PropTypes.func,
+  onActionChange: PropTypes.func,
+  onRowSelect: PropTypes.func, // Add this line
+};
+
+export default memo(MolGridDataRows);

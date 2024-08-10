@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Editor } from "@tinymce/tinymce-react";
 import "./TinyEditor.scss";
 
@@ -68,6 +69,17 @@ const TinyEditor = ({
       </div>
     </>
   );
+};
+TinyEditor.propTypes = {
+  onTinyMceEditorChange: PropTypes.func.isRequired,  
+  data: PropTypes.string, 
+  key: PropTypes.any, 
+  onValidation: PropTypes.func,
+  dataField: PropTypes.string, 
+  error: PropTypes.string, 
+  formSetting: PropTypes.object, 
+  isDisable: PropTypes.bool, 
+  editorProps: PropTypes.object, 
 };
 
 export default TinyEditor;

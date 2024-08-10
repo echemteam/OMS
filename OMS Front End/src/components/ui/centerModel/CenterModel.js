@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./CenterModel.scss";
 import { Modal } from "react-bootstrap";
 
@@ -19,4 +20,12 @@ const CenterModel = ({ isApprovalValidate, showModal, handleToggleModal, childre
   );
 };
 
+CenterModel.propTypes = {
+  isApprovalValidate: PropTypes.bool,
+  showModal: PropTypes.bool.isRequired,
+  handleToggleModal: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  modelSizeClass: PropTypes.string,
+  modalTitle: PropTypes.string
+};
 export default CenterModel;

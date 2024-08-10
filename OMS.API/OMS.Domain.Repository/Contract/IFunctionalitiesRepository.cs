@@ -8,8 +8,9 @@ namespace OMS.Domain.Repository.Contract
 {
     public interface IFunctionalitiesRepository
     {
-        Task<AddEntityDTO<int>> AddFunctionalitiesResponsiblesUser(FunctionalitiesResponsiblesDTO requestData);
-        Task<AddEntityDTO<int>> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId);
+        Task<AddEntityDto<int>> AddFunctionalitiesResponsiblesUser(FunctionalitiesResponsiblesDto requestData);
+        Task<AddEntityDto<int>> DeleteFunctionalitiesResponsiblesUser(int functionalitiesResponsiblesId);
         Task<EntityList<GetFunctionalitiesResponsiblesResponse>> GetFunctionalitiesResponsibles(GetFunctionalitiesResponsiblesRequest requestData);
+        Task<AddEntityDto<int>> AddEditFunctionalities(FunctionalitiesDto requestData);
     }
 }

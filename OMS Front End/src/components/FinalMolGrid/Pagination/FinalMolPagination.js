@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { AppIcons } from "../../../data/appIcons";
 import Image from "../../image/Image";
 import "./finalpagination.scss";
@@ -12,104 +13,98 @@ const MolPagination = ({
 }) => {
 
 	const [inputPage, setInputPage] = useState(currentPage);
-
+	// Handle previous page navigation
 	const handlePrevious = () => {
 		if (currentPage > 1) {
-			onPageChange(currentPage - 1);
+		  onPageChange(currentPage - 1);
 		}
-	};
-
-	const handlePageInputChange = (event) => {
+	  };
+	
+	  // Update the input page state when the user types in the page number input
+	  const handlePageInputChange = (event) => {
 		const input = event.target.value;
 		setInputPage(input);
-	};
-
-	const handleGoToPage = () => {
+	  };
+	
+	  // Navigate to the page specified in the input field
+	  const handleGoToPage = () => {
 		const pageNumber = parseInt(inputPage, 10);
 		if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= totalPages) {
-			onPageChange(pageNumber);
+		  onPageChange(pageNumber);
 		}
-	};
-
-	const handleKeyPress = (event) => {
+	  };
+	
+	  // Handle pressing "Enter" key to go to the specified page
+	  const handleKeyPress = (event) => {
 		if (event.key === "Enter") {
-			handleGoToPage();
+		  handleGoToPage();
 		}
-	};
-
-	const handleNext = () => {
+	  };
+	
+	  // Handle next page navigation
+	  const handleNext = () => {
 		if (currentPage < totalPages) {
-			onPageChange(currentPage + 1);
+		  onPageChange(currentPage + 1);
 		}
-	};
-
-	const handlePageSizeChange = (event) => {
+	  };
+	
+	  // Handle page size change
+	  const handlePageSizeChange = (event) => {
 		const newSize = parseInt(event.target.value, 10);
 		onPageSizeChange(newSize);
-	};
-
-	const renderPageNumbers = () => {
+	  };
+	
+	  // Render page numbers as buttons
+	  const renderPageNumbers = () => {
 		const pageNumbers = [];
-
-		// Calculate the start and end page numbers to display
 		let startPage = Math.max(currentPage - 2, 1);
 		let endPage = Math.min(startPage + 4, totalPages);
-
-		// Adjust the startPage if there are fewer than 5 pages to display
+	
 		if (endPage - startPage < 4) {
-			startPage = Math.max(endPage - 4, 1);
+		  startPage = Math.max(endPage - 4, 1);
 		}
-
+	
 		for (let i = startPage; i <= endPage; i++) {
-			pageNumbers.push(
-				<button
-					key={i}
-					className={i === currentPage ? "active-button" : ""}
-					onClick={() => {
-						onPageChange(i)
-						setInputPage(i)
-					}
-					}
-				>
-					{i}
-				</button>
-			);
+		  pageNumbers.push(
+			<button
+			  key={i}
+			  className={i === currentPage ? "active-button" : ""}
+			  onClick={() => {
+				onPageChange(i);
+				setInputPage(i);
+			  }}
+			>
+			  {i}
+			</button>
+		  );
 		}
-
+	
 		return pageNumbers;
-	};
-
-	const generatePageSizeOptions = () => {
+	  };
+	
+	  // Generate page size options for the select input
+	  const generatePageSizeOptions = () => {
 		const options = [];
-
-		// Add static page sizes
 		const staticPageSizes = [10, 20, 50, 100];
-
-		// Ensure the dynamicPageSize is not in the staticPageSizes array
-		const dynamicPageSize = pageSize; // Replace with the dynamic page size from props
-
-		// Check if dynamicPageSize is already in staticPageSizes
+		const dynamicPageSize = pageSize;
 		const isDynamicPageSizeInStatic = staticPageSizes.includes(dynamicPageSize);
-
-		// Combine static and dynamic page sizes (excluding dynamicPageSize if it's in staticPageSizes)
 		const allPageSizes = isDynamicPageSizeInStatic
-			? [...staticPageSizes]
-			: [...staticPageSizes, dynamicPageSize];
-
-		// Sort allPageSizes in ascending order
+		  ? [...staticPageSizes]
+		  : [...staticPageSizes, dynamicPageSize];
+	
 		allPageSizes.sort((a, b) => a - b);
-
+	
 		for (const size of allPageSizes) {
-			options.push(
-				<option key={"sel_" + size} value={size}>
-					{size}
-				</option>
-			);
+		  options.push(
+			<option key={"sel_" + size} value={size}>
+			  {size}
+			</option>
+		  );
 		}
-
+	
 		return options;
-	};
-
+	  };
+	
 	return (
 		<div className="table-pagination">
 			<p>
@@ -154,4 +149,12 @@ const MolPagination = ({
 	);
 };
 
+// Define PropTypes for the component
+MolPagination.propTypes = {
+  pageSize: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  onPageSizeChange: PropTypes.func.isRequired,
+};
 export default MolPagination;

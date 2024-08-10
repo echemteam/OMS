@@ -2,7 +2,7 @@
 {
     public class GetAllPhoneTypesResponse
     {
-        public short? PhoneTypeId { get; set; } 
-        public string? Type { get; set; } 
+        public short? PhoneTypeId { get; set; }
+        public string? Type { get; set; }
     }
 }

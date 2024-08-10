@@ -23,9 +23,9 @@ namespace OMS.Domain.Repository.Implementation
         {
         }
 
-        public async Task<AddEntityDTO<int>> AddContactPhone(PhoneDTO phone)
+        public async Task<AddEntityDto<int>> AddContactPhone(PhoneDto phone)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(ADDCONTACTPHONE, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDCONTACTPHONE, new
             {
                 phone.PhoneNumber,
                 phone.PhoneCode,
@@ -35,9 +35,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> UpdateContactPhone(PhoneDTO phone)
+        public async Task<AddEntityDto<int>> UpdateContactPhone(PhoneDto phone)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(UPDATECONTACTPHONE, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATECONTACTPHONE, new
             {
                 phone.PhoneId,
                 phone.PhoneCode,
@@ -46,9 +46,9 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<AddEntityDTO<int>> DeleteContactPhone(int phoneId, int deletedBy)
+        public async Task<AddEntityDto<int>> DeleteContactPhone(int phoneId, int deletedBy)
         {
-            return await _context.GetSingleAsync<AddEntityDTO<int>>(DELETECONTACTPHONE, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETECONTACTPHONE, new
             {
                 phoneId,
                 deletedBy
@@ -65,17 +65,16 @@ namespace OMS.Domain.Repository.Implementation
 
         }
 
-        public async Task<AddEntityDTO<int>> AddEditContactPhone(DataTable phoneList, int contactId)
+        public async Task<AddEntityDto<int>> AddEditContactPhone(DataTable phoneList, int contactId)
         {
-            AddEntityDTO<int> responceData = new();
             var parameters = new
             {
                 phoneList = phoneList.AsTableValuedParameter("[dbo].[PhoneTypeTable]"),
                 contactId
             };
-            responceData = await _context.GetSingleAsync<AddEntityDTO<int>>(ADDEDITCONTACTPHONE,
+            AddEntityDto<int> responceData = await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITCONTACTPHONE,
             parameters
-            ,CommandType.StoredProcedure);
+            , CommandType.StoredProcedure);
             return responceData;
         }
     }

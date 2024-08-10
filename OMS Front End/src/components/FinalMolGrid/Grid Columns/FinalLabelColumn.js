@@ -1,4 +1,4 @@
-export const renderGridLableColumn = (rowData, col, rowIndex) => {
+export const renderGridLabelColumn = (rowData, col, rowIndex) => {
 
   const { getLableClass } = col.colSettings
 
@@ -6,7 +6,7 @@ export const renderGridLableColumn = (rowData, col, rowIndex) => {
   const displayVal = columnValue.toString().toLowerCase();
   const cssClass = getLableClass(rowData?.[col.fieldName])
 
-  // const lableText = displayVal ? "Active" : "In Active";
+  
 
   let labelText = "";
   if (displayVal === "yes" || displayVal === "true" || displayVal === "active") {
@@ -16,6 +16,8 @@ export const renderGridLableColumn = (rowData, col, rowIndex) => {
   }
 
   return (
-    <span className={cssClass}>{labelText}</span>
+    <span className={cssClass}>{columnValue}</span>
   );
+
+  
 };

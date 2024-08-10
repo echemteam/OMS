@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using OMS.Shared.Services.Contract;
-using System.Text;
 
 namespace OMS.Framework.Middleware
 {
@@ -46,8 +45,8 @@ namespace OMS.Framework.Middleware
 
                         // Decrypt the data
                         var decryptedData = AesEcnryption.AesDecrypt(encryptedData,
-                                                                    _commonSettingService.EncryptionSettings.AESKey,
-                                                                    _commonSettingService.EncryptionSettings.AESIV, true);
+                                                                     _commonSettingService.EncryptionSettings.AESKey ?? string.Empty,
+                                                                    _commonSettingService.EncryptionSettings.AESIV ?? string.Empty, true);
                         // Replace the request body with the decrypted data
                         context.Request.Body = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(decryptedData));
                     }
@@ -64,8 +63,8 @@ namespace OMS.Framework.Middleware
                     if (!string.IsNullOrEmpty(encryptedQueryString))
                     {
                         var decryptedQueryString = AesEcnryption.AesDecrypt(encryptedQueryString,
-                            _commonSettingService.EncryptionSettings.AESKey,
-                            _commonSettingService.EncryptionSettings.AESIV, true);
+                             _commonSettingService.EncryptionSettings.AESKey ?? string.Empty,
+                            _commonSettingService.EncryptionSettings.AESIV ?? string.Empty, true);
 
                         _logger.LogInformation("decrypted Query String :" + decryptedQueryString);
                         // Replace the query string with the decrypted query string
