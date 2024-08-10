@@ -3,7 +3,6 @@ import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import { functionalConfigurationListData } from './config/FunctionalConfigurationList.data';
 import { useNavigate } from 'react-router-dom';
-// import MolGrid from '../../../../../components/Grid/MolGrid';
 import { useGetFunctionalitiesMutation } from '../../../../../app/services/configurationAPI';
 import { encryptUrlData } from '../../../../../services/CryptoService';
 import FinalMolGrid from '../../../../../components/FinalMolGrid/FinalMolGrid';

@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import { viewFunctionalEventsData } from './config/ViewFunctionalEvents.data'
-// import MolGrid from '../../../../../../components/Grid/MolGrid'
 import { useGetFunctionalityEventsMutation } from '../../../../../../app/services/configurationAPI';
 import CardSection from '../../../../../../components/ui/card/CardSection';
 import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid';
