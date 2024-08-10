@@ -192,6 +192,13 @@
       height: calc(100vh - 310px);
     }
   }
+  .model-content{
+    .model-body{
+      .card{
+        height: 100% !important;
+      }
+    }
+  }
 }
 
 
