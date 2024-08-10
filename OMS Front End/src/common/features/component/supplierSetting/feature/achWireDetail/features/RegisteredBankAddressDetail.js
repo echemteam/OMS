@@ -60,51 +60,66 @@ const RegisteredBankAddressDetail = ({ registeredBankAddressData, registeredBank
     }
   }, [activeStateId, getAllCities]);
 
-  useEffect(() => {
-    if (!isGetAllStatesFetching && isGetAllStatesSuccess && allGetAllStatesData) {
-      const filteredData = allGetAllStatesData.filter(item => item.countryId === activeCountryId);
-      setDropDownOptionField(filteredData, 'stateId', 'name', formData, 'stateId');
-      if (isInitialSetupRef.current && isGetACHWireBySupplierIdData?.recipientAddress.stateId) {
-        setFormData(prevData => ({
-          ...prevData,
-          initialState: {
-            ...prevData.initialState,
-            stateId: isGetACHWireBySupplierIdData.recipientAddress.stateId,
-          }
-        }));
-        setActiveStateId(isGetACHWireBySupplierIdData.bankAddress.stateId ?? 0);
-      }
-    }
-  }, [isGetAllStatesFetching, isGetAllStatesSuccess, allGetAllStatesData]);
+  
 
-
+  // useEffect(() => {
+  //   if (!isGetAllStatesFetching && isGetAllStatesSuccess && allGetAllStatesData) {
+  //     const filteredData = allGetAllStatesData.filter(item => item.countryId === activeCountryId);
+  //     setDropDownOptionField(filteredData, 'stateId', 'name', formData, 'stateId');
+  //     if (isInitialSetupRef.current && isGetACHWireBySupplierIdData?.recipientAddress.stateId) {
+  //       setFormData(prevData => ({
+  //         ...prevData,
+  //         initialState: {
+  //           ...prevData.initialState,
+  //           stateId: isGetACHWireBySupplierIdData.recipientAddress.stateId,
+  //         }
+  //       }));
+  //       setActiveStateId(isGetACHWireBySupplierIdData.bankAddress.stateId ?? 0);
+  //     }
+  //   }
+  // }, [isGetAllStatesFetching, isGetAllStatesSuccess, allGetAllStatesData]);
 
   useEffect(() => {
     if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
-      setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', formData, 'cityId');
-      if (isInitialSetupRef.current && isGetACHWireBySupplierIdData?.recipientAddress.cityId) {
-        setFormData(prevData => ({
-          ...prevData,
-          initialState: {
-            ...prevData.initialState,
-            cityId: isGetACHWireBySupplierIdData.recipientAddress.cityId,
-          }
-        }));
-        isInitialSetupRef.current = false; // Mark initial setup as done
-      }
+      const cities = allGetAllCitiesData.map((item) => ({
+        value: item.cityId,
+        label: item.name,
+      }));
+      let data = { ...formData };
+      const dropdownField = data?.formFields?.find(data => data.id === "cityId");
+      dropdownField.fieldSetting.options = cities;
+      setFormData(data);
+      // setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', addressFormData, 'cityId');
     }
   }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
+
+  // useEffect(() => {
+  //   if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
+  //     setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', formData, 'cityId');
+  //     if (isInitialSetupRef.current && isGetACHWireBySupplierIdData?.recipientAddress.cityId) {
+  //       setFormData(prevData => ({
+  //         ...prevData,
+  //         initialState: {
+  //           ...prevData.initialState,
+  //           cityId: isGetACHWireBySupplierIdData.recipientAddress.cityId,
+  //         }
+  //       }));
+  //       isInitialSetupRef.current = false; // Mark initial setup as done
+  //     }
+  //   }
+  // }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
 
   const handleChangeBankAddressDropdownList = (data, dataField) => {
     const manageData = { ...formData };
     if (dataField === "countryId") {
       setActiveCountryId(data?.value);
+      setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+      setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
       setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
-      setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, true);
       registeredFormRef.current.updateFormFieldValue({
         countryId: data.value,
         stateId: null,
-        cityId: null,
+        cityId: null
       });
     } else if (dataField === "stateId") {
       setActiveStateId(data?.value);
