@@ -3606,3 +3606,17 @@ input[type="checkbox"]:disabled {
     }
   }
 }
+
+
+.table-email-sec {
+    margin-bottom: 0;
+    width: 97%;
+    margin: 0 auto;
+    box-shadow: 0px 0px 17px -10px var(--textColorLight);
+
+    .card {
+      .card-top-title-btn{
+        padding: 10px 0;
+      } 
+    }
+}
