@@ -231,7 +231,7 @@ function Header() {
                   <span className="bi bi-pencil">Edit Profile</span>
                 </a>
               </div>
-              <div className="title-list drop-down-icon-menu">
+              <div className="title-list drop-down-icon-menu logout">
                 <a href="#" onClick={LogoutButton}>
                   <span className="bi bi-box-arrow-left">Log out</span>
                 </a>
