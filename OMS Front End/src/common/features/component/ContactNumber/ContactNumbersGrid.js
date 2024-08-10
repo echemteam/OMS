@@ -15,7 +15,7 @@ import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery } from "../
 const ContactNumberList = React.lazy(() => import("./feature/ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./feature/AddEditContactNumber"));
 
-const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, isButtonDisable , contryIdCode}) => {
+const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, isButtonDisable, contryIdCode }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -48,14 +48,16 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
     }, [isButtonDisable]);
 
     useEffect(() => {
-        if (isGetAllCountriesSucess && isCountriesData && contryIdCode) {
+        if (isGetAllCountriesSucess && isCountriesData) {
             setDropDownOptionField(isCountriesData, 'countryId', 'phoneCode', addEditContactsFormData, 'phoneCode');
-            const selectedCountry = isCountriesData.find(country => country.countryId === contryIdCode);
-            if (selectedCountry) {
-                setNewPhoneCode(selectedCountry.phoneCode);
+            if (contryIdCode) {
+                const selectedCountry = isCountriesData.find(country => country.countryId === contryIdCode);
+                if (selectedCountry) {
+                    setNewPhoneCode(selectedCountry.phoneCode);
+                }
             }
         }
-    }, [isGetAllCountriesSucess, isCountriesData , contryIdCode]);
+    }, [isGetAllCountriesSucess, isCountriesData, contryIdCode]);
 
 
     useEffect(() => {
@@ -125,12 +127,12 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
 }
 
 ContactNumbersGrid.propTypes = {
-    contactId: PropTypes.number.isRequired,  
+    contactId: PropTypes.number.isRequired,
     phoneNumberList: PropTypes.arrayOf(
         PropTypes.shape({
-            phoneId: PropTypes.number, 
+            phoneId: PropTypes.number,
             id: PropTypes.number,
-            
+
         })
     ).isRequired,
     setPhoneNumberList: PropTypes.func.isRequired,

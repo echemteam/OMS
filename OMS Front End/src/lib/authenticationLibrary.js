@@ -50,5 +50,6 @@ export const signOut = () => {
     //sessionStorage.removeItem('SecurityPermission');
     removeData("SecurityPermission");
     removeData("approvalRules");
+    removeData("smtpSettings");
     window.location.href = "/login";
 }
