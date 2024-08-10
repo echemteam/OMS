@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import FinancialSettingsgGrid from "../../../../common/features/component/supplierSetting/SupplierSettingGrid";
 
 const FinancialSettings = ({ supplierId , isEditablePage }) => {
-  console.log("supplierId" , supplierId)
   return (
     <div>
       <FinancialSettingsgGrid

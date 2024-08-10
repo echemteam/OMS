@@ -32,7 +32,7 @@ export const functionalConfigurationListData = {
                 {
                     name: "VIEWCONFIGURATION",
                     iconName: AppIcons.EyeIcon,
-                    title: "View Configuration"
+                    title: "View"
                 },
             ],
         },
