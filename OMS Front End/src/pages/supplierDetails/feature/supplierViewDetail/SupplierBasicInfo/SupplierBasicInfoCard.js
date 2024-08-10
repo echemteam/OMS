@@ -229,9 +229,10 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       let req = {
         ...custData,
         supplierId: supplierId,
-        statusId:  selectedStatus ? selectedStatus : 0,
+        statusId: selectedStatus ? selectedStatus : 0,
       }
-      updateSupplierInActiveStatus(req)
+      updateSupplierInActiveStatus(req);
+      updateRUserData(custData?.responsibleUserId?.value);
     }
   }
 
