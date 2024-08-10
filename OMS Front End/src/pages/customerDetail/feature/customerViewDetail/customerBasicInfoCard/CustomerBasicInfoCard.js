@@ -417,7 +417,7 @@ const CustomerBasicInfoCard = ({
                   options={responsibleUserOptions}
                   value={rUserValue}
                   onChange={handleRUserChange}
-                  placeholder="Select Status"
+                  placeholder="Responsible User"
                   isDisabled={isResponsibleUser ? true : isButtonDisable}
                 />
               </div>
