@@ -115,6 +115,16 @@
           display: block;
         }
       }
+      .record-not-found {
+        padding-top: 5px;
+
+        h5{
+          font-size: var(--commonFont);
+        }
+        img{
+          width: 60px;
+        }
+      }
     }
   }
 }

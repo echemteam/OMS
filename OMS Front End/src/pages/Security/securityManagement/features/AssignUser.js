@@ -208,7 +208,7 @@ const AssignUser = (props) => {
               {...userForm}
               key={shouldRerenderFormCreator}
             />
-            <div className="col-xxl-2 col-xl-2 col-md-2 mt-3">
+            <div className="col-xxl-2 col-xl-2 col-md-2">
               {buttonVisible ?
                 <Buttons
                   buttonTypeClassName="theme-button"
