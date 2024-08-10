@@ -73,6 +73,13 @@
 
   .task-tab {
     border-right: 1px solid #e8eae8;
+
+    .tab-section{
+      .tab-content{
+        max-height: calc(100vh - 220px);
+        overflow-x: auto;
+      }
+    }
   }
 }
 
