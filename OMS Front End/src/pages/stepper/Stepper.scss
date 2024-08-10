@@ -116,14 +116,12 @@
         }
       }
       .record-not-found {
-        padding-top: 5px;
+        // padding-top: 5px;
 
         h5{
-          font-size: var(--commonFont);
+          font-size: var(--commonFont-large);
         }
-        img{
-          width: 60px;
-        }
+        
       }
     }
   }
@@ -254,6 +252,14 @@
 
     .card{
       height: calc(100vh - 310px);
+    }
+  }
+  
+  .model-content{
+    .model-body{
+      .card{
+        height: 100% !important;
+      }
     }
   }
 }
