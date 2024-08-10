@@ -199,6 +199,7 @@ const CustomerBasicInfoCard = ({
           "Cancel"
         ).then((confirmed) => {
           if (confirmed) {
+            removeFields();
             let req = {
               customerId: customerId,
               statusId: selectedOption.value,
@@ -210,17 +211,13 @@ const CustomerBasicInfoCard = ({
       } else if (
         selectedOption.value === 4 ||
         selectedOption.value === 5 ||
-        selectedOption.value === 6 ||
-        selectedOption.value === 7
+        selectedOption.value === 6
       ) {
-        if (selectedOption.value !== 7) {
-          if (customerData.responsibleUserId) {
-            removeFields();
-          }
-        }
+        removeFields();
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
       } else if (selectedOption.value === 3) {
+        removeFields();
         if (childRef.current) {
           childRef.current.callChildFunction(
             customerId,
@@ -229,6 +226,12 @@ const CustomerBasicInfoCard = ({
         }
         setCustomerId(customerId);
         setStatusId(selectedOption.value);
+      } else if (selectedOption.value === 7) {
+        if (customerData.responsibleUserId) {
+          removeFields();
+        }
+        setShowModal(true);
+        setSelectedStatus(selectedOption.value);
       }
     }
   };

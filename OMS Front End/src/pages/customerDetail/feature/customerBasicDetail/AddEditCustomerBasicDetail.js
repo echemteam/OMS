@@ -199,15 +199,16 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                     ...req,
                     responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                 }
-                let request = {
-                    newValue: value,
-                    oldValue: formData.initialState,
-                    functionalityName: isOpen ? FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION : FunctionalitiesName.ADDCUSTOMER
-                }
-                const modifyData = await ValidateRequestByApprovalRules(request);
-                if (modifyData.newValue) {
-                    addEditCustomersBasicInformation(modifyData.newValue);
-                }
+                addEditCustomersBasicInformation(value);
+                // let request = {
+                //     newValue: value,
+                //     oldValue: formData.initialState,
+                //     functionalityName: isOpen ? FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION : FunctionalitiesName.ADDCUSTOMER
+                // }
+                // const modifyData = await ValidateRequestByApprovalRules(request);
+                // if (modifyData.newValue) {
+                //     addEditCustomersBasicInformation(modifyData.newValue);
+                // }
             } else {
                 if (data.taxId) {
                     const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, customerbasicData.formFields, 'taxId');
@@ -216,19 +217,20 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                             ...req,
                             responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                         }
-                        let request = {
-                            newValue: value,
-                            oldValue: formData.initialState,
-                            functionalityName: isOpen ? FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION : FunctionalitiesName.ADDCUSTOMER
-                        }
-                        const modifyData = await ValidateRequestByApprovalRules(request);
-                        if (isOpen) {
-                            if (modifyData.newValue) {
-                                addEditCustomersBasicInformation(modifyData.newValue);
-                            }
-                        } else {
-                            addEditCustomersBasicInformation(value);
-                        }
+                        addEditCustomersBasicInformation(value);
+                        // let request = {
+                        //     newValue: value,
+                        //     oldValue: formData.initialState,
+                        //     functionalityName: isOpen ? FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION : FunctionalitiesName.ADDCUSTOMER
+                        // }
+                        // const modifyData = await ValidateRequestByApprovalRules(request);
+                        // if (isOpen) {
+                        //     if (modifyData.newValue) {
+                        //         addEditCustomersBasicInformation(modifyData.newValue);
+                        //     }
+                        // } else {
+                        //     addEditCustomersBasicInformation(value);
+                        // }
                     } else {
                         ToastService.warning(validateTaxIdMessage);
                     }
