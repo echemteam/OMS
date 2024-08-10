@@ -157,7 +157,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const handleEditMode = (contactId) => {
         setEditMode(true);
         contactId && getById(contactId);
-        setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
+        // setFieldSetting(contactDetailFormData, 'contactTypeId', FieldSettingType.DISABLED, true);
     }
 
     useEffect(() => {

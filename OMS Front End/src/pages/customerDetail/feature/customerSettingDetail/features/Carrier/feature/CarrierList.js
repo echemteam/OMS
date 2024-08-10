@@ -57,14 +57,6 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
                         isLoading={isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
                     />
-                    {/* <MolGrid
-                        ref={molGridRef}
-                        configuration={AccountGridConfig}
-                        dataSource={collectAccountData}
-                        allowPagination={false}
-                        onActionChange={actionHandler}
-                        isLoading={isGetDataLoading}
-                    /> */}
                 </div>
             </CardSection>
         </div>

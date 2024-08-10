@@ -1,3 +1,4 @@
+import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
@@ -34,18 +35,34 @@ export const SecurityRoleGridConfig = {
       name: "Role Name",
       fieldName: "roleName",
       allowShort: true,
-      width:"80%",
+      colStyle: {
+        width: "80%",
+      },
     },
     {
       name: "Action",
-      width:"20%",
+      colStyle: {
+        width: "20%",
+      },
       colType: GridColumnType.ACTION,
       defaultAction: {
-        allowUser: true,
-        allowPermission: true,
+        // allowUser: true,
+        // allowPermission: true,
         allowEdit: true,
         allowDelete: true,
       },
+      customAction: [
+        {
+          name: "USER",
+          iconName: AppIcons.userIcon,
+          title: "User"
+        },
+        {
+          name: "PERMISSION",
+          iconName: AppIcons.permissionIcon,
+          title: "Permission"
+        },
+      ],
     },
   ],
 };

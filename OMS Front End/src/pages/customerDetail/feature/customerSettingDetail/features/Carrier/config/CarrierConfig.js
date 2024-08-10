@@ -94,7 +94,7 @@ export const AccountGridConfig = {
             fieldName: "accountNumber",
             allowEditColumn: true,
             editColumn: {
-                editColType: EditGridColumnType.NUMERIC,
+                editColType: EditGridColumnType.INPUT,
                 editColFieldName: "accountNumber",
                 isDisable: false,
                 editColValidation: [

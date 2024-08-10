@@ -45,15 +45,15 @@ export const userFormData = {
     },
     {
       id: "userName",
-      lable: "User Name",
-      Field_Name: "User Name",
+      lable: "Email Address",
+      Field_Name: "Email Address",
       fieldType: FormFieldTypes.INPUT,
       dataField: "userName",
       fieldSetting: {
-        placeholder: "Enter User Name",
+        placeholder: "Enter Email Address",
         allowSpace: true,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" }, { type: "email" }],
       style: {
         containerCss: "col-xxl- col-xl-6 col-md-6 mb-input",
       },

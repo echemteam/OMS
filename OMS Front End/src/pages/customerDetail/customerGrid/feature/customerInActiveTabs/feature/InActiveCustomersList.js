@@ -11,7 +11,6 @@ import ToastService from '../../../../../../services/toastService/ToastService';
 import { AppIcons } from '../../../../../../data/appIcons';
 import { StatusEnums } from '../../../../../../utils/Enums/StatusEnums';
 import { encryptUrlData } from '../../../../../../services/CryptoService';
-// import MolGrid from '../../../../../../components/Grid/MolGrid';
 import CardSection from '../../../../../../components/ui/card/CardSection';
 import CustomerListContext from '../../../../../../utils/ContextAPIs/Customer/CustomerListContext';
 import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../../../app/services/basicdetailAPI';

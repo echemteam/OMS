@@ -10,7 +10,6 @@ import React, {
 import { useNavigate } from "react-router-dom";
 
 import CardSection from "../../../../../../components/ui/card/CardSection";
-// import MolGrid from "../../../../../../components/Grid/MolGrid";
 import { useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from "../../../../../../app/services/basicdetailAPI";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import CustomerListContext from "../../../../../../utils/ContextAPIs/Customer/CustomerListContext";

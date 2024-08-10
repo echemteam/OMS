@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useEffect, useState,useImperativeHandle } from "react";
-import MolGrid from "../../../../../components/Grid/MolGrid";
 import { SubCustomerGridConfig } from "../config/SubCustomer.data";
 import ToastService from "../../../../../services/toastService/ToastService";
 import SwalAlert from "../../../../../services/swalService/SwalService";
