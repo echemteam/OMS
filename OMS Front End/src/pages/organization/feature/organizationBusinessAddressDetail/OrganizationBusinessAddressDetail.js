@@ -57,75 +57,75 @@ const OrganizationBusinessAddressDetail = () => {
       let formRegisteredData = { ...registeredAddressData };
       if(isGetOrganizationBusinessAddressesData){
 
-      if (isGetOrganizationBusinessAddressesData.physicalAddress) {
-        formPhysicalData.initialState = {
-          addressId: isGetOrganizationBusinessAddressesData.physicalAddress.addressId,
-          addressLine1Id: isGetOrganizationBusinessAddressesData.physicalAddress.addressLine1,
-          addressLine2Id: isGetOrganizationBusinessAddressesData.physicalAddress.addressLine2,
-          cityId: isGetOrganizationBusinessAddressesData.physicalAddress.cityId,
-          stateId: isGetOrganizationBusinessAddressesData.physicalAddress.stateId,
-          countryId: isGetOrganizationBusinessAddressesData.physicalAddress.countryId,
-          zipCode: isGetOrganizationBusinessAddressesData.physicalAddress.zipCode
-        };
-        setPhysicalAddressData(formPhysicalData);
+    //   if (isGetOrganizationBusinessAddressesData.physicalAddress) {
+    //     formPhysicalData.initialState = {
+    //       addressId: isGetOrganizationBusinessAddressesData.physicalAddress.addressId,
+    //       addressLine1Id: isGetOrganizationBusinessAddressesData.physicalAddress.addressLine1,
+    //       addressLine2Id: isGetOrganizationBusinessAddressesData.physicalAddress.addressLine2,
+    //       cityId: isGetOrganizationBusinessAddressesData.physicalAddress.cityId,
+    //       stateId: isGetOrganizationBusinessAddressesData.physicalAddress.stateId,
+    //       countryId: isGetOrganizationBusinessAddressesData.physicalAddress.countryId,
+    //       zipCode: isGetOrganizationBusinessAddressesData.physicalAddress.zipCode
+    //     };
+    //     setPhysicalAddressData(formPhysicalData);
        
-      }
+    //   }
 
-      if (isGetOrganizationBusinessAddressesData.billToAddress) {
-        formBillToAddressData.initialState = {
-          addressId: isGetOrganizationBusinessAddressesData.billToAddress.addressId,
-          addressLine1Id: isGetOrganizationBusinessAddressesData.billToAddress.addressLine1,
-          addressLine2Id: isGetOrganizationBusinessAddressesData.billToAddress.addressLine2,
-          cityId: isGetOrganizationBusinessAddressesData.billToAddress.cityId,
-          stateId: isGetOrganizationBusinessAddressesData.billToAddress.stateId,
-          countryId: isGetOrganizationBusinessAddressesData.billToAddress.countryId,
-          zipCode: isGetOrganizationBusinessAddressesData.billToAddress.zipCode
-        };
-        setBillToAddressData(formBillToAddressData);
+    //   if (isGetOrganizationBusinessAddressesData.billToAddress) {
+    //     formBillToAddressData.initialState = {
+    //       addressId: isGetOrganizationBusinessAddressesData.billToAddress.addressId,
+    //       addressLine1Id: isGetOrganizationBusinessAddressesData.billToAddress.addressLine1,
+    //       addressLine2Id: isGetOrganizationBusinessAddressesData.billToAddress.addressLine2,
+    //       cityId: isGetOrganizationBusinessAddressesData.billToAddress.cityId,
+    //       stateId: isGetOrganizationBusinessAddressesData.billToAddress.stateId,
+    //       countryId: isGetOrganizationBusinessAddressesData.billToAddress.countryId,
+    //       zipCode: isGetOrganizationBusinessAddressesData.billToAddress.zipCode
+    //     };
+    //     setBillToAddressData(formBillToAddressData);
        
-      }
+    //   }
 
-      if (isGetOrganizationBusinessAddressesData.labAddress) {
-        formLabData.initialState = {
-          addressId: isGetOrganizationBusinessAddressesData.labAddress.addressId,
-          addressLine1Id: isGetOrganizationBusinessAddressesData.labAddress.addressLine1,
-          addressLine2Id: isGetOrganizationBusinessAddressesData.labAddress.addressLine2,
-          cityId: isGetOrganizationBusinessAddressesData.labAddress.cityId,
-          stateId: isGetOrganizationBusinessAddressesData.labAddress.stateId,
-          countryId: isGetOrganizationBusinessAddressesData.labAddress.countryId,
-          zipCode: isGetOrganizationBusinessAddressesData.labAddress.zipCode
-        };
-        setLabAddressData(formLabData);
+    //   if (isGetOrganizationBusinessAddressesData.labAddress) {
+    //     formLabData.initialState = {
+    //       addressId: isGetOrganizationBusinessAddressesData.labAddress.addressId,
+    //       addressLine1Id: isGetOrganizationBusinessAddressesData.labAddress.addressLine1,
+    //       addressLine2Id: isGetOrganizationBusinessAddressesData.labAddress.addressLine2,
+    //       cityId: isGetOrganizationBusinessAddressesData.labAddress.cityId,
+    //       stateId: isGetOrganizationBusinessAddressesData.labAddress.stateId,
+    //       countryId: isGetOrganizationBusinessAddressesData.labAddress.countryId,
+    //       zipCode: isGetOrganizationBusinessAddressesData.labAddress.zipCode
+    //     };
+    //     setLabAddressData(formLabData);
        
-      }
+    //   }
 
-      if (isGetOrganizationBusinessAddressesData.warehouseAddress) {
-        formWarehouseData.initialState = {
-          addressId: isGetOrganizationBusinessAddressesData.warehouseAddress.addressId,
-          addressLine1Id: isGetOrganizationBusinessAddressesData.warehouseAddress.addressLine1,
-          addressLine2Id: isGetOrganizationBusinessAddressesData.warehouseAddress.addressLine2,
-          cityId: isGetOrganizationBusinessAddressesData.warehouseAddress.cityId,
-          stateId: isGetOrganizationBusinessAddressesData.warehouseAddress.stateId,
-          countryId: isGetOrganizationBusinessAddressesData.warehouseAddress.countryId,
-          zipCode: isGetOrganizationBusinessAddressesData.warehouseAddress.zipCode
-        };
-        setWarehouseAddressData(formWarehouseData);
+    //   if (isGetOrganizationBusinessAddressesData.warehouseAddress) {
+    //     formWarehouseData.initialState = {
+    //       addressId: isGetOrganizationBusinessAddressesData.warehouseAddress.addressId,
+    //       addressLine1Id: isGetOrganizationBusinessAddressesData.warehouseAddress.addressLine1,
+    //       addressLine2Id: isGetOrganizationBusinessAddressesData.warehouseAddress.addressLine2,
+    //       cityId: isGetOrganizationBusinessAddressesData.warehouseAddress.cityId,
+    //       stateId: isGetOrganizationBusinessAddressesData.warehouseAddress.stateId,
+    //       countryId: isGetOrganizationBusinessAddressesData.warehouseAddress.countryId,
+    //       zipCode: isGetOrganizationBusinessAddressesData.warehouseAddress.zipCode
+    //     };
+    //     setWarehouseAddressData(formWarehouseData);
      
-      }
+    //   }
 
-      if (isGetOrganizationBusinessAddressesData.registeredAddress) {
-        formRegisteredData.initialState = {
-          addressId: isGetOrganizationBusinessAddressesData.registeredAddress.addressId,
-          addressLine1Id: isGetOrganizationBusinessAddressesData.registeredAddress.addressLine1,
-          addressLine2Id: isGetOrganizationBusinessAddressesData.registeredAddress.addressLine2,
-          cityId: isGetOrganizationBusinessAddressesData.registeredAddress.cityId,
-          stateId: isGetOrganizationBusinessAddressesData.registeredAddress.stateId,
-          countryId: isGetOrganizationBusinessAddressesData.registeredAddress.countryId,
-          zipCode: isGetOrganizationBusinessAddressesData.registeredAddress.zipCode
-        };
-        setRegisteredAddressData(formRegisteredData);  
+    //   if (isGetOrganizationBusinessAddressesData.registeredAddress) {
+    //     formRegisteredData.initialState = {
+    //       addressId: isGetOrganizationBusinessAddressesData.registeredAddress.addressId,
+    //       addressLine1Id: isGetOrganizationBusinessAddressesData.registeredAddress.addressLine1,
+    //       addressLine2Id: isGetOrganizationBusinessAddressesData.registeredAddress.addressLine2,
+    //       cityId: isGetOrganizationBusinessAddressesData.registeredAddress.cityId,
+    //       stateId: isGetOrganizationBusinessAddressesData.registeredAddress.stateId,
+    //       countryId: isGetOrganizationBusinessAddressesData.registeredAddress.countryId,
+    //       zipCode: isGetOrganizationBusinessAddressesData.registeredAddress.zipCode
+    //     };
+    //     setRegisteredAddressData(formRegisteredData);  
         
-    }
+    // }
     setAddressIds({
       organizationBusinessAddressId: isGetOrganizationBusinessAddressesData.organizationBusinessAddressId,
       physicalAddressId: isGetOrganizationBusinessAddressesData.physicalAddressId,
@@ -219,15 +219,15 @@ const OrganizationBusinessAddressDetail = () => {
   return (
 
     <div>
-     <RegisteredAddressDetail registeredAddressData={registeredAddressData} RegisteredAddressForm={RegisteredAddressForm} registeredAddressRef={registeredAddressRef} />
+     <RegisteredAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} registeredAddressData={registeredAddressData} RegisteredAddressForm={RegisteredAddressForm} registeredAddressRef={registeredAddressRef} />
      
-      <PhysicalAddressDetail   physicalAddressData={physicalAddressData} PhysicalAddressForm={PhysicalAddressForm} physicalAddressRef={physicalAddressRef} />
+      <PhysicalAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}  physicalAddressData={physicalAddressData} PhysicalAddressForm={PhysicalAddressForm} physicalAddressRef={physicalAddressRef} />
 
-      <BillToAddressDetail billToAddressData={billToAddressData} BillToAddressForm={BillToAddressForm}  billToAddressRef={billToAddressRef} />
+      <BillToAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} billToAddressData={billToAddressData} BillToAddressForm={BillToAddressForm}  billToAddressRef={billToAddressRef} />
 
-      <LabAddressDetail labAddressRef={labAddressRef} LabAddressForm={LabAddressForm} labAddressData={labAddressData}/>
+      <LabAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} labAddressRef={labAddressRef} LabAddressForm={LabAddressForm} labAddressData={labAddressData}/>
 
-      <WarehouseAddressDetail warehouseAddressRef={warehouseAddressRef} WarehouseAddressForm={WarehouseAddressForm}  warehouseAddressData={warehouseAddressData}/>
+      <WarehouseAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} warehouseAddressRef={warehouseAddressRef} WarehouseAddressForm={WarehouseAddressForm}  warehouseAddressData={warehouseAddressData}/>
 
       {/* <RegisteredBankAddressDetail remitToAddressData={remitToAddressData} remitToAddressRef={remitToAddressRef}/> */}
       <div className="col-md-12">

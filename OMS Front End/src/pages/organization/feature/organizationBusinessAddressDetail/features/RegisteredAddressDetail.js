@@ -7,57 +7,92 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
+import { useState } from "react";
 
-const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,registeredAddressData})=>{
-    const [getAllCountries, { isSuccess: isGetAllCountriesSucess,isFetching:isGetAllcountriesFetching ,data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
-    const [getAllCities, { isSuccess: isGetAllCitiesSucess,isFetching:isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-    const [getAllStates, { isSuccess: isGetAllStatesSucess,isFetching:isGetAllStatesFetching, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
-    useEffect(() => {
-        getAllCountries();
-        getAllStates();
-        
-      }, [allGetAllCountriesData,allGetAllStatesData]);
-      
-      const handleBankStateOption = (responseData) => {
-        setDropDownOptionField(responseData, 'stateId', 'name', RegisteredAddressForm, 'stateId');
-      };
+const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,registeredAddressData,isGetOrganizationBusinessAddressesSuccess,isGetOrganizationBusinessAddressesData})=>{
+  const [registeredFormData,setRegisteredFormData]=useState(RegisteredAddressForm)
+  const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
+  const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+  const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
-    useEffect(()=>{
-        if (!isGetAllcountriesFetching && isGetAllCountriesSucess && allGetAllCountriesData) {
-            setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', RegisteredAddressForm, 'countryId');
-
-          }
-        if ( !isGetAllStatesFetching &&  isGetAllStatesSucess && allGetAllStatesData) {
-             handleBankStateOption(allGetAllStatesData);
-          }
-      if (!isGetAllCitiesFetching && isGetAllCitiesSucess && allGetAllCitiesData) {
-              setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', RegisteredAddressForm, 'cityId');
-           }
-    },[isGetAllcountriesFetching,allGetAllCountriesData,isGetAllCountriesSucess,isGetAllStatesSucess,allGetAllStatesData,isGetAllCitiesSucess,allGetAllCitiesData])
-   
-    const handleChangeAddressDropdownList = (data, dataField) => {
-        const manageData = { ...registeredAddressData };
-        if (dataField === "countryId") {
-           getAllStates(data.value);
-        
-          setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
-          registeredAddressRef.current.updateFormFieldValue({
-            countryId: data.value,
-            stateId: null,
-          });
-        } else if (dataField === "stateId") {
-          getAllCities(data.value)
-          setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
-         registeredAddressRef.current.updateFormFieldValue({
-            stateId: data.value,
-            cityId: null,
-          });
-        }
-      };
-    const formAddressActionHandler = {
-        DDL_CHANGED: handleChangeAddressDropdownList,
-      };
     
+    useEffect(() => {
+      if (isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.registeredAddress) {
+        debugger
+        const { registeredAddress } = isGetOrganizationBusinessAddressesData;
+        let data = { ...registeredFormData };
+        if (registeredAddress.countryId) {
+          setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === registeredAddress.countryId);
+        }
+  
+        if (registeredAddress.stateId) {
+          getAllCities(registeredAddress.stateId)
+        }
+  
+        data.initialState = {
+          addressId: registeredAddress.addressId,
+          addressLine1Id: registeredAddress.addressLine1,
+          addressLine2Id: registeredAddress.addressLine2,
+          countryId: registeredAddress.countryId,
+          zipCode: registeredAddress.zipCode,
+          stateId: registeredAddress.stateId,
+          cityId: registeredAddress.cityId,
+        };
+        setRegisteredFormData(data);
+      }
+    }, [isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
+
+    useEffect(() => {
+      getAllCountries();
+      getAllStates();
+    }, []);
+  
+    useEffect(() => {
+      if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
+        setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', registeredFormData, 'countryId');
+      }
+    }, [isGetAllCountriesFetching, isGetAllCountriesSuccess, allGetAllCountriesData]);
+  
+  
+    useEffect(() => {
+      if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
+        const cities = allGetAllCitiesData.map((item) => ({
+          value: item.cityId,
+          label: item.name,
+        }));
+        let data = { ...registeredFormData };
+        const dropdownField = data?.formFields?.find(data => data.id === "cityId");
+        dropdownField.fieldSetting.options = cities;
+        setRegisteredFormData(data);
+      }
+    }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
+  
+  
+    const handleChangeAddressDropdownList = (data, dataField) => {
+      const manageData = { ...registeredFormData };
+      if (dataField === "countryId") {
+        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+        setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
+        setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
+        registeredAddressRef.current.updateFormFieldValue({
+          countryId: data.value,
+          stateId: null,
+          cityId: null
+        });
+      } else if (dataField === "stateId") {
+        getAllCities(data.value)
+        setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
+        registeredAddressRef.current.updateFormFieldValue({
+          stateId: data.value,
+          cityId: null,
+        });
+      }
+      setRegisteredFormData(manageData);
+    };
+  
+    const formAddressActionHandler = {
+      DDL_CHANGED: handleChangeAddressDropdownList,
+    };
     return( 
         <CardSection cardTitle="Registered Address">
             <div className="row">
