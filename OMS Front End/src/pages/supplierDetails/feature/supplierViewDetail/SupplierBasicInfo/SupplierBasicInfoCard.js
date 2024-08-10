@@ -37,9 +37,6 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [formData, setFormData] = useState(reasonData);
   const [showModal, setShowModal] = useState(false);
-  const [staticId, setStaticId] = useState("")
-  const [statusFeild, setStatusFeild] = useState("")
-  const [options, setOptions] = useState([]);
   const [statusId, setStatusId] = useState();
   const [showEditIcon, setShowEditIcon] = useState(true);
 
@@ -82,42 +79,42 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
     }
   }, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
 
-  useEffect(() => {
-    if (supplierData) {
-      const statusId = supplierData.statusId;
-      switch (statusId) {
-        case 1:
-        case 2:
-        case 3:
-          setOptions(StaticStatus[StatusValue[statusId - 1].label]);
-          break;
-        case 4:
-          setOptions([
-            { value: "4", label: "Freeze" },
-            { value: "3", label: "Approved" },
-            { value: "1", label: "Pending" },
-          ]);
-          break;
-        case 5:
-          setOptions([
-            { value: "5", label: "Block" },
-            { value: "3", label: "Approved" },
-            { value: "1", label: "Pending" },
-          ]);
-          break;
-        case 6:
-          setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
-          break;
-        case 7:
-          setOptions(StaticStatus[StatusValue[statusId - 1].label]);
-          break;
-        default:
-          setOptions([]);
-      }
+  // useEffect(() => {
+  //   if (supplierData) {
+  //     const statusId = supplierData.statusId;
+  //     switch (statusId) {
+  //       case 1:
+  //       case 2:
+  //       case 3:
+  //         setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+  //         break;
+  //       case 4:
+  //         setOptions([
+  //           { value: "4", label: "Freeze" },
+  //           { value: "3", label: "Approved" },
+  //           { value: "1", label: "Pending" },
+  //         ]);
+  //         break;
+  //       case 5:
+  //         setOptions([
+  //           { value: "5", label: "Block" },
+  //           { value: "3", label: "Approved" },
+  //           { value: "1", label: "Pending" },
+  //         ]);
+  //         break;
+  //       case 6:
+  //         setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
+  //         break;
+  //       case 7:
+  //         setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+  //         break;
+  //       default:
+  //         setOptions([]);
+  //     }
 
-      setSelectedStatus(StatusValue[statusId - 1].label);
-    }
-  }, [supplierData]);
+  //     setSelectedStatus(StatusValue[statusId - 1].label);
+  //   }
+  // }, [supplierData]);
 
   useEffect(() => {
     if (supplierData) {
@@ -170,12 +167,10 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   }, [isSuccessRUser, isUpdateRUserData]);
 
   const handleStatusChange = (selectedOption) => {
-    setStaticId(selectedOption.value)
-    setStatusFeild(selectedOption.label)
     if (selectedOption.label === supplierData.status) {
       ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
-      if (selectedOption.value === "1" || selectedOption.value === "2") {
+      if (selectedOption.value === 1 || selectedOption.value === 2) {
         confirm("Warning?", `Are you sure you want to change the supplier status to ${selectedOption.label}?`,
           "Yes", "Cancel").then((confirmed) => {
             if (confirmed) {
@@ -188,17 +183,17 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
               setSelectedStatus(selectedOption.value);
             }
           });
-      } else if (selectedOption.value === "4" || selectedOption.value === "5" || selectedOption.value === "6") {
+      } else if (selectedOption.value === 4 || selectedOption.value === 5 || selectedOption.value === 6) {
         removeFields();
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
-      } else if (selectedOption.value === "3") {
+      } else if (selectedOption.value === 3) {
         removeFields();
         if (childRef.current) {
           childRef.current.callChildFunction(supplierId);
         }
         setStatusId(selectedOption.value);
-      } else if (selectedOption.value === "7") {
+      } else if (selectedOption.value === 7) {
         if (supplierData.responsibleUserId) {
           removeFields();
         }
@@ -234,7 +229,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       let req = {
         ...custData,
         supplierId: supplierId,
-        statusId: staticId
+        statusId:  selectedStatus ? selectedStatus : 0,
       }
       updateSupplierInActiveStatus(req)
     }
@@ -266,6 +261,11 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       default:
         return "badge-gradient-info";
     }
+  };
+
+  const getStatusLabel = (value) => {
+    const status = StatusValue.find(item => item.value === value);
+    return status ? status.label : 'Unknown'; // Returns 'Unknown' if value not found
   };
 
   return (
@@ -330,7 +330,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                 <b>&nbsp;:&nbsp;</b>
                 <div className={`status-dropdown ${getStatusClass()}`}>
                   <DropDown
-                    options={options}
+                    options={StatusValue}
                     value={selectedStatus}
                     onChange={handleStatusChange}
                     placeholder="Select Status"
@@ -418,7 +418,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
           <CenterModel
             showModal={showModal}
             handleToggleModal={handleToggleModal}
-            modalTitle={`${statusFeild} Reason`}
+            modalTitle={`${getStatusLabel(selectedStatus)} Reason`}
             modelSizeClass="w-50s"
           >
             <div className="row horizontal-form">

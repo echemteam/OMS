@@ -21,7 +21,6 @@ import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicD
 import { securityKey } from "../../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import {
-  StaticStatus,
   StatusValue,
 } from "../../../../../utils/Enums/StatusEnums";
 import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDetail.data";
@@ -32,6 +31,7 @@ import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
 import PropTypes from 'prop-types';
+import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 
 
 const CustomerBasicInfoCard = ({
@@ -47,9 +47,6 @@ const CustomerBasicInfoCard = ({
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [formData, setFormData] = useState(reasonData);
   const [showModal, setShowModal] = useState(false);
-  const [staticId, setStaticId] = useState("");
-  const [statusFeild, setStatusFeild] = useState("");
-  const [options, setOptions] = useState(StatusValue);
   const [customerID, setCustomerId] = useState();
   const [statusId, setStatusId] = useState();
   const [rUserValue, setRUserValue] = useState([]);
@@ -217,7 +214,9 @@ const CustomerBasicInfoCard = ({
         selectedOption.value === 7
       ) {
         if (selectedOption.value !== 7) {
-          removeFields();
+          if (customerData.responsibleUserId) {
+            removeFields();
+          }
         }
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
@@ -235,10 +234,8 @@ const CustomerBasicInfoCard = ({
   };
 
   const removeFields = () => {
-    const removeFields = ['ResponsibleUserId']
-    const newFrom = { ...formData };
-    newFrom.formFields = formData.formFields.filter(field => !removeFields.includes(field.id));
-    setFormData(newFrom);
+    const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+    setFormData(modifyFormFields);
   }
 
 
@@ -405,7 +402,7 @@ const CustomerBasicInfoCard = ({
               <b>&nbsp;:&nbsp;</b>
               <div className={`status-dropdown ${getStatusClass()}`}>
                 <DropDown
-                  options={options}
+                  options={StatusValue}
                   value={selectedStatus}
                   onChange={handleStatusChange}
                   placeholder="Select Status"

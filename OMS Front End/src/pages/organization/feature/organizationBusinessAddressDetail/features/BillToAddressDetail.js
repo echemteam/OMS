@@ -7,59 +7,92 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
+import { useState } from "react";
 
-const BillToAddressDetail=({billToAddressRef,billToAddressData,BillToAddressForm})=>{
+const BillToAddressDetail=({billToAddressRef,billToAddressData,BillToAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{
 
-    const [getAllCountries, { isSuccess: isGetAllCountriesSucess,isFetching:isGetAllcountriesFetching ,data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
-    const [getAllCities, { isSuccess: isGetAllCitiesSucess,isFetching:isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-    const [getAllStates, { isSuccess: isGetAllStatesSucess,isFetching:isGetAllStatesFetching, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
-    useEffect(() => {
-        getAllCountries();
-        getAllStates();
-        
-      }, [allGetAllCountriesData,allGetAllStatesData]);
-      
-      const handleBankStateOption = (responseData) => {
-            setDropDownOptionField(responseData, 'stateId', 'name', BillToAddressForm, 'stateId');
-      };
-    useEffect(()=>{
-       
-        if (!isGetAllcountriesFetching && isGetAllCountriesSucess && allGetAllCountriesData) {
-            setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', BillToAddressForm, 'countryId');
-          }
-        if ( !isGetAllStatesFetching && isGetAllStatesSucess && allGetAllStatesData) {
-            handleBankStateOption(allGetAllStatesData);
-          }
-        if ( !isGetAllCitiesFetching && isGetAllCitiesSucess && allGetAllCitiesData) {
-              setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', BillToAddressForm, 'cityId');
-              
-            }
-    },[isGetAllcountriesFetching,allGetAllCountriesData,isGetAllCountriesSucess,isGetAllStatesSucess,allGetAllStatesData,isGetAllCitiesSucess,allGetAllCitiesData])
-   
-    const handleChangeAddressDropdownList = (data, dataField) => {
+  const [billToAddressFormData,setBillToAddressFormData]=useState(BillToAddressForm)
+  const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
+  const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+  const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+
     
-        const manageData = { ...billToAddressData };
-        if (dataField === "countryId") {
-           getAllStates(data.value);
-      
-          setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
-          billToAddressRef.current.updateFormFieldValue({
-            countryId: data.value,
-            stateId: null,
-          });
-        } else if (dataField === "stateId") {
-          getAllCities(data.value)
-          setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
-         billToAddressRef.current.updateFormFieldValue({
-            stateId: data.value,
-            cityId: null,
-          });
-
+    useEffect(() => {
+      if (isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.billToAddress) {
+        const { billToAddress } = isGetOrganizationBusinessAddressesData;
+        let data = { ...billToAddressFormData };
+        if (billToAddress.countryId) {
+          setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === billToAddress.countryId);
         }
-      };
+  
+        if (billToAddress.stateId) {
+          getAllCities(billToAddress.stateId)
+        }
+  
+        data.initialState = {
+          addressId: billToAddress.addressId,
+          addressLine1Id: billToAddress.addressLine1,
+          addressLine2Id: billToAddress.addressLine2,
+          countryId: billToAddress.countryId,
+          zipCode: billToAddress.zipCode,
+          stateId: billToAddress.stateId,
+          cityId: billToAddress.cityId,
+        };
+        setBillToAddressFormData(data);
+      }
+    }, [isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
+
+    useEffect(() => {
+      getAllCountries();
+      getAllStates();
+    }, []);
+  
+    useEffect(() => {
+      if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
+        setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', billToAddressFormData, 'countryId');
+      }
+    }, [isGetAllCountriesFetching, isGetAllCountriesSuccess, allGetAllCountriesData]);
+  
+  
+    useEffect(() => {
+      if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
+        const cities = allGetAllCitiesData.map((item) => ({
+          value: item.cityId,
+          label: item.name,
+        }));
+        let data = { ...billToAddressFormData };
+        const dropdownField = data?.formFields?.find(data => data.id === "cityId");
+        dropdownField.fieldSetting.options = cities;
+        setBillToAddressFormData(data);
+      }
+    }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
+  
+  
+    const handleChangeAddressDropdownList = (data, dataField) => {
+      const manageData = { ...billToAddressFormData };
+      if (dataField === "countryId") {
+        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+        setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
+        setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
+        billToAddressRef.current.updateFormFieldValue({
+          countryId: data.value,
+          stateId: null,
+          cityId: null
+        });
+      } else if (dataField === "stateId") {
+        getAllCities(data.value)
+        setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
+        billToAddressRef.current.updateFormFieldValue({
+          stateId: data.value,
+          cityId: null,
+        });
+      }
+      setBillToAddressFormData(manageData);
+    };
+  
     const formAddressActionHandler = {
-        DDL_CHANGED: handleChangeAddressDropdownList,
-      };
+      DDL_CHANGED: handleChangeAddressDropdownList,
+    };
    
     return( 
         <CardSection cardTitle="Bill To Address">
