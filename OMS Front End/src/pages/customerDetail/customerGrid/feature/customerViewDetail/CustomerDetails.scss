@@ -233,26 +233,9 @@
                       margin-bottom: 0;
                       font-size: var(--commonFont-medium);
 
-                      .values{
-                        &.primary-email {
-                          position: relative;
-                          cursor: pointer;
-                          &::after {
-                            content: "\f00c";
-                            font-family: FontAwesome;
-                            font-style: normal;
-                            font-weight: normal;
-                            text-decoration: inherit;
-                            margin-left: 5px;
-                            padding: 3px;
-                            border-radius: 100%;
-                            color: #fff;
-                            background-color: var(--PrimaryColorBright);
-                            font-size: var(--commonFont-extraSmall);
-                          }
-                        }
+                      .values {
                       }
-                      .card-value{
+                      .card-value {
                         &.primary-phone {
                           position: relative;
                           cursor: pointer;
@@ -284,6 +267,23 @@
                           .copy-icon {
                             img {
                               filter: unset;
+                            }
+                            &.primary-email {
+                              position: relative;
+                              cursor: pointer;
+                              &::after {
+                                content: "\f00c";
+                                font-family: FontAwesome;
+                                font-style: normal;
+                                font-weight: normal;
+                                text-decoration: inherit;
+                                margin-left: 5px;
+                                padding: 3px;
+                                border-radius: 100%;
+                                color: #fff;
+                                background-color: var(--PrimaryColorBright);
+                                font-size: var(--commonFont-extraSmall);
+                              }
                             }
                           }
                         }
@@ -382,9 +382,10 @@
               .values {
                 color: #6e839b;
                 font-size: 12.5px;
-                white-space: normal;
-                text-wrap: wrap;
-                max-width: 83%;
+                text-wrap: nowrap;
+                overflow: hidden;
+                max-width: 140px;
+                text-overflow: ellipsis;
 
                 &.primary-email {
                   position: relative;
@@ -401,6 +402,9 @@
                     color: #fff;
                     background-color: var(--PrimaryColorBright);
                     font-size: var(--commonFont-extraSmall);
+                    @media only screen and (max-width: 1750px) {
+                      padding: 2px;
+                    }
                   }
                 }
 
@@ -411,6 +415,27 @@
 
               .copy-icon {
                 cursor: pointer;
+
+                &.primary-email {
+                  position: relative;
+                  cursor: pointer;
+                  &::before {
+                    content: "\f00c";
+                    font-family: FontAwesome;
+                    font-style: normal;
+                    font-weight: normal;
+                    text-decoration: inherit;
+                    margin-left: 5px;
+                    padding: 3px;
+                    border-radius: 100%;
+                    color: #fff;
+                    background-color: var(--PrimaryColorBright);
+                    font-size: var(--commonFont-extraSmall);
+                    @media only screen and (max-width: 1750px) {
+                      padding: 2px;
+                    }
+                  }
+                }
 
                 i {
                   margin-left: 5px;
