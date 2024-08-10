@@ -17,6 +17,9 @@
         border: none !important;
         .search-part {
           border: none !important;
+          input{
+            font-size: var(--commonFont-Large);
+          }
         }
       }
     }
