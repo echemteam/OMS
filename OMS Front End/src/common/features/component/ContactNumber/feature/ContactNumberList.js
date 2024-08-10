@@ -8,7 +8,7 @@ import FinalMolGrid from "../../../../../components/FinalMolGrid/FinalMolGrid";
 const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
 
     return (
-        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2 card-email-sec">
+        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2 table-email-sec">
             <CardSection
                 cardTitle="Phone Numbers"
                 buttonClassName="theme-button"

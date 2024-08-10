@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { AppIcons } from "../../../data/appIcons";
 import Image from "../../../components/image/Image";
+import Tooltip from "../../ui/tooltip/Tooltip";
 
 export const renderGridAction = (rowData, col, rowIndex, onActionHandler, allowEditGrid, isRowEditable, onEditRow) => {
 
@@ -38,7 +39,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler, allowE
   const isEditingRow = allowEditGrid && isRowEditable;
 
   return (
-    <div className="d-flex action-button">
+    <div className="d-flex action-button ">
       {!isEditingRow && col.customAction &&
         col.customAction.length > 0 &&
         col.customAction.map((action, index) => {
@@ -48,8 +49,8 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler, allowE
               e.preventDefault();
               handleAction(action.name, rowData, rowIndex);
             },
-            className: "mr-4",
-            title: action.name,
+            className: "mr-4 tooltip",
+            // title: action.title,
             href: "",
           };
           // Add condition to check if rowData.contractInputFile is present
@@ -60,6 +61,7 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler, allowE
             return (
               <Link {...commonLinkProps}>
                 <Image imagePath={action.iconName} altText={action.name} />
+                <Tooltip text={action.title} />
               </Link>
             );
           }
@@ -74,10 +76,10 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler, allowE
             
             handleRowEdit("EDIT", rowData, rowIndex);
           }}
-          className="mr-4"
-          title="EDIT"
+          className="mr-4 tooltip"
         >
           <Image imagePath={AppIcons.editIcon} altText="Edit Icon" />
+          <Tooltip text="Edit" />
         </Link>
       )}
 
@@ -88,10 +90,11 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler, allowE
             e.preventDefault();
             handleAction("DELETE", rowData, rowIndex);
           }}
-          className="mr-4"
+          className="mr-4 tooltip"
           title="DELETE"
         >
           <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" />
+          <Tooltip text="Delete" />
         </Link>
       )}
     </div>
