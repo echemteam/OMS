@@ -76,7 +76,7 @@ form {
 
 .input-group {
   position: relative;
-
+  flex-wrap: nowrap !important;
   .icon-fix {
     position: absolute;
     right: 6px;

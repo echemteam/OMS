@@ -10,7 +10,7 @@ import FinalMolGrid from "../../../../../components/FinalMolGrid/FinalMolGrid";
 const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
 
     return (
-        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-1 card-email-sec">
+        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-1 table-email-sec">
             <CardSection
                 cardTitle="Email Address"
                 buttonClassName="theme-button"
