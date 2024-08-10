@@ -39,7 +39,8 @@ const BankAddressDetail = ({ bankAddressData, bankAddressFormData, bankFormRef, 
 
   useEffect(() => {
     getAllCountries();
-  }, [getAllCountries]);
+    getAllStates();
+  }, []);
 
   useEffect(() => {
     if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
@@ -59,51 +60,74 @@ const BankAddressDetail = ({ bankAddressData, bankAddressFormData, bankFormRef, 
     }
   }, [activeStateId, getAllCities]);
 
-  useEffect(() => {
-    if (!isGetAllStatesFetching && isGetAllStatesSuccess && allGetAllStatesData) {
-      const filteredData = allGetAllStatesData.filter(item => item.countryId === activeCountryId);
-      setDropDownOptionField(filteredData, 'stateId', 'name', formData, 'stateId');
-      if (isInitialSetupRef.current && isGetACHWireBySupplierIdData?.bankAddress.stateId) {
-        setFormData(prevData => ({
-          ...prevData,
-          initialState: {
-            ...prevData.initialState,
-            stateId: isGetACHWireBySupplierIdData.bankAddress.stateId,
-          }
-        }));
-        setActiveStateId(isGetACHWireBySupplierIdData.bankAddress.stateId ?? 0);
-      }
-    }
-  }, [isGetAllStatesFetching, isGetAllStatesSuccess, allGetAllStatesData]);
+  // useEffect(() => {
+  //   if (!isGetAllStatesFetching && isGetAllStatesSuccess && allGetAllStatesData) {
+  //     const filteredData = allGetAllStatesData.filter(item => item.countryId === activeCountryId);
+  //     setDropDownOptionField(filteredData, 'stateId', 'name', formData, 'stateId');
+  //     if (isInitialSetupRef.current && isGetACHWireBySupplierIdData?.bankAddress.stateId) {
+  //       setFormData(prevData => ({
+  //         ...prevData,
+  //         initialState: {
+  //           ...prevData.initialState,
+  //           stateId: isGetACHWireBySupplierIdData.bankAddress.stateId,
+  //         }
+  //       }));
+  //       setActiveStateId(isGetACHWireBySupplierIdData.bankAddress.stateId ?? 0);
+  //     }
+  //   }
+  // }, [isGetAllStatesFetching, isGetAllStatesSuccess, allGetAllStatesData]);
 
 
 
   useEffect(() => {
     if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
-      setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', formData, 'cityId');
-      if (isInitialSetupRef.current && isGetACHWireBySupplierIdData?.bankAddress.cityId) {
-        setFormData(prevData => ({
-          ...prevData,
-          initialState: {
-            ...prevData.initialState,
-            cityId: isGetACHWireBySupplierIdData.bankAddress.cityId,
-          }
-        }));
-        isInitialSetupRef.current = false; // Mark initial setup as done
-      }
+      const cities = allGetAllCitiesData.map((item) => ({
+        value: item.cityId,
+        label: item.name,
+      }));
+      let data = { ...formData };
+      const dropdownField = data?.formFields?.find(data => data.id === "cityId");
+      dropdownField.fieldSetting.options = cities;
+      setFormData(data);
+      // setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', addressFormData, 'cityId');
     }
   }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
 
+  // useEffect(() => {
+  //   if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
+  //     setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', formData, 'cityId');
+  //     if (isInitialSetupRef.current && isGetACHWireBySupplierIdData?.bankAddress.cityId) {
+  //       setFormData(prevData => ({
+  //         ...prevData,
+  //         initialState: {
+  //           ...prevData.initialState,
+  //           cityId: isGetACHWireBySupplierIdData.bankAddress.cityId,
+  //         }
+  //       }));
+  //       isInitialSetupRef.current = false; // Mark initial setup as done
+  //     }
+  //   }
+  // }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
+
   const handleChangeBankAddressDropdownList = (data, dataField) => {
     const manageData = { ...formData };
+
     if (dataField === "countryId") {
-      setActiveCountryId(data?.value);
+      // setActiveCountryId(data?.value);
+      // setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
+      // setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, true);
+      // bankFormRef.current.updateFormFieldValue({
+      //   countryId: data.value,
+      //   stateId: null,
+      //   cityId: null,
+      // });
+      setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+      setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
       setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
-      setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, true);
       bankFormRef.current.updateFormFieldValue({
         countryId: data.value,
         stateId: null,
-        cityId: null,
+        cityId: null
       });
     } else if (dataField === "stateId") {
       setActiveStateId(data?.value);
@@ -112,6 +136,11 @@ const BankAddressDetail = ({ bankAddressData, bankAddressFormData, bankFormRef, 
         stateId: data.value,
         cityId: null,
       });
+      // setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
+      // bankFormRef.current.updateFormFieldValue({
+      //   stateId: data.value,
+      //   cityId: null,
+      // });
     }
     setFormData(manageData);
     // setShouldRerenderFormCreator(prev => !prev)
@@ -135,16 +164,16 @@ const BankAddressDetail = ({ bankAddressData, bankAddressFormData, bankFormRef, 
     </CardSection>
   );
 };
- 
+
 BankAddressDetail.propTypes = {
-  bankAddressData: PropTypes.object, 
-  bankAddressFormData: PropTypes.object.isRequired,  
+  bankAddressData: PropTypes.object,
+  bankAddressFormData: PropTypes.object.isRequired,
   bankFormRef: PropTypes.shape({
     current: PropTypes.shape({
       updateFormFieldValue: PropTypes.func
     })
-  }).isRequired,  
-  isGetACHWireBySupplierIdSuccess: PropTypes.bool.isRequired,  
+  }).isRequired,
+  isGetACHWireBySupplierIdSuccess: PropTypes.bool.isRequired,
   isGetACHWireBySupplierIdData: PropTypes.shape({
     bankAddress: PropTypes.shape({
       addressId: PropTypes.number,

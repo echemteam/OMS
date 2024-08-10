@@ -19,7 +19,7 @@ const SetInitialCountry = {
     value: 233
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId , deleteAddress}) => {
+const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, deleteAddress }) => {
 
     //** States */
     const ref = useRef();
@@ -38,7 +38,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = updateAddress();
     const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSuccess, data: isGetByIdData }] = getAddresssById();
 
-    const [getAllCities, { isSuccess: isGetAllCitiesSucess, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+    const [getAllCities, { isSuccess: isGetAllCitiesSucess, isFetching: isFetchingCities, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
     const [getAllStates, { isSuccess: isGetAllStatesSucess, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
     const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
     const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
@@ -106,32 +106,42 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     }, [isSupplier, isModelOpen]);
 
 
-    const handleStateOption = (responseData) => {
-        setDropDownOptionField(responseData, 'stateId', 'name', addressFormData, 'stateId');
-    }
 
     useEffect(() => {
         if (isGetAllCountriesSucess && allGetAllCountriesData) {
             setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', addressFormData, 'countryId');
-            setShouldRerenderFormCreator((prevState) => !prevState);
         }
-        if (isGetAllStatesSucess && allGetAllStatesData) {
-            handleStateOption(allGetAllStatesData);
-            setShouldRerenderFormCreator((prevState) => !prevState);
+    }, [isGetAllCountriesSucess, allGetAllCountriesData]);
+
+    // useEffect(() => {
+    //     if (isGetAllStatesSucess && allGetAllStatesData) {
+    //         handleStateOption(allGetAllStatesData);
+    //     }
+    // }, [isGetAllStatesSucess, allGetAllStatesData]);
+
+    useEffect(() => {
+        if (!isFetchingCities & isGetAllCitiesSucess && allGetAllCitiesData) {
+            const cities = allGetAllCitiesData.map((item) => ({
+                value: item.cityId,
+                label: item.name,
+            }));
+            let data = { ...formData };
+            const dropdownField = data?.formFields?.find(data => data.id === "cityId");
+            dropdownField.fieldSetting.options = cities;
+            setFormData(data);
+            // setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', addressFormData, 'cityId');
         }
-        if (isGetAllCitiesSucess && allGetAllCitiesData) {
-            setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', addressFormData, 'cityId');
-            setShouldRerenderFormCreator((prevState) => !prevState);
-        }
+    }, [isGetAllCitiesSucess, allGetAllCitiesData, isFetchingCities]);
+
+    useEffect(() => {
         if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
             const filterCondition = (item) => {
-                let condition = isSupplier ? item.isForSuppliers : item.isForCustomers
-                return condition;
+                return isSupplier ? item.isForSuppliers : item.isForCustomers;
             };
             setDropDownOptionField(allGetAllAddressTypesData, 'addressTypeId', 'type', addressFormData, 'addressTypeId', filterCondition);
             setShouldRerenderFormCreator((prevState) => !prevState);
         }
-    }, [isGetAllCountriesSucess, allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData, isGetAllAddressTypesSucess, allGetAllAddressTypesData]);
+    }, [isGetAllAddressTypesSucess, allGetAllAddressTypesData, isSupplier]);
 
     useEffect(() => {
         if (!isGetByIdFetching && isGetByIdSuccess && isGetByIdData) {
@@ -146,7 +156,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             }
 
             if (data.countryId) {
-                handleStateOption(allGetAllStatesData);
+                setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', form, 'stateId', item => item.countryId === data.countryId);
             }
 
             if (data.stateId) {
@@ -331,10 +341,12 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         // setAddressDataField(data)
         if (dataField === "countryId") {
             setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+            setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
             setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
             ref.current.updateFormFieldValue({
                 countryId: data.value,
                 stateId: null,
+                cityId: null
             });
         } else if (dataField === "stateId") {
             // setStateChange(data.value)
