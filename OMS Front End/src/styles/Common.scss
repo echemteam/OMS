@@ -1219,7 +1219,7 @@ a {
           height: 100%;
 
           .add-line {
-            width: 92%;
+            width: 82%;
             display: flex;
             flex-direction: column;
 
@@ -3285,7 +3285,7 @@ input[type="checkbox"]:disabled {
       flex-direction: column;
       border-right: 1px solid var(--linkMenu);
       border-bottom: 0 !important;
-      width: 18%;
+      width: 15%;
       overflow: hidden;
       transition: 0.5s all;
       padding-top: 11px;
@@ -3337,7 +3337,7 @@ input[type="checkbox"]:disabled {
     .collapse-tab {
       position: absolute;
       top: -5px;
-      left: calc(17% - 7px);
+      left: calc(17% - 37px);
       min-height: 22px;
       min-width: 22px;
       max-height: 22px;
