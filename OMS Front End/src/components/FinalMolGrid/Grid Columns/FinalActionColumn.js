@@ -3,9 +3,15 @@ import { AppIcons } from "../../../data/appIcons";
 import Image from "../../../components/image/Image";
 import Tooltip from "../../ui/tooltip/Tooltip";
 
-export const renderGridAction = (rowData, col, rowIndex, onActionHandler, allowEditGrid, isRowEditable, onEditRow) => {
-
-
+export const renderGridAction = (
+  rowData,
+  col,
+  rowIndex,
+  onActionHandler,
+  allowEditGrid,
+  isRowEditable,
+  onEditRow
+) => {
   if (!col.defaultAction) {
     col.defaultAction = {
       allowEdit: true,
@@ -28,19 +34,35 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler, allowE
   // this method help user to check if row edit enable then allow to make it editable
   const handleRowEdit = (actionName, data, rowIndex) => {
     if (!isRowEditable && allowEditGrid) {
-      if (onEditRow)
-        onEditRow(rowIndex, data);
-    }
-    else {
+      if (onEditRow) onEditRow(rowIndex, data);
+    } else {
       handleAction(actionName, data, rowIndex);
     }
-  }
+  };
 
   const isEditingRow = allowEditGrid && isRowEditable;
 
   return (
     <div className="d-flex action-button ">
-      {!isEditingRow && col.customAction &&
+      {/* Edit Action Button */}
+      {col.defaultAction.allowEdit && (
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+
+            handleRowEdit("EDIT", rowData, rowIndex);
+          }}
+          className="mr-4 tooltip"
+        >
+          <Image imagePath={AppIcons.editIcon} altText="Edit Icon" />
+          <Tooltip text="Edit" />
+        </Link>
+      )}
+
+      {/* Custom Action Button */}
+
+      {!isEditingRow &&
+        col.customAction &&
         col.customAction.length > 0 &&
         col.customAction.map((action, index) => {
           const commonLinkProps = {
@@ -67,22 +89,6 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler, allowE
           }
         })}
 
-
-      {/* Edit Action Button */}
-      {col.defaultAction.allowEdit && (
-        <Link
-          onClick={(e) => {
-            e.preventDefault();
-            
-            handleRowEdit("EDIT", rowData, rowIndex);
-          }}
-          className="mr-4 tooltip"
-        >
-          <Image imagePath={AppIcons.editIcon} altText="Edit Icon" />
-          <Tooltip text="Edit" />
-        </Link>
-      )}
-
       {/* Delete Action Button */}
       {!isEditingRow && col.defaultAction.allowDelete && (
         <Link
@@ -100,4 +106,3 @@ export const renderGridAction = (rowData, col, rowIndex, onActionHandler, allowE
     </div>
   );
 };
-
