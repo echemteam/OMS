@@ -22,7 +22,7 @@ namespace OMS.Domain.Entities.API.Request.SupplierAccoutingSetting
         public string? AccountType { get; set; }
         public string? AccountNumber { get; set; }
         public string? BranchCode { get; set; }
-        public int? IbanNumber { get; set; }
+        public string? IbanNumber { get; set; }
         public string? SwiftCode { get; set; }
         public string? RoutingNumber { get; set; }
         public string? SortCode { get; set; }
