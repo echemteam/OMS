@@ -4,7 +4,7 @@ export const creditCardFormData = {
   // name: "Email From",
   initialState: {
     ccNote: "",
-    isCCExistsOnFile: "",
+    isCCExistsOnFile: false,
   },
   formFields: [
     
