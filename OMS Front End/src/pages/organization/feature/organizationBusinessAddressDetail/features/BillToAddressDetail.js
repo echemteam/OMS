@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect ,useState} from "react";
 import PropTypes from "prop-types";
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
@@ -7,9 +7,9 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
-import { useState } from "react";
 
-const BillToAddressDetail=({billToAddressRef,billToAddressData,BillToAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{
+
+const BillToAddressDetail=({billToAddressRef,BillToAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{
 
   const [billToAddressFormData,setBillToAddressFormData]=useState(BillToAddressForm)
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
@@ -98,9 +98,9 @@ const BillToAddressDetail=({billToAddressRef,billToAddressData,BillToAddressForm
         <CardSection cardTitle="Bill To Address">
             <div className="row">
               <FormCreator
-                config={billToAddressData}
+                config={billToAddressFormData}
                 ref={billToAddressRef}
-                {...billToAddressData}
+                {...billToAddressFormData}
                 onActionChange={formAddressActionHandler}
               />
             </div>

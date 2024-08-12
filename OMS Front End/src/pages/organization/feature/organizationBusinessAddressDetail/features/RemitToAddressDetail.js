@@ -5,50 +5,56 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
-import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
+import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 
 
-const WarehouseAddressDetail=({warehouseAddressRef,WarehouseAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{;
-  const [warehouseAddressFormData,setWarehouseAddressFormData]=useState(WarehouseAddressForm)
+const RemitToAddressDetail=({remitToAddressRef,RemitToAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{
+ 
+  const [remitToAddressFormData,setRemitToAddressFormData]=useState(RemitToAddressForm)
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
   const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
-    
+  useEffect(() => {
+    getAllCountries();
+    getAllStates();
+  }, []);
+
+//   useEffect(()=>{
+
+//   })
     useEffect(() => {
-      if (isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.warehouseAddress) {
-        const { warehouseAddress } = isGetOrganizationBusinessAddressesData;
-        let data = { ...warehouseAddressFormData };
-        if (warehouseAddress.countryId) {
-          setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === warehouseAddress.countryId);
+     
+      if (isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.remitToAddress) {
+        const { remitToAddress } = isGetOrganizationBusinessAddressesData;
+        let data = { ...remitToAddressFormData };
+        if (remitToAddress.countryId) {
+          setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === remitToAddress.countryId);
         }
   
-        if (warehouseAddress.stateId) {
-          getAllCities(warehouseAddress.stateId)
+        if (remitToAddress.stateId) {
+          getAllCities(remitToAddress.stateId)
         }
   
         data.initialState = {
-          addressId: warehouseAddress.addressId,
-          addressLine1Id: warehouseAddress.addressLine1,
-          addressLine2Id: warehouseAddress.addressLine2,
-          countryId: warehouseAddress.countryId,
-          zipCode: warehouseAddress.zipCode,
-          stateId: warehouseAddress.stateId,
-          cityId: warehouseAddress.cityId,
+          addressId: remitToAddress.addressId,
+          addressLine1Id: remitToAddress.addressLine1,
+          addressLine2Id: remitToAddress.addressLine2,
+          countryId: remitToAddress.countryId,
+          zipCode: remitToAddress.zipCode,
+          stateId: remitToAddress.stateId,
+          cityId: remitToAddress.cityId,
         };
-        setWarehouseAddressFormData(data);
+        setRemitToAddressFormData(data);
       }
     }, [isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
 
-    useEffect(() => {
-      getAllCountries();
-      getAllStates();
-    }, []);
+   
   
     useEffect(() => {
       if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
-        setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', warehouseAddressFormData, 'countryId');
+        setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', remitToAddressFormData, 'countryId');
       }
     }, [isGetAllCountriesFetching, isGetAllCountriesSuccess, allGetAllCountriesData]);
   
@@ -59,21 +65,21 @@ const WarehouseAddressDetail=({warehouseAddressRef,WarehouseAddressForm,isGetOrg
           value: item.cityId,
           label: item.name,
         }));
-        let data = { ...warehouseAddressFormData };
+        let data = { ...remitToAddressFormData };
         const dropdownField = data?.formFields?.find(data => data.id === "cityId");
         dropdownField.fieldSetting.options = cities;
-        setWarehouseAddressFormData(data);
+        setRemitToAddressFormData(data);
       }
     }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
   
   
     const handleChangeAddressDropdownList = (data, dataField) => {
-      const manageData = { ...warehouseAddressFormData };
+      const manageData = { ...remitToAddressFormData };
       if (dataField === "countryId") {
         setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
         setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
         setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
-        warehouseAddressRef.current.updateFormFieldValue({
+        remitToAddressRef.current.updateFormFieldValue({
           countryId: data.value,
           stateId: null,
           cityId: null
@@ -81,24 +87,24 @@ const WarehouseAddressDetail=({warehouseAddressRef,WarehouseAddressForm,isGetOrg
       } else if (dataField === "stateId") {
         getAllCities(data.value)
         setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
-        warehouseAddressRef.current.updateFormFieldValue({
+        remitToAddressRef.current.updateFormFieldValue({
           stateId: data.value,
           cityId: null,
         });
       }
-      setWarehouseAddressFormData(manageData);
+      setRemitToAddressFormData(manageData);
     };
   
     const formAddressActionHandler = {
       DDL_CHANGED: handleChangeAddressDropdownList,
     };
     return( 
-        <CardSection cardTitle="Warehouse Address">
+        <CardSection cardTitle="Remit To Address">
             <div className="row">
               <FormCreator
-                config={warehouseAddressFormData}
-                ref={warehouseAddressRef}
-                {...warehouseAddressFormData}
+                config={remitToAddressFormData}
+                ref={remitToAddressRef}
+                {...remitToAddressFormData}
                 onActionChange={formAddressActionHandler}
               />
             </div>
@@ -106,10 +112,9 @@ const WarehouseAddressDetail=({warehouseAddressRef,WarehouseAddressForm,isGetOrg
     
        )
 }
-
-WarehouseAddressDetail.propTypes = {
-  warehouseAddressData: PropTypes.object.isRequired,
-  warehouseAddressRef: PropTypes.object.isRequired,
-  WarehouseAddressForm: PropTypes.object.isRequired,
+// PropTypes for the component
+RemitToAddressDetail.propTypes = {
+  remitToAddressRef: PropTypes.object.isRequired,
+  RemitToAddressForm: PropTypes.object.isRequired,
 };
-export default WarehouseAddressDetail;
+export default RemitToAddressDetail;
