@@ -86,27 +86,32 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
           supplierId: supplierId,
           ccNote: isGetPaymentSettingsBySupplierIdData.ccNote,
           isCCExistsOnFile: isGetPaymentSettingsBySupplierIdData.isCCExistsOnFile,
-        };
-      }
-      setGetCreditData(formCreditData);
-      if (activeTabIndex === 2 && isGetPaymentSettingsBySupplierIdData.mailingAddress) {
-        formCheckData.initialState = {
-          addressId: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressId ? isGetPaymentSettingsBySupplierIdData.mailingAddress.addressId : 0,
-          addressLine1Id: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressLine1,
-          addressLine2Id: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressLine2,
-          cityId: isGetPaymentSettingsBySupplierIdData.mailingAddress.cityId,
-          stateId: isGetPaymentSettingsBySupplierIdData.mailingAddress.stateId,
-          countryId: isGetPaymentSettingsBySupplierIdData.mailingAddress.countryId,
-          zipCode: isGetPaymentSettingsBySupplierIdData.mailingAddress.zipCode,
           checkMailingAddressId: isGetPaymentSettingsBySupplierIdData.checkMailingAddressId,
           supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
         };
-        setGetCheckData(formCheckData);
       }
+      setGetCreditData(formCreditData);
+      // if (activeTabIndex === 2 && isGetPaymentSettingsBySupplierIdData.mailingAddress) {
+      //   // formCheckData.initialState = {
+      //   //   // addressId: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressId ? isGetPaymentSettingsBySupplierIdData.mailingAddress.addressId : 0,
+      //   //   // addressLine1Id: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressLine1,
+      //   //   // addressLine2Id: isGetPaymentSettingsBySupplierIdData.mailingAddress.addressLine2,
+      //   //   // cityId: isGetPaymentSettingsBySupplierIdData.mailingAddress.cityId,
+      //   //   // stateId: isGetPaymentSettingsBySupplierIdData.mailingAddress.stateId,
+      //   //   // countryId: isGetPaymentSettingsBySupplierIdData.mailingAddress.countryId,
+      //   //   // zipCode: isGetPaymentSettingsBySupplierIdData.mailingAddress.zipCode,
+      //   //   
+      //   // };
+       
+      // }
+      // setGetCheckData({ checkMailingAddressId: isGetPaymentSettingsBySupplierIdData.checkMailingAddressId,
+      //   supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,});
       if (activeTabIndex === 3 && isGetPaymentSettingsBySupplierIdData.otherNote) {
         formOtherData.initialState = {
           supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
           supplierId: supplierId,
+          checkMailingAddressId: isGetPaymentSettingsBySupplierIdData.checkMailingAddressId,
+       supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
           otherNote: isGetPaymentSettingsBySupplierIdData.otherNote,
         };
         setGetOtherData(formOtherData);
@@ -160,6 +165,8 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
             supplierId={supplierId}
             getCheckData={getCheckData.initialState}
             onHandleGetById={handleGetById}
+            isGetPaymentSettingsBySupplierIdData={isGetPaymentSettingsBySupplierIdData}
+            isGetPaymentSettingsBySupplierIdSuccess={isGetPaymentSettingsBySupplierIdSuccess}
           />
         </div>
       ),
