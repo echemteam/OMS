@@ -4,6 +4,7 @@ import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
 import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import PropTypes from "prop-types";
+import Iconify from "../../../../../components/ui/iconify/Iconify";
 
 const ContactDetailCard = forwardRef(
   ({ contactItem, handleEdit, showEditIcon }) => {
@@ -153,7 +154,8 @@ const ContactDetailCard = forwardRef(
                   onClick={() => handleEdit(contactItem?.contactId)}
                   className="edit-btn"
                 >
-                  <Image imagePath={AppIcons.editThemeIcon} />
+                  {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
+                  <Iconify icon="tabler:pencil" />
                 </button>
               ) : null}
             </div>
@@ -185,7 +187,8 @@ const ContactDetailCard = forwardRef(
                         onClick={() => handleEdit(contactItem?.contactId)}
                         className="edit-btn"
                       >
-                        <Image imagePath={AppIcons.editThemeIcon} />
+                        {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
+                        <Iconify icon="tabler:pencil" />
                       </button>
                     ) : null}
                   </div>
@@ -196,10 +199,11 @@ const ContactDetailCard = forwardRef(
                     tabIndex="0"
                     onClick={handleOptionsClick}
                   >
-                    <Image
+                    {/* <Image
                       imagePath={AppIcons.EllipsisIcon}
                       altText="EllipsisIcon"
-                    />
+                    /> */}
+                    <Iconify icon="mdi:ellipsis-vertical" />
                   </span>
                 </div>
                 <div

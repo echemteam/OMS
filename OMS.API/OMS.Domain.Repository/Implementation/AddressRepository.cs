@@ -38,7 +38,9 @@ namespace OMS.Domain.Repository.Implementation
                 address.AddressLine5,
                 address.CountryId,
                 address.StateId,
+                address.StateName,
                 address.CityId,
+                address.CityName,
                 address.ZipCode,
                 address.CreatedBy
             }, CommandType.StoredProcedure);
@@ -77,7 +79,9 @@ namespace OMS.Domain.Repository.Implementation
                 address.AddressLine5,
                 address.CountryId,
                 address.StateId,
+                address.StateName,
                 address.CityId,
+                address.CityName,
                 address.ZipCode,
                 address.UpdatedBy
             }, CommandType.StoredProcedure);

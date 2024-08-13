@@ -32,6 +32,7 @@ import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
 import PropTypes from 'prop-types';
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+import Iconify from "../../../../../components/ui/iconify/Iconify";
 
 
 const CustomerBasicInfoCard = ({
@@ -380,7 +381,8 @@ const CustomerBasicInfoCard = ({
                 className="copy-icon"
                 onClick={() => CopyText(customerData?.emailAddress, "email")}
               >
-                <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+                {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
               </span>
             </div>
 
@@ -392,7 +394,8 @@ const CustomerBasicInfoCard = ({
                 className="copy-icon"
                 onClick={() => CopyText(customerData?.website, "website")}
               >
-                <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+                {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
               </span>
             </div>
           </div>
@@ -496,7 +499,8 @@ const CustomerBasicInfoCard = ({
           </div>
         </div>
         <div className="edit-icons" onClick={editClick}>
-          <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
+          {/* <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" /> */}
+          <Iconify icon="tabler:pencil" />
         </div>
       </div>
       {showModal && (

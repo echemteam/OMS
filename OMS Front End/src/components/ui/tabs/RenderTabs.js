@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Image from "../../image/Image";
 import { AppIcons } from "../../../data/appIcons";
 import PropTypes from "prop-types";
+import Iconify from "../iconify/Iconify";
 
 const RenderTabs = ({
   tabs,
@@ -67,7 +68,8 @@ const RenderTabs = ({
                       onClick={handleCollapseClick}
                       title="Collapse Tabs"
                     >
-                      <Image imagePath={AppIcons.arrowIcon} />
+                      {/* <Image imagePath={AppIcons.arrowIcon} /> */}
+                      <Iconify icon="solar:alt-arrow-down-outline" />
                     </div>
                   </>
                 ) : null}

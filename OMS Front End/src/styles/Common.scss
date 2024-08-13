@@ -8,8 +8,17 @@ body {
   padding: 0;
   margin: 0;
   background-color: #0004430d;
-  font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family:
+    "Public Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
     sans-serif;
   font-size: var(--commonFont);
   color: var(--textColor);
@@ -290,7 +299,7 @@ a {
       justify-content: center;
       cursor: pointer;
 
-      img {
+      svg {
         filter: brightness(100);
         transform: rotate(90deg);
         transition: 0.5s all;
@@ -444,7 +453,7 @@ a {
           opacity: 1;
 
           .click-btn {
-            img {
+            svg {
               transform: rotate(270deg);
             }
           }
@@ -576,7 +585,7 @@ a {
         min-width: 100px;
         max-width: 100px;
       }
-      .input-group{
+      .input-group {
         flex-wrap: nowrap;
       }
     }
@@ -3416,9 +3425,11 @@ input[type="checkbox"]:disabled {
 }
 
 // Tab Section End
-
 .model-hight-fix {
-  height: calc(100vh - 300px);
+  height: calc(100vh - 200px);
+  canvas {
+    width: 100% !important;
+  }
 }
 
 .main-customer-grid {
@@ -3575,7 +3586,7 @@ input[type="checkbox"]:disabled {
       .tab-section {
         height: calc(100vh - 80px) !important;
 
-        .tab-content{
+        .tab-content {
           height: calc(100vh - 80px) !important;
         }
       }
@@ -3597,7 +3608,6 @@ input[type="checkbox"]:disabled {
       height: calc(100vh - 348px);
     }
   }
-
 }
 @media only screen and (max-width: 1750px) {
   .stepper-view {
@@ -3609,16 +3619,15 @@ input[type="checkbox"]:disabled {
   }
 }
 
-
 .table-email-sec {
-    margin-bottom: 0;
-    width: 97%;
-    margin: 0 auto;
-    box-shadow: 0px 0px 17px -10px var(--textColorLight);
+  margin-bottom: 0;
+  width: 97%;
+  margin: 0 auto;
+  box-shadow: 0px 0px 17px -10px var(--textColorLight);
 
-    .card {
-      .card-top-title-btn{
-        padding: 10px 0;
-      } 
+  .card {
+    .card-top-title-btn {
+      padding: 10px 0;
     }
+  }
 }

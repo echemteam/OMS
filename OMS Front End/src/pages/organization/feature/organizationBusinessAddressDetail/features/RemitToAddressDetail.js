@@ -9,47 +9,52 @@ import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicde
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 
 
-const LabAddressDetail=({labAddressRef,LabAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{
+const RemitToAddressDetail=({remitToAddressRef,RemitToAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{
  
-  const [labAddressFormData,setLabAddressFormData]=useState(LabAddressForm)
+  const [remitToAddressFormData,setRemitToAddressFormData]=useState(RemitToAddressForm)
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-  const [getAllStates, {isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllStates, { isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching,data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
-    
+  useEffect(() => {
+    getAllCountries();
+    getAllStates();
+  }, []);
+
+//   useEffect(()=>{
+
+//   })
     useEffect(() => {
-      if (!isGetAllStateFetching && isGetAllStateSuccess && isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.labAddress) {
-        const { labAddress } = isGetOrganizationBusinessAddressesData;
-        let data = { ...labAddressFormData };
-        if (labAddress.countryId) {
-          setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === labAddress.countryId);
+     
+      if (!isGetAllStateFetching && isGetAllStateSuccess && isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.remitToAddress) {
+        const { remitToAddress } = isGetOrganizationBusinessAddressesData;
+        let data = { ...remitToAddressFormData };
+        if (remitToAddress.countryId) {
+          setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === remitToAddress.countryId);
         }
   
-        if (labAddress.stateId) {
-          getAllCities(labAddress.stateId)
+        if (remitToAddress.stateId) {
+          getAllCities(remitToAddress.stateId)
         }
   
         data.initialState = {
-          addressId: labAddress.addressId,
-          addressLine1Id: labAddress.addressLine1,
-          addressLine2Id: labAddress.addressLine2,
-          countryId: labAddress.countryId,
-          zipCode: labAddress.zipCode,
-          stateId: labAddress.stateId,
-          cityId: labAddress.cityId,
+          addressId: remitToAddress.addressId,
+          addressLine1Id: remitToAddress.addressLine1,
+          addressLine2Id: remitToAddress.addressLine2,
+          countryId: remitToAddress.countryId,
+          zipCode: remitToAddress.zipCode,
+          stateId: remitToAddress.stateId,
+          cityId: remitToAddress.cityId,
         };
-        setLabAddressFormData(data);
+        setRemitToAddressFormData(data);
       }
     }, [isGetAllStateFetching , isGetAllStateSuccess,isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
 
-    useEffect(() => {
-      getAllCountries();
-      getAllStates();
-    }, []);
+   
   
     useEffect(() => {
       if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
-        setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', labAddressFormData, 'countryId');
+        setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', remitToAddressFormData, 'countryId');
       }
     }, [isGetAllCountriesFetching, isGetAllCountriesSuccess, allGetAllCountriesData]);
   
@@ -60,21 +65,21 @@ const LabAddressDetail=({labAddressRef,LabAddressForm,isGetOrganizationBusinessA
           value: item.cityId,
           label: item.name,
         }));
-        let data = { ...labAddressFormData };
+        let data = { ...remitToAddressFormData };
         const dropdownField = data?.formFields?.find(data => data.id === "cityId");
         dropdownField.fieldSetting.options = cities;
-        setLabAddressFormData(data);
+        setRemitToAddressFormData(data);
       }
     }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
   
   
     const handleChangeAddressDropdownList = (data, dataField) => {
-      const manageData = { ...labAddressFormData };
+      const manageData = { ...remitToAddressFormData };
       if (dataField === "countryId") {
         setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
         setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
         setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
-        labAddressRef.current.updateFormFieldValue({
+        remitToAddressRef.current.updateFormFieldValue({
           countryId: data.value,
           stateId: null,
           cityId: null
@@ -82,24 +87,24 @@ const LabAddressDetail=({labAddressRef,LabAddressForm,isGetOrganizationBusinessA
       } else if (dataField === "stateId") {
         getAllCities(data.value)
         setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
-        labAddressRef.current.updateFormFieldValue({
+        remitToAddressRef.current.updateFormFieldValue({
           stateId: data.value,
           cityId: null,
         });
       }
-      setLabAddressFormData(manageData);
+      setRemitToAddressFormData(manageData);
     };
   
     const formAddressActionHandler = {
       DDL_CHANGED: handleChangeAddressDropdownList,
     };
     return( 
-        <CardSection cardTitle="Lab Address">
+        <CardSection cardTitle="Remit To Address">
             <div className="row">
               <FormCreator
-                config={labAddressFormData}
-                ref={labAddressRef}
-                {...labAddressFormData}
+                config={remitToAddressFormData}
+                ref={remitToAddressRef}
+                {...remitToAddressFormData}
                 onActionChange={formAddressActionHandler}
               />
             </div>
@@ -108,9 +113,8 @@ const LabAddressDetail=({labAddressRef,LabAddressForm,isGetOrganizationBusinessA
        )
 }
 // PropTypes for the component
-LabAddressDetail.propTypes = {
-  labAddressRef: PropTypes.object.isRequired,
-  labAddressData: PropTypes.object.isRequired,
-  LabAddressForm: PropTypes.object.isRequired,
+RemitToAddressDetail.propTypes = {
+  remitToAddressRef: PropTypes.object.isRequired,
+  RemitToAddressForm: PropTypes.object.isRequired,
 };
-export default LabAddressDetail;
+export default RemitToAddressDetail;

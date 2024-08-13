@@ -10,6 +10,7 @@ import Checkbox from "../../../../../../components/ui/inputs/checkBox/CheckBox";
 //** Service's */
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useThirdPartyAPICallMutation } from "../../../../../../app/services/thirdPartyAPI";
+import Iconify from "../../../../../../components/ui/iconify/Iconify";
 
 const VerifyProductDetail = ({ productId }) => {
 
@@ -64,7 +65,8 @@ const VerifyProductDetail = ({ productId }) => {
                         <span className="detail-value">{productDetail?.ProductName}</span>
                         <span className="detail-action">
                             <button className="edit-button">
-                                <Image imagePath={AppIcons.editThemeIcon} />
+                                {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
+                                <Iconify icon="tabler:pencil" />
                             </button>
                             <div className="checkbox">
                                 <Checkbox />
@@ -76,7 +78,8 @@ const VerifyProductDetail = ({ productId }) => {
                         <span className="detail-value">{productDetail?.CASNo}</span>
                         <span className="detail-action">
                             <button className="edit-button">
-                                <Image imagePath={AppIcons.editThemeIcon} />
+                                {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
+                                <Iconify icon="tabler:pencil" />
                             </button>
                             <div className="checkbox">
                                 <Checkbox />
@@ -88,7 +91,8 @@ const VerifyProductDetail = ({ productId }) => {
                         <span className="detail-value">{productDetail?.MDLNo}</span>
                         <span className="detail-action">
                             <button className="edit-button">
-                                <Image imagePath={AppIcons.editThemeIcon} />
+                                {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
+                                <Iconify icon="tabler:pencil" />
                             </button>
                             <div className="checkbox">
                                 <Checkbox />

@@ -13,6 +13,7 @@ import SupplierBasicDetail from "../../feature/supplierBasicDetail/SupplierBasic
 import SuplierAddressDetails from "../../feature/supplierAddressDetail/SupplierAddressDetails";
 import SupplierContactDetail from "../../feature/supplierContactDetail/SupplierContactDetail";
 import SupplierDocumentDetail from "../../feature/supplierDocumentDetail/SupplierDocumentDetail";
+import Iconify from "../../../../components/ui/iconify/Iconify";
 
 const AddSupplierTab = () => {
   const navigate = useNavigate();
@@ -103,7 +104,8 @@ const AddSupplierTab = () => {
                   </div>
                   {index < tabContent.length - 1 && (
                     <div className="right-arrow">
-                      <Image imagePath={AppIcons.arrowIcon} />
+                      {/* <Image imagePath={AppIcons.arrowIcon} /> */}
+                      <Iconify icon="solar:alt-arrow-down-outline" />
                     </div>
                   )}
                 </React.Fragment>
@@ -123,7 +125,8 @@ const AddSupplierTab = () => {
                             <button type="button" className="btn dark-btn mr-3 btn-prev"
                               onClick={movePreviewPage}
                             >
-                            <Image imagePath={AppIcons.nextArrowIcon} />  Back
+                            {/* <Image imagePath={AppIcons.nextArrowIcon} />  Back */}
+                            <Iconify icon="solar:alt-arrow-down-outline" /> Back
                             </button>
                           )}
                           {index < tabContent.length - 1 ? (
@@ -132,7 +135,8 @@ const AddSupplierTab = () => {
                               className="btn theme-button btn-next"
                               onClick={() => addSupplier(step.tab)}
                             >
-                              Next  <Image imagePath={AppIcons.nextArrowIcon} />
+                              {/* Next  <Image imagePath={AppIcons.nextArrowIcon} /> */}
+                             Next <Iconify icon="solar:alt-arrow-down-outline" />
                             </button>
                           ) : (
                             <>
