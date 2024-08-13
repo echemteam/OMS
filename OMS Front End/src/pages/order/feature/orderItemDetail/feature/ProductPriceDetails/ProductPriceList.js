@@ -12,7 +12,6 @@ import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid
 
 const ProductPriceList = ({ productId }) => {
   const molGridRef = useRef();
-  const [gridConfig, setGridConfig] = useState(priceListConfig);
   const [priceList, setPriceList] = useState([
     {
       Quantity: "10g",
@@ -122,7 +121,7 @@ const ProductPriceList = ({ productId }) => {
       <FinalMolGrid
         ref={molGridRef}
         dataSource={priceList}
-        configuration={gridConfig}
+        configuration={priceListConfig}
         allowPagination={false}
         isLoading={isApiResponseLoading}
         onRowDataUpdate={handleEditClick}
