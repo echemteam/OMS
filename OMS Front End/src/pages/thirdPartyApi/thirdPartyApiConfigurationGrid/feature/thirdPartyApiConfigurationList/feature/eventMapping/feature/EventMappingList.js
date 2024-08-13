@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { useDeleteApiEventMappingMutation, useGetApiEventMappingsMutation } from '../../../../../../../../app/services/thirdPartyAPI';
 import { AddEditMappingConfigurationData } from '../config/AddEditMapping.data';
 import SwalAlert from '../../../../../../../../services/swalService/SwalService';
@@ -49,13 +49,13 @@ const EventMappingList = (props) => {
 
     useEffect(() => {
         if (isGetApiEventMappingsSuccess && isGetApiEventMappingsData) {
-          
+
             setListData([isGetApiEventMappingsData]);
             props.setEndpointId(isGetApiEventMappingsData?.endpointId);
             if (isGetApiEventMappingsData?.providerId) {
                 props.setIsProviderData(true);
             }
-          
+
             if (isGetApiEventMappingsData.totalRecord) {
                 setTotalRowCount(isGetApiEventMappingsData.totalRecord);
             }
@@ -114,7 +114,7 @@ const EventMappingList = (props) => {
                     onSorting={handleSorting}
                     isLoading={isGetApiEventMappingsLoading}
                     onActionChange={actionHandler}
-               
+
                 />
             </div>
         </div>
@@ -124,8 +124,7 @@ const EventMappingList = (props) => {
 EventMappingList.propTypes = {
     keyId: PropTypes.number.isRequired,
     setIsProviderData: PropTypes.func.isRequired,
-    setEndpointId: PropTypes.func.isRequired,
-    setIsProviderData: PropTypes.func.isRequired,  
+    setEndpointId: PropTypes.func.isRequired
 };
 
 export default EventMappingList

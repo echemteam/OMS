@@ -13,7 +13,7 @@ import FormCreator from '../../../../../components/Forms/FormCreator';
 import DropDown from '../../../../../components/ui/dropdown/DropDrown';
 import DataLoader from '../../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
-import { StaticStatus, StatusValue } from '../../../../../utils/Enums/StatusEnums';
+import { StatusValue } from '../../../../../utils/Enums/StatusEnums';
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 //** Service's */

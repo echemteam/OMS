@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
 import { AddEditParameterData } from '../config/AddEditParameter.data';
 import { useAddEditApiEventParameterMutation, useLazyGetApiEventParameterByApiEventParametersIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
