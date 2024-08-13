@@ -17,7 +17,6 @@ const AddEditThirdPartyApiConfiguration = (props) => {
     if (isAddEditApiEventSuccess && allAddEditApiEventData) {
       if (allAddEditApiEventData.errorMessage.includes("exists")) {
         ToastService.warning(allAddEditApiEventData.errorMessage);
-        handleResetAndClose();
         return;
       }
       if (!props.keyId) {
@@ -25,7 +24,8 @@ const AddEditThirdPartyApiConfiguration = (props) => {
         handleResetAndClose();
         props.onGetData()
       } else {
-        handleResetAndClose()
+        handleResetAndClose();
+        ToastService.success(allAddEditApiEventData.errorMessage);
         props.onRepetGetData(props.keyId)
       }
     }

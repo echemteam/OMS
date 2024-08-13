@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { useAddApiEventMappingMutation } from '../../../../../../../../app/services/thirdPartyAPI';
 import { AddEditMappingData } from '../config/AddEditMapping.data';
 import { useLazyGetAllAPIProvidersQuery } from '../../../../../../../../app/services/apiEndPointsAPI';
@@ -11,11 +11,14 @@ import FormCreator from '../../../../../../../../components/Forms/FormCreator';
 import { useLazyGetAllAPIEndpointsQuery } from '../../../../../../../../app/services/apiParametersAPI';
 
 const AddEditEventMapping = (props) => {
+
     const addEditMappingRef = useRef();
-    const [addEditMappingData, setAddEditMappingData] = useState(AddEditMappingData)
+    const [mainProviderId, setMainProviderId] = useState(0)
+    const [addEditMappingData, setAddEditMappingData] = useState(AddEditMappingData);
+
     const [addApiEventMapping, { isLoading: isAddApiEventMappingLoading, isSuccess: isAddApiEventMappingSuccess, data: allAddApiEventMappingData, },] = useAddApiEventMappingMutation();
     const [getAllAPIProviders, { isSuccess: isGetAllAPIProvidersSucess, data: allGetAllAPIProvidersData }] = useLazyGetAllAPIProvidersQuery();
-    const [getAllAPIEndpoints, { isSuccess: isGetAllAPIEndpointsSucess, data: allGetAllAPIEndpointsData }] = useLazyGetAllAPIEndpointsQuery();
+    const [getAllAPIEndpoints, { isFetching, isSuccess: isGetAllAPIEndpointsSucess, data: allGetAllAPIEndpointsData }] = useLazyGetAllAPIEndpointsQuery();
 
     useEffect(() => {
         getAllAPIProviders()
@@ -39,11 +42,15 @@ const AddEditEventMapping = (props) => {
         if (isGetAllAPIProvidersSucess && allGetAllAPIProvidersData) {
             setDropDownOptionField(allGetAllAPIProvidersData, 'providerId', 'name', AddEditMappingData, 'providerId');
         }
-        if (isGetAllAPIEndpointsSucess && allGetAllAPIEndpointsData) {
-            setDropDownOptionField(allGetAllAPIEndpointsData, 'endpointId', 'name', AddEditMappingData, 'endpointId');
-        }
+    }, [isGetAllAPIProvidersSucess, allGetAllAPIProvidersData]);
 
-    }, [isGetAllAPIProvidersSucess, allGetAllAPIProvidersData, isGetAllAPIEndpointsSucess, allGetAllAPIEndpointsData]);
+    useEffect(() => {
+        if (mainProviderId && !isFetching && isGetAllAPIEndpointsSucess && allGetAllAPIEndpointsData) {
+            const modifyEndPointList = allGetAllAPIEndpointsData.filter(data => data.providerId === mainProviderId);
+            setDropDownOptionField(modifyEndPointList, 'endpointId', 'name', AddEditMappingData, 'endpointId');
+        }
+    }, [mainProviderId, isFetching, isGetAllAPIEndpointsSucess, allGetAllAPIEndpointsData]);
+
 
     const handleAddEditAPIPRovider = () => {
         const formData = addEditMappingRef.current.getFormData();
@@ -68,12 +75,23 @@ const AddEditEventMapping = (props) => {
         props.onClose();
     };
 
+    const handleDropdownChanges = (data, dataField) => {
+        if (dataField === 'providerId' && data.value) {
+            setMainProviderId(data.value);
+        }
+    }
+
+    //** Action Handler */
+    const formActionHandler = {
+        DDL_CHANGED: handleDropdownChanges
+    };
+
     return (
         <div className="row mt-2 add-address-form">
             <FormCreator
                 config={addEditMappingData}
                 ref={addEditMappingRef}
-           
+                onActionChange={formActionHandler}
             />
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">

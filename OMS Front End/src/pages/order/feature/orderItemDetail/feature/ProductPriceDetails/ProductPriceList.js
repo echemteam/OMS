@@ -103,7 +103,7 @@ const ProductPriceList = ({ productId }) => {
       productId: productId,
     };
     let request = {
-      eventName: EventName.PRODUCTPRICELIST,
+      eventName: EventName.AURUMPRODUCTPRICELIST,
       isDynamicParameter: true,
       parameters: JSON.stringify(dynamicParameters),
     };

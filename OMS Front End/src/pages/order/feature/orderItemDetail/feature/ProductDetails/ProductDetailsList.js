@@ -118,7 +118,7 @@ const ProductDetailsList = () => {
           searchText: productSearch,
         };
         let request = {
-          eventName: EventName.PRODUCTSEARCH,
+          eventName: EventName.AURUMPRODUCTSEARCH,
           isDynamicParameter: true,
           parameters: JSON.stringify(dynamicParameters),
         };
