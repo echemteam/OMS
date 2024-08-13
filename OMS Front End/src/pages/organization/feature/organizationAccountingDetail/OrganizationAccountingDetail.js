@@ -22,7 +22,7 @@ const OrganizationAccountingDetail=()=>{
 
     useEffect(()=>{
         getOrganizationAccountingDetails();
-    },[])
+    },[getOrganizationAccountingDetails])
 
       const handleAddEditAccountingDetail=()=>{
         let accountingData = organizationAccountingRef.current.getFormData();
