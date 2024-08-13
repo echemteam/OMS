@@ -2,8 +2,6 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
 //** Lib's */
 import PropTypes from 'prop-types';
-import Image from '../../../../../components/image/Image';
-import { AppIcons } from '../../../../../data/appIcons';
 import CopyText from '../../../../../utils/CopyText/CopyText';
 import { securityKey } from '../../../../../data/SecurityKey';
 import { ErrorMessage } from '../../../../../data/appMessages';
@@ -13,7 +11,7 @@ import FormCreator from '../../../../../components/Forms/FormCreator';
 import DropDown from '../../../../../components/ui/dropdown/DropDrown';
 import DataLoader from '../../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
-import { StaticStatus, StatusValue } from '../../../../../utils/Enums/StatusEnums';
+import { StatusValue } from '../../../../../utils/Enums/StatusEnums';
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 //** Service's */
@@ -306,7 +304,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                     imagePath={AppIcons.copyIcon}
                     altText="Website Icon"
                   /> */}
-                <Iconify icon="bitcoin-icons:copy-outline" />
+                  <Iconify icon="bitcoin-icons:copy-outline" />
                 </span>
               </div>
 
@@ -322,7 +320,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                     imagePath={AppIcons.copyIcon}
                     altText="Website Icon"
                   /> */}
-                <Iconify icon="bitcoin-icons:copy-outline" />
+                  <Iconify icon="bitcoin-icons:copy-outline" />
                 </span>
               </div>
             </div>

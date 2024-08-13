@@ -35,11 +35,9 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
         update(req)
     }
 
-    // useState(() => {
-    //     let configuration = { ...OurAccountGridConfig }
-    //     configuration.handleRowDataUpdate = handleEditClick;
-    //     setGridConfig(configuration);
-    // }, [])
+    const handleGridCheckBoxChange = (fieldName, rowData) => {
+        handleEditClick(rowData);
+    };
 
     return (
         <div className="first-card">
@@ -60,6 +58,7 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
                         onActionChange={actionHandler}
                         isLoading={isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
+                        onColumnChange={handleGridCheckBoxChange}
                     />
                 </div>
             </CardSection>

@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types'; 
 import { AddEditThirdPartyApiData } from './config/AddEditThirdPartyApiConfiguration.data';
 import Buttons from '../../../../../components/ui/button/Buttons';

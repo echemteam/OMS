@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Image from "../../../../../components/image/Image";
 import DropDown from "../../../../../components/ui/dropdown/DropDrown";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../../components/Forms/FormCreator";
@@ -24,7 +23,6 @@ import {
   StatusValue,
 } from "../../../../../utils/Enums/StatusEnums";
 import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDetail.data";
-import { AppIcons } from "../../../../../data/appIcons";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import { ErrorMessage, SuccessMessage } from "../../../../../data/appMessages";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";

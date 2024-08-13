@@ -5,7 +5,11 @@ import { phoneNumberConfig } from "../config/AddEditContactsForm.data";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import PropTypes from 'prop-types';
 import FinalMolGrid from "../../../../../components/FinalMolGrid/FinalMolGrid";
-const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
+const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, actionHandler, isButtonDisable, handleCheckBoxChange }) => {
+
+    const handleGridCheckBoxChange = (fieldName, rowData) => {
+        handleCheckBoxChange(rowData);
+    };
 
     return (
         <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2 table-email-sec">
@@ -25,6 +29,7 @@ const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, act
                             dataSource={phoneNumberList}
                             allowPagination={false}
                             onActionChange={actionHandler}
+                            onColumnChange={handleGridCheckBoxChange}
                         />
                     </div>
                 </div>
