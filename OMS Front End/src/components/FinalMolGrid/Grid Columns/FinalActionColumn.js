@@ -56,9 +56,7 @@ export const renderGridAction = (
           className="mr-4 tooltip"
         >
           {/* <Image imagePath={AppIcons.editIcon} altText="Edit Icon" /> */}
-          <Iconify 
-          icon="tabler:pencil" 
-          />
+          <Iconify icon="tabler:pencil" />
           <Tooltip text="Edit" />
         </Link>
       )}
@@ -86,7 +84,12 @@ export const renderGridAction = (
             // Render null if rowData.contractInputFile is not present
             return (
               <Link {...commonLinkProps}>
-                <Image imagePath={action.iconName} altText={action.name} />
+                {/* <Image imagePath={action.iconName} altText={action.name} /> */}
+                <Iconify
+                  icon={action.iconName}
+                  altText={action.name}
+                  className={action.className}
+                />
                 <Tooltip text={action.title} />
               </Link>
             );
@@ -104,9 +107,7 @@ export const renderGridAction = (
           title="DELETE"
         >
           {/* <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" /> */}
-          <Iconify
-          icon="mingcute:delete-2-line" 
-          />
+          <Iconify icon="mingcute:delete-2-line" />
           <Tooltip text="Delete" />
         </Link>
       )}

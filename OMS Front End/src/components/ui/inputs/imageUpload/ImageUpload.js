@@ -78,8 +78,8 @@ const ImageUpload = ({
                 />
                 <div className="custom-file-selector-design">
                     {!imagePreview ? 
-                    // <Image imagePath={AppIcons.Uploaddocumenticon} altText="Please Upload File"></Image>
-                    <Iconify icon="iconamoon:file-document-thin" />
+                    <Image imagePath={AppIcons.Uploaddocumenticon} altText="Please Upload File"></Image>
+                    // <Iconify icon="iconamoon:file-document-thin" />
                      : null}
                     {imagePreview ?
                         <img src={imagePreview} alt="Uploaded File" />

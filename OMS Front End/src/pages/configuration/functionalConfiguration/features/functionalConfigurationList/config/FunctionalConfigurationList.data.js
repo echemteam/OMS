@@ -31,7 +31,7 @@ export const functionalConfigurationListData = {
             customAction: [
                 {
                     name: "VIEWCONFIGURATION",
-                    iconName: AppIcons.EyeIcon,
+                    iconName: "lets-icons:view",
                     title: "View"
                 },
             ],

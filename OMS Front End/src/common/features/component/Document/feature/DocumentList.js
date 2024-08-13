@@ -235,8 +235,8 @@ const DocumentList = forwardRef(
                               key={data.customerDocumentId}
                             >
                               <div className="left-icons">
-                                {/* <Image imagePath={data.documentIcon} alt="Document Icon" /> */}
-                                <Iconify icon="iconamoon:file-document-thin" />
+                                <Image imagePath={data.documentIcon} alt="Document Icon" />
+                                {/* <Iconify icon="iconamoon:file-document-thin" /> */}
                               </div>
                               <div className="right-desc">
                                 <div className="doc-details">
