@@ -40,13 +40,12 @@ const ContactEmailsDropdown = ({
                 className={`copy-icon ${
                   primaryEmailAddress?.isPrimary ? "primary-email" : ""
                 }`}
-                title="Copy"
-                onClick={() =>
-                  CopyText(primaryEmailAddress?.emailAddress, "email")
-                }
               >
+                <div className="copy" onClick={() =>
+                  CopyText(primaryEmailAddress?.emailAddress, "email") 
+                }>
                 <Image imagePath={AppIcons.copyIcon} altText="Icon" />
-                {/* <i className="fa fa-files-o"></i> */}
+                </div>
               </span>
             </>
           ) : null}
