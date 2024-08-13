@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { contactInformationData } from "./config/ContactDetail.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import { useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery } from '../../../../app/services/commonAPI';
@@ -12,10 +12,13 @@ import { contactDetailFormData } from "../../../../common/features/component/Con
 // import { modifyContactType } from "../../../../utils/TransformData/TransformAPIData";
 // import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
+import { useAddEditOrderContactInformationMutation } from "../../../../app/services/orderAPI";
+import ToastService from "../../../../services/toastService/ToastService";
 
 
 const ContactDetails = (props) => {
   const basicInformation = useRef();
+  // const editRef = useRef();
   const [formData, setFormData] = useState(contactInformationData);
   // const [isSidebarModal, setIsSidebarModal] = useState(null)
   const [isModelOpen, setIsModelOpen] = useState(false);
@@ -24,7 +27,7 @@ const ContactDetails = (props) => {
   const [invoicerEnableDisableButton, setInvoiceEnableDisableButton] = useState(true)
   const [purchasingEnableDisableButton, setPurchasingEnableDisableButton] = useState(true)
 
-  const { orderCustomerId } = useContext(AddOrderContext);
+  const { conatctRef , orderCustomerId,  moveNextPage, orderId } = useContext(AddOrderContext);
 
   const [
     getAllContactTypes,
@@ -34,6 +37,7 @@ const ContactDetails = (props) => {
   const [getAllEndUserId, { isFetching: isGetAllEndUserFetching, isSuccess: isgetAllEndUserSuccess, data: isgetAllEndUserData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllInvoiceSubmissionId, { isFetching: isGetAllInvoiceSubmissionFetching, isSuccess: isgetAllInvoiceSubmissionSuccess, data: isgetAllInvoiceSubmissionData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllPurchasingId, { isFetching: isGetAllPurchasingFetching, isSuccess: isgetAllPurchasingSuccess, data: isgetAllPurchasingData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
+  const [addEditOrderContactInformation, { isLoading: isAddEditOrderContactInformationLoading, isSuccess: isAddEditOrderContactInformationSuccess, data: isAddEditOrderContactInformationData }] = useAddEditOrderContactInformationMutation();
 
   useEffect(() => {
     if (orderCustomerId) {
@@ -183,9 +187,43 @@ const ContactDetails = (props) => {
     setFormData(updatedFormData);
   };
 
+  useEffect(() => {
+    if (isAddEditOrderContactInformationSuccess && isAddEditOrderContactInformationData) {
+      
+      if (isAddEditOrderContactInformationData.errorMessage.includes('exists')) {
+        ToastService.warning(isAddEditOrderContactInformationData.errorMessage);
+        return;
+      }
+      ToastService.success(isAddEditOrderContactInformationData.errorMessage);
+      moveNextPage();
+    }
+  }, [isAddEditOrderContactInformationSuccess, isAddEditOrderContactInformationData]);
+
   const formActionHandler = {
     CHECK_CHANGE: handleCheckboxChanges
   };
+
+  useImperativeHandle(conatctRef, () => ({
+    handleAddOrderConatct,
+  }));
+
+  const handleAddOrderConatct = () => {
+    let data = basicInformation.current.getFormData();
+    if (data) {
+      console.log("datrw" , data)
+      // let request = {
+      //   orderId: orderId ? orderId : 0,
+      //   isEndUser: true,
+      //   endUserContactId: 0,
+      //   isInvoiceSubmission: true,
+      //   invoiceSubmissionContactId: 0,
+      //   isPurchasing: true,
+      //   purchasingContactId: 0,
+      //   // referenceNumber: string
+      // }
+      // addEditOrderContactInformation(request)
+    }
+  }
 
 
   return (

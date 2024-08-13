@@ -18,9 +18,40 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+
+        addEditOrderContactInformation: builder.mutation({
+            query: (data) => ({
+                url: '/Order/AddEditOrderContactInformation',
+                method: 'POST',
+                body: transformRequest(data)
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
+        checkPoNumberExistOrNot: builder.mutation({
+            query: (Details) => ({
+                url: '/Order/CheckPoNumberExistOrNot',
+                method: 'POST',
+                body: transformRequest(Details)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
+        getPoNumberDetailsByPoNumber: builder.query({
+            query: (number) => ({
+                url: encryptQueryString(`/Order/GetPoNumberDetailsByPoNumber/?poNumber=${String(number)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
-export const { useAddEditOrderInformationMutation } = orderAPI;
+export const { useAddEditOrderInformationMutation  , useAddEditOrderContactInformationMutation , useCheckPoNumberExistOrNotMutation , useLazyGetPoNumberDetailsByPoNumberQuery,
+} = orderAPI;
 
 export default orderAPI;

@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const addressFormData = {
   // name: "Email From",
-  initialState: { addressTypeId: ""  , addressLine1:"" , addressLine2:"" , addressLine3:"" , addressLine4:"" , addressLine5 :"" , countryId:233 , stateId:"" ,zipCode:"", cityId:"" , supplierId : 0 , isPreferredBilling:false , isShippingAndBilling:false , isPreferredShipping:false},
+  initialState: { addressTypeId: "", addressLine1: "", addressLine2: "", addressLine3: "", addressLine4: "", addressLine5: "", countryId: 233, stateId: "", zipCode: "", cityId: "", supplierId: 0, isPreferredBilling: false, isShippingAndBilling: false, isPreferredShipping: false , stateName:"" , cityName : "" },
   formFields: [
     {
       id: "addressTypeId",
@@ -21,7 +21,7 @@ export const addressFormData = {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input",
       },
     },
-    
+
     {
       id: "addressLine1",
       lable: "Address Line 1 ",
@@ -121,7 +121,7 @@ export const addressFormData = {
       id: "stateId",
       lable: "State ",
       Field_Name: "State",
-      fieldType: FormFieldTypes.SELECT,
+      fieldType: FormFieldTypes.EDITABLEDROPDOWN,
       dataField: "stateId",
       fieldSetting: {
         isDisabled: false,
@@ -137,7 +137,7 @@ export const addressFormData = {
       id: "cityId",
       lable: "City ",
       Field_Name: "City",
-      fieldType: FormFieldTypes.SELECT,
+      fieldType: FormFieldTypes.EDITABLEDROPDOWN,
       dataField: "cityId",
       fieldSetting: {
         isDisabled: true,

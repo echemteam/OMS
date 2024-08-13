@@ -183,7 +183,7 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
                                     Object.entries(documentListData).map(([type, items], index) => (
                                         <React.Fragment key={index}>
                                             <div className="col-xl-4 col-lg-4 col-md-4 col-12">
-                                                {items.map((data ) => (
+                                                {items.map((data) => (
                                                     <div className="documents" key={data.customerDocumentId}>
                                                         <div className="left-icons">
                                                             <Image imagePath={data.documentIcon} alt="Document Icon" />
@@ -195,6 +195,9 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
                                                                 <div className="document-type">{data.attachment}</div>
                                                             </div>
                                                             <div className="document-action">
+                                                                {/* <span className="action-icon" onClick={() => onHandleEditDocument(data)} >
+                                                                    <Image imagePath={AppIcons.editIcon} alt="Edit Icon" />
+                                                                </span> */}
                                                                 {
                                                                     getFileType && getFileType.length > 0 &&
                                                                     (["pdf", "csv", "docx", "xlsx"].includes(determineFileType(data.attachment))) &&
@@ -227,7 +230,7 @@ const DocumentList = forwardRef(({ keyId, isSupplier, downloadDocument, deleteDo
                 </div>
             </div>
             <CenterModel showModal={isModalOpen} handleToggleModal={handleToggleModal}
-                modalTitle="File Preview" modelSizeClass="w-40">
+                modalTitle="File Preview" modelSizeClass="w-55">
                 <div className="model-hight-fix">
                     {selectedDocument && getFileType &&
                         <FileViewer

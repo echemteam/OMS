@@ -7,7 +7,7 @@ export const addEditContactsFormData = {
   initialState: {
     phoneCode: '+1',
     phoneNumber: '',
-    phoneTypeId: '',
+    phoneTypeId: 2,
     extension: 0,
     id: 0,
     isPrimaryPhoneNumber: false

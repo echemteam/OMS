@@ -28,6 +28,9 @@ const FormEditableSelectField = ({
             } else if (fieldType === "dropdown") {
                 onChange(dataField, selectedValue.value);
             }
+            if (fieldActions && oteherProps?.isEnableOnChange) {
+                fieldActions('DDL_CHANGED', dataField, selectedValue);
+              }
         }
     };
 

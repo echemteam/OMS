@@ -96,7 +96,7 @@ const RegisteredBankAddressDetail = ({ registeredBankAddressData, registeredBank
   };
 
   return (
-    <CardSection cardTitle="Remit To Address">
+    <CardSection cardTitle="Remittance Address">
       <div className="row">
         <FormCreator
           config={formData}

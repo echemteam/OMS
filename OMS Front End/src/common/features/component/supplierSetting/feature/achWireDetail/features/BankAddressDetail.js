@@ -93,7 +93,7 @@ const BankAddressDetail = ({ bankAddressData, bankAddressFormData, bankFormRef, 
   };
 
   return (
-    <CardSection cardTitle="Bank Address">
+    <CardSection cardTitle="Bank Address Details">
       <div className="row">
         <FormCreator
           config={formData}

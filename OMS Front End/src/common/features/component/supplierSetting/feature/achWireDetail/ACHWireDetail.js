@@ -361,44 +361,8 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
 
   return (
     <div className="ach-wire-section">
-      {/* <CardSection cardTitle="Bank Address">
-        <div className="row">
-          <FormCreator
-            config={bankAddressData}
-            ref={bankFormRef}
-            {...bankAddressData}
-            key={shouldRerenderFormCreator}
-            onActionChange={formBackAddressActionHandler}
-          />
-        </div>
-      </CardSection> */}
-
-      <BankAddressDetail bankFormRef={bankFormRef} bankAddressFormData={bankAddressFormData}
-        bankAddressData={bankAddressData}
-        setShouldRerenderFormCreator={setShouldRerenderFormCreator}
-        isGetACHWireBySupplierIdSuccess={isGetACHWireBySupplierIdSuccess}
-        isGetACHWireBySupplierIdData={isGetACHWireBySupplierIdData}
-      />
-      {/* <CardSection cardTitle="Remit to Address">
-        <div className="row">
-          <FormCreator
-            config={registeredBankAddressData}
-            ref={registeredFormRef}
-            {...registeredBankAddressData}
-            key={shouldRerenderFormCreator}
-            onActionChange={formRegisteredActionHandler}
-          />
-        </div>
-      </CardSection> */}
-      <RegisteredBankAddressDetail registeredBankAddressData={registeredBankAddressData}
-        registeredBankAddressForm={registeredBankAddressForm}
-        registeredFormRef={registeredFormRef}
-        isGetACHWireBySupplierIdSuccess={isGetACHWireBySupplierIdSuccess}
-        isGetACHWireBySupplierIdData={isGetACHWireBySupplierIdData}
-        setShouldRerenderFormCreator={setShouldRerenderFormCreator}
-      />
-
-      <CardSection cardTitle="Other Details">
+     
+      <CardSection cardTitle="Beneficiary Details">
         <div className="row">
           <FormCreator
             config={achWireData}
@@ -407,6 +371,21 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
           />
         </div>
       </CardSection>
+
+      <BankAddressDetail bankFormRef={bankFormRef} bankAddressFormData={bankAddressFormData}
+        bankAddressData={bankAddressData}
+        setShouldRerenderFormCreator={setShouldRerenderFormCreator}
+        isGetACHWireBySupplierIdSuccess={isGetACHWireBySupplierIdSuccess}
+        isGetACHWireBySupplierIdData={isGetACHWireBySupplierIdData}
+      />
+      
+      <RegisteredBankAddressDetail registeredBankAddressData={registeredBankAddressData}
+        registeredBankAddressForm={registeredBankAddressForm}
+        registeredFormRef={registeredFormRef}
+        isGetACHWireBySupplierIdSuccess={isGetACHWireBySupplierIdSuccess}
+        isGetACHWireBySupplierIdData={isGetACHWireBySupplierIdData}
+        setShouldRerenderFormCreator={setShouldRerenderFormCreator}
+      />
 
       <div className="col-md-12">
         <div className="d-flex align-item-end justify-content-end" >

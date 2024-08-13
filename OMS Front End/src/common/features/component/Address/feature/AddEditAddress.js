@@ -13,6 +13,7 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import PropTypes from 'prop-types';
+import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 const SetInitialCountry = {
     label: "United States",
@@ -27,6 +28,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
     const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
     const [selectedCheckbox, setSelectedCheckbox] = useState(null);
+    const [addressEditTableId, setAddressEditTableId] = useState(0)
     // const [stateChage, setStateChange] = useState(null)
 
     //** API Call's */
@@ -145,6 +147,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     useEffect(() => {
         if (!isGetByIdFetching && isGetByIdSuccess && isGetByIdData) {
+            setAddressEditTableId(isGetByIdData.addressId)
             let form = { ...formData };
             let data = isGetByIdData;
             if (!isButtonDisable) {
@@ -275,14 +278,38 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     const buildTransformedData = (data, isSupplier, keyId, editMode) => {
         const addressTypeIdValue = getAddressTypeId(data, isSupplier, editMode);
+        const transformLocationData = (locationData, nameField) => {
+            if (typeof locationData === 'object') {
+                if (locationData.isNew) {
+                    return {
+                        id: 0, // Set id to 0 for new entries
+                        name: locationData.text || "", // Use the text for the name, or an empty string if not provided
+                    };
+                } else {
+                    return {
+                        id: locationData.value || locationData.id || 0, // Use existing value or id, or fallback to 0
+                        name: nameField || "", // Use existing nameField or fallback to an empty string
+                    };
+                }
+            }
+            return {
+                id: locationData || 0, // Use locationData if present, otherwise 0
+                name: nameField || "", // Use nameField if present, otherwise an empty string
+            };
+        };
+
+        const { id: stateId, name: stateName } = transformLocationData(data.stateId, data.stateName);
+        const { id: cityId, name: cityName } = transformLocationData(data.cityId, data.cityName);
 
         return {
             ...data,
             [isSupplier ? 'supplierId' : 'customerId']: keyId,
             addressTypeId: extractValue(addressTypeIdValue),
             countryId: extractValue(data.countryId),
-            stateId: extractValue(data.stateId),
-            cityId: extractValue(data.cityId),
+            stateId,
+            cityId,
+            stateName,
+            cityName,
         };
     };
 
@@ -304,7 +331,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
         return {
             ...transformedData,
-            addressId: isGetByIdData.addressId,
+            addressId: isGetByIdData === null ? addressEditTableId : isGetByIdData.addressId,
             customerAddressId,
             supplierAddressId,
         };
@@ -350,12 +377,47 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             });
         } else if (dataField === "stateId") {
             // setStateChange(data.value)
-            getAllCities(data.value)
-            setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
-            ref.current.updateFormFieldValue({
-                stateId: data.value,
-                cityId: null,
-            });
+            if (data) {
+                getAllCities(data.value)
+                // const updatedFormFields = manageData?.formFields?.map(field => {
+                //     if (field.dataField === "cityId") {
+                //         return {
+                //             ...field,
+                //             fieldType: FormFieldTypes.EDITABLEDROPDOWN,  // Replace the fieldType
+                //         };
+                //     }
+                //     return field;
+                // });
+                // manageData.formFields = updatedFormFields;
+                // setFormData(manageData);
+                setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
+                ref.current.updateFormFieldValue({
+                    stateId: data.value,
+                    cityId: null,
+                });
+            } else {
+                // setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, true);
+                ref.current.updateFormFieldValue({
+                    // stateId: data.value,
+                    cityId: null,
+                });
+                // const updatedFormFields = manageData?.formFields?.map(field => {
+                //     if (field.dataField === "cityId" && field.fieldType === FormFieldTypes.EDITABLEDROPDOWN) {
+                //         return {
+                //             ...field,
+                //             fieldType: FormFieldTypes.INPUT,  // Replace the fieldType
+                //         };
+                //     }
+                //     return field;
+                // });
+                // manageData.formFields = updatedFormFields;
+                // setFormData(manageData);
+                // ref.current.updateFormFieldValue({
+                //     // stateId: data.value,
+                //     cityId: null,
+                // });
+            } 
+
         }
         else if (!isSupplier && dataField === "addressTypeId") {
             let filteredFormFields;

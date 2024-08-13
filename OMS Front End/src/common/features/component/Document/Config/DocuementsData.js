@@ -19,13 +19,14 @@ export const DocumentFormData = {
       lable: "Document Type ",
       Field_Name: "Document Type",
       fieldType: FormFieldTypes.SELECT,
+      // fieldType: FormFieldTypes.EDITABLEDROPDOWN,
       dataField: "documentTypeId",
       fieldSetting: {
         placeholder: "Select Document Type",
         isEnableOnChange: true,
         options: []
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
       },
@@ -41,7 +42,7 @@ export const DocumentFormData = {
         allowSpace: true,
         maxLength: 50,
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
       },
