@@ -8,7 +8,7 @@ import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../
 import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
 import { useLazyGetAllCountriesQuery } from "../../../../../../../app/services/basicdetailAPI";
 
-const BankAddressDetail = ({ bankAddressData, bankAddressFormData, bankFormRef, isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData }) => {
+const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData }) => {
   const [formData, setFormData] = useState(bankAddressFormData);
 
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
@@ -107,7 +107,6 @@ const BankAddressDetail = ({ bankAddressData, bankAddressFormData, bankFormRef, 
 };
 
 BankAddressDetail.propTypes = {
-  bankAddressData: PropTypes.object,
   bankAddressFormData: PropTypes.object.isRequired,
   bankFormRef: PropTypes.shape({
     current: PropTypes.shape({
