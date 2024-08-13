@@ -135,9 +135,7 @@ const MolPagination = ({
 						imagePath={AppIcons.arrowIcon}
 						altText="Arrow Icon"
 					/> */}
-          <Iconify 
-		  imgCustomClassName="left-arrow"
-		  icon="solar:alt-arrow-down-outline" />
+          <Iconify icon="solar:alt-arrow-down-outline" className="left-arrow" />
         </button>
         {renderPageNumbers()}
         <button title="Next" onClick={handleNext}>
@@ -146,9 +144,7 @@ const MolPagination = ({
             imagePath={AppIcons.arrowIcon}
             altText="Arrow Icon"
           /> */}
-		  <Iconify 
-		  imgCustomClassName="right-arrow"
-		  icon="solar:alt-arrow-down-outline" />
+          <Iconify className="right-arrow" icon="solar:alt-arrow-down-outline" />            
         </button>
       </div>
     </div>

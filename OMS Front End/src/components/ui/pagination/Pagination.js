@@ -17,17 +17,11 @@ const Pagination = () => {
               imgCustomClassName="left-arrow"
               altText="Arrow Icon"
             /> */}
-            <Iconify
-              imgCustomClassName="left-icon"
-              icon="solar:alt-arrow-down-outline"
-            />
+            <Iconify icon="solar:alt-arrow-down-outline" className="left-arrow" />
           </button>
           <button className="active-button">1</button>
           <button title="Next">
-            <Iconify
-              imgCustomClassName="right-icon"
-              icon="solar:alt-arrow-down-outline"
-            />
+          <Iconify className="right-arrow" icon="solar:alt-arrow-down-outline" />
           </button>
         </div>
       </div>

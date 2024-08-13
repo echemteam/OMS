@@ -54,12 +54,12 @@ export const SecurityRoleGridConfig = {
       customAction: [
         {
           name: "USER",
-          iconName: AppIcons.userIcon,
+          iconName: "mingcute:user-3-line",
           title: "User"
         },
         {
           name: "PERMISSION",
-          iconName: AppIcons.permissionIcon,
+          iconName: "ph:key",
           title: "Permission"
         },
       ],

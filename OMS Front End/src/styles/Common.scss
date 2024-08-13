@@ -1710,6 +1710,7 @@ a {
         img {
           width: 40px;
         }
+        
       }
 
       .right-desc {
@@ -3367,6 +3368,12 @@ input[type="checkbox"]:disabled {
         transition: 0.5s all;
       }
 
+      svg {
+        filter: brightness(100);
+        transform: rotate(90deg);
+        transition: 0.5s all;
+      }
+
       &:hover {
         box-shadow: var(--card-shadow);
         background: linear-gradient(to right, #2d3641db, #000000db);
@@ -3379,6 +3386,10 @@ input[type="checkbox"]:disabled {
         background: linear-gradient(to right, #2d3641db, #000000db);
 
         img {
+          transform: rotate(270deg);
+        }
+        
+        svg {
           transform: rotate(270deg);
         }
       }
@@ -3501,7 +3512,7 @@ input[type="checkbox"]:disabled {
   }
 }
 .action-button {
-  cursor: pointer !important;
+  // cursor: pointer !important;
 }
 
 .main-organiazation-history {
@@ -3631,4 +3642,12 @@ input[type="checkbox"]:disabled {
       padding: 10px 0;
     }
   }
+}
+
+.disable-icon{
+font-size: var(--commonFont-large) !important;
+}
+.freeze-icon{
+  font-size: var(--commonFont-large) !important;
+  color: #7ed6ec !important;
 }

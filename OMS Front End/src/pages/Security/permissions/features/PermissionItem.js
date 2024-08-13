@@ -31,8 +31,8 @@ const PermissionItem = ({ item, level, onParenetUpdate }) => {
                 <div className="drop-menu-icon" onClick={onItemExpand}>
                     {item.children.length > 0 ? (
                         <div className="arrow-icon">
-                            {/* <Image imagePath={AppIcons.arrowIcon} altText="tree-icon" /> */}
-                            <Iconify icon="solar:alt-arrow-down-outline" />
+                            <Image imagePath={AppIcons.arrowIcon} altText="tree-icon" />
+                            {/* <Iconify icon="solar:alt-arrow-down-outline" /> */}
                         </div>) : (null)}
                     <Image imagePath={item.children.length > 0 || level === 0 ? AppIcons.folderIcon : AppIcons.subFolderIcon} altText="tree-icon" />
                 </div>

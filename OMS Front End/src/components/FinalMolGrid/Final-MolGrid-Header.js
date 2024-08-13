@@ -82,7 +82,7 @@ const FinalMolGridHeader = (props) => {
             altText="Arrow Icon"
           /> */}
           <Iconify
-		  imgCustomClassName="order-icon"
+		  className="order-icon"
 		  icon="solar:alt-arrow-down-outline" />
         </button>
         {shortColObj ? (
@@ -96,8 +96,8 @@ const FinalMolGridHeader = (props) => {
                 }}
               >
                 {/* <Image
-                                    imagePath={AppIcons.crossIcon}
-                                    altText="cancel"
+                imagePath={AppIcons.crossIcon}
+                altText="cancel"
                                 /> */}
                 <Iconify icon="maki:cross" />
               </button>

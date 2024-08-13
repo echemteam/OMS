@@ -206,8 +206,7 @@ const Input = ({
                   {showPassword ? (
                     <Image imagePath={AppIcons.EyeSlashIcon} altText="Password Hide" />
                   ) : (
-                    // <Image imagePath={AppIcons.EyeIcon} altText="Password Show" />
-                    <Iconify icon="lets-icons:view-light" />
+                    <Image imagePath={AppIcons.EyeIcon} altText="Password Show" />
                   )}
                 </div>
               )}
