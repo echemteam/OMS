@@ -8,15 +8,15 @@ import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicde
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 
-const PhysicalAddressDetail=({physicalAddressData,physicalAddressRef,PhysicalAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{
+const PhysicalAddressDetail=({physicalAddressRef,PhysicalAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{
   const [physicalFormData,setPhysicalFormData]=useState(PhysicalAddressForm)
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-  const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllStates, {isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
     
     useEffect(() => {
-      if (isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.physicalAddress) {
+      if (!isGetAllStateFetching && isGetAllStateSuccess && isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.physicalAddress) {
         const { physicalAddress } = isGetOrganizationBusinessAddressesData;
         let data = { ...physicalFormData };
         if (physicalAddress.countryId) {
@@ -38,7 +38,7 @@ const PhysicalAddressDetail=({physicalAddressData,physicalAddressRef,PhysicalAdd
         };
         setPhysicalFormData(data);
       }
-    }, [isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
+    }, [isGetAllStateFetching , isGetAllStateSuccess,isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
 
     useEffect(() => {
       getAllCountries();
@@ -96,9 +96,9 @@ const PhysicalAddressDetail=({physicalAddressData,physicalAddressRef,PhysicalAdd
         <CardSection cardTitle="Physical Address">
             <div className="row">
               <FormCreator
-                config={physicalAddressData}
+                config={physicalFormData}
                 ref={physicalAddressRef}
-                {...physicalAddressData}
+                {...physicalFormData}
                 onActionChange={formAddressActionHandler}
               />
             </div>
@@ -109,7 +109,7 @@ const PhysicalAddressDetail=({physicalAddressData,physicalAddressRef,PhysicalAdd
 
 // PropTypes for the component
 PhysicalAddressDetail.propTypes = {
-  physicalAddressData: PropTypes.object.isRequired,
+ 
   physicalAddressRef: PropTypes.object.isRequired,
   PhysicalAddressForm: PropTypes.object.isRequired,
 };

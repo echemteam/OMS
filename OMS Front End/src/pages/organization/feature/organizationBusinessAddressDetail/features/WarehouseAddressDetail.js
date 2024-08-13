@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect ,useState} from "react";
 import PropTypes from "prop-types";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../components/ui/card/CardSection";
@@ -7,17 +7,17 @@ import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
-import { useState } from "react";
 
-const WarehouseAddressDetail=({warehouseAddressData,warehouseAddressRef,WarehouseAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{;
+
+const WarehouseAddressDetail=({warehouseAddressRef,WarehouseAddressForm,isGetOrganizationBusinessAddressesData,isGetOrganizationBusinessAddressesSuccess})=>{;
   const [warehouseAddressFormData,setWarehouseAddressFormData]=useState(WarehouseAddressForm)
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-  const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllStates, { isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching,data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
     
     useEffect(() => {
-      if (isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.warehouseAddress) {
+      if (!isGetAllStateFetching && isGetAllStateSuccess && isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.warehouseAddress) {
         const { warehouseAddress } = isGetOrganizationBusinessAddressesData;
         let data = { ...warehouseAddressFormData };
         if (warehouseAddress.countryId) {
@@ -39,7 +39,7 @@ const WarehouseAddressDetail=({warehouseAddressData,warehouseAddressRef,Warehous
         };
         setWarehouseAddressFormData(data);
       }
-    }, [isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
+    }, [isGetAllStateFetching , isGetAllStateSuccess,isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
 
     useEffect(() => {
       getAllCountries();
@@ -96,9 +96,9 @@ const WarehouseAddressDetail=({warehouseAddressData,warehouseAddressRef,Warehous
         <CardSection cardTitle="Warehouse Address">
             <div className="row">
               <FormCreator
-                config={warehouseAddressData}
+                config={warehouseAddressFormData}
                 ref={warehouseAddressRef}
-                {...warehouseAddressData}
+                {...warehouseAddressFormData}
                 onActionChange={formAddressActionHandler}
               />
             </div>
