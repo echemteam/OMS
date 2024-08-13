@@ -13,7 +13,9 @@ import DataLoader from "../../../components/ui/dataLoader/DataLoader";
 import Iconify from "../../../components/ui/iconify/Iconify";
 import { useUpdateApprovalRequestsStatusMutation } from "../../../app/services/ApprovalAPI";
 import ToastService from "../../../services/toastService/ToastService";
-import Buttons from "../../../components/ui/button/Buttons";
+import { Button } from "react-bootstrap";
+import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
+//import Buttons from "../../../components/ui/button/Buttons";
 
 const parseJson = (jsonStr) => {
   try {
@@ -48,7 +50,7 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
 
 const formatBoolean = (value) => (value ? "True" : "False");
 
-const TaskDetail = ({ approvedData, isFetching }) => {
+const TaskDetail = ({ approvalRequestId, approvedData, isFetching, getApprovalRequestsByApprovalRequestId }) => {
   const navigate = useNavigate();
 
   const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
@@ -56,6 +58,7 @@ const TaskDetail = ({ approvedData, isFetching }) => {
   useEffect(() => {
     if (isUpdateSuccess && isUpdateData) {
       ToastService.success(isUpdateData.errorMessage);
+      getApprovalRequestsByApprovalRequestId(approvalRequestId);
     }
   }, [isUpdateSuccess, isUpdateData]);
 
@@ -96,8 +99,20 @@ const TaskDetail = ({ approvedData, isFetching }) => {
     }
   };
 
-  const handleApprovalRequest = (data) => {
-    updateApprovalRequest(data);
+  const handleApprovalRequest = () => {
+    approvalStatus(MyTaskStatus.Accept);
+  }
+
+  const handleRejectRequest = () => {
+    approvalStatus(MyTaskStatus.Pending);
+  }
+
+  const approvalStatus = (status) => {
+    let request = {
+      status: status,
+      approvalRequestId: approvalRequestId
+    }
+    updateApprovalRequest(request);
   }
 
   return (
@@ -126,43 +141,6 @@ const TaskDetail = ({ approvedData, isFetching }) => {
           )}
         </div>
       </div>
-
-      {/* <div className="customer-information">
-        <div>
-          <span className="customer-id">Field Name: <span>{fieldName}</span></span>
-          <span className="customer-name">Status: <span className={`${getLabelClass(status)}`}>{status}</span></span>
-        </div>
-
-        <div className="d-flex">
-          <div className="old-detail col-6">
-            <h3 className="detail-head">Old Value</h3>
-            <div className="detail">
-              {fieldName && oldFieldValue !== 'N/A' ? (
-                <>
-                  <div className="detail-btn mb-2">{fieldName}</div>
-                  <span className="customer-details">{fieldName} </span>: {typeof oldFieldValue === 'boolean' ? formatBoolean(oldFieldValue) : oldFieldValue}
-                </>
-              ) : (
-                <div>No old value available</div>
-              )}
-            </div>
-          </div>
-          <div className="new-detail col-6">
-            <h3 className="detail-head">New Value</h3>
-            <div className="detail">
-              {fieldName && newFieldValue !== 'N/A' ? (
-                <>
-                  <div className="detail-btn mb-2">{fieldName}</div>
-                  <span className="customer-details">{fieldName} </span>: {typeof newFieldValue === 'boolean' ? formatBoolean(newFieldValue) : newFieldValue}
-                </>
-              ) : (
-                <div>No new value available</div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       <div className="customer-information">
         <div className="info-row">
           <span className="info-label">Field Name : </span>
@@ -173,7 +151,6 @@ const TaskDetail = ({ approvedData, isFetching }) => {
           <span className={`ml-2 ${getLabelClass(status)}`}>{status}</span>
         </div>
       </div>
-
       <div className="value-comparison">
         <div className="value-block">
           <h3 className="value-title">Old Value</h3>
@@ -208,15 +185,15 @@ const TaskDetail = ({ approvedData, isFetching }) => {
       </div>
 
       <div className="task-footer mt-3 pr-3">
-        <Buttons buttonTypeClassName="reject-btn" onClick={handleApprovalRequest}>
+        <Button className="reject-btn" onClick={handleRejectRequest}>
           {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
           <Iconify icon="gg:close-o" />
           Reject
-        </Buttons>
-        <Buttons buttonTypeClassName="accept-btn" onClick={handleApprovalRequest}>
+        </Button>
+        <Button className="accept-btn" onClick={handleApprovalRequest}>
           <Image imagePath={AppIcons.RightTickIcon} altText="Accept Icon" />
           Accept
-        </Buttons>
+        </Button>
       </div>
     </div>
   );
