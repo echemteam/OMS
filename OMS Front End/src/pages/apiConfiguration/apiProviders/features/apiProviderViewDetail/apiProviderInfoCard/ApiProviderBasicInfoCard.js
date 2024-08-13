@@ -1,6 +1,4 @@
-import Image from "../../../../../../components/image/Image";
 import Iconify from "../../../../../../components/ui/iconify/Iconify";
-import { AppIcons } from "../../../../../../data/appIcons";
 import PropTypes from "prop-types";
  const ApiProviderBasicInfoCard = ({providerFormData,editClick}) => {
   return (     
