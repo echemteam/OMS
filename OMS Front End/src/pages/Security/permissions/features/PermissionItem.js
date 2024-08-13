@@ -5,6 +5,7 @@ import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
 import DropDown from "../../../../components/ui/dropdown/DropDrown";
 import { SelectGrantDenyDropdown, SelectViewEditDropdown } from "../../../../pages/Security/permissions/features/config/securityPermissions.Data";
+import Iconify from "../../../../components/ui/iconify/Iconify";
 //** Component's */
 const PermissionChildItem = React.lazy(() => import("./PermissionChildItem"));
 
@@ -30,7 +31,8 @@ const PermissionItem = ({ item, level, onParenetUpdate }) => {
                 <div className="drop-menu-icon" onClick={onItemExpand}>
                     {item.children.length > 0 ? (
                         <div className="arrow-icon">
-                            <Image imagePath={AppIcons.arrowIcon} altText="tree-icon" />
+                            {/* <Image imagePath={AppIcons.arrowIcon} altText="tree-icon" /> */}
+                            <Iconify icon="solar:alt-arrow-down-outline" />
                         </div>) : (null)}
                     <Image imagePath={item.children.length > 0 || level === 0 ? AppIcons.folderIcon : AppIcons.subFolderIcon} altText="tree-icon" />
                 </div>

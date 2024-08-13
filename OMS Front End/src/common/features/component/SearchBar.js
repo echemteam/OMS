@@ -3,6 +3,7 @@ import Input from "../../../components/ui/inputs/input/Input";
 import "./SearchBar.scss";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
+import Iconify from "../../../components/ui/iconify/Iconify";
 
 function SearchBar(props) {
   return (
@@ -23,7 +24,8 @@ function SearchBar(props) {
                 imgCustomClassName="open-bar"
                 altText="Icon"
               /> */}
-              <span className="bi bi-search"></span>
+              {/* <span className="bi bi-search"></span> */}
+              <Iconify icon="ei:search" />
             </Button>
           </div>
         </div>

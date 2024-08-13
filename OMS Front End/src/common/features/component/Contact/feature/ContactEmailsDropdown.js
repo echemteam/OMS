@@ -3,6 +3,7 @@ import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import PropTypes from "prop-types";
+import Iconify from "../../../../../components/ui/iconify/Iconify";
 
 const ContactEmailsDropdown = ({
   
@@ -45,7 +46,8 @@ const ContactEmailsDropdown = ({
                   CopyText(primaryEmailAddress?.emailAddress, "email")
                 }
               >
-                <Image imagePath={AppIcons.copyIcon} altText="Icon" />
+                {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
                 {/* <i className="fa fa-files-o"></i> */}
               </span>
             </>
@@ -64,7 +66,9 @@ const ContactEmailsDropdown = ({
                   onClick={() => CopyText(emaildata?.emailAddress, "email")}
                 >
                   {/* <i className="fa fa-files-o"></i> */}
-                  <Image imagePath={AppIcons.copyIcon} altText="Icon" />
+                  {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
+
                 </span>
               </span>
             

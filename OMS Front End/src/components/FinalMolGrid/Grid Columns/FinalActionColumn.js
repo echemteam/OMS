@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { AppIcons } from "../../../data/appIcons";
 import Image from "../../../components/image/Image";
 import Tooltip from "../../ui/tooltip/Tooltip";
+import Iconify from "../../ui/iconify/Iconify";
 
 export const renderGridAction = (
   rowData,
@@ -54,7 +55,10 @@ export const renderGridAction = (
           }}
           className="mr-4 tooltip"
         >
-          <Image imagePath={AppIcons.editIcon} altText="Edit Icon" />
+          {/* <Image imagePath={AppIcons.editIcon} altText="Edit Icon" /> */}
+          <Iconify 
+          icon="tabler:pencil" 
+          />
           <Tooltip text="Edit" />
         </Link>
       )}
@@ -99,7 +103,10 @@ export const renderGridAction = (
           className="mr-4 tooltip"
           title="DELETE"
         >
-          <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" />
+          {/* <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" /> */}
+          <Iconify
+          icon="mingcute:delete-2-line" 
+          />
           <Tooltip text="Delete" />
         </Link>
       )}

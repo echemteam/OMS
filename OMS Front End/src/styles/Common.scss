@@ -290,7 +290,7 @@ a {
       justify-content: center;
       cursor: pointer;
 
-      img {
+      svg {
         filter: brightness(100);
         transform: rotate(90deg);
         transition: 0.5s all;
@@ -444,7 +444,7 @@ a {
           opacity: 1;
 
           .click-btn {
-            img {
+            svg {
               transform: rotate(270deg);
             }
           }

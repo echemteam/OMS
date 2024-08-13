@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AppIcons } from "../../../data/appIcons";
 import Image from "../../image/Image";
 import "./pagination.scss";
+import Iconify from "../../ui/iconify/Iconify";
 
 const MolPagination = ({
   pageSize,
@@ -10,7 +11,6 @@ const MolPagination = ({
   onPageChange,
   onPageSizeChange,
 }) => {
-
   const [inputPage, setInputPage] = useState(currentPage);
 
   const handlePrevious = () => {
@@ -67,10 +67,9 @@ const MolPagination = ({
           key={i}
           className={i === currentPage ? "active-button" : ""}
           onClick={() => {
-            onPageChange(i)
-            setInputPage(i)
-          }
-          }
+            onPageChange(i);
+            setInputPage(i);
+          }}
         >
           {i}
         </button>
@@ -137,18 +136,26 @@ const MolPagination = ({
         </div>
         <div className="gap-2 pagination">
           <button title="Previous" onClick={handlePrevious}>
-            <Image
+            {/* <Image
               imgCustomClassName="left-arrow"
               imagePath={AppIcons.arrowIcon}
               altText="Arrow Icon"
+            /> */}
+            <Iconify
+              imgCustomClassName="left-arrow"
+              icon="solar:alt-arrow-down-outline"
             />
           </button>
           {renderPageNumbers()}
           <button title="Next" onClick={handleNext}>
-            <Image
+            {/* <Image
               imgCustomClassName="right-arrow"
               imagePath={AppIcons.arrowIcon}
               altText="Arrow Icon"
+            /> */}
+            <Iconify
+              imgCustomClassName="right-icon"
+              icon="solar:alt-arrow-down-outline"
             />
           </button>
         </div>

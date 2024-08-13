@@ -4,6 +4,7 @@ import Image from "../../../../components/image/Image";
 import { OrderTabEnum } from "../../../../utils/Enums/commonEnums";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
+import Iconify from "../../../../components/ui/iconify/Iconify";
 // import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
 
 const ContactDetails = React.lazy(() =>
@@ -79,7 +80,8 @@ const AddOrderTab = () => {
                   </div>
                   {index < tabContents.length - 1 && (
                     <div className="right-arrow">
-                      <Image imagePath={AppIcons.arrowIcon} alt="Arrow" />
+                      {/* <Image imagePath={AppIcons.arrowIcon} alt="Arrow" /> */}
+                      <Iconify icon="solar:alt-arrow-down-outline" />
                     </div>
                   )}
                 </React.Fragment>
@@ -101,7 +103,8 @@ const AddOrderTab = () => {
                             className="btn dark-btn mr-3 btn-prev"
                             onClick={movePreviewPage}
                           >
-                            <Image imagePath={AppIcons.nextArrowIcon} /> Back
+                            {/* <Image imagePath={AppIcons.nextArrowIcon} /> Back */}
+                            <Iconify icon="solar:alt-arrow-down-outline" /> Back
                           </button>
                         )}
                         <button
@@ -109,7 +112,8 @@ const AddOrderTab = () => {
                           className="btn theme-button ml-3 btn-next"
                           onClick={() => addOrder(step.tab)}
                         >
-                          Next<Image imagePath={AppIcons.nextArrowIcon} /> 
+                          {/* Next<Image imagePath={AppIcons.nextArrowIcon} />  */}
+                          Next <Iconify icon="solar:alt-arrow-down-outline" /> 
                         </button>
                         {/* <button
                           type="button"

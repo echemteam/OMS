@@ -6,6 +6,7 @@ import { PatternFormat } from 'react-number-format';
 import "./Input.scss"
 import Image from "../../../image/Image";
 import { AppIcons } from "../../../../data/appIcons";
+import Iconify from "../../iconify/Iconify";
 
 const excptIntSymbol = ["e", "E", "+", "-", "."];
 const excptDecimalSymbol = ["e", "E", "+", "-"];
@@ -205,7 +206,8 @@ const Input = ({
                   {showPassword ? (
                     <Image imagePath={AppIcons.EyeSlashIcon} altText="Password Hide" />
                   ) : (
-                    <Image imagePath={AppIcons.EyeIcon} altText="Password Show" />
+                    // <Image imagePath={AppIcons.EyeIcon} altText="Password Show" />
+                    <Iconify icon="lets-icons:view-light" />
                   )}
                 </div>
               )}
