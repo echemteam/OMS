@@ -13,11 +13,11 @@ const WarehouseAddressDetail=({warehouseAddressRef,WarehouseAddressForm,isGetOrg
   const [warehouseAddressFormData,setWarehouseAddressFormData]=useState(WarehouseAddressForm)
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-  const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllStates, { isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching,data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
     
     useEffect(() => {
-      if (isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.warehouseAddress) {
+      if (!isGetAllStateFetching && isGetAllStateSuccess && isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.warehouseAddress) {
         const { warehouseAddress } = isGetOrganizationBusinessAddressesData;
         let data = { ...warehouseAddressFormData };
         if (warehouseAddress.countryId) {
@@ -39,7 +39,7 @@ const WarehouseAddressDetail=({warehouseAddressRef,WarehouseAddressForm,isGetOrg
         };
         setWarehouseAddressFormData(data);
       }
-    }, [isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
+    }, [isGetAllStateFetching , isGetAllStateSuccess,isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
 
     useEffect(() => {
       getAllCountries();

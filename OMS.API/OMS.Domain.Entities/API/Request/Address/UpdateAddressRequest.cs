@@ -12,7 +12,10 @@
         public string? AddressLine4 { get; set; }
         public string? AddressLine5 { get; set; }
         public int? CityId { get; set; }
+        public string? CityName { get; set; }
         public int? StateId { get; set; }
+        public string? StateName { get; set; }
+
         public short? CountryId { get; set; }
         public int? ZipCode { get; set; }
         public int? SupplierId { get; set; }

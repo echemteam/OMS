@@ -17,21 +17,21 @@ const FormEditableSelectField = ({
     placeholder,
     fieldActions,
     isMultiSelect,
-  overRideProps,
+    overRideProps,
     ...oteherProps
 }) => {
 
     const handleInputChange = (e, fieldType, selectedValue) => {
         if (onChange) {
             if (fieldType === "input") {
-                onChange(dataField, {text:e.target.value,isNew:true});
+                onChange(dataField, { text: e.target.value, isNew: true });
             } else if (fieldType === "dropdown") {
                 onChange(dataField, selectedValue.value);
             }
         }
     };
 
-   
+
 
     const handleOnBlur = () => {
         if (onValidation) {
@@ -43,7 +43,7 @@ const FormEditableSelectField = ({
         <>
             <div className="input-label-part">
 
-                {labelName && labelName !== "" && <Label labelName={labelName} for={name} />}
+                {labelName && labelName !== "" && <Label labelName={labelName} for={name} isRequired={oteherProps.isRequired} />}
                 <EditableDropdown
                     options={options}
                     dataField={dataField}
@@ -51,7 +51,7 @@ const FormEditableSelectField = ({
                     onBlur={handleOnBlur}
                     value={value}
                     placeholder={placeholder}
-                    isText ={oteherProps.isText}
+                    isText={oteherProps.isText}
                     {...oteherProps}
                 />
             </div>
@@ -69,7 +69,7 @@ FormEditableSelectField.propTypes = {
     value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
-        PropTypes.object  
+        PropTypes.object
     ]),
     formSetting: PropTypes.shape({
         isViewOnly: PropTypes.bool,
@@ -87,6 +87,6 @@ FormEditableSelectField.propTypes = {
         isText: PropTypes.bool,
         isDisable: PropTypes.bool
     }),
-    oteherProps: PropTypes.object  
+    oteherProps: PropTypes.object
 };
 export default FormEditableSelectField

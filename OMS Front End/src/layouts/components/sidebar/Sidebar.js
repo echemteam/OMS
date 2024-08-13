@@ -3,6 +3,7 @@ import "./Sidebar.scss";
 import { Link } from "react-router-dom";
 import { Menu } from "../menu/Menu";
 import { hasPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
+import Iconify from "../../../components/ui/iconify/Iconify";
 
 const Sidebar = (props) => {
   const [selectedMenu, setSelectedMenu] = useState(null);
@@ -18,7 +19,7 @@ const Sidebar = (props) => {
 
   const handleChildClick = (e, menu) => {
     setClickedValueSubMenu(menu);
-    e.stopPropagation(); // Prevent the click event from bubbling up
+    e.stopPropagation();
   };
 
   return (
@@ -48,7 +49,7 @@ const Sidebar = (props) => {
                             to={menuItem.to}
                             className={menuItem.subMenu ? "menu-arrow" : ""}
                           >
-                            <i className={menuItem.iconClass}></i>
+                            <Iconify icon={menuItem.iconClass} />
                             <span>{menuItem.name}</span>
                           </Link>
                           {menuItem.subMenu && (

@@ -106,3 +106,19 @@
     margin: 0 9px;
   }
 }
+
+.radio-grid{
+  .molgrid-2{
+    table{
+      tbody{
+        tr{
+          td:nth-child(1){
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}

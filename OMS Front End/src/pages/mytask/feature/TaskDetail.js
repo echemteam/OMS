@@ -10,6 +10,7 @@ import { getLabelClass } from "../../../utils/StatusColors/StatusColors";
 import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
 import { encryptUrlData } from "../../../services/CryptoService";
 import DataLoader from "../../../components/ui/dataLoader/DataLoader";
+import Iconify from "../../../components/ui/iconify/Iconify";
 
 const parseJson = (jsonStr) => {
   try {
@@ -33,7 +34,7 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
         return values[key];
       }
     }
-    return 'N/A';
+    return "N/A";
   };
 
   const oldValue = findValue(oldValues, fieldNameLower);
@@ -45,7 +46,6 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
 const formatBoolean = (value) => (value ? "True" : "False");
 
 const TaskDetail = ({ approvedData, isFetching }) => {
-
   const navigate = useNavigate();
 
   if (isFetching) {
@@ -53,20 +53,25 @@ const TaskDetail = ({ approvedData, isFetching }) => {
   }
 
   if (!approvedData) {
-    return <div><NoRecordFound /></div>;
+    return (
+      <div>
+        <NoRecordFound />
+      </div>
+    );
   }
 
   const {
-    requestedByUserName = 'Unknown User',
-    functionalityName = 'No Functionality',
+    requestedByUserName = "Unknown User",
+    functionalityName = "No Functionality",
     requestedDate,
-    fieldName = 'No Field Name',
-    status = 'No Status',
-    oldValue = '{}',
-    newValue = '{}',
+    fieldName = "No Field Name",
+    status = "No Status",
+    oldValue = "{}",
+    newValue = "{}",
   } = approvedData;
 
-  const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(oldValue, newValue, fieldName);
+  const { oldValue: oldFieldValue, newValue: newFieldValue } =
+    getFieldDifference(oldValue, newValue, fieldName);
 
   const newValues = parseJson(newValue);
   const { customerId, supplierId } = newValues;
@@ -85,14 +90,20 @@ const TaskDetail = ({ approvedData, isFetching }) => {
     <div className="task-detail">
       <div className="task-head">
         <div className="d-flex align-items-center">
-          <span className="profile-icon">{FirstSecondLetter(requestedByUserName)}</span>
+          <span className="profile-icon">
+            {FirstSecondLetter(requestedByUserName)}
+          </span>
           <div className="title">
             {requestedByUserName}
             <span className="sub-title">{functionalityName}</span>
           </div>
         </div>
         <div>
-          <div className="date">{requestedDate ? formatDate(requestedDate, "MM/DD/YYYY hh:mm A") : 'No Date'}</div>
+          <div className="date">
+            {requestedDate
+              ? formatDate(requestedDate, "MM/DD/YYYY hh:mm A")
+              : "No Date"}
+          </div>
           {showRedirectButton && (
             <div className="view-customer" onClick={handleRedirectClick}>
               <Image imagePath={AppIcons.Iicon} altText="View Customer Icon" />
@@ -152,10 +163,14 @@ const TaskDetail = ({ approvedData, isFetching }) => {
       <div className="value-comparison">
         <div className="value-block">
           <h3 className="value-title">Old Value</h3>
-          {fieldName && oldFieldValue !== 'N/A' ? (
+          {fieldName && oldFieldValue !== "N/A" ? (
             <div className="value-content">
               <span className="value-label">{fieldName} : </span>
-              <span className="value-data">{typeof oldFieldValue === 'boolean' ? formatBoolean(oldFieldValue) : oldFieldValue}</span>
+              <span className="value-data">
+                {typeof oldFieldValue === "boolean"
+                  ? formatBoolean(oldFieldValue)
+                  : oldFieldValue}
+              </span>
             </div>
           ) : (
             <div className="no-value">No old value available</div>
@@ -163,10 +178,14 @@ const TaskDetail = ({ approvedData, isFetching }) => {
         </div>
         <div className="value-block">
           <h3 className="value-title">New Value</h3>
-          {fieldName && newFieldValue !== 'N/A' ? (
+          {fieldName && newFieldValue !== "N/A" ? (
             <div className="value-content">
               <span className="value-label">{fieldName} : </span>
-              <span className="value-data">{typeof newFieldValue === 'boolean' ? formatBoolean(newFieldValue) : newFieldValue}</span>
+              <span className="value-data">
+                {typeof newFieldValue === "boolean"
+                  ? formatBoolean(newFieldValue)
+                  : newFieldValue}
+              </span>
             </div>
           ) : (
             <div className="no-value">No new value available</div>
@@ -176,7 +195,8 @@ const TaskDetail = ({ approvedData, isFetching }) => {
 
       <div className="task-footer mt-3 pr-3">
         <Button className="reject-btn">
-          <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" />
+          {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
+          <Iconify icon="gg:close-o" />
           Reject
         </Button>
         <Button className="accept-btn">

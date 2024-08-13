@@ -1,6 +1,7 @@
 import React from 'react'
 import { AppIcons } from '../../../../../../../data/appIcons'
 import Image from '../../../../../../../components/image/Image'
+import Iconify from '../../../../../../../components/ui/iconify/Iconify'
 
 const ThirdPartyApiConfigurationInfoCard = ({ editClick, viewCardDetails }) => {
     return (
@@ -24,7 +25,8 @@ const ThirdPartyApiConfigurationInfoCard = ({ editClick, viewCardDetails }) => {
                     <div className="edit-icons"
                         onClick={editClick}
                     >
-                        <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
+                        {/* <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" /> */}
+                        <Iconify icon="tabler:pencil" />
                     </div>
                 </div>
             </div>

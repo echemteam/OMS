@@ -25,6 +25,7 @@ import { removeFormFields } from '../../../../../utils/FormFields/RemoveFields/h
 import { setDropDownOptionField } from '../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 import { reasonData } from '../../../../../common/features/component/CustomerSupplierReason/Reason.data';
 import { excludingRoles } from '../../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data';
+import Iconify from '../../../../../components/ui/iconify/Iconify';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../supplierApproval/SupplierApproval"));
@@ -301,10 +302,11 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                     CopyText(supplierData?.emailAddress, "email")
                   }
                 >
-                  <Image
+                  {/* <Image
                     imagePath={AppIcons.copyIcon}
                     altText="Website Icon"
-                  />
+                  /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
                 </span>
               </div>
 
@@ -316,10 +318,11 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                   className="copy-icon"
                   onClick={() => CopyText(supplierData?.website, "website")}
                 >
-                  <Image
+                  {/* <Image
                     imagePath={AppIcons.copyIcon}
                     altText="Website Icon"
-                  />
+                  /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
                 </span>
               </div>
             </div>
@@ -408,10 +411,11 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
           </div>
           {showEditIcon ?
             <div className="edit-icons" onClick={editClick}>
-              <Image
+              {/* <Image
                 imagePath={AppIcons.editThemeIcon}
                 altText="Website Icon"
-              />
+              /> */}
+              <Iconify icon="tabler:pencil" />
             </div>
             : null}
         </div>

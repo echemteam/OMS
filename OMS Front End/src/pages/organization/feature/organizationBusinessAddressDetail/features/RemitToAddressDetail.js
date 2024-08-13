@@ -14,7 +14,7 @@ const RemitToAddressDetail=({remitToAddressRef,RemitToAddressForm,isGetOrganizat
   const [remitToAddressFormData,setRemitToAddressFormData]=useState(RemitToAddressForm)
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-  const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllStates, { isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching,data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
   useEffect(() => {
     getAllCountries();
@@ -26,7 +26,7 @@ const RemitToAddressDetail=({remitToAddressRef,RemitToAddressForm,isGetOrganizat
 //   })
     useEffect(() => {
      
-      if (isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.remitToAddress) {
+      if (!isGetAllStateFetching && isGetAllStateSuccess && isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.remitToAddress) {
         const { remitToAddress } = isGetOrganizationBusinessAddressesData;
         let data = { ...remitToAddressFormData };
         if (remitToAddress.countryId) {
@@ -48,7 +48,7 @@ const RemitToAddressDetail=({remitToAddressRef,RemitToAddressForm,isGetOrganizat
         };
         setRemitToAddressFormData(data);
       }
-    }, [isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
+    }, [isGetAllStateFetching , isGetAllStateSuccess,isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
 
    
   

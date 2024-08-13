@@ -14,11 +14,11 @@ const BillToAddressDetail=({billToAddressRef,BillToAddressForm,isGetOrganization
   const [billToAddressFormData,setBillToAddressFormData]=useState(BillToAddressForm)
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-  const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllStates, { isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching,data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
     
     useEffect(() => {
-      if (isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.billToAddress) {
+      if (!isGetAllStateFetching && isGetAllStateSuccess && isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.billToAddress) {
         const { billToAddress } = isGetOrganizationBusinessAddressesData;
         let data = { ...billToAddressFormData };
         if (billToAddress.countryId) {
@@ -40,7 +40,7 @@ const BillToAddressDetail=({billToAddressRef,BillToAddressForm,isGetOrganization
         };
         setBillToAddressFormData(data);
       }
-    }, [isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
+    }, [isGetAllStateFetching , isGetAllStateSuccess,isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
 
     useEffect(() => {
       getAllCountries();

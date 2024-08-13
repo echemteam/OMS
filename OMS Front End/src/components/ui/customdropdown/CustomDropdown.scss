@@ -68,12 +68,12 @@
 }
 
 .css-1nmdiqs-menu {
-  font-size: var(--commonFont-small) !important;
+  font-size: var(--commonFont-medium) !important;
   z-index: 99;
 }
 
 .css-1jqq78o-placeholder {
-  font-size: var(--commonFont-small) !important;
+  font-size: var(--commonFont-medium) !important;
   line-height: normal !important;
 }
 
@@ -114,11 +114,11 @@
 //   width: 50px !important
 // }
 .css-1dimb5e-singleValue {
-  font-size: var(--commonFont-small);
+  font-size: var(--commonFont-medium);
 }
 
 .css-wsp0cs-MultiValueGeneric {
-  font-size: var(--commonFont-small) !important;
+  font-size: var(--commonFont-medium) !important;
 }
 
 .custom-option {
@@ -132,7 +132,7 @@
     white-space: nowrap;
   }
   .option-date {
-    font-size: var(--commonFont-small);
+    font-size: var(--commonFont-medium);
   }
 }
 
@@ -152,7 +152,7 @@
     width: 100%;
     text-align: left;
     margin-left: 10px;
-    font-size: var(--commonFont-small);
+    font-size: var(--commonFont-medium);
   }
 }
 
@@ -257,7 +257,7 @@
       width: 100%;
       text-align: left;
       margin-left: 10px;
-      font-size: var(--commonFont-small);
+      font-size: var(--commonFont-medium);
     }
   }
 
@@ -335,7 +335,7 @@
     gap: 8px;
     cursor: pointer;
     border: none;
-    font-size: var(--commonFont-small);
+    font-size: var(--commonFont-medium);
     background-size: 180% 100%;
     transition: all 0.4s ease-in-out;
     font-weight: 700 !important;
@@ -347,7 +347,7 @@
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
     img {
-      width: var(--commonFont-small);
+      width: var(--commonFont-medium);
       filter: brightness(10);
     }
   }
