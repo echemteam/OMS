@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
+using OMS.Domain.Entities.API.Request.Contact;
 using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.Entity.Approval;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -70,6 +72,17 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(approvalRequestsDetails);
             }
             return APISucessResponce(approvalRequestId);
+        }
+        [HttpPost("UpdateApprovalRequestsStatus")]
+        public async Task<IActionResult> UpdateApprovalRequestsStatus(UpdateApprovalRequestsStatusRequest requestData)
+        {
+            AddEntityDto<int> responseData = new();
+            if (requestData != null)
+            {
+                responseData = await _serviceManager.approvalService.UpdateApprovalRequestsStatus(requestData, CurrentUserId);
+                return APISucessResponce(responseData);
+            }
+            return APISucessResponce(responseData);
         }
         #endregion
     }

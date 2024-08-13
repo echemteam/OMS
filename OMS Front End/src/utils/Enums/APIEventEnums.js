@@ -1,5 +1,5 @@
 export const EventName = {
-    PRODUCTSEARCH: "Product Search",
-    PRODUCTDETAILS: "Product Details",
-    PRODUCTPRICELIST: "Product Price List"
+    AURUMPRODUCTSEARCH: "Aurum Product Search",
+    AURUMPRODUCTDETAILS: "Aurum Product Details",
+    AURUMPRODUCTPRICELIST: "Aurum Product Price List"
 }

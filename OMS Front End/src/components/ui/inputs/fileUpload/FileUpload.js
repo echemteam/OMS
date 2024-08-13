@@ -77,7 +77,7 @@ const FileUpload = ({
           <Image
             imagePath={AppIcons.Uploaddocumenticon}
             altText="Please Upload File"
-          ></Image>
+          ></Image> 
           {/* <Iconify icon="iconamoon:file-document-thin" /> */}
 
           {fileValue ? (

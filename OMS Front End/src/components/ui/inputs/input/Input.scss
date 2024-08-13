@@ -8,6 +8,10 @@
   font-size: var(--commonFont-medium) !important;
   transition: 0.5s all;
 
+  &::placeholder {
+    color: var(--placeholderColor);
+  }
+
   &:focus-visible,
   &:focus {
     border: 1px solid var(--themeColor) !important;
