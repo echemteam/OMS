@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useContext } from "react";
+import React, { useEffect,useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { useUpdateCustomerStatusMutation } from "../../../../app/services/basicdetailAPI";
@@ -7,42 +7,21 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { StatusEnums } from "../../../../utils/Enums/StatusEnums";
 import CardSection from "../../../../components/ui/card/CardSection";
 import Image from "../../../../components/image/Image";
-import {
-  CustomerSettingEnum,
-  CustomerSupplierTabEnum,
-} from "../../../../utils/Enums/commonEnums";
+import { CustomerSettingEnum, CustomerSupplierTabEnum } from "../../../../utils/Enums/commonEnums";
 import { AppIcons } from "../../../../data/appIcons";
-import PropTypes from "prop-types";
-import Iconify from "../../../../components/ui/iconify/Iconify";
+import PropTypes from 'prop-types';
+
 
 //** Compoent's */
-const CustomerBasicDetail = React.lazy(() =>
-  import("../../feature/customerBasicDetail/CustomerBasicDetail")
-);
-const CustomerSettingDetails = React.lazy(() =>
-  import("../../feature/customerSettingDetail/CustomerSettingDetails")
-);
-const CustomerAddressDetail = React.lazy(() =>
-  import("../../feature/customerAddressDetail/CustomerAddressDetail")
-);
-const CustomerDocumentDetail = React.lazy(() =>
-  import("../../feature/customerDocumentDetail/CustomerDocumentDetail")
-);
-const CustomerContactDetail = React.lazy(() =>
-  import("../../feature/customerContactDetail/CustomerContactDetail")
-);
+const CustomerBasicDetail = React.lazy(() => import("../../feature/customerBasicDetail/CustomerBasicDetail"));
+const CustomerSettingDetails = React.lazy(() => import("../../feature/customerSettingDetail/CustomerSettingDetails"));
+const CustomerAddressDetail = React.lazy(() => import("../../feature/customerAddressDetail/CustomerAddressDetail"));
+const CustomerDocumentDetail = React.lazy(() => import("../../feature/customerDocumentDetail/CustomerDocumentDetail"));
+const CustomerContactDetail = React.lazy(() => import("../../feature/customerContactDetail/CustomerContactDetail"));
 
 const AddCustomerTab = () => {
   const navigate = useNavigate();
-  const {
-    activeTab,
-    movePreviewPage,
-    addCustomer,
-    customerId,
-    showSubBackButton,
-    handleActiveSubTabClick,
-    saveFinacialSetting,
-  } = useContext(BasicDetailContext);
+  const { activeTab, movePreviewPage, addCustomer, customerId, showSubBackButton, handleActiveSubTabClick, saveFinacialSetting } = useContext(BasicDetailContext);
 
   const [
     updateCustomerStatus,
@@ -79,21 +58,18 @@ const AddCustomerTab = () => {
     {
       label: "Contact",
       subLabel: "Enter Customer Contact Details",
-      content: (
-        <CustomerContactDetail
-          isEditablePage={false}
-          isSearchFilterShow={false}
-        />
-      ),
+      content: <CustomerContactDetail isEditablePage={false} isSearchFilterShow={false} />,
       tab: CustomerSupplierTabEnum.Contact,
     },
     {
       label: "Setting",
       subLabel: "Enter Customer Shipping Method",
       content: (
-        <div className="mt-0">
-          <CustomerSettingDetails isEditablePage={false} />
-        </div>
+         
+          <div className="mt-0">
+            <CustomerSettingDetails isEditablePage={false} />
+          </div>
+         
       ),
       tab: CustomerSupplierTabEnum.Setting,
     },
@@ -104,6 +80,8 @@ const AddCustomerTab = () => {
       tab: CustomerSupplierTabEnum.Documents,
     },
   ];
+
+ 
 
   const handleSubmit = () => {
     let req = {
@@ -128,10 +106,9 @@ const AddCustomerTab = () => {
           <div className="stepper-header">
             {tabContent.map((step, index) => (
               <React.Fragment key={index}>
-                <div className={`step ${activeTab === index ? "active" : ""}`}>
-                  <button
-                    className="step-button"
-                    // onClick={() => handleTabClick(index)}
+                <div className={`step ${activeTab === index ? "active" : ""}`} >
+                  <button className="step-button"
+                  // onClick={() => handleTabClick(index)}
                   >
                     <span className="stepper-box">{index + 1}</span>
                     <span className="stepper-label">
@@ -142,8 +119,7 @@ const AddCustomerTab = () => {
                 </div>
                 {index < tabContent.length - 1 && (
                   <div className="right-arrow">
-                    {/* <Image imagePath={AppIcons.arrowIcon} /> */}
-                    <Iconify icon="solar:alt-arrow-down-outline" />
+                    <Image imagePath={AppIcons.arrowIcon} />
                   </div>
                 )}
               </React.Fragment>
@@ -152,86 +128,47 @@ const AddCustomerTab = () => {
           <div className="stepper-content">
             <form onSubmit={onSubmit}>
               {tabContent.map((step, index) => (
-                <div
-                  key={index}
-                  className={`content ${activeTab === index ? "active" : ""}`}
-                >
-                  {step.content}
-                  <div className="d-flex justify-content-end">
-                    {index > 0 && !showSubBackButton && (
-                      <button
-                        type="button"
-                        className="btn dark-btn mr-3 btn-prev"
-                        onClick={movePreviewPage}
-                      >
-                        {/* <Image imagePath={AppIcons.nextArrowIcon} />  */}
-                    <Iconify icon="solar:alt-arrow-down-outline" /> Back
-                      </button>
-                    )}
-                    {index < tabContent.length - 1 ? (
-                      activeTab === 3 ? (
-                        <React.Fragment>
-                          {!showSubBackButton ? (
-                            <button
-                              type="button"
-                              className="btn theme-button"
-                              onClick={saveFinacialSetting}
-                            >
-                              Save Financial Settings
+                <div key={index} className={`content ${activeTab === index ? "active" : ""}`} >
+                    {step.content}
+                    <div className="d-flex justify-content-end">
+                      {index > 0 && !showSubBackButton && (
+                        <button type="button" className="btn dark-btn mr-3 btn-prev" onClick={movePreviewPage} >
+                           <Image imagePath={AppIcons.nextArrowIcon} /> Back
+                        </button>
+                      )}
+                      {index < tabContent.length - 1 ? (
+                        activeTab === 3 ? (
+                          <React.Fragment>
+                            {!showSubBackButton ?
+                              <button type="button" className="btn theme-button" onClick={saveFinacialSetting}>
+                                Save Financial Settings
+                              </button>
+                              :
+                              <button type="button" className="btn dark-btn mr-3 btn-prev" onClick={() => handleActiveSubTabClick(CustomerSettingEnum.FinancialSettings)} >
+                                <Image imagePath={AppIcons.nextArrowIcon} /> Back
+                              </button>
+                            }
+                            <button type="button" className="btn theme-button btn-next ml-3" onClick={() => addCustomer(step.tab)}>
+                              Next <Image imagePath={AppIcons.nextArrowIcon} />
                             </button>
-                          ) : (
-                            <button
-                              type="button"
-                              className="btn dark-btn mr-3 btn-prev"
-                              onClick={() =>
-                                handleActiveSubTabClick(
-                                  CustomerSettingEnum.FinancialSettings
-                                )
-                              }
-                            >
-                              {/* <Image imagePath={AppIcons.nextArrowIcon} />  */}
-                              <Iconify icon="solar:alt-arrow-down-outline" /> Back
-                            </button>
-                          )}
-                          <button
-                            type="button"
-                            className="btn theme-button btn-next ml-3"
-                            onClick={() => addCustomer(step.tab)}
-                          >
-                            {/* <Image imagePath={AppIcons.nextArrowIcon} /> */}
-                            Next <Iconify icon="solar:alt-arrow-down-outline" />
+                          </React.Fragment>
+                        ) : (
+                          <button type="button" className="btn theme-button btn-next" onClick={() => addCustomer(step.tab)} >
+                            Next  <Image imagePath={AppIcons.nextArrowIcon} />
                           </button>
-                        </React.Fragment>
+                        )
                       ) : (
-                        <button
-                          type="button"
-                          className="btn theme-button btn-next"
-                          onClick={() => addCustomer(step.tab)}
-                        >
-                          {/* <Image imagePath={AppIcons.nextArrowIcon} /> */}
-                          Next<Iconify icon="solar:alt-arrow-down-outline" /> Back
-                        </button>
-                      )
-                    ) : (
-                      <>
-                        <button
-                          type="submit"
-                          className="btn theme-button"
-                          onClick={handleDraft}
-                        >
-                          Save as Draft
-                        </button>
+                        <>
+                          <button type="submit" className="btn theme-button" onClick={handleDraft} >
+                            Save as Draft
+                          </button>
 
-                        <button
-                          type="submit"
-                          className="btn theme-button ml-3"
-                          onClick={handleSubmit}
-                        >
-                          Save as Submit
-                        </button>
-                      </>
-                    )}
-                  </div>
+                          <button type="submit" className="btn theme-button ml-3" onClick={handleSubmit} >
+                            Save as Submit
+                          </button>
+                        </>
+                      )}
+                    </div>
                 </div>
               ))}
             </form>
@@ -243,13 +180,13 @@ const AddCustomerTab = () => {
 };
 
 AddCustomerTab.propTypes = {
-  activeTab: PropTypes.number,
-  movePreviewPage: PropTypes.func,
-  addCustomer: PropTypes.func,
-  customerId: PropTypes.number,
-  showSubBackButton: PropTypes.bool,
-  handleActiveSubTabClick: PropTypes.func,
-  saveFinacialSetting: PropTypes.func,
+  activeTab: PropTypes.number ,
+  movePreviewPage: PropTypes.func ,
+  addCustomer: PropTypes.func ,
+  customerId: PropTypes.number ,
+  showSubBackButton: PropTypes.bool ,
+  handleActiveSubTabClick: PropTypes.func ,
+  saveFinacialSetting: PropTypes.func ,
 };
 
 export default AddCustomerTab;
