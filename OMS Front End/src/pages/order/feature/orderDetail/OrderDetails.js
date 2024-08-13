@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { orderInformationData } from "./config/OrderInformation.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import SwalAlert from "../../../../services/swalService/SwalService";
@@ -13,6 +13,7 @@ import NoRecordFound from "../../../../components/ui/noRecordFound/NoRecordFound
 import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
 import { useAddAddressMutation, useLazyGetAllAddressTypesQuery, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from "../../../../app/services/addressAPI";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
+import { useAddEditOrderInformationMutation } from "../../../../app/services/orderAPI";
 
 const OrderDetails = () => {
   const basicInformation = useRef();
@@ -26,10 +27,11 @@ const OrderDetails = () => {
   const [getAddressData, setGetAddressData] = useState(null)
   const [getAddressTypeId, setGetAddressTypeId] = useState(null)
 
-  const { orderCustomerId, setOrderCustomerId } = useContext(AddOrderContext);
+  const { nextStepRef , orderCustomerId, setOrderCustomerId } = useContext(AddOrderContext);
 
   const [getAllAddressesByCustomerIdAndAddressTypeId, { isFetching: isGetAllAddressesByCustomerIdAndAddressTypeIdFetching, isSuccess: isGetAllAddressesByCustomerIdAndAddressTypeIdSuccess, data: isGetAllAddressesByCustomerIdAndAddressTypeIdData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
   const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
+  const [addEditOrderInformation, { isLoading: isAddEditOrderInformationLoading, isSuccess: isAddEditOrderInformationSuccess, data: isAddEditOrderInformationData }] = useAddEditOrderInformationMutation();
 
   useEffect(() => {
     if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
@@ -168,9 +170,32 @@ const OrderDetails = () => {
       setIsModelOpen(!isModelOpen);
     }
   };
+
   const updatedFormData = { ...formData };
   if (!isSubCustomerDropdownVisible) {
     updatedFormData.formFields = updatedFormData.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId");
+  }
+
+  useImperativeHandle(nextStepRef, () => ({
+    handleAddOrder,
+}));
+
+  const handleAddOrder = () => {
+    // debugger
+    let data = basicInformation.current.getFormData();
+    if (data) {
+      let req = {
+        // orderId: 0,
+        // orderMethodId: 0,
+        // customerId: 0,
+        // subCustomerId: 0,
+        // poNumber: string,
+        // orderReceivedDate: 0,
+        // orderAddressId: 0,
+        // billingAddressId: 0,
+        // shippingAddressId: 0
+      }
+    }
   }
 
   return (
@@ -182,6 +207,7 @@ const OrderDetails = () => {
           {...formData}
           onActionChange={formActionHandler}
           handleInputGroupButton={handleInputGroupButton}
+          onClick={handleAddOrder}
         />
       </div>
       <div className="row address-group">

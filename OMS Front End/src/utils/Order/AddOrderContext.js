@@ -20,20 +20,21 @@ export const AddOrderContextProvider = ({ children }) => {
     };
 
     const addOrder = (data) => {
+        // debugger
         setActiveTab((prev) => prev + 1);
 
-        // if (supplierId > 0 && data === 1) {
-        //     if (nextStepRef.current) {
-        //         nextStepRef.current.handleAddEditSupplier();
-        //     }
-        // } else if (supplierId > 0) {
-        //     setActiveTab((prev) => prev + 1)
-        // }
-        // else {
-        //     if (nextStepRef.current) {
-        //         nextStepRef.current.handleAddEditSupplier();
-        //     }
-        // }
+        if (orderCustomerId > 0 && data === 1) {
+            if (nextStepRef.current) {
+                nextStepRef.current.handleAddOrder();
+            }
+        } else if (orderCustomerId > 0) {
+            setActiveTab((prev) => prev + 1)
+        }
+        else {
+            if (nextStepRef.current) {
+                nextStepRef.current.handleAddOrder();
+            }
+        }
     }
 
     return (

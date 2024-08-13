@@ -20,7 +20,7 @@ const AddOrderTab = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  const { activeTab, movePreviewPage, addOrder, orderCustomerId , setActiveTab} = useContext(AddOrderContext);
+  const { activeTab, movePreviewPage, addOrder, orderCustomerId, setActiveTab } = useContext(AddOrderContext);
 
   const handleTabClick = (index) => {
     setActiveTab(index);
@@ -109,7 +109,7 @@ const AddOrderTab = () => {
                           className="btn theme-button ml-3 btn-next"
                           onClick={() => addOrder(step.tab)}
                         >
-                          Next<Image imagePath={AppIcons.nextArrowIcon} /> 
+                          Next<Image imagePath={AppIcons.nextArrowIcon} />
                         </button>
                         {/* <button
                           type="button"

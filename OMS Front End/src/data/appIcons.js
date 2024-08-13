@@ -85,7 +85,9 @@ import nextArrowIcon from "../assets/images/NextArrowIcon.svg"
 import doneIcon from "../assets/images/done.png";
 import cancelIcon from "../assets/images/cancel.png";
 import testApiIcon from "../assets/images/testApi.png";
-import backArrow from "../assets/images/BackArrow.svg"
+import backArrow from "../assets/images/BackArrow.svg";
+import pencilIcon from "../assets/images/pencil.png";
+
 
 export const AppIcons = {
   // Menus & Header Images
@@ -103,7 +105,7 @@ export const AppIcons = {
   DownloadIcon: downloadIcon,
   permissionIcon: permissionIcon,
   userIcon: userIcon,
-  User3DIcon:user3DIcon,
+  User3DIcon: user3DIcon,
   notificationIcon: notification,
   ShortcutIcon: shortcutIcon,
   arrowIcon: arrow,
@@ -148,27 +150,29 @@ export const AppIcons = {
   blockredIcone: blockredIcone,
   RejectedIcon: RejectedIcon,
 
-  supplierIcon:supplierIcon,
-  customerDetailsIcone:customerDetailsIcone,
-  securityIcon:securityIcon,
-  security:security,
+  supplierIcon: supplierIcon,
+  customerDetailsIcone: customerDetailsIcone,
+  securityIcon: securityIcon,
+  security: security,
 
-  PrimaryTick:primaryTick,
-  unauthorizedImg :unauthorizedImg,
-  FilterIcon:filterIcon,
-  ClearAllIcon:clearAllIcon,
-  EyeIcon:eyeIcon,
-  EyeSlashIcon:eyeSlashIcon,
-  ClearIcone:ClearIcone,
-  SearchIcone:SearchIcone,
-  EllipsisIcon:ellipsisIcon,
-  Iicon:iIcon,
+  PrimaryTick: primaryTick,
+  unauthorizedImg: unauthorizedImg,
+  FilterIcon: filterIcon,
+  ClearAllIcon: clearAllIcon,
+  EyeIcon: eyeIcon,
+  EyeSlashIcon: eyeSlashIcon,
+  ClearIcone: ClearIcone,
+  SearchIcone: SearchIcone,
+  EllipsisIcon: ellipsisIcon,
+  Iicon: iIcon,
 
   PendingIcon: pending,
   BlockedIcon: blocked,
   ActiveIcon: active,
-  nextArrowIcon: nextArrowIcon, 
+  nextArrowIcon: nextArrowIcon,
   DoneIcon: doneIcon,
   CancelIcon: cancelIcon,
   TestApiIcon: testApiIcon,
+  PencilIcon: pencilIcon,
+
 };
