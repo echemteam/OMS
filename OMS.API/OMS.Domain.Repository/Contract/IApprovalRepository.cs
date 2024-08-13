@@ -14,6 +14,10 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetValidateCheckListResponse>> GetValidateSupplier(int mainId);
         Task<AddEntityDto<int>> AddApprovalRequests(ApprovalRequestsDto requestData);
         Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId);
+        Task<AddEntityDto<int>> UpdateApprovalRequestsStatus(ApprovalRequestsDto requestData);
+        Task<string> GetPrimaryKeyColumnAsync(string tableName);
+        Task Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text);
+        Task<IEnumerable<string>> GetTableColumnsAsync(string tableName);
         Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration();
         Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId);
     }
