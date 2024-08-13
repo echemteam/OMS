@@ -59,7 +59,7 @@ const TaskDetail = ({ approvedData, isFetching }) => {
     }
   }, [isUpdateSuccess, isUpdateData]);
 
-  if (isFetching) {
+  if (isFetching || isUpdateLoading) {
     return <DataLoader />; // Display loader while loading
   }
 
@@ -97,7 +97,7 @@ const TaskDetail = ({ approvedData, isFetching }) => {
   };
 
   const handleApprovalRequest = (data) => {
-    // updateApprovalRequest(data);
+    updateApprovalRequest(data);
   }
 
   return (

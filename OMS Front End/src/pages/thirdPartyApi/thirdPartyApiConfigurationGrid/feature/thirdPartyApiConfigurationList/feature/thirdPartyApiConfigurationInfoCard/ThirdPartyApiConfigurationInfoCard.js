@@ -1,6 +1,4 @@
-import React from 'react'
-import { AppIcons } from '../../../../../../../data/appIcons'
-import Image from '../../../../../../../components/image/Image'
+import React from 'react';
 import Iconify from '../../../../../../../components/ui/iconify/Iconify'
 
 const ThirdPartyApiConfigurationInfoCard = ({ editClick, viewCardDetails }) => {
