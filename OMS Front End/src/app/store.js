@@ -34,6 +34,7 @@ import customerSubCustomerAPI from './services/customerSubCustomerAPI';
 import organizationAPI from './services/organizationAPI';
 import supplierFinancialSettingsAPI from './services/supplierFinancialSettingsAPI';
 import thirdPartyAPI from './services/thirdPartyAPI';
+import orderAPI from './services/orderAPI';
 
 export const store = configureStore({
   reducer: {
@@ -43,31 +44,32 @@ export const store = configureStore({
     [securityRoleAPI.reducerPath]: securityRoleAPI.reducer,
     [rolesMappingAPI.reducerPath]: rolesMappingAPI.reducer,
     [securityPermissionsAPI.reducerPath]: securityPermissionsAPI.reducer,
-    [basicdetailAPI.reducerPath]: basicdetailAPI.reducer, 
-    [contactAPI.reducerPath]: contactAPI.reducer, 
-    [addressAPI.reducerPath]: addressAPI.reducer, 
-    [configurationAPI.reducerPath]: configurationAPI.reducer, 
-    [documentAPI.reducerPath]: documentAPI.reducer, 
-    [notesAPI.reducerPath]:notesAPI.reducer,
-    [phoneNumberAPI.reducerPath]: phoneNumberAPI.reducer, 
-    [emailAddressAPI.reducerPath]: emailAddressAPI.reducer, 
-    [customerSettingsAPI.reducerPath]:customerSettingsAPI.reducer,
-    [supplierAPI.reducerPath]:supplierAPI.reducer,
-    [supplierNotesAPI.reducerPath]:supplierNotesAPI.reducer,
-    [supplierDocuementsAPI.reducerPath]:supplierDocuementsAPI.reducer,
+    [basicdetailAPI.reducerPath]: basicdetailAPI.reducer,
+    [contactAPI.reducerPath]: contactAPI.reducer,
+    [addressAPI.reducerPath]: addressAPI.reducer,
+    [configurationAPI.reducerPath]: configurationAPI.reducer,
+    [documentAPI.reducerPath]: documentAPI.reducer,
+    [notesAPI.reducerPath]: notesAPI.reducer,
+    [phoneNumberAPI.reducerPath]: phoneNumberAPI.reducer,
+    [emailAddressAPI.reducerPath]: emailAddressAPI.reducer,
+    [customerSettingsAPI.reducerPath]: customerSettingsAPI.reducer,
+    [supplierAPI.reducerPath]: supplierAPI.reducer,
+    [supplierNotesAPI.reducerPath]: supplierNotesAPI.reducer,
+    [supplierDocuementsAPI.reducerPath]: supplierDocuementsAPI.reducer,
     [commonAPI.reducerPath]: commonAPI.reducer,
     [supplierAddressAPI.reducerPath]: supplierAddressAPI.reducer,
-    [customerHistoryAPI.reducerPath]:customerHistoryAPI.reducer,
-    [supplierHistoryAPI.reducerPath]:supplierHistoryAPI.reducer,
+    [customerHistoryAPI.reducerPath]: customerHistoryAPI.reducer,
+    [supplierHistoryAPI.reducerPath]: supplierHistoryAPI.reducer,
     [approvalAPI.reducerPath]: approvalAPI.reducer,
     [apiProviderAPI.reducerPath]: apiProviderAPI.reducer,
-    [apiEndPointsAPI.reducerPath]:apiEndPointsAPI.reducer,
-    [apiParametersAPI.reducerPath]:apiParametersAPI.reducer,
-    [apiAuthenticationAPI.reducerPath]:apiAuthenticationAPI.reducer,
-    [customerSubCustomerAPI.reducerPath]:customerSubCustomerAPI.reducer,
-    [organizationAPI.reducerPath]:organizationAPI.reducer,
-    [thirdPartyAPI.reducerPath]:thirdPartyAPI.reducer,
-    [supplierFinancialSettingsAPI.reducerPath]:supplierFinancialSettingsAPI.reducer,
+    [apiEndPointsAPI.reducerPath]: apiEndPointsAPI.reducer,
+    [apiParametersAPI.reducerPath]: apiParametersAPI.reducer,
+    [apiAuthenticationAPI.reducerPath]: apiAuthenticationAPI.reducer,
+    [customerSubCustomerAPI.reducerPath]: customerSubCustomerAPI.reducer,
+    [organizationAPI.reducerPath]: organizationAPI.reducer,
+    [thirdPartyAPI.reducerPath]: thirdPartyAPI.reducer,
+    [orderAPI.reducerPath]: orderAPI.reducer,
+    [supplierFinancialSettingsAPI.reducerPath]: supplierFinancialSettingsAPI.reducer,
 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
@@ -101,6 +103,7 @@ export const store = configureStore({
     organizationAPI.middleware,
     supplierFinancialSettingsAPI.middleware,
     thirdPartyAPI.middleware,
+    orderAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);

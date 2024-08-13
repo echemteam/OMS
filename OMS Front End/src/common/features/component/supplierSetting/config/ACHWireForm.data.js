@@ -13,7 +13,7 @@ export const achWireFormData = {
     paymentTermId: 0,
     recipientPhoneNumber: "",
     isAddressInUs: false,
-    ibanNumber: 0,
+    ibanNumber: "",
     branchCode: "",
     swiftCode: "",
     routingNumber: "",
@@ -111,7 +111,8 @@ export const achWireFormData = {
       fieldSetting: {
         isDisabled: false,
         placeholder: "Please Enter IBAN Number",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        maxLength: 50,
       },
       // validation: [{ type: "require" }],
       style: {

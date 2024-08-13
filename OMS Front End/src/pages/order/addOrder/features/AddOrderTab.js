@@ -21,7 +21,7 @@ const AddOrderTab = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  const { activeTab, movePreviewPage, addOrder, orderCustomerId , setActiveTab} = useContext(AddOrderContext);
+  const { activeTab, movePreviewPage, addOrder, orderCustomerId, setActiveTab } = useContext(AddOrderContext);
 
   const handleTabClick = (index) => {
     setActiveTab(index);
