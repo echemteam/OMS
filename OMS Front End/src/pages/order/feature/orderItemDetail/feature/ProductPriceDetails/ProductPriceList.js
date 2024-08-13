@@ -82,17 +82,17 @@ const ProductPriceList = ({ productId }) => {
   useEffect(() => {
     if (priceListConfig?.columns) {
       // New blank row object
-      const blankRow = {
-        size: '',
-        unit: '',
-        price: '',
-        orderNote: '',
-        reqDate: '',
-        priorityDate: '',
-        promiseDate: '',
-        priority: '',
-        action: '',
-      };
+      // const blankRow = {
+      //   size: '',
+      //   unit: '',
+      //   price: '',
+      //   orderNote: '',
+      //   reqDate: '',
+      //   priorityDate: '',
+      //   promiseDate: '',
+      //   priority: '',
+      //   action: '',
+      // };
 
       setPriceList((prev) => [...prev]);
     }
