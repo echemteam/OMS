@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 //** Lib's */
 import { Message } from '../utils/ContactMessages';
 import Buttons from '../../../../../components/ui/button/Buttons';
@@ -9,7 +9,7 @@ import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
 import { addData, updateData } from '../utils/ContactEmailAddressUtil';
 import PropTypes from 'prop-types';
 
-const AddEditEmailModal = ({ contactId, emailAddressList, setEmailAddressList, editFormData, handleToggleModal, showModal, isEdit, onSuccess }) => {
+const AddEditEmailModal = ({ contactId, emailAddressList, setEmailAddressList, editFormData, handleToggleModal, showModal, isEdit, onSuccess, addeditRef }) => {
 
     //** State */
     const ref = useRef();
@@ -24,7 +24,7 @@ const AddEditEmailModal = ({ contactId, emailAddressList, setEmailAddressList, e
                 isPrimary: data.isEmailPrimary
             }
             addData(req, contactId, emailAddressList, setEmailAddressList, Message.EmailAdded, Message.EmailMaxLength, Message.DuplicateEmail, onResetData, onSuccess);
-        } else if ( data?.id) {
+        } else if (data?.id) {
             let req = {
                 ...data,
                 isPrimary: data.isEmailPrimary
@@ -32,6 +32,19 @@ const AddEditEmailModal = ({ contactId, emailAddressList, setEmailAddressList, e
             updateData(req, emailAddressList, setEmailAddressList, Message.EmailUpdated, Message.DuplicateEmail, Message.InvalidData, onResetData, onSuccess);
         }
     };
+
+    const handleCheckBoxChange = (data) => {
+        let req = {
+            ...data,
+            isEmailPrimary: data.isPrimary
+        }
+        updateData(req, emailAddressList, setEmailAddressList, Message.EmailUpdated, Message.DuplicateEmail, Message.InvalidData);
+    }
+
+    //** Use Imperative Handle */
+    useImperativeHandle(addeditRef, () => ({
+        callChildFunction: handleCheckBoxChange
+    }));
 
     useEffect(() => {
         if (isEdit && editFormData) {
@@ -83,7 +96,7 @@ AddEditEmailModal.propTypes = {
         PropTypes.shape({
             emailId: PropTypes.number,
             id: PropTypes.number,
-          
+
         })
     ).isRequired,
     setEmailAddressList: PropTypes.func.isRequired,

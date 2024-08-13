@@ -51,6 +51,15 @@ const approvalAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+        updateApprovalRequestsStatus: builder.mutation({
+            query: (requestData) => ({
+                url: '/Approval/UpdateApprovalRequestsStatus',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        })
     })
 })
 
@@ -59,7 +68,8 @@ export const {
     useLazyGetApprovalRequestsListByStatusAndRequestedByUserIdQuery,
     useLazyGetApprovalRequestsByApprovalRequestIdQuery,
     useAddUserChecklistResponseMutation,
-    useGetValidateCheckListMutation
+    useGetValidateCheckListMutation,
+    useUpdateApprovalRequestsStatusMutation
 } = approvalAPI;
 
 export default approvalAPI;

@@ -62,22 +62,24 @@ export const AllCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWDISABLE",
-          iconName: AppIcons.disablethemeIcone,
-          title: "Disable"
+          iconName: "fa6-solid:user-slash",
+          title: "Disable",
+          className: "disable-icon"
         },
         {
           name: "ALLOWFREEZE",
-          iconName: AppIcons.freezeblueIcone,
-          title: "Freeze"
+          iconName: "material-symbols:lock-outline",
+          title: "Freeze",
+          className: "freeze-icon"
         },
         {
           name: "ALLOWBLOCKED",
-          iconName: AppIcons.blockredIcone,
+          iconName: "akar-icons:block",
           title: "Blocked"
         },
         {
           name: "ALLOREJECT",
-          iconName: AppIcons.RejectedIcon,
+          iconName: "mdi:close-octagon",
           title: "Reject"
         },
       ],

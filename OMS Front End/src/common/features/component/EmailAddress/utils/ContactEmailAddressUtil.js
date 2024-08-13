@@ -81,8 +81,8 @@ export const updateData = (data, listData, setListData, successMessage, duplicat
 
             setListData(updatedData);
             ToastService.success(successMessage);
-            onResetData();
-            onSuccess();
+            onResetData?.();
+            onSuccess?.();
         } else {
             ToastService.warning(duplicateMessage);
         }

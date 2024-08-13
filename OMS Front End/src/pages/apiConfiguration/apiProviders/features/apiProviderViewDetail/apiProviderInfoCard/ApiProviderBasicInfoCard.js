@@ -1,5 +1,4 @@
-import Image from "../../../../../../components/image/Image";
-import { AppIcons } from "../../../../../../data/appIcons";
+import Iconify from "../../../../../../components/ui/iconify/Iconify";
 import PropTypes from "prop-types";
  const ApiProviderBasicInfoCard = ({providerFormData,editClick}) => {
   return (     
@@ -37,7 +36,8 @@ import PropTypes from "prop-types";
         <div className="edit-icons"
          onClick={editClick}
         >
-          <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
+          {/* <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" /> */}
+          <Iconify icon="tabler:pencil" />
         </div>     
       </div>
     </div>

@@ -9,39 +9,39 @@ using ThirdPartyAPILibrary.ThirdPartyResponseProvider;
 
 namespace ThirdPartyAPILibrary
 {
-    public class Program
-    {
-        public static async Task Main(string[] args)
-        {
-            ThirdPartyAPIIntegrator integrator = new();
-            await integrator.Run(args);
-        }
-    }
+    //public class Program
+    //{
+    //    public static async Task Main(string[] args)
+    //    {
+    //        ThirdPartyAPIIntegrator integrator = new();
+    //        await integrator.Run(args);
+    //    }
+    //}
 
     public class ThirdPartyAPIIntegrator
     {
         private static readonly HttpClient HttpClient = new();
 
-        public async Task Run(string[] args)
-        {
-            Console.WriteLine("Starting API Test...");
-            var parameters = new
-            {
-                pageNo = 1,
-                pageSize = 25,
-                orderByColumn = "ProductName",
-                orderFlag = 0,
-                searchText = "acid"
-            };
+        //public async Task Run(string[] args)
+        //{
+        //    Console.WriteLine("Starting API Test...");
+        //    var parameters = new
+        //    {
+        //        pageNo = 1,
+        //        pageSize = 25,
+        //        orderByColumn = "ProductName",
+        //        orderFlag = 0,
+        //        searchText = "acid"
+        //    };
 
-            ThirdPartyAPICallRequest requestData = new()
-            {
-                EventName = "Product Details",
-                IsDynamicParameter = false
-            };
-            APIResponse testResult = await GetThirdPartyApiResponse(requestData);
-            Console.WriteLine($"API Test Result: {testResult}");
-        }
+        //    ThirdPartyAPICallRequest requestData = new()
+        //    {
+        //        EventName = "1Click Product Price List",
+        //        IsDynamicParameter = false
+        //    };
+        //    APIResponse testResult = await GetThirdPartyApiResponse(requestData);
+        //    Console.WriteLine($"API Test Result: {testResult}");
+        //}
 
         public static async Task<APIResponse> GetThirdPartyApiResponse(ThirdPartyAPICallRequest requestData)
         {
@@ -120,32 +120,42 @@ namespace ThirdPartyAPILibrary
                 {
                     List<APIRequiredFields> getRequiredField = await helper.GetAPIRequiredFieldsByEventId(getApiEvent.ApiEventId);
 
-                    if (getApiEvent.Method == "GET")
+                    if (getRequiredField.Count == 0)
                     {
-                        var parameters = JsonConvert.DeserializeObject<Dictionary<string, string>>(requestData.IsDynamicParameter ? requestData.Parameters : getApiEvent.Parameters);
-
-                        var uriBuilder = new UriBuilder(getApiEvent.BaseURL);
-                        var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-                        foreach (var param in parameters)
-                        {
-                            query[param.Key] = param.Value;
-                        }
-                        uriBuilder.Query = query.ToString();
-
-                        url = uriBuilder.ToString();
-                        results = await APIResponseProvider.GetMethod(url, accessTokenObj.Token, getRequiredField);
-                    }
-                    else if (getApiEvent.Method == "POST")
-                    {
-                        string parameters = requestData.IsDynamicParameter ? requestData.Parameters : getApiEvent.Parameters;
-                        results = await APIResponseProvider.PostMethod(url, accessTokenObj.Token, parameters, getRequiredField);
-                    }
-                    else
-                    {
-                        results.Message = $"Unsupported HTTP method: {getApiEvent.Method} for apiEventId {getApiEvent.ApiEventId}.";
+                        results.Message = "Required fields Or mapping are missing. Please ensure all necessary fields are provided before proceeding.";
                         results.Data = "";
                         results.IsSuccess = false;
                         return results;
+                    }
+                    else
+                    {
+                        if (getApiEvent.Method == "GET")
+                        {
+                            var parameters = JsonConvert.DeserializeObject<Dictionary<string, string>>(requestData.IsDynamicParameter ? requestData.Parameters : getApiEvent.Parameters);
+
+                            var uriBuilder = new UriBuilder(getApiEvent.BaseURL);
+                            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                            foreach (var param in parameters)
+                            {
+                                query[param.Key] = param.Value;
+                            }
+                            uriBuilder.Query = query.ToString();
+
+                            url = uriBuilder.ToString();
+                            results = await APIResponseProvider.GetMethod(url, accessTokenObj.Token, getRequiredField);
+                        }
+                        else if (getApiEvent.Method == "POST")
+                        {
+                            string parameters = requestData.IsDynamicParameter ? requestData.Parameters : getApiEvent.Parameters;
+                            results = await APIResponseProvider.PostMethod(url, accessTokenObj.Token, parameters, getRequiredField);
+                        }
+                        else
+                        {
+                            results.Message = $"Unsupported HTTP method: {getApiEvent.Method} for apiEventId {getApiEvent.ApiEventId}.";
+                            results.Data = "";
+                            results.IsSuccess = false;
+                            return results;
+                        }
                     }
                 }
                 else

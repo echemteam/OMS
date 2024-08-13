@@ -1,7 +1,8 @@
 import { AppIcons } from "../../../data/appIcons";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import Image from "../../image/Image";
 import "./SidebarModel.scss";
+import Iconify from "../iconify/Iconify";
 
 const SidebarModel = ({ children, modalTitleIcon, ...props }) => {
   return (
@@ -19,6 +20,10 @@ const SidebarModel = ({ children, modalTitleIcon, ...props }) => {
                 imagePath={AppIcons.CloseIcon}
                 altText="Close"
               />
+              {/* <Iconify 
+              imgCustomClassName="default"
+              icon="gg:close-o"
+               /> */}
             </div>
           </div>
           <div className="model-body">
@@ -30,11 +35,11 @@ const SidebarModel = ({ children, modalTitleIcon, ...props }) => {
   );
 };
 SidebarModel.propTypes = {
-  children: PropTypes.node,  
-  modalTitleIcon: PropTypes.string,  
-  modalTitle: PropTypes.string,  
-  contentClass: PropTypes.string,  
-  isOpen: PropTypes.bool,  
-  onClose: PropTypes.func,  
+  children: PropTypes.node,
+  modalTitleIcon: PropTypes.string,
+  modalTitle: PropTypes.string,
+  contentClass: PropTypes.string,
+  isOpen: PropTypes.bool,
+  onClose: PropTypes.func,
 };
 export default SidebarModel;

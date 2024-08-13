@@ -6,6 +6,7 @@ import { PatternFormat } from 'react-number-format';
 import "./Input.scss"
 import Image from "../../../image/Image";
 import { AppIcons } from "../../../../data/appIcons";
+import Iconify from "../../iconify/Iconify";
 
 const excptIntSymbol = ["e", "E", "+", "-", "."];
 const excptDecimalSymbol = ["e", "E", "+", "-"];

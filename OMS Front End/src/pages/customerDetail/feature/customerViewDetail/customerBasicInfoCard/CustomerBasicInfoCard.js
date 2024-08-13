@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Image from "../../../../../components/image/Image";
 import DropDown from "../../../../../components/ui/dropdown/DropDrown";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../../components/Forms/FormCreator";
@@ -24,7 +23,6 @@ import {
   StatusValue,
 } from "../../../../../utils/Enums/StatusEnums";
 import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDetail.data";
-import { AppIcons } from "../../../../../data/appIcons";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import { ErrorMessage, SuccessMessage } from "../../../../../data/appMessages";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
@@ -32,6 +30,7 @@ import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
 import PropTypes from 'prop-types';
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
+import Iconify from "../../../../../components/ui/iconify/Iconify";
 
 
 const CustomerBasicInfoCard = ({
@@ -380,7 +379,8 @@ const CustomerBasicInfoCard = ({
                 className="copy-icon"
                 onClick={() => CopyText(customerData?.emailAddress, "email")}
               >
-                <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+                {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
               </span>
             </div>
 
@@ -392,7 +392,8 @@ const CustomerBasicInfoCard = ({
                 className="copy-icon"
                 onClick={() => CopyText(customerData?.website, "website")}
               >
-                <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+                {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
               </span>
             </div>
           </div>
@@ -496,7 +497,8 @@ const CustomerBasicInfoCard = ({
           </div>
         </div>
         <div className="edit-icons" onClick={editClick}>
-          <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
+          {/* <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" /> */}
+          <Iconify icon="tabler:pencil" />
         </div>
       </div>
       {showModal && (

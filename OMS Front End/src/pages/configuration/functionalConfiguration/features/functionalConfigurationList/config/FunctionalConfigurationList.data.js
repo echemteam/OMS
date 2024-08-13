@@ -1,4 +1,3 @@
-import { AppIcons } from "../../../../../../data/appIcons";
 import { GridColumnType } from "../../../../../../data/gridColumnType";
 
 export const functionalConfigurationListData = {
@@ -31,7 +30,7 @@ export const functionalConfigurationListData = {
             customAction: [
                 {
                     name: "VIEWCONFIGURATION",
-                    iconName: AppIcons.EyeIcon,
+                    iconName: "lets-icons:view",
                     title: "View"
                 },
             ],

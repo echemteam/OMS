@@ -8,6 +8,7 @@ import ToastService from '../../../../../services/toastService/ToastService';
 import SwalAlert from '../../../../../services/swalService/SwalService';
 import { encryptUrlData } from '../../../../../services/CryptoService';
 import FinalMolGrid from '../../../../../components/FinalMolGrid/FinalMolGrid';
+import { ErrorMessage } from '../../../../../data/appMessages';
 
 const ThirdPartyApiConfigurationList = ({ childRef }) => {
     const molGridRef = useRef();
@@ -17,7 +18,7 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     const [totalRowCount, setTotalRowCount] = useState(0);
 
     const [deleteApiEvent, { isSuccess: isDeleteApiEventSuccess, data: isDeleteApiEventData },] = useDeleteApiEventMutation();
-    const [getThirdPartyApiResponse, { isSuccess: isAPITesterSucess, data: isAPITesterData }] = useThirdPartyAPICallMutation();
+    const [getThirdPartyApiResponse, { isSuccess: isApiResponseSucess, data: isApiResponseData }] = useThirdPartyAPICallMutation();
     const [getApiEvents, { isLoading: isGetApiEventsLoading, isSuccess: isGetApiEventsSuccess, data: isGetApiEventsData, },] = useGetApiEventsMutation();
 
     const getLists = (pageObject, sortingString) => {
@@ -76,15 +77,18 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
     };
 
     useEffect(() => {
-        if (isAPITesterSucess && isAPITesterData) {
-            const data = JSON.parse(isAPITesterData.apiResponse);
-            const responseData = JSON.parse(data.responseData);
-            console.log('isAPITesterData =>', responseData);
-            if (isAPITesterData) {
-                ToastService.success("Successfully Worked.");
+        if (isApiResponseSucess && isApiResponseData) {
+            if (isApiResponseData.isSuccess) {
+                const responseData = JSON.parse(isApiResponseData.data);
+                // console.log('isApiResponseData =>', responseData?.data);
+                ToastService.success(responseData?.message);
+            } else if (!isApiResponseData.isSuccess) {
+                ToastService.warning(isApiResponseData.message);
+            } else {
+                ToastService.warning(ErrorMessage.DefaultMessage);
             }
         }
-    }, [isAPITesterSucess, isAPITesterData]);
+    }, [isApiResponseSucess, isApiResponseData]);
 
     useEffect(() => {
         if (molGridRef.current) {
@@ -109,15 +113,10 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
 
     const handleTestClick = (data) => {
         let parameter = {
-            pageNo: 1,
-            pageSize: 25,
-            orderByColumn: "ProductName",
-            orderFlag: 0,
-            searchText: "acid",
-            isActive: true
+            searchText: "acid"
         }
         let request = {
-            eventName: 'Get Search product List',
+            eventName: data.eventName,
             isDynamicParameter: false,
             parameters: JSON.stringify(parameter)
         }

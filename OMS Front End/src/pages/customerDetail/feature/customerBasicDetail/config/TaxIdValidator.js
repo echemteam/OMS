@@ -15,6 +15,7 @@ export const getTaxIdMinMaxLength = (countryId, formFields, formFieldsId) => {
         case 82: //** GE
             minLength = 11;
             maxLength = 11;
+            break;
         case 233: //** US
             minLength = 10;
             maxLength = 10;

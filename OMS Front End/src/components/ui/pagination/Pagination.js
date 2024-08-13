@@ -12,25 +12,21 @@ const Pagination = () => {
         </div>
         <div className="gap-2 pagination">
           <button title="Previous">
-            <Image
+            {/* <Image
               imagePath={AppIcons.arrowIcon}
               imgCustomClassName="left-arrow"
               altText="Arrow Icon"
-            />
-
+            /> */}
+            <Iconify icon="solar:alt-arrow-down-outline" className="left-arrow" />
           </button>
           <button className="active-button">1</button>
           <button title="Next">
-            <Image
-              imagePath={AppIcons.arrowIcon}
-              imgCustomClassName="right-arrow"
-              altText="Arrow Icon"
-            />
+          <Iconify className="right-arrow" icon="solar:alt-arrow-down-outline" />
           </button>
         </div>
       </div>
     </>
   );
-}
+};
 
 export default Pagination;

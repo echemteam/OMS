@@ -3,6 +3,7 @@ import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import PropTypes from "prop-types";
+import Iconify from "../../../../../components/ui/iconify/Iconify";
 
 const ContactPhoneNumberDropdown = ({  phoneNumberList,isOptionsOpen }) => {
 
@@ -61,7 +62,8 @@ const ContactPhoneNumberDropdown = ({  phoneNumberList,isOptionsOpen }) => {
               ) : null}
               <span className="copy-icon" title="Copy" onClick={() => CopyText(`(${primaryPhoneNumber.phoneCode}) ${primaryPhoneNumber.phoneNumber} 
                 ${primaryPhoneNumber.extension > 0 ? primaryPhoneNumber.extension : ""}`, "phone")}>
-                <Image imagePath={AppIcons.copyIcon} altText="Icon" />
+                {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
                 {/* <i className="fa fa-files-o"></i> */}
               </span>
             </>
@@ -81,7 +83,8 @@ const ContactPhoneNumberDropdown = ({  phoneNumberList,isOptionsOpen }) => {
                 </span>
                 <span className="copy-icon" title="Copy" onClick={() => CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${phoneData.extension > 0 ? phoneData.extension : ""}`, "phone")} >
                   {/* <i className="fa fa-files-o"></i> */}
-                  <Image imagePath={AppIcons.copyIcon} altText="Icon" />
+                  {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
                 </span>
               </span>
             ))}

@@ -25,7 +25,7 @@
           content: '';
           background: var(--whiteColor);
           border-radius: 100%;
-          border: 1px solid var(--grayColor);
+          border: 1px solid var(--themeColor);
           display: inline-block;
           width: 20px;
           height: 20px;
@@ -42,7 +42,7 @@
       &:checked {
         +.radio-label {
           &:before {
-            background-color: var(--radioButtonBackgroundColor);
+            background-color: var(--themeColor);
             box-shadow: inset 0 0 0 4px var(--whiteColor);
           }
         }

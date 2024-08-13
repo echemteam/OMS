@@ -1,4 +1,3 @@
-import { AppIcons } from "../../../../../../data/appIcons";
 import { GridColumnType } from "../../../../../../data/gridColumnType";
 
 export const thirdPartyListConfigurationData = {
@@ -31,12 +30,12 @@ export const thirdPartyListConfigurationData = {
             customAction: [
                 {
                     name: "TESTAPI",
-                    iconName: AppIcons.TestApiIcon,
+                    iconName: "hugeicons:api",
                     title: "Test Api"
                 },
                 {
                     name: "VIEWCONFIGURATION",
-                    iconName: AppIcons.EyeIcon,
+                    iconName: "lets-icons:view",
                     title: "View"
                 },
             ],

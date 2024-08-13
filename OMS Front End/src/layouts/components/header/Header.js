@@ -5,6 +5,7 @@ import { AppIcons } from "../../../data/appIcons";
 import SearchBar from "../../../common/features/component/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../app/slice/authSlice";
+import Iconify from "../../../components/ui/iconify/Iconify";
 
 function Header() {
   const dispatch = useDispatch();
@@ -75,21 +76,22 @@ function Header() {
     dispatch(logout());
   };
   const handleClickOutside = (event) => {
-    if (shortcutSecRef.current && !shortcutSecRef.current.contains(event.target)) {
+    if (
+      shortcutSecRef.current &&
+      !shortcutSecRef.current.contains(event.target)
+    ) {
       setIsActive(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
+    document.addEventListener("click", handleClickOutside, true);
     return () => {
-      document.removeEventListener('click', handleClickOutside, true);
+      document.removeEventListener("click", handleClickOutside, true);
     };
   }, []);
 
-  const handleChange = () => {
-
-  }
+  const handleChange = () => {};
 
   return (
     <div className="header-section">
@@ -104,8 +106,14 @@ function Header() {
       </div>
       <div className="right-section">
         <div className="profile-section">
-          <div className={`shortcut-sec ${isActive ? 'active' : ''}`} ref={shortcutSecRef}>
-            <div className="shortcut-icon" onClick={() => setIsActive(!isActive)}>
+          <div
+            className={`shortcut-sec ${isActive ? "active" : ""}`}
+            ref={shortcutSecRef}
+          >
+            <div
+              className="shortcut-icon"
+              onClick={() => setIsActive(!isActive)}
+            >
               <Image
                 imagePath={AppIcons.ShortcutIcon}
                 imgCustomClassName="shortcut-icon"
@@ -211,11 +219,15 @@ function Header() {
             </div>
             <div className="user-name-desc">
               <span>
-                <Image
+                {/* <Image
                   imagePath={AppIcons.arrowIcon}
                   imgCustomClassName="open-bar"
                   altText="Icon"
-                ></Image>
+                ></Image> */}
+                <Iconify
+                  imgCustomClassName="open-bar"
+                  icon="solar:alt-arrow-down-outline"
+                />
               </span>
             </div>
             <div className="profile-dropdown-menu">

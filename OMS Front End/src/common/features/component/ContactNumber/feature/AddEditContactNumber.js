@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import PropTypes from 'prop-types';
 //** Lib's */
 import { Message } from "../../EmailAddress/utils/ContactMessages";
@@ -21,7 +21,8 @@ const AddEditContactNumber = ({
   showModal,
   isEdit,
   onSuccess,
-  newPhoneCode
+  newPhoneCode,
+  addeditRef
 }) => {
   //** State */
   const ref = useRef();
@@ -65,6 +66,19 @@ const AddEditContactNumber = ({
       }
     }
   };
+
+  const handleCheckBoxChange = (data) => {
+    let req = {
+      ...data,
+      isPrimaryPhoneNumber: data.isPrimary,
+    };
+    updatePhoneNumberData(req, phoneNumberList, setPhoneNumberList, Message.ContactNumberUpdated, Message.ContactNumberDuplicate, Message.InvalidData);
+  }
+
+  //** Use Imperative Handle */
+  useImperativeHandle(addeditRef, () => ({
+    callChildFunction: handleCheckBoxChange
+  }));
 
   //** UseEffect */
   useEffect(() => {

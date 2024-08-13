@@ -21,7 +21,10 @@
   }
 }
 .verify-product-group {
-  margin-top: 46px;
+  margin-top:30px;
+  @media only screen and (max-width: 1860px) {
+    margin-top: 27px;
+  }
   .verify-product-label {
     font-size: var(--commonFont);
     color: var(--textColor);
@@ -105,4 +108,34 @@
   .address {
     margin: 0 9px;
   }
+}
+
+.radio-grid{
+  .molgrid-2{
+    table{
+      tbody{
+        tr{
+          td:nth-child(1){
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+.order-stepper{
+  .address{
+  .record-not-found{
+    padding: 5px 0px 0px 0px ;
+    img{
+      width: 60px;
+    }
+    h5{
+      font-size: var(--commonFont) !important;
+    }
+  }
+}
 }
