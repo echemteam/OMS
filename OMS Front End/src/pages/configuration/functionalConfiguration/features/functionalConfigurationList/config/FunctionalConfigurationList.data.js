@@ -1,4 +1,3 @@
-import { AppIcons } from "../../../../../../data/appIcons";
 import { GridColumnType } from "../../../../../../data/gridColumnType";
 
 export const functionalConfigurationListData = {

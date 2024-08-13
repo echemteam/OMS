@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 //** Lib's */
-import { AppIcons } from "../../../../../../data/appIcons";
-import Image from "../../../../../../components/image/Image";
 import { ErrorMessage } from "../../../../../../data/appMessages";
 import { EventName } from "../../../../../../utils/Enums/APIEventEnums";
 import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
