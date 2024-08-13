@@ -103,8 +103,8 @@ const AddOrderTab = () => {
                             className="btn dark-btn mr-3 btn-prev"
                             onClick={movePreviewPage}
                           >
-                            {/* <Image imagePath={AppIcons.nextArrowIcon} /> Back */}
-                            <Iconify icon="solar:alt-arrow-down-outline" /> Back
+                            <Image imagePath={AppIcons.nextArrowIcon} /> Back
+                            {/* <Iconify icon="solar:alt-arrow-down-outline" /> Back */}
                           </button>
                         )}
                         <button
@@ -112,8 +112,8 @@ const AddOrderTab = () => {
                           className="btn theme-button ml-3 btn-next"
                           onClick={() => addOrder(step.tab)}
                         >
-                          {/* Next<Image imagePath={AppIcons.nextArrowIcon} />  */}
-                          Next <Iconify icon="solar:alt-arrow-down-outline" /> 
+                          Next<Image imagePath={AppIcons.nextArrowIcon} /> 
+                          {/* Next <Iconify icon="solar:alt-arrow-down-outline" />  */}
                         </button>
                         {/* <button
                           type="button"

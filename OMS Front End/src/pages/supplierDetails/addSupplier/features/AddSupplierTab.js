@@ -125,8 +125,8 @@ const AddSupplierTab = () => {
                             <button type="button" className="btn dark-btn mr-3 btn-prev"
                               onClick={movePreviewPage}
                             >
-                            {/* <Image imagePath={AppIcons.nextArrowIcon} />  Back */}
-                            <Iconify icon="solar:alt-arrow-down-outline" /> Back
+                            <Image imagePath={AppIcons.nextArrowIcon} />  Back
+                            {/* <Iconify icon="solar:alt-arrow-down-outline" /> Back */}
                             </button>
                           )}
                           {index < tabContent.length - 1 ? (
@@ -135,8 +135,8 @@ const AddSupplierTab = () => {
                               className="btn theme-button btn-next"
                               onClick={() => addSupplier(step.tab)}
                             >
-                              {/* Next  <Image imagePath={AppIcons.nextArrowIcon} /> */}
-                             Next <Iconify icon="solar:alt-arrow-down-outline" />
+                              Next  <Image imagePath={AppIcons.nextArrowIcon} />
+                             {/* Next <Iconify icon="solar:alt-arrow-down-outline" /> */}
                             </button>
                           ) : (
                             <>
