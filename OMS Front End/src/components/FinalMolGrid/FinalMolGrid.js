@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import DataLoader from "./ui/dataLoader/DataLoader";
 import MolGridHeader from "./Final-MolGrid-Header";
 import MolGridDataRows from "./Final-MolGrid-data-row";
-import MolPagination from "./pagination/FinalMolPagination";
+import MolPagination from "./Pagination/FinalMolPagination";
 import NoRecordFound from "./ui/noRecordFound/NoRecordFound";
 
 import "./FinalMolGrid.scss";
