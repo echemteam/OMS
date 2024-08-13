@@ -20,7 +20,7 @@ const PendingTask = (props) => {
             }
             getApprovalRequestsListByStatus(req)
         }
-    }, [props.Pending])
+    }, [props.Pending,props.userId])
 
     useEffect(() => {
         if (!isGetApprovalRequestsListByStatusFetching && isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData) {
