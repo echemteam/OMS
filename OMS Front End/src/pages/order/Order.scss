@@ -21,7 +21,10 @@
   }
 }
 .verify-product-group {
-  margin-top: 46px;
+  margin-top:30px;
+  @media only screen and (max-width: 1860px) {
+    margin-top: 27px;
+  }
   .verify-product-label {
     font-size: var(--commonFont);
     color: var(--textColor);
