@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
 import { useAddApiEventRequiredFieldsMappingMutation, useLazyGetAllRequiredFieldsByEventIdQuery } from '../../../../../../../../app/services/thirdPartyAPI';
 import { AddEditRequiredMappingData } from '../config/AddEditRequiredMapping.data';

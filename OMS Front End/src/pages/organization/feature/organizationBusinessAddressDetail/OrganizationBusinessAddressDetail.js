@@ -17,7 +17,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { RemitToAddressForm } from "./config/RemitToAddressForm.data";
 import RemitToAddressDetail from "./features/RemitToAddressDetail";
 
-const OrganizationBusinessAddressDetail = ({}) => {
+const OrganizationBusinessAddressDetail = () => {
 
   const physicalAddressRef = useRef();
   const billToAddressRef = useRef();

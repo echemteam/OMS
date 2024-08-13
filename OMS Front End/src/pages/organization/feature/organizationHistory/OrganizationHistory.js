@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import NoRecordFound from '../../../../components/ui/noRecordFound/NoRecordFound';
 import "./OrganizationHistory.scss";
