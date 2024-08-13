@@ -1,6 +1,6 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { AppIcons } from "../../../data/appIcons";
 import { useNavigate } from "react-router-dom";
 import Image from "../../../components/image/Image";
@@ -11,6 +11,9 @@ import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLett
 import { encryptUrlData } from "../../../services/CryptoService";
 import DataLoader from "../../../components/ui/dataLoader/DataLoader";
 import Iconify from "../../../components/ui/iconify/Iconify";
+import { useUpdateApprovalRequestsStatusMutation } from "../../../app/services/ApprovalAPI";
+import ToastService from "../../../services/toastService/ToastService";
+import Buttons from "../../../components/ui/button/Buttons";
 
 const parseJson = (jsonStr) => {
   try {
@@ -48,6 +51,14 @@ const formatBoolean = (value) => (value ? "True" : "False");
 const TaskDetail = ({ approvedData, isFetching }) => {
   const navigate = useNavigate();
 
+  const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
+
+  useEffect(() => {
+    if (isUpdateSuccess && isUpdateData) {
+      ToastService.success(isUpdateData.errorMessage);
+    }
+  }, [isUpdateSuccess, isUpdateData]);
+
   if (isFetching) {
     return <DataLoader />; // Display loader while loading
   }
@@ -70,8 +81,7 @@ const TaskDetail = ({ approvedData, isFetching }) => {
     newValue = "{}",
   } = approvedData;
 
-  const { oldValue: oldFieldValue, newValue: newFieldValue } =
-    getFieldDifference(oldValue, newValue, fieldName);
+  const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(oldValue, newValue, fieldName);
 
   const newValues = parseJson(newValue);
   const { customerId, supplierId } = newValues;
@@ -85,6 +95,10 @@ const TaskDetail = ({ approvedData, isFetching }) => {
       navigate(`/SupplierDetails/${encryptUrlData(supplierId)}`);
     }
   };
+
+  const handleApprovalRequest = (data) => {
+    // updateApprovalRequest(data);
+  }
 
   return (
     <div className="task-detail">
@@ -194,15 +208,15 @@ const TaskDetail = ({ approvedData, isFetching }) => {
       </div>
 
       <div className="task-footer mt-3 pr-3">
-        <Button className="reject-btn">
+        <Buttons buttonTypeClassName="reject-btn" onClick={handleApprovalRequest}>
           {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
           <Iconify icon="gg:close-o" />
           Reject
-        </Button>
-        <Button className="accept-btn">
+        </Buttons>
+        <Buttons buttonTypeClassName="accept-btn" onClick={handleApprovalRequest}>
           <Image imagePath={AppIcons.RightTickIcon} altText="Accept Icon" />
           Accept
-        </Button>
+        </Buttons>
       </div>
     </div>
   );

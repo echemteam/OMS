@@ -140,7 +140,7 @@ export const AccountGridConfig = {
             },
             colSettings: {
                 allowCheckbox: true,
-                allowDisable: true
+                isDisabled: false
             },
         },
 

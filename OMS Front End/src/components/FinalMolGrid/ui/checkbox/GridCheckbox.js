@@ -31,22 +31,20 @@ const GridCheckbox = ({
     //     />
     //   </div>
     // </div>
-    <div className="checkbox-part">
-      <div className="checkbox">
-        <input
-          id={name}
-          name={name}
-          type="checkbox"
-          checked={checked}
-          disabled={disabled}
-          className="form-checkbox"
-          onChange={handleCheckboxChange}
-        />
-        <label
-          htmlFor={name}
-          className={"checkbox-label  checkbox-disable"}
-        ></label>
-      </div>
+    <div className="checkbox">
+      <input
+        id={name}
+        name={name}
+        type="checkbox"
+        checked={checked}
+        disabled={disabled}
+        className="form-checkbox"
+        onChange={handleCheckboxChange}
+      />
+      <label
+        htmlFor={name}
+        className={"checkbox-label  checkbox-disable"}
+      ></label>
     </div>
   );
 };

@@ -15,15 +15,15 @@ const SidebarModel = ({ children, modalTitleIcon, ...props }) => {
               className="close-btn"
               onClick={props.onClose ? props.onClose : null}
             >
-              {/* <Image
+              <Image
                 imgCustomClassName="default"
                 imagePath={AppIcons.CloseIcon}
                 altText="Close"
-              /> */}
-              <Iconify 
+              />
+              {/* <Iconify 
               imgCustomClassName="default"
               icon="gg:close-o"
-               />
+               /> */}
             </div>
           </div>
           <div className="model-body">

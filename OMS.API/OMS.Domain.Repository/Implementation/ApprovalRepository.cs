@@ -21,6 +21,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETAPPROVALREQUESTSLISTBYSTATUSANDREQUESTEDBYUSERID = "GetApprovalRequestsListByStatusAndRequestedByUserId";
         const string GETAPPROVALREQUESTSBYAPPROVALREQUESTID = "GetApprovalRequestsByApprovalRequestId";
         const string GETAPPROVALCONFIGURATION = "GetApprovalConfiguration";
+        const string UPDATEAPPROVALREQUESTSSTATUS = "UpdateApprovalRequestsStatus";
         #endregion
 
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
@@ -103,6 +104,38 @@ namespace OMS.Domain.Repository.Implementation
                 approvalRequestId
             }, CommandType.StoredProcedure);
             return approvalRequestsDetails;
+        }
+        public async Task<AddEntityDto<int>> UpdateApprovalRequestsStatus(ApprovalRequestsDto requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(UPDATEAPPROVALREQUESTSSTATUS, new
+            {
+                requestData.ApprovalRequestId,
+                requestData.ApprovedByUserId,
+                requestData.Status,
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<string> GetPrimaryKeyColumnAsync(string tableName)
+        {
+            string query = @"
+                SELECT COLUMN_NAME
+                FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+                WHERE OBJECTPROPERTY(OBJECT_ID(CONSTRAINT_NAME), 'IsPrimaryKey') = 1
+                AND TABLE_NAME = @TableName";
+
+            return await _context.GetScaler<string>(query, new { TableName = tableName });
+        }
+        public async Task Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text)
+        {
+            await _context.Execute(query, parameters, commandType);
+        }
+        public async Task<IEnumerable<string>> GetTableColumnsAsync(string tableName)
+        {
+            string query = @"
+            SELECT COLUMN_NAME
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_NAME = @TableName";
+
+            return await _context.GetList<string>(query, new { TableName = tableName });
         }
         public async Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration()
         {

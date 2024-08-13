@@ -74,11 +74,11 @@ const FileUpload = ({
           accept={acceptedFiles}
         />
         <div className="custom-file-selector-design">
-          {/* <Image
+          <Image
             imagePath={AppIcons.Uploaddocumenticon}
             altText="Please Upload File"
-          ></Image> */}
-          <Iconify icon="iconamoon:file-document-thin" />
+          ></Image> 
+          {/* <Iconify icon="iconamoon:file-document-thin" /> */}
 
           {fileValue ? (
             <p className="file-name">{fileValue}</p>

@@ -61,7 +61,7 @@ export const emailConfig = {
       colType: GridColumnType.CHECKBOX,
       colSettings: {
         allowCheckbox: true,
-        allowDisable: true
+        isDisabled: false
       },
     },
     {

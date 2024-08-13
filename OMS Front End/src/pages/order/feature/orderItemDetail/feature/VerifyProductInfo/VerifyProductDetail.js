@@ -42,7 +42,7 @@ const VerifyProductDetail = ({ productId }) => {
             productId: productId
         };
         let request = {
-            eventName: EventName.PRODUCTDETAILS,
+            eventName: EventName.AURUMPRODUCTDETAILS,
             isDynamicParameter: true,
             parameters: JSON.stringify(dynamicParameters)
         }

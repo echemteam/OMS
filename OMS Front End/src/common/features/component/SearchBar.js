@@ -25,7 +25,7 @@ function SearchBar(props) {
                 altText="Icon"
               /> */}
               {/* <span className="bi bi-search"></span> */}
-              <Iconify icon="ei:search" />
+              <Iconify icon="ei:search" className="open-bar" />
             </Button>
           </div>
         </div>

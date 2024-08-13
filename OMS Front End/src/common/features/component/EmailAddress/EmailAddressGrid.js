@@ -17,6 +17,7 @@ const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, 
 
     //** State */
     const molGridRef = useRef();
+    const addeditRef = useRef();
     const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -58,6 +59,12 @@ const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, 
         }
     };
 
+    const handleCheckBoxChange = (rowData) => {
+        if (addeditRef.current) {
+            addeditRef.current.callChildFunction(rowData);
+        }
+    }
+
     //** Success */
     const onSuccess = () => {
         setShowModal(!showModal);
@@ -88,11 +95,11 @@ const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, 
     return (
         <React.Fragment>
             <EmailAddressList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
-                isButtonDisable={isButtonDisable} emailAddressList={emailAddressList} />
-            {showModal && (
-                <AddEditEmailModal contactId={contactId} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal}
-                    editFormData={editFormData} isEdit={isEdit} emailAddressList={emailAddressList} setEmailAddressList={setEmailAddressList} />
-            )}
+                isButtonDisable={isButtonDisable} emailAddressList={emailAddressList} handleCheckBoxChange={handleCheckBoxChange} />
+            {/* {showModal && ( */}
+            <AddEditEmailModal contactId={contactId} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} addeditRef={addeditRef}
+                editFormData={editFormData} isEdit={isEdit} emailAddressList={emailAddressList} setEmailAddressList={setEmailAddressList} />
+            {/* )} */}
         </React.Fragment>
     )
 

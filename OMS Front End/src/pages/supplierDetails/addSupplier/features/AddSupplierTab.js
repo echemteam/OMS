@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CardSection from "../../../../components/ui/card/CardSection";
@@ -17,7 +16,7 @@ import Iconify from "../../../../components/ui/iconify/Iconify";
 
 const AddSupplierTab = () => {
   const navigate = useNavigate();
-  const { activeTab, movePreviewPage, addSupplier, supplierId } = useContext(AddSupplierContext);
+  const { activeTab, movePreviewPage, addSupplier, supplierId, setActiveTab } = useContext(AddSupplierContext);
 
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
 
@@ -44,11 +43,6 @@ const AddSupplierTab = () => {
       content: <SupplierContactDetail isEditablePage={false} isSearchFilterShow={false} />,
       tab: CustomerSupplierTabEnum.Contact
     },
-    // {
-    //   label: "Financial Settings",
-    //   subLabel: "Enter Supplier Financial Settings",
-    //   content: <SupplierSettingDetail className="mt-2 supplier-setting-sec" supplierId={supplierId} isEditablePage={false} isSearchFilterShow={false} />,
-    // },
     {
       label: "Documents",
       subLabel: "Add Supplier Documents Details",
@@ -80,6 +74,9 @@ const AddSupplierTab = () => {
     updateSupplierStatus(req);
   };
 
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
 
   return (
     <>
@@ -92,9 +89,7 @@ const AddSupplierTab = () => {
                   <div
                     className={`step ${activeTab === index ? 'active' : ''}`}
                   >
-                    <button className="step-button"
-                      // onClick={() => handleTabClick(index)}
-                    >
+                    <button className="step-button" onClick={() => handleTabClick(index)}>
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">
                         <span>{step.label}</span>
@@ -104,7 +99,6 @@ const AddSupplierTab = () => {
                   </div>
                   {index < tabContent.length - 1 && (
                     <div className="right-arrow">
-                      {/* <Image imagePath={AppIcons.arrowIcon} /> */}
                       <Iconify icon="solar:alt-arrow-down-outline" />
                     </div>
                   )}
@@ -122,21 +116,13 @@ const AddSupplierTab = () => {
                         {step.content}
                         <div className="d-flex justify-content-end">
                           {index > 0 && (
-                            <button type="button" className="btn dark-btn mr-3 btn-prev"
-                              onClick={movePreviewPage}
-                            >
-                            <Image imagePath={AppIcons.nextArrowIcon} />  Back
-                            {/* <Iconify icon="solar:alt-arrow-down-outline" /> Back */}
+                            <button type="button" className="btn dark-btn mr-3 btn-prev" onClick={movePreviewPage}>
+                              <Image imagePath={AppIcons.nextArrowIcon} />  Back
                             </button>
                           )}
                           {index < tabContent.length - 1 ? (
-                            <button
-                              type="button"
-                              className="btn theme-button btn-next"
-                              onClick={() => addSupplier(step.tab)}
-                            >
-                              Next  <Image imagePath={AppIcons.nextArrowIcon} />
-                             {/* Next <Iconify icon="solar:alt-arrow-down-outline" /> */}
+                            <button type="button" className="btn theme-button btn-next ml-3" onClick={() => { addSupplier(step.tab); setActiveTab(index + 1); }}>
+                              Next <Image imagePath={AppIcons.nextArrowIcon} />
                             </button>
                           ) : (
                             <>
@@ -169,8 +155,6 @@ const AddSupplierTab = () => {
       </div>
     </>
   );
-
-
 };
 
 export default AddSupplierTab;

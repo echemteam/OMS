@@ -26,6 +26,10 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
         update(req)
     }
 
+    const handleGridCheckBoxChange = (fieldName, rowData) => {
+        handleEditClick(rowData);
+    };
+
     useEffect(() => {
         if (isUpdateSuccess && isUpdateData) {
             if (isUpdateData.errorMessage.includes('EXISTS')) {
@@ -56,6 +60,7 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
                         onActionChange={actionHandler}
                         isLoading={isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
+                        onColumnChange={handleGridCheckBoxChange}
                     />
                 </div>
             </CardSection>

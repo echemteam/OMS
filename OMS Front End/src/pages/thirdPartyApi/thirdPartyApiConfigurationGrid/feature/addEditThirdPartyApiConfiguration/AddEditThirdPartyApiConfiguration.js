@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types'; 
 import { AddEditThirdPartyApiData } from './config/AddEditThirdPartyApiConfiguration.data';
 import Buttons from '../../../../../components/ui/button/Buttons';
@@ -18,7 +18,6 @@ const AddEditThirdPartyApiConfiguration = (props) => {
     if (isAddEditApiEventSuccess && allAddEditApiEventData) {
       if (allAddEditApiEventData.errorMessage.includes("exists")) {
         ToastService.warning(allAddEditApiEventData.errorMessage);
-        handleResetAndClose();
         return;
       }
       if (!props.keyId) {
@@ -26,7 +25,8 @@ const AddEditThirdPartyApiConfiguration = (props) => {
         handleResetAndClose();
         props.onGetData()
       } else {
-        handleResetAndClose()
+        handleResetAndClose();
+        ToastService.success(allAddEditApiEventData.errorMessage);
         props.onRepetGetData(props.keyId)
       }
     }
