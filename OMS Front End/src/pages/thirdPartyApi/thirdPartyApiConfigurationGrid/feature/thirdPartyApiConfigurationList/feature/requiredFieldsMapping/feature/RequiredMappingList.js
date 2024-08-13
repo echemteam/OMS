@@ -33,7 +33,7 @@ const RequiredMappingList = (props) => {
       const currentPageObject = molGridRef.current.getCurrentPageObject();
       getLists(currentPageObject, molGridRef.current.generateSortingString());
     }
-  }, [isDeleteApiEventRequiredFieldsMappingSuccess, isDeleteApiEventRequiredFieldsMappingData]);
+  }, [getLists,isDeleteApiEventRequiredFieldsMappingSuccess, isDeleteApiEventRequiredFieldsMappingData]);
 
   const handlePageChange = (page) => {
     getLists(page, molGridRef.current.generateSortingString());
