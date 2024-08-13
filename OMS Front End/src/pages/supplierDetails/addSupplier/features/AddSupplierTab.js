@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CardSection from "../../../../components/ui/card/CardSection";
