@@ -32,6 +32,7 @@ import PropTypes from 'prop-types';
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { Tooltip } from "react-bootstrap";
+import AddEditInvoiceSubmissionInstructionDetail from "./feature/AddEditInvoiceSubmissionInstructionDetail";
 
 
 const CustomerBasicInfoCard = ({
@@ -161,7 +162,7 @@ const CustomerBasicInfoCard = ({
 
   useEffect(() => {
     if (customerData) {
-      debugger
+
       const responsibleUserIds = customerData?.responsibleUserId?.split(',').map(id => id.trim());
       const responsibleUserNames = customerData?.responsibleUserName?.split(',').map(name => name.trim());
       const responsibleUsers = responsibleUserIds?.map((id, index) => ({
@@ -306,7 +307,9 @@ const CustomerBasicInfoCard = ({
       updateRUserData(custData?.responsibleUserId?.value);
     }
   };
-
+  const handleModelShow=()=>{
+    setShowModal(true);
+  }
   const handleToggleModal = () => {
     setShowModal(false);
     onReset();
@@ -516,7 +519,7 @@ const CustomerBasicInfoCard = ({
               <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>   
               <b>&nbsp;:&nbsp;</b>    
               <div className="checkbox-part ml-2 mt-2 eye-icon ">
-              <Iconify icon="ph:eye-duotone"/>
+              <Iconify icon="ph:eye-duotone"  onClick={handleModelShow}/>
               <div className="tooltip-show">
                   <p>Add/Edit Invoice Submission</p>
               </div>
@@ -559,6 +562,22 @@ const CustomerBasicInfoCard = ({
           </div>
         </CenterModel>
       )}
+      {
+        showModal &&(    
+        <CenterModel
+          showModal={showModal}
+          handleToggleModal={handleToggleModal}
+          modalTitle="Add/Edit Invoice Submission Instruction"
+          modelSizeClass="w-60"
+        >
+          <AddEditInvoiceSubmissionInstructionDetail
+            customerId={customerId}
+             showModal={showModal}
+             setShowModal={setShowModal}
+            handleToggleModal={handleToggleModal}  
+          />
+        </CenterModel>)
+      }
       <CustomerApproval
         isDetailPage={true}
         childRef={childRef}
