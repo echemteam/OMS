@@ -54,7 +54,7 @@ namespace OMS.Domain.Repository.Implementation
                 customers.TaxId,
                 customers.CreatedBy,
                 customers.IsBuyingForThirdParty,
-                customers.ResponsibleUserId,
+                //customers.ResponsibleUserId,
                 customers.IsSubCustomer
             }, CommandType.StoredProcedure);
         }
