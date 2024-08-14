@@ -518,7 +518,7 @@ const CustomerBasicInfoCard = ({
               <div className="checkbox-part ml-2 mt-2 eye-icon ">
               <Iconify icon="ph:eye-duotone"/>
               <div className="tooltip-show">
-                  <p>add/edit Invoice Submission</p>
+                  <p>Add/Edit Invoice Submission</p>
               </div>
               <di className="tooltip-arrow-icon"></di>
               </div>      
