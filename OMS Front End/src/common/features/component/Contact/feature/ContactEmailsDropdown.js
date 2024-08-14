@@ -41,6 +41,7 @@ const ContactEmailsDropdown = ({ emailAddressesList, isOptionsOpen }) => {
               >
                 <div
                   className="copy"
+                  style={{ cursor: "pointer"}}
                   onClick={() =>
                     CopyText(primaryEmailAddress?.emailAddress, "email")
                   }
@@ -60,6 +61,7 @@ const ContactEmailsDropdown = ({ emailAddressesList, isOptionsOpen }) => {
               <span
                 className="copy-icon"
                 title="Copy"
+                style={{ cursor: "pointer"}}
                 onClick={() => CopyText(emaildata?.emailAddress, "email")}
               >
                 {/* <i className="fa fa-files-o"></i> */}
