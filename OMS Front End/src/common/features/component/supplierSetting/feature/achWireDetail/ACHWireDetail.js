@@ -14,9 +14,12 @@ import ToastService from "../../../../../../services/toastService/ToastService";
 import BankAddressDetail from "./features/BankAddressDetail";
 import RegisteredBankAddressDetail from "./features/RegisteredBankAddressDetail";
 import { useLazyGetAllAccountTypeQuery } from "../../../../../../app/services/commonAPI";
+import ACHWIreOtherDetails from "./features/ACHWIreOtherDetails";
+import { ACHOtherDetailsData } from "../../config/ACHOtherDetails.data";
 
 const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) => {
   const aCHWireFormRef = useRef();
+  const aCHWireOtherRef = useRef();
   const bankFormRef = useRef();
   const registeredFormRef = useRef();
   const [achWireData, setAchWireData] = useState(achWireFormData);
@@ -109,6 +112,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
     const formBankAddress = bankFormRef.current.getFormData();
     const formRegisteredBankAddress = registeredFormRef.current.getFormData();
     const formOtherDetail = aCHWireFormRef.current.getFormData();
+    const formAchWireOtherDetail = aCHWireOtherRef.current.getFormData();
 
     if (formsupplierFinancialSettings && formBankAddress && formRegisteredBankAddress && formOtherDetail) {
       const extractId = (item, key) => (item[key] && typeof item[key] === "object" ? item[key].value : item[key]);
@@ -145,11 +149,11 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
         recipientAddressId: formOtherDetail.recipientAddressId ?? 0,
         supplierId,
         isActive: true,
-        messageToRecipient: formOtherDetail.messageToRecipient,
+        messageToRecipient: formAchWireOtherDetail.messageToRecipient,
         isAddressInUs: formOtherDetail.isAddressInUs,
         recipientPhoneNumber: formOtherDetail.recipientPhoneNumber,
         paymentTermId: extractId(formOtherDetail, 'paymentTermId'),
-        messageToRecipientBank: formOtherDetail.messageToRecipientBank,
+        messageToRecipientBank: formAchWireOtherDetail.messageToRecipientBank,
         beneficiaryName: formOtherDetail.beneficiaryName,
         bankName: formOtherDetail.bankName,
         accountType: extractId(formOtherDetail, 'accountType'),
@@ -187,6 +191,13 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
       <RegisteredBankAddressDetail
         registeredBankAddressForm={registeredBankAddressForm}
         registeredFormRef={registeredFormRef}
+        isGetACHWireBySupplierIdSuccess={isGetACHWireBySupplierIdSuccess}
+        isGetACHWireBySupplierIdData={isGetACHWireBySupplierIdData}
+      />
+
+      <ACHWIreOtherDetails
+        aCHWireOtherRef={aCHWireOtherRef}
+        otherData={ACHOtherDetailsData}
         isGetACHWireBySupplierIdSuccess={isGetACHWireBySupplierIdSuccess}
         isGetACHWireBySupplierIdData={isGetACHWireBySupplierIdData}
       />
