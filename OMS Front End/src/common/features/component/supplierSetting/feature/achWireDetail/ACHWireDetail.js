@@ -13,19 +13,25 @@ import { registeredBankAddressForm } from "../../config/RegisteredBankAddressFor
 import ToastService from "../../../../../../services/toastService/ToastService";
 import BankAddressDetail from "./features/BankAddressDetail";
 import RegisteredBankAddressDetail from "./features/RegisteredBankAddressDetail";
+import { useLazyGetAllAccountTypeQuery } from "../../../../../../app/services/commonAPI";
+import ACHWIreOtherDetails from "./features/ACHWIreOtherDetails";
+import { ACHOtherDetailsData } from "../../config/ACHOtherDetails.data";
 
 const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) => {
   const aCHWireFormRef = useRef();
+  const aCHWireOtherRef = useRef();
   const bankFormRef = useRef();
   const registeredFormRef = useRef();
   const [achWireData, setAchWireData] = useState(achWireFormData);
 
   const [addEditACHWire, { isLoading: isAddEditACHWireLoading, isSuccess: isAddEditACHWireSuccess, data: isAddEditACHWireData }] = useAddEditACHWireMutation();
   const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
+  const [getAllAccountType, { isFetching: isGetAllAccountTypeFetching, isSuccess: isGetAllAccountTypeSuccess, data: isGetAllAccountTypeData }] = useLazyGetAllAccountTypeQuery();
   const [getACHWireBySupplierId, { isFetching: isGetACHWireBySupplierIdFetching, isSuccess: isGetACHWireBySupplierIdSuccess, data: isGetACHWireBySupplierIdData }] = useLazyGetACHWireBySupplierIdQuery();
 
   useEffect(() => {
     getAllPaymentTerms();
+    getAllAccountType();
   }, []);
 
   useEffect(() => {
@@ -38,7 +44,11 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
       setDropDownOptionField(isGetAllPaymentTermsData, "paymentTermId", "paymentTerm", achWireFormData, "paymentTermId");
     }
-  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData]);
+    if (!isGetAllAccountTypeFetching && isGetAllAccountTypeSuccess && isGetAllAccountTypeData) {
+      setDropDownOptionField(isGetAllAccountTypeData, "accountType", "accountType", achWireFormData, "accountType");
+    }
+  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData,
+    isGetAllAccountTypeData, isGetAllAccountTypeSuccess, isGetAllAccountTypeFetching]);
 
 
   useEffect(() => {
@@ -102,6 +112,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
     const formBankAddress = bankFormRef.current.getFormData();
     const formRegisteredBankAddress = registeredFormRef.current.getFormData();
     const formOtherDetail = aCHWireFormRef.current.getFormData();
+    const formAchWireOtherDetail = aCHWireOtherRef.current.getFormData();
 
     if (formsupplierFinancialSettings && formBankAddress && formRegisteredBankAddress && formOtherDetail) {
       const extractId = (item, key) => (item[key] && typeof item[key] === "object" ? item[key].value : item[key]);
@@ -138,14 +149,14 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
         recipientAddressId: formOtherDetail.recipientAddressId ?? 0,
         supplierId,
         isActive: true,
-        messageToRecipient: formOtherDetail.messageToRecipient,
+        messageToRecipient: formAchWireOtherDetail.messageToRecipient,
         isAddressInUs: formOtherDetail.isAddressInUs,
         recipientPhoneNumber: formOtherDetail.recipientPhoneNumber,
         paymentTermId: extractId(formOtherDetail, 'paymentTermId'),
-        messageToRecipientBank: formOtherDetail.messageToRecipientBank,
+        messageToRecipientBank: formAchWireOtherDetail.messageToRecipientBank,
         beneficiaryName: formOtherDetail.beneficiaryName,
         bankName: formOtherDetail.bankName,
-        accountType: formOtherDetail.accountType,
+        accountType: extractId(formOtherDetail, 'accountType'),
         accountNumber: formOtherDetail.accountNumber,
         branchCode: formOtherDetail.branchCode,
         ibanNumber: formOtherDetail.ibanNumber,
@@ -184,8 +195,15 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
         isGetACHWireBySupplierIdData={isGetACHWireBySupplierIdData}
       />
 
+      <ACHWIreOtherDetails
+        aCHWireOtherRef={aCHWireOtherRef}
+        otherData={ACHOtherDetailsData}
+        isGetACHWireBySupplierIdSuccess={isGetACHWireBySupplierIdSuccess}
+        isGetACHWireBySupplierIdData={isGetACHWireBySupplierIdData}
+      />
+
       <div className="col-md-12">
-        <div className="d-flex align-item-end justify-content-end" >
+        <div className="d-flex align-item-end justify-content-end centered" >
           <Buttons
             buttonTypeClassName="theme-button"
             buttonText="Save"

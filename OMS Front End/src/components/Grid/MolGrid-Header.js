@@ -76,15 +76,15 @@ const MolGridHeader = (props) => {
             }}
           >
             <span>{col.name}</span>
-            {/* <Image
+            <Image
               imgCustomClassName="order-icon"
               imagePath={AppIcons.shortingArrowIcon}
               altText="Arrow Icon"
-            /> */}
-            <Iconify
+            />
+            {/* <Iconify
               imgCustomClassName="order-icon"
               icon="solar:alt-arrow-down-outline"
-            />
+            /> */}
           </button>
           {shortColObj ? (
             <span className="sort-priority-number">

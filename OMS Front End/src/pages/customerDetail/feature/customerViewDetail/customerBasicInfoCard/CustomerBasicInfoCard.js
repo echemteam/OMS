@@ -8,9 +8,9 @@ import CustomerApproval from "../../cutomerApproval/CustomerApproval";
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import {
   useLazyGetAllUserQuery,
-  useUpdateResponsibleUserMutation,
 } from "../../../../../app/services/commonAPI";
 import {
+  useAddEditResponsibleUserForCustomerMutation,
   useUpdateCustomerInActiveStatusMutation,
   useUpdateCustomerStatusMutation,
   useUpdateCustomerSubCustomerMutation
@@ -31,6 +31,7 @@ import { reasonData } from "../../../../../common/features/component/CustomerSup
 import PropTypes from 'prop-types';
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
+import { Tooltip } from "react-bootstrap";
 
 
 const CustomerBasicInfoCard = ({
@@ -56,9 +57,9 @@ const CustomerBasicInfoCard = ({
   ] = useUpdateCustomerSubCustomerMutation();
 
   const [
-    updateResponsibleUser,
-    { isSuccess: isSuccessRUser, data: isUpdateRUserData },
-  ] = useUpdateResponsibleUserMutation();
+    addEditResponsibleUserForCustomer,
+    { isSuccess: isSuccessAddEditResponsibleUserForCustomer, data: isAddEditResponsibleUserForCustomerData },
+  ] = useAddEditResponsibleUserForCustomerMutation();
   const [
     updateCustomerStatus,
     {
@@ -160,8 +161,15 @@ const CustomerBasicInfoCard = ({
 
   useEffect(() => {
     if (customerData) {
+      debugger
+      const responsibleUserIds = customerData?.responsibleUserId?.split(',').map(id => id.trim());
+      const responsibleUserNames = customerData?.responsibleUserName?.split(',').map(name => name.trim());
+      const responsibleUsers = responsibleUserIds?.map((id, index) => ({
+        value: id,
+        label: responsibleUserNames[index] || id,
+      }));
       setSelectedStatus(customerData.status);
-      setRUserValue(customerData.responsibleUserName);
+      setRUserValue(responsibleUsers);
       getAllUser();
     }
   }, [customerData]);
@@ -239,32 +247,37 @@ const CustomerBasicInfoCard = ({
 
 
   //** Responsible User  */
-  const handleRUserChange = (selectedValue) => {
-    confirm(
-      "Warning?",
-      `Are you sure you want to assign the responsible user?`,
-      "Yes",
-      "Cancel"
-    ).then((confirmed) => {
-      if (confirmed) {
-        updateRUserData(selectedValue.value);
-      }
-    });
-  };
-  const updateRUserData = (value) => {
+  // const handleRUserChange = (selectedValue) => {
+  //   confirm(
+  //     "Warning?",
+  //     `Are you sure you want to assign the responsible user?`,
+  //     "Yes",
+  //     "Cancel"
+  //   ).then((confirmed) => {
+  //     if (confirmed) {
+  //       updateRUserData(selectedValue);
+  //     }
+  //   });
+  // };
+
+  const onHandleBlur = () => {
     let req = {
-      ownerId: customerId,
-      ownerType: OwnerType.Customer,
-      responsibleUserId: value,
+      customerId: customerId,
+      userId: String(rUserValue)
     };
-    updateResponsibleUser(req);
-    setRUserValue(value);
+    addEditResponsibleUserForCustomer(req);
+  }
+
+  const updateRUserData = (data) => {
+    const responsibleUserId = data.map(option => option.value);
+    setRUserValue(responsibleUserId);
   };
+
   useEffect(() => {
-    if (isSuccessRUser && isUpdateRUserData) {
-      ToastService.success(isUpdateRUserData.errorMessage);
+    if (isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
+      ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage);
     }
-  }, [isSuccessRUser, isUpdateRUserData]);
+  }, [isSuccessAddEditResponsibleUserForCustomer, isAddEditResponsibleUserForCustomerData]);
 
   const updateCustomerApproval = () => {
     setSelectedStatus(statusId);
@@ -352,6 +365,9 @@ const CustomerBasicInfoCard = ({
     return status ? status.label : 'Unknown'; // Returns 'Unknown' if value not found
   };
 
+  console.log("customerData", customerData)
+  console.log("rUserValue", rUserValue);
+
   return !isLoading ? (
     <div className="basic-customer-detail">
       <div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -429,9 +445,11 @@ const CustomerBasicInfoCard = ({
                 <DropDown
                   options={responsibleUserOptions}
                   value={rUserValue}
-                  onChange={handleRUserChange}
+                  onChange={updateRUserData}
                   placeholder="Responsible User"
                   isDisabled={isResponsibleUser ? true : isButtonDisable}
+                  isMultiSelect={true}
+                  onBlur={onHandleBlur}
                 />
               </div>
             </div>
@@ -493,6 +511,17 @@ const CustomerBasicInfoCard = ({
                   ></label>
                 </div>
               </div>
+            </div>
+            <div className="field-desc">
+              <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>   
+              <b>&nbsp;:&nbsp;</b>    
+              <div className="checkbox-part ml-2 mt-2 eye-icon ">
+              <Iconify icon="ph:eye-duotone"/>
+              <div className="tooltip-show">
+                  <p>Add/Edit Invoice Submission</p>
+              </div>
+              <di className="tooltip-arrow-icon"></di>
+              </div>      
             </div>
           </div>
         </div>

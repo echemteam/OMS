@@ -13,6 +13,8 @@ const DropDown = (props) => {
   const defaultSelectedOptionMultiSelect = Array.isArray(props.value) ?
     props.options.filter(option => props.value.includes(option.value)) : [];
 
+    console.log("props" , props)
+    console.log("defaultSelectedOptionMultiSelect" , defaultSelectedOptionMultiSelect)
   return (
     <>
       <span className="d-inline-block custom-input">
