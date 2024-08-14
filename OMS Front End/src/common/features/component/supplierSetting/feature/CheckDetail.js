@@ -177,13 +177,7 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
                   isLoading={isAddEditCheckLoading}
                 // isDisable={isButtonDisable}
                 />
-                {/* <Buttons
-                  buttonTypeClassName="dark-btn ml-5"
-                  buttonText="Cancel"
-                // onClick={onSidebarClose}
-                /> */}
               </div>
-              {/* ))} */}
             </div>
           </CardSection>
         </div>

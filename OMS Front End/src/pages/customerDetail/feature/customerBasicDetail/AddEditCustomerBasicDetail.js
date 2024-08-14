@@ -362,7 +362,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             </CardSection>
 
             {!isOpen ?
-                <ExistingCustomerSupplierInfo parentRef={parentRef} isSupplier={false} getExistingInfoByName={useLazyGetCustomersDetailsByCutomerNameQuery} />
+                <ExistingCustomerSupplierInfo parentRef={parentRef} isOrderManage={false} isSupplier={false} getExistingInfoByName={useLazyGetCustomersDetailsByCutomerNameQuery} />
                 : null}
 
         </div>
