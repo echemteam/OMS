@@ -29,7 +29,6 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SupplierId,
                 requestData.IsAddressInUs,
                 requestData.RecipientPhoneNumber,
-                requestData.PaymentTermId,
                 requestData.MessageToRecipientBank,
                 requestData.BeneficiaryName,
                 requestData.BankName,

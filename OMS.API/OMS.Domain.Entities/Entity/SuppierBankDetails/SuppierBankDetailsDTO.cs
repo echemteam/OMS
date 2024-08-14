@@ -9,7 +9,6 @@
         public int? SupplierId { get; set; }
         public bool? IsAddressInUs { get; set; }
         public string? RecipientPhoneNumber { get; set; }
-        public byte? PaymentTermId { get; set; }
         public string? MessageToRecipientBank { get; set; }
         public string? BeneficiaryName { get; set; }
         public string? BankName { get; set; }
