@@ -13,6 +13,7 @@ import { registeredBankAddressForm } from "../../config/RegisteredBankAddressFor
 import ToastService from "../../../../../../services/toastService/ToastService";
 import BankAddressDetail from "./features/BankAddressDetail";
 import RegisteredBankAddressDetail from "./features/RegisteredBankAddressDetail";
+import { useLazyGetAllAccountTypeQuery } from "../../../../../../app/services/commonAPI";
 
 const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) => {
   const aCHWireFormRef = useRef();
@@ -22,10 +23,12 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
 
   const [addEditACHWire, { isLoading: isAddEditACHWireLoading, isSuccess: isAddEditACHWireSuccess, data: isAddEditACHWireData }] = useAddEditACHWireMutation();
   const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
+  const [getAllAccountType, { isFetching: isGetAllAccountTypeFetching, isSuccess: isGetAllAccountTypeSuccess, data: isGetAllAccountTypeData }] = useLazyGetAllAccountTypeQuery();
   const [getACHWireBySupplierId, { isFetching: isGetACHWireBySupplierIdFetching, isSuccess: isGetACHWireBySupplierIdSuccess, data: isGetACHWireBySupplierIdData }] = useLazyGetACHWireBySupplierIdQuery();
 
   useEffect(() => {
     getAllPaymentTerms();
+    getAllAccountType();
   }, []);
 
   useEffect(() => {
@@ -38,7 +41,11 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
     if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
       setDropDownOptionField(isGetAllPaymentTermsData, "paymentTermId", "paymentTerm", achWireFormData, "paymentTermId");
     }
-  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData]);
+    if (!isGetAllAccountTypeFetching && isGetAllAccountTypeSuccess && isGetAllAccountTypeData) {
+      setDropDownOptionField(isGetAllAccountTypeData, "accountType", "accountType", achWireFormData, "accountType");
+    }
+  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData,
+    isGetAllAccountTypeData, isGetAllAccountTypeSuccess, isGetAllAccountTypeFetching]);
 
 
   useEffect(() => {
@@ -145,7 +152,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
         messageToRecipientBank: formOtherDetail.messageToRecipientBank,
         beneficiaryName: formOtherDetail.beneficiaryName,
         bankName: formOtherDetail.bankName,
-        accountType: formOtherDetail.accountType,
+        accountType: extractId(formOtherDetail, 'accountType'),
         accountNumber: formOtherDetail.accountNumber,
         branchCode: formOtherDetail.branchCode,
         ibanNumber: formOtherDetail.ibanNumber,
@@ -185,7 +192,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
       />
 
       <div className="col-md-12">
-        <div className="d-flex align-item-end justify-content-end" >
+        <div className="d-flex align-item-end justify-content-end centered" >
           <Buttons
             buttonTypeClassName="theme-button"
             buttonText="Save"

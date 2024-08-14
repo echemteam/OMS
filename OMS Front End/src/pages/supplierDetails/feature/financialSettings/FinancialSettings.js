@@ -6,7 +6,7 @@ import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSuppli
 const FinancialSettings = ({ isEditablePage }) => {
   const { supplierId  } = useContext(AddSupplierContext);
   return (
-    <div>
+    <div className="financial-setting">
       <FinancialSettingsgGrid
         supplierId={supplierId || 0}
         isEditablePage={isEditablePage}

@@ -154,6 +154,8 @@ const AddressDetailCard = forwardRef(
         : "";
     };
 
+    console.log("addressData" , addressData)
+
     return (
       <React.Fragment>
         {!isGetAddresssByCustomerIdFetching ? (

@@ -6,7 +6,7 @@ export const achWireFormData = {
   initialState: {
     bankName: "",
     beneficiaryName: "",
-    accountType: "",
+    accountType: "Checking",
     accountNumber: "",
     messageToRecipientBank: "",
     messageToRecipient: "",
@@ -53,15 +53,31 @@ export const achWireFormData = {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input label-name-small",
       },
     },
+    // {
+    //   id: "paymentTermId",
+    //   lable: "Payment Terms",
+    //   Field_Name: "Payment Terms",
+    //   fieldType: FormFieldTypes.SELECT,
+    //   dataField: "paymentTermId",
+    //   fieldSetting: {
+    //     isDisabled: false,
+    //     placeholder: "Select Payment Terms",
+    //     isEnableOnChange: true
+    //   },
+    //   // validation: [{ type: "require" }],
+    //   style: {
+    //     containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input label-name-small",
+    //   },
+    // },
     {
       id: "accountType",
       lable: "Account Type",
       Field_Name: "Account Type",
-      fieldType: FormFieldTypes.INPUT,
+      fieldType: FormFieldTypes.SELECT,
       dataField: "accountType",
       fieldSetting: {
         isDisabled: false,
-        placeholder: "Please Enter Account Type",
+        placeholder: "Select Account Type",
         isEnableOnChange: true
       },
       validation: [{ type: "require" }],
