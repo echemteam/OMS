@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 //** Component */
 
 const CustomerBasicDetail = (props) => {
-  const { isOpen, getCustomerById, onSidebarClose, keyId } = props;
+  const { isOpen, getCustomerById, onSidebarClose, keyId, isEditablePage } = props;
 
   return (
     <div className="basic-info-sec half-sec">
@@ -16,6 +16,7 @@ const CustomerBasicDetail = (props) => {
           keyId={keyId}
           getCustomerById={getCustomerById}
           isOpen={isOpen}
+          isEditablePage={isEditablePage}
           onSidebarClose={onSidebarClose}
         />
       </CardSection>
@@ -24,9 +25,9 @@ const CustomerBasicDetail = (props) => {
 };
 
 CustomerBasicDetail.propTypes = {
-  isOpen: PropTypes.bool ,
-  getCustomerById: PropTypes.func ,
+  isOpen: PropTypes.bool,
+  getCustomerById: PropTypes.func,
   onSidebarClose: PropTypes.func,
-  keyId: PropTypes.number ,
+  keyId: PropTypes.number,
 };
 export default CustomerBasicDetail;

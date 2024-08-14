@@ -120,47 +120,6 @@ const CustomerBasicInfoCard = ({
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
-  // useEffect(() => {
-  //   setOptions(StatusValue);
-  //   if (customerData) {
-  //     // const statusId = customerData.statusId;
-  //     // switch (statusId) {
-  //     //   case 1:
-  //     //   case 2:
-  //     //   case 3:
-  //     //     setOptions(StaticStatus[StatusValue[statusId - 1].label]);
-  //     //     break;
-  //     //   case 4:
-  //     //     setOptions([
-  //     //       { value: "4", label: "Freeze" },
-  //     //       { value: "3", label: "Approved" },
-  //     //       { value: "1", label: "Pending" },
-  //     //     ]);
-  //     //     break;
-  //     //   case 5:
-  //     //     setOptions([
-  //     //       { value: "5", label: "Block" },
-  //     //       { value: "3", label: "Approved" },
-  //     //       { value: "1", label: "Pending" },
-  //     //     ]);
-  //     //     break;
-  //     //   case 6:
-  //     //     setOptions(
-  //     //       StaticStatus.Approved.filter(
-  //     //         (option) => option.label === StatusValue[statusId - 1].label
-  //     //       )
-  //     //     );
-  //     //     break;
-  //     //   case 7:
-  //     //     setOptions(StaticStatus[StatusValue[statusId - 1].label]);
-  //     //     break;
-
-  //     //   default:
-  //     //     setOptions([]);
-  //     // }
-  //   }
-  // }, [customerData]);
-
   useEffect(() => {
     if (customerData) {
 
@@ -442,6 +401,7 @@ const CustomerBasicInfoCard = ({
                 <DropdownSelect
                   isMultiSelect={true}
                   placeholder="Responsible User"
+                  isDropdownDisabled={isResponsibleUser ? true : isButtonDisable}
                   optionsValue={responsibleUserOptions}
                   value={rUserValue}
                   handleDropdownChange={updateRUserData}
@@ -499,7 +459,7 @@ const CustomerBasicInfoCard = ({
                     id={"isSubCustomer"}
                     checked={customerData?.isSubCustomer ? customerData?.isSubCustomer : false}
                     onChange={handleCheckboxChange}
-                    disabled={isButtonDisable}
+                    disabled={isResponsibleUser ? true : isButtonDisable}
                   />
                   <label
                     htmlFor={"isSubCustomer"}
@@ -509,15 +469,19 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
             <div className="field-desc">
-              <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
-              <b>&nbsp;:&nbsp;</b>
-              <div className="checkbox-part ml-2 mt-2 eye-icon ">
-                <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
-                <div className="tooltip-show">
-                  <p>Add/Edit Invoice Submission</p>
-                </div>
-                <di className="tooltip-arrow-icon"></di>
-              </div>
+              {isResponsibleUser ?
+                <>
+                  <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className="checkbox-part ml-2 mt-2 eye-icon ">
+                    <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
+                    <div className="tooltip-show">
+                      <p>Add/Edit Invoice Submission</p>
+                    </div>
+                    <di className="tooltip-arrow-icon"></di>
+                  </div>
+                </> : ""
+              }
             </div>
           </div>
         </div>

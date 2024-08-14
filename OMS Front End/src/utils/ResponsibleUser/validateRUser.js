@@ -8,5 +8,6 @@ export const validateResponsibleUserId = (userIdsString, loginUserId) => {
     if (!userIdsString || !loginUserId) return false;
 
     const idsArray = userIdsString.split(',').map(id => id.trim());
-    return idsArray.includes(loginUserId);
+    const loginUserIdStr = loginUserId.toString();
+    return idsArray.includes(loginUserIdStr);
 }

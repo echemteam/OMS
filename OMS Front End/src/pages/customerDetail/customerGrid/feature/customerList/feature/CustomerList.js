@@ -32,6 +32,8 @@ import CustomerApproval from "../../../../feature/cutomerApproval/CustomerApprov
 import { reasonData } from "../../../../../../common/features/component/CustomerSupplierReason/Reason.data";
 import PropTypes from 'prop-types';
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
+import { validateResponsibleUserId } from "../../../../../../utils/ResponsibleUser/validateRUser";
+import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
 //import MolGrid from "../../../../../../components/Grid/MolGrid";
 
 
@@ -105,24 +107,18 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       if (actionColumn.defaultAction.allowEdit) {
         actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
       }
-      if (actionColumn.defaultAction.allowBlocked) {
-        actionColumn.defaultAction.allowBlocked = hasBlock?.hasAccess;
-      }
-      if (actionColumn.defaultAction.allowFreeze) {
-        actionColumn.defaultAction.allowFreeze = hasFreeze?.hasAccess;
-      }
+      // actionColumn.customAction = securityValidator(hasBlock?.hasAccess, actionColumn.customAction, "ALLOWBLOCKED");
+      // actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
+      // actionColumn.customAction = securityValidator(hasDisable?.hasAccess, actionColumn.customAction, "ALLOWDISABLE");
+      // actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
+
       if (actionColumn.defaultAction.allowActiveCustomer) {
         actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
-      }
-      if (actionColumn.defaultAction.allowDisable) {
-        actionColumn.defaultAction.allowDisable = hasDisable?.hasAccess;
-      }
-      if (actionColumn.defaultAction.allowUnblocked) {
-        actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
       }
       if (actionColumn.defaultAction.allowUnfreeze) {
         actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
       }
+      
       if (approvalAction) {
         if (approvalAction.colSettings.allowCheckbox) {
           approvalAction.colSettings.allowCheckbox = true;
@@ -182,7 +178,9 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
-        const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authState?.user?.userID);
+        const isResponsibleId = isListeData.dataSource.find(data =>
+          validateResponsibleUserId(data.responsibleUserId, authState?.user?.userID)
+        );
         if (isResponsibleId) {
           setIsResponsibleUser(true);
           hasResponsibleUserhasAccess();
