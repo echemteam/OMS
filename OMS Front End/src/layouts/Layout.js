@@ -6,8 +6,6 @@ import Breadcome from "../components/ui/breadcome/Breadcome";
 import Footer from "./components/footer/Footer";
 import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation";
 import { PagePermissionsProvider } from "../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
-import Image from "../components/image/Image";
-import { AppIcons } from "../data/appIcons";
 import Unauthorize from "../pages/unauthorize/Unauthorize";
 import Iconify from "../components/ui/iconify/Iconify";
 
