@@ -5,11 +5,11 @@ import CopyText from "../../../../../utils/CopyText/CopyText";
 import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 
-const ContactPhoneNumberDropdown = ({  phoneNumberList,isOptionsOpen }) => {
-
-  let phoneNumbers =   phoneNumberList.filter((data) => data.isPrimary === false);
-   let primaryPhoneNumber =   phoneNumberList.find((data) => data.isPrimary === true);
-
+const ContactPhoneNumberDropdown = ({ phoneNumberList, isOptionsOpen }) => {
+  let phoneNumbers = phoneNumberList.filter((data) => data.isPrimary === false);
+  let primaryPhoneNumber = phoneNumberList.find(
+    (data) => data.isPrimary === true
+  );
 
   if (!primaryPhoneNumber && phoneNumberList && phoneNumberList.length > 0) {
     primaryPhoneNumber = phoneNumberList[0];
@@ -50,18 +50,46 @@ const ContactPhoneNumberDropdown = ({  phoneNumberList,isOptionsOpen }) => {
               <div className="number-type">
                 {phoneTypesIcon(primaryPhoneNumber?.phoneTypeId)}
               </div>
-              <div className={`card-value ml-0 ${primaryPhoneNumber?.isPrimary ? "" : ""}`}>
+              <div
+                className={`card-value ml-0 ${
+                  primaryPhoneNumber?.isPrimary ? "" : ""
+                }`}
+              >
                 {`(${primaryPhoneNumber?.phoneCode}) ${primaryPhoneNumber?.phoneNumber}`}
               </div>
-           
-              <div className={`card-value ${primaryPhoneNumber?.isPrimary ? "primary-phone" : ""}`} >
-                {`${primaryPhoneNumber?.extension > 0 ? "," + primaryPhoneNumber?.extension : ""}`}
+
+              <div
+                className={`card-value ${
+                  primaryPhoneNumber?.isPrimary ? "primary-phone" : ""
+                }`}
+              >
+                {`${
+                  primaryPhoneNumber?.extension > 0
+                    ? "," + primaryPhoneNumber?.extension
+                    : ""
+                }`}
               </div>
               {primaryPhoneNumber?.isPrimary ? (
                 <div className="primary-icon" title="Is Primary"></div>
               ) : null}
-              <span className="copy-icon" title="Copy" onClick={() => CopyText(`(${primaryPhoneNumber.phoneCode}) ${primaryPhoneNumber.phoneNumber} 
-                ${primaryPhoneNumber.extension > 0 ? primaryPhoneNumber.extension : ""}`, "phone")}>
+              <span
+                className="copy-icon"
+                title="Copy"
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  CopyText(
+                    `(${primaryPhoneNumber.phoneCode}) ${
+                      primaryPhoneNumber.phoneNumber
+                    } 
+                ${
+                  primaryPhoneNumber.extension > 0
+                    ? primaryPhoneNumber.extension
+                    : ""
+                }`,
+                    "phone"
+                  )
+                }
+              >
                 {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
                 <Iconify icon="bitcoin-icons:copy-outline" />
                 {/* <i className="fa fa-files-o"></i> */}
@@ -70,42 +98,54 @@ const ContactPhoneNumberDropdown = ({  phoneNumberList,isOptionsOpen }) => {
           ) : null}
         </div>
       </div>
-      {isOptionsOpen ? 
-      <>
-     {phoneNumbers.map((phoneData,index) => (
-              <span className="contact-list d-flex flex-row" key={index}>
-                <span className="number-list">
-                  {phoneTypesIcon(phoneData?.phoneTypeId)}
-                  <span className="">
-                    {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}${phoneData.extension ? `, ${phoneData.extension}` : ""
-                      }`}
-                  </span>
-                </span>
-                <span className="copy-icon" title="Copy" onClick={() => CopyText(`(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${phoneData.extension > 0 ? phoneData.extension : ""}`, "phone")} >
-                  {/* <i className="fa fa-files-o"></i> */}
-                  {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
-                <Iconify icon="bitcoin-icons:copy-outline" />
+      {isOptionsOpen ? (
+        <>
+          {phoneNumbers.map((phoneData, index) => (
+            <span className="contact-list d-flex flex-row" key={index}>
+              <span className="number-list">
+                {phoneTypesIcon(phoneData?.phoneTypeId)}
+                <span className="">
+                  {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}${
+                    phoneData.extension ? `, ${phoneData.extension}` : ""
+                  }`}
                 </span>
               </span>
-            ))}
-      </>
-      :null}
+              <span
+                className="copy-icon"
+                title="Copy"
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  CopyText(
+                    `(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${
+                      phoneData.extension > 0 ? phoneData.extension : ""
+                    }`,
+                    "phone"
+                  )
+                }
+              >
+                {/* <i className="fa fa-files-o"></i> */}
+                {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
+              </span>
+            </span>
+          ))}
+        </>
+      ) : null}
     </React.Fragment>
   );
 };
 
 ContactPhoneNumberDropdown.propTypes = {
- 
   phoneNumberList: PropTypes.arrayOf(
     PropTypes.shape({
       phoneCode: PropTypes.string,
-      phoneNumber: PropTypes.string ,
-      extension: PropTypes.number ,
-      phoneTypeId: PropTypes.number ,
-      isPrimary: PropTypes.bool 
+      phoneNumber: PropTypes.string,
+      extension: PropTypes.number,
+      phoneTypeId: PropTypes.number,
+      isPrimary: PropTypes.bool,
     })
   ).isRequired,
-  isOptionsOpen: PropTypes.bool
+  isOptionsOpen: PropTypes.bool,
 };
 
 export default ContactPhoneNumberDropdown;
