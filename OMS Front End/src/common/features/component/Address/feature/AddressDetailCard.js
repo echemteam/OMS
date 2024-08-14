@@ -193,7 +193,7 @@ const AddressDetailCard = forwardRef(
                           {address.addressLine2}
                         </span>
                         <span className="label-txt">
-                          {address.cityName}, {address.stateName}{" "}
+                          {address.cityName}, {address.stateCode ? address.stateCode : address.stateName}{" "}
                           {address.zipCode}
                         </span>
                         {/* <span className="label-txt">{address.stateName}</span> */}

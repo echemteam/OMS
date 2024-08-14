@@ -112,6 +112,15 @@ const basicdetailAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        addEditResponsibleUserForCustomer: builder.mutation({
+            query: (requestData) => ({
+                url: '/Customers/AddEditResponsibleUserForCustomer',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -127,7 +136,8 @@ export const {
     useAddEditCustomersBasicInformationMutation,
     useCheckCustomerNameExistMutation,
     useLazyGetCustomersDetailsByCutomerNameQuery,
-    useUpdateCustomerSubCustomerMutation
+    useUpdateCustomerSubCustomerMutation,
+    useAddEditResponsibleUserForCustomerMutation
 } = basicdetailAPI
 
 export default basicdetailAPI;
