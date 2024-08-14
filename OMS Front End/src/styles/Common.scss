@@ -3651,3 +3651,20 @@ font-size: var(--commonFont-large) !important;
   font-size: var(--commonFont-large) !important;
   color: #7ed6ec !important;
 }
+
+.order-price-list{
+  .css-1jqq78o-placeholder{
+    display: flex;
+  }
+  table {
+    tbody{
+      tr {
+        td {  
+          span {
+            padding: 4px 0 ;
+          }
+        }
+      }
+    }
+  }  
+}
