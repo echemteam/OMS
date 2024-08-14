@@ -22,10 +22,12 @@ const AddEditManageResponsibleUser = (props) => {
 
   useEffect(() => {
     if (isGetAllUserSucess && allGetAllUserData) {
-      const filterCondition = (item) => {
-        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());;
-      };
-      setDropDownOptionField(allGetAllUserData, 'userId', 'fullName', AddEditResponsibleData, 'responsibleUserId', filterCondition);
+      const filterData = allGetAllUserData.filter((item) => {
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+      });
+      // Remove duplicates based on fullName
+      const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
+      setDropDownOptionField(uniqueData, 'userId', 'fullName', AddEditResponsibleData, 'responsibleUserId');
     }
   }, [isGetAllUserSucess, allGetAllUserData]);
 

@@ -14,6 +14,7 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import CustomerViewTab from "../../../feature/customerViewDetail/customerViewTab/CustomerViewTab";
 import CustomerBasicInfoCard from "../../../feature/customerViewDetail/customerBasicInfoCard/CustomerBasicInfoCard";
 import "./CustomerDetails.scss"
+import { validateResponsibleUserId } from "../../../../../utils/ResponsibleUser/validateRUser";
 
 const CustomerDetails = () => {
 
@@ -42,13 +43,7 @@ const CustomerDetails = () => {
       GetCustomersBasicInformationByIdData &&
       !isGetCustomersBasicInformationByIdFetching
     ) {
-      if (
-        authState?.user?.userID !==
-        GetCustomersBasicInformationByIdData.responsibleUserId
-      ) {
-        setIsResponsibleUser(false);
-
-      }
+      setIsResponsibleUser(validateResponsibleUserId(GetCustomersBasicInformationByIdData.responsibleUserId, authState?.user?.userID));
       setCustomerData(GetCustomersBasicInformationByIdData);
       setCustomerCountryId(GetCustomersBasicInformationByIdData.countryId);
       setIsBuyingForThirdParty(GetCustomersBasicInformationByIdData.isBuyingForThirdParty);
