@@ -68,7 +68,8 @@ export const SubCustomerGridConfig = {
         {
           name: "VIEWCUSTOMER",
           iconName: "lets-icons:view",
-          title: "View Customer"
+          title: "View Customer",
+          className: "view-icon"
         },
       ],
 
