@@ -81,8 +81,6 @@ const ProductPriceList = ({ productId }) => {
     setPriceList(newGridData);
   };
 
-  console.log("priceList", priceList)
-
   return (
     <CardSection cardTitle="Product Price List">
       <div className="order-price-list">
