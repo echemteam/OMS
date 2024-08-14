@@ -13,6 +13,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP
         const string GETDETAILSBYCUSTOMERID = "GetDetailsByCustomerId";
         const string ADDEDITCUSTOMERSETTINGS = "AddEditCustomerSettings";
+        const string ADDEDITCUSTOMERINVOICE = "AddEditCustomerInvoice";
         const string ADDCUSTOMERSHPPINGDELIVERYCARRIERSANDDELIVERYMETHODS = "AddCustomerShppingDeliveryCarriersAndDeliveryMethods";
         const string UPDATESHPPINGDELIVERYCARRIERS = "UpdateShppingDeliveryCarriers";
         const string GETSHPPINGDELIVERYCARRIERANDDELIVERYMETHODSBYID = "GetShppingDeliveryCarrierAndDeliveryMethodsById";
@@ -56,6 +57,17 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SalesTax,
                 requestData.CardProcessingCharges,
                 requestData.BankWireFee
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<AddEntityDto<int>> AddEditCustomerInvoice(CustomerAccountingSettingsDto customerAccountingSettingsDto)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITCUSTOMERINVOICE, new
+            {
+                customerAccountingSettingsDto.CustomerAccountingSettingId,
+                customerAccountingSettingsDto.CustomerId,
+                customerAccountingSettingsDto.InvoiceSubmissionInstruction,
+                customerAccountingSettingsDto.CreatedBy
             }, CommandType.StoredProcedure);
         }
 
@@ -181,6 +193,8 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse;
         }
+
+       
 
         #endregion
     }
