@@ -51,6 +51,7 @@ const CustomerBasicInfoCard = ({
   const [showModal, setShowModal] = useState(false);
   const [customerID, setCustomerId] = useState();
   const [statusId, setStatusId] = useState();
+  const [responsibleUserIds, setResponsibleUserIds] = useState([]);
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
   const [
@@ -86,7 +87,7 @@ const CustomerBasicInfoCard = ({
 
   const [
     getAllUser,
-    { isSuccess: isGetAllUserSucess, data: allGetAlluserData },
+    { isFetching, isSuccess: isGetAllUserSucess, data: allGetAlluserData },
   ] = useLazyGetAllUserQuery();
 
   useEffect(() => {
@@ -163,13 +164,13 @@ const CustomerBasicInfoCard = ({
 
   useEffect(() => {
     if (customerData) {
-
       const responsibleUserIds = customerData?.responsibleUserId?.split(',').map(id => id.trim());
       const responsibleUserNames = customerData?.responsibleUserName?.split(',').map(name => name.trim());
       const responsibleUsers = responsibleUserIds?.map((id, index) => ({
         value: id,
         label: responsibleUserNames[index] || id,
       }));
+      setResponsibleUserIds(responsibleUserIds);
       setRUserValue(responsibleUsers);
       setSelectedStatus(customerData.status);
       getAllUser();
@@ -177,19 +178,25 @@ const CustomerBasicInfoCard = ({
   }, [customerData]);
 
   useEffect(() => {
-    if (isGetAllUserSucess && allGetAlluserData) {
+    if (!isFetching && isGetAllUserSucess && allGetAlluserData) {
+      // const finalData = responsibleUserIds?.map(option => option.value).join(',')
+      // 
+
       const filterData = allGetAlluserData.filter((item) => {
         return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
       });
-      // Remove duplicates based on fullName
+
       const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
-      const modifyUserData = uniqueData.map((item) => ({
+
+      const filteredData = responsibleUserIds ? uniqueData.filter((item) => !responsibleUserIds.includes(item.userId.toString())) : uniqueData;
+
+      const modifyUserData = filteredData.map((item) => ({
         value: item.userId,
         label: item.fullName,
       }));
       setResponsibleUserOptions(modifyUserData);
     }
-  }, [isGetAllUserSucess, allGetAlluserData]);
+  }, [isGetAllUserSucess, allGetAlluserData, isFetching]);
 
   const handleStatusChange = (selectedOption) => {
     if (selectedOption.label === customerData.status) {
@@ -251,17 +258,22 @@ const CustomerBasicInfoCard = ({
       // userId: String(rUserValue)
       userId: rUserValue?.map(option => option.value).join(',')
     };
+
     addEditResponsibleUserForCustomer(req);
   }
 
   const updateRUserData = (data) => {
-    // const responsibleUserId = data.map(option => option.value);
+    const responsibleUserId = data.map(option => option.value.toString());
     setRUserValue(data);
+    setResponsibleUserIds(responsibleUserId);
+    getAllUser();
   };
 
   useEffect(() => {
     if (isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
       ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage);
+
+
     }
   }, [isSuccessAddEditResponsibleUserForCustomer, isAddEditResponsibleUserForCustomerData]);
 
