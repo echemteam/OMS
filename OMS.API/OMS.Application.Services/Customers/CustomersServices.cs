@@ -143,6 +143,10 @@ namespace OMS.Application.Services.Customers
             short deletedBy = CurrentUserId;
             return await repositoryManager.customers.DeleteSubCustomer(subCustomerMainCustomerId, deletedBy);
         }
+        public async Task<AddEntityDto<int>> AddEditResponsibleUserForCustomer(AddEditResponsibleUserForCustomerRequest requestData, short currentUserId)
+        {
+            return await repositoryManager.customers.AddEditResponsibleUserForCustomer(requestData, currentUserId); ;
+        }
         #endregion
     }
 }
