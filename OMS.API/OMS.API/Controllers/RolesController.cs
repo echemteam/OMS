@@ -1,8 +1,10 @@
 ﻿using ClientIPAuthentication;
+using ClientIPAuthentication.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Roles;
+using OMS.Domain.Entities.API.Response.Roles;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -76,6 +78,21 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(roleId);
         }
+
+        [HttpGet("GetAllAccountType")]
+        public async Task<IActionResult> GetAllAccountType()
+        {
+            var accountTypes = Enum.GetValues(typeof(GetAllAccountType))
+                           .Cast<GetAllAccountType>()
+                           .Select(at => new GetAccountTypeResponse
+                           {
+                               Id = (int)at,
+                               Type = at.ToString()
+                           }).ToList();
+            return APISucessResponce<object>(accountTypes);
+        }
+
+
         #endregion
     }
 }

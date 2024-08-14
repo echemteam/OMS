@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 //** Lib's */
-import { AppIcons } from "../../../../../data/appIcons";
+// import { AppIcons } from "../../../../../data/appIcons";
 import Image from "../../../../../components/image/Image";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
