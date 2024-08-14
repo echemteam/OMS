@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { contactInformationData } from "./config/ContactDetail.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
@@ -27,7 +28,7 @@ const ContactDetails = (props) => {
   const [invoicerEnableDisableButton, setInvoiceEnableDisableButton] = useState(true)
   const [purchasingEnableDisableButton, setPurchasingEnableDisableButton] = useState(true)
 
-  const { conatctRef , orderCustomerId,  moveNextPage, orderId } = useContext(AddOrderContext);
+  const { conatctRef, orderCustomerId, moveNextPage, orderId } = useContext(AddOrderContext);
 
   const [
     getAllContactTypes,
@@ -37,7 +38,7 @@ const ContactDetails = (props) => {
   const [getAllEndUserId, { isFetching: isGetAllEndUserFetching, isSuccess: isgetAllEndUserSuccess, data: isgetAllEndUserData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllInvoiceSubmissionId, { isFetching: isGetAllInvoiceSubmissionFetching, isSuccess: isgetAllInvoiceSubmissionSuccess, data: isgetAllInvoiceSubmissionData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllPurchasingId, { isFetching: isGetAllPurchasingFetching, isSuccess: isgetAllPurchasingSuccess, data: isgetAllPurchasingData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
-  const [addEditOrderContactInformation, { isLoading: isAddEditOrderContactInformationLoading, isSuccess: isAddEditOrderContactInformationSuccess, data: isAddEditOrderContactInformationData }] = useAddEditOrderContactInformationMutation();
+  const [addEditOrderContactInformation, { isSuccess: isAddEditOrderContactInformationSuccess, data: isAddEditOrderContactInformationData }] = useAddEditOrderContactInformationMutation();
 
   useEffect(() => {
     if (orderCustomerId) {
@@ -188,8 +189,9 @@ const ContactDetails = (props) => {
   };
 
   useEffect(() => {
+
     if (isAddEditOrderContactInformationSuccess && isAddEditOrderContactInformationData) {
-      
+
       if (isAddEditOrderContactInformationData.errorMessage.includes('exists')) {
         ToastService.warning(isAddEditOrderContactInformationData.errorMessage);
         return;
@@ -210,18 +212,17 @@ const ContactDetails = (props) => {
   const handleAddOrderConatct = () => {
     let data = basicInformation.current.getFormData();
     if (data) {
-      console.log("datrw" , data)
-      // let request = {
-      //   orderId: orderId ? orderId : 0,
-      //   isEndUser: true,
-      //   endUserContactId: 0,
-      //   isInvoiceSubmission: true,
-      //   invoiceSubmissionContactId: 0,
-      //   isPurchasing: true,
-      //   purchasingContactId: 0,
-      //   // referenceNumber: string
-      // }
-      // addEditOrderContactInformation(request)
+      let request = {
+        orderId: orderId ? orderId : 0,
+        isEndUser: data.isEndUser,
+        endUserContactId: 0,
+        isInvoiceSubmission: data.isInvoiceSubmission,
+        invoiceSubmissionContactId: data.invoiceSubmissionId.value,
+        isPurchasing: data.isPurchasingGiven,
+        purchasingContactId: 0,
+        referenceNumber: data.refNumber
+      }
+      addEditOrderContactInformation(request)
     }
   }
 

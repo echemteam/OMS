@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Message } from "../../EmailAddress/utils/ContactMessages";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
-import { addEditContactsFormData } from "../config/AddEditContactsForm.data";
+import { addEditContactsFormData, initialPhoneTypeState } from "../config/AddEditContactsForm.data";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import {
   addPhoneNumberData,
@@ -35,6 +35,7 @@ const AddEditContactNumber = ({
       if (!data.id) {
         let req = {
           ...data,
+          phoneTypeId: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId : initialPhoneTypeState,
           isPrimary: data.isPrimaryPhoneNumber,
         };
         addPhoneNumberData(

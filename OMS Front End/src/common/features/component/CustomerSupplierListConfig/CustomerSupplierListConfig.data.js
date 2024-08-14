@@ -62,7 +62,7 @@ export const AllCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWDISABLE",
-          iconName: "fa6-solid:user-slash",
+          iconName: "mi:user",
           title: "Disable",
           className: "disable-icon"
         },
@@ -75,12 +75,14 @@ export const AllCustomerGridConfig = {
         {
           name: "ALLOWBLOCKED",
           iconName: "akar-icons:block",
-          title: "Blocked"
+          title: "Blocked",
+          className: "block-icon"
         },
         {
           name: "ALLOREJECT",
-          iconName: "mdi:close-octagon",
-          title: "Reject"
+          iconName: "carbon:close-outline",
+          title: "Reject",
+          className: "reject-icon"
         },
       ],
      
@@ -142,8 +144,9 @@ export const PendingCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWDISABLE",
-          iconName: AppIcons.disablethemeIcone,
-          title: "Disable"
+          iconName: "mi:user",
+          title: "Disable",
+          className: "disable-icon"
         },
       ],
     },
@@ -210,8 +213,9 @@ export const SubmittedCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWDISABLE",
-          iconName: AppIcons.disablethemeIcone,
-          title: "Disable"
+          iconName: "mi:user",
+          title: "Disable",
+          className: "disable-icon"
         },
       ],
     },
@@ -258,23 +262,27 @@ export const ApprovedCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWDISABLE",
-          iconName: AppIcons.disablethemeIcone,
-          title: "Disable"
+          iconName: "mi:user",
+          title: "Disable",
+          className: "disable-icon"
         },
         {
           name: "ALLOWFREEZE",
-          iconName: AppIcons.freezeblueIcone,
-          title: "Freeze"
+          iconName: "material-symbols:lock-outline",
+          title: "Freeze",
+          className: "freeze-icon"
         },
         {
           name: "ALLOWBLOCKED",
-          iconName: AppIcons.blockredIcone,
-          title: "Blocked"
+          iconName: "akar-icons:block",
+          title: "Blocked",
+          className: "block-icon"
         },
         {
           name: "ALLOREJECT",
-          iconName: AppIcons.RejectedIcon,
-          title: "Reject"
+          iconName: "carbon:close-outline",
+          title: "Reject",
+          className: "reject-icon"
         },
       ],
     },
@@ -368,6 +376,7 @@ export const AllInActiveCustomerGridConfig = {
       name: "Status",
       colStyle: {
         width: "25%",
+        
       },
       fieldName: "status",
       allowShort: false,
@@ -433,9 +442,10 @@ export const FreezedInActiveCustomerGridConfig = {
       },
       customAction: [
         {
-          name: "ALLOWUNFREEZE",
-          iconName: AppIcons.unfreezeIcone,
-          title: "UnFreeze"
+          name: "ALLOWFREEZE",
+          iconName: "material-symbols:lock-outline",
+          title: "Freeze",
+          className: "freeze-icon"
         },
       ],
     },
@@ -497,8 +507,9 @@ export const BlockedInActiveCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWUNBLOCKED",
-          iconName: AppIcons.unblokedIcone,
-          title: "UnBlock"
+          title: "UnBlock",
+          iconName: "basil:unlock-outline",
+          className: "un-lock-icon"
         },
       ],
     },

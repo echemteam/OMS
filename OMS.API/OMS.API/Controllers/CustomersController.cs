@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
+using OMS.Domain.Entities.API.Request.Common;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -137,6 +138,12 @@ namespace OMS.API.Controllers
                 return APISucessResponce<object>(deleteItem);
             }
             return APISucessResponce(subCustomerMainCustomerId);
+        }
+        [HttpPost("AddEditResponsibleUserForCustomer")]
+        public async Task<IActionResult> AddEditResponsibleUserForCustomer(AddEditResponsibleUserForCustomerRequest requestData)
+        {
+            var updateItem = await _serviceManager.customersServices.AddEditResponsibleUserForCustomer(requestData,CurrentUserId);
+            return APISucessResponce(updateItem);
         }
         #endregion
     }

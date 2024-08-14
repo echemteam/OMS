@@ -7,7 +7,6 @@ const Iconify = forwardRef(
     { icon, width = 20, style, className="", altText = "icon", ...other },
     ref
   ) => {
-    console.log(className);
     return (
       <div
         ref={ref}

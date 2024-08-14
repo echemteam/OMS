@@ -236,8 +236,8 @@
                       .card-value {
                         &.primary-phone {
                           position: relative;
-                          cursor: pointer;
-                          &::before {
+                          display: flex;
+                          &::after {
                             content: "\f00c";
                             font-family: FontAwesome;
                             font-style: normal;
@@ -527,8 +527,8 @@
 
                 &.primary-phone {
                   position: relative;
-                  cursor: pointer;
-                  &::before {
+                  display: flex;
+                  &::after {
                     content: "\f00c";
                     font-family: FontAwesome;
                     font-style: normal;
