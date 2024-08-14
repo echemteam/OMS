@@ -16,6 +16,8 @@ import CustomerListContext from '../../../../../../utils/ContextAPIs/Customer/Cu
 import { useGetCustomersMutation, useUpdateCustomerStatusMutation } from '../../../../../../app/services/basicdetailAPI';
 import PropTypes from 'prop-types';
 import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid';
+import { validateResponsibleUserId } from '../../../../../../utils/ResponsibleUser/validateRUser';
+import { securityValidator } from '../../../../../../utils/CustomActionSecurity/actionsSecurityValidator';
 
 const InActiveCustomersList = ({ statusId, configFile, handleChange, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
 
@@ -53,10 +55,13 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
     if (!isResponsibleUser) {
       const actionColumn = configFile?.columns.find(column => column.name === "Action");
       if (actionColumn) {
-
+        const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
         const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
         const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
         const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+
+        // actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
+        // actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
 
         if (actionColumn.defaultAction.allowActiveCustomer) {
           actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
@@ -88,7 +93,7 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
     if (isListSuccess && isListeData) {
       if (isListeData) {
         setDataSource(isListeData.dataSource);
-        const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authState?.user?.userID);
+        const isResponsibleId = isListeData.dataSource.find(data => validateResponsibleUserId(data.responsibleUserId, authState?.user?.userID));
         if (isResponsibleId) {
           setIsResponsibleUser(true);
           hasResponsibleUserhasAccess();
@@ -146,7 +151,7 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
   }
 
   const handleUnBlock = (data) => {
-    
+
     confirm(
       "Warning?",
       `Are you sure you want to unblock and change the status to approved?`,
