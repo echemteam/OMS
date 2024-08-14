@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ClientIPAuthentication\ClientIPAuthentication.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="ThirdPartyAPILibrary">
       <HintPath>..\ThirdPartyAPILibrary.dll</HintPath>
     </Reference>
