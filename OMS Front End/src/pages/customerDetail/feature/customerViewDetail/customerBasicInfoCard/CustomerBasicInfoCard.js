@@ -34,6 +34,7 @@ import Iconify from "../../../../../components/ui/iconify/Iconify";
 // import { Tooltip } from "react-bootstrap";
 // import Select from 'react-select';
 import DropdownSelect from "../../../../../components/ui/dropdown/DropdownSelect";
+import AddEditInvoiceSubmissionInstructionDetail from "./feature/AddEditInvoiceSubmissionInstructionDetail";
 
 const CustomerBasicInfoCard = ({
   editClick,
@@ -162,6 +163,7 @@ const CustomerBasicInfoCard = ({
 
   useEffect(() => {
     if (customerData) {
+
       const responsibleUserIds = customerData?.responsibleUserId?.split(',').map(id => id.trim());
       const responsibleUserNames = customerData?.responsibleUserName?.split(',').map(name => name.trim());
       const responsibleUsers = responsibleUserIds?.map((id, index) => ({
@@ -290,7 +292,9 @@ const CustomerBasicInfoCard = ({
       updateRUserData(custData);
     }
   };
-
+  const handleModelShow=()=>{
+    setShowModal(true);
+  }
   const handleToggleModal = () => {
     setShowModal(false);
     onReset();
@@ -505,8 +509,8 @@ const CustomerBasicInfoCard = ({
               <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
               <b>&nbsp;:&nbsp;</b>
               <div className="checkbox-part ml-2 mt-2 eye-icon ">
-                <Iconify icon="ph:eye-duotone" />
-                <div className="tooltip-show">
+              <Iconify icon="ph:eye-duotone"  onClick={handleModelShow}/>
+              <div className="tooltip-show">
                   <p>Add/Edit Invoice Submission</p>
                 </div>
                 <di className="tooltip-arrow-icon"></di>
@@ -548,6 +552,22 @@ const CustomerBasicInfoCard = ({
           </div>
         </CenterModel>
       )}
+      {
+        showModal &&(    
+        <CenterModel
+          showModal={showModal}
+          handleToggleModal={handleToggleModal}
+          modalTitle="Add/Edit Invoice Submission Instruction"
+          modelSizeClass="w-60"
+        >
+          <AddEditInvoiceSubmissionInstructionDetail
+            customerId={customerId}
+             showModal={showModal}
+             setShowModal={setShowModal}
+            handleToggleModal={handleToggleModal}  
+          />
+        </CenterModel>)
+      }
       <CustomerApproval
         isDetailPage={true}
         childRef={childRef}
