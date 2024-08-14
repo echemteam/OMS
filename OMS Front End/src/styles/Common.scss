@@ -3351,6 +3351,7 @@ input[type="checkbox"]:disabled {
       justify-content: center;
       cursor: pointer;
       transition: 0.5s all;
+      z-index: 999;
 
       img {
         filter: brightness(100);
@@ -3372,9 +3373,9 @@ input[type="checkbox"]:disabled {
 
     &.collapse-tabs {
       .collapse-tab {
-        left: calc(0% - 5px);
+        left: calc(0% - 0px);
         background: linear-gradient(to right, #2d3641db, #000000db);
-
+        z-index: 999;
         img {
           transform: rotate(270deg);
         }
@@ -3385,7 +3386,7 @@ input[type="checkbox"]:disabled {
       }
 
       .tab-header {
-        width: 0;
+        width: 10px;
         padding-right: 5px;
         transition: 0.5s all;
 

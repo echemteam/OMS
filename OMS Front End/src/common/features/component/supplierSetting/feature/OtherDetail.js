@@ -79,7 +79,7 @@ const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId, onHand
             />
           </div>
           <div className="col-md-12">
-            <div className="d-flex align-item-end justify-content-end" >
+            <div className="d-flex align-item-end justify-content-end centered" >
               <Buttons
                 buttonTypeClassName="theme-button"
                 buttonText="Save"
