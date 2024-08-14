@@ -13,7 +13,7 @@ export const achWireFormData = {
     paymentTermId: 0,
     recipientPhoneNumber: "",
     isAddressInUs: false,
-    ibanNumber: 0,
+    ibanNumber: "",
     branchCode: "",
     swiftCode: "",
     routingNumber: "",

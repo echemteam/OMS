@@ -11,14 +11,14 @@ import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 
-const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSettingFormRef }) => {
+const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSettingFormRef,isGetPaymentSettingsBySupplierIdSuccess,isGetPaymentSettingsBySupplierIdData }) => {
   const checkFormRef = useRef();
   const [checkformData, setCheckFormData] = useState(checkFormData);
 
   const [addEditCheck, { isLoading: isAddEditCheckLoading, isSuccess: isAddEditCheckSuccess, data: isAddEditCheckData }] = useAddEditCheckMutation();
-  const [getAllCities, { isSuccess: isGetAllCitiesSucess, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-  const [getAllStates, { isSuccess: isGetAllStatesSucess, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
-  const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
+  const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
+  const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+  const [getAllStates, { isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
   useEffect(() => {
     getAllCountries();
@@ -26,23 +26,26 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
   }, []);
 
   useEffect(() => {
-    if (isGetAllCountriesSucess && allGetAllCountriesData) {
-      setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', checkFormData, 'countryId');
-      
+    if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
+      setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', checkformData, 'countryId');
     }
-    if (isGetAllStatesSucess && allGetAllStatesData) {
-      handleStateOption(allGetAllStatesData);
-      
-    }
-    if (isGetAllCitiesSucess && allGetAllCitiesData) {
-      setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', checkFormData, 'cityId');
-      
-    }
-  }, [isGetAllCountriesSucess, allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData]);
+  }, [isGetAllCountriesFetching, isGetAllCountriesSuccess, allGetAllCountriesData]);
 
-  const handleStateOption = (responseData) => {
-    setDropDownOptionField(responseData, 'stateId', 'name', checkFormData, 'stateId');
-  };
+
+  useEffect(() => {
+    if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
+      const cities = allGetAllCitiesData.map((item) => ({
+        value: item.cityId,
+        label: item.name,
+      }));
+      let data = { ...checkformData };
+      const dropdownField = data?.formFields?.find(data => data.id === "cityId");
+      dropdownField.fieldSetting.options = cities;
+      setCheckFormData(data);
+    }
+  }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
+
+
 
   useEffect(() => {
     handleResponse(isAddEditCheckSuccess, isAddEditCheckData);
@@ -67,26 +70,52 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
     }
   }
 
+  // useEffect(() => {
+  //   if (getCheckData.addressId > 0) {
+  //     if (getCheckData.stateId) {
+  //       getAllCities(getCheckData.stateId)
+  //     }
+  //     let formCheckData = { ...checkformData };
+  //     formCheckData.initialState = {
+  //       // addressId:getCheckData.addressId,
+  //       addressLine1Id: getCheckData.addressLine1Id,
+  //       addressLine2Id: getCheckData.addressLine2Id,
+  //       cityId: getCheckData.cityId,
+  //       stateId: getCheckData.stateId,
+  //       countryId: getCheckData.countryId,
+  //       zipCode: getCheckData.zipCode,
+  //     };
+  //     setCheckFormData(formCheckData);
+  //   }
+  // }, [getCheckData])
   useEffect(() => {
-    if (getCheckData.addressId > 0) {
-      if (getCheckData.stateId) {
-        getAllCities(getCheckData.stateId)
+
+    if ( !isGetAllStateFetching && isGetAllStateSuccess &&isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData?.mailingAddress ) {
+      const {mailingAddress }= isGetPaymentSettingsBySupplierIdData;
+      let data = { ...checkformData };
+      if (mailingAddress.countryId) {
+        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === mailingAddress.countryId);
       }
-      let formCheckData = { ...checkformData };
-      formCheckData.initialState = {
-        // addressId:getCheckData.addressId,
-        addressLine1Id: getCheckData.addressLine1Id,
-        addressLine2Id: getCheckData.addressLine2Id,
-        cityId: getCheckData.cityId,
-        stateId: getCheckData.stateId,
-        countryId: getCheckData.countryId,
-        zipCode: getCheckData.zipCode,
+
+      if (mailingAddress.stateId) {
+        getAllCities(mailingAddress.stateId)
+      }
+
+      data.initialState = {
+        addressId: mailingAddress.addressId,
+        addressLine1Id: mailingAddress.addressLine1,
+        addressLine2Id: mailingAddress.addressLine2,
+        countryId: mailingAddress.countryId,
+        zipCode: mailingAddress.zipCode,
+        stateId: mailingAddress.stateId,
+        cityId: mailingAddress.cityId,
       };
-      setCheckFormData(formCheckData);
+      setCheckFormData(data);
     }
-  }, [getCheckData])
+  }, [isGetAllStateFetching,isGetAllStateSuccess,isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData]);
 
   const handleAddCheckDetail = () => {
+
     let formsupplierFinancialSettings = financialSettingFormRef.current.getFormData()
     let formcheckForm = checkFormRef.current.getFormData();
     if (formcheckForm && formsupplierFinancialSettings) {
@@ -120,20 +149,22 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
     const manageData = { ...checkformData };
     if (dataField === "countryId") {
       setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+      setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
       setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
       checkFormRef.current.updateFormFieldValue({
         countryId: data.value,
         stateId: null,
+        cityId: null
       });
     } else if (dataField === "stateId") {
       getAllCities(data.value)
-   
       setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
       checkFormRef.current.updateFormFieldValue({
         stateId: data.value,
         cityId: null,
       });
     }
+    setCheckFormData(manageData);
   };
 
   const formActionHandler = {
