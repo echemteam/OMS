@@ -72,7 +72,7 @@ const AddEditSubCustomer = (props) => {
         key={shouldRerenderFormCreator}
         {...subCustomerFormData}
       />
-      <div className="col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mt-3">
+      <div className="col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mt-2 d-flex align-items-center">
         <Buttons
           buttonTypeClassName="theme-button"
           buttonText="Assign"
