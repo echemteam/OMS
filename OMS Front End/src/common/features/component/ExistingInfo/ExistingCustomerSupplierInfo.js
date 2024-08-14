@@ -9,7 +9,6 @@ import { encryptUrlData } from '../../../../services/CryptoService';
 import ToastService from '../../../../services/toastService/ToastService';
 import { ErrorMessage } from '../../../../data/appMessages';
 import FinalMolGrid from '../../../../components/FinalMolGrid/FinalMolGrid';
-import MolGrid from '../../../../components/Grid/MolGrid';
 
 const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExistingInfoByName, isOrderManage }) => {
 

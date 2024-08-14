@@ -14,6 +14,7 @@ import SuplierAddressDetails from "../../feature/supplierAddressDetail/SupplierA
 import SupplierContactDetail from "../../feature/supplierContactDetail/SupplierContactDetail";
 import SupplierDocumentDetail from "../../feature/supplierDocumentDetail/SupplierDocumentDetail";
 import Iconify from "../../../../components/ui/iconify/Iconify";
+import FinancialSettings from "../../feature/financialSettings/FinancialSettings";
 
 const AddSupplierTab = () => {
   const navigate = useNavigate();
@@ -55,6 +56,12 @@ const AddSupplierTab = () => {
         />
       ),
       tab: CustomerSupplierTabEnum.Contact,
+    },
+    {
+      label: "Financial Setting",
+      subLabel: "Enter Financial Setting Details",
+      content: <FinancialSettings isEditablePage={false} />,
+      tab: CustomerSupplierTabEnum.Setting
     },
     {
       label: "Documents",

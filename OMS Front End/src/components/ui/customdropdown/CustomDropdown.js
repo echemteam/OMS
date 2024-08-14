@@ -28,7 +28,7 @@ const CustomOption = (props) => {
 };
 
 function CustomDropdown(props) {
-  const { dropDownSettings, inputButtonGroup, handleInputGroupButton } = props;
+  const { dropDownSettings, inputButtonGroup } = props;
   const base64Icon = inputButtonGroup?.icon;
 
   return (
