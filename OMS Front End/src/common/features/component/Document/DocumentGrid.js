@@ -19,6 +19,7 @@ const DocumentGrid = ({ keyId, isSupplier, addDocuments, downloadDocument, delet
     const childRef = useRef();
     const [showModal, setShowModal] = useState(false);
     const [buttonVisible, setButtonVisible] = useState(true);
+    // const [editDocumentData, SetEditDocumentData] = useState(null);
 
     //** API Call's */
     const [getAllDocumentTypes, { isSuccess: isGetAllDocumentTypesSucess, data: allGetAllDocumentTypesData }] = useLazyGetAllDocumentTypesQuery();
@@ -58,7 +59,13 @@ const DocumentGrid = ({ keyId, isSupplier, addDocuments, downloadDocument, delet
     //** Handle Change's */
     const handleToggleModal = () => {
         setShowModal(!showModal);
+        // SetEditDocumentData(null)
     };
+
+    // const handleEditDocument = (data) => {
+    //     setShowModal(true);
+    //     SetEditDocumentData(data);
+    // };
 
     const onSuccess = () => {
         setShowModal(!showModal);
@@ -74,11 +81,18 @@ const DocumentGrid = ({ keyId, isSupplier, addDocuments, downloadDocument, delet
                     textWithIcon={true} iconImg={AppIcons.PlusIcon} rightButton={buttonVisible}
                     buttonText="Add" titleButtonClick={handleToggleModal}>
                     <DocumentList childRef={childRef} isEditablePage={isEditablePage} SecurityKey={SecurityKey} keyId={keyId} isSupplier={isSupplier} showModal={showModal}
-                        downloadDocument={downloadDocument} deleteDocumentsById={deleteDocumentsById} getDocumentsById={getDocumentsById} setShowModal={setShowModal} />
+                        downloadDocument={downloadDocument} deleteDocumentsById={deleteDocumentsById} getDocumentsById={getDocumentsById} setShowModal={setShowModal}
+                    // onHandleEditDocument={handleEditDocument}
+                    />
                 </CardSection>
             </div>
-            <CenterModel showModal={showModal} handleToggleModal={handleToggleModal} modalTitle="Add Document" modelSizeClass="w-50s">
-                <AddDocument isSupplier={isSupplier} keyId={keyId} addDocuments={addDocuments} handleToggleModal={handleToggleModal} onSuccess={onSuccess} />
+            <CenterModel showModal={showModal} handleToggleModal={handleToggleModal}
+                modalTitle="Add Document"
+                // modalTitle={editDocumentData ? "Update Document" : "Add Document"}
+                modelSizeClass="w-50s">
+                <AddDocument isSupplier={isSupplier} keyId={keyId} addDocuments={addDocuments} handleToggleModal={handleToggleModal} onSuccess={onSuccess} 
+                // editDocumentData={editDocumentData} 
+                />
             </CenterModel>
         </React.Fragment>
     );

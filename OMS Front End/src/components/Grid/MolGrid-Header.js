@@ -2,14 +2,14 @@ import React from "react";
 import { AppIcons } from "../../data/appIcons";
 import Image from "../image/Image";
 import "./MolGrid.scss";
-
+import Iconify from "../ui/iconify/Iconify";
 
 const MolGridHeader = (props) => {
-
-
   // Function to handle sorting or toggling sorting order
   const handleSortColumn = (col) => {
-    const index = props.selectedSorting.findIndex(item => item.fieldName === col.fieldName);
+    const index = props.selectedSorting.findIndex(
+      (item) => item.fieldName === col.fieldName
+    );
     let sortingObj = [...props.selectedSorting];
 
     if (index !== -1) {
@@ -17,7 +17,7 @@ const MolGridHeader = (props) => {
       const updatedSorting = [...sortingObj];
       updatedSorting[index] = {
         ...updatedSorting[index],
-        isAsc: !updatedSorting[index].isAsc
+        isAsc: !updatedSorting[index].isAsc,
       };
       sortingObj = updatedSorting;
     } else {
@@ -28,19 +28,20 @@ const MolGridHeader = (props) => {
       const newItem = {
         fieldName: col.fieldName,
         isAsc: true,
-        sortNumber: nextSortNumber
+        sortNumber: nextSortNumber,
       };
 
       sortingObj = [...props.selectedSorting, newItem];
     }
 
-    if (props.onSortingUpdate)
-      props.onSortingUpdate(sortingObj);
+    if (props.onSortingUpdate) props.onSortingUpdate(sortingObj);
   };
-  
+
   // Function to remove a sorted column
   const handleRemoveSortColumn = (col) => {
-    const index = props.selectedSorting.findIndex((item) => item.fieldName === col.fieldName);
+    const index = props.selectedSorting.findIndex(
+      (item) => item.fieldName === col.fieldName
+    );
     let sortingObj = [...props.selectedSorting];
 
     if (index !== -1) {
@@ -50,13 +51,12 @@ const MolGridHeader = (props) => {
       // Update the sort number for the remaining objects
       sortingObj = sortingObj.map((item, idx) => ({
         ...item,
-        sortNumber: idx + 1
+        sortNumber: idx + 1,
       }));
     }
-    
-    if (props.onSortingUpdate)
-      props.onSortingUpdate(sortingObj);
-  }
+
+    if (props.onSortingUpdate) props.onSortingUpdate(sortingObj);
+  };
   const renderShortColumn = (col) => {
     let shortColObj = props.selectedSorting.find(
       (s) => s.fieldName === col.fieldName
@@ -65,8 +65,9 @@ const MolGridHeader = (props) => {
     return (
       <>
         <div
-          className={`shorting-part ${shortColObj && shortColObj.isAsc ? "short-column" : ""
-            }`}
+          className={`shorting-part ${
+            shortColObj && shortColObj.isAsc ? "short-column" : ""
+          }`}
         >
           <button
             type="button"
@@ -80,14 +81,21 @@ const MolGridHeader = (props) => {
               imagePath={AppIcons.shortingArrowIcon}
               altText="Arrow Icon"
             />
+            {/* <Iconify
+              imgCustomClassName="order-icon"
+              icon="solar:alt-arrow-down-outline"
+            /> */}
           </button>
           {shortColObj ? (
             <span className="sort-priority-number">
               <div className="short-count">
                 {shortColObj.sortNumber}
-                <button className="cancel-short" onClick={() => {
-                  handleRemoveSortColumn(col);
-                }}>
+                <button
+                  className="cancel-short"
+                  onClick={() => {
+                    handleRemoveSortColumn(col);
+                  }}
+                >
                   {/* <Image
                     imagePath={AppIcons.CloseIcon}
                     altText="cancel"
@@ -114,7 +122,11 @@ const MolGridHeader = (props) => {
         </th>
       ))} */}
       {props.columns.map((col, index) => (
-        <th key={`col_${index}`} style={{ width: col.width }} className="whitespace-nowrap">
+        <th
+          key={`col_${index}`}
+          style={{ width: col.width }}
+          className="whitespace-nowrap"
+        >
           {col.allowShort ? (
             <span className="heading-shorting">{renderShortColumn(col)}</span>
           ) : (

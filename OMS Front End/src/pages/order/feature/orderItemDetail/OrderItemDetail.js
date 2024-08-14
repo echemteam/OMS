@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 
 //** Component's */
 const OrderItemsList = React.lazy(() => import("./feature/OrderItemDetails/OrderItemsList"));
@@ -10,11 +11,11 @@ const VerifyProductDetail = React.lazy(() => import("./feature/VerifyProductInfo
 
 const OrderItemDetail = () => {
 
-  const [productId, setProductId] = useState(2);
+  const { productId } = useContext(AddOrderContext);
 
   return (
     <div className="row">
-      <ProductDetailsList setProductId={setProductId} />
+      <ProductDetailsList />
       <div className="col-6">
         <VerifyProductDetail productId={productId} />
       </div>

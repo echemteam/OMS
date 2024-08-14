@@ -290,7 +290,7 @@ a {
       justify-content: center;
       cursor: pointer;
 
-      img {
+      svg {
         filter: brightness(100);
         transform: rotate(90deg);
         transition: 0.5s all;
@@ -444,7 +444,7 @@ a {
           opacity: 1;
 
           .click-btn {
-            img {
+            svg {
               transform: rotate(270deg);
             }
           }
@@ -576,7 +576,7 @@ a {
         min-width: 100px;
         max-width: 100px;
       }
-      .input-group{
+      .input-group {
         flex-wrap: nowrap;
       }
     }
@@ -3323,7 +3323,7 @@ input[type="checkbox"]:disabled {
 
     .tab-content {
       width: 85%;
-      padding: 0 0 15px 15px;
+      padding: 0 15px 15px 15px;
       height: calc(100vh - 355px);
       overflow: hidden;
       overflow-y: auto;
@@ -3351,8 +3351,15 @@ input[type="checkbox"]:disabled {
       justify-content: center;
       cursor: pointer;
       transition: 0.5s all;
+      z-index: 999;
 
       img {
+        filter: brightness(100);
+        transform: rotate(90deg);
+        transition: 0.5s all;
+      }
+
+      svg {
         filter: brightness(100);
         transform: rotate(90deg);
         transition: 0.5s all;
@@ -3366,16 +3373,20 @@ input[type="checkbox"]:disabled {
 
     &.collapse-tabs {
       .collapse-tab {
-        left: calc(0% - 5px);
+        left: calc(0% - 0px);
         background: linear-gradient(to right, #2d3641db, #000000db);
-
+        z-index: 999;
         img {
+          transform: rotate(270deg);
+        }
+
+        svg {
           transform: rotate(270deg);
         }
       }
 
       .tab-header {
-        width: 0;
+        width: 10px;
         padding-right: 5px;
         transition: 0.5s all;
 
@@ -3415,10 +3426,24 @@ input[type="checkbox"]:disabled {
   }
 }
 
-// Tab Section End
+.order-body {
+  min-height: calc(100vh - 500px);
+  .stepper-section {
+    .stepper-content {
+      min-height: calc(100vh - 550px);
+      @media only screen and (max-width: 1750px) {
+        min-height: calc(100vh - 470px);
+      }
+    }
+  }
+}
 
+// Tab Section End
 .model-hight-fix {
-  height: calc(100vh - 300px);
+  height: calc(100vh - 200px);
+  canvas {
+    width: 100% !important;
+  }
 }
 
 .main-customer-grid {
@@ -3471,6 +3496,8 @@ input[type="checkbox"]:disabled {
 }
 .css-1nmdiq5-menu {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+  border: 2px solid var(--cardborderColor);
+  border-radius: 5px;
 }
 .css-tr4s17-option {
   margin: 0px auto !important;
@@ -3488,7 +3515,7 @@ input[type="checkbox"]:disabled {
   }
 }
 .action-button {
-  cursor: pointer !important;
+  // cursor: pointer !important;
 }
 
 .main-organiazation-history {
@@ -3568,13 +3595,27 @@ input[type="checkbox"]:disabled {
   }
 }
 
+.last-center {
+  table {
+    tbody {
+      tr {
+        td:last-child {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1750px) {
   .grid-over-flow {
     .vertical-tab-inner {
       .tab-section {
         height: calc(100vh - 80px) !important;
 
-        .tab-content{
+        .tab-content {
           height: calc(100vh - 80px) !important;
         }
       }
@@ -3588,7 +3629,7 @@ input[type="checkbox"]:disabled {
 .stepper-view {
   .vertical-tab-inner {
     .tab-section {
-      max-height: calc(100vh - 400px);
+      max-height: calc(100vh - 330px);
     }
   }
   .document-section {
@@ -3596,7 +3637,6 @@ input[type="checkbox"]:disabled {
       height: calc(100vh - 348px);
     }
   }
-
 }
 @media only screen and (max-width: 1750px) {
   .stepper-view {
@@ -3608,16 +3648,69 @@ input[type="checkbox"]:disabled {
   }
 }
 
-
 .table-email-sec {
-    margin-bottom: 0;
-    width: 97%;
-    margin: 0 auto;
-    box-shadow: 0px 0px 17px -10px var(--textColorLight);
+  margin-bottom: 0;
+  width: 97%;
+  margin: 0 auto;
+  box-shadow: 0px 0px 17px -10px var(--textColorLight);
 
-    .card {
-      .card-top-title-btn{
-        padding: 10px 0;
-      } 
+  .card {
+    .card-top-title-btn {
+      padding: 10px 0;
     }
+  }
+}
+
+.disable-icon {
+  font-size: var(--commonFont-large) !important;
+  color: #9346f8 !important;
+}
+.freeze-icon {
+  font-size: var(--commonFont-large) !important;
+  color: #7ed6ec !important;
+}
+
+.block-icon {
+  font-size: var(--commonFont-large) !important;
+  color: #d81f1f !important;
+}
+.reject-icon {
+  font-size: var(--commonFont-large) !important;
+  color: #ad0909 !important;
+}
+.un-lock-icon {
+  font-size: var(--commonFont-large) !important;
+  color: #0704bd !important;
+}
+.view-icon{
+  font-size: var(--commonFont-large) !important;
+  color: #1755b3 !important;
+}
+.key-icon{
+  font-size: var(--commonFont-large) !important;
+  color: #4ca717 !important;
+}
+.api-icon{
+  font-size: var(--commonFont-large) !important;
+  color: #14538d !important;
+}
+.delete-icon{
+  font-size: var(--commonFont-large) !important;
+  color: #d10808 !important;
+}
+.order-price-list{
+  .css-1jqq78o-placeholder{
+    display: flex;
+  }
+  table {
+    tbody{
+      tr {
+        td {  
+          span {
+            padding: 4px 0 ;
+          }
+        }
+      }
+    }
+  }  
 }

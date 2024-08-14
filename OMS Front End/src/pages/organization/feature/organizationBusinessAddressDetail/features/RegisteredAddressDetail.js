@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import PropTypes from "prop-types";
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
@@ -7,18 +7,17 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import { setDropDownOptionField, setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
-import { useState } from "react";
 
-const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,registeredAddressData,isGetOrganizationBusinessAddressesSuccess,isGetOrganizationBusinessAddressesData})=>{
+const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,isGetOrganizationBusinessAddressesSuccess,isGetOrganizationBusinessAddressesData})=>{
   const [registeredFormData,setRegisteredFormData]=useState(RegisteredAddressForm)
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
-  const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllStates, {isSuccess: isGetAllStateSuccess, isFetching: isGetAllStateFetching, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
 
     
     useEffect(() => {
-      if (isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.registeredAddress) {
-        debugger
+      if (!isGetAllStateFetching && isGetAllStateSuccess && isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData?.registeredAddress) {
+ 
         const { registeredAddress } = isGetOrganizationBusinessAddressesData;
         let data = { ...registeredFormData };
         if (registeredAddress.countryId) {
@@ -40,7 +39,7 @@ const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,regis
         };
         setRegisteredFormData(data);
       }
-    }, [isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
+    }, [isGetAllStateFetching , isGetAllStateSuccess,isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
 
     useEffect(() => {
       getAllCountries();
@@ -97,9 +96,9 @@ const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,regis
         <CardSection cardTitle="Registered Address">
             <div className="row">
               <FormCreator
-                config={registeredAddressData}
+                config={registeredFormData}
                 ref={registeredAddressRef}
-                {...registeredAddressData}
+                {...registeredFormData}
                 onActionChange={formAddressActionHandler}
               />
             </div>
@@ -112,6 +111,6 @@ const RegisteredAddressDetail=({registeredAddressRef,RegisteredAddressForm,regis
 RegisteredAddressDetail.propTypes = {
   registeredAddressRef: PropTypes.object.isRequired,
   RegisteredAddressForm: PropTypes.object.isRequired,
-  registeredAddressData: PropTypes.object.isRequired,
+ 
 };
 export default RegisteredAddressDetail;

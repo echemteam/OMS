@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AppIcons } from "../../../data/appIcons";
 import Image from "../../image/Image";
 import Buttons from "../../ui/button/Buttons";
+import Iconify from "../../ui/iconify/Iconify";
 
 export const RenderMultiGridAction = (rowData, col, rowIndex, onActionHandler) => {
 
@@ -113,7 +114,10 @@ export const RenderMultiGridAction = (rowData, col, rowIndex, onActionHandler) =
           className="mr-4"
           title="EDIT"
         >
-          <Image imagePath={AppIcons.editIcon} altText="Edit Icon" />
+          {/* <Image imagePath={AppIcons.editIcon} altText="Edit Icon" /> */}
+          <Iconify
+          icon="tabler:pencil" 
+          />
         </Link>
       )}
 
@@ -126,7 +130,10 @@ export const RenderMultiGridAction = (rowData, col, rowIndex, onActionHandler) =
           className="mr-4"
           title="DELETE"
         >
-          <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" />
+          {/* <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" /> */}
+          <Iconify
+          icon="mingcute:delete-2-line"  className="delete-icon"
+          />
         </Link>
       )}
     </div>

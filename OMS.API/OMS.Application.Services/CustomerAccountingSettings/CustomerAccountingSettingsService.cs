@@ -6,6 +6,7 @@ using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerAccountingSettings;
 using OMS.Domain.Repository;
+using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
 
 namespace OMS.Application.Services.CustomerAccountingSettings
@@ -31,7 +32,26 @@ namespace OMS.Application.Services.CustomerAccountingSettings
         {
             CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
             customerAccountingSettingsDto.CreatedBy = CurrentUserId;
-            return await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
+            AddEntityDto<int> responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
+            if (responceData.KeyValue > 0)
+            {
+                CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = new()
+                {
+                    CustomerId = requestData.CustomerId,
+                };
+                customerShppingDeliveryCarriersDto.CreatedBy = CurrentUserId;
+                customerShppingDeliveryCarriersDto.DeliveryAccountId = ((int)DeliveryAccount.OurAccount);
+                customerShppingDeliveryCarriersDto.IsByDefault = true;
+                responceData = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
+            }
+            return responceData;
+        }
+
+        public async Task<AddEntityDto<int>> AddEditCustomerInvoice(AddEditCustomerInvoiceRequest requestData, short CurrentUserId)
+        {
+            CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerInvoiceRequest, CustomerAccountingSettingsDto>();
+            customerAccountingSettingsDto.CreatedBy = CurrentUserId;
+            return await repositoryManager.customerAccountingSettings.AddEditCustomerInvoice(customerAccountingSettingsDto);
         }
 
         public async Task<AddEntityDto<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(AddCustomerShppingDeliveryCarriersAndDeliveryMethodsRequest requestData, short CurrentUserId)
@@ -109,6 +129,8 @@ namespace OMS.Application.Services.CustomerAccountingSettings
         {
             return repositoryManager.customerAccountingSettings.GetCustomerDeliveryMethodByCustomerDeliveryMethodId(customerDeliveryMethodId);
         }
+
+        
         #endregion
     }
 }

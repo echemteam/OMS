@@ -22,7 +22,7 @@ const OrganizationShippingChargesDetail=()=>{
 
     useEffect(()=>{
         getOrganizationShippingCharges();   
-    },[])
+    },[getOrganizationShippingCharges])
 
       const handleAddEditShippingChargesDetail=()=>{
          let shippingChargesData = organizationShippingChargesRef.current.getFormData();

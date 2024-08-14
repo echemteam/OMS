@@ -9,12 +9,12 @@ import { PagePermissionsProvider } from "../utils/ContextAPIs/PagePermissions/Pa
 import Image from "../components/image/Image";
 import { AppIcons } from "../data/appIcons";
 import Unauthorize from "../pages/unauthorize/Unauthorize";
+import Iconify from "../components/ui/iconify/Iconify";
 
 const Layout = (props) => {
   // Get the current location using React Router's useLocation hook
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
-
 
   // Extract the last segment of the pathname as routhPath
   let routhPath = location.pathname.replace("/", "");
@@ -24,10 +24,14 @@ const Layout = (props) => {
   }
 
   // Find the matching component route based on the routhPath
-  const renderComponent = props.componentRoutes?.find((x) => x.id.toLowerCase() === routhPath.toLowerCase());
+  const renderComponent = props.componentRoutes?.find(
+    (x) => x.id.toLowerCase() === routhPath.toLowerCase()
+  );
 
   // Check if the user is authorized to access the current route
-  const isAuthorize = renderComponent?.securityKey ? hasPermission(renderComponent.securityKey) : false;
+  const isAuthorize = renderComponent?.securityKey
+    ? hasPermission(renderComponent.securityKey)
+    : false;
 
   // Handler to toggle the collapse state
   const handleToggleClick = () => {
@@ -40,13 +44,14 @@ const Layout = (props) => {
       </AddPagePermissionsContext.Provider> */}
       <PagePermissionsProvider>
         {/* <SecurityPermissionsHOC permissionConfig={permissionConfig}> */}
-        <div className={`main-page-layout ${isCollapsed ? 'collapsed' : ''}`}>
+        <div className={`main-page-layout ${isCollapsed ? "collapsed" : ""}`}>
           <div className="top-sec">
             <div className="sidebar-section">
               <Sidebar componentRoutes={props.componentRoutes} />
               <div className="collapse-btn">
                 <div className="click-btn" onClick={handleToggleClick}>
-                  <Image imagePath={AppIcons.arrowIcon} />
+                  {/* <Image imagePath={AppIcons.arrowIcon} /> */}
+                  <Iconify icon="solar:alt-arrow-down-outline" />
                 </div>
               </div>
             </div>
@@ -63,6 +68,7 @@ const Layout = (props) => {
                     </div>
                     <Footer />
                   </div>
+                  <Footer />
                 </div>
                 : <Unauthorize />
               }

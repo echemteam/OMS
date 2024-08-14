@@ -25,7 +25,6 @@
       -o-transform: translateY(-50%);
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
-      
 
       &.content-95 {
         width: 95%;
@@ -66,7 +65,7 @@
       &.content-35 {
         width: 35%;
 
-        @media only screen and (max-width: 1280px){
+        @media only screen and (max-width: 1280px) {
           width: 45%;
         }
       }
@@ -80,14 +79,13 @@
         width: 20%;
       }
 
-
       .model-header {
         border-bottom: 1px solid rgba(206, 211, 216, 0.431372549);
         position: relative;
         background: var(--themeColor);
 
         .model-title {
-          font-size:  var(--commonFont-large);
+          font-size: var(--commonFont-large);
           font-weight: 600;
           padding: 10px;
           color: var(--whiteColor);
@@ -109,22 +107,39 @@
             transition: 0.5s all;
             filter: brightness(100);
             @media only screen and (max-width: 1750px) {
-             width: 21px; 
+              width: 21px;
             }
-          }
 
-          &:hover {
-            img {
-              transform: rotate(180deg);
-              -webkit-transform: rotate(180deg);
-              -moz-transform: rotate(180deg);
-              -ms-transform: rotate(180deg);
-              -o-transform: rotate(180deg);
-}
+            svg {
+              width: 30px;
+              transition: 0.5s all;
+              filter: brightness(100);
+              @media only screen and (max-width: 1750px) {
+                width: 21px;
+              }
+            }
+
+            &:hover {
+              img {
+                transform: rotate(180deg);
+                -webkit-transform: rotate(180deg);
+                -moz-transform: rotate(180deg);
+                -ms-transform: rotate(180deg);
+                -o-transform: rotate(180deg);
+              }
+              svg {
+                transform: rotate(180deg);
+                -webkit-transform: rotate(180deg);
+                -moz-transform: rotate(180deg);
+                -ms-transform: rotate(180deg);
+                -o-transform: rotate(180deg);
+              }
+            }
+            
           }
         }
       }
-      .model-body{
+      .model-body {
         padding: 0 12px;
         height: calc(100vh - 54px);
         overflow: hidden;
@@ -141,18 +156,17 @@
   }
 }
 
-
 @media only screen and (max-width: 1750px) {
   .sidebar-contact-model {
     .sidebar-model {
       .side-model-section {
         .model-content {
-          .model-header{
-            .model-title{
+          .model-header {
+            .model-title {
               padding: 6px 10px;
             }
             .close-btn {
-              img{
+              img {
                 width: 19px;
               }
             }
@@ -166,4 +180,3 @@
     }
   }
 }
-

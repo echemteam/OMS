@@ -19,6 +19,7 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
 
     //** State */
     const molGridRef = useRef();
+    const addeditRef = useRef();
     const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -86,6 +87,12 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
         }
     };
 
+    const handleCheckBoxChange = (rowData) => {
+        if (addeditRef.current) {
+            addeditRef.current.callChildFunction(rowData);
+        }
+    }
+
     //** Success */
     const onSuccess = () => {
         setShowModal(!showModal);
@@ -116,11 +123,12 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
     return (
         <React.Fragment>
             <ContactNumberList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
-                isButtonDisable={isButtonDisable} phoneNumberList={phoneNumberList} />
-            {showModal && (
-                <AddEditContactNumber handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal}
-                    editFormData={editFormData} isEdit={isEdit} contactId={contactId} phoneNumberList={phoneNumberList} setPhoneNumberList={setPhoneNumberList} newPhoneCode={newPhoneCode} />
-            )}
+                isButtonDisable={isButtonDisable} phoneNumberList={phoneNumberList} handleCheckBoxChange={handleCheckBoxChange} />
+            {/* {showModal && ( */}
+            <AddEditContactNumber handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} addeditRef={addeditRef}
+                editFormData={editFormData} isEdit={isEdit} contactId={contactId} phoneNumberList={phoneNumberList} setPhoneNumberList={setPhoneNumberList}
+                newPhoneCode={newPhoneCode} />
+            {/* )} */}
         </React.Fragment>
     )
 

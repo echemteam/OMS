@@ -2,8 +2,6 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
 //** Lib's */
 import PropTypes from 'prop-types';
-import Image from '../../../../../components/image/Image';
-import { AppIcons } from '../../../../../data/appIcons';
 import CopyText from '../../../../../utils/CopyText/CopyText';
 import { securityKey } from '../../../../../data/SecurityKey';
 import { ErrorMessage } from '../../../../../data/appMessages';
@@ -13,7 +11,7 @@ import FormCreator from '../../../../../components/Forms/FormCreator';
 import DropDown from '../../../../../components/ui/dropdown/DropDrown';
 import DataLoader from '../../../../../components/ui/dataLoader/DataLoader';
 import CenterModel from '../../../../../components/ui/centerModel/CenterModel';
-import { StaticStatus, StatusValue } from '../../../../../utils/Enums/StatusEnums';
+import { StatusValue } from '../../../../../utils/Enums/StatusEnums';
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigation/authorizeNavigation';
 //** Service's */
@@ -25,6 +23,7 @@ import { removeFormFields } from '../../../../../utils/FormFields/RemoveFields/h
 import { setDropDownOptionField } from '../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 import { reasonData } from '../../../../../common/features/component/CustomerSupplierReason/Reason.data';
 import { excludingRoles } from '../../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data';
+import Iconify from '../../../../../components/ui/iconify/Iconify';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../supplierApproval/SupplierApproval"));
@@ -127,17 +126,16 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
       const filterData = allGetAlluserData.filter((item) => {
-        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
       });
-      const modifyUserData = filterData.map((item) => ({
+      // Remove duplicates based on fullName
+      const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
+      const modifyUserData = uniqueData.map((item) => ({
         value: item.userId,
         label: item.fullName,
       }));
       setResponsibleUserOptions(modifyUserData);
-      const filterCondition = (item) => {
-        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
-      };
-      setDropDownOptionField(allGetAlluserData, 'userId', 'fullName', formData, 'responsibleUserId', filterCondition);
+      setDropDownOptionField(uniqueData, 'userId', 'fullName', formData, 'responsibleUserId');
     }
   }, [isGetAllUserSucess, allGetAlluserData]);
 
@@ -301,10 +299,11 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                     CopyText(supplierData?.emailAddress, "email")
                   }
                 >
-                  <Image
+                  {/* <Image
                     imagePath={AppIcons.copyIcon}
                     altText="Website Icon"
-                  />
+                  /> */}
+                  <Iconify icon="bitcoin-icons:copy-outline" />
                 </span>
               </div>
 
@@ -316,10 +315,11 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                   className="copy-icon"
                   onClick={() => CopyText(supplierData?.website, "website")}
                 >
-                  <Image
+                  {/* <Image
                     imagePath={AppIcons.copyIcon}
                     altText="Website Icon"
-                  />
+                  /> */}
+                  <Iconify icon="bitcoin-icons:copy-outline" />
                 </span>
               </div>
             </div>
@@ -408,10 +408,11 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
           </div>
           {showEditIcon ?
             <div className="edit-icons" onClick={editClick}>
-              <Image
+              {/* <Image
                 imagePath={AppIcons.editThemeIcon}
                 altText="Website Icon"
-              />
+              /> */}
+              <Iconify icon="tabler:pencil" />
             </div>
             : null}
         </div>

@@ -6,7 +6,11 @@ import CardSection from "../../../../../components/ui/card/CardSection";
 import PropTypes from 'prop-types';
 import FinalMolGrid from "../../../../../components/FinalMolGrid/FinalMolGrid";
 
-const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
+const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, actionHandler, isButtonDisable, handleCheckBoxChange }) => {
+
+    const handleGridCheckBoxChange = (fieldName, rowData) => {
+        handleCheckBoxChange(rowData);
+    };
 
     return (
         <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-1 table-email-sec">
@@ -26,6 +30,7 @@ const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, act
                             dataSource={emailAddressList}
                             allowPagination={false}
                             onActionChange={actionHandler}
+                            onColumnChange={handleGridCheckBoxChange}
                         />
                     </div>
                 </div>

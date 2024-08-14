@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Image from "../../../../../components/image/Image";
 import DropDown from "../../../../../components/ui/dropdown/DropDrown";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../../components/Forms/FormCreator";
@@ -9,9 +8,9 @@ import CustomerApproval from "../../cutomerApproval/CustomerApproval";
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import {
   useLazyGetAllUserQuery,
-  useUpdateResponsibleUserMutation,
 } from "../../../../../app/services/commonAPI";
 import {
+  useAddEditResponsibleUserForCustomerMutation,
   useUpdateCustomerInActiveStatusMutation,
   useUpdateCustomerStatusMutation,
   useUpdateCustomerSubCustomerMutation
@@ -24,15 +23,18 @@ import {
   StatusValue,
 } from "../../../../../utils/Enums/StatusEnums";
 import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDetail.data";
-import { AppIcons } from "../../../../../data/appIcons";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import { ErrorMessage, SuccessMessage } from "../../../../../data/appMessages";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
-import { OwnerType } from "../../../../../utils/Enums/commonEnums";
+// import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
 import PropTypes from 'prop-types';
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-
+import Iconify from "../../../../../components/ui/iconify/Iconify";
+// import { Tooltip } from "react-bootstrap";
+// import Select from 'react-select';
+import DropdownSelect from "../../../../../components/ui/dropdown/DropdownSelect";
+import AddEditInvoiceSubmissionInstructionDetail from "./feature/AddEditInvoiceSubmissionInstructionDetail";
 
 const CustomerBasicInfoCard = ({
   editClick,
@@ -57,9 +59,9 @@ const CustomerBasicInfoCard = ({
   ] = useUpdateCustomerSubCustomerMutation();
 
   const [
-    updateResponsibleUser,
-    { isSuccess: isSuccessRUser, data: isUpdateRUserData },
-  ] = useUpdateResponsibleUserMutation();
+    addEditResponsibleUserForCustomer,
+    { isSuccess: isSuccessAddEditResponsibleUserForCustomer, data: isAddEditResponsibleUserForCustomerData },
+  ] = useAddEditResponsibleUserForCustomerMutation();
   const [
     updateCustomerStatus,
     {
@@ -161,8 +163,15 @@ const CustomerBasicInfoCard = ({
 
   useEffect(() => {
     if (customerData) {
+
+      const responsibleUserIds = customerData?.responsibleUserId?.split(',').map(id => id.trim());
+      const responsibleUserNames = customerData?.responsibleUserName?.split(',').map(name => name.trim());
+      const responsibleUsers = responsibleUserIds?.map((id, index) => ({
+        value: id,
+        label: responsibleUserNames[index] || id,
+      }));
+      setRUserValue(responsibleUsers);
       setSelectedStatus(customerData.status);
-      setRUserValue(customerData.responsibleUserName);
       getAllUser();
     }
   }, [customerData]);
@@ -170,14 +179,11 @@ const CustomerBasicInfoCard = ({
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
       const filterData = allGetAlluserData.filter((item) => {
-        return (
-          item.roleName === null ||
-          !excludingRoles
-            .map((role) => role.toLowerCase())
-            .includes(item.roleName.toLowerCase())
-        );
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
       });
-      const modifyUserData = filterData.map((item) => ({
+      // Remove duplicates based on fullName
+      const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
+      const modifyUserData = uniqueData.map((item) => ({
         value: item.userId,
         label: item.fullName,
       }));
@@ -242,33 +248,25 @@ const CustomerBasicInfoCard = ({
   }
 
 
-  //** Responsible User  */
-  const handleRUserChange = (selectedValue) => {
-    confirm(
-      "Warning?",
-      `Are you sure you want to assign the responsible user?`,
-      "Yes",
-      "Cancel"
-    ).then((confirmed) => {
-      if (confirmed) {
-        updateRUserData(selectedValue.value);
-      }
-    });
-  };
-  const updateRUserData = (value) => {
+  const onHandleBlur = () => {
     let req = {
-      ownerId: customerId,
-      ownerType: OwnerType.Customer,
-      responsibleUserId: value,
+      customerId: customerId,
+      // userId: String(rUserValue)
+      userId: rUserValue?.map(option => option.value).join(',')
     };
-    updateResponsibleUser(req);
-    setRUserValue(value);
+    addEditResponsibleUserForCustomer(req);
+  }
+
+  const updateRUserData = (data) => {
+    // const responsibleUserId = data.map(option => option.value);
+    setRUserValue(data);
   };
+
   useEffect(() => {
-    if (isSuccessRUser && isUpdateRUserData) {
-      ToastService.success(isUpdateRUserData.errorMessage);
+    if (isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
+      ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage);
     }
-  }, [isSuccessRUser, isUpdateRUserData]);
+  }, [isSuccessAddEditResponsibleUserForCustomer, isAddEditResponsibleUserForCustomerData]);
 
   const updateCustomerApproval = () => {
     setSelectedStatus(statusId);
@@ -294,10 +292,12 @@ const CustomerBasicInfoCard = ({
         statusId: selectedStatus ? selectedStatus : 0,
       };
       updateCustomerInActiveStatus(req);
-      updateRUserData(custData?.responsibleUserId?.value);
+      updateRUserData(custData);
     }
   };
-
+  const handleModelShow = () => {
+    setShowModal(true);
+  }
   const handleToggleModal = () => {
     setShowModal(false);
     onReset();
@@ -383,7 +383,8 @@ const CustomerBasicInfoCard = ({
                 className="copy-icon"
                 onClick={() => CopyText(customerData?.emailAddress, "email")}
               >
-                <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+                {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
               </span>
             </div>
 
@@ -395,7 +396,8 @@ const CustomerBasicInfoCard = ({
                 className="copy-icon"
                 onClick={() => CopyText(customerData?.website, "website")}
               >
-                <Image imagePath={AppIcons.copyIcon} altText="Website Icon" />
+                {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
+                <Iconify icon="bitcoin-icons:copy-outline" />
               </span>
             </div>
           </div>
@@ -428,12 +430,22 @@ const CustomerBasicInfoCard = ({
               <div className="inf-label">R-User</div>
               <b>&nbsp;:&nbsp;</b>
               <div className="status-dropdown">
-                <DropDown
-                  options={responsibleUserOptions}
-                  value={rUserValue}
-                  onChange={handleRUserChange}
+                {/* <DropDown
+              options={responsibleUserOptions}
+              value={rUserValue}
+              onChange={updateRUserData}
+              placeholder="Responsible User"
+              isDisabled={isResponsibleUser ? true : isButtonDisable}
+              isMultiSelect={true}
+              onBlur={onHandleBlur}
+            /> */}
+                <DropdownSelect
+                  isMultiSelect={true}
                   placeholder="Responsible User"
-                  isDisabled={isResponsibleUser ? true : isButtonDisable}
+                  optionsValue={responsibleUserOptions}
+                  value={rUserValue}
+                  handleDropdownChange={updateRUserData}
+                  handleDropdownBlur={onHandleBlur}
                 />
               </div>
             </div>
@@ -496,10 +508,22 @@ const CustomerBasicInfoCard = ({
                 </div>
               </div>
             </div>
+            <div className="field-desc">
+              <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="checkbox-part ml-2 mt-2 eye-icon ">
+                <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
+                <div className="tooltip-show">
+                  <p>Add/Edit Invoice Submission</p>
+                </div>
+                <di className="tooltip-arrow-icon"></di>
+              </div>
+            </div>
           </div>
         </div>
         <div className="edit-icons" onClick={editClick}>
-          <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" />
+          {/* <Image imagePath={AppIcons.editThemeIcon} altText="Website Icon" /> */}
+          <Iconify icon="tabler:pencil" />
         </div>
       </div>
       {showModal && (
@@ -531,6 +555,22 @@ const CustomerBasicInfoCard = ({
           </div>
         </CenterModel>
       )}
+      {
+        showModal && (
+          <CenterModel
+            showModal={showModal}
+            handleToggleModal={handleToggleModal}
+            modalTitle="Add/Edit Invoice Submission Instruction"
+            modelSizeClass="w-60"
+          >
+            <AddEditInvoiceSubmissionInstructionDetail
+              customerId={customerId}
+              showModal={showModal}
+              setShowModal={setShowModal}
+              handleToggleModal={handleToggleModal}
+            />
+          </CenterModel>)
+      }
       <CustomerApproval
         isDetailPage={true}
         childRef={childRef}

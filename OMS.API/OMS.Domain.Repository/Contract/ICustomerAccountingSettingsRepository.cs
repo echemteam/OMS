@@ -20,5 +20,6 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDto<int>> AddDeliveryMethods(CustomerDeliveryMethodsDto requestData);
         Task<GetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse> GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(int customerDeliveryCarrierId);
         Task<GetCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse> GetCustomerDeliveryMethodByCustomerDeliveryMethodId(int customerDeliveryMethodId);
+        Task<AddEntityDto<int>> AddEditCustomerInvoice(CustomerAccountingSettingsDto customerAccountingSettingsDto);
     }
 }

@@ -18,7 +18,7 @@
     img {
       width: 17px;
 
-      &.left-arrow {
+      &.left-arrow{
         transform: rotate(90deg);
         -webkit-transform: rotate(90deg);
         -moz-transform: rotate(90deg);
@@ -26,7 +26,7 @@
         -o-transform: rotate(90deg);
       }
 
-      &.right-arrow {
+      &.right-arrow{
         transform: rotate(-90deg);
         -webkit-transform: rotate(-90deg);
         -moz-transform: rotate(-90deg);

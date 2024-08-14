@@ -33,7 +33,7 @@ const EventParameterList = (props) => {
       const currentPageObject = molGridRef.current.getCurrentPageObject();
       getLists(currentPageObject, molGridRef.current.generateSortingString());
     }
-  }, [isDeleteApiEventParameterSuccess, isDeleteApiEventParameterData]);
+  }, [isDeleteApiEventParameterSuccess, isDeleteApiEventParameterData,getLists]);
 
   const handlePageChange = (page) => {
     getLists(page, molGridRef.current.generateSortingString());
@@ -90,7 +90,7 @@ const EventParameterList = (props) => {
       };
       getApiEventParameters(request);
     }
-  }, []);
+  }, [props.keyId]);
 
   const handleEditClick = (data) => {
     props.handleDataToggleModal(data)

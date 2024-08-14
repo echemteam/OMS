@@ -7,7 +7,8 @@ export const orderInformationData = {
     customerId: "",
     subCustomerMainCustomerId: "",
     poNumber: "",
-    addressId: ""
+    isBillingId:"",
+    isShippingId:""
   },
   formFields: [
     {
@@ -139,11 +140,11 @@ export const orderInformationData = {
       }
     },
     {
-      id: "billingAddress",
+      id: "isBillingId",
       lable: "Billing Address ",
       Field_Name: "Billing Address ",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "billingAddress",
+      dataField: "isBillingId",
       fieldSetting: {
         placeholder: "Select Billing Address",
         isEnableOnChange: true,
@@ -156,11 +157,11 @@ export const orderInformationData = {
       },
     },
     {
-      id: "shippingAddress",
+      id: "isShippingId",
       lable: "Shipping Address ",
       Field_Name: "shipping Address ",
       fieldType: FormFieldTypes.SELECT,
-      dataField: "addressId",
+      dataField: "isShippingId",
       fieldSetting: {
         placeholder: "Select Shipping Address",
         isEnableOnChange: true,

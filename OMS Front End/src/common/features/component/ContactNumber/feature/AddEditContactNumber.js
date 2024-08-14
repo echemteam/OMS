@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import PropTypes from 'prop-types';
 //** Lib's */
 import { Message } from "../../EmailAddress/utils/ContactMessages";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
-import { addEditContactsFormData } from "../config/AddEditContactsForm.data";
+import { addEditContactsFormData, initialPhoneTypeState } from "../config/AddEditContactsForm.data";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import {
   addPhoneNumberData,
@@ -21,7 +21,8 @@ const AddEditContactNumber = ({
   showModal,
   isEdit,
   onSuccess,
-  newPhoneCode
+  newPhoneCode,
+  addeditRef
 }) => {
   //** State */
   const ref = useRef();
@@ -34,6 +35,7 @@ const AddEditContactNumber = ({
       if (!data.id) {
         let req = {
           ...data,
+          phoneTypeId: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId : initialPhoneTypeState,
           isPrimary: data.isPrimaryPhoneNumber,
         };
         addPhoneNumberData(
@@ -65,6 +67,19 @@ const AddEditContactNumber = ({
       }
     }
   };
+
+  const handleCheckBoxChange = (data) => {
+    let req = {
+      ...data,
+      isPrimaryPhoneNumber: data.isPrimary,
+    };
+    updatePhoneNumberData(req, phoneNumberList, setPhoneNumberList, Message.ContactNumberUpdated, Message.ContactNumberDuplicate, Message.InvalidData);
+  }
+
+  //** Use Imperative Handle */
+  useImperativeHandle(addeditRef, () => ({
+    callChildFunction: handleCheckBoxChange
+  }));
 
   //** UseEffect */
   useEffect(() => {

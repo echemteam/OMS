@@ -48,7 +48,7 @@
 }
 
 .css-1hb7zxy-IndicatorsContainer {
-  height: 35px !important;
+  height: 34px !important;
   padding: 0 5px !important;
 
   .css-1xc3v61-indicatorContainer {
@@ -61,19 +61,20 @@
   }
   .css-t3ipsp-control, .css-13cymwt-control{
     min-height: 32px !important;
-    height: 32px !important;
+    // height: 32px !important;
     padding-top: 0 !important;
   }
 }
 
 .css-1nmdiqs-menu {
-  font-size: var(--commonFont-small) !important;
+  font-size: var(--commonFont-medium) !important;
   z-index: 99;
 }
 
 .css-1jqq78o-placeholder {
-  font-size: var(--commonFont-small) !important;
+  font-size: var(--commonFont-medium) !important;
   line-height: normal !important;
+  color: var(--placeholderColor) !important;
 }
 
 //Dropdown Select End
@@ -112,11 +113,11 @@
 //   width: 50px !important
 // }
 .css-1dimb5e-singleValue {
-  font-size: var(--commonFont-small);
+  font-size: var(--commonFont-medium);
 }
 
 .css-wsp0cs-MultiValueGeneric {
-  font-size: var(--commonFont-small) !important;
+  font-size: var(--commonFont-medium) !important;
 }
 
 .custom-checkbox-select{

@@ -6,7 +6,7 @@ export const achWireFormData = {
   initialState: {
     bankName: "",
     beneficiaryName: "",
-    accountType: "",
+    accountType: "Checking",
     accountNumber: "",
     messageToRecipientBank: "",
     messageToRecipient: "",
@@ -53,15 +53,31 @@ export const achWireFormData = {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input label-name-small",
       },
     },
+    // {
+    //   id: "paymentTermId",
+    //   lable: "Payment Terms",
+    //   Field_Name: "Payment Terms",
+    //   fieldType: FormFieldTypes.SELECT,
+    //   dataField: "paymentTermId",
+    //   fieldSetting: {
+    //     isDisabled: false,
+    //     placeholder: "Select Payment Terms",
+    //     isEnableOnChange: true
+    //   },
+    //   // validation: [{ type: "require" }],
+    //   style: {
+    //     containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input label-name-small",
+    //   },
+    // },
     {
       id: "accountType",
       lable: "Account Type",
       Field_Name: "Account Type",
-      fieldType: FormFieldTypes.INPUT,
+      fieldType: FormFieldTypes.SELECT,
       dataField: "accountType",
       fieldSetting: {
         isDisabled: false,
-        placeholder: "Please Enter Account Type",
+        placeholder: "Select Account Type",
         isEnableOnChange: true
       },
       validation: [{ type: "require" }],
@@ -97,7 +113,7 @@ export const achWireFormData = {
         placeholder: "Please Enter Branch Code",
         isEnableOnChange: true
       },
-      validation: [{ type: "require" }],
+      //validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
       },
@@ -111,7 +127,8 @@ export const achWireFormData = {
       fieldSetting: {
         isDisabled: false,
         placeholder: "Please Enter IBAN Number",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        maxLength: 50,
       },
       // validation: [{ type: "require" }],
       style: {
@@ -205,22 +222,22 @@ export const achWireFormData = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
       },
     },
-    {
-      id: "paymentTermId",
-      lable: "Payment Terms",
-      Field_Name: "Payment Terms",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "paymentTermId",
-      fieldSetting: {
-        isDisabled: false,
-        placeholder: "Select Payment Terms",
-        isEnableOnChange: true
-      },
-      // validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input label-name-small",
-      },
-    },
+    // {
+    //   id: "paymentTermId",
+    //   lable: "Payment Terms",
+    //   Field_Name: "Payment Terms",
+    //   fieldType: FormFieldTypes.SELECT,
+    //   dataField: "paymentTermId",
+    //   fieldSetting: {
+    //     isDisabled: false,
+    //     placeholder: "Select Payment Terms",
+    //     isEnableOnChange: true
+    //   },
+    //   // validation: [{ type: "require" }],
+    //   style: {
+    //     containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input label-name-small",
+    //   },
+    // },
     {
       id: "isAddressInUs",
       lable: "Bank Account located in the United States or US Territory",
@@ -235,41 +252,39 @@ export const achWireFormData = {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-3 pt-2",
       }
     },
-    {
-      id: "messageToRecipient",
-      lable: "Message to recipient",
-      Field_Name: "Message to recipient",
-      fieldType: FormFieldTypes.TEXTAREA,
-      dataField: "messageToRecipient",
-      fieldSetting: {
-        placeholder: "Please Enter Message to recipient",
-        isEnableOnChange: true,
-        isMultiSelect: false,
-        isDisabled: false,
-      },
-      // validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
-      },
-    },
-    {
-      id: "messageToRecipientBank",
-      lable: "Message to recipient Bank",
-      Field_Name: "Message to recipient Bank",
-      fieldType: FormFieldTypes.TEXTAREA,
-      dataField: "messageToRecipientBank",
-      fieldSetting: {
-        placeholder: "Please Enter Message to recipient Bank",
-        isEnableOnChange: true,
-        maxLength: 75,
-      },
-      // validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
-      },
-    },
-
-
+    // {
+    //   id: "messageToRecipient",
+    //   lable: "Message to recipient",
+    //   Field_Name: "Message to recipient",
+    //   fieldType: FormFieldTypes.TEXTAREA,
+    //   dataField: "messageToRecipient",
+    //   fieldSetting: {
+    //     placeholder: "Please Enter Message to recipient",
+    //     isEnableOnChange: true,
+    //     isMultiSelect: false,
+    //     isDisabled: false,
+    //   },
+    //   // validation: [{ type: "require" }],
+    //   style: {
+    //     containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+    //   },
+    // },
+    // {
+    //   id: "messageToRecipientBank",
+    //   lable: "Message to recipient Bank",
+    //   Field_Name: "Message to recipient Bank",
+    //   fieldType: FormFieldTypes.TEXTAREA,
+    //   dataField: "messageToRecipientBank",
+    //   fieldSetting: {
+    //     placeholder: "Please Enter Message to recipient Bank",
+    //     isEnableOnChange: true,
+    //     maxLength: 75,
+    //   },
+    //   // validation: [{ type: "require" }],
+    //   style: {
+    //     containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
+    //   },
+    // },
   ],
   formSetting: {
     isViewOnly: false,

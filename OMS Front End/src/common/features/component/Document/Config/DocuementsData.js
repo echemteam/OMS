@@ -19,6 +19,7 @@ export const DocumentFormData = {
       lable: "Document Type ",
       Field_Name: "Document Type",
       fieldType: FormFieldTypes.SELECT,
+      // fieldType: FormFieldTypes.EDITABLEDROPDOWN,
       dataField: "documentTypeId",
       fieldSetting: {
         placeholder: "Select Document Type",
@@ -54,10 +55,10 @@ export const DocumentFormData = {
       dataField: "attachment",
       fieldSetting: {
         placeholder: "Upload Attachment",
-        allowSpace: true,
+        allowSpace: true, 
         isButtonVisible: false,
         isCustomButtonVisible: true,
-        acceptedFiles: '.pdf , .doc , .docx ,.csv , .xlsx , .xls ',
+        acceptedFiles: '.pdf , .docx ',
       },
       validation: [{ type: "require" }],
       style: {

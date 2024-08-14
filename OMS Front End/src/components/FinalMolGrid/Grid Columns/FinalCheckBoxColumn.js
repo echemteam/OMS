@@ -10,8 +10,8 @@ const RenderGridCheckboxColumn = ({
 }) => {
 
   const { colSettings, fieldName } = col;
-  const isDisabled = colSettings?.isDisabled === false;
-  
+  const isDisabled = colSettings?.isDisabled ? colSettings?.isDisabled : false;
+
   const [value, setValue] = useState(rowData[col.fieldName]);
 
   useEffect(() => {

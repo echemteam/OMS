@@ -1,4 +1,3 @@
-import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
@@ -54,13 +53,15 @@ export const SecurityRoleGridConfig = {
       customAction: [
         {
           name: "USER",
-          iconName: AppIcons.userIcon,
-          title: "User"
+          title: "User",
+          iconName: "mi:user",
+          className: "disable-icon"
         },
         {
           name: "PERMISSION",
-          iconName: AppIcons.permissionIcon,
-          title: "Permission"
+          iconName: "ph:key",
+          title: "Permission",
+          className: "key-icon"
         },
       ],
     },

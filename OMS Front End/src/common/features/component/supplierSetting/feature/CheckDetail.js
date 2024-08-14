@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import CardSection from "../../../../../components/ui/card/CardSection";
@@ -69,25 +70,6 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
       }
     }
   }
-
-  // useEffect(() => {
-  //   if (getCheckData.addressId > 0) {
-  //     if (getCheckData.stateId) {
-  //       getAllCities(getCheckData.stateId)
-  //     }
-  //     let formCheckData = { ...checkformData };
-  //     formCheckData.initialState = {
-  //       // addressId:getCheckData.addressId,
-  //       addressLine1Id: getCheckData.addressLine1Id,
-  //       addressLine2Id: getCheckData.addressLine2Id,
-  //       cityId: getCheckData.cityId,
-  //       stateId: getCheckData.stateId,
-  //       countryId: getCheckData.countryId,
-  //       zipCode: getCheckData.zipCode,
-  //     };
-  //     setCheckFormData(formCheckData);
-  //   }
-  // }, [getCheckData])
   useEffect(() => {
 
     if ( !isGetAllStateFetching && isGetAllStateSuccess &&isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData?.mailingAddress ) {
@@ -187,7 +169,7 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
               />
             </div>
             <div className="col-md-12">
-              <div className="d-flex align-item-end justify-content-end" >
+              <div className="d-flex align-item-end justify-content-end centered" >
                 <Buttons
                   buttonTypeClassName="theme-button"
                   buttonText="Save"
@@ -195,13 +177,7 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
                   isLoading={isAddEditCheckLoading}
                 // isDisable={isButtonDisable}
                 />
-                {/* <Buttons
-                  buttonTypeClassName="dark-btn ml-5"
-                  buttonText="Cancel"
-                // onClick={onSidebarClose}
-                /> */}
               </div>
-              {/* ))} */}
             </div>
           </CardSection>
         </div>

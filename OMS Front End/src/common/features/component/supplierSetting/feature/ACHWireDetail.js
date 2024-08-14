@@ -28,7 +28,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef , i
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
 
   const [addEditACHWire, { isLoading: isAddEditACHWireLoading, isSuccess: isAddEditACHWireSuccess, data: isAddEditACHWireData }] = useAddEditACHWireMutation();
-  const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
+  //const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
   const [getACHWireBySupplierId, { isFetching: isGetACHWireBySupplierIdFetching, isSuccess: isGetACHWireBySupplierIdSuccess, data: isGetACHWireBySupplierIdData }] = useLazyGetACHWireBySupplierIdQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSucess, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
   const [getAllStates, { isSuccess: isGetAllStatesSucess, data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
@@ -37,7 +37,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef , i
   useEffect(() => {
     getAllCountries();
     getAllStates();
-    getAllPaymentTerms();
+   // getAllPaymentTerms();
     // getACHWireBySupplierId(supplierId)
   }, []);
 
@@ -67,11 +67,10 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef , i
         setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', registeredBankAddressForm, 'cityId');
       }
     }
-    if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
-      setDropDownOptionField(isGetAllPaymentTermsData, "paymentTermId", "paymentTerm", achWireFormData, "paymentTermId");
-    }
-  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData, isGetAllCountriesSucess,
-    allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData]);
+    // if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
+    //   setDropDownOptionField(isGetAllPaymentTermsData, "paymentTermId", "paymentTerm", achWireFormData, "paymentTermId");
+    // }
+  }, [ isGetAllCountriesSucess,allGetAllCountriesData, isGetAllStatesSucess, allGetAllStatesData, isGetAllCitiesSucess, allGetAllCitiesData]);
 
   const handleBankStateOption = (responseData) => {
     setDropDownOptionField(responseData, 'stateId', 'name', bankAddressFormData, 'stateId');
@@ -180,7 +179,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef , i
           messageToRecipient: isGetACHWireBySupplierIdData.messageToRecipient,
           isAddressInUs: isGetACHWireBySupplierIdData.isAddressInUs,
           recipientPhoneNumber: isGetACHWireBySupplierIdData.recipientPhoneNumber,
-          paymentTermId: isGetACHWireBySupplierIdData.paymentTermId,
+      //    paymentTermId: isGetACHWireBySupplierIdData.paymentTermId,
           messageToRecipientBank: isGetACHWireBySupplierIdData.messageToRecipientBank,
           beneficiaryName: isGetACHWireBySupplierIdData.beneficiaryName,
           bankName: isGetACHWireBySupplierIdData.bankName,
@@ -241,7 +240,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef , i
         messageToRecipient: formOtherDetail.messageToRecipient,
         isAddressInUs: formOtherDetail.isAddressInUs,
         recipientPhoneNumber: formOtherDetail.recipientPhoneNumber,
-        paymentTermId: formOtherDetail.paymentTermId && typeof formOtherDetail.paymentTermId === "object" ? formOtherDetail.paymentTermId.value : formOtherDetail.paymentTermId,
+       // paymentTermId: formOtherDetail.paymentTermId && typeof formOtherDetail.paymentTermId === "object" ? formOtherDetail.paymentTermId.value : formOtherDetail.paymentTermId,
         messageToRecipientBank: formOtherDetail.messageToRecipientBank,
         beneficiaryName: formOtherDetail.beneficiaryName,
         bankName: formOtherDetail.bankName,

@@ -128,7 +128,7 @@ export const UserGridConfig = {
       colType: GridColumnType.CHECKBOX,
       colSettings: {
         allowCheckbox: true,
-        allowDisable: true,
+        isDisabled: true,
       },
     },
     {

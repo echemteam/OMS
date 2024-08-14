@@ -8,7 +8,7 @@ export const Menu = [
         name: "Dashboard",
         id: "Dashboard",
         to: "/",
-        iconClass: "bi bi-file-earmark-medical",
+        iconClass: "ri:home-3-line",
         subMenu: false,
         securityKey: securityKey.DASHBOARD,
         children: [],
@@ -32,7 +32,7 @@ export const Menu = [
       {
         id: "Security",
         name: "Security",
-        iconClass: "bi bi-shield-fill-check",
+        iconClass: "mdi:security-lock-outline",
         subMenu: true,
         to: "#",
         securityKey: securityKey.SECURITY,
@@ -54,7 +54,7 @@ export const Menu = [
       {
         id: "customer",
         name: "Customer Details",
-        iconClass: "bi bi-people-fill",
+        iconClass: "vaadin:clipboard-user",
         subMenu: true,
         to: "#",
         securityKey: securityKey.CUSTOMER,
@@ -76,7 +76,7 @@ export const Menu = [
       {
         id: "supplier",
         name: "Supplier Details",
-        iconClass: "fa fa-truck",
+        iconClass: "streamline:shipping-truck",
         subMenu: true,
         to: "#",
         securityKey: securityKey.SUPPLIER,

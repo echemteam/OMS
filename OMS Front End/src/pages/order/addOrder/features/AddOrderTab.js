@@ -4,6 +4,7 @@ import Image from "../../../../components/image/Image";
 import { OrderTabEnum } from "../../../../utils/Enums/commonEnums";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
+import Iconify from "../../../../components/ui/iconify/Iconify";
 // import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
 
 const ContactDetails = React.lazy(() =>
@@ -20,7 +21,7 @@ const AddOrderTab = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
-  const { activeTab, movePreviewPage, addOrder, orderCustomerId , setActiveTab} = useContext(AddOrderContext);
+  const { activeTab, movePreviewPage, addOrder, orderCustomerId, setActiveTab } = useContext(AddOrderContext);
 
   const handleTabClick = (index) => {
     setActiveTab(index);
@@ -56,9 +57,9 @@ const AddOrderTab = () => {
   ];
 
   return (
-    <div className="stepper-card">
+    <div className="stepper-card order-stepper">
       <div className="card">
-        <div className="card-body-sec">
+        <div className="card-body-sec order-body">
           <div className="stepper-section">
             <div className="stepper-header">
               {tabContents.map((step, index) => (
@@ -79,7 +80,8 @@ const AddOrderTab = () => {
                   </div>
                   {index < tabContents.length - 1 && (
                     <div className="right-arrow">
-                      <Image imagePath={AppIcons.arrowIcon} alt="Arrow" />
+                      {/* <Image imagePath={AppIcons.arrowIcon} alt="Arrow" /> */}
+                      <Iconify icon="solar:alt-arrow-down-outline" />
                     </div>
                   )}
                 </React.Fragment>
@@ -102,6 +104,7 @@ const AddOrderTab = () => {
                             onClick={movePreviewPage}
                           >
                             <Image imagePath={AppIcons.nextArrowIcon} /> Back
+                            {/* <Iconify icon="solar:alt-arrow-down-outline" /> Back */}
                           </button>
                         )}
                         <button
@@ -110,6 +113,7 @@ const AddOrderTab = () => {
                           onClick={() => addOrder(step.tab)}
                         >
                           Next<Image imagePath={AppIcons.nextArrowIcon} /> 
+                          {/* Next <Iconify icon="solar:alt-arrow-down-outline" />  */}
                         </button>
                         {/* <button
                           type="button"

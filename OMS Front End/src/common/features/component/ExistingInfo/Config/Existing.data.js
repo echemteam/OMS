@@ -70,3 +70,51 @@ export const basicInfoData = {
         },
     ],
 };
+
+export const OrderBasicInfoData = {
+    columns: [
+        {
+            name: "Customer Name",
+            fieldName: "customerName",
+            colStyle: {
+                width: "25%",
+            },
+            // allowShort: true,
+        },
+        {
+            name: "Po Number",
+            fieldName: "poNumber",
+            colStyle: {
+                width: "25%",
+            },
+            // allowShort: true,
+        },
+        {
+            name: "Order Received Date",
+            colStyle: {
+                width: "25%",
+            },
+            fieldName: "orderReceivedDate",
+            colType: GridColumnType.DATE,
+            colSettings: {
+              isUTC: true,
+              format: "MM/DD/YYYY hh:mm A ",
+            },
+            // allowShort: true,
+        },
+
+        {
+            name: "Action",
+            colStyle: {
+                width: "25%",
+                textAlign: "center",
+                justifyContent:"center"
+            },
+            colType: GridColumnType.ACTION,
+            defaultAction: {
+                allowEdit: true,
+                allowDisable: false,
+            },
+        },
+    ],
+};

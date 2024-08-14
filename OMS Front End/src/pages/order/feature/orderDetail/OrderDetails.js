@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { orderInformationData } from "./config/OrderInformation.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import SwalAlert from "../../../../services/swalService/SwalService";
@@ -13,9 +13,13 @@ import NoRecordFound from "../../../../components/ui/noRecordFound/NoRecordFound
 import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
 import { useAddAddressMutation, useLazyGetAllAddressTypesQuery, useLazyGetCustomerAddresssByAddressIdQuery, useUpdateAddAddressMutation } from "../../../../app/services/addressAPI";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
+import { useAddEditOrderInformationMutation, useCheckPoNumberExistOrNotMutation, useLazyGetPoNumberDetailsByPoNumberQuery } from "../../../../app/services/orderAPI";
+import ToastService from "../../../../services/toastService/ToastService";
+import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
 
 const OrderDetails = () => {
   const basicInformation = useRef();
+  const parentRef = useRef();
 
   const [formData, setFormData] = useState(orderInformationData);
   const [isSubCustomerDropdownVisible, setIsSubCustomerDropdownVisible] = useState(false);
@@ -23,13 +27,18 @@ const OrderDetails = () => {
   const [getAllCustomers, { isFetching: isGetAllCustomersFetching, isSuccess: isGetAllCustomersSuccess, data: isGetAllCustomersData }] = useLazyGetAllCustomersQuery();
   const [getAllSubCustomerByCustomerId, { isFetching: isGetAllSubCustomersFetching, isSuccess: isGetAllSubCustomersSuccess, data: isGetAllSubCustomersData }] = useGetAllSubCustomerByCustomerIdMutation();
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [getAddressData, setGetAddressData] = useState(null)
+  const [getShippingAddressData, setGetShippingAddressData] = useState(null)
+  const [getBillingAddressData, setGetBillingAddressData] = useState(null)
   const [getAddressTypeId, setGetAddressTypeId] = useState(null)
+  const [poNumber, setPoNumber] = useState('');
 
-  const { orderCustomerId, setOrderCustomerId } = useContext(AddOrderContext);
+  const { nextStepRef, orderCustomerId, setOrderCustomerId, setOrderId, moveNextPage, orderId } = useContext(AddOrderContext);
 
-  const [getAllAddressesByCustomerIdAndAddressTypeId, { isFetching: isGetAllAddressesByCustomerIdAndAddressTypeIdFetching, isSuccess: isGetAllAddressesByCustomerIdAndAddressTypeIdSuccess, data: isGetAllAddressesByCustomerIdAndAddressTypeIdData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
+  const [getAllShippingAddress, { isFetching: isGetAllShippingAddressFetching, isSuccess: isGetAllShippingAddressSuccess, data: isGetAllShippingAddressData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
+  const [getAllBillingAddress, { isFetching: isGetAllBillingAddressFetching, isSuccess: isGetAllBillingAddressSuccess, data: isGetAllBillingAddressData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
   const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
+  const [checkPoNumberExistOrNot, { isSuccess: isCheckPoNumberExistOrNotSucess, data: isCheckPoNumberExistOrNotData, }] = useCheckPoNumberExistOrNotMutation();
+  const [addEditOrderInformation, { isSuccess: isAddEditOrderInformationSuccess, data: isAddEditOrderInformationData }] = useAddEditOrderInformationMutation();
 
   useEffect(() => {
     if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
@@ -47,7 +56,17 @@ const OrderDetails = () => {
         customerId: orderCustomerId,
         addressTypeId: AddressType.Shipping
       }
-      getAllAddressesByCustomerIdAndAddressTypeId(req)
+      getAllShippingAddress(req)
+    }
+  }, [orderCustomerId])
+
+  useEffect(() => {
+    if (orderCustomerId) {
+      let req = {
+        customerId: orderCustomerId,
+        addressTypeId: AddressType.Billing
+      }
+      getAllBillingAddress(req)
     }
   }, [orderCustomerId])
 
@@ -56,10 +75,13 @@ const OrderDetails = () => {
   }, []);
 
   useEffect(() => {
-    if (!isGetAllAddressesByCustomerIdAndAddressTypeIdFetching && isGetAllAddressesByCustomerIdAndAddressTypeIdSuccess && isGetAllAddressesByCustomerIdAndAddressTypeIdData) {
-      setDropDownOptionField(isGetAllAddressesByCustomerIdAndAddressTypeIdData, 'addressId', 'addressLine1', orderInformationData, 'addressId');
+    if (!isGetAllShippingAddressFetching && isGetAllShippingAddressSuccess && isGetAllShippingAddressData) {
+      setDropDownOptionField(isGetAllShippingAddressData, 'addressId', 'addressLine1', orderInformationData, 'isShippingId');
     }
-  }, [isGetAllAddressesByCustomerIdAndAddressTypeIdFetching, isGetAllAddressesByCustomerIdAndAddressTypeIdSuccess, isGetAllAddressesByCustomerIdAndAddressTypeIdData])
+    if (!isGetAllBillingAddressFetching && isGetAllBillingAddressSuccess && isGetAllBillingAddressData) {
+      setDropDownOptionField(isGetAllBillingAddressData, 'addressId', 'addressLine1', orderInformationData, 'isBillingId');
+    }
+  }, [isGetAllShippingAddressFetching, isGetAllShippingAddressSuccess, isGetAllShippingAddressData, isGetAllBillingAddressFetching, isGetAllBillingAddressSuccess, isGetAllBillingAddressData])
 
   const onSidebarClose = () => {
     setIsModelOpen(false);
@@ -70,7 +92,7 @@ const OrderDetails = () => {
       customerId: orderCustomerId,
       addressTypeId: AddressType.Shipping
     }
-    getAllAddressesByCustomerIdAndAddressTypeId(req)
+    getAllShippingAddress(req)
   };
 
   useEffect(() => {
@@ -131,7 +153,9 @@ const OrderDetails = () => {
         setFormData(manageData)
         basicInformation.current.updateFormFieldValue({
           customerId: data.value,
-          subCustomerMainCustomerId: null
+          subCustomerMainCustomerId: null,
+          isBillingId: null,
+          isShippingId: null
         });
       }
       else {
@@ -152,9 +176,13 @@ const OrderDetails = () => {
         }
       });
     }
-    if (data.value && dataField === "addressId") {
-      const finalData = isGetAllAddressesByCustomerIdAndAddressTypeIdData?.filter((item) => item.addressId === data.value);
-      setGetAddressData(finalData.length ? finalData[0] : null);
+    if (data.value && dataField === "isShippingId") {
+      const finalData = isGetAllShippingAddressData?.filter((item) => item.addressId === data.value);
+      setGetShippingAddressData(finalData.length ? finalData[0] : null);
+    }
+    if (data.value && dataField === "isBillingId") {
+      const finalData = isGetAllBillingAddressData?.filter((item) => item.addressId === data.value);
+      setGetBillingAddressData(finalData.length ? finalData[0] : null);
     }
   };
 
@@ -162,15 +190,95 @@ const OrderDetails = () => {
     DDL_CHANGED: handleChangeDropdownList,
   };
 
+  useEffect(() => {
+    if (isCheckPoNumberExistOrNotSucess && isCheckPoNumberExistOrNotData) {
+      if (isCheckPoNumberExistOrNotData.errorMessage.includes('exists')) {
+        ToastService.warning(isCheckPoNumberExistOrNotData.errorMessage);
+        return;
+      }
+      ToastService.info(isCheckPoNumberExistOrNotData.errorMessage);
+    }
+  }, [isCheckPoNumberExistOrNotSucess, isCheckPoNumberExistOrNotData]);
+
+
   const handleInputGroupButton = (id) => {
     if (id > 0) {
       setGetAddressTypeId(id)
       setIsModelOpen(!isModelOpen);
+    } else if (id.target.textContent === "Verify") {
+      if (poNumber !== '') {
+        let request = {
+          customerId: orderCustomerId,
+          poNumber: poNumber
+        }
+        checkPoNumberExistOrNot(request);
+      }
     }
   };
+
   const updatedFormData = { ...formData };
   if (!isSubCustomerDropdownVisible) {
     updatedFormData.formFields = updatedFormData.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId");
+  }
+
+  const handleExistingInfo = () => {
+    if (poNumber !== '' && poNumber.trim().length >= 3) {
+      if (parentRef.current) {
+        parentRef.current.callChildFunction(poNumber);
+      }
+    } else {
+      ToastService.warning('Please enter at least three characters.');
+    }
+  }
+
+  const handleInputFields = (data, dataField) => {
+    if (dataField === 'poNumber') {
+      const trimCustomerName = data.replace(/\s+/g, '');
+      setPoNumber(trimCustomerName);
+    }
+  }
+
+  const formInputHandler = {
+    INPUT_CHANGED: handleInputFields,
+  }
+
+  useImperativeHandle(nextStepRef, () => ({
+    handleAddOrder,
+  }));
+
+  useEffect(() => {
+    if (isAddEditOrderInformationSuccess && isAddEditOrderInformationData) {
+      if (isAddEditOrderInformationData.errorMessage.includes('exists')) {
+        ToastService.warning(isAddEditOrderInformationData.errorMessage);
+        return;
+      }
+      // if (keyId > 0) {
+      //   onreset()
+      //   ToastService.success(isAddEditOrderInformationData.errorMessage);
+      // } else {
+      setOrderId(isAddEditOrderInformationData.keyValue)
+      ToastService.success(isAddEditOrderInformationData.errorMessage);
+      moveNextPage();
+      // }
+    }
+  }, [isAddEditOrderInformationSuccess, isAddEditOrderInformationData]);
+
+  const handleAddOrder = () => {
+    let data = basicInformation.current.getFormData();
+    if (data) {
+      let req = {
+        orderId: orderId ? orderId : 0,
+        orderMethodId: 2,
+        orderReceivedDate: data.subCustomerMainCustomerId.date ? new Date(data.subCustomerMainCustomerId.date) : null,
+        orderAddressId: 0,
+        customerId: data.customerId && typeof data.customerId === "object" ? data.customerId.value : data.customerId,
+        subCustomerId: data.subCustomerMainCustomerId && typeof data.subCustomerMainCustomerId === "object" ? data.subCustomerMainCustomerId.value : data.subCustomerMainCustomerId,
+        poNumber: data.poNumber,
+        billingAddressId: data.isBillingId && typeof data.isBillingId === "object" ? data.isBillingId.value : data.isBillingId,
+        shippingAddressId: data.isShippingId && typeof data.isShippingId === "object" ? data.isShippingId.value : data.isShippingId
+      }
+      addEditOrderInformation(req)
+    }
   }
 
   return (
@@ -182,30 +290,42 @@ const OrderDetails = () => {
           {...formData}
           onActionChange={formActionHandler}
           handleInputGroupButton={handleInputGroupButton}
+          onInputChange={formInputHandler}
+          onClick={handleAddOrder}
+          handleInputShowInfo={handleExistingInfo}
         />
       </div>
       <div className="row address-group">
         <div className="col-4"></div>
         <div className="col-4 address">
-          <div>Chemistry Research Laboratory</div>
-          <div>MansField Road</div>
-          <div>Oxford</div>
-          <div>United Kingdom, Oxfordshire OX1 3TA</div>
+          {getBillingAddressData ? (
+            <>
+              <div>{getBillingAddressData.addressLine1}</div>
+              <div>{getBillingAddressData.addressLine2}</div>
+              <div>{getBillingAddressData.cityName}</div>
+              <div>{getBillingAddressData.stateName}</div>
+              <div>{getBillingAddressData.countryName}, {getBillingAddressData.zipCode}</div>
+            </>
+          ) : (
+            <NoRecordFound />
+          )}
         </div>
         <div className="col-4 address">
-          {getAddressData ? (
+          {getShippingAddressData ? (
             <>
-              <div>{getAddressData.addressLine1}</div>
-              <div>{getAddressData.addressLine2}</div>
-              <div>{getAddressData.cityName}</div>
-              <div>{getAddressData.stateName}</div>
-              <div>{getAddressData.countryName}, {getAddressData.zipCode}</div>
+              <div>{getShippingAddressData.addressLine1}</div>
+              <div>{getShippingAddressData.addressLine2}</div>
+              <div>{getShippingAddressData.cityName}</div>
+              <div>{getShippingAddressData.stateName}</div>
+              <div>{getShippingAddressData.countryName}, {getShippingAddressData.zipCode}</div>
             </>
           ) : (
             <NoRecordFound />
           )}
         </div>
       </div>
+
+      <ExistingCustomerSupplierInfo parentRef={parentRef} isOrderManage={true} isSupplier={false} getExistingInfoByName={useLazyGetPoNumberDetailsByPoNumberQuery} />
 
       <SidebarModel
         modalTitle="Add/Edit Address"

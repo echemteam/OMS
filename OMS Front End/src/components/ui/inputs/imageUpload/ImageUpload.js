@@ -7,6 +7,7 @@ import Image from "../../../image/Image";
 import Buttons from "../../button/Buttons";
 import { AppIcons } from "../../../../data/appIcons";
 import { TextInputType } from "../../../../data/formControlTypes";
+import Iconify from "../../iconify/Iconify";
 
 const ImageUpload = ({
     type = TextInputType.FILE,
@@ -76,7 +77,10 @@ const ImageUpload = ({
                     accept={acceptedFiles}
                 />
                 <div className="custom-file-selector-design">
-                    {!imagePreview ? <Image imagePath={AppIcons.Uploaddocumenticon} altText="Please Upload File"></Image> : null}
+                    {!imagePreview ? 
+                    <Image imagePath={AppIcons.Uploaddocumenticon} altText="Please Upload File"></Image>
+                    // <Iconify icon="iconamoon:file-document-thin" />
+                     : null}
                     {imagePreview ?
                         <img src={imagePreview} alt="Uploaded File" />
                         :

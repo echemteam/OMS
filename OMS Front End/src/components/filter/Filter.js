@@ -6,6 +6,7 @@ import { AppIcons } from "../../data/appIcons";
 import DropdownSelect from "../ui/dropdown/DropdownSelect";
 import Input from "../ui/inputs/input/Input";
 import Buttons from "../ui/button/Buttons";
+import Iconify from "../ui/iconify/Iconify";
 
 const Filter = (props) => {
   const [isFilterActive, setIsFilterActive] = useState(false);
@@ -86,7 +87,8 @@ const Filter = (props) => {
                   </div>
                   <div className="delete-icon">
                     <div className="delete-btn" title="Delete Filter">
-                      <Image imagePath={AppIcons.deleteIcon} altText="Delete" />
+                      {/* <Image imagePath={AppIcons.deleteIcon} altText="Delete" /> */}
+                      <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
                     </div>
                   </div>
                 </div>
@@ -116,10 +118,11 @@ const Filter = (props) => {
                           title="Delete Filter"
                           onClick={() => removeFilter(filter.id)}
                         >
-                          <Image
+                          {/* <Image
                             imagePath={AppIcons.deleteIcon}
                             altText="Delete"
-                          />
+                          /> */}
+                          <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
                         </div>
                       </div>
                     </div>

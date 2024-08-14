@@ -31,6 +31,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDSUBCUSTOMER = "AddSubCustomer";
         const string GETSUBCUSTOMERBYCUSTOMERID = "GetSubCustomerByCustomerId";
         const string DELETESUBCUSTOMER = "DeleteSubCustomer";
+        const string ADDEDITRESPONSIBLEUSERFORCUSTOMER = "AddEditResponsibleUserForCustomer";
         #endregion
 
         public CustomersRepository(DapperContext dapperContext) : base(dapperContext)
@@ -229,6 +230,15 @@ namespace OMS.Domain.Repository.Implementation
             {
                 subCustomerMainCustomerId,
                 deletedBy
+            }, CommandType.StoredProcedure);
+        }
+        public async Task<AddEntityDto<int>> AddEditResponsibleUserForCustomer(AddEditResponsibleUserForCustomerRequest requestData, short createdBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITRESPONSIBLEUSERFORCUSTOMER, new
+            {
+                requestData.CustomerId,
+                requestData.UserId,
+                createdBy,
             }, CommandType.StoredProcedure);
         }
         #endregion

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import FormCreator from "../../../../../components/Forms/FormCreator";
@@ -79,7 +80,7 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
           />
         </div>
         <div className="col-md-12">
-          <div className="d-flex align-item-end justify-content-end" >
+          <div className="d-flex align-item-end justify-content-end centered" >
             <Buttons
               buttonTypeClassName="theme-button"
               buttonText="Save"

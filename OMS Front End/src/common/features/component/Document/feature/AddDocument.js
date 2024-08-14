@@ -1,14 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DocumentFormData } from "../Config/DocuementsData";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 
 const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuccess }) => {
+
+    // console.log("editDocumentData", editDocumentData)
+
+    const [formData, setFormData] = useState(DocumentFormData)
 
     const ref = useRef();
 
@@ -17,6 +21,17 @@ const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuc
         * The API endpoint and parameters are configured within the SupplierDocumentDetail OR CustomerDocumentDetail component.
     */
     const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = addDocuments();
+
+    // useEffect(() => {
+    //     if (editDocumentData) {
+    //         let formChanges = { ...formData };
+
+    //         formChanges.initialState = {
+    //             documentTypeId: editDocumentData.documentTypeId && typeof editDocumentData.documentTypeId === "object" ? editDocumentData.documentTypeId.value : editDocumentData.documentTypeId,
+    //         }
+    //         setFormData(formChanges)
+    //     }
+    // }, [editDocumentData])
 
     useEffect(() => {
         if (isAddSuccess && isAddData) {
@@ -49,15 +64,21 @@ const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuc
 
     return (
         <div className="row add-documentForm">
-            <FormCreator config={DocumentFormData} ref={ref} {...DocumentFormData} />
+            <FormCreator config={formData} ref={ref} {...formData} />
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <div className="d-flex align-item-end">
                         <Buttons
                             buttonTypeClassName="theme-button"
+                            // buttonText={editDocumentData ? "Update" : "Add"}
                             buttonText="Add"
                             onClick={handleSave}
                             isLoading={isAddLoading} />
+                        {/* <Buttons
+                            buttonTypeClassName="theme-button ml-5"
+                            buttonText={editDocumentData ? "Update and Close" : "Add and Close"}
+                            onClick={handleSave}
+                            isLoading={isAddLoading} /> */}
                         <Buttons
                             buttonTypeClassName="dark-btn ml-5"
                             buttonText="Cancel"

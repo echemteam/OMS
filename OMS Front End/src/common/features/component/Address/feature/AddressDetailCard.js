@@ -11,9 +11,10 @@ import Image from "../../../../../components/image/Image";
 //** Component's */
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
+import Iconify from "../../../../../components/ui/iconify/Iconify";
 
 const AddressDetailCard = forwardRef(
   ({
@@ -28,7 +29,6 @@ const AddressDetailCard = forwardRef(
     //** States */
     const [addressData, setAddressData] = useState([]);
     const { confirm } = SwalAlert();
-
 
     //** API Call's */
     /**
@@ -45,7 +45,10 @@ const AddressDetailCard = forwardRef(
       },
     ] = getAddresssByCustomerId();
 
-    const [deleteAllAddress, { isSuccess: isDeleteAddressSuccess, data: isDeleteAddressData }] = deleteAddress();
+    const [
+      deleteAllAddress,
+      { isSuccess: isDeleteAddressSuccess, data: isDeleteAddressData },
+    ] = deleteAddress();
 
     //** Use Effect */
     useEffect(() => {
@@ -60,8 +63,8 @@ const AddressDetailCard = forwardRef(
       ) {
         const filteredData = selectedAddressTypeId[0]
           ? GetAddresssByCustomerIdData.filter(
-            (address) => address.addressTypeId === selectedAddressTypeId[0]
-          )
+              (address) => address.addressTypeId === selectedAddressTypeId[0]
+            )
           : GetAddresssByCustomerIdData;
         setAddressData(filteredData);
       }
@@ -74,7 +77,7 @@ const AddressDetailCard = forwardRef(
     useEffect(() => {
       if (isDeleteAddressSuccess && isDeleteAddressData) {
         ToastService.success(isDeleteAddressData.errorMessage);
-        handleGetAddress()
+        handleGetAddress();
       }
     }, [isDeleteAddressSuccess, isDeleteAddressData]);
 
@@ -88,12 +91,14 @@ const AddressDetailCard = forwardRef(
 
     const handleDelete = (data) => {
       // onHandleEditDelete(data);
-      confirm("Delete?",
+      confirm(
+        "Delete?",
         "Are you sure you want to Delete?",
-        "Delete", "Cancel"
+        "Delete",
+        "Cancel"
       ).then((confirmed) => {
         if (confirmed) {
-          deleteAllAddress(data.addressId)
+          deleteAllAddress(data.addressId);
         }
       });
     };
@@ -145,8 +150,8 @@ const AddressDetailCard = forwardRef(
       return address.isPreferredBilling && address.addressTypeId === 1
         ? "Preferred Billing"
         : address.isPreferredShipping && address.addressTypeId === 2
-          ? "Preferred Shipping"
-          : "";
+        ? "Preferred Shipping"
+        : "";
     };
 
     return (
@@ -156,26 +161,30 @@ const AddressDetailCard = forwardRef(
             <div className="add-desc-part">
               <div className="address-card-list">
                 {addressData.map((address) => (
-                  <div className="address-main-card-section" key={address.addressId}>
+                  <div
+                    className="address-main-card-section"
+                    key={address.addressId}
+                  >
                     <div className="address-card">
                       {((address.isPreferredBilling &&
                         address.addressTypeId === 1) ||
                         (address.isPreferredShipping &&
                           address.addressTypeId === 2)) && (
-                          <div className="status-desc">
-                            <span className="field-info active-green-color">
-                              {getStatusDescription(address)}
-                            </span>
-                          </div>
-                        )}
+                        <div className="status-desc">
+                          <span className="field-info active-green-color">
+                            {getStatusDescription(address)}
+                          </span>
+                        </div>
+                      )}
                       <div
-                        className={`add-line ${(address.isPreferredBilling &&
-                          address.addressTypeId === 1) ||
+                        className={`add-line ${
+                          (address.isPreferredBilling &&
+                            address.addressTypeId === 1) ||
                           (address.isPreferredShipping &&
                             address.addressTypeId === 2)
-                          ? ""
-                          : ""
-                          }`}
+                            ? ""
+                            : ""
+                        }`}
                       >
                         <span className="label-txt">
                           {address.addressLine1}
@@ -183,11 +192,12 @@ const AddressDetailCard = forwardRef(
                         <span className="label-txt">
                           {address.addressLine2}
                         </span>
-                        <span className="label-txt">{address.cityName}, {address.stateName} {address.zipCode}</span>
-                        {/* <span className="label-txt">{address.stateName}</span> */}
                         <span className="label-txt">
-                          {address.countryName}
+                          {address.cityName}, {address.stateCode ? address.stateCode : address.stateName}{" "}
+                          {address.zipCode}
                         </span>
+                        {/* <span className="label-txt">{address.stateName}</span> */}
+                        <span className="label-txt">{address.countryName}</span>
                       </div>
                       <div className="edit-delete-button">
                         {showEditIcon ? (
@@ -195,14 +205,17 @@ const AddressDetailCard = forwardRef(
                             onClick={() => handleEdit(address)}
                             className="edit-btn"
                           >
-                            <Image imagePath={AppIcons.editThemeIcon} />
+                            {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
+
+                            <Iconify icon="tabler:pencil" />
                           </button>
                         ) : null}
                         <button
                           onClick={() => handleDelete(address)}
                           className="edit-btn ml-2"
                         >
-                          <Image imagePath={AppIcons.deleteThemeIcon} />
+                          {/* <Image imagePath={AppIcons.deleteThemeIcon} /> */}
+                          <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
                         </button>
                       </div>
                       <div

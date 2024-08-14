@@ -1,6 +1,6 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { AppIcons } from "../../../data/appIcons";
 import { useNavigate } from "react-router-dom";
 import Image from "../../../components/image/Image";
@@ -10,6 +10,11 @@ import { getLabelClass } from "../../../utils/StatusColors/StatusColors";
 import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
 import { encryptUrlData } from "../../../services/CryptoService";
 import DataLoader from "../../../components/ui/dataLoader/DataLoader";
+import Iconify from "../../../components/ui/iconify/Iconify";
+import { useUpdateApprovalRequestsStatusMutation } from "../../../app/services/ApprovalAPI";
+import ToastService from "../../../services/toastService/ToastService";
+import { Button } from "react-bootstrap";
+import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
 
 const parseJson = (jsonStr) => {
   try {
@@ -33,7 +38,7 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
         return values[key];
       }
     }
-    return 'N/A';
+    return "N/A";
   };
 
   const oldValue = findValue(oldValues, fieldNameLower);
@@ -44,26 +49,38 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
 
 const formatBoolean = (value) => (value ? "True" : "False");
 
-const TaskDetail = ({ approvedData, isFetching }) => {
-
+const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalRequest }) => {
   const navigate = useNavigate();
 
-  if (isFetching) {
+  const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
+
+  useEffect(() => {
+    if (isUpdateSuccess && isUpdateData) {
+      ToastService.success(isUpdateData.errorMessage);
+      approvalRequest(approvalRequestId);
+    }
+  }, [isUpdateSuccess, isUpdateData]);
+
+  if (isFetching || isUpdateLoading) {
     return <DataLoader />; // Display loader while loading
   }
 
   if (!approvedData) {
-    return <div><NoRecordFound /></div>;
+    return (
+      <div>
+        <NoRecordFound />
+      </div>
+    );
   }
 
   const {
-    requestedByUserName = 'Unknown User',
-    functionalityName = 'No Functionality',
+    requestedByUserName = "Unknown User",
+    functionalityName = "No Functionality",
     requestedDate,
-    fieldName = 'No Field Name',
-    status = 'No Status',
-    oldValue = '{}',
-    newValue = '{}',
+    fieldName = "No Field Name",
+    status = "No Status",
+    oldValue = "{}",
+    newValue = "{}",
   } = approvedData;
 
   const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(oldValue, newValue, fieldName);
@@ -81,18 +98,40 @@ const TaskDetail = ({ approvedData, isFetching }) => {
     }
   };
 
+  const handleApprovalRequest = () => {
+    approvalStatus(MyTaskStatus.Accept);
+  }
+
+  const handleRejectRequest = () => {
+    approvalStatus(MyTaskStatus.Pending);
+  }
+
+  const approvalStatus = (status) => {
+    let request = {
+      status: status,
+      approvalRequestId: approvalRequestId
+    }
+    updateApprovalRequest(request);
+  }
+
   return (
     <div className="task-detail">
       <div className="task-head">
         <div className="d-flex align-items-center">
-          <span className="profile-icon">{FirstSecondLetter(requestedByUserName)}</span>
+          <span className="profile-icon">
+            {FirstSecondLetter(requestedByUserName)}
+          </span>
           <div className="title">
             {requestedByUserName}
             <span className="sub-title">{functionalityName}</span>
           </div>
         </div>
         <div>
-          <div className="date">{requestedDate ? formatDate(requestedDate, "MM/DD/YYYY hh:mm A") : 'No Date'}</div>
+          <div className="date">
+            {requestedDate
+              ? formatDate(requestedDate, "MM/DD/YYYY hh:mm A")
+              : "No Date"}
+          </div>
           {showRedirectButton && (
             <div className="view-customer" onClick={handleRedirectClick}>
               <Image imagePath={AppIcons.Iicon} altText="View Customer Icon" />
@@ -101,43 +140,6 @@ const TaskDetail = ({ approvedData, isFetching }) => {
           )}
         </div>
       </div>
-
-      {/* <div className="customer-information">
-        <div>
-          <span className="customer-id">Field Name: <span>{fieldName}</span></span>
-          <span className="customer-name">Status: <span className={`${getLabelClass(status)}`}>{status}</span></span>
-        </div>
-
-        <div className="d-flex">
-          <div className="old-detail col-6">
-            <h3 className="detail-head">Old Value</h3>
-            <div className="detail">
-              {fieldName && oldFieldValue !== 'N/A' ? (
-                <>
-                  <div className="detail-btn mb-2">{fieldName}</div>
-                  <span className="customer-details">{fieldName} </span>: {typeof oldFieldValue === 'boolean' ? formatBoolean(oldFieldValue) : oldFieldValue}
-                </>
-              ) : (
-                <div>No old value available</div>
-              )}
-            </div>
-          </div>
-          <div className="new-detail col-6">
-            <h3 className="detail-head">New Value</h3>
-            <div className="detail">
-              {fieldName && newFieldValue !== 'N/A' ? (
-                <>
-                  <div className="detail-btn mb-2">{fieldName}</div>
-                  <span className="customer-details">{fieldName} </span>: {typeof newFieldValue === 'boolean' ? formatBoolean(newFieldValue) : newFieldValue}
-                </>
-              ) : (
-                <div>No new value available</div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       <div className="customer-information">
         <div className="info-row">
           <span className="info-label">Field Name : </span>
@@ -148,14 +150,17 @@ const TaskDetail = ({ approvedData, isFetching }) => {
           <span className={`ml-2 ${getLabelClass(status)}`}>{status}</span>
         </div>
       </div>
-
       <div className="value-comparison">
         <div className="value-block">
           <h3 className="value-title">Old Value</h3>
-          {fieldName && oldFieldValue !== 'N/A' ? (
+          {fieldName && oldFieldValue !== "N/A" ? (
             <div className="value-content">
               <span className="value-label">{fieldName} : </span>
-              <span className="value-data">{typeof oldFieldValue === 'boolean' ? formatBoolean(oldFieldValue) : oldFieldValue}</span>
+              <span className="value-data">
+                {typeof oldFieldValue === "boolean"
+                  ? formatBoolean(oldFieldValue)
+                  : oldFieldValue}
+              </span>
             </div>
           ) : (
             <div className="no-value">No old value available</div>
@@ -163,10 +168,14 @@ const TaskDetail = ({ approvedData, isFetching }) => {
         </div>
         <div className="value-block">
           <h3 className="value-title">New Value</h3>
-          {fieldName && newFieldValue !== 'N/A' ? (
+          {fieldName && newFieldValue !== "N/A" ? (
             <div className="value-content">
               <span className="value-label">{fieldName} : </span>
-              <span className="value-data">{typeof newFieldValue === 'boolean' ? formatBoolean(newFieldValue) : newFieldValue}</span>
+              <span className="value-data">
+                {typeof newFieldValue === "boolean"
+                  ? formatBoolean(newFieldValue)
+                  : newFieldValue}
+              </span>
             </div>
           ) : (
             <div className="no-value">No new value available</div>
@@ -175,11 +184,12 @@ const TaskDetail = ({ approvedData, isFetching }) => {
       </div>
 
       <div className="task-footer mt-3 pr-3">
-        <Button className="reject-btn">
-          <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" />
+        <Button className="reject-btn" onClick={handleRejectRequest}>
+          {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
+          <Iconify icon="gg:close-o" />
           Reject
         </Button>
-        <Button className="accept-btn">
+        <Button className="accept-btn" onClick={handleApprovalRequest}>
           <Image imagePath={AppIcons.RightTickIcon} altText="Accept Icon" />
           Accept
         </Button>

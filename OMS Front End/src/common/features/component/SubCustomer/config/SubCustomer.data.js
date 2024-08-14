@@ -67,8 +67,9 @@ export const SubCustomerGridConfig = {
       customAction: [
         {
           name: "VIEWCUSTOMER",
-          iconName: AppIcons.EyeIcon,
-          title: "View Customer"
+          iconName: "lets-icons:view",
+          title: "View Customer",
+          className: "view-icon"
         },
       ],
 

@@ -5,7 +5,29 @@ import { phoneNumberConfig } from "../config/AddEditContactsForm.data";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import PropTypes from 'prop-types';
 import FinalMolGrid from "../../../../../components/FinalMolGrid/FinalMolGrid";
-const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, actionHandler, isButtonDisable }) => {
+import { useEffect, useState } from "react";
+
+const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, actionHandler, isButtonDisable, handleCheckBoxChange }) => {
+
+    const [sortedPhoneNumberList, setSortedPhoneNumberList] = useState([]);
+
+    useEffect(() => {
+        const hasNewEntries = phoneNumberList.some(phone => !phone.phoneId);
+        if (phoneNumberList) {
+            if (hasNewEntries) {
+                // Sort the list by id in descending order
+                const sortedList = phoneNumberList.sort((a, b) => b.id - a.id);
+                setSortedPhoneNumberList(sortedList);
+            } else {
+                // Update the state without sorting
+                setSortedPhoneNumberList(phoneNumberList);
+            }
+        }
+    }, [phoneNumberList]);
+
+    const handleGridCheckBoxChange = (fieldName, rowData) => {
+        handleCheckBoxChange(rowData);
+    };
 
     return (
         <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2 table-email-sec">
@@ -22,9 +44,10 @@ const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, act
                         <FinalMolGrid
                             ref={molGridRef}
                             configuration={phoneNumberConfig}
-                            dataSource={phoneNumberList}
+                            dataSource={sortedPhoneNumberList}
                             allowPagination={false}
                             onActionChange={actionHandler}
+                            onColumnChange={handleGridCheckBoxChange}
                         />
                     </div>
                 </div>

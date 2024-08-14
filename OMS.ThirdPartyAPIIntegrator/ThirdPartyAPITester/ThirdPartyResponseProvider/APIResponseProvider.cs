@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using ThirdPartyAPILibrary.Enums;
 using ThirdPartyAPILibrary.Model;
 
 namespace ThirdPartyAPILibrary.ThirdPartyResponseProvider
@@ -23,12 +24,26 @@ namespace ThirdPartyAPILibrary.ThirdPartyResponseProvider
                     // Parse the response data into JObject
                     var responseObject = JObject.Parse(responseData);
 
-                    // Modify the response data using the new function
-                    var modifiedResponseObject = ModifyResponseData(responseObject, getRequiredField);
+                    // Extract the statusCode from the responseObject
+                    var statusCode = (int)responseObject["statusCode"];
+                    var message = (string)responseObject["message"];
 
-                    results.Data = modifiedResponseObject.ToString();
-                    results.Message = "";
-                    results.IsSuccess = true;
+                    if (statusCode == (int)APIResponceCode.OK)
+                    {
+                        // Modify the response data using the new function
+                        var modifiedResponseObject = ModifyResponseData(responseObject, getRequiredField);
+
+                        results.Data = modifiedResponseObject.ToString();
+                        results.Message = "";
+                        results.IsSuccess = true;
+                    }
+                    else
+                    {
+                        // Handle the non-200 status code case
+                        results.Data = "";
+                        results.Message = message; // Set message from response data
+                        results.IsSuccess = false;
+                    }
                     return results;
                 }
                 else
@@ -84,16 +99,27 @@ namespace ThirdPartyAPILibrary.ThirdPartyResponseProvider
                     // Parse the response data into JObject
                     var responseObject = JObject.Parse(responseData);
 
+                    // Extract the statusCode from the responseObject
+                    var statusCode = (int)responseObject["statusCode"];
+                    var message = (string)responseObject["message"];
 
-                    // Modify the response data using the new function
-                    var modifiedResponseObject = ModifyResponseData(responseObject, getRequiredField);
+                    if (statusCode == (int)APIResponceCode.OK)
+                    {
+                        // Modify the response data using the new function
+                        var modifiedResponseObject = ModifyResponseData(responseObject, getRequiredField);
 
-                    results.Data = modifiedResponseObject.ToString(); // Return the modified response data
-                    results.Message = "";
-                    results.IsSuccess = true;
+                        results.Data = modifiedResponseObject.ToString(); // Return the modified response data
+                        results.Message = "";
+                        results.IsSuccess = true;
+                    }
+                    else
+                    {
+                        // Handle the non-200 status code case
+                        results.Data = "";
+                        results.Message = message; // Set message from response data
+                        results.IsSuccess = false;
+                    }
                     return results;
-
-                    //return responseData; // Indicates the endpoint is working
                 }
                 else
                 {
@@ -183,7 +209,5 @@ namespace ThirdPartyAPILibrary.ThirdPartyResponseProvider
 
             return modifiedDataArray;
         }
-
-        
     }
 }

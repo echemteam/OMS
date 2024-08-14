@@ -13,6 +13,10 @@
         display: none;
       }
 
+      svg{
+        color: #acaab1;
+      }
+
       .sidebar-brand {
         display: flex;
         align-items: center;
@@ -79,6 +83,9 @@
                       span {
                         color: var(--sidebarHoverTextColor);
                       }
+                      svg{
+                        color: var(--whiteColor);
+                      }
                     }
                   }
 
@@ -99,6 +106,10 @@
                       }
                       span {
                         color: var(--sidebarActiveTextColor);
+                      }
+
+                      svg{
+                        color: var(--whiteColor);
                       }
                     }
                   }

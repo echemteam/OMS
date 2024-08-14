@@ -17,7 +17,7 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
         onSuccess();
         return;
     }
-   
+
     const isDuplicate = listData?.some(item => item.phoneNumber === request.phoneNumber && item.phoneCode === request.phoneCode);
 
 
@@ -52,8 +52,8 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
         const phoneTypeId = data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId
         const phoneType = data.phoneTypeId.label ? data.phoneTypeId.label : data.phoneType
         const isPrimary = data.isPrimaryPhoneNumber
-        
-        const isDuplicate =  listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === phoneCode && item.id !== data.id);
+
+        const isDuplicate = listData.some(item => item.phoneNumber === data.phoneNumber && item.phoneCode === phoneCode && item.id !== data.id);
         if (!isDuplicate) {
             let updatedData = listData.map(item => {
                 if (item.id === data.id) {
@@ -79,16 +79,16 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
 
             setListData(updatedData);
             ToastService.success(successMessage);
-            onResetData();
-            onSuccess();
+            onResetData?.();
+            onSuccess?.();
         } else {
             ToastService.warning(duplicateMessage);
         }
 
     } else {
         ToastService.success(inValidDate);
-        onResetData();
-        onSuccess();
+        onResetData?.();
+        onSuccess?.();
     }
 }
 

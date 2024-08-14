@@ -6,6 +6,7 @@ import "./FileUpload.scss";
 import Image from "../../../image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import Buttons from "../../button/Buttons";
+import Iconify from "../../iconify/Iconify";
 
 const FileUpload = ({
   type = TextInputType.FILE,
@@ -22,7 +23,6 @@ const FileUpload = ({
   acceptedFiles,
   isCustomButtonVisible,
 }) => {
-
   const [fileValue, setFileValue] = useState(null);
 
   const fileRef = useRef();
@@ -56,8 +56,9 @@ const FileUpload = ({
   return (
     <>
       <div
-        className={`form-field custom-file-uploader ${isDisable ? "field-disabled" : ""
-          }`}
+        className={`form-field custom-file-uploader ${
+          isDisable ? "field-disabled" : ""
+        }`}
       >
         <input
           ref={fileRef}
@@ -76,7 +77,8 @@ const FileUpload = ({
           <Image
             imagePath={AppIcons.Uploaddocumenticon}
             altText="Please Upload File"
-          ></Image>
+          ></Image> 
+          {/* <Iconify icon="iconamoon:file-document-thin" /> */}
 
           {fileValue ? (
             <p className="file-name">{fileValue}</p>
@@ -84,14 +86,14 @@ const FileUpload = ({
             <>
               <div className="drag-drop-txt">
                 <p>Drag & Drop Your File</p>
-                {acceptedFiles === "" ?
+                {acceptedFiles === "" ? (
                   <span className="small-txt">All File Formats we support</span>
-                  :
+                ) : (
                   <span className="small-txt">
                     {acceptedFiles}
                     Formats we support
                   </span>
-                }
+                )}
               </div>
             </>
           )}
@@ -139,7 +141,6 @@ const FileUpload = ({
   );
 };
 
-
 FileUpload.propTypes = {
   type: PropTypes.oneOf([TextInputType.FILE]),
   name: PropTypes.string,
@@ -149,7 +150,7 @@ FileUpload.propTypes = {
     PropTypes.shape({
       name: PropTypes.string,
       fileName: PropTypes.string,
-    })
+    }),
   ]),
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func,

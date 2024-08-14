@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react'
 import { AddEditParameterMappingData } from '../config/AddEditParameterMapping.data';
 import { onResetForm } from '../../../../../../../../utils/FormFields/ResetForm/handleResetForm';

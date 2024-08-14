@@ -34,7 +34,7 @@ const ParameterMappingList = (props) => {
             const currentPageObject = molGridRef.current.getCurrentPageObject();
             getLists(currentPageObject, molGridRef.current.generateSortingString());
         }
-    }, [isDeleteApiParameterMappingSuccess, isDeleteApiParameterMappingData]);
+    }, [isDeleteApiParameterMappingSuccess, isDeleteApiParameterMappingData, getLists]);
 
     const handlePageChange = (page) => {
         getLists(page, molGridRef.current.generateSortingString());
@@ -87,7 +87,7 @@ const ParameterMappingList = (props) => {
             };
             getApiParameterMappings(request);
         }
-    }, []);
+    }, [props.keyId]);
 
     const actionHandler = {
         DELETE: handleDeleteClick

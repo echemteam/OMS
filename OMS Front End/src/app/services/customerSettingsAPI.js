@@ -20,6 +20,19 @@ const customerSettingsAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+
+        addEditCustomerInvoice: builder.mutation({
+            query: (userDetails) => ({
+                url: '/CustomerAccoutingSettings/AddEditCustomerInvoice',
+                method: 'POST',
+                body: transformRequest(userDetails)
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
+
         //getSettingDetail by customer Id
         GetDetailsbyCustomerID: builder.query({
             query: (customerId) => ({
@@ -149,7 +162,7 @@ const customerSettingsAPI = createApi({
     })
 })
 
-export const { useAddEditCustomerSettingsMutation, useLazyGetDetailsbyCustomerIDQuery, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery,
+export const { useAddEditCustomerSettingsMutation,useAddEditCustomerInvoiceMutation, useLazyGetDetailsbyCustomerIDQuery, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery,
     useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation, useLazyGetShppingDeliveryCarrierAndDeliveryMethodsByIdQuery,
     useAddShppingDeliveryCarriersMutation, useDeleteCustomerDeliveryCarriersByIdMutation, useDeleteCustomerDeliveryMethodsByIdMutation,
     useAddDeliveryMethodsMutation, useUpdateShppingDeliveryCarriersMutation, useUpdateDeliveryMethodsMutation,

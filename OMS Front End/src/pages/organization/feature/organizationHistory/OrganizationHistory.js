@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import NoRecordFound from '../../../../components/ui/noRecordFound/NoRecordFound';
 import "./OrganizationHistory.scss";
@@ -7,13 +8,12 @@ import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 
 const OrganizationHistory = () => {
 
-  const [pageNumber, setPageNumber] = useState(1);
   const [historyData, setHistoryData] = useState([]);
   const [getOrganizationHistorys, { isLoading: isGetOrganizationHistorysLoading, isSuccess: isGetOrganizationHistorysSuccess, data: isGetOrganizationHistorysData }] = useGetOrganizationHistorysMutation();
 
   useEffect(() => {
-    getListApi(pageNumber);
-  }, [pageNumber]);
+    getListApi(1);
+  }, []);
 
   const getListApi = (page) => {
     const request = {

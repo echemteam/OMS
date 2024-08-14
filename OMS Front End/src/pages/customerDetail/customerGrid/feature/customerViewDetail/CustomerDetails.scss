@@ -58,8 +58,6 @@
         }
 
         .right-action-icon {
-          cursor: pointer;
-
           img {
             width: 15px;
             height: 15px;
@@ -238,7 +236,7 @@
                       .card-value {
                         &.primary-phone {
                           position: relative;
-                          cursor: pointer;
+                          display: flex;
                           &::after {
                             content: "\f00c";
                             font-family: FontAwesome;
@@ -251,6 +249,15 @@
                             color: #fff;
                             background-color: var(--PrimaryColorBright);
                             font-size: var(--commonFont-extraSmall);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 17px;
+
+                            @media only screen and (max-width: 1750px) {
+                              padding: 2px;
+                              height: 15px;
+                            }
                           }
                         }
                       }
@@ -270,8 +277,10 @@
                             }
                             &.primary-email {
                               position: relative;
-                              cursor: pointer;
-                              &::after {
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              &::before {
                                 content: "\f00c";
                                 font-family: FontAwesome;
                                 font-style: normal;
@@ -283,6 +292,15 @@
                                 color: #fff;
                                 background-color: var(--PrimaryColorBright);
                                 font-size: var(--commonFont-extraSmall);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                height: 17px;
+
+                                @media only screen and (max-width: 1750px) {
+                                  padding: 2px;
+                                  height: 15px;
+                                }
                               }
                             }
                           }
@@ -389,36 +407,9 @@
 
                 &.primary-email {
                   position: relative;
-                  cursor: pointer;
-                  &::after {
-                    content: "\f00c";
-                    font-family: FontAwesome;
-                    font-style: normal;
-                    font-weight: normal;
-                    text-decoration: inherit;
-                    margin-left: 5px;
-                    padding: 3px;
-                    border-radius: 100%;
-                    color: #fff;
-                    background-color: var(--PrimaryColorBright);
-                    font-size: var(--commonFont-extraSmall);
-                    @media only screen and (max-width: 1750px) {
-                      padding: 2px;
-                    }
-                  }
-                }
-
-                @media only screen and (max-width: 1750px) {
-                  font-size: 10.5px;
-                }
-              }
-
-              .copy-icon {
-                cursor: pointer;
-
-                &.primary-email {
-                  position: relative;
-                  cursor: pointer;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
                   &::before {
                     content: "\f00c";
                     font-family: FontAwesome;
@@ -431,8 +422,48 @@
                     color: #fff;
                     background-color: var(--PrimaryColorBright);
                     font-size: var(--commonFont-extraSmall);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 17px;
+
                     @media only screen and (max-width: 1750px) {
                       padding: 2px;
+                      height: 15px;
+                    }
+                  }
+                }
+
+                @media only screen and (max-width: 1750px) {
+                  font-size: 10.5px;
+                }
+              }
+
+              .copy-icon {
+                &.primary-email {
+                  position: relative;
+                  display: flex;
+                  align-items: center;
+                  &::before {
+                    content: "\f00c";
+                    font-family: FontAwesome;
+                    font-style: normal;
+                    font-weight: normal;
+                    text-decoration: inherit;
+                    margin-left: 5px;
+                    padding: 3px;
+                    border-radius: 100%;
+                    color: #fff;
+                    background-color: var(--PrimaryColorBright);
+                    font-size: var(--commonFont-extraSmall);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 17px;
+
+                    @media only screen and (max-width: 1750px) {
+                      padding: 2px;
+                      height: 15px;
                     }
                   }
                 }
@@ -496,7 +527,7 @@
 
                 &.primary-phone {
                   position: relative;
-                  cursor: pointer;
+                  display: flex;
                   &::after {
                     content: "\f00c";
                     font-family: FontAwesome;
@@ -509,6 +540,15 @@
                     color: #fff;
                     background-color: var(--PrimaryColorBright);
                     font-size: var(--commonFont-extraSmall);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 17px;
+
+                    @media only screen and (max-width: 1750px) {
+                      padding: 2px;
+                      height: 15px;
+                    }
                   }
                 }
 

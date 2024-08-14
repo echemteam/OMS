@@ -4,6 +4,7 @@ import { AppIcons } from "../../../data/appIcons";
 import Image from "../../image/Image";
 import Pagination from "../pagination/Pagination";
 import "./Table.scss";
+import Iconify from "../iconify/Iconify";
 
 const GridListTable2 = () => {
   const [data] = useState({
@@ -122,10 +123,16 @@ const TableRow = ({ rowContent, rowIndex, onEdit, onDelete }) => {
       <td>
         <div className="d-flex action-button">
           <Link onClick={() => onEdit(rowIndex)} className="mr-2">
-            <Image imagePath={AppIcons.editIcon} altText="Edit Icon" />
+            {/* <Image imagePath={AppIcons.editIcon} altText="Edit Icon" /> */}
+            <Iconify 
+          icon="tabler:pencil" 
+          />
           </Link>
           <Link onClick={() => onDelete(rowIndex)}>
-            <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" />
+            {/* <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" /> */}
+            <Iconify 
+          icon="mingcute:delete-2-line" className="delete-icon"
+          />
           </Link>
         </div>
       </td>

@@ -93,6 +93,11 @@
           transform: rotate(270deg);
           filter: contrast(0);
         }
+        svg {
+          // width: 12px;
+          transform: rotate(270deg);
+          filter: contrast(0);
+        }
       }
     }
 
@@ -118,10 +123,9 @@
       .record-not-found {
         // padding-top: 5px;
 
-        h5{
+        h5 {
           font-size: var(--commonFont-large);
         }
-        
       }
     }
   }
@@ -193,29 +197,28 @@
     }
   }
 
-  .card{
+  .card {
     height: calc(100vh - 145px);
 
-    .card{
+    .card {
       height: calc(100vh - 310px);
     }
   }
-  .model-content{
-    .model-body{
-      .card{
+  .model-content {
+    .model-body {
+      .card {
         height: 100% !important;
       }
     }
   }
 }
 
-
 @media only screen and (max-width: 1750px) {
   .stepper-view {
-    .card{
+    .card {
       height: calc(100vh - 145px);
-  
-      .card{
+
+      .card {
         height: calc(100vh - 265px);
       }
     }
@@ -224,10 +227,10 @@
 
 @media only screen and (max-width: 1750px) {
   .stepper-view-supplier {
-    .card{
+    .card {
       height: calc(100vh - 145px);
-  
-      .card{
+
+      .card {
         height: calc(100vh - 265px);
       }
     }
@@ -243,25 +246,49 @@
     .tab-section {
       height: calc(100vh - 395px);
       .tab-content {
-      max-height: calc(100vh - 400px);
-    }}
+        max-height: calc(100vh - 400px);
+      }
+    }
   }
 
-  .card{
+  .card {
     height: calc(100vh - 325px);
     @media only screen and (max-width: 1750px) {
       height: calc(100vh - 245px);
     }
 
-    .card{
+    .card {
       height: calc(100vh - 310px);
     }
   }
-  
-  .model-content{
-    .model-body{
-      .card{
+
+  .model-content {
+    .model-body {
+      .card {
         height: 100% !important;
+      }
+    }
+  }
+}
+
+.stepper-view-supplier {
+  .financial-setting {
+    .card {
+      height: 100%;
+    }
+    .address-main-card-sec{
+      .payment-method-sec{
+        margin-top: -20px;
+        height: calc(100vh - 390px);
+        overflow: hidden;
+        .tab-content{
+          padding-bottom: 60px;
+          .ach-wire-section{
+            .centered{
+              justify-content: center !important;
+            }
+          }
+        }
       }
     }
   }
