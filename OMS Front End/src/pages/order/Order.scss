@@ -21,6 +21,13 @@
   }
 }
 .verify-product-group {
+
+  .no-record-found{
+    border: 2px dashed var(--inputBorder);
+    border-radius: 6px;
+    padding: 0px 20px 10px 20px;
+  }
+ 
   margin-top:30px;
   @media only screen and (max-width: 1860px) {
     margin-top: 27px;
