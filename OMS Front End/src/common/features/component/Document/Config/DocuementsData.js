@@ -26,7 +26,7 @@ export const DocumentFormData = {
         isEnableOnChange: true,
         options: []
       },
-      // validation: [{ type: "require" }],
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
       },
@@ -42,7 +42,7 @@ export const DocumentFormData = {
         allowSpace: true,
         maxLength: 50,
       },
-      // validation: [{ type: "require" }],
+      validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 col-12 mb-input",
       },
@@ -55,10 +55,10 @@ export const DocumentFormData = {
       dataField: "attachment",
       fieldSetting: {
         placeholder: "Upload Attachment",
-        allowSpace: true,
+        allowSpace: true, 
         isButtonVisible: false,
         isCustomButtonVisible: true,
-        acceptedFiles: '.pdf , .doc , .docx ,.csv , .xlsx , .xls ',
+        acceptedFiles: '.pdf , .docx ',
       },
       validation: [{ type: "require" }],
       style: {

@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 //** Libs's */
-import { basicInfoData } from './Config/Existing.data';
+import { OrderBasicInfoData, basicInfoData } from './Config/Existing.data';
 import CardSection from '../../../../components/ui/card/CardSection';
 import SidebarModel from '../../../../components/ui/sidebarModel/SidebarModel';
 //** Service's */
@@ -9,8 +9,9 @@ import { encryptUrlData } from '../../../../services/CryptoService';
 import ToastService from '../../../../services/toastService/ToastService';
 import { ErrorMessage } from '../../../../data/appMessages';
 import FinalMolGrid from '../../../../components/FinalMolGrid/FinalMolGrid';
+import MolGrid from '../../../../components/Grid/MolGrid';
 
-const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExistingInfoByName }) => {
+const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExistingInfoByName, isOrderManage }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -62,7 +63,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
     }));
 
     return (
-        <SidebarModel modalTitle={!isSupplier ? "Customer Information" : "Supplier Information"} contentClass="content-70 basic-info-model"
+        <SidebarModel modalTitle={isOrderManage ? "Order Information" : !isSupplier ? "Customer Information" : "Supplier Information" } contentClass="content-70 basic-info-model"
             onClose={sidebarClose} isOpen={isExistingModel}>
             <div className='pop-up-input-btn mt-3'>
                 <CardSection>
@@ -70,7 +71,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
                         <div className="col-lg-12 table-striped">
                             <FinalMolGrid
                                 ref={molGridRef}
-                                configuration={basicInfoData}
+                                configuration={isOrderManage ? OrderBasicInfoData : basicInfoData}
                                 dataSource={existingInfoData}
                                 onActionChange={actionHandler}
                                 isLoading={isGetSupplierDetailsBySupplierNameFetching} />

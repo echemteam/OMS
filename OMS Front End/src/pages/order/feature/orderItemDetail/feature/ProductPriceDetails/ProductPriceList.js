@@ -69,7 +69,6 @@ const ProductPriceList = ({ productId }) => {
       if (isApiResponseData.isSuccess) {
         const responseData = JSON.parse(isApiResponseData.data);
         setPriceList(responseData?.data);
-        console.log(responseData?.data);
       } else if (!isApiResponseData.isSuccess) {
         ToastService.warning(isApiResponseData.message);
       } else {

@@ -121,7 +121,7 @@ export const addressFormData = {
       id: "stateId",
       lable: "State ",
       Field_Name: "State",
-      fieldType: FormFieldTypes.EDITABLEDROPDOWN,
+      fieldType: FormFieldTypes.SELECT,
       dataField: "stateId",
       fieldSetting: {
         isDisabled: false,
