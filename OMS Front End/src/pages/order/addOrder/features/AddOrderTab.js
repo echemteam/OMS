@@ -59,7 +59,7 @@ const AddOrderTab = () => {
   return (
     <div className="stepper-card order-stepper">
       <div className="card">
-        <div className="card-body-sec">
+        <div className="card-body-sec order-body">
           <div className="stepper-section">
             <div className="stepper-header">
               {tabContents.map((step, index) => (

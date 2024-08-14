@@ -8,17 +8,8 @@ body {
   padding: 0;
   margin: 0;
   background-color: #0004430d;
-  font-family:
-    "Public Sans",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "Oxygen",
-    "Ubuntu",
-    "Cantarell",
-    "Fira Sans",
-    "Droid Sans",
-    "Helvetica Neue",
+  font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   font-size: var(--commonFont);
   color: var(--textColor);
@@ -1710,7 +1701,6 @@ a {
         img {
           width: 40px;
         }
-        
       }
 
       .right-desc {
@@ -3333,7 +3323,7 @@ input[type="checkbox"]:disabled {
 
     .tab-content {
       width: 85%;
-      padding: 0 0 15px 15px;
+      padding: 0 15px 15px 15px;
       height: calc(100vh - 355px);
       overflow: hidden;
       overflow-y: auto;
@@ -3388,7 +3378,7 @@ input[type="checkbox"]:disabled {
         img {
           transform: rotate(270deg);
         }
-        
+
         svg {
           transform: rotate(270deg);
         }
@@ -3434,6 +3424,18 @@ input[type="checkbox"]:disabled {
     }
   }
 }
+
+// .order-body {
+//   min-height: calc(100vh - 500px);
+//   .stepper-section {
+//     .stepper-content {
+//       min-height: calc(100vh - 550px);
+//       @media only screen and (max-width: 1750px) {
+//         min-height: calc(100vh - 470px);
+//       }
+//     }
+//   }
+// }
 
 // Tab Section End
 .model-hight-fix {
@@ -3592,6 +3594,20 @@ input[type="checkbox"]:disabled {
   }
 }
 
+.last-center {
+  table {
+    tbody {
+      tr {
+        td:last-child {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 1750px) {
   .grid-over-flow {
     .vertical-tab-inner {
@@ -3644,12 +3660,25 @@ input[type="checkbox"]:disabled {
   }
 }
 
-.disable-icon{
-font-size: var(--commonFont-large) !important;
+.disable-icon {
+  font-size: var(--commonFont-large) !important;
 }
-.freeze-icon{
+.freeze-icon {
   font-size: var(--commonFont-large) !important;
   color: #7ed6ec !important;
+}
+
+.block-icon {
+  font-size: var(--commonFont-large) !important;
+  color: #d81f1f !important;
+}
+.reject-icon {
+  font-size: var(--commonFont-large) !important;
+  color: #ad0909 !important;
+}
+.un-lock-icon {
+  font-size: var(--commonFont-large) !important;
+  color: #0704bd !important;
 }
 
 .order-price-list{

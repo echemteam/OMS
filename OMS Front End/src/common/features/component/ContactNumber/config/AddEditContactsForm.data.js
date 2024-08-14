@@ -1,13 +1,18 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
+export const initialPhoneTypeState = {
+  label: 'Work',
+  value: 2
+}
+
 
 export const addEditContactsFormData = {
   name: "Add Edit Role Form",
   initialState: {
     phoneCode: '+1',
     phoneNumber: '',
-    phoneTypeId: 2,
+    phoneTypeId: initialPhoneTypeState.value,
     extension: 0,
     id: 0,
     isPrimaryPhoneNumber: false
