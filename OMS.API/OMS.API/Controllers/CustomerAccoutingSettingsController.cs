@@ -46,6 +46,13 @@ namespace OMS.API.Controllers
             return APISucessResponce(addEditSetting);
         }
 
+        [HttpPost("AddEditCustomerInvoice")]
+        public async Task<IActionResult> AddEditCustomerInvoice(AddEditCustomerInvoiceRequest requestData)
+        {
+            var addEditSetting = await _serviceManager.customerAccoutingSettingsService.AddEditCustomerInvoice(requestData, CurrentUserId);
+            return APISucessResponce(addEditSetting);
+        }
+
 
         [HttpPost("AddCustomerShppingDeliveryCarriersAndDeliveryMethods")]
         public async Task<IActionResult> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(AddCustomerShppingDeliveryCarriersAndDeliveryMethodsRequest requestData)

@@ -129,9 +129,9 @@ const AddSupplierTab = () => {
                     className={`content ${activeTab === index ? "active" : ""}`}
                   >
                     <div className="row">
-                      <div className="col-12 mx-auto">
+                      <div className="col-12 mx-auto ">
                         {step.content}
-                        <div className="d-flex justify-content-end">
+                        <div className="d-flex justify-content-end mt-2">
                           {index > 0 && (
                             <button
                               type="button"
