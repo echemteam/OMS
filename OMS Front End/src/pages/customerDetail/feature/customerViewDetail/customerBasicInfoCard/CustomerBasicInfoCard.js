@@ -249,7 +249,7 @@ const CustomerBasicInfoCard = ({
     let req = {
       customerId: customerId,
       // userId: String(rUserValue)
-      userId: rUserValue.map(option => option.value).join(',')
+      userId: rUserValue?.map(option => option.value).join(',')
     };
     addEditResponsibleUserForCustomer(req);
   }
@@ -292,7 +292,7 @@ const CustomerBasicInfoCard = ({
       updateRUserData(custData);
     }
   };
-  const handleModelShow=()=>{
+  const handleModelShow = () => {
     setShowModal(true);
   }
   const handleToggleModal = () => {
@@ -509,8 +509,8 @@ const CustomerBasicInfoCard = ({
               <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
               <b>&nbsp;:&nbsp;</b>
               <div className="checkbox-part ml-2 mt-2 eye-icon ">
-              <Iconify icon="ph:eye-duotone"  onClick={handleModelShow}/>
-              <div className="tooltip-show">
+                <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
+                <div className="tooltip-show">
                   <p>Add/Edit Invoice Submission</p>
                 </div>
                 <di className="tooltip-arrow-icon"></di>
@@ -553,20 +553,20 @@ const CustomerBasicInfoCard = ({
         </CenterModel>
       )}
       {
-        showModal &&(    
-        <CenterModel
-          showModal={showModal}
-          handleToggleModal={handleToggleModal}
-          modalTitle="Add/Edit Invoice Submission Instruction"
-          modelSizeClass="w-60"
-        >
-          <AddEditInvoiceSubmissionInstructionDetail
-            customerId={customerId}
-             showModal={showModal}
-             setShowModal={setShowModal}
-            handleToggleModal={handleToggleModal}  
-          />
-        </CenterModel>)
+        showModal && (
+          <CenterModel
+            showModal={showModal}
+            handleToggleModal={handleToggleModal}
+            modalTitle="Add/Edit Invoice Submission Instruction"
+            modelSizeClass="w-60"
+          >
+            <AddEditInvoiceSubmissionInstructionDetail
+              customerId={customerId}
+              showModal={showModal}
+              setShowModal={setShowModal}
+              handleToggleModal={handleToggleModal}
+            />
+          </CenterModel>)
       }
       <CustomerApproval
         isDetailPage={true}
