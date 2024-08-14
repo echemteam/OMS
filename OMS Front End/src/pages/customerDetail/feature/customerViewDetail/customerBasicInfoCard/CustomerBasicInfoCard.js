@@ -481,8 +481,8 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
             <div className="field-desc">
-              {isResponsibleUser ?
-                <>
+              {/* {isResponsibleUser ?
+                <> */}
                   <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
                   <b>&nbsp;:&nbsp;</b>
                   <div className="checkbox-part ml-2 mt-2 eye-icon ">
@@ -492,8 +492,8 @@ const CustomerBasicInfoCard = ({
                     </div>
                     <di className="tooltip-arrow-icon"></di>
                   </div>
-                </> : ""
-              }
+                {/* </> : ""
+              } */}
             </div>
           </div>
         </div>
