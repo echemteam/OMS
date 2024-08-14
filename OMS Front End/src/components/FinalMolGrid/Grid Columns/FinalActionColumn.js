@@ -107,7 +107,7 @@ export const renderGridAction = (
           title="DELETE"
         >
           {/* <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" /> */}
-          <Iconify icon="mingcute:delete-2-line" />
+          <Iconify icon="mingcute:delete-2-line" className="delete-icon" />
           <Tooltip text="Delete" />
         </Link>
       )}

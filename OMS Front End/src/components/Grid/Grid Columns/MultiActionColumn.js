@@ -132,7 +132,7 @@ export const RenderMultiGridAction = (rowData, col, rowIndex, onActionHandler) =
         >
           {/* <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" /> */}
           <Iconify
-          icon="mingcute:delete-2-line" 
+          icon="mingcute:delete-2-line"  className="delete-icon"
           />
         </Link>
       )}

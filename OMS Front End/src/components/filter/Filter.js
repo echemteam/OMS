@@ -88,7 +88,7 @@ const Filter = (props) => {
                   <div className="delete-icon">
                     <div className="delete-btn" title="Delete Filter">
                       {/* <Image imagePath={AppIcons.deleteIcon} altText="Delete" /> */}
-                      <Iconify icon="mingcute:delete-2-line" />
+                      <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
                     </div>
                   </div>
                 </div>
@@ -122,7 +122,7 @@ const Filter = (props) => {
                             imagePath={AppIcons.deleteIcon}
                             altText="Delete"
                           /> */}
-                          <Iconify icon="mingcute:delete-2-line" />
+                          <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
                         </div>
                       </div>
                     </div>

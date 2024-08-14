@@ -53,13 +53,15 @@ export const SecurityRoleGridConfig = {
       customAction: [
         {
           name: "USER",
-          iconName: "mingcute:user-3-line",
-          title: "User"
+          title: "User",
+          iconName: "mi:user",
+          className: "disable-icon"
         },
         {
           name: "PERMISSION",
           iconName: "ph:key",
-          title: "Permission"
+          title: "Permission",
+          className: "key-icon"
         },
       ],
     },

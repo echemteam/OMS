@@ -31,7 +31,8 @@ export const functionalConfigurationListData = {
                 {
                     name: "VIEWCONFIGURATION",
                     iconName: "lets-icons:view",
-                    title: "View"
+                    title: "View",
+                    className: "view-icon"
                 },
             ],
         },

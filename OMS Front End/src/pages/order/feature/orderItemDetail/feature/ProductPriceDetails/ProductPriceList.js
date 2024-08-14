@@ -12,43 +12,7 @@ import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid
 
 const ProductPriceList = ({ productId }) => {
   const molGridRef = useRef();
-  const [priceList, setPriceList] = useState([
-    {
-      Quantity: "10g",
-      Size: "Box",
-      Price: "$50",
-      isPrimary: "Special order",
-      priorityDate: 1,
-    },
-    {
-      Quantity: "20g",
-      Size: "Pack",
-      Price: "$90",
-      isPrimary: "Urgent",
-      priorityDate: 2,
-    },
-    {
-      Quantity: "50g",
-      Size: "Box",
-      Price: "$200",
-      isPrimary: "Regular order",
-      priorityDate: 3,
-    },
-    {
-      Quantity: "100g",
-      Size: "Pack",
-      Price: "$350",
-      isPrimary: "Special order",
-      priorityDate: 4,
-    },
-    {
-      Quantity: "500g",
-      Size: "Box",
-      Price: "$1200",
-      isPrimary: "Urgent",
-      priorityDate: 1,
-    },
-  ]);
+  const [priceList, setPriceList] = useState([]);
 
   const [
     getThirdPartyApiResponse,
@@ -61,7 +25,9 @@ const ProductPriceList = ({ productId }) => {
 
   useEffect(() => {
     // productId && getProductPriceByProductId();
-    getProductPriceByProductId();
+    if (productId) {
+      getProductPriceByProductId();
+    }
   }, [productId]);
 
   useEffect(() => {
@@ -115,16 +81,20 @@ const ProductPriceList = ({ productId }) => {
     setPriceList(newGridData);
   };
 
+  console.log("priceList", priceList)
+
   return (
     <CardSection cardTitle="Product Price List">
-      <FinalMolGrid
-        ref={molGridRef}
-        dataSource={priceList}
-        configuration={priceListConfig}
-        allowPagination={false}
-        isLoading={isApiResponseLoading}
-        onRowDataUpdate={handleEditClick}
-      />
+      <div className="order-price-list">
+        <FinalMolGrid
+          ref={molGridRef}
+          dataSource={priceList}
+          configuration={priceListConfig}
+          allowPagination={false}
+          isLoading={isApiResponseLoading}
+          onRowDataUpdate={handleEditClick}
+        />
+      </div>
     </CardSection>
   );
 };

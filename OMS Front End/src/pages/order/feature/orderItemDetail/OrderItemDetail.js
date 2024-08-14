@@ -11,9 +11,7 @@ const VerifyProductDetail = React.lazy(() => import("./feature/VerifyProductInfo
 
 const OrderItemDetail = () => {
 
-  // const [productId, setProductId] = useState(2);
   const { productId } = useContext(AddOrderContext);
-
 
   return (
     <div className="row">
