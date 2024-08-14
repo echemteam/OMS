@@ -31,6 +31,7 @@ import { reasonData } from "../../../../../common/features/component/CustomerSup
 import PropTypes from 'prop-types';
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
+import { Tooltip } from "react-bootstrap";
 
 
 const CustomerBasicInfoCard = ({
@@ -510,6 +511,17 @@ const CustomerBasicInfoCard = ({
                   ></label>
                 </div>
               </div>
+            </div>
+            <div className="field-desc">
+              <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>   
+              <b>&nbsp;:&nbsp;</b>    
+              <div className="checkbox-part ml-2 mt-2 eye-icon ">
+              <Iconify icon="ph:eye-duotone"/>
+              <div className="tooltip-show">
+                  <p>Add/Edit Invoice Submission</p>
+              </div>
+              <di className="tooltip-arrow-icon"></di>
+              </div>      
             </div>
           </div>
         </div>

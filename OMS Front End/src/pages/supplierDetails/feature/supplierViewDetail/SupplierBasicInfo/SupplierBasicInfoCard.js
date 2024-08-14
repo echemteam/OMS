@@ -126,17 +126,16 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
       const filterData = allGetAlluserData.filter((item) => {
-        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
       });
-      const modifyUserData = filterData.map((item) => ({
+      // Remove duplicates based on fullName
+      const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
+      const modifyUserData = uniqueData.map((item) => ({
         value: item.userId,
         label: item.fullName,
       }));
       setResponsibleUserOptions(modifyUserData);
-      const filterCondition = (item) => {
-        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
-      };
-      setDropDownOptionField(allGetAlluserData, 'userId', 'fullName', formData, 'responsibleUserId', filterCondition);
+      setDropDownOptionField(uniqueData, 'userId', 'fullName', formData, 'responsibleUserId');
     }
   }, [isGetAllUserSucess, allGetAlluserData]);
 

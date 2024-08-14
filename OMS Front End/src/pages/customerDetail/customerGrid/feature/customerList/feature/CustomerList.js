@@ -81,10 +81,12 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
 
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
-      const filterCondition = (item) => {
-        return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());
-      };
-      setDropDownOptionField(allGetAlluserData, 'userId', 'fullName', reasonData, 'responsibleUserId', filterCondition);
+      const filterData = allGetAlluserData.filter((item) => {
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+      });
+      // Remove duplicates based on fullName
+      const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
+      setDropDownOptionField(uniqueData, 'userId', 'fullName', reasonData, 'responsibleUserId');
     }
   }, [isGetAllUserSucess, allGetAlluserData,]);
 
