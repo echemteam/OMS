@@ -113,7 +113,7 @@ export const achWireFormData = {
         placeholder: "Please Enter Branch Code",
         isEnableOnChange: true
       },
-      validation: [{ type: "require" }],
+      //validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
       },
@@ -222,22 +222,22 @@ export const achWireFormData = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
       },
     },
-    {
-      id: "paymentTermId",
-      lable: "Payment Terms",
-      Field_Name: "Payment Terms",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "paymentTermId",
-      fieldSetting: {
-        isDisabled: false,
-        placeholder: "Select Payment Terms",
-        isEnableOnChange: true
-      },
-      // validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input label-name-small",
-      },
-    },
+    // {
+    //   id: "paymentTermId",
+    //   lable: "Payment Terms",
+    //   Field_Name: "Payment Terms",
+    //   fieldType: FormFieldTypes.SELECT,
+    //   dataField: "paymentTermId",
+    //   fieldSetting: {
+    //     isDisabled: false,
+    //     placeholder: "Select Payment Terms",
+    //     isEnableOnChange: true
+    //   },
+    //   // validation: [{ type: "require" }],
+    //   style: {
+    //     containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input label-name-small",
+    //   },
+    // },
     {
       id: "isAddressInUs",
       lable: "Bank Account located in the United States or US Territory",

@@ -25,12 +25,12 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
   const [achWireData, setAchWireData] = useState(achWireFormData);
 
   const [addEditACHWire, { isLoading: isAddEditACHWireLoading, isSuccess: isAddEditACHWireSuccess, data: isAddEditACHWireData }] = useAddEditACHWireMutation();
-  const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
+ // const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
   const [getAllAccountType, { isFetching: isGetAllAccountTypeFetching, isSuccess: isGetAllAccountTypeSuccess, data: isGetAllAccountTypeData }] = useLazyGetAllAccountTypeQuery();
   const [getACHWireBySupplierId, { isFetching: isGetACHWireBySupplierIdFetching, isSuccess: isGetACHWireBySupplierIdSuccess, data: isGetACHWireBySupplierIdData }] = useLazyGetACHWireBySupplierIdQuery();
 
   useEffect(() => {
-    getAllPaymentTerms();
+   // getAllPaymentTerms();
     getAllAccountType();
   }, []);
 
@@ -41,14 +41,13 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
   }, [activeTabIndex])
 
   useEffect(() => {
-    if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
-      setDropDownOptionField(isGetAllPaymentTermsData, "paymentTermId", "paymentTerm", achWireFormData, "paymentTermId");
-    }
+    // if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
+    //   setDropDownOptionField(isGetAllPaymentTermsData, "paymentTermId", "paymentTerm", achWireFormData, "paymentTermId");
+    // }
     if (!isGetAllAccountTypeFetching && isGetAllAccountTypeSuccess && isGetAllAccountTypeData) {
       setDropDownOptionField(isGetAllAccountTypeData, "accountType", "accountType", achWireFormData, "accountType");
     }
-  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData,
-    isGetAllAccountTypeData, isGetAllAccountTypeSuccess, isGetAllAccountTypeFetching]);
+  }, [ isGetAllAccountTypeData, isGetAllAccountTypeSuccess, isGetAllAccountTypeFetching]);
 
 
   useEffect(() => {
@@ -88,7 +87,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
           messageToRecipient: isGetACHWireBySupplierIdData.messageToRecipient,
           isAddressInUs: isGetACHWireBySupplierIdData.isAddressInUs,
           recipientPhoneNumber: isGetACHWireBySupplierIdData.recipientPhoneNumber,
-          paymentTermId: isGetACHWireBySupplierIdData.paymentTermId,
+         // paymentTermId: isGetACHWireBySupplierIdData.paymentTermId,
           messageToRecipientBank: isGetACHWireBySupplierIdData.messageToRecipientBank,
           beneficiaryName: isGetACHWireBySupplierIdData.beneficiaryName,
           bankName: isGetACHWireBySupplierIdData.bankName,
@@ -152,7 +151,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
         messageToRecipient: formAchWireOtherDetail.messageToRecipient,
         isAddressInUs: formOtherDetail.isAddressInUs,
         recipientPhoneNumber: formOtherDetail.recipientPhoneNumber,
-        paymentTermId: extractId(formOtherDetail, 'paymentTermId'),
+       // paymentTermId: extractId(formOtherDetail, 'paymentTermId'),
         messageToRecipientBank: formAchWireOtherDetail.messageToRecipientBank,
         beneficiaryName: formOtherDetail.beneficiaryName,
         bankName: formOtherDetail.bankName,
