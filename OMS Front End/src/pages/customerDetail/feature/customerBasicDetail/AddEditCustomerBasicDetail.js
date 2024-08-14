@@ -23,6 +23,8 @@ import SwalAlert from "../../../../services/swalService/SwalService";
 import { SuccessMessage } from "../../../../data/appMessages";
 import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
+import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/validateRUser";
+import { useSelector } from "react-redux";
 
 
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
@@ -33,11 +35,13 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const { confirm } = SwalAlert();
     const [noteId, setNoteId] = useState(0);
     const { formSetting } = customerbasicData;
+    const authState = useSelector((state) => state.auth);
     const [customerName, setCustomerName] = useState('');
     const [formData, setFormData] = useState(customerbasicData);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const [isResponsibleUser, setIsResponsibleUser] = useState(false);
     const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
-    const { nextRef, customerId, setCustomerId, moveNextPage, isResponsibleUser, setCustomerCountryId } = useContext(BasicDetailContext);
+    const { nextRef, customerId, setCustomerId, moveNextPage, setCustomerCountryId } = useContext(BasicDetailContext);
 
     //** API Call's */
     const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
@@ -61,10 +65,13 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                     formSetting.isViewOnly = true;
                     setIsButtonDisable(true);
                     setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, true);
-                }
-                else {
+                } else if (hasEditPermission.isEditable === true) {
                     formSetting.isViewOnly = false;
                     setIsButtonDisable(false);
+                    setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, false);
+                } else {
+                    formSetting.isViewOnly = true;
+                    setIsButtonDisable(true);
                     setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, false);
                 }
             }
@@ -169,6 +176,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCustomer" && field.dataField !== "responsibleUserId");
             setFormData(newFrom);
             setCustomerCountryId(GetCustomersBasicInformationByIdData.countryId);
+            setIsResponsibleUser(validateResponsibleUserId(GetCustomersBasicInformationByIdData.responsibleUserId, authState?.user?.userID));
         }
     }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
 
