@@ -188,6 +188,7 @@ const ContactDetails = (props) => {
   };
 
   useEffect(() => {
+    
     if (isAddEditOrderContactInformationSuccess && isAddEditOrderContactInformationData) {
       
       if (isAddEditOrderContactInformationData.errorMessage.includes('exists')) {
@@ -210,18 +211,17 @@ const ContactDetails = (props) => {
   const handleAddOrderConatct = () => {
     let data = basicInformation.current.getFormData();
     if (data) {
-      console.log("datrw" , data)
-      // let request = {
-      //   orderId: orderId ? orderId : 0,
-      //   isEndUser: true,
-      //   endUserContactId: 0,
-      //   isInvoiceSubmission: true,
-      //   invoiceSubmissionContactId: 0,
-      //   isPurchasing: true,
-      //   purchasingContactId: 0,
-      //   // referenceNumber: string
-      // }
-      // addEditOrderContactInformation(request)
+      let request = {
+        orderId: orderId ? orderId : 0,
+        isEndUser: data.isEndUser,
+        endUserContactId: 0,
+        isInvoiceSubmission: data.isInvoiceSubmission,
+        invoiceSubmissionContactId: data.invoiceSubmissionId.value,
+        isPurchasing: data.isPurchasingGiven,
+        purchasingContactId: 0,
+        referenceNumber: data.refNumber
+      }
+      addEditOrderContactInformation(request)
     }
   }
 

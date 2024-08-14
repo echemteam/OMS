@@ -38,7 +38,7 @@ const OrderDetails = () => {
   const [getAllBillingAddress, { isFetching: isGetAllBillingAddressFetching, isSuccess: isGetAllBillingAddressSuccess, data: isGetAllBillingAddressData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
   const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
   const [checkPoNumberExistOrNot, { isSuccess: isCheckPoNumberExistOrNotSucess, data: isCheckPoNumberExistOrNotData, }] = useCheckPoNumberExistOrNotMutation();
-  const [addEditOrderInformation, { isLoading: isAddEditOrderInformationLoading, isSuccess: isAddEditOrderInformationSuccess, data: isAddEditOrderInformationData }] = useAddEditOrderInformationMutation();
+  const [addEditOrderInformation, { isSuccess: isAddEditOrderInformationSuccess, data: isAddEditOrderInformationData }] = useAddEditOrderInformationMutation();
 
   useEffect(() => {
     if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
@@ -325,7 +325,7 @@ const OrderDetails = () => {
         </div>
       </div>
 
-      <ExistingCustomerSupplierInfo parentRef={parentRef} isSupplier={false} getExistingInfoByName={useLazyGetPoNumberDetailsByPoNumberQuery} />
+      <ExistingCustomerSupplierInfo parentRef={parentRef} isOrderManage={true} isSupplier={false} getExistingInfoByName={useLazyGetPoNumberDetailsByPoNumberQuery} />
 
       <SidebarModel
         modalTitle="Add/Edit Address"
