@@ -215,7 +215,7 @@ const AddressDetailCard = forwardRef(
                           className="edit-btn ml-2"
                         >
                           {/* <Image imagePath={AppIcons.deleteThemeIcon} /> */}
-                          <Iconify icon="mingcute:delete-2-line" />
+                          <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
                         </button>
                       </div>
                       <div

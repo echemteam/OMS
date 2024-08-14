@@ -31,12 +31,14 @@ export const thirdPartyListConfigurationData = {
                 {
                     name: "TESTAPI",
                     iconName: "hugeicons:api",
-                    title: "Test Api"
+                    title: "Test Api",
+                    className: "api-icon"
                 },
                 {
                     name: "VIEWCONFIGURATION",
                     iconName: "lets-icons:view",
-                    title: "View"
+                    title: "View",
+                    className: "view-icon"
                 },
             ],
         },

@@ -305,7 +305,7 @@ const DocumentList = forwardRef(
                                         imagePath={AppIcons.deleteIcon}
                                         alt="Delete Icon"
                                       /> */}
-                                      <Iconify icon="mingcute:delete-2-line" />
+                                      <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
                                     </span>
                                   ) : null}
                                 </div>

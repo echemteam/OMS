@@ -130,7 +130,7 @@ const InActiveSupplierTab = ({ statusId }) => {
     {
       sMenuItemCaption: "All",
       component: (
-        <div className="mt-2">
+        <div className="mt-2 ">
           <InActiveSuppliersList statusId={statusId} configFile={allManageData}
             search={debouncedSearch}
             handleChange={handleChange}

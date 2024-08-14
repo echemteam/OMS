@@ -131,7 +131,7 @@ const TableRow = ({ rowContent, rowIndex, onEdit, onDelete }) => {
           <Link onClick={() => onDelete(rowIndex)}>
             {/* <Image imagePath={AppIcons.deleteIcon} altText="Delete Icon" /> */}
             <Iconify 
-          icon="mingcute:delete-2-line" 
+          icon="mingcute:delete-2-line" className="delete-icon"
           />
           </Link>
         </div>

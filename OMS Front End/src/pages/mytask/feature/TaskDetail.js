@@ -15,7 +15,6 @@ import { useUpdateApprovalRequestsStatusMutation } from "../../../app/services/A
 import ToastService from "../../../services/toastService/ToastService";
 import { Button } from "react-bootstrap";
 import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
-//import Buttons from "../../../components/ui/button/Buttons";
 
 const parseJson = (jsonStr) => {
   try {
@@ -50,7 +49,7 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
 
 const formatBoolean = (value) => (value ? "True" : "False");
 
-const TaskDetail = ({ approvalRequestId, approvedData, isFetching, getApprovalRequestsByApprovalRequestId }) => {
+const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalRequest }) => {
   const navigate = useNavigate();
 
   const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
@@ -58,7 +57,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, getApprovalRe
   useEffect(() => {
     if (isUpdateSuccess && isUpdateData) {
       ToastService.success(isUpdateData.errorMessage);
-      getApprovalRequestsByApprovalRequestId(approvalRequestId);
+      approvalRequest(approvalRequestId);
     }
   }, [isUpdateSuccess, isUpdateData]);
 
