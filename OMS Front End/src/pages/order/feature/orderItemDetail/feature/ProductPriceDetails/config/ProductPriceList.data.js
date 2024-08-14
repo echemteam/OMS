@@ -5,21 +5,21 @@ export const priceListConfig = {
   columns: [
     {
       name: "Size",
-      fieldName: "size",
+      fieldName: "Size",
       colStyle: {
         width: "10%",
       },
     },
     {
       name: "Unit",
-      fieldName: "unit",
+      fieldName: "Quantity",
       colStyle: {
         width: "10%",
       },
     },
     {
       name: "Price",
-      fieldName: "price",
+      fieldName: "Price",
       colStyle: {
         width: "10%",
       },
@@ -47,25 +47,25 @@ export const priceListConfig = {
     },
     {
       name: "Req-Date",
-      fieldName: "reqDate",
-      colStyle: {
-        width: "15%",
-      },
-    },
-    {
-      name: "Priority Date",
       fieldName: "priorityDate",
-      colType: GridColumnType.DROPDOWN,
+      colType: GridColumnType.DATE,
       colSettings: {
-        isDisable: false,
-        placeHolder: "Please select option",
-        options: [
-          { label: "Test 1", value: 1 },
-          { label: "Test 2", value: 2 },
-          { label: "Test 3", value: 3 },
-          { label: "Test 4", value: 4 },
-        ],
+        format: "DD-MMM-YYYY"
       },
+      allowEditColumn: true,
+      editColumn: {
+        editColType: EditGridColumnType.DATEPICKER,
+        placeholder: "Req-Date",
+        editColFieldName: "releaseDate",
+        isDisable: false,
+        colConfig: {
+          format: "DD/MM/YYYY"
+        },
+        // editColValidation: [
+        //   { type: "required", message: "Req-Date is required." },
+        // ],
+      },
+      allowShort: false,
       colStyle: {
         textAlign: "right",
         width: "15%",
@@ -73,20 +73,75 @@ export const priceListConfig = {
       allowShort: false,
     },
     {
-      name: "Action",
-      fieldName: "isPrimary",
+      name: "Promise Date",
+      fieldName: "priorityDate",
+      colType: GridColumnType.DATE,
+      colSettings: {
+        format: "DD-MMM-YYYY"
+      },
+      allowEditColumn: true,
+      editColumn: {
+        placeholder: "Promise Date",
+        editColType: EditGridColumnType.DATEPICKER,
+        editColFieldName: "releaseDate",
+        isDisable: false,
+        colConfig: {
+          format: "DD/MM/YYYY"
+        },
+        // editColValidation: [
+        //   { type: "required", message: "Promise Date is required." },
+        // ],
+      },
+      allowShort: false,
+      colStyle: {
+        textAlign: "right",
+        width: "15%",
+      },
+      allowShort: false,
+    },
+    {
+      name: "Priority",
+      fieldName: "leadCast",
+      allowEditColumn: true,
+
+      editColumn: {
+        editColType: EditGridColumnType.DROPDOWN,
+        editColFieldName: "leadCast",
+        isDisable: false,
+        isMultiSelect: false,
+        options: [
+          { value: 1, label: "High" },
+          { value: 2, label: "Low" },
+        ],
+        editColValidation: [
+          // { type: "required", message: "Lead Cast is required." },
+        ],
+      },
       colStyle: {
         width: "20%",
       },
+      allowShort: false
+    },
+    {
+      name: "Action",
+      colType: GridColumnType.ACTION,
+      colStyle: {
+        width: "10%",
+      },
+      defaultAction: {
+        allowEdit: true,
+      },
     },
   ],
+
   allowEdit: true,
-    editSettings:{
-        defualtEditableView: true,
-        buttons:{
-            save:true,
-            delete:true,
-            cancel:false
-        }
+  editSettings: {
+    defualtEditableView: true,
+    buttons: {
+      save: true,
+      delete: false,
+      cancel: false
     }
+  }
+
 };
