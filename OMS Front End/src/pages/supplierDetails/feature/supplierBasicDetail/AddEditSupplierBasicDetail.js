@@ -126,10 +126,12 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             setDropDownOptionField(allGetAllGroupTypesData, 'groupTypeId', 'type', supplierBasicData, 'groupTypeId');
         }
         if (isGetAllUserSucess && allGetAllUserData) {
-            const filterCondition = (item) => {
-                return item.roleName === null || !excludingRoles.map(role => role.toLowerCase()).includes(item.roleName.toLowerCase());;
-            };
-            setDropDownOptionField(allGetAllUserData, 'userId', 'fullName', supplierBasicData, 'responsibleUserId', filterCondition);
+            const filterData = allGetAllUserData.filter((item) => {
+                return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+            });
+            // Remove duplicates based on fullName
+            const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
+            setDropDownOptionField(uniqueData, 'userId', 'fullName', supplierBasicData, 'responsibleUserId');
         }
         if (isGetAllCountriesSucess && allGetAllCountriesData) {
             setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', supplierBasicData, 'countryId');

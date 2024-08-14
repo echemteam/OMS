@@ -34,6 +34,7 @@ import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { Tooltip } from "react-bootstrap";
 import AddEditInvoiceSubmissionInstructionDetail from "./feature/AddEditInvoiceSubmissionInstructionDetail";
 
+import Select from 'react-select';
 
 const CustomerBasicInfoCard = ({
   editClick,
@@ -169,8 +170,8 @@ const CustomerBasicInfoCard = ({
         value: id,
         label: responsibleUserNames[index] || id,
       }));
-      setSelectedStatus(customerData.status);
       setRUserValue(responsibleUsers);
+      setSelectedStatus(customerData.status);
       getAllUser();
     }
   }, [customerData]);
@@ -178,14 +179,11 @@ const CustomerBasicInfoCard = ({
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
       const filterData = allGetAlluserData.filter((item) => {
-        return (
-          item.roleName === null ||
-          !excludingRoles
-            .map((role) => role.toLowerCase())
-            .includes(item.roleName.toLowerCase())
-        );
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
       });
-      const modifyUserData = filterData.map((item) => ({
+      // Remove duplicates based on fullName
+      const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
+      const modifyUserData = uniqueData.map((item) => ({
         value: item.userId,
         label: item.fullName,
       }));
@@ -247,31 +245,18 @@ const CustomerBasicInfoCard = ({
   }
 
 
-  //** Responsible User  */
-  // const handleRUserChange = (selectedValue) => {
-  //   confirm(
-  //     "Warning?",
-  //     `Are you sure you want to assign the responsible user?`,
-  //     "Yes",
-  //     "Cancel"
-  //   ).then((confirmed) => {
-  //     if (confirmed) {
-  //       updateRUserData(selectedValue);
-  //     }
-  //   });
-  // };
-
   const onHandleBlur = () => {
     let req = {
       customerId: customerId,
-      userId: String(rUserValue)
+      // userId: String(rUserValue)
+      userId: rUserValue.map(option => option.value).join(',')
     };
     addEditResponsibleUserForCustomer(req);
   }
 
   const updateRUserData = (data) => {
-    const responsibleUserId = data.map(option => option.value);
-    setRUserValue(responsibleUserId);
+    // const responsibleUserId = data.map(option => option.value);
+    setRUserValue(data);
   };
 
   useEffect(() => {
@@ -304,7 +289,7 @@ const CustomerBasicInfoCard = ({
         statusId: selectedStatus ? selectedStatus : 0,
       };
       updateCustomerInActiveStatus(req);
-      updateRUserData(custData?.responsibleUserId?.value);
+      updateRUserData(custData);
     }
   };
   const handleModelShow=()=>{
@@ -367,9 +352,6 @@ const CustomerBasicInfoCard = ({
     const status = StatusValue.find(item => item.value === value);
     return status ? status.label : 'Unknown'; // Returns 'Unknown' if value not found
   };
-
-  console.log("customerData", customerData)
-  console.log("rUserValue", rUserValue);
 
   return !isLoading ? (
     <div className="basic-customer-detail">
@@ -445,13 +427,21 @@ const CustomerBasicInfoCard = ({
               <div className="inf-label">R-User</div>
               <b>&nbsp;:&nbsp;</b>
               <div className="status-dropdown">
-                <DropDown
+                {/* <DropDown
+              options={responsibleUserOptions}
+              value={rUserValue}
+              onChange={updateRUserData}
+              placeholder="Responsible User"
+              isDisabled={isResponsibleUser ? true : isButtonDisable}
+              isMultiSelect={true}
+              onBlur={onHandleBlur}
+            /> */}
+                <Select
+                  isMulti
+                  placeholder="Responsible User"
                   options={responsibleUserOptions}
                   value={rUserValue}
                   onChange={updateRUserData}
-                  placeholder="Responsible User"
-                  isDisabled={isResponsibleUser ? true : isButtonDisable}
-                  isMultiSelect={true}
                   onBlur={onHandleBlur}
                 />
               </div>
@@ -516,15 +506,15 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
             <div className="field-desc">
-              <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>   
-              <b>&nbsp;:&nbsp;</b>    
+              <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
+              <b>&nbsp;:&nbsp;</b>
               <div className="checkbox-part ml-2 mt-2 eye-icon ">
               <Iconify icon="ph:eye-duotone"  onClick={handleModelShow}/>
               <div className="tooltip-show">
                   <p>Add/Edit Invoice Submission</p>
+                </div>
+                <di className="tooltip-arrow-icon"></di>
               </div>
-              <di className="tooltip-arrow-icon"></di>
-              </div>      
             </div>
           </div>
         </div>
