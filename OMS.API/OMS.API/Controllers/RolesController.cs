@@ -78,21 +78,6 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(roleId);
         }
-
-        [HttpGet("GetAllAccountType")]
-        public async Task<IActionResult> GetAllAccountType()
-        {
-            var accountTypes = Enum.GetValues(typeof(GetAllAccountType))
-                           .Cast<GetAllAccountType>()
-                           .Select(at => new GetAccountTypeResponse
-                           {
-                               Id = (int)at,
-                               Type = at.ToString()
-                           }).ToList();
-            return APISucessResponce<object>(accountTypes);
-        }
-
-
         #endregion
     }
 }
