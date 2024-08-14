@@ -8,7 +8,7 @@ namespace ClientIPAuthentication.Enum
 {
     public enum GetAllAccountType
     {
-        checking = 1,
-        saving = 2
+        Checking = 1,
+        Saving = 2
     }
 }

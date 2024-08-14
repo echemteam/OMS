@@ -219,8 +219,8 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
                         clearIconImg={AppIcons.ClearIcone}
                     >
                         <div className="row">
-                            <div className="col-md-12 table-striped">
-                                <div className='inactive-scroll-bar'>
+                            <div className="col-md-12 table-striped last-center">
+                                <div className='inactive-scroll-bar '>
                                     <FinalMolGrid
                                         ref={molGridRef}
                                         configuration={configFile}
