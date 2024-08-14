@@ -26,13 +26,14 @@ import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDe
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import { ErrorMessage, SuccessMessage } from "../../../../../data/appMessages";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
-import { OwnerType } from "../../../../../utils/Enums/commonEnums";
+// import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
 import PropTypes from 'prop-types';
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
-import { Tooltip } from "react-bootstrap";
-import Select from 'react-select';
+// import { Tooltip } from "react-bootstrap";
+// import Select from 'react-select';
+import DropdownSelect from "../../../../../components/ui/dropdown/DropdownSelect";
 
 const CustomerBasicInfoCard = ({
   editClick,
@@ -431,13 +432,13 @@ const CustomerBasicInfoCard = ({
               isMultiSelect={true}
               onBlur={onHandleBlur}
             /> */}
-                <Select
-                  isMulti
+                <DropdownSelect
+                  isMultiSelect={true}
                   placeholder="Responsible User"
-                  options={responsibleUserOptions}
+                  optionsValue={responsibleUserOptions}
                   value={rUserValue}
-                  onChange={updateRUserData}
-                  onBlur={onHandleBlur}
+                  handleDropdownChange={updateRUserData}
+                  handleDropdownBlur={onHandleBlur}
                 />
               </div>
             </div>
