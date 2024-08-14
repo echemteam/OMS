@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import { ErrorMessage } from "../../../../../../data/appMessages";
 import { EventName } from "../../../../../../utils/Enums/APIEventEnums";
@@ -13,74 +13,15 @@ import {
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useThirdPartyAPICallMutation } from "../../../../../../app/services/thirdPartyAPI";
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
+import AddOrderContext from "../../../../../../utils/Order/AddOrderContext";
 
 const ProductDetailsList = () => {
   const ref = useRef();
   const molGridRef = useRef();
   const [showModal, setShowModal] = useState(false);
   const [productSearch, setProductSearch] = useState("");
-  const [productDetailList, setProductDetailList] = useState([
-    {
-      ProductName: "Acetone",
-      CatalogId: "CAT001",
-      CASNumber: "67-64-1",
-      MDLNumber: "MFCD00009035",
-    },
-    {
-      ProductName: "Benzene",
-      CatalogId: "CAT002",
-      CASNumber: "71-43-2",
-      MDLNumber: "MFCD00003006",
-    },
-    {
-      ProductName: "Chloroform",
-      CatalogId: "CAT003",
-      CASNumber: "67-66-3",
-      MDLNumber: "MFCD00000814",
-    },
-    {
-      ProductName: "Ethanol",
-      CatalogId: "CAT004",
-      CASNumber: "64-17-5",
-      MDLNumber: "MFCD00003568",
-    },
-    {
-      ProductName: "Formaldehyde",
-      CatalogId: "CAT005",
-      CASNumber: "50-00-0",
-      MDLNumber: "MFCD00003274",
-    },
-    {
-      ProductName: "Glycerol",
-      CatalogId: "CAT006",
-      CASNumber: "56-81-5",
-      MDLNumber: "MFCD00004722",
-    },
-    {
-      ProductName: "Hexane",
-      CatalogId: "CAT007",
-      CASNumber: "110-54-3",
-      MDLNumber: "MFCD00009077",
-    },
-    {
-      ProductName: "Isopropanol",
-      CatalogId: "CAT008",
-      CASNumber: "67-63-0",
-      MDLNumber: "MFCD00011674",
-    },
-    {
-      ProductName: "Methanol",
-      CatalogId: "CAT009",
-      CASNumber: "67-56-1",
-      MDLNumber: "MFCD00004595",
-    },
-    {
-      ProductName: "Toluene",
-      CatalogId: "CAT010",
-      CASNumber: "108-88-3",
-      MDLNumber: "MFCD00008512",
-    },
-  ]);
+  const [productDetailList, setProductDetailList] = useState([]);
+  const { setProductId } = useContext(AddOrderContext);
 
   const [
     getThirdPartyApiResponse,
@@ -112,7 +53,7 @@ const ProductDetailsList = () => {
   const handleInputGroupButton = () => {
     if (productSearch.trim() !== "") {
       if (productSearch.length > 3) {
-        setShowModal(!showModal);
+        setShowModal(true);
         let dynamicParameters = {
           searchText: productSearch,
         };
@@ -142,7 +83,8 @@ const ProductDetailsList = () => {
   };
 
   const handleRowSelect = (rowIndex, rowData) => {
-    console.log("Row Selected", rowIndex, rowData);
+    setProductId(rowIndex.ProductId)
+    setShowModal(false);
   };
 
   const handleColumnsChange = (fieldName, rowData, rowIndex) => {

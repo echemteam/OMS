@@ -17,16 +17,19 @@ const MyTask = () => {
   const userId = authData.user.userID
 
   const [approvedData, setApprovedData] = useState(null)
+  const [approvalRequestId, setApprovalRequestId] = useState(0);
   // const [tabId , setTabId] = useState(null)
 
   const [getApprovalRequestsByApprovalRequestId, { isFetching: isGetApprovalRequestsByApprovalRequestIdFetching, isSuccess: isGetApprovalRequestsByApprovalRequestIdSuccess, data: isGetApprovalRequestsByApprovalRequestIdData }] = useLazyGetApprovalRequestsByApprovalRequestIdQuery();
 
   const handleGetPendingId = (data) => {
-    getApprovalRequestsByApprovalRequestId(data)
+    getApprovalRequestsByApprovalRequestId(data);
+    setApprovalRequestId(data);
   }
 
   const handleGetArchiveId = (data) => {
-    getApprovalRequestsByApprovalRequestId(data)
+    getApprovalRequestsByApprovalRequestId(data);
+    setApprovalRequestId(data);
   }
 
   const handleSetTab = (data) => {
@@ -63,7 +66,7 @@ const MyTask = () => {
             </div>
           </div>
           <div className="col-8">
-            <TaskDetail approvedData={approvedData} isFetching={isGetApprovalRequestsByApprovalRequestIdFetching} />
+            <TaskDetail approvedData={approvedData} getApprovalRequestsByApprovalRequestId={getApprovalRequestsByApprovalRequestId} approvalRequestId={approvalRequestId} isFetching={isGetApprovalRequestsByApprovalRequestIdFetching} />
           </div>
         </div>
       </div>

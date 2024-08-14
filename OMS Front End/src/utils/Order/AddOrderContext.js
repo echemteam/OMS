@@ -12,6 +12,8 @@ export const AddOrderContextProvider = ({ children }) => {
     const [activeTab, setActiveTab] = useState(0);
     const [orderCustomerId, setOrderCustomerId] = useState(0);
     const [orderId, setOrderId] = useState(0);
+    const [productId, setProductId] = useState(0);
+
 
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
@@ -26,8 +28,8 @@ export const AddOrderContextProvider = ({ children }) => {
             if (nextStepRef.current) {
                 nextStepRef.current.handleAddOrder();
             }
-        } else if (orderId > 0) {
-            setActiveTab((prev) => prev + 1)
+            // } else if (orderId > 0) {
+            //     setActiveTab((prev) => prev + 1)
         } else if (data === 2) {
             if (conatctRef.current) {
                 conatctRef.current.handleAddOrderConatct();
@@ -43,6 +45,7 @@ export const AddOrderContextProvider = ({ children }) => {
     return (
         <AddOrderContext.Provider value={{
             nextStepRef, orderCustomerId, setOrderCustomerId, moveNextPage, movePreviewPage, addOrder, activeTab, setActiveTab, orderId, setOrderId, conatctRef
+            , productId , setProductId , 
         }}>
             {children}
         </AddOrderContext.Provider>

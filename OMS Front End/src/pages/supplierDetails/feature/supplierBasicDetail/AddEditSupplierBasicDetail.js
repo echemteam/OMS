@@ -346,7 +346,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
                 </div>
             }
             {!isOpen ?
-                <ExistingCustomerSupplierInfo parentRef={parentRef} isSupplier={true} getExistingInfoByName={useLazyGetSupplierDetailsBySupplierNameQuery} />
+                <ExistingCustomerSupplierInfo parentRef={parentRef} isOrderManage={false} isSupplier={true} getExistingInfoByName={useLazyGetSupplierDetailsBySupplierNameQuery} />
                 : null}
         </React.Fragment>
     );

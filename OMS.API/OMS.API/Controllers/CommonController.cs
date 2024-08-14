@@ -1,9 +1,11 @@
 ﻿using ClientIPAuthentication;
+using ClientIPAuthentication.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Common;
 using OMS.Domain.Entities.API.Response.Common;
+using OMS.Domain.Entities.API.Response.Roles;
 using OMS.Domain.Entities.API.Response.User;
 using OMS.FileManger.Services;
 using OMS.Framework;
@@ -275,6 +277,19 @@ namespace OMS.API.Controllers
         {
             List<GetAllSubCustomerByCustomerIdResponse> responseData = await _serviceManager.commonServices.GetAllSubCustomerByCustomerId(customerId).ConfigureAwait(true);
             return APISucessResponce(responseData);
+        }
+
+        [HttpGet("GetAllAccountType")]
+        public async Task<IActionResult> GetAllAccountType()
+        {
+            var accountTypes =  Enum.GetValues(typeof(GetAllAccountType))
+                           .Cast<GetAllAccountType>()
+                           .Select(at => new GetAccountTypeResponse
+                           {
+                               Id = (int)at,
+                               AccountType = at.ToString()
+                           }).ToList();
+            return  APISucessResponce(accountTypes);
         }
     }
 }

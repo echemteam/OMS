@@ -13,7 +13,7 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import PropTypes from 'prop-types';
-import { FormFieldTypes } from "../../../../../data/formFieldType";
+// import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 const SetInitialCountry = {
     label: "United States",
