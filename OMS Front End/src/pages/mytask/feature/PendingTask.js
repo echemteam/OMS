@@ -14,13 +14,23 @@ const PendingTask = (props) => {
 
     useEffect(() => {
         if (props.Pending) {
-            let req = {
-                status : props.Pending,
-                requestedByUserId : props.userId
-            }
-            getApprovalRequestsListByStatus(req)
+            getApprovalRequestList();
         }
-    }, [props.Pending,props.userId])
+    }, [props.Pending, props.userId]);
+
+    const getApprovalRequestList = () => {
+        let req = {
+            status: props.Pending,
+            requestedByUserId: props.userId
+        }
+        getApprovalRequestsListByStatus(req)
+    }
+
+    useEffect(() => {
+        if (props.isApproval) {
+            getApprovalRequestList();
+        }
+    }, [props.isApproval]);
 
     useEffect(() => {
         if (!isGetApprovalRequestsListByStatusFetching && isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData) {
@@ -66,7 +76,7 @@ const PendingTask = (props) => {
     )
 }
 PendingTask.propTypes = {
-    Pending: PropTypes.string, 
+    Pending: PropTypes.string,
     userId: PropTypes.number.isRequired,
     onGetById: PropTypes.func
 };
