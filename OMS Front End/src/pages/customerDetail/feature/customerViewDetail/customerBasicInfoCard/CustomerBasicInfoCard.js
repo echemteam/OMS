@@ -49,6 +49,7 @@ const CustomerBasicInfoCard = ({
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [formData, setFormData] = useState(reasonData);
   const [showModal, setShowModal] = useState(false);
+  const [isInvoiceModelShow,setIsInvoiceModelShow]=useState(false);
   const [customerID, setCustomerId] = useState();
   const [statusId, setStatusId] = useState();
   const [responsibleUserIds, setResponsibleUserIds] = useState([]);
@@ -264,10 +265,11 @@ const CustomerBasicInfoCard = ({
     }
   };
   const handleModelShow = () => {
-    setShowModal(true);
+    setIsInvoiceModelShow(true);
   }
   const handleToggleModal = () => {
     setShowModal(false);
+    setIsInvoiceModelShow(false);
     onReset();
     getCustomerById();
     setSelectedStatus(customerData.status);
@@ -478,8 +480,6 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
             <div className="field-desc">
-              {isResponsibleUser ?
-                <>
                   <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
                   <b>&nbsp;:&nbsp;</b>
                   <div className="checkbox-part ml-2 mt-2 eye-icon ">
@@ -489,8 +489,6 @@ const CustomerBasicInfoCard = ({
                     </div>
                     <di className="tooltip-arrow-icon"></di>
                   </div>
-                </> : ""
-              }
             </div>
           </div>
         </div>
@@ -529,17 +527,17 @@ const CustomerBasicInfoCard = ({
         </CenterModel>
       )}
       {
-        showModal && (
+        isInvoiceModelShow && (
           <CenterModel
-            showModal={showModal}
-            handleToggleModal={handleToggleModal}
+            showModal={isInvoiceModelShow}
+            handleToggleModal={setIsInvoiceModelShow}
             modalTitle="Add/Edit Invoice Submission Instruction"
             modelSizeClass="w-60"
           >
             <AddEditInvoiceSubmissionInstructionDetail
               customerId={customerId}
-              showModal={showModal}
-              setShowModal={setShowModal}
+              isInvoiceModelShow={isInvoiceModelShow}
+              setIsInvoiceModelShow={setIsInvoiceModelShow}
               handleToggleModal={handleToggleModal}
             />
           </CenterModel>)
