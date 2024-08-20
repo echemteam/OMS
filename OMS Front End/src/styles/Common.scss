@@ -3667,7 +3667,7 @@ input[type="checkbox"]:disabled {
 }
 .freeze-icon {
   font-size: var(--commonFont-large) !important;
-  color: #7ed6ec !important;
+  color: #0097bd !important;
 }
 
 .block-icon {
@@ -3680,7 +3680,11 @@ input[type="checkbox"]:disabled {
 }
 .un-lock-icon {
   font-size: var(--commonFont-large) !important;
-  color: #0704bd !important;
+  color: #0097bd !important;
+}
+.un-block-icon {
+  font-size: var(--commonFont-large) !important;
+  color: #d81f1f !important;
 }
 .view-icon{
   font-size: var(--commonFont-large) !important;

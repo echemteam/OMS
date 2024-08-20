@@ -1,6 +1,9 @@
 import { AppIcons } from "../../../../data/appIcons";
 import { GridColumnType } from "../../../../data/gridColumnType";
-import { ListShowCustomer, ListSupplier } from "../../../../utils/Enums/commonEnums";
+import {
+  ListShowCustomer,
+  ListSupplier,
+} from "../../../../utils/Enums/commonEnums";
 import { getLabelClass } from "../../../../utils/StatusColors/StatusColors";
 
 export const AllCustomerGridConfig = {
@@ -64,28 +67,27 @@ export const AllCustomerGridConfig = {
           name: "ALLOWDISABLE",
           iconName: "mi:user",
           title: "Disable",
-          className: "disable-icon"
+          className: "disable-icon",
         },
         {
           name: "ALLOWFREEZE",
           iconName: "material-symbols:lock-outline",
           title: "Freeze",
-          className: "freeze-icon"
+          className: "freeze-icon",
         },
         {
           name: "ALLOWBLOCKED",
           iconName: "akar-icons:block",
           title: "Blocked",
-          className: "block-icon"
+          className: "block-icon",
         },
         {
           name: "ALLOREJECT",
           iconName: "carbon:close-outline",
           title: "Reject",
-          className: "reject-icon"
+          className: "reject-icon",
         },
       ],
-     
     },
   ],
 };
@@ -146,7 +148,7 @@ export const PendingCustomerGridConfig = {
           name: "ALLOWDISABLE",
           iconName: "mi:user",
           title: "Disable",
-          className: "disable-icon"
+          className: "disable-icon",
         },
       ],
     },
@@ -215,12 +217,11 @@ export const SubmittedCustomerGridConfig = {
           name: "ALLOWDISABLE",
           iconName: "mi:user",
           title: "Disable",
-          className: "disable-icon"
+          className: "disable-icon",
         },
       ],
     },
   ],
-
 };
 
 export const ApprovedCustomerGridConfig = {
@@ -264,25 +265,25 @@ export const ApprovedCustomerGridConfig = {
           name: "ALLOWDISABLE",
           iconName: "mi:user",
           title: "Disable",
-          className: "disable-icon"
+          className: "disable-icon",
         },
         {
           name: "ALLOWFREEZE",
           iconName: "material-symbols:lock-outline",
           title: "Freeze",
-          className: "freeze-icon"
+          className: "freeze-icon",
         },
         {
           name: "ALLOWBLOCKED",
           iconName: "akar-icons:block",
           title: "Blocked",
-          className: "block-icon"
+          className: "block-icon",
         },
         {
           name: "ALLOREJECT",
           iconName: "carbon:close-outline",
           title: "Reject",
-          className: "reject-icon"
+          className: "reject-icon",
         },
       ],
     },
@@ -325,12 +326,10 @@ export const RejectedCustomerGridConfig = {
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
-
       },
     },
   ],
 };
-
 
 export const AllInActiveCustomerGridConfig = {
   columns: [
@@ -376,7 +375,6 @@ export const AllInActiveCustomerGridConfig = {
       name: "Status",
       colStyle: {
         width: "25%",
-        
       },
       fieldName: "status",
       allowShort: false,
@@ -443,9 +441,9 @@ export const FreezedInActiveCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWFREEZE",
-          iconName: "material-symbols:lock-outline",
-          title: "Freeze",
-          className: "freeze-icon"
+          iconName: "basil:unlock-outline",
+          title: "Un-Freeze",
+          className: "un-lock-icon",
         },
       ],
     },
@@ -508,8 +506,8 @@ export const BlockedInActiveCustomerGridConfig = {
         {
           name: "ALLOWUNBLOCKED",
           title: "UnBlock",
-          iconName: "basil:unlock-outline",
-          className: "un-lock-icon"
+          iconName: "gg:unblock",
+          className: "un-block-icon",
         },
       ],
     },
