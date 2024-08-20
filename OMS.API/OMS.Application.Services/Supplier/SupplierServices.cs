@@ -1,5 +1,6 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
+using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -103,6 +104,11 @@ namespace OMS.Application.Services.Supplier
         public async Task<List<GetSupplierDetailsBySupplierNameResponse>> GetSupplierDetailsBySupplierName(string supplierName)
         {
             return await repositoryManager.supplier.GetSupplierDetailsBySupplierName(supplierName);
+        }
+
+        public async Task<AddEntityDto<int>> AddEditResponsibleUserForSupplier(AddEditResponsibleUserForSupplierRequest requestData, short currentUserId)
+        {
+            return await repositoryManager.supplier.AddEditResponsibleUserForSupplier(requestData, currentUserId); ;
         }
         #endregion
     }
