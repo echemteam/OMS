@@ -88,6 +88,15 @@ const supplierAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        addEditResponsibleUserForSupplier: builder.mutation({
+            query: (requestData) => ({
+                url: '/Supplier/AddEditResponsibleUserForSupplier',
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
       
     })
 })
@@ -101,8 +110,8 @@ export const {
     useLazyGetSupplierBasicInformationByIdQuery,
     useLazyGetAllSupplierTypeQuery,
     useCheckSupplierNameExistMutation,
-    useLazyGetSupplierDetailsBySupplierNameQuery
-  
+    useLazyGetSupplierDetailsBySupplierNameQuery,
+    useAddEditResponsibleUserForSupplierMutation
 } = supplierAPI
 
 export default supplierAPI;
