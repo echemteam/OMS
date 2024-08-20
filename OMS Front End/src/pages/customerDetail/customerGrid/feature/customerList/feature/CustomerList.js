@@ -10,7 +10,7 @@ import React, {
 import { useNavigate } from "react-router-dom";
 
 import CardSection from "../../../../../../components/ui/card/CardSection";
-import { useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from "../../../../../../app/services/basicdetailAPI";
+import { useAddEditResponsibleUserForCustomerMutation, useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from "../../../../../../app/services/basicdetailAPI";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import CustomerListContext from "../../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { useAddCustomerNotesMutation } from "../../../../../../app/services/notesAPI";
@@ -33,7 +33,7 @@ import { reasonData } from "../../../../../../common/features/component/Customer
 import PropTypes from 'prop-types';
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 import { validateResponsibleUserId } from "../../../../../../utils/ResponsibleUser/validateRUser";
-import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
+// import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
 //import MolGrid from "../../../../../../components/Grid/MolGrid";
 
 
@@ -72,14 +72,25 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
     },
   ] = useUpdateCustomerInActiveStatusMutation();
 
+  const [
+    addEditResponsibleUserForCustomer,
+    { isSuccess: isSuccessAddEditResponsibleUserForCustomer, data: isAddEditResponsibleUserForCustomerData },
+  ] = useAddEditResponsibleUserForCustomerMutation();
+
   const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
-  const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
+  // const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
 
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
   useEffect(() => {
     getAllUser();
   }, [statusId]);
+
+  useEffect(() => {
+    if (isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
+      ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage);
+    }
+  }, [isSuccessAddEditResponsibleUserForCustomer, isAddEditResponsibleUserForCustomerData]);
 
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
@@ -118,7 +129,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       if (actionColumn.defaultAction.allowUnfreeze) {
         actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
       }
-      
+
       if (approvalAction) {
         if (approvalAction.colSettings.allowCheckbox) {
           approvalAction.colSettings.allowCheckbox = true;
@@ -324,19 +335,18 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       };
       updateCustomerInActiveStatus(req);
       addCustomerNotes(req);
-      if (!assignRUser && custData.responsibleUserId && custData.responsibleUserId.value) {
-        updateRUserData(custData.responsibleUserId.value);
+      if (!assignRUser && custData.responsibleUserId && custData.responsibleUserId) {
+        updateRUserData(custData.responsibleUserId);
       }
     }
   };
 
   const updateRUserData = (value) => {
     let req = {
-      ownerId: customerID,
-      ownerType: OwnerType.Customer,
-      responsibleUserId: value
+      customerId: customerID,
+      userId: String(value)
     }
-    updateResponsibleUser(req);
+    addEditResponsibleUserForCustomer(req);
   }
 
   const actionHandler = {

@@ -13,7 +13,8 @@ export const reasonData = {
       fieldSetting: {
         placeholder: "Select Responsible User",
         isDisabled: false,
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        isMultiSelect: true,
       },
       validation: [{ type: "require" }],
       style: {

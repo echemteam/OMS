@@ -35,6 +35,8 @@ import Iconify from "../../../../../components/ui/iconify/Iconify";
 // import Select from 'react-select';
 import DropdownSelect from "../../../../../components/ui/dropdown/DropdownSelect";
 import AddEditInvoiceSubmissionInstructionDetail from "./feature/AddEditInvoiceSubmissionInstructionDetail";
+import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { useAddCustomerNotesMutation } from "../../../../../app/services/notesAPI";
 
 const CustomerBasicInfoCard = ({
   editClick,
@@ -79,6 +81,9 @@ const CustomerBasicInfoCard = ({
       data: updateCustomerInActiveStatusData,
     },
   ] = useUpdateCustomerInActiveStatusMutation();
+
+  const [addCustomerNotes] = useAddCustomerNotesMutation();
+
 
   const { isResponsibleUser } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
@@ -155,6 +160,14 @@ const CustomerBasicInfoCard = ({
         label: item.fullName,
       }));
       setResponsibleUserOptions(modifyUserData);
+
+      const filterDataDropdown = allGetAlluserData.filter((item) => {
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+      });
+      // Remove duplicates based on fullName
+      const uniqueDataDropdown = Array.from(new Map(filterDataDropdown.map((item) => [item.fullName, item])).values());
+      setDropDownOptionField(uniqueDataDropdown, 'userId', 'fullName', reasonData, 'responsibleUserId');
+
     }
   }, [isGetAllUserSucess, allGetAlluserData, isFetching]);
 
@@ -232,8 +245,6 @@ const CustomerBasicInfoCard = ({
   useEffect(() => {
     if (isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
       ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage);
-
-
     }
   }, [isSuccessAddEditResponsibleUserForCustomer, isAddEditResponsibleUserForCustomerData]);
 
@@ -259,11 +270,22 @@ const CustomerBasicInfoCard = ({
         ...custData,
         customerId: customerId,
         statusId: selectedStatus ? selectedStatus : 0,
+        note: custData.inActiveReason,
       };
       updateCustomerInActiveStatus(req);
-      updateRUserData(custData);
+      addCustomerNotes(req);
+      updateRUserDataDropdown(custData.responsibleUserId);
     }
   };
+
+  const updateRUserDataDropdown = (value) => {
+    let req = {
+      customerId: customerId,
+      userId: String(value)
+    }
+    addEditResponsibleUserForCustomer(req);
+  }
+
   const handleModelShow = () => {
     setIsInvoiceModelShow(true);
   }
