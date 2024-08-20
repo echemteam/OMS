@@ -1,4 +1,4 @@
-.input-field {
+.input-field-daterange {
   border: 1px solid var(--inputBorder) !important;
   border-radius: 6px !important;
   width: 100%;
@@ -230,7 +230,7 @@
 }
 
 @media only screen and (max-width: 1750px) {
-  .input-field{
+  .input-field-daterange{
     height: 30px;
   }
   .date-picker {

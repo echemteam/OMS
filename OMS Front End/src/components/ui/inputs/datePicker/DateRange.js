@@ -17,7 +17,7 @@ function DateRange(props) {
       {props.isDateRange ? (
         <div className="date-range-input">
           <DateRangePicker>
-            <input className="input-field" />
+            <input className="input-field-daterange" />
           </DateRangePicker>
           <Image
               imagePath={AppIcons.calenderIcon}
