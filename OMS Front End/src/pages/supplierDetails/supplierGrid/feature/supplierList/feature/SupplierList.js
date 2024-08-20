@@ -19,11 +19,14 @@ import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNaviga
 //** Service's */
 import { encryptUrlData } from '../../../../../../services/CryptoService';
 import ToastService from '../../../../../../services/toastService/ToastService';
-import { useUpdateResponsibleUserMutation } from '../../../../../../app/services/commonAPI';
+import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../../../../../app/services/commonAPI';
 import { useAddSupplierNotesMutation } from '../../../../../../app/services/supplierNotesAPI';
-import { useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../../../app/services/supplierAPI';
+import { useAddEditResponsibleUserForSupplierMutation, useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../../../app/services/supplierAPI';
 import { reasonData } from '../../../../../../common/features/component/CustomerSupplierReason/Reason.data';
 import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid';
+import { validateResponsibleUserId } from '../../../../../../utils/ResponsibleUser/validateRUser';
+import { excludingRoles } from '../../../../feature/supplierBasicDetail/config/SupplierBasicDetail.data';
+import { setDropDownOptionField } from '../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
@@ -46,13 +49,34 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   const { supplierListRef } = useContext(SupplierContext);
   const [assignRUser, setAssignRUser] = useState();
   const { isResponsibleUser, setIsResponsibleUser } = useContext(AddSupplierContext);
-
+  const [addEditResponsibleUserForSupplier,{ isSuccess: isSuccessAddEditResponsibleUserForSupplier, data: isAddEditResponsibleUserForSupplierData }] = useAddEditResponsibleUserForSupplierMutation();
   const [getSuppliers, { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData }] = useGetSuppliersMutation();
   const [updateSupplierApproveStatus, { isSuccess: isSuccessUpdateSupplier, data: updateSupplierData }] = useUpdateSupplierApproveStatusMutation();
   const [updateSupplierInActiveStatus, { isLoading: updateInActiveStatusSupplierLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
-
+  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
   const [addSupplierNotes] = useAddSupplierNotesMutation();
   const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
+
+  useEffect(() => {
+    getAllUser();
+  }, [statusId]);
+
+  useEffect(() => {
+    if (isGetAllUserSucess && allGetAlluserData) {
+      const filterData = allGetAlluserData.filter((item) => {
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+      });
+      // Remove duplicates based on fullName
+      const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
+      setDropDownOptionField(uniqueData, 'userId', 'fullName', reasonData, 'responsibleUserId');
+    }
+  }, [isGetAllUserSucess, allGetAlluserData,]);
+
+  useEffect(() => {
+    if (isSuccessAddEditResponsibleUserForSupplier && isAddEditResponsibleUserForSupplierData) {
+      ToastService.success(isAddEditResponsibleUserForSupplierData.errorMessage);
+    }
+  }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
 
   useEffect(() => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
@@ -146,7 +170,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
-        const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authState?.user?.userID);
+        const isResponsibleId = isListeData.dataSource.find(data =>  validateResponsibleUserId(data.responsibleUserId === authState?.user?.userID));
         if (isResponsibleId) {
           setIsResponsibleUser(true);
           hasResponsibleUserhasAccess();
@@ -294,13 +318,21 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
     }
   }
 
+  // const updateRUserData = (value) => {
+  //   let req = {
+  //     ownerId: supplierID,
+  //     OwnerType: OwnerType.Supplier,
+  //     responsibleUserId: value
+  //   }
+  //   updateResponsibleUser(req);
+  // }
+
   const updateRUserData = (value) => {
     let req = {
-      ownerId: supplierID,
-      OwnerType: OwnerType.Supplier,
-      responsibleUserId: value
+      supplierId: supplierID,
+      userId: String(value)
     }
-    updateResponsibleUser(req);
+    addEditResponsibleUserForSupplier(req);
   }
 
   const actionHandler = {
