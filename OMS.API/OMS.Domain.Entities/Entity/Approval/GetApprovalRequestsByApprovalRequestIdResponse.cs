@@ -22,5 +22,6 @@
         public string? ApprovedByUserName { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public string? Status { get; set; }
+        public string? RejectReason { get; set; }
     }
 }
