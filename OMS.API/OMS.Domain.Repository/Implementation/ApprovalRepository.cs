@@ -113,6 +113,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.ApprovalRequestId,
                 requestData.ApprovedByUserId,
                 requestData.Status,
+                requestData.RejectReason,
             }, CommandType.StoredProcedure);
         }
         public async Task<string> GetPrimaryKeyColumnAsync(string tableName)
