@@ -34,7 +34,7 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
   const newValues = parseJson(newJsonStr);
 
   // Convert field names to lowercase for case-insensitive comparison
-  const fieldNameLower = fieldName.toLowerCase();
+  const fieldNameLower = fieldName?.toLowerCase();
 
   const findValue = (values, fieldName) => {
     for (const key in values) {
@@ -136,7 +136,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
       updateApprovalRequest(request);
     } else {
       let data = ref.current.getFormData();
-      if(data){
+      if (data) {
         let request = {
           status: status,
           approvalRequestId: approvalRequestId,
@@ -194,38 +194,49 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
           </div>
         }
       </div>
-      <div className="value-comparison">
-        <div className="value-block">
-          <h3 className="value-title">Old Value</h3>
-          {fieldName && oldFieldValue !== "N/A" ? (
-            <div className="value-content">
-              <span className="value-label">{fieldName} : </span>
-              <span className="value-data">
-                {typeof oldFieldValue === "boolean"
-                  ? formatBoolean(oldFieldValue)
-                  : oldFieldValue}
-              </span>
+      {approvedData.isFunctional ?
+        <div className="customer-information pt-0">
+          <div className="info-row">
+            <span className="info-label">New Value : </span>
+            <div className="info-value ml-2">
+              <pre>{JSON.stringify(parseJson(approvedData.newValue), null, 2)}</pre>
             </div>
-          ) : (
-            <div className="no-value">No old value available</div>
-          )}
+          </div>
         </div>
-        <div className="value-block">
-          <h3 className="value-title">New Value</h3>
-          {fieldName && newFieldValue !== "N/A" ? (
-            <div className="value-content">
-              <span className="value-label">{fieldName} : </span>
-              <span className="value-data">
-                {typeof newFieldValue === "boolean"
-                  ? formatBoolean(newFieldValue)
-                  : newFieldValue}
-              </span>
-            </div>
-          ) : (
-            <div className="no-value">No new value available</div>
-          )}
+        :
+        <div className="value-comparison">
+          <div className="value-block">
+            <h3 className="value-title">Old Value</h3>
+            {fieldName && oldFieldValue !== "N/A" ? (
+              <div className="value-content">
+                <span className="value-label">{fieldName} : </span>
+                <span className="value-data">
+                  {typeof oldFieldValue === "boolean"
+                    ? formatBoolean(oldFieldValue)
+                    : oldFieldValue}
+                </span>
+              </div>
+            ) : (
+              <div className="no-value">No old value available</div>
+            )}
+          </div>
+          <div className="value-block">
+            <h3 className="value-title">New Value</h3>
+            {fieldName && newFieldValue !== "N/A" ? (
+              <div className="value-content">
+                <span className="value-label">{fieldName} : </span>
+                <span className="value-data">
+                  {typeof newFieldValue === "boolean"
+                    ? formatBoolean(newFieldValue)
+                    : newFieldValue}
+                </span>
+              </div>
+            ) : (
+              <div className="no-value">No new value available</div>
+            )}
+          </div>
         </div>
-      </div>
+      }
       {tabId !== 1 &&
         <div className="task-footer mt-3 pr-3">
           <Button className="reject-btn" onClick={handleToggleModal}>
