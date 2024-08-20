@@ -58,15 +58,17 @@ const AddEditNote = ({ keyId, onAddNotes, onUpdateNotes, isSupplier, isEditMode,
     }
     const handleNotes = () => {
         let notesData = ref.current.getFormData();
-        let request = {
-            note: notesData.note,
-            [isSupplier ? 'supplierId' : 'customerId']: keyId,
-            [isSupplier ? 'supplierNoteId' : 'customerNoteId']: isSupplier ? supplierNoteId : customerNoteId,
-        };
-        if (notesData && (supplierNoteId || customerNoteId)) {
-            updateNotes(request);
-        } else {
-            addNotes(request);
+        if (notesData) {
+            let request = {
+                note: notesData.note,
+                [isSupplier ? 'supplierId' : 'customerId']: keyId,
+                [isSupplier ? 'supplierNoteId' : 'customerNoteId']: isSupplier ? supplierNoteId : customerNoteId,
+            };
+            if (supplierNoteId || customerNoteId) {
+                updateNotes(request);
+            } else {
+                addNotes(request);
+            }
         }
     };
 

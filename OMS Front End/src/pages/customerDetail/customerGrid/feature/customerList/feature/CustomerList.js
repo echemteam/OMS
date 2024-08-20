@@ -33,6 +33,7 @@ import { reasonData } from "../../../../../../common/features/component/Customer
 import PropTypes from 'prop-types';
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 import { validateResponsibleUserId } from "../../../../../../utils/ResponsibleUser/validateRUser";
+import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
 // import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
 //import MolGrid from "../../../../../../components/Grid/MolGrid";
 
@@ -104,70 +105,38 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   }, [isGetAllUserSucess, allGetAlluserData,]);
 
   useEffect(() => {
+    onCustomeActionHandler();
+  }, [configFile]);
+
+  const hasResponsibleUserhasAccess = () => {
+    onCustomeActionHandler();
+  }
+
+  const onCustomeActionHandler = () => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
     const approvalAction = configFile?.columns.find((column) => column.name === "Approve");
     if (actionColumn) {
       const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
       const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
       const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
-      const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
       const hasDisable = hasFunctionalPermission(securityKey.DISABLECUSTOMER);
       const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
-      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+      // const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
 
-      if (actionColumn.defaultAction.allowEdit) {
+      if (actionColumn.defaultAction) {
         actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
       }
-      // actionColumn.customAction = securityValidator(hasBlock?.hasAccess, actionColumn.customAction, "ALLOWBLOCKED");
-      // actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
-      // actionColumn.customAction = securityValidator(hasDisable?.hasAccess, actionColumn.customAction, "ALLOWDISABLE");
-      // actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
-
-      if (actionColumn.defaultAction.allowActiveCustomer) {
-        actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
-      }
-      if (actionColumn.defaultAction.allowUnfreeze) {
-        actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
-      }
-
-      if (approvalAction) {
-        if (approvalAction.colSettings.allowCheckbox) {
-          approvalAction.colSettings.allowCheckbox = true;
-        }
-      }
+      actionColumn.customAction = securityValidator(hasBlock?.hasAccess, actionColumn.customAction, "ALLOWBLOCKED");
+      actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
+      actionColumn.customAction = securityValidator(hasDisable?.hasAccess, actionColumn.customAction, "ALLOWDISABLE");
+      actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
+    }
+    if (approvalAction && approvalAction.colSettings) {
+      approvalAction.colSettings.isDisabled = true;
     }
     if (isResponsibleUser) {
-      if (approvalAction) {
-        if (approvalAction.colSettings.allowCheckbox) {
-          approvalAction.colSettings.allowCheckbox = true;
-        }
-      }
-    }
-  }, [configFile]);
-
-  const hasResponsibleUserhasAccess = () => {
-    const actionColumn = configFile?.columns.find((column) => column.name === "Action");
-    if (actionColumn) {
-      if (actionColumn.defaultAction.hasOwnProperty('allowEdit')) {
-        actionColumn.defaultAction.allowEdit = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty("allowBlocked")) {
-        actionColumn.defaultAction.allowBlocked = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowFreeze')) {
-        actionColumn.defaultAction.allowFreeze = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
-        actionColumn.defaultAction.allowActiveCustomer = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowDisable')) {
-        actionColumn.defaultAction.allowDisable = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
-        actionColumn.defaultAction.allowUnblocked = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
-        actionColumn.defaultAction.allowUnblocked = true;
+      if (approvalAction && approvalAction.colSettings) {
+        approvalAction.colSettings.isDisabled = false;
       }
     }
   }

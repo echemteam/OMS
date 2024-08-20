@@ -139,7 +139,7 @@ export const PendingCustomerGridConfig = {
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
-        // allowDisable: true,
+        // isDisabled: true,
       },
       customAction: [
         {
@@ -197,7 +197,7 @@ export const SubmittedCustomerGridConfig = {
       colType: GridColumnType.CHECKBOX,
       colSettings: {
         allowCheckbox: true,
-        allowDisable: false,
+        isDisabled: false,
       },
     },
     {
@@ -208,7 +208,7 @@ export const SubmittedCustomerGridConfig = {
       colType: GridColumnType.ACTION,
       defaultAction: {
         allowEdit: true,
-        // allowDisable: true,
+        // isDisabled: true,
       },
       customAction: [
         {
