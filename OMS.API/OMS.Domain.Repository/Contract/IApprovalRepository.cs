@@ -19,6 +19,6 @@ namespace OMS.Domain.Repository.Contract
         Task Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text);
         Task<IEnumerable<string>> GetTableColumnsAsync(string tableName);
         Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration();
-        Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId);
+        Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string? roleId);
     }
 }
