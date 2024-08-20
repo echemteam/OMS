@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { AppIcons } from "../../../data/appIcons";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,10 @@ import { useUpdateApprovalRequestsStatusMutation } from "../../../app/services/A
 import ToastService from "../../../services/toastService/ToastService";
 import { Button } from "react-bootstrap";
 import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
+import Buttons from "../../../components/ui/button/Buttons";
+import FormCreator from "../../../components/Forms/FormCreator";
+import CenterModel from "../../../components/ui/centerModel/CenterModel";
+import { addResonData } from "../config/RejectReason.data";
 
 const parseJson = (jsonStr) => {
   try {
@@ -49,13 +53,16 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
 
 const formatBoolean = (value) => (value ? "True" : "False");
 
-const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalRequest }) => {
-  const navigate = useNavigate();
+const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalRequest, tabId }) => {
 
+  const navigate = useNavigate();
+  const ref = useRef();
+  const [showModal, setShowModal] = useState(false);
   const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
 
   useEffect(() => {
     if (isUpdateSuccess && isUpdateData) {
+      setShowModal(false)
       ToastService.success(isUpdateData.errorMessage);
       approvalRequest(approvalRequestId);
     }
@@ -86,9 +93,23 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
   const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(oldValue, newValue, fieldName);
 
   const newValues = parseJson(newValue);
-  const { customerId, supplierId } = newValues;
 
-  const showRedirectButton = customerId || supplierId;
+  const findKey = (obj, keySubstring) => {
+    return Object.keys(obj).find((key) =>
+      key.toLowerCase().includes(keySubstring.toLowerCase())
+    );
+  };
+
+  // Check for the presence of customerId or supplierId keys
+  const customerIdKey = findKey(newValues, 'customerid');
+  const supplierIdKey = findKey(newValues, 'supplierid');
+
+  // Retrieve the corresponding values
+  const customerId = customerIdKey ? newValues[customerIdKey] : null;
+  const supplierId = supplierIdKey ? newValues[supplierIdKey] : null;
+
+  // Determine if the redirect button should be shown
+  const showRedirectButton = !!customerId || !!supplierId;
 
   const handleRedirectClick = () => {
     if (customerId) {
@@ -103,16 +124,33 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
   }
 
   const handleRejectRequest = () => {
-    approvalStatus(MyTaskStatus.Pending);
+    approvalStatus(MyTaskStatus.Reject);
   }
 
   const approvalStatus = (status) => {
-    let request = {
-      status: status,
-      approvalRequestId: approvalRequestId
+    if (status === "Accept") {
+      let request = {
+        status: status,
+        approvalRequestId: approvalRequestId,
+      }
+      updateApprovalRequest(request);
+    } else {
+      let data = ref.current.getFormData();
+      if(data){
+        let request = {
+          status: status,
+          approvalRequestId: approvalRequestId,
+          rejectReason: data.rejectReason
+        }
+        updateApprovalRequest(request);
+      }
     }
-    updateApprovalRequest(request);
   }
+
+  const handleToggleModal = () => {
+    setShowModal(!showModal);
+  };
+
 
   return (
     <div className="task-detail">
@@ -149,6 +187,12 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
           <span className="info-label">Status : </span>
           <span className={`ml-2 ${getLabelClass(status)}`}>{status}</span>
         </div>
+        {approvedData.rejectReason &&
+          <div className="info-row">
+            <span className="info-label">Rejection Reason : </span>
+            <span className="info-value ml-2">{approvedData.rejectReason}</span>
+          </div>
+        }
       </div>
       <div className="value-comparison">
         <div className="value-block">
@@ -182,19 +226,50 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
           )}
         </div>
       </div>
-
-      <div className="task-footer mt-3 pr-3">
-        <Button className="reject-btn" onClick={handleRejectRequest}>
-          {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
-          <Iconify icon="gg:close-o" />
-          Reject
-        </Button>
-        <Button className="accept-btn" onClick={handleApprovalRequest}>
-          <Image imagePath={AppIcons.RightTickIcon} altText="Accept Icon" />
-          Accept
-        </Button>
-      </div>
+      {tabId !== 1 &&
+        <div className="task-footer mt-3 pr-3">
+          <Button className="reject-btn" onClick={handleToggleModal}>
+            {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
+            <Iconify icon="gg:close-o" className="mr-1" />
+            Reject
+          </Button>
+          <Button className="accept-btn" onClick={handleApprovalRequest}>
+            <Image imagePath={AppIcons.RightTickIcon} altText="Accept Icon" />
+            Accept
+          </Button>
+        </div>
+      }
+      <CenterModel
+        showModal={showModal}
+        handleToggleModal={handleToggleModal}
+        modalTitle="Add Rejection Reason"
+        modelSizeClass="w-40"
+      >
+        <div className="row  phone-numer-card">
+          <div className="col-md-12 add-edit-phoneForm">
+            <div className="row vertical-form">
+              <FormCreator config={addResonData} ref={ref} {...addResonData} />
+            </div>
+          </div>
+          <div className="col-md-12 mt-2">
+            <div className="d-flex align-item-center justify-content-end">
+              <Buttons
+                buttonTypeClassName="theme-button"
+                // buttonText={`${isEdit ? "Update" : "Add"}`}
+                buttonText="Add"
+                onClick={handleRejectRequest}
+              />
+              <Buttons
+                buttonTypeClassName="dark-btn ml-5"
+                buttonText="Cancel"
+                onClick={handleToggleModal}
+              />
+            </div>
+          </div>
+        </div>
+      </CenterModel>
     </div>
+
   );
 };
 TaskDetail.propTypes = {

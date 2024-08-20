@@ -34,9 +34,9 @@ const approvalAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-        getApprovalRequestsListByStatusAndRequestedByUserId: builder.query({
+        getApprovalRequestsListByStatusAndRoleId: builder.query({
             query: (data) => ({
-                url: encryptQueryString(`/Approval/GetApprovalRequestsListByStatusAndRequestedByUserId/?status=${data.status}&requestedByUserId=${data.requestedByUserId}`),
+                url: encryptQueryString(`/Approval/GetApprovalRequestsListByStatusAndRoleId/?status=${data.status}&roleId=${data.roleId}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
@@ -65,7 +65,7 @@ const approvalAPI = createApi({
 
 export const {
     useLazyGetUserCheckListQuery,
-    useLazyGetApprovalRequestsListByStatusAndRequestedByUserIdQuery,
+    useLazyGetApprovalRequestsListByStatusAndRoleIdQuery,
     useLazyGetApprovalRequestsByApprovalRequestIdQuery,
     useAddUserChecklistResponseMutation,
     useGetValidateCheckListMutation,

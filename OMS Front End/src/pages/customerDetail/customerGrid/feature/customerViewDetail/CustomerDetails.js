@@ -99,7 +99,7 @@ const CustomerDetails = () => {
               imagePath={AppIcons.BackArrowIcon}
             ></Buttons>
             <div className="customer-detail-tab-sec">
-              <CustomerViewTab customerId={customerId} isBuyingForThirdParty={isBuyingForThirdParty} contryIdCode={customerData?.countryId} />
+              <CustomerViewTab customerId={customerId} isBuyingForThirdParty={isBuyingForThirdParty} contryIdCode={customerData?.countryId} customerStatus={customerData?.statusId} />
             </div>
           </div>
         </div>

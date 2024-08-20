@@ -17,7 +17,7 @@ const supplierSecurityKey = {
     EDIT: securityKey.EDITSUPPLIERADDRESS,
 }
 
-const SuplierAddressDetails = ({ isEditablePage }) => {
+const SuplierAddressDetails = ({ isEditablePage ,supplierStatus }) => {
 
     const { supplierId, isResponsibleUser } = useContext(AddSupplierContext);
 
@@ -36,6 +36,7 @@ const SuplierAddressDetails = ({ isEditablePage }) => {
             addAddress={useAddAddressMutation}
             updateAddress={useUpdateAddAddressMutation} 
             deleteAddress={useDeleteAddressMutation}
+            statusId={supplierStatus}
             />
     )
 }

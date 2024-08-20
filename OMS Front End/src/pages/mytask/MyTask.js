@@ -13,10 +13,10 @@ import { getAuthProps } from "../../lib/authenticationLibrary";
 const MyTask = () => {
 
   const authData = getAuthProps();
-  const userId = authData.user.userID
-
+  const roleId = authData.roles.roleId
   const [isApproval, setIsApproval] = useState(false);
   const [approvedData, setApprovedData] = useState(null);
+  const [tabId , setTabId] = useState(0)
   const [approvalRequestId, setApprovalRequestId] = useState(0);
 
   const [getApprovalRequestsByApprovalRequestId, { isFetching: isGetApprovalRequestsByApprovalRequestIdFetching, isSuccess: isGetApprovalRequestsByApprovalRequestIdSuccess, data: isGetApprovalRequestsByApprovalRequestIdData }] = useLazyGetApprovalRequestsByApprovalRequestIdQuery();
@@ -32,7 +32,7 @@ const MyTask = () => {
   }
 
   const handleSetTab = (data) => {
-    // setTabId(data)
+    setTabId(data)
     setApprovedData(null)
   }
 
@@ -51,12 +51,12 @@ const MyTask = () => {
     {
       sMenuItemCaption: "Pending",
       icon: "fa fa-check-circle-o",
-      component: <div className="mt-3"><PendingTask isApproval={isApproval} Pending={MyTaskStatus.Pending} onGetById={handleGetPendingId} onTabChange={handleSetTab} userId={userId} /></div>,
+      component: <div className="mt-3"><PendingTask isApproval={isApproval} Pending={MyTaskStatus.Pending} onGetById={handleGetPendingId} onTabChange={handleSetTab} roleId={roleId} /></div>,
     },
     {
       sMenuItemCaption: "Archive",
       icon: "fa fa-file-archive-o",
-      component: <div className="mt-3"><ArchiveTask Accept={MyTaskStatus.Accept} onGetById={handleGetArchiveId} userId={userId} /></div>,
+      component: <div className="mt-3"><ArchiveTask Accept={[MyTaskStatus.Accept, MyTaskStatus.Reject]} onGetById={handleGetArchiveId} roleId={roleId} /></div>,
     },
   ];
 
@@ -70,7 +70,7 @@ const MyTask = () => {
             </div>
           </div>
           <div className="col-8">
-            <TaskDetail approvedData={approvedData} approvalRequest={approvalRequest} approvalRequestId={approvalRequestId} isFetching={isGetApprovalRequestsByApprovalRequestIdFetching} />
+            <TaskDetail approvedData={approvedData} approvalRequest={approvalRequest} approvalRequestId={approvalRequestId} isFetching={isGetApprovalRequestsByApprovalRequestIdFetching} tabId={tabId}/>
           </div>
         </div>
       </div>
