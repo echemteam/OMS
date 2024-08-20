@@ -73,7 +73,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   }, [isGetAllUserSucess, allGetAlluserData,]);
 
   useEffect(() => {
-    if (isSuccessAddEditResponsibleUserForSupplier && isAddEditResponsibleUserForSupplierData) {
+        if (isSuccessAddEditResponsibleUserForSupplier && isAddEditResponsibleUserForSupplierData) {
       ToastService.success(isAddEditResponsibleUserForSupplierData.errorMessage);
     }
   }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
@@ -312,20 +312,11 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
       }
       updateSupplierInActiveStatus(req)
       addSupplierNotes(req);
-      if (!assignRUser && custData.responsibleUserId && custData.responsibleUserId.value) {
-        updateRUserData(custData.responsibleUserId.value);
+      if (!assignRUser && custData.responsibleUserId && custData.responsibleUserId) {
+        updateRUserData(custData.responsibleUserId);
       }
     }
   }
-
-  // const updateRUserData = (value) => {
-  //   let req = {
-  //     ownerId: supplierID,
-  //     OwnerType: OwnerType.Supplier,
-  //     responsibleUserId: value
-  //   }
-  //   updateResponsibleUser(req);
-  // }
 
   const updateRUserData = (value) => {
     let req = {
