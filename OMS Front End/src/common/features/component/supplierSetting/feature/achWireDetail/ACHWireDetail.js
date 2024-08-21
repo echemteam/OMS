@@ -8,7 +8,6 @@ import Buttons from "../../../../../../components/ui/button/Buttons";
 import { bankAddressFormData } from "../../config/BankAddressForm.data";
 import { setDropDownOptionField } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useAddEditACHWireMutation, useLazyGetACHWireBySupplierIdQuery } from "../../../../../../app/services/supplierFinancialSettingsAPI";
-import { useLazyGetAllPaymentTermsQuery } from "../../../../../../app/services/customerSettingsAPI";
 import { registeredBankAddressForm } from "../../config/RegisteredBankAddressForm.data";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import BankAddressDetail from "./features/BankAddressDetail";

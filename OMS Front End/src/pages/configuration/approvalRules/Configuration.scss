@@ -4,7 +4,7 @@
     overflow: hidden;
     width: 100%;
 
-    .card-body-sec{
+    .card-body-sec {
       margin: 0;
     }
   }
@@ -39,8 +39,8 @@
         color: var(--textColor);
         font-weight: 500;
       }
-      
-      .fa{
+
+      .fa {
         transform: rotate(-90deg);
         position: absolute;
         right: 4px;
@@ -69,7 +69,7 @@
           color: var(--themeColor);
         }
       }
-    
+
       .profile-icon {
         display: flex;
         align-items: center;
@@ -77,22 +77,22 @@
         width: 30px;
         height: 30px;
         border: 1px solid var(--themeColor);
-        color: var(--themeColor);;
+        color: var(--themeColor);
         border-radius: 100%;
         box-shadow: var(--card-shadow);
 
-        .fa{
+        .fa {
           font-size: var(--commonFont-extraLarge);
         }
       }
-    
+
       span {
         margin-left: 10px;
         color: var(--textColor);
         font-weight: 500;
       }
 
-      .right-dropdown{
+      .right-dropdown {
         transform: rotate(-90deg);
         position: absolute;
         right: 4px;
@@ -148,6 +148,27 @@
   }
 }
 
+.approval-rules {
+  table {
+    tbody {
+      max-height: calc(100vh - 320px) !important;
+      @media only screen and (max-width: 1750px) {
+        max-height: calc(100vh - 290px) !important;
+      }
+    }
+  }
+}
+
+.functional-config {
+  table {
+    tbody {
+      max-height: calc(100vh - 460px) !important;
+      @media only screen and (max-width: 1750px) {
+        max-height: calc(100vh - 390px) !important;
+      }
+    }
+  }
+}
 
 @media only screen and (max-width: 1750px) {
   .config-card {
@@ -155,17 +176,19 @@
       height: calc(100vh - 120px);
       margin-bottom: 0;
     }
-    .config-content{
+    .config-content {
       max-height: calc(100vh - 180px);
     }
   }
 }
 
-
-.api-provider{
+.api-provider {
   table {
-    tbody{
-      max-height: calc(100vh - 450px);
+    tbody {
+      max-height: calc(100vh - 325px);
+      @media only screen and (max-width: 1750px) {
+        max-height: calc(100vh - 290px) !important;
+      }
     }
   }
 }

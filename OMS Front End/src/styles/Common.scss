@@ -32,6 +32,7 @@ a {
 
 .input-label-part {
   width: 100%;
+  position: relative;
 }
 
 .input-label {
@@ -773,6 +774,12 @@ a {
   }
 }
 
+.link-customer {
+  .card {
+    padding-top: 4px;
+  }
+}
+
 .card-email-sec {
   .card {
     margin-bottom: 0;
@@ -860,6 +867,9 @@ a {
   .card {
     .card-body-sec {
       padding: 5px !important;
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 150px);
+      }
     }
   }
 }
@@ -2313,11 +2323,32 @@ input[type="checkbox"]:disabled {
   }
 }
 
+.customer-detail-tab-sec {
+  .card {
+    table {
+      tbody {
+        max-height: calc(100vh - 540px);
+        @media only screen and (max-width: 1750px) {
+          max-height: calc(100vh - 490px);
+        }
+      }
+    }
+  }
+}
+
 .customer-list-all {
   margin-top: 5px !important;
 
   .card {
     padding: 10px 0 !important;
+    table {
+      tbody {
+        max-height: calc(100vh - 380px);
+        @media only screen and (max-width: 1750px) {
+          max-height: calc(100vh - 350px);
+        }
+      }
+    }
   }
 
   table {
@@ -3665,6 +3696,10 @@ input[type="checkbox"]:disabled {
   font-size: var(--commonFont-large) !important;
   color: #9346f8 !important;
 }
+.addparameter-icon {
+  font-size: var(--commonFont-2extraLarge) !important;
+  color: #9346f8 !important;
+}
 .freeze-icon {
   font-size: var(--commonFont-large) !important;
   color: #0097bd !important;
@@ -3686,35 +3721,35 @@ input[type="checkbox"]:disabled {
   font-size: var(--commonFont-large) !important;
   color: #d81f1f !important;
 }
-.view-icon{
+.view-icon {
   font-size: var(--commonFont-large) !important;
   color: #1755b3 !important;
 }
-.key-icon{
+.key-icon {
   font-size: var(--commonFont-large) !important;
   color: #4ca717 !important;
 }
-.api-icon{
+.api-icon {
   font-size: var(--commonFont-large) !important;
   color: #14538d !important;
 }
-.delete-icon{
+.delete-icon {
   font-size: var(--commonFont-large) !important;
   color: #d10808 !important;
 }
-.order-price-list{
-  .css-1jqq78o-placeholder{
+.order-price-list {
+  .css-1jqq78o-placeholder {
     display: flex;
   }
   table {
-    tbody{
+    tbody {
       tr {
-        td {  
+        td {
           span {
-            padding: 4px 0 ;
+            padding: 4px 0;
           }
         }
       }
     }
-  }  
+  }
 }

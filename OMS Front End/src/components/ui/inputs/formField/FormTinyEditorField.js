@@ -36,8 +36,8 @@ const FormTextEditorField = ({
                     onTinyMceEditorChange={handleOnChange}
                     isDisable={formSetting?.isViewOnly || editorProps?.isDisable || false}
                 />
-            </div>
             <ValidationText error={error || ""} />
+            </div>
         </>
     )
 }

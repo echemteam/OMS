@@ -15,7 +15,7 @@ import { encryptUrlData } from "../../../services/CryptoService";
 import { securityKey } from "../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
 import FinalMolGrid from "../../../components/FinalMolGrid/FinalMolGrid";
-
+import "./SecurityManagement.scss";
 
 const SecurityRoleManagement = () => {
   const molGridRef = useRef();
@@ -215,7 +215,7 @@ const SecurityRoleManagement = () => {
   };
 
   return (
-    <div>
+    <div className="security-list">
       <CardSection
         cardTitle="Security Roles"
         // cardSubTitle="Sub title add hear"

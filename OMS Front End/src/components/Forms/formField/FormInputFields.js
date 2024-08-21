@@ -109,8 +109,8 @@ const FormInputFields = ({
             />
           </>
         )}
-      </div>
       <ValidationText error={error || ""} />
+      </div>
     </>
   );
 };

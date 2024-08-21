@@ -16,7 +16,7 @@ const AddEditCarrier = forwardRef(({ showModal, handleToggleModal, isEdit, onSuc
     //** State */
     const ref = useRef();
     const { customerId } = useContext(BasicDetailContext);
-    const [formData, setFormData] = useState(addEditCarrierFormData);
+    const [formData] = useState(addEditCarrierFormData);
 
     //** API Call's */
     const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();

@@ -42,9 +42,9 @@ const CKEditorField = ({
                     onCKEditorChange={handleOnChange}
                     isDisable={formSetting?.isViewOnly || editorProps?.isDisable || false || overRideProps?.isDisable}
                 />
-            </div>
             <div className="mt-2">
                 <ValidationText error={error || ""} />
+            </div>
             </div>
         </>
     );

@@ -64,10 +64,10 @@ const FormSelectField = ({
             dataField={dataField}
           />
         </Suspense>
-      </div>
       <Suspense fallback={<div>Loading...</div>}>
         <ValidationText error={error || ""} />
       </Suspense>
+      </div>
     </>
   )
 }
