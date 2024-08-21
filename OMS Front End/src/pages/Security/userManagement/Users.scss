@@ -1,20 +1,23 @@
-.user-lists{
-  .card{
+.user-lists {
+  .card {
     margin-bottom: 0;
   }
   table {
-    thead{
-      tr{
-        th:nth-child(4){
+    thead {
+      tr {
+        th:nth-child(4) {
           display: flex;
           justify-content: center;
         }
       }
     }
-    tbody{
-      max-height: calc(100vh - 280px);
-      tr{
-        td:nth-child(4){
+    tbody {
+      max-height: calc(100vh - 320px);
+      @media only screen and (max-width: 1750px) {
+        max-height: calc(100vh - 290px);
+      }
+      tr {
+        td:nth-child(4) {
           display: flex;
           justify-content: center;
         }

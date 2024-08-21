@@ -32,8 +32,11 @@ namespace OMS.Application.Services.CustomerAccountingSettings
         {
             CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
             customerAccountingSettingsDto.CreatedBy = CurrentUserId;
+            AddEntityDto<int> responceData = new AddEntityDto<int>();
 
-            if (requestData.CustomerAccountingSettingId == null )
+            responceData= await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
+
+            if (requestData.CustomerAccountingSettingId == null)
             {
                 CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = new()
                 {
@@ -46,7 +49,7 @@ namespace OMS.Application.Services.CustomerAccountingSettings
                 _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
             }
 
-            return await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
+            return responceData;
 
         }
 
