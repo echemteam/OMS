@@ -1,7 +1,6 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Application.Services.SupplierAccoutingSetting;
-using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.SupplierAccoutingSetting;
 using OMS.Domain.Entities.API.Request.SupplierFinancialSettings;
 using OMS.Domain.Entities.API.Request.supplierPaymentSettings;
@@ -34,19 +33,37 @@ namespace OMS.Application.Services.SupplierFinancialSettings
         public async Task<AddEntityDto<int>> AddEditACHWire(AddEditACHWireRequest requestData, short CurrentUserId)
         {
             SuppierBankDetailsDto suppierBankDetailsDto = new();
-
             var responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
-            suppierBankDetailsDto = requestData.ToMapp<AddEditACHWireRequest, SuppierBankDetailsDto>();
-            if (requestData.BankAddress != null)
+            if (requestData.BeneficiaryDetails != null)
             {
-                suppierBankDetailsDto.BankAddressId = await AddEditAddress(requestData.BankAddress, CurrentUserId);
+                var beneficiaryDetails = requestData.BeneficiaryDetails.ToMapp<BeneficiaryDetailsRequest, SuppierBankDetailsDto>();
+                beneficiaryDetails.BankAddressId = await AddEditAddress(requestData.BeneficiaryDetails, r => r.AddressId, CurrentUserId);
+                MergeDto(suppierBankDetailsDto, beneficiaryDetails);
             }
-            if (requestData.RecipientAddress != null)
+            if (requestData.BankDetails != null)
             {
-                suppierBankDetailsDto.RecipientAddressId = await AddEditAddress(requestData.RecipientAddress, CurrentUserId);
+                var bankDetails = requestData.BankDetails.ToMapp<BankDetailsRequest, SuppierBankDetailsDto>();
+                bankDetails.RecipientAddressId = await AddEditAddress(requestData.BankDetails, r => r.AddressId, CurrentUserId);
+                MergeDto(suppierBankDetailsDto, bankDetails);
             }
+            if (requestData.OtherDetails != null)
+            {
+                MergeDto(suppierBankDetailsDto, requestData.OtherDetails.ToMapp<OtherDetailsRequest, SuppierBankDetailsDto>());
+            }
+            suppierBankDetailsDto.SupplierId=requestData.SupplierId;
             suppierBankDetailsDto.CreatedBy = CurrentUserId;
             return await repositoryManager.suppierBankDetails.AddEditACHWire(suppierBankDetailsDto);
+        }
+        private void MergeDto(SuppierBankDetailsDto destination, SuppierBankDetailsDto source)
+        {
+            foreach (var property in typeof(SuppierBankDetailsDto).GetProperties())
+            {
+                var value = property.GetValue(source);
+                if (value != null)
+                {
+                    property.SetValue(destination, value);
+                }
+            }
         }
         public async Task<AddEntityDto<int>> AddEditCreditCard(AddEditCreditCardRequest requestData, short CurrentUserId)
         {
@@ -66,7 +83,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditCheckRequest, SupplierPaymentSettingsDto>();
             if (requestData.MailingAddress != null)
             {
-                supplierPaymentSettingsDto.CheckMailingAddressId = await AddEditAddress(requestData.MailingAddress, CurrentUserId);
+                supplierPaymentSettingsDto.CheckMailingAddressId = await AddEditAddress(requestData.MailingAddress, r => r.AddressId, CurrentUserId);
             }
             supplierPaymentSettingsDto.CreatedBy = CurrentUserId;
             return await repositoryManager.supplierPaymentSettings.AddEditCheck(supplierPaymentSettingsDto);
@@ -80,12 +97,12 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             return await repositoryManager.supplierPaymentSettings.AddEditOther(supplierPaymentSettingsDto);
         }
 
-        private async Task<int> AddEditAddress(AddEditAddressRequest addressRequest, short currentUserId)
+        private async Task<int> AddEditAddress<T>(T addressRequest, Func<T, int?> getAddressId, short currentUserId) where T : class
         {
-            AddressDto addressDto = addressRequest.ToMapp<AddEditAddressRequest, AddressDto>();
+            AddressDto addressDto = addressRequest.ToMapp<T, AddressDto>();
             AddEntityDto<int> responseData;
 
-            if (addressRequest.AddressId > 0)
+            if (getAddressId(addressRequest) > 0)
             {
                 addressDto.UpdatedBy = currentUserId;
                 responseData = await repositoryManager.address.UpdateAddAddress(addressDto);

@@ -45,7 +45,6 @@ namespace OMS.Application.Services.CustomerAccountingSettings
 
                 _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
             }
-
             return await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
 
         }
