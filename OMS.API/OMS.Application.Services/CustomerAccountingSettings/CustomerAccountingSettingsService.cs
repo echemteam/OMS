@@ -32,19 +32,22 @@ namespace OMS.Application.Services.CustomerAccountingSettings
         {
             CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
             customerAccountingSettingsDto.CreatedBy = CurrentUserId;
-            AddEntityDto<int> responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
-            if (responceData.KeyValue > 0)
+
+            if (requestData.CustomerAccountingSettingId == null )
             {
                 CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = new()
                 {
                     CustomerId = requestData.CustomerId,
+                    CreatedBy = CurrentUserId,
+                    DeliveryAccountId = (int)DeliveryAccount.OurAccount,
+                    IsByDefault = true
                 };
-                customerShppingDeliveryCarriersDto.CreatedBy = CurrentUserId;
-                customerShppingDeliveryCarriersDto.DeliveryAccountId = ((int)DeliveryAccount.OurAccount);
-                customerShppingDeliveryCarriersDto.IsByDefault = true;
-                responceData = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
+
+                _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
             }
-            return responceData;
+
+            return await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
+
         }
 
         public async Task<AddEntityDto<int>> AddEditCustomerInvoice(AddEditCustomerInvoiceRequest requestData, short CurrentUserId)
