@@ -57,8 +57,8 @@ const FormInputFields = ({
           onBlur={handleOnBlur}
           isDisable={formSetting?.isViewOnly || inputProps?.isDisable || false}
         />
-      </div>
       <ValidationText error={error || ""} />
+      </div>
     </>
   );
 };
