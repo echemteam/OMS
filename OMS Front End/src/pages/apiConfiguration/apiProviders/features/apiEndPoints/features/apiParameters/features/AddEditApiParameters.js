@@ -175,7 +175,7 @@ const AddEditApiParameters = (props) => {
     <>
       <div>
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-12 mt-2">
             <div className="row vertical-form">
               <FormCreator
                 ref={apiParameterRef}
