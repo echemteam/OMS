@@ -4,15 +4,15 @@ import { EditGridColumnType } from "../../../../../../../components/FinalMolGrid
 export const priceListConfig = {
   columns: [
     {
-      name: "Size",
-      fieldName: "Size",
+      name: "Unit",
+      fieldName: "Quantity",
       colStyle: {
         width: "10%",
       },
     },
     {
-      name: "Unit",
-      fieldName: "Quantity",
+      name: "Size",
+      fieldName: "Size",
       colStyle: {
         width: "10%",
       },
