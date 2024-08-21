@@ -4,16 +4,13 @@ import { ContactType } from "../../../../../utils/Enums/commonEnums";
 
 export const contactInformationData = {
   initialState: {
-    endUserId:"",
+    endUserId:null,
     isEndUser: true,
     isPurchasingGiven: true,
-    endUser: "",
     refNumber: "",
     isInvoiceSubmission: true,
-    invoiceSubmission: "",
-    purchasing: "",
-    invoiceSubmissionId: "",
-    purchasingId: "",
+    invoiceSubmissionId: null,
+    purchasingId: null,
   },
   formFields: [
     {

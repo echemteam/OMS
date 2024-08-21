@@ -157,6 +157,10 @@ const ContactDetails = (props) => {
           setEndUserEnableDisableButton(true)
         } else {
           setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, true);
+          basicInformation.current.updateFormFieldValue({
+            endUserId : null,
+            isEndUser : false
+        });
           setEndUserEnableDisableButton(false)
         }
         break;
@@ -167,6 +171,10 @@ const ContactDetails = (props) => {
           setInvoiceEnableDisableButton(true)
         } else {
           setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, true);
+          basicInformation.current.updateFormFieldValue({
+            invoiceSubmissionId : null,
+            isInvoiceSubmission : false
+        });
           setInvoiceEnableDisableButton(false)
         }
         break;
@@ -177,6 +185,10 @@ const ContactDetails = (props) => {
           setPurchasingEnableDisableButton(true)
         } else {
           setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, true);
+          basicInformation.current.updateFormFieldValue({
+            purchasingId : null,
+            isPurchasingGiven : false
+        });
           setPurchasingEnableDisableButton(false)
         }
         break;
@@ -215,11 +227,11 @@ const ContactDetails = (props) => {
       let request = {
         orderId: orderId ? orderId : 0,
         isEndUser: data.isEndUser,
-        endUserContactId: 0,
+        endUserContactId: data.endUserId && typeof data.endUserId === "object" ? data.endUserId.value : data.endUserId,
         isInvoiceSubmission: data.isInvoiceSubmission,
-        invoiceSubmissionContactId: data.invoiceSubmissionId.value,
+        invoiceSubmissionContactId: data.invoiceSubmissionId && typeof data.invoiceSubmissionId === "object" ? data.invoiceSubmissionId.value : data.invoiceSubmissionId,
         isPurchasing: data.isPurchasingGiven,
-        purchasingContactId: 0,
+        purchasingContactId: data.purchasingId && typeof data.purchasingId === "object" ? data.purchasingId.value : data.purchasingId,
         referenceNumber: data.refNumber
       }
       addEditOrderContactInformation(request)

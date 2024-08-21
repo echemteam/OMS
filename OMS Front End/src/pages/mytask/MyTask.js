@@ -51,12 +51,12 @@ const MyTask = () => {
     {
       sMenuItemCaption: "Pending",
       icon: "fa fa-check-circle-o",
-      component: <div className="mt-3"><PendingTask isApproval={isApproval} Pending={MyTaskStatus.Pending} onGetById={handleGetPendingId} onTabChange={handleSetTab} roleId={roleId} /></div>,
+      component: <div className=""><PendingTask isApproval={isApproval} Pending={MyTaskStatus.Pending} onGetById={handleGetPendingId} onTabChange={handleSetTab} roleId={roleId} /></div>,
     },
     {
       sMenuItemCaption: "Archive",
       icon: "fa fa-file-archive-o",
-      component: <div className="mt-3"><ArchiveTask Accept={[MyTaskStatus.Accept, MyTaskStatus.Reject]} onGetById={handleGetArchiveId} roleId={roleId} /></div>,
+      component: <div className=""><ArchiveTask Accept={[MyTaskStatus.Accept, MyTaskStatus.Reject]} onGetById={handleGetArchiveId} roleId={roleId} /></div>,
     },
   ];
 

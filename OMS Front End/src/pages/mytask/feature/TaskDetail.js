@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { AppIcons } from "../../../data/appIcons";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Image from "../../../components/image/Image";
 import formatDate from "../../../lib/formatDate";
 import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
@@ -55,7 +55,7 @@ const formatBoolean = (value) => (value ? "True" : "False");
 
 const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalRequest, tabId }) => {
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const ref = useRef();
   const [showModal, setShowModal] = useState(false);
   const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
@@ -113,9 +113,9 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
 
   const handleRedirectClick = () => {
     if (customerId) {
-      navigate(`/CustomerDetails/${encryptUrlData(customerId)}`);
+      window.open(`/CustomerDetails/${encryptUrlData(customerId)}`, '_blank');
     } else if (supplierId) {
-      navigate(`/SupplierDetails/${encryptUrlData(supplierId)}`);
+      window.open(`/SupplierDetails/${encryptUrlData(supplierId)}`, '_blank');
     }
   };
 
@@ -197,28 +197,26 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
         }
       </div>
       {approvedData.isFunctional ?
-        <div className="customer-information pt-0">
-          <div className="info-row">
-            <span className="info-label">New Value : </span>
-            {/* <div className="info-value ml-2"> */}
-            {/* <pre>{JSON.stringify(parseJson(approvedData.newValue), null, 2)}</pre> */}
+        <div className="value-comparison">
+          <div className="value-block">
+            <span className="value-title">New Value</span>
             {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
-              <ul className="info-list">
+              <ul className="value-content pl-0">
                 {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
-                  <li key={key}>
-                    <span className="info-label">{key} : </span>
-                    <span className="info-value ml-2">
-                      {typeof value === "boolean"
-                        ? formatBoolean(value)
-                        : value}
-                    </span>
-                  </li>
+                  <>
+                    <li className="">
+                      <span className="value-label">{key}:</span>
+                      <span className="value-data ml-2">
+                        {typeof value === "boolean" ? formatBoolean(value) : value}
+                      </span>
+                    </li>
+
+                  </>
                 ))}
               </ul>
             ) : (
               <div className="no-value">No new value available</div>
             )}
-            {/* </div> */}
           </div>
         </div>
         :

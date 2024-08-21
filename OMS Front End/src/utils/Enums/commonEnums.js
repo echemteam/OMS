@@ -97,7 +97,7 @@ export const OrderTabEnum = {
 export const MyTaskStatus = {
     Pending: "Pending",
     Accept: "Accept",
-    Reject:"Reject"
+    Reject: "Reject"
 }
 
 export const ParameterType = {
@@ -121,4 +121,10 @@ export const ContactType = {
     PurchaseOrder: 8,
     SalesDepartment: 9,
     QCDepartment: 10
+}
+
+export const OrderInformationField = {
+    CustomerName: "CustomerName",
+    SubCustomer: "SubCustomer",
+    Verify:"Verify"
 }

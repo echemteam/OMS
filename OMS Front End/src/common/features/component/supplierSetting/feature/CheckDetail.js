@@ -153,7 +153,6 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
     DDL_CHANGED: handleChangeDropdownList,
   };
 
-
   return (
      
       <div className="ach-wire-section">

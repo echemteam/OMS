@@ -115,40 +115,52 @@ export const Menu = [
             to: "/FunctionalConfiguration",
             securityKey: securityKey.APPROVALRULES,
           },
-        ],
-      },
-      {
-        id: "apiconfiguration",
-        name: "API Configuration",
-        iconClass: "hugeicons:api",
-        subMenu: true,
-        to: "#",
-        securityKey: securityKey.APICONFIGURATION,
-        children: [
           {
             id: "apiProviders",
             submenuName: "API Providers",
             to: "/APIProviders",
             securityKey: securityKey.APIPROVIDERS,
           },
-        ],
-      },
-      {
-        id: "ThirdPartyAPI",
-        name: "Third party API",
-        iconClass: "hugeicons:api",
-        subMenu: true,
-        to: "#",
-        securityKey: securityKey.SECURITY,
-        children: [
           {
             id: "Api Configuration",
-            submenuName: "Api Configuration",
+            submenuName: "Third party API",
             to: "/ThirdPartyApiConfiguration",
             securityKey: securityKey.USERMANAGEMENT,
           },
         ],
       },
+      // {
+      //   id: "apiconfiguration",
+      //   name: "API Configuration",
+      //   iconClass: "hugeicons:api",
+      //   subMenu: true,
+      //   to: "#",
+      //   securityKey: securityKey.APICONFIGURATION,
+      //   children: [
+      //     {
+      //       id: "apiProviders",
+      //       submenuName: "API Providers",
+      //       to: "/APIProviders",
+      //       securityKey: securityKey.APIPROVIDERS,
+      //     },
+      //   ],
+      // },
+      // {
+      //   id: "ThirdPartyAPI",
+      //   name: "Third party API",
+      //   iconClass: "hugeicons:api",
+      //   subMenu: true,
+      //   to: "#",
+      //   securityKey: securityKey.SECURITY,
+      //   children: [
+      //     {
+      //       id: "Api Configuration",
+      //       submenuName: "Api Configuration",
+      //       to: "/ThirdPartyApiConfiguration",
+      //       securityKey: securityKey.USERMANAGEMENT,
+      //     },
+      //   ],
+      // },
     ],
   },
   {

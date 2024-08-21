@@ -4,6 +4,7 @@ import Select from "react-select";
 import "./DropdownSelect.scss";
 
 function DropdownSelect(props) {
+
   const base64Icon = props.inputButtonGroup?.icon;
 
   return (

@@ -5,49 +5,90 @@ import CardSection from "../../../../../../components/ui/card/CardSection";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
 import { achWireFormData } from "../../config/ACHWireForm.data";
 import Buttons from "../../../../../../components/ui/button/Buttons";
-import { bankAddressFormData } from "../../config/BankAddressForm.data";
-import { setDropDownOptionField } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setDropDownOptionField, setFieldSetting } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useAddEditACHWireMutation, useLazyGetACHWireBySupplierIdQuery } from "../../../../../../app/services/supplierFinancialSettingsAPI";
-import { registeredBankAddressForm } from "../../config/RegisteredBankAddressForm.data";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import BankAddressDetail from "./features/BankAddressDetail";
-import RegisteredBankAddressDetail from "./features/RegisteredBankAddressDetail";
-import { useLazyGetAllAccountTypeQuery } from "../../../../../../app/services/commonAPI";
 import ACHWIreOtherDetails from "./features/ACHWIreOtherDetails";
 import { ACHOtherDetailsData } from "../../config/ACHOtherDetails.data";
+import { useLazyGetAllCountriesQuery } from "../../../../../../app/services/basicdetailAPI";
+import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../../app/services/addressAPI";
+import { FieldSettingType } from "../../../../../../utils/Enums/commonEnums";
+import { bankAddressFormData } from "../../config/BankAddressForm.data";
+import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
 
 const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) => {
   const aCHWireFormRef = useRef();
   const aCHWireOtherRef = useRef();
   const bankFormRef = useRef();
-  const registeredFormRef = useRef();
+  // const registeredFormRef = useRef();
   const [achWireData, setAchWireData] = useState(achWireFormData);
 
+  const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
+  const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
+  const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+
   const [addEditACHWire, { isLoading: isAddEditACHWireLoading, isSuccess: isAddEditACHWireSuccess, data: isAddEditACHWireData }] = useAddEditACHWireMutation();
- // const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
-  const [getAllAccountType, { isFetching: isGetAllAccountTypeFetching, isSuccess: isGetAllAccountTypeSuccess, data: isGetAllAccountTypeData }] = useLazyGetAllAccountTypeQuery();
+  // const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
   const [getACHWireBySupplierId, { isFetching: isGetACHWireBySupplierIdFetching, isSuccess: isGetACHWireBySupplierIdSuccess, data: isGetACHWireBySupplierIdData }] = useLazyGetACHWireBySupplierIdQuery();
 
   useEffect(() => {
-   // getAllPaymentTerms();
-    getAllAccountType();
+    getAllCountries();
+    getAllStates();
   }, []);
+
+  useEffect(() => {
+    if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {
+      setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', achWireData, 'countryId');
+    }
+  }, [isGetAllCountriesFetching, isGetAllCountriesSuccess, allGetAllCountriesData]);
+
+
+  useEffect(() => {
+    if (!isGetAllCitiesFetching && isGetAllCitiesSuccess && allGetAllCitiesData) {
+      const cities = allGetAllCitiesData.map((item) => ({
+        value: item.cityId,
+        label: item.name,
+      }));
+      let data = { ...achWireData };
+      const dropdownField = data?.formFields?.find(data => data.id === "cityId");
+      dropdownField.fieldSetting.options = cities;
+      setAchWireData(data);
+    }
+  }, [isGetAllCitiesFetching, isGetAllCitiesSuccess, allGetAllCitiesData]);
+
+
+  const handleChangeBankAddressDropdownList = (data, dataField) => {
+    const manageData = { ...achWireData };
+    if (dataField === "countryId") {
+      setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', manageData, 'stateId', item => item.countryId === data.value);
+      setDropDownOptionField(null, 'cityId', 'name', manageData, 'cityId', null);
+      setFieldSetting(manageData, 'stateId', FieldSettingType.DISABLED, false);
+      aCHWireFormRef.current.updateFormFieldValue({
+        countryId: data.value,
+        stateId: null,
+        cityId: null
+      });
+    } else if (dataField === "stateId") {
+      getAllCities(data.value)
+      setFieldSetting(manageData, 'cityId', FieldSettingType.DISABLED, false);
+      aCHWireFormRef.current.updateFormFieldValue({
+        stateId: data.value,
+        cityId: null,
+      });
+    }
+    setAchWireData(manageData);
+  };
+
+  const formBackAddressActionHandler = {
+    DDL_CHANGED: handleChangeBankAddressDropdownList,
+  };
 
   useEffect(() => {
     if (activeTabIndex === 0 && supplierId > 0) {
       getACHWireBySupplierId(supplierId)
     }
   }, [activeTabIndex])
-
-  useEffect(() => {
-    // if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
-    //   setDropDownOptionField(isGetAllPaymentTermsData, "paymentTermId", "paymentTerm", achWireFormData, "paymentTermId");
-    // }
-    if (!isGetAllAccountTypeFetching && isGetAllAccountTypeSuccess && isGetAllAccountTypeData) {
-      setDropDownOptionField(isGetAllAccountTypeData, "accountType", "accountType", achWireFormData, "accountType");
-    }
-  }, [ isGetAllAccountTypeData, isGetAllAccountTypeSuccess, isGetAllAccountTypeFetching]);
-
 
   useEffect(() => {
     handleResponse(isAddEditACHWireSuccess, isAddEditACHWireData);
@@ -75,29 +116,29 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
   useEffect(() => {
 
     if (!isGetACHWireBySupplierIdFetching && isGetACHWireBySupplierIdSuccess && isGetACHWireBySupplierIdData) {
-
       let formDataAchWire = { ...achWireData };
+      if (isGetACHWireBySupplierIdData.bankAddress.countryId) {
+        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', formDataAchWire, 'stateId', item => item.countryId === isGetACHWireBySupplierIdData.bankAddress.countryId);
+      }
+
+      if (isGetACHWireBySupplierIdData.bankAddress.stateId) {
+        getAllCities(isGetACHWireBySupplierIdData.bankAddress.stateId)
+      }
       if (isGetACHWireBySupplierIdData.supplierBankDetailsId) {
         formDataAchWire.initialState = {
-          supplierBankDetailsId: isGetACHWireBySupplierIdData.supplierBankDetailsId,
-          bankAddressId: isGetACHWireBySupplierIdData.bankAddressId,
-          recipientAddressId: isGetACHWireBySupplierIdData.recipientAddressId,
           supplierId: supplierId,
-          messageToRecipient: isGetACHWireBySupplierIdData.messageToRecipient,
-          isAddressInUs: isGetACHWireBySupplierIdData.isAddressInUs,
           recipientPhoneNumber: isGetACHWireBySupplierIdData.recipientPhoneNumber,
-         // paymentTermId: isGetACHWireBySupplierIdData.paymentTermId,
-          messageToRecipientBank: isGetACHWireBySupplierIdData.messageToRecipientBank,
+          // paymentTermId: isGetACHWireBySupplierIdData.paymentTermId,
+          // messageToRecipientBank: isGetACHWireBySupplierIdData.messageToRecipientBank,
           beneficiaryName: isGetACHWireBySupplierIdData.beneficiaryName,
-          bankName: isGetACHWireBySupplierIdData.bankName,
-          accountType: isGetACHWireBySupplierIdData.accountType,
-          accountNumber: isGetACHWireBySupplierIdData.accountNumber,
-          branchCode: isGetACHWireBySupplierIdData.branchCode,
-          ibanNumber: isGetACHWireBySupplierIdData.ibanNumber,
-          swiftCode: isGetACHWireBySupplierIdData.swiftCode,
-          routingNumber: isGetACHWireBySupplierIdData.routingNumber,
-          sortCode: isGetACHWireBySupplierIdData.sortCode,
-          bsbNumber: isGetACHWireBySupplierIdData.bsbNumber,
+          addressId: isGetACHWireBySupplierIdData.bankAddress.addressId,
+          addressLine1Id: isGetACHWireBySupplierIdData.bankAddress.addressLine1,
+          addressLine2Id: isGetACHWireBySupplierIdData.bankAddress.addressLine2,
+          countryId: isGetACHWireBySupplierIdData.bankAddress.countryId,
+          zipCode: isGetACHWireBySupplierIdData.bankAddress.zipCode,
+          stateId: isGetACHWireBySupplierIdData.bankAddress.stateId,
+          cityId: isGetACHWireBySupplierIdData.bankAddress.cityId,
+          supplierId: supplierId,
         }
         setAchWireData(formDataAchWire)
       }
@@ -106,15 +147,14 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
 
 
   const handleACHWireAdd = () => {
+    
     const formsupplierFinancialSettings = financialSettingFormRef.current.getFormData();
     const formBankAddress = bankFormRef.current.getFormData();
-    const formRegisteredBankAddress = registeredFormRef.current.getFormData();
     const formOtherDetail = aCHWireFormRef.current.getFormData();
     const formAchWireOtherDetail = aCHWireOtherRef.current.getFormData();
 
-    if (formsupplierFinancialSettings && formBankAddress && formRegisteredBankAddress && formOtherDetail) {
+    if (formsupplierFinancialSettings && formBankAddress && formOtherDetail) {
       const extractId = (item, key) => (item[key] && typeof item[key] === "object" ? item[key].value : item[key]);
-
       const req = {
         supplierFinancialSettings: {
           isActive: true,
@@ -124,71 +164,65 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
           invoiceSubmissionMethod: extractId(formsupplierFinancialSettings, 'paymentMethodId'),
           poDeliveryMethodId: extractId(formsupplierFinancialSettings, 'poDeliveryMethodId'),
         },
-        bankAddress: {
+        beneficiaryDetails: {
+          addressId: formOtherDetail.addressId ?? 0,
+          addressLine1: formOtherDetail.addressLine1Id,
+          addressLine2: formOtherDetail.addressLine2Id,
+          cityId: extractId(formOtherDetail, 'cityId'),
+          stateId: extractId(formOtherDetail, 'stateId'),
+          countryId: extractId(formOtherDetail, 'countryId'),
+          zipCode: formOtherDetail.zipCode,
+          recipientPhoneNumber: formOtherDetail.recipientPhoneNumber,
+          beneficiaryName: formOtherDetail.beneficiaryName,
+        },
+        bankDetails: {
           addressId: formBankAddress.addressId ?? 0,
           addressLine1: formBankAddress.addressLine1Id,
           addressLine2: formBankAddress.addressLine2Id,
           cityId: extractId(formBankAddress, 'cityId'),
           stateId: extractId(formBankAddress, 'stateId'),
           countryId: extractId(formBankAddress, 'countryId'),
-          zipCode: formBankAddress.zipCode
+          zipCode: formBankAddress.zipCode,
+          bankName: formBankAddress.bankName,
+          accountType: extractId(formBankAddress, 'accountType'),
+          accountNumber: formBankAddress.accountNumber,
+          branchCode: formBankAddress.branchCode,
+          ibanNumber: formBankAddress.ibanNumber,
+          swiftCode: formBankAddress.swiftCode,
+          routingNumber: formBankAddress.routingNumber,
+          sortCode: formBankAddress.sortCode,
+          bsbNumber: formBankAddress.bsbNumber,
+          isAddressInUs: formBankAddress.isAddressInUs,
         },
-        recipientAddress: {
-          addressId: formRegisteredBankAddress.addressId ?? 0,
-          addressLine1: formRegisteredBankAddress.addressLine1Id,
-          addressLine2: formRegisteredBankAddress.addressLine2Id,
-          cityId: extractId(formRegisteredBankAddress, 'cityId'),
-          stateId: extractId(formRegisteredBankAddress, 'stateId'),
-          countryId: extractId(formRegisteredBankAddress, 'countryId'),
-          zipCode: formRegisteredBankAddress.zipCode
+        otherDetails: {
+          messageToRecipientBank: formAchWireOtherDetail.messageToRecipientBank,
+          messageToRecipient: formAchWireOtherDetail.messageToRecipient,
         },
-        supplierBankDetailsId: formOtherDetail.supplierBankDetailsId ?? 0,
-        bankAddressId: formOtherDetail.bankAddressId ?? 0,
-        recipientAddressId: formOtherDetail.recipientAddressId ?? 0,
-        supplierId,
-        isActive: true,
-        messageToRecipient: formAchWireOtherDetail.messageToRecipient,
-        isAddressInUs: formOtherDetail.isAddressInUs,
-        recipientPhoneNumber: formOtherDetail.recipientPhoneNumber,
-       // paymentTermId: extractId(formOtherDetail, 'paymentTermId'),
-        messageToRecipientBank: formAchWireOtherDetail.messageToRecipientBank,
-        beneficiaryName: formOtherDetail.beneficiaryName,
-        bankName: formOtherDetail.bankName,
-        accountType: extractId(formOtherDetail, 'accountType'),
-        accountNumber: formOtherDetail.accountNumber,
-        branchCode: formOtherDetail.branchCode,
-        ibanNumber: formOtherDetail.ibanNumber,
-        swiftCode: formOtherDetail.swiftCode,
-        routingNumber: formOtherDetail.routingNumber,
-        sortCode: formOtherDetail.sortCode,
-        bsbNumber: formOtherDetail.bsbNumber,
-      };
-
+        supplierId
+      }
       addEditACHWire(req);
     }
   };
 
+  if (isGetACHWireBySupplierIdFetching) {
+    return <div><DataLoader /></div>; // Replace with a proper loading spinner or component
+  }
+
   return (
     <div className="ach-wire-section">
 
-      <CardSection cardTitle="Beneficiary Details">
+      <CardSection cardTitle="Beneficiary/Remit To Details">
         <div className="row">
           <FormCreator
             config={achWireData}
             ref={aCHWireFormRef}
             {...achWireData}
+            onActionChange={formBackAddressActionHandler}
           />
         </div>
       </CardSection>
 
       <BankAddressDetail bankFormRef={bankFormRef} bankAddressFormData={bankAddressFormData}
-        isGetACHWireBySupplierIdSuccess={isGetACHWireBySupplierIdSuccess}
-        isGetACHWireBySupplierIdData={isGetACHWireBySupplierIdData}
-      />
-
-      <RegisteredBankAddressDetail
-        registeredBankAddressForm={registeredBankAddressForm}
-        registeredFormRef={registeredFormRef}
         isGetACHWireBySupplierIdSuccess={isGetACHWireBySupplierIdSuccess}
         isGetACHWireBySupplierIdData={isGetACHWireBySupplierIdData}
       />

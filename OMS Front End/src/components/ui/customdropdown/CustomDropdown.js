@@ -50,9 +50,10 @@ function CustomDropdown(props) {
       {inputButtonGroup?.isInputButton && (
         <button
           className="select-button"
-          disabled={!props.value}
+          // disabled={!props.value}
           type="button"
-          onClick={props.handleInputGroupButton}
+          // onClick={props.handleInputGroupButton}
+          onClick={() => props.handleInputGroupButton(props.inputButtonGroup?.GetByID)}
         >
           {base64Icon && (
             <img

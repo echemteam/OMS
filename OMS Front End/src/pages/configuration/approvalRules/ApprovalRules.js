@@ -46,7 +46,7 @@ const ApprovalRules = () => {
     <div className="row">
       <div className="approval-rules">
         <CardSection
-          cardTitle="Rules"
+          cardTitle="Approval Rules"
           buttonClassName="btn theme-button"
           rightButton={true}
           buttonText="Add"

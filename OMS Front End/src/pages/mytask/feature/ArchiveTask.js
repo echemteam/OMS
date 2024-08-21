@@ -6,6 +6,7 @@ import "../../mytask/MyTask.scss";
 import NoRecordFound from '../../../components/ui/noRecordFound/NoRecordFound';
 import DataLoader from '../../../components/ui/dataLoader/DataLoader';
 import { FirstSecondLetter } from '../../../utils/FirstSecLetter/FirstSecondLetter';
+import formatDate from '../../../lib/formatDate';
 
 const ArchiveTask = (props) => {
 
@@ -49,20 +50,30 @@ const ArchiveTask = (props) => {
                                 className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""}`}
                                 onClick={() => handleTabClick(tab.approvalRequestId)}
                             >
-                                <div className="d-flex align-items-center">
+                                <div className="d-flex align-items-start">
                                     <span className="profile-icon"> {FirstSecondLetter(tab.functionalityName)} </span>
-                                    <div className="title">
-                                        {tab.functionalityName}
-                                        <span className="sub-title">{tab.moduleName}</span>
-                                    </div>
                                     {/* <div className="title">
                                         {tab.functionalityName}
-                                        <div className='bage-fix'>
                                         <span className="sub-title">{tab.moduleName}</span>
-                                        <div class="mytask-type-badge">Billing</div>
-                                        </div>
                                     </div> */}
+                                    <div className="title">
+                                        {tab.functionalityName}
+                                        <div className='bage-fix'>
+                                            <span className="sub-title">{tab.moduleName}</span>
+                                            <div
+                                                className={`mytask-type-badge ${tab.status === "Accept" ? "badge-accept" : tab.status === "Reject" ? "badge-reject" : ""
+                                                    }`}
+                                            >
+                                                {tab.status}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                    <div className="date">
+                                        {tab.requestedDate
+                                            ? formatDate(tab.requestedDate, "MM/DD/YYYY hh:mm A")
+                                            : "No Date"}
+                                    </div>
                             </button>
                         ))
                     ) : (

@@ -6,6 +6,7 @@ import "../../mytask/MyTask.scss";
 import NoRecordFound from '../../../components/ui/noRecordFound/NoRecordFound';
 import DataLoader from '../../../components/ui/dataLoader/DataLoader';
 import { FirstSecondLetter } from '../../../utils/FirstSecLetter/FirstSecondLetter';
+import formatDate from '../../../lib/formatDate';
 
 const PendingTask = (props) => {
 
@@ -59,12 +60,17 @@ const PendingTask = (props) => {
                                 className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""}`}
                                 onClick={() => handleTabClick(tab.approvalRequestId)}
                             >
-                                <div className="d-flex align-items-center">
+                                <div className="d-flex align-items-start">
                                     <span className="profile-icon">  {FirstSecondLetter(tab.functionalityName)}</span>
                                     <div className="title">
                                         {tab.functionalityName}
                                         <span className="sub-title">{tab.moduleName}</span>
                                     </div>
+                                </div>
+                                <div className="date">
+                                    {tab.requestedDate
+                                        ? formatDate(tab.requestedDate, "MM/DD/YYYY hh:mm A")
+                                        : "No Date"}
                                 </div>
                             </button>
                         ))

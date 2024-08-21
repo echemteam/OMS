@@ -7,6 +7,7 @@ import { OrganizationOtherChargesFormData } from "./config/OrganizationOtherChar
 import { useAddEditOrganizationOtherChargesMutation, useLazyGetOrganizationOtherChargesQuery } from "../../../../app/services/organizationAPI";
 import { useLazyGetAllPaymentTermsQuery } from "../../../../app/services/customerSettingsAPI";
 import { setDropDownOptionField } from '../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
 const OrganizationOtherChargesDetail=()=>{
     const organizationOtherChargesRef = useRef();
@@ -75,6 +76,9 @@ const OrganizationOtherChargesDetail=()=>{
         }
     }, [isGetOrganizationOtherChargesFetching, isGetOrganizationOtherChargesSuccess, isGetOrganizationOtherChargesData,]);
 
+    if (isGetOrganizationOtherChargesFetching) {
+        return <div><DataLoader /></div>; // Replace with a proper loading spinner or component
+    }
 
     return( 
     

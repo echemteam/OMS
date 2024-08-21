@@ -7,6 +7,7 @@ import { setDropDownOptionField, setFieldSetting } from "../../../../../../../ut
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../../../app/services/addressAPI";
 import { FieldSettingType } from "../../../../../../../utils/Enums/commonEnums";
 import { useLazyGetAllCountriesQuery } from "../../../../../../../app/services/basicdetailAPI";
+import { useLazyGetAllAccountTypeQuery } from '../../../../../../../app/services/commonAPI';
 
 const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData }) => {
   const [formData, setFormData] = useState(bankAddressFormData);
@@ -14,36 +15,60 @@ const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySup
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
   const [getAllStates, { data: allGetAllStatesData }] = useLazyGetAllStatesQuery();
+  const [getAllAccountType, { isFetching: isGetAllAccountTypeFetching, isSuccess: isGetAllAccountTypeSuccess, data: isGetAllAccountTypeData }] = useLazyGetAllAccountTypeQuery();
 
   useEffect(() => {
-    if (isGetACHWireBySupplierIdSuccess && isGetACHWireBySupplierIdData?.bankAddress) {
-      const { bankAddress } = isGetACHWireBySupplierIdData;
+    getAllCountries();
+    getAllStates();
+    getAllAccountType();
+  }, []);
+
+
+  useEffect(() => {
+    if (isGetACHWireBySupplierIdSuccess && isGetACHWireBySupplierIdData?.recipientAddress) {
+      // const { bankAddress } = isGetACHWireBySupplierIdData;
       let data = { ...formData };
-      if (bankAddress.countryId) {
-        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === bankAddress.countryId);
+      if (isGetACHWireBySupplierIdData.recipientAddress.countryId) {
+        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === isGetACHWireBySupplierIdData.recipientAddress.countryId);
       }
 
-      if (bankAddress.stateId) {
-        getAllCities(bankAddress.stateId)
+      if (isGetACHWireBySupplierIdData.recipientAddress.stateId) {
+        getAllCities(isGetACHWireBySupplierIdData.recipientAddress.stateId)
       }
 
       data.initialState = {
-        addressId: bankAddress.addressId,
-        addressLine1Id: bankAddress.addressLine1,
-        addressLine2Id: bankAddress.addressLine2,
-        countryId: bankAddress.countryId,
-        zipCode: bankAddress.zipCode,
-        stateId: bankAddress.stateId,
-        cityId: bankAddress.cityId,
+        addressId: isGetACHWireBySupplierIdData.recipientAddress.addressId,
+        addressLine1Id: isGetACHWireBySupplierIdData.recipientAddress.addressLine1,
+        addressLine2Id: isGetACHWireBySupplierIdData.recipientAddress.addressLine2,
+        countryId: isGetACHWireBySupplierIdData.recipientAddress.countryId,
+        zipCode: isGetACHWireBySupplierIdData.recipientAddress.zipCode,
+        stateId: isGetACHWireBySupplierIdData.recipientAddress.stateId,
+        cityId: isGetACHWireBySupplierIdData.recipientAddress.cityId,
+        supplierBankDetailsId: isGetACHWireBySupplierIdData.supplierBankDetailsId,
+        bankAddressId: isGetACHWireBySupplierIdData.bankAddressId,
+        recipientAddressId: isGetACHWireBySupplierIdData.recipientAddressId,
+        // messageToRecipient: bankAddress.messageToRecipient,
+        isAddressInUs: isGetACHWireBySupplierIdData.isAddressInUs,
+        bankName: isGetACHWireBySupplierIdData.bankName,
+        accountType: isGetACHWireBySupplierIdData.accountType,
+        accountNumber: isGetACHWireBySupplierIdData.accountNumber,
+        branchCode: isGetACHWireBySupplierIdData.branchCode,
+        ibanNumber: isGetACHWireBySupplierIdData.ibanNumber,
+        swiftCode: isGetACHWireBySupplierIdData.swiftCode,
+        routingNumber: isGetACHWireBySupplierIdData.routingNumber,
+        sortCode: isGetACHWireBySupplierIdData.sortCode,
+        bsbNumber: isGetACHWireBySupplierIdData.bsbNumber,
       };
       setFormData(data);
     }
   }, [isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData]);
 
+
   useEffect(() => {
-    getAllCountries();
-    getAllStates();
-  }, []);
+    if (!isGetAllAccountTypeFetching && isGetAllAccountTypeSuccess && isGetAllAccountTypeData) {
+      setDropDownOptionField(isGetAllAccountTypeData, "accountType", "accountType", bankAddressFormData, "accountType");
+    }
+  }, [isGetAllAccountTypeData, isGetAllAccountTypeSuccess, isGetAllAccountTypeFetching]);
 
   useEffect(() => {
     if (!isGetAllCountriesFetching && isGetAllCountriesSuccess && allGetAllCountriesData) {

@@ -39,7 +39,7 @@
 
   .tab-button {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 
     .profile-icon {
@@ -80,7 +80,8 @@
         overflow-x: auto;
       }
       .tab-header {
-        padding-bottom: 10px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e8eae8;
       }
     }
   }
@@ -111,7 +112,7 @@
       font-weight: 600;
       display: flex;
       align-items: center;
-      cursor: pointer;
+      cursor: pointer !important;
     }
 
     .view-customer img {
@@ -244,6 +245,7 @@
       }
 
       .value-content {
+        list-style: none;
         .value-label {
           font-weight: 600;
         }
@@ -310,3 +312,18 @@
   font-weight: 600;
   // left: 145px;
 }
+.badge-accept {
+  background: var(--approved-theme);
+  color: var(--approved-theme-btn);
+}
+
+.badge-reject {
+  background: var(--reject-color);
+  color: var(--reject-theme-btn);
+}
+
+.date {
+  text-align: end;
+}
+
+
