@@ -19,8 +19,6 @@ const AddEditParameterMapping = (props) => {
   useEffect(() => {
     props.endpointId && getParametersByEndPointId(props.endpointId)
     props.keyId && getEventParameterByEventId(props.keyId);
-    console.log(props.endpointId);
- 
   }, [])
 
   useEffect(() => {
