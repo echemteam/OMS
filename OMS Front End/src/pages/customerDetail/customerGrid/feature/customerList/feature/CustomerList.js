@@ -15,7 +15,7 @@ import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/Bas
 import CustomerListContext from "../../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { useAddCustomerNotesMutation } from "../../../../../../app/services/notesAPI";
 import { useSelector } from "react-redux";
-import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../../../app/services/commonAPI";
+import { useLazyGetAllUserQuery } from "../../../../../../app/services/commonAPI";
 import { excludingRoles } from "../../../../feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { setDropDownOptionField } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
@@ -23,7 +23,6 @@ import { securityKey } from "../../../../../../data/SecurityKey";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { encryptUrlData } from "../../../../../../services/CryptoService";
 import { StatusEnums, StatusFeild } from "../../../../../../utils/Enums/StatusEnums";
-import { OwnerType } from "../../../../../../utils/Enums/commonEnums";
 import { AppIcons } from "../../../../../../data/appIcons";
 import CenterModel from "../../../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../../../components/Forms/FormCreator";

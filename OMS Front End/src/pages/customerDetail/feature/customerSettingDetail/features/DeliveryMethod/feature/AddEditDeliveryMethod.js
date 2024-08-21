@@ -15,7 +15,7 @@ const AddEditDeliveryMethod = forwardRef(({ showModal, handleToggleModal, isEdit
     //** State */
     const ref = useRef();
     const { customerId } = useContext(BasicDetailContext);
-    const [formData, setFormData] = useState(addEditDeliveryFormData);
+    const [formData] = useState(addEditDeliveryFormData);
 
     //** API Call's */
     const [update, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateDeliveryMethodsMutation();

@@ -21,7 +21,7 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
   const financialSettingFormRef = useRef();
   const [financialSettingForm, setFinancialSettingForm] = useState(financialSettingFormData);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
-  const [getCheckData, setGetCheckData] = useState(checkFormData)
+  const [getCheckData] = useState(checkFormData)
   const [getCreditData, setGetCreditData] = useState(creditCardFormData)
   const [getOtherData, setGetOtherData] = useState(otherFormData)
   const [activeTabIndex, setActiveTabIndex] = useState(0)
@@ -78,7 +78,7 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
   useEffect(() => {
     if (!isGetPaymentSettingsBySupplierIdFetching && isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData) {
       let formCreditData = { ...getCreditData };
-      let formCheckData = { ...getCheckData };
+      // let formCheckData = { ...getCheckData };
       let formOtherData = { ...getOtherData };
       if (activeTabIndex === 1 && isGetPaymentSettingsBySupplierIdData.ccNote) {
         formCreditData.initialState = {
