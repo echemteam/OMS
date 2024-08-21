@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 //** Lib's */
 import { AppIcons } from '../../../../../../data/appIcons';
-import { OwnerType } from '../../../../../../utils/Enums/commonEnums';
 import { securityKey } from '../../../../../../data/SecurityKey';
 import Buttons from '../../../../../../components/ui/button/Buttons';
 import FormCreator from '../../../../../../components/Forms/FormCreator';
@@ -19,7 +18,7 @@ import { hasFunctionalPermission } from '../../../../../../utils/AuthorizeNaviga
 //** Service's */
 import { encryptUrlData } from '../../../../../../services/CryptoService';
 import ToastService from '../../../../../../services/toastService/ToastService';
-import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../../../../../app/services/commonAPI';
+import { useLazyGetAllUserQuery } from '../../../../../../app/services/commonAPI';
 import { useAddSupplierNotesMutation } from '../../../../../../app/services/supplierNotesAPI';
 import { useAddEditResponsibleUserForSupplierMutation, useGetSuppliersMutation, useUpdateSupplierApproveStatusMutation, useUpdateSupplierInActiveStatusMutation } from '../../../../../../app/services/supplierAPI';
 import { reasonData } from '../../../../../../common/features/component/CustomerSupplierReason/Reason.data';
@@ -56,7 +55,6 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   const [updateSupplierInActiveStatus, { isLoading: updateInActiveStatusSupplierLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
   const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
   const [addSupplierNotes] = useAddSupplierNotesMutation();
-  const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
 
   useEffect(() => {
     getAllUser();

@@ -6,7 +6,6 @@ import CopyText from '../../../../../utils/CopyText/CopyText';
 import { securityKey } from '../../../../../data/SecurityKey';
 import { ErrorMessage } from '../../../../../data/appMessages';
 import Buttons from '../../../../../components/ui/button/Buttons';
-import { OwnerType } from '../../../../../utils/Enums/commonEnums';
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import DropDown from '../../../../../components/ui/dropdown/DropDrown';
 import DataLoader from '../../../../../components/ui/dataLoader/DataLoader';
