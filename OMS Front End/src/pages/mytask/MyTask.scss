@@ -49,7 +49,7 @@
       color: #000 !important;
       font-weight: 500;
       font-size: var(--commonFont-large) !important;
-      margin: 0px 10px;
+      margin: 0px 10px 0 0;
       width: 40px !important;
       height: 40px !important;
       line-height: 0;
@@ -61,11 +61,13 @@
     .title {
       display: flex;
       flex-direction: column;
-      font-size: var(--commonFont-large);
+      font-size: var(--commonFont-medium);
+
       color: var(--blackColor);
 
       .sub-title {
-        font-size: var(--commonFont);
+        font-size: var(--commonFont-medium);
+
         color: #222;
       }
     }
@@ -116,7 +118,7 @@
     }
 
     .view-customer img {
-      margin: 0 3px;
+      margin: 0 3px 0 0;
       vertical-align: middle;
     }
 
@@ -139,10 +141,10 @@
     .title {
       display: flex;
       flex-direction: column;
-      font-size: var(--commonFont-large);
+      font-size: var(--commonFont-medium);
 
       .sub-title {
-        font-size: var(--commonFont);
+        font-size: var(--commonFont-medium);
       }
     }
   }
@@ -204,10 +206,12 @@
       display: flex;
       // justify-content: space-between;
       margin-bottom: 10px;
+      align-items: center;
 
       .info-label {
         font-weight: 600;
         // color: #555;
+        font-size: var(--commonFont-medium);
       }
 
       .info-list {
@@ -217,6 +221,7 @@
 
       .info-value {
         color: var(--themeColor);
+        font-size: var(--commonFont-medium);
         font-weight: 600;
 
         &.info-value {
@@ -235,11 +240,14 @@
       width: 48%;
       background: #f9f9f9;
       padding: 15px;
+      display: flex;
+      gap: 5px;
       border-radius: 8px;
+      flex-direction: column;
 
       .value-title {
-        font-size: 16px;
-        margin-bottom: 10px;
+        font-size: var(--commonFont-large);
+        // margin-bottom: 10px;
         color: #333;
         font-weight: 700;
       }
@@ -248,11 +256,13 @@
         list-style: none;
         .value-label {
           font-weight: 600;
+          font-size: var(--commonFont-medium);
         }
 
         .value-data {
           color: var(--themeColor);
           font-weight: 600;
+          font-size: var(--commonFont-medium);
         }
       }
 
@@ -324,6 +334,6 @@
 
 .date {
   text-align: end;
+  font-size: var(--commonFont-small);
+  white-space: nowrap;
 }
-
-
