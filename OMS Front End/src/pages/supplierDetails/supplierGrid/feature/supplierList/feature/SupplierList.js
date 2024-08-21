@@ -27,6 +27,7 @@ import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid
 import { validateResponsibleUserId } from '../../../../../../utils/ResponsibleUser/validateRUser';
 import { excludingRoles } from '../../../../feature/supplierBasicDetail/config/SupplierBasicDetail.data';
 import { setDropDownOptionField } from '../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
+import { securityValidator } from '../../../../../../utils/CustomActionSecurity/actionsSecurityValidator';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
@@ -49,7 +50,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   const { supplierListRef } = useContext(SupplierContext);
   const [assignRUser, setAssignRUser] = useState();
   const { isResponsibleUser, setIsResponsibleUser } = useContext(AddSupplierContext);
-  const [addEditResponsibleUserForSupplier,{ isSuccess: isSuccessAddEditResponsibleUserForSupplier, data: isAddEditResponsibleUserForSupplierData }] = useAddEditResponsibleUserForSupplierMutation();
+  const [addEditResponsibleUserForSupplier, { isSuccess: isSuccessAddEditResponsibleUserForSupplier, data: isAddEditResponsibleUserForSupplierData }] = useAddEditResponsibleUserForSupplierMutation();
   const [getSuppliers, { isLoading: isListLoading, isSuccess: isListSuccess, data: isListeData }] = useGetSuppliersMutation();
   const [updateSupplierApproveStatus, { isSuccess: isSuccessUpdateSupplier, data: updateSupplierData }] = useUpdateSupplierApproveStatusMutation();
   const [updateSupplierInActiveStatus, { isLoading: updateInActiveStatusSupplierLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
@@ -73,82 +74,46 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   }, [isGetAllUserSucess, allGetAlluserData,]);
 
   useEffect(() => {
-        if (isSuccessAddEditResponsibleUserForSupplier && isAddEditResponsibleUserForSupplierData) {
+    if (isSuccessAddEditResponsibleUserForSupplier && isAddEditResponsibleUserForSupplierData) {
       ToastService.success(isAddEditResponsibleUserForSupplierData.errorMessage);
     }
   }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
 
   useEffect(() => {
+    onCustomeActionHandler();
+  }, [configFile]);
+
+  const hasResponsibleUserhasAccess = () => {
+    onCustomeActionHandler();
+  }
+
+  const onCustomeActionHandler = () => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
     const approvalAction = configFile?.columns.find((column) => column.name === "Approve");
     if (actionColumn) {
       const hasEdit = hasFunctionalPermission(securityKey.EDITSUPPLIER);
       const hasBlock = hasFunctionalPermission(securityKey.BLOCKSUPPLIER);
       const hasFreeze = hasFunctionalPermission(securityKey.FREEZESUPPLIER);
-      const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
+      //const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
       const hasDisable = hasFunctionalPermission(securityKey.DISABLESUPPLIER);
       const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
-      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
+      //const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
+      // const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
 
-      if (actionColumn.defaultAction.allowEdit) {
+      if (actionColumn.defaultAction) {
         actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
       }
-      if (actionColumn.defaultAction.allowBlocked) {
-        actionColumn.defaultAction.allowBlocked = hasBlock?.hasAccess;
-      }
-      if (actionColumn.defaultAction.allowFreeze) {
-        actionColumn.defaultAction.allowFreeze = hasFreeze?.hasAccess;
-      }
-      if (actionColumn.defaultAction.allowActiveSupplier) {
-        actionColumn.defaultAction.allowActiveSupplier = hasActive?.hasAccess;
-      }
-      if (actionColumn.defaultAction.allowDisable) {
-        actionColumn.defaultAction.allowDisable = hasDisable?.hasAccess;
-      }
-      if (actionColumn.defaultAction.allowUnblocked) {
-        actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
-      }
-      if (actionColumn.defaultAction.allowUnfreeze) {
-        actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
-      }
-      if (approvalAction) {
-        if (approvalAction.colSettings.allowCheckbox) {
-          approvalAction.colSettings.allowCheckbox = true;
-        }
-      }
+      actionColumn.customAction = securityValidator(hasBlock?.hasAccess, actionColumn.customAction, "ALLOWBLOCKED");
+      actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
+      actionColumn.customAction = securityValidator(hasDisable?.hasAccess, actionColumn.customAction, "ALLOWDISABLE");
+      actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
+    }
+    if (approvalAction && approvalAction.colSettings) {
+      approvalAction.colSettings.isDisabled = true;
     }
     if (isResponsibleUser) {
-      if (approvalAction) {
-        if (approvalAction.colSettings.allowCheckbox) {
-          approvalAction.colSettings.allowCheckbox = true;
-        }
-      }
-    }
-  }, [configFile]);
-
-  const hasResponsibleUserhasAccess = () => {
-    const actionColumn = configFile?.columns.find((column) => column.name === "Action");
-    if (actionColumn) {
-      if (actionColumn.defaultAction.hasOwnProperty('allowEdit')) {
-        actionColumn.defaultAction.allowEdit = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty("allowBlocked")) {
-        actionColumn.defaultAction.allowBlocked = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowFreeze')) {
-        actionColumn.defaultAction.allowFreeze = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowActiveSupplier')) {
-        actionColumn.defaultAction.allowActiveSupplier = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowDisable')) {
-        actionColumn.defaultAction.allowDisable = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
-        actionColumn.defaultAction.allowUnblocked = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
-        actionColumn.defaultAction.allowUnblocked = true;
+      if (approvalAction && approvalAction.colSettings) {
+        approvalAction.colSettings.isDisabled = false;
       }
     }
   }

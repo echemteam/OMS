@@ -96,7 +96,8 @@ export const OrderTabEnum = {
 
 export const MyTaskStatus = {
     Pending: "Pending",
-    Accept: "Accept"
+    Accept: "Accept",
+    Reject:"Reject"
 }
 
 export const ParameterType = {

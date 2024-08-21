@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
-import { useLazyGetApprovalRequestsListByStatusAndRequestedByUserIdQuery } from '../../../app/services/ApprovalAPI';
+import { useLazyGetApprovalRequestsListByStatusAndRoleIdQuery } from '../../../app/services/ApprovalAPI';
 import "../../mytask/MyTask.scss";
 import NoRecordFound from '../../../components/ui/noRecordFound/NoRecordFound';
 import DataLoader from '../../../components/ui/dataLoader/DataLoader';
@@ -11,18 +11,18 @@ const PendingTask = (props) => {
 
     const [pendingData, setPendingData] = useState([])
     const [activeTab, setActiveTab] = useState(null);
-    const [getApprovalRequestsListByStatus, { isFetching: isGetApprovalRequestsListByStatusFetching, isSuccess: isGetApprovalRequestsListByStatusSuccess, data: isGetApprovalRequestsListByStatusData }] = useLazyGetApprovalRequestsListByStatusAndRequestedByUserIdQuery();
+    const [getApprovalRequestsListByStatus, { isFetching: isGetApprovalRequestsListByStatusFetching, isSuccess: isGetApprovalRequestsListByStatusSuccess, data: isGetApprovalRequestsListByStatusData }] = useLazyGetApprovalRequestsListByStatusAndRoleIdQuery();
 
     useEffect(() => {
         if (props.Pending) {
             getApprovalRequestList();
         }
-    }, [props.Pending, props.userId]);
+    }, [props.Pending, props.roleId]);
 
     const getApprovalRequestList = () => {
         let req = {
             status: props.Pending,
-            requestedByUserId: props.userId
+            roleId: props.roleId
         }
         getApprovalRequestsListByStatus(req)
     }
@@ -78,7 +78,7 @@ const PendingTask = (props) => {
 }
 PendingTask.propTypes = {
     Pending: PropTypes.string,
-    userId: PropTypes.number.isRequired,
+    roleId: PropTypes.number.isRequired,
     onGetById: PropTypes.func
 };
 export default PendingTask

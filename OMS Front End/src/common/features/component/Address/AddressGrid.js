@@ -25,7 +25,8 @@ const AddressGrid = ({
   updateAddress,
   addAddress,
   getAddresssById,
-  deleteAddress
+  deleteAddress,
+  statusId
 }) => {
   //** States */
   const editRef = useRef();
@@ -134,6 +135,7 @@ const AddressGrid = ({
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
+          statusId={statusId}
         />
       </div>
     ),
@@ -148,6 +150,8 @@ const AddressGrid = ({
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
+          statusId={statusId}
+
         />
       </div>
     ),
@@ -162,6 +166,8 @@ const AddressGrid = ({
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
+          statusId={statusId}
+
         />
       </div>
     ),
@@ -176,6 +182,8 @@ const AddressGrid = ({
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
+          statusId={statusId}
+
         />
       </div>
     ),
@@ -190,6 +198,8 @@ const AddressGrid = ({
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
+          statusId={statusId}
+
         />
       </div>
     ),

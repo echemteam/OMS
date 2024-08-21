@@ -84,7 +84,6 @@ const SupplierDetails = () => {
     navigate("/Suppliers");
   };
 
-
   return (
     <>
       <div className="card-bottom-m-0">
@@ -103,7 +102,7 @@ const SupplierDetails = () => {
             <Buttons buttonTypeClassName="back-button btn dark-btn" onClick={handleBackClick}
               textWithIcon={true} buttonText="Back" imagePath={AppIcons.BackArrowIcon}></Buttons>
             {/* Supplier Tab's */}
-            <SupplierViewTab supplierId={supplierId} contryIdCode={supplierData?.countryId} />
+            <SupplierViewTab supplierId={supplierId} contryIdCode={supplierData?.countryId} supplierStatus={supplierData?.statusId}/>
           </div>
         </div>
       </div>

@@ -61,6 +61,7 @@ export const SuccessMessage = {
 	Map_Alert: '{0} mapped successfully',
 	Alret_Warning: 'Warning !',
 	TaxId: 'Minimum {0} and Maximum {1} characters allowed for Tax Id',
-	DefaultUSATaxId: 'Minimum 10 and Maximum 10 characters allowed.'
+	DefaultUSATaxId: 'Minimum 10 and Maximum 10 characters allowed.',
+	ApprovalSuccess:"We are reviewing your request and will get back to you shortly."
 };
 

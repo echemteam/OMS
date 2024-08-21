@@ -13,7 +13,7 @@ const SupplierContactDetail = React.lazy(() => import("../../supplierContactDeta
 const SuplierAddressDetails = React.lazy(() => import("../../supplierAddressDetail/SupplierAddressDetails"));
 const SupplierDocumentDetail = React.lazy(() => import("../../supplierDocumentDetail/SupplierDocumentDetail"));
 
-const SupplierViewTab = ({supplierId , contryIdCode}) => {
+const SupplierViewTab = ({supplierId , contryIdCode , supplierStatus}) => {
 
     const { isResponsibleUser } = useContext(AddSupplierContext);
 
@@ -29,7 +29,7 @@ const SupplierViewTab = ({supplierId , contryIdCode}) => {
             icon: "fa fa-address-book-o",
             component: (
                 <div className="mt-2 contact-accrodiaon-scroll">
-                    <SuplierAddressDetails isEditablePage={true} />
+                    <SuplierAddressDetails isEditablePage={true} supplierStatus={supplierStatus}/>
                 </div>
             ),
             isVisible: hasAddressPermission.hasAccess,

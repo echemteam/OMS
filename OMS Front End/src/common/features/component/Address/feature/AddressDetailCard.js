@@ -6,8 +6,6 @@ import React, {
   forwardRef,
 } from "react";
 //** Lib's */
-import { AppIcons } from "../../../../../data/appIcons";
-import Image from "../../../../../components/image/Image";
 //** Component's */
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
@@ -25,6 +23,7 @@ const AddressDetailCard = forwardRef(
     getByIdRef,
     selectedAddressTypeId,
     deleteAddress,
+    statusId
   }) => {
     //** States */
     const [addressData, setAddressData] = useState([]);
@@ -63,8 +62,8 @@ const AddressDetailCard = forwardRef(
       ) {
         const filteredData = selectedAddressTypeId[0]
           ? GetAddresssByCustomerIdData.filter(
-              (address) => address.addressTypeId === selectedAddressTypeId[0]
-            )
+            (address) => address.addressTypeId === selectedAddressTypeId[0]
+          )
           : GetAddresssByCustomerIdData;
         setAddressData(filteredData);
       }
@@ -150,8 +149,8 @@ const AddressDetailCard = forwardRef(
       return address.isPreferredBilling && address.addressTypeId === 1
         ? "Preferred Billing"
         : address.isPreferredShipping && address.addressTypeId === 2
-        ? "Preferred Shipping"
-        : "";
+          ? "Preferred Shipping"
+          : "";
     };
 
     return (
@@ -170,21 +169,20 @@ const AddressDetailCard = forwardRef(
                         address.addressTypeId === 1) ||
                         (address.isPreferredShipping &&
                           address.addressTypeId === 2)) && (
-                        <div className="status-desc">
-                          <span className="field-info active-green-color">
-                            {getStatusDescription(address)}
-                          </span>
-                        </div>
-                      )}
+                          <div className="status-desc">
+                            <span className="field-info active-green-color">
+                              {getStatusDescription(address)}
+                            </span>
+                          </div>
+                        )}
                       <div
-                        className={`add-line ${
-                          (address.isPreferredBilling &&
-                            address.addressTypeId === 1) ||
+                        className={`add-line ${(address.isPreferredBilling &&
+                          address.addressTypeId === 1) ||
                           (address.isPreferredShipping &&
                             address.addressTypeId === 2)
-                            ? ""
-                            : ""
-                        }`}
+                          ? ""
+                          : ""
+                          }`}
                       >
                         <span className="label-txt">
                           {address.addressLine1}
@@ -210,13 +208,16 @@ const AddressDetailCard = forwardRef(
                             <Iconify icon="tabler:pencil" />
                           </button>
                         ) : null}
-                        <button
-                          onClick={() => handleDelete(address)}
-                          className="edit-btn ml-2"
-                        >
-                          {/* <Image imagePath={AppIcons.deleteThemeIcon} /> */}
-                          <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
-                        </button>
+
+                        {statusId !== 3 &&
+                          <button
+                            onClick={() => handleDelete(address)}
+                            className="edit-btn ml-2"
+                          >
+                            {/* <Image imagePath={AppIcons.deleteThemeIcon} /> */}
+                            <Iconify icon="mingcute:delete-2-line" className="delete-icon" />
+                          </button>
+                        }
                       </div>
                       <div
                         className={`contact-type-badge ${getAddressTypeClass(

@@ -18,6 +18,7 @@ import ToastService from '../../../../../../services/toastService/ToastService';
 import { useGetSuppliersMutation, useUpdateSupplierStatusMutation } from '../../../../../../app/services/supplierAPI';
 import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid';
 import { validateResponsibleUserId } from '../../../../../../utils/ResponsibleUser/validateRUser';
+import { securityValidator } from '../../../../../../utils/CustomActionSecurity/actionsSecurityValidator';
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
 
@@ -56,36 +57,29 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
 
     useEffect(() => {
         if (!isResponsibleUser) {
-            const actionColumn = configFile?.columns.find(column => column.name === "Action");
-            if (actionColumn) {
-
-                const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
-                const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
-                const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
-
-                if (actionColumn.defaultAction.allowActiveSupplier) {
-                    actionColumn.defaultAction.allowActiveSupplier = hasActive?.hasAccess;
-                } else if (actionColumn.defaultAction.allowUnblocked) {
-                    actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
-                } else if (actionColumn.defaultAction.allowUnfreeze) {
-                    actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
-                }
-            }
+            onCustomeActionHandler();
         }
     }, [configFile]);
 
     const hasResponsibleUserhasAccess = () => {
+        onCustomeActionHandler();
+    }
+
+    const onCustomeActionHandler = () => {
         const actionColumn = configFile?.columns.find((column) => column.name === "Action");
         if (actionColumn) {
-            if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
-                actionColumn.defaultAction.allowActiveCustomer = true;
+            //const hasActive = hasFunctionalPermission(securityKey.ACTIVESUPPLIER);
+            const hasEdit = hasFunctionalPermission(securityKey.EDITSUPPLIER);
+            const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKSUPPLIER);
+            const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZESUPPLIER);
+
+            if (actionColumn.defaultAction) {
+                actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
             }
-            if (actionColumn.defaultAction.hasOwnProperty("allowUnblocked")) {
-                actionColumn.defaultAction.allowUnblocked = true;
-            }
-            if (actionColumn.defaultAction.hasOwnProperty('allowUnfreeze')) {
-                actionColumn.defaultAction.allowUnfreeze = true;
-            }
+            //actionColumn.customAction = securityValidator(hasBlock?.hasAccess, actionColumn.customAction, "ALLOWBLOCKED");
+            actionColumn.customAction = securityValidator(hasUnFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
+            //actionColumn.customAction = securityValidator(hasDisable?.hasAccess, actionColumn.customAction, "ALLOWDISABLE");
+            actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
         }
     }
 
@@ -200,7 +194,7 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
                         searchInput={true}
                         handleChange={handleChange}
                         searchInputName="Search By Supplier Name, Tax Id , Email Address"
-                        searchFilter={searchStatusFilter }
+                        searchFilter={searchStatusFilter}
                         handleChangeDropdown={handleChangeDropdown}
                         selectedOptions={selectedDrpvalues}
                         optionsValue={statusOptions}
@@ -251,32 +245,32 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
 
 InActiveSuppliersList.propTypes = {
     statusId: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number]))
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number]))
     ]).isRequired,
     configFile: PropTypes.object.isRequired,
     handleChange: PropTypes.func.isRequired,
     search: PropTypes.string.isRequired,
     handleChangeDropdown: PropTypes.func.isRequired,
     statusOptions: PropTypes.arrayOf(
-      PropTypes.shape({
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        label: PropTypes.string
-      })
+        PropTypes.shape({
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            label: PropTypes.string
+        })
     ).isRequired,
     selectedDrpvalues: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.number),
         PropTypes.string
-      ]).isRequired,
-      selectedStatusOptions: PropTypes.oneOfType([
+    ]).isRequired,
+    selectedStatusOptions: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.object),
         PropTypes.string
-      ]).isRequired,
+    ]).isRequired,
     searchStatusFilter: PropTypes.bool.isRequired,
     handleSearch: PropTypes.func.isRequired,
     handleClear: PropTypes.func.isRequired,
     shouldRerenderFormCreator: PropTypes.bool.isRequired,
-  };
+};
 
 export default InActiveSuppliersList;

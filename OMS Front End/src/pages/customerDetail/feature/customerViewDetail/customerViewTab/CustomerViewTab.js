@@ -14,7 +14,7 @@ const CustomerAddressDetail = React.lazy(() => import("../../customerAddressDeta
 const CustomerSettingDetails = React.lazy(() => import("../../customerSettingDetail/CustomerSettingDetails"));
 const CustomerSubCustomerDetail = React.lazy(() => import("../../customerSubCustomerDetail/CustomerSubCustomerDetail"));
 
-const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode }) => {
+const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode , customerStatus }) => {
 
   const { isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -44,7 +44,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode }) =>
       icon: "fa fa-address-book-o",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
-          <CustomerAddressDetail isEditablePage={true} />
+          <CustomerAddressDetail isEditablePage={true} customerStatus={customerStatus} />
         </div>
       ),
       isVisible: isResponsibleUser ? true : hasAddressPermission.hasAccess,
