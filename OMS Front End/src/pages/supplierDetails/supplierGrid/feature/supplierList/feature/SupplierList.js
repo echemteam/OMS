@@ -170,7 +170,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
-        const isResponsibleId = isListeData.dataSource.find(data =>  validateResponsibleUserId(data.responsibleUserId === authState?.user?.userID));
+        const isResponsibleId = isListeData.dataSource.find(data => validateResponsibleUserId(data.responsibleUserId === authState?.user?.userID));
         if (isResponsibleId) {
           setIsResponsibleUser(true);
           hasResponsibleUserhasAccess();
