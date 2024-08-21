@@ -55,7 +55,7 @@ const FunctionalConfiguration = () => {
                 <ModuleSelection handleModuleID={handleModuleID} />
             </CardSection>
             {moduleId > 0 &&
-                <div>
+                <div className='functional-config'>
                     <CardSection
                         cardTitle="Functional Configuration"
                         buttonClassName="btn theme-button"
