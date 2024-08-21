@@ -60,8 +60,8 @@ const FormDatePickerFields = ({
                     isDisable={formSetting?.isViewOnly || datePickerProps?.isDisable}
                     {...datePickerProps}
                 />
-            </div>
             <ValidationText error={error || ""} />
+            </div>
         </>
     );
 };
