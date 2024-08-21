@@ -291,5 +291,11 @@ namespace OMS.API.Controllers
                            }).ToList();
             return  APISucessResponce(accountTypes);
         }
+        [HttpGet("GetAllOrderMethod")]
+        public async Task<IActionResult> GetAllOrderMethod()
+        {
+            List<GetAllOrderMethodResponse> responseData = await _serviceManager.commonServices.GetAllOrderMethod().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }
