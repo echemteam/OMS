@@ -203,16 +203,6 @@ const thirdPartyAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
-        getAllApiEventRequiredFieldByApiEventId: builder.query({
-            query: (id) => ({
-                url: encryptQueryString(`/Common/GetAllApiEventRequiredFieldByApiEventId/?apiEventId=${Number(id)}`),
-                method: 'GET',
-            }),
-            // providesTags: ['User'],
-            transformResponse: transformSucessResponse,
-            transformErrorResponse: transformErrorResponse
-        }),
-
         getAllRequiredFieldsByEventId: builder.query({
             query: (id) => ({
                 url: encryptQueryString(`/ApiEventManagement/GetAllRequiredFieldsByEventId/?apiEventId=${Number(id)}`),
@@ -311,7 +301,6 @@ export const {
     useLazyGetApiEventByApiEventIdQuery,
     useLazyGetApiEventParameterByApiEventParametersIdQuery,
     useLazyGetApiEventRequiredFieldByApiEventRequiredFieldIdQuery,
-    useLazyGetAllApiEventRequiredFieldByApiEventIdQuery,
     useLazyGetAllRequiredFieldsByEventIdQuery,
 
 

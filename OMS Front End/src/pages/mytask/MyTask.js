@@ -64,12 +64,12 @@ const MyTask = () => {
     <CardSection>
       <div className="mytask-section">
         <div className="d-flex">
-          <div className="col-4 task-tab">
+          <div className="col-xxl-4 task-tab">
             <div className="task-title">
               <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
             </div>
           </div>
-          <div className="col-8">
+          <div className="col-xxl-8">
             <TaskDetail approvedData={approvedData} approvalRequest={approvalRequest} approvalRequestId={approvalRequestId} isFetching={isGetApprovalRequestsByApprovalRequestIdFetching} tabId={tabId}/>
           </div>
         </div>

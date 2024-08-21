@@ -88,7 +88,6 @@ const ProductDetailsList = () => {
   };
 
   const handleColumnsChange = (fieldName, rowData, rowIndex) => {
-    console.log("On Change called", fieldName);
     let newGridData = [...productDetailList];
     newGridData[rowIndex] = { ...productDetailList[rowIndex], ...rowData };
     setProductDetailList(newGridData);

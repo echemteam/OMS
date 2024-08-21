@@ -1,6 +1,8 @@
 import { getData } from "../LocalStorage/LocalStorageManager";
 //** Service */
 import { useAddApprovalRequestsMutation } from "../../app/services/commonAPI";
+import ToastService from "../../services/toastService/ToastService";
+import { ErrorMessage, SuccessMessage } from "../../data/appMessages";
 
 export const useValidateAndAddApprovalRequests = () => {
     // Hook to handle API requests for adding approval requests
@@ -37,36 +39,58 @@ export const useValidateAndAddApprovalRequests = () => {
 
         // Process each approval rule
         for (const rule of relevantRules) {
-            const { fieldName, moduleId, functionalityId, tableId, functionalitiesFieldId, functionalityEventId } = rule;
+            const { fieldName, moduleId, functionalityId, tableId, functionalitiesFieldId, functionalityEventId, isFunctional } = rule;
 
-            // Check if the rule specifies a field name to validate
-            if (fieldName) {
-                const normalizedFieldName = fieldName.toLowerCase();
-                const newFieldValue = newValueNormalized[normalizedFieldName];
-                const oldFieldValue = oldValueNormalized[normalizedFieldName];
+            if (isFunctional) {
+                const request = {
+                    moduleId,
+                    functionalityId,
+                    tableId,
+                    functionalitiesFieldId,
+                    functionalityEventId,
+                    oldValue: null,
+                    newValue: JSON.stringify(newValueNormalized)
+                };
 
-                // If the field value has changed, create an approval request
-                if (newFieldValue !== oldFieldValue) {
-                    const request = {
-                        moduleId,
-                        functionalityId,
-                        tableId,
-                        functionalitiesFieldId,
-                        functionalityEventId,
-                        oldValue: JSON.stringify(oldValueNormalized),
-                        newValue: JSON.stringify(newValueNormalized)
-                    };
-
-                    try {
-                        // Add the approval request and revert the change in newValue
-                        await addApprovalRequest(request);
-                        newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
-                    } catch (error) {
-                        console.error('Error adding approval request:', error);
-                    }
+                try {
+                    // Add the approval request and revert the change in newValue
+                    await addApprovalRequest(request);
+                    ToastService.success(SuccessMessage.ApprovalSuccess);
+                    //newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
+                } catch (error) {
+                    console.error('Error adding approval request:', error);
                 }
-            } else {
-                console.log('No fieldName property found in this rule');
+            } else if (!isFunctional) {
+                // Check if the rule specifies a field name to validate
+                if (fieldName) {
+                    const normalizedFieldName = fieldName.toLowerCase();
+                    const newFieldValue = newValueNormalized[normalizedFieldName];
+                    const oldFieldValue = oldValueNormalized[normalizedFieldName];
+
+                    // If the field value has changed, create an approval request
+                    if (newFieldValue !== oldFieldValue) {
+                        const request = {
+                            moduleId,
+                            functionalityId,
+                            tableId,
+                            functionalitiesFieldId,
+                            functionalityEventId,
+                            oldValue: JSON.stringify(oldValueNormalized),
+                            newValue: JSON.stringify(newValueNormalized)
+                        };
+
+                        try {
+                            // Add the approval request and revert the change in newValue
+                            await addApprovalRequest(request);
+                            newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
+                            ToastService.success(SuccessMessage.ApprovalSuccess);
+                        } catch (error) {
+                            console.error('Error adding approval request:', error);
+                        }
+                    }
+                } else {
+                    ToastService.warning(ErrorMessage.FieldNameNotFound);
+                }
             }
         }
 

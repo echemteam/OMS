@@ -74,12 +74,12 @@
   .task-tab {
     border-right: 1px solid #e8eae8;
 
-    .tab-section{
-      .tab-content{
+    .tab-section {
+      .tab-content {
         max-height: calc(100vh - 220px);
         overflow-x: auto;
       }
-      .tab-header{
+      .tab-header {
         padding-bottom: 10px;
       }
     }
@@ -209,6 +209,11 @@
         // color: #555;
       }
 
+      .info-list {
+        list-style: none;
+        padding-left: 10px;
+      }
+
       .info-value {
         color: var(--themeColor);
         font-weight: 600;
@@ -283,4 +288,25 @@
     white-space: nowrap;
     cursor: pointer;
   }
+}
+
+.bage-fix {
+  display: flex;
+  align-items: center;
+}
+
+.mytask-type-badge {
+  margin-left: 7px;
+  padding: 0px 5px;
+  // position: relative;
+  display: flex;
+  // top: -10px;
+  background: var(--themeColorLight);
+  color: var(--blackColor);
+  // right: 0;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  font-size: var(--commonFont-extraSmall);
+  font-weight: 600;
+  // left: 145px;
 }

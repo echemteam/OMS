@@ -32,7 +32,7 @@ const SupplierViewTab = ({supplierId , contryIdCode , supplierStatus}) => {
                     <SuplierAddressDetails isEditablePage={true} supplierStatus={supplierStatus}/>
                 </div>
             ),
-            isVisible: hasAddressPermission.hasAccess,
+            isVisible: isResponsibleUser ? true : hasAddressPermission.hasAccess,
         },
         {
             sMenuItemCaption: "Contact",
@@ -42,7 +42,7 @@ const SupplierViewTab = ({supplierId , contryIdCode , supplierStatus}) => {
                     <SupplierContactDetail isEditablePage={true} isSearchFilterShow={true} contryIdCode={contryIdCode}/>
                 </div>
             ),
-            isVisible: hasContactPermission.hasAccess,
+            isVisible: isResponsibleUser ? true : hasContactPermission.hasAccess,
         },
         {
             sMenuItemCaption: "Financial Settings",
@@ -55,7 +55,7 @@ const SupplierViewTab = ({supplierId , contryIdCode , supplierStatus}) => {
                     />
                 </div>
             ),
-            isVisible: hasContactPermission.hasAccess,
+            isVisible: isResponsibleUser ? true : hasContactPermission.hasAccess,
         },
         {
             sMenuItemCaption: "Documents",
@@ -65,7 +65,7 @@ const SupplierViewTab = ({supplierId , contryIdCode , supplierStatus}) => {
                     <SupplierDocumentDetail isEditablePage={true} />
                 </div>
             ),
-            isVisible: hasDocumentPermission.hasAccess,
+            isVisible: isResponsibleUser ? true : hasDocumentPermission.hasAccess,
         },
         {
             sMenuItemCaption: "Notes",
@@ -75,7 +75,7 @@ const SupplierViewTab = ({supplierId , contryIdCode , supplierStatus}) => {
                     <SupplierNoteDetail isEditablePage={true} />
                 </div>
             ),
-            isVisible: hasNotePermission.hasAccess,
+            isVisible: isResponsibleUser ? true : hasNotePermission.hasAccess,
         },
         {
             sMenuItemCaption: "History",
@@ -85,14 +85,14 @@ const SupplierViewTab = ({supplierId , contryIdCode , supplierStatus}) => {
                     <SupplierHistory />
                 </div>
             ),
-            isVisible: hasHistoryPermission.hasAccess,
+            isVisible: isResponsibleUser ? true : hasHistoryPermission.hasAccess,
         },
     ];
 
-    const visibleTabs = !isResponsibleUser ? tabs.filter((tab) => tab.isVisible) : tabs;
+    const visibleTabs =  tabs.filter((tab) => tab.isVisible);
 
     return (
-        <RenderTabs tabs={supplierId ? visibleTabs : null} />
+                <RenderTabs tabs={supplierId ? visibleTabs : null} />
     )
 }
 

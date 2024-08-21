@@ -26,12 +26,12 @@ const OrganizationBusinessAddressDetail = () => {
   const remitToAddressRef=useRef();
   const registeredAddressRef=useRef();
 
-  const [physicalAddressData, setPhysicalAddressData] =useState(PhysicalAddressForm);
-  const [billToAddressData, setBillToAddressData] = useState(BillToAddressForm);
-  const [labAddressData, setLabAddressData] = useState(LabAddressForm);
-  const [warehouseAddressData, setWarehouseAddressData] = useState(WarehouseAddressForm);
- const [remitToAddressData,setRemitToAddressData]=useState(RemitToAddressForm)
-  const [registeredAddressData,setRegisteredAddressData]=useState(RegisteredAddressForm);
+  const [physicalAddressData] =useState(PhysicalAddressForm);
+  const [billToAddressData] = useState(BillToAddressForm);
+  const [labAddressData] = useState(LabAddressForm);
+  const [warehouseAddressData] = useState(WarehouseAddressForm);
+ const [remitToAddressData]=useState(RemitToAddressForm)
+  const [registeredAddressData]=useState(RegisteredAddressForm);
 
   const [addressIds, setAddressIds] = useState({
     registeredAddressId: 0,

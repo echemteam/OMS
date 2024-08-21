@@ -13,6 +13,7 @@ import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel
 import AddSupplierContext from "../../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Service's */
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../../../app/services/supplierAPI";
+import { validateResponsibleUserId } from "../../../../../utils/ResponsibleUser/validateRUser";
 
 //** Component's */
 const SupplierViewTab = React.lazy(() => import("../../../feature/supplierViewDetail/supplierViewTabs/SupplierViewTab"));
@@ -47,9 +48,10 @@ const SupplierDetails = () => {
       !isGetSupplierBasicInformationByIdFetching
     ) {
       setSupplierData(GetSupplierBasicInformationByIdData);
-      if (authState?.user?.userID !== GetSupplierBasicInformationByIdData.responsibleUserId) {
-        setIsResponsibleUser(false);
-      }
+      // if (authState?.user?.userID !== GetSupplierBasicInformationByIdData.responsibleUserId) {
+      //   setIsResponsibleUser(false);
+      // }
+      setIsResponsibleUser(validateResponsibleUserId(GetSupplierBasicInformationByIdData.responsibleUserId, authState?.user?.userID));
     }
   }, [
     isGetSupplierBasicInformationById,

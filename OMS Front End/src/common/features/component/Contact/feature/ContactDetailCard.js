@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState, forwardRef } from "react";
 import ContactEmailsDropdown from "./ContactEmailsDropdown";
 import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
-import { AppIcons } from "../../../../../data/appIcons";
-import Image from "../../../../../components/image/Image";
 import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 

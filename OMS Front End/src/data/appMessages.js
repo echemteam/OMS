@@ -40,7 +40,8 @@ export const ErrorMessage = {
 	CommonErrorMessage: "Please enter at least 3 characters to search or select a dropdown value.",
 	SearchWarningMessage: "Please enter at least 3 characters to search.",
 	NoFound: "No Records found",
-	InvalidBoundarySpaces: "Only letters, digits, hyphens, ampersands, and spaces between characters are allowed."
+	InvalidBoundarySpaces: "Only letters, digits, hyphens, ampersands, and spaces between characters are allowed.",
+	FieldNameNotFound: "No fieldName property found in this rule"
 };
 
 export const SuccessMessage = {
@@ -61,6 +62,7 @@ export const SuccessMessage = {
 	Map_Alert: '{0} mapped successfully',
 	Alret_Warning: 'Warning !',
 	TaxId: 'Minimum {0} and Maximum {1} characters allowed for Tax Id',
-	DefaultUSATaxId: 'Minimum 10 and Maximum 10 characters allowed.'
+	DefaultUSATaxId: 'Minimum 10 and Maximum 10 characters allowed.',
+	ApprovalSuccess:"We are reviewing your request and will get back to you shortly."
 };
 
