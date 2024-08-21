@@ -774,6 +774,12 @@ a {
   }
 }
 
+.link-customer {
+  .card {
+    padding-top: 4px;
+  }
+}
+
 .card-email-sec {
   .card {
     margin-bottom: 0;
@@ -2317,9 +2323,8 @@ input[type="checkbox"]:disabled {
   }
 }
 
-.customer-detail-tab-sec{
+.customer-detail-tab-sec {
   .card {
-    padding: 10px 0 !important;
     table {
       tbody {
         max-height: calc(100vh - 540px);
