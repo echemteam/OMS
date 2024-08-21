@@ -5,7 +5,6 @@ import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
 import DropDown from "../../../../components/ui/dropdown/DropDrown";
 import { SelectGrantDenyDropdown, SelectViewEditDropdown } from "../../../../pages/Security/permissions/features/config/securityPermissions.Data";
-import Iconify from "../../../../components/ui/iconify/Iconify";
 //** Component's */
 const PermissionChildItem = React.lazy(() => import("./PermissionChildItem"));
 

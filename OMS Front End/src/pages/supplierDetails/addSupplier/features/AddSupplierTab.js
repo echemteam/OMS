@@ -18,7 +18,7 @@ import FinancialSettings from "../../feature/financialSettings/FinancialSettings
 
 const AddSupplierTab = () => {
   const navigate = useNavigate();
-  const { activeTab, setActiveTab, movePreviewPage, addSupplier, supplierId } =
+  const { activeTab, movePreviewPage, addSupplier, supplierId } =
     useContext(AddSupplierContext);
 
   const [
