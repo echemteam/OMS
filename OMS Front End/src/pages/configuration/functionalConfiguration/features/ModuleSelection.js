@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import DropDown from '../../../../components/ui/dropdown/DropDrown'
 import { useLazyGetAllModulesQuery } from '../../../../app/services/configurationAPI';
-import Buttons from '../../../../components/ui/button/Buttons';
 
 const ModuleSelection = (props) => {
     const [moduleData, setModuleData] = useState([])

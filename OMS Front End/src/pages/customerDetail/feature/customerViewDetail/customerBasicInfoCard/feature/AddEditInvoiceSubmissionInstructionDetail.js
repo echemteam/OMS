@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../../components/ui/button/Buttons";
@@ -8,7 +9,7 @@ import ToastService from "../../../../../../services/toastService/ToastService";
 const AddEditInvoiceSubmissionInstructionDetail = ({ customerId, handleToggleModal, isInvoiceModelShow, setIsInvoiceModelShow }) => {
     const invoiceRef = useRef();
     const [formData, setFormData] = useState(InvoiceFormData);
-    const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+    const [shouldRerenderFormCreator] = useState(false);
     const [addEditCustomerInvoice, { isLoading: isAddEditCustomerInvoiceLoading, isSuccess: isAddEditCustomerInvoiceSuccess, data: isAddEditCustomerInvoiceData }] = useAddEditCustomerInvoiceMutation();
     const [GetDetailsbyCustomerID, { isFetching: isGetDetailByCustomerIdFetching, isSuccess: isGetDetailByCustomerIdSuccess, data: isGetDetailByCustomerIdData, },] = useLazyGetDetailsbyCustomerIDQuery();
 
