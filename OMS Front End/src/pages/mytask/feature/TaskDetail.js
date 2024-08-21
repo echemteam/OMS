@@ -179,10 +179,12 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
         </div>
       </div>
       <div className="customer-information">
-        <div className="info-row">
-          <span className="info-label">Field Name : </span>
-          <span className="info-value ml-2">{fieldName}</span>
-        </div>
+        {!approvedData.isFunctional &&
+          <div className="info-row">
+            <span className="info-label">Field Name : </span>
+            <span className="info-value ml-2">{fieldName}</span>
+          </div>
+        }
         <div className="info-row">
           <span className="info-label">Status : </span>
           <span className={`ml-2 ${getLabelClass(status)}`}>{status}</span>
@@ -198,9 +200,25 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
         <div className="customer-information pt-0">
           <div className="info-row">
             <span className="info-label">New Value : </span>
-            <div className="info-value ml-2">
-              <pre>{JSON.stringify(parseJson(approvedData.newValue), null, 2)}</pre>
-            </div>
+            {/* <div className="info-value ml-2"> */}
+            {/* <pre>{JSON.stringify(parseJson(approvedData.newValue), null, 2)}</pre> */}
+            {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
+              <ul className="info-list">
+                {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="info-label">{key} : </span>
+                    <span className="info-value ml-2">
+                      {typeof value === "boolean"
+                        ? formatBoolean(value)
+                        : value}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="no-value">No new value available</div>
+            )}
+            {/* </div> */}
           </div>
         </div>
         :
