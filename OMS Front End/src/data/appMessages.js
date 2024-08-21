@@ -40,7 +40,8 @@ export const ErrorMessage = {
 	CommonErrorMessage: "Please enter at least 3 characters to search or select a dropdown value.",
 	SearchWarningMessage: "Please enter at least 3 characters to search.",
 	NoFound: "No Records found",
-	InvalidBoundarySpaces: "Only letters, digits, hyphens, ampersands, and spaces between characters are allowed."
+	InvalidBoundarySpaces: "Only letters, digits, hyphens, ampersands, and spaces between characters are allowed.",
+	FieldNameNotFound: "No fieldName property found in this rule"
 };
 
 export const SuccessMessage = {

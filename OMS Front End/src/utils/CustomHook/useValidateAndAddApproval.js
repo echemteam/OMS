@@ -2,7 +2,7 @@ import { getData } from "../LocalStorage/LocalStorageManager";
 //** Service */
 import { useAddApprovalRequestsMutation } from "../../app/services/commonAPI";
 import ToastService from "../../services/toastService/ToastService";
-import { SuccessMessage } from "../../data/appMessages";
+import { ErrorMessage, SuccessMessage } from "../../data/appMessages";
 
 export const useValidateAndAddApprovalRequests = () => {
     // Hook to handle API requests for adding approval requests
@@ -89,7 +89,7 @@ export const useValidateAndAddApprovalRequests = () => {
                         }
                     }
                 } else {
-                    console.log('No fieldName property found in this rule');
+                    ToastService.warning(ErrorMessage.FieldNameNotFound);
                 }
             }
         }

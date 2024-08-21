@@ -50,7 +50,7 @@ namespace OMS.Domain.Repository.Implementation
                 supplier.Note,
                 supplier.EmailAddress,
                 supplier.CreatedBy,
-                supplier.ResponsibleUserId
+                //supplier.ResponsibleUserId
             }, CommandType.StoredProcedure);
         }
 

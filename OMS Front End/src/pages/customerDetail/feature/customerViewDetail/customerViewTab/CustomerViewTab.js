@@ -14,7 +14,7 @@ const CustomerAddressDetail = React.lazy(() => import("../../customerAddressDeta
 const CustomerSettingDetails = React.lazy(() => import("../../customerSettingDetail/CustomerSettingDetails"));
 const CustomerSubCustomerDetail = React.lazy(() => import("../../customerSubCustomerDetail/CustomerSubCustomerDetail"));
 
-const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode , customerStatus }) => {
+const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, customerStatus }) => {
 
   const { isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -114,12 +114,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode , cus
   const visibleTabs = tabs.filter((tab) => tab.isVisible);
 
   return (
-    <>
-      {console.log('hasSubCustomerPermission', hasSubCustomerPermission)}
-      {console.log('isBuyingForThirdParty', isBuyingForThirdParty)}
-      {console.log('isResponsibleUser', isResponsibleUser)}
-      <RenderTabs tabs={customerId ? visibleTabs : null} />
-    </>
+    <RenderTabs tabs={customerId ? visibleTabs : null} />
   )
 }
 

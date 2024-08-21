@@ -14,5 +14,6 @@ namespace OMS.Domain.Entities.API.Response.Approval
         public int? ModuleId { get; set; }
         public string? ModuleName { get; set; }
         public string? Status { get; set; }
+        public DateTime? RequestedDate { get; set; }
     }
 }

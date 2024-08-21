@@ -17,6 +17,7 @@ import SwalAlert from '../../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../../services/toastService/ToastService';
 import { useGetSuppliersMutation, useUpdateSupplierStatusMutation } from '../../../../../../app/services/supplierAPI';
 import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid';
+import { validateResponsibleUserId } from '../../../../../../utils/ResponsibleUser/validateRUser';
 import { securityValidator } from '../../../../../../utils/CustomActionSecurity/actionsSecurityValidator';
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
@@ -83,10 +84,12 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
     }
 
     useEffect(() => {
-        if (isListSuccess && isListeData) {
+                if (isListSuccess && isListeData) {
             if (isListeData) {
                 setDataSource(isListeData.dataSource);
-                const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authState?.user?.userID);
+                // const isResponsibleId = isListeData.dataSource.find(data => data.responsibleUserId === authState?.user?.userID);
+                const isResponsibleId = isListeData.dataSource.find(data => validateResponsibleUserId(data.responsibleUserId, authState?.user?.userID));
+                
                 if (isResponsibleId) {
                     setIsResponsibleUser(true);
                     hasResponsibleUserhasAccess();

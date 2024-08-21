@@ -81,7 +81,6 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
 
   useEffect(() => {
     if (isSuccessAddEditResponsibleUserForSupplier && isAddEditResponsibleUserForSupplierData) {
-      console.log("API Response: ", isAddEditResponsibleUserForSupplierData);
       ToastService.success(isAddEditResponsibleUserForSupplierData.errorMessage);
     }
   }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
@@ -247,7 +246,6 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       supplierId: supplierId,
       userId: rUserValue?.map(option => option.value).join(',')
     };
-    console.log("Request Data: ", req);
     addEditResponsibleUserForSupplier(req);
   }
   const handleToggleModal = () => {

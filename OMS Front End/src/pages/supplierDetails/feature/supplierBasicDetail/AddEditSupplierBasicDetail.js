@@ -26,6 +26,8 @@ import { getTaxIdMinMaxLength } from "../../../customerDetail/feature/customerBa
 import PropTypes from 'prop-types';
 import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
+import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/validateRUser";
+import { useSelector } from "react-redux";
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
@@ -35,13 +37,15 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     //** State */
     const parentRef = useRef();
     const basicDetailRef = useRef();
+    const authState = useSelector((state) => state.auth);
     const [noteId, setNoteId] = useState(0);
     const { formSetting } = supplierBasicData;
     const [supplierName, setSupplierName] = useState('');
     const [formData, setFormData] = useState(supplierBasicData);
+    const [isResponsibleUser, setIsResponsibleUser] = useState(false);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
-    const { nextStepRef, setSupplierId, moveNextPage, supplierId, isResponsibleUser } = useContext(AddSupplierContext);
+    const { nextStepRef, setSupplierId, moveNextPage, supplierId } = useContext(AddSupplierContext);
 
     //** API Call's */
     const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData, }] = useLazyGetAllUserQuery();
@@ -67,9 +71,14 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
                     setIsButtonDisable(true);
                     setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, true);
                 }
-                else {
+                else if(hasEditPermission.isEditable === true) {
                     formSetting.isViewOnly = false;
                     setIsButtonDisable(false);
+                    setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, false);
+                }
+                else {
+                    formSetting.isViewOnly = true;
+                    setIsButtonDisable(true);
                     setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, false);
                 }
             }
@@ -153,6 +162,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             newFrom.initialState = { ...GetSupplierBasicInformationByIdData };
             newFrom.formFields = supplierBasicData.formFields.filter(field => field.dataField !== "note");
             setFormData(newFrom);
+            setIsResponsibleUser(validateResponsibleUserId(GetSupplierBasicInformationByIdData.responsibleUserId, authState?.user?.userID));
+
         }
     }, [isGetSupplierBasicInformationById, GetSupplierBasicInformationByIdData, isGetSupplierBasicInformationByIdFetching]);
 
