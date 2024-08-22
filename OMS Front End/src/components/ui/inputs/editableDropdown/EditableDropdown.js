@@ -58,12 +58,12 @@ const EditableDropdown = ({
     }
   };
 
-  const handleInputFields = () => {
-    setIsInputField(!isInputField);
-    if (dropdownAction) {
-      dropdownAction("DA_CHANGED", dataField, !isInputField);
-    }
-  }
+  // const handleInputFields = () => {
+  //   setIsInputField(!isInputField);
+  //   if (dropdownAction) {
+  //     dropdownAction("DA_CHANGED", dataField, !isInputField);
+  //   }
+  // }
 
   // const handleInputFields = (dataField, isInputField) => {
   //   setIsInputField(!isInputField);
@@ -106,7 +106,8 @@ const EditableDropdown = ({
       <div
         className="button-sec"
         //onClick={() => handleInputFields(dataField, isInputField)}
-        onClick={() => handleInputFields()}
+        //onClick={() => handleInputFields()}
+        onClick={() => setIsInputField(!isInputField)}
       >
         <div title={!isInputField ? "Edit" : "Cancel"}>
           <Image
