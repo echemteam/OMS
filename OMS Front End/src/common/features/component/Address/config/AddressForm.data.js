@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const addressFormData = {
   // name: "Email From",
-  initialState: { addressTypeId: "", addressLine1: "", addressLine2: "", addressLine3: "", addressLine4: "", addressLine5: "", countryId: 233, stateId: "", zipCode: "", cityId: "", supplierId: 0, isPreferredBilling: false, isShippingAndBilling: false, isPreferredShipping: false , stateName:"" , cityName : "" },
+  initialState: { addressTypeId: "", addressLine1: "", addressLine2: "", addressLine3: "", addressLine4: "", addressLine5: "", countryId: 233, stateId: "", zipCode: "", cityId: "", supplierId: 0, isPreferredBilling: false, isShippingAndBilling: false, isPreferredShipping: false, stateName: "", cityName: "" },
   formFields: [
     {
       id: "addressTypeId",
@@ -121,12 +121,13 @@ export const addressFormData = {
       id: "stateId",
       lable: "State ",
       Field_Name: "State",
-      fieldType: FormFieldTypes.SELECT,
+      fieldType: FormFieldTypes.EDITABLEDROPDOWN,
       dataField: "stateId",
       fieldSetting: {
         isDisabled: false,
         placeholder: "Select State",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        isText: false
       },
       validation: [{ type: "require" }],
       style: {
@@ -142,7 +143,11 @@ export const addressFormData = {
       fieldSetting: {
         isDisabled: true,
         placeholder: "Select City",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        isText: false,
+        isDependDropdown: {
+          dataField: 'stateId'
+        }
       },
       validation: [{ type: "require" }],
       style: {

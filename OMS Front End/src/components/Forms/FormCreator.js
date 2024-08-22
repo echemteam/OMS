@@ -37,31 +37,31 @@ const FormCreator = forwardRef((props, ref) => {
     }
   }, [props.config.initialState]);
 
-  const updateFormData=(data)=>{
-    const newFromdata = {...formData,...data}
-     setFormData(newFromdata);
-}
+  const updateFormData = (data) => {
+    const newFromdata = { ...formData, ...data }
+    setFormData(newFromdata);
+  }
 
-useImperativeHandle(
-  ref,
-  () => {
+  useImperativeHandle(
+    ref,
+    () => {
       return {
-          getFormData: () => {
-              if (isValidForm())
+        getFormData: () => {
+          if (isValidForm())
 
-                  return formData;
-          },
-          updateFormFieldValue:(data)=>{
-              updateFormData(data);
-          },
-          getFormDataWithoutValidation: () => {
-                return formData;
+            return formData;
+        },
+        updateFormFieldValue: (data) => {
+          updateFormData(data);
+        },
+        getFormDataWithoutValidation: () => {
+          return formData;
         },
       };
-  },
-  // eslint-disable-next-line
-  [formData, validState, validationRules],
-);
+    },
+    // eslint-disable-next-line
+    [formData, validState, validationRules],
+  );
 
   const isValidForm = () => {
     const validation = ValidateAll(formData, validationRules);
@@ -121,6 +121,12 @@ useImperativeHandle(
     }
   }
 
+  const onDropdownAction = (action, dataField, data) => {
+    if (props.onDropdownAction && props.onDropdownAction[action]) {
+      props.onDropdownAction[action](data, dataField);
+    }
+  }
+
   // const onInputShowInfo = (action, dataField, data) => {
   //   if (props.onInputShowInfo && props.onInputShowInfo[action]) {
   //     props.onInputShowInfo[action](data, dataField);
@@ -149,6 +155,7 @@ useImperativeHandle(
           onActionChange={onActionHandle}
           onCheckBoxChange={onCheckBoxHandle}
           onInputChange={onInputChange}
+          onDropdownAction={onDropdownAction}
           // onInputShowInfo={onInputShowInfo}
           onFormStateChange={handleStateChange}
           // onFormFieldChange={handleFormFieldChange}
@@ -184,7 +191,7 @@ FormCreator.propTypes = {
         id: PropTypes.string,
         value: PropTypes.any,
         options: PropTypes.array,
-        inputButtonGroup: PropTypes.object,  
+        inputButtonGroup: PropTypes.object,
         inputIcon: PropTypes.element,
         fieldSetting: PropTypes.object,
         changeAction: PropTypes.shape({
@@ -218,9 +225,9 @@ FormCreator.propTypes = {
   }).isRequired,
   onFormDataChange: PropTypes.func,
   onFormFieldValueChange: PropTypes.func,
-  onActionChange: PropTypes.object,   
-  onInputChange: PropTypes.object, 
-  onCheckBoxChange: PropTypes.object,  
+  onActionChange: PropTypes.object,
+  onInputChange: PropTypes.object,
+  onCheckBoxChange: PropTypes.object,
   handleInputGroupButton: PropTypes.func,
   handleInputShowInfo: PropTypes.func,
 };

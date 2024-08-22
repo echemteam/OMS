@@ -1,6 +1,7 @@
 export const FieldSettingType = {
-    MULTISELECT: "isMultiSelect",
     DISABLED: "isDisabled",
+    ISTEXT: "isText",
+    MULTISELECT: "isMultiSelect",
     INPUTBUTTON: "isInputButton",
     SECOUNDRYINPUTBUTTON: "isSecoundryInputButton"
 }

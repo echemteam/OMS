@@ -51,6 +51,7 @@ const FormFields = ({
   // onInputShowInfo,
   onCheckBoxChange,
   fieldValiadtionRules,
+  onDropdownAction
 }) => {
   const [overRideProps, setOverRideProps] = useState({});
 
@@ -301,7 +302,7 @@ const FormFields = ({
               isRequired={isRequired}
               fileFormate={field.fileFormate}
               {...field.fieldSetting}
-              // isModelOpen={formData.isModelOpen}
+            // isModelOpen={formData.isModelOpen}
             />
           </div>
         );
@@ -325,7 +326,7 @@ const FormFields = ({
               isRequired={isRequired}
               fileFormate={field.fileFormate}
               {...field.fieldSetting}
-              // isModelOpen={formData.isModelOpen}
+            // isModelOpen={formData.isModelOpen}
             />
           </div>
         );
@@ -343,6 +344,7 @@ const FormFields = ({
               error={validState.error[field.dataField] || ""}
               formSetting={formSetting}
               fieldActions={onActionChange}
+              dropdownAction={onDropdownAction}
               formData={formData}
               changeAction={field.changeAction}
               overRideProps={overRideProps?.[field.dataField]}
