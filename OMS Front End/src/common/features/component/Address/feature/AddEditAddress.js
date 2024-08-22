@@ -6,7 +6,7 @@ import { AddressType, FieldSettingType } from "../../../../../utils/Enums/common
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-import { setFieldSetting, setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setFieldSetting, setDropDownOptionField, getFieldData } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { addressFormData } from "../config/AddressForm.data";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
@@ -416,7 +416,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 //     // stateId: data.value,
                 //     cityId: null,
                 // });
-            } 
+            }
 
         }
         else if (!isSupplier && dataField === "addressTypeId") {
@@ -478,16 +478,33 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         callChildEditFunction: handleEdit
     }));
 
+    const handleDropdownAction = (data, dataField) => {
+        if (dataField === 'stateId') {
+            setFieldSetting(formData, 'cityId', FieldSettingType.ISTEXT, data);
+            // const selectField = getFieldData(formData, 'cityId');
+            // selectField.fieldSetting.isText = data;
+            ref.current.updateFormFieldValue({ cityId: null });
+            // setFormData(formData);
+            // setShouldRerenderFormCreator((prevState) => !prevState);
+        } else if (dataField === 'cityId') {
+            if (!data) {
+                setFieldSetting(formData, 'stateId', FieldSettingType.ISTEXT, data);
+                ref.current.updateFormFieldValue({ cityId: null });
+            }
+        }
+    }
+
     //** Action Handler */
     const formActionHandler = {
         DDL_CHANGED: handleChangeDropdownList,
-        CHECK_CHANGE: handleCheckboxChanges
+        CHECK_CHANGE: handleCheckboxChanges,
+        DA_CHANGED: handleDropdownAction
     };
 
 
     return (
         <div className="row mt-2 add-address-form">
-            <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler}
+            <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler} onDropdownAction={formActionHandler}
                 onCheckBoxChange={formActionHandler} key={shouldRerenderFormCreator} />
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">

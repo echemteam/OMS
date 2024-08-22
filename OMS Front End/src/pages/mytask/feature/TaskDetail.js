@@ -222,7 +222,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
         :
         <div className="value-comparison">
           <div className="value-block">
-            <h3 className="value-title">Old Value</h3>
+            <span className="value-title">Old Value</span>
             {fieldName && oldFieldValue !== "N/A" ? (
               <div className="value-content">
                 <span className="value-label">{fieldName} : </span>
@@ -237,7 +237,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
             )}
           </div>
           <div className="value-block">
-            <h3 className="value-title">New Value</h3>
+            <span className="value-title">New Value</span>
             {fieldName && newFieldValue !== "N/A" ? (
               <div className="value-content">
                 <span className="value-label">{fieldName} : </span>

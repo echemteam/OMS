@@ -1,4 +1,4 @@
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "../../../image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import "./EditableDropdown.scss";
@@ -18,6 +18,8 @@ const EditableDropdown = ({
   fieldActions,
   isMultiSelect,
   isText,
+  dropdownAction,
+  isDependDropdown,
   ...inputProps
 }) => {
 
@@ -30,12 +32,11 @@ const EditableDropdown = ({
     }
   };
 
-  useEffect (()=>{
-    if(value === null || value === "")
-    {
+  useEffect(() => {
+    if (value === null || value === "") {
       setIsInputField(false);
     }
-},[value])
+  }, [value])
 
   const handleChange = (selectedOption) => {
     if (onChange) {
@@ -57,7 +58,22 @@ const EditableDropdown = ({
     }
   };
 
-  
+  // const handleInputFields = () => {
+  //   setIsInputField(!isInputField);
+  //   if (dropdownAction) {
+  //     dropdownAction("DA_CHANGED", dataField, !isInputField);
+  //   }
+  // }
+
+  // const handleInputFields = (dataField, isInputField) => {
+  //   setIsInputField(!isInputField);
+  //   // if (isDependDropdown.dataField === dataField) {
+
+  //   // }
+  //   if (dropdownAction) {
+  //     dropdownAction("DA_CHANGED", dataField, !isInputField);
+  //   }
+  // }
 
   return (
     <div className="custom-dropdown">
@@ -78,7 +94,7 @@ const EditableDropdown = ({
             placeholder={placeholder}
             onChange={handleInputChange}
             onBlur={handleOnBlur}
-            value={value?value.text:""}
+            value={value ? value.text : ""}
             isDisable={formSetting?.isViewOnly || inputProps?.isDisable || false}
             {...inputProps}
           />
@@ -86,6 +102,8 @@ const EditableDropdown = ({
       </div>
       <div
         className="button-sec"
+        //onClick={() => handleInputFields(dataField, isInputField)}
+        //onClick={() => handleInputFields()}
         onClick={() => setIsInputField(!isInputField)}
       >
         <div title={!isInputField ? "Edit" : "Cancel"}>
