@@ -22,13 +22,24 @@ const FileUpload = ({
   isButtonVisible,
   acceptedFiles,
   isCustomButtonVisible,
+  dataField,
+  fieldActions,
+  ...inputProps
 }) => {
+  console.log("dataField", dataField);
   const [fileValue, setFileValue] = useState(null);
 
   const fileRef = useRef();
-  const handleInputChange = (e) => {
-    if (onChange) {
-      onChange(e);
+  const handleInputChange = (data) => {
+    // const value = isMultiSelect ? selectedOption.map((option) => option.value) : selectedOption;
+    const value = data.target.files[0].name;
+    // if (onChange) {
+    //   onChange(e);
+    // }
+    onChange(data);
+
+    if (fieldActions && inputProps) {
+      fieldActions("DDL_FILE", dataField, value);
     }
   };
 
@@ -77,7 +88,7 @@ const FileUpload = ({
           <Image
             imagePath={AppIcons.Uploaddocumenticon}
             altText="Please Upload File"
-          ></Image> 
+          ></Image>
           {/* <Iconify icon="iconamoon:file-document-thin" /> */}
 
           {fileValue ? (

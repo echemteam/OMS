@@ -121,9 +121,19 @@ function CardSection({
           </div>
           {
             // isButtonVisible &&(
-            rightButton &&
-              (multipleButton && rightButtonArray ? (
-                <>
+            rightButton && (
+              <div className="btn-right-sec">
+                {isFilter ? (
+                  <>
+                    <Filter
+                      headerTitle={filterHeaderTitle}
+                      placeholder="Select Filter"
+                    />
+                  </>
+                ) : (
+                  ""
+                )}
+                {multipleButton && (
                   <div className="btn-right-sec">
                     {rightButtonArray.map((button, index) => (
                       <Buttons
@@ -141,35 +151,21 @@ function CardSection({
                       />
                     ))}
                   </div>
-                </>
-              ) : (
-                <>
-                  <div className="btn-right-sec">
-                    {isFilter ? (
-                      <>
-                        <Filter
-                          headerTitle={filterHeaderTitle}
-                          placeholder="Select Filter"
-                        />
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    <Buttons
-                      buttonTypeClassName={buttonClassName}
-                      onClick={titleButtonClick}
-                      buttonText={buttonText}
-                      buttonTextBack={buttonTextBack}
-                      textWithIcon={textWithIcon}
-                      textWithIconBack={textWithIconBack}
-                      imagePath={iconImg}
-                      imagePathBack={iconImgBack}
-                      isLoading={isLoading}
-                      titleText={titleText}
-                    />
-                  </div>
-                </>
-              ))
+                )}
+                <Buttons
+                  buttonTypeClassName={buttonClassName}
+                  onClick={titleButtonClick}
+                  buttonText={buttonText}
+                  buttonTextBack={buttonTextBack}
+                  textWithIcon={textWithIcon}
+                  textWithIconBack={textWithIconBack}
+                  imagePath={iconImg}
+                  imagePathBack={iconImgBack}
+                  isLoading={isLoading}
+                  titleText={titleText}
+                />
+              </div>
+            )
             // )
           }
         </div>

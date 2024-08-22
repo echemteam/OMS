@@ -182,6 +182,9 @@
           margin-bottom: 0;
           margin: 0 25px 0 15px;
           opacity: 1;
+          overflow: hidden;
+          max-width: 450px;
+          text-overflow: ellipsis;
         }
       }
 

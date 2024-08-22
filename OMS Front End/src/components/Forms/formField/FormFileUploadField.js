@@ -139,6 +139,8 @@ const FormFileUploadField = ({
           isDownloadButton={inputProps.isDownloadable}
           acceptedFiles={inputProps.acceptedFiles}
           fileFormate={fileFormate}
+          dataField={dataField}
+          fieldActions={fieldActions}
           {...inputProps}
         />
       </div>
