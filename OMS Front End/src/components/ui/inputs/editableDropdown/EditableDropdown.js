@@ -77,9 +77,6 @@ const EditableDropdown = ({
 
   return (
     <div className="custom-dropdown">
-      {console.log('isInputField =>', isInputField)}
-      {console.log('isText =>', isText, dataField)}
-      {console.log('inputProps.isDisable =>', inputProps.isDisable)}
       <div className="input-sec">
         {!isInputField ? (
           <Dropdown
