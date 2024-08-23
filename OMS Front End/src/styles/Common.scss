@@ -2440,6 +2440,7 @@ input[type="checkbox"]:disabled {
 .checklist-section {
   border-bottom: 1px solid var(--inputBorder);
   padding-bottom: 15px;
+  padding-top: 15px;
 
   .sub-checklist {
     padding-left: 30px;

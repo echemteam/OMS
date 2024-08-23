@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useImperativeHandle, useState ,useRef} from "react";
+import React, { useEffect, useImperativeHandle, useState, useRef } from "react";
 //** Lib's */
 import "./ApprovalValidateData.scss";
 import Image from "../../../image/Image";
@@ -19,7 +19,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   const [visibleItems, setVisibleItems] = useState([]);
   const [showDoneButton, setShowDoneButton] = useState(false);
   const [showViewButton, setShowViewButton] = useState(false);
-  
+
   useEffect(() => {
     if (validateCheckList) {
       if (currentIndex < validateCheckList.length) {
@@ -49,7 +49,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }, [showModal])
 
   const boldSpecificWords = (text) => {
-    const wordsToBold = ["TaxId","Billing Address", "Shipping Address", "Invoice Submission Contact Email","Accounts Payable Contact Email","Default Payment Terms Template","Payment Method","Credit Limit","Billing Currency","Accounting Settings","Delivery Methods","Delivery Carriers"];
+    const wordsToBold = ["TaxId", "Billing Address", "Shipping Address", "Invoice Submission Contact Email", "Accounts Payable Contact Email", "Default Payment Terms Template", "Payment Method", "Credit Limit", "Billing Currency", "Accounting Settings", "Delivery Methods", "Delivery Carriers"];
     const regex = new RegExp(`\\b(${wordsToBold.join("|")})\\b`, "g");
     return text.replace(
       regex,
@@ -98,47 +98,47 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }));
 
   return (
-     
-      <CenterModel modalTitle="Validate Customer Information" showModal={showModal} handleToggleModal={handleShowValidateModal}
-        modelSizeClass="w-40 validation-center-model" isApprovalValidate={true}>
-        {!isGetCheckListLoading ? (
-          <div className="Validate-card row">
-            <div className="col-12">
-              <div className="customer-data-sec">
-                <div ref={scrollRef} className="validation-list">
-                  <ul>
-                    {visibleItems.map((item) => (
-                      <li key={item.id} className={item.isValid ? "success" : "error"} >
-                        <span className="tick-untick-img">
-                          <Image imagePath={item.isValid ? AppIcons.RightTickIcon : AppIcons.UnTickIcon} />
-                        </span>
-                        <span className="validation-msg" dangerouslySetInnerHTML={{ __html: boldSpecificWords(item.messages), }} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-12 mt-lg-4">
-              <div className="d-flex align-item-center justify-content-center">
-                <div className="d-flex align-item-center">
-                  {showDoneButton ?
-                    <Buttons buttonTypeClassName="theme-button" buttonText="Done" onClick={handleDone} />
-                    : null}
-                  {!isDetailPage && showViewButton ?
-                    <Buttons buttonTypeClassName="theme-button ml-5" buttonText={isSupplierApproval ? 'View Supplier Details' : 'View Customer Details'}
-                      onClick={handleRedirectToDetails} /> :
-                    null}
-                  <Buttons buttonTypeClassName="dark-btn ml-5" buttonText="Cancel" onClick={handleValidateModalClose} />
-                </div>
+
+    <CenterModel modalTitle="Validate Customer Information" showModal={showModal} handleToggleModal={handleShowValidateModal}
+      modelSizeClass="w-40 validation-center-model" isApprovalValidate={true}>
+      {!isGetCheckListLoading ? (
+        <div className="Validate-card row">
+          <div className="col-12">
+            <div className="customer-data-sec">
+              <div ref={scrollRef} className="validation-list">
+                <ul>
+                  {visibleItems.map((item) => (
+                    <li key={item.id} className={item.isValid ? "success" : "error"} >
+                      <span className="tick-untick-img">
+                        <Image imagePath={item.isValid ? AppIcons.RightTickIcon : AppIcons.UnTickIcon} />
+                      </span>
+                      <span className="validation-msg" dangerouslySetInnerHTML={{ __html: boldSpecificWords(item.messages), }} />
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
-        ) : (
-          <DataLoader />
-        )}
-      </CenterModel>
-     
+          <div className="col-md-12 mt-lg-4">
+            <div className="d-flex align-item-center justify-content-center">
+              <div className="d-flex align-item-center">
+                {showDoneButton ?
+                  <Buttons buttonTypeClassName="theme-button" buttonText="Done" onClick={handleDone} />
+                  : null}
+                {!isDetailPage && showViewButton ?
+                  <Buttons buttonTypeClassName="theme-button ml-5" buttonText={isSupplierApproval ? 'View Supplier Details' : 'View Customer Details'}
+                    onClick={handleRedirectToDetails} /> :
+                  null}
+                <Buttons buttonTypeClassName="dark-btn ml-5" buttonText="Cancel" onClick={handleValidateModalClose} />
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <DataLoader />
+      )}
+    </CenterModel>
+
   );
 };
 
