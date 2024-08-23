@@ -346,14 +346,14 @@ export const ComponentNavigation = [
     securityKey: securityKey.APIPROVIDERS
   },
   {
-    id: "",
+    id: "MyTask",
     path: "/MyTask",
     exact: true,
     title: '',
     component: MyTask,
     hasParams: false,
     text: 'My Task Page',
-    securityKey: securityKey.DASHBOARD
+    securityKey: securityKey.MYTASK
   },
   {
     id: 'Organization',
@@ -363,7 +363,7 @@ export const ComponentNavigation = [
     component: Organization,
     hasParams: false,
     text: 'Organization',
-    // securityKey: securityKey.MYTASK
+    securityKey: securityKey.ORGANIZATION
   },
   {
     id: 'ThirdPartyApiConfigurationViewDetails',
@@ -373,7 +373,7 @@ export const ComponentNavigation = [
     component: ThirdPartyApiConfigurationViewDetails,
     hasParams: false,
     text: 'ThirdPartyApiConfigurationViewDetails',
-    // securityKey: securityKey.MYTASK
+    securityKey: securityKey.THIRDPARTYAPI
   },
   {
     id: 'ThirdPartyApiConfiguration',
@@ -383,7 +383,7 @@ export const ComponentNavigation = [
     component: ThirdPartyApiConfiguration,
     hasParams: false,
     text: 'ThirdPartyApiConfiguration',
-    // securityKey: securityKey.MYTASK
+    securityKey: securityKey.THIRDPARTYAPI
   },
 
 ];

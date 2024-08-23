@@ -9,10 +9,44 @@ import CardSection from "../../../../../../components/ui/card/CardSection";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { useThirdPartyAPICallMutation } from "../../../../../../app/services/thirdPartyAPI";
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
+import Buttons from "../../../../../../components/ui/button/Buttons";
 
 const ProductPriceList = ({ productId }) => {
   const molGridRef = useRef();
+  const [gridConfig, setGridConfig] = useState(priceListConfig)
   const [priceList, setPriceList] = useState([]);
+
+  useEffect(() => {
+    if (priceList) {
+      // New blank row object
+      const blankRow = {
+        leadCast: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
+        priorityDate: '',
+        reqdate: '',
+        orderNote: '',
+        Price: '', // Use null for numerical fields if blank
+        Size: '',
+        Quantity: '', // Default to false for boolean fields
+      };
+
+      setPriceList([...priceList, blankRow]);
+    }
+  }, []);
+
+  const handleAddRow = () => {
+    const blankRow = {
+      leadCast: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
+      priorityDate: '',
+      reqdate: '',
+      orderNote: '',
+      Price: '', // Use null for numerical fields if blank
+      Size: '',
+      Quantity: '', // Default to false for boolean fields
+    };
+
+    setPriceList(prevData => [...prevData, blankRow]);
+
+  };
 
   const [
     getThirdPartyApiResponse,
@@ -43,24 +77,24 @@ const ProductPriceList = ({ productId }) => {
     }
   }, [isApiResponseSucess, isApiResponseData]);
 
-  useEffect(() => {
-    if (priceListConfig?.columns) {
-      // New blank row object
-      // const blankRow = {
-      //   size: '',
-      //   unit: '',
-      //   price: '',
-      //   orderNote: '',
-      //   reqDate: '',
-      //   priorityDate: '',
-      //   promiseDate: '',
-      //   priority: '',
-      //   action: '',
-      // };
+  // useEffect(() => {
+  //   if (priceListConfig?.columns) {
+  //     // New blank row object
+  //     // const blankRow = {
+  //     //   size: '',
+  //     //   unit: '',
+  //     //   price: '',
+  //     //   orderNote: '',
+  //     //   reqDate: '',
+  //     //   priorityDate: '',
+  //     //   promiseDate: '',
+  //     //   priority: '',
+  //     //   action: '',
+  //     // };
 
-      setPriceList((prev) => [...prev]);
-    }
-  }, []);
+  //     setPriceList((prev) => [...prev]);
+  //   }
+  // }, []);
 
   const getProductPriceByProductId = () => {
     let dynamicParameters = {
@@ -81,16 +115,32 @@ const ProductPriceList = ({ productId }) => {
     setPriceList(newGridData);
   };
 
+  const handleDeleteClick = () => {
+    alert("DELETE")
+  }
+
+  const actionHandler = {
+    EDIT: handleEditClick,
+    DELETE: handleDeleteClick,
+  }
+
   return (
     <CardSection cardTitle="Product Price List">
       <div className="order-price-list">
         <FinalMolGrid
           ref={molGridRef}
           dataSource={priceList}
-          configuration={priceListConfig}
-          allowPagination={false}
+          configuration={gridConfig}
           isLoading={isApiResponseLoading}
           onRowDataUpdate={handleEditClick}
+          allowPagination={false}
+          onActionChange={actionHandler}
+        />
+        <Buttons
+          onClick={handleAddRow}
+          buttonTypeClassName="theme-button my-2"
+          buttonText={"Add Row"}
+
         />
       </div>
     </CardSection>

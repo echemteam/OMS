@@ -117,12 +117,13 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
 
     if (!isGetACHWireBySupplierIdFetching && isGetACHWireBySupplierIdSuccess && isGetACHWireBySupplierIdData) {
       let formDataAchWire = { ...achWireData };
-      if (isGetACHWireBySupplierIdData.bankAddress.countryId) {
-        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', formDataAchWire, 'stateId', item => item.countryId === isGetACHWireBySupplierIdData.bankAddress.countryId);
+      const { bankAddress } = isGetACHWireBySupplierIdData;
+      if (bankAddress.countryId) {
+        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', formDataAchWire, 'stateId', item => item.countryId === bankAddress.countryId);
       }
 
-      if (isGetACHWireBySupplierIdData.bankAddress.stateId) {
-        getAllCities(isGetACHWireBySupplierIdData.bankAddress.stateId)
+      if (bankAddress.stateId) {
+        getAllCities(bankAddress.stateId)
       }
       if (isGetACHWireBySupplierIdData.supplierBankDetailsId) {
         formDataAchWire.initialState = {
@@ -131,13 +132,13 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
           // paymentTermId: isGetACHWireBySupplierIdData.paymentTermId,
           // messageToRecipientBank: isGetACHWireBySupplierIdData.messageToRecipientBank,
           beneficiaryName: isGetACHWireBySupplierIdData.beneficiaryName,
-          addressId: isGetACHWireBySupplierIdData.bankAddress.addressId,
-          addressLine1Id: isGetACHWireBySupplierIdData.bankAddress.addressLine1,
-          addressLine2Id: isGetACHWireBySupplierIdData.bankAddress.addressLine2,
-          countryId: isGetACHWireBySupplierIdData.bankAddress.countryId,
-          zipCode: isGetACHWireBySupplierIdData.bankAddress.zipCode,
-          stateId: isGetACHWireBySupplierIdData.bankAddress.stateId,
-          cityId: isGetACHWireBySupplierIdData.bankAddress.cityId,
+          addressId: bankAddress.addressId,
+          addressLine1Id: bankAddress.addressLine1,
+          addressLine2Id: bankAddress.addressLine2,
+          countryId: bankAddress.countryId,
+          zipCode: bankAddress.zipCode,
+          stateId: bankAddress.stateId,
+          cityId: bankAddress.cityId,
           supplierId: supplierId,
         }
         setAchWireData(formDataAchWire)

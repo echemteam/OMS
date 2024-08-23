@@ -61,7 +61,7 @@ export const rulesFormData = {
                 placeholder: "Select Module",
                 isEnableOnChange: true
             },
-            validation: [{ type: "require" }],
+            // validation: [{ type: "require" }],
             style: {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
             },

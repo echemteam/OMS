@@ -34,12 +34,13 @@ export const validateColumns = (columns, newRowData) => {
     const newErrors = {};
   
     columns.forEach(col => {
-        if (col.allowEditColumn && col.editColumn.editColValidation.length > 0) {
-        const error = validateField(newRowData[col.fieldName], col.editColumn.editColValidation);
-        if (error) {
-          newErrors[col.fieldName] = error;
+        if (col.allowEditColumn && Array.isArray(col.editColumn.editColValidation) && col.editColumn.editColValidation.length > 0) {
+            const value = newRowData[col.fieldName];
+            const error = validateField(value, col.editColumn.editColValidation);
+            if (error) {
+                newErrors[col.fieldName] = error;
+            }
         }
-      }
     });
   
     return newErrors;

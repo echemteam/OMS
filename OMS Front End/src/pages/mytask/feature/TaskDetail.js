@@ -143,6 +143,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
           rejectReason: data.rejectReason
         }
         updateApprovalRequest(request);
+        setShowModal(false)
       }
     }
   }

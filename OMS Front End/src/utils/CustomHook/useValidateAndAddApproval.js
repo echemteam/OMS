@@ -3,10 +3,12 @@ import { getData } from "../LocalStorage/LocalStorageManager";
 import { useAddApprovalRequestsMutation } from "../../app/services/commonAPI";
 import ToastService from "../../services/toastService/ToastService";
 import { ErrorMessage, SuccessMessage } from "../../data/appMessages";
+import SwalAlert from "../../services/swalService/SwalService";
 
 export const useValidateAndAddApprovalRequests = () => {
     // Hook to handle API requests for adding approval requests
     const [addApprovalRequest] = useAddApprovalRequestsMutation();
+    const { success } = SwalAlert();
 
     /**
      * Validates and processes request data based on approval rules.
@@ -55,7 +57,8 @@ export const useValidateAndAddApprovalRequests = () => {
                 try {
                     // Add the approval request and revert the change in newValue
                     await addApprovalRequest(request);
-                    ToastService.success(SuccessMessage.ApprovalSuccess);
+                    success(SuccessMessage.ApprovalSuccess);
+                    // ToastService.success(SuccessMessage.ApprovalSuccess);
                     //newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
                 } catch (error) {
                     console.error('Error adding approval request:', error);
@@ -83,7 +86,8 @@ export const useValidateAndAddApprovalRequests = () => {
                             // Add the approval request and revert the change in newValue
                             await addApprovalRequest(request);
                             newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
-                            ToastService.success(SuccessMessage.ApprovalSuccess);
+                            // ToastService.success(SuccessMessage.ApprovalSuccess);
+                            success(SuccessMessage.ApprovalSuccess);
                         } catch (error) {
                             console.error('Error adding approval request:', error);
                         }

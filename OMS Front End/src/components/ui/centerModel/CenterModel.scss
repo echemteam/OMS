@@ -92,4 +92,10 @@
     }
   }
 
+  &.w-80 {
+    .modal-dialog {
+      max-width: 80%;
+    }
+  }
+
 }

@@ -47,7 +47,7 @@ export const priceListConfig = {
     },
     {
       name: "Req-Date",
-      fieldName: "priorityDate",
+      fieldName: "reqdate",
       colType: GridColumnType.DATE,
       colSettings: {
         format: "DD-MMM-YYYY"
@@ -129,19 +129,20 @@ export const priceListConfig = {
         width: "10%",
       },
       defaultAction: {
-        allowEdit: true,
+        allowEdit: false,
+        allowDelete: false,
       },
+      allowShort: false
     },
   ],
-
-  allowEdit: true,
   editSettings: {
     defualtEditableView: true,
     buttons: {
       save: true,
-      delete: false,
-      cancel: false
+      cancel: false,
     }
-  }
-
+  },
+  allowEdit: true,
+  handleRowDataUpdate: null,
+  OnColumnChangeEdit: null
 };
