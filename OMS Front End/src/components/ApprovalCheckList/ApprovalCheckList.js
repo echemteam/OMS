@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from "react";
 //** Lib's */
 import Buttons from "../ui/button/Buttons";
@@ -10,10 +11,17 @@ import { transformData } from "./Config/ApprovalTransformData";
 //** Service's */
 import ToastService from "../../services/toastService/ToastService";
 import { useAddUserChecklistResponseMutation, useLazyGetUserCheckListQuery } from "../../app/services/ApprovalAPI";
-import PropTypes from 'prop-types';
+
+//** Component's */
+const BasicInformation = React.lazy(() => import("./feature/ApprovalInformation/BasicInfo"));
+const AddressInformation = React.lazy(() => import("./feature/ApprovalInformation/AddressInfo"));
+const ContactInformation = React.lazy(() => import("./feature/ApprovalInformation/ContactInfo"));
+const SettingInformation = React.lazy(() => import("./feature/ApprovalInformation/SettingInfo"));
 
 
-const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSuccessApprovalClose }) => {
+const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSuccessApprovalClose, mainId, getBasicInformationById,
+    getAddressById, getContactById, getFinacialSettingById, isSupplierApproval
+}) => {
 
     //** State */
     const [checkListData, setCheckListData] = useState([]);
@@ -72,30 +80,41 @@ const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSucces
 
     return (
         <div>
-            <SidebarModel modalTitle="Approval Check List" contentClass="content-40 basic-info-model"
+            <SidebarModel modalTitle="Approval Check List" contentClass="content-85 basic-info-model"
                 onClose={onSidebarClose} modalTitleIcon={AppIcons.AddIcon} isOpen={isModelOpen} >
                 {!isGetCheckListFetching ?
                     <React.Fragment>
-                        {checkListData.map((item) => (
-                            <div className="checklist-section">
-                                <div className="row mt-3" key={item.id}>
-                                    <div className="col-12 main-check-title mb-2">
-                                        <CheckListItem itemList={item} handleCheckChange={handleCheckChange} />
-                                    </div>
-                                    <div className="col-12">
-                                        <div className="sub-checklist">
-                                            <div className="row">
-                                                {item.checkListRequest.map((childItem, subIndex) => (
-                                                    <div className="col-12 sub-check-list mb-2" key={childItem.checklistItemId  }>
-                                                        <CheckListItem itemList={childItem} handleCheckChange={handleCheckChange} checkItemListId={childItem.checklistItemId} />
+                        <div className="row mt-3">
+                            <div className="col-md-8">
+                                <BasicInformation isModelOpen={isModelOpen} mainId={mainId} getBasicInformationById={getBasicInformationById} />
+                                <AddressInformation isSupplierApproval={isSupplierApproval} isModelOpen={isModelOpen} mainId={mainId} getAddressById={getAddressById} />
+                                <ContactInformation isSupplierApproval={isSupplierApproval} isModelOpen={isModelOpen} mainId={mainId} getContactById={getContactById} />
+                                <SettingInformation isSupplierApproval={isSupplierApproval} isModelOpen={isModelOpen} mainId={mainId} getFinacialSettingById={getFinacialSettingById} />
+                            </div>
+                            <div className="col-md-4">
+                                {checkListData.map((item) => (
+                                    <div className="checklist-section">
+                                        <div className="row" key={item.id}>
+                                            <div className="col-12 main-check-title mb-2">
+                                                <CheckListItem itemList={item} handleCheckChange={handleCheckChange} />
+                                            </div>
+                                            <div className="col-12">
+                                                <div className="sub-checklist">
+                                                    <div className="row">
+                                                        {item.checkListRequest.map((childItem) => (
+                                                            <div className="col-12 sub-check-list mb-2" key={childItem.checklistItemId}>
+                                                                <CheckListItem itemList={childItem} handleCheckChange={handleCheckChange} checkItemListId={childItem.checklistItemId} />
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                ))}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                ))}
                             </div>
-                        ))}
+                        </div>
+
                     </React.Fragment>
                     : <DataLoader />
                 }
@@ -127,7 +146,7 @@ const ApprovalCheckList = ({ ApprovalData, isModelOpen, onSidebarClose, onSucces
 ApprovalCheckList.propTypes = {
     ApprovalData: PropTypes.oneOfType([
         PropTypes.object,
-        PropTypes.number,  
+        PropTypes.number,
     ]).isRequired,
     isModelOpen: PropTypes.bool.isRequired,
     onSidebarClose: PropTypes.func.isRequired,

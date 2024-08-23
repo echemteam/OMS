@@ -76,7 +76,7 @@ export const contactInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        GetByID : ContactType.EndUser
+        GetByID : ContactType.ENDUSER
       }
     },
   
@@ -101,7 +101,7 @@ export const contactInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        GetByID : ContactType.InvoiceSubmission
+        GetByID : ContactType.INVOICESUBMISSION
 
       }
     },
@@ -126,7 +126,7 @@ export const contactInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        GetByID : ContactType.Purchasing
+        GetByID : ContactType.PURCHASING
       }
     },
     {

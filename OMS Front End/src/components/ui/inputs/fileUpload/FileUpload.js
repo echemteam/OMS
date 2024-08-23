@@ -26,7 +26,6 @@ const FileUpload = ({
   fieldActions,
   ...inputProps
 }) => {
-  console.log("dataField", dataField);
   const [fileValue, setFileValue] = useState(null);
 
   const fileRef = useRef();

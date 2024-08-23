@@ -4,7 +4,7 @@ import DropDown from "../../../../../components/ui/dropdown/DropDrown";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../components/ui/button/Buttons";
-import CustomerApproval from "../../cutomerApproval/CustomerApproval";
+
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import {
   useLazyGetAllUserQuery,
@@ -37,6 +37,9 @@ import DropdownSelect from "../../../../../components/ui/dropdown/DropdownSelect
 import AddEditInvoiceSubmissionInstructionDetail from "./feature/AddEditInvoiceSubmissionInstructionDetail";
 import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useAddCustomerNotesMutation } from "../../../../../app/services/notesAPI";
+
+//** Component's */
+const CustomerApproval = React.lazy(() => import("../../cutomerApproval/CustomerApproval"));
 
 const CustomerBasicInfoCard = ({
   editClick,

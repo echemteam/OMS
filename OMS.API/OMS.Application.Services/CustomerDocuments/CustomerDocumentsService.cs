@@ -1,12 +1,15 @@
-﻿using Common.Helper.Extension;
+﻿using Common.Helper.Export;
+using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Response.CustomerDocuments;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.Contact;
 using OMS.Domain.Entities.Entity.CustomerDocuments;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
 using OMS.Shared.Services.Contract;
+using System.Data;
 
 namespace OMS.Application.Services.CustomerDocuments
 {
@@ -26,22 +29,38 @@ namespace OMS.Application.Services.CustomerDocuments
         #region Customer Documents Services
         public async Task<AddEntityDto<int>> AddCustomerDocuments(AddCustomerDocumentsRequest requestData, short CurrentUserId)
         {
-            AddEntityDto<int> responseData = await repositoryManager.customerDocuments.CheckDocumentsExistOrNot(requestData.DocumentTypeId, requestData.Name, requestData.CustomerId);
+            //AddEntityDto<int> responseData = await repositoryManager.customerDocuments.CheckDocumentsExistOrNot(requestData.DocumentTypeId, requestData.Name, requestData.CustomerId);
 
-            if (responseData.KeyValue > 0)
+            AddEntityDto<int> responseData = new();
+
+            if (requestData.DocumentInfoList != null)
             {
-                if (requestData.Base64File != null && requestData.Name != null)
+                foreach (var document in requestData.DocumentInfoList)
                 {
-                    string AESKey = commonSettingService.EncryptionSettings.AESKey!;
-                    string AESIV = commonSettingService.EncryptionSettings.AESIV!;
-                    requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File!, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.CustomerId, requestData.Attachment!, AESKey, AESIV);
+                    if (!string.IsNullOrEmpty(document.Base64File) && !string.IsNullOrEmpty(requestData.StoragePath))
+                    {
+                        string AESKey = commonSettingService.EncryptionSettings.AESKey!;
+                        string AESIV = commonSettingService.EncryptionSettings.AESIV!;
 
+                        document.Attachment = FileManager.SaveEncryptFile(
+                            document.Base64File!,
+                            Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath, requestData.StoragePath, requestData.CustomerId.ToString()),
+                            document.Attachment!,
+                            AESKey,
+                            AESIV
+                        );
+                    }
                 }
+
+                // Map the request to the DTO and add it to the repository
                 CustomerDocumentsDto customerDocumentsDto = requestData.ToMapp<AddCustomerDocumentsRequest, CustomerDocumentsDto>();
                 customerDocumentsDto.CreatedBy = CurrentUserId;
-                responseData = await repositoryManager.customerDocuments.AddCustomerDocuments(customerDocumentsDto);
+                DataTable documentDataTable = ExportHelper.ListToDataTable(requestData.DocumentInfoList);
+                responseData = await repositoryManager.customerDocuments.AddCustomerDocuments(customerDocumentsDto, documentDataTable);
             }
-            return responseData!;
+
+            return responseData;
+
         }
 
         public async Task<List<GetCustomerDocumentsByIdResponse>> GetCustomerDocumentsById(int customerId)
