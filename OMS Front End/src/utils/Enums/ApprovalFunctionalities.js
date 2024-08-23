@@ -3,5 +3,6 @@ export const FunctionalitiesName = {
     ADDCUSTOMER: "Add Customer",
     UPDATESUPPLIER: "Update Supplier",
     ADDSUPPLIER: "Add Supplier",
-    ADDADDRESS:"Add Address"
+    ADDADDRESS:"Add Address",
+    ADDBILLINGADDRESS:"Add Billing Address",
 }

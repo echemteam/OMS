@@ -21,7 +21,7 @@ export const Menu = [
         to: "/Organization",
         iconClass: "solar:buildings-2-outline",
         subMenu: false,
-        securityKey: securityKey.DASHBOARD,
+        securityKey: securityKey.ORGANIZATION,
         children: [],
       },
     ],
@@ -113,7 +113,7 @@ export const Menu = [
             id: "functionalConfiguration",
             submenuName: "Functional Configuration",
             to: "/FunctionalConfiguration",
-            securityKey: securityKey.APPROVALRULES,
+            securityKey: securityKey.FUNCTIONALCONFIGURATION,
           },
           {
             id: "apiProviders",
@@ -125,7 +125,7 @@ export const Menu = [
             id: "Api Configuration",
             submenuName: "Third party API",
             to: "/ThirdPartyApiConfiguration",
-            securityKey: securityKey.USERMANAGEMENT,
+            securityKey: securityKey.THIRDPARTYAPI,
           },
         ],
       },
@@ -172,7 +172,7 @@ export const Menu = [
         to: "/Order",
         iconClass: "lets-icons:order",
         subMenu: false,
-        securityKey: securityKey.USERMANAGEMENT,
+        securityKey: securityKey.ORDER,
         children: [],
       },
       {
@@ -181,7 +181,7 @@ export const Menu = [
         to: "/MyTask",
         iconClass: "octicon:tasklist-24",
         subMenu: false,
-        securityKey: securityKey.DASHBOARD,
+        securityKey: securityKey.MYTASK,
         children: []
       }
     ]

@@ -288,7 +288,7 @@ const OrderDetails = () => {
         orderId: orderId ? orderId : 0,
         orderMethodId: data.orderMethodId && typeof data.orderMethodId === "object" ? data.orderMethodId.value : data.orderMethodId,
         // orderReceivedDate: data.subCustomerMainCustomerId.date ? new Date(data.subCustomerMainCustomerId.date) : null,
-        orderReceivedDate: new Date(),
+        orderReceivedDate: data.orderReceivedDate,
         orderAddressId: 0,
         customerId: data.customerId && typeof data.customerId === "object" ? data.customerId.value : data.customerId,
         subCustomerId: data.subCustomerMainCustomerId && typeof data.subCustomerMainCustomerId === "object" ? data.subCustomerMainCustomerId.value : data.subCustomerMainCustomerId,

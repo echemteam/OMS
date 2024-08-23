@@ -22,7 +22,7 @@ const ArchiveTask = (props) => {
             }
             getApprovalRequestsListByStatus(req)
         }
-    }, [props.Accept])
+    }, [props.Accept , props.roleId])
 
     useEffect(() => {
         if (!isGetApprovalRequestsListByStatusFetching && isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData) {

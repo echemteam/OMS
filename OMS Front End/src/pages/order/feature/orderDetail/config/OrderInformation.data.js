@@ -7,9 +7,11 @@ export const orderInformationData = {
     customerId: "",
     subCustomerMainCustomerId: null,
     poNumber: "",
-    isBillingId:"",
-    isShippingId:"",
-    orderMethodId:""
+    isBillingId: "",
+    isShippingId: "",
+    orderMethodId: "",
+    orderReceivedDate: new Date(),
+
   },
   formFields: [
     {
@@ -158,6 +160,21 @@ export const orderInformationData = {
       validation: [{ type: "require" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
+      },
+    },
+    {
+      id: "orderReceivedDate",
+      lable: "Order Received Date :",
+      Field_Name: "Order Received Date",
+      fieldType: FormFieldTypes.DATEPICKER,
+      dataField: "orderReceivedDate",
+      fieldSetting: {
+        placeholder: "Enter Order Received Date",
+        options: [],
+      },
+      validation: [{ type: "require" }, { type: "text" }],
+      style: {
+        containerCss: "col-4 mb-2",
       },
     },
     {

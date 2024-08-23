@@ -106,7 +106,7 @@ const VerifyProductDetail = ({ productId }) => {
                     <div className="no-record-found"><NoRecordFound /></div>
                 )
             ) : (
-                <DataLoader />
+                    <DataLoader />
             )}
         </div>
 
