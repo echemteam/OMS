@@ -38,7 +38,7 @@ const EditCheckBoxColumn = ({
       const newRowData = updatedData
         ? { ...updatedData, [col.fieldName]: newValue }
         : { ...rowData, [col.fieldName]: newValue };
-      onChange(rowIndex, newRowData);
+      onChange(rowIndex, newRowData, dataField);
     }
   };
 
@@ -52,7 +52,7 @@ const EditCheckBoxColumn = ({
   return (
     <>
       <GridCheckbox
-        name={col.name+"__"+ rowIndex}
+        name={col.name + "__" + rowIndex}
         className="form-checkbox"
         type="checkbox"
         dataField={editColumn.editColFieldName}

@@ -26,7 +26,9 @@ const ContactNumberList = ({ phoneNumberList, molGridRef, handleToggleModal, act
     }, [phoneNumberList]);
 
     const handleGridCheckBoxChange = (fieldName, rowData) => {
-        handleCheckBoxChange(rowData);
+        if (fieldName === 'isPrimary') {
+            handleCheckBoxChange(rowData);
+        }
     };
 
     return (
