@@ -197,7 +197,7 @@ export const orderInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        GetByID: AddressType.Shipping
+        GetByID: AddressType.SHIPPING
       }
     },
   ],

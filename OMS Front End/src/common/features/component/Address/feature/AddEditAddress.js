@@ -63,9 +63,9 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         if (isOrderManage) {
             setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
             let form = { ...addressFormData };
-            if (getAddressTypeIdOrder === AddressType.Billing) {
+            if (getAddressTypeIdOrder === AddressType.BILLING) {
                 form = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredShipping']);
-            } else if (getAddressTypeIdOrder === AddressType.Shipping) {
+            } else if (getAddressTypeIdOrder === AddressType.SHIPPING) {
                 form = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling']);
             }
             form.initialState = {

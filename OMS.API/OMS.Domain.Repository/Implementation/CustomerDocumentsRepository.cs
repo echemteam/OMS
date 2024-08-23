@@ -1,4 +1,6 @@
-﻿using OMS.Domain.Entities.API.Response.CustomerDocuments;
+﻿using Dapper;
+using OMS.Domain.Entities.API.Request.CustomerDocuments;
+using OMS.Domain.Entities.API.Response.CustomerDocuments;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerDocuments;
 using OMS.Domain.Repository.Contract;
@@ -31,14 +33,15 @@ namespace OMS.Domain.Repository.Implementation
                 customerId
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDto<int>> AddCustomerDocuments(CustomerDocumentsDto customerDocuments)
+        public async Task<AddEntityDto<int>> AddCustomerDocuments(CustomerDocumentsDto customerDocuments,DataTable documentDataTable)
         {
             return await _context.GetSingleAsync<AddEntityDto<int>>(ADDCUSTOMERDOCUMENTS, new
             {
-                customerDocuments.Name,
-                customerDocuments.DocumentTypeId,
+                //customerDocuments.Name,
+                //customerDocuments.DocumentTypeId,
                 customerDocuments.CustomerId,
-                customerDocuments.Attachment,
+                documentList = documentDataTable.AsTableValuedParameter("[dbo].[DocumentList]"),
+                //customerDocuments.Attachment,
                 customerDocuments.CreatedBy
             }, CommandType.StoredProcedure);
         }

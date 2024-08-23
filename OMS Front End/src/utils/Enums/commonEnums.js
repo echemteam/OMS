@@ -62,7 +62,7 @@ export const ApiParametersDataTypes = {
 export const PaymentMethodTypes = {
     CHECK: 1,
     ACHECHECK: 2,
-    Wire: 3,
+    WIRE: 3,
     CREDITCARD: 4,
     ADVANCEDCOLLECT: 5,
     OTHERWITHNOTEDIELD: 6
@@ -107,21 +107,21 @@ export const ParameterType = {
 }
 
 export const AddressType = {
-    Billing: 1,
-    Shipping: 2
+    BILLING: 1,
+    SHIPPING: 2
 }
 
 export const ContactType = {
-    Primary: 1,
-    EndUser: 2,
-    Purchasing: 3,
-    InvoiceSubmission: 4,
-    InvoiceFollowup: 5,
+    PRIMARY: 1,
+    ENDUSER: 2,
+    PURCHASING: 3,
+    INVOICESUBMISSION: 4,
+    INVOICEFOLLOWUP: 5,
     AP: 6,
-    AccountsReceivable: 7,
-    PurchaseOrder: 8,
-    SalesDepartment: 9,
-    QCDepartment: 10
+    ACCOUNTSRECEIVABLE: 7,
+    PURCHASEORDER: 8,
+    SALESDEPARTMENT: 9,
+    QCDEPARTMENT: 10
 }
 
 export const OrderInformationField = {

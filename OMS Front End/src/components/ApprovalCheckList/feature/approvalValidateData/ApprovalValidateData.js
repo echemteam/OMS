@@ -2,13 +2,13 @@
 import React, { useEffect, useImperativeHandle, useState ,useRef} from "react";
 //** Lib's */
 import "./ApprovalValidateData.scss";
-import Image from "../../image/Image";
-import Buttons from "../../ui/button/Buttons";
-import { AppIcons } from "../../../data/appIcons";
-import DataLoader from "../../ui/dataLoader/DataLoader";
-import CenterModel from "../../ui/centerModel/CenterModel";
-import { encryptUrlData } from "../../../services/CryptoService";
-import ToastService from "../../../services/toastService/ToastService";
+import Image from "../../../image/Image";
+import Buttons from "../../../ui/button/Buttons";
+import { AppIcons } from "../../../../data/appIcons";
+import DataLoader from "../../../ui/dataLoader/DataLoader";
+import CenterModel from "../../../ui/centerModel/CenterModel";
+import { encryptUrlData } from "../../../../services/CryptoService";
+import ToastService from "../../../../services/toastService/ToastService";
 import PropTypes from 'prop-types';
 
 const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckList, handleDone, showModal, handleShowValidateModal, handleValidateModalClose,
@@ -49,7 +49,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }, [showModal])
 
   const boldSpecificWords = (text) => {
-    const wordsToBold = ["Billing Address", "Shipping Address", "Invoice Submission Contact Email","Accounts Payable Contact Email","Default Payment Terms Template","Payment Method","Credit Limit","Billing Currency","Accounting Settings","Delivery Methods","Delivery Carriers"];
+    const wordsToBold = ["TaxId","Billing Address", "Shipping Address", "Invoice Submission Contact Email","Accounts Payable Contact Email","Default Payment Terms Template","Payment Method","Credit Limit","Billing Currency","Accounting Settings","Delivery Methods","Delivery Carriers"];
     const regex = new RegExp(`\\b(${wordsToBold.join("|")})\\b`, "g");
     return text.replace(
       regex,
