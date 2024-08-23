@@ -70,6 +70,13 @@
 .css-1nmdiqs-menu {
   font-size: var(--commonFont-medium) !important;
   z-index: 99;
+  cursor: pointer;
+  .css-1n6sfyn-MenuList {
+    cursor: pointer;
+    .css-tr4s17-option {
+      cursor: pointer;
+    }
+  }
 }
 
 .css-1jqq78o-placeholder {
@@ -106,6 +113,7 @@
 
 .css-1nmdiq5-menu {
   z-index: 99999 !important;
+  cursor: pointer;
 }
 
 .css-t3ipsp-control {
@@ -227,7 +235,7 @@
         font-size: var(--commonFont-medium);
       }
     }
-    .css-1hb7zxy-IndicatorsContainer{
+    .css-1hb7zxy-IndicatorsContainer {
       height: 10px !important;
     }
   }

@@ -179,7 +179,7 @@
             top: -26px;
             left: -100px;
             font-size: var(--commonFont-extraSmall);
-
+            pointer-events: none;
             p {
               margin: 0;
             }
