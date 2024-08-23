@@ -14,7 +14,7 @@ const CustomerAddressDetail = React.lazy(() => import("../../customerAddressDeta
 const CustomerSettingDetails = React.lazy(() => import("../../customerSettingDetail/CustomerSettingDetails"));
 const CustomerSubCustomerDetail = React.lazy(() => import("../../customerSubCustomerDetail/CustomerSubCustomerDetail"));
 
-const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode }) => {
+const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, customerStatus }) => {
 
   const { isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -44,10 +44,10 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode }) =>
       icon: "fa fa-address-book-o",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
-          <CustomerAddressDetail isEditablePage={true} />
+          <CustomerAddressDetail isEditablePage={true} customerStatus={customerStatus} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasAddressPermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasAddressPermission?.hasAccess,
     },
     {
       sMenuItemCaption: "Contact",
@@ -57,7 +57,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode }) =>
           <CustomerContactDetail isEditablePage={true} isSearchFilterShow={true} contryIdCode={contryIdCode} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasContactPermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasContactPermission?.hasAccess,
     },
     {
       sMenuItemCaption: "Settings",
@@ -67,7 +67,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode }) =>
           <CustomerSettingDetails isEditablePage={true} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasSettingPermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasSettingPermission?.hasAccess,
     },
     {
       sMenuItemCaption: "Documents",
@@ -77,7 +77,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode }) =>
           <CustomerDocumentDetail isEditablePage={true} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasDocumentPermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasDocumentPermission?.hasAccess,
     },
     {
       sMenuItemCaption: "Link Customer",
@@ -87,7 +87,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode }) =>
           <CustomerSubCustomerDetail />
         </div>
       ),
-      isVisible: isResponsibleUser ? isBuyingForThirdParty : isBuyingForThirdParty && hasSubCustomerPermission.hasAccess
+      isVisible: isResponsibleUser ? isBuyingForThirdParty : isBuyingForThirdParty && hasSubCustomerPermission?.hasAccess
     },
     {
       sMenuItemCaption: "Notes",
@@ -97,7 +97,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode }) =>
           <CustomerNoteDetail isEditablePage={true} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasNotePermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasNotePermission?.hasAccess,
     },
     {
       sMenuItemCaption: "History",
@@ -107,19 +107,14 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode }) =>
           <CustomerHistory isEditablePage={true} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasHistoryPermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasHistoryPermission?.hasAccess,
     }
   ];
 
   const visibleTabs = tabs.filter((tab) => tab.isVisible);
 
   return (
-    <>
-      {console.log('hasSubCustomerPermission', hasSubCustomerPermission)}
-      {console.log('isBuyingForThirdParty', isBuyingForThirdParty)}
-      {console.log('isResponsibleUser', isResponsibleUser)}
-      <RenderTabs tabs={customerId ? visibleTabs : null} />
-    </>
+    <RenderTabs tabs={customerId ? visibleTabs : null} />
   )
 }
 

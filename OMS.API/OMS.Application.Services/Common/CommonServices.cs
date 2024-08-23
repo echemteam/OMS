@@ -189,5 +189,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllContactsByCustomerIdAndContactTypeId(customerId,contactTypeId);
         }
+        public Task<List<GetAllOrderMethodResponse>> GetAllOrderMethod()
+        {
+            return repositoryManager.commonRepository.GetAllOrderMethod();
+        }
     }
 }

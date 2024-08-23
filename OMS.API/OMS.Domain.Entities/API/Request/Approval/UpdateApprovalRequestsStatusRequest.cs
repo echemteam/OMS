@@ -4,6 +4,7 @@
     {
         public int ApprovalRequestId { get; set; }
         public string? Status { get; set; }
+        public string? RejectReason { get; set; }
 
     }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../../components/ui/button/Buttons";
@@ -5,18 +6,18 @@ import { InvoiceFormData } from "../../../../../supplierDetails/feature/supplier
 import { useAddEditCustomerInvoiceMutation, useLazyGetDetailsbyCustomerIDQuery } from "../../../../../../app/services/customerSettingsAPI";
 import ToastService from "../../../../../../services/toastService/ToastService";
 
-const AddEditInvoiceSubmissionInstructionDetail = ({ customerId, handleToggleModal, showModal, setShowModal }) => {
+const AddEditInvoiceSubmissionInstructionDetail = ({ customerId, handleToggleModal, isInvoiceModelShow, setIsInvoiceModelShow }) => {
     const invoiceRef = useRef();
     const [formData, setFormData] = useState(InvoiceFormData);
-    const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+    const [shouldRerenderFormCreator] = useState(false);
     const [addEditCustomerInvoice, { isLoading: isAddEditCustomerInvoiceLoading, isSuccess: isAddEditCustomerInvoiceSuccess, data: isAddEditCustomerInvoiceData }] = useAddEditCustomerInvoiceMutation();
     const [GetDetailsbyCustomerID, { isFetching: isGetDetailByCustomerIdFetching, isSuccess: isGetDetailByCustomerIdSuccess, data: isGetDetailByCustomerIdData, },] = useLazyGetDetailsbyCustomerIDQuery();
 
     useEffect(() => {
-        if (showModal) {
+        if (isInvoiceModelShow) {
             GetDetailsbyCustomerID(customerId);
         }
-    }, [showModal])
+    }, [isInvoiceModelShow])
 
     useEffect(() => {
         if (!isGetDetailByCustomerIdFetching && isGetDetailByCustomerIdSuccess && isGetDetailByCustomerIdData) {
@@ -31,7 +32,7 @@ const AddEditInvoiceSubmissionInstructionDetail = ({ customerId, handleToggleMod
     useEffect(() => {
         if (isAddEditCustomerInvoiceSuccess && isAddEditCustomerInvoiceData) {
             ToastService.success(isAddEditCustomerInvoiceData.errorMessage);
-            setShowModal(false);
+            setIsInvoiceModelShow(false);
         }
     }, [isAddEditCustomerInvoiceSuccess, isAddEditCustomerInvoiceData]);
 

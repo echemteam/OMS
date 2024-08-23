@@ -75,7 +75,7 @@ setDropDownOptionField.propTypes = {
  */
 export const setFieldSetting = (formFieldsData, fieldId, fieldSettingType, value = false) => {
     const selectField = getFieldData(formFieldsData, fieldId);
-    if (selectField) {
+    if (selectField && selectField.fieldSetting) {
         switch (fieldSettingType) {
             case 'isMultiSelect':
                 selectField.fieldSetting.isMultiSelect = value;
@@ -88,6 +88,10 @@ export const setFieldSetting = (formFieldsData, fieldId, fieldSettingType, value
                 break;
             case 'isSecoundryInputButton':
                 selectField.inputButtonGroup.showInformation.showInputButton = value;
+                break;
+            case 'isText':
+                //selectField.fieldSetting.isText = value;
+                selectField.fieldSetting.isText = value;
                 break;
             default:
                 break;

@@ -28,6 +28,7 @@
   --cardborderColor: #e0e0e0;
   --tabBgColor: #dcdde0;
   --placeholderColor: #aeaeae96;
+  --textGreyColor: #b8b8b8;
 
   --sidebarColor: #2f3349;
   --sidebarHoverColor: #393d53;
@@ -96,6 +97,7 @@
   --commonFont-medium: 13px;
   --commonFont-small: 12px;
   --commonFont-extraSmall: 10px;
+  --commonFont-average: 15px;
 }
 
 // Variable Styling End
@@ -111,5 +113,6 @@
     --commonFont-medium: 11px;
     --commonFont-small: 10px;
     --commonFont-extraSmall: 9px;
+    --commonFont-average: 13px;
   }
 }

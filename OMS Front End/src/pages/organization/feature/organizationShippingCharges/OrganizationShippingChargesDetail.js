@@ -5,6 +5,7 @@ import Buttons from "../../../../components/ui/button/Buttons";
 import ToastService from "../../../../services/toastService/ToastService";
 import { OrganizationShippingChargesFormData } from "./config/OrganizationShippingCharges.data";
 import { useAddEditOrganizationShippingChargesMutation, useLazyGetOrganizationShippingChargesQuery } from "../../../../app/services/organizationAPI";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
 const OrganizationShippingChargesDetail=()=>{
     const organizationShippingChargesRef = useRef();
@@ -51,6 +52,9 @@ const OrganizationShippingChargesDetail=()=>{
         }
     }, [isGetOrganizationShippingChargesFetching, isGetOrganizationShippingChargesSuccess, isGetOrganizationShippingChargesData,]);
 
+    if (isGetOrganizationShippingChargesFetching) {
+        return <div><DataLoader /></div>; // Replace with a proper loading spinner or component
+    }
 
     return(
     

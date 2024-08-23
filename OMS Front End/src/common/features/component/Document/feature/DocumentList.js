@@ -153,8 +153,8 @@ const DocumentList = forwardRef(
 
       let request = {
         folderName: isSupplier
-          ? ModulePathName.Supplier
-          : ModulePathName.Customer,
+          ? ModulePathName.SUPPLIER
+          : ModulePathName.CUSTOMER,
         keyId: keyId,
         fileName: fileName,
       };

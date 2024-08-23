@@ -45,12 +45,15 @@ function CardSection({
   searchTextWithIcon,
   clearTextWithIcon,
   clearIconImg,
-  searchValue
+  searchValue,
+  multipleButton,
+  rightButtonArray,
 }) {
   return (
     <div
-      className={`card ${cardTitle ? "card-section-left" : ""}${searchInput && rightButton ? "card-section-between" : ""
-        }${rightButton ? "card-button-only" : ""}`}
+      className={`card ${cardTitle ? "card-section-left" : ""}${
+        searchInput && rightButton ? "card-section-between" : ""
+      }${rightButton ? "card-button-only" : ""}`}
     >
       {(cardTitle || rightButton || searchFilter || searchInput) && (
         <div className="card-top-title-btn">
@@ -116,40 +119,54 @@ function CardSection({
               </>
             )}
           </div>
-
           {
-            // isButtonVisible && (
-
+            // isButtonVisible &&(
             rightButton && (
-              <>
-                <div className="btn-right-sec">
-                  {/* Button to open the Add Craft modal */}
-                  {isFilter ? (
-                    <>
-                      <Filter
-                        headerTitle={filterHeaderTitle}
-                        placeholder="Select Filter"
+              <div className="btn-right-sec">
+                {isFilter ? (
+                  <>
+                    <Filter
+                      headerTitle={filterHeaderTitle}
+                      placeholder="Select Filter"
+                    />
+                  </>
+                ) : (
+                  ""
+                )}
+                {multipleButton && (
+                  <div className="btn-right-sec">
+                    {rightButtonArray.map((button, index) => (
+                      <Buttons
+                        key={index}
+                        buttonTypeClassName={button.buttonTypeClassName}
+                        onClick={button.onClick}
+                        buttonText={button.buttonText}
+                        buttonTextBack={buttonTextBack}
+                        textWithIcon={button.textWithIcon}
+                        textWithIconBack={textWithIconBack}
+                        imagePath={button.imagePath}
+                        imagePathBack={iconImgBack}
+                        isLoading={isLoading}
+                        titleText={titleText}
                       />
-                    </>
-                  ) : (
-                    ""
-                  )}
-                  <Buttons
-                    buttonTypeClassName={buttonClassName}
-                    onClick={titleButtonClick}
-                    buttonText={buttonText}
-                    buttonTextBack={buttonTextBack}
-                    textWithIcon={textWithIcon}
-                    textWithIconBack={textWithIconBack}
-                    imagePath={iconImg}
-                    imagePathBack={iconImgBack}
-                    isLoading={isLoading}
-                    titleText={titleText}
-                  />
-                </div>
-              </>
-              // )
+                    ))}
+                  </div>
+                )}
+                <Buttons
+                  buttonTypeClassName={buttonClassName}
+                  onClick={titleButtonClick}
+                  buttonText={buttonText}
+                  buttonTextBack={buttonTextBack}
+                  textWithIcon={textWithIcon}
+                  textWithIconBack={textWithIconBack}
+                  imagePath={iconImg}
+                  imagePathBack={iconImgBack}
+                  isLoading={isLoading}
+                  titleText={titleText}
+                />
+              </div>
             )
+            // )
           }
         </div>
       )}
@@ -198,6 +215,16 @@ CardSection.propTypes = {
   clearTextWithIcon: PropTypes.bool,
   clearIconImg: PropTypes.string,
   searchValue: PropTypes.string,
+  multipleButton: PropTypes.bool,
+  rightButtonArray: PropTypes.arrayOf(
+    PropTypes.shape({
+      buttonTypeClassName: PropTypes.string,
+      onClick: PropTypes.func,
+      buttonText: PropTypes.string,
+      textWithIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+      imagePath: PropTypes.string,
+    })
+  ),
 };
 
 export default CardSection;

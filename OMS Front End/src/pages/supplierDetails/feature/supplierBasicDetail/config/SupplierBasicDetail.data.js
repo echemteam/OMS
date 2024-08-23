@@ -12,7 +12,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 //   // ACTIVE: securityKey.ACTIVECUSTOMER
 // };
 
-
+export const excludingRoles = ['Admin', 'manager'];
 export const supplierBasicData = {
   initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "", supplierNoteId: "" },
   formFields: [

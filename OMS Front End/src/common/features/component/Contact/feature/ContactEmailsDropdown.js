@@ -1,6 +1,4 @@
 import React from "react";
-import { AppIcons } from "../../../../../data/appIcons";
-import Image from "../../../../../components/image/Image";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";

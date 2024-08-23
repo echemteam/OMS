@@ -41,6 +41,7 @@ export const DocumentFormData = {
         placeholder: "Enter Document Name",
         allowSpace: true,
         maxLength: 50,
+        isDisable: true
       },
       validation: [{ type: "require" }],
       style: {
@@ -55,7 +56,7 @@ export const DocumentFormData = {
       dataField: "attachment",
       fieldSetting: {
         placeholder: "Upload Attachment",
-        allowSpace: true, 
+        allowSpace: true,
         isButtonVisible: false,
         isCustomButtonVisible: true,
         acceptedFiles: '.pdf , .docx ',

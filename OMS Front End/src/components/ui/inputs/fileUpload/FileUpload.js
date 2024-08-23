@@ -6,7 +6,6 @@ import "./FileUpload.scss";
 import Image from "../../../image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import Buttons from "../../button/Buttons";
-import Iconify from "../../iconify/Iconify";
 
 const FileUpload = ({
   type = TextInputType.FILE,
@@ -22,13 +21,23 @@ const FileUpload = ({
   isButtonVisible,
   acceptedFiles,
   isCustomButtonVisible,
+  dataField,
+  fieldActions,
+  ...inputProps
 }) => {
   const [fileValue, setFileValue] = useState(null);
 
   const fileRef = useRef();
-  const handleInputChange = (e) => {
-    if (onChange) {
-      onChange(e);
+  const handleInputChange = (data) => {
+    // const value = isMultiSelect ? selectedOption.map((option) => option.value) : selectedOption;
+    const value = data.target.files[0].name;
+    // if (onChange) {
+    //   onChange(e);
+    // }
+    onChange(data);
+
+    if (fieldActions && inputProps) {
+      fieldActions("DDL_FILE", dataField, value);
     }
   };
 
@@ -51,14 +60,17 @@ const FileUpload = ({
       fileRef.current.value = null;
       handleClearClick();
     }
+    /** This flag is used for the user is upload the file then clear the fileName.  */
+    if (inputProps?.isFileNameCleared) {
+      handleClearClick();
+    }
   }, [filename]);
 
   return (
     <>
       <div
-        className={`form-field custom-file-uploader ${
-          isDisable ? "field-disabled" : ""
-        }`}
+        className={`form-field custom-file-uploader ${isDisable ? "field-disabled" : ""
+          }`}
       >
         <input
           ref={fileRef}
@@ -77,7 +89,7 @@ const FileUpload = ({
           <Image
             imagePath={AppIcons.Uploaddocumenticon}
             altText="Please Upload File"
-          ></Image> 
+          ></Image>
           {/* <Iconify icon="iconamoon:file-document-thin" /> */}
 
           {fileValue ? (

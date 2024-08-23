@@ -4,5 +4,6 @@
     {
         public int? FunctionalityId { get; set; }
         public string? Name { get; set; }
+        public bool? IsFunctional { get; set; }
     }
 }

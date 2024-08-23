@@ -4,7 +4,7 @@ export const securityKey = {
      DASHBOARD: "Dashboard",
 
      // My Task 
-     MYTASK: "MyTask",
+     MYTASK: "My Task",
 
      // Order
      ORDER: "Order",
@@ -68,7 +68,7 @@ export const securityKey = {
      //** Customer History */
      CUSTOMERHISTORY: "Customer History",
 
-     CUSTOMERSUBCUSTOMER:"Customer Sub-Customer",
+     CUSTOMERSUBCUSTOMER: "Customer Sub-Customer",
 
 
      //** SUPPLIER */
@@ -76,7 +76,7 @@ export const securityKey = {
      ADDSUPPLIER: "Add Supplier",
      SUPPLIERLIST: "Supplier List",
      //** EDITSUPPLIER */
-     EDITSUPPLIER : "Edit Supplier",
+     EDITSUPPLIER: "Edit Supplier",
      BLOCKSUPPLIER: "Block Supplier",
      UNBLOCKSUPPLIER: "UnBlock Supplier",
      DISABLESUPPLIER: "Disable Supplier",
@@ -104,27 +104,29 @@ export const securityKey = {
      //** Supplier History */
      SUPPLIERHISTORY: "Supplier History",
 
-    
+
      //** Api Configration */
      APICONFIGURATION: "API Configuration",
 
-     APIPROVIDERS:"API Providers",
-     APIENDPOINTS:"API EndPoints",
-     APIPARAMETERS:"API Parameters",
-     APIAUTHENTICATION:"API Authentication",
+     APIPROVIDERS: "API Providers",
+     APIENDPOINTS: "API EndPoints",
+     APIPARAMETERS: "API Parameters",
+     APIAUTHENTICATION: "API Authentication",
 
 
      //** Wating for the generate keys */
      //  ADDCUSTOMERSETTING: "Add Customer Setting",
      //  EDITCUSTOMERSETTING: "Edit Customer Setting",
 
-
-
      //** Permissions Management */ -- Pending 
      PERMISSIONMANAGEMENT: "Permissions Management",
      SAVEPERMISSIONS: "Save Permission",
 
-     CONFIGURATION : "Configuration",
-     APPROVALRULES : "Approval Rules",
+     CONFIGURATION: "Configuration",
+     APPROVALRULES: "Approval Rules",
+     FUNCTIONALCONFIGURATION: "Functional Configuration",
+     THIRDPARTYAPI: "Third Party Api",
+
+     ORGANIZATION: "Organization",
 
 };

@@ -44,7 +44,7 @@ const ContactDetails = (props) => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.EndUser
+        contactTypeId: ContactType.ENDUSER
       }
       getAllEndUserId(req)
     }
@@ -54,7 +54,7 @@ const ContactDetails = (props) => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.InvoiceSubmission
+        contactTypeId: ContactType.INVOICESUBMISSION
       }
       getAllInvoiceSubmissionId(req)
     }
@@ -64,7 +64,7 @@ const ContactDetails = (props) => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.Purchasing
+        contactTypeId: ContactType.PURCHASING
       }
       getAllPurchasingId(req)
     }
@@ -90,19 +90,19 @@ const ContactDetails = (props) => {
     if (data === 2) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.EndUser
+        contactTypeId: ContactType.ENDUSER
       }
       getAllEndUserId(req)
     } else if (data === 3) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.Purchasing
+        contactTypeId: ContactType.PURCHASING
       }
       getAllPurchasingId(req)
     } else if (data === 4) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.InvoiceSubmission
+        contactTypeId: ContactType.INVOICESUBMISSION
       }
       getAllInvoiceSubmissionId(req)
     }
@@ -125,13 +125,13 @@ const ContactDetails = (props) => {
   const handleInputGroupButton = (id) => {
     if (id > 0) {
       setContectTypeId(id)
-      if (endUserEnableDisableButton && ContactType.EndUser === id) {
+      if (endUserEnableDisableButton && ContactType.ENDUSER === id) {
         setIsModelOpen(!isModelOpen);
       }
-      if (invoicerEnableDisableButton && ContactType.InvoiceSubmission === id) {
+      if (invoicerEnableDisableButton && ContactType.INVOICESUBMISSION === id) {
         setIsModelOpen(!isModelOpen);
       }
-      if (purchasingEnableDisableButton && ContactType.Purchasing === id) {
+      if (purchasingEnableDisableButton && ContactType.PURCHASING === id) {
         setIsModelOpen(!isModelOpen);
       }
     }
@@ -157,6 +157,10 @@ const ContactDetails = (props) => {
           setEndUserEnableDisableButton(true)
         } else {
           setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, true);
+          basicInformation.current.updateFormFieldValue({
+            endUserId : null,
+            isEndUser : false
+        });
           setEndUserEnableDisableButton(false)
         }
         break;
@@ -167,6 +171,10 @@ const ContactDetails = (props) => {
           setInvoiceEnableDisableButton(true)
         } else {
           setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, true);
+          basicInformation.current.updateFormFieldValue({
+            invoiceSubmissionId : null,
+            isInvoiceSubmission : false
+        });
           setInvoiceEnableDisableButton(false)
         }
         break;
@@ -177,6 +185,10 @@ const ContactDetails = (props) => {
           setPurchasingEnableDisableButton(true)
         } else {
           setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, true);
+          basicInformation.current.updateFormFieldValue({
+            purchasingId : null,
+            isPurchasingGiven : false
+        });
           setPurchasingEnableDisableButton(false)
         }
         break;
@@ -215,11 +227,11 @@ const ContactDetails = (props) => {
       let request = {
         orderId: orderId ? orderId : 0,
         isEndUser: data.isEndUser,
-        endUserContactId: 0,
+        endUserContactId: data.endUserId && typeof data.endUserId === "object" ? data.endUserId.value : data.endUserId,
         isInvoiceSubmission: data.isInvoiceSubmission,
-        invoiceSubmissionContactId: data.invoiceSubmissionId.value,
+        invoiceSubmissionContactId: data.invoiceSubmissionId && typeof data.invoiceSubmissionId === "object" ? data.invoiceSubmissionId.value : data.invoiceSubmissionId,
         isPurchasing: data.isPurchasingGiven,
-        purchasingContactId: 0,
+        purchasingContactId: data.purchasingId && typeof data.purchasingId === "object" ? data.purchasingId.value : data.purchasingId,
         referenceNumber: data.refNumber
       }
       addEditOrderContactInformation(request)

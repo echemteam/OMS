@@ -4,7 +4,7 @@ import DropDown from "../../../../../components/ui/dropdown/DropDrown";
 import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../components/ui/button/Buttons";
-import CustomerApproval from "../../cutomerApproval/CustomerApproval";
+
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import {
   useLazyGetAllUserQuery,
@@ -35,6 +35,11 @@ import Iconify from "../../../../../components/ui/iconify/Iconify";
 // import Select from 'react-select';
 import DropdownSelect from "../../../../../components/ui/dropdown/DropdownSelect";
 import AddEditInvoiceSubmissionInstructionDetail from "./feature/AddEditInvoiceSubmissionInstructionDetail";
+import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { useAddCustomerNotesMutation } from "../../../../../app/services/notesAPI";
+
+//** Component's */
+const CustomerApproval = React.lazy(() => import("../../cutomerApproval/CustomerApproval"));
 
 const CustomerBasicInfoCard = ({
   editClick,
@@ -49,6 +54,7 @@ const CustomerBasicInfoCard = ({
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [formData, setFormData] = useState(reasonData);
   const [showModal, setShowModal] = useState(false);
+  const [isInvoiceModelShow,setIsInvoiceModelShow]=useState(false);
   const [customerID, setCustomerId] = useState();
   const [statusId, setStatusId] = useState();
   const [responsibleUserIds, setResponsibleUserIds] = useState([]);
@@ -78,6 +84,9 @@ const CustomerBasicInfoCard = ({
       data: updateCustomerInActiveStatusData,
     },
   ] = useUpdateCustomerInActiveStatusMutation();
+
+  const [addCustomerNotes] = useAddCustomerNotesMutation();
+
 
   const { isResponsibleUser } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
@@ -154,6 +163,14 @@ const CustomerBasicInfoCard = ({
         label: item.fullName,
       }));
       setResponsibleUserOptions(modifyUserData);
+
+      const filterDataDropdown = allGetAlluserData.filter((item) => {
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+      });
+      // Remove duplicates based on fullName
+      const uniqueDataDropdown = Array.from(new Map(filterDataDropdown.map((item) => [item.fullName, item])).values());
+      setDropDownOptionField(uniqueDataDropdown, 'userId', 'fullName', reasonData, 'responsibleUserId');
+
     }
   }, [isGetAllUserSucess, allGetAlluserData, isFetching]);
 
@@ -234,8 +251,6 @@ const CustomerBasicInfoCard = ({
   useEffect(() => {
     if (isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
       ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage);
-
-
     }
   }, [isSuccessAddEditResponsibleUserForCustomer, isAddEditResponsibleUserForCustomerData]);
 
@@ -261,16 +276,28 @@ const CustomerBasicInfoCard = ({
         ...custData,
         customerId: customerId,
         statusId: selectedStatus ? selectedStatus : 0,
+        note: custData.inActiveReason,
       };
       updateCustomerInActiveStatus(req);
-      updateRUserData(custData);
+      addCustomerNotes(req);
+      updateRUserDataDropdown(custData.responsibleUserId);
     }
   };
+
+  const updateRUserDataDropdown = (value) => {
+    let req = {
+      customerId: customerId,
+      userId: String(value)
+    }
+    addEditResponsibleUserForCustomer(req);
+  }
+
   const handleModelShow = () => {
-    setShowModal(true);
+    setIsInvoiceModelShow(true);
   }
   const handleToggleModal = () => {
     setShowModal(false);
+    setIsInvoiceModelShow(false);
     onReset();
     getCustomerById();
     setSelectedStatus(customerData.status);
@@ -481,8 +508,6 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
             <div className="field-desc">
-              {/* {isResponsibleUser ?
-                <> */}
                   <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
                   <b>&nbsp;:&nbsp;</b>
                   <div className="checkbox-part ml-2 mt-2 eye-icon ">
@@ -492,8 +517,6 @@ const CustomerBasicInfoCard = ({
                     </div>
                     <di className="tooltip-arrow-icon"></di>
                   </div>
-                {/* </> : ""
-              } */}
             </div>
           </div>
         </div>
@@ -532,17 +555,17 @@ const CustomerBasicInfoCard = ({
         </CenterModel>
       )}
       {
-        showModal && (
+        isInvoiceModelShow && (
           <CenterModel
-            showModal={showModal}
-            handleToggleModal={handleToggleModal}
+            showModal={isInvoiceModelShow}
+            handleToggleModal={setIsInvoiceModelShow}
             modalTitle="Add/Edit Invoice Submission Instruction"
             modelSizeClass="w-60"
           >
             <AddEditInvoiceSubmissionInstructionDetail
               customerId={customerId}
-              showModal={showModal}
-              setShowModal={setShowModal}
+              isInvoiceModelShow={isInvoiceModelShow}
+              setIsInvoiceModelShow={setIsInvoiceModelShow}
               handleToggleModal={handleToggleModal}
             />
           </CenterModel>)

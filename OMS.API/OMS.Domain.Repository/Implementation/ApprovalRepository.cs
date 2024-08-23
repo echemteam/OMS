@@ -19,6 +19,7 @@ namespace OMS.Domain.Repository.Implementation
         const string VALIDATESUPPLIERDATA = "ValidateSupplierData";
         const string ADDAPPROVALREQUESTS = "AddApprovalRequests";
         const string GETAPPROVALREQUESTSLISTBYSTATUSANDREQUESTEDBYUSERID = "GetApprovalRequestsListByStatusAndRequestedByUserId";
+        const string GETAPPROVALREQUESTSLISTBYSTATUSANDROLEID = "GetApprovalRequestsListByStatusAndRoleId";
         const string GETAPPROVALREQUESTSBYAPPROVALREQUESTID = "GetApprovalRequestsByApprovalRequestId";
         const string GETAPPROVALCONFIGURATION = "GetApprovalConfiguration";
         const string UPDATEAPPROVALREQUESTSSTATUS = "UpdateApprovalRequestsStatus";
@@ -87,11 +88,11 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.RequestedByUserId,
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>> GetApprovalRequestsListByStatusAndRequestedByUserId(string status, short requestedByUserId)
+        public async Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string status, string? roleId)
         {
-            List<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusAndRequestedByUserIdResponse>(GETAPPROVALREQUESTSLISTBYSTATUSANDREQUESTEDBYUSERID, new
+            List<GetApprovalRequestsListByStatusAndRoleIdResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusAndRoleIdResponse>(GETAPPROVALREQUESTSLISTBYSTATUSANDROLEID, new
             {
-                requestedByUserId,
+                roleId,
                 status
             }, commandType: CommandType.StoredProcedure);
             return getAllUsersResponse;
@@ -112,6 +113,7 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.ApprovalRequestId,
                 requestData.ApprovedByUserId,
                 requestData.Status,
+                requestData.RejectReason,
             }, CommandType.StoredProcedure);
         }
         public async Task<string> GetPrimaryKeyColumnAsync(string tableName)

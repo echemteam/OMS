@@ -1,14 +1,17 @@
 import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
-import { AddressType } from "../../../../../utils/Enums/commonEnums";
+import { AddressType, OrderInformationField } from "../../../../../utils/Enums/commonEnums";
 
 export const orderInformationData = {
   initialState: {
     customerId: "",
-    subCustomerMainCustomerId: "",
+    subCustomerMainCustomerId: null,
     poNumber: "",
-    isBillingId:"",
-    isShippingId:""
+    isBillingId: "",
+    isShippingId: "",
+    orderMethodId: "",
+    orderReceivedDate: new Date(),
+
   },
   formFields: [
     {
@@ -28,6 +31,7 @@ export const orderInformationData = {
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-6 mb-input",
       },
+      validation: [{ type: "require" }],
       dropdownSettings: {
         colorMap: {
           Approved: "#00b100",
@@ -60,6 +64,7 @@ export const orderInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
+        GetByID: OrderInformationField.CustomerName
       }
     },
     {
@@ -111,6 +116,8 @@ export const orderInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
+        GetByID: OrderInformationField.SubCustomer
+
       }
     },
     {
@@ -138,6 +145,37 @@ export const orderInformationData = {
           title: "PO Number"
         }
       }
+    },
+    {
+      id: "orderMethodId",
+      lable: "Order Method ",
+      Field_Name: "Order Method",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "orderMethodId",
+      fieldSetting: {
+        isDisabled: false,
+        placeholder: "Select Order Method",
+        isEnableOnChange: true
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
+      },
+    },
+    {
+      id: "orderReceivedDate",
+      lable: "Order Received Date :",
+      Field_Name: "Order Received Date",
+      fieldType: FormFieldTypes.DATEPICKER,
+      dataField: "orderReceivedDate",
+      fieldSetting: {
+        placeholder: "Enter Order Received Date",
+        options: [],
+      },
+      validation: [{ type: "require" }, { type: "text" }],
+      style: {
+        containerCss: "col-4 mb-2",
+      },
     },
     {
       id: "isBillingId",
@@ -176,7 +214,7 @@ export const orderInformationData = {
         isInputButton: true,
         buttonText: 'Add',
         icon: AppIcons.PlusIcon,
-        GetByID: AddressType.Shipping
+        GetByID: AddressType.SHIPPING
       }
     },
   ],

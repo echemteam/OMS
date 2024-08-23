@@ -8,7 +8,7 @@
         public int? CityId { get; set; }
         public int? StateId { get; set; }
         public short? CountryId { get; set; }
-        public int? ZipCode { get; set; }
+        public int? ZipCode { get; set; } 
 
     }
 }

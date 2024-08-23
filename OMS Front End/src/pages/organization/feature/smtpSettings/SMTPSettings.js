@@ -6,28 +6,29 @@ import Buttons from '../../../../components/ui/button/Buttons';
 import { useAddEditSmtpSettingsMutation, useLazyGetSmtpSettingsQuery } from '../../../../app/services/organizationAPI';
 import ToastService from '../../../../services/toastService/ToastService';
 import { decryptUrlData, encryptAES } from '../../../../services/CryptoService';
+import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 
 const SMTPSettings = () => {
     const smtpRef = useRef();
     const [smtpSettingData, setSmtpSettingData] = useState(SMTPSettingsData);
     const [addEditSmtpSetting, { isLoading: isAddEditSmtpSettingLoading, isSuccess: isAddEditSmtpSettingSuccess, data: isAddEditSmtpSettingData }] = useAddEditSmtpSettingsMutation();
     const [getSmtpSettings, { isFetching: isGetSmtpSettingsFetching, isSuccess: isGetSmtpSettingsSuccess, data: isGetSmtpSettingsData }] = useLazyGetSmtpSettingsQuery();
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         getSmtpSettings();
-        },[])
+    }, [])
 
     useEffect(() => {
         if (isAddEditSmtpSettingSuccess && isAddEditSmtpSettingData) {
-          ToastService.success(isAddEditSmtpSettingData.errorMessage);
-          getSmtpSettings();
+            ToastService.success(isAddEditSmtpSettingData.errorMessage);
+            getSmtpSettings();
         }
-      }, [isAddEditSmtpSettingSuccess, isAddEditSmtpSettingData]);
+    }, [isAddEditSmtpSettingSuccess, isAddEditSmtpSettingData]);
 
     const handleAddEditSmtpSettings = () => {
-   
+
         let data = smtpRef.current.getFormData();
-        if(data){
+        if (data) {
             let request = {
                 ...data,
                 emailProvider: encryptAES(data?.emailProvider),
@@ -36,7 +37,7 @@ const SMTPSettings = () => {
                 smtpPassword: encryptAES(data?.smtpPassword),
                 smtpSettingId: data?.smtpSettingId ? data.smtpSettingId : 0
             }
-                addEditSmtpSetting(request)
+            addEditSmtpSetting(request)
         }
     }
 
@@ -51,7 +52,7 @@ const SMTPSettings = () => {
                 smtpUserName: decryptUrlData(isGetSmtpSettingsData.smtpUserName),
                 smtpPassword: decryptUrlData(isGetSmtpSettingsData.smtpPassword),
                 useSsl: isGetSmtpSettingsData.useSsl,
-                smtpSettingId:isGetSmtpSettingsData.smtpSettingId,
+                smtpSettingId: isGetSmtpSettingsData.smtpSettingId,
 
             };
             setSmtpSettingData(formData);
@@ -59,15 +60,20 @@ const SMTPSettings = () => {
         }
     }, [isGetSmtpSettingsFetching, isGetSmtpSettingsSuccess, isGetSmtpSettingsData,]);
 
+    if (isGetSmtpSettingsFetching) {
+        return <div><DataLoader /></div>; // Replace with a proper loading spinner or component
+    }
+
     return (
+
         <div className="row mt-2 add-address-form">
-          
-                <FormCreator config={smtpSettingData}
-                    ref={smtpRef}
-                    {...smtpSettingData}
-                
-                />
-                
+
+            <FormCreator config={smtpSettingData}
+                ref={smtpRef}
+                {...smtpSettingData}
+
+            />
+
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -75,7 +81,7 @@ const SMTPSettings = () => {
                         buttonText="Save"
                         onClick={handleAddEditSmtpSettings}
                         isLoading={isAddEditSmtpSettingLoading}
-                 
+
                     />
                 </div>
             </div>

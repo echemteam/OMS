@@ -6,7 +6,6 @@ import CopyText from '../../../../../utils/CopyText/CopyText';
 import { securityKey } from '../../../../../data/SecurityKey';
 import { ErrorMessage } from '../../../../../data/appMessages';
 import Buttons from '../../../../../components/ui/button/Buttons';
-import { OwnerType } from '../../../../../utils/Enums/commonEnums';
 import FormCreator from '../../../../../components/Forms/FormCreator';
 import DropDown from '../../../../../components/ui/dropdown/DropDrown';
 import DataLoader from '../../../../../components/ui/dataLoader/DataLoader';
@@ -17,13 +16,14 @@ import { hasFunctionalPermission } from '../../../../../utils/AuthorizeNavigatio
 //** Service's */
 import SwalAlert from '../../../../../services/swalService/SwalService';
 import ToastService from '../../../../../services/toastService/ToastService';
-import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from '../../../../../app/services/commonAPI';
-import { useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../../app/services/supplierAPI';
+import { useLazyGetAllUserQuery } from '../../../../../app/services/commonAPI';
+import { useAddEditResponsibleUserForSupplierMutation, useUpdateSupplierInActiveStatusMutation, useUpdateSupplierStatusMutation } from '../../../../../app/services/supplierAPI';
 import { removeFormFields } from '../../../../../utils/FormFields/RemoveFields/handleRemoveFields';
 import { setDropDownOptionField } from '../../../../../utils/FormFields/FieldsSetting/SetFieldSetting';
 import { reasonData } from '../../../../../common/features/component/CustomerSupplierReason/Reason.data';
 import { excludingRoles } from '../../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data';
 import Iconify from '../../../../../components/ui/iconify/Iconify';
+import DropdownSelect from '../../../../../components/ui/dropdown/DropdownSelect';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../supplierApproval/SupplierApproval"));
@@ -38,11 +38,11 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const [showModal, setShowModal] = useState(false);
   const [statusId, setStatusId] = useState();
   const [showEditIcon, setShowEditIcon] = useState(true);
-
+  const [responsibleUserIds, setResponsibleUserIds] = useState([]);
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
-  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
-  const [updateResponsibleUser, { isSuccess: isSuccessRUser, data: isUpdateRUserData }] = useUpdateResponsibleUserMutation();
+  const [getAllUser, { isFetching: isSuppilierFetching,isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
+  const [addEditResponsibleUserForSupplier,{ isSuccess: isSuccessAddEditResponsibleUserForSupplier, data: isAddEditResponsibleUserForSupplierData }] = useAddEditResponsibleUserForSupplierMutation();
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
   const [updateSupplierInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
 
@@ -78,6 +78,11 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
     }
   }, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
 
+  useEffect(() => {
+    if (isSuccessAddEditResponsibleUserForSupplier && isAddEditResponsibleUserForSupplierData) {
+      ToastService.success(isAddEditResponsibleUserForSupplierData.errorMessage);
+    }
+  }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
   // useEffect(() => {
   //   if (supplierData) {
   //     const statusId = supplierData.statusId;
@@ -117,52 +122,46 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
 
   useEffect(() => {
     if (supplierData) {
+      const responsibleUserIds = supplierData?.responsibleUserId?.split(',').map(id => id.trim());
+      const responsibleUserNames = supplierData?.responsibleUserName?.split(',').map(name => name.trim());
+      const responsibleUsers = responsibleUserIds?.map((id, index) => ({
+        value: id,
+        label: responsibleUserNames[index] || id,
+      }));
+      setResponsibleUserIds(responsibleUserIds);
+      setRUserValue(responsibleUsers);
       setSelectedStatus(supplierData.status);
-      setRUserValue(supplierData.responsibleUserName);
       getAllUser();
     }
   }, [supplierData]);
 
   useEffect(() => {
-    if (isGetAllUserSucess && allGetAlluserData) {
+    if (!isSuppilierFetching && isGetAllUserSucess && allGetAlluserData) {
       const filterData = allGetAlluserData.filter((item) => {
         return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
       });
-      // Remove duplicates based on fullName
       const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
-      const modifyUserData = uniqueData.map((item) => ({
+      const filteredData = responsibleUserIds ? uniqueData.filter((item) => !responsibleUserIds.includes(item.userId.toString())) : uniqueData;
+      const modifyUserData = filteredData.map((item) => ({
         value: item.userId,
         label: item.fullName,
       }));
       setResponsibleUserOptions(modifyUserData);
-      setDropDownOptionField(uniqueData, 'userId', 'fullName', formData, 'responsibleUserId');
-    }
-  }, [isGetAllUserSucess, allGetAlluserData]);
+      const filterDataDropdown = allGetAlluserData.filter((item) => {
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+      });
 
-  //** Responsible User  */
-  const handleRUserChange = (selectedValue) => {
-    confirm("Warning?", `Are you sure you want to assign the responsible user?`,
-      "Yes", "Cancel"
-    ).then((confirmed) => {
-      if (confirmed) {
-        updateRUserData(selectedValue.value);
-      }
-    });
-  }
-  const updateRUserData = (value) => {
-    let req = {
-      ownerId: supplierId,
-      OwnerType: OwnerType.Supplier,
-      responsibleUserId: value
+      const uniqueDataDropdown = Array.from(new Map(filterDataDropdown.map((item) => [item.fullName, item])).values());
+      setDropDownOptionField(uniqueDataDropdown, 'userId', 'fullName', reasonData, 'responsibleUserId');
     }
-    updateResponsibleUser(req);
-    setRUserValue(value);
-  }
-  useEffect(() => {
-    if (isSuccessRUser && isUpdateRUserData) {
-      ToastService.success(isUpdateRUserData.errorMessage);
-    }
-  }, [isSuccessRUser, isUpdateRUserData]);
+  }, [isGetAllUserSucess, allGetAlluserData, isSuppilierFetching]);
+
+  const updateRUserData = (data) => {
+    const responsibleUserId = data.map(option => option.value.toString());
+    setRUserValue(data);
+    setResponsibleUserIds(responsibleUserId);
+    getAllUser();
+  };
 
   const handleStatusChange = (selectedOption) => {
     if (selectedOption.label === supplierData.status) {
@@ -230,10 +229,24 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
         statusId: selectedStatus ? selectedStatus : 0,
       }
       updateSupplierInActiveStatus(req);
-      updateRUserData(custData?.responsibleUserId?.value);
+      updateRUserDataDropdown(custData.responsibleUserId);
     }
   }
 
+  const updateRUserDataDropdown = (value) => {
+    let req = {
+      supplierId: supplierId,
+      userId: String(value)
+    }
+     addEditResponsibleUserForSupplier(req);
+  }
+  const onHandleBlur = () => {
+    let req = {
+      supplierId: supplierId,
+      userId: rUserValue?.map(option => option.value).join(',')
+    };
+    addEditResponsibleUserForSupplier(req);
+  }
   const handleToggleModal = () => {
     setShowModal(false);
     onReset()
@@ -353,13 +366,22 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                 <div className="inf-label">R-User</div>
                 <b>&nbsp;:&nbsp;</b>
                 <div className="status-dropdown">
-                  <DropDown
+                  {/* <DropDown
                     options={responsibleUserOptions}
                     value={rUserValue}
                     onChange={handleRUserChange}
                     placeholder="Responsible User"
                     isDisabled={isResponsibleUser ? true : isButtonDisable}
-                  />
+                  /> */}
+                  <DropdownSelect
+                  isMultiSelect={true}
+                  placeholder="Responsible User"
+                  isDropdownDisabled={isResponsibleUser ? true : isButtonDisable}
+                  optionsValue={responsibleUserOptions}
+                  value={rUserValue}
+                  handleDropdownChange={updateRUserData}
+                  handleDropdownBlur={onHandleBlur}
+                />
                 </div>
               </div>
             </div>

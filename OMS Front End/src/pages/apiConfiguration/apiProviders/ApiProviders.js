@@ -60,7 +60,7 @@ const ApiProviders = () => {
   return (
     <div>
       <CardSection
-        cardTitle="API Providers"
+        cardTitle=""
         handleChange={handleChange}
         searchInputName="Search By Provider Name"
         searchInput={true}

@@ -1,6 +1,7 @@
 export const FieldSettingType = {
-    MULTISELECT: "isMultiSelect",
     DISABLED: "isDisabled",
+    ISTEXT: "isText",
+    MULTISELECT: "isMultiSelect",
     INPUTBUTTON: "isInputButton",
     SECOUNDRYINPUTBUTTON: "isSecoundryInputButton"
 }
@@ -61,7 +62,7 @@ export const ApiParametersDataTypes = {
 export const PaymentMethodTypes = {
     CHECK: 1,
     ACHECHECK: 2,
-    Wire: 3,
+    WIRE: 3,
     CREDITCARD: 4,
     ADVANCEDCOLLECT: 5,
     OTHERWITHNOTEDIELD: 6
@@ -72,8 +73,8 @@ export const CountryId = {
 }
 
 export const ModulePathName = {
-    Customer: "Customer",
-    Supplier: "Supplier"
+    CUSTOMER: "Customer",
+    SUPPLIER: "Supplier"
 }
 
 export const MaskingType = {
@@ -96,7 +97,8 @@ export const OrderTabEnum = {
 
 export const MyTaskStatus = {
     Pending: "Pending",
-    Accept: "Accept"
+    Accept: "Accept",
+    Reject: "Reject"
 }
 
 export const ParameterType = {
@@ -105,19 +107,39 @@ export const ParameterType = {
 }
 
 export const AddressType = {
-    Billing: 1,
-    Shipping: 2
+    BILLING: 1,
+    SHIPPING: 2
 }
 
 export const ContactType = {
-    Primary: 1,
-    EndUser: 2,
-    Purchasing: 3,
-    InvoiceSubmission: 4,
-    InvoiceFollowup: 5,
+    PRIMARY: 1,
+    ENDUSER: 2,
+    PURCHASING: 3,
+    INVOICESUBMISSION: 4,
+    INVOICEFOLLOWUP: 5,
     AP: 6,
-    AccountsReceivable: 7,
-    PurchaseOrder: 8,
-    SalesDepartment: 9,
-    QCDepartment: 10
+    ACCOUNTSRECEIVABLE: 7,
+    PURCHASEORDER: 8,
+    SALESDEPARTMENT: 9,
+    QCDEPARTMENT: 10
 }
+
+export const OrderInformationField = {
+    CustomerName: "CustomerName",
+    SubCustomer: "SubCustomer",
+    Verify: "Verify"
+}
+
+
+export const Docum = {
+    CustomerName: "CustomerName",
+    SubCustomer: "SubCustomer",
+    Verify: "Verify"
+}
+
+export const DocumentTypes = {
+    TAXORREGISTRATIONDOCUMENT: 1,
+    CUSTOMERDETAILSFORM: 2,
+    OURSUBMITTEDFORMS: 3,
+    SUPPLIERDETAILSFORM: 4
+};

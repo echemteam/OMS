@@ -26,6 +26,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETSUPPLIERAUDITHISTORYBYSUPPLIERID = "GetSupplierAuditHistoryBySupplierId";
         const string ADDEDITCONTACTFORSUPPLIER = "AddEditContactForSupplier";
         const string GETSUPPLIERDETAILSBYSUPPLIERNAME = "GetSupplierDetailsBySupplierName";
+        const string ADDEDITRESPONSIBLEUSERFORSUPPLIER = "AddEditResponsibleUserForSupplier";
         #endregion
 
         public SupplierRepository(DapperContext dapperContext) : base(dapperContext)
@@ -49,7 +50,7 @@ namespace OMS.Domain.Repository.Implementation
                 supplier.Note,
                 supplier.EmailAddress,
                 supplier.CreatedBy,
-                supplier.ResponsibleUserId
+                //supplier.ResponsibleUserId
             }, CommandType.StoredProcedure);
         }
 
@@ -165,6 +166,15 @@ namespace OMS.Domain.Repository.Implementation
                 supplierName
             }, CommandType.StoredProcedure);
             return supplierDetails;
+        }
+        public async Task<AddEntityDto<int>> AddEditResponsibleUserForSupplier(AddEditResponsibleUserForSupplierRequest requestData, short createdBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITRESPONSIBLEUSERFORSUPPLIER, new
+            {
+                requestData.SupplierId,
+                requestData.UserId,
+                createdBy,
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }

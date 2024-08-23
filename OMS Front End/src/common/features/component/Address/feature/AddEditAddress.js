@@ -13,6 +13,8 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import PropTypes from 'prop-types';
+import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
+import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
 // import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 const SetInitialCountry = {
@@ -29,6 +31,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
     const [selectedCheckbox, setSelectedCheckbox] = useState(null);
     const [addressEditTableId, setAddressEditTableId] = useState(0)
+    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+
     // const [stateChage, setStateChange] = useState(null)
 
     //** API Call's */
@@ -63,9 +67,9 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         if (isOrderManage) {
             setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
             let form = { ...addressFormData };
-            if (getAddressTypeIdOrder === AddressType.Billing) {
+            if (getAddressTypeIdOrder === AddressType.BILLING) {
                 form = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredShipping']);
-            } else if (getAddressTypeIdOrder === AddressType.Shipping) {
+            } else if (getAddressTypeIdOrder === AddressType.SHIPPING) {
                 form = removeFormFields(addressFormData, ['isShippingAndBilling', 'isPreferredBilling']);
             }
             form.initialState = {
@@ -337,8 +341,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         };
     };
 
-    const handleAddEdit = () => {
-        let data = ref.current.getFormData();
+    const handleAddEdit = async () => {
+        const data = ref.current.getFormData();
         if (!data) return;
 
         const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
@@ -346,14 +350,36 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
             update(updateData);
-        } else {
-            let req = {
-                ...transformedData,
-                customerId: orderCustomerId ? orderCustomerId : transformedData.customerId
+            return;
+        }
+
+        // Add mode
+        const customerId = orderCustomerId ? orderCustomerId : transformedData.customerId;
+        const req = {
+            ...transformedData,
+            customerId: customerId,
+        };
+
+        if (data.addressTypeId === 1) {
+            const value = { ...req };
+            const request = {
+                newValue: value,
+                oldValue: formData.initialState,
+                isFunctional: true,
+                functionalityName: isModelOpen
+                    ? FunctionalitiesName.ADDADDRESS
+                    : FunctionalitiesName.ADDCUSTOMER
+            };
+            //** This is used for the the unctional Level */
+            const modifyData = await ValidateRequestByApprovalRules(request);
+            if (modifyData.newValue) {
+                onSidebarClose();
             }
+        } else {
             add(req);
         }
     };
+
 
     const extractValue = (field) => {
         return field && typeof field === "object" ? field.value : field;
@@ -416,7 +442,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 //     // stateId: data.value,
                 //     cityId: null,
                 // });
-            } 
+            }
 
         }
         else if (!isSupplier && dataField === "addressTypeId") {
@@ -478,16 +504,33 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         callChildEditFunction: handleEdit
     }));
 
+    const handleDropdownAction = (data, dataField) => {
+        if (dataField === 'stateId') {
+            setFieldSetting(formData, 'cityId', FieldSettingType.ISTEXT, data);
+            // const selectField = getFieldData(formData, 'cityId');
+            // selectField.fieldSetting.isText = data;
+            ref.current.updateFormFieldValue({ cityId: null });
+            // setFormData(formData);
+            // setShouldRerenderFormCreator((prevState) => !prevState);
+        } else if (dataField === 'cityId') {
+            if (!data) {
+                setFieldSetting(formData, 'stateId', FieldSettingType.ISTEXT, data);
+                ref.current.updateFormFieldValue({ cityId: null });
+            }
+        }
+    }
+
     //** Action Handler */
     const formActionHandler = {
         DDL_CHANGED: handleChangeDropdownList,
-        CHECK_CHANGE: handleCheckboxChanges
+        CHECK_CHANGE: handleCheckboxChanges,
+        DA_CHANGED: handleDropdownAction
     };
 
 
     return (
         <div className="row mt-2 add-address-form">
-            <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler}
+            <FormCreator config={formData} ref={ref} {...formData} onActionChange={formActionHandler} onDropdownAction={formActionHandler}
                 onCheckBoxChange={formActionHandler} key={shouldRerenderFormCreator} />
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">

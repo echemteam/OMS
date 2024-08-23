@@ -43,5 +43,6 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId);
         Task<List<GetAllContactsByCustomerIdAndContactTypeIdResponse>> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId);
 
+        Task<List<GetAllOrderMethodResponse>> GetAllOrderMethod();
     }
 }

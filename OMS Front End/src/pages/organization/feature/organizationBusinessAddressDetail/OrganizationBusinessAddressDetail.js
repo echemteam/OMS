@@ -16,6 +16,7 @@ import { useAddEditBusinessAddressesMutation, useLazyGetOrganizationBusinessAddr
 import ToastService from "../../../../services/toastService/ToastService";
 import { RemitToAddressForm } from "./config/RemitToAddressForm.data";
 import RemitToAddressDetail from "./features/RemitToAddressDetail";
+import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 
 const OrganizationBusinessAddressDetail = () => {
 
@@ -23,15 +24,15 @@ const OrganizationBusinessAddressDetail = () => {
   const billToAddressRef = useRef();
   const labAddressRef = useRef();
   const warehouseAddressRef = useRef();
-  const remitToAddressRef=useRef();
-  const registeredAddressRef=useRef();
+  const remitToAddressRef = useRef();
+  const registeredAddressRef = useRef();
 
-  const [physicalAddressData, setPhysicalAddressData] =useState(PhysicalAddressForm);
+  const [physicalAddressData, setPhysicalAddressData] = useState(PhysicalAddressForm);
   const [billToAddressData, setBillToAddressData] = useState(BillToAddressForm);
   const [labAddressData, setLabAddressData] = useState(LabAddressForm);
   const [warehouseAddressData, setWarehouseAddressData] = useState(WarehouseAddressForm);
- const [remitToAddressData,setRemitToAddressData]=useState(RemitToAddressForm)
-  const [registeredAddressData,setRegisteredAddressData]=useState(RegisteredAddressForm);
+  const [remitToAddressData, setRemitToAddressData] = useState(RemitToAddressForm)
+  const [registeredAddressData, setRegisteredAddressData] = useState(RegisteredAddressForm);
 
   const [addressIds, setAddressIds] = useState({
     registeredAddressId: 0,
@@ -39,33 +40,31 @@ const OrganizationBusinessAddressDetail = () => {
     physicalAddressId: 0,
     billToAddressId: 0,
     labAddressId: 0,
-    remitToAddressId:0,
+    remitToAddressId: 0,
     warehouseAddressId: 0,
   });
 
   const [addEditBusinessAddresses, { isLoading: isAddEditBusinessAddressLoading, isSuccess: isAddEditBusinessAddressSuccess, data: isAddEditBusinessAddressData }] = useAddEditBusinessAddressesMutation();
- 
+
   const [getOrganizationBusinessAddresses, { isFetching: isGetOrganizationBusinessAddressesFetching, isSuccess: isGetOrganizationBusinessAddressesSuccess, data: isGetOrganizationBusinessAddressesData }] = useLazyGetOrganizationBusinessAddressesQuery();
- 
- 
-  useEffect(()=>{
-    getOrganizationBusinessAddresses();
-  },[])
-  
+
+
   useEffect(() => {
+    getOrganizationBusinessAddresses();
+  }, [])
 
+  useEffect(() => {
     if (!isGetOrganizationBusinessAddressesFetching && isGetOrganizationBusinessAddressesSuccess && isGetOrganizationBusinessAddressesData) {
-      if(isGetOrganizationBusinessAddressesData){
-
-    setAddressIds({
-      organizationBusinessAddressId: isGetOrganizationBusinessAddressesData.organizationBusinessAddressId,
-      physicalAddressId: isGetOrganizationBusinessAddressesData.physicalAddressId,
-      billToAddressId: isGetOrganizationBusinessAddressesData.billToAddressId,
-      labAddressId: isGetOrganizationBusinessAddressesData.labAddressId,
-      warehouseAddressId: isGetOrganizationBusinessAddressesData.warehouseAddressId,
-      remitToAddressId:isGetOrganizationBusinessAddressesData.remitToAddressId,
-      registeredAddressId: isGetOrganizationBusinessAddressesData.registeredAddressId,
-    });
+      if (isGetOrganizationBusinessAddressesData) {
+        setAddressIds({
+          organizationBusinessAddressId: isGetOrganizationBusinessAddressesData.organizationBusinessAddressId,
+          physicalAddressId: isGetOrganizationBusinessAddressesData.physicalAddressId,
+          billToAddressId: isGetOrganizationBusinessAddressesData.billToAddressId,
+          labAddressId: isGetOrganizationBusinessAddressesData.labAddressId,
+          warehouseAddressId: isGetOrganizationBusinessAddressesData.warehouseAddressId,
+          remitToAddressId: isGetOrganizationBusinessAddressesData.remitToAddressId,
+          registeredAddressId: isGetOrganizationBusinessAddressesData.registeredAddressId,
+        });
       }
     }
   }, [isGetOrganizationBusinessAddressesFetching, isGetOrganizationBusinessAddressesSuccess, isGetOrganizationBusinessAddressesData]);
@@ -78,102 +77,106 @@ const OrganizationBusinessAddressDetail = () => {
   }, [isAddEditBusinessAddressSuccess, isAddEditBusinessAddressData]);
 
 
-  const handleAddEditBusinessAddress=()=>{
- 
+  const handleAddEditBusinessAddress = () => {
+
     let physicalAddressFormData = physicalAddressRef.current.getFormData();
     let billToAddressFormData = billToAddressRef.current.getFormData();
     let labAddressFormData = labAddressRef.current.getFormData();
     let warehouseAddressFormData = warehouseAddressRef.current.getFormData();
     let remitToAddressFormData = remitToAddressRef.current.getFormData();
     let registeredAddressFormData = registeredAddressRef.current.getFormData();
-  
-    if(physicalAddressFormData && billToAddressFormData && remitToAddressFormData && labAddressFormData && warehouseAddressFormData && registeredAddressFormData){
+
+    if (physicalAddressFormData && billToAddressFormData && remitToAddressFormData && labAddressFormData && warehouseAddressFormData && registeredAddressFormData) {
       const extractId = (item, key) => (item[key] && typeof item[key] === "object" ? item[key].value : item[key]);
-      
-      let requestData={
-            physicalAddress: {
-                addressId: physicalAddressFormData.addressId ?? 0,
-                addressLine1: physicalAddressFormData.addressLine1Id,
-                addressLine2: physicalAddressFormData.addressLine2Id,
-                cityId: extractId(physicalAddressFormData, 'cityId'),
-                 stateId: extractId(physicalAddressFormData, 'stateId'),
-                countryId: extractId(physicalAddressFormData, 'countryId'),
-                zipCode: physicalAddressFormData.zipCode
-              },
-              billToAddress: {
-                addressId:billToAddressFormData.addressId ?? 0,
-                addressLine1: billToAddressFormData.addressLine1Id,
-                addressLine2: billToAddressFormData.addressLine2Id,
-                cityId: extractId(billToAddressFormData, 'cityId'),
-                 stateId: extractId(billToAddressFormData, 'stateId'),
-                countryId: extractId(billToAddressFormData, 'countryId'),
-                zipCode: billToAddressFormData.zipCode
-              },
-              labAddress: {
-                addressId:labAddressFormData.addressId ?? 0,
-                addressLine1: labAddressFormData.addressLine1Id,
-                addressLine2: labAddressFormData.addressLine2Id,
-                cityId: extractId(labAddressFormData, 'cityId'),
-                 stateId: extractId(labAddressFormData, 'stateId'),
-                countryId: extractId(labAddressFormData, 'countryId'),
-                zipCode: labAddressFormData.zipCode
-              },
 
-              warehouseAddress: {
-                addressId:warehouseAddressFormData.addressId ?? 0,
-                addressLine1: warehouseAddressFormData.addressLine1Id,
-                addressLine2: warehouseAddressFormData.addressLine2Id,
-                cityId: extractId(warehouseAddressFormData, 'cityId'),
-                stateId: extractId(warehouseAddressFormData, 'stateId'),
-               countryId: extractId(warehouseAddressFormData, 'countryId'),
-                zipCode: warehouseAddressFormData.zipCode
-              },
+      let requestData = {
+        physicalAddress: {
+          addressId: physicalAddressFormData.addressId ?? 0,
+          addressLine1: physicalAddressFormData.addressLine1Id,
+          addressLine2: physicalAddressFormData.addressLine2Id,
+          cityId: extractId(physicalAddressFormData, 'cityId'),
+          stateId: extractId(physicalAddressFormData, 'stateId'),
+          countryId: extractId(physicalAddressFormData, 'countryId'),
+          zipCode: physicalAddressFormData.zipCode
+        },
+        billToAddress: {
+          addressId: billToAddressFormData.addressId ?? 0,
+          addressLine1: billToAddressFormData.addressLine1Id,
+          addressLine2: billToAddressFormData.addressLine2Id,
+          cityId: extractId(billToAddressFormData, 'cityId'),
+          stateId: extractId(billToAddressFormData, 'stateId'),
+          countryId: extractId(billToAddressFormData, 'countryId'),
+          zipCode: billToAddressFormData.zipCode
+        },
+        labAddress: {
+          addressId: labAddressFormData.addressId ?? 0,
+          addressLine1: labAddressFormData.addressLine1Id,
+          addressLine2: labAddressFormData.addressLine2Id,
+          cityId: extractId(labAddressFormData, 'cityId'),
+          stateId: extractId(labAddressFormData, 'stateId'),
+          countryId: extractId(labAddressFormData, 'countryId'),
+          zipCode: labAddressFormData.zipCode
+        },
 
-              registeredAddress: {
-                addressId:registeredAddressFormData.addressId ?? 0,
-                addressLine1: registeredAddressFormData.addressLine1Id,
-                addressLine2: registeredAddressFormData.addressLine2Id,
-                cityId: extractId(registeredAddressFormData, 'cityId'),
-                 stateId: extractId(registeredAddressFormData, 'stateId'),
-                countryId: extractId(registeredAddressFormData, 'countryId'),
-                zipCode: registeredAddressFormData.zipCode
-              },
+        warehouseAddress: {
+          addressId: warehouseAddressFormData.addressId ?? 0,
+          addressLine1: warehouseAddressFormData.addressLine1Id,
+          addressLine2: warehouseAddressFormData.addressLine2Id,
+          cityId: extractId(warehouseAddressFormData, 'cityId'),
+          stateId: extractId(warehouseAddressFormData, 'stateId'),
+          countryId: extractId(warehouseAddressFormData, 'countryId'),
+          zipCode: warehouseAddressFormData.zipCode
+        },
 
-              remitToAddress: {
-                addressId:remitToAddressFormData.addressId ?? 0,
-                addressLine1: remitToAddressFormData.addressLine1Id,
-                addressLine2: remitToAddressFormData.addressLine2Id,
-                cityId: extractId(remitToAddressFormData, 'cityId'),
-                 stateId: extractId(remitToAddressFormData, 'stateId'),
-                countryId: extractId(remitToAddressFormData, 'countryId'),
-                zipCode: remitToAddressFormData.zipCode
-              },
-              registeredAddressId: addressIds.registeredAddressId,
-              organizationBusinessAddressId: addressIds.organizationBusinessAddressId,
-              physicalAddressId: addressIds.physicalAddressId,
-              billToAddressId: addressIds.billToAddressId,
-              labAddressId: addressIds.labAddressId,
-              remitToAddressId:addressIds.remitToAddressId,
-              warehouseAddressId: addressIds.warehouseAddressId,
-        }
-        addEditBusinessAddresses(requestData);
+        registeredAddress: {
+          addressId: registeredAddressFormData.addressId ?? 0,
+          addressLine1: registeredAddressFormData.addressLine1Id,
+          addressLine2: registeredAddressFormData.addressLine2Id,
+          cityId: extractId(registeredAddressFormData, 'cityId'),
+          stateId: extractId(registeredAddressFormData, 'stateId'),
+          countryId: extractId(registeredAddressFormData, 'countryId'),
+          zipCode: registeredAddressFormData.zipCode
+        },
+
+        remitToAddress: {
+          addressId: remitToAddressFormData.addressId ?? 0,
+          addressLine1: remitToAddressFormData.addressLine1Id,
+          addressLine2: remitToAddressFormData.addressLine2Id,
+          cityId: extractId(remitToAddressFormData, 'cityId'),
+          stateId: extractId(remitToAddressFormData, 'stateId'),
+          countryId: extractId(remitToAddressFormData, 'countryId'),
+          zipCode: remitToAddressFormData.zipCode
+        },
+        registeredAddressId: addressIds.registeredAddressId,
+        organizationBusinessAddressId: addressIds.organizationBusinessAddressId,
+        physicalAddressId: addressIds.physicalAddressId,
+        billToAddressId: addressIds.billToAddressId,
+        labAddressId: addressIds.labAddressId,
+        remitToAddressId: addressIds.remitToAddressId,
+        warehouseAddressId: addressIds.warehouseAddressId,
+      }
+      addEditBusinessAddresses(requestData);
     }
+  }
+
+  if (isGetOrganizationBusinessAddressesFetching) {
+    return <div><DataLoader /></div>; // Replace with a proper loading spinner or component
   }
 
   return (
 
     <div>
-     <RegisteredAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} registeredAddressData={registeredAddressData} RegisteredAddressForm={RegisteredAddressForm} registeredAddressRef={registeredAddressRef} />
-     
-      <PhysicalAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}  physicalAddressData={physicalAddressData} PhysicalAddressForm={PhysicalAddressForm} physicalAddressRef={physicalAddressRef} />
+      <RegisteredAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} registeredAddressData={registeredAddressData} RegisteredAddressForm={RegisteredAddressForm} registeredAddressRef={registeredAddressRef} />
 
-      <BillToAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} billToAddressData={billToAddressData} BillToAddressForm={BillToAddressForm}  billToAddressRef={billToAddressRef} />
+      <PhysicalAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} physicalAddressData={physicalAddressData} PhysicalAddressForm={PhysicalAddressForm} physicalAddressRef={physicalAddressRef} />
 
-      <LabAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} labAddressRef={labAddressRef} LabAddressForm={LabAddressForm} labAddressData={labAddressData}/>
+      <BillToAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} billToAddressData={billToAddressData} BillToAddressForm={BillToAddressForm} billToAddressRef={billToAddressRef} />
 
-      <WarehouseAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} warehouseAddressRef={warehouseAddressRef} WarehouseAddressForm={WarehouseAddressForm}  warehouseAddressData={warehouseAddressData}/>
+      <LabAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} labAddressRef={labAddressRef} LabAddressForm={LabAddressForm} labAddressData={labAddressData} />
 
-      <RemitToAddressDetail  isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} remitToAddressData={remitToAddressData} remitToAddressRef={remitToAddressRef} RemitToAddressForm={RemitToAddressForm} />
+      <WarehouseAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} warehouseAddressRef={warehouseAddressRef} WarehouseAddressForm={WarehouseAddressForm} warehouseAddressData={warehouseAddressData} />
+
+      <RemitToAddressDetail isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData} isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess} remitToAddressData={remitToAddressData} remitToAddressRef={remitToAddressRef} RemitToAddressForm={RemitToAddressForm} />
       <div className="col-md-12">
         <div className="d-flex align-item-end justify-content-end" >
           <Buttons
@@ -184,8 +187,8 @@ const OrganizationBusinessAddressDetail = () => {
           />
         </div>
       </div>
-      </div>
- 
+    </div>
+
   );
 };
 OrganizationBusinessAddressDetail.propTypes = {

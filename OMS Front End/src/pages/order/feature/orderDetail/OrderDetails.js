@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useImperativeHandle, useRef, useState } f
 import { orderInformationData } from "./config/OrderInformation.data";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import SwalAlert from "../../../../services/swalService/SwalService";
-import { useGetAllSubCustomerByCustomerIdMutation, useLazyGetAllCustomersQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery } from "../../../../app/services/commonAPI";
+import { useGetAllSubCustomerByCustomerIdMutation, useLazyGetAllCustomersQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery, useLazyGetAllOrderMethodQuery } from "../../../../app/services/commonAPI";
 import { setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import { AppIcons } from "../../../../data/appIcons";
@@ -16,10 +16,12 @@ import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 import { useAddEditOrderInformationMutation, useCheckPoNumberExistOrNotMutation, useLazyGetPoNumberDetailsByPoNumberQuery } from "../../../../app/services/orderAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
+import { useNavigate } from "react-router-dom";
 
 const OrderDetails = () => {
   const basicInformation = useRef();
   const parentRef = useRef();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState(orderInformationData);
   const [isSubCustomerDropdownVisible, setIsSubCustomerDropdownVisible] = useState(false);
@@ -37,6 +39,7 @@ const OrderDetails = () => {
   const [getAllShippingAddress, { isFetching: isGetAllShippingAddressFetching, isSuccess: isGetAllShippingAddressSuccess, data: isGetAllShippingAddressData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
   const [getAllBillingAddress, { isFetching: isGetAllBillingAddressFetching, isSuccess: isGetAllBillingAddressSuccess, data: isGetAllBillingAddressData }] = useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery();
   const [getAllAddressTypes, { isSuccess: isGetAllAddressTypesSucess, data: allGetAllAddressTypesData }] = useLazyGetAllAddressTypesQuery();
+  const [getAllOrderMethod, { isSuccess: isGetAllOrderMethodSucess, data: allGetAllOrderMethodData }] = useLazyGetAllOrderMethodQuery();
   const [checkPoNumberExistOrNot, { isSuccess: isCheckPoNumberExistOrNotSucess, data: isCheckPoNumberExistOrNotData, }] = useCheckPoNumberExistOrNotMutation();
   const [addEditOrderInformation, { isSuccess: isAddEditOrderInformationSuccess, data: isAddEditOrderInformationData }] = useAddEditOrderInformationMutation();
 
@@ -51,10 +54,16 @@ const OrderDetails = () => {
   }, [isGetAllAddressTypesSucess, allGetAllAddressTypesData]);
 
   useEffect(() => {
+    if (isGetAllOrderMethodSucess && allGetAllOrderMethodData) {
+      setDropDownOptionField(allGetAllOrderMethodData, 'orderMethodId', 'orderMethod', orderInformationData, 'orderMethodId');
+    }
+  }, [isGetAllOrderMethodSucess, allGetAllOrderMethodData]);
+
+  useEffect(() => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
-        addressTypeId: AddressType.Shipping
+        addressTypeId: AddressType.SHIPPING
       }
       getAllShippingAddress(req)
     }
@@ -64,7 +73,7 @@ const OrderDetails = () => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
-        addressTypeId: AddressType.Billing
+        addressTypeId: AddressType.BILLING
       }
       getAllBillingAddress(req)
     }
@@ -72,6 +81,7 @@ const OrderDetails = () => {
 
   useEffect(() => {
     getAllAddressTypes();
+    getAllOrderMethod();
   }, []);
 
   useEffect(() => {
@@ -90,7 +100,7 @@ const OrderDetails = () => {
   const handleOrderInfoRepeatCall = () => {
     let req = {
       customerId: orderCustomerId,
-      addressTypeId: AddressType.Shipping
+      addressTypeId: AddressType.SHIPPING
     }
     getAllShippingAddress(req)
   };
@@ -202,17 +212,25 @@ const OrderDetails = () => {
 
 
   const handleInputGroupButton = (id) => {
-    if (id > 0) {
-      setGetAddressTypeId(id)
-      setIsModelOpen(!isModelOpen);
-    } else if (id.target.textContent === "Verify") {
-      if (poNumber !== '') {
-        let request = {
-          customerId: orderCustomerId,
-          poNumber: poNumber
+    if (orderCustomerId) {
+      if (typeof id === 'number' && id > 0) {
+        setGetAddressTypeId(id)
+        setIsModelOpen(!isModelOpen);
+      } else if (typeof id !== 'number' && id.target && id.target.textContent === "Verify") {
+        if (poNumber !== '') {
+          let request = {
+            customerId: orderCustomerId,
+            poNumber: poNumber
+          }
+          checkPoNumberExistOrNot(request);
         }
-        checkPoNumberExistOrNot(request);
+      } else if (id === "CustomerName" || id === "SubCustomer") {
+        navigate(`/addCustomer`)
       }
+    } else if (id === "CustomerName" || id === "SubCustomer") {
+      navigate(`/addCustomer`)
+    } else {
+      ToastService.warning("Please Add Customer Name")
     }
   };
 
@@ -268,8 +286,9 @@ const OrderDetails = () => {
     if (data) {
       let req = {
         orderId: orderId ? orderId : 0,
-        orderMethodId: 2,
-        orderReceivedDate: data.subCustomerMainCustomerId.date ? new Date(data.subCustomerMainCustomerId.date) : null,
+        orderMethodId: data.orderMethodId && typeof data.orderMethodId === "object" ? data.orderMethodId.value : data.orderMethodId,
+        // orderReceivedDate: data.subCustomerMainCustomerId.date ? new Date(data.subCustomerMainCustomerId.date) : null,
+        orderReceivedDate: data.orderReceivedDate,
         orderAddressId: 0,
         customerId: data.customerId && typeof data.customerId === "object" ? data.customerId.value : data.customerId,
         subCustomerId: data.subCustomerMainCustomerId && typeof data.subCustomerMainCustomerId === "object" ? data.subCustomerMainCustomerId.value : data.subCustomerMainCustomerId,

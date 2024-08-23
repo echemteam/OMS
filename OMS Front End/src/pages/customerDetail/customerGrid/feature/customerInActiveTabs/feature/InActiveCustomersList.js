@@ -53,39 +53,30 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
 
   useEffect(() => {
     if (!isResponsibleUser) {
-      const actionColumn = configFile?.columns.find(column => column.name === "Action");
-      if (actionColumn) {
-        const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
-        const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
-        const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
-        const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
-
-        // actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
-        // actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
-
-        if (actionColumn.defaultAction.allowActiveCustomer) {
-          actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
-        } else if (actionColumn.defaultAction.allowUnblocked) {
-          actionColumn.defaultAction.allowUnblocked = hasUnBlock?.hasAccess;
-        } else if (actionColumn.defaultAction.allowUnfreeze) {
-          actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
-        }
-      }
+      onCustomeActionHandler();
     }
   }, [configFile]);
 
   const hasResponsibleUserhasAccess = () => {
+    onCustomeActionHandler();
+  }
+
+  const onCustomeActionHandler = () => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
     if (actionColumn) {
-      if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
-        actionColumn.defaultAction.allowActiveCustomer = true;
+      const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
+      //const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
+      const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
+      //const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+      const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
+
+      if (actionColumn.defaultAction) {
+        actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
       }
-      if (actionColumn.defaultAction.hasOwnProperty("allowUnblocked")) {
-        actionColumn.defaultAction.allowUnblocked = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowUnfreeze')) {
-        actionColumn.defaultAction.allowUnfreeze = true;
-      }
+      //actionColumn.customAction = securityValidator(hasBlock?.hasAccess, actionColumn.customAction, "ALLOWBLOCKED");
+      actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
+      //actionColumn.customAction = securityValidator(hasDisable?.hasAccess, actionColumn.customAction, "ALLOWDISABLE");
+      actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
     }
   }
 

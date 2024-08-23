@@ -10,12 +10,12 @@ import React, {
 import { useNavigate } from "react-router-dom";
 
 import CardSection from "../../../../../../components/ui/card/CardSection";
-import { useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from "../../../../../../app/services/basicdetailAPI";
+import { useAddEditResponsibleUserForCustomerMutation, useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from "../../../../../../app/services/basicdetailAPI";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import CustomerListContext from "../../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { useAddCustomerNotesMutation } from "../../../../../../app/services/notesAPI";
 import { useSelector } from "react-redux";
-import { useLazyGetAllUserQuery, useUpdateResponsibleUserMutation } from "../../../../../../app/services/commonAPI";
+import { useLazyGetAllUserQuery } from "../../../../../../app/services/commonAPI";
 import { excludingRoles } from "../../../../feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { setDropDownOptionField } from "../../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNavigation/authorizeNavigation";
@@ -23,7 +23,6 @@ import { securityKey } from "../../../../../../data/SecurityKey";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { encryptUrlData } from "../../../../../../services/CryptoService";
 import { StatusEnums, StatusFeild } from "../../../../../../utils/Enums/StatusEnums";
-import { OwnerType } from "../../../../../../utils/Enums/commonEnums";
 import { AppIcons } from "../../../../../../data/appIcons";
 import CenterModel from "../../../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
@@ -34,6 +33,7 @@ import PropTypes from 'prop-types';
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 import { validateResponsibleUserId } from "../../../../../../utils/ResponsibleUser/validateRUser";
 import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
+// import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
 //import MolGrid from "../../../../../../components/Grid/MolGrid";
 
 
@@ -72,14 +72,25 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
     },
   ] = useUpdateCustomerInActiveStatusMutation();
 
+  const [
+    addEditResponsibleUserForCustomer,
+    { isSuccess: isSuccessAddEditResponsibleUserForCustomer, data: isAddEditResponsibleUserForCustomerData },
+  ] = useAddEditResponsibleUserForCustomerMutation();
+
   const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
-  const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
+  // const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
 
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
   useEffect(() => {
     getAllUser();
   }, [statusId]);
+
+  useEffect(() => {
+    if (isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
+      ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage);
+    }
+  }, [isSuccessAddEditResponsibleUserForCustomer, isAddEditResponsibleUserForCustomerData]);
 
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
@@ -93,70 +104,38 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   }, [isGetAllUserSucess, allGetAlluserData,]);
 
   useEffect(() => {
+    onCustomeActionHandler();
+  }, [configFile]);
+
+  const hasResponsibleUserhasAccess = () => {
+    onCustomeActionHandler();
+  }
+
+  const onCustomeActionHandler = () => {
     const actionColumn = configFile?.columns.find((column) => column.name === "Action");
     const approvalAction = configFile?.columns.find((column) => column.name === "Approve");
     if (actionColumn) {
       const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
       const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
       const hasFreeze = hasFunctionalPermission(securityKey.FREEZECUSTOMER);
-      const hasActive = hasFunctionalPermission(securityKey.ACTIVECUSTOMER);
       const hasDisable = hasFunctionalPermission(securityKey.DISABLECUSTOMER);
       const hasUnBlock = hasFunctionalPermission(securityKey.UNBLOCKCUSTOMER);
-      const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
+      // const hasUnFreeze = hasFunctionalPermission(securityKey.UNFREEZECUSTOMER);
 
-      if (actionColumn.defaultAction.allowEdit) {
+      if (actionColumn.defaultAction) {
         actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
       }
-      // actionColumn.customAction = securityValidator(hasBlock?.hasAccess, actionColumn.customAction, "ALLOWBLOCKED");
-      // actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
-      // actionColumn.customAction = securityValidator(hasDisable?.hasAccess, actionColumn.customAction, "ALLOWDISABLE");
-      // actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
-
-      if (actionColumn.defaultAction.allowActiveCustomer) {
-        actionColumn.defaultAction.allowActiveCustomer = hasActive?.hasAccess;
-      }
-      if (actionColumn.defaultAction.allowUnfreeze) {
-        actionColumn.defaultAction.allowUnfreeze = hasUnFreeze?.hasAccess;
-      }
-      
-      if (approvalAction) {
-        if (approvalAction.colSettings.allowCheckbox) {
-          approvalAction.colSettings.allowCheckbox = true;
-        }
-      }
+      actionColumn.customAction = securityValidator(hasBlock?.hasAccess, actionColumn.customAction, "ALLOWBLOCKED");
+      actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
+      actionColumn.customAction = securityValidator(hasDisable?.hasAccess, actionColumn.customAction, "ALLOWDISABLE");
+      actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
+    }
+    if (approvalAction && approvalAction.colSettings) {
+      approvalAction.colSettings.isDisabled = true;
     }
     if (isResponsibleUser) {
-      if (approvalAction) {
-        if (approvalAction.colSettings.allowCheckbox) {
-          approvalAction.colSettings.allowCheckbox = true;
-        }
-      }
-    }
-  }, [configFile]);
-
-  const hasResponsibleUserhasAccess = () => {
-    const actionColumn = configFile?.columns.find((column) => column.name === "Action");
-    if (actionColumn) {
-      if (actionColumn.defaultAction.hasOwnProperty('allowEdit')) {
-        actionColumn.defaultAction.allowEdit = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty("allowBlocked")) {
-        actionColumn.defaultAction.allowBlocked = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowFreeze')) {
-        actionColumn.defaultAction.allowFreeze = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowActiveCustomer')) {
-        actionColumn.defaultAction.allowActiveCustomer = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowDisable')) {
-        actionColumn.defaultAction.allowDisable = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
-        actionColumn.defaultAction.allowUnblocked = true;
-      }
-      if (actionColumn.defaultAction.hasOwnProperty('allowUnblocked')) {
-        actionColumn.defaultAction.allowUnblocked = true;
+      if (approvalAction && approvalAction.colSettings) {
+        approvalAction.colSettings.isDisabled = false;
       }
     }
   }
@@ -324,19 +303,18 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       };
       updateCustomerInActiveStatus(req);
       addCustomerNotes(req);
-      if (!assignRUser && custData.responsibleUserId && custData.responsibleUserId.value) {
-        updateRUserData(custData.responsibleUserId.value);
+      if (!assignRUser && custData.responsibleUserId && custData.responsibleUserId) {
+        updateRUserData(custData.responsibleUserId);
       }
     }
   };
 
   const updateRUserData = (value) => {
     let req = {
-      ownerId: customerID,
-      ownerType: OwnerType.Customer,
-      responsibleUserId: value
+      customerId: customerID,
+      userId: String(value)
     }
-    updateResponsibleUser(req);
+    addEditResponsibleUserForCustomer(req);
   }
 
   const actionHandler = {

@@ -13,17 +13,15 @@ export const Menu = [
         securityKey: securityKey.DASHBOARD,
         children: [],
       },
-
-
-      // {
-      //   name: "Organization",
-      //   id: "Organization",
-      //   to: "/Organization",
-      //   iconClass: "fa fa-building-o",
-      //   subMenu: false,
-      //   securityKey: securityKey.DASHBOARD,
-      //   children: [],
-      // },
+      {
+        name: "Organization",
+        id: "Organization",
+        to: "/Organization",
+        iconClass: "solar:buildings-2-outline",
+        subMenu: false,
+        securityKey: securityKey.ORGANIZATION,
+        children: [],
+      },
     ],
   },
   {
@@ -95,32 +93,44 @@ export const Menu = [
           },
         ],
       },
-      // {
-      //   id: "configuration",
-      //   name: "Configuration",
-      //   iconClass: "fa fa-cog",
-      //   subMenu: true,
-      //   to: "#",
-      //   securityKey: securityKey.CONFIGURATION,
-      //   children: [
-      //     {
-      //       id: "approvalRules",
-      //       submenuName: "Approval Rules",
-      //       to: "/ApprovalRules",
-      //       securityKey: securityKey.APPROVALRULES,
-      //     },
-      //     {
-      //       id: "functionalConfiguration",
-      //       submenuName: "Functional Configuration",
-      //       to: "/FunctionalConfiguration",
-      //       securityKey: securityKey.APPROVALRULES,
-      //     },
-      //   ],
-      // },
+      {
+        id: "configuration",
+        name: "Configuration",
+        iconClass: "solar:settings-broken",
+        subMenu: true,
+        to: "#",
+        securityKey: securityKey.CONFIGURATION,
+        children: [
+          {
+            id: "approvalRules",
+            submenuName: "Approval Rules",
+            to: "/ApprovalRules",
+            securityKey: securityKey.APPROVALRULES,
+          },
+          {
+            id: "functionalConfiguration",
+            submenuName: "Functional Configuration",
+            to: "/FunctionalConfiguration",
+            securityKey: securityKey.FUNCTIONALCONFIGURATION,
+          },
+          {
+            id: "apiProviders",
+            submenuName: "API Providers",
+            to: "/APIProviders",
+            securityKey: securityKey.APIPROVIDERS,
+          },
+          {
+            id: "Api Configuration",
+            submenuName: "Third party API",
+            to: "/ThirdPartyApiConfiguration",
+            securityKey: securityKey.THIRDPARTYAPI,
+          },
+        ],
+      },
       // {
       //   id: "apiconfiguration",
       //   name: "API Configuration",
-      //   iconClass: "fa fa-cog",
+      //   iconClass: "hugeicons:api",
       //   subMenu: true,
       //   to: "#",
       //   securityKey: securityKey.APICONFIGURATION,
@@ -136,7 +146,7 @@ export const Menu = [
       // {
       //   id: "ThirdPartyAPI",
       //   name: "Third party API",
-      //   iconClass: "fa fa-building-o",
+      //   iconClass: "hugeicons:api",
       //   subMenu: true,
       //   to: "#",
       //   securityKey: securityKey.SECURITY,
@@ -151,27 +161,27 @@ export const Menu = [
       // },
     ],
   },
-  // {
-  //   groupLabel: "Orders",
-  //   items: [
-  //     {
-  //       name: "Order",
-  //       id: "Order",
-  //       to: "/Order",
-  //       iconClass: "bi bi-file-earmark-medical",
-  //       subMenu: false,
-  //       securityKey: securityKey.USERMANAGEMENT,
-  //       children: [],
-  //     },
-  //     {
-  //       name: "My Task",
-  //       id: "MyTask",
-  //       to: "/MyTask",
-  //       iconClass: "fa fa-clipboard",
-  //       subMenu: false,
-  //       securityKey: securityKey.DASHBOARD,
-  //       children: []
-  //     }
-  //   ]
-  // }
+  {
+    groupLabel: "Orders",
+    items: [
+      {
+        name: "Order",
+        id: "Order",
+        to: "/Order",
+        iconClass: "lets-icons:order",
+        subMenu: false,
+        securityKey: securityKey.ORDER,
+        children: [],
+      },
+      // {
+      //   name: "My Task",
+      //   id: "MyTask",
+      //   to: "/MyTask",
+      //   iconClass: "octicon:tasklist-24",
+      //   subMenu: false,
+      //   securityKey: securityKey.MYTASK,
+      //   children: []
+      // }
+    ]
+  },
 ];
