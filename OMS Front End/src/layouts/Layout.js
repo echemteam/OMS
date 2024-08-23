@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
 import Header from "./components/header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
 import { Outlet, useLocation } from "react-router-dom";
 import Breadcome from "../components/ui/breadcome/Breadcome";
 import Footer from "./components/footer/Footer";
-import { PagePermissionsProvider } from "../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
 //import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation";
 // import Image from "../components/image/Image";
 // import { AppIcons } from "../data/appIcons";
@@ -39,43 +39,36 @@ const Layout = (props) => {
   };
   return (
     <React.Fragment>
-      {/* <AddPagePermissionsContext.Provider value={renderComponent.permissionCongif}>
-
-      </AddPagePermissionsContext.Provider> */}
-      <PagePermissionsProvider>
-        {/* <SecurityPermissionsHOC permissionConfig={permissionConfig}> */}
-        <div className={`main-page-layout ${isCollapsed ? "collapsed" : ""}`}>
-          <div className="top-sec">
-            <div className="sidebar-section">
-              <Sidebar componentRoutes={props.componentRoutes} />
-              <div className="collapse-btn">
-                <div className="click-btn" onClick={handleToggleClick}>
-                  {/* <Image imagePath={AppIcons.arrowIcon} /> */}
-                  <Iconify icon="solar:alt-arrow-down-outline" />
-                </div>
+      <div className={`main-page-layout ${isCollapsed ? "collapsed" : ""}`}>
+        <div className="top-sec">
+          <div className="sidebar-section">
+            <Sidebar componentRoutes={props.componentRoutes} />
+            <div className="collapse-btn">
+              <div className="click-btn" onClick={handleToggleClick}>
+                {/* <Image imagePath={AppIcons.arrowIcon} /> */}
+                <Iconify icon="solar:alt-arrow-down-outline" />
               </div>
-            </div>
-
-            <div className={`middle-page-section`}>
-              <Header />
-
-              {/* {isAuthorize ? */}
-              <div className="center-content-part">
-                <div className="content-desc-section">
-                  <Breadcome componentRoutes={props.componentRoutes} />
-                  <div className="center-container container-fluid">
-                    <Outlet />
-                  </div>
-                  <Footer />
-                </div>
-              </div>
-              {/* : <Unauthorize />
-              } */}
             </div>
           </div>
+
+          <div className={`middle-page-section`}>
+            <Header />
+
+            {/* {isAuthorize ? */}
+            <div className="center-content-part">
+              <div className="content-desc-section">
+                <Breadcome componentRoutes={props.componentRoutes} />
+                <div className="center-container container-fluid">
+                  <Outlet />
+                </div>
+                <Footer />
+              </div>
+            </div>
+            {/* : <Unauthorize />
+              } */}
+          </div>
         </div>
-        {/* </SecurityPermissionsHOC> */}
-      </PagePermissionsProvider>
+      </div>
     </React.Fragment>
   );
 };
