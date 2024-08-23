@@ -1,0 +1,32 @@
+.approval-list-card,
+.approval-list-card-contact,
+.approval-list-card-financial {
+  background-color: var(--whiteColor);
+  border: 1px solid var(--themeColor);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 10px;
+  box-sizing: border-box;
+  margin-top: 0px;
+  h5 {
+    font-size: var(--commonFont-extraLarge);
+    color: var(--themeColor);
+  }
+}
+
+.approval-list-card {
+  width: calc(50% - 20px);
+}
+
+.approval-list-card-contact,
+.approval-list-card-financial {
+  width: calc(100% - 20px);
+  margin-top: 10px;
+}
+
+.info-scrollable {
+  max-height: calc(100vh - 70px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}

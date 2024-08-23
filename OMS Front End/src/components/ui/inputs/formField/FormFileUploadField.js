@@ -125,6 +125,7 @@ const FormFileUploadField = ({
                     isDisable={formSetting?.isViewOnly || inputProps?.isDisable || false}
                     isDownloadButton={inputProps.isDownloadable}
                     acceptedFiles={inputProps.acceptedFiles}
+                    dataField={dataField}
                 />
             <ValidationText error={error || ""} />
             </div>

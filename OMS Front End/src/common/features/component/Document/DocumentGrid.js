@@ -9,6 +9,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import PropTypes from "prop-types";
 //** Service's */
 import { useLazyGetAllDocumentTypesQuery } from "../../../../app/services/documentAPI";
+import AddMultipleDocument from "./feature/MultipleDocument.js/AddMultipleDocument";
 //** Component's */
 const AddDocument = React.lazy(() => import("./feature/AddDocument"));
 const DocumentList = React.lazy(() => import("./feature/DocumentList"));
@@ -101,21 +102,18 @@ const DocumentGrid = ({
       <div className="document-section">
         <CardSection
           cardTitle="Attachments"
+          titleButtonClick={handleToggleModal}
+          textWithIcon={true}
+          iconImg={AppIcons.PlusIcon}
           buttonClassName="theme-button"
           rightButton={true}
+          buttonText="Add Document"
           multipleButton={true}
           rightButtonArray={[
             {
               buttonTypeClassName: "theme-button",
               onClick: handleMulDocToggleModal,
-              buttonText: "Upload Multiple File",
-              textWithIcon: true,
-              imagePath: AppIcons.PlusIcon,
-            },
-            {
-              buttonTypeClassName: "theme-button",
-              onClick: handleToggleModal,
-              buttonText: "Upload File",
+              buttonText: "Add Multiple Document",
               textWithIcon: true,
               imagePath: AppIcons.PlusIcon,
             },
@@ -159,7 +157,9 @@ const DocumentGrid = ({
         // modalTitle={editDocumentData ? "Update Document" : "Add Document"}
         modelSizeClass="w-50s"
       >
-        Praful Testing Multiple Documents
+        <AddMultipleDocument
+          handleMulDocToggleModal={handleMulDocToggleModal}
+        />
       </CenterModel>
     </React.Fragment>
   );

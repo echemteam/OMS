@@ -63,7 +63,7 @@ const OrderDetails = () => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
-        addressTypeId: AddressType.Shipping
+        addressTypeId: AddressType.SHIPPING
       }
       getAllShippingAddress(req)
     }
@@ -73,7 +73,7 @@ const OrderDetails = () => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
-        addressTypeId: AddressType.Billing
+        addressTypeId: AddressType.BILLING
       }
       getAllBillingAddress(req)
     }
@@ -100,7 +100,7 @@ const OrderDetails = () => {
   const handleOrderInfoRepeatCall = () => {
     let req = {
       customerId: orderCustomerId,
-      addressTypeId: AddressType.Shipping
+      addressTypeId: AddressType.SHIPPING
     }
     getAllShippingAddress(req)
   };

@@ -59,6 +59,76 @@ const approvalAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
+        }),
+
+        //** Customer */
+        getCustomersInfoById: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`Customers/GetCustomersBasicInformationById/?customerId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getCustomerAddresssInfoById: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Address/GetAddresssByCustomerId/?customerId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getCustomerContactInfoById: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Contact/GetContactByCustomerId/?customerId=${Number(data.id)}&searchText=${data.searchText}&searchContactType=${data.contactType}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getCustomerFinacialSetting: builder.query({
+            query: (customerId) => ({
+                url: encryptQueryString(`/CustomerAccoutingSettings/GetDetailsbyCustomerID/?customerId=${(customerId)}`),
+                method: 'GET',
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+
+        //** Supplier */
+        getSupplierBasicInfoById: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Supplier/GetSupplierBasicInformationById/?supplierId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getSupplierAddressInfoById: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Address/GetAddresssBySupplierId/?supplierId=${Number(id)}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getSupplierContactInfoById: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Contact/GetContactBySupplierId/?supplierId=${Number(data.id)}&searchText=${data.searchText}&searchContactType=${data.contactType}`),
+                Method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
+        getSupplierFinacialSetting: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/SupplierFinancialSettings/GetACHWireBySupplierId/?supplierId=${(id)}`),
+                method: 'GET',
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
         })
     })
 })
@@ -69,7 +139,18 @@ export const {
     useLazyGetApprovalRequestsByApprovalRequestIdQuery,
     useAddUserChecklistResponseMutation,
     useGetValidateCheckListMutation,
-    useUpdateApprovalRequestsStatusMutation
+    useUpdateApprovalRequestsStatusMutation,
+    //** Customer */
+    useLazyGetCustomersInfoByIdQuery,
+    useLazyGetCustomerAddresssInfoByIdQuery,
+    useLazyGetCustomerContactInfoByIdQuery,
+    useLazyGetCustomerFinacialSettingQuery,
+
+    //** Supplier */
+    useLazyGetSupplierBasicInfoByIdQuery,
+    useLazyGetSupplierAddressInfoByIdQuery,
+    useLazyGetSupplierContactInfoByIdQuery,
+    useLazyGetSupplierFinacialSettingQuery
 } = approvalAPI;
 
 export default approvalAPI;

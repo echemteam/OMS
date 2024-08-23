@@ -44,7 +44,7 @@ const ContactDetails = (props) => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.EndUser
+        contactTypeId: ContactType.ENDUSER
       }
       getAllEndUserId(req)
     }
@@ -54,7 +54,7 @@ const ContactDetails = (props) => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.InvoiceSubmission
+        contactTypeId: ContactType.INVOICESUBMISSION
       }
       getAllInvoiceSubmissionId(req)
     }
@@ -64,7 +64,7 @@ const ContactDetails = (props) => {
     if (orderCustomerId) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.Purchasing
+        contactTypeId: ContactType.PURCHASING
       }
       getAllPurchasingId(req)
     }
@@ -90,19 +90,19 @@ const ContactDetails = (props) => {
     if (data === 2) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.EndUser
+        contactTypeId: ContactType.ENDUSER
       }
       getAllEndUserId(req)
     } else if (data === 3) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.Purchasing
+        contactTypeId: ContactType.PURCHASING
       }
       getAllPurchasingId(req)
     } else if (data === 4) {
       let req = {
         customerId: orderCustomerId,
-        contactTypeId: ContactType.InvoiceSubmission
+        contactTypeId: ContactType.INVOICESUBMISSION
       }
       getAllInvoiceSubmissionId(req)
     }
@@ -125,13 +125,13 @@ const ContactDetails = (props) => {
   const handleInputGroupButton = (id) => {
     if (id > 0) {
       setContectTypeId(id)
-      if (endUserEnableDisableButton && ContactType.EndUser === id) {
+      if (endUserEnableDisableButton && ContactType.ENDUSER === id) {
         setIsModelOpen(!isModelOpen);
       }
-      if (invoicerEnableDisableButton && ContactType.InvoiceSubmission === id) {
+      if (invoicerEnableDisableButton && ContactType.INVOICESUBMISSION === id) {
         setIsModelOpen(!isModelOpen);
       }
-      if (purchasingEnableDisableButton && ContactType.Purchasing === id) {
+      if (purchasingEnableDisableButton && ContactType.PURCHASING === id) {
         setIsModelOpen(!isModelOpen);
       }
     }
