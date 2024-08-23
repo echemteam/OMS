@@ -55,7 +55,7 @@ const ContactInformation = ({ isModelOpen, mainId, getContactById }) => {
               {contact.emailAddressList &&
                 contact.emailAddressList.map((emails) => (
                   <>
-                    <h6 className="email-address">{emails.emailAddress}</h6>
+                    <h6 className="email-address-applist">{emails.emailAddress}</h6>
                     <h6 className={emails.isPrimary ? "is-primary" : ""}>
                       {/* Is Primary: {emails.isPrimary ? "Yes" : "No"} */}
                     </h6>
