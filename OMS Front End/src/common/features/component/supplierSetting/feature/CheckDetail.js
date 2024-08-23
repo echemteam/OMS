@@ -11,6 +11,7 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
+import DataLoader from "../../../../../components/FinalMolGrid/ui/dataLoader/DataLoader";
 
 const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSettingFormRef,isGetPaymentSettingsBySupplierIdSuccess,isGetPaymentSettingsBySupplierIdData }) => {
   const checkFormRef = useRef();
@@ -152,6 +153,10 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
   const formActionHandler = {
     DDL_CHANGED: handleChangeDropdownList,
   };
+
+  if (isGetAllStateFetching) {
+    return <div><DataLoader /></div>; // Replace with a proper loading spinner or component
+  }
 
   return (
      
