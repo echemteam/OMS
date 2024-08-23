@@ -11,6 +11,7 @@ import { useLazyGetAllAccountTypeQuery } from '../../../../../../../app/services
 
 const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData }) => {
   const [formData, setFormData] = useState(bankAddressFormData);
+  const [stateValue, setStateValue] = useState(false)
 
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
@@ -22,46 +23,6 @@ const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySup
     getAllStates();
     getAllAccountType();
   }, []);
-
-
-  useEffect(() => {
-    if (isGetACHWireBySupplierIdSuccess && isGetACHWireBySupplierIdData?.recipientAddress) {
-      // const { bankAddress } = isGetACHWireBySupplierIdData;
-      let data = { ...formData };
-      if (isGetACHWireBySupplierIdData.recipientAddress.countryId) {
-        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === isGetACHWireBySupplierIdData.recipientAddress.countryId);
-      }
-
-      if (isGetACHWireBySupplierIdData.recipientAddress.stateId) {
-        getAllCities(isGetACHWireBySupplierIdData.recipientAddress.stateId)
-      }
-
-      data.initialState = {
-        addressId: isGetACHWireBySupplierIdData.recipientAddress.addressId,
-        addressLine1Id: isGetACHWireBySupplierIdData.recipientAddress.addressLine1,
-        addressLine2Id: isGetACHWireBySupplierIdData.recipientAddress.addressLine2,
-        countryId: isGetACHWireBySupplierIdData.recipientAddress.countryId,
-        zipCode: isGetACHWireBySupplierIdData.recipientAddress.zipCode,
-        stateId: isGetACHWireBySupplierIdData.recipientAddress.stateId,
-        cityId: isGetACHWireBySupplierIdData.recipientAddress.cityId,
-        supplierBankDetailsId: isGetACHWireBySupplierIdData.supplierBankDetailsId,
-        bankAddressId: isGetACHWireBySupplierIdData.bankAddressId,
-        recipientAddressId: isGetACHWireBySupplierIdData.recipientAddressId,
-        // messageToRecipient: bankAddress.messageToRecipient,
-        isAddressInUs: isGetACHWireBySupplierIdData.isAddressInUs,
-        bankName: isGetACHWireBySupplierIdData.bankName,
-        accountType: isGetACHWireBySupplierIdData.accountType,
-        accountNumber: isGetACHWireBySupplierIdData.accountNumber,
-        branchCode: isGetACHWireBySupplierIdData.branchCode,
-        ibanNumber: isGetACHWireBySupplierIdData.ibanNumber,
-        swiftCode: isGetACHWireBySupplierIdData.swiftCode,
-        routingNumber: isGetACHWireBySupplierIdData.routingNumber,
-        sortCode: isGetACHWireBySupplierIdData.sortCode,
-        bsbNumber: isGetACHWireBySupplierIdData.bsbNumber,
-      };
-      setFormData(data);
-    }
-  }, [isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData]);
 
 
   useEffect(() => {
@@ -112,6 +73,57 @@ const BankAddressDetail = ({ bankAddressFormData, bankFormRef, isGetACHWireBySup
     }
     setFormData(manageData);
   };
+
+  useEffect(() => {
+    if (isGetACHWireBySupplierIdData?.recipientAddress) {
+      if (allGetAllStatesData) {
+      let data = { ...formData };
+        setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === isGetACHWireBySupplierIdData.recipientAddress.countryId);
+      }
+    }
+  }, [stateValue])
+
+  useEffect(() => {
+    if (isGetACHWireBySupplierIdSuccess && isGetACHWireBySupplierIdData?.recipientAddress) {
+      const { recipientAddress } = isGetACHWireBySupplierIdData;
+      let data = { ...formData };
+      if (recipientAddress.countryId) {
+        setStateValue(true)
+        // setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === recipientAddress.countryId);
+      }
+
+      if (recipientAddress.stateId) {
+        getAllCities(recipientAddress.stateId)
+      }
+
+      data.initialState = {
+        addressId: recipientAddress.addressId,
+        addressLine1Id: recipientAddress.addressLine1,
+        addressLine2Id: recipientAddress.addressLine2,
+        countryId: recipientAddress.countryId,
+        zipCode: recipientAddress.zipCode,
+        stateId: recipientAddress.stateId,
+        cityId: recipientAddress.cityId,
+        supplierBankDetailsId: isGetACHWireBySupplierIdData.supplierBankDetailsId,
+        bankAddressId: isGetACHWireBySupplierIdData.bankAddressId,
+        recipientAddressId: isGetACHWireBySupplierIdData.recipientAddressId,
+        // messageToRecipient: bankAddress.messageToRecipient,
+        isAddressInUs: isGetACHWireBySupplierIdData.isAddressInUs,
+        bankName: isGetACHWireBySupplierIdData.bankName,
+        accountType: isGetACHWireBySupplierIdData.accountType,
+        accountNumber: isGetACHWireBySupplierIdData.accountNumber,
+        branchCode: isGetACHWireBySupplierIdData.branchCode,
+        ibanNumber: isGetACHWireBySupplierIdData.ibanNumber,
+        swiftCode: isGetACHWireBySupplierIdData.swiftCode,
+        routingNumber: isGetACHWireBySupplierIdData.routingNumber,
+        sortCode: isGetACHWireBySupplierIdData.sortCode,
+        bsbNumber: isGetACHWireBySupplierIdData.bsbNumber,
+      };
+      setFormData(data);
+    }
+  }, [isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData]);
+
+
 
   const formBackAddressActionHandler = {
     DDL_CHANGED: handleChangeBankAddressDropdownList,

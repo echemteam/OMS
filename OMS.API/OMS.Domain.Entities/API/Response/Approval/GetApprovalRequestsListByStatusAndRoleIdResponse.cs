@@ -15,5 +15,6 @@ namespace OMS.Domain.Entities.API.Response.Approval
         public string? ModuleName { get; set; }
         public string? Status { get; set; }
         public DateTime? RequestedDate { get; set; }
+        public bool? IsFunctional { get; set; }
     }
 }

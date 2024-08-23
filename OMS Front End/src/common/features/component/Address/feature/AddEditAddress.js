@@ -6,13 +6,15 @@ import { AddressType, FieldSettingType } from "../../../../../utils/Enums/common
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-import { setFieldSetting, setDropDownOptionField, getFieldData } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setFieldSetting, setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { addressFormData } from "../config/AddressForm.data";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import PropTypes from 'prop-types';
+import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
+import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
 // import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 const SetInitialCountry = {
@@ -29,6 +31,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
     const [selectedCheckbox, setSelectedCheckbox] = useState(null);
     const [addressEditTableId, setAddressEditTableId] = useState(0)
+    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+
     // const [stateChage, setStateChange] = useState(null)
 
     //** API Call's */
@@ -337,8 +341,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         };
     };
 
-    const handleAddEdit = () => {
-        let data = ref.current.getFormData();
+    const handleAddEdit = async () => {
+        const data = ref.current.getFormData();
         if (!data) return;
 
         const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
@@ -346,14 +350,36 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
             update(updateData);
-        } else {
-            let req = {
-                ...transformedData,
-                customerId: orderCustomerId ? orderCustomerId : transformedData.customerId
+            return;
+        }
+
+        // Add mode
+        const customerId = orderCustomerId ? orderCustomerId : transformedData.customerId;
+        const req = {
+            ...transformedData,
+            customerId: customerId,
+        };
+
+        if (data.addressTypeId === 1) {
+            const value = { ...req };
+            const request = {
+                newValue: value,
+                oldValue: formData.initialState,
+                isFunctional: true,
+                functionalityName: isModelOpen
+                    ? FunctionalitiesName.ADDADDRESS
+                    : FunctionalitiesName.ADDCUSTOMER
+            };
+            //** This is used for the the unctional Level */
+            const modifyData = await ValidateRequestByApprovalRules(request);
+            if (modifyData.newValue) {
+                onSidebarClose();
             }
+        } else {
             add(req);
         }
     };
+
 
     const extractValue = (field) => {
         return field && typeof field === "object" ? field.value : field;

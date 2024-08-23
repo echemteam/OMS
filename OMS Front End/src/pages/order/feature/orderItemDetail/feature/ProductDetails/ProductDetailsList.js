@@ -113,18 +113,21 @@ const ProductDetailsList = () => {
           showModal={showModal}
           handleToggleModal={handleToggleCenterModal}
           modalTitle="Product Details"
-          modelSizeClass="w-70"
+          modelSizeClass="w-80"
         >
-          <div className="radio-grid">
-            <FinalMolGrid
-              ref={molGridRef}
-              dataSource={productDetailList}
-              configuration={productListConfig}
-              allowPagination={false}
-              isLoading={isApiResponseLoading}
-              onRowSelect={handleRowSelect}
-              onColumnChange={handleColumnsChange}
-            />
+
+          <div className="product-details-hight">
+            <div className="radio-grid">
+              <FinalMolGrid
+                ref={molGridRef}
+                dataSource={productDetailList}
+                configuration={productListConfig}
+                allowPagination={false}
+                isLoading={isApiResponseLoading}
+                onRowSelect={handleRowSelect}
+                onColumnChange={handleColumnsChange}
+              />
+            </div>
           </div>
         </CenterModel>
       </div>

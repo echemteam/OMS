@@ -1,4 +1,5 @@
-﻿using Common.Helper.Extension;
+﻿using Common.Helper.Export;
+using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.SupplierDocuements;
 using OMS.Domain.Entities.API.Response.SupplierDocuements;
@@ -7,6 +8,7 @@ using OMS.Domain.Entities.Entity.SupplierDocuements;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
 using OMS.Shared.Services.Contract;
+using System.Data;
 
 
 namespace OMS.Application.Services.SupplierDocuements
@@ -28,20 +30,33 @@ namespace OMS.Application.Services.SupplierDocuements
         {
             AddEntityDto<int> responseData = new();
 
-            responseData = await repositoryManager.supplierdocuements.CheckDocumentsExistOrNot(requestData.DocumentTypeId, requestData.Name, requestData.SupplierId);
-
-            if (responseData.KeyValue > 0)
+            if (requestData.DocumentInfoList != null)
             {
-                if (requestData.Base64File != null && requestData.Name != null)
+                foreach (var document in requestData.DocumentInfoList)
                 {
-                    string AESKey = commonSettingService.EncryptionSettings.AESKey!;
-                    string AESIV = commonSettingService.EncryptionSettings.AESIV!;
-                    requestData.Attachment = FileManager.SaveEncryptFile(requestData.Base64File!, commonSettingService.ApplicationSettings.SaveFilePath + "\\" + requestData.StoragePath + "\\" + requestData.SupplierId, requestData.Attachment!, AESKey, AESIV);
+                    if (!string.IsNullOrEmpty(document.Base64File) && !string.IsNullOrEmpty(requestData.StoragePath))
+                    {
+                        string AESKey = commonSettingService.EncryptionSettings.AESKey!;
+                        string AESIV = commonSettingService.EncryptionSettings.AESIV!;
+
+                        document.Attachment = FileManager.SaveEncryptFile(
+                            document.Base64File!,
+                            Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath, requestData.StoragePath, requestData.SupplierId.ToString()),
+                            document.Attachment!,
+                            AESKey,
+                            AESIV
+                        );
+                    }
                 }
+
+                // Map the request to the DTO and add it to the repository
                 SupplierDocumentsDto supplierDocumentsDto = requestData.ToMapp<AddSupplierDocumentsRequest, SupplierDocumentsDto>();
                 supplierDocumentsDto.CreatedBy = CurrentUserId;
-                responseData = await repositoryManager.supplierdocuements.AddSupplierDocuments(supplierDocumentsDto);
+                var modifyData = requestData.DocumentInfoList.Select(data => new { data.Name, data.Attachment, data.DocumentTypeId }).ToList();
+                DataTable documentDataTable = ExportHelper.ListToDataTable(modifyData);
+                responseData = await repositoryManager.supplierdocuements.AddSupplierDocuments(supplierDocumentsDto, documentDataTable);
             }
+
             return responseData;
         }
         public async Task<List<GetSupplierDocumentsByIdResponse>> GetSupplierDocumentsById(int supplierId)

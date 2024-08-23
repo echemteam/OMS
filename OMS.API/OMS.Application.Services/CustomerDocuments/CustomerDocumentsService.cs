@@ -55,7 +55,8 @@ namespace OMS.Application.Services.CustomerDocuments
                 // Map the request to the DTO and add it to the repository
                 CustomerDocumentsDto customerDocumentsDto = requestData.ToMapp<AddCustomerDocumentsRequest, CustomerDocumentsDto>();
                 customerDocumentsDto.CreatedBy = CurrentUserId;
-                DataTable documentDataTable = ExportHelper.ListToDataTable(requestData.DocumentInfoList);
+                var modifyData = requestData.DocumentInfoList.Select(data => new {data.Name,data.Attachment,data.DocumentTypeId}).ToList();
+                DataTable documentDataTable = ExportHelper.ListToDataTable(modifyData);
                 responseData = await repositoryManager.customerDocuments.AddCustomerDocuments(customerDocumentsDto, documentDataTable);
             }
 

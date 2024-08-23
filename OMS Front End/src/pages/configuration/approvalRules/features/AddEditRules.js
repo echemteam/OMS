@@ -29,6 +29,7 @@ const AddEditRules = (props) => {
 
   const [getAllFunctionalities,
     {
+      isFetching: isGetAllFunctionalitiesFetching,
       isSuccess: isGetAllFunctionalitiesSucess,
       data: allGetAllFunctionalitiesData,
     },
@@ -37,6 +38,7 @@ const AddEditRules = (props) => {
   const [
     getAllFunctionalitiesFields,
     {
+      isFetching: isGetAllFunctionalitiesFieldsFetching,
       isSuccess: isGetAllFunctionalitiesFieldsSucess,
       data: allGetAllFunctionalitiesFieldsData,
     },
@@ -79,41 +81,123 @@ const AddEditRules = (props) => {
     if (isgetAllModulesSucess && allGetAllModulesData) {
       handleModuleOption(allGetAllModulesData);
     }
-    if (isGetAllFunctionalitiesSucess && allGetAllFunctionalitiesData) {
-      handleFunctionalityOption(allGetAllFunctionalitiesData);
+
+  }, [isgetAllModulesSucess, allGetAllModulesData])
+
+  // useEffect(() => {
+  //   if (!isGetAllFunctionalitiesFetching && isGetAllFunctionalitiesSucess && allGetAllFunctionalitiesData) {
+  //     let form = { ...ruleData };
+
+  //     const options = allGetAllFunctionalitiesData.map((item) => ({
+  //       value: item.functionalityId,
+  //       label: item.name,
+  //     }));
+
+  //     const dropdownField = form?.formFields?.find(item => item.id === "functionalityId");
+
+  //     if (dropdownField) {
+  //       dropdownField.fieldSetting.options = options;
+
+  //       // If editing, ensure the correct functionality value is set
+  //       if (isGetApprovalConfigurationByApprovalConfigurationIdData) {
+  //         const selectedFunctionality = allGetAllFunctionalitiesData.find(
+  //           (item) => item.functionalityId === isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId
+  //         );
+
+  //         if (selectedFunctionality) {
+  //           ruleFormRef.current.updateFormFieldValue({
+  //             functionalityId: {
+  //               value: selectedFunctionality.functionalityId,
+  //               label: selectedFunctionality.name,
+  //             },
+  //           });
+  //         }
+  //       }
+
+  //       setRuleData(form);
+  //     }
+  //   }
+  // }, [isGetAllFunctionalitiesFetching, isGetAllFunctionalitiesSucess, allGetAllFunctionalitiesData]);
+
+  useEffect(() => {
+    if (!isGetAllFunctionalitiesFetching && isGetAllFunctionalitiesSucess && allGetAllFunctionalitiesData) {
+      // Handle the option setting logic
+      handleSetFunctionalityOptions();
     }
+  }, [isGetAllFunctionalitiesFetching, isGetAllFunctionalitiesSucess, allGetAllFunctionalitiesData]);
+
+  const handleSetFunctionalityOptions = () => {
+    let form = { ...ruleData };
+    const dataq = allGetAllFunctionalitiesData.map((item) => ({
+      value: item.functionalityId,
+      label: item.name,
+    }));
+
+    const dropdownField = form?.formFields?.find(item => item.id === "functionalityId");
+    dropdownField.fieldSetting.options = dataq;
+
+    if (isGetApprovalConfigurationByApprovalConfigurationIdData) {
+      const selectedFunctionality = allGetAllFunctionalitiesData.find(
+        item => item.functionalityId === isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId
+      );
+
+      if (selectedFunctionality) {
+        if (selectedFunctionality.isFunctional) {
+          setFieldSetting(form, 'functionalitiesFieldId', FieldSettingType.DISABLED, true);
+        } else {
+          setFieldSetting(form, 'functionalitiesFieldId', FieldSettingType.DISABLED, false);
+        }
+        ruleFormRef.current.updateFormFieldValue({
+          functionalityId: selectedFunctionality.functionalityId,
+        });
+      }
+    }
+
+    setRuleData(form);
+  };
+
+  useEffect(() => {
+    if (!isGetAllFunctionalitiesFieldsFetching && isGetAllFunctionalitiesFieldsSucess && allGetAllFunctionalitiesFieldsData) {
+      handleSetFunctionalitiesFieldOptions();
+    }
+  }, [isGetAllFunctionalitiesFieldsFetching, isGetAllFunctionalitiesFieldsSucess, allGetAllFunctionalitiesFieldsData]);
+
+  const handleSetFunctionalitiesFieldOptions = () => {
+    let data = { ...ruleData };
+    const datav = allGetAllFunctionalitiesFieldsData.map((item) => ({
+      value: item.functionalitiesFieldId,
+      label: item.fieldName,
+    }));
+
+    const dropdownField = data?.formFields?.find(field => field.id === "functionalitiesFieldId");
+    if (dropdownField && dropdownField.fieldSetting) {
+      dropdownField.fieldSetting.options = datav;
+
+      // If there's a preselected value, update it
+      if (isGetApprovalConfigurationByApprovalConfigurationIdData) {
+        ruleFormRef.current.updateFormFieldValue({
+          functionalitiesFieldId: isGetApprovalConfigurationByApprovalConfigurationIdData.functionalitiesFieldId,
+        });
+      }
+      setRuleData(data);
+    }
+  };
+
+
+  useEffect(() => {
     if (isGetAllRolesSucess && allGetAllRolesData) {
       handleRoleOption(allGetAllRolesData);
     }
-    if (
-      isGetAllFunctionalitiesFieldsSucess && allGetAllFunctionalitiesFieldsData
-    ) {
-      handleFunctionalityFieldOption(allGetAllFunctionalitiesFieldsData);
-    }
-  }, [isgetAllModulesSucess, allGetAllModulesData,
-    allGetAllFunctionalitiesData, isGetAllFunctionalitiesSucess,
-    isGetAllRolesSucess, allGetAllRolesData,
-    isGetAllFunctionalitiesFieldsSucess, allGetAllFunctionalitiesFieldsData
-  ])
+  }, [isGetAllRolesSucess, allGetAllRolesData,])
 
   const handleModuleOption = (responseData) => {
     setDropDownOptionField(responseData, CommansDataField.ModuleId, 'moduleName', rulesFormData, CommansDataField.ModuleId);
-  }
-
-  const handleFunctionalityOption = (responseData) => {
-    setDropDownOptionField(responseData, CommansDataField.FunctionalityId, 'name', rulesFormData, CommansDataField.FunctionalityId);
   }
 
   const handleRoleOption = (responseData) => {
     setDropDownOptionField(responseData, "roleId", "roleName", rulesFormData, "roleId"
     );
   };
-
-  const handleFunctionalityFieldOption = (responseData) => {
-    setDropDownOptionField(responseData, "functionalitiesFieldId", "fieldName", rulesFormData, "functionalitiesFieldId"
-    );
-  };
-
 
   useEffect(() => {
     if (isAddEditApprovalConfigurationSucess && allAddEditApprovalConfigurationData) {
@@ -129,6 +213,9 @@ const AddEditRules = (props) => {
   }, [isAddEditApprovalConfigurationSucess, allAddEditApprovalConfigurationData]);
 
   useEffect(() => {
+    let form = { ...rulesFormData };
+    setFieldSetting(form, 'functionalityId', FieldSettingType.DISABLED, true);
+    setFieldSetting(form, 'functionalitiesFieldId', FieldSettingType.DISABLED, true);
     onResetForm(rulesFormData, setRuleData, null);
     if (props.initData.approvalConfigurationId) {
       getApprovalConfigurationByApprovalConfigurationId(props.initData.approvalConfigurationId)
@@ -137,18 +224,18 @@ const AddEditRules = (props) => {
 
   useEffect(() => {
     if (!isGetApprovalConfigurationByApprovalConfigurationIdFetching && isGetApprovalConfigurationByApprovalConfigurationIdSuccess && isGetApprovalConfigurationByApprovalConfigurationIdData) {
+      let form = { ...rulesFormData };
       if (isGetApprovalConfigurationByApprovalConfigurationIdData.moduleId > 0) {
         getAllFunctionalities(isGetApprovalConfigurationByApprovalConfigurationIdData.moduleId);
       }
       if (isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId) {
         getAllFunctionalitiesFields(isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId);
       }
-    
+      // let data = { ...ruleData };
       setApprovalConfigurationId(isGetApprovalConfigurationByApprovalConfigurationIdData.approvalConfigurationId);
-      let form = { ...rulesFormData };
       setFieldSetting(form, 'functionalityId', FieldSettingType.DISABLED, false);
-      setFieldSetting(form, 'functionalitiesFieldId', FieldSettingType.DISABLED, false);
-      
+      // setFieldSetting(form, 'functionalitiesFieldId', FieldSettingType.DISABLED, false);
+
       form.initialState = {
         ...rulesFormData.initialState,
         approvalAction: isGetApprovalConfigurationByApprovalConfigurationIdData.approvalAction,
@@ -164,26 +251,98 @@ const AddEditRules = (props) => {
 
 
   const handleChangeDropdownList = (data, dataField) => {
-    const manageData = { ...ruleData };
+    let manageData = { ...ruleData };
+    const existingState = { ...manageData.initialState };
+
     if (dataField === CommansDataField.ModuleId) {
+      // Handle ModuleId change
       setModuleID(data.value);
+
+      // Update options for functionality dropdown
       setDropDownOptionField(allGetAllFunctionalitiesData, "functionalityId", "name", manageData, "functionalityId");
       setFieldSetting(manageData, 'functionalityId', FieldSettingType.DISABLED, false);
+
+      // Clear functionalityId on module change
       ruleFormRef.current.updateFormFieldValue({
         moduleId: data.value,
         functionalityId: null,
       });
-    }
-    else if (dataField === CommansDataField.FunctionalityId) {
+
+      // Update manageData and state
+      manageData.initialState = {
+        ...existingState,
+        moduleId: data.value,
+        functionalityId: null,
+      };
+      setRuleData(manageData);
+
+    } else if (dataField === CommansDataField.FunctionalityId) {
+      // Handle FunctionalityId change
       setFunctionalityID(data.value);
+
+      // Find selected functionality data
+      const functionalData = allGetAllFunctionalitiesData.find(item => item.functionalityId === data.value);
+
+      // Set options for functionalitiesFieldId dropdown
       setDropDownOptionField(allGetAllFunctionalitiesFieldsData, "functionalitiesFieldId", "fieldName", manageData, "functionalitiesFieldId");
-      setFieldSetting(manageData, 'functionalitiesFieldId', FieldSettingType.DISABLED, false);
-      ruleFormRef.current.updateFormFieldValue({
-        functionalityId: data.value,
-        functionalitiesFieldId: null,
-      });
+      // setFieldSetting(manageData, 'functionalitiesFieldId', FieldSettingType.DISABLED, false);
+
+      if (functionalData) {
+        if (functionalData.isFunctional) {
+          // Remove functionalitiesFieldId if the functionality is functional
+          // manageData = removeFormFields(manageData, ['functionalitiesFieldId']);
+          setFieldSetting(manageData, 'functionalitiesFieldId', FieldSettingType.DISABLED, true);
+          // manageData.initialState = {
+          //   ...existingState,
+          //   moduleId: existingState.moduleId,
+          //   functionalityId: data.value,
+          //   functionalitiesFieldId: null,
+          // };
+          // setRuleData(manageData);
+
+        } else {
+          // const isFieldAlreadyPresent = manageData.formFields.some(field => field.dataField === 'functionalitiesFieldId');
+          setFieldSetting(manageData, 'functionalitiesFieldId', FieldSettingType.DISABLED, false);
+          // if (!isFieldAlreadyPresent) {
+          //   const functionalitiesField = {
+          //     id: "functionalitiesFieldId",
+          //     lable: "Field",
+          //     Field_Name: "fieldName",
+          //     fieldType: FormFieldTypes.SELECT,
+          //     dataField: "functionalitiesFieldId",
+          //     fieldSetting: {
+          //       isDisabled: true,
+          //       placeholder: "Select Field",
+          //       isEnableOnChange: true,
+          //     },
+          //     style: {
+          //       containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+          //     },
+          //   };
+
+          //   const insertIndex = 3; // Insert at the 4th position
+          //   let updatedFormFields = [...manageData.formFields];
+          //   updatedFormFields.splice(insertIndex, 0, functionalitiesField);
+          //   manageData.formFields = updatedFormFields;
+
+          //   manageData.initialState = {
+          //     ...existingState,
+          //     functionalitiesFieldId: null, // Ensure this is initialized correctly
+          //   };
+          //   setRuleData(manageData);
+          // }
+        }
+
+        // Update form field values
+        ruleFormRef.current.updateFormFieldValue({
+          ...existingState,
+          functionalityId: data.value,
+          functionalitiesFieldId: existingState.functionalitiesFieldId,
+        });
+      }
     }
   };
+
 
   const handleAddEditRule = () => {
     let data = ruleFormRef.current.getFormData();
