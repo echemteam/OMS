@@ -24,9 +24,9 @@ const ProductPriceList = ({ productId }) => {
         priorityDate: '',
         reqdate: '',
         orderNote: '',
-        Price: '', // Use null for numerical fields if blank
-        Size: '',
-        Quantity: '', // Default to false for boolean fields
+        Price: '50', // Use null for numerical fields if blank
+        Size: '10',
+        Quantity: '5', // Default to false for boolean fields
       };
 
       setPriceList([...priceList, blankRow]);
@@ -39,9 +39,9 @@ const ProductPriceList = ({ productId }) => {
       priorityDate: '',
       reqdate: '',
       orderNote: '',
-      Price: '', // Use null for numerical fields if blank
-      Size: '',
-      Quantity: '', // Default to false for boolean fields
+      Price: '50', // Use null for numerical fields if blank
+      Size: '10',
+      Quantity: '5', // Default to false for boolean fields
     };
 
     setPriceList(prevData => [...prevData, blankRow]);
