@@ -198,7 +198,7 @@ export const SubmittedCustomerGridConfig = {
       colType: GridColumnType.CHECKBOX,
       colSettings: {
         allowCheckbox: true,
-        isDisabled: false,
+        isDisabled: false
       },
     },
     {

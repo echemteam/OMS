@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AddressType } from "../../../../utils/Enums/commonEnums";
 
-const AddressInformation = ({ isModelOpen, mainId, getAddressById }) => {
+const AddressInformation = ({ isModelOpen, mainId, getAddressById, isSubCustomer }) => {
   //** State */
   const [addressInformation, setAddressInformation] = useState([]);
 
@@ -27,7 +27,7 @@ const AddressInformation = ({ isModelOpen, mainId, getAddressById }) => {
       isGetAddressByIdSuccess &&
       isGetAddressByIdData
     ) {
-      const addressTypeArray = [AddressType.BILLING, AddressType.SHIPPING];
+      const addressTypeArray = isSubCustomer ? [AddressType.SHIPPING]:[AddressType.BILLING, AddressType.SHIPPING];
       const filteredData = isGetAddressByIdData.filter(
         (address) =>
           addressTypeArray.includes(address.addressTypeId) &&

@@ -10,7 +10,7 @@ const RenderGridCheckboxColumn = ({
 }) => {
 
   const { colSettings, fieldName } = col;
-  const isDisabled = colSettings?.isDisabled ? colSettings?.isDisabled : false;
+  const isDisabled = colSettings?.isDisabled ? true : false;
 
   const [value, setValue] = useState(rowData[col.fieldName]);
 
@@ -29,12 +29,14 @@ const RenderGridCheckboxColumn = ({
   };
 
   return (
-    <GridCheckbox
-      type="checkbox"
-      checked={value}
-      disabled={isDisabled}
-      onChange={(handleCheckboxChange)}
-    />
+    <>
+      <GridCheckbox
+        type="checkbox"
+        checked={value}
+        disabled={isDisabled}
+        onChange={(handleCheckboxChange)}
+      />
+    </>
   );
 };
 
