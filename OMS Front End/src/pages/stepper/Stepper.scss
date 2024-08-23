@@ -16,11 +16,12 @@
         opacity: 0.7;
 
         .step-button {
-          border: none;
-          box-shadow: none;
           background: none;
           display: flex;
           align-items: center;
+          outline: none !important;
+          border: none !important;
+          box-shadow: none !important;
 
           .stepper-box {
             display: flex;
@@ -276,15 +277,15 @@
     .card {
       height: 100%;
     }
-    .address-main-card-sec{
-      .payment-method-sec{
+    .address-main-card-sec {
+      .payment-method-sec {
         margin-top: -20px;
         height: calc(100vh - 390px);
         overflow: hidden;
-        .tab-content{
+        .tab-content {
           padding-bottom: 60px;
-          .ach-wire-section{
-            .centered{
+          .ach-wire-section {
+            .centered {
               justify-content: center !important;
             }
           }
