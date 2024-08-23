@@ -64,7 +64,7 @@ export const AllCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWDISABLE",
-          iconName: "mi:user",
+          iconName: "la:user-slash",
           title: "Disable",
           className: "disable-icon",
         },
@@ -145,7 +145,7 @@ export const PendingCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWDISABLE",
-          iconName: "mi:user",
+          iconName: "la:user-slash",
           title: "Disable",
           className: "disable-icon",
         },
@@ -214,7 +214,7 @@ export const SubmittedCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWDISABLE",
-          iconName: "mi:user",
+          iconName: "la:user-slash",
           title: "Disable",
           className: "disable-icon",
         },
@@ -262,7 +262,7 @@ export const ApprovedCustomerGridConfig = {
       customAction: [
         {
           name: "ALLOWDISABLE",
-          iconName: "mi:user",
+          iconName: "la:user-slash",
           title: "Disable",
           className: "disable-icon",
         },
