@@ -55,11 +55,12 @@
     padding: 5px !important;
   }
 }
-.basic-info-select{
+.basic-info-select {
   .css-1hb7zxy-IndicatorsContainer {
     height: 32px !important;
   }
-  .css-t3ipsp-control, .css-13cymwt-control{
+  .css-t3ipsp-control,
+  .css-13cymwt-control {
     min-height: 32px !important;
     // height: 32px !important;
     padding-top: 0 !important;
@@ -107,7 +108,8 @@
   z-index: 99999 !important;
 }
 
-.css-t3ipsp-control {}
+.css-t3ipsp-control {
+}
 
 // .css-1dimb5e-singleValue{
 //   width: 50px !important
@@ -120,12 +122,11 @@
   font-size: var(--commonFont-medium) !important;
 }
 
-.custom-checkbox-select{
+.custom-checkbox-select {
   width: 100%;
 }
 
 @media only screen and (max-width: 1750px) {
-
   .css-16xfy0z-control,
   .css-13cymwt-control {
     height: 28px !important;
@@ -143,62 +144,91 @@
   .css-1hb7zxy-IndicatorsContainer {
     height: 23px !important;
     padding: 0 5px !important;
-    
+
     .css-1xc3v61-indicatorContainer {
       padding: 3px 5px 0 !important;
     }
   }
   .css-894a34-indicatorSeparator,
-  .css-1u9des2-indicatorSeparator{
+  .css-1u9des2-indicatorSeparator {
     margin-bottom: 5px !important;
     margin-top: 6px !important;
   }
-  
-  
+
   //Dropdown Select End
   .css-t3ipsp-control,
   .css-13cymwt-control {
     min-height: 28px !important;
     height: 28px !important;
   }
-  
+
   .css-12zf3ro-control {
     &:hover {
       min-height: 28px !important;
       height: 28px !important;
     }
   }
-  
+
   .css-1xc3v61-indicatorContainer {
     padding: 3px 5px !important;
   }
-  
+
   .css-1fdsijx-ValueContainer {
     padding: 0px 5px !important;
   }
-  
+
   .css-15lsz6c-indicatorContainer {
     padding: 3px 5px !important;
   }
 }
 
-.css-1wy0on6{
+.css-1wy0on6 {
   align-items: flex-start !important;
 }
 @media only screen and (max-width: 1750px) {
-  .css-3w2yfm-ValueContainer{
+  .css-3w2yfm-ValueContainer {
     padding: 0 8px !important;
   }
   .css-1dyz3mf,
-  .css-hlgwow{
-  padding: 0 5px !important;
+  .css-hlgwow {
+    padding: 0 5px !important;
+  }
 }
-
-}
-  @media only screen and (max-width: 1366px) {
-    .css-1hb7zxy-IndicatorsContainer {
-      .css-1xc3v61-indicatorContainer {
-        padding: 0 5px !important;
-      }
+@media only screen and (max-width: 1366px) {
+  .css-1hb7zxy-IndicatorsContainer {
+    .css-1xc3v61-indicatorContainer {
+      padding: 0 5px !important;
     }
   }
+}
+
+// Disabled state styles
+.css-3iigni-container {
+  background-color: #f2f2f2 !important;
+  border-color: #cccccc !important;
+  color: #888888 !important;
+  opacity: 0.7 !important;
+  .css-16xfy0z-control {
+    min-height: 25px !important;
+    height: 25px !important;
+    margin-top: 3px;
+    cursor: no-drop !important;
+    @media only screen and (max-width: 1750px) {
+      min-height: 0px !important;
+      height: 22px !important;
+    }
+    .css-1fdsijx-ValueContainer {
+      height: 19px !important;
+      .css-1jqq78o-placeholder {
+        height: 21px;
+      }
+      .css-olqui2-singleValue {
+        height: 30px;
+        font-size: var(--commonFont-medium);
+      }
+    }
+    .css-1hb7zxy-IndicatorsContainer{
+      height: 10px !important;
+    }
+  }
+}

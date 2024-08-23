@@ -90,7 +90,6 @@
 
         .edit-icons {
           cursor: pointer;
-        
 
           img {
             width: 20px;
@@ -104,22 +103,29 @@
         margin-bottom: 2px !important;
         margin-top: 3px;
 
-        input[type=checkbox]:before {
+        input[type="checkbox"]:before {
           display: none;
         }
 
-        .checkbox-part .checkbox input{
+        .checkbox-part .checkbox input {
           top: 32px;
         }
 
-       .checkbox-label{
-        width: 15px !important;
-        height: 15px !important;
-        margin-top: -7px;
-        margin-left: -1px;
+        .checkbox-part .checkbox label {
+          &::before {
+            width: 18px !important;
+            height: 18px !important;
+            margin-top: -1px;
+            margin-left: -1px;
+          }
+        }
 
-       
-       }
+        .checkbox-label {
+          width: 15px !important;
+          height: 15px !important;
+          margin-top: -7px;
+          margin-left: -1px;
+        }
 
         .submission-tab {
           color: var(--themeColor) !important;
@@ -141,14 +147,14 @@
             margin-left: 5px;
           }
         }
-        .eye-icon{
+        .eye-icon {
           margin-top: -1px !important;
           color: var(--themeColor);
           cursor: pointer;
           margin-left: 5px;
           position: relative;
 
-          .tooltip-arrow-icon{
+          .tooltip-arrow-icon {
             width: 0;
             height: 0;
             border-left: 6px solid transparent;
@@ -162,7 +168,7 @@
             opacity: 0;
             display: none;
           }
-          .tooltip-show{
+          .tooltip-show {
             display: none;
             padding: 5px 8px;
             border-radius: 4px;
@@ -173,22 +179,20 @@
             top: -26px;
             left: -100px;
             font-size: var(--commonFont-extraSmall);
-          
 
-            p{
+            p {
               margin: 0;
             }
           }
 
-          &:hover .tooltip-arrow-icon{
+          &:hover .tooltip-arrow-icon {
             opacity: 1;
             display: block;
           }
 
-          &:hover .tooltip-show{
+          &:hover .tooltip-show {
             display: block;
           }
-
         }
 
         .inf-label {
