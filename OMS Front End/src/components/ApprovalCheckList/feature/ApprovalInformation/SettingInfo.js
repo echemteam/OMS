@@ -19,7 +19,6 @@ const SettingInformation = ({ isModelOpen, mainId, getFinacialSettingById }) => 
     useEffect(() => {
         if (!isFinacialSettingFetching && isFinacialSettingSuccess && isFinacialSettingData) {
             setFinacialInformation(isFinacialSettingData);
-            console.log('finacialInformation', isFinacialSettingData);
         }
     }, [isFinacialSettingFetching, isFinacialSettingSuccess, isFinacialSettingData]);
 

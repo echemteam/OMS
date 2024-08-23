@@ -24,7 +24,6 @@ const ContactInformation = ({ isModelOpen, mainId, getContactById }) => {
     useEffect(() => {
         if (!isGetContactFetching && isGetContactSucess && isGetcontactItem) {
             setContactInformation(isGetcontactItem);
-            console.log(isGetcontactItem);
         }
     }, [isGetContactFetching, isGetContactSucess, isGetcontactItem]);
 

@@ -9,7 +9,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import PropTypes from "prop-types";
 //** Service's */
 import { useLazyGetAllDocumentTypesQuery } from "../../../../app/services/documentAPI";
-import AddMultipleDocument from "./feature/AddMultipleDocument";
+import AddMultipleDocument from "./feature/MultipleDocument.js/AddMultipleDocument";
 //** Component's */
 const AddDocument = React.lazy(() => import("./feature/AddDocument"));
 const DocumentList = React.lazy(() => import("./feature/DocumentList"));

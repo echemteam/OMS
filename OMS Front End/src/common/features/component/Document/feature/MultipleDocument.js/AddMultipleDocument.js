@@ -1,12 +1,11 @@
 import React, { useRef, useState } from "react";
-import Buttons from "../../../../../components/ui/button/Buttons";
-import PropTypes from "prop-types";
-import FormCreator from "../../../../../components/Forms/FormCreator";
-import { DocumentMultipleFormData } from "../Config/MultipleDocuments.Data";
-import "../Document.scss";
-import Iconify from "../../../../../components/ui/iconify/Iconify";
-import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
-import { AppIcons } from "../../../../../data/appIcons";
+import Buttons from "../../../../../../components/ui/button/Buttons";
+import FormCreator from "../../../../../../components/Forms/FormCreator";
+import { DocumentMultipleFormData } from "../../Config/MultipleDocuments.Data";
+import "../../Document.scss";
+import Iconify from "../../../../../../components/ui/iconify/Iconify";
+import NoRecordFound from "../../../../../../components/ui/noRecordFound/NoRecordFound";
+import { AppIcons } from "../../../../../../data/appIcons";
 import Select from "react-select";
 
 const getFileIcon = (extension) => {
@@ -44,7 +43,7 @@ const documentTypes = [
 ];
 
 const AddMultipleDocument = ({ handleMulDocToggleModal }) => {
-  const [formData, setFormData] = useState(DocumentMultipleFormData);
+  // const [formData, setFormData] = useState(DocumentMultipleFormData);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const ref = useRef();
 
@@ -78,9 +77,8 @@ const AddMultipleDocument = ({ handleMulDocToggleModal }) => {
   return (
     <div className="row">
       <FormCreator
-        config={formData}
+        config={DocumentMultipleFormData}
         ref={ref}
-        {...formData}
         onActionChange={formActionHandler}
       />
       <table className="custom-table mt-4">
@@ -93,13 +91,13 @@ const AddMultipleDocument = ({ handleMulDocToggleModal }) => {
           </tr>
         </thead>
         <tbody>
-          {uploadedFiles.length === 0 ? (
+          {uploadedFiles.length === 0 ?
             <tr>
               <td colSpan="3">
                 <NoRecordFound />
               </td>
             </tr>
-          ) : (
+            :
             uploadedFiles.map((file, index) => (
               <tr key={index}>
                 <td>
@@ -137,7 +135,7 @@ const AddMultipleDocument = ({ handleMulDocToggleModal }) => {
                 </td>
               </tr>
             ))
-          )}
+          }
         </tbody>
       </table>
       <div className="d-flex align-item-end justify-content-end mt-3">
