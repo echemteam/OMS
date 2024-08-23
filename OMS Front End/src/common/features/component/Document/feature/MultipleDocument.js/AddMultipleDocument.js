@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from "react";
 import Buttons from "../../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
@@ -41,7 +43,6 @@ const getFileExtension = (filename) => {
 
 
 const AddMultipleDocument = ({ isSupplier, keyId, handleMulDocToggleModal, addDocuments, documentTypes }) => {
-
 
   const ref = useRef();
   const [attachment, setAttachment] = useState([]);
@@ -187,6 +188,18 @@ const AddMultipleDocument = ({ isSupplier, keyId, handleMulDocToggleModal, addDo
       </div>
     </div>
   );
+};
+
+AddMultipleDocument.propTypes = {
+  isSupplier: PropTypes.bool.isRequired,
+  keyId: PropTypes.string.isRequired, // Adjust type if keyId is not a string
+  handleMulDocToggleModal: PropTypes.func.isRequired,
+  addDocuments: PropTypes.func.isRequired,
+  documentTypes: PropTypes.arrayOf(PropTypes.shape({
+    // Define the shape of each documentType object if known
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired
+  })).isRequired
 };
 
 export default AddMultipleDocument;
