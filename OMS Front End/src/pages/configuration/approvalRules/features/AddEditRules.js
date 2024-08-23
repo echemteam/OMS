@@ -12,8 +12,6 @@ import { rulesFormData } from "./config/RulesForm.data";
 import { useAddEditApprovalConfigurationMutation, useLazyGetAllFunctionalitiesFieldsQuery, useLazyGetAllFunctionalitiesQuery, useLazyGetAllModulesQuery, useLazyGetApprovalConfigurationByApprovalConfigurationIdQuery } from "../../../../app/services/configurationAPI";
 import { useLazyGetAllRolesQuery } from "../../../../app/services/securityPermissionsAPI";
 import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
-import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-import { FormFieldTypes } from "../../../../data/formFieldType";
 
 const AddEditRules = (props) => {
   const ruleFormRef = useRef();

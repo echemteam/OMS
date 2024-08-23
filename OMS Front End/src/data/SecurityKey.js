@@ -128,6 +128,5 @@ export const securityKey = {
      THIRDPARTYAPI: "Third Party Api",
 
      ORGANIZATION: "Organization",
-     ORDER: "Order",
 
 };

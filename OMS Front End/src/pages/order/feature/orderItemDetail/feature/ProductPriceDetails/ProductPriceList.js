@@ -13,7 +13,6 @@ import Buttons from "../../../../../../components/ui/button/Buttons";
 
 const ProductPriceList = ({ productId }) => {
   const molGridRef = useRef();
-  const [gridConfig, setGridConfig] = useState(priceListConfig)
   const [priceList, setPriceList] = useState([]);
 
   useEffect(() => {
@@ -130,7 +129,7 @@ const ProductPriceList = ({ productId }) => {
         <FinalMolGrid
           ref={molGridRef}
           dataSource={priceList}
-          configuration={gridConfig}
+          configuration={priceListConfig}
           isLoading={isApiResponseLoading}
           onRowDataUpdate={handleEditClick}
           allowPagination={false}

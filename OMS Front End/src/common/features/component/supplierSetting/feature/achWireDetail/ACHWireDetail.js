@@ -139,7 +139,6 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
           zipCode: bankAddress.zipCode,
           stateId: bankAddress.stateId,
           cityId: bankAddress.cityId,
-          supplierId: supplierId,
         }
         setAchWireData(formDataAchWire)
       }

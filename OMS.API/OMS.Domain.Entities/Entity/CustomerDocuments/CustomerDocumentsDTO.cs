@@ -1,4 +1,4 @@
-﻿using OMS.Domain.Entities.API.Request.CustomerDocuments;
+﻿using OMS.Domain.Entities.API.Request.Common;
 
 namespace OMS.Domain.Entities.Entity.CustomerDocuments
 {
@@ -21,6 +21,5 @@ namespace OMS.Domain.Entities.Entity.CustomerDocuments
         //public string? Attachment { get; set; }
         //public string? Name { get; set; }
         //public byte? DocumentTypeId { get; set; }
-        //public int? CustomerId { get; set; }
     }
 }
