@@ -360,24 +360,28 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             customerId: customerId,
         };
 
-        if (data.addressTypeId === 1) {
-            const value = { ...req };
-            const request = {
-                newValue: value,
-                oldValue: formData.initialState,
-                isFunctional: true,
-                functionalityName: isModelOpen
-                    ? FunctionalitiesName.ADDADDRESS
-                    : FunctionalitiesName.ADDCUSTOMER
-            };
-            //** This is used for the the unctional Level */
-            const modifyData = await ValidateRequestByApprovalRules(request);
-            if (modifyData.newValue) {
-                onSidebarClose();
-            }
-        } else {
+        if (data) {
             add(req);
         }
+
+        // if (data.addressTypeId === 1) {
+        //     const value = { ...req };
+        //     const request = {
+        //         newValue: value,
+        //         oldValue: formData.initialState,
+        //         isFunctional: true,
+        //         functionalityName: isModelOpen
+        //             ? FunctionalitiesName.ADDADDRESS
+        //             : FunctionalitiesName.ADDCUSTOMER
+        //     };
+        //     //** This is used for the the unctional Level */
+        //     const modifyData = await ValidateRequestByApprovalRules(request);
+        //     if (modifyData.newValue) {
+        //         onSidebarClose();
+        //     }
+        // } else {
+        //     add(req);
+        // }
     };
 
 
