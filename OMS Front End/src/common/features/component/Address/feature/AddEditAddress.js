@@ -6,7 +6,7 @@ import { AddressType, FieldSettingType } from "../../../../../utils/Enums/common
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
-import { setFieldSetting, setDropDownOptionField, getFieldData } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { setFieldSetting, setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { addressFormData } from "../config/AddressForm.data";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";

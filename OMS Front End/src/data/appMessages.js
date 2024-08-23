@@ -41,7 +41,10 @@ export const ErrorMessage = {
 	SearchWarningMessage: "Please enter at least 3 characters to search.",
 	NoFound: "No Records found",
 	InvalidBoundarySpaces: "Only letters, digits, hyphens, ampersands, and spaces between characters are allowed.",
-	FieldNameNotFound: "No fieldName property found in this rule"
+	FieldNameNotFound: "No fieldName property found in this rule",
+	FileExists: "The file already exists. Please choose a different file name.",
+	DocumentDetailMissing: "Your document details are missing",
+	DocumentTypeExists: "Document Type already exists."
 };
 
 export const SuccessMessage = {
@@ -63,6 +66,6 @@ export const SuccessMessage = {
 	Alret_Warning: 'Warning !',
 	TaxId: 'Minimum {0} and Maximum {1} characters allowed for Tax Id',
 	DefaultUSATaxId: 'Minimum 10 and Maximum 10 characters allowed.',
-	ApprovalSuccess:"We are reviewing your request and will get back to you shortly."
+	ApprovalSuccess: "We are reviewing your request and will get back to you shortly."
 };
 

@@ -1,6 +1,4 @@
-import { AppIcons } from "../../../../../data/appIcons";
 import { FormFieldTypes } from "../../../../../data/formFieldType";
-import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const DocumentMultipleFormData = {
   name: "Document Form",
@@ -20,6 +18,7 @@ export const DocumentMultipleFormData = {
         isButtonVisible: false,
         isCustomButtonVisible: true,
         acceptedFiles: ".pdf , .docx ",
+        isFileNameCleared: true
       },
       validation: [{ type: "require" }],
       style: {

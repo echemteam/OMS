@@ -65,7 +65,6 @@ export const priceListConfig = {
         //   { type: "required", message: "Req-Date is required." },
         // ],
       },
-      allowShort: false,
       colStyle: {
         textAlign: "right",
         width: "15%",
@@ -92,7 +91,6 @@ export const priceListConfig = {
         //   { type: "required", message: "Promise Date is required." },
         // ],
       },
-      allowShort: false,
       colStyle: {
         textAlign: "right",
         width: "15%",

@@ -4,11 +4,11 @@ import Sidebar from "./components/sidebar/Sidebar";
 import { Outlet, useLocation } from "react-router-dom";
 import Breadcome from "../components/ui/breadcome/Breadcome";
 import Footer from "./components/footer/Footer";
-import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation";
 import { PagePermissionsProvider } from "../utils/ContextAPIs/PagePermissions/PagePermissionsContext";
-import Image from "../components/image/Image";
-import { AppIcons } from "../data/appIcons";
-import Unauthorize from "../pages/unauthorize/Unauthorize";
+//import { hasPermission } from "../utils/AuthorizeNavigation/authorizeNavigation";
+// import Image from "../components/image/Image";
+// import { AppIcons } from "../data/appIcons";
+// import Unauthorize from "../pages/unauthorize/Unauthorize";
 import Iconify from "../components/ui/iconify/Iconify";
 
 const Layout = (props) => {
@@ -24,14 +24,14 @@ const Layout = (props) => {
   }
 
   // Find the matching component route based on the routhPath
-  const renderComponent = props.componentRoutes?.find(
-    (x) => x.id.toLowerCase() === routhPath.toLowerCase()
-  );
+  // const renderComponent = props.componentRoutes?.find(
+  //   (x) => x.id.toLowerCase() === routhPath.toLowerCase()
+  // );
 
   // Check if the user is authorized to access the current route
-  const isAuthorize = renderComponent?.securityKey
-    ? hasPermission(renderComponent.securityKey)
-    : false;
+  // const isAuthorize = renderComponent?.securityKey
+  //   ? hasPermission(renderComponent.securityKey)
+  //   : false;
 
   // Handler to toggle the collapse state
   const handleToggleClick = () => {

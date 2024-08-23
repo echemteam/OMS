@@ -73,8 +73,8 @@ export const CountryId = {
 }
 
 export const ModulePathName = {
-    Customer: "Customer",
-    Supplier: "Supplier"
+    CUSTOMER: "Customer",
+    SUPPLIER: "Supplier"
 }
 
 export const MaskingType = {
@@ -127,5 +127,19 @@ export const ContactType = {
 export const OrderInformationField = {
     CustomerName: "CustomerName",
     SubCustomer: "SubCustomer",
-    Verify:"Verify"
+    Verify: "Verify"
 }
+
+
+export const Docum = {
+    CustomerName: "CustomerName",
+    SubCustomer: "SubCustomer",
+    Verify: "Verify"
+}
+
+export const DocumentTypes = {
+    TAXORREGISTRATIONDOCUMENT: 1,
+    CUSTOMERDETAILSFORM: 2,
+    OURSUBMITTEDFORMS: 3,
+    SUPPLIERDETAILSFORM: 4
+};
