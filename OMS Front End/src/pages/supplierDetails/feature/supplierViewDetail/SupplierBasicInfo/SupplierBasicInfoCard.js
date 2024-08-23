@@ -339,7 +339,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
 
             <div className="col-3">
 
-              <div className="field-desc basic-info-select">
+              <div className="field-desc basic-info-select dis-dropdown">
                 <div className="inf-label">Status</div>
                 <b>&nbsp;:&nbsp;</b>
                 <div className={`status-dropdown ${getStatusClass()}`}>
@@ -362,7 +362,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                     : ErrorMessage.NotAvailabe}
                 </div>
               </div>
-              <div className="field-desc basic-info-select">
+              <div className="field-desc basic-info-select dis-dropdown">
                 <div className="inf-label">R-User</div>
                 <b>&nbsp;:&nbsp;</b>
                 <div className="status-dropdown">
