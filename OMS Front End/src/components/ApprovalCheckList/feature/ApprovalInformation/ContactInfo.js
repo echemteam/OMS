@@ -75,7 +75,7 @@ const ContactInformation = ({ isModelOpen, mainId, getContactById }) => {
                       } ${phoneData.isPrimary ? "is-primary" : ""}`}
                     >
                       {/* Phone Type: {phoneData.phoneType || "Home"} */}
-                      {phoneData.phoneCode} {phoneData.phoneNumber}
+                      ({phoneData.phoneCode}) {phoneData.phoneNumber}
                       {phoneData.extension ? `, ${phoneData.extension}` : ""}
                       {/* Is Primary: {phoneData.isPrimary ? "Yes" : "No"} */}
                     </h6>

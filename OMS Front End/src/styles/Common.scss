@@ -3781,6 +3781,15 @@ input[type="checkbox"]:disabled {
           font-size: var(--commonFont-medium);
         }
       }
+      
+      .css-3w2yfm-ValueContainer{
+        .css-1p3m7a8-multiValue {
+          max-height: 15px !important;
+        }
+        .css-wsp0cs-MultiValueGeneric {
+          padding: 0 !important;
+        }
+      }
       .css-1hb7zxy-IndicatorsContainer {
         height: 10px !important;
       }
