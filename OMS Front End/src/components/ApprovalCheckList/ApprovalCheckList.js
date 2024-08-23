@@ -137,14 +137,14 @@ const ApprovalCheckList = ({
             <div className="row mt-3">
               <div className="col-md-8 info-scrollable">
                 <div className="row">
-                  <div className="col-6 approval-list-card">
+                  <div className="col-4 approval-list-card-basicinformation">
                     <BasicInformation
                       isModelOpen={isModelOpen}
                       mainId={mainId}
                       getBasicInformationById={getBasicInformationById}
                     />
                   </div>
-                  <div className="col-6 approval-list-card">
+                  <div className="col-8 approval-list-card-addressinformation">
                     <AddressInformation
                       isSupplierApproval={isSupplierApproval}
                       isModelOpen={isModelOpen}
@@ -170,7 +170,7 @@ const ApprovalCheckList = ({
                   </div>
                 </div>
               </div>
-              <div className="col-md-4 d-flex flex-column justify-content-between">
+              <div className="col-md-4 d-flex flex-column justify-content-between approval-check-list">
                 {checkListData.map((item) => (
                   <div className="checklist-section">
                     <div className="row" key={item.id}>
