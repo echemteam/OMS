@@ -47,7 +47,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
           <CustomerAddressDetail isEditablePage={true} customerStatus={customerStatus} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasAddressPermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasAddressPermission?.hasAccess,
     },
     {
       sMenuItemCaption: "Contact",
@@ -57,7 +57,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
           <CustomerContactDetail isEditablePage={true} isSearchFilterShow={true} contryIdCode={contryIdCode} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasContactPermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasContactPermission?.hasAccess,
     },
     {
       sMenuItemCaption: "Settings",
@@ -67,7 +67,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
           <CustomerSettingDetails isEditablePage={true} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasSettingPermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasSettingPermission?.hasAccess,
     },
     {
       sMenuItemCaption: "Documents",
@@ -77,7 +77,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
           <CustomerDocumentDetail isEditablePage={true} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasDocumentPermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasDocumentPermission?.hasAccess,
     },
     {
       sMenuItemCaption: "Link Customer",
@@ -87,7 +87,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
           <CustomerSubCustomerDetail />
         </div>
       ),
-      isVisible: isResponsibleUser ? isBuyingForThirdParty : isBuyingForThirdParty && hasSubCustomerPermission.hasAccess
+      isVisible: isResponsibleUser ? isBuyingForThirdParty : isBuyingForThirdParty && hasSubCustomerPermission?.hasAccess
     },
     {
       sMenuItemCaption: "Notes",
@@ -97,7 +97,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
           <CustomerNoteDetail isEditablePage={true} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasNotePermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasNotePermission?.hasAccess,
     },
     {
       sMenuItemCaption: "History",
@@ -107,7 +107,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
           <CustomerHistory isEditablePage={true} />
         </div>
       ),
-      isVisible: isResponsibleUser ? true : hasHistoryPermission.hasAccess,
+      isVisible: isResponsibleUser ? true : hasHistoryPermission?.hasAccess,
     }
   ];
 
