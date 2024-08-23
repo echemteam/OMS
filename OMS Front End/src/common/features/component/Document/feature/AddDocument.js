@@ -7,8 +7,9 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 import PropTypes from 'prop-types';
+import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 
-const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuccess }) => {
+const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess }) => {
 
     // console.log("editDocumentData", editDocumentData)
 
@@ -22,16 +23,13 @@ const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuc
     */
     const [add, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = addDocuments();
 
-    // useEffect(() => {
-    //     if (editDocumentData) {
-    //         let formChanges = { ...formData };
-
-    //         formChanges.initialState = {
-    //             documentTypeId: editDocumentData.documentTypeId && typeof editDocumentData.documentTypeId === "object" ? editDocumentData.documentTypeId.value : editDocumentData.documentTypeId,
-    //         }
-    //         setFormData(formChanges)
-    //     }
-    // }, [editDocumentData])
+    useEffect(() => {
+        if (showModal) {
+            console.log('DocumentFormData.initialState', DocumentFormData.initialState);
+            console.log('formData.initialState', formData.initialState);
+            onResetForm(formData, setFormData, DocumentFormData.initialState);
+        }
+    }, [showModal])
 
     useEffect(() => {
         if (isAddSuccess && isAddData) {
@@ -43,6 +41,7 @@ const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuc
                 return;
             }
             onSuccess();
+            onResetForm(formData, setFormData, DocumentFormData.initialState);
             ToastService.success(isAddData.errorMessage);
         }
     }, [isAddSuccess, isAddData]);
@@ -50,21 +49,35 @@ const AddDocument = ({ keyId, isSupplier, addDocuments, handleToggleModal, onSuc
     const handleSave = () => {
         const data = ref.current.getFormData();
         if (data) {
+            const documentList = [
+                {
+                    name: data.attachment.fileName,
+                    attachment: data.attachment.fileName,
+                    base64File: data.attachment.base64Data,
+                    documentTypeId: data.documentTypeId && typeof data.documentTypeId === "object" ? data.documentTypeId.value : data.documentTypeId,
+                }
+            ]
             const requestData = {
-                ...data,
-                base64File: data.attachment.base64Data,
-                attachment: data.attachment.fileName,
-                storagePath: isSupplier ? ModulePathName.Supplier : ModulePathName.Customer,
+                storagePath: isSupplier ? ModulePathName.SUPPLIER : ModulePathName.CUSTOMER,
                 [isSupplier ? 'supplierId' : 'customerId']: keyId,
-                documentTypeId: data.documentTypeId && typeof data.documentTypeId === "object" ? data.documentTypeId.value : data.documentTypeId,
+                documentInfoList: documentList
             };
             add(requestData);
         }
     };
 
+
+    const onFormDataChange = (updatedData) => {
+        formData.initialState = {
+            ...updatedData,
+            name: updatedData.attachment && updatedData.attachment.fileName
+        };
+        setFormData(formData);
+    }
+
     return (
         <div className="row add-documentForm">
-            <FormCreator config={formData} ref={ref} {...formData} />
+            <FormCreator config={formData} ref={ref} {...formData} onFormDataChange={onFormDataChange} />
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <div className="d-flex align-item-end">

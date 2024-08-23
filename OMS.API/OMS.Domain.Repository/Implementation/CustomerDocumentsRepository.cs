@@ -40,7 +40,7 @@ namespace OMS.Domain.Repository.Implementation
                 //customerDocuments.Name,
                 //customerDocuments.DocumentTypeId,
                 customerDocuments.CustomerId,
-                documentList = documentDataTable.AsTableValuedParameter("[dbo].[DocumentList]"),
+                documentList = documentDataTable.AsTableValuedParameter("[dbo].[DocumentTypeTable]"),
                 //customerDocuments.Attachment,
                 customerDocuments.CreatedBy
             }, CommandType.StoredProcedure);

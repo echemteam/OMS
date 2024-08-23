@@ -27,6 +27,7 @@ const DocumentGrid = ({
   //** State */
   const childRef = useRef();
   const [showModal, setShowModal] = useState(false);
+  const [documentTypes, setDocumentTypes] = useState([]);
   const [showMulDocModal, setShowMulDocModal] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
   // const [editDocumentData, SetEditDocumentData] = useState(null);
@@ -62,33 +63,28 @@ const DocumentGrid = ({
   useEffect(() => {
     if (isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
       const keyFilter = isSupplier ? "isForSuppliers" : "isForCustomers";
-      const getData = allGetAllDocumentTypesData
-        .filter((x) => x[keyFilter])
-        .map((item) => ({
-          value: item.documentTypeId,
-          label: item.type,
-        }));
+      const getData = allGetAllDocumentTypesData.filter((x) => x[keyFilter]).map((item) => ({
+        value: item.documentTypeId,
+        label: item.type,
+      }));
       const dropdownField = DocumentFormData.formFields.find(
         (item) => item.dataField === "documentTypeId"
       );
       dropdownField.fieldSetting.options = getData;
+      setDocumentTypes(getData);
     }
   }, [isGetAllDocumentTypesSucess, allGetAllDocumentTypesData]);
 
   //** Handle Change's */
   const handleToggleModal = () => {
     setShowModal(!showModal);
-    // SetEditDocumentData(null)
   };
   const handleMulDocToggleModal = () => {
     setShowMulDocModal(!showMulDocModal);
-    // SetEditDocumentData(null)
+    if (childRef.current) {
+      childRef.current.callChildFunction();
+    }
   };
-
-  // const handleEditDocument = (data) => {
-  //     setShowModal(true);
-  //     SetEditDocumentData(data);
-  // };
 
   const onSuccess = () => {
     setShowModal(!showModal);
@@ -106,9 +102,9 @@ const DocumentGrid = ({
           textWithIcon={true}
           iconImg={AppIcons.PlusIcon}
           buttonClassName="theme-button"
-          rightButton={true}
+          rightButton={buttonVisible ? buttonVisible : false}
           buttonText="Add Document"
-          multipleButton={true}
+          multipleButton={buttonVisible ? buttonVisible : false}
           rightButtonArray={[
             {
               buttonTypeClassName: "theme-button",
@@ -130,7 +126,7 @@ const DocumentGrid = ({
             deleteDocumentsById={deleteDocumentsById}
             getDocumentsById={getDocumentsById}
             setShowModal={setShowModal}
-            // onHandleEditDocument={handleEditDocument}
+          // onHandleEditDocument={handleEditDocument}
           />
         </CardSection>
       </div>
@@ -144,10 +140,11 @@ const DocumentGrid = ({
         <AddDocument
           isSupplier={isSupplier}
           keyId={keyId}
+          showModal={showModal}
           addDocuments={addDocuments}
           handleToggleModal={handleToggleModal}
           onSuccess={onSuccess}
-          // editDocumentData={editDocumentData}
+        // editDocumentData={editDocumentData}
         />
       </CenterModel>
       <CenterModel
@@ -158,6 +155,10 @@ const DocumentGrid = ({
         modelSizeClass="w-50s"
       >
         <AddMultipleDocument
+          addDocuments={addDocuments}
+          isSupplier={isSupplier}
+          keyId={keyId}
+          documentTypes={documentTypes}
           handleMulDocToggleModal={handleMulDocToggleModal}
         />
       </CenterModel>

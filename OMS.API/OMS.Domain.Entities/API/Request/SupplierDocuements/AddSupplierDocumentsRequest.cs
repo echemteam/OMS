@@ -1,13 +1,13 @@
-﻿namespace OMS.Domain.Entities.API.Request.SupplierDocuements
+﻿
+
+using OMS.Domain.Entities.API.Request.Common;
+
+namespace OMS.Domain.Entities.API.Request.SupplierDocuements
 {
     public class AddSupplierDocumentsRequest
     {
-        public string? Name { get; set; }
-        public byte? DocumentTypeId { get; set; }
         public int? SupplierId { get; set; }
-        public string? Attachment { get; set; }
-        public string? Base64File { get; set; }
         public string? StoragePath { get; set; }
-
+        public List<DocumentList>? DocumentInfoList { get; set; }
     }
 }

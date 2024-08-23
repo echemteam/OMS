@@ -1,13 +1,17 @@
-﻿namespace OMS.Domain.Entities.Entity.SupplierDocuements
+﻿
+using OMS.Domain.Entities.API.Request.Common;
+
+namespace OMS.Domain.Entities.Entity.SupplierDocuements
 {
     public class SupplierDocumentsDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {
         public int? SupplierDocumentId { get; set; }
-        public string? Name { get; set; }
-        public byte? DocumentTypeId { get; set; }
+        //public string? Name { get; set; }
+        //public byte? DocumentTypeId { get; set; }
         public int? SupplierId { get; set; }
         public short? StatusId { get; set; }
-        public string? Attachment { get; set; }
+        //public string? Attachment { get; set; }
+        public List<DocumentList>? DocumentInfoList { get; set; }
         public DateTime? CreatedAt { get; set; }
         public short? CreatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }

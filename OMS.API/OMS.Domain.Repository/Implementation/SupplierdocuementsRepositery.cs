@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.SupplierDocuements;
+﻿using Dapper;
+using OMS.Domain.Entities.API.Response.SupplierDocuements;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.SupplierDocuements;
 using OMS.Domain.Repository.Contract;
@@ -33,14 +34,15 @@ namespace OMS.Domain.Repository.Implementation
                 supplierId
             }, CommandType.StoredProcedure);
         }
-        public async Task<AddEntityDto<int>> AddSupplierDocuments(SupplierDocumentsDto supplierDocuements)
+        public async Task<AddEntityDto<int>> AddSupplierDocuments(SupplierDocumentsDto supplierDocuements, DataTable documentDataTable)
         {
             return await _context.GetSingleAsync<AddEntityDto<int>>(ADDSUPPLIERDOCUMENTS, new
             {
-                supplierDocuements.Name,
-                supplierDocuements.DocumentTypeId,
+                //supplierDocuements.Name,
+                //supplierDocuements.DocumentTypeId,
                 supplierDocuements.SupplierId,
-                supplierDocuements.Attachment,
+                documentList = documentDataTable.AsTableValuedParameter("[dbo].[DocumentTypeTable]"),
+                //supplierDocuements.Attachment,
                 supplierDocuements.CreatedBy
             }, CommandType.StoredProcedure);
         }

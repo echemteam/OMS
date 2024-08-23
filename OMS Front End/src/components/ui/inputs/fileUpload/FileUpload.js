@@ -6,7 +6,6 @@ import "./FileUpload.scss";
 import Image from "../../../image/Image";
 import { AppIcons } from "../../../../data/appIcons";
 import Buttons from "../../button/Buttons";
-import Iconify from "../../iconify/Iconify";
 
 const FileUpload = ({
   type = TextInputType.FILE,
@@ -61,14 +60,17 @@ const FileUpload = ({
       fileRef.current.value = null;
       handleClearClick();
     }
+    /** This flag is used for the user is upload the file then clear the fileName.  */
+    if (inputProps?.isFileNameCleared) {
+      handleClearClick();
+    }
   }, [filename]);
 
   return (
     <>
       <div
-        className={`form-field custom-file-uploader ${
-          isDisable ? "field-disabled" : ""
-        }`}
+        className={`form-field custom-file-uploader ${isDisable ? "field-disabled" : ""
+          }`}
       >
         <input
           ref={fileRef}
