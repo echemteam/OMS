@@ -64,7 +64,14 @@ const PendingTask = (props) => {
                                     <span className="profile-icon">  {FirstSecondLetter(tab.functionalityName)}</span>
                                     <div className="title">
                                         {tab.functionalityName}
-                                        <span className="sub-title">{tab.moduleName}</span>
+                                        <div className='bage-fix'>
+                                            <span className="sub-title">{tab.moduleName}</span>
+                                            <div
+                                                className={`mytask-type-badge ${tab.isFunctional ? "badge-accept" : ""}`}
+                                            >
+                                                {tab.isFunctional ? "Functional" : "Field"}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="date">
