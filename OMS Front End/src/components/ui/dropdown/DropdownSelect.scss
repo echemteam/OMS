@@ -213,33 +213,4 @@
   }
 }
 
-// Disabled state styles
-.css-3iigni-container {
-  background-color: #f2f2f2 !important;
-  border-color: #cccccc !important;
-  color: #888888 !important;
-  opacity: 0.7 !important;
-  .css-16xfy0z-control {
-    min-height: 25px !important;
-    height: 25px !important;
-    margin-top: 3px;
-    cursor: no-drop !important;
-    @media only screen and (max-width: 1750px) {
-      min-height: 0px !important;
-      height: 22px !important;
-    }
-    .css-1fdsijx-ValueContainer {
-      height: 19px !important;
-      .css-1jqq78o-placeholder {
-        height: 21px;
-      }
-      .css-olqui2-singleValue {
-        height: 30px;
-        font-size: var(--commonFont-medium);
-      }
-    }
-    .css-1hb7zxy-IndicatorsContainer {
-      height: 10px !important;
-    }
-  }
-}
+
