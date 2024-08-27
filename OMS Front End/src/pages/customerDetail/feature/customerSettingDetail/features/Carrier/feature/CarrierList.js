@@ -27,7 +27,9 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
     }
 
     const handleGridCheckBoxChange = (fieldName, rowData) => {
-        handleEditClick(rowData);
+        if (fieldName === 'isPrimary') {
+            handleEditClick(rowData);
+        }
     };
 
     useEffect(() => {

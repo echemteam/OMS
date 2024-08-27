@@ -36,7 +36,9 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
     }
 
     const handleGridCheckBoxChange = (fieldName, rowData) => {
-        handleEditClick(rowData);
+        if (fieldName === 'isPrimary') {
+            handleEditClick(rowData);
+        }
     };
 
     return (

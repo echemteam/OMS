@@ -67,22 +67,21 @@ const MolGridDataRows = ({
    */
   const handleRowEditSave = useCallback(
     (rowIndex) => {
-      if (editRowIndex.includes(rowIndex) ||  editGridSettings?.defualtEditableView) {
+      if (editRowIndex.includes(rowIndex) || editGridSettings?.defualtEditableView) {
         const updatedRowData = editRowData[rowIndex];
-        if(updatedRowData)
-        {
-        const newErrors = validateColumns(columns, updatedRowData);
+        if (updatedRowData) {
+          const newErrors = validateColumns(columns, updatedRowData);
 
-        if (Object.keys(newErrors).length === 0) {
-          if (onRowDataUpdateSaving) {
-            onRowDataUpdateSaving(updatedRowData, rowIndex);
+          if (Object.keys(newErrors).length === 0) {
+            if (onRowDataUpdateSaving) {
+              onRowDataUpdateSaving(updatedRowData, rowIndex);
+            }
+            handleCancelEdit(rowIndex);
+          } else {
+            setErrors((prevErrors) => ({ ...prevErrors, [rowIndex]: newErrors }));
           }
-          handleCancelEdit(rowIndex);
-        } else {
-          setErrors((prevErrors) => ({ ...prevErrors, [rowIndex]: newErrors }));
         }
       }
-    }
     },
     [editRowData, columns, onRowDataUpdateSaving]
   );
@@ -93,28 +92,27 @@ const MolGridDataRows = ({
    * @param {object} updatedData - The updated data for the row.
    */
   const handleRowDataUpdate = useCallback(
-    (rowIndex, newRowData, fieldName) => {
+    (rowIndex, newRowData, fieldName, dataField) => {
 
       const updatedRowData = [...editRowData];
-      
 
-     if(newRowData)
-     {
-      const newErrors = validateColumns(columns, newRowData);
 
-      if (Object.keys(newErrors).length === 0) {
-        setErrors((prevErrors) => {
-          const updatedErrors = { ...prevErrors };
-          delete updatedErrors[rowIndex];
-          return updatedErrors;
-        });
-      } else {
-        setErrors((prevErrors) => ({ ...prevErrors, [rowIndex]: newErrors }));
+      if (newRowData) {
+        const newErrors = validateColumns(columns, newRowData);
+
+        if (Object.keys(newErrors).length === 0) {
+          setErrors((prevErrors) => {
+            const updatedErrors = { ...prevErrors };
+            delete updatedErrors[rowIndex];
+            return updatedErrors;
+          });
+        } else {
+          setErrors((prevErrors) => ({ ...prevErrors, [rowIndex]: newErrors }));
+        }
+
       }
 
-     }
 
-      
       updatedRowData[rowIndex] = { ...updatedRowData[rowIndex], ...newRowData };
       setEditRowData(updatedRowData);
 
@@ -172,7 +170,7 @@ const MolGridDataRows = ({
 
     if (
       col.colType !== GridColumnType.ACTION &&
-      ( (!isRowEdited && !editGridSettings?.defualtEditableView) || !col.allowEditColumn )
+      ((!isRowEdited && !editGridSettings?.defualtEditableView) || !col.allowEditColumn)
     ) {
       return renderNonEditableColumn(rowData, col, rowIndex);
     }
@@ -273,7 +271,7 @@ const MolGridDataRows = ({
   };
 
   const renderActionColumn = (rowData, col, rowIndex, isRowEdited) => {
-    if ((allowEditGrid && isRowEdited) || (allowEditGrid &&editGridSettings?.defualtEditableView)) {
+    if ((allowEditGrid && isRowEdited) || (allowEditGrid && editGridSettings?.defualtEditableView)) {
       return renderEditGridAction(
         rowData,
         col,
@@ -369,17 +367,15 @@ const MolGridDataRows = ({
         <React.Fragment key={`row_${rowIndex}`}>
           <tr
             key={`row_${rowIndex}`}
-            className={`parent-row ${
-              collapsedRows[rowIndex] ? "collapsed" : ""
-            }`}
+            className={`parent-row ${collapsedRows[rowIndex] ? "collapsed" : ""
+              }`}
             onClick={(e) => handleRowClick(e, row, rowIndex)}
           >
             {configuration.hasChildGridTable ? (
               <td className="first-td" onClick={() => toggleRow(rowIndex)}>
                 <span
-                  className={`bi bi-chevron-${
-                    collapsedRows[rowIndex] ? "down" : "right"
-                  }`}
+                  className={`bi bi-chevron-${collapsedRows[rowIndex] ? "down" : "right"
+                    }`}
                 ></span>
               </td>
             ) : null}
@@ -415,7 +411,7 @@ MolGridDataRows.propTypes = {
   customColumnClass: PropTypes.string,
   customHeaderClass: PropTypes.string,
   allowEditGrid: PropTypes.bool,
-  editGridSettings:PropTypes.object,
+  editGridSettings: PropTypes.object,
   slectedRowIndex: PropTypes.number,
   onColumnDataChange: PropTypes.func,
   onRowDataUpdateSaving: PropTypes.func,

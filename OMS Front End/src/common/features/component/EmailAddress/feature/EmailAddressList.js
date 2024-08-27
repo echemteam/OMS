@@ -9,7 +9,9 @@ import FinalMolGrid from "../../../../../components/FinalMolGrid/FinalMolGrid";
 const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, actionHandler, isButtonDisable, handleCheckBoxChange }) => {
 
     const handleGridCheckBoxChange = (fieldName, rowData) => {
-        handleCheckBoxChange(rowData);
+        if (fieldName === 'isPrimary') {
+            handleCheckBoxChange(rowData);
+        }
     };
 
     return (
