@@ -22,7 +22,8 @@ const AddEditContactNumber = ({
   isEdit,
   onSuccess,
   newPhoneCode,
-  addeditRef
+  addeditRef,
+  isOrderManage
 }) => {
   //** State */
   const ref = useRef();
@@ -112,6 +113,12 @@ const AddEditContactNumber = ({
     form.initialState = { ...addEditContactsFormData.initialState };
     setFormData(form);
   };
+
+  useEffect(() => {
+    if (isOrderManage) {
+      onResetData()
+    }
+  }, [isOrderManage])
 
   return (
     <CenterModel

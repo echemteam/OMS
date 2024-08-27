@@ -17,7 +17,7 @@ const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddres
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
 const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey,
-    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall , contryIdCode}) => {
+    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode, orderResetValue }) => {
 
     //** State */
     const ref = useRef();
@@ -79,7 +79,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     //** UseEffect */
     useEffect(() => {
         if (isAddEditSuccess && isAddEditData) {
-            
+
             if (isAddEditData.errorMessage.includes('EXISTS')) {
                 ToastService.warning(isAddEditData.errorMessage);
                 return;
@@ -205,6 +205,12 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         callChildFunction: onResetData,
     }));
 
+    useEffect(() => {
+        if (orderResetValue && isOrderManage) {
+            setPhoneNumberList([]);
+            setEmailAddressList([])
+        }
+    }, [orderResetValue])
 
     return (
         <div>
@@ -215,9 +221,9 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                     </div>
                     <div className="row">
                         <EmailAddressGrid isButtonDisable={isButtonDisable} emailAddressList={emailAddressList}
-                            setEmailAddressList={setEmailAddressList} contactId={contactId} />
+                            setEmailAddressList={setEmailAddressList} contactId={contactId} isOrderManage={isOrderManage} />
                         <ContactNumbersGrid isButtonDisable={isButtonDisable} phoneNumberList={phoneNumberList}
-                            setPhoneNumberList={setPhoneNumberList} contactId={contactId} contryIdCode={contryIdCode} />
+                            setPhoneNumberList={setPhoneNumberList} contactId={contactId} contryIdCode={contryIdCode} isOrderManage={isOrderManage} />
                     </div>
                 </React.Fragment>
                 : <DataLoader />
@@ -226,12 +232,12 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 <div className="d-flex align-item-end justify-content-end">
                     <div className="d-flex align-item-end">
                         {/* {!enableDisableButton && */}
-                            <Buttons
-                                buttonTypeClassName="theme-button"
-                                buttonText='Save'
-                                isLoading={isAddEditLoading}
-                                onClick={handleAddEdit}
-                                isDisable={isButtonDisable} />
+                        <Buttons
+                            buttonTypeClassName="theme-button"
+                            buttonText='Save'
+                            isLoading={isAddEditLoading}
+                            onClick={handleAddEdit}
+                            isDisable={isButtonDisable} />
                         {/* } */}
                         <Buttons
                             buttonTypeClassName="dark-btn ml-5"
@@ -264,8 +270,8 @@ AddEditContact.propTypes = {
     isEdit: PropTypes.bool,
     isOpen: PropTypes.bool,
     getContactById: PropTypes.func.isRequired,
-    getContectTypeId: PropTypes.string, 
-    customerId: PropTypes.number, 
+    getContectTypeId: PropTypes.string,
+    customerId: PropTypes.number,
     isOrderManage: PropTypes.bool,
     onhandleApiCall: PropTypes.func
 };

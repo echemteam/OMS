@@ -27,6 +27,7 @@ const ContactDetails = (props) => {
   const [endUserEnableDisableButton, setEndUserEnableDisableButton] = useState(true)
   const [invoicerEnableDisableButton, setInvoiceEnableDisableButton] = useState(true)
   const [purchasingEnableDisableButton, setPurchasingEnableDisableButton] = useState(true)
+  const [orderResetValue, setOrderResetValue] = useState(false)
 
   const { conatctRef, orderCustomerId, moveNextPage, orderId } = useContext(AddOrderContext);
 
@@ -70,21 +71,97 @@ const ContactDetails = (props) => {
     }
   }, [orderCustomerId])
 
+  // useEffect(() => {
+  //   if (!isGetAllEndUserFetching && isgetAllEndUserSuccess && isgetAllEndUserData) {
+  //     const getContact = isgetAllEndUserData.map((item) => ({
+  //       value: item.contactId,
+  //       label: item.fullName,
+  //     }));
+  //     const dropdownField = formData?.formFields?.find(item => item.dataField === "endUserId");
+  //     dropdownField.fieldSetting.options = getContact;
+  //   }
+  // }, [isGetAllEndUserFetching, isgetAllEndUserSuccess, isgetAllEndUserData])
+
+  // useEffect(() => {
+  //   if (!isGetAllInvoiceSubmissionFetching && isgetAllInvoiceSubmissionSuccess && isgetAllInvoiceSubmissionData) {
+  //     const getContact = isgetAllInvoiceSubmissionData.map((item) => ({
+  //       value: item.contactId,
+  //       label: item.fullName,
+  //     }));
+  //     const dropdownField = formData?.formFields?.find(item => item.dataField === "invoiceSubmissionId");
+  //     dropdownField.fieldSetting.options = getContact;
+  //   }
+  // }, [isGetAllInvoiceSubmissionFetching, isgetAllInvoiceSubmissionSuccess, isgetAllInvoiceSubmissionData])
+
+  // useEffect(() => {
+  //   if (!isGetAllPurchasingFetching && isgetAllPurchasingSuccess && isgetAllPurchasingData) {
+  //     debugger
+  //     const getContact = isgetAllPurchasingData.map((item) => ({
+  //       value: item.contactId,
+  //       label: item.fullName,
+  //     }));
+  //     const dropdownField = formData?.formFields?.find(item => item.dataField === "purchasingId");
+  //     dropdownField.fieldSetting.options = getContact;
+  //   }
+  // }, [isGetAllPurchasingFetching, isgetAllPurchasingSuccess, isgetAllPurchasingData])
+
   useEffect(() => {
     if (!isGetAllEndUserFetching && isgetAllEndUserSuccess && isgetAllEndUserData) {
-      setDropDownOptionField(isgetAllEndUserData, 'contactId', 'fullName', contactInformationData, 'endUserId');
+      const getContact = isgetAllEndUserData.map((item) => ({
+        value: item.contactId,
+        label: item.fullName,
+      }));
+      
+      // Create a new formData object to trigger re-render
+      setFormData(prevFormData => {
+        const newFormData = { ...prevFormData };
+        const dropdownField = newFormData.formFields?.find(item => item.dataField === "endUserId");
+        if (dropdownField) {
+          dropdownField.fieldSetting.options = getContact;
+        }
+        return newFormData;
+      });
     }
-  }, [isGetAllEndUserFetching, isgetAllEndUserSuccess, isgetAllEndUserData])
+  }, [isGetAllEndUserFetching, isgetAllEndUserSuccess, isgetAllEndUserData]);
+  
   useEffect(() => {
     if (!isGetAllInvoiceSubmissionFetching && isgetAllInvoiceSubmissionSuccess && isgetAllInvoiceSubmissionData) {
-      setDropDownOptionField(isgetAllInvoiceSubmissionData, 'contactId', 'fullName', contactInformationData, 'invoiceSubmissionId');
+      const getContact = isgetAllInvoiceSubmissionData.map((item) => ({
+        value: item.contactId,
+        label: item.fullName,
+      }));
+      
+      // Create a new formData object to trigger re-render
+      setFormData(prevFormData => {
+        const newFormData = { ...prevFormData };
+        const dropdownField = newFormData.formFields?.find(item => item.dataField === "invoiceSubmissionId");
+        if (dropdownField) {
+          dropdownField.fieldSetting.options = getContact;
+        }
+        return newFormData;
+      });
     }
-  }, [isGetAllInvoiceSubmissionFetching, isgetAllInvoiceSubmissionSuccess, isgetAllInvoiceSubmissionData])
+  }, [isGetAllInvoiceSubmissionFetching, isgetAllInvoiceSubmissionSuccess, isgetAllInvoiceSubmissionData]);
+  
   useEffect(() => {
     if (!isGetAllPurchasingFetching && isgetAllPurchasingSuccess && isgetAllPurchasingData) {
-      setDropDownOptionField(isgetAllPurchasingData, 'contactId', 'fullName', contactInformationData, 'purchasingId');
+      const getContact = isgetAllPurchasingData.map((item) => ({
+        value: item.contactId,
+        label: item.fullName,
+      }));
+      
+      // Create a new formData object to trigger re-render
+      setFormData(prevFormData => {
+        const newFormData = { ...prevFormData };
+        const dropdownField = newFormData.formFields?.find(item => item.dataField === "purchasingId");
+        if (dropdownField) {
+          dropdownField.fieldSetting.options = getContact;
+        }
+        return newFormData;
+      });
     }
-  }, [isGetAllPurchasingFetching, isgetAllPurchasingSuccess, isgetAllPurchasingData])
+  }, [isGetAllPurchasingFetching, isgetAllPurchasingSuccess, isgetAllPurchasingData]);
+  
 
   const handleDropdownApiCall = (data) => {
     if (data === 2) {
@@ -138,13 +215,13 @@ const ContactDetails = (props) => {
   }
 
   const onSuccess = () => {
-    // onGetContactList();
     setIsModelOpen(!isModelOpen);
+    setOrderResetValue(true)
   };
 
   const onSidebarClose = () => {
     setIsModelOpen(false);
-    // onGetContactList();
+    setOrderResetValue(false)
   };
 
 
@@ -158,9 +235,9 @@ const ContactDetails = (props) => {
         } else {
           setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, true);
           basicInformation.current.updateFormFieldValue({
-            endUserId : null,
-            isEndUser : false
-        });
+            endUserId: null,
+            isEndUser: false
+          });
           setEndUserEnableDisableButton(false)
         }
         break;
@@ -172,9 +249,9 @@ const ContactDetails = (props) => {
         } else {
           setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, true);
           basicInformation.current.updateFormFieldValue({
-            invoiceSubmissionId : null,
-            isInvoiceSubmission : false
-        });
+            invoiceSubmissionId: null,
+            isInvoiceSubmission: false
+          });
           setInvoiceEnableDisableButton(false)
         }
         break;
@@ -186,9 +263,9 @@ const ContactDetails = (props) => {
         } else {
           setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, true);
           basicInformation.current.updateFormFieldValue({
-            purchasingId : null,
-            isPurchasingGiven : false
-        });
+            purchasingId: null,
+            isPurchasingGiven: false
+          });
           setPurchasingEnableDisableButton(false)
         }
         break;
@@ -269,6 +346,7 @@ const ContactDetails = (props) => {
             customerId={orderCustomerId}
             onhandleApiCall={handleDropdownApiCall}
             onSidebarClose={onSidebarClose}
+            orderResetValue={orderResetValue}
           // enableDisableButton={enableDisableButton}
           />
         </SidebarModel>

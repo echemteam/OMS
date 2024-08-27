@@ -15,7 +15,7 @@ import { useDeleteContactPhoneMutation, useLazyGetAllPhoneTypesQuery } from "../
 const ContactNumberList = React.lazy(() => import("./feature/ContactNumberList"));
 const AddEditContactNumber = React.lazy(() => import("./feature/AddEditContactNumber"));
 
-const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, isButtonDisable, contryIdCode }) => {
+const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, isButtonDisable, contryIdCode , isOrderManage}) => {
 
     //** State */
     const molGridRef = useRef();
@@ -127,7 +127,7 @@ const ContactNumbersGrid = ({ contactId, phoneNumberList, setPhoneNumberList, is
             {/* {showModal && ( */}
             <AddEditContactNumber handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} addeditRef={addeditRef}
                 editFormData={editFormData} isEdit={isEdit} contactId={contactId} phoneNumberList={phoneNumberList} setPhoneNumberList={setPhoneNumberList}
-                newPhoneCode={newPhoneCode} />
+                newPhoneCode={newPhoneCode} isOrderManage={isOrderManage} />
             {/* )} */}
         </React.Fragment>
     )

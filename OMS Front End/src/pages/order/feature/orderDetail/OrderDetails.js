@@ -84,14 +84,65 @@ const OrderDetails = () => {
     getAllOrderMethod();
   }, []);
 
+  // useEffect(() => {
+  //   if (!isGetAllShippingAddressFetching && isGetAllShippingAddressSuccess && isGetAllShippingAddressData) {
+  //     const getAddress = isGetAllShippingAddressData.map((item) => ({
+  //       value: item.addressId,
+  //       label: item.addressLine1,
+  //     }));
+  //     const dropdownField = formData?.formFields?.find(item => item.dataField === "isShippingId");
+  //     dropdownField.fieldSetting.options = getAddress;
+  //   }
+  // }, [isGetAllShippingAddressFetching, isGetAllShippingAddressSuccess, isGetAllShippingAddressData])
+
   useEffect(() => {
     if (!isGetAllShippingAddressFetching && isGetAllShippingAddressSuccess && isGetAllShippingAddressData) {
-      setDropDownOptionField(isGetAllShippingAddressData, 'addressId', 'addressLine1', orderInformationData, 'isShippingId');
+      const getContact = isGetAllShippingAddressData.map((item) => ({
+        value: item.addressId,
+        label: item.addressLine1,
+      }));
+      
+      // Create a new formData object to trigger re-render
+      setFormData(prevFormData => {
+        const newFormData = { ...prevFormData };
+        const dropdownField = newFormData.formFields?.find(item => item.dataField === "isShippingId");
+        if (dropdownField) {
+          dropdownField.fieldSetting.options = getContact;
+        }
+        return newFormData;
+      });
     }
+  }, [isGetAllShippingAddressFetching, isGetAllShippingAddressSuccess, isGetAllShippingAddressData])
+
+  // useEffect(() => {
+  //   if (!isGetAllBillingAddressFetching && isGetAllBillingAddressSuccess && isGetAllBillingAddressData) {
+  //     const getAddress = isGetAllBillingAddressData.map((item) => ({
+  //       value: item.addressId,
+  //       label: item.addressLine1,
+  //     }));
+  //     const dropdownField = formData?.formFields?.find(item => item.dataField === "isBillingId");
+  //     dropdownField.fieldSetting.options = getAddress;
+  //   }
+  // }, [isGetAllBillingAddressFetching, isGetAllBillingAddressSuccess, isGetAllBillingAddressData])
+
+  useEffect(() => {
     if (!isGetAllBillingAddressFetching && isGetAllBillingAddressSuccess && isGetAllBillingAddressData) {
-      setDropDownOptionField(isGetAllBillingAddressData, 'addressId', 'addressLine1', orderInformationData, 'isBillingId');
+      const getContact = isGetAllBillingAddressData.map((item) => ({
+        value: item.addressId,
+        label: item.addressLine1,
+      }));
+      
+      // Create a new formData object to trigger re-render
+      setFormData(prevFormData => {
+        const newFormData = { ...prevFormData };
+        const dropdownField = newFormData.formFields?.find(item => item.dataField === "isBillingId");
+        if (dropdownField) {
+          dropdownField.fieldSetting.options = getContact;
+        }
+        return newFormData;
+      });
     }
-  }, [isGetAllShippingAddressFetching, isGetAllShippingAddressSuccess, isGetAllShippingAddressData, isGetAllBillingAddressFetching, isGetAllBillingAddressSuccess, isGetAllBillingAddressData])
+  }, [isGetAllBillingAddressFetching, isGetAllBillingAddressSuccess, isGetAllBillingAddressData])
 
   const onSidebarClose = () => {
     setIsModelOpen(false);
