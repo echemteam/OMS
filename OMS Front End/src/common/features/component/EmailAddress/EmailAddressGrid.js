@@ -13,7 +13,7 @@ import { useDeleteContactEmailMutation } from "../../../../app/services/emailAdd
 const EmailAddressList = React.lazy(() => import("./feature/EmailAddressList"));
 const AddEditEmailModal = React.lazy(() => import("./feature/AddEditEmailAddress"));
 
-const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, isButtonDisable }) => {
+const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, isButtonDisable , isOrderManage ,orderResetValue }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -95,10 +95,10 @@ const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, 
     return (
         <React.Fragment>
             <EmailAddressList molGridRef={molGridRef} handleToggleModal={handleToggleModal} actionHandler={actionHandler}
-                isButtonDisable={isButtonDisable} emailAddressList={emailAddressList} handleCheckBoxChange={handleCheckBoxChange} />
+                isButtonDisable={isButtonDisable} emailAddressList={emailAddressList} handleCheckBoxChange={handleCheckBoxChange} isOrderManage={isOrderManage} />
             {/* {showModal && ( */}
             <AddEditEmailModal contactId={contactId} handleToggleModal={handleToggleModal} onSuccess={onSuccess} showModal={showModal} addeditRef={addeditRef}
-                editFormData={editFormData} isEdit={isEdit} emailAddressList={emailAddressList} setEmailAddressList={setEmailAddressList} />
+                editFormData={editFormData} isEdit={isEdit} emailAddressList={emailAddressList} setEmailAddressList={setEmailAddressList} isOrderManage={isOrderManage} />
             {/* )} */}
         </React.Fragment>
     )

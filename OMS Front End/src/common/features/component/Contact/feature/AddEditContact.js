@@ -19,7 +19,7 @@ const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddres
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
 const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey,
-    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode }) => {
+    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode, orderResetValue }) => {
 
     //** State */
     const ref = useRef();
@@ -272,6 +272,12 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         callChildFunction: onResetData,
     }));
 
+    useEffect(() => {
+        if (orderResetValue && isOrderManage) {
+            setPhoneNumberList([]);
+            setEmailAddressList([])
+        }
+    }, [orderResetValue])
 
     return (
         <div>
@@ -282,9 +288,9 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                     </div>
                     <div className="row">
                         <EmailAddressGrid isButtonDisable={isButtonDisable} emailAddressList={emailAddressList}
-                            setEmailAddressList={setEmailAddressList} contactId={contactId} />
+                            setEmailAddressList={setEmailAddressList} contactId={contactId} isOrderManage={isOrderManage} />
                         <ContactNumbersGrid isButtonDisable={isButtonDisable} phoneNumberList={phoneNumberList}
-                            setPhoneNumberList={setPhoneNumberList} contactId={contactId} contryIdCode={contryIdCode} />
+                            setPhoneNumberList={setPhoneNumberList} contactId={contactId} contryIdCode={contryIdCode} isOrderManage={isOrderManage} />
                     </div>
                 </React.Fragment>
                 : <DataLoader />

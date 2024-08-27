@@ -342,6 +342,7 @@ const ContactGrid = ({
             contryIdCode={contryIdCode}
             customerId={null}
             onhandleApiCall={null}
+            orderResetValue={null}
           />
         </SidebarModel>
       </div>
