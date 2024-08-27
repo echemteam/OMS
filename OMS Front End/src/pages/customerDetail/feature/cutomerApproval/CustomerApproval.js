@@ -53,6 +53,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     };
 
     const handleValidateModalClose = () => {
+        setValidateCheckList([]);
         setIsShowValidateModal(!isShowValidateModal);
         if (!isDetailPage) {
             getListApi();
@@ -88,7 +89,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
         <React.Fragment>
             <ApprovalValidateData parentRef={parentRef} handleValidateSuccess={handleValidateSuccess} showModal={isShowValidateModal} isSupplierApproval={false}
                 isGetCheckListLoading={isGetCheckListLoading} mainId={customerId} isDetailPage={isDetailPage} handleShowValidateModal={handleShowValidateModal}
-                handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList} />
+                handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList ? validateCheckList : null} />
             <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={customerId} onSuccessApprovalClose={onSuccessApprovalClose}
                 ApprovalData={isSubCustomer ? ApprovalEnum.APPROVESUBCUSTOMER : ApprovalEnum.APPROVECUSTOMER} isSupplierApproval={false} isSubCustomer={isSubCustomer}
                 getBasicInformationById={useLazyGetCustomersInfoByIdQuery} getAddressById={useLazyGetCustomerAddresssInfoByIdQuery}
