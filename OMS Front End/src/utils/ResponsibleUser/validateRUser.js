@@ -7,7 +7,7 @@
 export const validateResponsibleUserId = (userIdsString, loginUserId) => {
     if (!userIdsString || !loginUserId) return false;
 
-    const idsArray = userIdsString.split(',').map(id => id.trim());
+    const idsArray = userIdsString.toString().split(',').map(id => id.trim());
     const loginUserIdStr = loginUserId.toString();
     return idsArray.includes(loginUserIdStr);
 }
