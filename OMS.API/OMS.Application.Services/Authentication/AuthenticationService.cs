@@ -60,7 +60,7 @@ namespace OMS.Application.Services.Authentication
                 SecuritySettingId = a.SecuritySettingId
             }).ToList();
 
-            //authResponce.ApprovalRulesConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
+            authResponce.ApprovalRulesConfiguration = await repositoryManager.approval.GetApprovalConfiguration();
             authResponce.smtpSettings = await repositoryManager.smtpSettings.GetSmtpSettings();
 
             UserDetails userDetails = user.ToMapp<UserDto, UserDetails>();

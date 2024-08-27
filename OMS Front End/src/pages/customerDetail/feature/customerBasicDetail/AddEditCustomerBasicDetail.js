@@ -212,7 +212,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 let request = {
                     newValue: value,
                     oldValue: formData.initialState,
-                    functionalityName: isOpen ? FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION : FunctionalitiesName.ADDCUSTOMER
+                    functionalityName: isOpen ? FunctionalitiesName.CUSTOMERBASICINFOUPDATE : FunctionalitiesName.ADDCUSTOMER
                 }
                 const modifyData = await ValidateRequestByApprovalRules(request);
                 if (modifyData.newValue) {
@@ -229,7 +229,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                         let request = {
                             newValue: value,
                             oldValue: formData.initialState,
-                            functionalityName: isOpen ? FunctionalitiesName.UPDATECUSTOMERBASICINFOMATION : FunctionalitiesName.ADDCUSTOMER
+                            functionalityName: isOpen ? FunctionalitiesName.CUSTOMERBASICINFOUPDATE : FunctionalitiesName.ADDCUSTOMER
                         }
                         const modifyData = await ValidateRequestByApprovalRules(request);
                         if (isOpen) {

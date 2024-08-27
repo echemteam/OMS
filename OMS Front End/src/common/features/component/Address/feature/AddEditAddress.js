@@ -349,39 +349,39 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
-            update(updateData);
-            return;
+
+            if (isAddressType(updateData.addressTypeId)) {
+                await handleApprovalRequest(updateData, formData.initialState, FunctionalitiesName.CUSTOMERUPDATEADDRESS);
+            } else {
+                update(updateData);
+            }
+        } else {
+            // Add mode
+            const customerId = orderCustomerId ? orderCustomerId : transformedData.customerId;
+            const req = {
+                ...transformedData,
+                customerId: customerId,
+            };
+            if (isAddressType(req.addressTypeId)) {
+                await handleApprovalRequest(req, null, FunctionalitiesName.CUSTOMERADDADDRESS);
+            } else {
+                add(req);
+            }
         }
+    };
 
-        // Add mode
-        const customerId = orderCustomerId ? orderCustomerId : transformedData.customerId;
-        const req = {
-            ...transformedData,
-            customerId: customerId,
-        };
-
-        if (data) {
-            add(req);
+    const isAddressType = (typeId) => {
+        if (isSupplier) {
+            // return typeId === AddressType.ACCOUNTS_PAYABLE.toString();
+            return; // Write Address type for the supplier.
         }
+        return typeId === AddressType.BILLING.toString() || typeId === AddressType.SHIPPING.toString();
+    };
 
-        // if (data.addressTypeId === 1) {
-        //     const value = { ...req };
-        //     const request = {
-        //         newValue: value,
-        //         oldValue: formData.initialState,
-        //         isFunctional: true,
-        //         functionalityName: isModelOpen
-        //             ? FunctionalitiesName.ADDADDRESS
-        //             : FunctionalitiesName.ADDCUSTOMER
-        //     };
-        //     //** This is used for the the unctional Level */
-        //     const modifyData = await ValidateRequestByApprovalRules(request);
-        //     if (modifyData.newValue) {
-        //         onSidebarClose();
-        //     }
-        // } else {
-        //     add(req);
-        // }
+    const handleApprovalRequest = async (newValue, oldValue, functionalityName) => {
+        const request = { newValue, oldValue, isFunctional: true, functionalityName };
+        const modifyData = await ValidateRequestByApprovalRules(request);
+        if (modifyData.newValue) onSidebarClose();
     };
 
 

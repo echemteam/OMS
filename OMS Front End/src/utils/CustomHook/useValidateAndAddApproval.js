@@ -7,8 +7,8 @@ import SwalAlert from "../../services/swalService/SwalService";
 
 export const useValidateAndAddApprovalRequests = () => {
     // Hook to handle API requests for adding approval requests
-    const [addApprovalRequest] = useAddApprovalRequestsMutation();
     const { success } = SwalAlert();
+    const [addApprovalRequest] = useAddApprovalRequestsMutation();
 
     /**
      * Validates and processes request data based on approval rules.
@@ -25,6 +25,9 @@ export const useValidateAndAddApprovalRequests = () => {
         // Retrieve approval rules from local storage
         const approvalRulesList = getData("approvalRules") || [];
 
+        // If no approval rules List are found, return the original requestData
+        if (!approvalRulesList.length) return requestData;
+
         // Destructure and provide default values for requestData properties
         const { functionalityName = '', newValue = {}, oldValue = {} } = requestData;
 
@@ -36,8 +39,8 @@ export const useValidateAndAddApprovalRequests = () => {
 
         // Normalize field names to lowercase for both newValue and oldValue
         const normalize = obj => Object.fromEntries(Object.entries(obj).map(([key, value]) => [key.toLowerCase(), value]));
-        const newValueNormalized = normalize(newValue);
-        const oldValueNormalized = normalize(oldValue);
+        const newValueNormalized = newValue ? normalize(newValue) : newValue;
+        const oldValueNormalized = oldValue ? normalize(oldValue) : oldValue;
 
         // Process each approval rule
         for (const rule of relevantRules) {
@@ -50,7 +53,7 @@ export const useValidateAndAddApprovalRequests = () => {
                     tableId,
                     functionalitiesFieldId,
                     functionalityEventId,
-                    oldValue: null,
+                    oldValue: JSON.stringify(oldValueNormalized),
                     newValue: JSON.stringify(newValueNormalized)
                 };
 
@@ -58,7 +61,6 @@ export const useValidateAndAddApprovalRequests = () => {
                     // Add the approval request and revert the change in newValue
                     await addApprovalRequest(request);
                     success(SuccessMessage.ApprovalSuccess);
-                    // ToastService.success(SuccessMessage.ApprovalSuccess);
                     //newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
                 } catch (error) {
                     console.error('Error adding approval request:', error);
@@ -86,7 +88,6 @@ export const useValidateAndAddApprovalRequests = () => {
                             // Add the approval request and revert the change in newValue
                             await addApprovalRequest(request);
                             newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
-                            // ToastService.success(SuccessMessage.ApprovalSuccess);
                             success(SuccessMessage.ApprovalSuccess);
                         } catch (error) {
                             console.error('Error adding approval request:', error);

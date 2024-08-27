@@ -226,7 +226,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             let request = {
                 newValue: req,
                 oldValue: formData.initialState,
-                functionalityName: isOpen ? FunctionalitiesName.UPDATESUPPLIER : FunctionalitiesName.ADDSUPPLIER
+                functionalityName: isOpen ? FunctionalitiesName.SUPPLIERBASICINFOUPDATE : FunctionalitiesName.ADDSUPPLIER
             }
             const modifyData = await ValidateRequestByApprovalRules(request);
             if (modifyData.newValue) {
@@ -240,7 +240,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             let request = {
                 newValue: req,
                 oldValue: formData.initialState,
-                functionalityName: isOpen ? FunctionalitiesName.UPDATESUPPLIER : FunctionalitiesName.ADDSUPPLIER
+                functionalityName: isOpen ? FunctionalitiesName.SUPPLIERBASICINFOUPDATE : FunctionalitiesName.ADDSUPPLIER
             }
             const modifyData = await ValidateRequestByApprovalRules(request);
             if (modifyData.newValue) {
