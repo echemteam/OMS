@@ -23,7 +23,7 @@ const ApiproviderViewTab = ({ providerId, providerData }) => {
           <ApiEndPoints providerId={providerId} />
         </div>
       ),
-      isVisible: hasApiEndpointPermission.hasAccess,
+      isVisible: hasApiEndpointPermission?.hasAccess,
     },
     {
       sMenuItemCaption: "API Authentication Management",
@@ -36,7 +36,7 @@ const ApiproviderViewTab = ({ providerId, providerData }) => {
           />
         </div>
       ),
-      isVisible: hasApiAuthenticationPermission.hasAccess,
+      isVisible: hasApiAuthenticationPermission?.hasAccess,
     },
   ];
 

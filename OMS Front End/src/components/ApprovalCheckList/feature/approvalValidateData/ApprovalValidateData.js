@@ -21,7 +21,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   const [showViewButton, setShowViewButton] = useState(false);
 
   useEffect(() => {
-    if (validateCheckList) {
+    if (validateCheckList.length > 0) {
       if (currentIndex < validateCheckList.length) {
         const timer = setTimeout(() => {
           setVisibleItems((prevItems) => [
@@ -40,12 +40,10 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }, [currentIndex, validateCheckList]);
 
   useEffect(() => {
-    if (showModal) {
-      setCurrentIndex(0);
-      setVisibleItems([]);
-      setShowDoneButton(false);
-      setShowViewButton(false);
-    }
+    setCurrentIndex(0);
+    setVisibleItems([]);
+    setShowDoneButton(false);
+    setShowViewButton(false);
   }, [showModal])
 
   const boldSpecificWords = (text) => {
@@ -58,10 +56,15 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   };
 
   const showButtons = () => {
-    const allDone = visibleItems.some(data => data.isValid === false);
-    if (!allDone) {
-      setShowDoneButton(true);
-      setShowViewButton(false);
+    if (visibleItems.length > 0) {
+      const allDone = visibleItems.some(data => data.isValid === false);
+      if (!allDone) {
+        setShowDoneButton(true);
+        setShowViewButton(false);
+      } else {
+        setShowDoneButton(false);
+        setShowViewButton(true);
+      }
     } else {
       setShowDoneButton(false);
       setShowViewButton(true);
@@ -71,6 +74,9 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+    if (visibleItems.length > 0) {
+      showButtons();
     }
   }, [visibleItems]);
 
