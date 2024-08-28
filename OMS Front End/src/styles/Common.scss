@@ -895,7 +895,7 @@ a {
       margin-top: 0;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 150px);
+        max-height: calc(100vh - 150px);
       }
     }
   }

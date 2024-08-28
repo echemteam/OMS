@@ -37,6 +37,7 @@ import DropdownSelect from "../../../../../components/ui/dropdown/DropdownSelect
 import AddEditInvoiceSubmissionInstructionDetail from "./feature/AddEditInvoiceSubmissionInstructionDetail";
 import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useAddCustomerNotesMutation } from "../../../../../app/services/notesAPI";
+import { CustomerSupplierStatus } from "../../../../../utils/Enums/commonEnums";
 
 //** Component's */
 const CustomerApproval = React.lazy(() => import("../../cutomerApproval/CustomerApproval"));
@@ -54,7 +55,7 @@ const CustomerBasicInfoCard = ({
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [formData, setFormData] = useState(reasonData);
   const [showModal, setShowModal] = useState(false);
-  const [isInvoiceModelShow,setIsInvoiceModelShow]=useState(false);
+  const [isInvoiceModelShow, setIsInvoiceModelShow] = useState(false);
   const [customerID, setCustomerId] = useState();
   const [statusId, setStatusId] = useState();
   const [responsibleUserIds, setResponsibleUserIds] = useState([]);
@@ -180,36 +181,32 @@ const CustomerBasicInfoCard = ({
         "You can't change the status of the customer to currect customer status."
       );
     } else {
-      if (selectedOption.value === 1 || selectedOption.value === 2) {
-        confirm(
-          "Warning?",
-          `Are you sure you want to change the customer status to ${selectedOption.label}?`,
-          "Yes",
-          "Cancel"
-        ).then((confirmed) => {
-          if (confirmed) {
-            let req = {
-              customerId: customerId,
-              statusId: selectedOption.value,
-            };
-            updateCustomerStatus(req);
-            setSelectedStatus(selectedOption.value);
-          }
-        });
+      if (selectedOption.value === CustomerSupplierStatus.PENDING) {
+        confirm("Warning?", `Are you sure you want to change the customer status to ${selectedOption.label}?`,
+          "Yes", "Cancel").then((confirmed) => {
+            if (confirmed) {
+              let req = {
+                customerId: customerId,
+                statusId: selectedOption.value,
+              };
+              updateCustomerStatus(req);
+              setSelectedStatus(selectedOption.value);
+            }
+          });
       } else if (
-        selectedOption.value === 4 ||
-        selectedOption.value === 5 ||
-        selectedOption.value === 6 ||
-        selectedOption.value === 7
+        selectedOption.value === CustomerSupplierStatus.FREEZE ||
+        selectedOption.value === CustomerSupplierStatus.BLOCK ||
+        selectedOption.value === CustomerSupplierStatus.DISABLE ||
+        selectedOption.value === CustomerSupplierStatus.REJECT
       ) {
-        if (selectedOption.value !== 7) {
+        if (selectedOption.value !== CustomerSupplierStatus.REJECT) {
           if (customerData.responsibleUserId) {
             removeFields();
           }
         }
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
-      } else if (selectedOption.value === 3) {
+      } else if (selectedOption.value === CustomerSupplierStatus.APPROVED || selectedOption.value === CustomerSupplierStatus.SUBMITTED) {
         if (childRef.current) {
           childRef.current.callChildFunction(
             customerId,
@@ -505,15 +502,15 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
             <div className="field-desc">
-                  <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
-                  <b>&nbsp;:&nbsp;</b>
-                  <div className="checkbox-part ml-2 mt-2 eye-icon ">
-                    <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
-                    <div className="tooltip-show">
-                      <p>Add/Edit Invoice Submission</p>
-                    </div>
-                    <di className="tooltip-arrow-icon"></di>
-                  </div>
+              <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="checkbox-part ml-2 mt-2 eye-icon ">
+                <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
+                <div className="tooltip-show">
+                  <p>Add/Edit Invoice Submission</p>
+                </div>
+                <di className="tooltip-arrow-icon"></di>
+              </div>
             </div>
           </div>
         </div>

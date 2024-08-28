@@ -10,6 +10,11 @@ export const useValidateAndAddApprovalRequests = () => {
     const { success } = SwalAlert();
     const [addApprovalRequest] = useAddApprovalRequestsMutation();
 
+    // Utility function to deep compare two objects
+    const deepEqual = (obj1, obj2) => {
+        return JSON.stringify(obj1) === JSON.stringify(obj2);
+    };
+
     /**
      * Validates and processes request data based on approval rules.
      * 
@@ -41,6 +46,13 @@ export const useValidateAndAddApprovalRequests = () => {
         const normalize = obj => Object.fromEntries(Object.entries(obj).map(([key, value]) => [key.toLowerCase(), value]));
         const newValueNormalized = newValue ? normalize(newValue) : newValue;
         const oldValueNormalized = oldValue ? normalize(oldValue) : oldValue;
+
+        if (requestData.isFunctionalObjMatch) {
+            const isEqual = deepEqual(oldValueNormalized, newValueNormalized);
+            if (isEqual) {
+                return requestData;
+            }
+        }
 
         // Process each approval rule
         for (const rule of relevantRules) {

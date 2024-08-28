@@ -84,24 +84,13 @@ const OrderDetails = () => {
     getAllOrderMethod();
   }, []);
 
-  // useEffect(() => {
-  //   if (!isGetAllShippingAddressFetching && isGetAllShippingAddressSuccess && isGetAllShippingAddressData) {
-  //     const getAddress = isGetAllShippingAddressData.map((item) => ({
-  //       value: item.addressId,
-  //       label: item.addressLine1,
-  //     }));
-  //     const dropdownField = formData?.formFields?.find(item => item.dataField === "isShippingId");
-  //     dropdownField.fieldSetting.options = getAddress;
-  //   }
-  // }, [isGetAllShippingAddressFetching, isGetAllShippingAddressSuccess, isGetAllShippingAddressData])
-
   useEffect(() => {
     if (!isGetAllShippingAddressFetching && isGetAllShippingAddressSuccess && isGetAllShippingAddressData) {
       const getContact = isGetAllShippingAddressData.map((item) => ({
         value: item.addressId,
         label: item.addressLine1,
       }));
-      
+
       // Create a new formData object to trigger re-render
       setFormData(prevFormData => {
         const newFormData = { ...prevFormData };
@@ -114,24 +103,13 @@ const OrderDetails = () => {
     }
   }, [isGetAllShippingAddressFetching, isGetAllShippingAddressSuccess, isGetAllShippingAddressData])
 
-  // useEffect(() => {
-  //   if (!isGetAllBillingAddressFetching && isGetAllBillingAddressSuccess && isGetAllBillingAddressData) {
-  //     const getAddress = isGetAllBillingAddressData.map((item) => ({
-  //       value: item.addressId,
-  //       label: item.addressLine1,
-  //     }));
-  //     const dropdownField = formData?.formFields?.find(item => item.dataField === "isBillingId");
-  //     dropdownField.fieldSetting.options = getAddress;
-  //   }
-  // }, [isGetAllBillingAddressFetching, isGetAllBillingAddressSuccess, isGetAllBillingAddressData])
-
   useEffect(() => {
     if (!isGetAllBillingAddressFetching && isGetAllBillingAddressSuccess && isGetAllBillingAddressData) {
       const getContact = isGetAllBillingAddressData.map((item) => ({
         value: item.addressId,
         label: item.addressLine1,
       }));
-      
+
       // Create a new formData object to trigger re-render
       setFormData(prevFormData => {
         const newFormData = { ...prevFormData };
@@ -179,47 +157,51 @@ const OrderDetails = () => {
 
   useEffect(() => {
     if (!isGetAllSubCustomersFetching && isGetAllSubCustomersSuccess && isGetAllSubCustomersData) {
-      const subcustomerData = isGetAllSubCustomersData.map((item) => ({
-        value: item.subCustomerId,
-        label: item.subCustomerName,
-        date: item.createdAt,
-        status: item.statusName
-      }));
-      const dropdownField = formData?.formFields?.find(item => item.dataField === "subCustomerMainCustomerId");
-
-      dropdownField.fieldSetting.options = subcustomerData;
+      if (isGetAllSubCustomersData.length === 0) {
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          formFields: prevFormData.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId")
+        }));
+      } else {
+        const subcustomerOptions = isGetAllSubCustomersData.map(item => ({
+          value: item.subCustomerId,
+          label: item.subCustomerName
+        }));
+        setFormData(prevFormData => {
+          const updatedFormData = { ...prevFormData };
+          const dropdownField = updatedFormData.formFields?.find(item => item.dataField === "subCustomerMainCustomerId");
+          if (dropdownField) {
+            dropdownField.fieldSetting.options = subcustomerOptions;
+          }
+          return updatedFormData;
+        });
+      }
     }
-  }, [isGetAllSubCustomersFetching, isGetAllSubCustomersSuccess, isGetAllSubCustomersData]);
+  }, [isGetAllSubCustomersFetching, isGetAllSubCustomersSuccess, isGetAllSubCustomersData]);;
 
 
   useEffect(() => {
     if (!isSubCustomerDropdownVisible) {
-      const newFrom = { ...formData };
-      newFrom.formFields = newFrom.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId");
-      setFormData(newFrom);
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        formFields: prevFormData.formFields.filter(field => field.dataField !== "subCustomerMainCustomerId")
+      }));
     }
   }, [isSubCustomerDropdownVisible]);
 
-
   const handleChangeDropdownList = (data, dataField) => {
     if (dataField === "customerId") {
-      setOrderCustomerId(data.value)
-      if (data.isBuyingForThirdParty === true) {
-        setIsSubCustomerDropdownVisible(true);
+      setOrderCustomerId(data.value);
+      if (data.isBuyingForThirdParty) {
         getAllSubCustomerByCustomerId(data.value);
-        const manageData = { ...formData };
-        let filteredFormFields;
-        filteredFormFields = orderInformationData.formFields
-        manageData.formFields = filteredFormFields;
-        setFormData(manageData)
+        setFormData({ ...orderInformationData });
         basicInformation.current.updateFormFieldValue({
           customerId: data.value,
           subCustomerMainCustomerId: null,
           isBillingId: null,
           isShippingId: null
         });
-      }
-      else {
+      } else {
         setIsSubCustomerDropdownVisible(false);
       }
     }

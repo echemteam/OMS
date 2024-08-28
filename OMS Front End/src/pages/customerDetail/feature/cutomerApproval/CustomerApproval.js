@@ -12,7 +12,7 @@ const ApprovalCheckList = React.lazy(() => import("../../../../components/Approv
 const ApprovalValidateData = React.lazy(() => import("../../../../components/ApprovalCheckList/feature/approvalValidateData/ApprovalValidateData"));
 
 
-const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval, isDetailPage }) => {
+const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval, isDetailPage, isAddPagePage }) => {
 
     const parentRef = useRef();
     const [customerId, setCustomerId] = useState(0);
@@ -55,7 +55,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     const handleValidateModalClose = () => {
         setValidateCheckList([]);
         setIsShowValidateModal(!isShowValidateModal);
-        if (!isDetailPage) {
+        if (!isDetailPage && !isAddPagePage) {
             getListApi();
         }
     };

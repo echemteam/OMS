@@ -14,6 +14,8 @@ import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
+import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
+import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
 
 const FinancialSettings = ({ isEditablePage }) => {
 
@@ -21,6 +23,7 @@ const FinancialSettings = ({ isEditablePage }) => {
   const [showButton, setShowButton] = useState(true);
   const [isBankFee, setIsBankFee] = useState(false);
   const [isCardCharges, setIsCardCharges] = useState(false);
+  const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
   const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, handleActiveSubTabClick } = useContext(BasicDetailContext);
@@ -190,7 +193,7 @@ const FinancialSettings = ({ isEditablePage }) => {
     onhandleEdit,
   }));
 
-  const onhandleEdit = () => {
+  const onhandleEdit = async () => {
     const settingFormData = settingFormRef.current.getFormData();
     if (settingFormData && !settingFormData.customerAccountingSettingId) {
       const request = {
@@ -204,8 +207,11 @@ const FinancialSettings = ({ isEditablePage }) => {
         exemptSalesTax: settingFormData.exemptSalesTax,
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
       };
-      addEditCustomerSettings(request);
-
+      if (isEditablePage) {
+        await handleApprovalRequest(request, settingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
+      } else {
+        addEditCustomerSettings(request);
+      }
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
       const updaterequest = {
         ...settingFormData,
@@ -225,8 +231,19 @@ const FinancialSettings = ({ isEditablePage }) => {
         exemptSalesTax: settingFormData.exemptSalesTax,
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
       };
-      addEditCustomerSettings(updaterequest);
+      if (isEditablePage) {
+        await handleApprovalRequest(updaterequest, settingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
+      } else {
+        addEditCustomerSettings(updaterequest);
+      }
+
     }
+  };
+
+  const handleApprovalRequest = async (newValue, oldValue, functionalityName) => {
+    const request = { newValue, oldValue, isFunctional: true, functionalityName };
+    const modifyData = await ValidateRequestByApprovalRules(request);
+    if (modifyData.newValue) GetDetailsbyCustomerID(customerId);
   };
 
   const handleSalesTax = (data, dataField) => {
@@ -275,15 +292,6 @@ const FinancialSettings = ({ isEditablePage }) => {
     if (customerCountryId !== CountryId.USA && value === PaymentMethodTypes.CREDITCARD) {
       formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
     }
-    // else if (customerCountryId !== CountryId.USA && value !== PaymentMethodTypes.CREDITCARD) {
-    //   const isBankFeePresent = formData.formFields.some((field) => field.dataField === 'bankWireFee');
-    //   if (!isBankFeePresent) {
-    //     let updatedFormFields = [...formData.formFields];
-    //     formData.formFields = formData.formFields.filter((field) => field.dataField !== 'bankWireFee');
-    //     updatedFormFields = [...formData.formFields];
-    //     formData.formFields = updatedFormFields;
-    //   }
-    // }
     const isCardChargePresent = formData.formFields.some((field) => field.dataField === 'cardProcessingCharges');
     if (!isCardChargePresent) {
       const insertIndex = formData.formFields.length - 1;
