@@ -129,7 +129,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId;
     };
 
-    const handleSupplierAddEdit = () => {
+    const handlMainAddEdit = () => {
         const data = ref.current.getFormData();
         if (!data) return;
 
@@ -324,7 +324,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                             buttonTypeClassName="theme-button"
                             buttonText='Save'
                             isLoading={isAddEditLoading}
-                            onClick={isSupplier ? handleSupplierAddEdit : handleAddEdit}
+                            onClick={isSupplier ? handlMainAddEdit : isEditablePage ? handleAddEdit : handlMainAddEdit}
                             isDisable={isButtonDisable} />
                         {/* } */}
                         <Buttons

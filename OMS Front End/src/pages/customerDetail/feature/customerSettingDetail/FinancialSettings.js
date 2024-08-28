@@ -207,8 +207,11 @@ const FinancialSettings = ({ isEditablePage }) => {
         exemptSalesTax: settingFormData.exemptSalesTax,
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
       };
-      await handleApprovalRequest(request, settingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
-      //addEditCustomerSettings(request);
+      if (isEditablePage) {
+        await handleApprovalRequest(request, settingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
+      } else {
+        addEditCustomerSettings(request);
+      }
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
       const updaterequest = {
         ...settingFormData,
@@ -228,8 +231,12 @@ const FinancialSettings = ({ isEditablePage }) => {
         exemptSalesTax: settingFormData.exemptSalesTax,
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
       };
-      await handleApprovalRequest(updaterequest, settingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
-      //addEditCustomerSettings(updaterequest);
+      if (isEditablePage) {
+        await handleApprovalRequest(updaterequest, settingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
+      } else {
+        addEditCustomerSettings(updaterequest);
+      }
+
     }
   };
 

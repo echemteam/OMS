@@ -21,7 +21,8 @@ const SetInitialCountry = {
     value: 233
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, deleteAddress }) => {
+const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable,
+    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage }) => {
 
     //** States */
     const ref = useRef();
@@ -352,7 +353,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
 
-            if (isAddressType(updateData.addressTypeId)) {
+            if (isEditablePage && isAddressType(updateData.addressTypeId)) {
                 await handleApprovalRequest(updateData, formData.initialState, updateAddressApproval);
             } else {
                 update(updateData);
@@ -364,7 +365,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 ...transformedData,
                 customerId: customerId,
             };
-            if (isAddressType(req.addressTypeId)) {
+            if (isEditablePage && isAddressType(req.addressTypeId)) {
                 await handleApprovalRequest(req, null, addAddressApproval);
             } else {
                 add(req);

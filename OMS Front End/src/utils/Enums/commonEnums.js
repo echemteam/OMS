@@ -6,6 +6,16 @@ export const FieldSettingType = {
     SECOUNDRYINPUTBUTTON: "isSecoundryInputButton"
 }
 
+export const CustomerSupplierStatus = {
+    PENDING: 1,
+    SUBMITTED: 2,
+    APPROVED: 3,
+    FREEZE: 4,
+    BLOCK: 5,
+    DISABLE: 6,
+    REJECT: 7
+}
+
 export const ApprovalEnum = {
     APPROVECUSTOMER: 1,
     APPROVESUPPLIER: 2,

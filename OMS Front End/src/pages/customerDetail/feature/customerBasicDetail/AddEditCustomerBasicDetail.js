@@ -27,7 +27,7 @@ import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/val
 import { useSelector } from "react-redux";
 
 
-const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
+const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage, setSubCustomer }) => {
 
     //** State */
     const parentRef = useRef();
@@ -84,7 +84,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             formSetting.isViewOnly = false;
         }
     }, [isEditablePage, hasEditPermission, isResponsibleUser])
-
     useEffect(() => {
         const fetchData = async () => {
             await Promise.all([
@@ -108,7 +107,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         };
         fetchData();
     }, [keyId, isOpen]);
-
     useEffect(() => {
         if (isOpen) {
             if (customerId > 0) {
@@ -119,7 +117,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             }
         }
     }, [isOpen, customerId, getCustomersBasicInformationById])
-
     useEffect(() => {
         if (isGetAllGroupTypesSucess && allGetAllGroupTypesData) {
             setDropDownOptionField(allGetAllGroupTypesData, 'groupTypeId', 'type', customerbasicData, 'groupTypeId');
@@ -140,7 +137,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         }
     }, [isGetAllGroupTypesSucess, allGetAllGroupTypesData, isGetAllUserSucess, allGetAllUserData, isGetAllCountriesSucess, allGetAllCountriesData,
         isGetAllTerritoriesSucess, allGetAllTerritoriesData]);
-
     useEffect(() => {
         if (isAddEditCustomersBasicInformationSuccess && isAddEditCustomersBasicInformationData) {
             if (isAddEditCustomersBasicInformationData.errorMessage.includes('exists')) {
@@ -159,14 +155,12 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             }
         }
     }, [isAddEditCustomersBasicInformationSuccess, isAddEditCustomersBasicInformationData]);
-
     const onreset = () => {
         onSidebarClose()
         let restData = { ...customerbasicData };
         restData.initialState = { ...formData };
         setFormData(restData);
     }
-
     useEffect(() => {
         if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
             const newFrom = { ...customerbasicData };
@@ -179,20 +173,18 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             setIsResponsibleUser(validateResponsibleUserId(GetCustomersBasicInformationByIdData.responsibleUserId, authState?.user?.userID));
         }
     }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
-
     useEffect(() => {
         if (isOpen) {
             customerId && getCustomersBasicInformationById(customerId);
         }
     }, [isOpen]);
-
     useImperativeHandle(nextRef, () => ({
         handleAddBasicDetails,
     }));
-
     const handleAddBasicDetails = async () => {
         let data = basicDetailRef.current.getFormData();
         if (data) {
+            setSubCustomer && setSubCustomer(data.isSubCustomer);
             let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
             let req = {
                 ...data,
@@ -248,7 +240,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             ToastService.warning('Please enter customer basic information');
         }
     };
-
     const handleValidateTextId = (data, dataField) => {
         if (dataField === 'countryId') {
             const { formFields } = getTaxIdMinMaxLength(data.value, customerbasicData.formFields, 'taxId');
@@ -262,7 +253,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             setFormData(updatedForm);
         }
     }
-
     const handleCheckboxchange = (data, datafield) => {
 
         if (customerId) {
@@ -284,25 +274,19 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             }
         }
     }
-
     const formActionHandler = {
         DDL_CHANGED: handleValidateTextId,
         CHECK_CHANGE: handleCheckboxchange
     };
-
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
             const trimCustomerName = data.replace(/\s+/g, '');
             setCustomerName(trimCustomerName);
         }
     }
-
-
     const formInputHandler = {
         INPUT_CHANGED: handleInputFields,
     }
-
-
     const handleInputGroupButton = () => {
         if (customerName !== '') {
             let request = {
@@ -311,7 +295,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             CheckCustomerNameExist(request);
         }
     }
-
     const handleExistingInfo = () => {
         if (customerName !== '' && customerName.trim().length >= 3) {
             if (parentRef.current) {
@@ -321,7 +304,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             ToastService.warning('Please enter at least three characters.');
         }
     }
-
     useEffect(() => {
         if (isCustomerNameExistSucess && isCustomerNameExistData) {
             if (isCustomerNameExistData.errorMessage.includes('exists')) {
