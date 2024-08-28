@@ -523,7 +523,7 @@
 
               .card-value {
                 color: #6e839b;
-                font-size: var(--commonFont-small);
+                font-size: 11px;
 
                 &.primary-phone {
                   position: relative;
@@ -543,7 +543,8 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    height: 17px;
+                    height: 15px;
+                    width: 15px;
 
                     @media only screen and (max-width: 1750px) {
                       padding: 2px;

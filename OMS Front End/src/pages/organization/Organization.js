@@ -112,7 +112,7 @@ const Organization = () => {
     ];
   
     return (
-        <div className="vertical-tab-card">
+        <div className="vertical-tab-card organization">
             <div className="row">
                 <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
                     <CardSection  >

@@ -44,7 +44,8 @@
         position: absolute;
         bottom: 25px;
       }
-      span{
+
+      span {
         color: var(--textColor);
       }
     }
@@ -64,16 +65,16 @@
       content: "";
       position: absolute;
       top: 0;
-      left: -20%;
+      right: 100%;
       background: url(../../assets/images/login-bg-shap.png);
       background-position: center left;
-      background-size: contain;
+      background-size: cover;
       background-repeat: no-repeat;
       height: 100vh;
-      width: 100%;
+      width: 200px;
     }
 
-  
+
 
     .login-form-section {
       width: 70%;
@@ -92,7 +93,8 @@
 
       .input-label-part {
         margin-bottom: 0;
-        .input-label{
+
+        .input-label {
           min-height: unset;
         }
 

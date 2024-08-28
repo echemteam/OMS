@@ -111,7 +111,7 @@ export const ComponentNavigation = [
     id: 'Users',
     path: '/Users',
     exact: true,
-    title: '',
+    title: 'Manage User',
     component: Users,
     hasParams: false,
     text: 'Users',
