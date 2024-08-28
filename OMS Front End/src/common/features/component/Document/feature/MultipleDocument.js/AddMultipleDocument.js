@@ -73,12 +73,33 @@ const AddMultipleDocument = ({
     }
   }, [isAddSuccess, isAddData]);
 
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (openDropdownIndex !== null) {
+  //       console.log("Closing dropdown on scroll");
+  //       setOpenDropdownIndex(null);
+  //     }
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [openDropdownIndex]);
+
+  const [lastScrollTop, setLastScrollTop] = useState(0);
+
   useEffect(() => {
     const handleScroll = () => {
-      if (openDropdownIndex !== null) {
-        console.log("Closing dropdown on scroll");
-        setOpenDropdownIndex(null);
+      const currentScrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      if (currentScrollTop > lastScrollTop) {
+        console.log("Scrolling down");
+      } else {
+        console.log("Scrolling up");
       }
+      setLastScrollTop(currentScrollTop <= 0 ? 0 : currentScrollTop);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -86,7 +107,7 @@ const AddMultipleDocument = ({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [openDropdownIndex]);
+  }, [lastScrollTop]);
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -243,7 +264,7 @@ const AddMultipleDocument = ({
                     className="react-select"
                     classNamePrefix="react-select"
                     menuPortalTarget={document.body}
-                    menuPosition="fixed"
+                    menuPosition="absolute"
                     isOpen={openDropdownIndex === index}
                     onMenuOpen={() => setOpenDropdownIndex(index)}
                     onMenuClose={() => setOpenDropdownIndex(null)}
