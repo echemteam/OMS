@@ -364,7 +364,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
                   isLoading={isListLoading}
                   pagination={{
                     totalCount: totalRowCount,
-                    pageSize: 25,
+                    pageSize: 20,
                     currentPage: 1,
                   }}
                   onPageChange={handlePageChange}

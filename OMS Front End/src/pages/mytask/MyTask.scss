@@ -254,6 +254,8 @@
 
       .value-content {
         list-style: none;
+        margin-bottom: 0;
+
         .value-label {
           font-weight: 600;
           font-size: var(--commonFont-medium);
@@ -263,6 +265,18 @@
           color: var(--themeColor);
           font-weight: 600;
           font-size: var(--commonFont-medium);
+        }
+
+        .dynamic-task-sepration {
+          border-bottom: 3px dotted var(--tableBorderColor);
+          width: 50%;
+          padding-bottom: 3px;
+          padding-top: 3px;
+          // .value-label {
+          //   &:last-child {
+          //     margin-bottom: 5px;
+          //   }
+          // }
         }
       }
 

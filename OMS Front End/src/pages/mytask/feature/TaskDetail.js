@@ -51,6 +51,53 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
   return { oldValue, newValue };
 };
 
+const renderPhoneList = (phoneList) => {
+  if (!Array.isArray(phoneList) || phoneList.length === 0) {
+    return <div className="no-value">No phone list available</div>;
+  }
+
+  return (
+    <ul className="value-content pl-0">
+      {phoneList.map((phone, index) => (
+        <li key={index} className="dynamic-task-sepration">
+          <span className="value-label">Phone Type:</span>
+          <span className="value-data ml-2">{phone.phoneType}</span>
+          <br />
+          <span className="value-label">Phone Number:</span>
+          <span className="value-data ml-2">{phone.phoneNumber}</span>
+          <br />
+          <span className="value-label">Extension:</span>
+          <span className="value-data ml-2">{phone.extension}</span>
+          <br />
+          <span className="value-label">Is Primary:</span>
+          <span className="value-data ml-2">{formatBoolean(phone.isPrimary)}</span>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const renderEmailList = (emailList) => {
+  if (!Array.isArray(emailList) || emailList.length === 0) {
+    return <div className="no-value">No email list available</div>;
+  }
+
+  return (
+    <ul className="value-content pl-0">
+      {emailList.map((email, index) => (
+        <li key={index} className="mb-1">
+          <span className="value-label">Email Address:</span>
+          <span className="value-data ml-2">{email.emailAddress}</span>
+          <br />
+          <span className="value-label">Is Primary Email:</span>
+          <span className="value-data ml-2">{formatBoolean(email.isEmailPrimary)}</span>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+
 const formatBoolean = (value) => (value ? "True" : "False");
 
 const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalRequest, tabId }) => {
@@ -93,6 +140,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
   const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(oldValue, newValue, fieldName);
 
   const newValues = parseJson(newValue);
+
 
   const findKey = (obj, keySubstring) => {
     return Object.keys(obj).find((key) =>
@@ -204,15 +252,20 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
             {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
               <ul className="value-content pl-0">
                 {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
-                  <>
-                    <li className="">
-                      <span className="value-label">{key}:</span>
-                      <span className="value-data ml-2">
-                        {typeof value === "boolean" ? formatBoolean(value) : value}
-                      </span>
-                    </li>
-
-                  </>
+                  <li key={key}>
+                    <span className="value-label">{key}:</span>
+                    <span className="value-data ml-2">
+                      {Array.isArray(value)
+                        ? key.toLowerCase().includes('phone')
+                          ? renderPhoneList(value)
+                          : key.toLowerCase().includes('email')
+                            ? renderEmailList(value)
+                            : value.join(', ')
+                        : typeof value === "boolean"
+                          ? formatBoolean(value)
+                          : value}
+                    </span>
+                  </li>
                 ))}
               </ul>
             ) : (
