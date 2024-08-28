@@ -14,7 +14,7 @@ const MyTask = () => {
   const roleId = authData.roles.roleId;
   const [isApproval, setIsApproval] = useState(false);
   const [approvedData, setApprovedData] = useState(null);
-  const [tabId, setTabId] = useState(0);
+  const [tabId, setTabId] = useState(0)
   const [approvalRequestId, setApprovalRequestId] = useState(0);
 
   const [
@@ -124,13 +124,7 @@ const MyTask = () => {
             </div>
           </div>
           <div className="col-xxl-8">
-            <TaskDetail
-              approvedData={approvedData}
-              approvalRequest={approvalRequest}
-              approvalRequestId={approvalRequestId}
-              isFetching={isGetApprovalRequestsByApprovalRequestIdFetching}
-              tabId={tabId}
-            />
+            <TaskDetail approvedData={approvedData} approvalRequest={approvalRequest} approvalRequestId={approvalRequestId} isFetching={isGetApprovalRequestsByApprovalRequestIdFetching} tabId={tabId} />
           </div>
         </div>
       </div>

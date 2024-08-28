@@ -48,13 +48,17 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         if (!data) return;
 
         const { filteredTypeIds, matchTypeIds } = isContactType(data.contactTypeId, isEdit);
+
+        const addAddressApproval = isSupplier ? FunctionalitiesName.SUPPLIERADDCONTACT : FunctionalitiesName.CUSTOMERADDCONTACT
+        const updateAddressApproval = isSupplier ? FunctionalitiesName.SUPPLIERUPDATECONTACT : FunctionalitiesName.CUSTOMERUPDATECONTACT
+
         if (matchTypeIds.length > 0 || matchTypeIds?.value) {
             const request = requestData(data, matchTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
             let req = {
                 ...request,
                 customerId: customerId ? customerId : request.customerId
             }
-            const functionalityName = isEdit ? FunctionalitiesName.CUSTOMERUPDATECONTACT : FunctionalitiesName.CUSTOMERADDCONTACT;
+            const functionalityName = isEdit ? updateAddressApproval : addAddressApproval;
             await handleApprovalRequest(req, formData.initialState, functionalityName, filteredTypeIds.length);
         }
         if (filteredTypeIds.length > 0) {
@@ -66,7 +70,6 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             addEdit(req);
         }
     };
-
     // Normalize typeIds to an array of values
     const normalizeTypeIds = (typeIds) => {
         if (Array.isArray(typeIds)) {
@@ -80,7 +83,6 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         }
         return [];
     };
-
     const isContactType = (typeIds, isEdit) => {
         let filteredTypeIds = [];
         let matchTypeIds = [];
@@ -91,11 +93,11 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             if (typeIdsArray.includes(ContactType.INVOICESUBMISSION) || typeIdsArray.includes(ContactType.AP)) {
                 return {
                     filteredTypeIds: [],
-                    matchTypeIds: getContactTypeId(typeIdsArray)
+                    matchTypeIds: getCustomerContactTypeId(typeIdsArray)
                 };
             } else {
                 return {
-                    filteredTypeIds: getContactTypeId(typeIdsArray),
+                    filteredTypeIds: getCustomerContactTypeId(typeIdsArray),
                     matchTypeIds: []
                 };
             }
@@ -110,11 +112,10 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             }
         }
         return {
-            filteredTypeIds: filteredTypeIds.length > 0 ? getContactTypeId(filteredTypeIds, isEdit) : filteredTypeIds, // Values remaining after filtering
-            matchTypeIds: matchTypeIds.length > 0 ? getContactTypeId(matchTypeIds, isEdit) : matchTypeIds,      // Values that were removed
+            filteredTypeIds: filteredTypeIds.length > 0 ? getCustomerContactTypeId(filteredTypeIds, isEdit) : filteredTypeIds, // Values remaining after filtering
+            matchTypeIds: matchTypeIds.length > 0 ? getCustomerContactTypeId(matchTypeIds, isEdit) : matchTypeIds,      // Values that were removed
         };
     };
-
     const handleApprovalRequest = async (newValue, oldValue, functionalityName, remainingContactLength) => {
         const request = { newValue, oldValue, isFunctional: true, functionalityName };
         const modifyData = await ValidateRequestByApprovalRules(request);
@@ -124,9 +125,29 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             }
         }
     };
+    const getCustomerContactTypeId = (contactTypeId, isEdit) => {
+        return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId;
+    };
+
+    const handlMainAddEdit = () => {
+        const data = ref.current.getFormData();
+        if (!data) return;
+
+        const contactTypeId = getContactTypeId(data.contactTypeId, isEdit);
+        const request = requestData(data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
+        let req = {
+            ...request,
+            customerId: customerId ? customerId : request.customerId
+        }
+        addEdit(req);
+    };
 
     const getContactTypeId = (contactTypeId, isEdit) => {
-        return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId;
+        if (isEdit) {
+            return contactTypeId && typeof contactTypeId === "object" ? String(contactTypeId.value) : String(contactTypeId);
+        } else {
+            return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId;
+        }
     };
 
     const requestData = (data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId) => {
@@ -303,7 +324,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                             buttonTypeClassName="theme-button"
                             buttonText='Save'
                             isLoading={isAddEditLoading}
-                            onClick={handleAddEdit}
+                            onClick={isSupplier ? handlMainAddEdit : isEditablePage ? handleAddEdit : handlMainAddEdit}
                             isDisable={isButtonDisable} />
                         {/* } */}
                         <Buttons

@@ -6,9 +6,13 @@ import { creditCardFormData } from "../config/CreditCardForm.data";
 import Buttons from "../../../../../components/ui/button/Buttons";
 import { useAddEditCreditCardMutation } from "../../../../../app/services/supplierFinancialSettingsAPI";
 import ToastService from "../../../../../services/toastService/ToastService";
+import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
+import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
+import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 
 const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financialSettingFormRef }) => {
   const creditCardFormRef = useRef();
+  const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
   const [creditCardForm, setCreditCardFormDataForm] = useState(creditCardFormData);
 
   const [addEditCreditCard, { isLoading: isAddEditCreditCardLoading, isSuccess: isAddEditCreditCardSuccess, data: isAddEditCreditCardData }] = useAddEditCreditCardMutation();
@@ -47,7 +51,7 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
     }
   }
 
-  const handleCreditCradAdd = () => {
+  const handleCreditCradAdd = async () => {
     let creditCardForm = creditCardFormRef.current.getFormData()
     let formsupplierFinancialSettings = financialSettingFormRef.current.getFormData()
     if (creditCardForm && formsupplierFinancialSettings) {
@@ -65,9 +69,25 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
         ccNote: creditCardForm.ccNote,
         isCCExistsOnFile: creditCardForm.isCCExistsOnFile,
       };
-      addEditCreditCard(req)
+      let requestIntialState = {
+        isActive: true,
+        supplierId: supplierId,
+        ...formsupplierFinancialSettings
+      }
+      await handleApprovalRequest(req, requestIntialState, FunctionalitiesName.SUPPLIERADDUPDATEFINANCIALSETTING);
+      //addEditCreditCard(req)
     }
   }
+
+  const handleApprovalRequest = async (newValue, oldValue, functionalityName) => {
+    const request = { newValue, oldValue, isFunctional: true, functionalityName };
+    const modifyData = await ValidateRequestByApprovalRules(request);
+    if (modifyData.newValue) {
+      onHandleGetById(supplierId);
+      onResetForm(creditCardForm,setCreditCardFormDataForm,creditCardFormData.initialState);
+    }
+  };
+
 
   return (
     <div className="ach-wire-section">
