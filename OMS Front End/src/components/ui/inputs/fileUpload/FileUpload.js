@@ -23,17 +23,20 @@ const FileUpload = ({
   isCustomButtonVisible,
   dataField,
   fieldActions,
+  isMultiple = false,
   ...inputProps
 }) => {
   const [fileValue, setFileValue] = useState(null);
 
   const fileRef = useRef();
   const handleInputChange = (data) => {
-    // const value = isMultiSelect ? selectedOption.map((option) => option.value) : selectedOption;
-    const value = data.target.files[0].name;
-    // if (onChange) {
-    //   onChange(e);
-    // }
+    const files = data.target.files;
+    const value = isMultiple
+      ? Array.from(files)
+          .map((file) => file.name)
+          .join(", ")
+      : files[0].name;
+
     onChange(data);
 
     if (fieldActions && inputProps) {
@@ -69,8 +72,9 @@ const FileUpload = ({
   return (
     <>
       <div
-        className={`form-field custom-file-uploader ${isDisable ? "field-disabled" : ""
-          }`}
+        className={`form-field custom-file-uploader ${
+          isDisable ? "field-disabled" : ""
+        }`}
       >
         <input
           ref={fileRef}
@@ -84,6 +88,7 @@ const FileUpload = ({
           onBlur={onBlur}
           disabled={isDisable}
           accept={acceptedFiles}
+          multiple={isMultiple}
         />
         <div className="custom-file-selector-design">
           <Image
