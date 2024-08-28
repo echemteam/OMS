@@ -108,7 +108,12 @@ export const ParameterType = {
 
 export const AddressType = {
     BILLING: 1,
-    SHIPPING: 2
+    SHIPPING: 2,
+    AP: 3,
+    PRIMARY: 4,
+    PHYSICALADDRESSHQ: 5,
+    REMITTANCEADDRESS: 6,
+    BANKADDRESS: 7
 }
 
 export const ContactType = {
