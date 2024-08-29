@@ -3568,10 +3568,13 @@ input[type="checkbox"]:disabled {
 
 // Tab Section End
 .model-hight-fix {
-  height: calc(100vh - 200px);
-
+  height: calc(100vh - 60px);
   canvas {
     width: 100% !important;
+  }
+  .document-container{
+    width: auto !important; 
+    padding: 10px !important;
   }
 }
 

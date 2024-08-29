@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import FinalMolGrid from "../../../../../../../components/FinalMolGrid/FinalMolGrid";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
@@ -8,29 +8,42 @@ import { AccountGridConfig } from "../config/CarrierConfig";
 import PropTypes from 'prop-types';
 import ToastService from "../../../../../../../services/toastService/ToastService";
 
-const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList }) => {
+const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList , handleDeleteClick }) => {
 
     // const [gridConfig, setGridConfig] = useState(AccountGridConfig);
-
+    // const [gridConfig, setGridConfig] = useState(AccountGridConfig)
+    const [dataSource, setDataSource] = useState(collectAccountData);
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
 
-    const handleEditClick = (data) => {
+    useEffect(() => {
+        if (!isGetDataLoading && collectAccountData) {
+            // New blank row object
+            const blankRow = {
+                carrier: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
+                accountNumber: '',
+                handlingFee: '',
+                isPrimary: false,
+            };
+
+            setDataSource([...collectAccountData, blankRow]);
+        }
+    }, [collectAccountData, isGetDataLoading]);
+
+    const handleEditClick = (data, rowIndex) => {
+        let newGridData = [...dataSource]
+        newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
+        setDataSource(newGridData);
+
         const req = {
             customerId: customerId,
             isPrimary: data.isPrimary,
             accountNumber: data.accountNumber,
-            customerDeliveryCarrierId: data.customerDeliveryCarrierId ? data.customerDeliveryCarrierId : 0,
-            carrierId: data.carrier && typeof data.carrier === "object" ? data.carrier.value : data.carrierId,
+            customerDeliveryCarrierId: data.customerDeliveryCarrierId || 0,
+            carrierId: data.carrier?.value || data.carrierId,
             handlingFee: data.handlingFee
-        }
-        update(req)
+        };
+        update(req);
     }
-
-    const handleGridCheckBoxChange = (fieldName, rowData) => {
-        if (fieldName === 'isPrimary') {
-            handleEditClick(rowData);
-        }
-    };
 
     useEffect(() => {
         if (isUpdateSuccess && isUpdateData) {
@@ -55,14 +68,15 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
                 titleButtonClick={handleToggleModal}>
                 <div className="account-table table-striped mb-3">
                     <FinalMolGrid
+                        key={JSON.stringify(dataSource)}
                         ref={molGridRef}
                         configuration={AccountGridConfig}
-                        dataSource={collectAccountData}
+                        dataSource={dataSource}
                         allowPagination={false}
                         onActionChange={actionHandler}
                         isLoading={isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
-                        onColumnChange={handleGridCheckBoxChange}
+                        onRowDataDelete={handleDeleteClick}
                     />
                 </div>
             </CardSection>
