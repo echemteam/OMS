@@ -24,7 +24,7 @@
         border-bottom: 1px solid var(--light-menuDot);
         padding-bottom: 15px;
         margin-bottom: 15px;
-
+        align-items: flex-start;
         .profile-icon-desc {
           display: flex;
           align-items: center;
@@ -57,7 +57,16 @@
           text-overflow: ellipsis;
           transition: all .5s ease;
           white-space: nowrap;
-          max-width: 285px;
+          max-width: 335px;
+          @media only screen and (max-width: 1750px) {
+            max-width: 285px;
+          }
+          @media only screen and (max-width: 1650px) {
+            max-width: 245px;
+          }
+          @media only screen and (max-width: 1280px) {
+            max-width: 195px;
+          }
         }
 
         .email-web-info {
@@ -470,10 +479,12 @@
 }
 
 .profile-icon {
-  width: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
   margin-left: 9px;
   font-size: var(--commonFont-extraSmall) !important;
-  height: 20px !important;
 }
 
 .edit-icons {

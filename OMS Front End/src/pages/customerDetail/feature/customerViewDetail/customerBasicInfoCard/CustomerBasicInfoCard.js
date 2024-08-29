@@ -6,29 +6,25 @@ import FormCreator from "../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../components/ui/button/Buttons";
 
 import SwalAlert from "../../../../../services/swalService/SwalService";
-import {
-  useLazyGetAllUserQuery,
-} from "../../../../../app/services/commonAPI";
+import { useLazyGetAllUserQuery } from "../../../../../app/services/commonAPI";
 import {
   useAddEditResponsibleUserForCustomerMutation,
   useUpdateCustomerInActiveStatusMutation,
   useUpdateCustomerStatusMutation,
-  useUpdateCustomerSubCustomerMutation
+  useUpdateCustomerSubCustomerMutation,
 } from "../../../../../app/services/basicdetailAPI";
 import ToastService from "../../../../../services/toastService/ToastService";
 import BasicDetailContext from "../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { securityKey } from "../../../../../data/SecurityKey";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import {
-  StatusValue,
-} from "../../../../../utils/Enums/StatusEnums";
+import { StatusValue } from "../../../../../utils/Enums/StatusEnums";
 import { excludingRoles } from "../../customerBasicDetail/config/CustomerBasicDetail.data";
 import CopyText from "../../../../../utils/CopyText/CopyText";
 import { ErrorMessage, SuccessMessage } from "../../../../../data/appMessages";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 // import { OwnerType } from "../../../../../utils/Enums/commonEnums";
 import { reasonData } from "../../../../../common/features/component/CustomerSupplierReason/Reason.data";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 // import { Tooltip } from "react-bootstrap";
@@ -38,9 +34,12 @@ import AddEditInvoiceSubmissionInstructionDetail from "./feature/AddEditInvoiceS
 import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { useAddCustomerNotesMutation } from "../../../../../app/services/notesAPI";
 import { CustomerSupplierStatus } from "../../../../../utils/Enums/commonEnums";
+import Tooltip from "../../../../../components/ui/tooltip/Tooltip";
 
 //** Component's */
-const CustomerApproval = React.lazy(() => import("../../cutomerApproval/CustomerApproval"));
+const CustomerApproval = React.lazy(() =>
+  import("../../cutomerApproval/CustomerApproval")
+);
 
 const CustomerBasicInfoCard = ({
   editClick,
@@ -63,12 +62,18 @@ const CustomerBasicInfoCard = ({
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
   const [
     updateCustomerSubCustomer,
-    { isSuccess: isSuccessUpdateCustomerSubCustomer, data: isUpdateCustomerSubCustomerData },
+    {
+      isSuccess: isSuccessUpdateCustomerSubCustomer,
+      data: isUpdateCustomerSubCustomerData,
+    },
   ] = useUpdateCustomerSubCustomerMutation();
 
   const [
     addEditResponsibleUserForCustomer,
-    { isSuccess: isSuccessAddEditResponsibleUserForCustomer, data: isAddEditResponsibleUserForCustomerData },
+    {
+      isSuccess: isSuccessAddEditResponsibleUserForCustomer,
+      data: isAddEditResponsibleUserForCustomerData,
+    },
   ] = useAddEditResponsibleUserForCustomerMutation();
   const [
     updateCustomerStatus,
@@ -88,7 +93,6 @@ const CustomerBasicInfoCard = ({
 
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
-
   const { isResponsibleUser } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(
@@ -103,12 +107,10 @@ const CustomerBasicInfoCard = ({
   useEffect(() => {
     if (!isResponsibleUser) {
       if (hasEditPermission && hasEditPermission.isViewOnly === true) {
-
         setIsButtonDisable(true);
       } else if (hasEditPermission.isEditable === true) {
         // setShowEditIcon(true);
       } else {
-
         setIsButtonDisable(true);
       }
     }
@@ -133,8 +135,12 @@ const CustomerBasicInfoCard = ({
 
   useEffect(() => {
     if (customerData) {
-      const responsibleUserIds = customerData?.responsibleUserId?.split(',').map(id => id.trim());
-      const responsibleUserNames = customerData?.responsibleUserName?.split(',').map(name => name.trim());
+      const responsibleUserIds = customerData?.responsibleUserId
+        ?.split(",")
+        .map((id) => id.trim());
+      const responsibleUserNames = customerData?.responsibleUserName
+        ?.split(",")
+        .map((name) => name.trim());
       const responsibleUsers = responsibleUserIds?.map((id, index) => ({
         value: id,
         label: responsibleUserNames[index] || id,
@@ -149,15 +155,26 @@ const CustomerBasicInfoCard = ({
   useEffect(() => {
     if (!isFetching && isGetAllUserSucess && allGetAlluserData) {
       // const finalData = responsibleUserIds?.map(option => option.value).join(',')
-      // 
+      //
 
       const filterData = allGetAlluserData.filter((item) => {
-        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+        return (
+          item.roleName === null ||
+          !excludingRoles
+            .map((role) => role.toLowerCase())
+            .includes(item.roleName.toLowerCase())
+        );
       });
 
-      const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
+      const uniqueData = Array.from(
+        new Map(filterData.map((item) => [item.fullName, item])).values()
+      );
 
-      const filteredData = responsibleUserIds ? uniqueData.filter((item) => !responsibleUserIds.includes(item.userId.toString())) : uniqueData;
+      const filteredData = responsibleUserIds
+        ? uniqueData.filter(
+            (item) => !responsibleUserIds.includes(item.userId.toString())
+          )
+        : uniqueData;
 
       const modifyUserData = filteredData.map((item) => ({
         value: item.userId,
@@ -166,12 +183,26 @@ const CustomerBasicInfoCard = ({
       setResponsibleUserOptions(modifyUserData);
 
       const filterDataDropdown = allGetAlluserData.filter((item) => {
-        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+        return (
+          item.roleName === null ||
+          !excludingRoles
+            .map((role) => role.toLowerCase())
+            .includes(item.roleName.toLowerCase())
+        );
       });
       // Remove duplicates based on fullName
-      const uniqueDataDropdown = Array.from(new Map(filterDataDropdown.map((item) => [item.fullName, item])).values());
-      setDropDownOptionField(uniqueDataDropdown, 'userId', 'fullName', reasonData, 'responsibleUserId');
-
+      const uniqueDataDropdown = Array.from(
+        new Map(
+          filterDataDropdown.map((item) => [item.fullName, item])
+        ).values()
+      );
+      setDropDownOptionField(
+        uniqueDataDropdown,
+        "userId",
+        "fullName",
+        reasonData,
+        "responsibleUserId"
+      );
     }
   }, [isGetAllUserSucess, allGetAlluserData, isFetching]);
 
@@ -182,17 +213,21 @@ const CustomerBasicInfoCard = ({
       );
     } else {
       if (selectedOption.value === CustomerSupplierStatus.PENDING) {
-        confirm("Warning?", `Are you sure you want to change the customer status to ${selectedOption.label}?`,
-          "Yes", "Cancel").then((confirmed) => {
-            if (confirmed) {
-              let req = {
-                customerId: customerId,
-                statusId: selectedOption.value,
-              };
-              updateCustomerStatus(req);
-              setSelectedStatus(selectedOption.value);
-            }
-          });
+        confirm(
+          "Warning?",
+          `Are you sure you want to change the customer status to ${selectedOption.label}?`,
+          "Yes",
+          "Cancel"
+        ).then((confirmed) => {
+          if (confirmed) {
+            let req = {
+              customerId: customerId,
+              statusId: selectedOption.value,
+            };
+            updateCustomerStatus(req);
+            setSelectedStatus(selectedOption.value);
+          }
+        });
       } else if (
         selectedOption.value === CustomerSupplierStatus.FREEZE ||
         selectedOption.value === CustomerSupplierStatus.BLOCK ||
@@ -206,7 +241,10 @@ const CustomerBasicInfoCard = ({
         }
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
-      } else if (selectedOption.value === CustomerSupplierStatus.APPROVED || selectedOption.value === CustomerSupplierStatus.SUBMITTED) {
+      } else if (
+        selectedOption.value === CustomerSupplierStatus.APPROVED ||
+        selectedOption.value === CustomerSupplierStatus.SUBMITTED
+      ) {
         if (childRef.current) {
           childRef.current.callChildFunction(
             customerId,
@@ -220,33 +258,40 @@ const CustomerBasicInfoCard = ({
   };
 
   const removeFields = () => {
-    const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
+    const modifyFormFields = removeFormFields(formData, ["responsibleUserId"]);
     setFormData(modifyFormFields);
-  }
-
+  };
 
   const onHandleBlur = () => {
     let req = {
       customerId: customerId,
       // userId: String(rUserValue)
-      userId: rUserValue?.map(option => option.value).join(',')
+      userId: rUserValue?.map((option) => option.value).join(","),
     };
 
     addEditResponsibleUserForCustomer(req);
-  }
+  };
 
   const updateRUserData = (data) => {
-    const responsibleUserId = data.map(option => option.value.toString());
+    const responsibleUserId = data.map((option) => option.value.toString());
     setRUserValue(data);
     setResponsibleUserIds(responsibleUserId);
     getAllUser();
   };
 
   useEffect(() => {
-    if (isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
-      ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage);
+    if (
+      isSuccessAddEditResponsibleUserForCustomer &&
+      isAddEditResponsibleUserForCustomerData
+    ) {
+      ToastService.success(
+        isAddEditResponsibleUserForCustomerData.errorMessage
+      );
     }
-  }, [isSuccessAddEditResponsibleUserForCustomer, isAddEditResponsibleUserForCustomerData]);
+  }, [
+    isSuccessAddEditResponsibleUserForCustomer,
+    isAddEditResponsibleUserForCustomerData,
+  ]);
 
   const updateCustomerApproval = () => {
     setSelectedStatus(statusId);
@@ -281,14 +326,14 @@ const CustomerBasicInfoCard = ({
   const updateRUserDataDropdown = (value) => {
     let req = {
       customerId: customerId,
-      userId: String(value)
-    }
+      userId: String(value),
+    };
     addEditResponsibleUserForCustomer(req);
-  }
+  };
 
   const handleModelShow = () => {
     setIsInvoiceModelShow(true);
-  }
+  };
   const handleToggleModal = () => {
     setShowModal(false);
     setIsInvoiceModelShow(false);
@@ -344,23 +389,31 @@ const CustomerBasicInfoCard = ({
   }, [isSuccessUpdateCustomerSubCustomer, isUpdateCustomerSubCustomerData]);
 
   const getStatusLabel = (value) => {
-    const status = StatusValue.find(item => item.value === value);
-    return status ? status.label : 'Unknown'; // Returns 'Unknown' if value not found
+    const status = StatusValue.find((item) => item.value === value);
+    return status ? status.label : "Unknown"; // Returns 'Unknown' if value not found
   };
 
   return !isLoading ? (
     <div className="basic-customer-detail">
       <div className="col-xl-12 col-lg-12 col-md-12 col-12">
         <div className="d-flex profile-info  justify-content-between col-11">
-          <div className="d-flex col-3 flex-column profile-icon-desc justify-content-center">
-            <div className="d-flex">
+          <div className="col-3 flex-column profile-icon-desc justify-content-center">
+            <div className="d-flex w-100">
               <div className="profile-icon ">
                 {" "}
                 {customerData?.name
                   ? customerData?.name.charAt(0).toUpperCase()
                   : ""}
               </div>
-              <h5 className="ml-0">{customerData?.name}</h5>
+              <div className="customer-name">
+                <h5 className="ml-0" title={customerData?.name}>
+                  {customerData?.name}
+                </h5>
+                <div className="info-icon">
+                  <Iconify icon="clarity:info-solid" className="info" />
+                  <Tooltip text={customerData?.name} />
+                </div>
+              </div>
             </div>
 
             <div className="field-desc col-span-3">
@@ -434,7 +487,9 @@ const CustomerBasicInfoCard = ({
                 <DropdownSelect
                   isMultiSelect={true}
                   placeholder="Responsible User"
-                  isDropdownDisabled={isResponsibleUser ? true : isButtonDisable}
+                  isDropdownDisabled={
+                    isResponsibleUser ? true : isButtonDisable
+                  }
                   optionsValue={responsibleUserOptions}
                   value={rUserValue}
                   handleDropdownChange={updateRUserData}
@@ -495,7 +550,11 @@ const CustomerBasicInfoCard = ({
                     className="form-checkbox"
                     type="checkbox"
                     id={"isSubCustomer"}
-                    checked={customerData?.isSubCustomer ? customerData?.isSubCustomer : false}
+                    checked={
+                      customerData?.isSubCustomer
+                        ? customerData?.isSubCustomer
+                        : false
+                    }
                     onChange={handleCheckboxChange}
                     disabled={isResponsibleUser ? true : isButtonDisable}
                   />
@@ -507,7 +566,9 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
             <div className="field-desc">
-              <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
+              <div className="inf-label inf-label-width submission-tab">
+                Invoice Submission
+              </div>
               <b>&nbsp;:&nbsp;</b>
               <div className="checkbox-part ml-2 mt-2 eye-icon ">
                 <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
@@ -553,22 +614,21 @@ const CustomerBasicInfoCard = ({
           </div>
         </CenterModel>
       )}
-      {
-        isInvoiceModelShow && (
-          <CenterModel
-            showModal={isInvoiceModelShow}
-            handleToggleModal={setIsInvoiceModelShow}
-            modalTitle="Add/Edit Invoice Submission Instruction"
-            modelSizeClass="w-60"
-          >
-            <AddEditInvoiceSubmissionInstructionDetail
-              customerId={customerId}
-              isInvoiceModelShow={isInvoiceModelShow}
-              setIsInvoiceModelShow={setIsInvoiceModelShow}
-              handleToggleModal={handleToggleModal}
-            />
-          </CenterModel>)
-      }
+      {isInvoiceModelShow && (
+        <CenterModel
+          showModal={isInvoiceModelShow}
+          handleToggleModal={setIsInvoiceModelShow}
+          modalTitle="Add/Edit Invoice Submission Instruction"
+          modelSizeClass="w-60"
+        >
+          <AddEditInvoiceSubmissionInstructionDetail
+            customerId={customerId}
+            isInvoiceModelShow={isInvoiceModelShow}
+            setIsInvoiceModelShow={setIsInvoiceModelShow}
+            handleToggleModal={handleToggleModal}
+          />
+        </CenterModel>
+      )}
       <CustomerApproval
         isDetailPage={true}
         childRef={childRef}
@@ -579,7 +639,6 @@ const CustomerBasicInfoCard = ({
     <DataLoader />
   );
 };
-
 
 CustomerBasicInfoCard.propTypes = {
   editClick: PropTypes.func.isRequired,

@@ -293,7 +293,10 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                     ? supplierData?.name.charAt(0).toUpperCase()
                     : ""}
                 </div>
-                <h5 className="ml-0">{supplierData?.name}</h5>
+                <div className='d-flex'>
+                <h5 className="ml-0" title={supplierData?.name}>{supplierData?.name}</h5>
+                </div>
+
               </div>
 
               <div className="field-desc col-span-3">
