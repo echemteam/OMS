@@ -116,3 +116,16 @@
     --commonFont-average: 13px;
   }
 }
+@media only screen and (max-width: 1366px) {
+  :root {
+    // Font-styling
+    --commonFont-2extraLarge: 18px;
+    --commonFont-extraLarge: 15px;
+    --commonFont-large: 13px;
+    --commonFont: 11px;
+    --commonFont-medium: 10px;
+    --commonFont-small: 9px;
+    --commonFont-extraSmall: 8px;
+    --commonFont-average: 12px;
+  }
+}

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types"; 
 const ValidationText = (props) => {
   return props.error ? (
-    <div className="font-normal validation-text mt-1">
+    <div className="font-normal validation-text">
       {props.error}
     </div>
   ) : null;

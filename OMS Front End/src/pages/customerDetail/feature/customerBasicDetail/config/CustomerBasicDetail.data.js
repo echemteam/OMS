@@ -43,7 +43,7 @@ export const customerbasicData = {
       fieldSetting: {
         placeholder: "Enter Email",
         allowSpace: true,
-        maxLength: 50,
+        maxLength: 65,
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
@@ -182,7 +182,7 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isSubCustomer",
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-2 col-12 mt-3 pt-2 mb-input margin-left0-checkbox",
+        containerCss: "col-xxl-2 col-xl-2 col-md-2 col-12 pt-2 mb-input margin-top-checkbox margin-left0-checkbox",
       },
     },
     {

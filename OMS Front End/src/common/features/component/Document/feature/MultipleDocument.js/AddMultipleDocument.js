@@ -73,54 +73,6 @@ const AddMultipleDocument = ({
     }
   }, [isAddSuccess, isAddData]);
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (openDropdownIndex !== null) {
-  //       console.log("Closing dropdown on scroll");
-  //       setOpenDropdownIndex(null);
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [openDropdownIndex]);
-
-  const [lastScrollTop, setLastScrollTop] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      if (currentScrollTop > lastScrollTop) {
-        console.log("Scrolling down");
-      } else {
-        console.log("Scrolling up");
-      }
-      setLastScrollTop(currentScrollTop <= 0 ? 0 : currentScrollTop);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [lastScrollTop]);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     console.log("Basic scroll event triggered");
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-
   const handleSave = () => {
     const modifyData = uploadedFiles.map((data) => {
       const matchingAttachment = attachment.find(
@@ -147,24 +99,6 @@ const AddMultipleDocument = ({
       ToastService.warning(ErrorMessage.DocumentDetailMissing);
     }
   };
-
-  // const handleFileUpload = (value) => {
-  //   console.log("value", value);
-  //   const fileExtension = getFileExtension(value);
-  //   const newFile = {
-  //     name: value,
-  //     attachment: value,
-  //     extension: fileExtension,
-  //     documentTypeId: null
-  //   };
-  //   // const existFile = uploadedFiles && uploadedFiles.some(data => data.name === newFile.name && data.extension === newFile.extension);
-  //   // if (!existFile) {
-  //   setUploadedFiles((prevFiles) => [...prevFiles, newFile]);
-  //   // } else {
-  //   //   ToastService.warning(ErrorMessage.FileExists);
-  //   // }
-  // };
-
   const handleFileUpload = (value) => {
     const files = value.split(", ");
 
@@ -183,19 +117,11 @@ const AddMultipleDocument = ({
 
   const handleTypeChange = (index, selectedOption) => {
     const newType = selectedOption ? selectedOption.value : "";
-    // if (!existFileType || selectedOption.value === DocumentTypes.OURSUBMITTEDFORMS) {
     setUploadedFiles((prevFiles) =>
       prevFiles.map((file, i) =>
         i === index ? { ...file, documentTypeId: newType } : file
       )
     );
-    // } else {
-    //   setUploadedFiles((prevFiles) =>
-    //     prevFiles.map((file, i) =>
-    //       i === index ? { ...file, documentTypeId: null } : file
-    //     ));
-    //   ToastService.warning(ErrorMessage.DocumentTypeExists);
-    // }
     setOpenDropdownIndex(index);
   };
   const handleFileRemove = (index) => {
@@ -208,7 +134,7 @@ const AddMultipleDocument = ({
   const onFormDataChange = (updatedData) => {
     setAttachment((prevAttachments) => [
       ...prevAttachments,
-      updatedData?.attachment,
+      ...updatedData?.attachment,
     ]);
   };
 

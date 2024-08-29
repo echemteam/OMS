@@ -51,7 +51,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "Enter Email",
         allowSpace: true,
-        maxLength: 50,
+        maxLength: 65,
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {

@@ -79,7 +79,7 @@ const CustomerDetails = () => {
     <>
       <div className="card-bottom-m-0">
         <div className="row">
-          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 basic-left-part customer-desc-left-sec mb-2 mt-2">
+          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 basic-left-part customer-desc-left-sec mb-2 mt-2 customer-all-details">
             <CardSection>
               <CustomerBasicInfoCard
                 editClick={handleToggleModal}

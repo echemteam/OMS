@@ -129,6 +129,35 @@
 .css-wsp0cs-MultiValueGeneric {
   font-size: var(--commonFont-medium) !important;
 }
+.customer-all-details{
+  .css-wsp0cs-MultiValueGeneric {
+    padding: 0px 3px !important;
+    
+  } 
+  .css-13cymwt-control{
+    min-height: auto !important;
+    
+  }
+  .css-1hb7zxy-IndicatorsContainer{
+    height: 27px !important;
+  }
+  .css-3w2yfm-ValueContainer{
+    padding-top: 5px !important;
+  }
+  .dis-dropdown {}
+  .css-3iigni-container {
+    .css-16xfy0z-control{
+      border: none !important;
+      background: transparent !important;
+    }
+  }
+
+  .css-3w2yfm-ValueContainer{
+    min-width: calc(100% - 30px);
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
 
 .custom-checkbox-select {
   width: 100%;
@@ -136,6 +165,7 @@
     display: flex;
   }
 }
+
 
 @media only screen and (max-width: 1750px) {
   .css-16xfy0z-control,

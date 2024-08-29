@@ -109,10 +109,10 @@
       overflow: hidden;
       overflow-y: auto;
       width: 100%;
-      max-height: calc(100vh - 245px);
+      max-height: calc(100vh - 235px);
       @media only screen and (max-width: 1750px) {
         padding: 10px 15px;
-        max-height: calc(100vh - 185px);
+        max-height: calc(100vh - 179px);
       }
       .content {
         display: none;
