@@ -43,17 +43,11 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(poNumber);
         }
-        [HttpPost("AddEditOrderInformation")]
-        public async Task<IActionResult> AddEditOrderInformation(AddEditOrderInformationRequest requestData)
+        [HttpPost("AddOrder")]
+        public async Task<IActionResult> AddOrder(AddOrderRequest requestData)
         {
-            var addEditItem = await _serviceManager.orderServices.AddEditOrderInformation(requestData, CurrentUserId);
-            return APISucessResponce(addEditItem);
-        }
-        [HttpPost("AddEditOrderContactInformation")]
-        public async Task<IActionResult> AddEditOrderContactInformation(AddEditOrderContactInformationRequest requestData)
-        {
-            var addEditItem = await _serviceManager.orderServices.AddEditOrderContactInformation(requestData, CurrentUserId);
-            return APISucessResponce(addEditItem);
+            var addItem = await _serviceManager.orderServices.AddOrder(requestData, CurrentUserId);
+            return APISucessResponce(addItem);
         }
         #endregion
     }

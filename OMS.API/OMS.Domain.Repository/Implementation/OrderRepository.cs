@@ -13,9 +13,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string CHECKPONUMBEREXISTORNOT = "CheckPoNumberExistOrNot";
         const string GETPONUMBERDETAILSBYPONUMBER = "GetPoNumberDetailsByPoNumber";
-        const string ADDEDITORDERINFORMATION = "AddEditOrderInformation";
-        const string ADDEDITORDERCONTACTINFORMATION = "AddEditOrderContactInformation";
-        const string ADDEDITORDERADDRESSINFORMATION = "AddEditOrderAddressInformation";
+        const string ADDORDER = "AddOrder";
         #endregion
 
         public OrderRepository(DapperContext dapperContext) : base(dapperContext)
@@ -39,45 +37,26 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return poNumberDetails;
         }
-        public async Task<AddEntityDto<int>> AddEditOrderInformation(OrderDto requestData)
+        public async Task<AddEntityDto<int>> AddOrder(OrderDto requestData)
         {
-            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORDERINFORMATION, new
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDORDER, new
             {
-                requestData.OrderId,
                 requestData.OrderMethodId,
                 requestData.CustomerId,
                 requestData.SubCustomerId,
                 requestData.PoNumber,
+                requestData.PoDate,
                 requestData.OrderReceivedDate,
-                requestData.CreatedBy,
-            }, CommandType.StoredProcedure);
-        }
-        public async Task<AddEntityDto<int>> AddEditOrderAddressInformation(OrderAddressDto requestData)
-        {
-            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORDERADDRESSINFORMATION, new
-            {
-                requestData.OrderAddressId,
-                requestData.OrderId,
-                requestData.BillingAddressId,
-                requestData.ShippingAddressId,
-                requestData.CreatedBy,
-            }, CommandType.StoredProcedure);
-        }
-        public async Task<AddEntityDto<int>> AddEditOrderContactInformation(OrderDto requestData)
-        {
-            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDEDITORDERCONTACTINFORMATION, new
-            {
-                requestData.OrderId,
                 requestData.IsEndUser,
-                requestData.EndUserContactId,
                 requestData.IsInvoiceSubmission,
-                requestData.InvoiceSubmissionContactId,
                 requestData.IsPurchasing,
-                requestData.PurchasingContactId,
                 requestData.ReferenceNumber,
+                requestData.PO_TotalOrderAmount,
+                requestData.CurrencyId,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }
+      
         #endregion
     }
 }
