@@ -48,6 +48,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLADDRESSESBYCUSTOMERIDANDADDRESSTYPEID = "GetAllAddressesByCustomerIdAndAddressTypeId";
         const string GETALLCONTACTSBYCUSTOMERIDANDCONTACTTYPEID = "GetAllContactsByCustomerIdAndContactTypeId";
         const string GETALLORDERMETHOD = "GetAllOrderMethod";
+        const string GETALLINCOTERM = "GetAllIncoterm";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -265,6 +266,10 @@ namespace OMS.Domain.Repository.Implementation
         public async Task<List<GetAllOrderMethodResponse>> GetAllOrderMethod()
         {
             return await _context.GetList<GetAllOrderMethodResponse>(GETALLORDERMETHOD, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<List<GetAllIncotermResponse>> GetAllIncoterm()
+        {
+            return await _context.GetList<GetAllIncotermResponse>(GETALLINCOTERM, commandType: CommandType.StoredProcedure);
         }
     }
 }

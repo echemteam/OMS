@@ -10,7 +10,7 @@ import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDeta
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
-import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
+import { useLazyGetAllIncotermQuery, useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddEditCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery } from "../../../../app/services/basicdetailAPI";
 import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { customerbasicData, excludingRoles } from "./config/CustomerBasicDetail.data";
@@ -48,6 +48,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
     const [getAllGroupTypes, { isSuccess: isGetAllGroupTypesSucess, data: allGetAllGroupTypesData }] = useLazyGetAllGroupTypesQuery();
     const [getAllTerritories, { isSuccess: isGetAllTerritoriesSucess, data: allGetAllTerritoriesData }] = useLazyGetAllTerritoriesQuery();
+    const [getAllIncoterm, { isSuccess: isGetAllIncotermSucess, data: allGetAllIncotermData }] = useLazyGetAllIncotermQuery();
     const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
     const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById,
         data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
@@ -90,7 +91,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 getAllUser(),
                 getAllCountries(),
                 getAllGroupTypes(),
-                getAllTerritories()
+                getAllTerritories(),
+                getAllIncoterm()
             ]);
 
             if (isOpen) {
@@ -135,8 +137,11 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         if (isGetAllTerritoriesSucess && allGetAllTerritoriesData) {
             setDropDownOptionField(allGetAllTerritoriesData, 'territoryId', 'territory', customerbasicData, 'territoryId');
         }
+        if (isGetAllIncotermSucess && allGetAllIncotermData) {
+            setDropDownOptionField(allGetAllIncotermData, 'incotermId', 'incotermName', customerbasicData, 'incotermId');
+        }
     }, [isGetAllGroupTypesSucess, allGetAllGroupTypesData, isGetAllUserSucess, allGetAllUserData, isGetAllCountriesSucess, allGetAllCountriesData,
-        isGetAllTerritoriesSucess, allGetAllTerritoriesData]);
+        isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllIncotermSucess, allGetAllIncotermData]);
     useEffect(() => {
         if (isAddEditCustomersBasicInformationSuccess && isAddEditCustomersBasicInformationData) {
             if (isAddEditCustomersBasicInformationData.errorMessage.includes('exists')) {
@@ -190,6 +195,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 ...data,
                 groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object" ? data.groupTypeId.value : data.groupTypeId,
                 territoryId: data.territoryId && typeof data.territoryId === "object" ? data.territoryId.value : data.territoryId,
+                incotermId: data.incotermId && typeof data.incotermId === "object" ? data.incotermId.value : data.incotermId,
                 countryId: data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId,
                 responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                 customerId: keyId ? keyId : customerId,

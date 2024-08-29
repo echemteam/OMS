@@ -63,7 +63,7 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton })
     //     setDeliveryCarrierId(data.customerDeliveryCarrierId);
     // }
 
-    const handleDeleteClick = (data) => {
+    const handleDeleteClick = (index , data) => {
         confirm(
             "Delete?",
             "Are you sure you want to Delete?",
@@ -85,7 +85,7 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton })
         <>
             <CarrierList molGridRef={molGridRef} collectAccountData={carriersList} actionHandler={actionHandler} customerId={customerId}
                 handleToggleModal={handleToggleModal} isGetDataLoading={isGetDataLoading} isShowButton={isShowButton}
-                handleGetDefaultList={handleGetDefaultList}
+                handleGetDefaultList={handleGetDefaultList} handleDeleteClick={handleDeleteClick}
             />
             {showModal && (
                 <AddEditCarrier handleToggleModal={handleToggleModal} showModal={showModal}

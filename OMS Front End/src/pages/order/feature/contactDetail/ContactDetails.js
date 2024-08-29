@@ -71,40 +71,6 @@ const ContactDetails = (props) => {
     }
   }, [orderCustomerId])
 
-  // useEffect(() => {
-  //   if (!isGetAllEndUserFetching && isgetAllEndUserSuccess && isgetAllEndUserData) {
-  //     const getContact = isgetAllEndUserData.map((item) => ({
-  //       value: item.contactId,
-  //       label: item.fullName,
-  //     }));
-  //     const dropdownField = formData?.formFields?.find(item => item.dataField === "endUserId");
-  //     dropdownField.fieldSetting.options = getContact;
-  //   }
-  // }, [isGetAllEndUserFetching, isgetAllEndUserSuccess, isgetAllEndUserData])
-
-  // useEffect(() => {
-  //   if (!isGetAllInvoiceSubmissionFetching && isgetAllInvoiceSubmissionSuccess && isgetAllInvoiceSubmissionData) {
-  //     const getContact = isgetAllInvoiceSubmissionData.map((item) => ({
-  //       value: item.contactId,
-  //       label: item.fullName,
-  //     }));
-  //     const dropdownField = formData?.formFields?.find(item => item.dataField === "invoiceSubmissionId");
-  //     dropdownField.fieldSetting.options = getContact;
-  //   }
-  // }, [isGetAllInvoiceSubmissionFetching, isgetAllInvoiceSubmissionSuccess, isgetAllInvoiceSubmissionData])
-
-  // useEffect(() => {
-  //   if (!isGetAllPurchasingFetching && isgetAllPurchasingSuccess && isgetAllPurchasingData) {
-  //     debugger
-  //     const getContact = isgetAllPurchasingData.map((item) => ({
-  //       value: item.contactId,
-  //       label: item.fullName,
-  //     }));
-  //     const dropdownField = formData?.formFields?.find(item => item.dataField === "purchasingId");
-  //     dropdownField.fieldSetting.options = getContact;
-  //   }
-  // }, [isGetAllPurchasingFetching, isgetAllPurchasingSuccess, isgetAllPurchasingData])
-
   useEffect(() => {
     if (!isGetAllEndUserFetching && isgetAllEndUserSuccess && isgetAllEndUserData) {
       const getContact = isgetAllEndUserData.map((item) => ({

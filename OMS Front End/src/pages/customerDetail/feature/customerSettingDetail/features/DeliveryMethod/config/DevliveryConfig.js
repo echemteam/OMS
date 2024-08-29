@@ -146,24 +146,16 @@ export const OurAccountGridConfig = {
                 allowEdit: true,
                 allowDelete: true,
             },
-            editColumn: {
-                editColType: EditGridColumnType.ACTION,
-                defaultEditAction: {
-                    allowSave: true,
-                    allowCancel: true,
-                },
-            },
             allowShort: false
         },
     ],
+    allowEdit: true,
     editSettings: {
-        defualtEditableView: false,
+        defualtEditableView: true,
         buttons: {
             save: true,
-            cancel: true,
+            delete: true,
+            cancel: false
         }
-    },
-    allowEdit: true,
-    handleRowDataUpdate: null,
-    OnColumnChangeEdit: null
+    }
 };

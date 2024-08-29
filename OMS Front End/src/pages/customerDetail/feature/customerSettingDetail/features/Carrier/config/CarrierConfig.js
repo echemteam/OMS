@@ -136,12 +136,16 @@ export const AccountGridConfig = {
             editColumn: {
                 editColType: EditGridColumnType.CHECKBOX,
                 editColFieldName: "isPrimary",
+                isDisable: false,
                 editColValidation: [],
             },
             colSettings: {
-                allowCheckbox: true,
-                isDisabled: false
+                // allowCheckbox: true,
+                // isDisabled: false
+                isDisabled: false,
+                allowEdit: true
             },
+            allowShort: false
         },
 
         {
@@ -161,17 +165,26 @@ export const AccountGridConfig = {
             //         allowCancel: true,
             //     },
             // },
-            // allowShort: false
+            allowShort: false
         },
     ],
+    // editSettings: {
+    //     defualtEditableView: false,
+    //     buttons: {
+    //         save: true,
+    //         cancel: true,
+    //     }
+    // },
+    // allowEdit: true,
+    // handleRowDataUpdate: null,
+    // OnColumnChangeEdit: null
+    allowEdit: true,
     editSettings: {
-        defualtEditableView: false,
+        defualtEditableView: true,
         buttons: {
             save: true,
-            cancel: true,
+            delete: true,
+            cancel: false
         }
-    },
-    allowEdit: true,
-    handleRowDataUpdate: null,
-    OnColumnChangeEdit: null
+    }
 };

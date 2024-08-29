@@ -18,7 +18,7 @@ export const renderEditGridAction = (
 
   const handleDelete = (rowIndex) => {
     if (onRowDataDelete) {
-      onRowDataDelete(rowIndex);
+      onRowDataDelete(rowIndex , rowData);
     }
   };
 
