@@ -18,5 +18,7 @@
         public string? ResponsibleUserId { get; set; }
         public string? ResponsibleUserName { get; set; }
         public bool? IsSubCustomer { get; set; }
+        public byte? IncotermId { get; set; }
+        public string? IncotermName { get; set; }
     }
 }

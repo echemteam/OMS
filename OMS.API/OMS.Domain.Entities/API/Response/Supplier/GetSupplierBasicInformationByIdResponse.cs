@@ -20,6 +20,7 @@
         public string? EmailAddress { get; set; }
         public string? ResponsibleUserId { get; set; }
         public string? ResponsibleUserName { get; set; }
-
+        public byte? IncotermId { get; set; }
+        public string? IncotermName { get; set; }
     }
 }

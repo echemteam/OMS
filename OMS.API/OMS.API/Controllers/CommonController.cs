@@ -1,5 +1,4 @@
-﻿using ClientIPAuthentication;
-using ClientIPAuthentication.Enum;
+﻿using ClientIPAuthentication.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
@@ -254,16 +253,16 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
         [HttpGet("GetAllAddressesByCustomerIdAndAddressTypeId")]
-        public async Task<IActionResult> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId,short addressTypeId)
+        public async Task<IActionResult> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId)
         {
-            List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse> responseData = await _serviceManager.commonServices.GetAllAddressesByCustomerIdAndAddressTypeId(customerId,addressTypeId).ConfigureAwait(true);
+            List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse> responseData = await _serviceManager.commonServices.GetAllAddressesByCustomerIdAndAddressTypeId(customerId, addressTypeId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
 
         [HttpGet("GetAllContactsByCustomerIdAndContactTypeId")]
         public async Task<IActionResult> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId)
         {
-            List<GetAllContactsByCustomerIdAndContactTypeIdResponse> responseData = await _serviceManager.commonServices.GetAllContactsByCustomerIdAndContactTypeId(customerId,contactTypeId).ConfigureAwait(true);
+            List<GetAllContactsByCustomerIdAndContactTypeIdResponse> responseData = await _serviceManager.commonServices.GetAllContactsByCustomerIdAndContactTypeId(customerId, contactTypeId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
         [HttpGet("GetAllCustomers")]
@@ -282,19 +281,25 @@ namespace OMS.API.Controllers
         [HttpGet("GetAllAccountType")]
         public async Task<IActionResult> GetAllAccountType()
         {
-            var accountTypes =  Enum.GetValues(typeof(GetAllAccountType))
+            var accountTypes = Enum.GetValues(typeof(GetAllAccountType))
                            .Cast<GetAllAccountType>()
                            .Select(at => new GetAccountTypeResponse
                            {
                                Id = (int)at,
                                AccountType = at.ToString()
                            }).ToList();
-            return  APISucessResponce(accountTypes);
+            return APISucessResponce(accountTypes);
         }
         [HttpGet("GetAllOrderMethod")]
         public async Task<IActionResult> GetAllOrderMethod()
         {
             List<GetAllOrderMethodResponse> responseData = await _serviceManager.commonServices.GetAllOrderMethod().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+        [HttpGet("GetAllIncoterm")]
+        public async Task<IActionResult> GetAllIncoterm()
+        {
+            List<GetAllIncotermResponse> responseData = await _serviceManager.commonServices.GetAllIncoterm().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
     }
