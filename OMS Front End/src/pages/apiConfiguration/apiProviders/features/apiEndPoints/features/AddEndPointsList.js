@@ -112,7 +112,7 @@ const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
       };
  return(<>
   <div className="row">
-          <div className="col-md-12 table-striped api-provider">
+          <div className="col-md-12 table-striped api-provider api-management">
             <FinalMolGrid
               ref={molGridRef}
               configuration={ApiEndPointGridConfig}

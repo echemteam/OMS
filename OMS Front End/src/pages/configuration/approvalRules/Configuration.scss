@@ -8,6 +8,7 @@
       margin: 0;
     }
   }
+
   .config-content {
     display: flex;
     flex-direction: column;
@@ -15,6 +16,7 @@
     overflow: hidden;
     overflow-y: auto;
     width: 100%;
+
     .config-module-info {
       display: flex;
       flex-direction: row;
@@ -28,8 +30,10 @@
       &:hover {
         background-color: var(--linkMenu);
       }
+
       &.selected {
         background-color: var(--themeColorLight);
+
         span {
           color: var(--themeColor);
         }
@@ -63,8 +67,10 @@
       &:hover {
         background-color: var(--linkMenu);
       }
+
       &.selected {
         background-color: var(--themeColorLight);
+
         span {
           color: var(--themeColor);
         }
@@ -112,6 +118,7 @@
       border: 1px solid var(--themeColor);
       border-radius: 5px;
       position: relative;
+
       .profile-icon {
         display: flex;
         align-items: center;
@@ -129,16 +136,19 @@
         color: var(--textColor);
         font-weight: 500;
       }
+
       .edit-icons {
         background: none;
         cursor: pointer !important;
         padding: 0 !important;
         top: 0;
         right: 0;
+
         img {
           width: 20px !important;
           filter: none !important;
           padding: 0 !important;
+
           @media only screen and (max-width: 1750px) {
             width: 15px !important;
           }
@@ -151,24 +161,15 @@
 .approval-rules {
   table {
     tbody {
-      max-height: calc(100vh - 320px) !important;
+      max-height: calc(100vh - 300px) !important;
+
       @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 290px) !important;
+        max-height: calc(100vh - 275px) !important;
       }
     }
   }
 }
 
-.functional-config {
-  table {
-    tbody {
-      max-height: calc(100vh - 460px) !important;
-      @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 390px) !important;
-      }
-    }
-  }
-}
 
 @media only screen and (max-width: 1750px) {
   .config-card {
@@ -176,6 +177,7 @@
       height: calc(100vh - 120px);
       margin-bottom: 0;
     }
+
     .config-content {
       max-height: calc(100vh - 180px);
     }
@@ -185,9 +187,66 @@
 .api-provider {
   table {
     tbody {
-      max-height: calc(100vh - 325px);
+      max-height: calc(100vh - 300px);
+
       @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 290px) !important;
+        max-height: calc(100vh - 265px) !important;
+      }
+    }
+  }
+}
+
+
+.functional-config {
+  table {
+    tbody {
+      max-height: calc(100vh - 435px) !important;
+
+      @media only screen and (max-width: 1750px) {
+        max-height: calc(100vh - 365px) !important;
+      }
+    }
+  }
+}
+
+.view-function-provider {
+  table {
+    tbody {
+      max-height: calc(100vh - 365px) !important;
+
+      @media only screen and (max-width: 1750px) {
+        max-height: calc(100vh - 325px) !important;
+      }
+    }
+  }
+}
+
+
+.customer-detail-tab-sec {
+  .contact-accrodiaon-scroll {
+    .card-body-sec {
+      max-height: calc(100vh - 245px);
+    }
+
+
+  }
+
+  .api-management {
+    table {
+      tbody {
+        max-height: calc(100vh - 405px) !important;
+
+        @media only screen and (max-width: 1750px) {
+          max-height: calc(100vh - 365px) !important;
+        }
+
+        @media only screen and (max-width: 1650px) {
+          max-height: calc(100vh - 345px) !important;
+        }
+
+        @media only screen and (max-width: 1280px) {
+          max-height: calc(100vh - 358px) !important;
+        }
       }
     }
   }

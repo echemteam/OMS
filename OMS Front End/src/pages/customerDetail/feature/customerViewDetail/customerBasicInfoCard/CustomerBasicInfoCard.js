@@ -351,7 +351,7 @@ const CustomerBasicInfoCard = ({
   return !isLoading ? (
     <div className="basic-customer-detail">
       <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-        <div className="d-flex gap-5 profile-info  justify-content-between col-11">
+        <div className="d-flex profile-info  justify-content-between col-11">
           <div className="d-flex col-3 flex-column profile-icon-desc justify-content-center">
             <div className="d-flex">
               <div className="profile-icon ">
@@ -394,7 +394,7 @@ const CustomerBasicInfoCard = ({
             </div>
           </div>
 
-          <div className="col-3">
+          <div className="col-3 pr-5">
             <div className="field-desc basic-info-select dis-dropdown">
               <div className="inf-label">Status</div>
               <b>&nbsp;:&nbsp;</b>

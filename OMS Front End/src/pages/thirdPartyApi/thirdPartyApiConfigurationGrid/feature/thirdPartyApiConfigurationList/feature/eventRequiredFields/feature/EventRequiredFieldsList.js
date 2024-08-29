@@ -104,7 +104,7 @@ const EventRequiredFieldsList = (props) => {
 
   return (
     <div className="row">
-      <div className="col-md-12 table-striped api-provider">
+      <div className="col-md-12 table-striped api-provider api-partner">
         <FinalMolGrid
           ref={molGridRef}
           configuration={AddEditRequireConfigurationData}

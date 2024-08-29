@@ -96,7 +96,7 @@ const AddSupplierTab = () => {
 
   return (
     <>
-      <div className="stepper-card">
+      <div className="stepper-card stepper-view">
         <CardSection>
           <div className="stepper-section">
             <div className="stepper-header">

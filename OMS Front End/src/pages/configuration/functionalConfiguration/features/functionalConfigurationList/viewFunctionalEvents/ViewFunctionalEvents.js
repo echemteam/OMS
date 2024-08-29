@@ -63,7 +63,7 @@ const ViewFunctionalEvents = (props) => {
 
   return (
     <div className="row">
-      <div className="col-md-12 table-striped api-provider">
+      <div className="col-md-12 table-striped api-provider view-function-provider">
         <CardSection
           cardTitle="View Functional Events"
           buttonClassName="btn theme-button"
