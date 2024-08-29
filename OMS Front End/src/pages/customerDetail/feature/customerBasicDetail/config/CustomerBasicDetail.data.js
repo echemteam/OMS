@@ -159,7 +159,7 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isBuyingForThirdParty",
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-2 col-12 mt-3 pt-2 mb-input margin-left0-checkbox",
+        containerCss: "col-xxl-2 col-xl-2 col-md-2 col-12 pt-2 mb-input margin-top-checkbox",
       },
     },
     {

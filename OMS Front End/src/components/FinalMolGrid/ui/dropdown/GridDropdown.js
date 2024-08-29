@@ -17,6 +17,7 @@ const GridDropdown = (props) => {
     <span className="d-inline-block custom-input">
       <Select
         className="custom-checkbox-select"
+        classNamePrefix="react-select"
         // value={props.value}
         value={
           props.isMultiSelect
@@ -29,6 +30,9 @@ const GridDropdown = (props) => {
         isMulti={props.isMultiSelect}
         placeholder={props.placeholder}
         isDisabled={props.isDropdownDisabled}
+        menuPortalTarget={document.body}
+                    menuPosition="absolute"
+        
       />
     </span>
   );

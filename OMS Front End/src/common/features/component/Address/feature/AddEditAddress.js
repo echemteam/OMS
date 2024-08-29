@@ -15,14 +15,14 @@ import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAll
 import PropTypes from 'prop-types';
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
-// import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 const SetInitialCountry = {
     label: "United States",
     value: 233
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, deleteAddress }) => {
+const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable,
+    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage }) => {
 
     //** States */
     const ref = useRef();
@@ -347,11 +347,14 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
         const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
 
+        const addAddressApproval = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : FunctionalitiesName.CUSTOMERADDADDRESS
+        const updateAddressApproval = isSupplier ? FunctionalitiesName.SUPPLIERUPDATEADDRESS : FunctionalitiesName.CUSTOMERUPDATEADDRESS
+
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
 
-            if (isAddressType(updateData.addressTypeId)) {
-                await handleApprovalRequest(updateData, formData.initialState, FunctionalitiesName.CUSTOMERUPDATEADDRESS);
+            if (isEditablePage && isAddressType(updateData.addressTypeId)) {
+                await handleApprovalRequest(updateData, formData.initialState, updateAddressApproval);
             } else {
                 update(updateData);
             }
@@ -362,8 +365,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 ...transformedData,
                 customerId: customerId,
             };
-            if (isAddressType(req.addressTypeId)) {
-                await handleApprovalRequest(req, null, FunctionalitiesName.CUSTOMERADDADDRESS);
+            if (isEditablePage && isAddressType(req.addressTypeId)) {
+                await handleApprovalRequest(req, null, addAddressApproval);
             } else {
                 add(req);
             }
@@ -372,8 +375,8 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     const isAddressType = (typeId) => {
         if (isSupplier) {
-            // return typeId === AddressType.ACCOUNTS_PAYABLE.toString();
-            return; // Write Address type for the supplier.
+            //return typeId === AddressType.PHYSICALADDRESSHQ.toString();
+            // return; // Write Address type for the supplier.
         }
         return typeId === AddressType.BILLING.toString() || typeId === AddressType.SHIPPING.toString();
     };

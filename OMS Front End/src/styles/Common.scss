@@ -359,6 +359,7 @@ a {
                   .menu-group {
                     position: relative;
                     margin: 15px 0;
+
                     &::before {
                       content: "";
                       height: 1px;
@@ -368,10 +369,12 @@ a {
                       position: absolute;
                       top: -9px;
                     }
+
                     .group-label {
                       display: none;
                     }
                   }
+
                   li {
                     &.menu-item {
                       position: relative;
@@ -401,6 +404,7 @@ a {
                         transition: all 1s ease-in-out;
                         height: 0;
                       }
+
                       &.active-menu {
                         &:hover {
                           .sidebar-dropdown {
@@ -431,10 +435,12 @@ a {
                         }
                       }
                     }
+
                     &.active-menu {
                       a::before {
                         transform: translateY(-50%) rotate(-90deg);
                       }
+
                       ul {
                         li {
                           &::before {
@@ -461,8 +467,7 @@ a {
         }
       }
 
-      .middle-page-section {
-      }
+      .middle-page-section {}
     }
   }
 }
@@ -586,6 +591,7 @@ a {
         min-width: 100px;
         max-width: 100px;
       }
+
       .input-group {
         flex-wrap: nowrap;
       }
@@ -625,14 +631,12 @@ a {
   }
 
   .card-top-title-btn {
-    // padding: 10px 10px;
-    padding-bottom: 5px;
+    padding-bottom: 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
     min-height: 44px;
-    padding-left: 5px;
 
     &::before {
       position: absolute;
@@ -745,7 +749,7 @@ a {
 
 .address-main-card-sec {
   .card {
-    padding-top: 4px;
+    padding-top: 7px;
 
     @media only screen and (max-width: 1750px) {
       padding-top: 7px;
@@ -755,7 +759,7 @@ a {
 
 .contact-main-card-section {
   .card {
-    padding-top: 4px;
+    padding-top: 7px;
 
     @media only screen and (max-width: 1750px) {
       padding-top: 7px;
@@ -765,7 +769,7 @@ a {
 
 .document-section {
   .card {
-    padding-top: 4px;
+    padding-top: 7px;
 
     @media only screen and (max-width: 1750px) {
       padding-top: 7px;
@@ -775,7 +779,7 @@ a {
 
 .notes-main-card-section {
   .card {
-    padding-top: 4px;
+    padding-top: 7px;
 
     @media only screen and (max-width: 1750px) {
       padding-top: 7px;
@@ -785,7 +789,7 @@ a {
 
 .link-customer {
   .card {
-    padding-top: 4px;
+    padding-top: 7px;
   }
 }
 
@@ -874,15 +878,80 @@ a {
 
 .vertical-tab-card {
   .card {
+    height: calc(100vh - 255px);
+
+    @media only screen and (max-width: 1750px) {
+      height: calc(100vh - 235px);
+    }
+
+    .vertical-tab-inner {
+      .card {
+        height: auto;
+      }
+    }
+
     .card-body-sec {
       padding: 5px !important;
+      margin-top: 0;
+
+      @media only screen and (max-width: 1750px) {
+        max-height: calc(100vh - 150px);
+      }
+    }
+  }
+}
+
+.vertical-tab-card {
+  &.organization {
+    .card {
+      height: calc(100vh - 120px);
+
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 106px);
+      }
+
+      .vertical-tab-inner {
+        .card {
+          height: auto;
+        }
+      }
+
+      .card-body-sec {
+        padding: 5px !important;
+        margin-top: 0;
+
+        @media only screen and (max-width: 1750px) {
+          height: calc(100vh - 150px);
+        }
+      }
+    }
+  }
+}
+
+.setting-tab-sec{
+  .card {
+    height: calc(100vh - 255px);
+
+    @media only screen and (max-width: 1750px) {
+      height: calc(100vh - 235px);
+    }
+
+    .vertical-tab-inner {
+      .card {
+        height: auto;
+      }
+    }
+
+    .card-body-sec {
+      padding: 5px !important;
+      margin-top: 0;
+
       @media only screen and (max-width: 1750px) {
         height: calc(100vh - 150px);
       }
     }
   }
 }
-
 .main-organiazation-history {
   .vertical-tab-inner {
     .tab-section {
@@ -956,8 +1025,7 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {
-      }
+      .tab-body-section {}
     }
 
     &.vertical-tab {
@@ -1070,8 +1138,7 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {
-        }
+        .tab-sub-body-section {}
       }
     }
   }
@@ -1263,6 +1330,7 @@ a {
 
               &:first-child {
                 font-weight: 600;
+                text-transform: capitalize;
               }
             }
           }
@@ -1381,11 +1449,9 @@ a {
           display: flex;
           align-items: center;
 
-          .email-sec {
-          }
+          .email-sec {}
 
-          .contact-sec {
-          }
+          .contact-sec {}
         }
 
         .contact-type {
@@ -1466,8 +1532,7 @@ a {
               color: var(--themeColor);
             }
 
-            @media only screen and (max-width: 1750px) {
-            }
+            @media only screen and (max-width: 1750px) {}
           }
 
           .contact-name {
@@ -2256,6 +2321,7 @@ a {
   }
 
   .css-1nmdiq5-menu {
+
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -2351,6 +2417,7 @@ input[type="checkbox"]:disabled {
     table {
       tbody {
         max-height: calc(100vh - 540px);
+
         @media only screen and (max-width: 1750px) {
           max-height: calc(100vh - 490px);
         }
@@ -2364,11 +2431,13 @@ input[type="checkbox"]:disabled {
 
   .card {
     padding: 10px 0 !important;
+
     table {
       tbody {
-        max-height: calc(100vh - 380px);
+        max-height: calc(100vh - 365px);
+
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 350px);
+          max-height: calc(100vh - 330px);
         }
       }
     }
@@ -2755,6 +2824,7 @@ input[type="checkbox"]:disabled {
 
 @media only screen and (max-width: 1750px) {
   .status-dropdown {
+
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
@@ -3113,8 +3183,7 @@ input[type="checkbox"]:disabled {
         }
 
         .card-body-sec {
-          .note-card-sec {
-          }
+          .note-card-sec {}
         }
       }
     }
@@ -3202,8 +3271,7 @@ input[type="checkbox"]:disabled {
         .tab-content {
           // padding-top: 20px;
 
-          .tab-body-section {
-          }
+          .tab-body-section {}
         }
 
         &.vertical-tab {
@@ -3266,8 +3334,7 @@ input[type="checkbox"]:disabled {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {
-    }
+    .tab-body-section {}
   }
 
   &.vertical-tab {
@@ -3431,6 +3498,7 @@ input[type="checkbox"]:disabled {
         left: calc(0% - 0px);
         background: linear-gradient(to right, #2d3641db, #000000db);
         z-index: 999;
+
         img {
           transform: rotate(270deg);
         }
@@ -3467,13 +3535,16 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+
   .custom-pass-sec {
     position: relative;
+
     .password-hide-show {
       position: absolute;
       right: 15px;
       top: 49%;
       transform: translateY(-50%);
+
       img {
         width: 20px;
       }
@@ -3483,9 +3554,11 @@ input[type="checkbox"]:disabled {
 
 .order-body {
   min-height: calc(100vh - 500px);
+
   .stepper-section {
     .stepper-content {
       min-height: calc(100vh - 550px);
+
       @media only screen and (max-width: 1750px) {
         min-height: calc(100vh - 470px);
       }
@@ -3526,6 +3599,7 @@ input[type="checkbox"]:disabled {
   width: 25px;
   right: 10px;
   top: 5px;
+
   img {
     width: 85%;
   }
@@ -3535,6 +3609,7 @@ input[type="checkbox"]:disabled {
   background-color: var(--frozen-theme) !important;
   color: var(--frozen-theme-btn) !important;
 }
+
 .css-wsp0cs-MultiValueGeneric {
   color: var(--frozen-theme-btn) !important;
   font-weight: 500 !important;
@@ -3553,11 +3628,13 @@ input[type="checkbox"]:disabled {
   margin: 0px auto !important;
   // width: 97% !important;
 }
+
 .css-1nmdiq5-menu {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
   border: 2px solid var(--cardborderColor);
   border-radius: 5px;
 }
+
 .css-tr4s17-option {
   margin: 0px auto !important;
   // width: 97% !important;
@@ -3565,14 +3642,17 @@ input[type="checkbox"]:disabled {
   color: var(--whiteColor) !important;
   border-radius: 5px;
 }
+
 .css-1n6sfyn-MenuList {
   padding: 0 !important;
+
   .custom-option {
     .option-label {
       font-size: var(--commonFont-small);
     }
   }
 }
+
 .action-button {
   // cursor: pointer !important;
 }
@@ -3585,10 +3665,11 @@ input[type="checkbox"]:disabled {
       height: calc(100vh - 190px);
       position: relative;
     }
+
     .tab-content {
       width: 85%;
       padding: 0 0 15px 15px;
-      height: calc(100vh - 190px);
+      height: calc(100vh - 170px);
       overflow: hidden;
       overflow-y: auto;
       transition: 0.5s all;
@@ -3623,6 +3704,7 @@ input[type="checkbox"]:disabled {
   .table-pagination {
     display: none;
   }
+
   table {
     tbody {
       tr {
@@ -3649,6 +3731,7 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+
   .api-provider table tbody {
     max-height: calc(100vh - 325px) !important;
   }
@@ -3679,6 +3762,7 @@ input[type="checkbox"]:disabled {
         }
       }
     }
+
     .api-provider table tbody {
       max-height: calc(100vh - 325px) !important;
     }
@@ -3691,12 +3775,14 @@ input[type="checkbox"]:disabled {
       max-height: calc(100vh - 330px);
     }
   }
+
   .document-section {
     .card-body-sec {
       height: calc(100vh - 348px);
     }
   }
 }
+
 @media only screen and (max-width: 1750px) {
   .stepper-view {
     .vertical-tab-inner {
@@ -3709,9 +3795,9 @@ input[type="checkbox"]:disabled {
 
 .table-email-sec {
   margin-bottom: 0;
-  width: 97%;
+  width: 100%;
   margin: 0 auto;
-  box-shadow: 0px 0px 17px -10px var(--textColorLight);
+  // box-shadow: 0px 0px 17px -10px var(--textColorLight);
 
   .card {
     .card-top-title-btn {
@@ -3724,10 +3810,12 @@ input[type="checkbox"]:disabled {
   font-size: var(--commonFont-large) !important;
   color: #9346f8 !important;
 }
+
 .addparameter-icon {
   font-size: var(--commonFont-2extraLarge) !important;
   color: #9346f8 !important;
 }
+
 .freeze-icon {
   font-size: var(--commonFont-large) !important;
   color: #0097bd !important;
@@ -3737,38 +3825,47 @@ input[type="checkbox"]:disabled {
   font-size: var(--commonFont-large) !important;
   color: #d81f1f !important;
 }
+
 .reject-icon {
   font-size: var(--commonFont-large) !important;
   color: #ad0909 !important;
 }
+
 .un-lock-icon {
   font-size: var(--commonFont-large) !important;
   color: #0097bd !important;
 }
+
 .un-block-icon {
   font-size: var(--commonFont-large) !important;
   color: #d81f1f !important;
 }
+
 .view-icon {
   font-size: var(--commonFont-large) !important;
   color: #1755b3 !important;
 }
+
 .key-icon {
   font-size: var(--commonFont-large) !important;
   color: #4ca717 !important;
 }
+
 .api-icon {
   font-size: var(--commonFont-large) !important;
   color: #14538d !important;
 }
+
 .delete-icon {
   font-size: var(--commonFont-large) !important;
   color: #d10808 !important;
 }
+
 .order-price-list {
   .css-1jqq78o-placeholder {
     display: flex;
   }
+
   table {
     tbody {
       tr {
@@ -3790,20 +3887,25 @@ input[type="checkbox"]:disabled {
     border-color: #cccccc !important;
     color: #888888 !important;
     opacity: 0.7 !important;
+
     .css-16xfy0z-control {
       min-height: 25px !important;
       height: 25px !important;
       margin-top: 3px;
       cursor: no-drop !important;
+
       @media only screen and (max-width: 1750px) {
         min-height: 0px !important;
         height: 22px !important;
       }
+
       .css-1fdsijx-ValueContainer {
         height: 19px !important;
+
         .css-1jqq78o-placeholder {
           height: 21px;
         }
+
         .css-olqui2-singleValue {
           height: 30px;
           font-size: var(--commonFont-medium);
@@ -3814,13 +3916,31 @@ input[type="checkbox"]:disabled {
         .css-1p3m7a8-multiValue {
           max-height: 15px !important;
         }
+
         .css-wsp0cs-MultiValueGeneric {
           padding: 0 !important;
         }
       }
+
       .css-1hb7zxy-IndicatorsContainer {
         height: 10px !important;
       }
     }
   }
+}
+
+.react-select__menu {
+  z-index: 9999;
+}
+
+
+
+
+.organization-tab-title {
+  font-size: var(--commonFont-extraLarge);
+  font-weight: 600;
+  color: var(--textColor);
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--linkMenu);
 }

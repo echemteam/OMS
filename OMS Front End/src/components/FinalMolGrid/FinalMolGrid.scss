@@ -6,8 +6,7 @@
           background: #f2edf3b0;
         }
 
-        td {
-        }
+        td {}
       }
     }
   }
@@ -76,12 +75,15 @@ table {
         padding: 10px 10px 10px 19px;
         font-size: var(--commonFont);
         color: var(--blackColor);
+        text-transform: uppercase;
+        font-weight: 600;
 
         .heading-shorting {
           position: relative;
 
           .shorting-part {
             display: inline-block;
+
             button {
               background: transparent;
               border: none;
@@ -104,8 +106,7 @@ table {
               img {
                 height: 14px;
 
-                &.order-icon {
-                }
+                &.order-icon {}
               }
             }
 
@@ -156,14 +157,15 @@ table {
                       height: 6px;
                     }
 
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      svg {
-                        width: 8px;
-                        
-                      }
-                   
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    svg {
+                      width: 8px;
+
+                    }
+
                   }
                 }
               }
@@ -222,11 +224,13 @@ table {
 
           div {
             justify-content: center;
-            // display: flex;
+            align-items: center;
 
             a {
               &:last-child {
                 margin-right: 0;
+                align-items: center;
+                display: flex;
               }
             }
           }
@@ -296,6 +300,10 @@ table {
             }
           }
         }
+        .input-field{
+          // height: 25px;
+          border-radius: 3px;
+        }
       }
     }
   }
@@ -309,7 +317,8 @@ table {
         &:last-child {
           a {
             cursor: pointer;
-
+            display: flex;
+            align-items: center;
             img {
               min-height: 17px;
               min-width: 17px;
@@ -387,9 +396,10 @@ table {
 .inactive-list-sec {
   table {
     tbody {
-      max-height: calc(100vh - 400px);
+      max-height: calc(100vh - 395px);
+
       @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 332px);
+        max-height: calc(100vh - 350px);
       }
     }
   }
@@ -435,10 +445,10 @@ table {
 }
 
 
-.short-count{
-.component-iconify{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+.short-count {
+  .component-iconify {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

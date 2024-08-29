@@ -67,7 +67,7 @@ const SMTPSettings = () => {
     return (
 
         <div className="row mt-2 add-address-form">
-
+<h4 className="organization-tab-title">SMTP Settings</h4>
             <FormCreator config={smtpSettingData}
                 ref={smtpRef}
                 {...smtpSettingData}

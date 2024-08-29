@@ -243,6 +243,7 @@ const AddressGrid = ({
         >
           <AddEditAddress
             isOrderManage={false}
+            isEditablePage={isEditablePage}
             editRef={editRef}
             isSupplier={isSupplier}
             isModelOpen={isModelOpen}
