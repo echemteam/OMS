@@ -50,5 +50,10 @@ namespace OMS.Domain.Repository
         IApiEventRequiredFieldsMappingRepository apiEventRequiredFieldsMapping { get; }
         IFunctionalitiesRepository functionalities { get; }
         IOrderRepository order { get; }
+        IOrderAddressRepository orderAddress { get; }
+        IOrderContactRepository orderContact { get; }
+        IOrderItemRepository orderItem { get; }
+
+
     }
 }

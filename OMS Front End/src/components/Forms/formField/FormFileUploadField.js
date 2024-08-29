@@ -43,34 +43,53 @@ const FormFileUploadField = ({
       } else if (e.target.files[0]) {
         const fileObj = e.target.files[0];
         setSelectedFile(fileObj);
+        const acceptedExtensions = inputProps.acceptedFiles ? inputProps.acceptedFiles.split(",").map((ext) => ext.trim()) : [];
+        if (!isValidFileType(fileObj.name, acceptedExtensions)) {
+          info("File Type doesn't match", `Please select file with extension ${acceptedExtensions}`);
+          setSelectedFile(null);
+          inputProps.value = null;
+          handleClearFile();
+          return;
+        }
 
-        const acceptedExtensions = inputProps.acceptedFiles
-          ? inputProps.acceptedFiles.split(",").map((ext) => ext.trim())
-          : [];
-
-      if (!isValidFileType(fileObj.name, acceptedExtensions)) {
-        info(
-          "File Type doesn't match",
-          `Please select file with extension ${acceptedExtensions}`
-        );
-        setSelectedFile(null);
-        inputProps.value = null;
-        handleClearFile();
-        return;
-      }
-
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const fileContent = event.target.result;
-          const newFileObject = {
-            fileName: fileObj.name,
-            base64Data: fileContent,
+        const files = e.target.files;
+        let value = inputProps.isMultiple ? Array.from(files).map((file) => file.name).join(", ") : files[0].name;
+        if (inputProps.isMultiple) {
+          const fileReaders = Array.from(files).map(file => {
+            return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = (event) => {
+                resolve({
+                  fileName: file.name,
+                  base64Data: event.target.result,
+                });
+              };
+              reader.onerror = reject;
+              reader.readAsDataURL(file);
+            });
+          });
+          Promise.all(fileReaders).then(fileObjects => {
+            onChange(dataField, fileObjects);
+          }).catch(error => {
+            console.error("Error reading files:", error);
+          });
+        } else {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const fileContent = event.target.result;
+            const newFileObject = {
+              fileName: fileObj.name,
+              base64Data: fileContent,
+            };
+            onChange(dataField, newFileObject);
           };
-          onChange(dataField, newFileObject);
-        };
 
-        reader.readAsDataURL(fileObj);
+          reader.readAsDataURL(fileObj);
+        }
 
+        if (fieldActions && inputProps) {
+          fieldActions("DDL_FILE", dataField, value);
+        }
         // onChange(dataField, fileObj);
       }
     }

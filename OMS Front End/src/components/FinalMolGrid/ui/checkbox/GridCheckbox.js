@@ -32,7 +32,6 @@ const GridCheckbox = ({
     //   </div>
     // </div>
     <div className="checkbox">
-      {console.log('disabled', disabled)}
       <input
         id={name}
         name={name}
