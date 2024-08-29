@@ -14,7 +14,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const excludingRoles = ['Admin', 'manager'];
 export const supplierBasicData = {
-  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "", supplierNoteId: "" },
+  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "", supplierNoteId: "" , incotermId:"" },
   formFields: [
     {
       id: "name",
@@ -51,7 +51,7 @@ export const supplierBasicData = {
       fieldSetting: {
         placeholder: "Enter Email",
         allowSpace: true,
-        maxLength: 50,
+        maxLength: 75,
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
@@ -131,7 +131,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
     {
@@ -147,7 +147,7 @@ export const supplierBasicData = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
 
@@ -169,7 +169,22 @@ export const supplierBasicData = {
         message: SuccessMessage.DefaultUSATaxId
       },
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+    {
+      id: "incotermId",
+      lable: "Incoterm",
+      Field_Name: "Incoterm",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "incotermId",
+      fieldSetting: {
+        placeholder: "Select Incoterm",
+        isEnableOnChange: true
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
     {

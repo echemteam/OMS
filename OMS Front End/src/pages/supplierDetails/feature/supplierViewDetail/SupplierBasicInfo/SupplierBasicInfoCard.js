@@ -41,8 +41,8 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const [responsibleUserIds, setResponsibleUserIds] = useState([]);
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
-  const [getAllUser, { isFetching: isSuppilierFetching,isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
-  const [addEditResponsibleUserForSupplier,{ isSuccess: isSuccessAddEditResponsibleUserForSupplier, data: isAddEditResponsibleUserForSupplierData }] = useAddEditResponsibleUserForSupplierMutation();
+  const [getAllUser, { isFetching: isSuppilierFetching, isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
+  const [addEditResponsibleUserForSupplier, { isSuccess: isSuccessAddEditResponsibleUserForSupplier, data: isAddEditResponsibleUserForSupplierData }] = useAddEditResponsibleUserForSupplierMutation();
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
   const [updateSupplierInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
 
@@ -238,7 +238,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       supplierId: supplierId,
       userId: String(value)
     }
-     addEditResponsibleUserForSupplier(req);
+    addEditResponsibleUserForSupplier(req);
   }
   const onHandleBlur = () => {
     let req = {
@@ -374,14 +374,14 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                     isDisabled={isResponsibleUser ? true : isButtonDisable}
                   /> */}
                   <DropdownSelect
-                  isMultiSelect={true}
-                  placeholder="Responsible User"
-                  isDropdownDisabled={isResponsibleUser ? true : isButtonDisable}
-                  optionsValue={responsibleUserOptions}
-                  value={rUserValue}
-                  handleDropdownChange={updateRUserData}
-                  handleDropdownBlur={onHandleBlur}
-                />
+                    isMultiSelect={true}
+                    placeholder="Responsible User"
+                    isDropdownDisabled={isResponsibleUser ? true : isButtonDisable}
+                    optionsValue={responsibleUserOptions}
+                    value={rUserValue}
+                    handleDropdownChange={updateRUserData}
+                    handleDropdownBlur={onHandleBlur}
+                  />
                 </div>
               </div>
             </div>
@@ -408,11 +408,16 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
             {/* third no */}
 
             <div className="col-3">
-              <di className="field-desc">
+              <div className="field-desc">
                 <div className="inf-label">Group Type</div>
                 <b>&nbsp;:&nbsp;</b>
                 <div className="info-desc">{supplierData?.groupType}</div>
-              </di>
+              </div>
+              <div className="field-desc">
+                <div className="inf-label">Incoterm</div>
+                <b>&nbsp;:&nbsp;</b>
+                <div className="info-desc">{supplierData?.incotermName}</div>
+              </div>
 
               {/* <div className="field-desc">
               <div className="inf-label">Is Company</div>

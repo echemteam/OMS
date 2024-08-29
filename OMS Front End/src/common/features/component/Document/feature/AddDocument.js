@@ -11,8 +11,6 @@ import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleRes
 
 const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess }) => {
 
-    // console.log("editDocumentData", editDocumentData)
-
     const [formData, setFormData] = useState(DocumentFormData)
 
     const ref = useRef();
