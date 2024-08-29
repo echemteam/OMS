@@ -356,7 +356,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
               modalTitle={`${statusFeild + " "}Reason`}
               modelSizeClass="w-50s"
             >
-              <div className="row horizontal-form">
+              <div className="row">
                 <FormCreator
                   config={formData}
                   ref={reasonRef}

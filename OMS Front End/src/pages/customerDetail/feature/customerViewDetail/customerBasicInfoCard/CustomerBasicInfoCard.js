@@ -531,7 +531,7 @@ const CustomerBasicInfoCard = ({
           modalTitle={`${getStatusLabel(selectedStatus)} Reason`}
           modelSizeClass="w-50s"
         >
-          <div className="row horizontal-form">
+          <div className="row">
             <FormCreator config={formData} ref={reasonRef} {...formData} />
             <div className="col-md-12 mt-2">
               <div className="d-flex align-item-end justify-content-end">
