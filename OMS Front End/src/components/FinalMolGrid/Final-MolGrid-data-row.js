@@ -270,8 +270,6 @@ const MolGridDataRows = ({
     }
   };
 
-  console.log("onRowDataDelete" , onRowDataDelete)
-
   const renderActionColumn = (rowData, col, rowIndex, isRowEdited) => {
     if ((allowEditGrid && isRowEdited) || (allowEditGrid && editGridSettings?.defualtEditableView)) {
       return renderEditGridAction(

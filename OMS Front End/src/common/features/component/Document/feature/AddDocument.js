@@ -25,8 +25,6 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
 
     useEffect(() => {
         if (showModal) {
-            console.log('DocumentFormData.initialState', DocumentFormData.initialState);
-            console.log('formData.initialState', formData.initialState);
             onResetForm(formData, setFormData, DocumentFormData.initialState);
         }
     }, [showModal])
