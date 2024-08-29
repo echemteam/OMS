@@ -43,7 +43,7 @@ export const customerbasicData = {
       fieldSetting: {
         placeholder: "Enter Email",
         allowSpace: true,
-        maxLength: 75,
+        maxLength: 65,
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
