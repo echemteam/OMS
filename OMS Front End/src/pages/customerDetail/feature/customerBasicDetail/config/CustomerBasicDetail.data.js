@@ -6,7 +6,7 @@ import { getLabelClass } from "../../../../../utils/StatusColors/StatusColors";
 export const excludingRoles = ['Admin', 'manager']
 
 export const customerbasicData = {
-  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isSubCustomer: false, taxId: "", isBuyingForThirdParty: false, responsibleUserId: "", customerNoteId: "" },
+  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isSubCustomer: false, taxId: "", isBuyingForThirdParty: false, responsibleUserId: "", customerNoteId: "" , incotermId:"" },
   formFields: [
     {
       id: "name",
@@ -79,7 +79,7 @@ export const customerbasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
 
@@ -96,7 +96,7 @@ export const customerbasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
     {
@@ -111,11 +111,24 @@ export const customerbasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
-
-
+    {
+      id: "incotermId",
+      lable: "Incoterm",
+      Field_Name: "Incoterm",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "incotermId",
+      fieldSetting: {
+        placeholder: "Select Incoterm",
+        isEnableOnChange: true
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
     {
       id: "taxId",
       lable: "Tax Id ",

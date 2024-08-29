@@ -218,8 +218,6 @@ const DocumentList = forwardRef(
       setActionType(null);
     };
 
-    console.log("documentListData" , documentListData)
-
     return (
       <div className="document-list-sec">
         <div className="document-listing">

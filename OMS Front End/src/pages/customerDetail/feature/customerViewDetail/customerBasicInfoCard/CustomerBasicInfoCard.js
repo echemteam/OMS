@@ -461,6 +461,11 @@ const CustomerBasicInfoCard = ({
               <b>&nbsp;:&nbsp;</b>
               <div className="info-desc">{customerData?.type}</div>
             </div>
+            <div className="field-desc">
+              <div className="inf-label">Incoterm</div>
+              <b>&nbsp;:&nbsp;</b>
+              <div className="info-desc">{customerData?.incotermName}</div>
+            </div>
           </div>
 
           {/* third no */}
