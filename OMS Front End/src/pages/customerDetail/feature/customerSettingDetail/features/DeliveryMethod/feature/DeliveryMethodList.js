@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import { OurAccountGridConfig } from "../config/DevliveryConfig";
@@ -8,10 +8,39 @@ import FinalMolGrid from "../../../../../../../components/FinalMolGrid/FinalMolG
 import { useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import ToastService from "../../../../../../../services/toastService/ToastService";
 
-const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList }) => {
+const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList , handleDeleteClick }) => {
 
-    // const [gridConfig, setGridConfig] = useState(OurAccountGridConfig);
+    const [dataSource, setDataSource] = useState(ourAccountData);
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateDeliveryMethodsMutation();
+
+    useEffect(() => {
+        if (!isGetDataLoading && ourAccountData) {
+            // New blank row object
+            const blankRow = {
+                zone: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
+                name: '',
+                charge: '',
+                isPrimary: false,
+            };
+
+            setDataSource([...ourAccountData, blankRow]);
+        }
+    }, [ourAccountData, isGetDataLoading]);
+
+    const handleEditClick = (data, rowIndex) => {
+        let newGridData = [...dataSource]
+        newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
+        setDataSource(newGridData);
+
+        const req = {
+            charge: data.charge,
+            customerId: customerId,
+            isPrimary: data.isPrimary,
+            customerDeliveryMethodId: data.customerDeliveryMethodId ? data.customerDeliveryMethodId : 0,
+            deliveryMethodId: data.deliveryMethodId && typeof data.deliveryMethodId === "object" ? data.deliveryMethodId.value : data.deliveryMethodId,
+        };
+        update(req);
+    }
 
     useEffect(() => {
         if (isUpdateSuccess && isUpdateData) {
@@ -23,23 +52,6 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
             ToastService.success(isUpdateData.errorMessage);
         }
     }, [isUpdateSuccess, isUpdateData]);
-
-    const handleEditClick = (data) => {
-        const req = {
-            charge: data.charge,
-            customerId: customerId,
-            isPrimary: data.isPrimary,
-            customerDeliveryMethodId: data.customerDeliveryMethodId ? data.customerDeliveryMethodId : 0,
-            deliveryMethodId: data.deliveryMethodId && typeof data.deliveryMethodId === "object" ? data.deliveryMethodId.value : data.deliveryMethodId,
-        }
-        update(req)
-    }
-
-    const handleGridCheckBoxChange = (fieldName, rowData) => {
-        if (fieldName === 'isPrimary') {
-            handleEditClick(rowData);
-        }
-    };
 
     return (
         <div className="first-card">
@@ -53,14 +65,15 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
                 titleButtonClick={handleToggleModal}>
                 <div className="account-table table-striped mb-3">
                     <FinalMolGrid
+                        key={JSON.stringify(dataSource)}
                         ref={molGridRef}
                         configuration={OurAccountGridConfig}
-                        dataSource={ourAccountData}
+                        dataSource={dataSource}
                         allowPagination={false}
                         onActionChange={actionHandler}
                         isLoading={isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
-                        onColumnChange={handleGridCheckBoxChange}
+                        onRowDataDelete={handleDeleteClick}
                     />
                 </div>
             </CardSection>

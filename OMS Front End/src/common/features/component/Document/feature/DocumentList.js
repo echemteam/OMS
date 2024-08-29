@@ -18,11 +18,12 @@ import {
 //** Service's */
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
-import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
+// import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 import FileViewer from "react-file-viewer";
 import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
+import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 
 const DocumentList = forwardRef(
   ({
@@ -44,6 +45,7 @@ const DocumentList = forwardRef(
     const [getFileType, setGetFileType] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [actionType, setActionType] = useState(null);
+    const [downloadFileName, setDownloadFileName] = useState();
 
     /**
      * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -126,7 +128,7 @@ const DocumentList = forwardRef(
         if (actionType === "download") {
           const link = document.createElement("a");
           link.href = fileURL;
-          link.download = isDownalodData.fileName;
+          link.download = downloadFileName;
           document.body.appendChild(link);
           link.click();
           link.remove();
@@ -146,7 +148,8 @@ const DocumentList = forwardRef(
       }
     }, [isDeleteSucess, isDeleteData]);
 
-    const handleDocumentAction = (action, fileName) => {
+    const handleDocumentAction = (action, fileName , name) => {
+      setDownloadFileName(name)
       setSelectedDocument(null);
       setIsModalOpen(false);
       setActionType(action);
@@ -215,6 +218,8 @@ const DocumentList = forwardRef(
       setActionType(null);
     };
 
+    console.log("documentListData" , documentListData)
+
     return (
       <div className="document-list-sec">
         <div className="document-listing">
@@ -279,7 +284,7 @@ const DocumentList = forwardRef(
                                       onClick={() =>
                                         handleDocumentAction(
                                           "download",
-                                          data.attachment
+                                          data.attachment , data.name
                                         )
                                       }
                                     >
@@ -325,11 +330,15 @@ const DocumentList = forwardRef(
             )}
           </div>
         </div>
-        <CenterModel
-          showModal={isModalOpen}
-          handleToggleModal={handleToggleModal}
+        <SidebarModel
+          // showModal={isModalOpen}
+          // handleToggleModal={handleToggleModal}
+          // modalTitle="File Preview"
+          // modelSizeClass="w-40"
+          isOpen={isModalOpen}
+          contentClass="content-65"
           modalTitle="File Preview"
-          modelSizeClass="w-40"
+          onClose={handleToggleModal}
         >
           <div className="model-hight-fix">
             {selectedDocument && getFileType && (
@@ -340,7 +349,7 @@ const DocumentList = forwardRef(
               />
             )}
           </div>
-        </CenterModel>
+        </SidebarModel>
       </div>
     );
   }
