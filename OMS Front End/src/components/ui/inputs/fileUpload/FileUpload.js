@@ -30,12 +30,7 @@ const FileUpload = ({
 
   const fileRef = useRef();
   const handleInputChange = (data) => {
-    const files = data.target.files;
-    // const value = isMultiple ? Array.from(files).map((file) => file.name).join(", ") : files[0].name;
     onChange(data);
-    // if (fieldActions && inputProps) {
-    //   fieldActions("DDL_FILE", dataField, value);
-    // }
   };
 
   const handleClearClick = () => {
