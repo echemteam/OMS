@@ -56,6 +56,7 @@ export const achWireFormData = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
+        maxLength: 35,
       },
       validation: [{ type: "require" }],
       style: {
@@ -73,6 +74,7 @@ export const achWireFormData = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
+        maxLength:35,
       },
       // validation: [{ type: "require" }],
       style: {

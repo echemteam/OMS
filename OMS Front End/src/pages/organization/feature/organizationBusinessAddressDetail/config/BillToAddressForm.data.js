@@ -22,7 +22,7 @@ export const BillToAddressForm = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
-        maxLength:250,
+        maxLength:35,
       },
      // validation: [{ type: "require" }],
       style: {
@@ -40,7 +40,7 @@ export const BillToAddressForm = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
-        maxLength:250
+        maxLength:35
       },
       // validation: [{ type: "require" }],
       style: {
