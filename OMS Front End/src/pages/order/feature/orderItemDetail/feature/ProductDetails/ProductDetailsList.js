@@ -15,7 +15,7 @@ import { useThirdPartyAPICallMutation } from "../../../../../../app/services/thi
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 import AddOrderContext from "../../../../../../utils/Order/AddOrderContext";
 
-const ProductDetailsList = () => {
+const ProductDetailsList = ({ onhandleProductDetailsListData }) => {
   const ref = useRef();
   const molGridRef = useRef();
   const [showModal, setShowModal] = useState(false);
@@ -97,6 +97,17 @@ const ProductDetailsList = () => {
   const formInputHandler = {
     INPUT_CHANGED: handleInputFields,
   };
+
+  useEffect(() => {
+    const data = ref.current.getFormData();
+    if (data) {
+      let req = {
+        documentName: data.attachment.fileName,
+        base64File: data.attachment.base64Data,
+      }
+      onhandleProductDetailsListData(req)
+    }
+  }, [])
 
   return (
     <>

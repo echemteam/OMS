@@ -8,28 +8,6 @@ const orderAPI = createApi({
     baseQuery: customFetchBase,
     endpoints: (builder) => ({
 
-        addEditOrderInformation: builder.mutation({
-            query: (data) => ({
-                url: '/Order/AddEditOrderInformation',
-                method: 'POST',
-                body: transformRequest(data)
-            }),
-
-            transformResponse: transformSucessResponse,
-            transformErrorResponse: transformErrorResponse
-        }),
-
-        addEditOrderContactInformation: builder.mutation({
-            query: (data) => ({
-                url: '/Order/AddEditOrderContactInformation',
-                method: 'POST',
-                body: transformRequest(data)
-            }),
-
-            transformResponse: transformSucessResponse,
-            transformErrorResponse: transformErrorResponse
-        }),
-
         checkPoNumberExistOrNot: builder.mutation({
             query: (Details) => ({
                 url: '/Order/CheckPoNumberExistOrNot',
@@ -48,10 +26,21 @@ const orderAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+
+        addOrder: builder.mutation({
+            query: (data) => ({
+                url: '/Order/AddOrder',
+                method: 'POST',
+                body: transformRequest(data)
+            }),
+
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
-export const { useAddEditOrderInformationMutation  , useAddEditOrderContactInformationMutation , useCheckPoNumberExistOrNotMutation , useLazyGetPoNumberDetailsByPoNumberQuery,
-} = orderAPI;
+export const { useCheckPoNumberExistOrNotMutation, useLazyGetPoNumberDetailsByPoNumberQuery,
+    useAddOrderMutation } = orderAPI;
 
 export default orderAPI;

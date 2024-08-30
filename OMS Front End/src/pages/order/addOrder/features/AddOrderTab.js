@@ -1,10 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppIcons } from "../../../../data/appIcons";
 import Image from "../../../../components/image/Image";
 import { OrderTabEnum } from "../../../../utils/Enums/commonEnums";
 import SidebarModel from "../../../../components/ui/sidebarModel/SidebarModel";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 import Iconify from "../../../../components/ui/iconify/Iconify";
+import { useAddOrderMutation } from "../../../../app/services/orderAPI";
+import ToastService from "../../../../services/toastService/ToastService";
+import { useNavigate } from "react-router-dom";
 // import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
 
 const ContactDetails = React.lazy(() =>
@@ -20,8 +23,33 @@ const OrderItemDetail = React.lazy(() =>
 const AddOrderTab = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [editMode] = useState(false);
+  const navigate = useNavigate();
 
   const { activeTab, movePreviewPage, addOrder, setActiveTab } = useContext(AddOrderContext);
+
+  const [finalOrderInformationData, setFinalOrderInformationData] = useState({});
+  const [finalOrderContactData, setFinalOrderContactData] = useState([]);
+  // const [finalOrderItemData, setFinalOrderItemData] = useState([]);
+
+  const [
+    addOrderApi,
+    {
+      isSuccess: isAddOrderApiSuccess,
+      data: isAddOrderApiData,
+    },
+  ] = useAddOrderMutation();
+
+  const handleOrderInformation = (data) => {
+    setFinalOrderInformationData(data)
+  }
+
+  const handleOrderContact = (data) => {
+    setFinalOrderContactData(data)
+  }
+
+  // const handleOrderItem = (data) => {
+  //   setFinalOrderItemData(data)
+  // }
 
   const handleTabClick = (index) => {
     setActiveTab(index);
@@ -35,23 +63,65 @@ const AddOrderTab = () => {
     e.preventDefault();
   };
 
+  useEffect(() => {
+    if (isAddOrderApiSuccess && isAddOrderApiData) {
+      if (isAddOrderApiData.errorMessage.includes("exists")) {
+        ToastService.warning(isAddOrderApiData.errorMessage);
+        return;
+      }
+      ToastService.success(isAddOrderApiData.errorMessage);
+      navigate("/addCustomer");
+    }
+  }, [isAddOrderApiSuccess, isAddOrderApiData]);
+
+  const AddOrderData = (finalOrderItemData) => {
+    const orderData = {
+      orderId: finalOrderInformationData.orderId || 0,
+      orderMethodId: finalOrderInformationData.orderMethodId || 0,
+      customerId: finalOrderInformationData.customerId || 0,
+      subCustomerId: finalOrderInformationData.subCustomerId || 0,
+      poNumber: finalOrderInformationData.poNumber || "",
+      poDate: finalOrderInformationData.poDate ? finalOrderInformationData.poDate : null,
+      orderReceivedDate: finalOrderInformationData.orderReceivedDate ? finalOrderInformationData.orderReceivedDate : null,
+      isEndUser: finalOrderContactData.isEndUser || false,
+      isInvoiceSubmission: finalOrderContactData.isInvoiceSubmission || false,
+      isPurchasing: finalOrderContactData.isPurchasing || false,
+      referenceNumber: finalOrderContactData.referenceNumber || "",
+      pO_TotalOrderAmount: 0,
+      currencyId: 0,
+      billingAddressId: finalOrderInformationData.billingAddressId || 0,
+      shippingAddressId: finalOrderInformationData.shippingAddressId || 0,
+      orderItemsList: finalOrderItemData.orderItemsList || [],
+      orderContactsList: finalOrderContactData.orderContactsList || [],
+      orderChargeId: finalOrderItemData.orderChargeId || 0,
+      chargeType: finalOrderItemData.chargeType || "",
+      name: finalOrderItemData.name || "",
+      orderItemId: finalOrderItemData.orderItemId || 0,
+      documentName: finalOrderItemData.documentName || "",
+      documentType: finalOrderItemData.documentType || 0,
+      base64File: finalOrderItemData.base64File || "",
+      storagePath: finalOrderItemData.storagePath || ""
+    };
+    addOrderApi(orderData)
+  }
+
   const tabContents = [
     {
       label: "Add Order Information",
       subLabel: "Enter Order Basic information",
-      content: <OrderDetails />,
+      content: <OrderDetails onHandleOrderInformation={handleOrderInformation} />,
       tab: OrderTabEnum.BasicInformation,
     },
     {
       label: "Add Contact",
       subLabel: "Enter Contact Details",
-      content: <ContactDetails />,
+      content: <ContactDetails onHandleOrderContact={handleOrderContact} />,
       tab: OrderTabEnum.Contact,
     },
     {
       label: "Add Order Item",
       subLabel: "Enter Order Item Details",
-      content: <OrderItemDetail />,
+      content: <OrderItemDetail onhandleAddOrderData={AddOrderData} />,
       tab: OrderTabEnum.OrderItem,
     },
   ];
@@ -96,7 +166,7 @@ const AddOrderTab = () => {
                   >
                     <div className="">
                       {step.content}
-                      <div className="d-flex justify-content-end  mt-3">
+                      <div className="d-flex justify-content-end mt-3">
                         {index > 0 && (
                           <button
                             type="button"
@@ -104,7 +174,6 @@ const AddOrderTab = () => {
                             onClick={movePreviewPage}
                           >
                             <Image imagePath={AppIcons.nextArrowIcon} /> Back
-                            {/* <Iconify icon="solar:alt-arrow-down-outline" /> Back */}
                           </button>
                         )}
                         <button
@@ -112,16 +181,9 @@ const AddOrderTab = () => {
                           className="btn theme-button ml-3 btn-next"
                           onClick={() => addOrder(step.tab)}
                         >
-                          Next<Image imagePath={AppIcons.nextArrowIcon} /> 
-                          {/* Next <Iconify icon="solar:alt-arrow-down-outline" />  */}
+                          {activeTab === 2 ? "Save" : "Next"} <Image imagePath={AppIcons.nextArrowIcon} />
                         </button>
-                        {/* <button
-                          type="button"
-                          className="btn theme-button ml-3"
-                          onClick={handleSaveClick}
-                        >
-                          Save
-                        </button> */}
+                        {/* )} */}
                       </div>
                     </div>
                   </div>

@@ -30,7 +30,7 @@ import {
 } from "../../../../app/services/addressAPI";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 import {
-  useAddEditOrderInformationMutation,
+  // useAddEditOrderInformationMutation,
   useCheckPoNumberExistOrNotMutation,
   useLazyGetPoNumberDetailsByPoNumberQuery,
 } from "../../../../app/services/orderAPI";
@@ -38,7 +38,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
 import { useNavigate } from "react-router-dom";
 
-const OrderDetails = () => {
+const OrderDetails = ({ onHandleOrderInformation }) => {
   const basicInformation = useRef();
   const parentRef = useRef();
   const navigate = useNavigate();
@@ -73,7 +73,6 @@ const OrderDetails = () => {
     nextStepRef,
     orderCustomerId,
     setOrderCustomerId,
-    setOrderId,
     moveNextPage,
     orderId,
   } = useContext(AddOrderContext);
@@ -109,13 +108,6 @@ const OrderDetails = () => {
       data: isCheckPoNumberExistOrNotData,
     },
   ] = useCheckPoNumberExistOrNotMutation();
-  const [
-    addEditOrderInformation,
-    {
-      isSuccess: isAddEditOrderInformationSuccess,
-      data: isAddEditOrderInformationData,
-    },
-  ] = useAddEditOrderInformationMutation();
 
   useEffect(() => {
     if (isGetAllAddressTypesSucess && allGetAllAddressTypesData) {
@@ -433,27 +425,10 @@ const OrderDetails = () => {
   };
 
   useImperativeHandle(nextStepRef, () => ({
-    handleAddOrder,
+    handleAddOrderInformation,
   }));
 
-  useEffect(() => {
-    if (isAddEditOrderInformationSuccess && isAddEditOrderInformationData) {
-      if (isAddEditOrderInformationData.errorMessage.includes("exists")) {
-        ToastService.warning(isAddEditOrderInformationData.errorMessage);
-        return;
-      }
-      // if (keyId > 0) {
-      //   onreset()
-      //   ToastService.success(isAddEditOrderInformationData.errorMessage);
-      // } else {
-      setOrderId(isAddEditOrderInformationData.keyValue);
-      ToastService.success(isAddEditOrderInformationData.errorMessage);
-      moveNextPage();
-      // }
-    }
-  }, [isAddEditOrderInformationSuccess, isAddEditOrderInformationData]);
-
-  const handleAddOrder = () => {
+  const handleAddOrderInformation = () => {
     let data = basicInformation.current.getFormData();
     if (data) {
       let req = {
@@ -462,7 +437,6 @@ const OrderDetails = () => {
           data.orderMethodId && typeof data.orderMethodId === "object"
             ? data.orderMethodId.value
             : data.orderMethodId,
-        // orderReceivedDate: data.subCustomerMainCustomerId.date ? new Date(data.subCustomerMainCustomerId.date) : null,
         orderReceivedDate: data.orderReceivedDate,
         orderAddressId: 0,
         customerId:
@@ -471,7 +445,7 @@ const OrderDetails = () => {
             : data.customerId,
         subCustomerId:
           data.subCustomerMainCustomerId &&
-          typeof data.subCustomerMainCustomerId === "object"
+            typeof data.subCustomerMainCustomerId === "object"
             ? data.subCustomerMainCustomerId.value
             : data.subCustomerMainCustomerId,
         poNumber: data.poNumber,
@@ -484,7 +458,9 @@ const OrderDetails = () => {
             ? data.isShippingId.value
             : data.isShippingId,
       };
-      addEditOrderInformation(req);
+      // addEditOrderInformation(req);
+      onHandleOrderInformation(req)
+      moveNextPage();
     }
   };
 
@@ -498,7 +474,7 @@ const OrderDetails = () => {
           onActionChange={formActionHandler}
           handleInputGroupButton={handleInputGroupButton}
           onInputChange={formInputHandler}
-          onClick={handleAddOrder}
+          onClick={handleAddOrderInformation}
           handleInputShowInfo={handleExistingInfo}
         />
       </div>
