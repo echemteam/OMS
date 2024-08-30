@@ -62,7 +62,7 @@ export const AddEditParameterData = {
             },
             style: {
                 containerCss:
-                    "col-xxl-6 col-xl-6 col-md-6 col-6 col-6 mb-input margin-left0-checkbox mt-2",
+                    "col-xxl-6 col-xl-6 col-md-6 col-6 col-6 mb-input margin-left-checkbox mt-3",
             },
         },
     ],

@@ -8,17 +8,8 @@ body {
   padding: 0;
   margin: 0;
   background-color: #0004430d;
-  font-family:
-    "Public Sans",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "Oxygen",
-    "Ubuntu",
-    "Cantarell",
-    "Fira Sans",
-    "Droid Sans",
-    "Helvetica Neue",
+  font-family: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   font-size: var(--commonFont);
   color: var(--textColor);
@@ -467,7 +458,8 @@ a {
         }
       }
 
-      .middle-page-section {}
+      .middle-page-section {
+      }
     }
   }
 }
@@ -900,8 +892,8 @@ a {
     }
   }
 }
-.sidebar-model{
-  .card{
+.sidebar-model {
+  .card {
     height: auto;
   }
 }
@@ -1031,7 +1023,8 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {}
+      .tab-body-section {
+      }
     }
 
     &.vertical-tab {
@@ -1145,7 +1138,8 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {}
+        .tab-sub-body-section {
+        }
       }
     }
   }
@@ -1219,6 +1213,10 @@ a {
     border-right: 1px solid transparent !important;
     border-bottom-right-radius: 0 !important;
     border-top-right-radius: 0 !important;
+    height: 31px !important;
+    .css-1hb7zxy-IndicatorsContainer {
+      margin: auto;
+    }
   }
 
   .css-12zf3ro-control,
@@ -1226,6 +1224,10 @@ a {
     border-bottom-right-radius: 0 !important;
     border-top-right-radius: 0 !important;
     border-right: 1px solid var(--themeColor) !important;
+
+    @media only screen and (max-width: 1750px) {
+      height: 31px !important;
+    }
   }
 }
 
@@ -1261,7 +1263,7 @@ a {
 
       @media only screen and (max-width: 1750px) {
         margin-top: 4px;
-        height: 28px;
+        height: 31px !important;
       }
     }
   }
@@ -1330,6 +1332,9 @@ a {
             width: 82%;
             display: flex;
             flex-direction: column;
+            @media only screen and (max-width: 1750px) {
+              width: 75%;
+            }
 
             span {
               color: #2d3641db;
@@ -1456,9 +1461,11 @@ a {
           display: flex;
           align-items: center;
 
-          .email-sec {}
+          .email-sec {
+          }
 
-          .contact-sec {}
+          .contact-sec {
+          }
         }
 
         .contact-type {
@@ -1539,7 +1546,8 @@ a {
               color: var(--themeColor);
             }
 
-            @media only screen and (max-width: 1750px) {}
+            @media only screen and (max-width: 1750px) {
+            }
           }
 
           .contact-name {
@@ -2338,7 +2346,6 @@ a {
   }
 
   .css-1nmdiq5-menu {
-
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -2830,10 +2837,10 @@ input[type="checkbox"]:disabled {
 .margin-top-checkbox {
   .input-field-sec {
     .checkbox-label-part {
-      margin-top: 14px;
+      margin-top: 14px !important;
 
       @media only screen and (max-width: 1750px) {
-        margin-top: 8px;
+        margin-top: 8px !important;
       }
     }
   }
@@ -2841,7 +2848,6 @@ input[type="checkbox"]:disabled {
 
 @media only screen and (max-width: 1750px) {
   .status-dropdown {
-
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
@@ -3200,7 +3206,8 @@ input[type="checkbox"]:disabled {
         }
 
         .card-body-sec {
-          .note-card-sec {}
+          .note-card-sec {
+          }
         }
       }
     }
@@ -3288,7 +3295,8 @@ input[type="checkbox"]:disabled {
         .tab-content {
           // padding-top: 20px;
 
-          .tab-body-section {}
+          .tab-body-section {
+          }
         }
 
         &.vertical-tab {
@@ -3351,7 +3359,8 @@ input[type="checkbox"]:disabled {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {}
+    .tab-body-section {
+    }
   }
 
   &.vertical-tab {
@@ -3795,8 +3804,6 @@ input[type="checkbox"]:disabled {
   }
 }
 
-
-
 .stepper-view {
   .vertical-tab-inner {
     .tab-section {
@@ -3964,9 +3971,6 @@ input[type="checkbox"]:disabled {
   z-index: 9999;
 }
 
-
-
-
 .organization-tab-title {
   font-size: var(--commonFont-extraLarge);
   font-weight: 600;
@@ -4005,7 +4009,6 @@ input[type="checkbox"]:disabled {
 
     .component-iconify {
       color: var(--themeColor);
-
     }
 
     .custom-tooltip {
@@ -4017,7 +4020,6 @@ input[type="checkbox"]:disabled {
       z-index: 99;
       width: 300px;
       max-width: 300px;
-      
 
       .tooltip-arrow {
         width: 0;
@@ -4054,6 +4056,4 @@ input[type="checkbox"]:disabled {
       }
     }
   }
-
-
 }
