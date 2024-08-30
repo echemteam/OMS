@@ -8,6 +8,7 @@ const GridCheckbox = ({
   onChange,
   disabled,
   dataField,
+  isStaticCheckBox,
   cssClass = "checkbox-part",
 }) => {
   const handleCheckboxChange = (e) => {
@@ -15,6 +16,10 @@ const GridCheckbox = ({
     if (onChange) {
       onChange(dataField, newValue);
     }
+  };
+
+  const handleStaticCheckboxChange = (event) => {
+    onChange(dataField, event.target.checked);
   };
 
   return (
@@ -39,7 +44,7 @@ const GridCheckbox = ({
         checked={checked}
         disabled={disabled}
         className="form-checkbox"
-        onChange={handleCheckboxChange}
+        onChange={isStaticCheckBox ? handleStaticCheckboxChange : handleCheckboxChange}
       />
       <label
         htmlFor={name}

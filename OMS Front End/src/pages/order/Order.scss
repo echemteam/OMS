@@ -42,8 +42,8 @@
       }
     }
   }
- 
-  margin-top:36px;
+
+  margin-top: 36px;
   @media only screen and (max-width: 1860px) {
     margin-top: 30px;
   }
@@ -62,6 +62,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
     .detail-row {
+      width: 100%;
       display: flex;
       align-items: center;
       padding: 8px 0;
@@ -78,19 +79,22 @@
         padding-left: 10px;
         font-size: var(--commonFont-small);
         color: var(--textColor);
-        width: 150px;
+        width: 20%;
       }
 
       .detail-value {
         font-size: var(--commonFont-small);
         color: var(--textColorLight);
-        width: 70%;
+        width: 50%;
+        .input-group {
+          width: 100%;
+        }
       }
 
       .detail-action {
         display: flex;
-        flex-direction: row;
-
+        justify-content: space-around;
+        width: 30%;
         .checkbox {
           margin: 0 7px;
         }

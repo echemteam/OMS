@@ -35,6 +35,7 @@ const RenderGridCheckboxColumn = ({
         checked={value}
         disabled={isDisabled}
         onChange={(handleCheckboxChange)}
+        isStaticCheckBox={false}
       />
     </>
   );

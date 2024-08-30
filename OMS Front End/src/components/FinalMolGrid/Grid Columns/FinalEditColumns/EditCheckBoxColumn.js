@@ -59,6 +59,7 @@ const EditCheckBoxColumn = ({
         checked={checked}
         onChange={handleCheckboxChange}
         disabled={editColumn.isDisable}
+        isStaticCheckBox={false}
       />
       {hasError && <ValidationText error={errorMessage || ' '} className="error-message" />}
     </>

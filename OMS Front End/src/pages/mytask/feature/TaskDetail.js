@@ -125,8 +125,6 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
 
 const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalRequest, tabId }) => {
 
-  console.log("approvedData", approvedData);
-
   const ref = useRef();
   const [showModal, setShowModal] = useState(false);
   const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
