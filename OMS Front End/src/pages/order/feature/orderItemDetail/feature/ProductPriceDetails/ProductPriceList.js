@@ -64,7 +64,13 @@ const ProductPriceList = ({ productId, onPriceListUpdate }) => {
 
   const mapApiResponseToPriceList = (responseData) => {
     return responseData.map(item => ({
-      ...item,
+      orderPriority: item.orderPriority || "",
+      promiseDate: item.promiseDate || '',
+      requestDate: item.requestDate || '',
+      orderNote: item.orderNote || '',
+      Price: item.Price || '',
+      Size: item.Size || '',
+      Unit: item.Unit || '', // Ensure this is mapped properly
     }));
   };
 
@@ -108,7 +114,7 @@ const ProductPriceList = ({ productId, onPriceListUpdate }) => {
       ToastService.success("Data details updated successfully!");
     }
   };
-  
+
   const handleDeleteClick = (rowIndex) => {
     confirm(
       "Delete?",
@@ -140,7 +146,7 @@ const ProductPriceList = ({ productId, onPriceListUpdate }) => {
           onRowDataUpdate={handleEditClick}
           onRowDataDelete={handleDeleteClick}
           allowPagination={false}
-          // onActionChange={actionHandler}
+        // onActionChange={actionHandler}
         />
         <Buttons
           onClick={handleAddRow}

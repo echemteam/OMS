@@ -10,18 +10,12 @@ import { AppIcons } from "../../../../data/appIcons";
 import AddEditContact from "../../../../common/features/component/Contact/feature/AddEditContact";
 import { useAddEditContactMutation, useLazyGetAllContactTypesQuery, useLazyGetCustomerContactByContactIdQuery } from "../../../../app/services/contactAPI";
 import { contactDetailFormData } from "../../../../common/features/component/Contact/config/ContactDetailForm.data";
-// import { modifyContactType } from "../../../../utils/TransformData/TransformAPIData";
-// import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
-import { useAddEditOrderContactInformationMutation } from "../../../../app/services/orderAPI";
-import ToastService from "../../../../services/toastService/ToastService";
-
 
 const ContactDetails = (props) => {
   const basicInformation = useRef();
   // const editRef = useRef();
   const [formData, setFormData] = useState(contactInformationData);
-  // const [isSidebarModal, setIsSidebarModal] = useState(null)
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [getContectTypeId, setContectTypeId] = useState(null)
   const [endUserEnableDisableButton, setEndUserEnableDisableButton] = useState(true)
@@ -39,7 +33,6 @@ const ContactDetails = (props) => {
   const [getAllEndUserId, { isFetching: isGetAllEndUserFetching, isSuccess: isgetAllEndUserSuccess, data: isgetAllEndUserData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllInvoiceSubmissionId, { isFetching: isGetAllInvoiceSubmissionFetching, isSuccess: isgetAllInvoiceSubmissionSuccess, data: isgetAllInvoiceSubmissionData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
   const [getAllPurchasingId, { isFetching: isGetAllPurchasingFetching, isSuccess: isgetAllPurchasingSuccess, data: isgetAllPurchasingData }] = useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery();
-  const [addEditOrderContactInformation, { isSuccess: isAddEditOrderContactInformationSuccess, data: isAddEditOrderContactInformationData }] = useAddEditOrderContactInformationMutation();
 
   useEffect(() => {
     if (orderCustomerId) {
@@ -77,7 +70,7 @@ const ContactDetails = (props) => {
         value: item.contactId,
         label: item.fullName,
       }));
-      
+
       // Create a new formData object to trigger re-render
       setFormData(prevFormData => {
         const newFormData = { ...prevFormData };
@@ -89,14 +82,14 @@ const ContactDetails = (props) => {
       });
     }
   }, [isGetAllEndUserFetching, isgetAllEndUserSuccess, isgetAllEndUserData]);
-  
+
   useEffect(() => {
     if (!isGetAllInvoiceSubmissionFetching && isgetAllInvoiceSubmissionSuccess && isgetAllInvoiceSubmissionData) {
       const getContact = isgetAllInvoiceSubmissionData.map((item) => ({
         value: item.contactId,
         label: item.fullName,
       }));
-      
+
       // Create a new formData object to trigger re-render
       setFormData(prevFormData => {
         const newFormData = { ...prevFormData };
@@ -108,14 +101,14 @@ const ContactDetails = (props) => {
       });
     }
   }, [isGetAllInvoiceSubmissionFetching, isgetAllInvoiceSubmissionSuccess, isgetAllInvoiceSubmissionData]);
-  
+
   useEffect(() => {
     if (!isGetAllPurchasingFetching && isgetAllPurchasingSuccess && isgetAllPurchasingData) {
       const getContact = isgetAllPurchasingData.map((item) => ({
         value: item.contactId,
         label: item.fullName,
       }));
-      
+
       // Create a new formData object to trigger re-render
       setFormData(prevFormData => {
         const newFormData = { ...prevFormData };
@@ -127,7 +120,7 @@ const ContactDetails = (props) => {
       });
     }
   }, [isGetAllPurchasingFetching, isgetAllPurchasingSuccess, isgetAllPurchasingData]);
-  
+
 
   const handleDropdownApiCall = (data) => {
     if (data === 2) {
@@ -243,19 +236,6 @@ const ContactDetails = (props) => {
     setFormData(updatedFormData);
   };
 
-  useEffect(() => {
-
-    if (isAddEditOrderContactInformationSuccess && isAddEditOrderContactInformationData) {
-
-      if (isAddEditOrderContactInformationData.errorMessage.includes('exists')) {
-        ToastService.warning(isAddEditOrderContactInformationData.errorMessage);
-        return;
-      }
-      ToastService.success(isAddEditOrderContactInformationData.errorMessage);
-      moveNextPage();
-    }
-  }, [isAddEditOrderContactInformationSuccess, isAddEditOrderContactInformationData]);
-
   const formActionHandler = {
     CHECK_CHANGE: handleCheckboxChanges
   };
@@ -265,22 +245,46 @@ const ContactDetails = (props) => {
   }));
 
   const handleAddOrderConatct = () => {
-    let data = basicInformation.current.getFormData();
+    let data = basicInformation.current.getFormData(); // Retrieve form data
     if (data) {
-      let request = {
-        orderId: orderId ? orderId : 0,
-        isEndUser: data.isEndUser,
-        endUserContactId: data.endUserId && typeof data.endUserId === "object" ? data.endUserId.value : data.endUserId,
-        isInvoiceSubmission: data.isInvoiceSubmission,
-        invoiceSubmissionContactId: data.invoiceSubmissionId && typeof data.invoiceSubmissionId === "object" ? data.invoiceSubmissionId.value : data.invoiceSubmissionId,
-        isPurchasing: data.isPurchasingGiven,
-        purchasingContactId: data.purchasingId && typeof data.purchasingId === "object" ? data.purchasingId.value : data.purchasingId,
-        referenceNumber: data.refNumber
+      let orderContactsList = [];
+  
+      if (data.isEndUser && data.endUserId) {
+        orderContactsList.push({
+          contactId: typeof data.endUserId === "object" ? data.endUserId.value : data.endUserId,
+          contactTypeId: ContactType.ENDUSER
+        });
       }
-      addEditOrderContactInformation(request)
+  
+      if (data.isInvoiceSubmission && data.invoiceSubmissionId) {
+        orderContactsList.push({
+          contactId: typeof data.invoiceSubmissionId === "object" ? data.invoiceSubmissionId.value : data.invoiceSubmissionId,
+          contactTypeId: ContactType.INVOICESUBMISSION
+        });
+      }
+  
+      if (data.isPurchasingGiven && data.purchasingId) {
+        orderContactsList.push({
+          contactId: typeof data.purchasingId === "object" ? data.purchasingId.value : data.purchasingId,
+          contactTypeId: ContactType.PURCHASING
+        });
+      }
+  
+      let request = {
+        orderId: orderId || 0, // Use orderId or default to 0
+        orderContactsList, // Add the contacts list to the request
+        referenceNumber: data.refNumber,
+        isEndUser: data.isEndUser,
+        isInvoiceSubmission: data.isInvoiceSubmission,
+        isPurchasing: data.isPurchasingGiven,
+      };
+  
+      // Pass the request data to the parent component or API
+      props.onHandleOrderContact(request);
+      moveNextPage(); // Move to the next page or step
     }
-  }
-
+  };
+  
 
   return (
     <>

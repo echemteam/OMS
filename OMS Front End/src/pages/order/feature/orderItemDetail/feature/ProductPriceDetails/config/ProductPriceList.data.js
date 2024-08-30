@@ -21,23 +21,28 @@ export const priceListConfig = {
       colSettings: {},
       allowShort: false
     },
-    
     {
       name: "Unit",
+      fieldName: "Unit",
+      allowEditColumn: true,
+
+      editColumn: {
+        editColType: EditGridColumnType.DROPDOWN,
+        editColFieldName: "Unit",
+        isDisable: false,
+        isMultiSelect: false,
+        options: [
+          { value: "MG", label: "MG" },
+          { value: "G", label: "G" },
+          { value: "KG", label: "KG" },
+        ],
+        // editColValidation: [
+        //   // { type: "required", message: "Lead Cast is required." },
+        // ],
+      },
       colStyle: {
         width: "7%",
       },
-      fieldName: "Unit",
-      allowEditColumn: true,
-      editColumn: {
-        editColType: EditGridColumnType.INPUT,
-        editColFieldName: "Unit",
-        isDisable: false,
-        // editColValidation: [
-        //   // { type: "required", message: "Unit is required." },
-        // ],
-      },
-      colSettings: {},
       allowShort: false
     },
     {
@@ -68,7 +73,7 @@ export const priceListConfig = {
         editColFieldName: "orderNote",
         isDisable: false,
         colConfig: {
-          maxLength: 5,
+          maxLength: 20,
           isReadOnly: false,
         },
         // editColValidation: [{ type: "required", message: "Order Note ." }],
@@ -142,8 +147,8 @@ export const priceListConfig = {
         isDisable: false,
         isMultiSelect: false,
         options: [
-          { value: 1, label: "High" },
-          { value: 2, label: "Low" },
+          { value: "High", label: "High" },
+          { value: "Low", label: "Low" },
         ],
         // editColValidation: [
         //   // { type: "required", message: "Lead Cast is required." },
