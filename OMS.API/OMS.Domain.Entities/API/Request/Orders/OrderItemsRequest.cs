@@ -2,7 +2,7 @@
 {
     public class OrderItemsRequest
     {
-        public int? CatalogId { get; set; }
+        public string? CatalogId { get; set; }
         public string? CasNumber { get; set; }
         public string? MdlNumber { get; set; }
         public string? ChemicalName { get; set; }

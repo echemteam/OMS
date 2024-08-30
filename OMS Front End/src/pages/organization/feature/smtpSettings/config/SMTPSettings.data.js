@@ -13,7 +13,7 @@ export const SMTPSettingsData = {
             fieldSetting: {
                 placeholder: "Enter Email Provider",
                 allowSpace: true,
-                maxLength: 255,
+                maxLength: 65,
             },
             validation: [{ type: "require" } , { type: "email" }],
             style: {
@@ -60,7 +60,7 @@ export const SMTPSettingsData = {
             fieldSetting: {
                 placeholder: "Enter User Name",
                 allowSpace: true,
-                maxLength:255,
+                maxLength:65,
             },
             validation: [{ type: "require" }],
             style: {

@@ -29,7 +29,7 @@ export const OrganizationBankFormData = {
             fieldSetting: {
                 placeholder: "Enter Checking Account Number",
                 allowSpace: true,
-                maxLength:50,
+                maxLength:35,
             },
             validation: [{ type: "require" }],
             style: {

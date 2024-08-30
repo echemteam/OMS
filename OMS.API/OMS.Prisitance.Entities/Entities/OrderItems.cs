@@ -10,7 +10,7 @@ namespace OMS.Prisitance.Entities.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long? OrderItemId { get; set; }
         public int? OrderId { get; set; }
-        public int? CatalogId { get; set; }
+        public string? CatalogId { get; set; }
         public string? CasNumber { get; set; }
         public string? MdlNumber { get; set; }
         public string? ChemicalName { get; set; }

@@ -10,7 +10,6 @@ import { getLabelClass } from "../../../utils/StatusColors/StatusColors";
 import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
 import { encryptUrlData } from "../../../services/CryptoService";
 import DataLoader from "../../../components/ui/dataLoader/DataLoader";
-import Iconify from "../../../components/ui/iconify/Iconify";
 import { useUpdateApprovalRequestsStatusMutation } from "../../../app/services/ApprovalAPI";
 import ToastService from "../../../services/toastService/ToastService";
 import { Button } from "react-bootstrap";

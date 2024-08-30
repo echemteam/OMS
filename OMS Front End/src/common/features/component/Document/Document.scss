@@ -106,6 +106,12 @@
   display: flex;
   align-content: center;
 }
+@media only screen and (max-width: 1750px) {
+  .css-t3ipsp-control, .css-13cymwt-control {
+      min-height: 30px !important;
+      height: 30px !important;
+  }
+}
 
 .react-select__control--is-focused {
   border-color: var(--themeColor) !important;
