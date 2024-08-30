@@ -13,6 +13,7 @@ const LoginFormData = {
             fieldSetting: {
                 placeholder: "User Name",
                 allowSpace: false,
+                maxLength:65,
             },
             validation: [{ type: "require" }],
             style: {
@@ -27,6 +28,7 @@ const LoginFormData = {
             dataField: "password",
             fieldSetting: {
                 placeholder: "Password",
+                maxLength:20,
             },
             style: {
                 containerCss: "col-md-12"
