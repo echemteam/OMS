@@ -1875,19 +1875,19 @@ a {
 .document-section {
   .card-body-sec {
     margin-top: 0 !important;
-    height: calc(100vh - 310px);
+    height: calc(100vh - 335px);
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 280px);
+      height: calc(100vh - 295px);
     }
 
     .document-list-sec {
-      height: calc(100vh - 315px);
+      height: calc(100vh - 335px);
       overflow: hidden;
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 280px);
+        height: calc(100vh - 295px);
       }
     }
   }
