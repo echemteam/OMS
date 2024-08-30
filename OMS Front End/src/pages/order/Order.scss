@@ -21,6 +21,7 @@
 }
 
 .verify-product-group {
+  // margin-top: 36px;
   .loader-section {
     padding: 0;
   }
@@ -46,18 +47,21 @@
       }
     }
   }
-
-  margin-top: 36px;
-
-  @media only screen and (max-width: 1860px) {
-    margin-top: 30px;
+  .record-not-found{
+    border: 1px solid var(--inputBorder);
+    border-radius: 5px;
+    padding: 35px 0;
   }
+
+
+  
 
   .verify-product-label {
     font-size: var(--commonFont);
     color: var(--textColor);
     font-weight: 500;
-    margin: 10px 0;
+    margin: 0 0 5px;
+
   }
 
   .verify-product-details {
@@ -194,8 +198,12 @@
     .stepper-section {
       .stepper-content{
 
-        min-height: calc(100vh - 175px);
-        max-height: calc(100vh - 160px) !important;
+        min-height: calc(100vh - 235px);
+        max-height: calc(100vh - 235px) !important;
+        @media only screen and (max-width: 1750px) {
+          min-height: calc(100vh - 175px);
+        max-height: calc(100vh - 175px) !important;
+        }
       }
     }
   }
@@ -210,4 +218,10 @@
       overflow-x: unset;
     }
   }
+}
+
+@media only screen and (max-width: 1650px) {
+  .input-field {
+    height: 28px;
+}
 }
