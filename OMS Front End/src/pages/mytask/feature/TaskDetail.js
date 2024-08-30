@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { AppIcons } from "../../../data/appIcons";
+// import { useNavigate } from "react-router-dom";
 import Image from "../../../components/image/Image";
 import formatDate from "../../../lib/formatDate";
 import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
@@ -17,6 +18,7 @@ import Buttons from "../../../components/ui/button/Buttons";
 import FormCreator from "../../../components/Forms/FormCreator";
 import CenterModel from "../../../components/ui/centerModel/CenterModel";
 import { addResonData } from "../config/RejectReason.data";
+import Iconify from "../../../components/ui/iconify/Iconify";
 
 const parseJson = (jsonStr) => {
   try {
@@ -27,7 +29,27 @@ const parseJson = (jsonStr) => {
   }
 };
 
-const formatBoolean = (value) => (value ? "True" : "False");
+const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
+  const oldValues = parseJson(oldJsonStr);
+  const newValues = parseJson(newJsonStr);
+
+  // Convert field names to lowercase for case-insensitive comparison
+  const fieldNameLower = fieldName?.toLowerCase();
+
+  const findValue = (values, fieldName) => {
+    for (const key in values) {
+      if (key.toLowerCase() === fieldName) {
+        return values[key];
+      }
+    }
+    return "N/A";
+  };
+
+  const oldValue = findValue(oldValues, fieldNameLower);
+  const newValue = findValue(newValues, fieldNameLower);
+
+  return { oldValue, newValue };
+};
 
 const renderPhoneList = (phoneList) => {
   if (!Array.isArray(phoneList) || phoneList.length === 0) {
@@ -75,73 +97,34 @@ const renderEmailList = (emailList) => {
   );
 };
 
-const renderValue = (key, value) => {
-  if (value === null || value === undefined) {
-    return <div className="no-value">No value available</div>;
-  }
 
-  if (Array.isArray(value)) {
-    if (key.toLowerCase().includes('phone')) {
-      return renderPhoneList(value);
-    } else if (key.toLowerCase().includes('email')) {
-      return renderEmailList(value);
-    } else {
-      return value.join(', ');
-    }
-  } else if (typeof value === "boolean") {
-    return formatBoolean(value);
-  } else if (typeof value === "object") {
-    if (value === null) {
-      return <div className="no-value">No data available</div>;
-    }
-    return value.label || JSON.stringify(value);
-  } else {
-    return value;
-  }
-};
-
-const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
-  const oldValues = parseJson(oldJsonStr);
-  const newValues = parseJson(newJsonStr);
-
-  // Convert field names to lowercase for case-insensitive comparison
-  const fieldNameLower = fieldName?.toLowerCase();
-
-  const findValue = (values, fieldName) => {
-    for (const key in values) {
-      if (key.toLowerCase() === fieldName) {
-        return values[key];
-      }
-    }
-    return "N/A";
-  };
-
-  const oldValue = findValue(oldValues, fieldNameLower);
-  const newValue = findValue(newValues, fieldNameLower);
-
-  return { oldValue, newValue };
-};
+const formatBoolean = (value) => (value ? "True" : "False");
 
 const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalRequest, tabId }) => {
 
+  // const navigate = useNavigate();
   const ref = useRef();
   const [showModal, setShowModal] = useState(false);
   const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
 
   useEffect(() => {
     if (isUpdateSuccess && isUpdateData) {
-      setShowModal(false);
+      setShowModal(false)
       ToastService.success(isUpdateData.errorMessage);
       approvalRequest(approvalRequestId);
     }
   }, [isUpdateSuccess, isUpdateData]);
 
   if (isFetching || isUpdateLoading) {
-    return <DataLoader />;
+    return <DataLoader />; // Display loader while loading
   }
 
   if (!approvedData) {
-    return <NoRecordFound />;
+    return (
+      <div>
+        <NoRecordFound />
+      </div>
+    );
   }
 
   const {
@@ -158,18 +141,22 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
 
   const newValues = parseJson(newValue);
 
+
   const findKey = (obj, keySubstring) => {
     return Object.keys(obj).find((key) =>
       key.toLowerCase().includes(keySubstring.toLowerCase())
     );
   };
 
+  // Check for the presence of customerId or supplierId keys
   const customerIdKey = findKey(newValues, 'customerid');
   const supplierIdKey = findKey(newValues, 'supplierid');
 
+  // Retrieve the corresponding values
   const customerId = customerIdKey ? newValues[customerIdKey] : null;
   const supplierId = supplierIdKey ? newValues[supplierIdKey] : null;
 
+  // Determine if the redirect button should be shown
   const showRedirectButton = !!customerId || !!supplierId;
 
   const handleRedirectClick = () => {
@@ -193,7 +180,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
       let request = {
         status: status,
         approvalRequestId: approvalRequestId,
-      };
+      }
       updateApprovalRequest(request);
     } else {
       let data = ref.current.getFormData();
@@ -202,9 +189,9 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
           status: status,
           approvalRequestId: approvalRequestId,
           rejectReason: data.rejectReason
-        };
+        }
         updateApprovalRequest(request);
-        setShowModal(false);
+        setShowModal(false)
       }
     }
   }
@@ -212,6 +199,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
   const handleToggleModal = () => {
     setShowModal(!showModal);
   };
+
 
   return (
     <div className="task-detail">
@@ -266,14 +254,23 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
                 {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
                   <li key={key}>
                     <span className="value-label">{key}:</span>
-                    <span className="value-data ml-2">{renderValue(key, value)}</span>
+                    <span className="value-data ml-2">
+                      {Array.isArray(value)
+                        ? key.toLowerCase().includes('phone')
+                          ? renderPhoneList(value)
+                          : key.toLowerCase().includes('email')
+                            ? renderEmailList(value)
+                            : value.join(', ')
+                        : typeof value === "boolean"
+                          ? formatBoolean(value)
+                          : value}
+                    </span>
                   </li>
                 ))}
               </ul>
             ) : (
               <div className="no-value">No new value available</div>
             )}
-
           </div>
         </div>
         :
@@ -282,9 +279,11 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
             <span className="value-title">Old Value</span>
             {fieldName && oldFieldValue !== "N/A" ? (
               <div className="value-content">
-                <span className="value-label">{fieldName}:</span>
+                <span className="value-label">{fieldName} : </span>
                 <span className="value-data">
-                  {renderValue(fieldName, oldFieldValue)}
+                  {typeof oldFieldValue === "boolean"
+                    ? formatBoolean(oldFieldValue)
+                    : oldFieldValue}
                 </span>
               </div>
             ) : (
@@ -293,74 +292,77 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
           </div>
           <div className="value-block">
             <span className="value-title">New Value</span>
-            {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
-              <ul className="value-content pl-0">
-                {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
-                  <li key={key}>
-                    <span className="value-label">{key}:</span>
-                    <span className="value-data ml-2">{renderValue(key, value)}</span>
-                  </li>
-                ))}
-              </ul>
+            {fieldName && newFieldValue !== "N/A" ? (
+              <div className="value-content">
+                <span className="value-label">{fieldName} : </span>
+                <span className="value-data">
+                  {typeof newFieldValue === "boolean"
+                    ? formatBoolean(newFieldValue)
+                    : newFieldValue}
+                </span>
+              </div>
             ) : (
               <div className="no-value">No new value available</div>
             )}
           </div>
         </div>
       }
-
-      <div className="action-buttons">
-        <Buttons
-          onClick={handleApprovalRequest}
-          variant="success"
-          size="sm"
-          text="Approve"
-          isLoading={isUpdateLoading}
-        />
-        <Buttons
-          onClick={handleToggleModal}
-          variant="danger"
-          size="sm"
-          text="Reject"
-        />
-      </div>
+      {tabId !== 1 &&
+        <div className="task-footer mt-3 pr-3">
+          <Button className="reject-btn" onClick={handleToggleModal}>
+            {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
+            <Iconify icon="gg:close-o" className="mr-1" />
+            Reject
+          </Button>
+          <Button className="accept-btn" onClick={handleApprovalRequest}>
+            <Image imagePath={AppIcons.RightTickIcon} altText="Accept Icon" />
+            Accept
+          </Button>
+        </div>
+      }
       <CenterModel
-        show={showModal}
-        handleClose={handleToggleModal}
-        title="Reject Reason"
-        isSubmitLoading={isUpdateLoading}
+        showModal={showModal}
+        handleToggleModal={handleToggleModal}
+        modalTitle="Add Rejection Reason"
+        modelSizeClass="w-40"
       >
-        <FormCreator
-          ref={ref}
-          formData={addResonData}
-        />
-        <div className="modal-buttons">
-          <Button
-            variant="secondary"
-            onClick={handleToggleModal}
-            disabled={isUpdateLoading}
-          >
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            onClick={handleRejectRequest}
-            disabled={isUpdateLoading}
-          >
-            Submit
-          </Button>
+        <div className="row  phone-numer-card">
+          <div className="col-md-12 add-edit-phoneForm">
+            <div className="row vertical-form">
+              <FormCreator config={addResonData} ref={ref} {...addResonData} />
+            </div>
+          </div>
+          <div className="col-md-12 mt-2">
+            <div className="d-flex align-item-center justify-content-end">
+              <Buttons
+                buttonTypeClassName="theme-button"
+                // buttonText={`${isEdit ? "Update" : "Add"}`}
+                buttonText="Add"
+                onClick={handleRejectRequest}
+              />
+              <Buttons
+                buttonTypeClassName="dark-btn ml-5"
+                buttonText="Cancel"
+                onClick={handleToggleModal}
+              />
+            </div>
+          </div>
         </div>
       </CenterModel>
     </div>
+
   );
 };
-
 TaskDetail.propTypes = {
-  approvalRequestId: PropTypes.number.isRequired,
-  approvedData: PropTypes.object.isRequired,
+  approvedData: PropTypes.shape({
+    requestedByUserName: PropTypes.string,
+    functionalityName: PropTypes.string,
+    requestedDate: PropTypes.string,
+    fieldName: PropTypes.string,
+    status: PropTypes.string,
+    oldValue: PropTypes.string,
+    newValue: PropTypes.string,
+  }),
   isFetching: PropTypes.bool.isRequired,
-  approvalRequest: PropTypes.func.isRequired,
-  tabId: PropTypes.number.isRequired
 };
-
 export default TaskDetail;

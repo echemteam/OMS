@@ -41,7 +41,7 @@ const FormCheckboxField = ({
             <h5>{checkboxProps.hasMainTitle}</h5>
           </div>
           : ""}
-        <div className="checkbox-label-part mb-2">
+        <div className="checkbox-label-part mb-2 mt-2">
           <Checkbox
             name={name}
             label={labelName}
