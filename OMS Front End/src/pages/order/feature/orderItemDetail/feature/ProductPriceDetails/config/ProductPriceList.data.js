@@ -25,7 +25,6 @@ export const priceListConfig = {
       name: "Unit",
       fieldName: "Unit",
       allowEditColumn: true,
-
       editColumn: {
         editColType: EditGridColumnType.DROPDOWN,
         editColFieldName: "Unit",
@@ -140,7 +139,6 @@ export const priceListConfig = {
       name: "Priority",
       fieldName: "orderPriority",
       allowEditColumn: true,
-
       editColumn: {
         editColType: EditGridColumnType.DROPDOWN,
         editColFieldName: "orderPriority",
