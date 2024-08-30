@@ -201,14 +201,14 @@ const AssignUser = (props) => {
     <div>
       <div className="row">
         <div className="col-12 col-md-11 assign-user-form">
-          <div className="row mt-2 align-items-end">
+          <div className="row mt-2 assign-user-model-section">
             <FormCreator
               ref={asignUserFormRef}
               config={userForm}
               {...userForm}
               key={shouldRerenderFormCreator}
             />
-            <div className="col-xxl-2 col-xl-2 col-md-2">
+            <div className="col-xxl-2 col-xl-2 col-md-2 mt-4 right-btn">
               {buttonVisible ?
                 <Buttons
                   buttonTypeClassName="theme-button"
