@@ -6,7 +6,7 @@ export const priceListConfig = {
     {
       name: "Size",
       colStyle: {
-        width: "10%",
+        width: "7%",
       },
       fieldName: "Size",
       allowEditColumn: true,
@@ -21,33 +21,11 @@ export const priceListConfig = {
       colSettings: {},
       allowShort: false
     },
-    // {
-    //   name: "Unit",
-    //   fieldName: "Unit",
-    //   allowEditColumn: true,
-    //   editColumn: {
-    //     editColType: EditGridColumnType.DROPDOWN,
-    //     editColFieldName: "Unit",
-    //     isDisable: false,
-    //     isMultiSelect: false,
-    //     options: [
-    //       { value: 1, label: "MG" },
-    //       { value: 2, label: "G" },
-    //       { value: 3, label: "KG" },
-    //     ],
-    //     editColValidation: [
-    //       { type: "required", message: "Unit is required." },
-    //     ],
-    //   },
-    //   colStyle: {
-    //     width: "10%",
-    //   },
-    //   allowShort: false
-    // },
+    
     {
       name: "Unit",
       colStyle: {
-        width: "10%",
+        width: "7%",
       },
       fieldName: "Unit",
       allowEditColumn: true,
@@ -65,7 +43,7 @@ export const priceListConfig = {
     {
       name: "Price",
       colStyle: {
-        width: "10%",
+        width: "7%",
       },
       fieldName: "Price",
       allowEditColumn: true,
@@ -96,7 +74,7 @@ export const priceListConfig = {
         // editColValidation: [{ type: "required", message: "Order Note ." }],
       },
       colStyle: {
-        width: "20%",
+        width: "19%",
         textAlign: "center",
       },
       allowShort: false,
@@ -179,7 +157,7 @@ export const priceListConfig = {
     {
       name: "Action",
       colStyle: {
-        width: "25%",
+        width: "10%",
       },
       colType: GridColumnType.ACTION,
       defaultAction: {
