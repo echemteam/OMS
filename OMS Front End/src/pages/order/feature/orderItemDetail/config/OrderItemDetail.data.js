@@ -3,6 +3,9 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 export const orderItemDetailData = {
   initialState: {
     productSearch: "",
+    attachment: "",
+    base64File: "",
+    storagePath: ""
   },
 
   formFields: [
@@ -38,7 +41,7 @@ export const orderItemDetailData = {
         allowSpace: true,
         isButtonVisible: false,
         isCustomButtonVisible: true,
-        acceptedFiles: ".pdf , .doc , .docx ,.csv , .xlsx , .xls ",
+        acceptedFiles: ".pdf , .docx ",
       },
       validation: [{ type: "require" }],
       style: {

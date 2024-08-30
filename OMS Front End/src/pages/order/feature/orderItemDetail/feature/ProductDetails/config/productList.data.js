@@ -4,6 +4,9 @@ import { GridColumnType } from "../../../../../../../components/FinalMolGrid/lib
 export const productDetailsList = {
   initialState: {
     productSearch: "",
+    attachment: "",
+    base64File: "",
+    storagePath: ""
   },
 
   formFields: [
@@ -19,7 +22,7 @@ export const productDetailsList = {
         maxLength: 50,
         exemptBoundarySpaces: true,
       },
-      validation: [{ type: "require" }, { type: "uniqueName" }],
+      // validation: [{ type: "require" }, { type: "uniqueName" }],
       style: {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input relative",
       },
@@ -41,7 +44,7 @@ export const productDetailsList = {
         isCustomButtonVisible: true,
         acceptedFiles: ".pdf , .doc , .docx ,.csv , .xlsx , .xls ",
       },
-      validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
         containerCss:
           "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-input mb-0 custom-file-upload-section",
