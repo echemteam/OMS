@@ -3993,8 +3993,7 @@ input[type="checkbox"]:disabled {
 }
 
 .customer-name {
-  width: calc(100% - 20px);
-
+  max-width: calc(100% - 20px);
   display: flex;
   align-items: center;
   justify-content: space-between;
