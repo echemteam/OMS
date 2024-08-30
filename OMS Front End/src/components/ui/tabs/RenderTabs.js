@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Image from "../../image/Image";
-import { AppIcons } from "../../../data/appIcons";
 import PropTypes from "prop-types";
 import Iconify from "../iconify/Iconify";
 

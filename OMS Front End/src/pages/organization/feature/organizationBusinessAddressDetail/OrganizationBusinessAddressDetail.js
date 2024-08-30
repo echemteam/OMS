@@ -12,10 +12,7 @@ import WarehouseAddressDetail from "./features/WarehouseAddressDetail";
 import { RegisteredAddressForm } from "./config/RegisteredAddressForm.data";
 import RegisteredAddressDetail from "./features/RegisteredAddressDetail";
 import Buttons from "../../../../components/ui/button/Buttons";
-import {
-  useAddEditBusinessAddressesMutation,
-  useLazyGetOrganizationBusinessAddressesQuery,
-} from "../../../../app/services/organizationAPI";
+import { useAddEditBusinessAddressesMutation, useLazyGetOrganizationBusinessAddressesQuery, } from "../../../../app/services/organizationAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import { RemitToAddressForm } from "./config/RemitToAddressForm.data";
 import RemitToAddressDetail from "./features/RemitToAddressDetail";
@@ -29,17 +26,12 @@ const OrganizationBusinessAddressDetail = () => {
   const remitToAddressRef = useRef();
   const registeredAddressRef = useRef();
 
-  const [physicalAddressData, setPhysicalAddressData] =
-    useState(PhysicalAddressForm);
-  const [billToAddressData, setBillToAddressData] = useState(BillToAddressForm);
-  const [labAddressData, setLabAddressData] = useState(LabAddressForm);
-  const [warehouseAddressData, setWarehouseAddressData] =
-    useState(WarehouseAddressForm);
-  const [remitToAddressData, setRemitToAddressData] =
-    useState(RemitToAddressForm);
-  const [registeredAddressData, setRegisteredAddressData] = useState(
-    RegisteredAddressForm
-  );
+  const [physicalAddressData] = useState(PhysicalAddressForm);
+  const [billToAddressData] = useState(BillToAddressForm);
+  const [labAddressData] = useState(LabAddressForm);
+  const [warehouseAddressData] = useState(WarehouseAddressForm);
+  const [remitToAddressData] = useState(RemitToAddressForm);
+  const [registeredAddressData] = useState(RegisteredAddressForm);
 
   const [addressIds, setAddressIds] = useState({
     registeredAddressId: 0,
@@ -213,72 +205,48 @@ const OrganizationBusinessAddressDetail = () => {
     <div>
       <h4 className="organization-tab-title">Business Address</h4>
       <RegisteredAddressDetail
-        isGetOrganizationBusinessAddressesData={
-          isGetOrganizationBusinessAddressesData
-        }
-        isGetOrganizationBusinessAddressesSuccess={
-          isGetOrganizationBusinessAddressesSuccess
-        }
+        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
+        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
         registeredAddressData={registeredAddressData}
         RegisteredAddressForm={RegisteredAddressForm}
         registeredAddressRef={registeredAddressRef}
       />
 
       <PhysicalAddressDetail
-        isGetOrganizationBusinessAddressesData={
-          isGetOrganizationBusinessAddressesData
-        }
-        isGetOrganizationBusinessAddressesSuccess={
-          isGetOrganizationBusinessAddressesSuccess
-        }
+        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
+        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
         physicalAddressData={physicalAddressData}
         PhysicalAddressForm={PhysicalAddressForm}
         physicalAddressRef={physicalAddressRef}
       />
 
       <BillToAddressDetail
-        isGetOrganizationBusinessAddressesData={
-          isGetOrganizationBusinessAddressesData
-        }
-        isGetOrganizationBusinessAddressesSuccess={
-          isGetOrganizationBusinessAddressesSuccess
-        }
+        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
+        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
         billToAddressData={billToAddressData}
         BillToAddressForm={BillToAddressForm}
         billToAddressRef={billToAddressRef}
       />
 
       <LabAddressDetail
-        isGetOrganizationBusinessAddressesData={
-          isGetOrganizationBusinessAddressesData
-        }
-        isGetOrganizationBusinessAddressesSuccess={
-          isGetOrganizationBusinessAddressesSuccess
-        }
+        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
+        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
         labAddressRef={labAddressRef}
         LabAddressForm={LabAddressForm}
         labAddressData={labAddressData}
       />
 
       <WarehouseAddressDetail
-        isGetOrganizationBusinessAddressesData={
-          isGetOrganizationBusinessAddressesData
-        }
-        isGetOrganizationBusinessAddressesSuccess={
-          isGetOrganizationBusinessAddressesSuccess
-        }
+        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
+        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
         warehouseAddressRef={warehouseAddressRef}
         WarehouseAddressForm={WarehouseAddressForm}
         warehouseAddressData={warehouseAddressData}
       />
 
       <RemitToAddressDetail
-        isGetOrganizationBusinessAddressesData={
-          isGetOrganizationBusinessAddressesData
-        }
-        isGetOrganizationBusinessAddressesSuccess={
-          isGetOrganizationBusinessAddressesSuccess
-        }
+        isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
+        isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}
         remitToAddressData={remitToAddressData}
         remitToAddressRef={remitToAddressRef}
         RemitToAddressForm={RemitToAddressForm}

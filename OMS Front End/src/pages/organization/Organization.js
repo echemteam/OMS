@@ -15,9 +15,9 @@ const OrganizationProfileManagement = React.lazy(() => import("./feature/organiz
 const Organization = () => {
 
     const [activeTabId, setActiveTabId] = useState(0)
-  const handleActiveTab=(id)=>{
-    setActiveTabId(id);
-  }
+    const handleActiveTab = (id) => {
+        setActiveTabId(id);
+    }
 
 
     const tabs = [
@@ -26,8 +26,8 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
                     <OrganizationProfileManagement
-                       
-                       />
+
+                    />
                 </div>
             ),
         },
@@ -36,7 +36,7 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
 
-                    <OrganizationBusinessAddressDetail   />
+                    <OrganizationBusinessAddressDetail />
                 </div>
             ),
         },
@@ -44,7 +44,7 @@ const Organization = () => {
             sMenuItemCaption: "Contact Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationContactDetail   />
+                    <OrganizationContactDetail />
                 </div>
             ),
         },
@@ -53,7 +53,7 @@ const Organization = () => {
             sMenuItemCaption: "Logistic Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationLogisticDetail  />
+                    <OrganizationLogisticDetail />
                 </div>
             ),
         },
@@ -61,7 +61,7 @@ const Organization = () => {
             sMenuItemCaption: "Bank Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationBankDetail  />
+                    <OrganizationBankDetail />
                 </div>
             ),
         },
@@ -69,7 +69,7 @@ const Organization = () => {
             sMenuItemCaption: "Accounting Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationAccountingDetail  />
+                    <OrganizationAccountingDetail />
                 </div>
             ),
         },
@@ -77,7 +77,7 @@ const Organization = () => {
             sMenuItemCaption: "Shipping Charges",
             component: (
                 <div className="mt-2">
-                    <OrganizationShippingChargesDetail  />
+                    <OrganizationShippingChargesDetail />
                 </div>
             ),
         },
@@ -95,7 +95,7 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
                     <SMTPSettings
-                       />
+                    />
                 </div>
             ),
         },
@@ -110,7 +110,7 @@ const Organization = () => {
         },
 
     ];
-  
+
     return (
         <div className="vertical-tab-card organization">
             <div className="row">
@@ -118,7 +118,7 @@ const Organization = () => {
                     <CardSection  >
                         <div className='main-organiazation-history'>
                             <div className="vertical-tab-inner">
-                                <RenderTabs tabs={tabs} isCollapse={true} onActiveTab={handleActiveTab} isOrganization={true}  />
+                                <RenderTabs tabs={tabs} isCollapse={true} onActiveTab={handleActiveTab} isOrganization={true} />
                             </div>
                         </div>
                     </CardSection>
