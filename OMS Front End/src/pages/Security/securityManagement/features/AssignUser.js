@@ -200,7 +200,7 @@ const AssignUser = (props) => {
   return (
     <div>
       <div className="row">
-        <div className="col-12 col-md-11 assign-user-form">
+        <div className="col-12 assign-user-form">
           <div className="row mt-2 assign-user-model-section">
             <FormCreator
               ref={asignUserFormRef}
