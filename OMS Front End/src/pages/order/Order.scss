@@ -14,10 +14,12 @@
     font-size: var(--commonFont);
     color: var(--textColor);
   }
+
   span:nth-child(2) {
     margin-left: 20px;
   }
 }
+
 .verify-product-group {
   .loader-section {
     padding: 0;
@@ -27,6 +29,7 @@
     border: 2px dashed var(--inputBorder);
     border-radius: 6px;
     padding: 0px 20px 10px 20px;
+
     table {
       tbody {
         tr {
@@ -34,6 +37,7 @@
         }
       }
     }
+
     table {
       tbody {
         tr {
@@ -44,9 +48,11 @@
   }
 
   margin-top: 36px;
+
   @media only screen and (max-width: 1860px) {
     margin-top: 30px;
   }
+
   .verify-product-label {
     font-size: var(--commonFont);
     color: var(--textColor);
@@ -86,6 +92,7 @@
         font-size: var(--commonFont-small);
         color: var(--textColorLight);
         width: 50%;
+
         .input-group {
           width: 100%;
         }
@@ -95,6 +102,7 @@
         display: flex;
         justify-content: space-around;
         width: 30%;
+
         .checkbox {
           margin: 0 7px;
         }
@@ -115,31 +123,11 @@
   }
 }
 
-@media only screen and (max-width: 1860px) {
-  .address {
-    margin: 0 9px;
-  }
-}
-@media only screen and (max-width: 1675px) {
-  .address {
-    width: 31.5%;
-  }
-}
-@media only screen and (max-width: 1560px) {
-  .address {
-    width: 31.5%;
-  }
-}
-@media only screen and (max-width: 1410px) {
-  .address {
-    margin: 0 9px;
-  }
-}
-
 .product-details-hight {
   table {
     tbody {
       min-height: calc(100vh - 170px);
+
       tr {
         &:last-child {
           border-bottom: 0 !important;
@@ -147,6 +135,7 @@
       }
     }
   }
+
   .parent-row {
     cursor: pointer;
   }
@@ -172,15 +161,53 @@
   .address {
     .record-not-found {
       padding: 5px 0px 0px 0px;
+
       img {
         width: 60px;
       }
+
       h5 {
         font-size: var(--commonFont) !important;
       }
     }
   }
+
   .order-stepper-height {
     max-height: calc(100vh - 400px);
+  }
+}
+
+.stepper-card {
+  &.order-stepper {
+    height: calc(100vh - 105px);
+    .card {
+      @media only screen and (max-width: 1750px) {
+        height: 100%;
+      }
+  }
+   
+  }
+
+}
+.stepper-card {
+  &.order-stepper {
+    .stepper-section {
+      .stepper-content{
+
+        min-height: calc(100vh - 175px);
+        max-height: calc(100vh - 160px) !important;
+      }
+    }
+  }
+
+}
+
+.order-price-list{
+  table {
+    overflow: unset;
+    tbody{
+      overflow-y: unset;
+      overflow-x: unset;
+    }
   }
 }
