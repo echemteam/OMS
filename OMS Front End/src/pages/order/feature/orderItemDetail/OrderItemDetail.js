@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useImperativeHandle, useState } from "react";
+import React, { useContext, useEffect, useImperativeHandle, useState } from "react";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 
 //** Component's */
@@ -21,8 +21,12 @@ const OrderItemDetail = ({ onhandleAddOrderData }) => {
 
   const [priceList, setPriceList] = useState([]);
   const [verifyProductData, setVerifyProductData] = useState([]);
+  const [isDocumentData, setIsDocumentData] = useState(false);
   const [priceListAndVerifyProductData, setPriceListAndVerifyProductData] = useState([])
-  const [productDetailsListData, setProductDetailsListData] = useState()
+  const [productDetailsListData, setProductDetailsListData] = useState({
+    documentName: "",
+    base64File: ""
+  });
 
   const handlePriceListUpdate = (updatedPriceList) => {
     const listToAdd = Array.isArray(updatedPriceList) ? updatedPriceList : [updatedPriceList];
@@ -83,17 +87,18 @@ const OrderItemDetail = ({ onhandleAddOrderData }) => {
       chargeType: "",
       name: "",
       orderItemId: 0,
-      documentName: "",
+      documentName: productDetailsListData.documentName ? productDetailsListData.documentName : "",
       documentType: 0,
-      base64File: "",
+      base64File: productDetailsListData.base64File ? productDetailsListData.base64File : "",
       storagePath: "",
     };
     onhandleAddOrderData(requestBody)
+    setIsDocumentData(true)
   }
 
   return (
     <div className="row">
-      <ProductDetailsList onhandleProductDetailsListData={handleProductDetailsListData} />
+      <ProductDetailsList onhandleProductDetailsListData={handleProductDetailsListData} isDocumentData={isDocumentData}/>
       <div className="col-6">
         <VerifyProductDetail productId={productId} onVerifyProductList={handleVerifyProductDetail} />
       </div>

@@ -70,7 +70,7 @@ const AddOrderTab = () => {
         return;
       }
       ToastService.success(isAddOrderApiData.errorMessage);
-      navigate("/addCustomer");
+      navigate("/OrderList");
     }
   }, [isAddOrderApiSuccess, isAddOrderApiData]);
 
