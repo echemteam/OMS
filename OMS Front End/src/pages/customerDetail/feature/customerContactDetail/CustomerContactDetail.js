@@ -12,7 +12,7 @@ const customerSecurityKey = {
   EDIT: securityKey.EDITCUSTOMERCONTACT,
 }
 
-const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow , contryIdCode}) => {
+const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow, contryIdCode, customerStatusId }) => {
 
   const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -32,6 +32,7 @@ const CustomerContactDetail = ({ isEditablePage, isSearchFilterShow , contryIdCo
         SecurityKey={!isResponsibleUser ? customerSecurityKey : null}
         getContactById={useLazyGetCustomerContactByContactIdQuery}
         contryIdCode={contryIdCode}
+        customerStatusId={customerStatusId}
       />
     </div>
   );

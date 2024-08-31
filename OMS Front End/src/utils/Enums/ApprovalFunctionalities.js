@@ -4,7 +4,7 @@ export const FunctionalitiesName = {
     CUSTOMERUPDATEADDRESS: "Customer Update Address",
     CUSTOMERADDCONTACT: "Customer Add Contact",
     CUSTOMERUPDATECONTACT: "Customer Update Contact",
-    CUSTOMERADDUPDATEFINANCIALSETTING: "Customer Add/Update Financial Setting",
+    CUSTOMERADDUPDATEFINANCIALSETTING: "Customer Update Financial Setting",
     SUPPLIERBASICINFOUPDATE: "Supplier Basic info update",
     SUPPLIERADDADDRESS: "Supplier Add Address",
     SUPPLIERUPDATEADDRESS: "Supplier Update Address",
@@ -19,4 +19,22 @@ export const FunctionalitiesName = {
     ADDSUPPLIER: "Add Supplier",
     ADDADDRESS: "Add Address",
     ADDBILLINGADDRESS: "Add Billing Address",
+
+
+    CUSTOMERUPDATE: "Customer Update",
+    // Address
+    ADDCUSTOMERBILLINGADDRESS: "Add Customer Billing Address",
+    UPDATECUSTOMERBILLINGADDRESS: "Update Customer Billing Address",
+    ADDCUSTOMERSHIPPINGADDRESS: "Add Customer Shipping Address",
+    UPDATECUSTOMERSHIPPINGADDRESS: "Update Customer Shipping Address",
+    // Contact
+    ADDCUSTOMERINVOICEFOLLOWUPCONTACT: "Add Customer Invoice Follow Up Contact",
+    UPDATECUSTOMERINVOICEFOLLOWUPCONTACT: "Update Customer Invoice Follow Up Contact",
+    ADDCUSTOMERINVOICESUBMISSIONCONTACT: "Add Customer Invoice Submission Contact",
+    UPDATECUSTOMERINVOICESUBMISSIONCONTACT: "Update Customer Invoice Submission Contact",
+    // Setting
+    UPDATECUSTOMERFINANCIALSETTING: "Update Customer Financial Setting",
+    // Document
+    UPLOADCUSTOMERDOCUMENT: "Upload Customer Document"
+
 }

@@ -144,7 +144,7 @@ export const OurAccountGridConfig = {
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowEdit: true,
-                allowDelete: true,
+                allowDelete: false,
             },
             allowShort: false
         },
@@ -154,7 +154,7 @@ export const OurAccountGridConfig = {
         defualtEditableView: true,
         buttons: {
             save: true,
-            delete: true,
+            delete: false,
             cancel: false
         }
     }

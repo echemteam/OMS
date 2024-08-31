@@ -105,9 +105,8 @@ const ShippingSettings = ({ isEditablePage }) => {
   const handleChangeDropdown = (data, dataField) => {
     if (dataField === 'deliveryAccountId') {
       confirm(
-        accountTypeId > 0 ? "Change Shipping Methods?" : "Shipping Methods?",
-        accountTypeId > 0 ? "Are you sure you want to Change the Shipping Method?" : "Are you sure you want to Add Default Shipping Method?",
-        "Yes", "No"
+        "Shipping Methods?", "Are you sure you want to Add Default Shipping Method?",
+        "Yes", '', false
       ).then((confirmed) => {
         let request = {
           customerId: customerId,

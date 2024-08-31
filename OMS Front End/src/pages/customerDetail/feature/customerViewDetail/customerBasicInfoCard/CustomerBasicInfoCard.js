@@ -565,19 +565,18 @@ const CustomerBasicInfoCard = ({
                 </div>
               </div>
             </div>
-            <div className="field-desc">
-              <div className="inf-label inf-label-width submission-tab">
-                Invoice Submission
-              </div>
-              <b>&nbsp;:&nbsp;</b>
-              <div className="checkbox-part ml-2 mt-2 eye-icon ">
-                <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
-                <div className="tooltip-show">
-                  <p>Add/Edit Invoice Submission</p>
+            {isResponsibleUser || !isButtonDisable ?
+              <div className="field-desc">
+                <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
+                <b>&nbsp;:&nbsp;</b>
+                <div className="checkbox-part ml-2 mt-2 eye-icon ">
+                  <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
+                  <div className="tooltip-show">
+                    <p>Add/Edit Invoice Submission</p>
+                  </div>
+                  <di className="tooltip-arrow-icon"></di>
                 </div>
-                <di className="tooltip-arrow-icon"></di>
-              </div>
-            </div>
+              </div> : null}
           </div>
         </div>
         <div className="edit-icons" onClick={editClick}>

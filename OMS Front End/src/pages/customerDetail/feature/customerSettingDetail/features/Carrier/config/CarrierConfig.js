@@ -156,7 +156,7 @@ export const AccountGridConfig = {
             colType: GridColumnType.ACTION,
             defaultAction: {
                 allowEdit: true,
-                allowDelete: true,
+                allowDelete: false,
             },
             // editColumn: {
             //     editColType: EditGridColumnType.ACTION,
@@ -183,7 +183,7 @@ export const AccountGridConfig = {
         defualtEditableView: true,
         buttons: {
             save: true,
-            delete: true,
+            delete: false,
             cancel: false
         }
     }

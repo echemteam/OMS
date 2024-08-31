@@ -9,7 +9,7 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { getFieldData, setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { CountryId, CustomerSettingEnum, PaymentMethodTypes } from "../../../../utils/Enums/commonEnums";
+import { CountryId, CustomerSettingEnum, CustomerSupplierStatus, PaymentMethodTypes } from "../../../../utils/Enums/commonEnums";
 import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
@@ -17,7 +17,7 @@ import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, us
 import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
 
-const FinancialSettings = ({ isEditablePage }) => {
+const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   const settingFormRef = useRef();
   const [showButton, setShowButton] = useState(true);
@@ -208,10 +208,11 @@ const FinancialSettings = ({ isEditablePage }) => {
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
       };
       if (isEditablePage) {
-        await handleApprovalRequest(request, settingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
+        await handleApprovalRequest(request, customerSettingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
       } else {
         addEditCustomerSettings(request);
       }
+      // addEditCustomerSettings(request);
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
       const updaterequest = {
         ...settingFormData,
@@ -232,7 +233,7 @@ const FinancialSettings = ({ isEditablePage }) => {
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
       };
       if (isEditablePage) {
-        await handleApprovalRequest(updaterequest, settingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
+        await handleApprovalRequest(updaterequest, customerSettingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
       } else {
         addEditCustomerSettings(updaterequest);
       }
