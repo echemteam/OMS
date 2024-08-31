@@ -70,11 +70,6 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             eventName = getEventName(data.contactTypeId, isEdit, 'AddEditContactCustomer');
         }
         if (matchTypeIds.length > 0 || matchTypeIds?.value) {
-            const request = requestData(data, matchTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
-            let req = {
-                ...request,
-                customerId: customerId ? customerId : request.customerId
-            }
             if (eventNameArr.length > 0) {
                 const matchTypeIdsArray = matchTypeIds.split(',');
                 for (let index = 0; index < eventNameArr.length; index++) {
@@ -86,9 +81,13 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                         customerId: customerId ? customerId : request.customerId
                     }
                     await handleApprovalRequest(req, formData.initialState, event, filteredTypeIds.length);
-
                 }
             } else if (eventName) {
+                const request = requestData(data, matchTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
+                let req = {
+                    ...request,
+                    customerId: customerId ? customerId : request.customerId
+                }
                 await handleApprovalRequest(req, formData.initialState, eventName, filteredTypeIds.length);
             }
 
@@ -149,7 +148,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         };
     };
     const handleApprovalRequest = async (newValue, oldValue, eventName, remainingContactLength) => {
-        const request = { newValue, oldValue, isFunctional: true, eventName };
+        const request = { newValue, oldValue, isFunctional: true, eventName, isFunctionalObjMatch: true };
         const modifyData = await ValidateRequestByApprovalRules(request);
         if (remainingContactLength === 0) {
             if (modifyData.newValue && onSuccess) {

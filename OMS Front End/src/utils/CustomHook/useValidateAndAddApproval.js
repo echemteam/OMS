@@ -1,11 +1,12 @@
 import { getData } from "../LocalStorage/LocalStorageManager";
-//** Service */
-import { useAddApprovalRequestsMutation } from "../../app/services/commonAPI";
-import ToastService from "../../services/toastService/ToastService";
-import { ErrorMessage, SuccessMessage } from "../../data/appMessages";
-import SwalAlert from "../../services/swalService/SwalService";
+//** Lib's */
 import { AddressType, ContactType } from "../Enums/commonEnums";
+import { ErrorMessage, SuccessMessage } from "../../data/appMessages";
 import { FunctionalitiesName } from "../Enums/ApprovalFunctionalities";
+//** Service */
+import SwalAlert from "../../services/swalService/SwalService";
+import ToastService from "../../services/toastService/ToastService";
+import { useAddApprovalRequestsMutation } from "../../app/services/commonAPI";
 
 export const useValidateAndAddApprovalRequests = () => {
     // Hook to handle API requests for adding approval requests
@@ -14,16 +15,29 @@ export const useValidateAndAddApprovalRequests = () => {
 
     // Utility function to deep compare two objects
     const compareObj = (obj1, obj2) => {
-        const { newValueNormalized, oldValueNormalized } = normalizeValues(obj1, obj2);
+        const { newValueNormalized, oldValueNormalized } = normalizeValues(obj1, obj2, true);
         return JSON.stringify(newValueNormalized) === JSON.stringify(oldValueNormalized);
     };
 
-    const normalizeValues = (newValue, oldValue) => {
-        // Normalize field names to lowercase for both newValue and oldValue
-        const normalize = obj => Object.fromEntries(Object.entries(obj).map(([key, value]) => [key.toLowerCase(), String(value)]));
+    const normalizeValues = (newValue, oldValue, isStrictEquality) => {
+        // Recursive function to normalize keys and values
+        const normalize = obj => {
+            if (Array.isArray(obj)) {
+                return obj.map(item => normalize(item)); // Normalize each item in the array
+            } else if (obj && typeof obj === 'object') {
+                return Object.fromEntries(
+                    Object.entries(obj).map(([key, value]) => [
+                        key.toLowerCase(), typeof value === 'object' ? normalize(value) : isStrictEquality ? String(value) : value
+                    ])
+                );
+            } else {
+                return obj;
+            }
+        };
+        // const normalize = obj => Object.fromEntries(Object.entries(obj).map(([key, value]) => [key.toLowerCase(), String(value)]));
         const newValueNormalized = newValue ? normalize(newValue) : newValue;
         const oldValueNormalized = oldValue ? normalize(oldValue) : oldValue;
-        return { newValueNormalized, oldValueNormalized }
+        return { newValueNormalized, oldValueNormalized, originalValues: { newValue, oldValue } }
     }
 
     const getEventName = (id, isEdit, functionalityName) => {
@@ -53,6 +67,11 @@ export const useValidateAndAddApprovalRequests = () => {
         }
     };
 
+    // Utility function to find the original key by normalized key
+    const findOriginalKey = (normalizedKey, obj) => {
+        return Object.keys(obj).find(key => key.toLowerCase() === normalizedKey);
+    };
+
     /**
      * Validates and processes request data based on approval rules.
      * 
@@ -80,7 +99,7 @@ export const useValidateAndAddApprovalRequests = () => {
         // If no relevant rules are found, return the original requestData
         if (!relevantRules.length) return requestData;
 
-        const { newValueNormalized, oldValueNormalized } = normalizeValues(newValue, oldValue);
+        const { newValueNormalized, oldValueNormalized, originalValues } = normalizeValues(newValue, oldValue);
 
         if (requestData.isFunctionalObjMatch) {
             const isEqual = compareObj(newValue, oldValue);
@@ -89,7 +108,7 @@ export const useValidateAndAddApprovalRequests = () => {
             }
         }
 
-        let allSuccessful = true; // Flag to track if all requests are successful
+        let allSuccessful = false; // Flag to track if all requests are successful
 
         // Process each approval rule
         for (const rule of relevantRules) {
@@ -102,23 +121,22 @@ export const useValidateAndAddApprovalRequests = () => {
                     tableId,
                     functionalitiesFieldId,
                     functionalityEventId,
-                    oldValue: JSON.stringify(oldValueNormalized),
-                    newValue: JSON.stringify(newValueNormalized)
+                    oldValue: JSON.stringify(originalValues.oldValue),
+                    newValue: JSON.stringify(originalValues.newValue)
                 };
 
                 try {
                     // Add the approval request and revert the change in newValue
                     await addApprovalRequest(request);
-                    // success(SuccessMessage.ApprovalSuccess);
-                    //newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
+                    allSuccessful = true;
                 } catch (error) {
-                    allSuccessful = false; // Set flag to false if any request fails
                     console.error('Error adding approval request:', error);
                 }
             } else if (!isFunctional) {
                 // Check if the rule specifies a field name to validate
                 if (fieldName) {
                     const normalizedFieldName = fieldName.toLowerCase();
+                    const originalKeyName = findOriginalKey(normalizedFieldName, originalValues.newValue);
                     const newFieldValue = newValueNormalized[normalizedFieldName];
                     const oldFieldValue = oldValueNormalized[normalizedFieldName];
 
@@ -136,16 +154,14 @@ export const useValidateAndAddApprovalRequests = () => {
 
                         try {
                             // Add the approval request and revert the change in newValue
+                            allSuccessful = true;
                             await addApprovalRequest(request);
-                            newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
-                            // success(SuccessMessage.ApprovalSuccess);
+                            originalValues.newValue[originalKeyName] = oldFieldValue
                         } catch (error) {
-                            allSuccessful = false; // Set flag to false if any request fails
                             console.error('Error adding approval request:', error);
                         }
                     }
                 } else {
-                    allSuccessful = false; // Set flag to false if any request fails
                     ToastService.warning(ErrorMessage.FieldNameNotFound);
                 }
             }
@@ -159,8 +175,8 @@ export const useValidateAndAddApprovalRequests = () => {
         // Return the updated requestData with normalized values
         return {
             ...requestData,
-            newValue: newValueNormalized,
-            oldValue: oldValueNormalized
+            newValue: originalValues.newValue,
+            oldValue: originalValues.oldValue
         };
     }
 

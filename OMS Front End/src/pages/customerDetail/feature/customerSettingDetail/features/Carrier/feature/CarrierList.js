@@ -7,12 +7,15 @@ import { AppIcons } from "../../../../../../../data/appIcons";
 import { AccountGridConfig } from "../config/CarrierConfig";
 import PropTypes from 'prop-types';
 import ToastService from "../../../../../../../services/toastService/ToastService";
+import { useValidateAndAddApprovalRequests } from "../../../../../../../utils/CustomHook/useValidateAndAddApproval";
+import { FunctionalitiesName } from "../../../../../../../utils/Enums/ApprovalFunctionalities";
 
-const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList , handleDeleteClick }) => {
+const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId,
+    handleGetDefaultList, handleDeleteClick, isEditablePage }) => {
 
-    // const [gridConfig, setGridConfig] = useState(AccountGridConfig);
-    // const [gridConfig, setGridConfig] = useState(AccountGridConfig)
     const [dataSource, setDataSource] = useState(collectAccountData);
+    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
 
     useEffect(() => {
@@ -29,11 +32,7 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
         }
     }, [collectAccountData, isGetDataLoading]);
 
-    const handleEditClick = (data, rowIndex) => {
-        let newGridData = [...dataSource]
-        newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
-        setDataSource(newGridData);
-
+    const handleEditClick = async (data, rowIndex) => {
         const req = {
             customerId: customerId,
             isPrimary: data.isPrimary,
@@ -42,8 +41,21 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
             carrierId: data.carrier?.value || data.carrierId,
             handlingFee: data.handlingFee
         };
-        update(req);
+        if (isEditablePage) {
+            await handleApprovalRequest(req, dataSource.initialState);
+        } else {
+            let newGridData = [...dataSource]
+            newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
+            setDataSource(newGridData);
+            update(req);
+        }
     }
+
+    const handleApprovalRequest = async (newValue, oldValue) => {
+        const request = { newValue, oldValue, isFunctional: false, eventName: FunctionalitiesName.UPDATECUSTOMERSHIPPINGSETTING };
+        const modifyData = await ValidateRequestByApprovalRules(request);
+        if (modifyData.newValue) handleGetDefaultList();
+    };
 
     useEffect(() => {
         if (isUpdateSuccess && isUpdateData) {

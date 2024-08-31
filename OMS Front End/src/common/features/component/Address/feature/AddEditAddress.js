@@ -2,7 +2,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Lib's */
 import Buttons from "../../../../../components/ui/button/Buttons";
-import { AddressType, CustomerSupplierStatus, FieldSettingType } from "../../../../../utils/Enums/commonEnums";
+import { AddressType, FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { removeFormFields } from "../../../../../utils/FormFields/RemoveFields/handleRemoveFields";
@@ -372,7 +372,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     };
 
     const handleApprovalRequest = async (newValue, oldValue, eventName) => {
-        const request = { newValue, oldValue, isFunctional: true, eventName };
+        const request = { newValue, oldValue, isFunctional: true, eventName, isFunctionalObjMatch: true };
         const modifyData = await ValidateRequestByApprovalRules(request);
         if (modifyData.newValue) onSidebarClose();
     };

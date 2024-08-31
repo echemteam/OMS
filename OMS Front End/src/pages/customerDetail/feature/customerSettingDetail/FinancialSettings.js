@@ -6,7 +6,7 @@ import { securityKey } from "../../../../data/SecurityKey";
 import Buttons from "../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
-import { getFieldData, setDropDownOptionField } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { getFieldData, setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import { CountryId, CustomerSettingEnum, CustomerSupplierStatus, PaymentMethodTypes } from "../../../../utils/Enums/commonEnums";
@@ -19,7 +19,7 @@ import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionali
 
 const ExemptSalesTax = { exemptSalesTax: true };
 
-const FinancialSettings = ({ isEditablePage }) => {
+const FinancialSettings = ({ isEditablePage ,customerStatusId}) => {
 
   const settingFormRef = useRef();
   const [showButton, setShowButton] = useState(true);
@@ -73,7 +73,7 @@ const FinancialSettings = ({ isEditablePage }) => {
       GetDetailsbyCustomerID(customerId);
       addRemoveBankFee();
     }
-  }, [customerCountryId, setCustomerCountryId])
+  }, [customerCountryId, setCustomerCountryId, customerStatusId])
 
   useEffect(() => {
     if (customerId > 0) {
@@ -138,6 +138,11 @@ const FinancialSettings = ({ isEditablePage }) => {
   useEffect(() => {
     if (!isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDSuccess && isGetDetailByCustomerIDData) {
       if (isGetDetailByCustomerIDData) {
+        if (customerStatusId === CustomerSupplierStatus.APPROVED) {
+          setFieldSetting(customerSettingFormData, 'billingCurrency', 'isDisabled', true);
+        } else {
+          setFieldSetting(customerSettingFormData, 'billingCurrency', 'isDisabled');
+        }
         let modifyFormFields;
         if (isGetDetailByCustomerIDData.paymentMethodId !== PaymentMethodTypes.CREDITCARD) {
           setIsBankFee(true);
@@ -224,45 +229,43 @@ const FinancialSettings = ({ isEditablePage }) => {
         exemptSalesTax: settingFormData.exemptSalesTax,
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
       };
-      if (isEditablePage) {
-        await handleApprovalRequest(request, customerSettingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
-      } else {
-        addEditCustomerSettings(request);
-      }
-      // addEditCustomerSettings(request);
+      addEditCustomerSettings(request);
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
-      const updaterequest = {
-        ...settingFormData,
-        customerAccountingSettingId: settingFormData.customerAccountingSettingId,
-        customerId: customerId,
-        paymentTermId: settingFormData.paymentTermId && typeof settingFormData.paymentTermId === "object"
-          ? settingFormData.paymentTermId.value
-          : settingFormData.paymentTermId,
-        paymentMethodId: settingFormData.paymentMethodId && typeof settingFormData.paymentMethodId === "object"
-          ? settingFormData.paymentMethodId.value
-          : settingFormData.paymentMethodId,
-        billingCurrency: settingFormData.billingCurrency && typeof settingFormData.billingCurrency === "object"
-          ? settingFormData.billingCurrency.value
-          : settingFormData.billingCurrency,
-        bankWireFee: settingFormData.bankWireFee && isBankFee ? settingFormData.bankWireFee : null,
-        salesTax: settingFormData.salesTax && !settingFormData.exemptSalesTax ? settingFormData.salesTax : null,
-        exemptSalesTax: settingFormData.exemptSalesTax,
-        cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
-      };
+      const updaterequest = updateRequestObj(settingFormData);
       if (isEditablePage) {
-        await handleApprovalRequest(updaterequest, customerSettingFormData.initialState, FunctionalitiesName.CUSTOMERADDUPDATEFINANCIALSETTING);
+        await handleApprovalRequest(updaterequest, isGetDetailByCustomerIDData, FunctionalitiesName.UPDATECUSTOMERFINANCIALSETTING);
       } else {
         addEditCustomerSettings(updaterequest);
       }
-
     }
   };
 
-  const handleApprovalRequest = async (newValue, oldValue, functionalityName) => {
-    const request = { newValue, oldValue, isFunctional: true, functionalityName };
+  const handleApprovalRequest = async (newValue, oldValue, eventName) => {
+    const request = { newValue, oldValue, isFunctional: false, eventName };
     const modifyData = await ValidateRequestByApprovalRules(request);
-    if (modifyData.newValue) GetDetailsbyCustomerID(customerId);
+    if (modifyData.newValue) {
+      const updaterequest = updateRequestObj(modifyData.newValue);
+      addEditCustomerSettings(updaterequest);
+    }
   };
+
+  const updateRequestObj = (data) => {
+    return {
+      ...data,
+      customerAccountingSettingId: data.customerAccountingSettingId,
+      customerId: customerId,
+      paymentTermId: data.paymentTermId && typeof data.paymentTermId === "object"
+        ? data.paymentTermId.value : data.paymentTermId,
+      paymentMethodId: data.paymentMethodId && typeof data.paymentMethodId === "object"
+        ? data.paymentMethodId.value : data.paymentMethodId,
+      billingCurrency: data.billingCurrency && typeof data.billingCurrency === "object"
+        ? data.billingCurrency.value : data.billingCurrency,
+      bankWireFee: data.bankWireFee && isBankFee ? data.bankWireFee : null,
+      salesTax: data.salesTax && !data.exemptSalesTax ? data.salesTax : null,
+      exemptSalesTax: data.exemptSalesTax,
+      cardProcessingCharges: data.cardProcessingCharges && isCardCharges ? data.cardProcessingCharges : null,
+    };
+  }
 
   const handleSalesTax = (data, dataField) => {
     if (dataField === 'exemptSalesTax' && data) {
