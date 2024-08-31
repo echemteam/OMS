@@ -4,7 +4,7 @@ export const SettingFormData = {
   name: "Setting Form",
   initialState: {
     paymentTermId: "", creditLimit: 10000, paymentMethodId: "", billingCurrency: "USD",
-    invoiceSubmissionInstruction: "", bankFee: '', salesTax: '', cardProcessingCharges: '', exemptSalesTax: false
+    invoiceSubmissionInstruction: "", bankFee: '', salesTax: '', cardProcessingCharges: '', exemptSalesTax: true
   },
   formFields: [
     {
