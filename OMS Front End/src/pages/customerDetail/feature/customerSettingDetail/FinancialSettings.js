@@ -17,7 +17,9 @@ import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, us
 import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
 
-const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
+const ExemptSalesTax = { exemptSalesTax: true };
+
+const FinancialSettings = ({ isEditablePage }) => {
 
   const settingFormRef = useRef();
   const [showButton, setShowButton] = useState(true);
@@ -26,7 +28,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
   const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
-  const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, handleActiveSubTabClick } = useContext(BasicDetailContext);
+  const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, handleActiveSubTabClick, activeTab } = useContext(BasicDetailContext);
 
   //** API Call's */
   const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
@@ -56,6 +58,15 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
     getAllPaymentMethod();
     // removeCardProcessCharge();
   }, []);
+
+
+  useEffect(() => {
+    if (!isEditablePage && activeTab === 3) {
+      if (ExemptSalesTax.exemptSalesTax) {
+        handleCheckboxChanges(true, "exemptSalesTax")
+      }
+    }
+  }, [activeTab])
 
   useEffect(() => {
     if (customerCountryId) {
@@ -176,6 +187,12 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
         }
         setCustomerSettingFormData(formData);
         setShouldRerenderFormCreator((prevState) => !prevState);
+      }
+    } else {
+      if (isEditablePage && activeTab === 0) {
+        if (ExemptSalesTax.exemptSalesTax) {
+          handleCheckboxChanges(true, "exemptSalesTax")
+        }
       }
     }
   }, [isGetDetailByCustomerIDFetching, isGetDetailByCustomerIDSuccess, isGetDetailByCustomerIDData,]);

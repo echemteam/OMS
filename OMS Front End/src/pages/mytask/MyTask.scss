@@ -235,6 +235,9 @@
     display: flex;
     justify-content: space-between;
     padding: 0 15px;
+    max-height: calc(100vh - 300px);
+    overflow-x: auto;
+    // background: #f9f9f9;
 
     .value-block {
       width: 48%;
@@ -244,6 +247,7 @@
       gap: 5px;
       border-radius: 8px;
       flex-direction: column;
+      height: fit-content;
 
       .value-title {
         font-size: var(--commonFont-large);
@@ -350,4 +354,14 @@
   text-align: end;
   font-size: var(--commonFont-small);
   white-space: nowrap;
+}
+
+.list-style {
+  list-style: none;
+ 
+}
+
+.border-dashed {
+  // border-bottom: 3px dashed var(--tableBorderColor);
+  // width: 50%;
 }
