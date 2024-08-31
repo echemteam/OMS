@@ -159,6 +159,9 @@
           box-shadow: 0 0 0.25rem 0.05rem rgba(105, 108, 255, 0.1) !important;
           padding-left: 12px !important;
         }
+        &::placeholder {
+          color: var(--placeholderColor);
+        }
       }
     }
   }

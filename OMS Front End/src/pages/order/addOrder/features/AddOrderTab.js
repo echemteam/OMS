@@ -8,7 +8,6 @@ import Iconify from "../../../../components/ui/iconify/Iconify";
 import { useAddOrderMutation } from "../../../../app/services/orderAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import { useNavigate } from "react-router-dom";
-// import AddEditAddress from "../../../../common/features/component/Address/feature/AddEditAddress";
 
 const ContactDetails = React.lazy(() =>
   import("../../feature/contactDetail/ContactDetails")
@@ -29,7 +28,6 @@ const AddOrderTab = () => {
 
   const [finalOrderInformationData, setFinalOrderInformationData] = useState({});
   const [finalOrderContactData, setFinalOrderContactData] = useState([]);
-  // const [finalOrderItemData, setFinalOrderItemData] = useState([]);
 
   const [
     addOrderApi,
@@ -47,13 +45,9 @@ const AddOrderTab = () => {
     setFinalOrderContactData(data)
   }
 
-  // const handleOrderItem = (data) => {
-  //   setFinalOrderItemData(data)
-  // }
-
-  const handleTabClick = (index) => {
-    setActiveTab(index);
-  };
+  // const handleTabClick = (index) => {
+  //   setActiveTab(index);
+  // };
 
   const onSidebarClose = () => {
     setIsModelOpen(false);
@@ -139,7 +133,7 @@ const AddOrderTab = () => {
                   >
                     <button
                       className="step-button"
-                      onClick={() => handleTabClick(index)}
+                      // onClick={() => handleTabClick(index)}
                     >
                       <span className="stepper-box">{index + 1}</span>
                       <span className="stepper-label">
