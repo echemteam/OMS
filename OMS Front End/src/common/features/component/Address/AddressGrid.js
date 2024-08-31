@@ -45,24 +45,45 @@ const AddressGrid = ({
   ] = useLazyGetAllAddressTypesQuery();
 
 
+  //** Use Effect */
   useEffect(() => {
-    if (!isEditablePage || !SecurityKey) return;
-
-    const addPermission = hasFunctionalPermission(SecurityKey.ADD);
-    const editPermission = hasFunctionalPermission(SecurityKey.EDIT);
-
-    handleAddPermission(addPermission);
-    handleEditPermission(editPermission);
-
-  }, [isEditablePage, isSupplier, SecurityKey, editMode]);
-
-  const handleAddPermission = (permission) => {
-    if (permission?.hasAccess) {
-      setButtonVisible(true);
-    } else {
-      setButtonVisible(false);
+    if (isEditablePage) {
+      if (SecurityKey) {
+        const hasAddPermission = hasFunctionalPermission(SecurityKey.ADD);
+        const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
+        if (hasAddPermission) {
+          if (hasAddPermission.hasAccess === true) {
+            setButtonVisible(true);
+          } else {
+            setButtonVisible(false);
+          }
+        }
+        if (hasEditPermission && formSetting) {
+          if (editMode) {
+            if (hasEditPermission.isViewOnly === true) {
+              formSetting.isViewOnly = true;
+              setIsButtonDisable(true);
+            } else {
+              formSetting.isViewOnly = false;
+              setIsButtonDisable(false);
+            }
+          } else if (!editMode) {
+            if (hasAddPermission.hasAccess === true) {
+              formSetting.isViewOnly = false;
+              setIsButtonDisable(false);
+            }
+            if (hasEditPermission && hasEditPermission.isViewOnly === true) {
+              setShowEditIcon(true);
+            } else if (hasEditPermission.isEditable === true) {
+              setShowEditIcon(true);
+            } else {
+              setShowEditIcon(false);
+            }
+          }
+        }
+      }
     }
-  };
+  }, [isEditablePage, isSupplier, SecurityKey, editMode]);
 
   const handleEditPermission = (permission) => {
     if (formSetting) {
@@ -256,6 +277,7 @@ const AddressGrid = ({
             onSidebarClose={onSidebarClose}
             getAddressTypeIdOrder={null}
             orderCustomerId={null}
+            customerStatusId={statusId}
           />
         </SidebarModel>
       </div>

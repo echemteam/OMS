@@ -396,7 +396,7 @@ const CustomerBasicInfoCard = ({
   return !isLoading ? (
     <div className="basic-customer-detail">
       <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-        <div className="d-flex profile-info  justify-content-between col-11">
+        <div className="d-flex profile-info  justify-content-between col-12">
           <div className="col-3 flex-column profile-icon-desc justify-content-center">
             <div className="d-flex w-100">
               <div className="profile-icon ">
@@ -565,19 +565,18 @@ const CustomerBasicInfoCard = ({
                 </div>
               </div>
             </div>
-            <div className="field-desc">
-              <div className="inf-label inf-label-width submission-tab">
-                Invoice Submission
-              </div>
-              <b>&nbsp;:&nbsp;</b>
-              <div className="checkbox-part ml-2 mt-2 eye-icon ">
-                <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
-                <div className="tooltip-show">
-                  <p>Add/Edit Invoice Submission</p>
+            {isResponsibleUser || !isButtonDisable ?
+              <div className="field-desc">
+                <div className="inf-label inf-label-width submission-tab">Invoice Submission</div>
+                <b>&nbsp;:&nbsp;</b>
+                <div className="checkbox-part ml-2 mt-2 eye-icon ">
+                  <Iconify icon="ph:eye-duotone" onClick={handleModelShow} />
+                  <div className="tooltip-show">
+                    <p>Add/Edit Invoice Submission</p>
+                  </div>
+                  <di className="tooltip-arrow-icon"></di>
                 </div>
-                <di className="tooltip-arrow-icon"></di>
-              </div>
-            </div>
+              </div> : null}
           </div>
         </div>
         <div className="edit-icons" onClick={editClick}>

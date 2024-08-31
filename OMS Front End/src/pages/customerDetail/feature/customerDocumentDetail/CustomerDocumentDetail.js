@@ -13,7 +13,7 @@ const customerSecurityKey = {
     DOWNALOD: securityKey.DOWNALODCUSTOMERDOCUMENT,
 }
 
-const CustomerDocumentDetail = ({ isEditablePage }) => {
+const CustomerDocumentDetail = ({ isEditablePage, customerStatusId }) => {
 
     const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -23,7 +23,7 @@ const CustomerDocumentDetail = ({ isEditablePage }) => {
             * This hook dynamically sets the API call based on the module (customer or supplier).
         */
         <DocumentGrid keyId={customerId || 0} isSupplier={false} isEditablePage={isEditablePage}
-            SecurityKey={!isResponsibleUser ? customerSecurityKey : null}
+            SecurityKey={!isResponsibleUser ? customerSecurityKey : null} customerStatusId={customerStatusId}
             addDocuments={useAddCustomerDocumentsMutation} downloadDocument={useLazyDownloadDocumentQuery}
             deleteDocumentsById={useDeleteCustomerDocumentsByIdMutation} getDocumentsById={useLazyGetCustomerDocumentsByIdQuery} />
     )

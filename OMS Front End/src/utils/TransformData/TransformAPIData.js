@@ -24,9 +24,20 @@ export const modifyAddressType = (apiResponseData) => {
 }
 
 export const modifyPhoneNumberData = (phoneDataArray) => {
+    const isSingleItem = phoneDataArray.length === 1;
     const newArray = phoneDataArray.map(phoneData => ({
         ...phoneData,
-        extension: phoneData.extension === '-' ? 0 : phoneData.extension
+        extension: phoneData.extension === '-' ? 0 : phoneData.extension,
+        isPrimary: isSingleItem ? true : phoneData.isPrimary
+    }));
+    return newArray;
+};
+
+export const modifyEmailAddressData = (emailDataArray) => {
+    const isSingleItem = emailDataArray.length === 1;
+    const newArray = emailDataArray.map(emailData => ({
+        ...emailData,
+        isPrimary: isSingleItem ? true : emailData.isPrimary
     }));
     return newArray;
 };

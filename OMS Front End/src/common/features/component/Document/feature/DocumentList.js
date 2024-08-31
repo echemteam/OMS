@@ -293,7 +293,7 @@ const DocumentList = forwardRef(
                                       <Iconify icon="uil:folder-download" />
                                     </span>
                                   ) : null}
-                                  {showDeleteButton ? (
+                                  {/* {showDeleteButton ? (
                                     <span
                                       className="action-icon"
                                       onClick={() =>
@@ -304,13 +304,9 @@ const DocumentList = forwardRef(
                                         )
                                       }
                                     >
-                                      {/* <Image
-                                        imagePath={AppIcons.deleteIcon}
-                                        alt="Delete Icon"
-                                      /> */}
                                       <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
                                     </span>
-                                  ) : null}
+                                  ) : null} */}
                                 </div>
                               </div>
                             </div>
