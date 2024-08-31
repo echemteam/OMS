@@ -234,7 +234,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
 
       {approvedData.isFunctional ?
         <div className="value-comparison">
-          <div className="value-block">
+          <div className="value-block w-100">
             <span className="value-title">New Value</span>
             {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
               <ul className="value-content pl-0">
