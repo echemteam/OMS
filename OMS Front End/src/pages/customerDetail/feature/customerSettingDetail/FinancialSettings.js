@@ -19,7 +19,7 @@ import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionali
 
 const ExemptSalesTax = { exemptSalesTax: true };
 
-const FinancialSettings = ({ isEditablePage }) => {
+const FinancialSettings = ({ isEditablePage ,customerStatusId}) => {
 
   const settingFormRef = useRef();
   const [showButton, setShowButton] = useState(true);
