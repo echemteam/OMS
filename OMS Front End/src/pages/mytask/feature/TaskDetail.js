@@ -155,7 +155,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
   };
 
   const renderValue = (value) => {
-  
+
     if (Array.isArray(value)) {
       return (
         <ul className="pl-0 mt-1">
@@ -185,7 +185,6 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
       return value !== null ? value.toString() : 'N/A';
     }
   };
-  
 
   return (
     <div className="task-detail">
@@ -260,7 +259,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
               <div className="value-content">
                 <span className="value-label">{fieldName} : </span>
                 <span className="value-data">
-                {renderValue(oldFieldValue)}
+                  {renderValue(oldFieldValue)}
                 </span>
               </div>
             ) : (
@@ -273,7 +272,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
               <div className="value-content">
                 <span className="value-label">{fieldName} : </span>
                 <span className="value-data">
-                {renderValue(newFieldValue)}
+                  {renderValue(newFieldValue)}
                 </span>
               </div>
             ) : (
@@ -282,7 +281,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
           </div>
         </div>
       }
-      {tabId !== 1 &&
+      {tabId !== 1 && status !== "Reject" ?
         <div className="task-footer mt-3 pr-3">
           <Button className="reject-btn" onClick={handleToggleModal}>
             {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
@@ -294,6 +293,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
             Accept
           </Button>
         </div>
+        : null
       }
       <CenterModel
         showModal={showModal}
