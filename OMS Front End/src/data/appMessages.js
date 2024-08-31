@@ -66,6 +66,6 @@ export const SuccessMessage = {
 	Alret_Warning: 'Warning !',
 	TaxId: 'Minimum {0} and Maximum {1} characters allowed for Tax Id',
 	DefaultUSATaxId: 'Minimum 10 and Maximum 10 characters allowed.',
-	ApprovalSuccess: "We are reviewing your request and will get back to you shortly."
+	ApprovalSuccess: "We are currently reviewing your request and will respond shortly. If approved, your request will be added or updated accordingly."
 };
 

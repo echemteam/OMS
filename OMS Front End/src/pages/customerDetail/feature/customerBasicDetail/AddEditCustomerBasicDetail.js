@@ -12,7 +12,7 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import ToastService from "../../../../services/toastService/ToastService";
 import { useLazyGetAllIncotermQuery, useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddEditCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery } from "../../../../app/services/basicdetailAPI";
-import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
+import { CustomerSupplierStatus, FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { customerbasicData, excludingRoles } from "./config/CustomerBasicDetail.data";
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
 import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
@@ -168,6 +168,13 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     }
     useEffect(() => {
         if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
+            if (GetCustomersBasicInformationByIdData.statusId === CustomerSupplierStatus.APPROVED) {
+                setFieldSetting(formData, 'name', 'isDisabled', true);
+                setFieldSetting(formData, 'taxId', 'isDisabled', true);
+            } else {
+                setFieldSetting(formData, 'name', 'isDisabled');
+                setFieldSetting(formData, 'taxId', 'isDisabled');
+            }
             const newFrom = { ...customerbasicData };
             const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, customerbasicData.formFields, 'taxId');
             newFrom.formFields = formFields;
