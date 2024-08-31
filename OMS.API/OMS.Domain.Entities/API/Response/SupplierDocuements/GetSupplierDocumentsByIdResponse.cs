@@ -8,5 +8,6 @@
         public string? Type { get; set; }
         public int? SupplierId { get; set; }
         public string? Attachment { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }
