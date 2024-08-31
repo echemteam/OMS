@@ -33,7 +33,9 @@ export const FunctionalitiesName = {
     ADDCUSTOMERINVOICESUBMISSIONCONTACT: "Add Customer Invoice Submission Contact",
     UPDATECUSTOMERINVOICESUBMISSIONCONTACT: "Update Customer Invoice Submission Contact",
     // Setting
+    ADDCUSTOMERFINANCIALSETTING: "Add Customer Financial Setting",
     UPDATECUSTOMERFINANCIALSETTING: "Update Customer Financial Setting",
+    UPDATECUSTOMERSHIPPINGSETTING:"Update Customer Shipping Setting",
     // Document
     UPLOADCUSTOMERDOCUMENT: "Upload Customer Document"
 

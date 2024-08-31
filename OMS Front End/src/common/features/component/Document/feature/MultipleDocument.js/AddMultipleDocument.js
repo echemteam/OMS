@@ -12,6 +12,8 @@ import Select from "react-select";
 import { ModulePathName } from "../../../../../../utils/Enums/commonEnums";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../../../data/appMessages";
+import { useValidateAndAddApprovalRequests } from "../../../../../../utils/CustomHook/useValidateAndAddApproval";
+import { FunctionalitiesName } from "../../../../../../utils/Enums/ApprovalFunctionalities";
 
 const getFileIcon = (extension) => {
   switch (extension) {
@@ -47,11 +49,13 @@ const AddMultipleDocument = ({
   handleMulDocToggleModal,
   addDocuments,
   documentTypes,
+  isEditablePage
 }) => {
   const ref = useRef();
   const [attachment, setAttachment] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
+  const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
 
   /**
    * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -73,7 +77,7 @@ const AddMultipleDocument = ({
     }
   }, [isAddSuccess, isAddData]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const modifyData = uploadedFiles.map((data) => {
       const matchingAttachment = attachment.find(
         (att) => att.fileName === data.name
@@ -83,9 +87,7 @@ const AddMultipleDocument = ({
         base64File: matchingAttachment ? matchingAttachment.base64Data : null,
       };
     });
-    const IsAllDetailExist = modifyData.every(
-      (data) => data.name && data.base64File && data.documentTypeId !== null
-    );
+    const IsAllDetailExist = modifyData.every((data) => data.name && data.base64File && data.documentTypeId !== null);
     if (IsAllDetailExist) {
       const requestData = {
         storagePath: isSupplier
@@ -94,11 +96,23 @@ const AddMultipleDocument = ({
         [isSupplier ? "supplierId" : "customerId"]: keyId,
         documentInfoList: modifyData,
       };
-      add(requestData);
+      if (!isSupplier && isEditablePage) {
+        await handleApprovalRequest(requestData, null);
+      } else {
+        add(requestData);
+      }
     } else {
       ToastService.warning(ErrorMessage.DocumentDetailMissing);
     }
   };
+
+  const handleApprovalRequest = async (newValue) => {
+    const request = { newValue, oldValue: null, isFunctional: true, eventName: FunctionalitiesName.UPLOADCUSTOMERDOCUMENT };
+    const modifyData = await ValidateRequestByApprovalRules(request);
+    if (modifyData.newValue) handleMulDocToggleModal();
+  };
+
+
   const handleFileUpload = (value) => {
     const files = value.split(", ");
 
@@ -179,8 +193,8 @@ const AddMultipleDocument = ({
                     value={
                       file.documentTypeId
                         ? documentTypes.find(
-                            (option) => option.value === file.type
-                          )
+                          (option) => option.value === file.type
+                        )
                         : null
                     }
                     onChange={(selectedOption) =>

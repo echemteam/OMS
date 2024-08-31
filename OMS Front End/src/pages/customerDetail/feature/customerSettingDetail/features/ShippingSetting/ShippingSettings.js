@@ -147,11 +147,13 @@ const ShippingSettings = ({ isEditablePage }) => {
       {!isGetDefaultValueFetching ?
         <div className="grid-section">
           {accountTypeId === 1 ?
-            <ManageDevliveryMethod isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
+            <ManageDevliveryMethod isEditablePage={isEditablePage} isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
             accountTypeId === 2 ?
               <>
-                <ManageCarrier isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
-                <ManageDevliveryMethod isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
+                <ManageCarrier isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching}
+                  isEditablePage={isEditablePage} />
+                <ManageDevliveryMethod isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching}
+                  isEditablePage={isEditablePage} />
               </> : null
           }
         </div>

@@ -11,7 +11,7 @@ import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleRes
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 
-const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess, isEditablePage, customerStatusId }) => {
+const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess, isEditablePage }) => {
 
     const ref = useRef();
     const [formData, setFormData] = useState(DocumentFormData);
@@ -60,15 +60,16 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
                 [isSupplier ? 'supplierId' : 'customerId']: keyId,
                 documentInfoList: documentList
             };
-            if (isEditablePage && customerStatusId === CustomerSupplierStatus.APPROVED) {
-                await handleApprovalRequest(requestData, null, FunctionalitiesName.SUPPLIERUPDATEADDRESS);
+            if (!isSupplier && isEditablePage) {
+                await handleApprovalRequest(requestData, null);
+            } else {
+                add(requestData);
             }
-            add(requestData);
         }
     };
 
-    const handleApprovalRequest = async (newValue, oldValue, functionalityName) => {
-        const request = { newValue, oldValue, isFunctional: true, functionalityName };
+    const handleApprovalRequest = async (newValue) => {
+        const request = { newValue, oldValue: null, isFunctional: true, eventName: FunctionalitiesName.UPLOADCUSTOMERDOCUMENT };
         const modifyData = await ValidateRequestByApprovalRules(request);
         if (modifyData.newValue) {
             onSuccess();
