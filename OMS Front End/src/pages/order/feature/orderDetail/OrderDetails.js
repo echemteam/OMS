@@ -323,6 +323,8 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
           isBillingId: null,
           isShippingId: null,
         });
+        setGetShippingAddressData(null)
+        setGetBillingAddressData(null)
       } else {
         setIsSubCustomerDropdownVisible(false);
       }

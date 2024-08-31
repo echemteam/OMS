@@ -117,13 +117,13 @@ const MyTask = () => {
   return (
     <CardSection>
       <div className="mytask-section">
-        <div className="d-flex">
-          <div className="col-xxl-4 task-tab">
+        <div className="row">
+          <div className="col-xxl-4 col-xl-4 col-md-4 col-12 task-tab">
             <div className="task-title">
               <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
             </div>
           </div>
-          <div className="col-xxl-8">
+          <div className="col-xxl-8 col-xl-8 col-md-8 col-12 ">
             <TaskDetail approvedData={approvedData} approvalRequest={approvalRequest} approvalRequestId={approvalRequestId} isFetching={isGetApprovalRequestsByApprovalRequestIdFetching} tabId={tabId} />
           </div>
         </div>
