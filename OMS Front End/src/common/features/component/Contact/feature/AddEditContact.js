@@ -43,13 +43,13 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
 
 
     const handleAddEdit = async () => {
-        if (isSupplier) {
-            handlWithoutApprovalAddEdit();
-        } else if (isEditablePage) {
-            handleApprovalAddEdit()
-        } else {
-            handlWithoutApprovalAddEdit();
-        }
+        handlWithoutApprovalAddEdit();
+        // if (isSupplier) {
+        // } else if (isEditablePage) {
+        //     handleApprovalAddEdit()
+        // } else {
+        //     handlWithoutApprovalAddEdit();
+        // }
     }
 
     const handleApprovalAddEdit = async () => {

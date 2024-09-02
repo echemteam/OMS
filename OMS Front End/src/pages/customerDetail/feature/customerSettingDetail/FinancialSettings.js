@@ -19,7 +19,7 @@ import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionali
 
 const ExemptSalesTax = { exemptSalesTax: true };
 
-const FinancialSettings = ({ isEditablePage ,customerStatusId}) => {
+const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   const settingFormRef = useRef();
   const [showButton, setShowButton] = useState(true);
@@ -232,11 +232,11 @@ const FinancialSettings = ({ isEditablePage ,customerStatusId}) => {
       addEditCustomerSettings(request);
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
       const updaterequest = updateRequestObj(settingFormData);
-      if (isEditablePage) {
-        await handleApprovalRequest(updaterequest, isGetDetailByCustomerIDData, FunctionalitiesName.UPDATECUSTOMERFINANCIALSETTING);
-      } else {
-        addEditCustomerSettings(updaterequest);
-      }
+      // if (isEditablePage) {
+      //   await handleApprovalRequest(updaterequest, isGetDetailByCustomerIDData, FunctionalitiesName.UPDATECUSTOMERFINANCIALSETTING);
+      // } else {
+      addEditCustomerSettings(updaterequest);
+      // }
     }
   };
 

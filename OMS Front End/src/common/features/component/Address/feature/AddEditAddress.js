@@ -349,12 +349,12 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
-            const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
-            if (isEditablePage && eventName) {
-                await handleApprovalRequest(updateData, formData.initialState, eventName);
-            } else {
-                update(updateData);
-            }
+            // const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
+            // if (isEditablePage && eventName) {
+            //     await handleApprovalRequest(updateData, formData.initialState, eventName);
+            // } else {
+            update(updateData);
+            // }
         } else {
             // Add mode
             const customerId = orderCustomerId ? orderCustomerId : transformedData.customerId;
@@ -362,12 +362,12 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 ...transformedData,
                 customerId: customerId,
             };
-            const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
-            if (isEditablePage && eventName) {
-                await handleApprovalRequest(req, null, eventName);
-            } else {
-                add(req);
-            }
+            // const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
+            // if (isEditablePage && eventName) {
+            //     await handleApprovalRequest(req, null, eventName);
+            // } else {
+            add(req);
+            // }
         }
     };
 

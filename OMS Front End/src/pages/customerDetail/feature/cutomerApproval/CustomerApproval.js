@@ -20,6 +20,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     const [isShowApproval, setIsShowApproval] = useState(false);
     const [validateCheckList, setValidateCheckList] = useState([]);
     const [isShowValidateModal, setIsShowValidateModal] = useState(false);
+    const [showApprovalCheckList, setShowApprovalCheckList] = useState(false);
 
     const [getValidateCheckList, { isLoading: isGetCheckListLoading, isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
 
@@ -40,7 +41,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     };
 
     //** Validate check list Modal */
-    const handleShowValidateModal = (customerId, isSubCustomer) => {
+    const handleShowValidateModal = (customerId, isSubCustomer, isShowApprovalCheckList) => {
         setIsShowValidateModal(!isShowValidateModal);
         let request = {
             customerId: customerId,
@@ -50,6 +51,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
         setIsSubCustomer(isSubCustomer);
         getValidateCheckList(request);
         setCustomerId(customerId);
+        setShowApprovalCheckList(isShowApprovalCheckList);
     };
 
     const handleValidateModalClose = () => {
@@ -90,11 +92,13 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
             <ApprovalValidateData parentRef={parentRef} handleValidateSuccess={handleValidateSuccess} showModal={isShowValidateModal} isSupplierApproval={false}
                 isGetCheckListLoading={isGetCheckListLoading} mainId={customerId} isDetailPage={isDetailPage} handleShowValidateModal={handleShowValidateModal}
                 handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList ? validateCheckList : null} />
-            <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={customerId} onSuccessApprovalClose={onSuccessApprovalClose}
-                ApprovalData={isSubCustomer ? ApprovalEnum.APPROVESUBCUSTOMER : ApprovalEnum.APPROVECUSTOMER} isSupplierApproval={false} isSubCustomer={isSubCustomer}
-                getBasicInformationById={useLazyGetCustomersInfoByIdQuery} getAddressById={useLazyGetCustomerAddresssInfoByIdQuery}
-                getContactById={useLazyGetCustomerContactInfoByIdQuery} getFinacialSettingById={useLazyGetCustomerFinacialSettingQuery}
-            />
+            {showApprovalCheckList &&
+                <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={customerId} onSuccessApprovalClose={onSuccessApprovalClose}
+                    ApprovalData={isSubCustomer ? ApprovalEnum.APPROVESUBCUSTOMER : ApprovalEnum.APPROVECUSTOMER} isSupplierApproval={false} isSubCustomer={isSubCustomer}
+                    getBasicInformationById={useLazyGetCustomersInfoByIdQuery} getAddressById={useLazyGetCustomerAddresssInfoByIdQuery}
+                    getContactById={useLazyGetCustomerContactInfoByIdQuery} getFinacialSettingById={useLazyGetCustomerFinacialSettingQuery}
+                />
+            }
         </React.Fragment>
     )
 });

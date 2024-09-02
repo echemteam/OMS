@@ -92,7 +92,8 @@ const AddCustomerTab = () => {
     if (childRef.current) {
       childRef.current.callChildFunction(
         customerId,
-        subCustomer
+        subCustomer,
+        true
       );
     }
 
