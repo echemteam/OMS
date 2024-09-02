@@ -44,5 +44,6 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId);
         Task<List<GetAllContactsByCustomerIdAndContactTypeIdResponse>> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId);
         Task<List<GetAllOrderMethodResponse>> GetAllOrderMethod();
+        Task<List<GetAllIncotermResponse>> GetAllIncoterm();
     }
 }

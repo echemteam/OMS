@@ -78,7 +78,9 @@ const OrganizationProfileManagement = () => {
 
     return (
         <div className="row mt-2 add-address-form">
-
+            <h4 className='organization-tab-title'>
+                Organization Profile
+            </h4>
             <FormCreator
                 config={organizationProfileData}
                 ref={organizationProfileRef}

@@ -13,7 +13,7 @@ import { setFieldSetting, setDropDownOptionField } from "../../../../utils/FormF
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
-import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
+import { useLazyGetAllIncotermQuery, useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery } from "../../../../app/services/basicdetailAPI";
 import {
     useAddEditSupplierBasicInformationMutation, useCheckSupplierNameExistMutation, useLazyGetAllSupplierTypeQuery, useLazyGetSupplierBasicInformationByIdQuery,
@@ -57,6 +57,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         data: GetSupplierBasicInformationByIdData }] = useLazyGetSupplierBasicInformationByIdQuery();
     const [addEditSupplierBasicInformation, { isLoading: isAddEditSupplierBasicInformationLoading, isSuccess: isAddEditSupplierBasicInformationSuccess,
         data: isAddEditSupplierBasicInformationData }] = useAddEditSupplierBasicInformationMutation();
+    const [getAllIncoterm, { isSuccess: isGetAllIncotermSucess, data: allGetAllIncotermData }] = useLazyGetAllIncotermQuery();
 
     //** Security Key */
     const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
@@ -70,7 +71,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
                     setIsButtonDisable(true);
                     setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, true);
                 }
-                else if(hasEditPermission.isEditable === true) {
+                else if (hasEditPermission.isEditable === true) {
                     formSetting.isViewOnly = false;
                     setIsButtonDisable(false);
                     setFieldSetting(formData, 'responsibleUserId', FieldSettingType.DISABLED, false);
@@ -106,7 +107,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
                 getAllCountries(),
                 getAllGroupTypes(),
                 getAllTerritories(),
-                getAllSupplierType()
+                getAllSupplierType(),
+                getAllIncoterm(),
             ]);
 
             if (!isOpen) {
@@ -150,8 +152,11 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         if (isGetAllSupplierTypeSucess && allGetAllSupplierTypeData) {
             setDropDownOptionField(allGetAllSupplierTypeData, 'supplierTypeId', 'type', supplierBasicData, 'supplierTypeId');
         }
+        if (isGetAllIncotermSucess && allGetAllIncotermData) {
+            setDropDownOptionField(allGetAllIncotermData, 'incotermId', 'incotermName', supplierBasicData, 'incotermId');
+        }
     }, [isGetAllGroupTypesSucess, allGetAllGroupTypesData, isGetAllUserSucess, allGetAllUserData, isGetAllCountriesSucess, allGetAllCountriesData,
-        isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllSupplierTypeSucess, allGetAllSupplierTypeData]);
+        isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllSupplierTypeSucess, allGetAllSupplierTypeData , isGetAllIncotermSucess , allGetAllIncotermData]);
 
     useEffect(() => {
         if (isGetSupplierBasicInformationById && GetSupplierBasicInformationByIdData && !isGetSupplierBasicInformationByIdFetching) {
@@ -215,6 +220,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             groupTypeId: getIdValue(data.groupTypeId),
             supplierTypeId: getIdValue(data.supplierTypeId),
             territoryId: getIdValue(data.territoryId),
+            incotermId: getIdValue(data.incotermId),
             countryId: getIdValue(data.countryId),
             responsibleUserId: getIdValue(data.responsibleUserId) || 0,
             supplierId: keyId || supplierId,

@@ -2,14 +2,14 @@ export const orderItemSelectList = {
   columns: [
     {
       name: "Chemical Name",
-      fieldName: "Chemical Name",
+      fieldName: "ProductName",
       colStyle: {
         width: "40%",
       },
     },
     {
       name: "Catalog ID",
-      fieldName: "CatalogID",
+      fieldName: "CatalogId",
       colStyle: {
         width: "15%",
       },
@@ -17,7 +17,7 @@ export const orderItemSelectList = {
 
     {
       name: "CAS No",
-      fieldName: "CAS No",
+      fieldName: "CASNo",
       colStyle: {
         width: "15%",
       },
@@ -33,7 +33,7 @@ export const orderItemSelectList = {
       name: "Order Total",
       fieldName: "Order Total",
       colStyle: {
-        width: "15%",
+        width: "Price",
       },
     }
   ],

@@ -94,7 +94,7 @@ const ApiAuthenticationList = ({ handleEditClick, getDataRef, providerId , handl
   return (
 
     <div className="row">
-      <div className="col-md-12 table-striped api-provider pagination-none first-word-break">
+      <div className="col-md-12 table-striped api-provider pagination-none first-word-break api-management">
         <FinalMolGrid
           ref={molGridRef}
           configuration={ApiAuthenticationtGridConfig}
@@ -102,7 +102,7 @@ const ApiAuthenticationList = ({ handleEditClick, getDataRef, providerId , handl
           allowPagination={true}
           pagination={{
             totalCount: totalRowCount,
-            pageSize: 10,
+            pageSize: 20,
             currentPage: 1,
           }}
           onPageChange={handlePageChange}

@@ -150,7 +150,7 @@ const Users = () => {
   };
 
   return (
-    <div className="user-lists">
+    <div className="user-lists mt-2">
       <CardSection
         // cardTitle="View All Users"
         // cardSubTitle="Sub title add hear"

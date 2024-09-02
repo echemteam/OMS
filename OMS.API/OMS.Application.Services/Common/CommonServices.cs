@@ -193,5 +193,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllOrderMethod();
         }
+        public Task<List<GetAllIncotermResponse>> GetAllIncoterm()
+        {
+            return repositoryManager.commonRepository.GetAllIncoterm();
+        }
     }
 }

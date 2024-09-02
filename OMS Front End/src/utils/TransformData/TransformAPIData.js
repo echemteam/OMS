@@ -24,9 +24,20 @@ export const modifyAddressType = (apiResponseData) => {
 }
 
 export const modifyPhoneNumberData = (phoneDataArray) => {
+    const isSingleItem = phoneDataArray.length === 1;
     const newArray = phoneDataArray.map(phoneData => ({
         ...phoneData,
-        extension: phoneData.extension === '-' ? 0 : phoneData.extension
+        extension: phoneData.extension === '-' ? 0 : phoneData.extension,
+        isPrimary: isSingleItem ? true : phoneData.isPrimary
+    }));
+    return newArray;
+};
+
+export const modifyEmailAddressData = (emailDataArray) => {
+    const isSingleItem = emailDataArray.length === 1;
+    const newArray = emailDataArray.map(emailData => ({
+        ...emailData,
+        isPrimary: isSingleItem ? true : emailData.isPrimary
     }));
     return newArray;
 };
@@ -52,7 +63,7 @@ const getIconForFileType = (fileType) => {
 
 export const documentTransformData = (data) => {
     return data.reduce((acc, item) => {
-        const { type, attachment, customerDocumentId, customerId, documentTypeId, name } = item;
+        const { type, attachment, customerDocumentId, customerId, documentTypeId, name , createdAt} = item;
 
         // Extract the file type and get the file icon basde on the file type  
         const documentIcon = getFileTypeIcon(attachment);
@@ -63,7 +74,8 @@ export const documentTransformData = (data) => {
             customerId,
             documentTypeId,
             name,
-            documentIcon
+            documentIcon,
+            createdAt
         };
 
         if (!acc[type]) {
@@ -77,7 +89,7 @@ export const documentTransformData = (data) => {
 
 export const supplierDocumentTransformData = (data) => {
     return data.reduce((acc, item) => {
-        const { type, attachment, supplierDocumentId, supplierId, documentTypeId, name } = item;
+        const { type, attachment, supplierDocumentId, supplierId, documentTypeId, name , createdAt} = item;
 
         // Extract the file type and get the file icon basde on the file type  
         const documentIcon = getFileTypeIcon(attachment);
@@ -88,7 +100,8 @@ export const supplierDocumentTransformData = (data) => {
             supplierId,
             documentTypeId,
             name,
-            documentIcon
+            documentIcon,
+            createdAt
         };
 
         if (!acc[type]) {

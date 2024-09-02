@@ -4,25 +4,63 @@ import { EditGridColumnType } from "../../../../../../../components/FinalMolGrid
 export const priceListConfig = {
   columns: [
     {
-      name: "Unit",
-      fieldName: "Quantity",
+      name: "Size",
       colStyle: {
-        width: "10%",
+        width: "7%",
       },
+      fieldName: "Size",
+      allowEditColumn: true,
+      editColumn: {
+        editColType: EditGridColumnType.INPUT,
+        editColFieldName: "Size",
+        isDisable: false,
+        // editColValidation: [
+        //   // { type: "required", message: "Size is required." },
+        // ],
+      },
+      colSettings: {},
+      allowShort: false
     },
     {
-      name: "Size",
-      fieldName: "Size",
-      colStyle: {
-        width: "10%",
+      name: "Unit",
+      fieldName: "Unit",
+      allowEditColumn: true,
+      editColumn: {
+        editColType: EditGridColumnType.DROPDOWN,
+        editColFieldName: "Unit",
+        isDisable: false,
+        isMultiSelect: false,
+        options: [
+          { value: "MG", label: "MG" },
+          { value: "G", label: "G" },
+          { value: "KG", label: "KG" },
+        ],
+        // editColValidation: [
+        //   // { type: "required", message: "Lead Cast is required." },
+        // ],
       },
+      colStyle: {
+        width: "7%",
+      },
+      allowShort: false
     },
     {
       name: "Price",
-      fieldName: "Price",
       colStyle: {
-        width: "10%",
+        width: "7%",
       },
+      fieldName: "Price",
+      allowEditColumn: true,
+      editColumn: {
+        editColType: EditGridColumnType.INPUT,
+        editColFieldName: "Price",
+        isDisable: false,
+        // editColValidation: [
+        //   // { type: "required", message: "Price is required." },
+        // ],
+      },
+      colSettings: {},
+      allowShort: false
     },
     {
       name: "Order Note",
@@ -34,20 +72,20 @@ export const priceListConfig = {
         editColFieldName: "orderNote",
         isDisable: false,
         colConfig: {
-          maxLength: 5,
+          maxLength: 20,
           isReadOnly: false,
         },
-        editColValidation: [{ type: "required", message: "Order Note ." }],
+        // editColValidation: [{ type: "required", message: "Order Note ." }],
       },
       colStyle: {
-        width: "20%",
+        width: "19%",
         textAlign: "center",
       },
       allowShort: false,
     },
     {
       name: "Req-Date",
-      fieldName: "reqdate",
+      fieldName: "requestDate",
       colType: GridColumnType.DATE,
       colSettings: {
         format: "DD-MMM-YYYY"
@@ -56,7 +94,7 @@ export const priceListConfig = {
       editColumn: {
         editColType: EditGridColumnType.DATEPICKER,
         placeholder: "Req-Date",
-        editColFieldName: "releaseDate",
+        editColFieldName: "requestDate",
         isDisable: false,
         colConfig: {
           format: "DD/MM/YYYY"
@@ -73,7 +111,7 @@ export const priceListConfig = {
     },
     {
       name: "Promise Date",
-      fieldName: "priorityDate",
+      fieldName: "promiseDate",
       colType: GridColumnType.DATE,
       colSettings: {
         format: "DD-MMM-YYYY"
@@ -82,7 +120,7 @@ export const priceListConfig = {
       editColumn: {
         placeholder: "Promise Date",
         editColType: EditGridColumnType.DATEPICKER,
-        editColFieldName: "releaseDate",
+        editColFieldName: "promiseDate",
         isDisable: false,
         colConfig: {
           format: "DD/MM/YYYY"
@@ -99,21 +137,20 @@ export const priceListConfig = {
     },
     {
       name: "Priority",
-      fieldName: "leadCast",
+      fieldName: "orderPriority",
       allowEditColumn: true,
-
       editColumn: {
         editColType: EditGridColumnType.DROPDOWN,
-        editColFieldName: "leadCast",
+        editColFieldName: "orderPriority",
         isDisable: false,
         isMultiSelect: false,
         options: [
-          { value: 1, label: "High" },
-          { value: 2, label: "Low" },
+          { value: "High", label: "High" },
+          { value: "Low", label: "Low" },
         ],
-        editColValidation: [
-          // { type: "required", message: "Lead Cast is required." },
-        ],
+        // editColValidation: [
+        //   // { type: "required", message: "Lead Cast is required." },
+        // ],
       },
       colStyle: {
         width: "20%",
@@ -122,25 +159,24 @@ export const priceListConfig = {
     },
     {
       name: "Action",
-      colType: GridColumnType.ACTION,
       colStyle: {
         width: "10%",
       },
+      colType: GridColumnType.ACTION,
       defaultAction: {
-        allowEdit: false,
-        allowDelete: false,
+        allowEdit: true,
+        allowDelete: true,
       },
       allowShort: false
     },
   ],
+  allowEdit: true,
   editSettings: {
     defualtEditableView: true,
     buttons: {
       save: true,
-      cancel: false,
+      delete: true,
+      cancel: false
     }
-  },
-  allowEdit: true,
-  handleRowDataUpdate: null,
-  OnColumnChangeEdit: null
+  }
 };

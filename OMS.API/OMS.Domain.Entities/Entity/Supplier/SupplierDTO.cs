@@ -74,5 +74,7 @@ namespace OMS.Domain.Entities.Entity.Supplier
         public short? ApprovedBy { get; set; }
         [Column("ResponsibleUserId")]
         public short? ResponsibleUserId { get; set; }
+        [Column("IncotermId")]
+        public byte? IncotermId { get; set; }
     }
 }

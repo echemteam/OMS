@@ -18,7 +18,8 @@ export const DocumentMultipleFormData = {
         isButtonVisible: false,
         isCustomButtonVisible: true,
         acceptedFiles: ".pdf , .docx ",
-        isFileNameCleared: true
+        isFileNameCleared: true,
+        isMultiple: true,
       },
       validation: [{ type: "require" }],
       style: {

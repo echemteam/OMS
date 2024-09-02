@@ -15,14 +15,14 @@ import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAll
 import PropTypes from 'prop-types';
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
-// import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 const SetInitialCountry = {
     label: "United States",
     value: 233
 }
 
-const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable, onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, deleteAddress }) => {
+const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable,
+    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage }) => {
 
     //** States */
     const ref = useRef();
@@ -31,7 +31,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
     const [selectedCheckbox, setSelectedCheckbox] = useState(null);
     const [addressEditTableId, setAddressEditTableId] = useState(0)
-    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, getEventName } = useValidateAndAddApprovalRequests();
 
     // const [stateChage, setStateChange] = useState(null)
 
@@ -349,39 +349,32 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
-            update(updateData);
-            return;
+            const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
+            if (isEditablePage && eventName) {
+                await handleApprovalRequest(updateData, formData.initialState, eventName);
+            } else {
+                update(updateData);
+            }
+        } else {
+            // Add mode
+            const customerId = orderCustomerId ? orderCustomerId : transformedData.customerId;
+            const req = {
+                ...transformedData,
+                customerId: customerId,
+            };
+            const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
+            if (isEditablePage && eventName) {
+                await handleApprovalRequest(req, null, eventName);
+            } else {
+                add(req);
+            }
         }
+    };
 
-        // Add mode
-        const customerId = orderCustomerId ? orderCustomerId : transformedData.customerId;
-        const req = {
-            ...transformedData,
-            customerId: customerId,
-        };
-
-        if (data) {
-            add(req);
-        }
-
-        // if (data.addressTypeId === 1) {
-        //     const value = { ...req };
-        //     const request = {
-        //         newValue: value,
-        //         oldValue: formData.initialState,
-        //         isFunctional: true,
-        //         functionalityName: isModelOpen
-        //             ? FunctionalitiesName.ADDADDRESS
-        //             : FunctionalitiesName.ADDCUSTOMER
-        //     };
-        //     //** This is used for the the unctional Level */
-        //     const modifyData = await ValidateRequestByApprovalRules(request);
-        //     if (modifyData.newValue) {
-        //         onSidebarClose();
-        //     }
-        // } else {
-        //     add(req);
-        // }
+    const handleApprovalRequest = async (newValue, oldValue, eventName) => {
+        const request = { newValue, oldValue, isFunctional: true, eventName, isFunctionalObjMatch: true };
+        const modifyData = await ValidateRequestByApprovalRules(request);
+        if (modifyData.newValue) onSidebarClose();
     };
 
 

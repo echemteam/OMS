@@ -15,5 +15,6 @@
         //public short? ResponsibleUserId { get; set; }
         public long? CustomerNoteId { get; set; }
         public bool? IsSubCustomer { get; set; }
+        public byte? IncotermId { get; set; }
     }
 }

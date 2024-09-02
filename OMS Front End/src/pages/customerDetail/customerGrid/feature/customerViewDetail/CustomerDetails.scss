@@ -32,15 +32,13 @@
           align-items: center;
 
           .profile-icon {
-            min-width: 25px;
-            min-height: 25px;
-            max-width: 25px;
-            max-height: 25px;
-            background: linear-gradient(
-              to right,
-              rgba(45, 54, 65, 0.8588235294),
-              rgba(0, 0, 0, 0.8588235294)
-            );
+            min-width: 25px !important;
+            min-height: 25px !important;
+            max-width: 25px !important;
+            max-height: 25px !important;
+            background: linear-gradient(to right,
+                rgba(45, 54, 65, 0.8588235294),
+                rgba(0, 0, 0, 0.8588235294));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -135,23 +133,23 @@
               .profile-icon {
                 margin: 0;
                 content: "";
-                min-height: 50px;
-                min-width: 50px;
-                max-height: 50px;
-                max-width: 50px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 border-radius: 100%;
-                background: linear-gradient(
-                  to right,
-                  rgba(45, 54, 65, 0.8588235294),
-                  rgba(0, 0, 0, 0.8588235294)
-                );
+                background: linear-gradient(to right,
+                    rgba(45, 54, 65, 0.8588235294),
+                    rgba(0, 0, 0, 0.8588235294));
+
+                min-width: 50px !important;
+                min-height: 50px !important;
+                max-width: 50px !important;
+                max-height: 50px !important;
 
                 .profile-text {
                   color: var(--whiteColor);
                   font-size: var(--commonFont-medium);
+
                 }
               }
 
@@ -231,12 +229,13 @@
                       margin-bottom: 0;
                       font-size: var(--commonFont-medium);
 
-                      .values {
-                      }
+                      .values {}
+
                       .card-value {
                         &.primary-phone {
                           position: relative;
                           display: flex;
+
                           &::after {
                             content: "\f00c";
                             font-family: FontAwesome;
@@ -275,11 +274,13 @@
                             img {
                               filter: unset;
                             }
+
                             &.primary-email {
                               position: relative;
                               display: flex;
                               align-items: center;
                               justify-content: center;
+
                               &::before {
                                 content: "\f00c";
                                 font-family: FontAwesome;
@@ -295,7 +296,10 @@
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
-                                height: 17px;
+                                min-height: 17px;
+                                min-width: 17px;
+                                max-height: 17px;
+                                max-width: 17px;
 
                                 @media only screen and (max-width: 1750px) {
                                   padding: 2px;
@@ -378,7 +382,7 @@
         .email-address {
           .dropdown-desc-sec {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             margin-bottom: 3px;
             width: 100%;
 
@@ -410,6 +414,7 @@
                   display: flex;
                   align-items: center;
                   justify-content: center;
+
                   &::before {
                     content: "\f00c";
                     font-family: FontAwesome;
@@ -444,6 +449,7 @@
                   position: relative;
                   display: flex;
                   align-items: center;
+
                   &::before {
                     content: "\f00c";
                     font-family: FontAwesome;
@@ -459,8 +465,10 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    height: 17px;
-
+                    min-height: 17px;
+                    min-width: 17px;
+                    max-height: 17px;
+                    max-width: 17px;
                     @media only screen and (max-width: 1750px) {
                       padding: 2px;
                       height: 15px;
@@ -487,7 +495,7 @@
           .contact-sec {
             .number-list {
               display: flex;
-              align-items: flex-start;
+              align-items: center;
               width: 100%;
 
               .number-type {
@@ -523,11 +531,12 @@
 
               .card-value {
                 color: #6e839b;
-                font-size: var(--commonFont-small);
+                font-size: 11px;
 
                 &.primary-phone {
                   position: relative;
                   display: flex;
+
                   &::after {
                     content: "\f00c";
                     font-family: FontAwesome;
@@ -543,7 +552,8 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    height: 17px;
+                    height: 15px;
+                    width: 15px;
 
                     @media only screen and (max-width: 1750px) {
                       padding: 2px;

@@ -146,8 +146,8 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
   }, [isGetACHWireBySupplierIdFetching, isGetACHWireBySupplierIdSuccess, isGetACHWireBySupplierIdData,]);
 
 
-  const handleACHWireAdd = () => {
-    
+  const handleACHWireAdd = async () => {
+
     const formsupplierFinancialSettings = financialSettingFormRef.current.getFormData();
     const formBankAddress = bankFormRef.current.getFormData();
     const formOtherDetail = aCHWireFormRef.current.getFormData();

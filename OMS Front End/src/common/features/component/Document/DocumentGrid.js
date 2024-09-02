@@ -23,6 +23,7 @@ const DocumentGrid = ({
   getDocumentsById,
   isEditablePage,
   SecurityKey,
+  customerStatusId
 }) => {
   //** State */
   const childRef = useRef();
@@ -144,6 +145,8 @@ const DocumentGrid = ({
           addDocuments={addDocuments}
           handleToggleModal={handleToggleModal}
           onSuccess={onSuccess}
+          isEditablePage={isEditablePage}
+          customerStatusId={customerStatusId}
         // editDocumentData={editDocumentData}
         />
       </CenterModel>
@@ -160,6 +163,8 @@ const DocumentGrid = ({
           keyId={keyId}
           documentTypes={documentTypes}
           handleMulDocToggleModal={handleMulDocToggleModal}
+          isEditablePage={isEditablePage}
+          customerStatusId={customerStatusId}
         />
       </CenterModel>
     </React.Fragment>

@@ -5,17 +5,17 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
-import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
+import { CustomerSupplierStatus, ModulePathName } from "../../../../../utils/Enums/commonEnums";
 import PropTypes from 'prop-types';
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
+import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
+import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 
-const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess }) => {
-
-    // console.log("editDocumentData", editDocumentData)
-
-    const [formData, setFormData] = useState(DocumentFormData)
+const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess, isEditablePage }) => {
 
     const ref = useRef();
+    const [formData, setFormData] = useState(DocumentFormData);
+    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
 
     /**
         * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -25,8 +25,6 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
 
     useEffect(() => {
         if (showModal) {
-            console.log('DocumentFormData.initialState', DocumentFormData.initialState);
-            console.log('formData.initialState', formData.initialState);
             onResetForm(formData, setFormData, DocumentFormData.initialState);
         }
     }, [showModal])
@@ -46,7 +44,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
         }
     }, [isAddSuccess, isAddData]);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const data = ref.current.getFormData();
         if (data) {
             const documentList = [
@@ -62,7 +60,20 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
                 [isSupplier ? 'supplierId' : 'customerId']: keyId,
                 documentInfoList: documentList
             };
-            add(requestData);
+            if (!isSupplier && isEditablePage) {
+                await handleApprovalRequest(requestData, null);
+            } else {
+                add(requestData);
+            }
+        }
+    };
+
+    const handleApprovalRequest = async (newValue) => {
+        const request = { newValue, oldValue: null, isFunctional: true, eventName: FunctionalitiesName.UPLOADCUSTOMERDOCUMENT };
+        const modifyData = await ValidateRequestByApprovalRules(request);
+        if (modifyData.newValue) {
+            onSuccess();
+            onResetForm(formData, setFormData, DocumentFormData.initialState);
         }
     };
 

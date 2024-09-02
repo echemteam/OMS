@@ -45,5 +45,7 @@ namespace OMS.Domain.Entities.Entity.Customers
         public short? ResponsibleUserId { get; set; }
         [Column("IsSubCustomer")]
         public short? IsSubCustomer { get; set; }
+        [Column("IncotermId")]
+        public byte? IncotermId { get; set; }
     }
 }

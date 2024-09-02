@@ -109,10 +109,10 @@
       overflow: hidden;
       overflow-y: auto;
       width: 100%;
-      max-height: calc(100vh - 245px);
+      max-height: calc(100vh - 235px);
       @media only screen and (max-width: 1750px) {
         padding: 10px 15px;
-        max-height: calc(100vh - 195px);
+        max-height: calc(100vh - 179px);
       }
       .content {
         display: none;
@@ -199,10 +199,12 @@
   }
 
   .card {
-    height: calc(100vh - 145px);
-
+    height: calc(100vh - 120px);
+    .stepper-content{
+      padding-bottom: 0;
+    }
     .card {
-      height: calc(100vh - 310px);
+      height: calc(100vh - 295px);
     }
   }
   .model-content {
@@ -217,10 +219,10 @@
 @media only screen and (max-width: 1750px) {
   .stepper-view {
     .card {
-      height: calc(100vh - 145px);
+      height: calc(100vh - 106px);
 
       .card {
-        height: calc(100vh - 265px);
+        height: calc(100vh - 225px);
       }
     }
   }

@@ -23,22 +23,14 @@ const FileUpload = ({
   isCustomButtonVisible,
   dataField,
   fieldActions,
+  isMultiple = false,
   ...inputProps
 }) => {
   const [fileValue, setFileValue] = useState(null);
 
   const fileRef = useRef();
   const handleInputChange = (data) => {
-    // const value = isMultiSelect ? selectedOption.map((option) => option.value) : selectedOption;
-    const value = data.target.files[0].name;
-    // if (onChange) {
-    //   onChange(e);
-    // }
     onChange(data);
-
-    if (fieldActions && inputProps) {
-      fieldActions("DDL_FILE", dataField, value);
-    }
   };
 
   const handleClearClick = () => {
@@ -84,6 +76,7 @@ const FileUpload = ({
           onBlur={onBlur}
           disabled={isDisable}
           accept={acceptedFiles}
+          multiple={isMultiple}
         />
         <div className="custom-file-selector-design">
           <Image

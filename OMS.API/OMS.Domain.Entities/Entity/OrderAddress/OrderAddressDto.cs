@@ -1,4 +1,4 @@
-﻿namespace OMS.Domain.Entities.Entity.Orders
+﻿namespace OMS.Domain.Entities.Entity.OrderAddress
 {
     public class OrderAddressDto : IBaseCreateEntity, IBaseUpdateEntity, IBaseDeleteEntity
     {

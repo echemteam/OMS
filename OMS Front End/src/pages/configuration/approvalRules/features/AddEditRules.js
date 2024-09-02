@@ -220,6 +220,9 @@ const AddEditRules = (props) => {
     if (props.initData.approvalConfigurationId) {
       getApprovalConfigurationByApprovalConfigurationId(props.initData.approvalConfigurationId)
     }
+    if (!props.isEdit) {
+      setApprovalConfigurationId(0);
+    }
   }, [props.isOpen]);
 
   useEffect(() => {
@@ -360,10 +363,10 @@ const AddEditRules = (props) => {
             ? data.functionalityId.value
             : data.functionalityId,
         functionalitiesFieldId:
-          data.functionalitiesFieldId &&
+          data.functionalitiesFieldId ? data.functionalitiesFieldId &&
             typeof data.functionalitiesFieldId === "object"
             ? data.functionalitiesFieldId.value
-            : data.functionalitiesFieldId,
+            : data.functionalitiesFieldId : 0,
         approverRoleId:
           data.roleId && typeof data.roleId === "object"
             ? data.roleId.value

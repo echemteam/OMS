@@ -20,7 +20,7 @@ import PropTypes from "prop-types";
 //** Component's */
 const ContactList = React.lazy(() => import("./feature/ContactList"));
 const AddEditContact = React.lazy(() => import("./feature/AddEditContact"));
- 
+
 
 const ContactGrid = ({
   keyId,
@@ -31,7 +31,8 @@ const ContactGrid = ({
   SecurityKey,
   getContactById,
   isSearchFilterShow,
-  contryIdCode
+  contryIdCode,
+  customerStatusId
 }) => {
   //** State */
   const editRef = useRef();
@@ -262,7 +263,7 @@ const ContactGrid = ({
       </div>
     </div>
   ];
-   
+
 
   const filteredTabs = tabContactType?.filter(item => isSupplier ? item.isForSuppliers : item.isForCustomers);
 
@@ -272,27 +273,27 @@ const ContactGrid = ({
       sMenuItemCaption: data.type,
       component
     };
-    
+
   });
 
- 
+
   return (
     <div className="contact-main-card-section vertical-tab-card">
       <CardSection
         cardTitle={isSearchFilterShow ? "" : "Contact"}
         handleChange={handleChange}
         searchInputName="Search By Name and Email"
-        searchInput={isSearchFilterShow }
+        searchInput={isSearchFilterShow}
         buttonClassName="theme-button"
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
-        rightButton={buttonVisible }
+        rightButton={buttonVisible}
         buttonText="Add"
         titleButtonClick={handleToggleModal}
-        clearButton={isSearchFilterShow }
+        clearButton={isSearchFilterShow}
         clearTitleButtonClick={onhandleClear}
         clearButtonText="Clear"
-        searchButton={isSearchFilterShow }
+        searchButton={isSearchFilterShow}
         searchbuttonText="Search"
         searchTitleButtonClick={onhandleSearch}
         searchFilter={false}
@@ -342,6 +343,8 @@ const ContactGrid = ({
             contryIdCode={contryIdCode}
             customerId={null}
             onhandleApiCall={null}
+            orderResetValue={null}
+            customerStatusId={customerStatusId}
           />
         </SidebarModel>
       </div>

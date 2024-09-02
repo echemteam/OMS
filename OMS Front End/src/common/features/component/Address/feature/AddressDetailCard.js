@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
+import { CustomerSupplierStatus } from "../../../../../utils/Enums/commonEnums";
 
 const AddressDetailCard = forwardRef(
   ({
@@ -197,28 +198,18 @@ const AddressDetailCard = forwardRef(
                         {/* <span className="label-txt">{address.stateName}</span> */}
                         <span className="label-txt">{address.countryName}</span>
                       </div>
-                      <div className="edit-delete-button">
-                        {showEditIcon ? (
-                          <button
-                            onClick={() => handleEdit(address)}
-                            className="edit-btn"
-                          >
-                            {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
-
-                            <Iconify icon="tabler:pencil" />
-                          </button>
-                        ) : null}
-
-                        {statusId !== 3 &&
-                          <button
-                            onClick={() => handleDelete(address)}
-                            className="edit-btn ml-2"
-                          >
-                            {/* <Image imagePath={AppIcons.deleteThemeIcon} /> */}
+                      {statusId !== CustomerSupplierStatus.APPROVED &&
+                        <div className="edit-delete-button">
+                          {showEditIcon ? (
+                            <button onClick={() => handleEdit(address)} className="edit-btn" >
+                              <Iconify icon="tabler:pencil" />
+                            </button>
+                          ) : null}
+                          <button onClick={() => handleDelete(address)} className="edit-btn ml-2" >
                             <Iconify icon="mingcute:delete-2-line" className="delete-icon" />
                           </button>
-                        }
-                      </div>
+                        </div>
+                      }
                       <div
                         className={`contact-type-badge ${getAddressTypeClass(
                           address.type

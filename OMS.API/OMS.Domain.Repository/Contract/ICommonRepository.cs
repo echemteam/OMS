@@ -42,7 +42,7 @@ namespace OMS.Domain.Repository.Contract
         Task<List<GetAllSubCustomerByCustomerIdResponse>> GetAllSubCustomerByCustomerId(int customerId);
         Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId);
         Task<List<GetAllContactsByCustomerIdAndContactTypeIdResponse>> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId);
-
         Task<List<GetAllOrderMethodResponse>> GetAllOrderMethod();
+        Task<List<GetAllIncotermResponse>> GetAllIncoterm();
     }
 }

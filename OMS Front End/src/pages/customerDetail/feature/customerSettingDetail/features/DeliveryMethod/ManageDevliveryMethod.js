@@ -14,14 +14,14 @@ import PropTypes from 'prop-types';
 const DeliveryMethodList = React.lazy(() => import("./feature/DeliveryMethodList"));
 const AddEditDeliveryMethod = React.lazy(() => import("./feature/AddEditDeliveryMethod"));
 
-const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowButton }) => {
+const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowButton, isEditablePage }) => {
 
     const molGridRef = useRef();
     const { confirm } = SwalAlert();
     const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
-    const { deliveryMethodsList , customerId } = useContext(BasicDetailContext);
+    const { deliveryMethodsList, customerId } = useContext(BasicDetailContext);
 
     const { data, isFetching, isSuccess } = useGetAllDeliveryMethodsQuery();
     const [deleteDeliveryMethods, { isSuccess: isDeleteSuccess, data: isDeletData }] = useDeleteCustomerDeliveryMethodsByIdMutation();
@@ -63,7 +63,7 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
     //     setDeliveryMethodId(data.customerDeliveryMethodId)
     // }
 
-    const handleDeleteClick = (data) => {
+    const handleDeleteClick = (index, data) => {
         confirm(
             "Delete?",
             "Are you sure you want to Delete?",
@@ -84,13 +84,14 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
     return (
         <>
             <DeliveryMethodList molGridRef={molGridRef} ourAccountData={deliveryMethodsList} actionHandler={actionHandler} handleToggleModal={handleToggleModal}
-                isGetDataLoading={isGetDataLoading} isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} customerId={customerId}/>
-            {showModal && (
-                <AddEditDeliveryMethod handleToggleModal={handleToggleModal} showModal={showModal} 
-                // deliveryMethodId={deliveryMethodId} 
-                onSuccess={onSuccess}
+                isGetDataLoading={isGetDataLoading} isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList}
+                customerId={customerId} handleDeleteClick={handleDeleteClick} isEditablePage={isEditablePage} />
+            {/* {showModal && (
+                <AddEditDeliveryMethod handleToggleModal={handleToggleModal} showModal={showModal}
+                    // deliveryMethodId={deliveryMethodId} 
+                    onSuccess={onSuccess}
                     isEdit={isEdit} />
-            )}
+            )} */}
         </>
     )
 }

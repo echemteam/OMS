@@ -42,13 +42,15 @@ const ContactInformation = ({ isModelOpen, mainId, getContactById }) => {
           contactInformation.map((contact, index) => (
             <div className="col-4" key={index}>
               <h6>{contact.type}</h6>
-              <h6 className="name">
+              <h6 className={`name ${contact.isPrimary ? "is-primary" : ""}`}>
                 Name:{" "}
                 <p>
                   {contact.firstName} {contact.lastName}
                 </p>
+                {/* Is Primary: {contact.isPrimary ? "Yes" : "No"} */}
               </h6>
-              <h6 className={contact.isPrimary ? "is-primary" : ""}>
+
+              <h6 >
                 {/* Is Primary: {contact.isPrimary ? "Yes" : "No"} */}
               </h6>
               <h6 className="email">Email Address:</h6>
@@ -66,16 +68,15 @@ const ContactInformation = ({ isModelOpen, mainId, getContactById }) => {
                 contact.phoneNumberList.map((phoneData) => (
                   <>
                     <h6
-                      className={`d-flex ${
-                        phoneData.phoneType === "Home"
+                      className={`d-flex ${phoneData.phoneType === "Home"
                           ? "home"
                           : phoneData.phoneType === "Work"
-                          ? "work"
-                          : "home"
-                      } ${phoneData.isPrimary ? "is-primary" : ""}`}
+                            ? "work"
+                            : "home"
+                        } ${phoneData.isPrimary ? "is-primary" : ""}`}
                     >
                       {/* Phone Type: {phoneData.phoneType || "Home"} */}
-                      {phoneData.phoneCode} {phoneData.phoneNumber}
+                      ({phoneData.phoneCode}) {phoneData.phoneNumber}
                       {phoneData.extension ? `, ${phoneData.extension}` : ""}
                       {/* Is Primary: {phoneData.isPrimary ? "Yes" : "No"} */}
                     </h6>

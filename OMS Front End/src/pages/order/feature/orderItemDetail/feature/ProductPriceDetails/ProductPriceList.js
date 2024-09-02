@@ -10,22 +10,24 @@ import ToastService from "../../../../../../services/toastService/ToastService";
 import { useThirdPartyAPICallMutation } from "../../../../../../app/services/thirdPartyAPI";
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 import Buttons from "../../../../../../components/ui/button/Buttons";
+import SwalAlert from "../../../../../../services/swalService/SwalService";
 
-const ProductPriceList = ({ productId }) => {
+const ProductPriceList = ({ productId, onPriceListUpdate }) => {
   const molGridRef = useRef();
   const [priceList, setPriceList] = useState([]);
+  const [originalPriceList, setOriginalPriceList] = useState([]); // To store original data
+  const { confirm } = SwalAlert();
 
   useEffect(() => {
     if (priceList) {
-      // New blank row object
       const blankRow = {
-        leadCast: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
-        priorityDate: '',
-        reqdate: '',
+        orderPriority: "",
+        promiseDate: '',
+        requestDate: '',
         orderNote: '',
-        Price: '50', // Use null for numerical fields if blank
-        Size: '10',
-        Quantity: '5', // Default to false for boolean fields
+        Price: '',
+        Size: '',
+        Unit: '',
       };
 
       setPriceList([...priceList, blankRow]);
@@ -34,17 +36,15 @@ const ProductPriceList = ({ productId }) => {
 
   const handleAddRow = () => {
     const blankRow = {
-      leadCast: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
-      priorityDate: '',
-      reqdate: '',
+      orderPriority: "",
+      promiseDate: '',
+      requestDate: '',
       orderNote: '',
-      Price: '50', // Use null for numerical fields if blank
-      Size: '10',
-      Quantity: '5', // Default to false for boolean fields
+      Price: '',
+      Size: '',
+      Unit: '',
     };
-
     setPriceList(prevData => [...prevData, blankRow]);
-
   };
 
   const [
@@ -57,43 +57,35 @@ const ProductPriceList = ({ productId }) => {
   ] = useThirdPartyAPICallMutation();
 
   useEffect(() => {
-    // productId && getProductPriceByProductId();
     if (productId) {
       getProductPriceByProductId();
     }
   }, [productId]);
 
+  const mapApiResponseToPriceList = (responseData) => {
+    return responseData.map(item => ({
+      orderPriority: item.orderPriority || "",
+      promiseDate: item.promiseDate || '',
+      requestDate: item.requestDate || '',
+      orderNote: item.orderNote || '',
+      Price: item.Price || '',
+      Size: item.Size || '',
+      Unit: item.Unit || '', // Ensure this is mapped properly
+    }));
+  };
+
   useEffect(() => {
     if (isApiResponseSucess && isApiResponseData) {
       if (isApiResponseData.isSuccess) {
         const responseData = JSON.parse(isApiResponseData.data);
-        setPriceList(responseData?.data);
-      } else if (!isApiResponseData.isSuccess) {
-        ToastService.warning(isApiResponseData.message);
+        const mappedData = mapApiResponseToPriceList(responseData?.data || []);
+        setPriceList(mappedData);
+        setOriginalPriceList(mappedData); // Store the original data
       } else {
-        ToastService.warning(ErrorMessage.DefaultMessage);
+        ToastService.warning(isApiResponseData.message || ErrorMessage.DefaultMessage);
       }
     }
   }, [isApiResponseSucess, isApiResponseData]);
-
-  // useEffect(() => {
-  //   if (priceListConfig?.columns) {
-  //     // New blank row object
-  //     // const blankRow = {
-  //     //   size: '',
-  //     //   unit: '',
-  //     //   price: '',
-  //     //   orderNote: '',
-  //     //   reqDate: '',
-  //     //   priorityDate: '',
-  //     //   promiseDate: '',
-  //     //   priority: '',
-  //     //   action: '',
-  //     // };
-
-  //     setPriceList((prev) => [...prev]);
-  //   }
-  // }, []);
 
   const getProductPriceByProductId = () => {
     let dynamicParameters = {
@@ -108,38 +100,58 @@ const ProductPriceList = ({ productId }) => {
   };
 
   const handleEditClick = (data, rowIndex) => {
-    alert("Editing row", rowIndex);
-    let newGridData = [...priceList];
-    newGridData[rowIndex] = { ...priceList[rowIndex], ...data };
-    setPriceList(newGridData);
+    const updatedRow = {
+      ...priceList[rowIndex],
+      ...data,
+    };
+    const updatedPriceList = priceList.map((row, index) =>
+      index === rowIndex ? updatedRow : row
+    );
+    setPriceList(updatedPriceList);
+    const originalRow = originalPriceList[rowIndex];
+    if (JSON.stringify(updatedRow) !== JSON.stringify(originalRow)) {
+      onPriceListUpdate(updatedRow);
+      ToastService.success("Data details updated successfully!");
+    }
   };
 
-  const handleDeleteClick = () => {
-    alert("DELETE")
+  const handleDeleteClick = (rowIndex) => {
+    confirm(
+      "Delete?",
+      "Are you sure you want to Delete?",
+      "Delete",
+      "Cancel"
+    ).then((confirmed) => {
+      if (confirmed) {
+        const updatedPriceList = priceList.filter((_, index) => index !== rowIndex);
+        setPriceList(updatedPriceList);
+      }
+    });
   }
 
-  const actionHandler = {
-    EDIT: handleEditClick,
-    DELETE: handleDeleteClick,
-  }
+  // const actionHandler = {
+  //   // EDIT: handleEditClick,
+  //   // DELETE: handleDeleteClick,
+  // };
 
   return (
     <CardSection cardTitle="Product Price List">
       <div className="order-price-list">
         <FinalMolGrid
+          key={JSON.stringify(priceList)}
           ref={molGridRef}
           dataSource={priceList}
           configuration={priceListConfig}
           isLoading={isApiResponseLoading}
           onRowDataUpdate={handleEditClick}
+          onRowDataDelete={handleDeleteClick}
           allowPagination={false}
-          onActionChange={actionHandler}
+        // onActionChange={actionHandler}
         />
         <Buttons
           onClick={handleAddRow}
           buttonTypeClassName="theme-button my-2"
           buttonText={"Add Row"}
-
         />
       </div>
     </CardSection>

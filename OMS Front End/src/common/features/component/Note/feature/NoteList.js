@@ -50,7 +50,7 @@ const NoteList = forwardRef(({ keyId, handleEditClick, onGetByIdNotes, showEditI
             {!isGetNotesFetching ?
                 <> {notesFormData.length > 0 ? (
                     notesFormData.map((notes, noteIndex) => (
-                        <div className="col-xxl-6 col-xl-6 col-md-6 col-12 mb-2" key={noteIndex}>
+                        <div className="col-xxl-4 col-xl-4 col-md-4 col-12 mb-2" key={noteIndex}>
                             <div className={`notes-card randomColor ${getRandomColor(noteIndex)}`}>
                                 <div className="card-content">
                                     <div className="bottom-info">

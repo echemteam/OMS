@@ -18,11 +18,13 @@ import {
 //** Service's */
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
-import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
+// import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 import FileViewer from "react-file-viewer";
 import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
+import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
+import formatDate from "../../../../../lib/formatDate";
 
 const DocumentList = forwardRef(
   ({
@@ -44,6 +46,7 @@ const DocumentList = forwardRef(
     const [getFileType, setGetFileType] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [actionType, setActionType] = useState(null);
+    const [downloadFileName, setDownloadFileName] = useState();
 
     /**
      * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -99,7 +102,6 @@ const DocumentList = forwardRef(
           : documentTransformData(isListData);
         setDocumentListData(modifyData);
         let detectedFileTypes = new Set();
-
         Object.values(modifyData).forEach((items) => {
           items.forEach((item) => {
             const fileType = determineFileType(item.attachment);
@@ -126,7 +128,7 @@ const DocumentList = forwardRef(
         if (actionType === "download") {
           const link = document.createElement("a");
           link.href = fileURL;
-          link.download = isDownalodData.fileName;
+          link.download = downloadFileName;
           document.body.appendChild(link);
           link.click();
           link.remove();
@@ -146,7 +148,8 @@ const DocumentList = forwardRef(
       }
     }, [isDeleteSucess, isDeleteData]);
 
-    const handleDocumentAction = (action, fileName) => {
+    const handleDocumentAction = (action, fileName, name) => {
+      setDownloadFileName(name)
       setSelectedDocument(null);
       setIsModalOpen(false);
       setActionType(action);
@@ -249,6 +252,9 @@ const DocumentList = forwardRef(
                                   <div className="document-type">
                                     {data.attachment}
                                   </div>
+                                  <div className="document-type">
+                                    {formatDate(data.createdAt, "MM/DD/YYYY hh:mm A")}
+                                  </div>
                                 </div>
                                 <div className="document-action">
                                   {/* <span className="action-icon" onClick={() => onHandleEditDocument(data)} >
@@ -279,7 +285,7 @@ const DocumentList = forwardRef(
                                       onClick={() =>
                                         handleDocumentAction(
                                           "download",
-                                          data.attachment
+                                          data.attachment, data.name
                                         )
                                       }
                                     >
@@ -290,7 +296,7 @@ const DocumentList = forwardRef(
                                       <Iconify icon="uil:folder-download" />
                                     </span>
                                   ) : null}
-                                  {showDeleteButton ? (
+                                  {/* {showDeleteButton ? (
                                     <span
                                       className="action-icon"
                                       onClick={() =>
@@ -301,13 +307,9 @@ const DocumentList = forwardRef(
                                         )
                                       }
                                     >
-                                      {/* <Image
-                                        imagePath={AppIcons.deleteIcon}
-                                        alt="Delete Icon"
-                                      /> */}
                                       <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
                                     </span>
-                                  ) : null}
+                                  ) : null} */}
                                 </div>
                               </div>
                             </div>
@@ -325,11 +327,15 @@ const DocumentList = forwardRef(
             )}
           </div>
         </div>
-        <CenterModel
-          showModal={isModalOpen}
-          handleToggleModal={handleToggleModal}
+        <SidebarModel
+          // showModal={isModalOpen}
+          // handleToggleModal={handleToggleModal}
+          // modalTitle="File Preview"
+          // modelSizeClass="w-40"
+          isOpen={isModalOpen}
+          contentClass="content-65"
           modalTitle="File Preview"
-          modelSizeClass="w-40"
+          onClose={handleToggleModal}
         >
           <div className="model-hight-fix">
             {selectedDocument && getFileType && (
@@ -340,7 +346,7 @@ const DocumentList = forwardRef(
               />
             )}
           </div>
-        </CenterModel>
+        </SidebarModel>
       </div>
     );
   }

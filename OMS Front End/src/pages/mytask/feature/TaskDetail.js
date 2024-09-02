@@ -51,6 +51,7 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
   return { oldValue, newValue };
 };
 
+
 const formatBoolean = (value) => (value ? "True" : "False");
 
 const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalRequest, tabId }) => {
@@ -93,6 +94,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
   const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(oldValue, newValue, fieldName);
 
   const newValues = parseJson(newValue);
+
 
   const findKey = (obj, keySubstring) => {
     return Object.keys(obj).find((key) =>
@@ -152,6 +154,37 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
     setShowModal(!showModal);
   };
 
+  const renderValue = (value) => {
+
+    if (Array.isArray(value)) {
+      return (
+        <ul className="pl-0 mt-1">
+          {value.map((item, index) => (
+            <li key={index} className="list-style">
+              {renderValue(item)}
+            </li>
+          ))}
+        </ul>
+      );
+    } else if (typeof value === 'object' && value !== null) {
+      return (
+        <ul className="pl-1 mt-1 border-dashed">
+          {Object.entries(value).map(([subKey, subValue]) => (
+            <li key={subKey} className="list-style">
+              <span className="value-label">{subKey}:</span>
+              <span className="value-data ml-2">{renderValue(subValue)}</span>
+            </li>
+          ))}
+        </ul>
+      );
+    } else if (typeof value === 'boolean') {
+      // Handle booleans
+      return formatBoolean(value);
+    } else {
+      // Handle other values
+      return value !== null ? value.toString() : 'N/A';
+    }
+  };
 
   return (
     <div className="task-detail">
@@ -197,22 +230,20 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
           </div>
         }
       </div>
+
       {approvedData.isFunctional ?
         <div className="value-comparison">
-          <div className="value-block">
+          <div className="value-block w-100">
             <span className="value-title">New Value</span>
             {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
               <ul className="value-content pl-0">
                 {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
-                  <>
-                    <li className="">
-                      <span className="value-label">{key}:</span>
-                      <span className="value-data ml-2">
-                        {typeof value === "boolean" ? formatBoolean(value) : value}
-                      </span>
-                    </li>
-
-                  </>
+                  <li key={key}>
+                    <span className="value-label">{key}:</span>
+                    <span className="value-data ml-2">
+                      {renderValue(value)}
+                    </span>
+                  </li>
                 ))}
               </ul>
             ) : (
@@ -228,9 +259,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
               <div className="value-content">
                 <span className="value-label">{fieldName} : </span>
                 <span className="value-data">
-                  {typeof oldFieldValue === "boolean"
-                    ? formatBoolean(oldFieldValue)
-                    : oldFieldValue}
+                  {renderValue(oldFieldValue)}
                 </span>
               </div>
             ) : (
@@ -243,9 +272,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
               <div className="value-content">
                 <span className="value-label">{fieldName} : </span>
                 <span className="value-data">
-                  {typeof newFieldValue === "boolean"
-                    ? formatBoolean(newFieldValue)
-                    : newFieldValue}
+                  {renderValue(newFieldValue)}
                 </span>
               </div>
             ) : (
@@ -254,7 +281,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
           </div>
         </div>
       }
-      {tabId !== 1 &&
+      {tabId !== 1 && status !== "Reject" ?
         <div className="task-footer mt-3 pr-3">
           <Button className="reject-btn" onClick={handleToggleModal}>
             {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
@@ -266,6 +293,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
             Accept
           </Button>
         </div>
+        : null
       }
       <CenterModel
         showModal={showModal}

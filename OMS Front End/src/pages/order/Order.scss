@@ -6,8 +6,6 @@
 .address {
   border: 1px solid var(--themeColor);
   border-radius: 10px;
-  width: 32%;
-  margin: 0 10px;
   padding: 8px;
 }
 
@@ -16,11 +14,14 @@
     font-size: var(--commonFont);
     color: var(--textColor);
   }
+
   span:nth-child(2) {
     margin-left: 20px;
   }
 }
+
 .verify-product-group {
+  // margin-top: 36px;
   .loader-section {
     padding: 0;
   }
@@ -29,6 +30,7 @@
     border: 2px dashed var(--inputBorder);
     border-radius: 6px;
     padding: 0px 20px 10px 20px;
+
     table {
       tbody {
         tr {
@@ -36,6 +38,7 @@
         }
       }
     }
+
     table {
       tbody {
         tr {
@@ -44,16 +47,17 @@
       }
     }
   }
- 
-  margin-top:36px;
-  @media only screen and (max-width: 1860px) {
-    margin-top: 30px;
+  .record-not-found {
+    border: 1px solid var(--inputBorder);
+    border-radius: 5px;
+    padding: 35px 0;
   }
+
   .verify-product-label {
     font-size: var(--commonFont);
     color: var(--textColor);
     font-weight: 500;
-    margin: 10px 0;
+    margin: 0 0 5px;
   }
 
   .verify-product-details {
@@ -64,6 +68,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
     .detail-row {
+      width: 100%;
       display: flex;
       align-items: center;
       padding: 8px 0;
@@ -80,28 +85,52 @@
         padding-left: 10px;
         font-size: var(--commonFont-small);
         color: var(--textColor);
-        width: 150px;
+        width: 20%;
       }
 
       .detail-value {
         font-size: var(--commonFont-small);
         color: var(--textColorLight);
-        width: 70%;
+        width: 60%;
+
+        .input-group {
+          width: 100%;
+        }
       }
 
       .detail-action {
         display: flex;
-        flex-direction: row;
+        // justify-content: space-around;
+        width: 20%;
+        justify-content: flex-end;
+        padding-right: 15px;
 
         .checkbox {
-          margin: 0 7px;
+          margin-right: 15px;
+          @media only screen and (max-width: 1366px) {
+            margin-right: 7px;
+          }
         }
-
+        .right-edit-pencil {
+          min-width: 45px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+        }
         .edit-button {
           background: none;
           border: none;
           cursor: pointer;
           padding: 0;
+          margin: 0 15px;
+          &:first-child {
+            margin-left: 0;
+            margin-right: 15px;
+
+            @media only screen and (max-width: 1366px) {
+              margin-right: 0px;
+            }
+          }
 
           img {
             min-width: 16px;
@@ -113,31 +142,11 @@
   }
 }
 
-@media only screen and (max-width: 1860px) {
-  .address {
-    margin: 0 9px;
-  }
-}
-@media only screen and (max-width: 1675px) {
-  .address {
-    width: 31.5%;
-  }
-}
-@media only screen and (max-width: 1560px) {
-  .address {
-    width: 31.5%;
-  }
-}
-@media only screen and (max-width: 1410px) {
-  .address {
-    margin: 0 9px;
-  }
-}
-
 .product-details-hight {
   table {
     tbody {
       min-height: calc(100vh - 170px);
+
       tr {
         &:last-child {
           border-bottom: 0 !important;
@@ -145,6 +154,7 @@
       }
     }
   }
+
   .parent-row {
     cursor: pointer;
   }
@@ -170,15 +180,59 @@
   .address {
     .record-not-found {
       padding: 5px 0px 0px 0px;
+
       img {
         width: 60px;
       }
+
       h5 {
         font-size: var(--commonFont) !important;
       }
     }
   }
+
   .order-stepper-height {
     max-height: calc(100vh - 400px);
+  }
+}
+
+.stepper-card {
+  &.order-stepper {
+    height: calc(100vh - 105px);
+    .card {
+      @media only screen and (max-width: 1750px) {
+        height: 100%;
+      }
+    }
+  }
+}
+.stepper-card {
+  &.order-stepper {
+    .stepper-section {
+      .stepper-content {
+        min-height: calc(100vh - 235px);
+        max-height: calc(100vh - 235px) !important;
+        @media only screen and (max-width: 1750px) {
+          min-height: calc(100vh - 175px);
+          max-height: calc(100vh - 175px) !important;
+        }
+      }
+    }
+  }
+}
+
+.order-price-list {
+  table {
+    overflow: unset;
+    tbody {
+      overflow-y: unset;
+      overflow-x: unset;
+    }
+  }
+}
+
+@media only screen and (max-width: 1650px) {
+  .input-field {
+    height: 28px;
   }
 }

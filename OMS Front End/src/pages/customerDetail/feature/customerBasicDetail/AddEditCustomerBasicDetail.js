@@ -10,9 +10,9 @@ import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDeta
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
-import { useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
+import { useLazyGetAllIncotermQuery, useLazyGetAllUserQuery } from "../../../../app/services/commonAPI";
 import { useAddEditCustomersBasicInformationMutation, useCheckCustomerNameExistMutation, useLazyGetAllCountriesQuery, useLazyGetAllGroupTypesQuery, useLazyGetAllTerritoriesQuery, useLazyGetCustomersBasicInformationByIdQuery, useLazyGetCustomersDetailsByCutomerNameQuery } from "../../../../app/services/basicdetailAPI";
-import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
+import { CustomerSupplierStatus, FieldSettingType } from "../../../../utils/Enums/commonEnums";
 import { customerbasicData, excludingRoles } from "./config/CustomerBasicDetail.data";
 import ExistingCustomerSupplierInfo from "../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo";
 import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
@@ -27,7 +27,7 @@ import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/val
 import { useSelector } from "react-redux";
 
 
-const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage }) => {
+const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage, setSubCustomer }) => {
 
     //** State */
     const parentRef = useRef();
@@ -48,6 +48,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [getAllCountries, { isSuccess: isGetAllCountriesSucess, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
     const [getAllGroupTypes, { isSuccess: isGetAllGroupTypesSucess, data: allGetAllGroupTypesData }] = useLazyGetAllGroupTypesQuery();
     const [getAllTerritories, { isSuccess: isGetAllTerritoriesSucess, data: allGetAllTerritoriesData }] = useLazyGetAllTerritoriesQuery();
+    const [getAllIncoterm, { isSuccess: isGetAllIncotermSucess, data: allGetAllIncotermData }] = useLazyGetAllIncotermQuery();
     const [CheckCustomerNameExist, { isSuccess: isCustomerNameExistSucess, data: isCustomerNameExistData, }] = useCheckCustomerNameExistMutation();
     const [getCustomersBasicInformationById, { isFetching: isGetCustomersBasicInformationByIdFetching, isSuccess: isGetCustomersBasicInformationById,
         data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
@@ -84,14 +85,14 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             formSetting.isViewOnly = false;
         }
     }, [isEditablePage, hasEditPermission, isResponsibleUser])
-
     useEffect(() => {
         const fetchData = async () => {
             await Promise.all([
                 getAllUser(),
                 getAllCountries(),
                 getAllGroupTypes(),
-                getAllTerritories()
+                getAllTerritories(),
+                getAllIncoterm()
             ]);
 
             if (isOpen) {
@@ -108,7 +109,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         };
         fetchData();
     }, [keyId, isOpen]);
-
     useEffect(() => {
         if (isOpen) {
             if (customerId > 0) {
@@ -119,7 +119,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             }
         }
     }, [isOpen, customerId, getCustomersBasicInformationById])
-
     useEffect(() => {
         if (isGetAllGroupTypesSucess && allGetAllGroupTypesData) {
             setDropDownOptionField(allGetAllGroupTypesData, 'groupTypeId', 'type', customerbasicData, 'groupTypeId');
@@ -138,9 +137,11 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         if (isGetAllTerritoriesSucess && allGetAllTerritoriesData) {
             setDropDownOptionField(allGetAllTerritoriesData, 'territoryId', 'territory', customerbasicData, 'territoryId');
         }
+        if (isGetAllIncotermSucess && allGetAllIncotermData) {
+            setDropDownOptionField(allGetAllIncotermData, 'incotermId', 'incotermName', customerbasicData, 'incotermId');
+        }
     }, [isGetAllGroupTypesSucess, allGetAllGroupTypesData, isGetAllUserSucess, allGetAllUserData, isGetAllCountriesSucess, allGetAllCountriesData,
-        isGetAllTerritoriesSucess, allGetAllTerritoriesData]);
-
+        isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllIncotermSucess, allGetAllIncotermData]);
     useEffect(() => {
         if (isAddEditCustomersBasicInformationSuccess && isAddEditCustomersBasicInformationData) {
             if (isAddEditCustomersBasicInformationData.errorMessage.includes('exists')) {
@@ -159,16 +160,21 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             }
         }
     }, [isAddEditCustomersBasicInformationSuccess, isAddEditCustomersBasicInformationData]);
-
     const onreset = () => {
         onSidebarClose()
         let restData = { ...customerbasicData };
         restData.initialState = { ...formData };
         setFormData(restData);
     }
-
     useEffect(() => {
         if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
+            if (GetCustomersBasicInformationByIdData.statusId === CustomerSupplierStatus.APPROVED) {
+                setFieldSetting(formData, 'name', 'isDisabled', true);
+                setFieldSetting(formData, 'taxId', 'isDisabled', true);
+            } else {
+                setFieldSetting(formData, 'name', 'isDisabled');
+                setFieldSetting(formData, 'taxId', 'isDisabled');
+            }
             const newFrom = { ...customerbasicData };
             const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, customerbasicData.formFields, 'taxId');
             newFrom.formFields = formFields;
@@ -179,25 +185,24 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             setIsResponsibleUser(validateResponsibleUserId(GetCustomersBasicInformationByIdData.responsibleUserId, authState?.user?.userID));
         }
     }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
-
     useEffect(() => {
         if (isOpen) {
             customerId && getCustomersBasicInformationById(customerId);
         }
     }, [isOpen]);
-
     useImperativeHandle(nextRef, () => ({
         handleAddBasicDetails,
     }));
-
     const handleAddBasicDetails = async () => {
         let data = basicDetailRef.current.getFormData();
         if (data) {
+            setSubCustomer && setSubCustomer(data.isSubCustomer);
             let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
             let req = {
                 ...data,
                 groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object" ? data.groupTypeId.value : data.groupTypeId,
                 territoryId: data.territoryId && typeof data.territoryId === "object" ? data.territoryId.value : data.territoryId,
+                incotermId: data.incotermId && typeof data.incotermId === "object" ? data.incotermId.value : data.incotermId,
                 countryId: data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId,
                 responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                 customerId: keyId ? keyId : customerId,
@@ -250,7 +255,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             ToastService.warning('Please enter customer basic information');
         }
     };
-
     const handleValidateTextId = (data, dataField) => {
         if (dataField === 'countryId') {
             const { formFields } = getTaxIdMinMaxLength(data.value, customerbasicData.formFields, 'taxId');
@@ -264,7 +268,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             setFormData(updatedForm);
         }
     }
-
     const handleCheckboxchange = (data, datafield) => {
 
         if (customerId) {
@@ -286,25 +289,19 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             }
         }
     }
-
     const formActionHandler = {
         DDL_CHANGED: handleValidateTextId,
         CHECK_CHANGE: handleCheckboxchange
     };
-
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
             const trimCustomerName = data.replace(/\s+/g, '');
             setCustomerName(trimCustomerName);
         }
     }
-
-
     const formInputHandler = {
         INPUT_CHANGED: handleInputFields,
     }
-
-
     const handleInputGroupButton = () => {
         if (customerName !== '') {
             let request = {
@@ -313,7 +310,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             CheckCustomerNameExist(request);
         }
     }
-
     const handleExistingInfo = () => {
         if (customerName !== '' && customerName.trim().length >= 3) {
             if (parentRef.current) {
@@ -323,7 +319,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             ToastService.warning('Please enter at least three characters.');
         }
     }
-
     useEffect(() => {
         if (isCustomerNameExistSucess && isCustomerNameExistData) {
             if (isCustomerNameExistData.errorMessage.includes('exists')) {

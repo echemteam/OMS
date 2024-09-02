@@ -17,6 +17,7 @@ const changePasswordInfo = {
             dataField: "password",
             fieldSetting: {
                 placeholder: "Enter Your Password",
+                maxLength:20,
             },
             validation: [{ type: "require" }, { type: "password" }],
             style: {
@@ -31,6 +32,7 @@ const changePasswordInfo = {
             dataField: "confirmPassword",
             fieldSetting: {
                 placeholder: "Confirm Your Password",
+                maxLength:20,
             },
             validation: [{ type: "require" }, { type: "compare", compareEle: "password" }],
             style: {

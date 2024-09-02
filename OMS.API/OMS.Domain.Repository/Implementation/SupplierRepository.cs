@@ -51,6 +51,7 @@ namespace OMS.Domain.Repository.Implementation
                 supplier.EmailAddress,
                 supplier.CreatedBy,
                 //supplier.ResponsibleUserId
+                supplier.IncotermId
             }, CommandType.StoredProcedure);
         }
 

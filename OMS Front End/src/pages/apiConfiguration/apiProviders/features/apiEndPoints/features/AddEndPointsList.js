@@ -112,7 +112,7 @@ const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
       };
  return(<>
   <div className="row">
-          <div className="col-md-12 table-striped api-provider">
+          <div className="col-md-12 table-striped api-provider api-management">
             <FinalMolGrid
               ref={molGridRef}
               configuration={ApiEndPointGridConfig}
@@ -120,7 +120,7 @@ const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
               allowPagination={true}
               pagination={{
                 totalCount: totalRowCount,
-                pageSize: 10,
+                pageSize: 20,
                 currentPage: 1,
               }}
               onPageChange={handlePageChange}
