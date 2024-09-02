@@ -9,6 +9,7 @@ using OMS.Application.Services.Contact;
 using OMS.Application.Services.CustomerDocuments;
 using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
+using OMS.Application.Services.Dictionary;
 using OMS.Application.Services.EmailAddress;
 using OMS.Application.Services.Order;
 using OMS.Application.Services.Organization;
@@ -52,5 +53,6 @@ namespace OMS.Application.Services
         ISupplierFinancialSettingsService supplierFinancialSettingsService { get; }
         IApiEventManagementService apiEventManagementService { get; }
         IOrderServices orderServices { get; }
+        IDictionaryServices dictionaryServices { get; }
     }
 }
