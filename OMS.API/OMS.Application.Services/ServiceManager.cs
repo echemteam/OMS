@@ -10,6 +10,7 @@ using OMS.Application.Services.CustomerAccountingSettings;
 using OMS.Application.Services.CustomerDocuments;
 using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
+using OMS.Application.Services.Dictionary;
 using OMS.Application.Services.EmailAddress;
 using OMS.Application.Services.Order;
 using OMS.Application.Services.Organization;
@@ -26,6 +27,7 @@ using OMS.Application.Services.Test;
 using OMS.Application.Services.User;
 using OMS.Domain.Repository;
 using OMS.Shared.Services.Contract;
+using System.ComponentModel.Design;
 
 namespace OMS.Application.Services
 {
@@ -65,6 +67,7 @@ namespace OMS.Application.Services
         ISupplierFinancialSettingsService _supplierFinancialSettingsService;
         IApiEventManagementService _apiEventManagementService;
         IOrderServices _orderServices;
+        IDictionaryServices _dictionaryServices;
 
         public ITestService testService
         {
@@ -373,6 +376,18 @@ namespace OMS.Application.Services
                     _orderServices = new OrderServices(_repositoryManager, _commonSettingService);
                 }
                 return _orderServices;
+
+            }
+        }
+        public IDictionaryServices dictionaryServices
+        {
+            get
+            {
+                if (_dictionaryServices == null)
+                {
+                    _dictionaryServices = new DictionaryServices(_repositoryManager, _commonSettingService);
+                }
+                return _dictionaryServices;
 
             }
         }
