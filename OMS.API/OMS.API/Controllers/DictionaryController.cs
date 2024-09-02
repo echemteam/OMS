@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Dictionary;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
 
@@ -10,7 +11,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   [Authorize]
     public class DictionaryController : BaseController
     {
         #region private variable
@@ -30,6 +31,15 @@ namespace OMS.API.Controllers
             var dictionaryData = await _serviceManager.dictionaryServices.AddEditDictionary(requestData);
             return APISucessResponce(dictionaryData);
         }
+
+        [HttpPost("GetAllDictionary")]
+        public async Task<IActionResult> GetAllDictionary([FromBody] ListEntityRequest<BaseFilter> requestData)
+        {
+            var dictionaryList = await _serviceManager.dictionaryServices.GetAllDictionary(requestData);
+            return APISucessResponce<object>(dictionaryList);
+        }
+
+
         #endregion
     }
 }

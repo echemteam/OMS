@@ -1,9 +1,12 @@
-﻿using OMS.Domain.Entities.Entity.CommonEntity;
+﻿using OMS.Domain.Entities.API.Response.Dictionary;
+using OMS.Domain.Entities.API.Response.User;
+using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerNotes;
 using OMS.Domain.Entities.Entity.Dictionary;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
+using OMS.Shared.Entities.CommonEntity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,6 +20,7 @@ namespace OMS.Domain.Repository.Implementation
     {
         #region SP Name
         const string ADDEDITDICTIONARY = "AddEditDictionary";
+        const string GETALLDICTIONARY = "GetAllDictionary";
         #endregion
         public DictionaryRepository(DapperContext dapperContext) : base(dapperContext)
         {
@@ -33,6 +37,16 @@ namespace OMS.Domain.Repository.Implementation
         }
         #endregion
 
+        public async Task<EntityList<DictionaryListResponse>> GetAllDictionary(ListEntityRequest<BaseFilter> requestData)
+        {
+            return await _context.GetListSP<DictionaryListResponse>(GETALLDICTIONARY, new
+            {
+                requestData.Pagination?.PageNumber,
+                requestData.Pagination?.PageSize,
+                requestData.Filters?.SearchText,
+                requestData.SortString,
+            }, true);
+        }
 
     }
 }
