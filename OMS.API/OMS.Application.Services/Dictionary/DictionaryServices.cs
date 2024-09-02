@@ -40,5 +40,9 @@ namespace OMS.Application.Services.Dictionary
         {
             return await repositoryManager.dictionaryRepository.GetAllDictionary(requestData);
         }
+        public async Task<GetDictionaryResponse> GetDictionaryByDictonaryId(int dictionaryId)
+        {
+            return await repositoryManager.dictionaryRepository.GetDictionaryByDictonaryId(dictionaryId);
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP Name
         const string ADDEDITDICTIONARY = "AddEditDictionary";
         const string GETALLDICTIONARY = "GetAllDictionary";
+        const string GETDICTIONARYBYDICTIONARYID = "GetDictionaryByDictioryId";
         #endregion
         public DictionaryRepository(DapperContext dapperContext) : base(dapperContext)
         {
@@ -46,6 +47,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.Filters?.SearchText,
                 requestData.SortString,
             }, true);
+        }
+
+        public async Task<GetDictionaryResponse> GetDictionaryByDictonaryId(int dictionaryId)
+        {
+            GetDictionaryResponse dictionary = await _context.GetFrist<GetDictionaryResponse>(GETDICTIONARYBYDICTIONARYID, new
+            {
+                dictionaryId
+            }, CommandType.StoredProcedure);
+            return dictionary;
         }
 
     }

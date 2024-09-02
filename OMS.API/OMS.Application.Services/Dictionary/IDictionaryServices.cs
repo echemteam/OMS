@@ -19,5 +19,6 @@ namespace OMS.Application.Services.Dictionary
     {
         Task<AddEntityDto<int>> AddEditDictionary(AddEditDictonaryRequest requestData);
         Task<EntityList<DictionaryListResponse>> GetAllDictionary(ListEntityRequest<BaseFilter> requestData);
+        Task<GetDictionaryResponse> GetDictionaryByDictonaryId(int dictionaryId);
     }
 }

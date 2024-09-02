@@ -18,5 +18,6 @@ namespace OMS.Domain.Repository.Contract
 
         Task<AddEntityDto<int>> AddEditDictionary(DictionaryDto requestData);
         Task<EntityList<DictionaryListResponse>> GetAllDictionary(ListEntityRequest<BaseFilter> requestData);
+        Task<GetDictionaryResponse> GetDictionaryByDictonaryId(int dictionaryId);
     }
 }

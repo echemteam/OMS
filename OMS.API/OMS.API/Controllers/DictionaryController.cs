@@ -11,7 +11,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   [Authorize]
+  // [Authorize]
     public class DictionaryController : BaseController
     {
         #region private variable
@@ -39,6 +39,16 @@ namespace OMS.API.Controllers
             return APISucessResponce<object>(dictionaryList);
         }
 
+        [HttpGet("GetDictionaryByDictonaryId")]
+        public async Task<IActionResult> GetDictionaryByDictonaryId(int dictionaryId)
+        {
+            if (dictionaryId > 0)
+            {
+                var dictionary = await _serviceManager.dictionaryServices.GetDictionaryByDictonaryId(dictionaryId).ConfigureAwait(true);
+                return APISucessResponce<object>(dictionary);
+            }
+            return APISucessResponce(dictionaryId);
+        }
 
         #endregion
     }
