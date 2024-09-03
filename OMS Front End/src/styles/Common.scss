@@ -112,6 +112,9 @@ a {
   margin-right: 1.25rem;
 }
 
+.mt-0 {
+  margin-top: 0;
+}
 // Margin-top
 .mt-1 {
   margin-top: 0.25rem;
@@ -1282,6 +1285,53 @@ a {
   }
   @media only screen and (max-width: 1200px) {
     margin-left: 0.75px;
+  }
+}
+
+// Customer Docuement Detail
+
+
+
+.supplier-document-detail {
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+      padding: 5px !important;
+      height: calc(100vh - 250px);
+      overflow: hidden;
+    }
+  }
+}
+
+.customer-document-detail {
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+      padding: 5px !important;
+      height: calc(100vh - 250px);
+      overflow: hidden;
+    }
+  }
+}
+
+// Docuement Section
+
+.docuement-section {
+  .card {
+    .card-body-sec {
+      height: fit-content;
+    }
+  }
+}
+
+//Supplier Docuement Detail
+
+.supplier-document-detail {
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+      padding: 5px !important;
+    }
   }
 }
 
