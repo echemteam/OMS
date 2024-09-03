@@ -30,7 +30,7 @@ export const registeredBankAddressForm = {
     },
     {
       id: "addressLine2Id",
-      lable: "Address Line 2",
+      lable: "Address Line 27",
       Field_Name: "Address Line 2",
       fieldType: FormFieldTypes.INPUT,
       dataField: "addressLine2Id",

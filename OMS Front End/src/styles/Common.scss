@@ -1140,6 +1140,7 @@ a {
         padding-top: 0;
 
         .tab-sub-body-section {
+          margin-right: 10px;
         }
       }
     }
@@ -1277,6 +1278,10 @@ a {
     @media only screen and (max-width: 1750px) {
       margin-top: 5px;
     }
+    
+  }
+  @media only screen and (max-width: 1200px) {
+    margin-left: 0.75px;
   }
 }
 
@@ -3188,6 +3193,17 @@ input[type="checkbox"]:disabled {
   }
 }
 
+.lable-none{
+  .input-label{
+    visibility: hidden;
+  }
+  .input-label-part{
+    input{
+      margin-top: 0;
+    }
+  }
+}
+
 .basic-info-sec {
   .card {
     .card-body-sec {
@@ -4053,6 +4069,43 @@ input[type="checkbox"]:disabled {
     &:hover {
       .custom-tooltip {
         display: block;
+      }
+    }
+  }
+}
+
+// Responsive CSS
+// @media only screen and (max-width: 1400px) {
+//   .vertical-tab-inner
+//   .tab-section {
+//     .tab-header {
+//       width: 30% ;
+//     }
+//     .collapse-tab{
+//       left: calc(29% - 37px);
+//     }
+//     .collapse-tabs{
+//       .tab-header{
+//         width: 10px ;
+//       }
+//     }
+//   }
+// }
+
+@media only screen and (max-width: 1300px) {
+  
+  .parent-row {
+    td{
+    &:first-child{
+      width: 25% !important;
+    }
+  }
+  
+  }
+  .heading-row{
+    th{
+      &:first-child{
+        width: 25% !important;
       }
     }
   }

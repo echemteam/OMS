@@ -60,7 +60,7 @@ export const PhysicalAddressForm = {
       },
       //validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
     {
@@ -77,7 +77,7 @@ export const PhysicalAddressForm = {
       },
       //validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
     {
@@ -94,7 +94,7 @@ export const PhysicalAddressForm = {
       },
     //  validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
     {
@@ -110,7 +110,7 @@ export const PhysicalAddressForm = {
       },
       //validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
 

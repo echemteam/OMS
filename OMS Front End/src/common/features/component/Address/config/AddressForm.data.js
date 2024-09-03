@@ -40,7 +40,7 @@ export const addressFormData = {
     },
     {
       id: "addressLine2",
-      lable: "Address Line 2 ",
+      lable: "Address Line 2",
       Field_Name: "Address Line 2",
       fieldType: FormFieldTypes.INPUT,
       dataField: "addressLine2",

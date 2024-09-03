@@ -174,7 +174,7 @@
   .stepper-card {
     .stepper-section {
       .stepper-content {
-        max-height: calc(100vh - 190px);
+        max-height: calc(100vh - 185px);
       }
     }
   }
@@ -295,4 +295,35 @@
       }
     }
   }
+}
+
+
+// Responsive CSS
+
+
+@media only screen and (max-width: 1250px){
+  .stepper-card {
+    .stepper-section {
+      .stepper-header{
+        overflow: hidden;
+        overflow-x: auto;
+        width: 100%;
+
+        .step{
+          min-width: 180px;
+        }
+      }
+      ::-webkit-scrollbar {
+        width: 5px;
+        height: 3px;
+        background-color: var(--inputBorder);
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: var(--gradient-theme);
+      }
+    }
+    
+  }
+  
 }
