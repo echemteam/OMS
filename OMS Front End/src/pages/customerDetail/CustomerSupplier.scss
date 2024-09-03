@@ -571,3 +571,11 @@
 //     }
 //   }
 // }
+
+// Responsive CSS
+
+@media only screen and (max-width: 1200px) {
+  .profile-info {
+    gap: 2rem !important;
+  }
+}

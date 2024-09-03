@@ -174,7 +174,7 @@
   .stepper-card {
     .stepper-section {
       .stepper-content {
-        max-height: calc(100vh - 185px);
+        max-height: calc(100vh - 179px);
       }
     }
   }
@@ -222,7 +222,7 @@
       height: calc(100vh - 106px);
 
       .card {
-        height: calc(100vh - 225px);
+        height: calc(100vh - 235px);
       }
     }
   }
@@ -301,7 +301,7 @@
 // Responsive CSS
 
 
-@media only screen and (max-width: 1250px){
+@media only screen and (max-width: 1272px){
   .stepper-card {
     .stepper-section {
       .stepper-header{
@@ -325,5 +325,5 @@
     }
     
   }
-  
+
 }

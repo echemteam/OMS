@@ -99,7 +99,7 @@ const OrderItemDetail = ({ onhandleAddOrderData }) => {
   return (
     <div className="row">
       <ProductDetailsList onhandleProductDetailsListData={handleProductDetailsListData} isDocumentData={isDocumentData}/>
-      <div className="col-6">
+      <div className="col-xl-6 col-2xl-6 col-lg-12 col-12">
         <VerifyProductDetail productId={productId} onVerifyProductList={handleVerifyProductDetail} />
       </div>
       <div className="col-12">

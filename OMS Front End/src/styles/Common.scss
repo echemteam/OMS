@@ -4110,3 +4110,15 @@ input[type="checkbox"]:disabled {
     }
   }
 }
+
+.responsive-grid{
+  table{
+    min-width: 1200px !important;
+    overflow: auto;
+  }
+}
+.responsive-grid-title{
+  padding-left: 5px !important;
+  min-width: 1400px !important;
+  margin-top: 10px;
+ }
