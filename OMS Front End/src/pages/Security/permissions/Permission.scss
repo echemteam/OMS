@@ -261,11 +261,14 @@
   }
   &.security-permission{
     .inner-section{
-      max-height: calc(100vh - 380px);
+      max-height: calc(100vh - 385px);
       overflow: hidden;
       overflow-y: auto;
       @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 320px);
+        max-height: calc(100vh - 315px);
+      }
+      @media only screen and (max-width: 1650px) {
+        max-height: calc(100vh - 310px);
       }
     }
   }

@@ -1,6 +1,7 @@
 .stepper-card {
   overflow: hidden;
   width: 100%;
+
   .stepper-section {
     .stepper-header {
       display: flex;
@@ -94,6 +95,7 @@
           transform: rotate(270deg);
           filter: contrast(0);
         }
+
         svg {
           // width: 12px;
           transform: rotate(270deg);
@@ -110,10 +112,12 @@
       overflow-y: auto;
       width: 100%;
       max-height: calc(100vh - 235px);
+
       @media only screen and (max-width: 1750px) {
         padding: 10px 15px;
         max-height: calc(100vh - 179px);
       }
+
       .content {
         display: none;
 
@@ -121,6 +125,7 @@
           display: block;
         }
       }
+
       .record-not-found {
         // padding-top: 5px;
 
@@ -137,13 +142,16 @@
     .card {
       padding: 0px 5px 5px;
       margin-bottom: 0;
+
       .card {
         padding: 0;
       }
     }
+
     .stepper-section {
       .stepper-header {
         padding-bottom: 9px;
+
         .step {
           .step-button {
             .stepper-box {
@@ -174,7 +182,7 @@
   .stepper-card {
     .stepper-section {
       .stepper-content {
-        max-height: calc(100vh - 190px);
+        max-height: calc(100vh - 175px);
       }
     }
   }
@@ -192,6 +200,7 @@
       overflow: hidden;
     }
   }
+
   .vertical-tab-inner {
     .tab-section .tab-content {
       max-height: calc(100vh - 400px);
@@ -200,13 +209,16 @@
 
   .card {
     height: calc(100vh - 120px);
-    .stepper-content{
+
+    .stepper-content {
       padding-bottom: 0;
     }
+
     .card {
       height: calc(100vh - 295px);
     }
   }
+
   .model-content {
     .model-body {
       .card {
@@ -216,38 +228,40 @@
   }
 }
 
+
 @media only screen and (max-width: 1750px) {
   .stepper-view {
     .card {
       height: calc(100vh - 106px);
 
       .card {
-        height: calc(100vh - 225px);
+        height: calc(100vh - 235px);
       }
     }
   }
-}
 
-@media only screen and (max-width: 1750px) {
   .stepper-view-supplier {
     .card {
       height: calc(100vh - 145px);
 
       .card {
-        height: calc(100vh - 265px);
+        height: calc(100vh - 255px);
       }
     }
   }
 }
+
 .stepper-view-supplier {
   .supplier-contacts {
     .card-body-sec {
       max-height: calc(100vh - 195px);
     }
   }
+
   .vertical-tab-inner {
     .tab-section {
       height: calc(100vh - 395px);
+
       .tab-content {
         max-height: calc(100vh - 400px);
       }
@@ -256,6 +270,7 @@
 
   .card {
     height: calc(100vh - 325px);
+
     @media only screen and (max-width: 1750px) {
       height: calc(100vh - 245px);
     }
@@ -274,18 +289,43 @@
   }
 }
 
+@media only screen and (max-width: 1280px) {
+  .stepper-view {
+    .card {
+      .card {
+        height: auto;
+      }
+    }
+  }
+
+  .stepper-card {
+    .stepper-section {
+      .stepper-content {
+        .content {
+          &.active {
+            padding-bottom: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
 .stepper-view-supplier {
   .financial-setting {
     .card {
       height: 100%;
     }
+
     .address-main-card-sec {
       .payment-method-sec {
         margin-top: -20px;
         height: calc(100vh - 390px);
         overflow: hidden;
+
         .tab-content {
           padding-bottom: 60px;
+
           .ach-wire-section {
             .centered {
               justify-content: center !important;
