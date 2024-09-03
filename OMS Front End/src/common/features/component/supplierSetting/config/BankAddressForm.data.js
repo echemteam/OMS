@@ -122,14 +122,14 @@ export const bankAddressFormData = {
       id: "zipCode",
       lable: "Zip Code ",
       Field_Name: "Zip Code",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "zipCode",
       fieldSetting: {
         placeholder: "Enter Zip Code",
         allowSpace: true,
-        maxLength: 9,
+        maxLength: 10,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" }, { type: "validZipCode" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },
@@ -271,7 +271,7 @@ export const bankAddressFormData = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
       },
     },
-     {
+    {
       id: "isAddressInUs",
       lable: "Bank Account located in the United States or US Territory",
       Field_Name: "Bank Account located in the United States or US Territory",

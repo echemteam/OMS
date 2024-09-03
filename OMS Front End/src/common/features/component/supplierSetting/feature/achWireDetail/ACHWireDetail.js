@@ -17,6 +17,7 @@ import { FieldSettingType } from "../../../../../../utils/Enums/commonEnums";
 import { bankAddressFormData } from "../../config/BankAddressForm.data";
 import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
 
+
 const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) => {
   const aCHWireFormRef = useRef();
   const aCHWireOtherRef = useRef();

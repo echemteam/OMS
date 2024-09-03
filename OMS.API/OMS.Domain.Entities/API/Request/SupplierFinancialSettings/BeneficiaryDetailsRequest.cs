@@ -8,7 +8,7 @@
         public int? CityId { get; set; }
         public int? StateId { get; set; }
         public short? CountryId { get; set; }
-        public int? ZipCode { get; set; }
+        public string? ZipCode { get; set; }
         public string? BeneficiaryName { get; set; }
         public string? RecipientPhoneNumber { get; set; }
     }
