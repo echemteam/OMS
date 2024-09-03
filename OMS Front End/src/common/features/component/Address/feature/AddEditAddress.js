@@ -31,7 +31,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
     const [selectedCheckbox, setSelectedCheckbox] = useState(null);
     const [addressEditTableId, setAddressEditTableId] = useState(0)
-    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, getEventName } = useValidateAndAddApprovalRequests();
 
     // const [stateChage, setStateChange] = useState(null)
 
@@ -347,14 +347,11 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
         const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
 
-        const addAddressApproval = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : FunctionalitiesName.CUSTOMERADDADDRESS
-        const updateAddressApproval = isSupplier ? FunctionalitiesName.SUPPLIERUPDATEADDRESS : FunctionalitiesName.CUSTOMERUPDATEADDRESS
-
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
-
-            if (isEditablePage && isAddressType(updateData.addressTypeId)) {
-                await handleApprovalRequest(updateData, formData.initialState, updateAddressApproval);
+            const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
+            if (isEditablePage && eventName) {
+                await handleApprovalRequest(updateData, formData.initialState, eventName);
             } else {
                 update(updateData);
             }
@@ -365,24 +362,17 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 ...transformedData,
                 customerId: customerId,
             };
-            if (isEditablePage && isAddressType(req.addressTypeId)) {
-                await handleApprovalRequest(req, null, addAddressApproval);
+            const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
+            if (isEditablePage && eventName) {
+                await handleApprovalRequest(req, null, eventName);
             } else {
                 add(req);
             }
         }
     };
 
-    const isAddressType = (typeId) => {
-        if (isSupplier) {
-            //return typeId === AddressType.PHYSICALADDRESSHQ.toString();
-            // return; // Write Address type for the supplier.
-        }
-        return typeId === AddressType.BILLING.toString() || typeId === AddressType.SHIPPING.toString();
-    };
-
-    const handleApprovalRequest = async (newValue, oldValue, functionalityName) => {
-        const request = { newValue, oldValue, isFunctional: true, functionalityName };
+    const handleApprovalRequest = async (newValue, oldValue, eventName) => {
+        const request = { newValue, oldValue, isFunctional: true, eventName, isFunctionalObjMatch: true };
         const modifyData = await ValidateRequestByApprovalRules(request);
         if (modifyData.newValue) onSidebarClose();
     };

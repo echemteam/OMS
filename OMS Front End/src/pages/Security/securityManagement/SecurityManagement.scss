@@ -2,9 +2,12 @@
   .card {
     .card-body-sec {
       table tbody {
-        max-height: calc(100vh - 320px);
+        max-height: calc(100vh - 305px);
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 290px);
+          max-height: calc(100vh - 260px);
+        }
+        @media only screen and (max-width: 1550px) {
+          max-height: calc(100vh - 250px);
         }
       }
     }

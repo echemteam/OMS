@@ -5,7 +5,10 @@ import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 
 const ContactDetailCard = forwardRef(
-  ({ contactItem, handleEdit, showEditIcon }) => {
+  (
+    { contactItem, handleEdit, showEditIcon, openModalId, setOpenModalId },
+    ref
+  ) => {
     const emailDropdownRef = useRef(null);
     const phoneDropdownRef = useRef(null);
     const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
@@ -80,7 +83,10 @@ const ContactDetailCard = forwardRef(
     };
 
     const handleOptionsClick = () => {
-      setIsOptionsOpen((prevState) => !prevState);
+      setOpenModalId(
+        contactItem.contactId === openModalId ? null : contactItem.contactId
+      );
+      // setIsOptionsOpen(!isOptionsOpen);
     };
 
     const handleBodyClick = (e) => {
@@ -205,8 +211,9 @@ const ContactDetailCard = forwardRef(
                   </span>
                 </div>
                 <div
+                  ref={ref}
                   className={`customer-detail-model ${
-                    isOptionsOpen ? "open-model" : ""
+                    openModalId === contactItem.contactId ? "open-model" : ""
                   }`}
                 >
                   <div className="customer-card-top-sec">

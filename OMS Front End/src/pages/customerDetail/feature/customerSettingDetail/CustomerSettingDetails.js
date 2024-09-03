@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 //** Lib's */
 import "./SettingDetails.scss"
 import FinancialSettings from "./FinancialSettings";
@@ -11,11 +11,11 @@ import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/a
 import ShippingSettings from "./features/ShippingSetting/ShippingSettings";
 import PropTypes from "prop-types";
 
-const CustomerSettingDetails = ({ isEditablePage }) => {
+const CustomerSettingDetails = ({ isEditablePage, customerStatusId }) => {
 
   const [showFinacialTab, setShowFinacialTab] = useState(false);
   const [showShippingTab, setShowShippingTab] = useState(false);
-  const { isResponsibleUser, activeSubTab,handleActiveSubTabClick } = useContext(BasicDetailContext);
+  const { isResponsibleUser, activeSubTab, handleActiveSubTabClick } = useContext(BasicDetailContext);
 
   const hasShippingPermission = hasFunctionalPermission(securityKey.CUSTOMERSHIPPINGSETTING);
   const hasFinacialPermission = hasFunctionalPermission(securityKey.CUSTOMERFINANCIALSETTING);
@@ -51,7 +51,7 @@ const CustomerSettingDetails = ({ isEditablePage }) => {
       component: (
         <div className="mt-2 financial-sec">
           {showFinacialTab ?
-            <FinancialSettings isEditablePage={isEditablePage} /> :
+            <FinancialSettings isEditablePage={isEditablePage} customerStatusId={customerStatusId} /> :
             <Unauthorize />
           }
         </div>

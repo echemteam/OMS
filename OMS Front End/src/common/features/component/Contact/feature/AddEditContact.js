@@ -6,14 +6,13 @@ import { ContactType, FieldSettingType } from "../../../../../utils/Enums/common
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { contactDetailFormData } from "../config/ContactDetailForm.data";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
-import { modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
+import { modifyEmailAddressData, modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
 import { setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
-import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 //** Component's */
 const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddressGrid"));
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
@@ -32,7 +31,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const [phoneNumberList, setPhoneNumberList] = useState([]);
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
-    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, getEventName } = useValidateAndAddApprovalRequests();
 
     //** API Call's */
     /**
@@ -44,22 +43,54 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
 
 
     const handleAddEdit = async () => {
+        if (isSupplier) {
+            handlWithoutApprovalAddEdit();
+        } else if (isEditablePage) {
+            handleApprovalAddEdit()
+        } else {
+            handlWithoutApprovalAddEdit();
+        }
+    }
+
+    const handleApprovalAddEdit = async () => {
         const data = ref.current.getFormData();
         if (!data) return;
-
         const { filteredTypeIds, matchTypeIds } = isContactType(data.contactTypeId, isEdit);
 
-        const addAddressApproval = isSupplier ? FunctionalitiesName.SUPPLIERADDCONTACT : FunctionalitiesName.CUSTOMERADDCONTACT
-        const updateAddressApproval = isSupplier ? FunctionalitiesName.SUPPLIERUPDATECONTACT : FunctionalitiesName.CUSTOMERUPDATECONTACT
-
+        let eventName;
+        let eventNameArr = [];
+        if (Array.isArray(data.contactTypeId) && data.contactTypeId.length === 1) {
+            eventName = getEventName(data.contactTypeId[0], isEdit, 'AddEditContactCustomer');
+        } else if (Array.isArray(data.contactTypeId) && data.contactTypeId.length >= 2) {
+            data.contactTypeId.map((data) => {
+                const event = getEventName(data, isEdit, 'AddEditContactCustomer');
+                event && eventNameArr.push(event);
+            });
+        } else {
+            eventName = getEventName(data.contactTypeId, isEdit, 'AddEditContactCustomer');
+        }
         if (matchTypeIds.length > 0 || matchTypeIds?.value) {
-            const request = requestData(data, matchTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
-            let req = {
-                ...request,
-                customerId: customerId ? customerId : request.customerId
+            if (eventNameArr.length > 0) {
+                const matchTypeIdsArray = matchTypeIds.split(',');
+                for (let index = 0; index < eventNameArr.length; index++) {
+                    const event = eventNameArr[index];
+                    const currentTypeId = matchTypeIdsArray[index];
+                    const request = requestData(data, currentTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
+                    let req = {
+                        ...request,
+                        customerId: customerId ? customerId : request.customerId
+                    }
+                    await handleApprovalRequest(req, formData.initialState, event, filteredTypeIds.length);
+                }
+            } else if (eventName) {
+                const request = requestData(data, matchTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
+                let req = {
+                    ...request,
+                    customerId: customerId ? customerId : request.customerId
+                }
+                await handleApprovalRequest(req, formData.initialState, eventName, filteredTypeIds.length);
             }
-            const functionalityName = isEdit ? updateAddressApproval : addAddressApproval;
-            await handleApprovalRequest(req, formData.initialState, functionalityName, filteredTypeIds.length);
+
         }
         if (filteredTypeIds.length > 0) {
             const request = requestData(data, filteredTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
@@ -90,7 +121,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         const typeIdsArray = normalizeTypeIds(typeIds);
 
         if (isEdit) {
-            if (typeIdsArray.includes(ContactType.INVOICESUBMISSION) || typeIdsArray.includes(ContactType.AP)) {
+            if (typeIdsArray.includes(ContactType.INVOICESUBMISSION) || typeIdsArray.includes(ContactType.INVOICEFOLLOWUP)) {
                 return {
                     filteredTypeIds: [],
                     matchTypeIds: getCustomerContactTypeId(typeIdsArray)
@@ -107,8 +138,8 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 //filteredTypeIds = typeIdsArray.filter(id => id !== ContactType.INVOICESUBMISSION);
             } else if (!isSupplier) {
                 // Remove customer-related contact types (INVOICESUBMISSION and AP) if they exist.
-                filteredTypeIds = typeIdsArray?.filter(id => id !== ContactType.INVOICESUBMISSION && id !== ContactType.AP);
-                matchTypeIds = typeIdsArray.filter(id => id === ContactType.INVOICESUBMISSION || id === ContactType.AP);
+                filteredTypeIds = typeIdsArray?.filter(id => id !== ContactType.INVOICESUBMISSION && id !== ContactType.INVOICEFOLLOWUP);
+                matchTypeIds = typeIdsArray.filter(id => id === ContactType.INVOICESUBMISSION || id === ContactType.INVOICEFOLLOWUP);
             }
         }
         return {
@@ -116,8 +147,8 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             matchTypeIds: matchTypeIds.length > 0 ? getCustomerContactTypeId(matchTypeIds, isEdit) : matchTypeIds,      // Values that were removed
         };
     };
-    const handleApprovalRequest = async (newValue, oldValue, functionalityName, remainingContactLength) => {
-        const request = { newValue, oldValue, isFunctional: true, functionalityName };
+    const handleApprovalRequest = async (newValue, oldValue, eventName, remainingContactLength) => {
+        const request = { newValue, oldValue, isFunctional: true, eventName, isFunctionalObjMatch: true };
         const modifyData = await ValidateRequestByApprovalRules(request);
         if (remainingContactLength === 0) {
             if (modifyData.newValue && onSuccess) {
@@ -128,8 +159,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const getCustomerContactTypeId = (contactTypeId, isEdit) => {
         return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId;
     };
-
-    const handlMainAddEdit = () => {
+    const handlWithoutApprovalAddEdit = () => {
         const data = ref.current.getFormData();
         if (!data) return;
 
@@ -154,11 +184,9 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         return {
             ...data,
             contactId: contactId,
-            // customerId: 1093,
-            // contactTypeId: String(contactTypeId),
-            contactTypeId: contactTypeId && typeof contactTypeId === "object" ? String(contactTypeId.value) : String(contactTypeId),
+            contactTypeId: String(contactTypeId),
             [isSupplier ? 'supplierId' : 'customerId']: keyId,
-            emailList: emailAddressList.length > 0 ? emailAddressList : null,
+            emailList: emailAddressList.length > 0 ? modifyEmailAddressData(emailAddressList) : null,
             phoneList: phoneNumberList.length > 0 ? modifyPhoneNumberData(phoneNumberList) : null,
             [isSupplier ? 'supplierContactId' : 'customerContactId']: isSupplier ? supplierContactId : customerContactId,
         };
@@ -324,7 +352,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                             buttonTypeClassName="theme-button"
                             buttonText='Save'
                             isLoading={isAddEditLoading}
-                            onClick={isSupplier ? handlMainAddEdit : isEditablePage ? handleAddEdit : handlMainAddEdit}
+                            onClick={handleAddEdit}
                             isDisable={isButtonDisable} />
                         {/* } */}
                         <Buttons

@@ -140,11 +140,13 @@ const VerifyProductDetail = ({ productId, onVerifyProductList }) => {
                                             dataField="isChecked"
                                             isStaticCheckBox={true}
                                         />
-                                        {shouldShowPencilIcon("ProductName") && (
-                                            <button className="edit-button" onClick={() => handleEditClick("ProductName")}>
-                                                <Image imagePath={AppIcons.PencilIcon} altText="Edit Icon" />
-                                            </button>
-                                        )}
+                                        <div className="right-edit-pencil">
+                                            {shouldShowPencilIcon("ProductName") && (
+                                                <button className="edit-button" onClick={() => handleEditClick("ProductName")}>
+                                                    <Image imagePath={AppIcons.PencilIcon} altText="Edit Icon" />
+                                                </button>
+                                            )}
+                                        </div>
                                     </>
                                 )}
                             </span>
@@ -184,11 +186,14 @@ const VerifyProductDetail = ({ productId, onVerifyProductList }) => {
                                             dataField="isCASChecked"
                                             isStaticCheckBox={true}
                                         />
-                                        {shouldShowPencilIcon("CASNo") && (
-                                            <button className="edit-button" onClick={() => handleEditClick("CASNo")}>
-                                                <Image imagePath={AppIcons.PencilIcon} altText="Edit Icon" />
-                                            </button>
-                                        )}
+                                        <div className="right-edit-pencil">
+                                            {shouldShowPencilIcon("CASNo") && (
+                                                <button className="edit-button" onClick={() => handleEditClick("CASNo")}>
+                                                    <Image imagePath={AppIcons.PencilIcon} altText="Edit Icon" />
+                                                </button>
+                                            )}
+                                        </div>
+
                                     </>
                                 )}
                             </span>
@@ -228,11 +233,13 @@ const VerifyProductDetail = ({ productId, onVerifyProductList }) => {
                                             dataField="isMDLChecked"
                                             isStaticCheckBox={true}
                                         />
-                                        {shouldShowPencilIcon("MDLNo") && (
-                                            <button className="edit-button" onClick={() => handleEditClick("MDLNo")}>
-                                                <Image imagePath={AppIcons.PencilIcon} altText="Edit Icon" />
-                                            </button>
-                                        )}
+                                        <div className="right-edit-pencil">
+                                            {shouldShowPencilIcon("MDLNo") && (
+                                                <button className="edit-button" onClick={() => handleEditClick("MDLNo")}>
+                                                    <Image imagePath={AppIcons.PencilIcon} altText="Edit Icon" />
+                                                </button>
+                                            )}
+                                        </div>
                                     </>
                                 )}
                             </span>

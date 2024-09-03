@@ -54,7 +54,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
       icon: "fa fa-phone",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll contact-card-section-new">
-          <CustomerContactDetail isEditablePage={true} isSearchFilterShow={true} contryIdCode={contryIdCode} />
+          <CustomerContactDetail isEditablePage={true} isSearchFilterShow={true} contryIdCode={contryIdCode} customerStatusId={customerStatus} />
         </div>
       ),
       isVisible: isResponsibleUser ? true : hasContactPermission?.hasAccess,
@@ -64,7 +64,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
       icon: "fa fa-cog",
       component: (
         <div className="mt-2">
-          <CustomerSettingDetails isEditablePage={true} />
+          <CustomerSettingDetails isEditablePage={true} customerStatusId={customerStatus} />
         </div>
       ),
       isVisible: isResponsibleUser ? true : hasSettingPermission?.hasAccess,
@@ -74,7 +74,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
       icon: "fa fa-file-text-o",
       component: (
         <div className="mt-2">
-          <CustomerDocumentDetail isEditablePage={true} />
+          <CustomerDocumentDetail isEditablePage={true} customerStatusId={customerStatus} />
         </div>
       ),
       isVisible: isResponsibleUser ? true : hasDocumentPermission?.hasAccess,

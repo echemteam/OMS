@@ -7,6 +7,7 @@ import { securityKey } from "../../data/SecurityKey";
 import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
 import ApiProviderViewDetail from "../../pages/apiConfiguration/apiProviders/features/apiProviderViewDetail/ApiProviderViewDetail";
 import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/feature/thirdPartyApiConfigurationList/feature/thirdPartyApiConfigurationViewDetails/ThirdPartyApiConfigurationViewDetails";
+import OrderList from "../../pages/order/orderGrid/OrderList";
 
 const ApiProviders = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProviders"));
 //** Not Found */
@@ -384,6 +385,16 @@ export const ComponentNavigation = [
     hasParams: false,
     text: 'ThirdPartyApiConfiguration',
     securityKey: securityKey.THIRDPARTYAPI
+  },
+  {
+    id: 'OrderList',
+    path: '/OrderList',
+    exact: true,
+    title: '',
+    component: OrderList,
+    hasParams: false,
+    text: 'OrderList',
+    // securityKey: securityKey.SUPPLIER
   },
 
 ];

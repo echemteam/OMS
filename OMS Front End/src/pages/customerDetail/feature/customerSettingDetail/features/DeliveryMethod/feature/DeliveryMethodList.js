@@ -7,10 +7,14 @@ import PropTypes from 'prop-types';
 import FinalMolGrid from "../../../../../../../components/FinalMolGrid/FinalMolGrid";
 import { useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import ToastService from "../../../../../../../services/toastService/ToastService";
+import { FunctionalitiesName } from "../../../../../../../utils/Enums/ApprovalFunctionalities";
+import { useValidateAndAddApprovalRequests } from "../../../../../../../utils/CustomHook/useValidateAndAddApproval";
 
-const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId, handleGetDefaultList , handleDeleteClick }) => {
+const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton,
+    customerId, handleGetDefaultList, handleDeleteClick, isEditablePage }) => {
 
     const [dataSource, setDataSource] = useState(ourAccountData);
+    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateDeliveryMethodsMutation();
 
     useEffect(() => {
@@ -27,11 +31,7 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
         }
     }, [ourAccountData, isGetDataLoading]);
 
-    const handleEditClick = (data, rowIndex) => {
-        let newGridData = [...dataSource]
-        newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
-        setDataSource(newGridData);
-
+    const handleEditClick = async (data, rowIndex) => {
         const req = {
             charge: data.charge,
             customerId: customerId,
@@ -39,8 +39,21 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
             customerDeliveryMethodId: data.customerDeliveryMethodId ? data.customerDeliveryMethodId : 0,
             deliveryMethodId: data.deliveryMethodId && typeof data.deliveryMethodId === "object" ? data.deliveryMethodId.value : data.deliveryMethodId,
         };
-        update(req);
+        if (isEditablePage) {
+            await handleApprovalRequest(req, dataSource.initialState);
+        } else {
+            let newGridData = [...dataSource]
+            newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
+            setDataSource(newGridData);
+            update(req);
+        }
     }
+
+    const handleApprovalRequest = async (newValue, oldValue) => {
+        const request = { newValue, oldValue, isFunctional: false, eventName: FunctionalitiesName.UPDATECUSTOMERSHIPPINGSETTING };
+        const modifyData = await ValidateRequestByApprovalRules(request);
+        if (modifyData.newValue) handleGetDefaultList();
+    };
 
     useEffect(() => {
         if (isUpdateSuccess && isUpdateData) {

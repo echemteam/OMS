@@ -1,9 +1,12 @@
 import { getData } from "../LocalStorage/LocalStorageManager";
-//** Service */
-import { useAddApprovalRequestsMutation } from "../../app/services/commonAPI";
-import ToastService from "../../services/toastService/ToastService";
+//** Lib's */
+import { AddressType, ContactType } from "../Enums/commonEnums";
 import { ErrorMessage, SuccessMessage } from "../../data/appMessages";
+import { FunctionalitiesName } from "../Enums/ApprovalFunctionalities";
+//** Service */
 import SwalAlert from "../../services/swalService/SwalService";
+import ToastService from "../../services/toastService/ToastService";
+import { useAddApprovalRequestsMutation } from "../../app/services/commonAPI";
 
 export const useValidateAndAddApprovalRequests = () => {
     // Hook to handle API requests for adding approval requests
@@ -11,8 +14,62 @@ export const useValidateAndAddApprovalRequests = () => {
     const [addApprovalRequest] = useAddApprovalRequestsMutation();
 
     // Utility function to deep compare two objects
-    const deepEqual = (obj1, obj2) => {
-        return JSON.stringify(obj1) === JSON.stringify(obj2);
+    const compareObj = (obj1, obj2) => {
+        const { newValueNormalized, oldValueNormalized } = normalizeValues(obj1, obj2, true);
+        return JSON.stringify(newValueNormalized) === JSON.stringify(oldValueNormalized);
+    };
+
+    const normalizeValues = (newValue, oldValue, isStrictEquality) => {
+        // Recursive function to normalize keys and values
+        const normalize = obj => {
+            if (Array.isArray(obj)) {
+                return obj.map(item => normalize(item)); // Normalize each item in the array
+            } else if (obj && typeof obj === 'object') {
+                return Object.fromEntries(
+                    Object.entries(obj).map(([key, value]) => [
+                        key.toLowerCase(), typeof value === 'object' ? normalize(value) : isStrictEquality ? String(value) : value
+                    ])
+                );
+            } else {
+                return obj;
+            }
+        };
+        // const normalize = obj => Object.fromEntries(Object.entries(obj).map(([key, value]) => [key.toLowerCase(), String(value)]));
+        const newValueNormalized = newValue ? normalize(newValue) : newValue;
+        const oldValueNormalized = oldValue ? normalize(oldValue) : oldValue;
+        return { newValueNormalized, oldValueNormalized, originalValues: { newValue, oldValue } }
+    }
+
+    const getEventName = (id, isEdit, functionalityName) => {
+        const getAddressEventName = () => {
+            if (id === AddressType.BILLING.toString()) {
+                return isEdit ? FunctionalitiesName.UPDATECUSTOMERBILLINGADDRESS : FunctionalitiesName.ADDCUSTOMERBILLINGADDRESS;
+            } else if (id === AddressType.SHIPPING.toString()) {
+                return isEdit ? FunctionalitiesName.UPDATECUSTOMERSHIPPINGADDRESS : FunctionalitiesName.ADDCUSTOMERSHIPPINGADDRESS;
+            }
+        };
+
+        const getContactEventName = () => {
+            if (id.toString() === ContactType.INVOICESUBMISSION.toString()) {
+                return isEdit ? FunctionalitiesName.UPDATECUSTOMERINVOICESUBMISSIONCONTACT : FunctionalitiesName.ADDCUSTOMERINVOICESUBMISSIONCONTACT;
+            } else if (id.toString() === ContactType.INVOICEFOLLOWUP.toString()) {
+                return isEdit ? FunctionalitiesName.UPDATECUSTOMERINVOICEFOLLOWUPCONTACT : FunctionalitiesName.ADDCUSTOMERINVOICEFOLLOWUPCONTACT;
+            }
+        };
+
+        switch (functionalityName) {
+            case "AddEditAddressCustomer":
+                return getAddressEventName();
+            case "AddEditContactCustomer":
+                return getContactEventName();
+            default:
+                return null;
+        }
+    };
+
+    // Utility function to find the original key by normalized key
+    const findOriginalKey = (normalizedKey, obj) => {
+        return Object.keys(obj).find(key => key.toLowerCase() === normalizedKey);
     };
 
     /**
@@ -34,25 +91,24 @@ export const useValidateAndAddApprovalRequests = () => {
         if (!approvalRulesList.length) return requestData;
 
         // Destructure and provide default values for requestData properties
-        const { functionalityName = '', newValue = {}, oldValue = {} } = requestData;
+        const { eventName = '', newValue = {}, oldValue = {} } = requestData;
 
         // Filter the approval rules to only include those relevant to the given functionality
-        const relevantRules = approvalRulesList.filter(rule => rule.functionalityName === functionalityName);
+        const relevantRules = approvalRulesList.filter(rule => rule.eventName === eventName);
 
         // If no relevant rules are found, return the original requestData
         if (!relevantRules.length) return requestData;
 
-        // Normalize field names to lowercase for both newValue and oldValue
-        const normalize = obj => Object.fromEntries(Object.entries(obj).map(([key, value]) => [key.toLowerCase(), value]));
-        const newValueNormalized = newValue ? normalize(newValue) : newValue;
-        const oldValueNormalized = oldValue ? normalize(oldValue) : oldValue;
+        const { newValueNormalized, oldValueNormalized, originalValues } = normalizeValues(newValue, oldValue);
 
         if (requestData.isFunctionalObjMatch) {
-            const isEqual = deepEqual(oldValueNormalized, newValueNormalized);
+            const isEqual = compareObj(newValue, oldValue);
             if (isEqual) {
                 return requestData;
             }
         }
+
+        let allSuccessful = false; // Flag to track if all requests are successful
 
         // Process each approval rule
         for (const rule of relevantRules) {
@@ -65,15 +121,14 @@ export const useValidateAndAddApprovalRequests = () => {
                     tableId,
                     functionalitiesFieldId,
                     functionalityEventId,
-                    oldValue: JSON.stringify(oldValueNormalized),
-                    newValue: JSON.stringify(newValueNormalized)
+                    oldValue: JSON.stringify(originalValues.oldValue),
+                    newValue: JSON.stringify(originalValues.newValue)
                 };
 
                 try {
                     // Add the approval request and revert the change in newValue
                     await addApprovalRequest(request);
-                    success(SuccessMessage.ApprovalSuccess);
-                    //newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
+                    allSuccessful = true;
                 } catch (error) {
                     console.error('Error adding approval request:', error);
                 }
@@ -81,6 +136,7 @@ export const useValidateAndAddApprovalRequests = () => {
                 // Check if the rule specifies a field name to validate
                 if (fieldName) {
                     const normalizedFieldName = fieldName.toLowerCase();
+                    const originalKeyName = findOriginalKey(normalizedFieldName, originalValues.newValue);
                     const newFieldValue = newValueNormalized[normalizedFieldName];
                     const oldFieldValue = oldValueNormalized[normalizedFieldName];
 
@@ -98,9 +154,9 @@ export const useValidateAndAddApprovalRequests = () => {
 
                         try {
                             // Add the approval request and revert the change in newValue
+                            allSuccessful = true;
                             await addApprovalRequest(request);
-                            newValueNormalized[normalizedFieldName] = oldFieldValue; // Revert change in newValue
-                            success(SuccessMessage.ApprovalSuccess);
+                            originalValues.newValue[originalKeyName] = oldFieldValue
                         } catch (error) {
                             console.error('Error adding approval request:', error);
                         }
@@ -111,13 +167,18 @@ export const useValidateAndAddApprovalRequests = () => {
             }
         }
 
+        // If all requests were successful, show a success message
+        if (allSuccessful) {
+            success(SuccessMessage.ApprovalSuccess);
+        }
+
         // Return the updated requestData with normalized values
         return {
             ...requestData,
-            newValue: newValueNormalized,
-            oldValue: oldValueNormalized
+            newValue: originalValues.newValue,
+            oldValue: originalValues.oldValue
         };
     }
 
-    return { ValidateRequestByApprovalRules };
+    return { ValidateRequestByApprovalRules, getEventName, compareObj };
 }

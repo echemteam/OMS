@@ -105,9 +105,8 @@ const ShippingSettings = ({ isEditablePage }) => {
   const handleChangeDropdown = (data, dataField) => {
     if (dataField === 'deliveryAccountId') {
       confirm(
-        accountTypeId > 0 ? "Change Shipping Methods?" : "Shipping Methods?",
-        accountTypeId > 0 ? "Are you sure you want to Change the Shipping Method?" : "Are you sure you want to Add Default Shipping Method?",
-        "Yes", "No"
+        "Shipping Methods?", "Are you sure you want to Add Default Shipping Method?",
+        "Yes", '', false
       ).then((confirmed) => {
         let request = {
           customerId: customerId,
@@ -148,11 +147,13 @@ const ShippingSettings = ({ isEditablePage }) => {
       {!isGetDefaultValueFetching ?
         <div className="grid-section">
           {accountTypeId === 1 ?
-            <ManageDevliveryMethod isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
+            <ManageDevliveryMethod isEditablePage={isEditablePage} isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
             accountTypeId === 2 ?
               <>
-                <ManageCarrier isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
-                <ManageDevliveryMethod isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} />
+                <ManageCarrier isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching}
+                  isEditablePage={isEditablePage} />
+                <ManageDevliveryMethod isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching}
+                  isEditablePage={isEditablePage} />
               </> : null
           }
         </div>

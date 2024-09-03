@@ -35,7 +35,7 @@ const FormFileUploadField = ({
     return acceptedFileType.includes(`.${fileExt}`);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     if (onChange) {
       if (e.target.type !== "file") {
         setSelectedFile(null);
@@ -68,7 +68,7 @@ const FormFileUploadField = ({
               reader.readAsDataURL(file);
             });
           });
-          Promise.all(fileReaders).then(fileObjects => {
+          await Promise.all(fileReaders).then(fileObjects => {
             onChange(dataField, fileObjects);
           }).catch(error => {
             console.error("Error reading files:", error);

@@ -183,6 +183,15 @@ const ContactDetails = (props) => {
     setOrderResetValue(false)
   };
 
+  // useEffect(() => {
+  //   if (activeTab === 0) {
+  //     let updatedFormData = { ...formData };
+  //     setFieldSetting(updatedFormData, 'endUserId', FieldSettingType.DISABLED, false);
+  //     setFieldSetting(updatedFormData, 'invoiceSubmissionId', FieldSettingType.DISABLED, false);
+  //     setFieldSetting(updatedFormData, 'purchasingId', FieldSettingType.DISABLED, false);
+  //     setFormData(updatedFormData)
+  //   }
+  // }, [activeTab])
 
   const handleCheckboxChanges = (data, dataField) => {
     let updatedFormData = { ...formData };
@@ -248,28 +257,28 @@ const ContactDetails = (props) => {
     let data = basicInformation.current.getFormData(); // Retrieve form data
     if (data) {
       let orderContactsList = [];
-  
+
       if (data.isEndUser && data.endUserId) {
         orderContactsList.push({
           contactId: typeof data.endUserId === "object" ? data.endUserId.value : data.endUserId,
           contactTypeId: ContactType.ENDUSER
         });
       }
-  
+
       if (data.isInvoiceSubmission && data.invoiceSubmissionId) {
         orderContactsList.push({
           contactId: typeof data.invoiceSubmissionId === "object" ? data.invoiceSubmissionId.value : data.invoiceSubmissionId,
           contactTypeId: ContactType.INVOICESUBMISSION
         });
       }
-  
+
       if (data.isPurchasingGiven && data.purchasingId) {
         orderContactsList.push({
           contactId: typeof data.purchasingId === "object" ? data.purchasingId.value : data.purchasingId,
           contactTypeId: ContactType.PURCHASING
         });
       }
-  
+
       let request = {
         orderId: orderId || 0, // Use orderId or default to 0
         orderContactsList, // Add the contacts list to the request
@@ -278,13 +287,13 @@ const ContactDetails = (props) => {
         isInvoiceSubmission: data.isInvoiceSubmission,
         isPurchasing: data.isPurchasingGiven,
       };
-  
+
       // Pass the request data to the parent component or API
       props.onHandleOrderContact(request);
       moveNextPage(); // Move to the next page or step
     }
   };
-  
+
 
   return (
     <>

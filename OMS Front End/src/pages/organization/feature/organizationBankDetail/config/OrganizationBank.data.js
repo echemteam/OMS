@@ -29,7 +29,7 @@ export const OrganizationBankFormData = {
             fieldSetting: {
                 placeholder: "Enter Checking Account Number",
                 allowSpace: true,
-                maxLength:35,
+                maxLength:34,
             },
             validation: [{ type: "require" }],
             style: {
@@ -45,7 +45,7 @@ export const OrganizationBankFormData = {
             fieldSetting: {
                 placeholder: "Enter Routing Account Number",
                 allowSpace: true,
-                 maxLength:50,
+                 maxLength:9,
             },
             validation: [{ type: "require" }],
             style: {
@@ -61,7 +61,7 @@ export const OrganizationBankFormData = {
             fieldSetting: {
                 placeholder: "Enter Swift Code",
                 allowSpace: true,
-                maxLength:50,
+                maxLength:11,
             },
             validation: [{ type: "require" }],
             style: {
@@ -77,7 +77,7 @@ export const OrganizationBankFormData = {
             fieldSetting: {
                 placeholder: "Enter Bank Address",
                 allowSpace: true,
-                maxLength:255,
+                maxLength:35,
             },
             validation: [{ type: "require" }],
             style: {
