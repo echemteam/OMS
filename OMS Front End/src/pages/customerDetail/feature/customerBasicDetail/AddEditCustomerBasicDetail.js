@@ -293,8 +293,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     };
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const trimCustomerName = data.replace(/\s+/g, '');
-            setCustomerName(trimCustomerName);
+            // const trimCustomerName = data.replace(/\s+/g, '');
+            setCustomerName(data);
         }
     }
     const formInputHandler = {
@@ -309,7 +309,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         }
     }
     const handleExistingInfo = () => {
-        if (customerName !== '' && customerName.trim().length >= 3) {
+        if (customerName !== '' && customerName.length >= 3) {
             if (parentRef.current) {
                 parentRef.current.callChildFunction(customerName);
             }
