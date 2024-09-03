@@ -4111,50 +4111,54 @@ input[type="checkbox"]:disabled {
 }
 
 // Responsive CSS
-// @media only screen and (max-width: 1400px) {
-//   .vertical-tab-inner
-//   .tab-section {
-//     .tab-header {
-//       width: 30% ;
-//     }
-//     .collapse-tab{
-//       left: calc(29% - 37px);
-//     }
-//     .collapse-tabs{
-//       .tab-header{
-//         width: 10px ;
-//       }
-//     }
-//   }
-// }
-
-@media only screen and (max-width: 1300px) {
-  
-  .parent-row {
-    td{
-    &:first-child{
-      width: 25% !important;
+@media only screen and (max-width: 1400px) {
+  .vertical-tab-inner
+  .tab-section {
+    .tab-header {
+      width: 30% ;
     }
-  }
-  
-  }
-  .heading-row{
-    th{
-      &:first-child{
-        width: 25% !important;
+    .collapse-tab{
+      left: calc(29% - 37px);
+    }
+    .collapse-tabs{
+      .tab-header{
+        width: 10px ;
       }
     }
   }
 }
 
+@media only screen and (max-width: 1300px) {
+  
+  // .parent-row {
+  //   td{
+  //   &:first-child{
+  //     width: 25% !important;
+  //   }
+  // }
+  
+  // }
+  // .heading-row{
+  //   th{
+  //     &:first-child{
+  //       width: 25% !important;
+  //     }
+  //   }
+  // }
+}
+
 .responsive-grid{
+  .molgrid-2 {
+    overflow: auto !important;
+
   table{
     min-width: 1200px !important;
     overflow: auto;
   }
 }
-.responsive-grid-title{
-  padding-left: 5px !important;
-  min-width: 1400px !important;
-  margin-top: 10px;
- }
+}
+// .responsive-grid-title{
+//   padding-left: 5px !important;
+//   min-width: 1400px !important;
+//   margin-top: 10px;
+//  }

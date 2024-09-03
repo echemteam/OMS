@@ -686,3 +686,19 @@
 }
 
 // Contact Card New UI End
+
+
+@media only screen and (max-width:1280px) {
+  .custom-contact-card {
+   
+  
+    .contact-main-card-section {
+      width: 30%;
+      min-width: 220px;
+      
+    }
+  }
+  .address-main-card-section{
+    min-width: 220px;
+  }
+}
