@@ -5,6 +5,8 @@ import React, {
   useState,
 } from "react";
 //** Lib's */
+
+
 import Image from "../../../../../components/image/Image";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
@@ -24,14 +26,14 @@ import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import formatDate from "../../../../../lib/formatDate";
-import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
+// import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 
 const DocumentList = forwardRef(
   ({
     keyId,
     isSupplier,
     downloadDocument,
-    // deleteDocumentsById,
+    deleteDocumentsById,
     getDocumentsById,
     childRef,
     SecurityKey,
@@ -39,9 +41,9 @@ const DocumentList = forwardRef(
     isArchive,
   }) => {
     //** State */
-    // const { confirm } = SwalAlert();
+    const { confirm } = SwalAlert();
     const [documentListData, setDocumentListData] = useState([]);
-    // const [showDeleteButton, setShowDeleteButton] = useState(true);
+    const [showDeleteButton, setShowDeleteButton] = useState(true);
     const [showDownalodButton, setShowDownalodButton] = useState(true);
     const [selectedDocument, setSelectedDocument] = useState(null);
     const [getFileType, setGetFileType] = useState([]);
@@ -166,12 +168,12 @@ const DocumentList = forwardRef(
       }
     }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
-    // useEffect(() => {
-    //   if (isDeleteSucess && isDeleteData) {
-    //     ToastService.success(isDeleteData.errorMessage);
-    //     onGetData();
-    //   }
-    // }, [isDeleteSucess, isDeleteData]);
+    useEffect(() => {
+      if (isDeleteSucess && isDeleteData) {
+        ToastService.success(isDeleteData.errorMessage);
+        onGetData();
+      }
+    }, [isDeleteSucess, isDeleteData]);
 
     const handleDocumentAction = (action, fileName, name) => {
       setDownloadFileName(name);
@@ -192,18 +194,18 @@ const DocumentList = forwardRef(
       }
     };
 
-    // const handleDelete = (documentId) => {
-    //   confirm(
-    //     "Delete?",
-    //     "Are you sure you want to Delete?",
-    //     "Delete",
-    //     "Cancel"
-    //   ).then((confirmed) => {
-    //     if (confirmed) {
-    //       Delete(documentId);
-    //     }
-    //   });
-    // };
+    const handleDelete = (documentId) => {
+      confirm(
+        "Delete?",
+        "Are you sure you want to Delete?",
+        "Delete",
+        "Cancel"
+      ).then((confirmed) => {
+        if (confirmed) {
+          Delete(documentId);
+        }
+      });
+    };
 
     const determineFileType = (fileName) => {
       const extension = fileName.split(".").pop().toLowerCase();
