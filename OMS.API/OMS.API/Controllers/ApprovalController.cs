@@ -1,12 +1,8 @@
-﻿using ClientIPAuthentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
-using OMS.Domain.Entities.API.Request.Contact;
 using OMS.Domain.Entities.API.Response.Approval;
-using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -15,7 +11,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     //[CheckClientIpActionFilter]
     public class ApprovalController : BaseController
     {
@@ -73,9 +69,21 @@ namespace OMS.API.Controllers
             }
             return APISucessResponce(approvalRequestId);
         }
+
+        [HttpPost("CheckFieldValueExists")]
+        public async Task<IActionResult> CheckFieldValueExists(string fieldName, string fieldValue)
+        {
+            if (fieldValue != null && fieldName !=null )
+            {
+                var checkValues = await _serviceManager.approvalService.CheckFieldValueExists(fieldName, fieldValue!);
+                return APISucessResponce(checkValues);
+            }
+            return APISucessResponce(fieldName, fieldValue!);
+        }
+
         [HttpPost("UpdateApprovalRequestsStatus")]
         public async Task<IActionResult> UpdateApprovalRequestsStatus(UpdateApprovalRequestsStatusRequest requestData)
-            {
+        {
             AddEntityDto<int> responseData = new();
             if (requestData != null)
             {

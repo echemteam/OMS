@@ -88,6 +88,11 @@ namespace OMS.Application.Services.Approval
             return await repositoryManager.approval.GetApprovalRequestsByApprovalRequestId(approvalRequestId);
         }
 
+        public async Task<CheckFieldValueExistsResponse> CheckFieldValueExists(string fieldName, string fieldValue)
+        {
+            return await repositoryManager.approval.CheckFieldValueExists(fieldName, fieldValue);
+        }
+
         public async Task<AddEntityDto<int>> UpdateApprovalRequestsStatus(UpdateApprovalRequestsStatusRequest requestData, short currentUserId)
         {
             var response = new AddEntityDto<int>();
@@ -131,7 +136,16 @@ namespace OMS.Application.Services.Approval
             }
             else
             {
-                return await HandleFieldApproval(responceData, approvalRequestsDto, requestData);
+                response = await HandleFieldApproval(responceData, approvalRequestsDto,requestData);
+                if (response.KeyValue > 0)
+                {
+                    approvalRequestsDto.Status = ApprovalRequestsStatus.Accept;
+                }
+                else
+                {
+                    approvalRequestsDto.Status = ApprovalRequestsStatus.Pending;
+                }
+                var addEntityDto = await UpdateApprovalStatus(approvalRequestsDto);
             }
             return response;
         }
@@ -307,13 +321,10 @@ namespace OMS.Application.Services.Approval
         }
 
 
-        private async Task<AddEntityDto<int>> HandleFieldApproval(GetApprovalRequestsByApprovalRequestIdResponse responceDataItem, ApprovalRequestsDto approvalRequestsDto, UpdateApprovalRequestsStatusRequest requestData)
+        private async Task<AddEntityDto<int>> HandleFieldApproval(GetApprovalRequestsByApprovalRequestIdResponse responceData, ApprovalRequestsDto approvalRequestsDto, UpdateApprovalRequestsStatusRequest requestData)
         {
             AddEntityDto<int> response = new();
             int approvalRequestId = requestData.ApprovalRequestId;
-            var responceData = await repositoryManager.approval.GetApprovalRequestsByApprovalRequestId(approvalRequestId);
-
-            object responseData = new();
 
             Dictionary<string, object> oldValues = null!;
             Dictionary<string, object> newValues = null!;
@@ -328,7 +339,6 @@ namespace OMS.Application.Services.Approval
                 newValues = ApprovalRuleHelper.FiledParseJson(responceData.NewValue!);
             }
 
-            // Determine the primary key column dynamically
             string tableName = responceData.TableName!;
             string primaryKeyColumn = await repositoryManager.approval.GetPrimaryKeyColumnAsync(tableName);
 
@@ -336,7 +346,6 @@ namespace OMS.Application.Services.Approval
             .ToDictionary(kvp => kvp.Key.ToLower(), kvp => kvp.Value);
 
 
-            // Retrieve actual columns from the table schema to validate input
             var tableColumns = await repositoryManager.approval.GetTableColumnsAsync(tableName);
             var validColumns = tableColumns.ToHashSet(StringComparer.OrdinalIgnoreCase);
 
@@ -351,7 +360,6 @@ namespace OMS.Application.Services.Approval
             var newFieldValue = normalizedColumns[fieldName];
             var oldFieldValue = oldValues.GetValueOrDefault(fieldName, string.Empty);
 
-            // Check if the value has changed
             if (newFieldValue.ToString() == oldFieldValue.ToString())
             {
 
@@ -368,21 +376,19 @@ namespace OMS.Application.Services.Approval
                 response.KeyValue = responceData.ApprovalRequestId ?? 0;
             }
 
-
-            // Determine if the record exists for update or needs to be inserted
             bool recordExists = Convert.ToInt32(primaryKeyValue) > 0;
 
-            string query;
+            string query = "";
             if (recordExists)
             {
                 // Update statement
                 query = BuildUpdateQuery(tableName, fieldName, primaryKeyColumn);
             }
-            else
-            {
-                // Insert statement
-                query = BuildInsertQuery(tableName, fieldName, primaryKeyColumn);
-            }
+            //else
+            //{
+            //    // Insert statement
+            //    query = BuildInsertQuery(tableName, fieldName, primaryKeyColumn);
+            //}
 
             await repositoryManager.approval.Execute(query, new Dictionary<string, object>
                 {
@@ -393,10 +399,7 @@ namespace OMS.Application.Services.Approval
             response.ErrorMessage = "";
             response.KeyValue = responceData.ApprovalRequestId ?? 0;
 
-
-
             response = await repositoryManager.approval.UpdateApprovalRequestsStatus(approvalRequestsDto);
-
             return response;
 
         }
@@ -408,13 +411,13 @@ namespace OMS.Application.Services.Approval
             WHERE {primaryKeyColumn} = @{primaryKeyColumn};";
             return query;
         }
-        private string BuildInsertQuery(string tableName, string fieldName, string primaryKeyColumn)
-        {
-            var query = $@"
-            INSERT INTO {tableName} ({primaryKeyColumn}, {fieldName})
-            VALUES (@{primaryKeyColumn}, @{fieldName});
-            "; return query;
-        }
+        //private string BuildInsertQuery(string tableName, string fieldName, string primaryKeyColumn)
+        //{
+        //    var query = $@"
+        //    INSERT INTO {tableName} ({primaryKeyColumn}, {fieldName})
+        //    VALUES (@{primaryKeyColumn}, @{fieldName});
+        //    "; return query;
+        //}
 
     }
 

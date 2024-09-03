@@ -4,13 +4,6 @@ namespace Common.Helper.ApprovalRules
 {
     public class ApprovalRuleHelper
     {
-        private readonly string _connectionString;
-
-        public ApprovalRuleHelper(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
-
         //public static Dictionary<string, object> ParseJson(string jsonData)
         //{
         //    var jsonDict = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonData);
@@ -19,8 +12,6 @@ namespace Common.Helper.ApprovalRules
         //        kvp => (object)kvp.Value.ToString()
         //    );
         //}
-
-
         public static Dictionary<string, object> FiledParseJson(string jsonData)
         {
             // Deserialize JSON to a dictionary with string keys and values of type object
@@ -86,23 +77,20 @@ namespace Common.Helper.ApprovalRules
 
             return parameters;
         }
-        public static string BuildUpdateQuery(string tableName, string fieldName, string primaryKeyColumn)
+
+        private string BuildUpdateQuery(string tableName, string fieldName, string primaryKeyColumn)
         {
-            return $@"
+            var query = $@"
             UPDATE {tableName}
-            SET {fieldName} = @{fieldName}
-            WHERE {primaryKeyColumn} = @{primaryKeyColumn};
-        ";
+            SET {fieldName} = @{fieldName}WHERE {primaryKeyColumn} = @{primaryKeyColumn};";
+            return query;
         }
-
-        public static string BuildInsertQuery(string tableName, string fieldName, string primaryKeyColumn)
+        private string BuildInsertQuery(string tableName, string fieldName, string primaryKeyColumn)
         {
-            return $@"
-            INSERT INTO {tableName} ({primaryKeyColumn}, {fieldName})
-            VALUES (@{primaryKeyColumn}, @{fieldName});
-        ";
+            var query = $@"
+            INSERT INTO {tableName} ({primaryKeyColumn}, {fieldName})VALUES (@{primaryKeyColumn}, @{fieldName});
+            "; return query;
         }
-
         public static bool ValidateField(Dictionary<string, object> newValues, string fieldName, HashSet<string> validColumns, out object newFieldValue)
         {
             var normalizedFieldName = fieldName.ToLower();
