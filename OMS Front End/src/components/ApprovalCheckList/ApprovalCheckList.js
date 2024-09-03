@@ -16,6 +16,8 @@ import {
 } from "../../app/services/ApprovalAPI";
 
 import "./ApprovalCheckList.scss";
+import DropDown from "../ui/customdropdown/Dropdown";
+import CustomDropdown from "../ui/customdropdown/CustomDropdown";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -41,7 +43,7 @@ const ApprovalCheckList = ({
   getContactById,
   getFinacialSettingById,
   isSupplierApproval,
-  isSubCustomer
+  isSubCustomer,
 }) => {
   //** State */
   const [checkListData, setCheckListData] = useState([]);
@@ -90,24 +92,24 @@ const ApprovalCheckList = ({
   }, [isAddUserCheckResponseSuccess, isAddUserCheckResponseData]);
 
   //** handle Change */
-  const handleCheckChange = (itemId, value) => {
-    const modifyData = checkListData.map((item) => {
-      const updatedCheckListItems = item.checkListRequest.map((childItem) =>
-        childItem.checklistItemId === itemId
-          ? { ...childItem, isApproved: value }
-          : childItem
-      );
-      const allChildChecked = updatedCheckListItems.every(
-        (childItem) => childItem.isApproved
-      );
-      return {
-        ...item,
-        isMainChecked: allChildChecked,
-        checkListRequest: updatedCheckListItems,
-      };
-    });
-    setCheckListData(modifyData);
-  };
+  // const handleCheckChange = (itemId, value) => {
+  //   const modifyData = checkListData.map((item) => {
+  //     const updatedCheckListItems = item.checkListRequest.map((childItem) =>
+  //       childItem.checklistItemId === itemId
+  //         ? { ...childItem, isApproved: value }
+  //         : childItem
+  //     );
+  //     const allChildChecked = updatedCheckListItems.every(
+  //       (childItem) => childItem.isApproved
+  //     );
+  //     return {
+  //       ...item,
+  //       isMainChecked: allChildChecked,
+  //       checkListRequest: updatedCheckListItems,
+  //     };
+  //   });
+  //   setCheckListData(modifyData);
+  // };
   const handleAddResponse = () => {
     const allChildChecked = checkListData.every((item) => item.isMainChecked);
     if (allChildChecked) {
@@ -128,56 +130,98 @@ const ApprovalCheckList = ({
     <div>
       <SidebarModel
         modalTitle="Approval Check List"
-        contentClass="content-85 basic-info-model"
+        contentClass="content-95 basic-info-model"
         onClose={onSidebarClose}
         modalTitleIcon={AppIcons.AddIcon}
-        isOpen={isModelOpen}>
+        isOpen={isModelOpen}
+      >
         {!isGetCheckListFetching ? (
-          <React.Fragment>
+          <>
             <div className="row mt-3">
-              <div className="col-md-8 info-scrollable">
+              
+              <div className="col-6 info-scrollable">
+              <div className="checklist-info">
+                <h5>Check List Information</h5>
+              </div>
                 <div className="row">
-                  {!isSubCustomer ?
-                    <div className="col-4 approval-list-card-basicinformation">
-                      <BasicInformation
+                  {!isSubCustomer ? (
+                    <div className="col-12 mb-3">
+                      <div className="approval-list-card-basicinformation">
+                        <BasicInformation
+                          isModelOpen={isModelOpen}
+                          mainId={mainId}
+                          getBasicInformationById={getBasicInformationById}
+                        />
+                      </div>
+                    </div>
+                  ) : null}
+                  <div className="col-12 mb-3">
+                    <div className="approval-list-card-addressinformation">
+                      <AddressInformation
+                        isSupplierApproval={isSupplierApproval}
                         isModelOpen={isModelOpen}
                         mainId={mainId}
-                        getBasicInformationById={getBasicInformationById}
+                        getAddressById={getAddressById}
+                        isSubCustomer={isSubCustomer}
                       />
                     </div>
-                    : null}
-                  <div className="col-8 approval-list-card-addressinformation">
-                    <AddressInformation
-                      isSupplierApproval={isSupplierApproval}
-                      isModelOpen={isModelOpen}
-                      mainId={mainId}
-                      getAddressById={getAddressById}
-                      isSubCustomer={isSubCustomer}
-                    />
                   </div>
-                  {!isSubCustomer ?
-                    <div className="col-12 approval-list-card-contact">
-                      <ContactInformation
-                        isSupplierApproval={isSupplierApproval}
-                        isModelOpen={isModelOpen}
-                        mainId={mainId}
-                        getContactById={getContactById}
-                      />
+                  {!isSubCustomer ? (
+                    <div className="col-12 mb-3">
+                      <div className="approval-list-card-contact">
+                        <ContactInformation
+                          isSupplierApproval={isSupplierApproval}
+                          isModelOpen={isModelOpen}
+                          mainId={mainId}
+                          getContactById={getContactById}
+                        />
+                      </div>
                     </div>
-                    : null}
-                  {!isSubCustomer ?
-                    <div className="col-12 approval-list-card-financial">
-                      <SettingInformation
-                        isSupplierApproval={isSupplierApproval}
-                        isModelOpen={isModelOpen}
-                        mainId={mainId}
-                        getFinacialSettingById={getFinacialSettingById}
-                      />
+                  ) : null}
+                  {!isSubCustomer ? (
+                    <div className="col-12 mb-3">
+                      <div className="approval-list-card-financial">
+                        <SettingInformation
+                          isSupplierApproval={isSupplierApproval}
+                          isModelOpen={isModelOpen}
+                          mainId={mainId}
+                          getFinacialSettingById={getFinacialSettingById}
+                        />
+                      </div>
                     </div>
-                    : null}
+                  ) : null}
+                </div>
+                <div className="row">
+                  <div className="col-md-12 my-3 mt-4">
+                    <div className="d-flex align-item-end justify-content-end">
+                      <div className="d-flex align-item-end">
+                        <Buttons
+                          buttonTypeClassName="theme-button"
+                          buttonText="Approve"
+                          isLoading={isAddUserCheckResponseLoading}
+                          onClick={handleAddResponse}
+                        />
+                        <Buttons
+                          buttonTypeClassName="dark-btn ml-5"
+                          buttonText="Cancel"
+                          onClick={onSidebarClose}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="col-md-4 d-flex flex-column justify-content-between approval-check-list">
+              <div className="col-6 right-document-view">
+                <div className="checklist-info">
+                  <h5>Documents</h5>
+                </div>
+                <div className="row">
+                  <div className="col-8">
+                    <CustomDropdown/>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="col-md-4 d-flex flex-column justify-content-between approval-check-list">
                 <div>
                   {checkListData.map((item) => (
                     <div className="checklist-section">
@@ -210,28 +254,10 @@ const ApprovalCheckList = ({
                     </div>
                   ))}
                 </div>
-                <div className="row">
-                  <div className="col-md-12 my-3 mt-4">
-                    <div className="d-flex align-item-end justify-content-end">
-                      <div className="d-flex align-item-end">
-                        <Buttons
-                          buttonTypeClassName="theme-button"
-                          buttonText="Approve"
-                          isLoading={isAddUserCheckResponseLoading}
-                          onClick={handleAddResponse}
-                        />
-                        <Buttons
-                          buttonTypeClassName="dark-btn ml-5"
-                          buttonText="Cancel"
-                          onClick={onSidebarClose}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                
+              </div> */}
             </div>
-          </React.Fragment>
+          </>
         ) : (
           <DataLoader />
         )}

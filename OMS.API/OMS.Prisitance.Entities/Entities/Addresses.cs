@@ -33,7 +33,7 @@ namespace OMS.Prisitance.Entities.Entities
         [Column("CountryId")]
         public short? CountryId { get; set; }
         [Column("ZipCode")]
-        public int? ZipCode { get; set; }
+        public string? ZipCode { get; set; }
         [Column("IsVerified")]
         public bool? IsVerified { get; set; }
         [Column("VerifiedBy")]

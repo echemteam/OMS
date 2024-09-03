@@ -871,10 +871,10 @@ a {
 
 .vertical-tab-card {
   .card {
-    height: calc(100vh - 255px);
+    height: calc(100vh - 265px);
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 235px);
+      height: calc(100vh - 240px);
     }
 
     .vertical-tab-inner {
@@ -928,10 +928,10 @@ a {
 
 .setting-tab-sec {
   .card {
-    height: calc(100vh - 255px);
+    height: calc(100vh - 265px);
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 235px);
+      height: calc(100vh - 240px);
     }
 
     .vertical-tab-inner {
@@ -1892,7 +1892,7 @@ a {
     height: calc(100vh - 335px);
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 295px);
+      height: calc(100vh - 290px);
     }
 
     .document-list-sec {
@@ -1901,7 +1901,7 @@ a {
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 295px);
+        height: calc(100vh - 290px);
       }
     }
   }
@@ -1973,6 +1973,26 @@ a {
     .css-qbdosj-Input {
       margin: 0;
     }
+  }
+}
+.supplier-document{
+  .document-section {
+    .card-body-sec {
+      height: calc(100vh - 315px);
+  
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 280px);
+      }
+  
+      .document-list-sec {
+        height: calc(100vh - 315px);
+  
+        @media only screen and (max-width: 1750px) {
+          height: calc(100vh - 280px);
+        }
+      }
+    }
+  
   }
 }
 
@@ -2070,7 +2090,20 @@ a {
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 290px);
+        height: calc(100vh - 300px);
+      }
+    }
+  }
+}
+.supplier-note{
+  .card {
+    .card-body-sec {
+      .note-card-sec {
+        height: calc(100vh - 325px);
+  
+        @media only screen and (max-width: 1750px) {
+          height: calc(100vh - 285px);
+        }
       }
     }
   }
@@ -2449,7 +2482,7 @@ input[type="checkbox"]:disabled {
         max-height: calc(100vh - 540px);
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 490px);
+          max-height: calc(100vh - 500px);
         }
       }
     }
@@ -2464,10 +2497,13 @@ input[type="checkbox"]:disabled {
 
     table {
       tbody {
-        max-height: calc(100vh - 365px);
+        max-height: calc(100vh - 355px);
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 330px);
+          max-height: calc(100vh - 325px);
+        }
+        @media only screen and (max-width: 1650px) {
+          max-height: calc(100vh - 320px);
         }
       }
     }
@@ -2479,7 +2515,7 @@ input[type="checkbox"]:disabled {
         th {
           &:nth-child(3) {
             display: flex;
-            justify-content: center;
+            justify-content: left;
           }
 
           &:nth-child(4) {
@@ -2495,7 +2531,7 @@ input[type="checkbox"]:disabled {
         td {
           &:nth-child(3) {
             display: flex;
-            justify-content: center;
+            justify-content: left;
           }
 
           &:nth-child(4) {
@@ -3443,7 +3479,7 @@ input[type="checkbox"]:disabled {
     position: relative;
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 300px);
+      height: calc(100vh - 305px);
     }
 
     .tab-header {

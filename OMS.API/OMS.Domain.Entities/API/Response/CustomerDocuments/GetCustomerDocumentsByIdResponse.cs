@@ -9,5 +9,6 @@
         public int? CustomerId { get; set; }
         public string? Attachment { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public bool IsArchive { get; set; }
     }
 }
