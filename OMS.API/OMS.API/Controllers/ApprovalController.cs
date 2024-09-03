@@ -75,7 +75,7 @@ namespace OMS.API.Controllers
         }
         [HttpPost("UpdateApprovalRequestsStatus")]
         public async Task<IActionResult> UpdateApprovalRequestsStatus(UpdateApprovalRequestsStatusRequest requestData)
-        {
+            {
             AddEntityDto<int> responseData = new();
             if (requestData != null)
             {

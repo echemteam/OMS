@@ -25,5 +25,8 @@ namespace OMS.Domain.Entities.Entity.Address
         public DateTime? DeletedAt { get; set; }
         [Column("DeletedBy")]
         public short? DeletedBy { get; set; }
+        public bool? IsPreferredShipping { get; set; }
+        public bool? IsPreferredBilling { get; set; }
+        public bool? IsShippingAndBilling { get; set; }
     }
 }
