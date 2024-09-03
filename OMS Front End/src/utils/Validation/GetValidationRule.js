@@ -97,6 +97,12 @@ const getValidationRule = (element, validation) => {
                 message: ErrorMessage.InvalidField.replace("{0}", "Number")
             }
             break;
+        case "validZipCode":
+            valObj = {
+                type: validation.type,
+                message: ErrorMessage.Invalidpostalcode
+            }
+            break;
         default:
             break;
     }

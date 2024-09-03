@@ -16,8 +16,8 @@ import {
   supplierDocumentTransformData,
 } from "../../../../../utils/TransformData/TransformAPIData";
 //** Service's */
-import SwalAlert from "../../../../../services/swalService/SwalService";
-import ToastService from "../../../../../services/toastService/ToastService";
+// import SwalAlert from "../../../../../services/swalService/SwalService";
+// import ToastService from "../../../../../services/toastService/ToastService";
 // import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 import FileViewer from "react-file-viewer";
@@ -31,16 +31,16 @@ const DocumentList = forwardRef(
     keyId,
     isSupplier,
     downloadDocument,
-    deleteDocumentsById,
+    // deleteDocumentsById,
     getDocumentsById,
     childRef,
     SecurityKey,
     isEditablePage,
   }) => {
     //** State */
-    const { confirm } = SwalAlert();
+    // const { confirm } = SwalAlert();
     const [documentListData, setDocumentListData] = useState([]);
-    const [showDeleteButton, setShowDeleteButton] = useState(true);
+    // const [showDeleteButton, setShowDeleteButton] = useState(true);
     const [showDownalodButton, setShowDownalodButton] = useState(true);
     const [selectedDocument, setSelectedDocument] = useState(null);
     const [getFileType, setGetFileType] = useState([]);
@@ -52,8 +52,8 @@ const DocumentList = forwardRef(
      * This hook dynamically sets the API call based on the module (customer or supplier).
      * The API endpoint and parameters are configured within the SupplierDocumentDetail OR CustomerDocumentDetail component.
      */
-    const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] =
-      deleteDocumentsById();
+    // const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] =
+    //   deleteDocumentsById();
     const [
       getList,
       { isFetching: isListFetching, isSuccess: isListSucess, data: isListData },
@@ -80,9 +80,9 @@ const DocumentList = forwardRef(
         );
         if (hasDeletePermission) {
           if (hasDeletePermission.hasAccess === true) {
-            setShowDeleteButton(true);
+            // setShowDeleteButton(true);
           } else {
-            setShowDeleteButton(false);
+            // setShowDeleteButton(false);
           }
         }
         if (hasDownalodPermission) {
@@ -141,12 +141,12 @@ const DocumentList = forwardRef(
       }
     }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
-    useEffect(() => {
-      if (isDeleteSucess && isDeleteData) {
-        ToastService.success(isDeleteData.errorMessage);
-        onGetData();
-      }
-    }, [isDeleteSucess, isDeleteData]);
+    // useEffect(() => {
+    //   if (isDeleteSucess && isDeleteData) {
+    //     ToastService.success(isDeleteData.errorMessage);
+    //     onGetData();
+    //   }
+    // }, [isDeleteSucess, isDeleteData]);
 
     const handleDocumentAction = (action, fileName, name) => {
       setDownloadFileName(name)
@@ -167,18 +167,18 @@ const DocumentList = forwardRef(
       }
     };
 
-    const handleDelete = (documentId) => {
-      confirm(
-        "Delete?",
-        "Are you sure you want to Delete?",
-        "Delete",
-        "Cancel"
-      ).then((confirmed) => {
-        if (confirmed) {
-          Delete(documentId);
-        }
-      });
-    };
+    // const handleDelete = (documentId) => {
+    //   confirm(
+    //     "Delete?",
+    //     "Are you sure you want to Delete?",
+    //     "Delete",
+    //     "Cancel"
+    //   ).then((confirmed) => {
+    //     if (confirmed) {
+    //       Delete(documentId);
+    //     }
+    //   });
+    // };
 
     const determineFileType = (fileName) => {
       const extension = fileName.split(".").pop().toLowerCase();
