@@ -1,18 +1,12 @@
 ﻿using OMS.Domain.Entities.API.Response.Dictionary;
-using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.CustomerNotes;
 using OMS.Domain.Entities.Entity.Dictionary;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
 using OMS.Shared.Entities.CommonEntity;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace OMS.Domain.Repository.Implementation
 {
@@ -22,6 +16,7 @@ namespace OMS.Domain.Repository.Implementation
         const string ADDEDITDICTIONARY = "AddEditDictionary";
         const string GETALLDICTIONARY = "GetAllDictionary";
         const string GETDICTIONARYBYDICTIONARYID = "GetDictionaryByDictioryId";
+        const string DELETEDICTIONARY = "DeleteDictionary";
         #endregion
         public DictionaryRepository(DapperContext dapperContext) : base(dapperContext)
         {
@@ -34,9 +29,10 @@ namespace OMS.Domain.Repository.Implementation
                 addEditDictonaryDto.DictionaryId,
                 addEditDictonaryDto.Key,
                 addEditDictonaryDto.Value,
+                addEditDictonaryDto.CreatedBy,
             }, CommandType.StoredProcedure);
         }
-        #endregion
+       
 
         public async Task<EntityList<DictionaryListResponse>> GetAllDictionary(ListEntityRequest<BaseFilter> requestData)
         {
@@ -57,6 +53,15 @@ namespace OMS.Domain.Repository.Implementation
             }, CommandType.StoredProcedure);
             return dictionary;
         }
+        public async Task<AddEntityDto<int>> DeleteDictionary(int dictionaryId, short deletedBy)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(DELETEDICTIONARY, new
+            {
+                dictionaryId ,
+                deletedBy
+            }, CommandType.StoredProcedure);
+        }
+        #endregion
 
     }
 }
