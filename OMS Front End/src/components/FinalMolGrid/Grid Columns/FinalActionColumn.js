@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import { AppIcons } from "../../../data/appIcons";
-import Image from "../../../components/image/Image";
 import Tooltip from "../../ui/tooltip/Tooltip";
 import Iconify from "../../ui/iconify/Iconify";
 

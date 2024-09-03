@@ -61,6 +61,7 @@ namespace OMS.Domain.Repository
         IOrderAddressRepository _orderAddressRepository;
         IOrderContactRepository _orderContactRepository;
         IOrderItemRepository _orderItemRepository;
+        IDictionaryRepository _dictionaryRepository;
 
         public ITestRepository test
         {
@@ -622,6 +623,18 @@ namespace OMS.Domain.Repository
                     _orderItemRepository = new OrderItemRepository(_context);
                 }
                 return _orderItemRepository;
+            }
+
+        }
+        public IDictionaryRepository dictionaryRepository
+        {
+            get
+            {
+                if (_dictionaryRepository == null)
+                {
+                    _dictionaryRepository = new DictionaryRepository(_context);
+                }
+                return _dictionaryRepository;
             }
 
         }

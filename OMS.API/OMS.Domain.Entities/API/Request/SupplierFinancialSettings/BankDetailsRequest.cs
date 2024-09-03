@@ -9,7 +9,7 @@
         public int? CityId { get; set; }
         public int? StateId { get; set; }
         public short? CountryId { get; set; }
-        public int? ZipCode { get; set; }
+        public string? ZipCode { get; set; }
         public string? AccountType { get; set; }
         public string? AccountNumber { get; set; }
         public string? RoutingNumber { get; set; }

@@ -157,7 +157,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             setDropDownOptionField(allGetAllIncotermData, 'incotermId', 'incotermName', supplierBasicData, 'incotermId');
         }
     }, [isGetAllGroupTypesSucess, allGetAllGroupTypesData, isGetAllUserSucess, allGetAllUserData, isGetAllCountriesSucess, allGetAllCountriesData,
-        isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllSupplierTypeSucess, allGetAllSupplierTypeData , isGetAllIncotermSucess , allGetAllIncotermData]);
+        isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllSupplierTypeSucess, allGetAllSupplierTypeData, isGetAllIncotermSucess, allGetAllIncotermData]);
 
     useEffect(() => {
         if (isGetSupplierBasicInformationById && GetSupplierBasicInformationByIdData && !isGetSupplierBasicInformationByIdFetching) {
@@ -293,8 +293,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const trimCustomerName = data.replace(/\s+/g, '');
-            setSupplierName(trimCustomerName);
+            // const trimCustomerName = data.replace(/\s+/g, '');
+            setSupplierName(data);
         }
     };
 
@@ -317,15 +317,15 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             ToastService.warning('Supplier name is invalid.');
             return;
         }
-        const trimmedName = supplierName.trim();
+        // const trimmedName = supplierName.trim();
 
-        if (trimmedName.length < 3) {
+        if (supplierName.length < 3) {
             ToastService.warning('Please enter at least three characters.');
             return;
         }
 
         if (parentRef.current) {
-            parentRef.current.callChildFunction(trimmedName);
+            parentRef.current.callChildFunction(supplierName);
         }
     };
 

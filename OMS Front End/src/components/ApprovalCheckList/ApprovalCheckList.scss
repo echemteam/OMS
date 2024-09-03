@@ -7,11 +7,11 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
-  margin: 10px;
   box-sizing: border-box;
-  margin-top: 0px;
+
   h5 {
     font-size: var(--commonFont-extraLarge);
+    font-weight: 700;
     color: var(--themeColor);
     margin-bottom: var(--commonFont-extraLarge);
     width: 100%;
@@ -30,7 +30,10 @@
     }
   }
 }
+
 .approval-list-card-addressinformation {
+  position: relative;
+
   h6:nth-child(1) {
     font-size: var(--commonFont-medium);
     color: var(--textGreyColor);
@@ -48,6 +51,7 @@
       background-color: var(--themeColor);
       border-radius: 50%;
     }
+
     &::after {
       content: "";
       position: absolute;
@@ -59,42 +63,36 @@
       top: 0px;
     }
   }
+
   h6:nth-child(2) {
     font-size: var(--commonFont-average);
     margin-bottom: -3px;
     font-weight: 400;
     margin-left: 20px;
   }
+
   p:nth-of-type(1) {
     margin-left: 20px;
     font-size: var(--commonFont-average);
     margin-bottom: 5px;
   }
+
   p:nth-of-type(2) {
     margin-left: 20px;
     font-size: var(--commonFont-average);
   }
-}
 
-.approval-list-card-basicinformation {
-  width: calc(30% - 20px);
-}
-.approval-list-card-addressinformation {
-  width: calc(70% - 20px);
-}
-.approval-list-card-contact,
-.approval-list-card-financial {
-  width: calc(100% - 20px);
-  margin-top: 10px;
 }
 
 .info-scrollable {
-  max-height: calc(100vh - 70px);
+  height: 100vh;
+  max-height: calc(100vh - 105px);
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
   padding-left: 10px;
-  
+  padding: 5px 20px;
+
   &::after {
     content: "";
     position: absolute;
@@ -107,14 +105,38 @@
 
 }
 
+.customer-all-details {
+  .right-document-view{
+    padding: 5px 20px;
+  .css-1hb7zxy-IndicatorsContainer{
+    height: auto !important;
+    
+  }
+  .css-1u9des2-indicatorSeparator{
+    display: block !important;
+  }
+  .css-b62m3t-container .css-t3ipsp-control .css-15lsz6c-indicatorContainer,
+  .css-b62m3t-container .css-13cymwt-control .css-1xc3v61-indicatorContainer{
+    color: var(--textColor) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .css-1nmdiq5-menu{
+    width: 100 !important;
+  }
+}
+
+}
 .approval-list-card-contact {
   h5 {
     margin-left: -5pxx;
     padding-left: 30px;
+
     &::before {
       left: 20px;
     }
   }
+
   h6:first-child {
     font-size: var(--commonFont-medium);
     color: var(--textGreyColor);
@@ -126,12 +148,13 @@
       content: "";
       position: absolute;
       left: -17px;
-      top: 3px;
-      width: 8px;
-      height: 8px;
+      top: 4px;
+      width: 7px;
+      height: 7px;
       background-color: var(--themeColor);
       border-radius: 50%;
     }
+
     &::after {
       content: "";
       position: absolute;
@@ -143,6 +166,7 @@
       top: 0px;
     }
   }
+
   h6 {
     font-size: var(--commonFont-average);
     margin-bottom: 5px;
@@ -151,11 +175,31 @@
     display: flex;
     position: relative;
     display: flex;
+
     p {
       margin-left: 8px;
       font-weight: 400;
       color: var(--textColor);
       margin-bottom: 0;
+    }
+  }
+
+  .email-primary {
+    display: flex;
+    align-items: flex-start;
+
+    .email-address-applist {
+      font-size: var(--commonFont-average);
+      color: inherit !important;
+      text-transform: none;
+
+      &::before {
+        display: none;
+      }
+
+      &::after {
+        display: none;
+      }
     }
   }
 }
@@ -194,7 +238,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 17px;
+    min-height: 17px;
+    min-width: 17px;
+    max-height: 17px;
+    max-width: 17px;
 
     @media only screen and (max-width: 1750px) {
       padding: 2px;
@@ -205,6 +252,7 @@
 
 .phone-number {
   color: var(--themeColor);
+
   &::before {
     content: "\f095";
     font-family: FontAwesome;
@@ -215,12 +263,14 @@
 .email {
   margin-top: 10px;
   color: var(--themeColor);
+
   &::before {
     content: "\f0e0";
     font-family: FontAwesome;
     margin-right: 5px;
   }
 }
+
 .email-address-applist {
   margin-left: 40px !important;
   margin-bottom: 10px !important;
@@ -251,4 +301,22 @@
 
 .approval-check-list {
   min-height: calc(100vh - 70px);
+}
+
+.card-top-title{
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--commonFont-extraLarge);
+  padding-left: 0;
+  h5{
+    margin-bottom: 0;
+
+  }
+}
+
+.checklist-info{
+  h5{
+    font-weight: 700;
+  }
+  
 }

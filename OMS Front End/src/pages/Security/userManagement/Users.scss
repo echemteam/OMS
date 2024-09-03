@@ -12,8 +12,11 @@
       }
     }
     tbody {
-      max-height: calc(100vh - 320px);
+      max-height: calc(100vh - 330px);
       @media only screen and (max-width: 1750px) {
+        max-height: calc(100vh - 300px);
+      }
+      @media only screen and (max-width: 1650px) {
         max-height: calc(100vh - 290px);
       }
       tr {

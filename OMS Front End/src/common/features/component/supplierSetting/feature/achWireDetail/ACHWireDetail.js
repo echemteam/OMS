@@ -16,8 +16,7 @@ import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../
 import { FieldSettingType } from "../../../../../../utils/Enums/commonEnums";
 import { bankAddressFormData } from "../../config/BankAddressForm.data";
 import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
-import { useValidateAndAddApprovalRequests } from "../../../../../../utils/CustomHook/useValidateAndAddApproval";
-import { FunctionalitiesName } from "../../../../../../utils/Enums/ApprovalFunctionalities";
+
 
 const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) => {
   const aCHWireFormRef = useRef();
@@ -25,7 +24,6 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
   const bankFormRef = useRef();
   // const registeredFormRef = useRef();
   const [achWireData, setAchWireData] = useState(achWireFormData);
-  const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
 
   const [getAllCountries, { isSuccess: isGetAllCountriesSuccess, isFetching: isGetAllCountriesFetching, data: allGetAllCountriesData }] = useLazyGetAllCountriesQuery();
   const [getAllCities, { isSuccess: isGetAllCitiesSuccess, isFetching: isGetAllCitiesFetching, data: allGetAllCitiesData }] = useLazyGetAllCitiesQuery();
@@ -203,21 +201,8 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
         },
         supplierId
       }
-      let intialState = {
-        ...formsupplierFinancialSettings,
-        ...formBankAddress,
-        ...formOtherDetail,
-        ...formAchWireOtherDetail
-      }
-      await handleApprovalRequest(req, intialState, FunctionalitiesName.SUPPLIERADDUPDATEFINANCIALSETTING);
-      //addEditACHWire(req);
+      addEditACHWire(req);
     }
-  };
-
-  const handleApprovalRequest = async (newValue, oldValue, functionalityName) => {
-    const request = { newValue, oldValue, isFunctional: true, functionalityName };
-    const modifyData = await ValidateRequestByApprovalRules(request);
-    if (modifyData.newValue) getACHWireBySupplierId(supplierId)
   };
 
   if (isGetACHWireBySupplierIdFetching) {

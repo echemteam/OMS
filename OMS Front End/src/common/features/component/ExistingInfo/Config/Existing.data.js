@@ -7,7 +7,7 @@ export const basicInfoData = {
             name: "Name",
             fieldName: "name",
             colStyle: {
-                width: "15%",
+                width: "25%",
             },
             // allowShort: true,
         },
@@ -15,7 +15,7 @@ export const basicInfoData = {
             name: "Tax Id",
             fieldName: "taxId",
             colStyle: {
-                width: "15%",
+                width: "10%",
             },
             // allowShort: true,
         },
@@ -50,7 +50,7 @@ export const basicInfoData = {
             allowShort: false,
             colType: GridColumnType.LABLE,
             colStyle: {
-                width: "15%",
+                width: "10%",
             },
             colSettings: {
                 valueField: "status",
