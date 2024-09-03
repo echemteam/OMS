@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types"
 import CustomDropdown from "./CustomDropdown";
-import { options } from "./data";
 
 const DropDown = (props) => {
 
