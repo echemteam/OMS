@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect } from "react";
 import { securityKey } from "../../../../data/SecurityKey";
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
