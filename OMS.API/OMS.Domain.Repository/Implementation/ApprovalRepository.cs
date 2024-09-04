@@ -2,6 +2,7 @@
 using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
@@ -23,6 +24,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETAPPROVALREQUESTSBYAPPROVALREQUESTID = "GetApprovalRequestsByApprovalRequestId";
         const string GETAPPROVALCONFIGURATION = "GetApprovalConfiguration";
         const string UPDATEAPPROVALREQUESTSSTATUS = "UpdateApprovalRequestsStatus";
+        const string CHECKFIELDVALUEEXISTS = "CheckFieldValueExists";
         #endregion
 
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
@@ -105,6 +107,14 @@ namespace OMS.Domain.Repository.Implementation
                 approvalRequestId
             }, CommandType.StoredProcedure);
             return approvalRequestsDetails;
+        }
+        public async Task<CheckFieldValueExistsResponse> CheckFieldValueExists(string fieldName, string fieldValue)
+        {
+            return await _context.GetSingleAsync<CheckFieldValueExistsResponse>(CHECKFIELDVALUEEXISTS, new
+            {
+                fieldName,
+                fieldValue
+            }, CommandType.StoredProcedure);
         }
         public async Task<AddEntityDto<int>> UpdateApprovalRequestsStatus(ApprovalRequestsDto requestData)
         {

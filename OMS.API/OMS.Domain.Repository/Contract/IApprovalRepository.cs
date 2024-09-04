@@ -15,6 +15,7 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDto<int>> AddApprovalRequests(ApprovalRequestsDto requestData);
         Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId);
         Task<AddEntityDto<int>> UpdateApprovalRequestsStatus(ApprovalRequestsDto requestData);
+        Task<CheckFieldValueExistsResponse> CheckFieldValueExists(string fieldName, string fieldValue);
         Task<string> GetPrimaryKeyColumnAsync(string tableName);
         Task Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text);
         Task<IEnumerable<string>> GetTableColumnsAsync(string tableName);

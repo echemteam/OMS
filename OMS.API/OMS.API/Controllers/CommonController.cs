@@ -302,5 +302,12 @@ namespace OMS.API.Controllers
             List<GetAllIncotermResponse> responseData = await _serviceManager.commonServices.GetAllIncoterm().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+
+        [HttpGet("GetAllDocumentByOwnerId")]
+        public async Task<IActionResult> GetAllDocumentByOwnerId(int ownerId, short ownerType)
+        {
+            List<GetAllDocumentByOwnerIdResponse> responseData = await _serviceManager.commonServices.GetAllDocumentByOwnerId(ownerId,ownerType).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

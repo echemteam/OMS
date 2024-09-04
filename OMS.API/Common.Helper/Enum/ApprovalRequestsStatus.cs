@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Common.Helper.Enum
+﻿namespace Common.Helper.Enum
 {
-    public enum ApprovalRequestsStatus
+    public static class ApprovalRequestsStatus
     {
-        Pending,
-        Accept
+        public const string Pending = "Pending";
+        public const string Accept = "Accept";
+        public const string Reject = "Reject";
     }
 }
