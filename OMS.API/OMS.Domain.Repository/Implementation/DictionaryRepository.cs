@@ -14,7 +14,7 @@ namespace OMS.Domain.Repository.Implementation
     {
         #region SP Name
         const string ADDEDITDICTIONARY = "AddEditDictionary";
-        const string GETALLDICTIONARY = "GetAllDictionary";
+        const string GETDICTIONARY = "GetDictionary";
         const string GETDICTIONARYBYDICTIONARYID = "GetDictionaryByDictioryId";
         const string DELETEDICTIONARY = "DeleteDictionary";
         #endregion
@@ -34,9 +34,9 @@ namespace OMS.Domain.Repository.Implementation
         }
        
 
-        public async Task<EntityList<DictionaryListResponse>> GetAllDictionary(ListEntityRequest<BaseFilter> requestData)
+        public async Task<EntityList<DictionaryListResponse>> GetDictionary(ListEntityRequest<BaseFilter> requestData)
         {
-            return await _context.GetListSP<DictionaryListResponse>(GETALLDICTIONARY, new
+            return await _context.GetListSP<DictionaryListResponse>(GETDICTIONARY, new
             {
                 requestData.Pagination?.PageNumber,
                 requestData.Pagination?.PageSize,

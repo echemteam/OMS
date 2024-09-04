@@ -9,7 +9,7 @@ namespace OMS.Application.Services.Dictionary
     public interface IDictionaryServices
     {
         Task<AddEntityDto<int>> AddEditDictionary(AddEditDictonaryRequest requestData,short CurrentUserId);
-        Task<EntityList<DictionaryListResponse>> GetAllDictionary(ListEntityRequest<BaseFilter> requestData);
+        Task<EntityList<DictionaryListResponse>> GetDictionary(ListEntityRequest<BaseFilter> requestData);
         Task<GetDictionaryResponse> GetDictionaryByDictonaryId(int dictionaryId);
         Task<AddEntityDto<int>> DeleteDictionary(int dictionaryId , short CurrentUserId);
     }
