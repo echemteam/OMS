@@ -113,12 +113,12 @@ namespace OMS.Application.Services.Approval
                 return await UpdateApprovalStatus(approvalRequestsDto);
             }
 
-            if (responceData.IsFunctional == true || responceData.NewValue == null || responceData.EventName == null)
+            if (responceData.IsFunctional == true && (responceData.NewValue != null || responceData.EventName != null))
             {
                 try
                 {
                     response = await HandleEvent(responceData, currentUserId);
-                    if (response.KeyValue > 0)
+                    if (response.KeyValue > 0 || response.ErrorMessage != "")
                     {
                         approvalRequestsDto.Status = ApprovalRequestsStatus.Accept;
                     }
@@ -136,8 +136,8 @@ namespace OMS.Application.Services.Approval
             }
             else
             {
-                response = await HandleFieldApproval(responceData, approvalRequestsDto,requestData);
-                if (response.KeyValue > 0)
+                response = await HandleFieldApproval(responceData, approvalRequestsDto, requestData);
+                if (response.KeyValue > 0 || response.ErrorMessage != "")
                 {
                     approvalRequestsDto.Status = ApprovalRequestsStatus.Accept;
                 }
