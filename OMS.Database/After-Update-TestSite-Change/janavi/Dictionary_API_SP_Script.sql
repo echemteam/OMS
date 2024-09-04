@@ -1,6 +1,6 @@
 USE [OmsLite]
 GO
-/****** Object:  StoredProcedure [dbo].[AddEditDictionary]    Script Date: 03-09-2024 10:16:56 ******/
+/****** Object:  StoredProcedure [dbo].[AddEditDictionary]    Script Date: 04-09-2024 11:37:47 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -15,7 +15,15 @@ AS
 BEGIN
 	
 	SET NOCOUNT ON;
-	    BEGIN TRY  
+	    BEGIN TRY 
+		
+       IF EXISTS (SELECT 1 FROM [dbo].[Dictionary] WHERE [Key] = @Key AND  DeletedAt IS NULL AND DeletedBy IS NULL)
+        BEGIN
+            SELECT CAST(0 AS INT) AS KeyValue, 'Key EXISTS ' AS ErrorMessage;
+            RETURN;
+        END
+
+ 
 	 DECLARE @keyId AS INT;        
 	   IF @DictionaryId > 0        
         BEGIN        
@@ -61,7 +69,7 @@ BEGIN
             SELECT @keyId AS KeyValue,           
             'Dictionary Added' AS ErrorMessage;        
         END        
-        
+    
                
     END TRY                            
     BEGIN CATCH                              
@@ -73,7 +81,7 @@ BEGIN
  
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteDictionary]    Script Date: 03-09-2024 10:16:56 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteDictionary]    Script Date: 04-09-2024 11:37:47 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -115,13 +123,13 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetAllDictionary]    Script Date: 03-09-2024 10:16:56 ******/
+/****** Object:  StoredProcedure [dbo].[GetDictionary]    Script Date: 04-09-2024 11:37:47 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 --GetAllDictionary 1,25,'','',100
-CREATE PROCEDURE [dbo].[GetAllDictionary]
+CREATE PROCEDURE [dbo].[GetDictionary]
  @PageNumber INT = 1,                  
     @PageSize INT = 25,                  
     @SearchText NVARCHAR(200),  
@@ -173,7 +181,7 @@ BEGIN
 	
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetDictionaryByDictioryId]    Script Date: 03-09-2024 10:16:56 ******/
+/****** Object:  StoredProcedure [dbo].[GetDictionaryByDictioryId]    Script Date: 04-09-2024 11:37:47 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

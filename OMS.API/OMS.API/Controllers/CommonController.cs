@@ -302,5 +302,18 @@ namespace OMS.API.Controllers
             List<GetAllIncotermResponse> responseData = await _serviceManager.commonServices.GetAllIncoterm().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+
+        [HttpGet("GetAllDocumentByOwnerId")]
+        public async Task<IActionResult> GetAllDocumentByOwnerId(int ownerId, short ownerType)
+        {
+            List<GetAllDocumentByOwnerIdResponse> responseData = await _serviceManager.commonServices.GetAllDocumentByOwnerId(ownerId,ownerType).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+        [HttpGet("GetAllFunctionalityEventByFunctionalityId")]
+        public async Task<IActionResult> GetAllFunctionalityEventByFunctionalityId(int functionalityId)
+        {
+            List<GetAllFunctionalityEventByFunctionalityIdResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalityEventByFunctionalityId(functionalityId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

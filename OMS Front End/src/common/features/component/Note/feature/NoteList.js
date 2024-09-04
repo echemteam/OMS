@@ -81,12 +81,10 @@ const NoteList = forwardRef(
                     <div className="card-content">
                       <div className="bottom-info">
                         <div className="note-text editor-section">
-                          <div
-                            dangerouslySetInnerHTML={{ __html: notes.note }}
-                          ></div>
+                          <div dangerouslySetInnerHTML={{ __html: notes.note }}></div>
                           <div className="history-btn">
                             <Iconify
-                              icon="mdi:ellipsis-vertical"
+                              icon="iconamoon:history-bold"
                               className="history-btn"
                             />
                             <div className="btn-dropdown-menu">
@@ -125,7 +123,7 @@ const NoteList = forwardRef(
         )}
         <SidebarModel
           modalTitle="History"
-          contentClass="content-60"
+          contentClass="content-50"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}

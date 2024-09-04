@@ -49,6 +49,8 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLCONTACTSBYCUSTOMERIDANDCONTACTTYPEID = "GetAllContactsByCustomerIdAndContactTypeId";
         const string GETALLORDERMETHOD = "GetAllOrderMethod";
         const string GETALLINCOTERM = "GetAllIncoterm";
+        const string GETALLDOCUMENTBYOWNERID = "GetAllDocumentByOwnerId";
+        const string GETALLFUNCTIONALITYEVENTBYFUNCTIONALITYID = "GetAllFunctionalityEventByFunctionalityId";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -270,6 +272,25 @@ namespace OMS.Domain.Repository.Implementation
         public async Task<List<GetAllIncotermResponse>> GetAllIncoterm()
         {
             return await _context.GetList<GetAllIncotermResponse>(GETALLINCOTERM, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<List<GetAllDocumentByOwnerIdResponse>> GetAllDocumentByOwnerId(int ownerId, short ownerType)
+        {
+            List<GetAllDocumentByOwnerIdResponse> getAllDocumentByOwnerIdResponse = await _context.GetList<GetAllDocumentByOwnerIdResponse>(GETALLDOCUMENTBYOWNERID, new
+            {
+                ownerId,
+                ownerType
+            }, commandType: CommandType.StoredProcedure);
+            return getAllDocumentByOwnerIdResponse;
+        }
+
+        public async Task<List<GetAllFunctionalityEventByFunctionalityIdResponse>> GetAllFunctionalityEventByFunctionalityId(int functionalityId)
+        {
+            List<GetAllFunctionalityEventByFunctionalityIdResponse> getAllDocumentByOwnerIdResponse = await _context.GetList<GetAllFunctionalityEventByFunctionalityIdResponse>(GETALLFUNCTIONALITYEVENTBYFUNCTIONALITYID, new
+            {
+                functionalityId
+            }, commandType: CommandType.StoredProcedure);
+            return getAllDocumentByOwnerIdResponse;
         }
     }
 }
