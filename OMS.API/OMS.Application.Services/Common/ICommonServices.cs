@@ -46,5 +46,6 @@ namespace OMS.Application.Services.Common
         Task<List<GetAllOrderMethodResponse>> GetAllOrderMethod();
         Task<List<GetAllIncotermResponse>> GetAllIncoterm();
         Task<List<GetAllDocumentByOwnerIdResponse>> GetAllDocumentByOwnerId(int ownerId, short ownerType);
+        Task<List<GetAllFunctionalityEventByFunctionalityIdResponse>> GetAllFunctionalityEventByFunctionalityId(int functionalityId);
     }
 }

@@ -34,6 +34,7 @@ namespace OMS.Domain.Repository.Implementation
                 addEditApprovalConfiguration.RuleName,
                 addEditApprovalConfiguration.ModuleId,
                 addEditApprovalConfiguration.FunctionalityId,
+                addEditApprovalConfiguration.FunctionalityEventId,
                 addEditApprovalConfiguration.FunctionalitiesFieldId,
                 addEditApprovalConfiguration.ApproverRoleId,
                 addEditApprovalConfiguration.ApprovalAction

@@ -50,6 +50,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLORDERMETHOD = "GetAllOrderMethod";
         const string GETALLINCOTERM = "GetAllIncoterm";
         const string GETALLDOCUMENTBYOWNERID = "GetAllDocumentByOwnerId";
+        const string GETALLFUNCTIONALITYEVENTBYFUNCTIONALITYID = "GetAllFunctionalityEventByFunctionalityId";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -279,6 +280,15 @@ namespace OMS.Domain.Repository.Implementation
             {
                 ownerId,
                 ownerType
+            }, commandType: CommandType.StoredProcedure);
+            return getAllDocumentByOwnerIdResponse;
+        }
+
+        public async Task<List<GetAllFunctionalityEventByFunctionalityIdResponse>> GetAllFunctionalityEventByFunctionalityId(int functionalityId)
+        {
+            List<GetAllFunctionalityEventByFunctionalityIdResponse> getAllDocumentByOwnerIdResponse = await _context.GetList<GetAllFunctionalityEventByFunctionalityIdResponse>(GETALLFUNCTIONALITYEVENTBYFUNCTIONALITYID, new
+            {
+                functionalityId
             }, commandType: CommandType.StoredProcedure);
             return getAllDocumentByOwnerIdResponse;
         }

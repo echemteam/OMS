@@ -201,5 +201,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllDocumentByOwnerId(ownerId, ownerType);
         }
+        public Task<List<GetAllFunctionalityEventByFunctionalityIdResponse>> GetAllFunctionalityEventByFunctionalityId(int functionalityId)
+        {
+            return repositoryManager.commonRepository.GetAllFunctionalityEventByFunctionalityId(functionalityId);
+        }
     }
 }
