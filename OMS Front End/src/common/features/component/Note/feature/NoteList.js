@@ -12,6 +12,7 @@ import Iconify from "../../../../../components/ui/iconify/Iconify";
 import { Link } from "react-router-dom";
 import TimeLine from "../../../../../components/ui/timeline/TimeLine";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
+import Tooltip from "../../../../../components/ui/tooltip/Tooltip";
 
 const NoteList = forwardRef(
   ({ keyId, handleEditClick, onGetByIdNotes, showEditIcon, listRef }) => {
@@ -81,15 +82,18 @@ const NoteList = forwardRef(
                     <div className="card-content">
                       <div className="bottom-info">
                         <div className="note-text editor-section">
-                          <div dangerouslySetInnerHTML={{ __html: notes.note }}></div>
-                          <div className="history-btn">
+                          <div
+                            dangerouslySetInnerHTML={{ __html: notes.note }}
+                          ></div>
+                          <div
+                            className="history-btn"
+                            onClick={handleToggleModal}
+                          >
                             <Iconify
                               icon="iconamoon:history-bold"
                               className="history-btn"
                             />
-                            <div className="btn-dropdown-menu">
-                              <Link onClick={handleToggleModal}>History</Link>
-                            </div>
+                            <Tooltip text="History"/>
                           </div>
                         </div>
                         <div className="card-notes ">

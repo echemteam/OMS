@@ -115,6 +115,7 @@ a {
 .mt-0 {
   margin-top: 0;
 }
+
 // Margin-top
 .mt-1 {
   margin-top: 0.25rem;
@@ -2160,47 +2161,15 @@ a {
   cursor: pointer;
   position: relative;
 
-  .btn-dropdown-menu {
-    background: var(--whiteColor);
-    border-radius: 5px;
-    border: 1px solid #f2f4f6;
-    z-index: 1;
-    box-shadow: 0px 0px 40px -9px #6a6a95;
-    padding: 10px;
-    min-width: 100px;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    display: none;
+  &:hover {
 
-    &::before {
-      content: "";
-      width: 0;
-      height: 0;
-      border-left: 7px solid transparent;
-      border-right: 7px solid transparent;
-      border-bottom: 10px solid var(--whiteColor);
-      position: absolute;
-      top: -7px;
-      right: 7px;
-    }
-
-    a {
-      color: var(--textColor);
-      transition: 0.5s all;
-      font-weight: 600;
-
-      &:hover {
-        color: var(--themeColor);
-      }
-    }
-
-  }
-  &:hover{
-    .btn-dropdown-menu{
+    .custom-tooltip {
+      left: -12px;
       display: block;
+      visibility: visible;
     }
   }
+
 }
 
 .supplier-note {
@@ -3852,13 +3821,16 @@ input[type="checkbox"]:disabled {
       overflow: hidden;
       overflow-y: auto;
       transition: 0.5s all;
+
       @media only screen and (max-width: 1750px) {
         height: calc(100vh - 120px);
       }
+
       .organiazation-history .main-card {
         max-height: calc(100vh - 165px);
+
         @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 145px);
+          max-height: calc(100vh - 145px);
         }
       }
     }
