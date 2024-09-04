@@ -896,6 +896,7 @@ a {
     }
   }
 }
+
 .sidebar-model {
   .card {
     height: auto;
@@ -1027,8 +1028,7 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {
-      }
+      .tab-body-section {}
     }
 
     &.vertical-tab {
@@ -1142,8 +1142,7 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {
-        }
+        .tab-sub-body-section {}
       }
     }
   }
@@ -1218,6 +1217,7 @@ a {
     border-bottom-right-radius: 0 !important;
     border-top-right-radius: 0 !important;
     height: 31px !important;
+
     .css-1hb7zxy-IndicatorsContainer {
       margin: auto;
     }
@@ -1383,6 +1383,7 @@ a {
             width: 82%;
             display: flex;
             flex-direction: column;
+
             @media only screen and (max-width: 1750px) {
               width: 75%;
             }
@@ -1512,11 +1513,9 @@ a {
           display: flex;
           align-items: center;
 
-          .email-sec {
-          }
+          .email-sec {}
 
-          .contact-sec {
-          }
+          .contact-sec {}
         }
 
         .contact-type {
@@ -1597,8 +1596,7 @@ a {
               color: var(--themeColor);
             }
 
-            @media only screen and (max-width: 1750px) {
-            }
+            @media only screen and (max-width: 1750px) {}
           }
 
           .contact-name {
@@ -2020,24 +2018,25 @@ a {
     }
   }
 }
-.supplier-document{
+
+.supplier-document {
   .document-section {
     .card-body-sec {
       height: calc(100vh - 315px);
-  
+
       @media only screen and (max-width: 1750px) {
         height: calc(100vh - 280px);
       }
-  
+
       .document-list-sec {
         height: calc(100vh - 315px);
-  
+
         @media only screen and (max-width: 1750px) {
           height: calc(100vh - 280px);
         }
       }
     }
-  
+
   }
 }
 
@@ -2066,6 +2065,9 @@ a {
     align-items: flex-start;
     padding: 10px;
     height: 100%;
+
+
+
   }
 
   .note-label {
@@ -2137,15 +2139,76 @@ a {
       @media only screen and (max-width: 1750px) {
         height: calc(100vh - 300px);
       }
+
+      .bottom-info {
+        .note-text {
+          &.editor-section {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            justify-content: space-between;
+          }
+        }
+      }
     }
   }
 }
-.supplier-note{
+
+.history-btn {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  position: relative;
+
+  .btn-dropdown-menu {
+    background: var(--whiteColor);
+    border-radius: 5px;
+    border: 1px solid #f2f4f6;
+    z-index: 1;
+    box-shadow: 0px 0px 40px -9px #6a6a95;
+    padding: 10px;
+    min-width: 100px;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    display: none;
+
+    &::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 10px solid var(--whiteColor);
+      position: absolute;
+      top: -7px;
+      right: 7px;
+    }
+
+    a {
+      color: var(--textColor);
+      transition: 0.5s all;
+      font-weight: 600;
+
+      &:hover {
+        color: var(--themeColor);
+      }
+    }
+
+  }
+  &:hover{
+    .btn-dropdown-menu{
+      display: block;
+    }
+  }
+}
+
+.supplier-note {
   .card {
     .card-body-sec {
       .note-card-sec {
         height: calc(100vh - 325px);
-  
+
         @media only screen and (max-width: 1750px) {
           height: calc(100vh - 285px);
         }
@@ -2430,6 +2493,7 @@ a {
   }
 
   .css-1nmdiq5-menu {
+
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -2547,6 +2611,7 @@ input[type="checkbox"]:disabled {
         @media only screen and (max-width: 1750px) {
           max-height: calc(100vh - 325px);
         }
+
         @media only screen and (max-width: 1650px) {
           max-height: calc(100vh - 320px);
         }
@@ -2935,6 +3000,7 @@ input[type="checkbox"]:disabled {
 
 @media only screen and (max-width: 1750px) {
   .status-dropdown {
+
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
@@ -3293,8 +3359,7 @@ input[type="checkbox"]:disabled {
         }
 
         .card-body-sec {
-          .note-card-sec {
-          }
+          .note-card-sec {}
         }
       }
     }
@@ -3382,8 +3447,7 @@ input[type="checkbox"]:disabled {
         .tab-content {
           // padding-top: 20px;
 
-          .tab-body-section {
-          }
+          .tab-body-section {}
         }
 
         &.vertical-tab {
@@ -3446,8 +3510,7 @@ input[type="checkbox"]:disabled {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {
-    }
+    .tab-body-section {}
   }
 
   &.vertical-tab {
@@ -3785,10 +3848,19 @@ input[type="checkbox"]:disabled {
     .tab-content {
       width: 85%;
       padding: 0 0 15px 15px;
-      height: calc(100vh - 170px);
+      height: calc(100vh - 140px);
       overflow: hidden;
       overflow-y: auto;
       transition: 0.5s all;
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 120px);
+      }
+      .organiazation-history .main-card {
+        max-height: calc(100vh - 165px);
+        @media only screen and (max-width: 1750px) {
+        max-height: calc(100vh - 145px);
+        }
+      }
     }
   }
 }
