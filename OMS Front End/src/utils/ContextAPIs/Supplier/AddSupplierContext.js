@@ -1,58 +1,92 @@
-import { useRef, useState } from 'react';
-import { createContext } from 'react';
+import { useRef, useState } from "react";
+import { createContext } from "react";
 
 const AddSupplierContext = createContext();
 
 export default AddSupplierContext;
 
-
 export const AddSupplierContextProvider = ({ children }) => {
-    const nextStepRef = useRef(null);
-    const [mainId, setMainId] = useState(0);
-    const [activeTab, setActiveTab] = useState(0);
-    const [supplierId, setSupplierId] = useState(0);
-    const [allCountries, setAllCountries] = useState(false);
+  const nextStepRef = useRef(null);
+  const [mainId, setMainId] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
+  const [activeSubTab, setActiveSubTab] = useState(0);
+  const [supplierId, setSupplierId] = useState(0);
+  const [allCountries, setAllCountries] = useState(false);
 
-    //** Using for Contact  */
-    const [contactId, setContactId] = useState(0);
-    const [contactNumbers, setContactNumbers] = useState();
-    const [phoneNumberData, setPhoneNumberData] = useState();
-    const [emailAddressData, setEmailAddressData] = useState();
-    const [contactMainModal, setContactMainModal] = useState(false);
-    //** */
+  //** Using for Contact  */
+  const [contactId, setContactId] = useState(0);
+  const [contactNumbers, setContactNumbers] = useState();
+  const [phoneNumberData, setPhoneNumberData] = useState();
+  const [emailAddressData, setEmailAddressData] = useState();
+  const [contactMainModal, setContactMainModal] = useState(false);
+  //** */
 
-    const [isResponsibleUser, setIsResponsibleUser] = useState(false);
+  const [isResponsibleUser, setIsResponsibleUser] = useState(false);
 
-    const moveNextPage = () => {
-        setActiveTab((prev) => prev + 1);
-    };
+  const [showSubBackButton, setShowSubBackButton] = useState(false);
 
-    const movePreviewPage = () => {
-        setActiveTab((prev) => prev - 1);
-    };
+  const moveNextPage = () => {
+    setActiveTab((prev) => prev + 1);
+  };
 
-    const addSupplier = (data) => {
-        if (supplierId > 0 && data === 1) {
-            if (nextStepRef.current) {
-                nextStepRef.current.handleAddEditSupplier();
-            }
-        } else if(supplierId > 0){
-            setActiveTab((prev) => prev + 1)
-        }
-        else {
-            if (nextStepRef.current) {
-                nextStepRef.current.handleAddEditSupplier();
-            }
-        }
+  const movePreviewPage = () => {
+    setActiveTab((prev) => prev - 1);
+  };
+
+  const addSupplier = (data) => {
+    if (supplierId > 0 && data === 1) {
+      if (nextStepRef.current) {
+        nextStepRef.current.handleAddEditSupplier();
+      }
+    } else if (supplierId > 0) {
+      setActiveTab((prev) => prev + 1);
+    } else {
+      if (nextStepRef.current) {
+        nextStepRef.current.handleAddEditSupplier();
+      }
     }
+  };
 
-    return (
-        <AddSupplierContext.Provider value={{
-            nextStepRef, supplierId, setSupplierId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addSupplier, setAllCountries, allCountries, setMainId, mainId,
-            contactId, setContactId, contactMainModal, contactNumbers, setContactNumbers, setPhoneNumberData, setIsResponsibleUser, isResponsibleUser,
-            phoneNumberData, emailAddressData, setEmailAddressData, setContactMainModal
-        }}>
-            {children}
-        </AddSupplierContext.Provider>
-    );
+  const handleActiveSubTabClick = (tabIndex) => {
+    setActiveSubTab(tabIndex);
+    setShowSubBackButton(false);
+    if (tabIndex === 1) {
+      setShowSubBackButton(true);
+    }
+  };
+
+  return (
+    <AddSupplierContext.Provider
+      value={{
+        nextStepRef,
+        supplierId,
+        setSupplierId,
+        activeTab,
+        setActiveTab,
+        moveNextPage,
+        movePreviewPage,
+        addSupplier,
+        setAllCountries,
+        allCountries,
+        setMainId,
+        mainId,
+        contactId,
+        setContactId,
+        contactMainModal,
+        contactNumbers,
+        setContactNumbers,
+        setPhoneNumberData,
+        setIsResponsibleUser,
+        isResponsibleUser,
+        phoneNumberData,
+        emailAddressData,
+        setEmailAddressData,
+        setContactMainModal,
+        handleActiveSubTabClick,
+        activeSubTab,
+      }}
+    >
+      {children}
+    </AddSupplierContext.Provider>
+  );
 };

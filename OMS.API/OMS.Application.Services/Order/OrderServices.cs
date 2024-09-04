@@ -6,6 +6,7 @@ using OMS.Domain.Entities.API.Response.Orders;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.OrderAddress;
 using OMS.Domain.Entities.Entity.OrderDocument;
+using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Entities.Entity.Orders;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
@@ -44,26 +45,15 @@ namespace OMS.Application.Services.Order
             orderDto.CreatedBy = CurrentUserId;
             responseData = await repositoryManager.order.AddOrder(orderDto);
 
+            if (responseData.KeyValue <= 0)
+                return responseData;
+
             if (responseData.KeyValue > 0)
             {
-                if (!string.IsNullOrEmpty(requestData.Base64File) && !string.IsNullOrEmpty(requestData.StoragePath))
-                {
-                    string AESKey = commonSettingService.EncryptionSettings.AESKey!;
-                    string AESIV = commonSettingService.EncryptionSettings.AESIV!;
-
-                    requestData.DocumentName = FileManager.SaveEncryptFile(
-                        requestData.Base64File!,
-                        Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, requestData.StoragePath, responseData.KeyValue.ToString()),
-                        requestData.DocumentName!,
-                        AESKey,
-                        AESIV
-                    );
-                }
-
                 if (requestData.BillingAddressId > 0 || requestData.ShippingAddressId > 0)
                 {
                     OrderAddressDto orderAddressDto = requestData.ToMapp<AddOrderRequest, OrderAddressDto>();
-                    orderAddressDto.OrderId=responseData.KeyValue;
+                    orderAddressDto.OrderId = responseData.KeyValue;
                     orderAddressDto.CreatedBy = CurrentUserId;
                     await repositoryManager.orderAddress.AddOrderAddress(orderAddressDto);
                 }
@@ -79,23 +69,39 @@ namespace OMS.Application.Services.Order
                     }
                     await repositoryManager.orderContact.AddOrderContact(orderContactsListDataTable);
                 }
-                
+
                 if (requestData.orderItemsList != null && requestData.orderItemsList.Any())
+                {
+                    foreach (var item in requestData.orderItemsList)
+                    {
+                        // Map each individual item
+                        OrderItemsDto orderItemsDto = item.ToMapp<OrderItemsRequest, OrderItemsDto>();
+                        orderItemsDto.OrderId = responseData.KeyValue;
+                        orderItemsDto.CreatedBy = CurrentUserId;
+                        orderItemsDto.EntityType = "OrderItem";
+                        await repositoryManager.orderItem.AddOrderItem(orderItemsDto);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(requestData.Base64File) && !string.IsNullOrEmpty(requestData.StoragePath))
+                {
+                    string AESKey = commonSettingService.EncryptionSettings.AESKey!;
+                    string AESIV = commonSettingService.EncryptionSettings.AESIV!;
+
+                    requestData.DocumentName = FileManager.SaveEncryptFile(
+                        requestData.Base64File!,
+                        Path.Combine(commonSettingService.ApplicationSettings.SaveFilePath!, requestData.StoragePath, responseData.KeyValue.ToString()),
+                        requestData.DocumentName!,
+                        AESKey,
+                        AESIV
+                    );
+                }
+                if (requestData.DocumentName != null || requestData.DocumentName != "" && responseData.KeyValue > 0)
                 {
                     OrderDocumentDto orderDocumentDto = requestData.ToMapp<AddOrderRequest, OrderDocumentDto>();
                     orderDocumentDto.OrderId = responseData.KeyValue;
                     orderDocumentDto.CreatedBy = CurrentUserId;
-                    DataTable orderItemsListDataTable = ExportHelper.ListToDataTable(requestData.orderItemsList);
-
-                    orderItemsListDataTable.Columns.Add("OrderId", typeof(int));
-                    orderItemsListDataTable.Columns.Add("CreatedBy", typeof(short));
-
-                    foreach (DataRow row in orderItemsListDataTable.Rows)
-                    {
-                        row["OrderId"] = responseData.KeyValue;
-                        row["CreatedBy"] = CurrentUserId;
-                    }
-                    await repositoryManager.orderItem.AddOrderItem(orderItemsListDataTable, orderDocumentDto);
+                    await repositoryManager.orderDocument.AddOrderDocumnet(orderDocumentDto);
                 }
             }
             return responseData;
