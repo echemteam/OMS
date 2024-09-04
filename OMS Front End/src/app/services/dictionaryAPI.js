@@ -19,7 +19,7 @@ const dictionaryAPI = createApi({
         }),
         GetAllDictionary: builder.mutation({
             query: (userQuery) => ({
-                url: '/Dictionary/GetAllDictionary',
+                url: '/Dictionary/GetDictionary',
                 method: 'POST',
                 body: transformRequest(userQuery)
             }),
