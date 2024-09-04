@@ -23,7 +23,6 @@ const CustomerContactDetail = React.lazy(() => import("../../feature/customerCon
 const AddCustomerTab = () => {
 
   const childRef = useRef();
-  const isSubCustomerRef = useRef();
   const navigate = useNavigate();
   const [subCustomer, setSubCustomer] = useState(false);
   const { activeTab, movePreviewPage, addCustomer, customerId, showSubBackButton, handleActiveSubTabClick, saveFinacialSetting } = useContext(BasicDetailContext);

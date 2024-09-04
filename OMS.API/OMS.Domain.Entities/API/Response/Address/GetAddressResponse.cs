@@ -11,7 +11,7 @@
         public string? StateName { get; set; }
         public short? CountryId { get; set; }
         public string? CountryName { get; set; }
-        public int? ZipCode { get; set; }
+        public string? ZipCode { get; set; }
 
     }
 }

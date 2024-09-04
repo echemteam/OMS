@@ -129,7 +129,15 @@ const approvalAPI = createApi({
 
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
-        })
+        }),
+        checkFieldValueExists: builder.mutation({
+            query: (requestData) => ({
+                url: `/Approval/CheckFieldValueExists?fieldName=${requestData.fieldName}&fieldValue=${requestData.fieldValue}`,
+                method: 'POST'
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -140,6 +148,7 @@ export const {
     useAddUserChecklistResponseMutation,
     useGetValidateCheckListMutation,
     useUpdateApprovalRequestsStatusMutation,
+    useCheckFieldValueExistsMutation,
     //** Customer */
     useLazyGetCustomersInfoByIdQuery,
     useLazyGetCustomerAddresssInfoByIdQuery,

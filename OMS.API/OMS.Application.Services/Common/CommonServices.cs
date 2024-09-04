@@ -197,5 +197,13 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllIncoterm();
         }
+        public Task<List<GetAllDocumentByOwnerIdResponse>> GetAllDocumentByOwnerId(int ownerId, short ownerType)
+        {
+            return repositoryManager.commonRepository.GetAllDocumentByOwnerId(ownerId, ownerType);
+        }
+        public Task<List<GetAllFunctionalityEventByFunctionalityIdResponse>> GetAllFunctionalityEventByFunctionalityId(int functionalityId)
+        {
+            return repositoryManager.commonRepository.GetAllFunctionalityEventByFunctionalityId(functionalityId);
+        }
     }
 }

@@ -20,10 +20,12 @@ const DocumentGrid = ({
   addDocuments,
   downloadDocument,
   deleteDocumentsById,
+  isArchive,
   getDocumentsById,
   isEditablePage,
   SecurityKey,
-  customerStatusId
+
+  customerStatusId,
 }) => {
   //** State */
   const childRef = useRef();
@@ -64,10 +66,12 @@ const DocumentGrid = ({
   useEffect(() => {
     if (isGetAllDocumentTypesSucess && allGetAllDocumentTypesData) {
       const keyFilter = isSupplier ? "isForSuppliers" : "isForCustomers";
-      const getData = allGetAllDocumentTypesData.filter((x) => x[keyFilter]).map((item) => ({
-        value: item.documentTypeId,
-        label: item.type,
-      }));
+      const getData = allGetAllDocumentTypesData
+        .filter((x) => x[keyFilter])
+        .map((item) => ({
+          value: item.documentTypeId,
+          label: item.type,
+        }));
       const dropdownField = DocumentFormData.formFields.find(
         (item) => item.dataField === "documentTypeId"
       );
@@ -98,15 +102,16 @@ const DocumentGrid = ({
     <React.Fragment>
       <div className="document-section">
         <CardSection
-          cardTitle="Attachments"
-          titleButtonClick={handleToggleModal}
+         
+          cardTitle={isArchive ? null : "Attachments"}
+          titleButtonClick={isArchive ? null : handleToggleModal}
           textWithIcon={true}
-          iconImg={AppIcons.PlusIcon}
-          buttonClassName="theme-button"
-          rightButton={buttonVisible ? buttonVisible : false}
-          buttonText="Add Document"
-          multipleButton={buttonVisible ? buttonVisible : false}
-          rightButtonArray={[
+          iconImg={isArchive ? null : AppIcons.PlusIcon}
+          buttonClassName = {isArchive ? null : "theme-button"}
+          rightButton={isArchive ? null : buttonVisible ? buttonVisible : false}
+          buttonText= {isArchive ? null : "Add Document"}
+          multipleButton={isArchive ? null : buttonVisible ? buttonVisible : false}
+          rightButtonArray={isArchive ? null : [
             {
               buttonTypeClassName: "theme-button",
               onClick: handleMulDocToggleModal,
@@ -121,13 +126,14 @@ const DocumentGrid = ({
             isEditablePage={isEditablePage}
             SecurityKey={SecurityKey}
             keyId={keyId}
+            isArchive={isArchive}
             isSupplier={isSupplier}
             showModal={showModal}
             downloadDocument={downloadDocument}
             deleteDocumentsById={deleteDocumentsById}
             getDocumentsById={getDocumentsById}
             setShowModal={setShowModal}
-          // onHandleEditDocument={handleEditDocument}
+            // onHandleEditDocument={handleEditDocument}
           />
         </CardSection>
       </div>
@@ -147,7 +153,7 @@ const DocumentGrid = ({
           onSuccess={onSuccess}
           isEditablePage={isEditablePage}
           customerStatusId={customerStatusId}
-        // editDocumentData={editDocumentData}
+          // editDocumentData={editDocumentData}
         />
       </CenterModel>
       <CenterModel

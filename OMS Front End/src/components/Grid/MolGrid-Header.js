@@ -2,7 +2,6 @@ import React from "react";
 import { AppIcons } from "../../data/appIcons";
 import Image from "../image/Image";
 import "./MolGrid.scss";
-import Iconify from "../ui/iconify/Iconify";
 
 const MolGridHeader = (props) => {
   // Function to handle sorting or toggling sorting order

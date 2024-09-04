@@ -62,10 +62,9 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         if (Array.isArray(data.contactTypeId) && data.contactTypeId.length === 1) {
             eventName = getEventName(data.contactTypeId[0], isEdit, 'AddEditContactCustomer');
         } else if (Array.isArray(data.contactTypeId) && data.contactTypeId.length >= 2) {
-            data.contactTypeId.map((data) => {
-                const event = getEventName(data, isEdit, 'AddEditContactCustomer');
-                event && eventNameArr.push(event);
-            });
+            eventNameArr = data.contactTypeId.map((id) => {
+                return getEventName(id, isEdit, 'AddEditContactCustomer');
+            }).filter(event => event);
         } else {
             eventName = getEventName(data.contactTypeId, isEdit, 'AddEditContactCustomer');
         }

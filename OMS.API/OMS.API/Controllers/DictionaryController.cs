@@ -31,10 +31,10 @@ namespace OMS.API.Controllers
             return APISucessResponce(dictionaryData);
         }
 
-        [HttpPost("GetAllDictionary")]
+        [HttpPost("GetDictionary")]
         public async Task<IActionResult> GetAllDictionary([FromBody] ListEntityRequest<BaseFilter> requestData)
         {
-            var dictionaryList = await _serviceManager.dictionaryServices.GetAllDictionary(requestData);
+            var dictionaryList = await _serviceManager.dictionaryServices.GetDictionary(requestData);
             return APISucessResponce<object>(dictionaryList);
         }
 

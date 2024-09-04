@@ -112,6 +112,10 @@ a {
   margin-right: 1.25rem;
 }
 
+.mt-0 {
+  margin-top: 0;
+}
+
 // Margin-top
 .mt-1 {
   margin-top: 0.25rem;
@@ -893,6 +897,7 @@ a {
     }
   }
 }
+
 .sidebar-model {
   .card {
     height: auto;
@@ -1024,8 +1029,7 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {
-      }
+      .tab-body-section {}
     }
 
     &.vertical-tab {
@@ -1139,8 +1143,7 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {
-        }
+        .tab-sub-body-section {}
       }
     }
   }
@@ -1215,6 +1218,7 @@ a {
     border-bottom-right-radius: 0 !important;
     border-top-right-radius: 0 !important;
     height: 31px !important;
+
     .css-1hb7zxy-IndicatorsContainer {
       margin: auto;
     }
@@ -1280,6 +1284,53 @@ a {
   }
 }
 
+// Customer Docuement Detail
+
+
+
+.supplier-document-detail {
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+      padding: 5px !important;
+      height: calc(100vh - 250px);
+      overflow: hidden;
+    }
+  }
+}
+
+.customer-document-detail {
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+      padding: 5px !important;
+      height: calc(100vh - 250px);
+      overflow: hidden;
+    }
+  }
+}
+
+// Docuement Section
+
+.docuement-section {
+  .card {
+    .card-body-sec {
+      height: fit-content;
+    }
+  }
+}
+
+//Supplier Docuement Detail
+
+.supplier-document-detail {
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+      padding: 5px !important;
+    }
+  }
+}
+
 // Address Card Start
 .address-card-section {
   .accordion-item {
@@ -1333,6 +1384,7 @@ a {
             width: 82%;
             display: flex;
             flex-direction: column;
+
             @media only screen and (max-width: 1750px) {
               width: 75%;
             }
@@ -1462,11 +1514,9 @@ a {
           display: flex;
           align-items: center;
 
-          .email-sec {
-          }
+          .email-sec {}
 
-          .contact-sec {
-          }
+          .contact-sec {}
         }
 
         .contact-type {
@@ -1547,8 +1597,7 @@ a {
               color: var(--themeColor);
             }
 
-            @media only screen and (max-width: 1750px) {
-            }
+            @media only screen and (max-width: 1750px) {}
           }
 
           .contact-name {
@@ -1970,24 +2019,25 @@ a {
     }
   }
 }
-.supplier-document{
+
+.supplier-document {
   .document-section {
     .card-body-sec {
       height: calc(100vh - 315px);
-  
+
       @media only screen and (max-width: 1750px) {
         height: calc(100vh - 280px);
       }
-  
+
       .document-list-sec {
         height: calc(100vh - 315px);
-  
+
         @media only screen and (max-width: 1750px) {
           height: calc(100vh - 280px);
         }
       }
     }
-  
+
   }
 }
 
@@ -2016,6 +2066,9 @@ a {
     align-items: flex-start;
     padding: 10px;
     height: 100%;
+
+
+
   }
 
   .note-label {
@@ -2087,15 +2140,44 @@ a {
       @media only screen and (max-width: 1750px) {
         height: calc(100vh - 300px);
       }
+
+      .bottom-info {
+        .note-text {
+          &.editor-section {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            justify-content: space-between;
+          }
+        }
+      }
     }
   }
 }
-.supplier-note{
+
+.history-btn {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+
+    .custom-tooltip {
+      left: -12px;
+      display: block;
+      visibility: visible;
+    }
+  }
+
+}
+
+.supplier-note {
   .card {
     .card-body-sec {
       .note-card-sec {
         height: calc(100vh - 325px);
-  
+
         @media only screen and (max-width: 1750px) {
           height: calc(100vh - 285px);
         }
@@ -2380,6 +2462,7 @@ a {
   }
 
   .css-1nmdiq5-menu {
+
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -2497,6 +2580,7 @@ input[type="checkbox"]:disabled {
         @media only screen and (max-width: 1750px) {
           max-height: calc(100vh - 325px);
         }
+
         @media only screen and (max-width: 1650px) {
           max-height: calc(100vh - 320px);
         }
@@ -2885,6 +2969,7 @@ input[type="checkbox"]:disabled {
 
 @media only screen and (max-width: 1750px) {
   .status-dropdown {
+
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
@@ -3243,8 +3328,7 @@ input[type="checkbox"]:disabled {
         }
 
         .card-body-sec {
-          .note-card-sec {
-          }
+          .note-card-sec {}
         }
       }
     }
@@ -3332,8 +3416,7 @@ input[type="checkbox"]:disabled {
         .tab-content {
           // padding-top: 20px;
 
-          .tab-body-section {
-          }
+          .tab-body-section {}
         }
 
         &.vertical-tab {
@@ -3396,8 +3479,7 @@ input[type="checkbox"]:disabled {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {
-    }
+    .tab-body-section {}
   }
 
   &.vertical-tab {
@@ -3523,7 +3605,7 @@ input[type="checkbox"]:disabled {
     .collapse-tab {
       position: absolute;
       top: -5px;
-      left: calc(17% - 37px);
+      left: calc(17% - 42px);
       min-height: 22px;
       min-width: 22px;
       max-height: 22px;
@@ -3735,10 +3817,22 @@ input[type="checkbox"]:disabled {
     .tab-content {
       width: 85%;
       padding: 0 0 15px 15px;
-      height: calc(100vh - 170px);
+      height: calc(100vh - 140px);
       overflow: hidden;
       overflow-y: auto;
       transition: 0.5s all;
+
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 120px);
+      }
+
+      .organiazation-history .main-card {
+        max-height: calc(100vh - 165px);
+
+        @media only screen and (max-width: 1750px) {
+          max-height: calc(100vh - 145px);
+        }
+      }
     }
   }
 }
@@ -4091,5 +4185,36 @@ input[type="checkbox"]:disabled {
         display: block;
       }
     }
+  }
+}
+
+
+@keyframes cd-bounce-1 {
+  0% {
+    transform: translateX(0%);
+  }
+
+  15% {
+    transform: translateX(-25%) rotate(-5deg);
+  }
+
+  30% {
+    transform: translateX(20%) rotate(3deg);
+  }
+
+  45% {
+    transform: translateX(-15%) rotate(-3deg);
+  }
+
+  60% {
+    transform: translateX(10%) rotate(2deg);
+  }
+
+  75% {
+    transform: translateX(-5%) rotate(-1deg);
+  }
+
+  100% {
+    transform: translateX(0%);
   }
 }

@@ -350,7 +350,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
             const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
-            if (isEditablePage && eventName) {
+            if (!isSupplier && isEditablePage && eventName) {
                 await handleApprovalRequest(updateData, formData.initialState, eventName);
             } else {
                 update(updateData);
@@ -363,7 +363,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 customerId: customerId,
             };
             const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
-            if (isEditablePage && eventName) {
+            if (!isSupplier && isEditablePage && eventName) {
                 await handleApprovalRequest(req, null, eventName);
             } else {
                 add(req);

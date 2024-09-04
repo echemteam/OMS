@@ -62,7 +62,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
     }));
 
     return (
-        <SidebarModel modalTitle={isOrderManage ? "Order Information" : !isSupplier ? "Customer Information" : "Supplier Information" } contentClass="content-70 basic-info-model"
+        <SidebarModel modalTitle={isOrderManage ? "Order Information" : !isSupplier ? "Existing Customer Information" : " Existing Supplier Information" } contentClass="content-75 basic-info-model"
             onClose={sidebarClose} isOpen={isExistingModel}>
             <div className='pop-up-input-btn mt-3'>
                 <CardSection>

@@ -74,15 +74,64 @@ export const invalidBoundarySpaces = (value) => {
     return validPattern.test(value);
 }
 
-// export const invalidBoundarySpaces = () => {
-//     const invalidChars = /^\s|\s$/;
+export const isValidZipCode = (value) => {
+    const pattern = getPostalCodePattern(value?.countryId);
+    const isValid = pattern ? pattern.test(value?.zipCode) : false;
+    return isValid;
+}
 
-//     // If the string starts or ends with a space, return false
-//     if (invalidChars.test(value)) {
-//         return false;
-//     }
-
-//     // Otherwise, check if the string contains spaces only between characters
-//     const validPattern = /^[^\s][a-zA-Z\s]*[^\s]$/;
-//     return validPattern.test(value);
-// }
+const getPostalCodePattern = (country) => {
+    switch (country) {
+        case 11:
+            return /^[A-Za-z]\d{4}[A-Za-z]{3}$/; // Argentina: B1234ABC
+        /**
+            * Australia, Switzerland, South Africa, Norway, Denmark, 
+            * Belgium, Austria, New Zealand, Hungary, Luxembourg  
+        **/
+        case 14: case 15: case 22: case 59: case 99:
+        case 127: case 158: case 165: case 204: case 214:
+            return /^\d{4}$/;
+        case 31:
+            return /^\d{5}-\d{3}$/; // Brazil: 12345-678
+        case 39:
+            return /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/; // Canada: A1A 1A1
+        /**
+            * France, Germany, Italy, Spain, Mexico, South Korea, 
+            * Finland, Turkey, Saudi Arabia, Malaysia, United Arab Emirates
+        **/
+        case 75: case 74: case 82: case 107: case 116: case 194:
+        case 207: case 225: case 132: case 142: case 231:
+            return /^\d{5}$/;
+        /**
+            * India, Russia, China, Singapore
+        **/
+        case 45: case 101: case 182: case 199:
+            return /^\d{6}$/;
+        case 58:
+            return /^\d{3}\s?\d{2}$/; // Czech Republic: 123 45
+        case 85:
+            return /^\d{3}\s?\d{2}$/; // Greece: 123 45
+        case 100:
+            return /^\d{3}$/; // Iceland: 101
+        case 106:
+            return /^\d{5,7}$/; // Israel: 12345 or 1234567
+        case 109:
+            return /^\d{3}-\d{4}$/; // Japan: 123-4567
+        case 135:
+            return /^[A-Za-z]{3}\s?\d{4}$/; // Malta: ABC 1234
+        case 156:
+            return /^\d{4}\s?[A-Za-z]{2}$/; // Netherlands: 1234 AB
+        case 176:
+            return /^\d{2}-\d{3}$/; // Poland: 12-345
+        case 177:
+            return /^\d{4}-\d{3}$/; // Portugal: 1234-567
+        case 213:
+            return /^\d{3}\s?\d{2}$/; // Sweden: 123 45
+        case 232:
+            return /^[A-Za-z]{1,2}\d{1,2}[A-Za-z]?\d[A-Za-z]{2}$/; // UK: AA9A 9AA
+        case 233: //** US
+            return /^\d{5}(-\d{4})?$/; // USA: 12345 or 12345-6789
+        default:
+            return null;
+    }
+};
