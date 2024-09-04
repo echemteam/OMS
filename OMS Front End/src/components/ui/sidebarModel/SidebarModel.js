@@ -5,10 +5,12 @@ import "./SidebarModel.scss";
 // import Iconify from "../iconify/Iconify";
 
 const SidebarModel = ({ children, modalTitleIcon, ...props }) => {
+  
+  
   return (
     <div className={`sidebar-model ${props.isOpen ? "active-model" : ""}`}>
-      <div className="side-model-section" >
-        <div className={`model-content ${props.contentClass}`}>
+      <div className="side-model-section">
+        <div className={`model-content ${props.contentClass}`} >
           <div className="model-header">
             <div className="model-title">{props.modalTitle}</div>
             <div
