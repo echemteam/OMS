@@ -157,6 +157,7 @@ const AddressGrid = ({
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
           statusId={statusId}
+          isModelOpen={isModelOpen}
         />
       </div>
     ),
@@ -172,6 +173,40 @@ const AddressGrid = ({
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
           statusId={statusId}
+          isModelOpen={isModelOpen}
+          
+        />
+      </div>
+    ),
+
+    (addressTypeId) => (
+      <div className="mt-2">
+        <AddressDetailCard
+          keyId={keyId}
+          getAddresssByCustomerId={getAddresssByCustomerId}
+          onHandleEditAddress={handleEditAddress}
+          showEditIcon={showEditIcon}
+          getByIdRef={getByIdRef}
+          selectedAddressTypeId={addressTypeId}
+          deleteAddress={deleteAddress}
+          statusId={statusId}
+          isModelOpen={isModelOpen}
+        />
+      </div>
+    ),
+
+    (addressTypeId) => (
+      <div className="mt-2">
+        <AddressDetailCard
+          keyId={keyId}
+          getAddresssByCustomerId={getAddresssByCustomerId}
+          onHandleEditAddress={handleEditAddress}
+          showEditIcon={showEditIcon}
+          getByIdRef={getByIdRef}
+          selectedAddressTypeId={addressTypeId}
+          deleteAddress={deleteAddress}
+          statusId={statusId}
+          isModelOpen={isModelOpen}
 
         />
       </div>
@@ -188,39 +223,7 @@ const AddressGrid = ({
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
           statusId={statusId}
-
-        />
-      </div>
-    ),
-
-    (addressTypeId) => (
-      <div className="mt-2">
-        <AddressDetailCard
-          keyId={keyId}
-          getAddresssByCustomerId={getAddresssByCustomerId}
-          onHandleEditAddress={handleEditAddress}
-          showEditIcon={showEditIcon}
-          getByIdRef={getByIdRef}
-          selectedAddressTypeId={addressTypeId}
-          deleteAddress={deleteAddress}
-          statusId={statusId}
-
-        />
-      </div>
-    ),
-
-    (addressTypeId) => (
-      <div className="mt-2">
-        <AddressDetailCard
-          keyId={keyId}
-          getAddresssByCustomerId={getAddresssByCustomerId}
-          onHandleEditAddress={handleEditAddress}
-          showEditIcon={showEditIcon}
-          getByIdRef={getByIdRef}
-          selectedAddressTypeId={addressTypeId}
-          deleteAddress={deleteAddress}
-          statusId={statusId}
-
+          isModelOpen={isModelOpen}
         />
       </div>
     ),
