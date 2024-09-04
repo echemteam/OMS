@@ -28,9 +28,9 @@ namespace OMS.Application.Services.Dictionary
             dictionaryDto.CreatedBy = CurrentUserId;
             return await repositoryManager.dictionaryRepository.AddEditDictionary(dictionaryDto);
         }
-        public async Task<EntityList<DictionaryListResponse>> GetAllDictionary(ListEntityRequest<BaseFilter> requestData)
+        public async Task<EntityList<DictionaryListResponse>> GetDictionary(ListEntityRequest<BaseFilter> requestData)
         {
-            return await repositoryManager.dictionaryRepository.GetAllDictionary(requestData);
+            return await repositoryManager.dictionaryRepository.GetDictionary(requestData);
         }
         public async Task<GetDictionaryResponse> GetDictionaryByDictonaryId(int dictionaryId)
         {
