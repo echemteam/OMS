@@ -127,6 +127,12 @@ export const Menu = [
             to: "/ThirdPartyApiConfiguration",
             securityKey: securityKey.THIRDPARTYAPI,
           },
+          {
+            id: "Dictionary",
+            submenuName: "Dictionary",
+            to: "/Dictionary",
+            securityKey: securityKey.DICTIONARY,
+          },
         ],
       },
       // {
