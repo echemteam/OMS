@@ -43,14 +43,6 @@ export const viewFunctionalEventsData = {
       },
     },
     {
-      name: "event Name",
-      fieldName: "eventName",
-      colStyle: {
-        width: "20%",
-      },
-      allowShort: true,
-    },
-    {
       name: "description",
       fieldName: "description",
       colStyle: {
