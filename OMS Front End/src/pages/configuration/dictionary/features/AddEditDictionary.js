@@ -36,14 +36,17 @@ const AddEditDictionary = (props) => {
   }, [dictionaryId ,props.isEdit]);
 
   useEffect(() => {
-
     if (isAddEditDictionarySuccess && addEditDictionaryData) {
+      if(addEditDictionaryData.errorMessage.includes('exists')) {
+        ToastService.warning(addEditDictionaryData.errorMessage);
+        return;
+      }
       props.onSuccess();
       ToastService.success(addEditDictionaryData.errorMessage);
       onResetData();
       props.onClose();
     }
-  }, [isAddEditDictionarySuccess, addEditDictionaryData]);
+      }, [isAddEditDictionarySuccess, addEditDictionaryData]);
 
   const handleDictionary = () => {
     const formData = dictionaryRef.current.getFormData();
@@ -74,7 +77,7 @@ const AddEditDictionary = (props) => {
   useImperativeHandle(props.childRef, () => ({
     callChildFunction: onResetData,
   }));
-  
+    
   return (
       <div>
         <div className="row">
