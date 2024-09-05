@@ -12,6 +12,7 @@ using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.Dictionary;
 using OMS.Application.Services.EmailAddress;
+using OMS.Application.Services.EmailTemplates;
 using OMS.Application.Services.Order;
 using OMS.Application.Services.Organization;
 using OMS.Application.Services.PhoneNumber;
@@ -68,6 +69,7 @@ namespace OMS.Application.Services
         IApiEventManagementService _apiEventManagementService;
         IOrderServices _orderServices;
         IDictionaryServices _dictionaryServices;
+        IEmailTemplatesService _emailTemplatesService;
 
         public ITestService testService
         {
@@ -388,6 +390,18 @@ namespace OMS.Application.Services
                     _dictionaryServices = new DictionaryServices(_repositoryManager, _commonSettingService);
                 }
                 return _dictionaryServices;
+
+            }
+        }
+        public IEmailTemplatesService emailTemplatesService
+        {
+            get
+            {
+                if (_emailTemplatesService == null)
+                {
+                    _emailTemplatesService = new EmailTemplatesService(_repositoryManager, _commonSettingService);
+                }
+                return _emailTemplatesService;
 
             }
         }

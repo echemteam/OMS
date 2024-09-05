@@ -55,6 +55,6 @@ namespace OMS.Domain.Repository
         IOrderItemRepository orderItem { get; }
         IDictionaryRepository dictionaryRepository { get; }
         IOrderDocumentRepository orderDocument { get; }
-
+        IEmailTemplatesRepository emailTemplates { get; }
     }
 }

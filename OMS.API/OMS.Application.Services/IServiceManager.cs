@@ -11,6 +11,7 @@ using OMS.Application.Services.CustomerNotes;
 using OMS.Application.Services.Customers;
 using OMS.Application.Services.Dictionary;
 using OMS.Application.Services.EmailAddress;
+using OMS.Application.Services.EmailTemplates;
 using OMS.Application.Services.Order;
 using OMS.Application.Services.Organization;
 using OMS.Application.Services.PhoneNumber;
@@ -54,5 +55,6 @@ namespace OMS.Application.Services
         IApiEventManagementService apiEventManagementService { get; }
         IOrderServices orderServices { get; }
         IDictionaryServices dictionaryServices { get; }
+        IEmailTemplatesService emailTemplatesService { get; }
     }
 }
