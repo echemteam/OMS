@@ -29,9 +29,11 @@ const MyTask = () => {
   const handleGetPendingId = (data) => {
     getApprovalRequestsByApprovalRequestId(data);
     setApprovalRequestId(data);
+     
   };
 
   const handleGetArchiveId = (data) => {
+   
     getApprovalRequestsByApprovalRequestId(data);
     setApprovalRequestId(data);
   };
@@ -42,7 +44,7 @@ const MyTask = () => {
   };
 
   const approvalRequest = (data) => {
-    getApprovalRequestsByApprovalRequestId(data);
+    setApprovedData(null); 
     setIsApproval(true);
   };
 
@@ -52,7 +54,7 @@ const MyTask = () => {
       isGetApprovalRequestsByApprovalRequestIdSuccess &&
       isGetApprovalRequestsByApprovalRequestIdData
     ) {
-      setApprovedData(isGetApprovalRequestsByApprovalRequestIdData);
+      setApprovedData(isGetApprovalRequestsByApprovalRequestIdData);    
     }
   }, [
     isGetApprovalRequestsByApprovalRequestIdFetching,
@@ -95,6 +97,7 @@ const MyTask = () => {
             onGetById={handleGetPendingId}
             onTabChange={handleSetTab}
             roleId={roleId}
+            setIsApproval={setIsApproval}
           />
         </div>
       ),
