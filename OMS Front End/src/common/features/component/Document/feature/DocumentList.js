@@ -116,16 +116,9 @@ const DocumentList = forwardRef(
 
         // Filter documents based on isArchive flag
 
-        if (isArchive) {
-          var filteredData = modifyData.filter(
-            (doc) => doc.isArchive === isArchive
-          );
-        } else if (!isArchive) {
-          var filteredData = modifyData.filter(
-            (doc) => doc.isArchive === isArchive
-          );
-        }
-
+        const filteredData = modifyData.filter(
+          (doc) => doc.isArchive === isArchive
+        );
         setDocumentListData(filteredData);
 
         // Detect file types

@@ -100,24 +100,23 @@ const ApprovalCheckList = ({
 
   useEffect(() => {
     if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
-      
       const fileData = isDownalodData.fileData;
       const blob = new Blob([fileData], { type: fileData.type });
       const fileURL = URL.createObjectURL(blob);
-      if(actionType === "view"){
-      setSelectedDocument(fileURL);
-      setIsModalOpen(true);
-      setGetFileType(determineFileType(isDownalodData.fileName));
+      if (actionType === "view") {
+        setSelectedDocument(fileURL);
+        setIsModalOpen(true);
+        setGetFileType(determineFileType(isDownalodData.fileName));
       }
     }
   }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
   useEffect(() => {
-     if (
+    if (
       !isGetAllDocumentByOwnerIdFetching &&
       isGetAllDocumentByOwnerIdSuccess &&
       isGetAllDocumentByOwnerIdData
     ) {
-      const transformedData = isGetAllDocumentByOwnerIdData.map((item) => ({
+       const transformedData = isGetAllDocumentByOwnerIdData.map((item) => ({
         value: item.documentId,
         label: item.name,
         attachment: item.attachment,
@@ -219,9 +218,8 @@ const ApprovalCheckList = ({
     }
   };
   const handleDocumentChange = (selectedoption) => {
-    
     setDocument(selectedoption.value);
-    handleDocumentView("view", selectedoption.attachment);
+        handleDocumentView("view", selectedoption.attachment);
   };
   const handleDocumentView = (action, fileName, name) => {
     setSelectedDocument(null);
@@ -338,20 +336,21 @@ const ApprovalCheckList = ({
                     />
                   </div>
                 </div>
-            {/* File viewer modal */}
-      {selectedDocument && getFileType && (
-          <SidebarModel
-  
-          modalTitle="File Preview"
-          isOpen={isModalOpen}
-          contentClass="content-65"
-          onClose={handleToggleModal}
-        >
-          <div className="model-hight-fix">
-        <FileViewer fileType={getFileType} filePath={selectedDocument}  onError={(error) => console.error("Error:", error)} />
-        </div>
-        </SidebarModel>
-      )}
+                {/* File viewer modal */}
+
+                <div className="row">
+                  <div className="col-12">
+                    <div className="document-view">
+                      {selectedDocument && getFileType && (
+                        <FileViewer
+                          fileType={getFileType}
+                          filePath={selectedDocument}
+                          onError={(error) => console.error("Error:", error)}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
               {/* <div className="col-md-4 d-flex flex-column justify-content-between approval-check-list">
                 <div>
@@ -393,9 +392,7 @@ const ApprovalCheckList = ({
         ) : (
           <DataLoader />
         )}
-
       </SidebarModel>
-     
     </div>
   );
 };
