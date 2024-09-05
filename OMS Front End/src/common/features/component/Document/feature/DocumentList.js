@@ -164,7 +164,7 @@ const DocumentList = forwardRef(
         } else if (actionType === "view") {
           setSelectedDocument(fileURL);
           setIsModalOpen(true);
-          setGetFileType([determineFileType(isDownalodData.fileName)]);
+          setGetFileType(determineFileType(isDownalodData.fileName));
         }
       }
     }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
@@ -332,23 +332,35 @@ const DocumentList = forwardRef(
           </div>
         </div>
 
-        {/* File viewer modal */}
-        {selectedDocument && (
-          <SidebarModel
-            open={isModalOpen}
-            handleToggle={handleToggleModal}
-            title="View Document"
-          >
-            <FileViewer fileType={getFileType[0]} filePath={selectedDocument} />
-          </SidebarModel>
-        )}
+    
+
+        <SidebarModel
+          // showModal={isModalOpen}
+          // handleToggleModal={handleToggleModal}
+          // modalTitle="File Preview"
+          // modelSizeClass="w-40"
+          isOpen={isModalOpen}
+          contentClass="content-65"
+          modalTitle="File Preview"
+          onClose={handleToggleModal}
+        >
+          <div className="model-hight-fix">
+            {selectedDocument && getFileType && (
+              <FileViewer
+                fileType={getFileType}
+                filePath={selectedDocument}
+                onError={(error) => console.error("Error:", error)}
+              />
+            )}
+          </div>
+        </SidebarModel>
       </div>
     );
   }
 );
 
 DocumentList.propTypes = {
-  keyId: PropTypes.string.isRequired,
+  keyId: PropTypes.number.isRequired,
   isSupplier: PropTypes.bool.isRequired,
   downloadDocument: PropTypes.func.isRequired,
   deleteDocumentsById: PropTypes.func.isRequired,
