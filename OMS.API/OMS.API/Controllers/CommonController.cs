@@ -306,14 +306,14 @@ namespace OMS.API.Controllers
         [HttpGet("GetAllDocumentByOwnerId")]
         public async Task<IActionResult> GetAllDocumentByOwnerId(int ownerId, short ownerType)
         {
-            List<GetAllDocumentByOwnerIdResponse> responseData = await _serviceManager.commonServices.GetAllDocumentByOwnerId(ownerId,ownerType).ConfigureAwait(true);
+            List<GetAllDocumentByOwnerIdResponse> responseData = await _serviceManager.commonServices.GetAllDocumentByOwnerId(ownerId, ownerType).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
-        [HttpGet("GetAllFunctionalityEventByFunctionalityId")]
-        public async Task<IActionResult> GetAllFunctionalityEventByFunctionalityId(int functionalityId)
+        [HttpGet("GetNotesHistory")]
+        public async Task<IActionResult> GetNotesHistory(int entityId, int ownerId, byte ownerTypeId, string noteType)
         {
-            List<GetAllFunctionalityEventByFunctionalityIdResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalityEventByFunctionalityId(functionalityId).ConfigureAwait(true);
-            return APISucessResponce(responseData);
+            List<GetNotesHistoryResponse> responseData = await _serviceManager.commonServices.GetNotesHistory(entityId, ownerId, ownerTypeId, noteType);
+            return APISucessResponce<object>(responseData);
         }
     }
 }
