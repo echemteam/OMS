@@ -15,7 +15,6 @@ namespace OMS.Domain.Repository.Implementation
         const string GETEMAILTEMPLATESlIST = "GetEmailTemplatesList";
         const string ADDEDITEMAILTEMPLATES = "AddEditEmailTemplates";
         const string GETEMAILTEMPLATESBYID = "GetEmailTemplatesbyId";
-        const string DELETEEMAILTEMPLATES = "DeleteEmailTemplates";
         #endregion
 
         public EmailTemplatesRepository(DapperContext dapperContext) : base(dapperContext)

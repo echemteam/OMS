@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
+using OMS.Domain.Entities.API.Request.ApiConfiguration;
 using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Request.ApiEventParameter;
@@ -237,6 +238,13 @@ namespace OMS.API.Controllers
         {
             List<GetAllEventParameterResponse> responseData = await _serviceManager.apiEventManagementService.GetAllEventParameterByEventId(apiEventId).ConfigureAwait(true);
             return APISucessResponce(responseData);
+        }
+
+        [HttpPost("GetApiEventLogByEventId")]
+        public async Task<IActionResult> GetApiEventLogByEventId(GetApiEventLogByEventIdRequest requestData)
+        {
+            var eventLogsList = await _serviceManager.apiEventManagementService.GetApiEventLogByEventId(requestData);
+            return APISucessResponce<object>(eventLogsList);
         }
 
         #endregion
