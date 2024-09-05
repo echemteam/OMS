@@ -17,7 +17,7 @@ namespace OMS.Application.Services.EmailTemplates
         public readonly ICommonSettingService _commonSettingService;
         #endregion
 
-        #region private variable
+        #region Constructor
         public EmailTemplatesService(IRepositoryManager _repoManager, ICommonSettingService commonSettingServices) : base(_repoManager, commonSettingServices)
         {
         }
