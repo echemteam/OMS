@@ -1,4 +1,6 @@
-﻿using OMS.Domain.Entities.API.Response.ApiEvent;
+﻿using OMS.Domain.Entities.API.Request.ApiConfiguration;
+using OMS.Domain.Entities.API.Response.ApiConfiguration;
+using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.Entity.ApiEvent;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Shared.Entities.CommonEntity;
@@ -11,6 +13,6 @@ namespace OMS.Domain.Repository.Contract
         Task<GetApiEventByApiEventIdResponse> GetApiEventByApiEventId(int apiEventId);
         Task<AddEntityDto<int>> DeleteApiEvent(int apiEventId, int deletedBy);
         Task<EntityList<GetApiEventsResponse>> GetApiEvents(ListEntityRequest<BaseFilter> requestData);
-
+        Task<EntityList<GetApiEventLogByEventIdResponse>> GetApiEventLogByEventId(GetApiEventLogByEventIdRequest requestData);
     }
 }

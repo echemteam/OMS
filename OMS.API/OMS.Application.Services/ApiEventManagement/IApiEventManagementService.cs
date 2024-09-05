@@ -1,9 +1,11 @@
-﻿using OMS.Domain.Entities.API.Request.ApiEvent;
+﻿using OMS.Domain.Entities.API.Request.ApiConfiguration;
+using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Request.ApiEventParameter;
 using OMS.Domain.Entities.API.Request.ApiEventRequiredField;
 using OMS.Domain.Entities.API.Request.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Request.ApiParameterMapping;
+using OMS.Domain.Entities.API.Response.ApiConfiguration;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventMapping;
 using OMS.Domain.Entities.API.Response.ApiEventParameter;
@@ -42,5 +44,6 @@ namespace OMS.Application.Services.ApiEventManagement
         Task<List<GetAllAPIParametersResponse>> GetAllAPIParametersByEndpointId(int endpointId);
         Task<List<GetAllRequiredFieldsResponse>> GetAllRequiredFieldsByEventId(int apiEventId);
         Task<List<GetAllEventParameterResponse>> GetAllEventParameterByEventId(int apiEventId);
+        Task<EntityList<GetApiEventLogByEventIdResponse>> GetApiEventLogByEventId(GetApiEventLogByEventIdRequest requestData);
     }
 }
