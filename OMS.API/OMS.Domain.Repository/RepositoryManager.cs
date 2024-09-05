@@ -63,7 +63,7 @@ namespace OMS.Domain.Repository
         IOrderItemRepository _orderItemRepository;
         IDictionaryRepository _dictionaryRepository;
         IOrderDocumentRepository _orderDocumentRepository;
-
+        IEmailTemplatesRepository _emailTemplatesRepository;
         public ITestRepository test
         {
             get
@@ -651,5 +651,18 @@ namespace OMS.Domain.Repository
             }
 
         }
+        public IEmailTemplatesRepository emailTemplates
+        {
+            get
+            {
+                if (_emailTemplatesRepository == null)
+                {
+                    _emailTemplatesRepository = new EmailTemplatesRepository(_context);
+                }
+                return _emailTemplatesRepository;
+            }
+
+        }
+
     }
 }
