@@ -15,13 +15,13 @@ const PendingTask = (props) => {
     const [getApprovalRequestsListByStatus, { isFetching: isGetApprovalRequestsListByStatusFetching, isSuccess: isGetApprovalRequestsListByStatusSuccess, data: isGetApprovalRequestsListByStatusData }] = useLazyGetApprovalRequestsListByStatusAndRoleIdQuery();
 
     useEffect(() => {
-        if (props.Pending) {
-            getApprovalRequestList();
+                if (props.Pending) {
+            getApprovalRequestList();    
         }
-    }, [props.Pending, props.roleId]);
+           }, [props.Pending, props.roleId]);
 
     const getApprovalRequestList = () => {
-        let req = {
+                let req = {
             status: props.Pending,
             roleId: props.roleId
         }
@@ -29,9 +29,11 @@ const PendingTask = (props) => {
     }
 
     useEffect(() => {
-        if (props.isApproval) {
-            getApprovalRequestList();
+                if (props.isApproval) {
+            getApprovalRequestList(); 
         }
+        props.setIsApproval(false);
+    
     }, [props.isApproval]);
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Libs's */
-import { ApprovalEnum } from "../../../../utils/Enums/commonEnums";
+import { ApprovalEnum, OwnerType } from "../../../../utils/Enums/commonEnums";
 //** Service's */
 import {
     useGetValidateCheckListMutation, useLazyGetCustomerAddresssInfoByIdQuery, useLazyGetCustomerContactInfoByIdQuery,
@@ -91,9 +91,9 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
                 isGetCheckListLoading={isGetCheckListLoading} mainId={customerId} isDetailPage={isDetailPage} handleShowValidateModal={handleShowValidateModal}
                 handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList ? validateCheckList : null} />
             <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={customerId} onSuccessApprovalClose={onSuccessApprovalClose}
-                ApprovalData={isSubCustomer ? ApprovalEnum.APPROVESUBCUSTOMER : ApprovalEnum.APPROVECUSTOMER} isSupplierApproval={false} isSubCustomer={isSubCustomer}
+                ApprovalData={isSubCustomer ? ApprovalEnum.APPROVESUBCUSTOMER : ApprovalEnum.APPROVECUSTOMER} isSupplierApproval={false} isSubCustomer={isSubCustomer} 
                 getBasicInformationById={useLazyGetCustomersInfoByIdQuery} getAddressById={useLazyGetCustomerAddresssInfoByIdQuery}
-                getContactById={useLazyGetCustomerContactInfoByIdQuery} getFinacialSettingById={useLazyGetCustomerFinacialSettingQuery}
+                getContactById={useLazyGetCustomerContactInfoByIdQuery} getFinacialSettingById={useLazyGetCustomerFinacialSettingQuery} ownerType={OwnerType.Customer}
             />
         </React.Fragment>
     )

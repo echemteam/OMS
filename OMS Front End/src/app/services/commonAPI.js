@@ -116,6 +116,14 @@ const commonAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+        getAllDocumentByOwnerId: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Common/GetAllDocumentByOwnerId/?ownerId=${data.ownerId}&ownerType=${data.ownerType}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
     })
 })
 
@@ -124,7 +132,7 @@ export const {
     useUpdateResponsibleUserMutation,useLazyGetAllCustomersQuery,useGetAllSubCustomerByCustomerIdMutation , useLazyGetAllAccountTypeQuery
     , useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery,useAddApprovalRequestsMutation,
     useLazyGetAllOrderMethodQuery,
-    useLazyGetAllIncotermQuery
+    useLazyGetAllIncotermQuery, useLazyGetAllDocumentByOwnerIdQuery,
 } = commonAPI
 
 export default commonAPI;
