@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import PropTypes from 'prop-types';
 //** Lib's */
-import { ApprovalEnum } from "../../../../utils/Enums/commonEnums";
+import { ApprovalEnum, OwnerType } from "../../../../utils/Enums/commonEnums";
 import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
 //** Service's */
 import { useGetValidateCheckListMutation, useLazyGetSupplierAddressInfoByIdQuery, useLazyGetSupplierBasicInfoByIdQuery, useLazyGetSupplierContactInfoByIdQuery, useLazyGetSupplierFinacialSettingQuery } from "../../../../app/services/ApprovalAPI";
@@ -86,7 +86,7 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
             <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={supplierId} isSupplierApproval={true}
                 ApprovalData={ApprovalEnum.APPROVESUPPLIER} onSuccessApprovalClose={onSuccessApprovalClose}
                 getBasicInformationById={useLazyGetSupplierBasicInfoByIdQuery} getAddressById={useLazyGetSupplierAddressInfoByIdQuery}
-                getContactById={useLazyGetSupplierContactInfoByIdQuery} getFinacialSettingById={useLazyGetSupplierFinacialSettingQuery}
+                getContactById={useLazyGetSupplierContactInfoByIdQuery} getFinacialSettingById={useLazyGetSupplierFinacialSettingQuery} ownerType={OwnerType.Supplier}
             />
         </React.Fragment>
     )
