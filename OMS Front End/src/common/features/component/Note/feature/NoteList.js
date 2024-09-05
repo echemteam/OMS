@@ -9,16 +9,18 @@ import { getRandomColor } from "../../../../../utils/RandomColors/RandomColors";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
 import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
-import { Link } from "react-router-dom";
 import TimeLine from "../../../../../components/ui/timeline/TimeLine";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import Tooltip from "../../../../../components/ui/tooltip/Tooltip";
+import { useLazyGetNotesHistoryQuery } from "../../../../../app/services/commonAPI";
+import { NoteTypes, OwnerType } from "../../../../../utils/Enums/commonEnums";
 
 const NoteList = forwardRef(
-  ({ keyId, handleEditClick, onGetByIdNotes, showEditIcon, listRef }) => {
+  ({ keyId, handleEditClick, onGetByIdNotes, showEditIcon, listRef ,isSupplier}) => {
     //** States */
     const [notesFormData, setNotesFormData] = useState([]);
     const [isModelOpen, setIsModelOpen] = useState(false);
+    const[noteTimeLineList,setNoteTimeLineList]=useState([]);
 
     //** API Call's */
     /**
@@ -33,6 +35,25 @@ const NoteList = forwardRef(
         data: isGetNotesData,
       },
     ] = onGetByIdNotes();
+    const [
+      getNotesHistory,
+      {
+        isFetching: isGetNotesHistoryFetching,
+        isSuccess: isGetNotesHistorySuccess,
+        data: isGetNotesHistoryData,
+      },
+    ] = useLazyGetNotesHistoryQuery();
+
+    const handleHistory=(noteId)=>{
+      let req = {
+         entityId:noteId,
+         ownerId: keyId,
+         ownerTypeId:isSupplier ? OwnerType.Supplier:OwnerType.Customer,
+         noteType:NoteTypes.DefaultNote,
+
+       };
+       getNotesHistory(req);
+    }
 
     //** UseEffect */
     useEffect(() => {
@@ -40,9 +61,21 @@ const NoteList = forwardRef(
     }, [keyId]);
 
     useEffect(() => {
+      
+      if ( !isGetNotesHistoryFetching &&isGetNotesHistorySuccess && isGetNotesHistoryData ) {
+        if(isGetNotesHistoryData){
+          setNoteTimeLineList(isGetNotesHistoryData);
+        }
+      }
+    }, [isGetNotesHistoryFetching, isGetNotesHistorySuccess, isGetNotesHistoryData,]);
+
+    useEffect(() => { 
+    
       if (!isGetNotesFetching && isGetNotesSuccess && isGetNotesData) {
+      
         if (Array.isArray(isGetNotesData)) {
           setNotesFormData(isGetNotesData);
+         
         }
       }
     }, [isGetNotesFetching, isGetNotesSuccess, isGetNotesData]);
@@ -57,7 +90,9 @@ const NoteList = forwardRef(
       callListFunction: onGetNote,
     }));
     //** Handle Changes */
-    const handleToggleModal = () => {
+    const handleToggleModal = (NoteId) => {
+
+      handleHistory(NoteId);
       setIsModelOpen(true);
     };
     const onSidebarClose = () => {
@@ -87,7 +122,7 @@ const NoteList = forwardRef(
                           ></div>
                           <div
                             className="history-btn"
-                            onClick={handleToggleModal}
+                            onClick={() =>handleToggleModal(isSupplier ? notes.supplierNoteId : notes.customerNoteId)}
                           >
                             <Iconify
                               icon="iconamoon:history-bold"
@@ -132,7 +167,7 @@ const NoteList = forwardRef(
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}
         >
-          <TimeLine />
+          <TimeLine notesData={noteTimeLineList} />
         </SidebarModel>
       </div>
     );

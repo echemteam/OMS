@@ -95,6 +95,7 @@ const NoteGrid = ({
             handleEditClick={handleEditClick}
             onGetByIdNotes={onGetByIdNotes}
             keyId={keyId}
+            isSupplier={isSupplier}
             showEditIcon={showEditIcon}
           />
         </div>

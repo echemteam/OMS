@@ -48,7 +48,7 @@ const ApprovalCheckList = ({
   const [checkListData, setCheckListData] = useState([]);
   const [documentListData, setDocumentListData] = useState([]);
   const [document, setDocument] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ ,setIsModalOpen] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [getFileType, setGetFileType] = useState([]);
   const [actionType, setActionType] = useState(null);
@@ -105,7 +105,6 @@ const ApprovalCheckList = ({
       const fileURL = URL.createObjectURL(blob);
       if (actionType === "view") {
         setSelectedDocument(fileURL);
-        setIsModalOpen(true);
         setGetFileType(determineFileType(isDownalodData.fileName));
       }
     }
@@ -128,12 +127,6 @@ const ApprovalCheckList = ({
     isGetAllDocumentByOwnerIdSuccess,
     isGetAllDocumentByOwnerIdData,
   ]);
-
-  const handleToggleModal = () => {
-    setIsModalOpen(false);
-    setSelectedDocument(null);
-    setActionType(null);
-  };
 
   const determineFileType = (fileName) => {
     const extension = fileName.split(".").pop().toLowerCase();
