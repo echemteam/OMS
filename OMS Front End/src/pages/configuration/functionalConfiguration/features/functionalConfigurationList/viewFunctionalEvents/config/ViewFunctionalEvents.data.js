@@ -19,7 +19,7 @@ export const viewFunctionalEventsData = {
       allowShort: true,
     },
     {
-      name: "create data",
+      name: "created date",
       colStyle: {
         width: "20%",
       },
