@@ -51,6 +51,22 @@ export const rulesFormData = {
             },
         },
         {
+            id: "functionalityEventId",
+            lable: "Functionality Event",
+            Field_Name: "Functionality Event",
+            fieldType: FormFieldTypes.SELECT,
+            dataField: "functionalityEventId",
+            fieldSetting: {
+                // isDisabled: true,
+                placeholder: "Select Functionality Event",
+                isEnableOnChange: true
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+            },
+        },
+        {
             id: "functionalitiesFieldId",
             lable: "Field ",
             Field_Name: "fieldName",

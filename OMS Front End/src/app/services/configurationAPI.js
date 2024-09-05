@@ -124,6 +124,14 @@ const configurationAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+        getAllFunctionalityEventByFunctionalityId: builder.query({
+            query: (id) => ({
+                url: encryptQueryString(`/Common/GetAllFunctionalityEventByFunctionalityId/?functionalityId=${Number(id)}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
     })
 })
 
@@ -141,6 +149,7 @@ export const {
     useGetFunctionalitiesResponsiblesMutation,
     useGetFunctionalityEventsMutation,
     useDeleteFunctionalitiesResponsiblesUserMutation,
+    useLazyGetAllFunctionalityEventByFunctionalityIdQuery,
 } = configurationAPI
 
 export default configurationAPI;
