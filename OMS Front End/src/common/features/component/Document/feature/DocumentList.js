@@ -7,7 +7,6 @@ import React, {
 } from "react";
 //** Lib's */
 
-
 import Image from "../../../../../components/image/Image";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
@@ -86,13 +85,12 @@ const DocumentList = forwardRef(
         const hasDownalodPermission = hasFunctionalPermission(
           SecurityKey.DOWNALOD
         );
-        setShowDeleteButton(hasDeletePermission?.hasAccess ?? false);
-        setShowDownalodButton(hasDownalodPermission?.hasAccess ?? false);
+
         if (hasDeletePermission) {
           if (hasDeletePermission.hasAccess === true) {
-            // setShowDeleteButton(true);
+            setShowDeleteButton(true);
           } else {
-            // setShowDeleteButton(false);
+            setShowDeleteButton(false);
           }
         }
         if (hasDownalodPermission) {
@@ -111,7 +109,6 @@ const DocumentList = forwardRef(
           ? supplierDocumentTransformData(isListData)
           : documentTransformData(isListData);
 
-
         // Ensure modifyData is an array
         if (!Array.isArray(modifyData)) {
           modifyData = Object.values(modifyData).flat();
@@ -119,19 +116,9 @@ const DocumentList = forwardRef(
 
         // Filter documents based on isArchive flag
 
-
-
-
-        if (isArchive) {
-          var filteredData = modifyData.filter(
-            (doc) => doc.isArchive === isArchive
-          );
-        } else if (!isArchive) {
-          var filteredData = modifyData.filter(
-            (doc) => doc.isArchive === isArchive
-          );
-        }
-
+        const filteredData = modifyData.filter(
+          (doc) => doc.isArchive === isArchive
+        );
         setDocumentListData(filteredData);
 
         // Detect file types
@@ -301,23 +288,25 @@ const DocumentList = forwardRef(
                               <Iconify icon="uil:folder-download" />
                             </span>
                           )}
-                          {isArchive ? null : (
-                            <span
-                              className="action-icon"
-                              onClick={() =>
-                                handleDelete(
-                                  isSupplier
-                                    ? data.supplierDocumentId
-                                    : data.customerDocumentId
-                                )
-                              }
-                            >
-                              <Iconify
-                                icon="mingcute:delete-2-line"
-                                className="delete-icon"
-                              />
-                            </span>
-                          )}
+                          {isArchive
+                            ? null
+                            : showDeleteButton && (
+                                <span
+                                  className="action-icon"
+                                  onClick={() =>
+                                    handleDelete(
+                                      isSupplier
+                                        ? data.supplierDocumentId
+                                        : data.customerDocumentId
+                                    )
+                                  }
+                                >
+                                  <Iconify
+                                    icon="mingcute:delete-2-line"
+                                    className="delete-icon"
+                                  />
+                                </span>
+                              )}
                         </div>
                       </div>
                     </div>
@@ -331,8 +320,6 @@ const DocumentList = forwardRef(
             )}
           </div>
         </div>
-
-    
 
         <SidebarModel
           // showModal={isModalOpen}
