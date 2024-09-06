@@ -9,7 +9,6 @@ import { dictionaryFormData } from "./config/Dictionary.Data";
 
 
 const Dictionary = () => {
-  const childRef = useRef();
   const getDataRef=useRef();
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -33,10 +32,10 @@ const Dictionary = () => {
   };
 
   const onSuccess = () => {
+     setIsModelOpen(true);
     if (getDataRef.current) {
       getDataRef.current.callChildFunction();
     }
-    setIsModelOpen(false);
   };
 
   return (
@@ -71,8 +70,7 @@ const Dictionary = () => {
           initData={formData}
           onClose={onSidebarClose}
           onSuccess={onSuccess}
-          isModelOpen={isModelOpen}
-          childRef={childRef}
+          isModelOpen={isModelOpen}     
         /> 
       </SidebarModel>
     </div>
