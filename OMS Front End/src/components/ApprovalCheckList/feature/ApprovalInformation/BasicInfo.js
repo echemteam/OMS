@@ -4,14 +4,6 @@ import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
 import PropTypes from "prop-types";
 
 const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById,approvalChekedData ,handleCheckbox}) => {
-
-const BasicInformation = ({
-  isModelOpen,
-  mainId,
-  getBasicInformationById,
-  approvalChekedData,
-  handleCheckbox,
-}) => {
   const [basicInformation, setBasicInformation] = useState();
   const [isChecked, setIsChecked] = useState(
     approvalChekedData?.isChecked || false
@@ -86,5 +78,5 @@ BasicInformation.propTypes = {
   }),
   handleCheckbox: PropTypes.func.isRequired
 };
-}
+
 export default BasicInformation;
