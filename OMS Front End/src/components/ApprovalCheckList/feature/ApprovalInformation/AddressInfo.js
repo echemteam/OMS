@@ -9,12 +9,14 @@ const AddressInformation = ({
   mainId,
   getAddressById,
   isSubCustomer,
-  approvalChekedData ,
-  handleCheckbox
+  approvalChekedData,
+  handleCheckbox,
 }) => {
   //** State */
   const [addressInformation, setAddressInformation] = useState([]);
-  const [isChecked,setIsChecked]=useState(approvalChekedData?.isChecked || false);
+  const [isChecked, setIsChecked] = useState(
+    approvalChekedData?.isChecked || false
+  );
 
   //** API Call's */
   const [
@@ -51,9 +53,9 @@ const AddressInformation = ({
     }
   }, [isGetAddressByIdFetching, isGetAddressByIdSuccess, isGetAddressByIdData]);
 
-  const handleChange = (checkedValue,newValue) => {
+  const handleChange = (checkedValue, newValue) => {
     setIsChecked(newValue);
-    handleCheckbox(checkedValue,newValue);  
+    handleCheckbox(checkedValue, newValue);
   };
 
   return (
@@ -62,31 +64,28 @@ const AddressInformation = ({
         <h5> Address Information </h5>
         <div className="checkbox-part">
           <Checkbox
-            name={"addressInformation"} 
+            name={"addressInformation"}
             dataField={"addressInformation"}
             checked={isChecked || false}
-            onChange={handleChange}   />
+            onChange={handleChange}
+          />
         </div>
       </div>
       <div className="card-info-checklist">
-        <div className="row">
-          {addressInformation &&
-            addressInformation.map((address, index) => (
-              <div className="col-6">
-                <div className="address-card-part" key={index}>
-                  <h6>{address.type}</h6>
-                  <h6>{address.addressLine1}</h6>
-                  <p>{address.isPreferredBilling}</p>
-                  <p>
-                    {address.cityName},{" "}
-                    {address.stateCode ? address.stateCode : address.stateName}{" "}
-                    {address.zipCode}
-                    <div>{address.countryName}</div>
-                  </p>
-                </div>
-              </div>
-            ))}
-        </div>
+        {addressInformation &&
+          addressInformation.map((address, index) => (
+            <div className="address-card-part" key={index}>
+              <h6 className="title">{address.type}</h6>
+              <h6 className="add-line-desc">{address.addressLine1}</h6>
+              <p className="add-line-desc">{address.isPreferredBilling}</p>
+              <p className="add-line-desc">
+                {address.cityName},{" "}
+                {address.stateCode ? address.stateCode : address.stateName}{" "}
+                {address.zipCode}
+                <div>{address.countryName}</div>
+              </p>
+            </div>
+          ))}
       </div>
     </>
   );

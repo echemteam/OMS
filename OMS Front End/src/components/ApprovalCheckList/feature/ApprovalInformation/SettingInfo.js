@@ -7,12 +7,14 @@ const SettingInformation = ({
   isModelOpen,
   mainId,
   getFinacialSettingById,
-  approvalChekedData ,
-  handleCheckbox
+  approvalChekedData,
+  handleCheckbox,
 }) => {
   //** State */
   const [finacialInformation, setFinacialInformation] = useState();
-  const [isChecked,setIsChecked]=useState(approvalChekedData?.isChecked || false);
+  const [isChecked, setIsChecked] = useState(
+    approvalChekedData?.isChecked || false
+  );
 
   //** API Call's */
   const [
@@ -60,9 +62,9 @@ const SettingInformation = ({
         return "Unknown Method";
     }
   };
-  const handleChange = (checkedValue,newValue) => {
+  const handleChange = (checkedValue, newValue) => {
     setIsChecked(newValue);
-    handleCheckbox(checkedValue,newValue);  
+    handleCheckbox(checkedValue, newValue);
   };
 
   return (
@@ -70,23 +72,34 @@ const SettingInformation = ({
       <div className="card-top-title">
         <h5> Finacial Information </h5>
         <div className="checkbox-part">
-          <Checkbox 
-            name={"settingInformation"} 
+          <Checkbox
+            name={"settingInformation"}
             dataField={"settingInformation"}
             checked={isChecked || false}
-            onChange={handleChange}   />
+            onChange={handleChange}
+          />
         </div>
       </div>
-      {finacialInformation && (
-        <>
-          <h6>
-            Payment Method:{" "}
-            {getPaymentMethodName(finacialInformation.paymentMethodId)}
-          </h6>
-          <h6> Credit Limit: {finacialInformation.creditLimit}</h6>
-          <h6> Billing Currency: {finacialInformation.billingCurrency}</h6>
-        </>
-      )}
+      <div className="card-info-checklist">
+        {finacialInformation && (
+          <div className="card-part">
+            <h6 className="name-title">
+              <span className="label">Payment Method:</span>
+              <p className="name-desc">
+                {getPaymentMethodName(finacialInformation.paymentMethodId)}
+              </p>
+            </h6>
+            <h6 className="name-title">
+              <span className="label">Credit Limit:</span>
+              <p className="name-desc">{finacialInformation.creditLimit}</p>
+            </h6>
+            <h6 className="name-title">
+              <span className="label">Billing Currency:</span>
+              <p className="name-desc">{finacialInformation.billingCurrency}</p>
+            </h6>
+          </div>
+        )}
+      </div>
     </>
   );
 };
