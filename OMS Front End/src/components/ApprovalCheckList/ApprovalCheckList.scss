@@ -54,23 +54,24 @@
     .info-sec {
       .card-info {
         display: flex;
+        padding: 0 8px;
 
         // flex-direction: column;
         .card-label {
           font-weight: 700;
-          color: var(--themeColor);
+          color: var(--textColor);
           margin-right: 10px;
           font-size: var(--commonFont);
         }
 
         .desc-part {
-          color: var(--blackColor); 
-          font-weight: 800;
+          color: var(--textColor);
         }
       }
     }
 
     .card-info-checklist {
+      padding: 0 8px;
       .address-card-part {
         margin-bottom: 7px;
         margin-top: 5px;
