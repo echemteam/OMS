@@ -69,6 +69,22 @@ export const OrganizationBankFormData = {
             },
         },
         {
+            id: "bankBranch",
+            lable: "Bank Branch",
+            Field_Name: "Bank Branch",
+            fieldType: FormFieldTypes.INPUT,
+            dataField: "bankBranch",
+            fieldSetting: {
+                placeholder: "Enter Bank Branch",
+                allowSpace: true,
+                maxLength:100,
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-md-6 mb-3 mb-input relative",
+            },
+        },
+        {
             id: "bankAddress",
             lable: "Bank Address ",
             Field_Name: "Bank Address",
@@ -84,22 +100,7 @@ export const OrganizationBankFormData = {
                 containerCss: "col-md-6 mb-3 mb-input relative",
             },
         },
-        {
-            id: "bankBranch",
-            lable: "Bank Branch ",
-            Field_Name: "Bank Branch",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "bankBranch",
-            fieldSetting: {
-                placeholder: "Enter Bank Branch",
-                allowSpace: true,
-                maxLength:100,
-            },
-            validation: [{ type: "require" }],
-            style: {
-                containerCss: "col-md-6 mb-3 mb-input relative",
-            },
-        },
+        
     ],
     formSetting: {
         isViewOnly: false

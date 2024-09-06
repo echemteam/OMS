@@ -136,7 +136,7 @@ const ProductPriceList = ({ productId, onPriceListUpdate }) => {
 
   return (
     <CardSection cardTitle="Product Price List">
-      <div className="order-price-list">
+      <div className="order-price-list responsive-grid">
         <FinalMolGrid
           key={JSON.stringify(priceList)}
           ref={molGridRef}

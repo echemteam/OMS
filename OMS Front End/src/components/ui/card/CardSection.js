@@ -56,7 +56,7 @@ function CardSection({
       }${rightButton ? "card-button-only" : ""}`}
     >
       {(cardTitle || rightButton || searchFilter || searchInput) && (
-        <div className="card-top-title-btn">
+        <div className="card-top-title-btn responsive-grid-title">
           {cardTitle && (
             <div className="section-title mr-3">
               <h4>{cardTitle}</h4>

@@ -1143,7 +1143,9 @@ a {
       .tab-sub-content {
         padding-top: 0;
 
-        .tab-sub-body-section {}
+        .tab-sub-body-section {
+          margin-right: 10px;
+        }
       }
     }
   }
@@ -1281,6 +1283,10 @@ a {
     @media only screen and (max-width: 1750px) {
       margin-top: 5px;
     }
+    
+  }
+  @media only screen and (max-width: 1200px) {
+    margin-left: 0.75px;
   }
 }
 
@@ -2235,6 +2241,7 @@ a {
 
     li {
       margin-bottom: 5px;
+      word-break: break-all;
     }
   }
 }
@@ -3306,6 +3313,17 @@ input[type="checkbox"]:disabled {
 
   .validation-text {
     position: absolute;
+  }
+}
+
+.lable-none{
+  .input-label{
+    visibility: hidden;
+  }
+  .input-label-part{
+    input{
+      margin-top: 0;
+    }
   }
 }
 

@@ -288,3 +288,49 @@
     }
   }
 }
+
+@media only screen and (max-width: 1024px) {
+  .sidebar-section{
+    position: absolute;
+    z-index: 999;
+
+    
+  }
+  .main-page-layout {
+    .middle-page-section {
+      width: 100%;
+      margin-left: 80px;     
+    }
+  }
+
+  .collapsed{
+    .tab-bg{
+      &::after{
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: #00000050;
+        z-index: 0;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        transition: all 0.5s ease-in-out;
+      }
+  }
+    }
+
+  .tab-bg{
+      &::after{
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: #00000050;
+        z-index: 99;
+        position: absolute;
+        top: 0;
+        left: 0%;
+        transition: all 0.5s ease-in-out;
+      }
+  }
+ 
+}
