@@ -69,5 +69,5 @@ export const SuccessMessage = {
 	DefaultUSATaxId: 'Minimum 10 and Maximum 10 characters allowed.',
 	ApprovalSuccess: "We are currently reviewing your request and will respond shortly. If approved, your request will be added or updated accordingly.",
 	FieldsApprovalSuccess: "{0} is currently under review, and a response will be provided shortly.",
-	FieldsApprovalExists: " Additionally, {0} already exists in our records and, therefore, cannot be accepted."
+	FieldsApprovalExists: " {0} already exists in our records and, therefore, cannot be accepted."
 };
