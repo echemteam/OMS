@@ -40,7 +40,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [formData, setFormData] = useState(customerbasicData);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const [isResponsibleUser, setIsResponsibleUser] = useState(false);
-    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
     const { nextRef, customerId, setCustomerId, moveNextPage, setCustomerCountryId } = useContext(BasicDetailContext);
 
     //** API Call's */
@@ -220,7 +220,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                     eventName: isOpen && FunctionalitiesName.CUSTOMERUPDATE
                 }
                 const modifyData = await ValidateRequestByApprovalRules(request);
-                if (modifyData.newValue && modifyData.isallSuccessful) {
+                if (modifyData.newValue) {
                     addEditCustomersBasicInformation(modifyData.newValue);
                 }
             } else {
@@ -238,7 +238,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                         }
                         const modifyData = await ValidateRequestByApprovalRules(request);
                         if (isOpen) {
-                            if (modifyData.newValue && modifyData.isallSuccessful) {
+                            if (modifyData.newValue) {
                                 addEditCustomersBasicInformation(modifyData.newValue);
                             }
                         } else {
@@ -352,7 +352,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                                 buttonTypeClassName="theme-button"
                                 buttonText="Update"
                                 onClick={handleAddBasicDetails}
-                                isLoading={isAddEditCustomersBasicInformationLoading}
+                                isLoading={isApprovelLoading || isAddEditCustomersBasicInformationLoading}
                                 isDisable={isButtonDisable}
                             />
                             <Buttons

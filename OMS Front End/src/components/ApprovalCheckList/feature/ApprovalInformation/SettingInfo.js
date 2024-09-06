@@ -7,9 +7,12 @@ const SettingInformation = ({
   isModelOpen,
   mainId,
   getFinacialSettingById,
+  approvalChekedData ,
+  handleCheckbox
 }) => {
   //** State */
   const [finacialInformation, setFinacialInformation] = useState();
+  const [isChecked,setIsChecked]=useState(approvalChekedData?.isChecked || false);
 
   //** API Call's */
   const [
@@ -57,13 +60,21 @@ const SettingInformation = ({
         return "Unknown Method";
     }
   };
+  const handleChange = (checkedValue,newValue) => {
+    setIsChecked(newValue);
+    handleCheckbox(checkedValue,newValue);  
+  };
 
   return (
     <>
       <div className="card-top-title">
         <h5> Finacial Information </h5>
         <div className="checkbox-part">
-          <Checkbox />
+          <Checkbox 
+            name={"settingInformation"} 
+            dataField={"settingInformation"}
+            checked={isChecked || false}
+            onChange={handleChange}   />
         </div>
       </div>
       {finacialInformation && (

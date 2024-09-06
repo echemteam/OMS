@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { AddressType } from "../../../../utils/Enums/commonEnums";
 import PropTypes from "prop-types";
@@ -8,12 +9,12 @@ const AddressInformation = ({
   mainId,
   getAddressById,
   isSubCustomer,
-  itemList,
-  handleCheckChange,
-  checkItemListId,
+  approvalChekedData ,
+  handleCheckbox
 }) => {
   //** State */
   const [addressInformation, setAddressInformation] = useState([]);
+  const [isChecked,setIsChecked]=useState(approvalChekedData?.isChecked || false);
 
   //** API Call's */
   const [
@@ -50,12 +51,21 @@ const AddressInformation = ({
     }
   }, [isGetAddressByIdFetching, isGetAddressByIdSuccess, isGetAddressByIdData]);
 
+  const handleChange = (checkedValue,newValue) => {
+    setIsChecked(newValue);
+    handleCheckbox(checkedValue,newValue);  
+  };
+
   return (
     <>
       <div className="card-top-title">
         <h5> Address Information </h5>
         <div className="checkbox-part">
-          <Checkbox />
+          <Checkbox
+            name={"addressInformation"} 
+            dataField={"addressInformation"}
+            checked={isChecked || false}
+            onChange={handleChange}   />
         </div>
       </div>
       <div className="card-info-checklist">
@@ -80,5 +90,15 @@ const AddressInformation = ({
       </div>
     </>
   );
+};
+AddressInformation.propTypes = {
+  isModelOpen: PropTypes.bool.isRequired,
+  mainId: PropTypes.string.isRequired,
+  getAddressById: PropTypes.func.isRequired,
+  isSubCustomer: PropTypes.bool.isRequired,
+  approvalChekedData: PropTypes.shape({
+    isChecked: PropTypes.bool,
+  }).isRequired,
+  handleCheckbox: PropTypes.func.isRequired,
 };
 export default AddressInformation;

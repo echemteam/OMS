@@ -24,7 +24,8 @@ const AddressDetailCard = forwardRef(
     getByIdRef,
     selectedAddressTypeId,
     deleteAddress,
-    statusId
+    statusId,
+    isModelOpen
   }) => {
     //** States */
     const [addressData, setAddressData] = useState([]);
@@ -50,11 +51,12 @@ const AddressDetailCard = forwardRef(
       { isSuccess: isDeleteAddressSuccess, data: isDeleteAddressData },
     ] = deleteAddress();
 
-    //** Use Effect */
     useEffect(() => {
-      keyId && getById(keyId);
+      if (!isModelOpen && keyId) {
+        getById(keyId);
+      }
     }, [keyId, selectedAddressTypeId]);
-
+    
     useEffect(() => {
       if (
         !isGetAddresssByCustomerIdFetching &&
@@ -73,7 +75,7 @@ const AddressDetailCard = forwardRef(
       isGetAddresssByCustomerId,
       GetAddresssByCustomerIdData,
     ]);
-
+    
     useEffect(() => {
       if (isDeleteAddressSuccess && isDeleteAddressData) {
         ToastService.success(isDeleteAddressData.errorMessage);

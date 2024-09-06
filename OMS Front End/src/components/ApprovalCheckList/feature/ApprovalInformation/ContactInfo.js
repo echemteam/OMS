@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { ContactType } from "../../../../utils/Enums/commonEnums";
 import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
 
-const ContactInformation = ({ isModelOpen, mainId, getContactById }) => {
+const ContactInformation = ({ isModelOpen, mainId, getContactById ,approvalChekedData ,handleCheckbox}) => {
   //** State */
   const [contactInformation, setContactInformation] = useState([]);
+  const [isChecked,setIsChecked]=useState(approvalChekedData?.isChecked || false);
 
   //** API Call's */
   const [
@@ -34,6 +35,10 @@ const ContactInformation = ({ isModelOpen, mainId, getContactById }) => {
       setContactInformation(isGetcontactItem);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetcontactItem]);
+  const handleChange = (checkedValue,newValue) => {
+    setIsChecked(newValue);
+    handleCheckbox(checkedValue,newValue);  
+  };
 
   return (
     <React.Fragment>
@@ -41,7 +46,11 @@ const ContactInformation = ({ isModelOpen, mainId, getContactById }) => {
         <div className="card-top-title">
           <h5> Contact Information </h5>
           <div className="checkbox-part">
-            <Checkbox />
+            <Checkbox
+              name={"contactInformation"} 
+              dataField={"contactInformation"}
+              checked={isChecked || false}
+              onChange={handleChange}   />
           </div>
         </div>
         {contactInformation &&

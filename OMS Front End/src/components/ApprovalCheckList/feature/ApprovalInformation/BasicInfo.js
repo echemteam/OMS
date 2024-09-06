@@ -1,8 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
 
-const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById }) => {
+
+const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById,approvalChekedData ,handleCheckbox}) => {
   const [basicInformation, setBasicInformation] = useState();
+  const [isChecked,setIsChecked]=useState(approvalChekedData?.isChecked || false);
+  
+
 
   //** API Call's */
   const [
@@ -34,12 +39,23 @@ const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById }) => {
     isGetCustomerBasicInfoByIdData,
   ]);
 
+  const handleChange = (checkedValue,newValue) => {
+    setIsChecked(newValue);
+    handleCheckbox(checkedValue,newValue);  
+  };
+
   return (
     <>
       <div className="card-top-title">
         <h5> Basic Information </h5>
         <div className="checkbox-part">
-          <Checkbox />
+          <Checkbox 
+          name={"basicInformation"} 
+          dataField={"basicInformation"}
+          checked={isChecked || false}
+          onChange={handleChange}  
+          
+          />
         </div>
       </div>
 

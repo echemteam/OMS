@@ -19,7 +19,7 @@ export const viewFunctionalEventsData = {
       allowShort: true,
     },
     {
-      name: "create data",
+      name: "created date",
       colStyle: {
         width: "20%",
       },
@@ -41,14 +41,6 @@ export const viewFunctionalEventsData = {
         isUTC: true,
         format: "MM/DD/YYYY hh:mm A ",
       },
-    },
-    {
-      name: "event Name",
-      fieldName: "eventName",
-      colStyle: {
-        width: "20%",
-      },
-      allowShort: true,
     },
     {
       name: "description",

@@ -158,3 +158,8 @@ export const DocumentTypes = {
     OURSUBMITTEDFORMS: 3,
     SUPPLIERDETAILSFORM: 4
 };
+export const NoteTypes = {
+    DefaultNote: "Default Note",
+    InvoiceSubmissionInstruction: "Invoice Submission Instruction",
+
+}

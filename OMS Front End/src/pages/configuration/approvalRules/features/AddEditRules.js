@@ -9,7 +9,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
 import { setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { rulesFormData } from "./config/RulesForm.data";
-import { useAddEditApprovalConfigurationMutation, useLazyGetAllFunctionalitiesFieldsQuery, useLazyGetAllFunctionalitiesQuery, useLazyGetAllModulesQuery, useLazyGetApprovalConfigurationByApprovalConfigurationIdQuery } from "../../../../app/services/configurationAPI";
+import { useAddEditApprovalConfigurationMutation, useLazyGetAllFunctionalitiesFieldsQuery, useLazyGetAllFunctionalitiesQuery, useLazyGetAllFunctionalityEventByFunctionalityIdQuery, useLazyGetAllModulesQuery, useLazyGetApprovalConfigurationByApprovalConfigurationIdQuery } from "../../../../app/services/configurationAPI";
 import { useLazyGetAllRolesQuery } from "../../../../app/services/securityPermissionsAPI";
 import { FieldSettingType } from "../../../../utils/Enums/commonEnums";
 
@@ -34,6 +34,13 @@ const AddEditRules = (props) => {
       data: allGetAllFunctionalitiesData,
     },
   ] = useLazyGetAllFunctionalitiesQuery();
+  const [getAllFunctionalityEventByFunctionalityId,
+    {
+      isFetching: isGetAllFunctionalityEventByFunctionalityIdFetching,
+      isSuccess: isGetAllFunctionalityEventByFunctionalityIdSucess,
+      data: isGetAllFunctionalityEventByFunctionalityIdData,
+    },
+  ] = useLazyGetAllFunctionalityEventByFunctionalityIdQuery();
 
   const [
     getAllFunctionalitiesFields,
@@ -63,6 +70,7 @@ const AddEditRules = (props) => {
   useEffect(() => {
     getAllModules();
     getAllRoles();
+   
   }, []);
 
   useEffect(() => {
@@ -74,6 +82,7 @@ const AddEditRules = (props) => {
   useEffect(() => {
     if (functionalityID > 0) {
       getAllFunctionalitiesFields(functionalityID);
+      getAllFunctionalityEventByFunctionalityId(functionalityID);
     }
   }, [functionalityID]);
 
@@ -83,6 +92,14 @@ const AddEditRules = (props) => {
     }
 
   }, [isgetAllModulesSucess, allGetAllModulesData])
+
+  useEffect(() => {
+    
+    if (!isGetAllFunctionalityEventByFunctionalityIdFetching && isGetAllFunctionalityEventByFunctionalityIdSucess && isGetAllFunctionalityEventByFunctionalityIdData) {
+      handleFunctionalityEventOption(isGetAllFunctionalityEventByFunctionalityIdData);
+    }
+
+  }, [isGetAllFunctionalityEventByFunctionalityIdFetching,isGetAllFunctionalityEventByFunctionalityIdSucess, isGetAllFunctionalityEventByFunctionalityIdData])
 
   // useEffect(() => {
   //   if (!isGetAllFunctionalitiesFetching && isGetAllFunctionalitiesSucess && allGetAllFunctionalitiesData) {
@@ -199,6 +216,10 @@ const AddEditRules = (props) => {
     );
   };
 
+  const handleFunctionalityEventOption = (responseData) => {
+    setDropDownOptionField(responseData, "functionalityEventId", "eventName", rulesFormData, "functionalityEventId"
+    );
+  };
   useEffect(() => {
     if (isAddEditApprovalConfigurationSucess && allAddEditApprovalConfigurationData) {
       if (allAddEditApprovalConfigurationData.errorMessage.includes("exists")) {
@@ -244,6 +265,7 @@ const AddEditRules = (props) => {
         approvalAction: isGetApprovalConfigurationByApprovalConfigurationIdData.approvalAction,
         functionalitiesFieldId: isGetApprovalConfigurationByApprovalConfigurationIdData.functionalitiesFieldId,
         functionalityId: isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId,
+        functionalityEventId:isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityEventId,
         moduleId: isGetApprovalConfigurationByApprovalConfigurationIdData.moduleId,
         roleId: isGetApprovalConfigurationByApprovalConfigurationIdData.approverRoleId,
         ruleName: isGetApprovalConfigurationByApprovalConfigurationIdData.ruleName,
@@ -348,7 +370,7 @@ const AddEditRules = (props) => {
 
 
   const handleAddEditRule = () => {
-    let data = ruleFormRef.current.getFormData();
+        let data = ruleFormRef.current.getFormData();
     if (data) {
       const requestData = {
         ...data,
@@ -362,6 +384,11 @@ const AddEditRules = (props) => {
           data.functionalityId && typeof data.functionalityId === "object"
             ? data.functionalityId.value
             : data.functionalityId,
+
+            functionalityEventId:
+            data.functionalityEventId && typeof data.functionalityEventId === "object"
+              ? data.functionalityEventId.value
+              : data.functionalityEventId,
         functionalitiesFieldId:
           data.functionalitiesFieldId ? data.functionalitiesFieldId &&
             typeof data.functionalitiesFieldId === "object"

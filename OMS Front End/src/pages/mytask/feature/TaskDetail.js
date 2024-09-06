@@ -19,6 +19,8 @@ import Buttons from "../../../components/ui/button/Buttons";
 import FormCreator from "../../../components/Forms/FormCreator";
 import CenterModel from "../../../components/ui/centerModel/CenterModel";
 import { addResonData } from "../config/RejectReason.data";
+import Base64FileViewer from "../../../common/features/component/Base64FileView/Base64FileViewer";
+import { FunctionalitiesName } from "../../../utils/Enums/ApprovalFunctionalities";
 
 const parseJson = (jsonStr) => {
   try {
@@ -89,6 +91,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
     status = "No Status",
     oldValue = "{}",
     newValue = "{}",
+    eventName = ""
   } = approvedData;
 
   const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(oldValue, newValue, fieldName);
@@ -194,8 +197,8 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
             {FirstSecondLetter(requestedByUserName)}
           </span>
           <div className="title">
-            {requestedByUserName}
-            <span className="sub-title">{functionalityName}</span>
+            <h6 className="">{eventName} ({functionalityName})</h6>
+            <span className="sub-title"><b>Requested By:</b> {requestedByUserName}</span>
           </div>
         </div>
         <div>
@@ -233,23 +236,27 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
 
       {approvedData.isFunctional ?
         <div className="value-comparison">
-          <div className="value-block w-100">
-            <span className="value-title">New Value</span>
-            {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
-              <ul className="value-content pl-0">
-                {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
-                  <li key={key}>
-                    <span className="value-label">{key}:</span>
-                    <span className="value-data ml-2">
-                      {renderValue(value)}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div className="no-value">No new value available</div>
-            )}
-          </div>
+          {approvedData?.eventName === FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ?
+            <Base64FileViewer documentData={approvedData.newValue} isLoading={isFetching} />
+            :
+            <div className="value-block w-100">
+              <span className="value-title">New Value</span>
+              {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
+                <ul className="value-content pl-0">
+                  {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
+                    <li key={key}>
+                      <span className="value-label">{key}:</span>
+                      <span className="value-data ml-2">
+                        {renderValue(value)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="no-value">No new value available</div>
+              )}
+            </div>
+          }
         </div>
         :
         <div className="value-comparison">

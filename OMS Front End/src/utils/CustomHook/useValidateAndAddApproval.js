@@ -8,6 +8,7 @@ import SwalAlert from "../../services/swalService/SwalService";
 import ToastService from "../../services/toastService/ToastService";
 import { useAddApprovalRequestsMutation } from "../../app/services/commonAPI";
 import { useCheckFieldValueExistsMutation } from "../../app/services/ApprovalAPI";
+import { useState } from "react";
 
 const fieldValidationMapping = {
     [FunctionalitiesName.CUSTOMERUPDATE]: ['TaxId', 'Name']
@@ -17,6 +18,8 @@ const fieldValidationMapping = {
 export const useValidateAndAddApprovalRequests = () => {
     // Hook to handle API requests for adding approval requests
     const { success, warning } = SwalAlert();
+    const [isApprovelLoading, setIsApprovelLoading] = useState(false);
+
     const [addApprovalRequest] = useAddApprovalRequestsMutation();
     const [checkFieldValueExists] = useCheckFieldValueExistsMutation();
 
@@ -32,6 +35,7 @@ export const useValidateAndAddApprovalRequests = () => {
      * @returns {Object} - The updated requestData object with normalized values.
     */
     const ValidateRequestByApprovalRules = async (requestData) => {
+        setIsApprovelLoading(true); // Start loader
 
         // Retrieve approval rules from local storage
         const approvalRulesList = getData("approvalRules") || [];
@@ -113,7 +117,7 @@ export const useValidateAndAddApprovalRequests = () => {
                                 }
                                 originalValues.newValue[originalKeyName] = oldFieldValue;
                                 let req = {
-                                    fieldName: originalKeyName,
+                                    fieldName: fieldName,
                                     errorMessage: response.data.errorMessage,
                                     isExist: response.data.exist
                                 }
@@ -150,6 +154,8 @@ export const useValidateAndAddApprovalRequests = () => {
                 finalMessage && warning(finalMessage);
             }
         }
+
+        setIsApprovelLoading(false); // End loader
 
         // Return the updated requestData with normalized values
         return {
@@ -226,7 +232,7 @@ export const useValidateAndAddApprovalRequests = () => {
         }
         if (findExistFields.length > 0) {
             const existFieldsNames = getFieldNames(findExistFields);
-            message = message !== '' ? message + " and " + SuccessMessage.FieldsApprovalExists.replace("{0}", existFieldsNames) :
+            message = message !== '' ? message + SuccessMessage.FieldsApprovalExists.replace("{0}", existFieldsNames) :
                 SuccessMessage.FieldsApprovalExists.replace("{0}", existFieldsNames);
         }
         return message;
@@ -236,11 +242,11 @@ export const useValidateAndAddApprovalRequests = () => {
         if (fields.length > 0) {
             const fieldNames = fields.map(data => data.fieldName);
             return fieldNames.length > 1
-                ? fieldNames.slice(0, -1).join(', ') + ' and ' + fieldNames.slice(-1)
+                ? fieldNames.slice(0, -1).join(', ') + fieldNames.slice(-1)
                 : fieldNames[0];
         }
         return '';
     };
 
-    return { ValidateRequestByApprovalRules, getEventName, compareObj };
+    return { ValidateRequestByApprovalRules, getEventName, compareObj, isApprovelLoading };
 }

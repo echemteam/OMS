@@ -32,6 +32,8 @@ const PendingTask = (props) => {
         if (props.isApproval) {
             getApprovalRequestList();
         }
+        props.setIsApproval(false);
+
     }, [props.isApproval]);
 
     useEffect(() => {
@@ -55,20 +57,15 @@ const PendingTask = (props) => {
                 <div className="tabs">
                     {pendingData.length > 0 ? (
                         pendingData.map((tab) => (
-                            <button
-                                key={tab.approvalRequestId} // Use a unique key
-                                className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""}`}
-                                onClick={() => handleTabClick(tab.approvalRequestId)}
-                            >
+                            <button key={tab.approvalRequestId} // Use a unique key
+                                className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""}`} onClick={() => handleTabClick(tab.approvalRequestId)} >
                                 <div className="d-flex align-items-start">
-                                    <span className="profile-icon">  {FirstSecondLetter(tab.functionalityName)}</span>
+                                    <span className="profile-icon">  {FirstSecondLetter(tab.eventName)}</span>
                                     <div className="title">
-                                        {tab.functionalityName}
+                                        {tab.eventName}
                                         <div className='bage-fix'>
                                             <span className="sub-title">{tab.moduleName}</span>
-                                            <div
-                                                className={`mytask-type-badge ${tab.isFunctional ? "badge-accept" : ""}`}
-                                            >
+                                            <div className={`mytask-type-badge ${tab.isFunctional ? "badge-accept" : ""}`}>
                                                 {tab.isFunctional ? "Functional" : "Field"}
                                             </div>
                                         </div>

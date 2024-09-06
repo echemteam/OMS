@@ -3,21 +3,19 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 //** Lib's */
 import Buttons from "../ui/button/Buttons";
-import CheckListItem from "./CheckListItem";
+import FileViewer from "react-file-viewer";
 import { AppIcons } from "../../data/appIcons";
 import DataLoader from "../ui/dataLoader/DataLoader";
 import SidebarModel from "../ui/sidebarModel/SidebarModel";
 import { transformData } from "./Config/ApprovalTransformData";
 //** Service's */
 import ToastService from "../../services/toastService/ToastService";
-import {
-  useAddUserChecklistResponseMutation,
-  useLazyGetUserCheckListQuery,
-} from "../../app/services/ApprovalAPI";
-
+import {useLazyGetUserCheckListQuery,} from "../../app/services/ApprovalAPI";
+import DropDown from "../../components/ui/dropdown/DropDrown";
 import "./ApprovalCheckList.scss";
-import DropDown from "../ui/customdropdown/Dropdown";
-import CustomDropdown from "../ui/customdropdown/CustomDropdown";
+import { useLazyGetAllDocumentByOwnerIdQuery } from "../../app/services/commonAPI";
+import { ModulePathName } from "../../utils/Enums/commonEnums";
+import { useLazyDownloadDocumentQuery } from "../../app/services/documentAPI";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -44,27 +42,127 @@ const ApprovalCheckList = ({
   getFinacialSettingById,
   isSupplierApproval,
   isSubCustomer,
+  ownerType,
 }) => {
   //** State */
   const [checkListData, setCheckListData] = useState([]);
+  const [documentListData, setDocumentListData] = useState([]);
+  const [document, setDocument] = useState(null);
+  const [ ,setIsModalOpen] = useState(false);
+  const [selectedDocument, setSelectedDocument] = useState(null);
+  const [getFileType, setGetFileType] = useState([]);
+  const [actionType, setActionType] = useState(null);
+  const [approvalChekedData,setApprovalChekedData]=useState([{name:"basicInformation",isCheked:false,},
+                            {name:"addressInformation",isCheked:false,},
+                            {name:"contactInformation",isCheked:false,},
+                            {name:"settingInformation",isCheked:false,}]);
+
+   const addressInfoCheck=[{name:"addressInformation",isCheked:false}];
 
   //** API Call's */
-  const [
-    getCheckList,
-    {
+  const [ getCheckList,{
       isFetching: isGetCheckListFetching,
       isSuccess: isGetCheckListSuccess,
       data: isGetCheckListData,
     },
   ] = useLazyGetUserCheckListQuery();
+  // const [
+  //   addUserCheckResponse,
+  //   {
+  //     isLoading: isAddUserCheckResponseLoading,
+  //     isSuccess: isAddUserCheckResponseSuccess,
+  //     data: isAddUserCheckResponseData,
+  //   },
+  // ] = useAddUserChecklistResponseMutation();
   const [
-    addUserCheckResponse,
+    getAllDocumentByOwnerId,
     {
-      isLoading: isAddUserCheckResponseLoading,
-      isSuccess: isAddUserCheckResponseSuccess,
-      data: isAddUserCheckResponseData,
+      isFetching: isGetAllDocumentByOwnerIdFetching,
+      isSuccess: isGetAllDocumentByOwnerIdSuccess,
+      data: isGetAllDocumentByOwnerIdData,
     },
-  ] = useAddUserChecklistResponseMutation();
+  ] = useLazyGetAllDocumentByOwnerIdQuery();
+
+  const [
+    Downalod,
+    {
+      isFetching: isDownalodFetching,
+      isSuccess: isDownalodSucess,
+      data: isDownalodData,
+    },
+  ] = useLazyDownloadDocumentQuery();
+
+  const handleCheckbox = (name, isChecked) => {
+    const listData= isSubCustomer ? addressInfoCheck : approvalChekedData
+    const updatedData = listData.map((item) =>
+      item.name === name ? { ...item, isCheked: isChecked } : item
+    );
+    setCheckListData(updatedData);
+    setApprovalChekedData(updatedData);
+  }
+
+  useEffect(() => {
+    if (mainId) {
+      let req = {
+        ownerId: mainId,
+        ownerType: ownerType,
+      };
+      getAllDocumentByOwnerId(req);
+    }
+  }, [mainId]);
+
+  useEffect(() => {
+    if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
+      const fileData = isDownalodData.fileData;
+      const blob = new Blob([fileData], { type: fileData.type });
+      const fileURL = URL.createObjectURL(blob);
+      if (actionType === "view") {
+        setSelectedDocument(fileURL);
+        setGetFileType(determineFileType(isDownalodData.fileName));
+      }
+    }
+  }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
+  useEffect(() => {
+    if (
+      !isGetAllDocumentByOwnerIdFetching &&
+      isGetAllDocumentByOwnerIdSuccess &&
+      isGetAllDocumentByOwnerIdData
+    ) {
+       const transformedData = isGetAllDocumentByOwnerIdData.map((item) => ({
+        value: item.documentId,
+        label: item.name,
+        attachment: item.attachment,
+      }));
+      setDocumentListData(transformedData);
+    }
+  }, [
+    isGetAllDocumentByOwnerIdFetching,
+    isGetAllDocumentByOwnerIdSuccess,
+    isGetAllDocumentByOwnerIdData,
+  ]);
+
+  const determineFileType = (fileName) => {
+    const extension = fileName.split(".").pop().toLowerCase();
+    switch (extension) {
+      case "pdf":
+        return "pdf";
+      case "docx":
+        return "docx";
+      case "ppt":
+      case "pptx":
+        return "pptx";
+      case "xlsx":
+        return "xlsx";
+      case "csv":
+        return "csv";
+      case "xls":
+        return "xls";
+      case "doc":
+        return "doc";
+      default:
+        return null;
+    }
+  };
 
   //** Use Effect */
   useEffect(() => {
@@ -84,12 +182,12 @@ const ApprovalCheckList = ({
     }
   }, [isGetCheckListFetching, isGetCheckListSuccess, isGetCheckListData]);
 
-  useEffect(() => {
-    if (isAddUserCheckResponseSuccess && isAddUserCheckResponseData) {
-      ToastService.success(isAddUserCheckResponseData.errorMessage);
-      onSuccessApprovalClose();
-    }
-  }, [isAddUserCheckResponseSuccess, isAddUserCheckResponseData]);
+  // useEffect(() => {
+  //   if (isAddUserCheckResponseSuccess && isAddUserCheckResponseData) {
+  //     ToastService.success(isAddUserCheckResponseData.errorMessage);
+  //     onSuccessApprovalClose();
+  //   }
+  // }, [isAddUserCheckResponseSuccess, isAddUserCheckResponseData]);
 
   //** handle Change */
   // const handleCheckChange = (itemId, value) => {
@@ -111,21 +209,43 @@ const ApprovalCheckList = ({
   //   setCheckListData(modifyData);
   // };
   const handleAddResponse = () => {
-    const allChildChecked = checkListData.every((item) => item.isMainChecked);
+    const allChildChecked = checkListData.every((item) => item.isCheked);
     if (allChildChecked) {
-      checkListData.forEach((data) => {
-        let childRequest = {
-          checkListRequest: data.checkListRequest,
-        };
-        addUserCheckResponse(childRequest);
-      });
+      // checkListData.forEach((data) => {
+      //   let childRequest = {
+      //     checkListRequest: data.checkListRequest,
+      //   };
+       // addUserCheckResponse(childRequest);
+       onSuccessApprovalClose();
+      // }
+      // );
     } else {
       ToastService.warning(
         "Please ensure that all data has been thoroughly reviewed."
       );
     }
   };
+  const handleDocumentChange = (selectedoption) => {
+    setDocument(selectedoption.value);
+        handleDocumentView("view", selectedoption.attachment);
+  };
+  const handleDocumentView = (action, fileName, name) => {
+    setSelectedDocument(null);
+    setIsModalOpen(false);
+    setActionType(action);
 
+    let request = {
+      folderName: isSupplierApproval
+        ? ModulePathName.SUPPLIER
+        : ModulePathName.CUSTOMER,
+      keyId: mainId,
+      fileName: fileName,
+    };
+
+    if (action === "view") {
+      Downalod(request);
+    }
+  };
   return (
     <div>
       <SidebarModel
@@ -138,11 +258,10 @@ const ApprovalCheckList = ({
         {!isGetCheckListFetching ? (
           <>
             <div className="row mt-3">
-              
               <div className="col-6 info-scrollable">
-              <div className="checklist-info">
-                <h5>Check List Information</h5>
-              </div>
+                <div className="checklist-info">
+                  <h5>Check List Information</h5>
+                </div>
                 <div className="row">
                   {!isSubCustomer ? (
                     <div className="col-12 mb-3">
@@ -151,6 +270,8 @@ const ApprovalCheckList = ({
                           isModelOpen={isModelOpen}
                           mainId={mainId}
                           getBasicInformationById={getBasicInformationById}
+                          approvalChekedData={approvalChekedData.find(item => item.name === 'basicInformation')}
+                          handleCheckbox={handleCheckbox}
                         />
                       </div>
                     </div>
@@ -163,6 +284,8 @@ const ApprovalCheckList = ({
                         mainId={mainId}
                         getAddressById={getAddressById}
                         isSubCustomer={isSubCustomer}
+                        approvalChekedData={addressInfoCheck.find(item => item.name === 'addressInformation')}
+                          handleCheckbox={handleCheckbox}
                       />
                     </div>
                   </div>
@@ -174,6 +297,8 @@ const ApprovalCheckList = ({
                           isModelOpen={isModelOpen}
                           mainId={mainId}
                           getContactById={getContactById}
+                          approvalChekedData={approvalChekedData.find(item => item.name === 'contactInformation')}
+                          handleCheckbox={handleCheckbox}
                         />
                       </div>
                     </div>
@@ -186,6 +311,8 @@ const ApprovalCheckList = ({
                           isModelOpen={isModelOpen}
                           mainId={mainId}
                           getFinacialSettingById={getFinacialSettingById}
+                          approvalChekedData={approvalChekedData.find(item => item.name === 'settingInformation')}
+                          handleCheckbox={handleCheckbox}
                         />
                       </div>
                     </div>
@@ -198,7 +325,7 @@ const ApprovalCheckList = ({
                         <Buttons
                           buttonTypeClassName="theme-button"
                           buttonText="Approve"
-                          isLoading={isAddUserCheckResponseLoading}
+                         // isLoading={isAddUserCheckResponseLoading}
                           onClick={handleAddResponse}
                         />
                         <Buttons
@@ -217,7 +344,27 @@ const ApprovalCheckList = ({
                 </div>
                 <div className="row">
                   <div className="col-8">
-                    <CustomDropdown/>
+                    <DropDown
+                      placeholder="Select Documents"
+                      options={documentListData}
+                      value={document}
+                      onChange={handleDocumentChange}
+                    />
+                  </div>
+                </div>
+                {/* File viewer modal */}
+
+                <div className="row">
+                  <div className="col-12">
+                    <div className="document-view">
+                      {selectedDocument && getFileType && (
+                        <FileViewer
+                          fileType={getFileType}
+                          filePath={selectedDocument}
+                          onError={(error) => console.error("Error:", error)}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
