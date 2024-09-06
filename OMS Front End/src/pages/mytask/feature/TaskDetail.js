@@ -91,6 +91,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
     status = "No Status",
     oldValue = "{}",
     newValue = "{}",
+    eventName = ""
   } = approvedData;
 
   const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(oldValue, newValue, fieldName);
@@ -196,8 +197,8 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
             {FirstSecondLetter(requestedByUserName)}
           </span>
           <div className="title">
-            {requestedByUserName}
-            <span className="sub-title">{functionalityName}</span>
+            <h6 className="">{eventName} ({functionalityName})</h6>
+            <span className="sub-title"><b>Requested By:</b> {requestedByUserName}</span>
           </div>
         </div>
         <div>
