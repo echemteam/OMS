@@ -172,8 +172,8 @@ const CustomerBasicInfoCard = ({
 
       const filteredData = responsibleUserIds
         ? uniqueData.filter(
-            (item) => !responsibleUserIds.includes(item.userId.toString())
-          )
+          (item) => !responsibleUserIds.includes(item.userId.toString())
+        )
         : uniqueData;
 
       const modifyUserData = filteredData.map((item) => ({
@@ -248,7 +248,8 @@ const CustomerBasicInfoCard = ({
         if (childRef.current) {
           childRef.current.callChildFunction(
             customerId,
-            customerData.isSubCustomer ? customerData.isSubCustomer : false
+            customerData.isSubCustomer ? customerData.isSubCustomer : false,
+            selectedOption.value === CustomerSupplierStatus.SUBMITTED ? false : true
           );
         }
         setCustomerId(customerId);

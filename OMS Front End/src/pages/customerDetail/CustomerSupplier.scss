@@ -55,7 +55,7 @@
           padding-left: 10px;
           overflow: hidden;
           text-overflow: ellipsis;
-          transition: all .5s ease;
+          transition: all 0.5s ease;
           white-space: nowrap;
           max-width: 335px;
           @media only screen and (max-width: 1750px) {
@@ -548,3 +548,30 @@
 // .center-container {
 //   height: calc(100vh - 80px) !important;
 // }
+
+// Responsive CSS
+
+// @media only screen and (max-width: 1400px) {
+//   .vertical-tab-inner
+//   .tab-section {
+//     .tab-header {
+//       width: 30% !important;
+//     }
+//     .collapse-tab{
+//       left: calc(30% - 37px) !important;
+//     }
+//     .collapse-tabs{
+//       .tab-header{
+//         width: 10px !important;
+//       }
+//     }
+//   }
+// }
+
+// Responsive CSS
+
+@media only screen and (max-width: 1200px) {
+  .profile-info {
+    gap: 2rem !important;
+  }
+}
