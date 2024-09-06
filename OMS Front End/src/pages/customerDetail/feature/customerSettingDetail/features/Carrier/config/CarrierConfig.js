@@ -6,9 +6,9 @@ export const addEditCarrierFormData = {
   name: "Shipping Form",
   initialState: {
     carrierId: 0,
-    accountNumber: '',
+    accountNumber: "",
     handlingFee: 10,
-    isCarrierPrimary: false
+    isCarrierPrimary: false,
   },
   formFields: [
     {
@@ -19,11 +19,12 @@ export const addEditCarrierFormData = {
       dataField: "carrier",
       fieldSetting: {
         placeholder: "Select Carrier",
-        isEnableOnChange: true
+        isEnableOnChange: true,
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 label-h-0",
+        containerCss:
+          "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-2 label-h-0",
       },
     },
     {
@@ -35,11 +36,12 @@ export const addEditCarrierFormData = {
       fieldSetting: {
         placeholder: "Enter Account Number",
         allowSpace: true,
-maxLength: 25,
+        maxLength: 25,
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-3 label-h-0",
+        containerCss:
+          "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-3 label-h-0",
       },
     },
     {
@@ -55,7 +57,8 @@ maxLength: 25,
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-3 label-h-0",
+        containerCss:
+          "col-xxl-12 col-xl-12 col-md-12 col-12 col-12 mb-3 label-h-0",
       },
     },
     {
@@ -73,7 +76,6 @@ maxLength: 25,
         containerCss: "col-xxl-4 col-xl-12 col-md-12 col-12 col-12 mb-2",
       },
     },
-
   ],
 };
 
@@ -84,7 +86,7 @@ export const AccountGridConfig = {
       fieldName: "carrier",
       colStyle: {
         width: "25%",
-      }
+      },
     },
     {
       name: "Account Number",
@@ -97,17 +99,15 @@ export const AccountGridConfig = {
         editColType: EditGridColumnType.INPUT,
         editColFieldName: "accountNumber",
         isDisable: false,
-                editColValidation: [
+        editColValidation: [
           { type: "required", message: "Account Number is required." },
-          {
-            type: "maxLength",
-            value: 9,
-            message: "Account number Doesn't contain more than 9 Characters.",
-          },
         ],
+        colConfig: {
+          maxLength: 9,
+        },
       },
       colSettings: {},
-      allowShort: false
+      allowShort: false,
     },
     {
       name: "Handling Fee New",
@@ -129,6 +129,10 @@ export const AccountGridConfig = {
             message: "Handling Fee must be at least 3 characters long.",
           },
         ],
+
+        colConfig: {
+          maxLength: 3,
+        },
       },
       colSettings: {},
       allowShort: false,
