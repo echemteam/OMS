@@ -133,6 +133,12 @@ export const Menu = [
             to: "/Dictionary",
             securityKey: securityKey.DICTIONARY,
           },
+          {
+            id: "Email Template",
+            submenuName: "Email Template",
+            to: "/EmailTemplate",
+            securityKey: securityKey.DICTIONARY,
+          },
         ],
       },
       // {

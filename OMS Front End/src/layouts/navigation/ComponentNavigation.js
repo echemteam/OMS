@@ -8,6 +8,7 @@ import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules
 import ApiProviderViewDetail from "../../pages/apiConfiguration/apiProviders/features/apiProviderViewDetail/ApiProviderViewDetail";
 import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/feature/thirdPartyApiConfigurationList/feature/thirdPartyApiConfigurationViewDetails/ThirdPartyApiConfigurationViewDetails";
 import OrderList from "../../pages/order/orderGrid/OrderList";
+import EmailTemplate from "../../pages/configuration/emailTemplate/EmailTemplate";
 
 const ApiProviders = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProviders"));
 //** Not Found */
@@ -405,6 +406,16 @@ export const ComponentNavigation = [
     component: Dictionary,
     hasParams: false,
     text: 'Dictionary',
+    securityKey: securityKey.DICTIONARY
+  },
+  {
+    id: 'emailTemplate',
+    path: '/EmailTemplate',
+    exact: true,
+    title: '',
+    component: EmailTemplate,
+    hasParams: false,
+    text: 'EmailTemplate',
     securityKey: securityKey.DICTIONARY
   },
 ];

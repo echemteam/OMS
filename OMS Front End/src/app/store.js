@@ -36,6 +36,7 @@ import supplierFinancialSettingsAPI from './services/supplierFinancialSettingsAP
 import thirdPartyAPI from './services/thirdPartyAPI';
 import orderAPI from './services/orderAPI';
 import dictionaryAPI from './services/dictionaryAPI';
+import emailTemplateAPI from './services/emailTemplateAPI';
 
 export const store = configureStore({
   reducer: {
@@ -71,7 +72,8 @@ export const store = configureStore({
     [thirdPartyAPI.reducerPath]: thirdPartyAPI.reducer,
     [orderAPI.reducerPath]: orderAPI.reducer,
     [supplierFinancialSettingsAPI.reducerPath]: supplierFinancialSettingsAPI.reducer,
-    [dictionaryAPI.reducerPath]:dictionaryAPI.reducer
+    [dictionaryAPI.reducerPath]:dictionaryAPI.reducer,
+    [emailTemplateAPI.reducerPath]:emailTemplateAPI.reducer,
 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
@@ -106,7 +108,8 @@ export const store = configureStore({
     supplierFinancialSettingsAPI.middleware,
     thirdPartyAPI.middleware,
     orderAPI.middleware,
-    dictionaryAPI.middleware
+    dictionaryAPI.middleware,
+    emailTemplateAPI.middleware,
   ),
 })
 setupListeners(store.dispatch);

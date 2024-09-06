@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
-
+import PropTypes from "prop-types";
 
 const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById,approvalChekedData ,handleCheckbox}) => {
   const [basicInformation, setBasicInformation] = useState();
@@ -63,5 +63,14 @@ const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById,approva
     </>
   );
 };
-
+// Define PropTypes for BasicInformation
+BasicInformation.propTypes = {
+  isModelOpen: PropTypes.bool.isRequired,
+  mainId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  getBasicInformationById: PropTypes.func.isRequired,
+  approvalChekedData: PropTypes.shape({
+    isChecked: PropTypes.bool
+  }),
+  handleCheckbox: PropTypes.func.isRequired
+};
 export default BasicInformation;

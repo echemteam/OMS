@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { PaymentMethodTypes } from "../../../../utils/Enums/commonEnums";
 import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
+import PropTypes from "prop-types";
 
 const SettingInformation = ({
   isModelOpen,
@@ -90,5 +91,15 @@ const SettingInformation = ({
     </>
   );
 };
+SettingInformation.propTypes = {
+  isModelOpen: PropTypes.bool.isRequired,
+  mainId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  getFinacialSettingById: PropTypes.func.isRequired,
+  approvalChekedData: PropTypes.shape({
+    isChecked: PropTypes.bool
+  }),
+  handleCheckbox: PropTypes.func.isRequired
+};
+
 
 export default SettingInformation;
