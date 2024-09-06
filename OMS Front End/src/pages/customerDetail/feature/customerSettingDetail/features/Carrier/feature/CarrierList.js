@@ -14,21 +14,21 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
     handleGetDefaultList, handleDeleteClick, isEditablePage }) => {
 
     const [dataSource, setDataSource] = useState(collectAccountData);
-    const { ValidateRequestByApprovalRules,isApprovelLoading } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
 
     useEffect(() => {
         if (!isGetDataLoading && collectAccountData) {
             // New blank row object
-            const blankRow = {
-                carrier: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
-                accountNumber: '',
-                handlingFee: '',
-                isPrimary: false,
-            };
+            // const blankRow = {
+            //     carrier: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
+            //     accountNumber: '',
+            //     handlingFee: '',
+            //     isPrimary: false,
+            // };
 
-            setDataSource([...collectAccountData, blankRow]);
+            setDataSource([...collectAccountData]);
         }
     }, [collectAccountData, isGetDataLoading]);
 
