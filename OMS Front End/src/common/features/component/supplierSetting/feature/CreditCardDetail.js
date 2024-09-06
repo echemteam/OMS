@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { creditCardFormData } from "../config/CreditCardForm.data";
 import Buttons from "../../../../../components/ui/button/Buttons";
-import { useAddEditCreditCardMutation } from "../../../../../app/services/supplierFinancialSettingsAPI";
-import ToastService from "../../../../../services/toastService/ToastService";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
@@ -15,17 +13,17 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
   const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
   const [creditCardForm, setCreditCardFormDataForm] = useState(creditCardFormData);
 
-  const [addEditCreditCard, { isLoading: isAddEditCreditCardLoading, isSuccess: isAddEditCreditCardSuccess, data: isAddEditCreditCardData }] = useAddEditCreditCardMutation();
+  // const [addEditCreditCard, { isLoading: isAddEditCreditCardLoading, isSuccess: isAddEditCreditCardSuccess, data: isAddEditCreditCardData }] = useAddEditCreditCardMutation();
 
-  useEffect(() => {
-    handleResponse(isAddEditCreditCardSuccess, isAddEditCreditCardData);
-  }, [isAddEditCreditCardSuccess, isAddEditCreditCardData]);
+  // useEffect(() => {
+  //   handleResponse(isAddEditCreditCardSuccess, isAddEditCreditCardData);
+  // }, [isAddEditCreditCardSuccess, isAddEditCreditCardData]);
 
-  const handleResponse = (success, data) => {
-    if (success && data) {
-      handleAddResponse(success, data);
-    }
-  };
+  // const handleResponse = (success, data) => {
+  //   if (success && data) {
+  //     handleAddResponse(success, data);
+  //   }
+  // };
 
   useEffect(() => {
     if (getCreditData.supplierPaymentSettingId > 0) {
@@ -38,18 +36,18 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
     }
   }, [getCreditData])
 
-  const handleAddResponse = (isSuccess, responseData) => {
-    if (isSuccess && responseData) {
-      if (responseData.errorMessage.includes("exists")) {
-        ToastService.warning(responseData.errorMessage);
-        return;
-      }
-      ToastService.success(responseData.errorMessage);
-      if (supplierId) {
-        onHandleGetById(supplierId)
-      }
-    }
-  }
+  // const handleAddResponse = (isSuccess, responseData) => {
+  //   if (isSuccess && responseData) {
+  //     if (responseData.errorMessage.includes("exists")) {
+  //       ToastService.warning(responseData.errorMessage);
+  //       return;
+  //     }
+  //     ToastService.success(responseData.errorMessage);
+  //     if (supplierId) {
+  //       onHandleGetById(supplierId)
+  //     }
+  //   }
+  // }
 
   const handleCreditCradAdd = async () => {
     let creditCardForm = creditCardFormRef.current.getFormData()
@@ -105,7 +103,7 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
               buttonTypeClassName="theme-button"
               buttonText="Save"
               onClick={handleCreditCradAdd}
-              isLoading={isApprovelLoading || isAddEditCreditCardLoading}
+              isLoading={isApprovelLoading}
             // isDisable={isButtonDisable}
             />
             {/* <Buttons
