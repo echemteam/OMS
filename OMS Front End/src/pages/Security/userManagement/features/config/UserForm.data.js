@@ -22,6 +22,7 @@ export const userFormData = {
       fieldSetting: {
         placeholder: "Enter First Name",
         allowSpace: true,
+        maxLength:65,
       },
       validation: [{ type: "require" }],
       style: {
@@ -37,6 +38,7 @@ export const userFormData = {
       fieldSetting: {
         placeholder: "Enter Last Name",
         allowSpace: true,
+        maxLength:65,
       },
       validation: [{ type: "require" }],
       style: {
@@ -52,6 +54,7 @@ export const userFormData = {
       fieldSetting: {
         placeholder: "Enter User Name",
         allowSpace: true,
+        maxLength : 65,
       },
       validation: [{ type: "require" }],
       style: {
@@ -66,6 +69,7 @@ export const userFormData = {
       dataField: "password",
       fieldSetting: {
         placeholder: "Enter Your Password",
+        maxLength:20,
       },
       validation: [{ type: "require" }, { type: "password" }],
       style: {
