@@ -79,7 +79,7 @@ export const customerbasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
+        containerCss: "col-xxl-3 col-xl-4 col-md-6 col-12 mb-input",
       },
     },
 
@@ -96,7 +96,7 @@ export const customerbasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
+        containerCss: "col-xxl-3 col-xl-4 col-md-6 col-12 mb-input",
       },
     },
     {
@@ -147,7 +147,7 @@ export const customerbasicData = {
         message: SuccessMessage.DefaultUSATaxId
       },
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input",
+        containerCss: "col-xxl-3 col-xl-3 col-md-4 col-12 mb-input",
       },
     },
     {
@@ -172,7 +172,7 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isBuyingForThirdParty",
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-2 col-12 pt-2 mb-input margin-top-checkbox mt-2",
+        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-12 pt-2 mb-input margin-top-checkbox mt-2",
       },
     },
     {
@@ -182,7 +182,7 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.CHECKBOX,
       dataField: "isSubCustomer",
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-2 col-12 pt-2 mb-input margin-top-checkbox margin-left0-checkbox",
+        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-12 md-pt-0 pt-2 mb-input margin-top-checkbox margin-left0-checkbox mt-2",
       },
     },
     {
