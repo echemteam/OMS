@@ -15,13 +15,13 @@ const PendingTask = (props) => {
     const [getApprovalRequestsListByStatus, { isFetching: isGetApprovalRequestsListByStatusFetching, isSuccess: isGetApprovalRequestsListByStatusSuccess, data: isGetApprovalRequestsListByStatusData }] = useLazyGetApprovalRequestsListByStatusAndRoleIdQuery();
 
     useEffect(() => {
-                if (props.Pending) {
-            getApprovalRequestList();    
+        if (props.Pending) {
+            getApprovalRequestList();
         }
-           }, [props.Pending, props.roleId]);
+    }, [props.Pending, props.roleId]);
 
     const getApprovalRequestList = () => {
-                let req = {
+        let req = {
             status: props.Pending,
             roleId: props.roleId
         }
@@ -29,11 +29,11 @@ const PendingTask = (props) => {
     }
 
     useEffect(() => {
-                if (props.isApproval) {
-            getApprovalRequestList(); 
+        if (props.isApproval) {
+            getApprovalRequestList();
         }
         props.setIsApproval(false);
-    
+
     }, [props.isApproval]);
 
     useEffect(() => {
@@ -57,20 +57,15 @@ const PendingTask = (props) => {
                 <div className="tabs">
                     {pendingData.length > 0 ? (
                         pendingData.map((tab) => (
-                            <button
-                                key={tab.approvalRequestId} // Use a unique key
-                                className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""}`}
-                                onClick={() => handleTabClick(tab.approvalRequestId)}
-                            >
+                            <button key={tab.approvalRequestId} // Use a unique key
+                                className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""}`} onClick={() => handleTabClick(tab.approvalRequestId)} >
                                 <div className="d-flex align-items-start">
                                     <span className="profile-icon">  {FirstSecondLetter(tab.functionalityName)}</span>
                                     <div className="title">
                                         {tab.functionalityName}
                                         <div className='bage-fix'>
                                             <span className="sub-title">{tab.moduleName}</span>
-                                            <div
-                                                className={`mytask-type-badge ${tab.isFunctional ? "badge-accept" : ""}`}
-                                            >
+                                            <div className={`mytask-type-badge ${tab.isFunctional ? "badge-accept" : ""}`}>
                                                 {tab.isFunctional ? "Functional" : "Field"}
                                             </div>
                                         </div>
