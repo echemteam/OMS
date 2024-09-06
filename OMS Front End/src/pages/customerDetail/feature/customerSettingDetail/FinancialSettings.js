@@ -19,13 +19,13 @@ import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionali
 
 const ExemptSalesTax = { exemptSalesTax: true };
 
-const FinancialSettings = ({ isEditablePage ,customerStatusId}) => {
+const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   const settingFormRef = useRef();
   const [showButton, setShowButton] = useState(true);
   const [isBankFee, setIsBankFee] = useState(false);
   const [isCardCharges, setIsCardCharges] = useState(false);
-  const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+  const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
   const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, handleActiveSubTabClick, activeTab } = useContext(BasicDetailContext);
@@ -397,7 +397,7 @@ const FinancialSettings = ({ isEditablePage ,customerStatusId}) => {
                 buttonTypeClassName="theme-button"
                 buttonText="Save"
                 onClick={onhandleEdit}
-                isLoading={isAddEditCustomerSettingsLoading}
+                isLoading={isApprovelLoading || isAddEditCustomerSettingsLoading}
               />
             </div>
           </div>

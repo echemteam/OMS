@@ -12,7 +12,7 @@ import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleRes
 
 const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financialSettingFormRef }) => {
   const creditCardFormRef = useRef();
-  const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+  const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
   const [creditCardForm, setCreditCardFormDataForm] = useState(creditCardFormData);
 
   const [addEditCreditCard, { isLoading: isAddEditCreditCardLoading, isSuccess: isAddEditCreditCardSuccess, data: isAddEditCreditCardData }] = useAddEditCreditCardMutation();
@@ -84,7 +84,7 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
     const modifyData = await ValidateRequestByApprovalRules(request);
     if (modifyData.newValue) {
       onHandleGetById(supplierId);
-      onResetForm(creditCardForm,setCreditCardFormDataForm,creditCardFormData.initialState);
+      onResetForm(creditCardForm, setCreditCardFormDataForm, creditCardFormData.initialState);
     }
   };
 
@@ -105,7 +105,7 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
               buttonTypeClassName="theme-button"
               buttonText="Save"
               onClick={handleCreditCradAdd}
-              isLoading={isAddEditCreditCardLoading}
+              isLoading={isApprovelLoading || isAddEditCreditCardLoading}
             // isDisable={isButtonDisable}
             />
             {/* <Buttons
