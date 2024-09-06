@@ -60,9 +60,9 @@ const PendingTask = (props) => {
                             <button key={tab.approvalRequestId} // Use a unique key
                                 className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""}`} onClick={() => handleTabClick(tab.approvalRequestId)} >
                                 <div className="d-flex align-items-start">
-                                    <span className="profile-icon">  {FirstSecondLetter(tab.functionalityName)}</span>
+                                    <span className="profile-icon">  {FirstSecondLetter(tab.eventName)}</span>
                                     <div className="title">
-                                        {tab.functionalityName}
+                                        {tab.eventName}
                                         <div className='bage-fix'>
                                             <span className="sub-title">{tab.moduleName}</span>
                                             <div className={`mytask-type-badge ${tab.isFunctional ? "badge-accept" : ""}`}>

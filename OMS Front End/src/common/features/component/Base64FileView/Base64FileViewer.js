@@ -122,8 +122,6 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                 modalTitle="File Preview"
                 onClose={handleToggleModal}>
                 <div className="model-hight-fix">
-                    {console.log('getFileType', getFileType)}
-                    {console.log('selectedDocument', selectedDocument)}
                     {selectedDocument && getFileType && (
                         <FileViewer
                             fileType={getFileType}
