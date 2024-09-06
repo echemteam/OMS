@@ -10,7 +10,7 @@ import SidebarModel from "../ui/sidebarModel/SidebarModel";
 import { transformData } from "./Config/ApprovalTransformData";
 //** Service's */
 import ToastService from "../../services/toastService/ToastService";
-import {useAddUserChecklistResponseMutation,useLazyGetUserCheckListQuery,} from "../../app/services/ApprovalAPI";
+import {useLazyGetUserCheckListQuery,} from "../../app/services/ApprovalAPI";
 import DropDown from "../../components/ui/dropdown/DropDrown";
 import "./ApprovalCheckList.scss";
 import { useLazyGetAllDocumentByOwnerIdQuery } from "../../app/services/commonAPI";
@@ -66,14 +66,14 @@ const ApprovalCheckList = ({
       data: isGetCheckListData,
     },
   ] = useLazyGetUserCheckListQuery();
-  const [
-    addUserCheckResponse,
-    {
-      isLoading: isAddUserCheckResponseLoading,
-      isSuccess: isAddUserCheckResponseSuccess,
-      data: isAddUserCheckResponseData,
-    },
-  ] = useAddUserChecklistResponseMutation();
+  // const [
+  //   addUserCheckResponse,
+  //   {
+  //     isLoading: isAddUserCheckResponseLoading,
+  //     isSuccess: isAddUserCheckResponseSuccess,
+  //     data: isAddUserCheckResponseData,
+  //   },
+  // ] = useAddUserChecklistResponseMutation();
   const [
     getAllDocumentByOwnerId,
     {
@@ -325,7 +325,7 @@ const ApprovalCheckList = ({
                         <Buttons
                           buttonTypeClassName="theme-button"
                           buttonText="Approve"
-                          isLoading={isAddUserCheckResponseLoading}
+                         // isLoading={isAddUserCheckResponseLoading}
                           onClick={handleAddResponse}
                         />
                         <Buttons
