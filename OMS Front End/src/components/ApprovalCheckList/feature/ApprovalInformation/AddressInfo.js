@@ -8,12 +8,12 @@ const AddressInformation = ({
   mainId,
   getAddressById,
   isSubCustomer,
-  itemList,
-  handleCheckChange,
-  checkItemListId,
+  approvalChekedData ,
+  handleCheckbox
 }) => {
   //** State */
   const [addressInformation, setAddressInformation] = useState([]);
+  const [isChecked,setIsChecked]=useState(approvalChekedData?.isChecked || false);
 
   //** API Call's */
   const [
@@ -50,12 +50,21 @@ const AddressInformation = ({
     }
   }, [isGetAddressByIdFetching, isGetAddressByIdSuccess, isGetAddressByIdData]);
 
+  const handleChange = (checkedValue,newValue) => {
+    setIsChecked(newValue);
+    handleCheckbox(checkedValue,newValue);  
+  };
+
   return (
     <>
       <div className="card-top-title">
         <h5> Address Information </h5>
         <div className="checkbox-part">
-          <Checkbox />
+          <Checkbox
+            name={"addressInformation"} 
+            dataField={"addressInformation"}
+            checked={isChecked || false}
+            onChange={handleChange}   />
         </div>
       </div>
       <div className="card-info-checklist">

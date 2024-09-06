@@ -52,11 +52,15 @@ const ApprovalCheckList = ({
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [getFileType, setGetFileType] = useState([]);
   const [actionType, setActionType] = useState(null);
+  const [approvalChekedData,setApprovalChekedData]=useState([{name:"basicInformation",isCheked:false,},
+                            {name:"addressInformation",isCheked:false,},
+                            {name:"contactInformation",isCheked:false,},
+                            {name:"settingInformation",isCheked:false,}]);
+
+   const addressInfoCheck=[{name:"addressInformation",isCheked:false}];
 
   //** API Call's */
-  const [
-    getCheckList,
-    {
+  const [ getCheckList,{
       isFetching: isGetCheckListFetching,
       isSuccess: isGetCheckListSuccess,
       data: isGetCheckListData,
@@ -87,6 +91,15 @@ const ApprovalCheckList = ({
       data: isDownalodData,
     },
   ] = useLazyDownloadDocumentQuery();
+
+  const handleCheckbox = (name, isChecked) => {
+    const listData= isSubCustomer ? addressInfoCheck : approvalChekedData
+    const updatedData = listData.map((item) =>
+      item.name === name ? { ...item, isCheked: isChecked } : item
+    );
+    setCheckListData(updatedData);
+    setApprovalChekedData(updatedData);
+  }
 
   useEffect(() => {
     if (mainId) {
@@ -169,12 +182,12 @@ const ApprovalCheckList = ({
     }
   }, [isGetCheckListFetching, isGetCheckListSuccess, isGetCheckListData]);
 
-  useEffect(() => {
-    if (isAddUserCheckResponseSuccess && isAddUserCheckResponseData) {
-      ToastService.success(isAddUserCheckResponseData.errorMessage);
-      onSuccessApprovalClose();
-    }
-  }, [isAddUserCheckResponseSuccess, isAddUserCheckResponseData]);
+  // useEffect(() => {
+  //   if (isAddUserCheckResponseSuccess && isAddUserCheckResponseData) {
+  //     ToastService.success(isAddUserCheckResponseData.errorMessage);
+  //     onSuccessApprovalClose();
+  //   }
+  // }, [isAddUserCheckResponseSuccess, isAddUserCheckResponseData]);
 
   //** handle Change */
   // const handleCheckChange = (itemId, value) => {
@@ -196,14 +209,16 @@ const ApprovalCheckList = ({
   //   setCheckListData(modifyData);
   // };
   const handleAddResponse = () => {
-    const allChildChecked = checkListData.every((item) => item.isMainChecked);
+    const allChildChecked = checkListData.every((item) => item.isCheked);
     if (allChildChecked) {
-      checkListData.forEach((data) => {
-        let childRequest = {
-          checkListRequest: data.checkListRequest,
-        };
-        addUserCheckResponse(childRequest);
-      });
+      // checkListData.forEach((data) => {
+      //   let childRequest = {
+      //     checkListRequest: data.checkListRequest,
+      //   };
+       // addUserCheckResponse(childRequest);
+       onSuccessApprovalClose();
+      // }
+      // );
     } else {
       ToastService.warning(
         "Please ensure that all data has been thoroughly reviewed."
@@ -255,6 +270,8 @@ const ApprovalCheckList = ({
                           isModelOpen={isModelOpen}
                           mainId={mainId}
                           getBasicInformationById={getBasicInformationById}
+                          approvalChekedData={approvalChekedData.find(item => item.name === 'basicInformation')}
+                          handleCheckbox={handleCheckbox}
                         />
                       </div>
                     </div>
@@ -267,6 +284,8 @@ const ApprovalCheckList = ({
                         mainId={mainId}
                         getAddressById={getAddressById}
                         isSubCustomer={isSubCustomer}
+                        approvalChekedData={addressInfoCheck.find(item => item.name === 'addressInformation')}
+                          handleCheckbox={handleCheckbox}
                       />
                     </div>
                   </div>
@@ -278,6 +297,8 @@ const ApprovalCheckList = ({
                           isModelOpen={isModelOpen}
                           mainId={mainId}
                           getContactById={getContactById}
+                          approvalChekedData={approvalChekedData.find(item => item.name === 'contactInformation')}
+                          handleCheckbox={handleCheckbox}
                         />
                       </div>
                     </div>
@@ -290,6 +311,8 @@ const ApprovalCheckList = ({
                           isModelOpen={isModelOpen}
                           mainId={mainId}
                           getFinacialSettingById={getFinacialSettingById}
+                          approvalChekedData={approvalChekedData.find(item => item.name === 'settingInformation')}
+                          handleCheckbox={handleCheckbox}
                         />
                       </div>
                     </div>
