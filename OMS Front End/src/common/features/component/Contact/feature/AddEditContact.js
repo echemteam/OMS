@@ -31,7 +31,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const [phoneNumberList, setPhoneNumberList] = useState([]);
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
-    const { ValidateRequestByApprovalRules, getEventName } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, getEventName, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     //** API Call's */
     /**
@@ -350,7 +350,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                         <Buttons
                             buttonTypeClassName="theme-button"
                             buttonText='Save'
-                            isLoading={isAddEditLoading}
+                            isLoading={isApprovelLoading || isAddEditLoading}
                             onClick={handleAddEdit}
                             isDisable={isButtonDisable} />
                         {/* } */}

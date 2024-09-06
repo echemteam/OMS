@@ -15,7 +15,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
 
     const ref = useRef();
     const [formData, setFormData] = useState(DocumentFormData);
-    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     /**
         * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -97,7 +97,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
                             // buttonText={editDocumentData ? "Update" : "Add"}
                             buttonText="Add"
                             onClick={handleSave}
-                            isLoading={isAddLoading} />
+                            isLoading={isApprovelLoading || isAddLoading} />
                         {/* <Buttons
                             buttonTypeClassName="theme-button ml-5"
                             buttonText={editDocumentData ? "Update and Close" : "Add and Close"}

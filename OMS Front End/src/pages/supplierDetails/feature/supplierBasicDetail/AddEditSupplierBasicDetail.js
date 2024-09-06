@@ -24,8 +24,6 @@ import { supplierBasicData } from "./config/SupplierBasicDetail.data";
 import { excludingRoles } from "../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { getTaxIdMinMaxLength } from "../../../customerDetail/feature/customerBasicDetail/config/TaxIdValidator";
 import PropTypes from 'prop-types';
-import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
-import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
 import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/validateRUser";
 import { useSelector } from "react-redux";
 
@@ -44,7 +42,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const [formData, setFormData] = useState(supplierBasicData);
     const [isResponsibleUser, setIsResponsibleUser] = useState(false);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
-    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    // const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
     const { nextStepRef, setSupplierId, moveNextPage, supplierId } = useContext(AddSupplierContext);
 
     //** API Call's */
@@ -229,29 +227,29 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         };
 
         if (!data.taxId) {
-            let request = {
-                newValue: req,
-                oldValue: formData.initialState,
-                functionalityName: isOpen ? FunctionalitiesName.SUPPLIERBASICINFOUPDATE : FunctionalitiesName.ADDSUPPLIER
-            }
-            const modifyData = await ValidateRequestByApprovalRules(request);
-            if (modifyData.newValue) {
-                addEditSupplierBasicInformation(modifyData.newValue);
-            }
+            // let request = {
+            //     newValue: req,
+            //     oldValue: formData.initialState,
+            //     functionalityName: isOpen ? FunctionalitiesName.SUPPLIERBASICINFOUPDATE : FunctionalitiesName.ADDSUPPLIER
+            // }
+            // const modifyData = await ValidateRequestByApprovalRules(request);
+            // if (modifyData.newValue) {
+            addEditSupplierBasicInformation(req);
+            // }
             return;
         }
 
         const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(req.countryId || 0, supplierBasicData.formFields, 'taxId');
         if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
-            let request = {
-                newValue: req,
-                oldValue: formData.initialState,
-                functionalityName: isOpen ? FunctionalitiesName.SUPPLIERBASICINFOUPDATE : FunctionalitiesName.ADDSUPPLIER
-            }
-            const modifyData = await ValidateRequestByApprovalRules(request);
-            if (modifyData.newValue) {
-                addEditSupplierBasicInformation(modifyData.newValue);
-            }
+            // let request = {
+            //     newValue: req,
+            //     oldValue: formData.initialState,
+            //     functionalityName: isOpen ? FunctionalitiesName.SUPPLIERBASICINFOUPDATE : FunctionalitiesName.ADDSUPPLIER
+            // }
+            // const modifyData = await ValidateRequestByApprovalRules(request);
+            // if (modifyData.newValue) {
+            addEditSupplierBasicInformation(req);
+            // }
         } else {
             ToastService.warning(validateTaxIdMessage);
         }

@@ -51,13 +51,13 @@ const ArchiveTask = (props) => {
                                 onClick={() => handleTabClick(tab.approvalRequestId)}
                             >
                                 <div className="d-flex align-items-start">
-                                    <span className="profile-icon"> {FirstSecondLetter(tab.functionalityName)} </span>
+                                    <span className="profile-icon"> {FirstSecondLetter(tab.eventName)} </span>
                                     {/* <div className="title">
                                         {tab.functionalityName}
                                         <span className="sub-title">{tab.moduleName}</span>
                                     </div> */}
                                     <div className="title">
-                                        {tab.functionalityName}
+                                        {tab.eventName}
                                         <div className='bage-fix'>
                                             <span className="sub-title">{tab.moduleName}</span>
                                             <div

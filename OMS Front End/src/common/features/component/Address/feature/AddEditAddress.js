@@ -31,7 +31,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
     const [selectedCheckbox, setSelectedCheckbox] = useState(null);
     const [addressEditTableId, setAddressEditTableId] = useState(0)
-    const { ValidateRequestByApprovalRules, getEventName } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, getEventName, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     // const [stateChage, setStateChange] = useState(null)
 
@@ -535,7 +535,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                         buttonTypeClassName="theme-button"
                         buttonText={editMode ? "Update" : "Save"}
                         onClick={handleAddEdit}
-                        isLoading={isAddLoading || isUpdateLoading}
+                        isLoading={isApprovelLoading || isAddLoading || isUpdateLoading}
                         isDisable={isButtonDisable} />
                     <Buttons
                         buttonTypeClassName="dark-btn ml-5"

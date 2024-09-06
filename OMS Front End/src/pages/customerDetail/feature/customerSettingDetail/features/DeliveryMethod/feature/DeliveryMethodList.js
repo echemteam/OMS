@@ -14,7 +14,7 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
     customerId, handleGetDefaultList, handleDeleteClick, isEditablePage }) => {
 
     const [dataSource, setDataSource] = useState(ourAccountData);
-    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateDeliveryMethodsMutation();
 
     useEffect(() => {
@@ -84,7 +84,7 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
                         dataSource={dataSource}
                         allowPagination={false}
                         onActionChange={actionHandler}
-                        isLoading={isGetDataLoading}
+                        isLoading={isApprovelLoading || isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
                         onRowDataDelete={handleDeleteClick}
                     />
