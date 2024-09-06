@@ -68,6 +68,8 @@ const Layout = (props) => {
               } */}
           </div>
         </div>
+      <div className="tab-bg"></div>
+
       </div>
     </React.Fragment>
   );

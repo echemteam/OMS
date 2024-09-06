@@ -240,7 +240,7 @@ const DocumentList = forwardRef(
               documentListData.length > 0 ? (
                 documentListData.map((data) => (
                   <div
-                    className="col-xl-4 col-lg-4 col-md-4 col-12"
+                    className="col-xl-4 col-lg-4 col-md-6 col-12"
                     key={data.customerDocumentId}
                   >
                     <div className="documents">

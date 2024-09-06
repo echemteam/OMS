@@ -117,7 +117,7 @@ export const useValidateAndAddApprovalRequests = () => {
                                 }
                                 originalValues.newValue[originalKeyName] = oldFieldValue;
                                 let req = {
-                                    fieldName: originalKeyName,
+                                    fieldName: fieldName,
                                     errorMessage: response.data.errorMessage,
                                     isExist: response.data.exist
                                 }
@@ -232,7 +232,7 @@ export const useValidateAndAddApprovalRequests = () => {
         }
         if (findExistFields.length > 0) {
             const existFieldsNames = getFieldNames(findExistFields);
-            message = message !== '' ? message + " and " + SuccessMessage.FieldsApprovalExists.replace("{0}", existFieldsNames) :
+            message = message !== '' ? message + SuccessMessage.FieldsApprovalExists.replace("{0}", existFieldsNames) :
                 SuccessMessage.FieldsApprovalExists.replace("{0}", existFieldsNames);
         }
         return message;
@@ -242,7 +242,7 @@ export const useValidateAndAddApprovalRequests = () => {
         if (fields.length > 0) {
             const fieldNames = fields.map(data => data.fieldName);
             return fieldNames.length > 1
-                ? fieldNames.slice(0, -1).join(', ') + ' and ' + fieldNames.slice(-1)
+                ? fieldNames.slice(0, -1).join(', ') + fieldNames.slice(-1)
                 : fieldNames[0];
         }
         return '';

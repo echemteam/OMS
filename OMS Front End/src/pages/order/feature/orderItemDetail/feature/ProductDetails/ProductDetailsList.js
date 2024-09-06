@@ -113,7 +113,7 @@ const ProductDetailsList = ({ onhandleProductDetailsListData, isDocumentData }) 
 
   return (
     <>
-      <div className="col-6">
+      <div className="col-xl-6 col-2xl-6 col-lg-12 col-12">
         <form onKeyPress={handleKeyPress}>
           <FormCreator
             config={productDetailsList}

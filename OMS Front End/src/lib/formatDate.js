@@ -10,7 +10,9 @@ export const formatDate = (date, format) => {
 export default formatDate;
 
 export const formatDateInShort = (isdate) => {
-  const date = new Date(isdate);
+  if (isdate) {
+    var date = new Date(isdate);
+  }
 
   return date.toLocaleDateString("en-US", {
     day: "numeric",

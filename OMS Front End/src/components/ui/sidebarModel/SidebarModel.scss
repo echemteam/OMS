@@ -66,7 +66,7 @@
         width: 35%;
 
         @media only screen and (max-width: 1280px) {
-          width: 45%;
+          width: 55%;
         }
       }
       &.content-30 {
@@ -135,7 +135,6 @@
                 -o-transform: rotate(180deg);
               }
             }
-            
           }
         }
       }
@@ -176,6 +175,19 @@
             padding: 0px 13px 0;
           }
         }
+      }
+    }
+  }
+}
+
+//responsive UI Design
+
+@media only screen and (max-width: 1024px) {
+  .sidebar-model {
+    .side-model-section {
+      .model-content.content-50 {
+        width: 70%;
+        // z-index: 99999 !important;
       }
     }
   }

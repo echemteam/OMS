@@ -10,7 +10,7 @@ import SidebarModel from "../ui/sidebarModel/SidebarModel";
 import { transformData } from "./Config/ApprovalTransformData";
 //** Service's */
 import ToastService from "../../services/toastService/ToastService";
-import {useLazyGetUserCheckListQuery,} from "../../app/services/ApprovalAPI";
+import { useLazyGetUserCheckListQuery } from "../../app/services/ApprovalAPI";
 import DropDown from "../../components/ui/dropdown/DropDrown";
 import "./ApprovalCheckList.scss";
 import { useLazyGetAllDocumentByOwnerIdQuery } from "../../app/services/commonAPI";
@@ -48,19 +48,23 @@ const ApprovalCheckList = ({
   const [checkListData, setCheckListData] = useState([]);
   const [documentListData, setDocumentListData] = useState([]);
   const [document, setDocument] = useState(null);
-  const [ ,setIsModalOpen] = useState(false);
+  const [, setIsModalOpen] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [getFileType, setGetFileType] = useState([]);
   const [actionType, setActionType] = useState(null);
-  const [approvalChekedData,setApprovalChekedData]=useState([{name:"basicInformation",isCheked:false,},
-                            {name:"addressInformation",isCheked:false,},
-                            {name:"contactInformation",isCheked:false,},
-                            {name:"settingInformation",isCheked:false,}]);
+  const [approvalChekedData, setApprovalChekedData] = useState([
+    { name: "basicInformation", isCheked: false },
+    { name: "addressInformation", isCheked: false },
+    { name: "contactInformation", isCheked: false },
+    { name: "settingInformation", isCheked: false },
+  ]);
 
-   const addressInfoCheck=[{name:"addressInformation",isCheked:false}];
+  const addressInfoCheck = [{ name: "addressInformation", isCheked: false }];
 
   //** API Call's */
-  const [ getCheckList,{
+  const [
+    getCheckList,
+    {
       isFetching: isGetCheckListFetching,
       isSuccess: isGetCheckListSuccess,
       data: isGetCheckListData,
@@ -93,13 +97,13 @@ const ApprovalCheckList = ({
   ] = useLazyDownloadDocumentQuery();
 
   const handleCheckbox = (name, isChecked) => {
-    const listData= isSubCustomer ? addressInfoCheck : approvalChekedData
+    const listData = isSubCustomer ? addressInfoCheck : approvalChekedData;
     const updatedData = listData.map((item) =>
       item.name === name ? { ...item, isCheked: isChecked } : item
     );
     setCheckListData(updatedData);
     setApprovalChekedData(updatedData);
-  }
+  };
 
   useEffect(() => {
     if (mainId) {
@@ -128,7 +132,7 @@ const ApprovalCheckList = ({
       isGetAllDocumentByOwnerIdSuccess &&
       isGetAllDocumentByOwnerIdData
     ) {
-       const transformedData = isGetAllDocumentByOwnerIdData.map((item) => ({
+      const transformedData = isGetAllDocumentByOwnerIdData.map((item) => ({
         value: item.documentId,
         label: item.name,
         attachment: item.attachment,
@@ -215,8 +219,8 @@ const ApprovalCheckList = ({
       //   let childRequest = {
       //     checkListRequest: data.checkListRequest,
       //   };
-       // addUserCheckResponse(childRequest);
-       onSuccessApprovalClose();
+      // addUserCheckResponse(childRequest);
+      onSuccessApprovalClose();
       // }
       // );
     } else {
@@ -227,7 +231,7 @@ const ApprovalCheckList = ({
   };
   const handleDocumentChange = (selectedoption) => {
     setDocument(selectedoption.value);
-        handleDocumentView("view", selectedoption.attachment);
+    handleDocumentView("view", selectedoption.attachment);
   };
   const handleDocumentView = (action, fileName, name) => {
     setSelectedDocument(null);
@@ -256,67 +260,79 @@ const ApprovalCheckList = ({
         isOpen={isModelOpen}
       >
         {!isGetCheckListFetching ? (
-          <>
+          <div className="checklist-left-section">
             <div className="row mt-3">
               <div className="col-6 info-scrollable">
-                <div className="checklist-info">
-                  <h5>Check List Information</h5>
-                </div>
                 <div className="row">
                   {!isSubCustomer ? (
                     <div className="col-12 mb-3">
-                      <div className="approval-list-card-basicinformation">
-                        <BasicInformation
-                          isModelOpen={isModelOpen}
-                          mainId={mainId}
-                          getBasicInformationById={getBasicInformationById}
-                          approvalChekedData={approvalChekedData.find(item => item.name === 'basicInformation')}
-                          handleCheckbox={handleCheckbox}
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-                  <div className="col-12 mb-3">
-                    <div className="approval-list-card-addressinformation">
-                      <AddressInformation
-                        isSupplierApproval={isSupplierApproval}
-                        isModelOpen={isModelOpen}
-                        mainId={mainId}
-                        getAddressById={getAddressById}
-                        isSubCustomer={isSubCustomer}
-                        approvalChekedData={addressInfoCheck.find(item => item.name === 'addressInformation')}
-                          handleCheckbox={handleCheckbox}
-                      />
-                    </div>
-                  </div>
-                  {!isSubCustomer ? (
+                      <div className="row">
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-12">
+                          <div className="approval-list-part">
+                            <BasicInformation
+                              isModelOpen={isModelOpen}
+                              mainId={mainId}
+                              getBasicInformationById={getBasicInformationById}
+                              approvalChekedData={approvalChekedData.find(
+                                (item) => item.name === "basicInformation"
+                              )}
+                              handleCheckbox={handleCheckbox}
+                            />
+                          </div>
+                          {!isSubCustomer ? (
+                            <div className="col-12 mb-3">
+                              <div className="approval-list-part">
+                                <ContactInformation
+                                  isSupplierApproval={isSupplierApproval}
+                                  isModelOpen={isModelOpen}
+                                  mainId={mainId}
+                                  getContactById={getContactById}
+                                  approvalChekedData={approvalChekedData.find(
+                                    (item) => item.name === "contactInformation"
+                                  )}
+                                  handleCheckbox={handleCheckbox}
+                                />
+                              </div>
+                            </div>
+                          ) : null}
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-12">
+                          <div className="approval-list-part">
+                            <AddressInformation
+                              isSupplierApproval={isSupplierApproval}
+                              isModelOpen={isModelOpen}
+                              mainId={mainId}
+                              getAddressById={getAddressById}
+                              isSubCustomer={isSubCustomer}
+                              approvalChekedData={addressInfoCheck.find(
+                                (item) => item.name === "addressInformation"
+                              )}
+                              handleCheckbox={handleCheckbox}
+                            />
+                          </div>
+                          {!isSubCustomer ? (
                     <div className="col-12 mb-3">
-                      <div className="approval-list-card-contact">
-                        <ContactInformation
-                          isSupplierApproval={isSupplierApproval}
-                          isModelOpen={isModelOpen}
-                          mainId={mainId}
-                          getContactById={getContactById}
-                          approvalChekedData={approvalChekedData.find(item => item.name === 'contactInformation')}
-                          handleCheckbox={handleCheckbox}
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-                  {!isSubCustomer ? (
-                    <div className="col-12 mb-3">
-                      <div className="approval-list-card-financial">
+                      <div className="approval-list-part">
                         <SettingInformation
                           isSupplierApproval={isSupplierApproval}
                           isModelOpen={isModelOpen}
                           mainId={mainId}
                           getFinacialSettingById={getFinacialSettingById}
-                          approvalChekedData={approvalChekedData.find(item => item.name === 'settingInformation')}
+                          approvalChekedData={approvalChekedData.find(
+                            (item) => item.name === "settingInformation"
+                          )}
                           handleCheckbox={handleCheckbox}
                         />
                       </div>
                     </div>
                   ) : null}
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
+                  <div className="col-12 mb-3"></div>
+
+                 
                 </div>
                 <div className="row">
                   <div className="col-md-12 my-3 mt-4">
@@ -325,7 +341,7 @@ const ApprovalCheckList = ({
                         <Buttons
                           buttonTypeClassName="theme-button"
                           buttonText="Approve"
-                         // isLoading={isAddUserCheckResponseLoading}
+                          // isLoading={isAddUserCheckResponseLoading}
                           onClick={handleAddResponse}
                         />
                         <Buttons
@@ -404,7 +420,7 @@ const ApprovalCheckList = ({
                 
               </div> */}
             </div>
-          </>
+          </div>
         ) : (
           <DataLoader />
         )}

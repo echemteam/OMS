@@ -3,10 +3,18 @@ import React, { useEffect, useState } from "react";
 import { ContactType } from "../../../../utils/Enums/commonEnums";
 import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
 
-const ContactInformation = ({ isModelOpen, mainId, getContactById ,approvalChekedData ,handleCheckbox}) => {
+const ContactInformation = ({
+  isModelOpen,
+  mainId,
+  getContactById,
+  approvalChekedData,
+  handleCheckbox,
+}) => {
   //** State */
   const [contactInformation, setContactInformation] = useState([]);
-  const [isChecked,setIsChecked]=useState(approvalChekedData?.isChecked || false);
+  const [isChecked, setIsChecked] = useState(
+    approvalChekedData?.isChecked || false
+  );
 
   //** API Call's */
   const [
@@ -35,67 +43,79 @@ const ContactInformation = ({ isModelOpen, mainId, getContactById ,approvalCheke
       setContactInformation(isGetcontactItem);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetcontactItem]);
-  const handleChange = (checkedValue,newValue) => {
+  const handleChange = (checkedValue, newValue) => {
     setIsChecked(newValue);
-    handleCheckbox(checkedValue,newValue);  
+    handleCheckbox(checkedValue, newValue);
   };
 
   return (
     <React.Fragment>
-      <div className="row">
+      <>
         <div className="card-top-title">
           <h5> Contact Information </h5>
           <div className="checkbox-part">
             <Checkbox
-              name={"contactInformation"} 
+              name={"contactInformation"}
               dataField={"contactInformation"}
               checked={isChecked || false}
-              onChange={handleChange}   />
+              onChange={handleChange}
+            />
           </div>
         </div>
-        {contactInformation &&
-          contactInformation.map((contact, index) => (
-            <div className="col-6" key={index}>
-              <h6>{contact.type}</h6>
-              <h6 className={`name ${contact.isPrimary ? "is-primary" : ""}`}>
-                Name:{" "}
-                <p>
-                  {contact.firstName} {contact.lastName}
-                </p>
-              </h6>
-              <h6 className="email">Email Address:</h6>
-              {contact.emailAddressList &&
-                contact.emailAddressList.map((emails) => (
-                  <div className="email-primary">
-                    <h6 className="email-address-applist">
-                      {emails.emailAddress}
-                    </h6>
-                    <span
-                      className={emails.isPrimary ? "is-primary" : ""}
-                    ></span>
-                  </div>
-                ))}
-              <h6 className="phone-number">Phone Number</h6>
-              {contact.phoneNumberList &&
-                contact.phoneNumberList.map((phoneData) => (
-                  <>
-                    <h6
-                      className={`d-flex ${
-                        phoneData.phoneType === "Home"
-                          ? "home"
-                          : phoneData.phoneType === "Work"
-                          ? "work"
-                          : "home"
-                      } ${phoneData.isPrimary ? "is-primary" : ""}`}
-                    >
-                      ({phoneData.phoneCode}) {phoneData.phoneNumber}
-                      {phoneData.extension ? `, ${phoneData.extension}` : ""}
-                    </h6>
-                  </>
-                ))}
-            </div>
-          ))}
-      </div>
+        <div className="card-info-checklist">
+          {contactInformation &&
+            contactInformation.map((contact, index) => (
+              <div className="card-part" key={index}>
+                <h6 className="title">{contact.type}</h6>
+                <h6
+                  className={`name-title ${
+                    contact.isPrimary ? "is-primary" : ""
+                  }`}
+                >
+                  <span className="label">Name :</span>
+                  <p className="name-desc">
+                    {contact.firstName} {contact.lastName}
+                  </p>
+                </h6>
+                <h6 className="name-title">
+                  <span className="label">Email :</span>
+                  {contact.emailAddressList &&
+                    contact.emailAddressList.map((emails) => (
+                      <div className="email-primary">
+                        <h6 className="name-desc">{emails.emailAddress}</h6>
+                        <span
+                          className={emails.isPrimary ? "is-primary" : ""}
+                        ></span>
+                      </div>
+                    ))}
+                </h6>
+                <h6 className="name-title">
+                  <span className="label">Phone :</span>
+
+                  {contact.phoneNumberList &&
+                    contact.phoneNumberList.map((phoneData) => (
+                      <>
+                        <h6
+                          className={`name-desc d-flex ${
+                            phoneData.phoneType === "Home"
+                              ? "home"
+                              : phoneData.phoneType === "Work"
+                              ? "work"
+                              : "home"
+                          } ${phoneData.isPrimary ? "is-primary" : ""}`}
+                        >
+                          ({phoneData.phoneCode}) {phoneData.phoneNumber}
+                          {phoneData.extension
+                            ? `, ${phoneData.extension}`
+                            : ""}
+                        </h6>
+                      </>
+                    ))}
+                </h6>
+              </div>
+            ))}
+        </div>
+      </>
     </React.Fragment>
   );
 };
