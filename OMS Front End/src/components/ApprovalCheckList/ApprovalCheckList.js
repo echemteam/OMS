@@ -345,6 +345,12 @@ const ApprovalCheckList = ({
                           onClick={handleAddResponse}
                         />
                         <Buttons
+                          buttonTypeClassName="danger-btn ml-5"
+                          buttonText="Reject"
+                          // isLoading={isAddUserCheckResponseLoading}
+                          onClick={handleAddResponse}
+                        />
+                        <Buttons
                           buttonTypeClassName="dark-btn ml-5"
                           buttonText="Cancel"
                           onClick={onSidebarClose}
