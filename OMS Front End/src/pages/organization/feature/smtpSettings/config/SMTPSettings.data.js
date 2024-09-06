@@ -45,6 +45,7 @@ export const SMTPSettingsData = {
             fieldSetting: {
                 placeholder: "Enter Port",
                 allowSpace: false,
+                maxLength: 5,
             },
             validation: [{ type: "require" }],
             style: {

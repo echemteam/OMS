@@ -50,14 +50,34 @@ const documentAPI = createApi({
             }),
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
+        }),
+        // downloadApprovalRequestDocument: builder.query({
+        //     query: (requestData) => ({
+        //         url: encryptQueryString(`/CustomerDocuments/DownloadApprovalRequestDocument/?Base64FileData=${requestData.base64FileData}&FileName=${requestData.fileName}`),
+        //         Method: 'GET',
+        //         responseHandler: (response) => response.blob()
+        //     }),
+        //     transformResponse: transformSucessResponse,
+        //     transformErrorResponse: transformErrorResponse
+        // }),
+        downloadApprovalRequestDocument: builder.mutation({
+            query: (requestData) => ({
+                url: '/CustomerDocuments/DownloadApprovalRequestDocument',
+                method: 'POST',
+                body: transformRequest(requestData),
+                responseHandler: (response) => response.blob()
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
         })
-
     })
 })
 
 export const {
     useLazyGetAllDocumentTypesQuery, useAddCustomerDocumentsMutation,
     useLazyGetCustomerDocumentsByIdQuery, useDeleteCustomerDocumentsByIdMutation, useLazyDownloadDocumentQuery,
+    useDownloadApprovalRequestDocumentMutation,
+    // useLazyDownloadApprovalRequestDocumentQuery,
 } = documentAPI
 
 export default documentAPI;

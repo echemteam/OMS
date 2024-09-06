@@ -55,7 +55,7 @@ const AddMultipleDocument = ({
   const [attachment, setAttachment] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
-  const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+  const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
   /**
    * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -249,7 +249,7 @@ const AddMultipleDocument = ({
       <div className="d-flex align-item-end justify-content-end mt-3">
         <Buttons
           buttonTypeClassName="theme-button"
-          isLoading={isAddLoading}
+          isLoading={isApprovelLoading || isAddLoading}
           buttonText="Save"
           onClick={handleSave}
         />

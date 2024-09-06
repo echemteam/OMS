@@ -8,6 +8,7 @@ import SwalAlert from "../../services/swalService/SwalService";
 import ToastService from "../../services/toastService/ToastService";
 import { useAddApprovalRequestsMutation } from "../../app/services/commonAPI";
 import { useCheckFieldValueExistsMutation } from "../../app/services/ApprovalAPI";
+import { useState } from "react";
 
 const fieldValidationMapping = {
     [FunctionalitiesName.CUSTOMERUPDATE]: ['TaxId', 'Name']
@@ -17,6 +18,8 @@ const fieldValidationMapping = {
 export const useValidateAndAddApprovalRequests = () => {
     // Hook to handle API requests for adding approval requests
     const { success, warning } = SwalAlert();
+    const [isApprovelLoading, setIsApprovelLoading] = useState(false);
+
     const [addApprovalRequest] = useAddApprovalRequestsMutation();
     const [checkFieldValueExists] = useCheckFieldValueExistsMutation();
 
@@ -32,6 +35,7 @@ export const useValidateAndAddApprovalRequests = () => {
      * @returns {Object} - The updated requestData object with normalized values.
     */
     const ValidateRequestByApprovalRules = async (requestData) => {
+        setIsApprovelLoading(true); // Start loader
 
         // Retrieve approval rules from local storage
         const approvalRulesList = getData("approvalRules") || [];
@@ -151,6 +155,8 @@ export const useValidateAndAddApprovalRequests = () => {
             }
         }
 
+        setIsApprovelLoading(false); // End loader
+
         // Return the updated requestData with normalized values
         return {
             ...requestData,
@@ -242,5 +248,5 @@ export const useValidateAndAddApprovalRequests = () => {
         return '';
     };
 
-    return { ValidateRequestByApprovalRules, getEventName, compareObj };
+    return { ValidateRequestByApprovalRules, getEventName, compareObj, isApprovelLoading };
 }

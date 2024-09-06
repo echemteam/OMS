@@ -14,7 +14,7 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
     handleGetDefaultList, handleDeleteClick, isEditablePage }) => {
 
     const [dataSource, setDataSource] = useState(collectAccountData);
-    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules,isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
 
@@ -86,7 +86,7 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
                         dataSource={dataSource}
                         allowPagination={false}
                         onActionChange={actionHandler}
-                        isLoading={isGetDataLoading}
+                        isLoading={isApprovelLoading || isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
                         onRowDataDelete={handleDeleteClick}
                     />

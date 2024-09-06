@@ -13,6 +13,7 @@ export const rulesFormData = {
             fieldSetting: {
                 placeholder: "Enter Rule Name",
                 allowSpace: true,
+                maxLength: 65,
             },
             validation: [{ type: "require" }],
             style: {

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, useRef, useImperativeHandle } from "react";
+import { useState, useEffect, useRef } from "react";
 import FormCreator from "../../../../components/Forms/FormCreator";
 import Buttons from "../../../../components/ui/button/Buttons";
 import { onResetForm } from "../../../../utils/FormFields/ResetForm/handleResetForm";
@@ -48,6 +48,13 @@ const AddEditDictionary = (props) => {
     }
       }, [isAddEditDictionarySuccess, addEditDictionaryData]);
 
+   useEffect(() => {
+      if (props.isModelOpen && !props.isEdit) {
+          let formData = { ...dictionaryFormData };
+          onResetForm(formData, setDictionaryData, null);
+        }
+      }, [props.isModelOpen])
+
   const handleDictionary = () => {
     const formData = dictionaryRef.current.getFormData();
     if (formData && !dictionaryId) {
@@ -72,12 +79,10 @@ const AddEditDictionary = (props) => {
   const onResetData = () => {
     let formData = { ...dictionaryFormData };
     onResetForm(formData, setDictionaryData, null);
+    props.onClose();
+
   };
 
-  useImperativeHandle(props.childRef, () => ({
-    callChildFunction: onResetData,
-  }));
-    
   return (
       <div>
         <div className="row">
@@ -101,7 +106,7 @@ const AddEditDictionary = (props) => {
               <Buttons
                 buttonTypeClassName="dark-btn ml-5"
                 buttonText="Cancel"
-                onClick={props.onClose}
+                onClick={onResetData}
               />
             </div>
           </div>
