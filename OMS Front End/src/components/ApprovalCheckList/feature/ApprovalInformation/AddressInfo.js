@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { AddressType } from "../../../../utils/Enums/commonEnums";
 import PropTypes from "prop-types";
@@ -89,5 +90,15 @@ const AddressInformation = ({
       </div>
     </>
   );
+};
+AddressInformation.propTypes = {
+  isModelOpen: PropTypes.bool.isRequired,
+  mainId: PropTypes.string.isRequired,
+  getAddressById: PropTypes.func.isRequired,
+  isSubCustomer: PropTypes.bool.isRequired,
+  approvalChekedData: PropTypes.shape({
+    isChecked: PropTypes.bool,
+  }).isRequired,
+  handleCheckbox: PropTypes.func.isRequired,
 };
 export default AddressInformation;
