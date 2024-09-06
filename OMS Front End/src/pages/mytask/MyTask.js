@@ -29,11 +29,11 @@ const MyTask = () => {
   const handleGetPendingId = (data) => {
     getApprovalRequestsByApprovalRequestId(data);
     setApprovalRequestId(data);
-     
+
   };
 
   const handleGetArchiveId = (data) => {
-   
+
     getApprovalRequestsByApprovalRequestId(data);
     setApprovalRequestId(data);
   };
@@ -44,7 +44,7 @@ const MyTask = () => {
   };
 
   const approvalRequest = (data) => {
-    setApprovedData(null); 
+    setApprovedData(null);
     setIsApproval(true);
   };
 
@@ -54,7 +54,7 @@ const MyTask = () => {
       isGetApprovalRequestsByApprovalRequestIdSuccess &&
       isGetApprovalRequestsByApprovalRequestIdData
     ) {
-      setApprovedData(isGetApprovalRequestsByApprovalRequestIdData);    
+      setApprovedData(isGetApprovalRequestsByApprovalRequestIdData);
     }
   }, [
     isGetApprovalRequestsByApprovalRequestIdFetching,

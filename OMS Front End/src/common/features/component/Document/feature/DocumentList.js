@@ -291,22 +291,22 @@ const DocumentList = forwardRef(
                           {isArchive
                             ? null
                             : showDeleteButton && (
-                                <span
-                                  className="action-icon"
-                                  onClick={() =>
-                                    handleDelete(
-                                      isSupplier
-                                        ? data.supplierDocumentId
-                                        : data.customerDocumentId
-                                    )
-                                  }
-                                >
-                                  <Iconify
-                                    icon="mingcute:delete-2-line"
-                                    className="delete-icon"
-                                  />
-                                </span>
-                              )}
+                              <span
+                                className="action-icon"
+                                onClick={() =>
+                                  handleDelete(
+                                    isSupplier
+                                      ? data.supplierDocumentId
+                                      : data.customerDocumentId
+                                  )
+                                }
+                              >
+                                <Iconify
+                                  icon="mingcute:delete-2-line"
+                                  className="delete-icon"
+                                />
+                              </span>
+                            )}
                         </div>
                       </div>
                     </div>
