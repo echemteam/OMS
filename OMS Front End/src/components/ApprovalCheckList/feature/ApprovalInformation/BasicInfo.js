@@ -86,4 +86,5 @@ BasicInformation.propTypes = {
   }),
   handleCheckbox: PropTypes.func.isRequired
 };
+}
 export default BasicInformation;
