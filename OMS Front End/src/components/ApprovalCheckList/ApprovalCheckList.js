@@ -264,75 +264,73 @@ const ApprovalCheckList = ({
             <div className="row mt-3">
               <div className="col-6 info-scrollable">
                 <div className="row">
-                  {!isSubCustomer ? (
-                    <div className="col-12 mb-3">
-                      <div className="row">
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-12">
-                          <div className="approval-list-part">
-                            <BasicInformation
-                              isModelOpen={isModelOpen}
-                              mainId={mainId}
-                              getBasicInformationById={getBasicInformationById}
-                              approvalChekedData={approvalChekedData.find(
-                                (item) => item.name === "basicInformation"
-                              )}
-                              handleCheckbox={handleCheckbox}
-                            />
-                          </div>
-                          {!isSubCustomer ? (
-                            <div className="col-12 mb-3">
-                              <div className="approval-list-part">
-                                <ContactInformation
-                                  isSupplierApproval={isSupplierApproval}
-                                  isModelOpen={isModelOpen}
-                                  mainId={mainId}
-                                  getContactById={getContactById}
-                                  approvalChekedData={approvalChekedData.find(
-                                    (item) => item.name === "contactInformation"
-                                  )}
-                                  handleCheckbox={handleCheckbox}
-                                />
-                              </div>
+                  <div className="col-12 mb-3">
+                    <div className="row">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-12">
+                        <div className="approval-list-part">
+                          <BasicInformation
+                            isModelOpen={isModelOpen}
+                            mainId={mainId}
+                            getBasicInformationById={getBasicInformationById}
+                            approvalChekedData={approvalChekedData.find(
+                              (item) => item.name === "basicInformation"
+                            )}
+                            handleCheckbox={handleCheckbox}
+                          />
+                        </div>
+                        {!isSubCustomer ? (
+                          <div className="col-12 mb-3">
+                            <div className="approval-list-part">
+                              <ContactInformation
+                                isSupplierApproval={isSupplierApproval}
+                                isModelOpen={isModelOpen}
+                                mainId={mainId}
+                                getContactById={getContactById}
+                                approvalChekedData={approvalChekedData.find(
+                                  (item) => item.name === "contactInformation"
+                                )}
+                                handleCheckbox={handleCheckbox}
+                              />
                             </div>
-                          ) : null}
-                        </div>
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-12">
-                          <div className="approval-list-part">
-                            <AddressInformation
-                              isSupplierApproval={isSupplierApproval}
-                              isModelOpen={isModelOpen}
-                              mainId={mainId}
-                              getAddressById={getAddressById}
-                              isSubCustomer={isSubCustomer}
-                              approvalChekedData={addressInfoCheck.find(
-                                (item) => item.name === "addressInformation"
-                              )}
-                              handleCheckbox={handleCheckbox}
-                            />
                           </div>
-                          {!isSubCustomer ? (
-                    <div className="col-12 mb-3">
-                      <div className="approval-list-part">
-                        <SettingInformation
-                          isSupplierApproval={isSupplierApproval}
-                          isModelOpen={isModelOpen}
-                          mainId={mainId}
-                          getFinacialSettingById={getFinacialSettingById}
-                          approvalChekedData={approvalChekedData.find(
-                            (item) => item.name === "settingInformation"
-                          )}
-                          handleCheckbox={handleCheckbox}
-                        />
+                        ) : null}
                       </div>
-                    </div>
-                  ) : null}
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-12">
+                        <div className="approval-list-part">
+                          <AddressInformation
+                            isSupplierApproval={isSupplierApproval}
+                            isModelOpen={isModelOpen}
+                            mainId={mainId}
+                            getAddressById={getAddressById}
+                            isSubCustomer={isSubCustomer}
+                            approvalChekedData={addressInfoCheck.find(
+                              (item) => item.name === "addressInformation"
+                            )}
+                            handleCheckbox={handleCheckbox}
+                          />
                         </div>
+                        {!isSubCustomer ? (
+                          <div className="col-12 mb-3">
+                            <div className="approval-list-part">
+                              <SettingInformation
+                                isSupplierApproval={isSupplierApproval}
+                                isModelOpen={isModelOpen}
+                                mainId={mainId}
+                                getFinacialSettingById={getFinacialSettingById}
+                                approvalChekedData={approvalChekedData.find(
+                                  (item) => item.name === "settingInformation"
+                                )}
+                                handleCheckbox={handleCheckbox}
+                              />
+                            </div>
+                          </div>
+                        ) : null}
                       </div>
                     </div>
-                  ) : null}
+                  </div>
                   <div className="col-12 mb-3"></div>
 
-                 
+
                 </div>
                 <div className="row">
                   <div className="col-md-12 my-3 mt-4">

@@ -15,5 +15,6 @@
         public byte? ApproverRoleId { get; set; }
         public string? RoleName { get; set; }
         public string? ApprovalAction { get; set; }
+        public bool? IsFunctional { get; set; }
     }
 }

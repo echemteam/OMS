@@ -269,6 +269,7 @@ const AddEditRules = (props) => {
         moduleId: isGetApprovalConfigurationByApprovalConfigurationIdData.moduleId,
         roleId: isGetApprovalConfigurationByApprovalConfigurationIdData.approverRoleId,
         ruleName: isGetApprovalConfigurationByApprovalConfigurationIdData.ruleName,
+        isFunctional:isGetApprovalConfigurationByApprovalConfigurationIdData.isFunctional,
       };
       setRuleData(form);
     }
@@ -317,6 +318,7 @@ const AddEditRules = (props) => {
           // Remove functionalitiesFieldId if the functionality is functional
           // manageData = removeFormFields(manageData, ['functionalitiesFieldId']);
           setFieldSetting(manageData, 'functionalitiesFieldId', FieldSettingType.DISABLED, true);
+          manageData.initialState.isFunctional = functionalData.isFunctional;
           // manageData.initialState = {
           //   ...existingState,
           //   moduleId: existingState.moduleId,
@@ -363,6 +365,7 @@ const AddEditRules = (props) => {
           ...existingState,
           functionalityId: data.value,
           functionalitiesFieldId: existingState.functionalitiesFieldId,
+          isFunctional: functionalData.isFunctional,
         });
       }
     }
