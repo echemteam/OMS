@@ -23,7 +23,6 @@ import Base64FileViewer from "../../../common/features/component/Base64FileView/
 import { FunctionalitiesName } from "../../../utils/Enums/ApprovalFunctionalities";
 import { useLazyGetCustomersBasicInformationByIdQuery } from "../../../app/services/basicdetailAPI";
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../app/services/supplierAPI";
-import CardSection from "../../../components/ui/card/CardSection";
 
 const parseJson = (jsonStr) => {
   try {
