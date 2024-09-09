@@ -106,8 +106,8 @@
               margin-top: 0;
 
               @media only screen and (max-width: 1750px) {
-                min-height: calc(100vh - 200px);
-                max-height: calc(100vh - 200px);
+                min-height: calc(100vh - 193px);
+                max-height: calc(100vh - 193px);
               }
 
               @media only screen and (max-width: 1280px) {
@@ -124,20 +124,21 @@
       }
     }
   }
-
+  .card-section-left .card-button-only {
+    padding: 8px;
+  }
   .tab-section-desc {
     .tab-section {
       .tab-body-section {
         .card {
           padding: 12px 0;
-
-          &.card-section-left {
-            .card-top-title-btn {
-              padding-left: 12px;
-              padding-right: 12px;
-            }
+          @media only screen and (max-width: 1750px) {
+            padding: 8px 0;
           }
-
+          .card-top-title-btn {
+            padding-left: 12px;
+            padding-right: 12px;
+          }
           .module-listing {
             ul {
               margin: 0;
@@ -387,30 +388,10 @@
       max-height: calc(100vh - 205px);
     }
 
-    @media only screen and (max-width: 1366px) {
-      min-height: calc(100vh - 201px);
-      max-height: calc(100vh - 201px);
-    }
-    @media only screen and (max-width: 1200px) {
-      min-height: calc(100vh - 192px);
-      max-height: calc(100vh - 192px);
-    }
+    
   }
 
-  .record-not-found {
-    min-height: calc(100vh - 245px);
-    max-height: calc(100vh - 245px);
 
-    @media only screen and (max-width: 1750px) {
-      min-height: calc(100vh - 203px);
-      max-height: calc(100vh - 203px);
-    }
-
-    @media only screen and (max-width: 1366px) {
-      min-height: calc(100vh - 190px);
-      max-height: calc(100vh - 190px);
-    }
-  }
 
 
 }

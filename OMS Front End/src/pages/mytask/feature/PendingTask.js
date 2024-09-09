@@ -84,7 +84,7 @@ const PendingTask = (props) => {
           </CardSection>
         </div>
         <div className="col-7 pl-1 pr-1">
-          <CardSection cardTitle="Events">
+          <CardSection cardTitle="Events" rightButton={true}>
             <div className="customer-info">
               {isGetApprovalRequestsListByStatusFetching ? (
                 <DataLoader />

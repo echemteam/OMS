@@ -3052,7 +3052,8 @@ input[type="checkbox"]:disabled {
     padding: 8px;
 
     .card-top-title-btn {
-      min-height: unset;
+      min-height: 30px;
+      max-height: 30px;
       padding-bottom: 7px;
     }
   }
