@@ -289,7 +289,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
         </div>
       }
       {tabId !== 1 && status !== "Reject" ?
-        <div className="task-footer mt-3 pr-3">
+        <div className="task-footer mt-3">
           <Button className="reject-btn" onClick={handleToggleModal}>
             {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
             <Iconify icon="gg:close-o" className="mr-1" />
