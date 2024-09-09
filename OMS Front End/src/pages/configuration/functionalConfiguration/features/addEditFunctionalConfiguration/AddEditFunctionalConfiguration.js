@@ -7,6 +7,7 @@ import FormCreator from '../../../../../components/Forms/FormCreator';
 import { useAddEditFunctionalitiesMutation } from '../../../../../app/services/configurationAPI';
 import ToastService from '../../../../../services/toastService/ToastService';
 import { onResetForm } from '../../../../../utils/FormFields/ResetForm/handleResetForm';
+import ViewFunctionalEvents from '../functionalConfigurationList/viewFunctionalEvents/ViewFunctionalEvents';
 
 const AddEditFunctionalConfiguration = (props) => {
   const functionalRef = useRef();
@@ -78,6 +79,14 @@ const AddEditFunctionalConfiguration = (props) => {
           />
         </div>
       </div>
+      {props.initData.functionalityId ? 
+          <div className="mt-2">
+          <ViewFunctionalEvents
+            functionalityId={ props.initData.functionalityId}
+            />
+            </div>
+        : null
+      }
     </div>
   )
 }
