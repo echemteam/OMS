@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { ContactType } from "../../../../utils/Enums/commonEnums";
 import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
+import PropTypes from "prop-types";
 
 const ContactInformation = ({
   isModelOpen,
@@ -118,6 +119,15 @@ const ContactInformation = ({
       </>
     </React.Fragment>
   );
+};
+ContactInformation.propTypes = {
+  isModelOpen: PropTypes.bool.isRequired,
+  mainId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  getContactById: PropTypes.func.isRequired,
+  approvalChekedData: PropTypes.shape({
+    isChecked: PropTypes.bool
+  }),
+  handleCheckbox: PropTypes.func.isRequired
 };
 
 export default ContactInformation;
