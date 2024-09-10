@@ -21,14 +21,14 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
     useEffect(() => {
         if (!isGetDataLoading && ourAccountData) {
             // New blank row object
-            const blankRow = {
-                zone: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
-                name: '',
-                charge: '',
-                isPrimary: false,
-            };
+            // const blankRow = {
+            //     zone: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
+            //     name: '',
+            //     charge: '',
+            //     isPrimary: false,
+            // };
 
-            setDataSource([...ourAccountData, blankRow]);
+            setDataSource([...ourAccountData]);
         }
     }, [ourAccountData, isGetDataLoading]);
 

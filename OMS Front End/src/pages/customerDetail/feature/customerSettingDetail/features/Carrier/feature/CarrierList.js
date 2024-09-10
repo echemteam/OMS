@@ -22,14 +22,14 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
     useEffect(() => {
         if (!isGetDataLoading && collectAccountData) {
             // New blank row object
-            const blankRow = {
-                carrier: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
-                accountNumber: '',
-                handlingFee: '',
-                isPrimary: false,
-            };
+            // const blankRow = {
+            //     carrier: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
+            //     accountNumber: '',
+            //     handlingFee: '',
+            //     isPrimary: false,
+            // };
 
-            setDataSource([...collectAccountData, blankRow]);
+            setDataSource([...collectAccountData]);
         }
     }, [collectAccountData, isGetDataLoading]);
 
