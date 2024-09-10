@@ -24,8 +24,9 @@ const AddressDetailCard = forwardRef(
     getByIdRef,
     selectedAddressTypeId,
     deleteAddress,
-    statusId,
-    isModelOpen
+    customerStatusId,
+    isModelOpen,
+    isSupplier
   }) => {
     //** States */
     const [addressData, setAddressData] = useState([]);
@@ -56,7 +57,7 @@ const AddressDetailCard = forwardRef(
         getById(keyId);
       }
     }, [keyId, selectedAddressTypeId]);
-    
+
     useEffect(() => {
       if (
         !isGetAddresssByCustomerIdFetching &&
@@ -75,7 +76,7 @@ const AddressDetailCard = forwardRef(
       isGetAddresssByCustomerId,
       GetAddresssByCustomerIdData,
     ]);
-    
+
     useEffect(() => {
       if (isDeleteAddressSuccess && isDeleteAddressData) {
         ToastService.success(isDeleteAddressData.errorMessage);
@@ -200,7 +201,7 @@ const AddressDetailCard = forwardRef(
                         {/* <span className="label-txt">{address.stateName}</span> */}
                         <span className="label-txt">{address.countryName}</span>
                       </div>
-                      {statusId !== CustomerSupplierStatus.APPROVED &&
+                      {isSupplier && customerStatusId !== CustomerSupplierStatus.APPROVED &&
                         <div className="edit-delete-button">
                           {showEditIcon ? (
                             <button onClick={() => handleEdit(address)} className="edit-btn" >
@@ -212,11 +213,7 @@ const AddressDetailCard = forwardRef(
                           </button>
                         </div>
                       }
-                      <div
-                        className={`contact-type-badge ${getAddressTypeClass(
-                          address.type
-                        )}`}
-                      >
+                      <div className={`contact-type-badge ${getAddressTypeClass(address.type)}`}>
                         {address.type}
                       </div>
                     </div>
@@ -227,8 +224,9 @@ const AddressDetailCard = forwardRef(
           </div>
         ) : (
           <DataLoader />
-        )}
-      </React.Fragment>
+        )
+        }
+      </React.Fragment >
     );
   }
 );

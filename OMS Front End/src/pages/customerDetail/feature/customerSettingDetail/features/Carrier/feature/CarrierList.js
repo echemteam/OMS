@@ -9,12 +9,13 @@ import PropTypes from 'prop-types';
 import ToastService from "../../../../../../../services/toastService/ToastService";
 import { useValidateAndAddApprovalRequests } from "../../../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../../../utils/Enums/ApprovalFunctionalities";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 
 const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId,
-    handleGetDefaultList, handleDeleteClick, isEditablePage }) => {
+    handleGetDefaultList, handleDeleteClick, isEditablePage, customerStatusId }) => {
 
     const [dataSource, setDataSource] = useState(collectAccountData);
-    const { ValidateRequestByApprovalRules,isApprovelLoading } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
 
@@ -41,7 +42,7 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
             carrierId: data.carrier?.value || data.carrierId,
             handlingFee: data.handlingFee
         };
-        if (isEditablePage) {
+        if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
             await handleApprovalRequest(req, dataSource.initialState);
         } else {
             let newGridData = [...dataSource]

@@ -21,7 +21,7 @@ import PropTypes from "prop-types";
 const ManageCarrier = React.lazy(() => import("../Carrier/ManageCarrier"));
 const ManageDevliveryMethod = React.lazy(() => import("../DeliveryMethod/ManageDevliveryMethod"));
 
-const ShippingSettings = ({ isEditablePage }) => {
+const ShippingSettings = ({ isEditablePage, customerStatusId }) => {
 
   const ref = useRef();
   const { confirm } = SwalAlert();
@@ -147,13 +147,14 @@ const ShippingSettings = ({ isEditablePage }) => {
       {!isGetDefaultValueFetching ?
         <div className="grid-section">
           {accountTypeId === 1 ?
-            <ManageDevliveryMethod isEditablePage={isEditablePage} isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching} /> :
+            <ManageDevliveryMethod isEditablePage={isEditablePage} isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} customerStatusId={customerStatusId}
+              isGetDataLoading={isGetDefaultValueFetching} /> :
             accountTypeId === 2 ?
               <>
                 <ManageCarrier isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching}
-                  isEditablePage={isEditablePage} />
+                  isEditablePage={isEditablePage} customerStatusId={customerStatusId} />
                 <ManageDevliveryMethod isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} isGetDataLoading={isGetDefaultValueFetching}
-                  isEditablePage={isEditablePage} />
+                  isEditablePage={isEditablePage} customerStatusId={customerStatusId} />
               </> : null
           }
         </div>
