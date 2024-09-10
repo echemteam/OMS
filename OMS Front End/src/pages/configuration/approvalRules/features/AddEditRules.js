@@ -19,6 +19,8 @@ const AddEditRules = (props) => {
   const [moduleId, setModuleID] = useState(0)
   const [functionalityID, setFunctionalityID] = useState(0)
   const [ApprovalConfigurationId, setApprovalConfigurationId] = useState(0)
+  const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
+
   
   const [getAllModules,
     {
@@ -219,6 +221,7 @@ const AddEditRules = (props) => {
   const handleFunctionalityEventOption = (responseData) => {
     setDropDownOptionField(responseData, "functionalityEventId", "eventName", rulesFormData, "functionalityEventId"
     );
+    setShouldRerenderFormCreator((prevState) => !prevState);
   };
   useEffect(() => {
     if (isAddEditApprovalConfigurationSucess && allAddEditApprovalConfigurationData) {
@@ -273,6 +276,7 @@ const AddEditRules = (props) => {
         template:isGetApprovalConfigurationByApprovalConfigurationIdData.template
       };
       setRuleData(form);
+      setShouldRerenderFormCreator((prevState) => !prevState);
     }
   }, [isGetApprovalConfigurationByApprovalConfigurationIdFetching, isGetApprovalConfigurationByApprovalConfigurationIdSuccess, isGetApprovalConfigurationByApprovalConfigurationIdData]);
 
@@ -420,7 +424,7 @@ const AddEditRules = (props) => {
         ref={ruleFormRef}
         {...ruleData}
         onActionChange={formActionHandler}
-       // key={shouldRerenderFormCreator}
+        key={shouldRerenderFormCreator}
       />
       <div className="col-md-12">
         <div className="d-flex align-item-end justify-content-end">
