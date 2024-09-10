@@ -14,6 +14,7 @@ import ToastService from "../../../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../../../data/appMessages";
 import { useValidateAndAddApprovalRequests } from "../../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../../utils/Enums/ApprovalFunctionalities";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 
 const getFileIcon = (extension) => {
   switch (extension) {
@@ -49,7 +50,8 @@ const AddMultipleDocument = ({
   handleMulDocToggleModal,
   addDocuments,
   documentTypes,
-  isEditablePage
+  isEditablePage,
+  customerStatusId
 }) => {
   const ref = useRef();
   const [attachment, setAttachment] = useState([]);
@@ -96,7 +98,7 @@ const AddMultipleDocument = ({
         [isSupplier ? "supplierId" : "customerId"]: keyId,
         documentInfoList: modifyData,
       };
-      if (!isSupplier && isEditablePage) {
+      if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
         await handleApprovalRequest(requestData, null);
       } else {
         add(requestData);

@@ -125,7 +125,7 @@ const MyTask = () => {
         </div>
         <div className="col-xxl-7 col-xl-7 col-md-7 col-12 ">
           <div className="right-desc">
-            <CardSection cardTitle="Description">
+            <CardSection>
               <TaskDetail
                 approvedData={approvedData}
                 approvalRequest={approvalRequest}

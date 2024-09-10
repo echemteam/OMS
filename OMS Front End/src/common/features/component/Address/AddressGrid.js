@@ -26,7 +26,7 @@ const AddressGrid = ({
   addAddress,
   getAddresssById,
   deleteAddress,
-  statusId
+  customerStatusId
 }) => {
   //** States */
   const editRef = useRef();
@@ -85,36 +85,6 @@ const AddressGrid = ({
     }
   }, [isEditablePage, isSupplier, SecurityKey, editMode]);
 
-  const handleEditPermission = (permission) => {
-    if (formSetting) {
-      if (editMode) {
-        if (permission?.isViewOnly) {
-          formSetting.isViewOnly = true;
-          setIsButtonDisable(true);
-        } else {
-          formSetting.isViewOnly = false;
-          setIsButtonDisable(false);
-        }
-      } else {
-        handleNonEditModePermissions(permission);
-      }
-    }
-  };
-
-  const handleNonEditModePermissions = (permission) => {
-    if (permission?.hasAccess) {
-      formSetting.isViewOnly = false;
-      setIsButtonDisable(false);
-    }
-
-    if (permission?.isViewOnly || permission?.isEditable) {
-      setShowEditIcon(true);
-    } else {
-      setShowEditIcon(false);
-    }
-  };
-
-
   useEffect(() => {
     getAllAddressTypes();
   }, [keyId]);
@@ -156,8 +126,9 @@ const AddressGrid = ({
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
-          statusId={statusId}
+          customerStatusId={customerStatusId}
           isModelOpen={isModelOpen}
+          isSupplier={isSupplier}
         />
       </div>
     ),
@@ -172,9 +143,9 @@ const AddressGrid = ({
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
-          statusId={statusId}
+          customerStatusId={customerStatusId}
           isModelOpen={isModelOpen}
-          
+          isSupplier={isSupplier}
         />
       </div>
     ),
@@ -189,8 +160,9 @@ const AddressGrid = ({
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
-          statusId={statusId}
+          customerStatusId={customerStatusId}
           isModelOpen={isModelOpen}
+          isSupplier={isSupplier}
         />
       </div>
     ),
@@ -205,9 +177,9 @@ const AddressGrid = ({
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
-          statusId={statusId}
+          customerStatusId={customerStatusId}
           isModelOpen={isModelOpen}
-
+          isSupplier={isSupplier}
         />
       </div>
     ),
@@ -222,8 +194,9 @@ const AddressGrid = ({
           getByIdRef={getByIdRef}
           selectedAddressTypeId={addressTypeId}
           deleteAddress={deleteAddress}
-          statusId={statusId}
+          customerStatusId={customerStatusId}
           isModelOpen={isModelOpen}
+          isSupplier={isSupplier}
         />
       </div>
     ),
@@ -280,7 +253,7 @@ const AddressGrid = ({
             onSidebarClose={onSidebarClose}
             getAddressTypeIdOrder={null}
             orderCustomerId={null}
-            customerStatusId={statusId}
+            customerStatusId={customerStatusId}
           />
         </SidebarModel>
       </div>

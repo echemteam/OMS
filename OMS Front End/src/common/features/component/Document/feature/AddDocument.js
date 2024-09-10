@@ -10,8 +10,9 @@ import PropTypes from 'prop-types';
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 
-const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess, isEditablePage }) => {
+const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess, isEditablePage, customerStatusId }) => {
 
     const ref = useRef();
     const [formData, setFormData] = useState(DocumentFormData);
@@ -60,7 +61,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
                 [isSupplier ? 'supplierId' : 'customerId']: keyId,
                 documentInfoList: documentList
             };
-            if (!isSupplier && isEditablePage) {
+            if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
                 await handleApprovalRequest(requestData, null);
             } else {
                 add(requestData);
