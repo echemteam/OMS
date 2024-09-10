@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
 import PropTypes from "prop-types";
 
-const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById,approvalChekedData ,handleCheckbox}) => {
+const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById, approvalChekedData, handleCheckbox }) => {
   const [basicInformation, setBasicInformation] = useState();
   const [isChecked, setIsChecked] = useState(
     approvalChekedData?.isChecked || false
@@ -57,11 +57,35 @@ const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById,approva
           />
         </div>
       </div>
-      <div className="info-sec">
+      <div className="card-info-checklist">
         {basicInformation && (
-          <div className="card-info">
-            <span className="card-label">Tax Id: </span>
-            <span className="desc-part">{basicInformation.taxId}</span>
+          <div className="card-part">
+            <h6 className="name-title">
+              <span className="label">Customer Name:</span>
+              <p className="name-desc">{basicInformation.name} </p>
+            </h6>
+            <h6 className="name-title">
+              <span className="label">Tax Id:</span>
+              <p className="name-desc">{basicInformation.taxId}</p>
+            </h6>
+            <h6 className="name-title">
+              <span className="label">Email:</span>
+              <p className="name-desc">{basicInformation.emailAddress}</p>
+            </h6>
+            <h6 className="name-title">
+              <span className="label">Country:</span>
+              <p className="name-desc">{basicInformation.countryName}</p>
+            </h6>
+            <h6 className="name-title">
+              <span className="label">Is Sub Customer:</span>
+              <p className="name-desc">
+                {basicInformation && basicInformation.isSubCustomer ? (
+                  <i className="fa fa-check green-color"></i>
+                ) : (
+                  <i className="fa fa-times red-color"></i>
+                )}
+              </p>
+            </h6>
           </div>
         )}
       </div>

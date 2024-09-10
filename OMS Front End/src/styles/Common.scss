@@ -1283,8 +1283,9 @@ a {
     @media only screen and (max-width: 1750px) {
       margin-top: 5px;
     }
-    
+
   }
+
   @media only screen and (max-width: 1200px) {
     margin-left: 0.75px;
   }
@@ -3316,12 +3317,13 @@ input[type="checkbox"]:disabled {
   }
 }
 
-.lable-none{
-  .input-label{
+.lable-none {
+  .input-label {
     visibility: hidden;
   }
-  .input-label-part{
-    input{
+
+  .input-label-part {
+    input {
       margin-top: 0;
     }
   }
@@ -4101,7 +4103,7 @@ input[type="checkbox"]:disabled {
 
       .css-3w2yfm-ValueContainer {
         .css-1p3m7a8-multiValue {
-          max-height: 15px !important;
+          // max-height: 15px !important;
         }
 
         .css-wsp0cs-MultiValueGeneric {
@@ -4238,9 +4240,19 @@ input[type="checkbox"]:disabled {
 }
 
 
-.document-view{
+.document-view {
   margin-top: 10px;
-    max-height: calc(100vh - 170px);
-    overflow: hidden;
-    overflow-y: auto;
+  max-height: calc(100vh - 150px);
+  overflow: hidden;
+  overflow-y: auto;
+  @media only screen and (max-width: 1750px) {
+    max-height: calc(100vh - 140px);
+  }
+}
+
+.pg-viewer-wrapper {
+  overflow-y: auto !important;
+  .document-container {
+    padding: 15px;
+  }
 }

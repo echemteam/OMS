@@ -209,5 +209,9 @@ namespace OMS.Application.Services.Common
         {
             return await repositoryManager.commonRepository.GetNotesHistory(entityId, ownerId, ownerTypeId, noteType);
         }
+        public Task<List<GetAllFunctionalityEventByFunctionalityIdResponse>> GetAllFunctionalityEventByModuleId(int moduleId)
+        {
+            return repositoryManager.commonRepository.GetAllFunctionalityEventByModuleId(moduleId);
+        }
     }
 }

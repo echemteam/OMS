@@ -2,7 +2,6 @@
 using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.Customers;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
@@ -90,12 +89,14 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.RequestedByUserId,
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string status, string? roleId)
+        public async Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string status, string? roleId, string eventIds, string sortOrder)
         {
             List<GetApprovalRequestsListByStatusAndRoleIdResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusAndRoleIdResponse>(GETAPPROVALREQUESTSLISTBYSTATUSANDROLEID, new
             {
                 roleId,
-                status
+                status,
+                eventIds,
+                sortOrder
             }, commandType: CommandType.StoredProcedure);
             return getAllUsersResponse;
         }

@@ -321,5 +321,12 @@ namespace OMS.API.Controllers
             List<GetNotesHistoryResponse> responseData = await _serviceManager.commonServices.GetNotesHistory(entityId, ownerId, ownerTypeId, noteType);
             return APISucessResponce<object>(responseData);
         }
+
+        [HttpGet("GetAllFunctionalityEventByModuleId")]
+        public async Task<IActionResult> GetAllFunctionalityEventByModuleId(int moduleId)
+        {
+            List<GetAllFunctionalityEventByFunctionalityIdResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalityEventByModuleId(moduleId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

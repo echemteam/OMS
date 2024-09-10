@@ -13,7 +13,7 @@ const customerSecurityKey = {
     EDIT: securityKey.EDITCUSTOMERADDRESS,
 }
 
-const CustomerAddressDetail = ({ isEditablePage , customerStatus }) => {
+const CustomerAddressDetail = ({ isEditablePage, customerStatusId }) => {
 
     const { customerId, isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -28,7 +28,7 @@ const CustomerAddressDetail = ({ isEditablePage , customerStatus }) => {
             addAddress={useAddAddressMutation}
             updateAddress={useUpdateAddAddressMutation}
             deleteAddress={useDeleteAddressMutation}
-            statusId={customerStatus}
+            customerStatusId={customerStatusId}
         />
     )
 }
