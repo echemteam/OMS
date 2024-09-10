@@ -11,6 +11,7 @@ import { ErrorMessage } from "../../../data/appMessages";
 
 const EmailTemplate=()=>{
     const getDataRef=useRef();
+    const childRef = useRef();
     const [isModelOpen, setIsModelOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [formData, setFormData] = useState(EmailTemplateFormData);
@@ -25,6 +26,9 @@ const EmailTemplate=()=>{
     const onSidebarClose = () => {
       setIsModelOpen(false);
       setIsEdit(false);
+      if(childRef.current){
+        childRef.current.callChildFunction();
+      }
     };
   
     const handleEditClick = (data) => {
@@ -106,7 +110,8 @@ const EmailTemplate=()=>{
             initData={formData}
             onClose={onSidebarClose}
             onSuccess={onSuccess}
-            isModelOpen={isModelOpen}     
+            isModelOpen={isModelOpen}
+            childRef = {childRef}
           /> 
         </SidebarModel>
       </div>
