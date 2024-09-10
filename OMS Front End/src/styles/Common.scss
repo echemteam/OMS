@@ -1878,7 +1878,7 @@ a {
         align-items: flex-start;
         justify-content: space-between;
         width: 100%;
-        
+
 
         .doc-details {
           padding-left: 5px;
@@ -4257,5 +4257,16 @@ input[type="checkbox"]:disabled {
   .document-container {
     padding: 15px !important;
     width: 100% !important;
+  }
+}
+.right-side-sec-padding-0{
+  .document-list-sec {
+    .document-listing {
+      .documents {
+        .right-desc{
+          padding-top: 0;
+        }
+      }
+    }
   }
 }
