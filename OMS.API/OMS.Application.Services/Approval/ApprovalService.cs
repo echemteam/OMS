@@ -2,7 +2,9 @@
 using Common.Helper.Enum;
 using Common.Helper.Export;
 using Common.Helper.Extension;
+using Common.Helper.ReplacePlaceholders;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
@@ -10,6 +12,7 @@ using OMS.Domain.Entities.API.Request.Contact;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Approval;
+using OMS.Domain.Entities.API.Response.EmailTemplates;
 using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -75,13 +78,29 @@ namespace OMS.Application.Services.Approval
         }
         public async Task<AddEntityDto<int>> AddApprovalRequests(AddApprovalRequests requestData, short CurrentUserId)
         {
+            GetTemplateByFunctionalityEventIdResponse FormatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(requestData.FunctionalityEventId);
             ApprovalRequestsDto approvalRequestsDto = requestData.ToMapp<AddApprovalRequests, ApprovalRequestsDto>();
             approvalRequestsDto.RequestedByUserId = CurrentUserId;
+
+            approvalRequestsDto.OldValueTemplate = string.Empty;
+            approvalRequestsDto.NewValueTemplate = string.Empty;
+
+            if (!string.IsNullOrEmpty(requestData.OldValue))
+            {
+                var oldValueData = JObject.Parse(requestData.OldValue!);
+                approvalRequestsDto.OldValueTemplate = ReplaceTemplatePlaceholders.ReplacePlaceholders(FormatTemplate.Template!, oldValueData);
+            }
+            if (!string.IsNullOrEmpty(requestData.NewValue))
+            {
+                var newValueData = JObject.Parse(requestData.NewValue!);
+                approvalRequestsDto.NewValueTemplate = ReplaceTemplatePlaceholders.ReplacePlaceholders(FormatTemplate.Template!, newValueData);
+            }
+
             return await repositoryManager.approval.AddApprovalRequests(approvalRequestsDto);
         }
         public Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string roleId, string eventIds, string sortOrder)
         {
-            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(status, roleId,eventIds,sortOrder);
+            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(status, roleId, eventIds, sortOrder);
         }
         public async Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId)
         {

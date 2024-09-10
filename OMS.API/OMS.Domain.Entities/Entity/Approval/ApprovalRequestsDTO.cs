@@ -16,5 +16,7 @@
         public DateTime? ApprovedDate { get; set; }
         public string? Status { get; set; }
         public string? RejectReason { get; set; }
-    }
+        public string? OldValueTemplate { get; set; }
+        public string? NewValueTemplate { get; set; }
+    }                  
 }
