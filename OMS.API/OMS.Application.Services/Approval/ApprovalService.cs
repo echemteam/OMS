@@ -79,9 +79,9 @@ namespace OMS.Application.Services.Approval
             approvalRequestsDto.RequestedByUserId = CurrentUserId;
             return await repositoryManager.approval.AddApprovalRequests(approvalRequestsDto);
         }
-        public Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string roleId)
+        public Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string roleId, string eventIds, string sortOrder)
         {
-            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(status, roleId);
+            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(status, roleId,eventIds,sortOrder);
         }
         public async Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId)
         {

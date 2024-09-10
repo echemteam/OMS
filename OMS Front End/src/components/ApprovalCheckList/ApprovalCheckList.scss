@@ -3,6 +3,8 @@
     padding: 0 20px;
     height: calc(100vh - 70px);
     position: relative;
+    overflow: hidden;
+    overflow-y: auto;
 
     &:before {
       position: absolute;
@@ -72,6 +74,7 @@
 
     .card-info-checklist {
       padding: 0 8px;
+
       .address-card-part {
         margin-bottom: 7px;
         margin-top: 5px;
@@ -121,16 +124,41 @@
           display: flex;
           align-items: center;
           margin-bottom: 0;
+
           .label {
             font-weight: 700;
             font-size: var(--commonFont);
             margin: 5px 5px 5px 0;
+            min-width: 45px;
           }
 
           .name-desc {
             margin: 0;
             font-size: var(--commonFont);
             color: var(--textColor);
+          }
+
+          &.number-sec {
+            align-items: flex-start;
+
+            .label {
+              margin-top: 0;
+              min-width: 45px;
+            }
+
+            .name-desc-sec {
+              width: calc(100% - 45px);
+              display: flex;
+              flex-wrap: wrap;
+
+              .name-desc {
+                margin-right: 5px;
+
+                &:last-child {
+                  margin-right: 0;
+                }
+              }
+            }
           }
         }
       }

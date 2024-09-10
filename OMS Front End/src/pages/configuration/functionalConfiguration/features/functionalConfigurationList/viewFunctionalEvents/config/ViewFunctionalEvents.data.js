@@ -3,7 +3,7 @@ import { GridColumnType } from "../../../../../../../data/gridColumnType";
 export const viewFunctionalEventsData = {
   columns: [
     {
-      name: "functionality Name",
+      name: "functionality",
       fieldName: "functionalityName",
       colStyle: {
         width: "20%",
@@ -11,7 +11,7 @@ export const viewFunctionalEventsData = {
       allowShort: true,
     },
     {
-      name: "event Name",
+      name: "event",
       fieldName: "eventName",
       colStyle: {
         width: "20%",

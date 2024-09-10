@@ -9,9 +9,10 @@ import { useUpdateDeliveryMethodsMutation } from "../../../../../../../app/servi
 import ToastService from "../../../../../../../services/toastService/ToastService";
 import { FunctionalitiesName } from "../../../../../../../utils/Enums/ApprovalFunctionalities";
 import { useValidateAndAddApprovalRequests } from "../../../../../../../utils/CustomHook/useValidateAndAddApproval";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 
 const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton,
-    customerId, handleGetDefaultList, handleDeleteClick, isEditablePage }) => {
+    customerId, handleGetDefaultList, handleDeleteClick, isEditablePage, customerStatusId }) => {
 
     const [dataSource, setDataSource] = useState(ourAccountData);
     const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
@@ -20,14 +21,14 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
     useEffect(() => {
         if (!isGetDataLoading && ourAccountData) {
             // New blank row object
-            const blankRow = {
-                zone: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
-                name: '',
-                charge: '',
-                isPrimary: false,
-            };
+            // const blankRow = {
+            //     zone: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
+            //     name: '',
+            //     charge: '',
+            //     isPrimary: false,
+            // };
 
-            setDataSource([...ourAccountData, blankRow]);
+            setDataSource([...ourAccountData]);
         }
     }, [ourAccountData, isGetDataLoading]);
 
@@ -39,7 +40,7 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
             customerDeliveryMethodId: data.customerDeliveryMethodId ? data.customerDeliveryMethodId : 0,
             deliveryMethodId: data.deliveryMethodId && typeof data.deliveryMethodId === "object" ? data.deliveryMethodId.value : data.deliveryMethodId,
         };
-        if (isEditablePage) {
+        if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
             await handleApprovalRequest(req, dataSource.initialState);
         } else {
             let newGridData = [...dataSource]

@@ -99,7 +99,7 @@ const CustomerDetails = () => {
               imagePath={AppIcons.BackArrowIcon}
             ></Buttons>
             <div className="customer-detail-tab-sec">
-              <CustomerViewTab customerId={customerId} isBuyingForThirdParty={isBuyingForThirdParty} contryIdCode={customerData?.countryId} customerStatus={customerData?.statusId} />
+              <CustomerViewTab customerId={customerId} isBuyingForThirdParty={isBuyingForThirdParty} contryIdCode={customerData?.countryId} customerStatusId={customerData?.statusId} />
             </div>
           </div>
         </div>
@@ -118,6 +118,7 @@ const CustomerDetails = () => {
           keyId={keyId}
           isEditablePage={true}
           getCustomerById={onSuccess}
+          customerStatusId={customerData?.statusId}
         />
       </SidebarModel>
     </>

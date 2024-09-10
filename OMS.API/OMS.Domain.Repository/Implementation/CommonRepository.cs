@@ -52,6 +52,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLDOCUMENTBYOWNERID = "GetAllDocumentByOwnerId";
         const string GETALLFUNCTIONALITYEVENTBYFUNCTIONALITYID = "GetAllFunctionalityEventByFunctionalityId";
         const string GETNOTESHISTORY = "GetNotesHistory";
+        const string GETALLFUNCTIONALITYEVENTBYMODULEID = "GetAllFunctionalityEventByModuleId";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -303,6 +304,14 @@ namespace OMS.Domain.Repository.Implementation
                 noteType
             }, commandType: CommandType.StoredProcedure);
             return getNotesHistoryResponse;
+        }
+        public async Task<List<GetAllFunctionalityEventByFunctionalityIdResponse>> GetAllFunctionalityEventByModuleId(int moduleId)
+        {
+            List<GetAllFunctionalityEventByFunctionalityIdResponse> getAllFunctionalityEventByFunctionalityIdResponse = await _context.GetList<GetAllFunctionalityEventByFunctionalityIdResponse>(GETALLFUNCTIONALITYEVENTBYMODULEID, new
+            {
+                moduleId
+            }, commandType: CommandType.StoredProcedure);
+            return getAllFunctionalityEventByFunctionalityIdResponse;
         }
     }
 }

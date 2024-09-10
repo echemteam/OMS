@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
+﻿using OMS.Domain.Entities.API.Request.ApiConfiguration;
+using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
 using OMS.Domain.Entities.Entity.ApprovalConfiguration;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -49,10 +50,11 @@ namespace OMS.Domain.Repository.Implementation
             return getApprovalConfigurationByApprovalConfigurationIdResponse;
         }
 
-        public async Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData)
+        public async Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(GetApprovalConfigurationRulesRequest requestData)
         {
             return await _context.GetListSP<GetApprovalConfigurationRulesResponse>(GETAPPROVALCONFIGURATIONRULES, new
             {
+                requestData.FunctionalityId,
                 requestData.Pagination?.PageNumber,
                 requestData.Pagination?.PageSize,
                 requestData.Filters?.SearchText,

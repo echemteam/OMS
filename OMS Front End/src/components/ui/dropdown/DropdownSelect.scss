@@ -55,10 +55,12 @@
     padding: 5px !important;
   }
 }
+
 .basic-info-select {
   .css-1hb7zxy-IndicatorsContainer {
     height: 32px !important;
   }
+
   .css-t3ipsp-control,
   .css-13cymwt-control {
     min-height: 32px !important;
@@ -71,8 +73,10 @@
   font-size: var(--commonFont-medium) !important;
   z-index: 99;
   cursor: pointer;
+
   .css-1n6sfyn-MenuList {
     cursor: pointer;
+
     .css-tr4s17-option {
       cursor: pointer;
     }
@@ -102,6 +106,7 @@
 .css-1xc3v61-indicatorContainer {
   padding: 5px !important;
 }
+
 .css-hlgwow,
 .css-1fdsijx-ValueContainer {
   padding: 0 5px !important;
@@ -116,8 +121,7 @@
   cursor: pointer;
 }
 
-.css-t3ipsp-control {
-}
+.css-t3ipsp-control {}
 
 // .css-1dimb5e-singleValue{
 //   width: 50px !important
@@ -129,45 +133,57 @@
 .css-wsp0cs-MultiValueGeneric {
   font-size: var(--commonFont-medium) !important;
 }
-.customer-all-details{
+
+.customer-all-details {
   .css-wsp0cs-MultiValueGeneric {
     padding: 0px 3px !important;
-    
-  } 
-  .css-13cymwt-control{
-    min-height: auto !important;
-    
+
   }
-  .css-1hb7zxy-IndicatorsContainer{
+
+  .css-13cymwt-control {
+    min-height: auto !important;
+
+  }
+
+  .css-1hb7zxy-IndicatorsContainer {
     height: 27px !important;
   }
-  .css-3w2yfm-ValueContainer{
+
+  .css-3w2yfm-ValueContainer {
     padding-top: 5px !important;
   }
+
   .dis-dropdown {}
+
   .css-3iigni-container {
-    .css-16xfy0z-control{
+    .css-16xfy0z-control {
       border: none !important;
       background: transparent !important;
     }
   }
 
-  .css-3w2yfm-ValueContainer{
+  .css-3w2yfm-ValueContainer {
     min-width: calc(100% - 30px);
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
   }
 }
 
 .custom-checkbox-select {
   width: 100%;
-  .css-1dimb5e-singleValue{
+
+  .css-1dimb5e-singleValue {
     display: flex;
   }
 }
 
+.css-1wy0on6 {
+  align-items: flex-start !important;
+}
 
 @media only screen and (max-width: 1750px) {
+
   .css-16xfy0z-control,
   .css-13cymwt-control {
     height: 28px !important;
@@ -181,19 +197,26 @@
       height: 28px;
     }
   }
+
   .css-hlgwow,
   .css-1hb7zxy-IndicatorsContainer {
     height: 25px !important;
     padding: 0 5px !important;
 
     .css-1xc3v61-indicatorContainer {
-      padding: 3px 5px 0 !important;
+      padding: 0px 5px 0 !important;
     }
   }
+
   .css-894a34-indicatorSeparator,
   .css-1u9des2-indicatorSeparator {
-    margin-bottom: 5px !important;
-    margin-top: 6px !important;
+    margin-bottom: 4px !important;
+    margin-top: 4px !important;
+  }
+  .customer-all-details {
+    .css-1hb7zxy-IndicatorsContainer {
+      height: 25px !important;
+  }
   }
 
   //Dropdown Select End
@@ -221,20 +244,44 @@
   .css-15lsz6c-indicatorContainer {
     padding: 3px 5px !important;
   }
-}
 
-.css-1wy0on6 {
-  align-items: flex-start !important;
-}
-@media only screen and (max-width: 1750px) {
   .css-3w2yfm-ValueContainer {
     padding: 0 8px !important;
   }
+
   .css-1dyz3mf,
   .css-hlgwow {
     padding: 0 5px !important;
   }
 }
+
+
+@media only screen and (max-width: 1650px) {
+
+  .css-hlgwow,
+  .css-1hb7zxy-IndicatorsContainer {
+    height: 25px !important;
+    padding: 0 5px !important;
+
+    .css-1xc3v61-indicatorContainer {
+      padding: 0px 5px 0 !important;
+    }
+  }
+
+  .css-894a34-indicatorSeparator {
+    .css-1u9des2-indicatorSeparator {
+      margin-bottom: 4px !important;
+      margin-top: 4px !important;
+    }
+  }
+
+  .customer-all-details {
+    .css-1hb7zxy-IndicatorsContainer {
+      height: 25px !important;
+    }
+  }
+}
+
 @media only screen and (max-width: 1366px) {
   .css-1hb7zxy-IndicatorsContainer {
     .css-1xc3v61-indicatorContainer {
@@ -242,5 +289,3 @@
     }
   }
 }
-
-

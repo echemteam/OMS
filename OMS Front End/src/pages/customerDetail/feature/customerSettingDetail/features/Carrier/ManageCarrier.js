@@ -12,13 +12,13 @@ import PropTypes from 'prop-types';
 
 //** Component's */
 const CarrierList = React.lazy(() => import("./feature/CarrierList"));
-const AddEditCarrier = React.lazy(() => import("./feature/AddEditCarrier"));
+// const AddEditCarrier = React.lazy(() => import("./feature/AddEditCarrier"));
 
-const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton, isEditablePage }) => {
+const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton, isEditablePage, customerStatusId }) => {
 
     const molGridRef = useRef();
     const { confirm } = SwalAlert();
-    const [isEdit, setIsEdit] = useState(false);
+    // const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const { carriersList, customerId } = useContext(BasicDetailContext);
     const { data, isFetching, isSuccess } = useGetAllDeliveryCarriersQuery();
@@ -47,14 +47,14 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton, i
 
     const handleToggleModal = () => {
         setShowModal(!showModal);
-        setIsEdit(false);
+        // setIsEdit(false);
     };
 
-    //** Success */
-    const onSuccess = () => {
-        setShowModal(!showModal);
-        handleGetDefaultList();
-    };
+    // //** Success */
+    // const onSuccess = () => {
+    //     setShowModal(!showModal);
+    //     handleGetDefaultList();
+    // };
 
     //** Action Handler */
     // const handleEditModal = (data) => {
@@ -84,7 +84,7 @@ const ManageCarrier = ({ handleGetDefaultList, isGetDataLoading, isShowButton, i
     return (
         <>
             <CarrierList molGridRef={molGridRef} collectAccountData={carriersList} actionHandler={actionHandler} customerId={customerId}
-                handleToggleModal={handleToggleModal} isGetDataLoading={isGetDataLoading} isShowButton={isShowButton}
+                handleToggleModal={handleToggleModal} isGetDataLoading={isGetDataLoading} isShowButton={isShowButton} customerStatusId={customerStatusId}
                 handleGetDefaultList={handleGetDefaultList} handleDeleteClick={handleDeleteClick} isEditablePage={isEditablePage}
             />
             {/* {showModal && (

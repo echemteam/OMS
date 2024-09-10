@@ -17,8 +17,10 @@ const Rules = (props) => {
         pageNumber: pageObject.pageNumber,
         pageSize: pageObject.pageSize,
       },
-      filters: { searchText: "" },
+      filters: { searchText: props.search },
       sortString: sortingString,
+       functionalityId: props.selectedDrpvalues ? props.selectedDrpvalues :0
+    
     };
     getApprovalConfigurationRules(request);
   };
@@ -51,8 +53,9 @@ const Rules = (props) => {
           pageNumber: currentPageObject.pageNumber,
           pageSize: currentPageObject.pageSize,
         },
-        filters: { searchText: "" },
+        filters: { searchText: props.search },
         sortString: currentsortingString,
+        functionalityId: props.selectedDrpvalues ? props.selectedDrpvalues :0
       };
       getApprovalConfigurationRules(request);
     }
@@ -76,10 +79,20 @@ const Rules = (props) => {
       props.onEdit(data);
     }
   }
+  useEffect (() => {
+    if (props.selectedDrpvalues === "" ) {
+       onGetData();
+    }
+  }, [props.selectedDrpvalues]);
 
   const actionHandler = {
     EDIT: handleEditClick
   }
+  useEffect (() => {
+    if (props.search === "" ) {
+       onGetData();
+    }
+  }, [props.search]);
 
   return (
      
@@ -99,6 +112,9 @@ const Rules = (props) => {
             onSorting={handleSorting}
             isLoading={isGetApprovalConfigurationRulesLoading}
             onActionChange={actionHandler}
+            searchTitleButtonClick={props.handleSearch}
+            handleChange={props.handleChange}
+            handleClear={props.handleClear}
           />
         </div>
       </div>

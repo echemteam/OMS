@@ -12,13 +12,13 @@ import PropTypes from 'prop-types';
 
 //** Component's */
 const DeliveryMethodList = React.lazy(() => import("./feature/DeliveryMethodList"));
-const AddEditDeliveryMethod = React.lazy(() => import("./feature/AddEditDeliveryMethod"));
+// const AddEditDeliveryMethod = React.lazy(() => import("./feature/AddEditDeliveryMethod"));
 
-const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowButton, isEditablePage }) => {
+const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowButton, isEditablePage, customerStatusId }) => {
 
     const molGridRef = useRef();
     const { confirm } = SwalAlert();
-    const [isEdit, setIsEdit] = useState(false);
+    // const [isEdit, setIsEdit] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
     const { deliveryMethodsList, customerId } = useContext(BasicDetailContext);
@@ -47,14 +47,14 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
 
     const handleToggleModal = () => {
         setShowModal(!showModal);
-        setIsEdit(false);
+        // setIsEdit(false);
     };
 
-    //** Success */
-    const onSuccess = () => {
-        setShowModal(!showModal);
-        handleGetDefaultList();
-    };
+    // //** Success */
+    // const onSuccess = () => {
+    //     setShowModal(!showModal);
+    //     handleGetDefaultList();
+    // };
 
     //** Action Handler */
     // const handleEditModal = (data) => {
@@ -84,7 +84,7 @@ const ManageDevliveryMethod = ({ handleGetDefaultList, isGetDataLoading, isShowB
     return (
         <>
             <DeliveryMethodList molGridRef={molGridRef} ourAccountData={deliveryMethodsList} actionHandler={actionHandler} handleToggleModal={handleToggleModal}
-                isGetDataLoading={isGetDataLoading} isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList}
+                isGetDataLoading={isGetDataLoading} isShowButton={isShowButton} handleGetDefaultList={handleGetDefaultList} customerStatusId={customerStatusId}
                 customerId={customerId} handleDeleteClick={handleDeleteClick} isEditablePage={isEditablePage} />
             {/* {showModal && (
                 <AddEditDeliveryMethod handleToggleModal={handleToggleModal} showModal={showModal}

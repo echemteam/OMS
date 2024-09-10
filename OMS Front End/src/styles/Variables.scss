@@ -93,11 +93,11 @@
   --commonFont-2extraLarge: 21px;
   --commonFont-extraLarge: 18px;
   --commonFont-large: 16px;
+  --commonFont-average: 15px;
   --commonFont: 14px;
   --commonFont-medium: 13px;
   --commonFont-small: 12px;
   --commonFont-extraSmall: 10px;
-  --commonFont-average: 15px;
 }
 
 // Variable Styling End
@@ -110,10 +110,10 @@
     --commonFont-extraLarge: 16px;
     --commonFont-large: 14px;
     --commonFont: 12px;
+    --commonFont-average: 13px;
     --commonFont-medium: 11px;
     --commonFont-small: 10px;
     --commonFont-extraSmall: 9px;
-    --commonFont-average: 13px;
   }
 }
 @media only screen and (max-width: 1366px) {

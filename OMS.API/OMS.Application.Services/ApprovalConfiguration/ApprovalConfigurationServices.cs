@@ -1,5 +1,6 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
+using OMS.Domain.Entities.API.Request.ApiConfiguration;
 using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Request.Functionalities;
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
@@ -37,7 +38,7 @@ namespace OMS.Application.Services.ApprovalConfiguration
             return repositoryManager.approvalConfiguration.GetApprovalConfigurationByApprovalConfigurationId(approvalConfigurationId);
         }
 
-        public Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData)
+        public Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(GetApprovalConfigurationRulesRequest requestData)
         {
             return repositoryManager.approvalConfiguration.GetApprovalConfigurationRules(requestData);
         }

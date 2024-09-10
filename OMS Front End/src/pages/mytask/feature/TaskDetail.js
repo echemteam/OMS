@@ -21,6 +21,8 @@ import CenterModel from "../../../components/ui/centerModel/CenterModel";
 import { addResonData } from "../config/RejectReason.data";
 import Base64FileViewer from "../../../common/features/component/Base64FileView/Base64FileViewer";
 import { FunctionalitiesName } from "../../../utils/Enums/ApprovalFunctionalities";
+import { useLazyGetCustomersBasicInformationByIdQuery } from "../../../app/services/basicdetailAPI";
+import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../app/services/supplierAPI";
 
 const parseJson = (jsonStr) => {
   try {
@@ -56,12 +58,23 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
 
 const formatBoolean = (value) => (value ? "True" : "False");
 
-const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalRequest, tabId }) => {
+const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, approvalRequest, tabId }) => {
 
   // const navigate = useNavigate();
   const ref = useRef();
+  const [customerId, setCustomerId] = useState(0);
+  const [supplierId, setSupplierId] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [oldFieldValue, setOldFieldValue] = useState();
+  const [newFieldValue, setNewFieldValue] = useState();
+  const [customerData, setCustomerData] = useState({});
+  // const [supplierData, setSupplierData] = useState({});
+  const [showRedirectButton, setShowRedirectButton] = useState(false);
   const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
+
+  const [getSupplierInfoById, { isFetching: isGetSupplierFetching, isSuccess: isGetSupplierSuccess, data: isGetSupplierData }] = useLazyGetSupplierBasicInformationByIdQuery();
+  const [getCustomersInfoById, { isFetching: isGetCustomerFetching, isSuccess: isGetCustomerSuccess, data: isGetCustomerData }] = useLazyGetCustomersBasicInformationByIdQuery();
+
 
   useEffect(() => {
     if (isUpdateSuccess && isUpdateData) {
@@ -71,50 +84,61 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
     }
   }, [isUpdateSuccess, isUpdateData]);
 
-  if (isFetching || isUpdateLoading) {
-    return <DataLoader />; // Display loader while loading
-  }
+  // Effect for handling customer data fetch
+  useEffect(() => {
+    if (customerId) {
+      getCustomersInfoById(customerId);
+    }
+  }, [customerId, getCustomersInfoById]);
 
-  if (!approvedData) {
-    return (
-      <div>
-        <NoRecordFound />
-      </div>
-    );
-  }
-
-  const {
-    requestedByUserName = "Unknown User",
-    functionalityName = "No Functionality",
-    requestedDate,
-    fieldName = "No Field Name",
-    status = "No Status",
-    oldValue = "{}",
-    newValue = "{}",
-    eventName = ""
-  } = approvedData;
-
-  const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(oldValue, newValue, fieldName);
-
-  const newValues = parseJson(newValue);
+  // Effect for handling supplier data fetch
+  useEffect(() => {
+    if (supplierId) {
+      getSupplierInfoById(supplierId);
+    }
+  }, [supplierId, getSupplierInfoById]);
 
 
-  const findKey = (obj, keySubstring) => {
-    return Object.keys(obj).find((key) =>
-      key.toLowerCase().includes(keySubstring.toLowerCase())
-    );
-  };
+  useEffect(() => {
+    if (!isGetCustomerFetching && isGetCustomerSuccess && isGetCustomerData) {
+      setCustomerData(isGetCustomerData);
+    }
+  }, [isGetCustomerFetching, isGetCustomerSuccess, isGetCustomerData]);
 
-  // Check for the presence of customerId or supplierId keys
-  const customerIdKey = findKey(newValues, 'customerid');
-  const supplierIdKey = findKey(newValues, 'supplierid');
+  useEffect(() => {
+    if (!isGetSupplierFetching && isGetSupplierSuccess && isGetSupplierData) {
+      // setSupplierData(isGetSupplierData);
+    }
+  }, [isGetSupplierFetching, isGetSupplierSuccess, isGetSupplierData]);
 
-  // Retrieve the corresponding values
-  const customerId = customerIdKey ? newValues[customerIdKey] : null;
-  const supplierId = supplierIdKey ? newValues[supplierIdKey] : null;
+  useEffect(() => {
+    if (approvedData) {
+      const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(approvedData.oldValue, approvedData.newValue, approvedData.fieldName);
+      const newValues = parseJson(approvedData.newValue);
+      setOldFieldValue(oldFieldValue);
+      setNewFieldValue(newFieldValue);
+      const findKey = (obj, keySubstring) => {
+        return Object.keys(obj).find((key) =>
+          key.toLowerCase().includes(keySubstring.toLowerCase())
+        );
+      };
 
-  // Determine if the redirect button should be shown
-  const showRedirectButton = !!customerId || !!supplierId;
+      // Check for the presence of customerId or supplierId keys
+      const customerIdKey = findKey(newValues, 'customerid');
+      const supplierIdKey = findKey(newValues, 'supplierid');
+
+      // Retrieve the corresponding values
+      const customerId = customerIdKey ? newValues[customerIdKey] : null;
+      const supplierId = supplierIdKey ? newValues[supplierIdKey] : null;
+
+      // Determine if the redirect button should be shown
+      const showRedirectButton = !!customerId || !!supplierId;
+
+      setCustomerId(customerId);
+      setSupplierId(supplierId);
+      setShowRedirectButton(showRedirectButton);
+    }
+  }, [approvedData]);
 
   const handleRedirectClick = () => {
     if (customerId) {
@@ -189,150 +213,199 @@ const TaskDetail = ({ approvalRequestId, approvedData, isFetching, approvalReque
     }
   };
 
-  return (
-    <div className="task-detail">
-      <div className="task-head">
-        <div className="d-flex align-items-center">
-          <span className="profile-icon">
-            {FirstSecondLetter(requestedByUserName)}
-          </span>
-          <div className="title">
-            <h6 className="">{eventName} ({functionalityName})</h6>
-            <span className="sub-title"><b>Requested By:</b> {requestedByUserName}</span>
-          </div>
-        </div>
-        <div>
-          <div className="date">
-            {requestedDate
-              ? formatDate(requestedDate, "MM/DD/YYYY hh:mm A")
-              : "No Date"}
-          </div>
-          {showRedirectButton && (
-            <div className="view-customer" onClick={handleRedirectClick}>
-              <Image imagePath={AppIcons.Iicon} altText="View Customer Icon" />
-              View Details
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="customer-information">
-        {!approvedData.isFunctional &&
-          <div className="info-row">
-            <span className="info-label">Field Name : </span>
-            <span className="info-value ml-2">{fieldName}</span>
-          </div>
-        }
-        <div className="info-row">
-          <span className="info-label">Status : </span>
-          <span className={`ml-2 ${getLabelClass(status)}`}>{status}</span>
-        </div>
-        {approvedData.rejectReason &&
-          <div className="info-row">
-            <span className="info-label">Rejection Reason : </span>
-            <span className="info-value ml-2">{approvedData.rejectReason}</span>
-          </div>
-        }
-      </div>
 
-      {approvedData.isFunctional ?
-        <div className="value-comparison">
-          {approvedData?.eventName === FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ?
-            <Base64FileViewer documentData={approvedData.newValue} isLoading={isFetching} />
-            :
-            <div className="value-block w-100">
-              <span className="value-title">New Value</span>
-              {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
-                <ul className="value-content pl-0">
-                  {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
-                    <li key={key}>
-                      <span className="value-label">{key}:</span>
-                      <span className="value-data ml-2">
-                        {renderValue(value)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <div className="no-value">No new value available</div>
-              )}
-            </div>
+
+  return (
+    <React.Fragment>
+      {approvedData ?
+        <div className="task-detail">
+          {(approvedData && !isEventByIdLoading && !isUpdateLoading) || (isGetSupplierFetching || isGetCustomerFetching) ?
+            <>
+              <div className="task-head">
+                <div className="d-flex align-items-center">
+                  <span className="profile-icon">
+                    {FirstSecondLetter(approvedData.requestedByUserName)}
+                  </span>
+                  <div className="title">
+                    <h6 className="">{approvedData.eventName}</h6>
+                    <span className="sub-title">
+                      Generated by <b>{approvedData.requestedByUserName}</b> on
+                      <b className="date ml-1">
+                        {approvedData.requestedDate
+                          ? formatDate(approvedData.requestedDate, "MM/DD/YYYY hh:mm A")
+                          : "No Date"}
+                      </b>
+                      {/* <b>Requested By:</b>  */}
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  {/* <div className="date mb-2">
+                    {approvedData.requestedDate
+                      ? formatDate(approvedData.requestedDate, "MM/DD/YYYY hh:mm A")
+                      : "No Date"}
+                  </div> */}
+                  {showRedirectButton && (
+                    <div className="view-customer" onClick={handleRedirectClick}>
+                      <Image imagePath={AppIcons.Iicon} altText="View Customer Icon" />
+                      View Details
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="customer-information">
+                <div className="row mb-3">
+                  <div className="col-md-5">
+                    <span className="info-label fw-bold">Customer Name : </span>
+                    <span className="info-value ml-2">{customerData?.name}</span>
+                  </div>
+                  <div className="col-md-4">
+                    <span className="info-label fw-bold">Email: </span>
+                    <span className="info-value ml-2">{customerData?.emailAddress}</span>
+                  </div>
+                  <div className="col-md-3">
+                    <span className="info-label fw-bold">Country : </span>
+                    <span className="info-value ml-2">{customerData?.countryName}</span>
+                  </div>
+                </div>
+                {!approvedData.isFunctional &&
+                  <div className="info-row">
+                    <span className="info-label">Field Name : </span>
+                    <span className="info-value ml-2">{approvedData.fieldName}</span>
+                  </div>
+                }
+                <div className="info-row">
+                  <span className="info-label">Status : </span>
+                  <span className={`ml-2 ${getLabelClass(approvedData.status)}`}>{approvedData.status}</span>
+                </div>
+                {approvedData.rejectReason &&
+                  <div className="info-row">
+                    <span className="info-label">Rejection Reason : </span>
+                    <span className="info-value ml-2">{approvedData.rejectReason}</span>
+                  </div>
+                }
+              </div>
+              {approvedData.isFunctional ?
+                <div className="value-comparison">
+                  {approvedData?.eventName === FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ?
+                    <Base64FileViewer documentData={approvedData.newValue} isLoading={isEventByIdLoading} />
+                    :
+                    <React.Fragment>
+                      {approvedData?.eventName.toLowerCase().includes("update") &&
+                        <div className="value-block w-100">
+                          <span className="value-title">Old Value</span>
+                          {Object.entries(parseJson(approvedData.oldValue)).length > 0 ? (
+                            <ul className="value-content pl-0">
+                              {Object.entries(parseJson(approvedData.oldValue)).map(([key, value]) => (
+                                <li key={key}>
+                                  <span className="value-label">{key}:</span>
+                                  <span className="value-data ml-2">
+                                    {renderValue(value)}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <div className="no-value">No new value available</div>
+                          )}
+                        </div>
+                      }
+                      <div className="value-block w-100">
+                        <span className="value-title">New Value</span>
+                        {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
+                          <ul className="value-content pl-0">
+                            {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
+                              <li key={key}>
+                                <span className="value-label">{key}:</span>
+                                <span className="value-data ml-2">
+                                  {renderValue(value)}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div className="no-value">No new value available</div>
+                        )}
+                      </div>
+                    </React.Fragment>
+                  }
+                </div>
+                :
+                <div className="value-comparison">
+                  <div className="value-block">
+                    <span className="value-title">Old Value</span>
+                    {approvedData.fieldName && oldFieldValue !== "N/A" ? (
+                      <div className="value-content">
+                        <span className="value-label">{approvedData.fieldName} : </span>
+                        <span className="value-data">
+                          {renderValue(oldFieldValue)}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="no-value">No old value available</div>
+                    )}
+                  </div>
+                  <div className="value-block">
+                    <span className="value-title">New Value</span>
+                    {approvedData.fieldName && newFieldValue !== "N/A" ? (
+                      <div className="value-content">
+                        <span className="value-label">{approvedData.fieldName} : </span>
+                        <span className="value-data">
+                          {renderValue(newFieldValue)}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="no-value">No new value available</div>
+                    )}
+                  </div>
+                </div>}
+              {tabId !== 1 && approvedData.status !== "Reject" ?
+                <div className="task-footer mt-3">
+                  <Button className="reject-btn" onClick={handleToggleModal}>
+                    {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
+                    <Iconify icon="gg:close-o" className="mr-1" />
+                    Reject
+                  </Button>
+                  <Button className="accept-btn" onClick={handleApprovalRequest}>
+                    <Image imagePath={AppIcons.RightTickIcon} altText="Accept Icon" />
+                    Accept
+                  </Button>
+                </div> : null}
+              <CenterModel
+                showModal={showModal}
+                handleToggleModal={handleToggleModal}
+                modalTitle="Add Rejection Reason"
+                modelSizeClass="w-40"
+              >
+                <div className="row  phone-numer-card">
+                  <div className="col-md-12 add-edit-phoneForm">
+                    <div className="row vertical-form">
+                      <FormCreator config={addResonData} ref={ref} {...addResonData} />
+                    </div>
+                  </div>
+                  <div className="col-md-12 mt-2">
+                    <div className="d-flex align-item-center justify-content-end">
+                      <Buttons
+                        buttonTypeClassName="theme-button"
+                        // buttonText={`${isEdit ? "Update" : "Add"}`}
+                        buttonText="Add"
+                        onClick={handleRejectRequest}
+                      />
+                      <Buttons
+                        buttonTypeClassName="dark-btn ml-5"
+                        buttonText="Cancel"
+                        onClick={handleToggleModal}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CenterModel>
+            </>
+            : <DataLoader />
           }
         </div>
-        :
-        <div className="value-comparison">
-          <div className="value-block">
-            <span className="value-title">Old Value</span>
-            {fieldName && oldFieldValue !== "N/A" ? (
-              <div className="value-content">
-                <span className="value-label">{fieldName} : </span>
-                <span className="value-data">
-                  {renderValue(oldFieldValue)}
-                </span>
-              </div>
-            ) : (
-              <div className="no-value">No old value available</div>
-            )}
-          </div>
-          <div className="value-block">
-            <span className="value-title">New Value</span>
-            {fieldName && newFieldValue !== "N/A" ? (
-              <div className="value-content">
-                <span className="value-label">{fieldName} : </span>
-                <span className="value-data">
-                  {renderValue(newFieldValue)}
-                </span>
-              </div>
-            ) : (
-              <div className="no-value">No new value available</div>
-            )}
-          </div>
-        </div>
-      }
-      {tabId !== 1 && status !== "Reject" ?
-        <div className="task-footer mt-3 pr-3">
-          <Button className="reject-btn" onClick={handleToggleModal}>
-            {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
-            <Iconify icon="gg:close-o" className="mr-1" />
-            Reject
-          </Button>
-          <Button className="accept-btn" onClick={handleApprovalRequest}>
-            <Image imagePath={AppIcons.RightTickIcon} altText="Accept Icon" />
-            Accept
-          </Button>
-        </div>
-        : null
-      }
-      <CenterModel
-        showModal={showModal}
-        handleToggleModal={handleToggleModal}
-        modalTitle="Add Rejection Reason"
-        modelSizeClass="w-40"
-      >
-        <div className="row  phone-numer-card">
-          <div className="col-md-12 add-edit-phoneForm">
-            <div className="row vertical-form">
-              <FormCreator config={addResonData} ref={ref} {...addResonData} />
-            </div>
-          </div>
-          <div className="col-md-12 mt-2">
-            <div className="d-flex align-item-center justify-content-end">
-              <Buttons
-                buttonTypeClassName="theme-button"
-                // buttonText={`${isEdit ? "Update" : "Add"}`}
-                buttonText="Add"
-                onClick={handleRejectRequest}
-              />
-              <Buttons
-                buttonTypeClassName="dark-btn ml-5"
-                buttonText="Cancel"
-                onClick={handleToggleModal}
-              />
-            </div>
-          </div>
-        </div>
-      </CenterModel>
-    </div>
-
+        : <NoRecordFound />}
+    </React.Fragment>
   );
 };
 TaskDetail.propTypes = {
