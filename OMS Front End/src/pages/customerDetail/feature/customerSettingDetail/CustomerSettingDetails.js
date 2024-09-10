@@ -62,7 +62,7 @@ const CustomerSettingDetails = ({ isEditablePage, customerStatusId }) => {
       component: (
         <div className="mt-2 shipping-sec">
           {showShippingTab ?
-            <ShippingSettings isEditablePage={isEditablePage} />
+            <ShippingSettings isEditablePage={isEditablePage} customerStatusId={customerStatusId}/>
             : <Unauthorize />
           }
         </div>

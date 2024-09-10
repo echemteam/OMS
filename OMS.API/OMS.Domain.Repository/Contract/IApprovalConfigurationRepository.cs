@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
+﻿using OMS.Domain.Entities.API.Request.ApiConfiguration;
+using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
 using OMS.Domain.Entities.Entity.ApprovalConfiguration;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -10,7 +11,7 @@ namespace OMS.Domain.Repository.Contract
     {
         Task<AddEntityDto<int>> AddEditApprovalConfiguration(ApprovalConfigurationDto addEditApprovalConfiguration);
         Task<GetApprovalConfigurationByApprovalConfigurationIdResponse> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId);
-        Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData);
+        Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(GetApprovalConfigurationRulesRequest requestData);
         Task<EntityList<GetFunctionalitiesResponse>> GetFunctionalities(GetFunctionalitiesRequest requestData);
         Task<EntityList<GetFunctionalityEventsResponse>> GetFunctionalityEvents(GetFunctionalityEventsRequest requestData);
     }

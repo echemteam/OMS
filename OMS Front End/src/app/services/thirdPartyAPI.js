@@ -276,6 +276,15 @@ const thirdPartyAPI = createApi({
             transformErrorResponse: transformErrorResponse
         }),
 
+        getApiEventLogByEventId: builder.mutation({
+            query: (data) => ({
+                url: '/ApiEventManagement/GetApiEventLogByEventId',
+                method: 'POST',
+                body: transformRequest(data)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -313,6 +322,7 @@ export const {
     useDeleteApiEventRequiredFieldsMappingMutation,
 
     useThirdPartyAPICallMutation,
+    useGetApiEventLogByEventIdMutation,
 } = thirdPartyAPI
 
 export default thirdPartyAPI;

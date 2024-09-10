@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
+using OMS.Domain.Entities.API.Request.ApiConfiguration;
 using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Request.Functionalities;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -45,7 +46,7 @@ namespace OMS.API.Controllers
             return APISucessResponce(approvalConfigurationId);
         }
         [HttpPost("GetApprovalConfigurationRules")]
-        public async Task<IActionResult> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData)
+        public async Task<IActionResult> GetApprovalConfigurationRules(GetApprovalConfigurationRulesRequest requestData)
         {
             var approvalConfigurationRulesList = await _serviceManager.approvalConfigurationServices.GetApprovalConfigurationRules(requestData).ConfigureAwait(true);
             return APISucessResponce(approvalConfigurationRulesList);

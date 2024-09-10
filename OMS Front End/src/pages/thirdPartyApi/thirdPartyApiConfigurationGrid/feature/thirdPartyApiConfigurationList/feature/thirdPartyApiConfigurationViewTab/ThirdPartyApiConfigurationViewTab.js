@@ -5,6 +5,7 @@ import ParameterMapping from '../parameterMapping/ParameterMapping';
 import EventRequiredFields from '../eventRequiredFields/EventRequiredFields';
 import RequiredFieldsMapping from '../requiredFieldsMapping/RequiredFieldsMapping';
 import EventParamter from '../eventParamter/EventParamter';
+import EventHistory from '../eventHistory/EventHistory';
 
 
 const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
@@ -63,6 +64,17 @@ const ThirdPartyApiConfigurationViewTab = ({ keyId }) => {
             component: (
                 <div className="mt-2">
                     <RequiredFieldsMapping
+                        keyId={keyId}
+                    />
+                </div>
+            ),
+            // isVisible: hasNotePermission.hasAccess,
+        },
+        {
+            sMenuItemCaption: "History",
+            component: (
+                <div className="mt-2">
+                    <EventHistory
                         keyId={keyId}
                     />
                 </div>

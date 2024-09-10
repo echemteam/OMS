@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
+﻿using OMS.Domain.Entities.API.Request.ApiConfiguration;
+using OMS.Domain.Entities.API.Request.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Request.Functionalities;
 using OMS.Domain.Entities.API.Response.ApprovalConfiguration;
 using OMS.Domain.Entities.API.Response.Functionalities;
@@ -11,7 +12,7 @@ namespace OMS.Application.Services.ApprovalConfiguration
     {
         Task<AddEntityDto<int>> AddEditApprovalConfiguration(AddEditApprovalConfigurationRequest requestData);
         Task<GetApprovalConfigurationByApprovalConfigurationIdResponse> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId);
-        Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(ListEntityRequest<BaseFilter> requestData);
+        Task<EntityList<GetApprovalConfigurationRulesResponse>> GetApprovalConfigurationRules(GetApprovalConfigurationRulesRequest requestData);
         Task<EntityList<GetFunctionalitiesResponse>> GetFunctionalities(GetFunctionalitiesRequest requestData);
         Task<EntityList<GetFunctionalityEventsResponse>> GetFunctionalityEvents(GetFunctionalityEventsRequest requestData);
         Task<AddEntityDto<int>> AddFunctionalitiesResponsiblesUser(AddFunctionalitiesResponsiblesUserRequest requestData, short CurrentUserId);

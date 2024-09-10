@@ -14,7 +14,7 @@ const CustomerAddressDetail = React.lazy(() => import("../../customerAddressDeta
 const CustomerSettingDetails = React.lazy(() => import("../../customerSettingDetail/CustomerSettingDetails"));
 const CustomerSubCustomerDetail = React.lazy(() => import("../../customerSubCustomerDetail/CustomerSubCustomerDetail"));
 
-const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, customerStatus }) => {
+const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, customerStatusId }) => {
 
   const { isResponsibleUser } = useContext(BasicDetailContext);
 
@@ -44,7 +44,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
       icon: "fa fa-address-book-o",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll">
-          <CustomerAddressDetail isEditablePage={true} customerStatus={customerStatus} />
+          <CustomerAddressDetail isEditablePage={true} customerStatusId={customerStatusId} />
         </div>
       ),
       isVisible: isResponsibleUser ? true : hasAddressPermission?.hasAccess,
@@ -54,7 +54,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
       icon: "fa fa-phone",
       component: (
         <div className="mt-2 contact-accrodiaon-scroll contact-card-section-new">
-          <CustomerContactDetail isEditablePage={true} isSearchFilterShow={true} contryIdCode={contryIdCode} customerStatusId={customerStatus} />
+          <CustomerContactDetail isEditablePage={true} isSearchFilterShow={true} contryIdCode={contryIdCode} customerStatusId={customerStatusId} />
         </div>
       ),
       isVisible: isResponsibleUser ? true : hasContactPermission?.hasAccess,
@@ -64,7 +64,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
       icon: "fa fa-cog",
       component: (
         <div className="mt-2">
-          <CustomerSettingDetails isEditablePage={true} customerStatusId={customerStatus} />
+          <CustomerSettingDetails isEditablePage={true} customerStatusId={customerStatusId} />
         </div>
       ),
       isVisible: isResponsibleUser ? true : hasSettingPermission?.hasAccess,
@@ -74,7 +74,7 @@ const CustomerViewTab = ({ customerId, isBuyingForThirdParty, contryIdCode, cust
       icon: "fa fa-file-text-o",
       component: (
         <div className="mt-2">
-          <CustomerDocumentDetail isEditablePage={true} customerStatusId={customerStatus} />
+          <CustomerDocumentDetail isEditablePage={true} customerStatusId={customerStatusId} />
         </div>
       ),
       isVisible: isResponsibleUser ? true : hasDocumentPermission?.hasAccess,
