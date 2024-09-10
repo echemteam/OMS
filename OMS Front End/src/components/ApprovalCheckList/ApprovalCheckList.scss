@@ -123,12 +123,16 @@
         .name-title {
           display: flex;
           align-items: center;
-          margin-bottom: 0;
+          margin-bottom: 6px;
+          &:last-child{
+            margin-bottom: 0;
+          }
 
           .label {
             font-weight: 700;
             font-size: var(--commonFont);
-            margin: 5px 5px 5px 0;
+            margin: 0;
+            margin-right: 7px;
             min-width: 50px;
             @media only screen and (max-width: 1750px) {
             min-width: 45px;
@@ -139,6 +143,7 @@
             margin: 0;
             font-size: var(--commonFont);
             color: var(--textColor);
+            margin-right: 7px;
           }
 
           &.number-sec {
@@ -158,7 +163,7 @@
               flex-wrap: wrap;
 
               .name-desc {
-                margin-right: 5px;
+                margin-right: 7px;
 
                 &:last-child {
                   margin-right: 0;

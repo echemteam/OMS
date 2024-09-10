@@ -362,6 +362,15 @@
             font-style: italic;
           }
         }
+        .document-list-sec{
+          .document-listing{
+            .documents{
+              .right-desc{
+                padding-top: 0;
+              }
+            }
+          }
+        }
       }
 
       .detail-head {
