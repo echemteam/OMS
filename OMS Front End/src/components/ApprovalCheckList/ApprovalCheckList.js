@@ -261,7 +261,7 @@ const handleToggleModal=()=>{
   //   setCheckListData(modifyData);
   // };
   const handleAddResponse = () => {
-    setShowModal(true);
+    // setShowModal(true);
     const allChildChecked = checkListData.every((item) => item.isCheked);
     if (allChildChecked) {
       // checkListData.forEach((data) => {
