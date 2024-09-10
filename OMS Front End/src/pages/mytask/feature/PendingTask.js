@@ -8,10 +8,13 @@ import DataLoader from "../../../components/ui/dataLoader/DataLoader";
 import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
 import formatDate from "../../../lib/formatDate";
 import CardSection from "../../../components/ui/card/CardSection";
+import ModuleList from "./ModuleList";
 
 const PendingTask = (props) => {
-  const [pendingData, setPendingData] = useState([]);
   const [activeTab, setActiveTab] = useState(null);
+  const [pendingData, setPendingData] = useState([]);
+  const [pendingEvents, setPendingEvents] = useState([]);
+
   const [
     getApprovalRequestsListByStatus,
     {
@@ -48,7 +51,13 @@ const PendingTask = (props) => {
       isGetApprovalRequestsListByStatusSuccess &&
       isGetApprovalRequestsListByStatusData
     ) {
-      setPendingData(isGetApprovalRequestsListByStatusData);
+      const filterData =
+        props.moduleList[0]?.moduleId &&
+        isGetApprovalRequestsListByStatusData.filter(
+          (data) => data.moduleId === props.moduleList[0].moduleId
+        );
+      setPendingData(filterData);
+      setPendingEvents(isGetApprovalRequestsListByStatusData);
     }
   }, [
     isGetApprovalRequestsListByStatusFetching,
@@ -63,34 +72,39 @@ const PendingTask = (props) => {
     }
   };
 
+  const handleModuleClick = (moduleId) => {
+    const filterData = pendingEvents.filter(
+      (data) => data.moduleId === moduleId
+    );
+    setPendingData(filterData);
+    if (props.handleRestEventDetail) {
+      props.handleRestEventDetail();
+    }
+  };
+
   return (
     <>
       <div className="row">
         <div className="col-5 pr-0">
-          <CardSection cardTitle="Modules">
-            <div className="module-listing">
-              <ul>
-                <li>
-                  <a href="">customer</a>
-                </li>
-                <li>
-                  <a href="">Supplier</a>
-                </li>
-                <li>
-                  <a href="">Dummy Modules</a>
-                </li>
-              </ul>
-            </div>
-          </CardSection>
+          <ModuleList
+            moduleList={props.moduleList}
+            apiResponseData={pendingData}
+            handleTabClick={handleTabClick}
+            onModuleChange={handleModuleClick}
+          />
         </div>
         <div className="col-7 pl-1 pr-1">
-          <CardSection cardTitle="Events">
+          <CardSection
+            cardTitle="Events"
+            rightButton={true}
+            isShort={true}
+          >
             <div className="customer-info">
               {isGetApprovalRequestsListByStatusFetching ? (
                 <DataLoader />
               ) : (
                 <div className="tabs">
-                  {pendingData.length > 0 ? (
+                  {pendingData && pendingData.length > 0 ? (
                     pendingData.map((tab) => (
                       <button
                         key={tab.approvalRequestId} // Use a unique key
@@ -139,6 +153,7 @@ const PendingTask = (props) => {
           </CardSection>
         </div>
       </div>
+      
     </>
   );
 };

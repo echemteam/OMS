@@ -1879,6 +1879,7 @@ a {
         justify-content: space-between;
         width: 100%;
 
+
         .doc-details {
           padding-left: 5px;
 
@@ -3052,7 +3053,8 @@ input[type="checkbox"]:disabled {
     padding: 8px;
 
     .card-top-title-btn {
-      min-height: unset;
+      min-height: 30px;
+      max-height: 30px;
       padding-bottom: 7px;
     }
   }
@@ -4253,6 +4255,18 @@ input[type="checkbox"]:disabled {
 .pg-viewer-wrapper {
   overflow-y: auto !important;
   .document-container {
-    padding: 15px;
+    padding: 15px !important;
+    width: 100% !important;
+  }
+}
+.right-side-sec-padding-0{
+  .document-list-sec {
+    .document-listing {
+      .documents {
+        .right-desc{
+          padding-top: 0;
+        }
+      }
+    }
   }
 }

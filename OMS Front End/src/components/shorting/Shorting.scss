@@ -1,0 +1,59 @@
+.shorting-section {
+  position: relative;
+
+  .shorting-desc-list {
+    box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
+    background: var(--whiteColor);
+    border-radius: 5px;
+    width: 210px;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    display: none;
+    z-index: 11;
+
+    .short-types {
+      .shorting-title {
+        padding: 8px 10px;
+        background: var(--bg-main-content);
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: var(--commonFont-small);
+        display: flex;
+        align-items: center;
+      }
+
+      .shorting-inputs {
+        padding: 15px 10px;
+
+        .radio {
+          .radio-buttons {
+            margin: 0;
+            margin-bottom: 20px;
+            
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        .checkbox {
+
+          .input-checkbox {
+            margin-bottom: 10px;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+
+    &.active {
+      height: auto;
+      display: block;
+    }
+  }
+}

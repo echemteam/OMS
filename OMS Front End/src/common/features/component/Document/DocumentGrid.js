@@ -121,6 +121,7 @@ const DocumentGrid = ({
             },
           ]}
         >
+          <div className="right-side-sec-padding-0">
           <DocumentList
             childRef={childRef}
             isEditablePage={isEditablePage}
@@ -135,6 +136,7 @@ const DocumentGrid = ({
             setShowModal={setShowModal}
             // onHandleEditDocument={handleEditDocument}
           />
+          </div>
         </CardSection>
       </div>
       <CenterModel

@@ -3,7 +3,8 @@ export const FieldSettingType = {
     ISTEXT: "isText",
     MULTISELECT: "isMultiSelect",
     INPUTBUTTON: "isInputButton",
-    SECOUNDRYINPUTBUTTON: "isSecoundryInputButton"
+    SECOUNDRYINPUTBUTTON: "isSecoundryInputButton",
+    CKEDITORDISABLED:"CKEditorDisabled"
 }
 
 export const CustomerSupplierStatus = {
@@ -162,4 +163,14 @@ export const NoteTypes = {
     DefaultNote: "Default Note",
     InvoiceSubmissionInstruction: "Invoice Submission Instruction",
 
+}
+
+export const MyTaskFieldNames = {
+    PAYMENTMETHODID: "PaymentMethodId",
+    PAYMENTTERMID: "PaymentTermId"
+}
+
+export const MyTaskKeyNames = {
+    PAYMENTMETHODID: "PaymentMethod",
+    PAYMENTTERMID: "PaymentTerm"
 }

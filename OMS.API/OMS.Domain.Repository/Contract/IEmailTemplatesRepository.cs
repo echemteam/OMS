@@ -10,5 +10,6 @@ namespace OMS.Domain.Repository.Contract
         Task<EntityList<EmailTemplatesListResponse>>GetEmailTemplatesList(ListEntityRequest<BaseFilter> requestData);
         Task<AddEntityDto<int>>AddEditEmailTemplate(EmailTemplatesDto requestData);
         Task<GetEmailTemplatesByIdResponse>GetEmailTemplateById(int emailTemplateId);
+        Task<GetTemplateByFunctionalityEventIdResponse> GetTemplateByFunctionalityEventId(int? functionalityEventId);
     }
 }

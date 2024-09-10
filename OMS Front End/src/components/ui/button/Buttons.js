@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import Image from "../../image/Image";
 import "./Buttons.scss";
+import Iconify from "../iconify/Iconify";
 
 function Buttons(props) {
-  const { titleText, isLoading, buttonTypeClassName, onClick, textWithIcon, buttonText, imagePath, isDisable } = props;
+  const { titleText, isLoading, buttonTypeClassName, onClick, textWithIcon,isIcon,iconClass, buttonText, imagePath, isDisable } = props;
 
   return (
     <button
@@ -24,6 +25,9 @@ function Buttons(props) {
           {textWithIcon && buttonText}
 
           {!textWithIcon && buttonText}
+        {isIcon && (
+          <Iconify icon={iconClass} className="button-icon" />
+        )}
         </>
       )}
     </button>
