@@ -37,7 +37,7 @@ namespace OMS.Domain.Repository.Implementation
                 addEditApprovalConfiguration.FunctionalityEventId,
                 addEditApprovalConfiguration.FunctionalitiesFieldId,
                 addEditApprovalConfiguration.ApproverRoleId,
-                addEditApprovalConfiguration.ApprovalAction
+                addEditApprovalConfiguration.Template,
             }, CommandType.StoredProcedure);
         }
         public async Task<GetApprovalConfigurationByApprovalConfigurationIdResponse> GetApprovalConfigurationByApprovalConfigurationId(int approvalConfigurationId)

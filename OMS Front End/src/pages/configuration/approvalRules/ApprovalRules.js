@@ -61,7 +61,7 @@ const ApprovalRules = () => {
 
         <SidebarModel
           modalTitle={`${isEdit ? "Update" : "Add"} Rules`}
-          contentClass="content-35"
+          contentClass="content-50"
           onClose={onSidebarClose}
           modalTitleIcon={AppIcons.AddIcon}
           isOpen={isModelOpen}

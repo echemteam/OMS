@@ -93,6 +93,9 @@ export const setFieldSetting = (formFieldsData, fieldId, fieldSettingType, value
                 //selectField.fieldSetting.isText = value;
                 selectField.fieldSetting.isText = value;
                 break;
+            case 'CKEditorDisabled':
+                    selectField.fieldSetting.isDisable = value;
+                    break;
             default:
                 break;
         }
