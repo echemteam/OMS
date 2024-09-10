@@ -343,25 +343,27 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const handleAddEdit = async () => {
         const data = ref.current.getFormData();
         if (!data) return;
-
-        const dropdownLableRequests = {
-            addressTypeName: getDropdownLabelName(allGetAllAddressTypesData, 'addressTypeId', 'type', data.addressTypeId),
-            countryName: getDropdownLabelName(allGetAllCountriesData, 'countryId', 'name', data.countryId),
-            stateName: getDropdownLabelName(allGetAllStatesData, 'stateId', 'name', data.stateId),
-            cityName: getDropdownLabelName(allGetAllCitiesData, 'cityId', 'name', data.cityId)
-        };
-
         const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
+
+        const dropdownLabelRequestsFromData = createDropdownLabelRequests(data, allGetAllAddressTypesData,
+            allGetAllCountriesData, allGetAllStatesData, allGetAllCitiesData);
+
+        const dropdownLabelRequestsFromInitialState = createDropdownLabelRequests(formData.initialState, allGetAllAddressTypesData,
+            allGetAllCountriesData, allGetAllStatesData, allGetAllCitiesData);
 
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
-            let request = {
-                ...updateData,
-                ...dropdownLableRequests
-            }
-            const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
-            if (!isSupplier && isEditablePage && eventName && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-                await handleApprovalRequest(request, formData.initialState, eventName);
+            if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+                let request = {
+                    ...updateData,
+                    ...dropdownLabelRequestsFromData
+                }
+                let initialStateRequest = {
+                    ...formData.initialState,
+                    ...dropdownLabelRequestsFromInitialState
+                }
+                const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
+                await handleApprovalRequest(request, initialStateRequest, eventName);
             } else {
                 update(updateData);
             }
@@ -371,7 +373,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             const req = {
                 ...transformedData,
                 customerId: customerId,
-                ...dropdownLableRequests
+                ...dropdownLabelRequestsFromData
             };
             const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
             if (!isSupplier && isEditablePage && eventName && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
@@ -387,6 +389,15 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         const modifyData = await ValidateRequestByApprovalRules(request);
         if (modifyData.newValue) onSidebarClose();
     };
+
+    const createDropdownLabelRequests = (sourceData, addressTypesData, countriesData, statesData, citiesData) => {
+        return {
+            addressTypeName: getDropdownLabelName(addressTypesData, 'addressTypeId', 'type', sourceData.addressTypeId),
+            countryName: getDropdownLabelName(countriesData, 'countryId', 'name', sourceData.countryId),
+            stateName: getDropdownLabelName(statesData, 'stateId', 'name', sourceData.stateId),
+            cityName: getDropdownLabelName(citiesData, 'cityId', 'name', sourceData.cityId)
+        };
+    }
 
 
     const extractValue = (field) => {

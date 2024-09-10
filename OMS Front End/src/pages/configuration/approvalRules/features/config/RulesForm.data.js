@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const rulesFormData = {
-    initialState: { approvalConfigurationId: 0, ruleName: "", moduleId: "", functionalityId: "", functionalitiesFieldId: "", roleId: "",isFunctional:false },
+    initialState: { approvalConfigurationId: 0, ruleName: "", moduleId: "", functionalityId: "", functionalitiesFieldId: "", roleId: "", isFunctional: false },
     formFields: [
         {
             id: "ruleName",
@@ -98,40 +98,40 @@ export const rulesFormData = {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
-         
-          {
+
+        {
             id: "template",
             lable: "Template",
             Field_Name: "Template",
             fieldType: FormFieldTypes.CKEDITOR,
             dataField: "template",
             fieldSetting: {
-              placeholder: "",
-              allowSpace: true,
-              isDisable:true
+                placeholder: "",
+                allowSpace: true,
+                isDisable: false
             },
             // validation: [{ type: "require" }],
             style: {
-              containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
+                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
             },
-          },
-          {
+        },
+        {
             id: "isFunctional",
             lable: "Is Functional",
             Field_Name: "Is Functional",
             fieldType: FormFieldTypes.CHECKBOX,
             dataField: "isFunctional",
             fieldSetting: {
-              placeholder: "",
-              allowSpace: true,
-              isDisable: true,
-              
+                placeholder: "",
+                allowSpace: true,
+                isDisable: true,
+
             },
             // validation: [{ type: "require" }],
             style: {
-              containerCss: "col-xxl-5 col-xl-5 col-md-12 col-12 col-12 ",
+                containerCss: "col-xxl-5 col-xl-5 col-md-12 col-12 col-12 ",
             },
-          },
+        },
     ],
     formSetting: {
         isViewOnly: false
@@ -176,14 +176,14 @@ export const rulesListData = {
             name: "Is Functional",
             fieldName: "isFunctional",
             colStyle: {
-              width: "15%",
+                width: "15%",
             },
             colType: GridColumnType.CHECKBOX,
             colSettings: {
                 //allowCheckbox: true,
-              isDisabled: true
+                isDisabled: true
             },
-          },
+        },
         {
             name: "Action",
             colStyle: {
