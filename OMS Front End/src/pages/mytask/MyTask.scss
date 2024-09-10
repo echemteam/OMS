@@ -147,7 +147,7 @@
               li {
                 padding: 0;
 
-                a {
+                span {
                   color: var(--textColor);
                   width: 100%;
                   display: inline-block;
@@ -158,7 +158,7 @@
 
                 .active,
                 &:hover {
-                  a {
+                  span {
                     background: var(--themeColorLight);
                     color: var(--blackColor);
                   }
