@@ -27,7 +27,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
             if (isGetSupplierDetailsBySupplierNameData.length > 0) {
                 setIsExistingModel(true);
                 setExistingInfoData(isGetSupplierDetailsBySupplierNameData)
-            } else {
+             } else {
                 ToastService.info(ErrorMessage.NoFound);
             }
         }
