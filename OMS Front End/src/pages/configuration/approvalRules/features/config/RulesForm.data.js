@@ -75,7 +75,7 @@ export const rulesFormData = {
             dataField: "functionalitiesFieldId",
             fieldSetting: {
                 isDisabled: true,
-                placeholder: "Select Module",
+                placeholder: "Select Field",
                 isEnableOnChange: true
             },
             // validation: [{ type: "require" }],
@@ -139,15 +139,15 @@ export const rulesFormData = {
 export const rulesListData = {
     columns: [
         {
-            name: "Module Name",
+            name: "Module",
             fieldName: "moduleName",
             colStyle: {
-                width: "20%",
+                width: "10%",
             },
             allowShort: true,
         },
         {
-            name: "Functionality Name",
+            name: "Functionality",
             fieldName: "functionalityName",
             colStyle: {
                 width: "20%",
@@ -155,18 +155,18 @@ export const rulesListData = {
             allowShort: true,
         },
         {
-            name: "Rule Name",
+            name: "Rule",
             fieldName: "ruleName",
             colStyle: {
-                width: "20%",
+                width: "30%",
             },
             allowShort: true,
         },
         {
-            name: "Role Name",
+            name: "Role",
             fieldName: "roleName",
             colStyle: {
-                width: "20%",
+                width: "10%",
             },
             allowShort: true,
         },
