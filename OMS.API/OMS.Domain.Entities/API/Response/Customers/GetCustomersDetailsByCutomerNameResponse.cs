@@ -9,5 +9,6 @@
         public string? EmailAddress { get; set; }
         public string? TaxId { get; set; }
         public string? Status { get; set; }
+        public float? MatchPercentage { get; set; }
     }
 }
