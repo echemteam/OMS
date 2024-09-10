@@ -164,3 +164,13 @@ export const NoteTypes = {
     InvoiceSubmissionInstruction: "Invoice Submission Instruction",
 
 }
+
+export const MyTaskFieldNames = {
+    PAYMENTMETHODID: "PaymentMethodId",
+    PAYMENTTERMID: "PaymentTermId"
+}
+
+export const MyTaskKeyNames = {
+    PAYMENTMETHODID: "PaymentMethod",
+    PAYMENTTERMID: "PaymentTerm"
+}

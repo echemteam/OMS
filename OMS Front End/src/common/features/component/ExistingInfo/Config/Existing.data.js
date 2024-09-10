@@ -58,10 +58,18 @@ export const basicInfoData = {
             },
         },
         {
-            name: "Match Percentage",
+            name: "Matching (%)",
             fieldName: "matchPercentage",
+            colType: GridColumnType.CUSTOM,
             colStyle: {
-                width: "15%",
+                width: "10%",
+            },
+            renderCustomCol: (rowData) => {
+                return (
+                    <>
+                        {rowData?.matchPercentage ? `${rowData.matchPercentage}%` : 'N/A'}
+                    </>
+                );
             },
             // allowShort: true,
         },
@@ -105,8 +113,8 @@ export const OrderBasicInfoData = {
             fieldName: "orderReceivedDate",
             colType: GridColumnType.DATE,
             colSettings: {
-              isUTC: true,
-              format: "MM/DD/YYYY hh:mm A ",
+                isUTC: true,
+                format: "MM/DD/YYYY hh:mm A ",
             },
             // allowShort: true,
         },
@@ -116,7 +124,7 @@ export const OrderBasicInfoData = {
             colStyle: {
                 width: "25%",
                 textAlign: "center",
-                justifyContent:"center"
+                justifyContent: "center"
             },
             colType: GridColumnType.ACTION,
             defaultAction: {

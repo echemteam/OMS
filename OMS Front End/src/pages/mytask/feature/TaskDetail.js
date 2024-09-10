@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { AppIcons } from "../../../data/appIcons";
-// import { useNavigate } from "react-router-dom";
 import Image from "../../../components/image/Image";
 import formatDate from "../../../lib/formatDate";
 import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
@@ -14,7 +13,7 @@ import Iconify from "../../../components/ui/iconify/Iconify";
 import { useUpdateApprovalRequestsStatusMutation } from "../../../app/services/ApprovalAPI";
 import ToastService from "../../../services/toastService/ToastService";
 import { Button } from "react-bootstrap";
-import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
+import { MyTaskFieldNames, MyTaskKeyNames, MyTaskStatus } from "../../../utils/Enums/commonEnums";
 import Buttons from "../../../components/ui/button/Buttons";
 import FormCreator from "../../../components/Forms/FormCreator";
 import CenterModel from "../../../components/ui/centerModel/CenterModel";
@@ -23,6 +22,8 @@ import Base64FileViewer from "../../../common/features/component/Base64FileView/
 import { FunctionalitiesName } from "../../../utils/Enums/ApprovalFunctionalities";
 import { useLazyGetCustomersBasicInformationByIdQuery } from "../../../app/services/basicdetailAPI";
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../app/services/supplierAPI";
+import { useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery } from "../../../app/services/customerSettingsAPI";
+import { getDropdownLabelName } from "../../../utils/CommonUtils/CommonUtilsMethods";
 
 const parseJson = (jsonStr) => {
   try {
@@ -55,6 +56,16 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
   return { oldValue, newValue };
 };
 
+// Function to filter out keys that end with "Id"
+const filterKeysWithId = (obj) => {
+  const filteredObj = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (!key.toLowerCase().endsWith('id')) {
+      filteredObj[key] = value;
+    }
+  }
+  return filteredObj;
+};
 
 const formatBoolean = (value) => (value ? "True" : "False");
 
@@ -68,13 +79,15 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
   const [oldFieldValue, setOldFieldValue] = useState();
   const [newFieldValue, setNewFieldValue] = useState();
   const [customerData, setCustomerData] = useState({});
-  // const [supplierData, setSupplierData] = useState({});
   const [showRedirectButton, setShowRedirectButton] = useState(false);
   const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
 
   const [getSupplierInfoById, { isFetching: isGetSupplierFetching, isSuccess: isGetSupplierSuccess, data: isGetSupplierData }] = useLazyGetSupplierBasicInformationByIdQuery();
   const [getCustomersInfoById, { isFetching: isGetCustomerFetching, isSuccess: isGetCustomerSuccess, data: isGetCustomerData }] = useLazyGetCustomersBasicInformationByIdQuery();
 
+  //** API Call's For Setting Data */
+  const [getAllPaymentTerms, { data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
+  const [getAllPaymentMethod, { data: isGetAllPaymentMethodData }] = useLazyGetAllPaymentMethodQuery();
 
   useEffect(() => {
     if (isUpdateSuccess && isUpdateData) {
@@ -98,7 +111,6 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
     }
   }, [supplierId, getSupplierInfoById]);
 
-
   useEffect(() => {
     if (!isGetCustomerFetching && isGetCustomerSuccess && isGetCustomerData) {
       setCustomerData(isGetCustomerData);
@@ -113,6 +125,9 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
 
   useEffect(() => {
     if (approvedData) {
+      getAllPaymentTerms();
+      getAllPaymentMethod();
+
       const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(approvedData.oldValue, approvedData.newValue, approvedData.fieldName);
       const newValues = parseJson(approvedData.newValue);
       setOldFieldValue(oldFieldValue);
@@ -182,7 +197,6 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
   };
 
   const renderValue = (value) => {
-
     if (Array.isArray(value)) {
       return (
         <ul className="pl-0 mt-1">
@@ -209,11 +223,31 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
       return formatBoolean(value);
     } else {
       // Handle other values
-      return value  ? value.toString() : 'N/A';
+      return value !== null ? value?.toString() : 'N/A';
     }
   };
 
+  const renderLableName = (fieldName, value) => {
+    switch (fieldName.toLowerCase()) {
+      case MyTaskFieldNames.PAYMENTMETHODID.toLowerCase():
+        return getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', value);
+      case MyTaskFieldNames.PAYMENTTERMID.toLowerCase():
+        return getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', value);
+      default:
+        return value;
+    }
+  }
 
+  const renderKeyName = (fieldName) => {
+    switch (fieldName.toLowerCase()) {
+      case MyTaskFieldNames.PAYMENTMETHODID.toLowerCase():
+        return MyTaskKeyNames.PAYMENTMETHODID;
+      case MyTaskFieldNames.PAYMENTTERMID.toLowerCase():
+        return MyTaskKeyNames.PAYMENTTERMID;
+      default:
+        return fieldName;
+    }
+  }
 
   return (
     <React.Fragment>
@@ -271,7 +305,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                 {!approvedData.isFunctional &&
                   <div className="info-row">
                     <span className="info-label">Field Name : </span>
-                    <span className="info-value ml-2">{approvedData.fieldName}</span>
+                    <span className="info-value ml-2">{renderKeyName(approvedData.fieldName)}</span>
                   </div>
                 }
                 <div className="info-row">
@@ -294,9 +328,9 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                       {approvedData?.eventName.toLowerCase().includes("update") &&
                         <div className="value-block w-100">
                           <span className="value-title">Old Value</span>
-                          {Object.entries(parseJson(approvedData.oldValue)).length > 0 ? (
+                          {Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).length > 0 ? (
                             <ul className="value-content pl-0">
-                              {Object.entries(parseJson(approvedData.oldValue)).map(([key, value]) => (
+                              {Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).map(([key, value]) => (
                                 <li key={key}>
                                   <span className="value-label">{key}:</span>
                                   <span className="value-data ml-2">
@@ -312,9 +346,9 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                       }
                       <div className="value-block w-100">
                         <span className="value-title">New Value</span>
-                        {Object.entries(parseJson(approvedData.newValue)).length > 0 ? (
+                        {Object.entries(filterKeysWithId(parseJson(approvedData.newValue))).length > 0 ? (
                           <ul className="value-content pl-0">
-                            {Object.entries(parseJson(approvedData.newValue)).map(([key, value]) => (
+                            {Object.entries(filterKeysWithId(parseJson(approvedData.newValue))).map(([key, value]) => (
                               <li key={key}>
                                 <span className="value-label">{key}:</span>
                                 <span className="value-data ml-2">
@@ -336,9 +370,10 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                     <span className="value-title">Old Value</span>
                     {approvedData.fieldName && oldFieldValue !== "N/A" ? (
                       <div className="value-content">
-                        <span className="value-label">{approvedData.fieldName} : </span>
+                        <span className="value-label">{renderKeyName(approvedData.fieldName)} : </span>
                         <span className="value-data">
-                          {renderValue(oldFieldValue)}
+                          {/* {renderValue(oldFieldValue)} */}
+                          {renderLableName(approvedData.fieldName, renderValue(oldFieldValue))}
                         </span>
                       </div>
                     ) : (
@@ -349,9 +384,10 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                     <span className="value-title">New Value</span>
                     {approvedData.fieldName && newFieldValue !== "N/A" ? (
                       <div className="value-content">
-                        <span className="value-label">{approvedData.fieldName} : </span>
+                        <span className="value-label">{renderKeyName(approvedData.fieldName)} : </span>
                         <span className="value-data">
-                          {renderValue(newFieldValue)}
+                          {/* {renderValue(newFieldValue)} */}
+                          {renderLableName(approvedData.fieldName, renderValue(newFieldValue))}
                         </span>
                       </div>
                     ) : (
@@ -375,8 +411,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                 showModal={showModal}
                 handleToggleModal={handleToggleModal}
                 modalTitle="Add Rejection Reason"
-                modelSizeClass="w-40"
-              >
+                modelSizeClass="w-40">
                 <div className="row  phone-numer-card">
                   <div className="col-md-12 add-edit-phoneForm">
                     <div className="row vertical-form">

@@ -54,7 +54,7 @@ const ArchiveTask = (props) => {
           (data) => data.moduleId === props.moduleList[0].moduleId
         );
       setArchiveData(filterData);
-      setArchiveEvents(filterData);
+      setArchiveEvents(isGetApprovalRequestsListByStatusData);
     }
   }, [
     isGetApprovalRequestsListByStatusFetching,

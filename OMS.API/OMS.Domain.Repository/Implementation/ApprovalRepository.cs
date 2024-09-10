@@ -87,6 +87,8 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OldValue,
                 requestData.NewValue,
                 requestData.RequestedByUserId,
+                requestData.OldValueTemplate,
+                requestData.NewValueTemplate,
             }, CommandType.StoredProcedure);
         }
         public async Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string status, string? roleId, string eventIds, string sortOrder)

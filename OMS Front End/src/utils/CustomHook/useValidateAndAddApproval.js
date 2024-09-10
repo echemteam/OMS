@@ -99,7 +99,7 @@ export const useValidateAndAddApprovalRequests = () => {
                     tableId,
                     functionalitiesFieldId,
                     functionalityEventId,
-                    oldValue: JSON.stringify(originalValues.oldValue),
+                    oldValue: originalValues.oldValue ? JSON.stringify(originalValues.oldValue) : null,
                     newValue: JSON.stringify(originalValues.newValue)
                 };
 

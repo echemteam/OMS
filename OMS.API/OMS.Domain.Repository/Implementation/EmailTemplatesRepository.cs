@@ -15,6 +15,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETEMAILTEMPLATESlIST = "GetEmailTemplatesList";
         const string ADDEDITEMAILTEMPLATES = "AddEditEmailTemplates";
         const string GETEMAILTEMPLATESBYID = "GetEmailTemplatesbyId";
+        const string GETTEMPLATEBYFUNCTIONALITYEVENTID = "GetTemplateByFunctionalityEventId";
         #endregion
 
         public EmailTemplatesRepository(DapperContext dapperContext) : base(dapperContext)
@@ -49,6 +50,14 @@ namespace OMS.Domain.Repository.Implementation
             GetEmailTemplatesByIdResponse emailTemplates = await _context.GetFrist<GetEmailTemplatesByIdResponse>(GETEMAILTEMPLATESBYID, new
             {
                 emailTemplateId
+            }, CommandType.StoredProcedure);
+            return emailTemplates;
+        }
+        public async Task<GetTemplateByFunctionalityEventIdResponse> GetTemplateByFunctionalityEventId(int? functionalityEventId)
+        {
+            GetTemplateByFunctionalityEventIdResponse emailTemplates = await _context.GetFrist<GetTemplateByFunctionalityEventIdResponse>(GETTEMPLATEBYFUNCTIONALITYEVENTID, new
+            {
+                functionalityEventId
             }, CommandType.StoredProcedure);
             return emailTemplates;
         }

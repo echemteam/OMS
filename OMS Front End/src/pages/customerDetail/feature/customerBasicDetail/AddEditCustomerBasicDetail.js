@@ -97,13 +97,14 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             ]);
 
             if (isOpen) {
-                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId', 'isSubCompany', 'note']);
+                                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId', 'isSubCompany', 'note']);
                 // setFormData(modifyFormFields);
                 // setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
                 // setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
-            } else if (!isOpen) {
+            } else if (!isOpen) { 
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
+                setFieldSetting(customerbasicData,'name',FieldSettingType.CKEDITORDISABLED,false);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON, true);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
             }
@@ -113,14 +114,14 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     useEffect(() => {
         if (isOpen) {
             if (customerId > 0) {
-                getCustomersBasicInformationById(customerId);
-
+                                getCustomersBasicInformationById(customerId);
+                setFieldSetting(customerbasicData,'name',FieldSettingType.CKEDITORDISABLED,true);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
             }
         }
     }, [isOpen, customerId, getCustomersBasicInformationById])
-    useEffect(() => {
+     useEffect(() => {
         if (isGetAllGroupTypesSucess && allGetAllGroupTypesData) {
             setDropDownOptionField(allGetAllGroupTypesData, 'groupTypeId', 'type', customerbasicData, 'groupTypeId');
         }
@@ -181,7 +182,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 setFieldSetting(formData, 'taxId', 'isDisabled');
             }
             const newFrom = { ...customerbasicData };
-            const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, customerbasicData.formFields, 'taxId');
+                        const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, customerbasicData.formFields, 'taxId');
             newFrom.formFields = formFields;
             newFrom.initialState = { ...GetCustomersBasicInformationByIdData };
             newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCustomer" && field.dataField !== "responsibleUserId");
@@ -199,7 +200,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         handleAddBasicDetails,
     }));
     const handleAddBasicDetails = async () => {
-        let data = basicDetailRef.current.getFormData();
+                        let data = basicDetailRef.current.getFormData();
         if (data) {
             setSubCustomer && setSubCustomer(data.isSubCustomer);
             let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
