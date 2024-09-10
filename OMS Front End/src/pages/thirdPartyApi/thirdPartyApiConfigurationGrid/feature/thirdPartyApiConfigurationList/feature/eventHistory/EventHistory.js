@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useGetApiEventLogByEventIdMutation } from "../../../../../../../app/services/thirdPartyAPI";
 import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader";
