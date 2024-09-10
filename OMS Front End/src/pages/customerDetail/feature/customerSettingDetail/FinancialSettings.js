@@ -9,13 +9,14 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { getFieldData, setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { CountryId, CustomerSettingEnum, CustomerSupplierStatus, PaymentMethodTypes } from "../../../../utils/Enums/commonEnums";
+import { CountryId, CustomerSettingEnum, PaymentMethodTypes } from "../../../../utils/Enums/commonEnums";
 import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
 import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 
 const ExemptSalesTax = { exemptSalesTax: true };
 
@@ -138,7 +139,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
   useEffect(() => {
     if (!isGetDetailByCustomerIDFetching && isGetDetailByCustomerIDSuccess && isGetDetailByCustomerIDData) {
       if (isGetDetailByCustomerIDData) {
-        if (customerStatusId === CustomerSupplierStatus.APPROVED) {
+        if (isCustomerOrSupplierApprovedStatus(customerStatusId)) {
           setFieldSetting(customerSettingFormData, 'billingCurrency', 'isDisabled', true);
         } else {
           setFieldSetting(customerSettingFormData, 'billingCurrency', 'isDisabled');
@@ -232,7 +233,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
       addEditCustomerSettings(request);
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
       const updaterequest = updateRequestObj(settingFormData);
-      if (isEditablePage) {
+      if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
         await handleApprovalRequest(updaterequest, isGetDetailByCustomerIDData, FunctionalitiesName.UPDATECUSTOMERFINANCIALSETTING);
       } else {
         addEditCustomerSettings(updaterequest);

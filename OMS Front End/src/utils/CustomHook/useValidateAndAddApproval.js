@@ -62,7 +62,31 @@ export const useValidateAndAddApprovalRequests = () => {
         }
 
         let allSuccessful = false; // Flag to track if all requests are successful
-        let FieldValueResponse = []; // Store the fields level messages
+        let FieldValueResponse = [];
+        let approvalMessage = ""; // Store the fields level messages
+
+        // First we Validate the Field value
+        for (const rule of relevantRules) {
+            const { fieldName, isFunctional } = rule;
+            if (!isFunctional) {
+                const fieldsToValidate = fieldValidationMapping[eventName] || [];
+                const shouldValidate = fieldsToValidate.includes(fieldName);
+                if (shouldValidate) {
+                    const normalizedFieldName = fieldName.toLowerCase();
+                    const originalKeyName = findOriginalKey(normalizedFieldName, originalValues.newValue);
+                    const newFieldValue = newValueNormalized[normalizedFieldName];
+                    const oldFieldValue = oldValueNormalized[normalizedFieldName];
+                    if (newFieldValue !== oldFieldValue) {
+                        const response = await checkFieldValueExists({ fieldName: originalKeyName, fieldValue: newFieldValue });
+                        if (response.data.exist) {
+                            setIsApprovelLoading(false);
+                            return warning(SuccessMessage.FieldsApprovalExists.replace("{0}", fieldName));
+                        }
+                    }
+                }
+            }
+        }
+
 
         // Process each approval rule
         for (const rule of relevantRules) {
@@ -83,6 +107,7 @@ export const useValidateAndAddApprovalRequests = () => {
                     // Add the approval request and revert the change in newValue
                     await addApprovalRequest(request);
                     allSuccessful = true;
+                    FieldValueResponse.push(eventName);
                 } catch (error) {
                     console.error('Error adding approval request:', error);
                 }
@@ -109,19 +134,10 @@ export const useValidateAndAddApprovalRequests = () => {
                             const shouldValidate = fieldsToValidate.includes(fieldName);
 
                             if (shouldValidate) {
-                                // Validate field value
-                                const response = await checkFieldValueExists({ fieldName: originalKeyName, fieldValue: newFieldValue });
-                                if (!response.data.exist) {
-                                    allSuccessful = true;
-                                    await addApprovalRequest(request);
-                                }
+                                allSuccessful = true;
+                                await addApprovalRequest(request);
                                 originalValues.newValue[originalKeyName] = oldFieldValue;
-                                let req = {
-                                    fieldName: fieldName,
-                                    errorMessage: response.data.errorMessage,
-                                    isExist: response.data.exist
-                                }
-                                FieldValueResponse.push(req);
+                                FieldValueResponse.push(eventName);
                             } else {
                                 // For other fields, add the approval request directly
                                 allSuccessful = true;
@@ -138,23 +154,16 @@ export const useValidateAndAddApprovalRequests = () => {
             }
         }
 
-        let finalMessage = "";
-
-        // If all requests were successful, show a success message
+        // // If all requests were successful, show a success message
         if (allSuccessful) {
-            if (FieldValueResponse.some(data => data.isExist === true)) {
-                finalMessage = processFieldValueResponse(FieldValueResponse);
-                finalMessage && warning(finalMessage);
+            if (requestData.isCustomeMessage && FieldValueResponse.length > 0) {
+                const formattedResponse = FieldValueResponse.length === 1
+                    ? FieldValueResponse[0] : FieldValueResponse.slice(0, -1).join(', ') + ' and ' + FieldValueResponse.slice(-1);
+                approvalMessage = formattedResponse;
             } else {
                 success(SuccessMessage.ApprovalSuccess);
             }
-        } else {
-            if (FieldValueResponse.some(data => data.isExist === true)) {
-                finalMessage = processFieldValueResponse(FieldValueResponse);
-                finalMessage && warning(finalMessage);
-            }
         }
-
         setIsApprovelLoading(false); // End loader
 
         // Return the updated requestData with normalized values
@@ -162,7 +171,8 @@ export const useValidateAndAddApprovalRequests = () => {
             ...requestData,
             newValue: originalValues.newValue,
             oldValue: originalValues.oldValue,
-            isallSuccessful: allSuccessful
+            isallSuccessful: allSuccessful,
+            approvalMessage: approvalMessage
         };
     }
     // Utility function to deep compare two objects
@@ -221,32 +231,32 @@ export const useValidateAndAddApprovalRequests = () => {
         return Object.keys(obj).find(key => key.toLowerCase() === normalizedKey);
     };
 
-    const processFieldValueResponse = (response) => {
-        const findExistFields = response.filter(data => data.isExist === true);
-        const findNonExistFields = response.filter(data => data.isExist === false);
+    // const processFieldValueResponse = (response) => {
+    //     const findExistFields = response.filter(data => data.isExist === true);
+    //     const findNonExistFields = response.filter(data => data.isExist === false);
 
-        let message = '';
-        if (findNonExistFields.length > 0) {
-            const nonExistFieldsNames = getFieldNames(findNonExistFields);
-            message = SuccessMessage.FieldsApprovalSuccess.replace("{0}", nonExistFieldsNames);
-        }
-        if (findExistFields.length > 0) {
-            const existFieldsNames = getFieldNames(findExistFields);
-            message = message !== '' ? message + SuccessMessage.FieldsApprovalExists.replace("{0}", existFieldsNames) :
-                SuccessMessage.FieldsApprovalExists.replace("{0}", existFieldsNames);
-        }
-        return message;
-    };
+    //     let message = '';
+    //     if (findNonExistFields.length > 0) {
+    //         const nonExistFieldsNames = getFieldNames(findNonExistFields);
+    //         message = SuccessMessage.FieldsApprovalSuccess.replace("{0}", nonExistFieldsNames);
+    //     }
+    //     if (findExistFields.length > 0) {
+    //         const existFieldsNames = getFieldNames(findExistFields);
+    //         message = message !== '' ? message + SuccessMessage.FieldsApprovalExists.replace("{0}", existFieldsNames) :
+    //             SuccessMessage.FieldsApprovalExists.replace("{0}", existFieldsNames);
+    //     }
+    //     return message;
+    // };
 
-    const getFieldNames = (fields) => {
-        if (fields.length > 0) {
-            const fieldNames = fields.map(data => data.fieldName);
-            return fieldNames.length > 1
-                ? fieldNames.slice(0, -1).join(', ') + fieldNames.slice(-1)
-                : fieldNames[0];
-        }
-        return '';
-    };
+    // const getFieldNames = (eventNames) => {
+    //     if (eventNames.length > 0) {
+    //         const fieldNames = .map(data => data.fieldName);
+    //         return fieldNames.length > 1
+    //             ? fieldNames.slice(0, -1).join(', ') + fieldNames.slice(-1)
+    //             : fieldNames[0];
+    //     }
+    //     return '';
+    // };
 
     return { ValidateRequestByApprovalRules, getEventName, compareObj, isApprovelLoading };
 }

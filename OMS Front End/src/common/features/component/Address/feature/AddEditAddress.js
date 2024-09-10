@@ -15,6 +15,7 @@ import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAll
 import PropTypes from 'prop-types';
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 
 const SetInitialCountry = {
     label: "United States",
@@ -22,7 +23,7 @@ const SetInitialCountry = {
 }
 
 const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable,
-    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage }) => {
+    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage, customerStatusId }) => {
 
     //** States */
     const ref = useRef();
@@ -350,7 +351,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
             const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
-            if (!isSupplier && isEditablePage && eventName) {
+            if (!isSupplier && isEditablePage && eventName && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
                 await handleApprovalRequest(updateData, formData.initialState, eventName);
             } else {
                 update(updateData);
@@ -363,7 +364,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                 customerId: customerId,
             };
             const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
-            if (!isSupplier && isEditablePage && eventName) {
+            if (!isSupplier && isEditablePage && eventName && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
                 await handleApprovalRequest(req, null, eventName);
             } else {
                 add(req);

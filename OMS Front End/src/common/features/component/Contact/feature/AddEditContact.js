@@ -13,15 +13,19 @@ import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
+import SwalAlert from "../../../../../services/swalService/SwalService";
+import { SuccessMessage } from "../../../../../data/appMessages";
 //** Component's */
 const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddressGrid"));
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
-const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey,
+const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId,
     isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode, orderResetValue }) => {
 
     //** State */
     const ref = useRef();
+    const { success } = SwalAlert();
     const { formSetting } = contactDetailFormData;
     const [contactId, setContactId] = useState(0);
     const [editMode, setEditMode] = useState(false);
@@ -31,6 +35,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const [phoneNumberList, setPhoneNumberList] = useState([]);
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
+    const approvalMessages = []; // Array to store all approval messages
     const { ValidateRequestByApprovalRules, getEventName, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     //** API Call's */
@@ -43,10 +48,8 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
 
 
     const handleAddEdit = async () => {
-        if (isSupplier) {
-            handlWithoutApprovalAddEdit();
-        } else if (isEditablePage) {
-            handleApprovalAddEdit()
+        if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+            handleApprovalAddEdit();
         } else {
             handlWithoutApprovalAddEdit();
         }
@@ -66,7 +69,8 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 return getEventName(id, isEdit, 'AddEditContactCustomer');
             }).filter(event => event);
         } else {
-            eventName = getEventName(data.contactTypeId, isEdit, 'AddEditContactCustomer');
+            let contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
+            eventName = getEventName(contactTypeId, isEdit, 'AddEditContactCustomer');
         }
         if (matchTypeIds.length > 0 || matchTypeIds?.value) {
             if (eventNameArr.length > 0) {
@@ -79,7 +83,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                         ...request,
                         customerId: customerId ? customerId : request.customerId
                     }
-                    await handleApprovalRequest(req, formData.initialState, event, filteredTypeIds.length);
+                    await handleApprovalRequest(req, formData.initialState, event, true, index, eventNameArr.length - 1);
                 }
             } else if (eventName) {
                 const request = requestData(data, matchTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
@@ -87,7 +91,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                     ...request,
                     customerId: customerId ? customerId : request.customerId
                 }
-                await handleApprovalRequest(req, formData.initialState, eventName, filteredTypeIds.length);
+                await handleApprovalRequest(req, formData.initialState, eventName, 0);
             }
 
         }
@@ -146,11 +150,17 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             matchTypeIds: matchTypeIds.length > 0 ? getCustomerContactTypeId(matchTypeIds, isEdit) : matchTypeIds,      // Values that were removed
         };
     };
-    const handleApprovalRequest = async (newValue, oldValue, eventName, remainingContactLength) => {
-        const request = { newValue, oldValue, isFunctional: true, eventName, isFunctionalObjMatch: true };
+    const handleApprovalRequest = async (newValue, oldValue, eventName, isCustomeMessage, index, contactLength) => {
+        const request = { newValue, oldValue, isFunctional: true, eventName, isCustomeMessage };
         const modifyData = await ValidateRequestByApprovalRules(request);
-        if (remainingContactLength === 0) {
+        approvalMessages.push(modifyData.approvalMessage);
+        if (index === contactLength) {
             if (modifyData.newValue && onSuccess) {
+                if (isCustomeMessage) {
+                    const formattedResponse = approvalMessages.length === 1
+                        ? approvalMessages[0] : approvalMessages.slice(0, -1).join(', ') + ' and ' + approvalMessages.slice(-1);
+                    success(SuccessMessage.FinalSuccess.replace("{0}", formattedResponse));
+                }
                 onSuccess();
             }
         }
@@ -194,13 +204,12 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     //** UseEffect */
     useEffect(() => {
         if (isAddEditSuccess && isAddEditData) {
-
             if (isAddEditData.errorMessage.includes('EXISTS')) {
                 ToastService.warning(isAddEditData.errorMessage);
                 return;
             }
             if (onSuccess) {
-                onSuccess();
+                // onSuccess();
                 setContactId(isAddEditData?.keyValue);
                 ToastService.success(isAddEditData.errorMessage);
                 if (isOrderManage) {
