@@ -343,9 +343,9 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                       {approvedData?.eventName.toLowerCase().includes("update") &&
                         <div className="value-block w-100">
                           <span className="value-title">Old Value</span>
-                          {/* {approvedData.oldValueTemplate ?
+                          {approvedData.oldValueTemplate ?
                             <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.oldValueTemplate }}></div>
-                            : */}
+                            :
                           <>
                             {Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).length > 0 ? (
                               <ul className="value-content pl-0">
@@ -362,14 +362,14 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                               <div className="no-value">No new value available</div>
                             )}
                           </>
-                          {/* } */}
+                          } 
                         </div>
                       }
                       <div className="value-block w-100">
                         <span className="value-title">New Value</span>
-                        {/* {approvedData.newValueTemplate ?
+                         {approvedData.newValueTemplate ?
                           <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.newValueTemplate }}></div>
-                          : */}
+                          : 
                         <>
                           {Object.entries(filterKeysWithId(parseJson(approvedData.newValue))).length > 0 ? (
                             <ul className="value-content pl-0">
@@ -386,7 +386,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                             <div className="no-value">No new value available</div>
                           )}
                         </>
-                        {/* } */}
+                        } 
                       </div>
                     </React.Fragment>
                   }
