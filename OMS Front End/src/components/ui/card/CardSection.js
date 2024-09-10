@@ -48,6 +48,8 @@ function CardSection({
   searchValue,
   multipleButton,
   rightButtonArray,
+  isIcon,
+  iconClass,
 }) {
   return (
     <div
@@ -163,6 +165,8 @@ function CardSection({
                   imagePathBack={iconImgBack}
                   isLoading={isLoading}
                   titleText={titleText}
+                  isIcon={isIcon}
+                  iconClass={iconClass}
                 />
               </div>
             )
