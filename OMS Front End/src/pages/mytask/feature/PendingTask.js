@@ -9,7 +9,6 @@ import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLett
 import formatDate from "../../../lib/formatDate";
 import CardSection from "../../../components/ui/card/CardSection";
 import ModuleList from "./ModuleList";
-import Iconify from "../../../components/ui/iconify/Iconify";
 
 const PendingTask = (props) => {
   const [activeTab, setActiveTab] = useState(null);

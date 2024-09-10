@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
+import { getDropdownLabelName } from "../../../../../utils/CommonUtils/CommonUtilsMethods";
 
 const SetInitialCountry = {
     label: "United States",
@@ -112,8 +113,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         }
     }, [isSupplier, isModelOpen]);
 
-
-
     useEffect(() => {
         if (isGetAllCountriesSucess && allGetAllCountriesData) {
             setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', addressFormData, 'countryId');
@@ -136,7 +135,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             const dropdownField = data?.formFields?.find(data => data.id === "cityId");
             dropdownField.fieldSetting.options = cities;
             setFormData(data);
-            // setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', addressFormData, 'cityId');
         }
     }, [isGetAllCitiesSucess, allGetAllCitiesData, isFetchingCities]);
 
@@ -346,13 +344,24 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         const data = ref.current.getFormData();
         if (!data) return;
 
+        const dropdownLableRequests = {
+            addressTypeName: getDropdownLabelName(allGetAllAddressTypesData, 'addressTypeId', 'type', data.addressTypeId),
+            countryName: getDropdownLabelName(allGetAllCountriesData, 'countryId', 'name', data.countryId),
+            stateName: getDropdownLabelName(allGetAllStatesData, 'stateId', 'name', data.stateId),
+            cityName: getDropdownLabelName(allGetAllCitiesData, 'cityId', 'name', data.cityId)
+        };
+
         const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
 
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
+            let request = {
+                ...updateData,
+                ...dropdownLableRequests
+            }
             const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
             if (!isSupplier && isEditablePage && eventName && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-                await handleApprovalRequest(updateData, formData.initialState, eventName);
+                await handleApprovalRequest(request, formData.initialState, eventName);
             } else {
                 update(updateData);
             }
@@ -362,6 +371,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             const req = {
                 ...transformedData,
                 customerId: customerId,
+                ...dropdownLableRequests
             };
             const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
             if (!isSupplier && isEditablePage && eventName && isCustomerOrSupplierApprovedStatus(customerStatusId)) {

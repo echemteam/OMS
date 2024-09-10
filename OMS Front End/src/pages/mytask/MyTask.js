@@ -8,7 +8,6 @@ import { MyTaskStatus } from "../../utils/Enums/commonEnums";
 import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
 import { getAuthProps } from "../../lib/authenticationLibrary";
 import { useLazyGetAllModulesQuery } from "../../app/services/configurationAPI";
-import CenterModel from "../../components/ui/centerModel/CenterModel";
 
 //** Compoent's */
 const PendingTask = React.lazy(() => import("./feature/PendingTask"));
