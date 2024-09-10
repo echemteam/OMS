@@ -14,7 +14,7 @@ const MyTask = () => {
   const roleId = authData.roles.roleId;
   const [isApproval, setIsApproval] = useState(false);
   const [approvedData, setApprovedData] = useState(null);
-  const [tabId, setTabId] = useState(0)
+  const [tabId, setTabId] = useState(0);
   const [approvalRequestId, setApprovalRequestId] = useState(0);
 
   const [
@@ -29,11 +29,9 @@ const MyTask = () => {
   const handleGetPendingId = (data) => {
     getApprovalRequestsByApprovalRequestId(data);
     setApprovalRequestId(data);
-
   };
 
   const handleGetArchiveId = (data) => {
-
     getApprovalRequestsByApprovalRequestId(data);
     setApprovalRequestId(data);
   };
@@ -90,7 +88,7 @@ const MyTask = () => {
       sMenuItemCaption: "Pending",
       icon: "fa fa-check-circle-o",
       component: (
-        <div className="">
+        <>
           <PendingTask
             isApproval={isApproval}
             Pending={MyTaskStatus.Pending}
@@ -99,7 +97,7 @@ const MyTask = () => {
             roleId={roleId}
             setIsApproval={setIsApproval}
           />
-        </div>
+        </>
       ),
     },
     {
@@ -118,20 +116,28 @@ const MyTask = () => {
   ];
 
   return (
-    <CardSection>
-      <div className="mytask-section">
-        <div className="row">
-          <div className="col-xxl-4 col-xl-4 col-md-4 col-12 task-tab">
-            <div className="task-title">
-              <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
-            </div>
+    <div className="mytask-section">
+      <div className="row">
+        <div className="col-xxl-5 col-xl-5 col-md-5 col-12 task-tab">
+          <div className="task-title tab-section-desc">
+            <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
           </div>
-          <div className="col-xxl-8 col-xl-8 col-md-8 col-12 ">
-            <TaskDetail approvedData={approvedData} approvalRequest={approvalRequest} approvalRequestId={approvalRequestId} isFetching={isGetApprovalRequestsByApprovalRequestIdFetching} tabId={tabId} />
+        </div>
+        <div className="col-xxl-7 col-xl-7 col-md-7 col-12 ">
+          <div className="right-desc">
+            <CardSection>
+              <TaskDetail
+                approvedData={approvedData}
+                approvalRequest={approvalRequest}
+                approvalRequestId={approvalRequestId}
+                isFetching={isGetApprovalRequestsByApprovalRequestIdFetching}
+                tabId={tabId}
+              />
+            </CardSection>
           </div>
         </div>
       </div>
-    </CardSection>
+    </div>
   );
 };
 

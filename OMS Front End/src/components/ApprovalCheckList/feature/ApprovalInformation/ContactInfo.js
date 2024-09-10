@@ -90,28 +90,29 @@ const ContactInformation = ({
                       </div>
                     ))}
                 </h6>
-                <h6 className="name-title">
+                <h6 className="name-title number-sec">
                   <span className="label">Phone :</span>
-
-                  {contact.phoneNumberList &&
-                    contact.phoneNumberList.map((phoneData) => (
-                      <>
-                        <h6
-                          className={`name-desc d-flex ${
-                            phoneData.phoneType === "Home"
-                              ? "home"
-                              : phoneData.phoneType === "Work"
-                              ? "work"
-                              : "home"
-                          } ${phoneData.isPrimary ? "is-primary" : ""}`}
-                        >
-                          ({phoneData.phoneCode}) {phoneData.phoneNumber}
-                          {phoneData.extension
-                            ? `, ${phoneData.extension}`
-                            : ""}
-                        </h6>
-                      </>
-                    ))}
+                  <div className="name-desc-sec">
+                    {contact.phoneNumberList &&
+                      contact.phoneNumberList.map((phoneData) => (
+                        <>
+                          <h6
+                            className={`name-desc d-flex ${
+                              phoneData.phoneType === "Home"
+                                ? "home"
+                                : phoneData.phoneType === "Work"
+                                ? "work"
+                                : "home"
+                            } ${phoneData.isPrimary ? "is-primary" : ""}`}
+                          >
+                            ({phoneData.phoneCode}) {phoneData.phoneNumber}
+                            {phoneData.extension
+                              ? `, ${phoneData.extension}`
+                              : ""}
+                          </h6>
+                        </>
+                      ))}
+                  </div>
                 </h6>
               </div>
             ))}
@@ -125,9 +126,9 @@ ContactInformation.propTypes = {
   mainId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   getContactById: PropTypes.func.isRequired,
   approvalChekedData: PropTypes.shape({
-    isChecked: PropTypes.bool
+    isChecked: PropTypes.bool,
   }),
-  handleCheckbox: PropTypes.func.isRequired
+  handleCheckbox: PropTypes.func.isRequired,
 };
 
 export default ContactInformation;
