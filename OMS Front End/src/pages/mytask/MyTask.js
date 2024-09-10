@@ -8,6 +8,7 @@ import { MyTaskStatus } from "../../utils/Enums/commonEnums";
 import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
 import { getAuthProps } from "../../lib/authenticationLibrary";
 import { useLazyGetAllModulesQuery } from "../../app/services/configurationAPI";
+import CenterModel from "../../components/ui/centerModel/CenterModel";
 
 //** Compoent's */
 const PendingTask = React.lazy(() => import("./feature/PendingTask"));
@@ -17,7 +18,7 @@ const MyTask = () => {
   const authData = getAuthProps();
   const roleId = authData.roles.roleId;
   const [tabId, setTabId] = useState(0);
-  const [moduleList, setModuleList] = useState([])
+  const [moduleList, setModuleList] = useState([]);
   const [isApproval, setIsApproval] = useState(false);
   const [approvedData, setApprovedData] = useState(null);
   const [approvalRequestId, setApprovalRequestId] = useState(0);
@@ -31,7 +32,10 @@ const MyTask = () => {
     },
   ] = useLazyGetApprovalRequestsByApprovalRequestIdQuery();
 
-  const [getAllModules, { isSuccess: isgetAllModulesSucess, data: allGetAllModulesData }] = useLazyGetAllModulesQuery();
+  const [
+    getAllModules,
+    { isSuccess: isgetAllModulesSucess, data: allGetAllModulesData },
+  ] = useLazyGetAllModulesQuery();
 
   const handleGetPendingId = (data) => {
     getApprovalRequestsByApprovalRequestId(data);
@@ -40,7 +44,7 @@ const MyTask = () => {
 
   const handleRestEventDetail = () => {
     setApprovalRequestId(0);
-    setApprovedData(null)
+    setApprovedData(null);
   };
 
   const handleGetArchiveId = (data) => {
@@ -120,6 +124,7 @@ const MyTask = () => {
             moduleList={moduleList}
             setIsApproval={setIsApproval}
             handleRestEventDetail={handleRestEventDetail}
+            // filterModel={handleToggleModal}
           />
         </>
       ),
@@ -142,28 +147,33 @@ const MyTask = () => {
   ];
 
   return (
-    <div className="mytask-section">
-      <div className="row">
-        <div className="col-xxl-5 col-xl-5 col-md-5 col-12 task-tab">
-          <div className="task-title tab-section-desc">
-            <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
+    <>
+      <div className="mytask-section">
+        <div className="row">
+          <div className="col-xxl-5 col-xl-5 col-md-5 col-12 task-tab">
+            <div className="task-title tab-section-desc">
+              <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
+            </div>
           </div>
-        </div>
-        <div className="col-xxl-7 col-xl-7 col-md-7 col-12 ">
-          <div className="right-desc">
-            <CardSection>
-              <TaskDetail
-                approvedData={approvedData}
-                approvalRequest={approvalRequest}
-                approvalRequestId={approvalRequestId}
-                isEventByIdLoading={isGetApprovalRequestsByApprovalRequestIdFetching}
-                tabId={tabId}
-              />
-            </CardSection>
+          <div className="col-xxl-7 col-xl-7 col-md-7 col-12 ">
+            <div className="right-desc">
+              <CardSection>
+                <TaskDetail
+                  approvedData={approvedData}
+                  approvalRequest={approvalRequest}
+                  approvalRequestId={approvalRequestId}
+                  isEventByIdLoading={
+                    isGetApprovalRequestsByApprovalRequestIdFetching
+                  }
+                  tabId={tabId}
+                />
+              </CardSection>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      
+    </>
   );
 };
 

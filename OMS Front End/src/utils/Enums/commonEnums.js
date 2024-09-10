@@ -3,7 +3,8 @@ export const FieldSettingType = {
     ISTEXT: "isText",
     MULTISELECT: "isMultiSelect",
     INPUTBUTTON: "isInputButton",
-    SECOUNDRYINPUTBUTTON: "isSecoundryInputButton"
+    SECOUNDRYINPUTBUTTON: "isSecoundryInputButton",
+    CKEDITORDISABLED:"CKEditorDisabled"
 }
 
 export const CustomerSupplierStatus = {

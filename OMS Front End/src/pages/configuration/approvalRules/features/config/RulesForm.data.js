@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const rulesFormData = {
-    initialState: { approvalConfigurationId: 0, ruleName: "", moduleId: "", functionalityId: "", functionalitiesFieldId: "", roleId: "", approvalAction: "",isFunctional:false },
+    initialState: { approvalConfigurationId: 0, ruleName: "", moduleId: "", functionalityId: "", functionalitiesFieldId: "", roleId: "",isFunctional:false },
     formFields: [
         {
             id: "ruleName",
@@ -32,7 +32,7 @@ export const rulesFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
         {
@@ -48,7 +48,7 @@ export const rulesFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
         {
@@ -64,7 +64,7 @@ export const rulesFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
         {
@@ -75,12 +75,12 @@ export const rulesFormData = {
             dataField: "functionalitiesFieldId",
             fieldSetting: {
                 isDisabled: true,
-                placeholder: "Select Module",
+                placeholder: "Select Field",
                 isEnableOnChange: true
             },
             // validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
         {
@@ -98,22 +98,24 @@ export const rulesFormData = {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
-        {
-            id: "approvalAction",
-            lable: "Approval Action ",
-            Field_Name: "Approval Action",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "approvalAction",
+         
+          {
+            id: "template",
+            lable: "Template",
+            Field_Name: "Template",
+            fieldType: FormFieldTypes.CKEDITOR,
+            dataField: "template",
             fieldSetting: {
-                placeholder: "Enter Approval Action",
-                allowSpace: true,
+              placeholder: "",
+              allowSpace: true,
+              isDisable:true
             },
-            validation: [{ type: "require" }],
+            // validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+              containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
             },
-        },
-        {
+          },
+          {
             id: "isFunctional",
             lable: "Is Functional",
             Field_Name: "Is Functional",
@@ -139,15 +141,15 @@ export const rulesFormData = {
 export const rulesListData = {
     columns: [
         {
-            name: "Module Name",
+            name: "Module",
             fieldName: "moduleName",
             colStyle: {
-                width: "20%",
+                width: "10%",
             },
             allowShort: true,
         },
         {
-            name: "Functionality Name",
+            name: "Functionality",
             fieldName: "functionalityName",
             colStyle: {
                 width: "20%",
@@ -155,26 +157,18 @@ export const rulesListData = {
             allowShort: true,
         },
         {
-            name: "Rule Name",
+            name: "Rule",
             fieldName: "ruleName",
             colStyle: {
-                width: "20%",
+                width: "30%",
             },
             allowShort: true,
         },
         {
-            name: "Role Name",
+            name: "Role",
             fieldName: "roleName",
             colStyle: {
-                width: "20%",
-            },
-            allowShort: true,
-        },
-        {
-            name: "Approval",
-            fieldName: "approvalAction",
-            colStyle: {
-                width: "20%",
+                width: "10%",
             },
             allowShort: true,
         },

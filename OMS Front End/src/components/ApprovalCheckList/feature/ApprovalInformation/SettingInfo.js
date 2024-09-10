@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { PaymentMethodTypes } from "../../../../utils/Enums/commonEnums";
 import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
 import PropTypes from "prop-types";
+import { useLazyGetAllPaymentTermsQuery } from "../../../../app/services/customerSettingsAPI";
 
 const SettingInformation = ({
   isModelOpen,
@@ -13,25 +14,25 @@ const SettingInformation = ({
 }) => {
   //** State */
   const [finacialInformation, setFinacialInformation] = useState();
-  const [isChecked, setIsChecked] = useState(
-    approvalChekedData?.isChecked || false
-  );
-
+  const [isChecked, setIsChecked] = useState(approvalChekedData?.isChecked || false);
+  const [paymentTermsData, setPaymentTermsData] = useState([]);
   //** API Call's */
-  const [
-    getFinacialSetting,
-    {
-      isFetching: isFinacialSettingFetching,
-      isSuccess: isFinacialSettingSuccess,
-      data: isFinacialSettingData,
-    },
-  ] = getFinacialSettingById();
+  const [getFinacialSetting, { isFetching: isFinacialSettingFetching, isSuccess: isFinacialSettingSuccess, data: isFinacialSettingData, },] = getFinacialSettingById();
+  const [getAllPaymentTerms, { isFetching: isGetAllPaymentTermsFetching, isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
 
   useEffect(() => {
     if (isModelOpen && mainId) {
       getFinacialSetting(mainId);
+      getAllPaymentTerms();
     }
   }, [isModelOpen, mainId]);
+
+  useEffect(() => {
+    if (!isGetAllPaymentTermsFetching && isGetAllPaymentTermsSuccess && isGetAllPaymentTermsData) {
+      setPaymentTermsData(isGetAllPaymentTermsData);
+    }
+  }, [isGetAllPaymentTermsFetching, isGetAllPaymentTermsSuccess, isGetAllPaymentTermsData]);
+
 
   useEffect(() => {
     if (
@@ -46,6 +47,11 @@ const SettingInformation = ({
     isFinacialSettingSuccess,
     isFinacialSettingData,
   ]);
+
+  const getPaymentTerm = (Id) => {
+    let find = paymentTermsData?.find((item) => item.paymentTermId === Id)
+    return find?.paymentTerm;
+  };
 
   const getPaymentMethodName = (methodId) => {
     switch (methodId) {
@@ -98,6 +104,11 @@ const SettingInformation = ({
               <span className="label">Billing Currency:</span>
               <p className="name-desc">{finacialInformation.billingCurrency}</p>
             </h6>
+            <h6 className="name-title">
+              <span className="label">Payment Terms:</span>
+              <p className="name-desc">{getPaymentTerm(finacialInformation.paymentTermId)}</p>
+            </h6>
+
           </div>
         )}
       </div>
