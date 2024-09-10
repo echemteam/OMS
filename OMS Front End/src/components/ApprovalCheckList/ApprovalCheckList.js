@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 //** Lib's */
 import Buttons from "../ui/button/Buttons";
 import FileViewer from "react-file-viewer";
@@ -14,8 +14,12 @@ import { useLazyGetUserCheckListQuery } from "../../app/services/ApprovalAPI";
 import DropDown from "../../components/ui/dropdown/DropDrown";
 import "./ApprovalCheckList.scss";
 import { useLazyGetAllDocumentByOwnerIdQuery } from "../../app/services/commonAPI";
-import { ModulePathName } from "../../utils/Enums/commonEnums";
+import { CustomerSupplierStatus, ModulePathName } from "../../utils/Enums/commonEnums";
 import { useLazyDownloadDocumentQuery } from "../../app/services/documentAPI";
+import CenterModel from "../ui/centerModel/CenterModel";
+import FormCreator from "../Forms/FormCreator";
+import { reasonData } from "../../common/features/component/CustomerSupplierReason/Reason.data";
+import { useUpdateCustomerInActiveStatusMutation } from "../../app/services/basicdetailAPI";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -43,8 +47,12 @@ const ApprovalCheckList = ({
   isSupplierApproval,
   isSubCustomer,
   ownerType,
+ 
 }) => {
   //** State */
+  const reasonRef = useRef();
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState(reasonData);
   const [checkListData, setCheckListData] = useState([]);
   const [documentListData, setDocumentListData] = useState([]);
   const [document, setDocument] = useState(null);
@@ -52,6 +60,7 @@ const ApprovalCheckList = ({
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [getFileType, setGetFileType] = useState([]);
   const [actionType, setActionType] = useState(null);
+  
   const [approvalChekedData, setApprovalChekedData] = useState([
     { name: "basicInformation", isCheked: false },
     { name: "addressInformation", isCheked: false },
@@ -79,6 +88,14 @@ const ApprovalCheckList = ({
   //   },
   // ] = useAddUserChecklistResponseMutation();
   const [
+    updateCustomerInActiveStatus,
+    {
+      isLoading: updateCustomerInActiveStatusCustomerLoading,
+      isSuccess: isSuccessUpdateCustomerInActiveStatus,
+      data: updateCustomerInActiveStatusData,
+    },
+  ] = useUpdateCustomerInActiveStatusMutation();
+  const [
     getAllDocumentByOwnerId,
     {
       isFetching: isGetAllDocumentByOwnerIdFetching,
@@ -104,6 +121,33 @@ const ApprovalCheckList = ({
     setCheckListData(updatedData);
     setApprovalChekedData(updatedData);
   };
+  useEffect(() => {
+    if (
+      isSuccessUpdateCustomerInActiveStatus &&
+      updateCustomerInActiveStatusData
+    ) {
+      ToastService.success(updateCustomerInActiveStatusData.errorMessage);
+     
+       handleToggleModal();
+    }
+  }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
+
+
+  const handleUpdate = () => {
+ 
+    let custData = reasonRef.current.getFormData();
+    if (custData) {
+      let req = {
+        ...custData,
+        customerId: mainId,
+        statusId: CustomerSupplierStatus.REJECT,
+        note: custData.inActiveReason,
+      };
+      updateCustomerInActiveStatus(req);
+     // setStatusCheckId(req.statusId);
+
+    }
+  };
 
   useEffect(() => {
     if (mainId) {
@@ -114,6 +158,7 @@ const ApprovalCheckList = ({
       getAllDocumentByOwnerId(req);
     }
   }, [mainId]);
+
 
   useEffect(() => {
     if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
@@ -144,7 +189,10 @@ const ApprovalCheckList = ({
     isGetAllDocumentByOwnerIdSuccess,
     isGetAllDocumentByOwnerIdData,
   ]);
-
+const handleToggleModal=()=>{
+  setShowModal(false);
+  onSidebarClose();
+}
   const determineFileType = (fileName) => {
     const extension = fileName.split(".").pop().toLowerCase();
     switch (extension) {
@@ -213,6 +261,7 @@ const ApprovalCheckList = ({
   //   setCheckListData(modifyData);
   // };
   const handleAddResponse = () => {
+    setShowModal(true);
     const allChildChecked = checkListData.every((item) => item.isCheked);
     if (allChildChecked) {
       // checkListData.forEach((data) => {
@@ -228,6 +277,10 @@ const ApprovalCheckList = ({
         "Please ensure that all data has been thoroughly reviewed."
       );
     }
+  };
+  const handleRejectResponse = () => {
+    setShowModal(true);
+    
   };
   const handleDocumentChange = (selectedoption) => {
     setDocument(selectedoption.value);
@@ -346,7 +399,7 @@ const ApprovalCheckList = ({
                           buttonTypeClassName="danger-btn ml-5"
                           buttonText="Reject"
                           // isLoading={isAddUserCheckResponseLoading}
-                          onClick={handleAddResponse}
+                          onClick={handleRejectResponse}
                         />
                         <Buttons
                           buttonTypeClassName="dark-btn ml-5"
@@ -429,6 +482,32 @@ const ApprovalCheckList = ({
           <DataLoader />
         )}
       </SidebarModel>
+      <CenterModel
+            showModal={showModal}
+            handleToggleModal={handleToggleModal}
+            modalTitle={`Reject Reason`}
+            modelSizeClass="w-50s" >
+            <div className="row">
+              <FormCreator config={formData} ref={reasonRef} {...formData} />
+              <div className="col-md-12 mt-2">
+                <div className="d-flex align-item-end justify-content-end">
+                  <div className="d-flex align-item-end">
+                    <Buttons
+                      buttonTypeClassName="theme-button"
+                      buttonText="Update"
+                      isLoading={updateCustomerInActiveStatusCustomerLoading}
+                      onClick={handleUpdate}
+                    />
+                    <Buttons
+                      buttonTypeClassName="dark-btn ml-5"
+                      buttonText="Cancel"
+                      onClick={handleToggleModal}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CenterModel>
     </div>
   );
 };

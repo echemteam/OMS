@@ -25,7 +25,7 @@ export const functionalConfigurationListData = {
             },
             colType: GridColumnType.ACTION,
             defaultAction: {
-                allowEdit: true,
+                allowEdit: false,
             },
             customAction: [
                 {

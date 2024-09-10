@@ -88,8 +88,8 @@ const FunctionalConfigurationList = (props) => {
     }
 
     const actionHandler = {
-        VIEWCONFIGURATION: handleViewClick,
-        EDIT: handleEditClick
+        VIEWCONFIGURATION: handleEditClick,
+       // EDIT: handleEditClick
     }
 
     return (
