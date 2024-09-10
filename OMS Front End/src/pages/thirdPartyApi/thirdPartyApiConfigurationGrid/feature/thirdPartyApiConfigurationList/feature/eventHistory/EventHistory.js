@@ -74,7 +74,7 @@ const EventHistory = ({keyId}) => {
                           <h4 className="timeline-title">
                             <span className="mr-1">{event.eventName}</span>
                             <span className="mr-1 font-bold">
-                              {event.statusCode}
+                             Status Code :  {event.statusCode}
                             </span>
                           </h4>
                           <p>{event.errorMessage}</p>
