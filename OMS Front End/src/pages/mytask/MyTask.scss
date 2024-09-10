@@ -466,6 +466,17 @@
           height: 30px !important;
         }
       }
+      &.btn.undefined {
+        display: none;
+      }
+    }
+    .shorting-section{
+      button{
+        &.btn.undefined {
+          display: block;
+          min-width: auto;
+        }
+      }
     }
   }
 }

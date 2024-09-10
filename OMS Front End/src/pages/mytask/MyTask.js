@@ -8,7 +8,6 @@ import { MyTaskStatus } from "../../utils/Enums/commonEnums";
 import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
 import { getAuthProps } from "../../lib/authenticationLibrary";
 import { useLazyGetAllModulesQuery } from "../../app/services/configurationAPI";
-import CenterModel from "../../components/ui/centerModel/CenterModel";
 
 //** Compoent's */
 const PendingTask = React.lazy(() => import("./feature/PendingTask"));
@@ -124,7 +123,6 @@ const MyTask = () => {
             moduleList={moduleList}
             setIsApproval={setIsApproval}
             handleRestEventDetail={handleRestEventDetail}
-            // filterModel={handleToggleModal}
           />
         </>
       ),
@@ -152,7 +150,9 @@ const MyTask = () => {
         <div className="row">
           <div className="col-xxl-5 col-xl-5 col-md-5 col-12 task-tab">
             <div className="task-title tab-section-desc">
-              <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
+              <div className="filter-model-sec">
+                <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
+              </div>
             </div>
           </div>
           <div className="col-xxl-7 col-xl-7 col-md-7 col-12 ">
@@ -172,7 +172,6 @@ const MyTask = () => {
           </div>
         </div>
       </div>
-      
     </>
   );
 };

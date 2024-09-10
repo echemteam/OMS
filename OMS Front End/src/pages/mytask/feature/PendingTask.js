@@ -9,7 +9,6 @@ import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLett
 import formatDate from "../../../lib/formatDate";
 import CardSection from "../../../components/ui/card/CardSection";
 import ModuleList from "./ModuleList";
-import Iconify from "../../../components/ui/iconify/Iconify";
 
 const PendingTask = (props) => {
   const [activeTab, setActiveTab] = useState(null);
@@ -94,13 +93,11 @@ const PendingTask = (props) => {
             onModuleChange={handleModuleClick}
           />
         </div>
-        <div className="col-7 pl-1 pr-1 filter-model-sec">
+        <div className="col-7 pl-1 pr-1">
           <CardSection
             cardTitle="Events"
             rightButton={true}
-            isIcon={true}
-            iconClass="line-md:filter"
-            titleButtonClick={props.filterModel}
+            isShort={true}
           >
             <div className="customer-info">
               {isGetApprovalRequestsListByStatusFetching ? (
@@ -156,6 +153,7 @@ const PendingTask = (props) => {
           </CardSection>
         </div>
       </div>
+      
     </>
   );
 };
