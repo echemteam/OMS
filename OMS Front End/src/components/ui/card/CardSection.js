@@ -4,6 +4,7 @@ import SearchBar from "../../../common/features/component/SearchBar";
 import Buttons from "../button/Buttons";
 import Filter from "../../filter/Filter";
 import DropDown from "../dropdown/DropDrown";
+import Shorting from "../../shorting/Shorting";
 
 function CardSection({
   children,
@@ -50,6 +51,7 @@ function CardSection({
   rightButtonArray,
   isIcon,
   iconClass,
+  isShort,
 }) {
   return (
     <div
@@ -135,6 +137,9 @@ function CardSection({
                 ) : (
                   ""
                 )}
+                {isShort ? <>
+                  <Shorting/>
+                </>: null}
                 {multipleButton && (
                   <div className="btn-right-sec">
                     {rightButtonArray.map((button, index) => (
@@ -168,6 +173,7 @@ function CardSection({
                   isIcon={isIcon}
                   iconClass={iconClass}
                 />
+                
               </div>
             )
             // )

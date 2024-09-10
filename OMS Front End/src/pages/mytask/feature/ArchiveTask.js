@@ -13,7 +13,6 @@ import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
 import ModuleList from "./ModuleList";
 
 const ArchiveTask = (props) => {
-
   const authData = getAuthProps();
   const roleId = authData.roles.roleId;
   const [activeTab, setActiveTab] = useState(null);
@@ -49,7 +48,11 @@ const ArchiveTask = (props) => {
       isGetApprovalRequestsListByStatusSuccess &&
       isGetApprovalRequestsListByStatusData
     ) {
-      const filterData = props.moduleList[0]?.moduleId && isGetApprovalRequestsListByStatusData.filter(data => data.moduleId === props.moduleList[0].moduleId);
+      const filterData =
+        props.moduleList[0]?.moduleId &&
+        isGetApprovalRequestsListByStatusData.filter(
+          (data) => data.moduleId === props.moduleList[0].moduleId
+        );
       setArchiveData(filterData);
       setArchiveEvents(isGetApprovalRequestsListByStatusData);
     }
@@ -67,7 +70,9 @@ const ArchiveTask = (props) => {
   };
 
   const handleModuleClick = (moduleId) => {
-    const filterData = archiveEvents.filter(data => data.moduleId === moduleId);
+    const filterData = archiveEvents.filter(
+      (data) => data.moduleId === moduleId
+    );
     setArchiveData(filterData);
     if (props.handleRestEventDetail) {
       props.handleRestEventDetail();
@@ -78,10 +83,15 @@ const ArchiveTask = (props) => {
     <>
       <div className="row">
         <div className="col-5 pr-0">
-          <ModuleList moduleList={props.moduleList} apiResponseData={archiveData} handleTabClick={handleTabClick} onModuleChange={handleModuleClick} />
+          <ModuleList
+            moduleList={props.moduleList}
+            apiResponseData={archiveData}
+            handleTabClick={handleTabClick}
+            onModuleChange={handleModuleClick}
+          />
         </div>
         <div className="col-7 pl-1 pr-1">
-          <CardSection cardTitle="Events">
+          <CardSection cardTitle="Events" rightButton={true} isShort={true}>
             <div className="customer-info">
               {isGetApprovalRequestsListByStatusFetching ? (
                 <DataLoader />
@@ -91,8 +101,9 @@ const ArchiveTask = (props) => {
                     archiveData.map((tab) => (
                       <button
                         key={tab.approvalRequestId} // Use a unique key
-                        className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""
-                          }`}
+                        className={`tab-button ${
+                          activeTab === tab.approvalRequestId ? "active" : ""
+                        }`}
                         onClick={() => handleTabClick(tab.approvalRequestId)}
                       >
                         <div className="d-flex align-items-center">
@@ -111,12 +122,13 @@ const ArchiveTask = (props) => {
                                 {tab.moduleName}
                               </span>
                               <div
-                                className={`mytask-type-badge ${tab.status === "Accept"
-                                  ? "badge-accept"
-                                  : tab.status === "Reject"
+                                className={`mytask-type-badge ${
+                                  tab.status === "Accept"
+                                    ? "badge-accept"
+                                    : tab.status === "Reject"
                                     ? "badge-reject"
                                     : ""
-                                  }`}
+                                }`}
                               >
                                 {tab.status}
                               </div>
@@ -126,9 +138,9 @@ const ArchiveTask = (props) => {
                         <div className="date">
                           {tab.requestedDate
                             ? formatDate(
-                              tab.requestedDate,
-                              "MM/DD/YYYY hh:mm A"
-                            )
+                                tab.requestedDate,
+                                "MM/DD/YYYY hh:mm A"
+                              )
                             : "No Date"}
                         </div>
                       </button>

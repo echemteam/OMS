@@ -123,7 +123,6 @@ const MyTask = () => {
             moduleList={moduleList}
             setIsApproval={setIsApproval}
             handleRestEventDetail={handleRestEventDetail}
-            // filterModel={handleToggleModal}
           />
         </>
       ),
@@ -151,7 +150,9 @@ const MyTask = () => {
         <div className="row">
           <div className="col-xxl-5 col-xl-5 col-md-5 col-12 task-tab">
             <div className="task-title tab-section-desc">
-              <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
+              <div className="filter-model-sec">
+                <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
+              </div>
             </div>
           </div>
           <div className="col-xxl-7 col-xl-7 col-md-7 col-12 ">
@@ -171,7 +172,6 @@ const MyTask = () => {
           </div>
         </div>
       </div>
-      
     </>
   );
 };
