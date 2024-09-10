@@ -201,7 +201,7 @@ const AddressDetailCard = forwardRef(
                         {/* <span className="label-txt">{address.stateName}</span> */}
                         <span className="label-txt">{address.countryName}</span>
                       </div>
-                      {isSupplier && customerStatusId !== CustomerSupplierStatus.APPROVED &&
+                      {isSupplier ?
                         <div className="edit-delete-button">
                           {showEditIcon ? (
                             <button onClick={() => handleEdit(address)} className="edit-btn" >
@@ -211,7 +211,21 @@ const AddressDetailCard = forwardRef(
                           <button onClick={() => handleDelete(address)} className="edit-btn ml-2" >
                             <Iconify icon="mingcute:delete-2-line" className="delete-icon" />
                           </button>
-                        </div>
+                        </div> :
+                        <>
+                          {!isSupplier && customerStatusId !== CustomerSupplierStatus.APPROVED &&
+                            <div className="edit-delete-button">
+                              {showEditIcon ? (
+                                <button onClick={() => handleEdit(address)} className="edit-btn" >
+                                  <Iconify icon="tabler:pencil" />
+                                </button>
+                              ) : null}
+                              <button onClick={() => handleDelete(address)} className="edit-btn ml-2" >
+                                <Iconify icon="mingcute:delete-2-line" className="delete-icon" />
+                              </button>
+                            </div>
+                          }
+                        </>
                       }
                       <div className={`contact-type-badge ${getAddressTypeClass(address.type)}`}>
                         {address.type}

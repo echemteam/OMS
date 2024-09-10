@@ -58,6 +58,14 @@ export const basicInfoData = {
             },
         },
         {
+            name: "Match Percentage",
+            fieldName: "matchPercentage",
+            colStyle: {
+                width: "15%",
+            },
+            // allowShort: true,
+        },
+        {
             name: "Action",
             colStyle: {
                 width: "10%",
