@@ -15,7 +15,7 @@ const ApiEndPoints=({providerId})=>{
     const [formData, setFormData] = useState(addEditApiEndPointsFormData);
 
     const handleEditClick = (data) => {
-  
+
       onResetForm(addEditApiEndPointsFormData,setFormData, null);
       setIsModelOpen(true);
       setFormData(data);
@@ -23,12 +23,15 @@ const ApiEndPoints=({providerId})=>{
      };
 
     const handleToggleModal = () => {
+      onResetForm(addEditApiEndPointsFormData,setFormData, null);
       setIsModelOpen(true);
     };
-  const onSidebarClose = () => {
-        setIsModelOpen(false);
-        setIsEdit(false);     
-     };
+
+    const onSidebarClose = () => {
+          setIsModelOpen(false);
+          setIsEdit(false);     
+      };
+
      const onSuccess = () => {
       setIsModelOpen(true);
       if (childRef.current) {
@@ -59,9 +62,10 @@ return(
           <AddEditApiEndPoints
             isEdit={isEdit}
             providerId={providerId}
-         initData={formData}
-        onClose={onSidebarClose}
-        onSuccess={onSuccess}
+           initData={formData}
+           onClose={onSidebarClose}
+           onSuccess={onSuccess}
+           isModelOpen={isModelOpen} 
           />
         </SidebarModel>
     </div>)

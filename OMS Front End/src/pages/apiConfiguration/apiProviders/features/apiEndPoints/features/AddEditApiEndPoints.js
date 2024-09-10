@@ -16,7 +16,7 @@ const AddEditApiEndPoints = (props) => {
   const [getApiEndpointByEndpointId,{ isFetching: isGetApiEndpointByEndpointIdFetching, isSuccess: isGetApiEndpointByEndpointIdSuccess, data: GetApiEndpointByEndpointIdData,},] = useLazyGetApiEndpointByEndpointIdQuery();
   const [endPointFormData, setEndPointFormData] = useState( addEditApiEndPointsFormData);
   const [addEditApiEndpoint,{  isLoading: isAddEditApiEndPointLoading,isSuccess: isAddEditApiEndPointSuccess,data: allAddEditApiEndPointData,}, ] = useAddEditApiEndpointMutation();
-  useEffect(() => {
+    useEffect(() => {
     if ( isGetApiEndpointByEndpointIdSuccess &&GetApiEndpointByEndpointIdData &&!isGetApiEndpointByEndpointIdFetching ) {
       const newFrom = { ...endPointFormData };
       newFrom.initialState = {
@@ -41,23 +41,28 @@ const AddEditApiEndPoints = (props) => {
     if (isAddEditApiEndPointSuccess && allAddEditApiEndPointData) {
 
       if (allAddEditApiEndPointData.errorMessage.includes("exists")) {
-        props.onSuccess();
         ToastService.warning(allAddEditApiEndPointData.errorMessage); 
-        props.onClose();
         return;
     }
-      onResetForm(addEditApiEndPointsFormData, setEndPointFormData, null);
-      props.onSuccess();
-      ToastService.success(allAddEditApiEndPointData.errorMessage);
-      props.onClose();
+    props.onSuccess();
+    ToastService.success(allAddEditApiEndPointData.errorMessage);
+    handleResetAndClose();
+    props.onClose();
     }
   }, [isAddEditApiEndPointSuccess, allAddEditApiEndPointData]);
 
+  useEffect(() => {
+    if (props.isModelOpen && !props.isEdit) {
+        let formData = { ...addEditApiEndPointsFormData };
+        onResetForm(formData, setEndPointFormData, null);
+      }
+    }, [props.isModelOpen])
+
   const handleResetAndClose = () => {
-    onResetForm(addEditApiEndPointsFormData, setEndPointFormData, null);
+    let formData = { ...addEditApiEndPointsFormData };
+    onResetForm(formData, setEndPointFormData, null);
     props.onClose();
   };
-
   useEffect(() => {
     const dropdownField = addEditApiEndPointsFormData.formFields.find((item) => item.dataField === "method" );
     dropdownField.fieldSetting.options = Object.entries(ApiEndPointMethods).map(([key, value]) => ({
