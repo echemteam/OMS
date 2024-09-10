@@ -209,7 +209,6 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
       return formatBoolean(value);
     } else {
       // Handle other values
-      debugger
       return value  ? value.toString() : 'N/A';
     }
   };
