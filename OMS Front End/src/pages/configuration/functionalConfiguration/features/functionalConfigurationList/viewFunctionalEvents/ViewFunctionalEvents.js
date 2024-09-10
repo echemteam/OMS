@@ -65,7 +65,7 @@ const ViewFunctionalEvents = (props) => {
     <div className="row">
       <div className="col-md-12 table-striped api-provider view-function-provider">
         <CardSection
-          cardTitle="View Functional Events"
+          cardTitle="Functional Events"
           buttonClassName="btn theme-button"
         >
           <FinalMolGrid
