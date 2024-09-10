@@ -154,7 +154,7 @@ const AddEditRules = (props) => {
 
     const dropdownField = form?.formFields?.find(item => item.id === "functionalityId");
     dropdownField.fieldSetting.options = dataq;
-
+    //setShouldRerenderFormCreator((prevState) => !prevState);
     if (isGetApprovalConfigurationByApprovalConfigurationIdData) {
       const selectedFunctionality = allGetAllFunctionalitiesData.find(
         item => item.functionalityId === isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId
@@ -221,7 +221,7 @@ const AddEditRules = (props) => {
   const handleFunctionalityEventOption = (responseData) => {
     setDropDownOptionField(responseData, "functionalityEventId", "eventName", rulesFormData, "functionalityEventId"
     );
-    setShouldRerenderFormCreator((prevState) => !prevState);
+    //setShouldRerenderFormCreator((prevState) => !prevState);
   };
   useEffect(() => {
     if (isAddEditApprovalConfigurationSucess && allAddEditApprovalConfigurationData) {
