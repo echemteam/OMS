@@ -8,10 +8,18 @@ import DataLoader from "../../../components/ui/dataLoader/DataLoader";
 import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
 import formatDate from "../../../lib/formatDate";
 import CardSection from "../../../components/ui/card/CardSection";
+import { getAuthProps } from "../../../lib/authenticationLibrary";
+import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
+import ModuleList from "./ModuleList";
 
 const ArchiveTask = (props) => {
-  const [archiveData, setArchiveData] = useState([]);
+
+  const authData = getAuthProps();
+  const roleId = authData.roles.roleId;
   const [activeTab, setActiveTab] = useState(null);
+  const [archiveData, setArchiveData] = useState([]);
+  const [archiveEvents, setArchiveEvents] = useState([]);
+
   const [
     getApprovalRequestsListByStatus,
     {
@@ -22,14 +30,18 @@ const ArchiveTask = (props) => {
   ] = useLazyGetApprovalRequestsListByStatusAndRoleIdQuery();
 
   useEffect(() => {
-    if (props.Accept) {
-      let req = {
-        status: props.Accept.join(","),
-        roleId: props.roleId,
-      };
-      getApprovalRequestsListByStatus(req);
+    if (roleId) {
+      getApprovalRequestList();
     }
-  }, [props.Accept, props.roleId]);
+  }, [roleId]);
+
+  const getApprovalRequestList = () => {
+    let req = {
+      status: [MyTaskStatus.Accept, MyTaskStatus.Reject],
+      roleId: roleId,
+    };
+    getApprovalRequestsListByStatus(req);
+  };
 
   useEffect(() => {
     if (
@@ -37,7 +49,9 @@ const ArchiveTask = (props) => {
       isGetApprovalRequestsListByStatusSuccess &&
       isGetApprovalRequestsListByStatusData
     ) {
-      setArchiveData(isGetApprovalRequestsListByStatusData);
+      const filterData = props.moduleList[0]?.moduleId && isGetApprovalRequestsListByStatusData.filter(data => data.moduleId === props.moduleList[0].moduleId);
+      setArchiveData(filterData);
+      setArchiveEvents(filterData);
     }
   }, [
     isGetApprovalRequestsListByStatusFetching,
@@ -45,10 +59,18 @@ const ArchiveTask = (props) => {
     isGetApprovalRequestsListByStatusData,
   ]);
 
-  const handleTabClick = (id) => {
+  const handleTabClick = (id, moduleId) => {
     setActiveTab(id);
     if (props.onGetById) {
       props.onGetById(id);
+    }
+  };
+
+  const handleModuleClick = (moduleId) => {
+    const filterData = archiveEvents.filter(data => data.moduleId === moduleId);
+    setArchiveData(filterData);
+    if (props.handleRestEventDetail) {
+      props.handleRestEventDetail();
     }
   };
 
@@ -56,21 +78,7 @@ const ArchiveTask = (props) => {
     <>
       <div className="row">
         <div className="col-5 pr-0">
-          <CardSection cardTitle="Modules">
-            <div className="module-listing">
-              <ul>
-                <li>
-                  <a href="">customer</a>
-                </li>
-                <li>
-                  <a href="">Supplier</a>
-                </li>
-                <li>
-                  <a href="">Dummy Modules</a>
-                </li>
-              </ul>
-            </div>
-          </CardSection>
+          <ModuleList moduleList={props.moduleList} apiResponseData={archiveData} handleTabClick={handleTabClick} onModuleChange={handleModuleClick} />
         </div>
         <div className="col-7 pl-1 pr-1">
           <CardSection cardTitle="Events">
@@ -79,13 +87,12 @@ const ArchiveTask = (props) => {
                 <DataLoader />
               ) : (
                 <div className="tabs">
-                  {archiveData.length > 0 ? (
+                  {archiveData && archiveData.length > 0 ? (
                     archiveData.map((tab) => (
                       <button
                         key={tab.approvalRequestId} // Use a unique key
-                        className={`tab-button ${
-                          activeTab === tab.approvalRequestId ? "active" : ""
-                        }`}
+                        className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""
+                          }`}
                         onClick={() => handleTabClick(tab.approvalRequestId)}
                       >
                         <div className="d-flex align-items-center">
@@ -104,13 +111,12 @@ const ArchiveTask = (props) => {
                                 {tab.moduleName}
                               </span>
                               <div
-                                className={`mytask-type-badge ${
-                                  tab.status === "Accept"
-                                    ? "badge-accept"
-                                    : tab.status === "Reject"
+                                className={`mytask-type-badge ${tab.status === "Accept"
+                                  ? "badge-accept"
+                                  : tab.status === "Reject"
                                     ? "badge-reject"
                                     : ""
-                                }`}
+                                  }`}
                               >
                                 {tab.status}
                               </div>
@@ -120,9 +126,9 @@ const ArchiveTask = (props) => {
                         <div className="date">
                           {tab.requestedDate
                             ? formatDate(
-                                tab.requestedDate,
-                                "MM/DD/YYYY hh:mm A"
-                              )
+                              tab.requestedDate,
+                              "MM/DD/YYYY hh:mm A"
+                            )
                             : "No Date"}
                         </div>
                       </button>
