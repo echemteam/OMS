@@ -129,7 +129,10 @@
             font-weight: 700;
             font-size: var(--commonFont);
             margin: 5px 5px 5px 0;
+            min-width: 50px;
+            @media only screen and (max-width: 1750px) {
             min-width: 45px;
+            }
           }
 
           .name-desc {
@@ -143,7 +146,10 @@
 
             .label {
               margin-top: 0;
-              min-width: 45px;
+              min-width: 50px;
+              @media only screen and (max-width: 1750px) {
+                min-width: 45px;
+                }
             }
 
             .name-desc-sec {

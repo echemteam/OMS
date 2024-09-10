@@ -9,9 +9,9 @@ import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLett
 import formatDate from "../../../lib/formatDate";
 import CardSection from "../../../components/ui/card/CardSection";
 import ModuleList from "./ModuleList";
+import Iconify from "../../../components/ui/iconify/Iconify";
 
 const PendingTask = (props) => {
-
   const [activeTab, setActiveTab] = useState(null);
   const [pendingData, setPendingData] = useState([]);
   const [pendingEvents, setPendingEvents] = useState([]);
@@ -47,12 +47,24 @@ const PendingTask = (props) => {
   }, [props.isApproval]);
 
   useEffect(() => {
-    if (!isGetApprovalRequestsListByStatusFetching && isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData) {
-      const filterData = props.moduleList[0]?.moduleId && isGetApprovalRequestsListByStatusData.filter(data => data.moduleId === props.moduleList[0].moduleId);
+    if (
+      !isGetApprovalRequestsListByStatusFetching &&
+      isGetApprovalRequestsListByStatusSuccess &&
+      isGetApprovalRequestsListByStatusData
+    ) {
+      const filterData =
+        props.moduleList[0]?.moduleId &&
+        isGetApprovalRequestsListByStatusData.filter(
+          (data) => data.moduleId === props.moduleList[0].moduleId
+        );
       setPendingData(filterData);
       setPendingEvents(isGetApprovalRequestsListByStatusData);
     }
-  }, [isGetApprovalRequestsListByStatusFetching, isGetApprovalRequestsListByStatusSuccess, isGetApprovalRequestsListByStatusData,]);
+  }, [
+    isGetApprovalRequestsListByStatusFetching,
+    isGetApprovalRequestsListByStatusSuccess,
+    isGetApprovalRequestsListByStatusData,
+  ]);
 
   const handleTabClick = (id) => {
     setActiveTab(id);
@@ -62,7 +74,9 @@ const PendingTask = (props) => {
   };
 
   const handleModuleClick = (moduleId) => {
-    const filterData = pendingEvents.filter(data => data.moduleId === moduleId);
+    const filterData = pendingEvents.filter(
+      (data) => data.moduleId === moduleId
+    );
     setPendingData(filterData);
     if (props.handleRestEventDetail) {
       props.handleRestEventDetail();
@@ -73,10 +87,21 @@ const PendingTask = (props) => {
     <>
       <div className="row">
         <div className="col-5 pr-0">
-          <ModuleList moduleList={props.moduleList} apiResponseData={pendingData} handleTabClick={handleTabClick} onModuleChange={handleModuleClick} />
+          <ModuleList
+            moduleList={props.moduleList}
+            apiResponseData={pendingData}
+            handleTabClick={handleTabClick}
+            onModuleChange={handleModuleClick}
+          />
         </div>
-        <div className="col-7 pl-1 pr-1">
-          <CardSection cardTitle="Events" rightButton={true}>
+        <div className="col-7 pl-1 pr-1 filter-model-sec">
+          <CardSection
+            cardTitle="Events"
+            rightButton={true}
+            isIcon={true}
+            iconClass="line-md:filter"
+            titleButtonClick={props.filterModel}
+          >
             <div className="customer-info">
               {isGetApprovalRequestsListByStatusFetching ? (
                 <DataLoader />
@@ -86,8 +111,9 @@ const PendingTask = (props) => {
                     pendingData.map((tab) => (
                       <button
                         key={tab.approvalRequestId} // Use a unique key
-                        className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""
-                          }`}
+                        className={`tab-button ${
+                          activeTab === tab.approvalRequestId ? "active" : ""
+                        }`}
                         onClick={() => handleTabClick(tab.approvalRequestId)}
                       >
                         <div className="d-flex align-items-center">
@@ -102,8 +128,9 @@ const PendingTask = (props) => {
                                 {tab.moduleName}
                               </span>
                               <div
-                                className={`mytask-type-badge ${tab.isFunctional ? "badge-accept" : ""
-                                  }`}
+                                className={`mytask-type-badge ${
+                                  tab.isFunctional ? "badge-accept" : ""
+                                }`}
                               >
                                 {tab.isFunctional ? "Functional" : "Field"}
                               </div>
@@ -113,9 +140,9 @@ const PendingTask = (props) => {
                         <div className="date">
                           {tab.requestedDate
                             ? formatDate(
-                              tab.requestedDate,
-                              "MM/DD/YYYY hh:mm A"
-                            )
+                                tab.requestedDate,
+                                "MM/DD/YYYY hh:mm A"
+                              )
                             : "No Date"}
                         </div>
                       </button>
