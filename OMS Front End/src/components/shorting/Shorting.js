@@ -5,8 +5,8 @@ import RadioButton from "../ui/inputs/radioButton/RadioButton";
 import Checkbox from "../ui/inputs/checkBox/CheckBox";
 
 const options = [
-  { label: "Newest", value: "newest" },
-  { label: "Oldest", value: "oldest" },
+  { label: "Newest", value: "Newest" },
+  { label: "Oldest", value: "Oldest" },
 ];
 const checkboxOptions = [
   { label: "Select All", value: "selectAll", checked: false },
@@ -16,13 +16,16 @@ const checkboxOptions = [
   { label: "Fourth", value: "fourth", checked: false },
   { label: "Fifth", value: "fifth", checked: false },
 ];
-const Shorting = () => {
-  const [selectedOption, setSelectedOption] = useState(options[0].value);
+const Shorting = (props) => {
+  const [selectedOrderBy, setSelectedOrderBy] = useState("Newest");
   const [checkboxes, setCheckboxes] = useState(checkboxOptions);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const dropdownRef = useRef(null);
   const handleRadioChange = (event) => {
-    setSelectedOption(event.target.value);
+    setSelectedOrderBy(event.target.value);
+    if (props.selectedSortOrder) {
+      props.selectedSortOrder(event.target.value);
+    }
   };
   const handleCheckboxChange = (index) => {
     const newCheckboxes = [...checkboxes];
@@ -45,7 +48,7 @@ const Shorting = () => {
 
     // Add event listener when the component mounts
     document.addEventListener("mousedown", handleClickOutside);
-    
+
     // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -64,8 +67,8 @@ const Shorting = () => {
                 <RadioButton
                   options={options}
                   name={"Sorting-Filter"}
-                  selectedOption={selectedOption}
-                  checked={selectedOption}
+                  selectedOption={selectedOrderBy}
+                  checked={selectedOrderBy}
                   onChange={handleRadioChange}
                 />
               </div>

@@ -41,7 +41,10 @@ export const useValidateAndAddApprovalRequests = () => {
         const approvalRulesList = getData("approvalRules") || [];
 
         // If no approval rules List are found, return the original requestData
-        if (!approvalRulesList.length) return requestData;
+        if (!approvalRulesList.length) {
+            setIsApprovelLoading(false);
+            return requestData
+        }
 
         // Destructure and provide default values for requestData properties
         const { eventName = '', newValue = {}, oldValue = {} } = requestData;
@@ -50,13 +53,17 @@ export const useValidateAndAddApprovalRequests = () => {
         const relevantRules = approvalRulesList.filter(rule => rule.eventName === eventName);
 
         // If no relevant rules are found, return the original requestData
-        if (!relevantRules.length) return requestData;
+        if (!relevantRules.length) {
+            setIsApprovelLoading(false)
+            return requestData;
+        }
 
         const { newValueNormalized, oldValueNormalized, originalValues } = normalizeValues(newValue, oldValue);
 
         if (requestData.isFunctionalObjMatch) {
             const isEqual = compareObj(newValue, oldValue);
             if (isEqual) {
+                setIsApprovelLoading(false);
                 return requestData;
             }
         }
@@ -137,13 +144,13 @@ export const useValidateAndAddApprovalRequests = () => {
                                 allSuccessful = true;
                                 await addApprovalRequest(request);
                                 originalValues.newValue[originalKeyName] = oldFieldValue;
-                                FieldValueResponse.push(eventName);
                             } else {
                                 // For other fields, add the approval request directly
                                 allSuccessful = true;
                                 await addApprovalRequest(request);
                                 originalValues.newValue[originalKeyName] = oldFieldValue;
                             }
+                            FieldValueResponse.push(fieldName);
                         } catch (error) {
                             ToastService.warning(error);
                         }

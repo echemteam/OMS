@@ -39,9 +39,17 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
             isPrimary: data.isPrimary,
             customerDeliveryMethodId: data.customerDeliveryMethodId ? data.customerDeliveryMethodId : 0,
             deliveryMethodId: data.deliveryMethodId && typeof data.deliveryMethodId === "object" ? data.deliveryMethodId.value : data.deliveryMethodId,
+            chargeType: data?.name,
+            zone: data?.zone,
         };
         if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-            await handleApprovalRequest(req, dataSource.initialState);
+            const oldValue = dataSource && dataSource.find(data => data.customerDeliveryMethodId === req.customerDeliveryMethodId);
+            let requestIntialState = {
+                ...oldValue,
+                chargeType: oldValue?.name,
+                zone: oldValue?.zone,
+            }
+            await handleApprovalRequest(req, requestIntialState);
         } else {
             let newGridData = [...dataSource]
             newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };

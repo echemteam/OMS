@@ -52,12 +52,12 @@ function CardSection({
   isIcon,
   iconClass,
   isShort,
+  selectedSortOrder
 }) {
   return (
     <div
-      className={`card ${cardTitle ? "card-section-left" : ""}${
-        searchInput && rightButton ? "card-section-between" : ""
-      }${rightButton ? "card-button-only" : ""}`}
+      className={`card ${cardTitle ? "card-section-left" : ""}${searchInput && rightButton ? "card-section-between" : ""
+        }${rightButton ? "card-button-only" : ""}`}
     >
       {(cardTitle || rightButton || searchFilter || searchInput) && (
         <div className="card-top-title-btn responsive-grid-title">
@@ -138,8 +138,8 @@ function CardSection({
                   ""
                 )}
                 {isShort ? <>
-                  <Shorting/>
-                </>: null}
+                  <Shorting selectedSortOrder={selectedSortOrder} />
+                </> : null}
                 {multipleButton && (
                   <div className="btn-right-sec">
                     {rightButtonArray.map((button, index) => (
@@ -173,7 +173,7 @@ function CardSection({
                   isIcon={isIcon}
                   iconClass={iconClass}
                 />
-                
+
               </div>
             )
             // )

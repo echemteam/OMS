@@ -82,7 +82,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                     {!isLoading ? (
                         documentList.length > 0 ? (
                             documentList.map((data) => (
-                                <div className="col-xl-12 col-lg-12 col-md-4 col-12" key={data.customerDocumentId} >
+                                <div className="col-xl-6 col-lg-6 col-md-4 col-6" key={data.customerDocumentId} >
                                     <div className="documents">
                                         <div className="left-icons">
                                             <Image imagePath={data.documentIcon} alt="Document Icon" />

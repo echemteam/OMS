@@ -36,7 +36,7 @@ const approvalAPI = createApi({
         }),
         getApprovalRequestsListByStatusAndRoleId: builder.query({
             query: (data) => ({
-                url: encryptQueryString(`/Approval/GetApprovalRequestsListByStatusAndRoleId/?status=${data.status}&roleId=${data.roleId}`),
+                url: encryptQueryString(`/Approval/GetApprovalRequestsListByStatusAndRoleId/?status=${data.status}&roleId=${data.roleId}&sortOrder=${data.orderby}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
