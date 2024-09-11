@@ -270,7 +270,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
 
   return (
     <React.Fragment>
-      {(approvedData && !isEventByIdLoading && !isUpdateLoading) || (isGetSupplierFetching || isGetCustomerFetching) ?
+      {(!isEventByIdLoading && !isUpdateLoading) || (isGetSupplierFetching || isGetCustomerFetching) ?
         <div className="task-detail">
           {approvedData ?
             <>
