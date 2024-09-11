@@ -40,10 +40,16 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
             accountNumber: data.accountNumber,
             customerDeliveryCarrierId: data.customerDeliveryCarrierId || 0,
             carrierId: data.carrier?.value || data.carrierId,
-            handlingFee: data.handlingFee
+            handlingFee: data.handlingFee,
+            carrierName: data?.carrier
         };
         if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-            await handleApprovalRequest(req, dataSource.initialState);
+            const oldValue = dataSource && dataSource.find(data => data.customerDeliveryCarrierId === req.customerDeliveryCarrierId);
+            let requestIntialState = {
+                ...oldValue,
+                carrierName: oldValue?.carrier
+            }
+            await handleApprovalRequest(req, requestIntialState);
         } else {
             let newGridData = [...dataSource]
             newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };

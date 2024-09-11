@@ -351,7 +351,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                             <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.oldValueTemplate }}></div>
                             :
                             <>
-                              {Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).length > 0 ? (
+                              {approvedData.oldValue && Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).length > 0 ? (
                                 <ul className="value-content pl-0">
                                   {Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).map(([key, value]) => (
                                     <li key={key}>
@@ -363,7 +363,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                                   ))}
                                 </ul>
                               ) : (
-                                <div className="no-value">No new value available</div>
+                                <div className="no-value">No old value available</div>
                               )}
                             </>
                           }
