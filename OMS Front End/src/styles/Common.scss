@@ -320,11 +320,14 @@ a {
 
       .content-desc-section {
         .center-container {
-          height: calc(100vh - 15px);
+          height: calc(100vh - 85px);
           overflow: hidden;
           overflow-y: auto;
           margin-bottom: 0;
           padding-bottom: 6px;
+          @media only screen and (max-width: 1750px) {
+            height: calc(100vh - 70px);
+          }
         }
       }
     }
@@ -875,9 +878,12 @@ a {
 
 .vertical-tab-card {
   .card {
-    height: calc(100vh - 265px);
+    height: calc(100vh - 267px);
 
     @media only screen and (max-width: 1750px) {
+      height: calc(100vh - 245px);
+    }
+    @media only screen and (max-width: 1366px) {
       height: calc(100vh - 240px);
     }
 
@@ -1312,8 +1318,11 @@ a {
     .card-body-sec {
       margin-top: 0;
       padding: 5px !important;
-      height: calc(100vh - 250px);
+      height: calc(100vh - 297px);
       overflow: hidden;
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 265px);
+      }
     }
   }
 }
@@ -1954,7 +1963,7 @@ a {
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 290px);
+        height: calc(100vh - 295px);
       }
     }
   }
@@ -2142,12 +2151,15 @@ a {
   .card-body-sec {
     .note-card-sec {
       // max-height: calc(100vh - 235px);
-      height: calc(100vh - 345px);
+      height: calc(100vh - 346px);
       overflow: hidden;
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 300px);
+        height: calc(100vh - 305px);
+      }
+      @media only screen and (max-width: 1650px) {
+        height: calc(100vh - 301px);
       }
 
       .bottom-info {
@@ -4054,6 +4066,8 @@ input[type="checkbox"]:disabled {
 
   table {
     tbody {
+      overflow: unset;
+      max-height: unset;
       tr {
         td {
           span {
