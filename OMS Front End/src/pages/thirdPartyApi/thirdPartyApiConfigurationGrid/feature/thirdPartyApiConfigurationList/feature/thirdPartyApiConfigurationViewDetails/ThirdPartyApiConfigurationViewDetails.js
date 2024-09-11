@@ -71,7 +71,7 @@ export const ThirdPartyApiConfigurationViewDetails = () => {
               imagePath={AppIcons.BackArrowIcon}
             ></Buttons>
           </div>
-          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab grid-over-flow">
+          <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab grid-over-flow ">
             <ThirdPartyApiConfigurationViewTab
               keyId={keyId}
             />

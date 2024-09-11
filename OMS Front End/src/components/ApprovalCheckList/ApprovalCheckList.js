@@ -49,7 +49,8 @@ const ApprovalCheckList = ({
   isSupplierApproval,
   isSubCustomer,
   ownerType,
-  customerData
+  basicData,
+//  setStatusCheckId
 }) => {
   //** State */
   const reasonRef = useRef();
@@ -118,8 +119,8 @@ const ApprovalCheckList = ({
   useEffect(()=>{
     if(showModal)
     getAllUser()
-        if (customerData.responsibleUserId) {
-          const responsibleUserIds = customerData?.responsibleUserId
+        if (basicData?.responsibleUserId) {
+          const responsibleUserIds = basicData?.responsibleUserId
             ?.split(",")
             .map((id) => Number(id.trim()));
       
@@ -172,6 +173,7 @@ const ApprovalCheckList = ({
         note: custData.inActiveReason,
       };
       updateCustomerInActiveStatus(req);
+    //  setStatusCheckId(req.statusId)
     
 
     }
