@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 //** Lib's */
 import Buttons from "../ui/button/Buttons";
 import FileViewer from "react-file-viewer";
@@ -13,13 +13,15 @@ import ToastService from "../../services/toastService/ToastService";
 import { useLazyGetUserCheckListQuery } from "../../app/services/ApprovalAPI";
 import DropDown from "../../components/ui/dropdown/DropDrown";
 import "./ApprovalCheckList.scss";
-import { useLazyGetAllDocumentByOwnerIdQuery } from "../../app/services/commonAPI";
+import { useLazyGetAllDocumentByOwnerIdQuery, useLazyGetAllUserQuery } from "../../app/services/commonAPI";
 import { CustomerSupplierStatus, ModulePathName } from "../../utils/Enums/commonEnums";
 import { useLazyDownloadDocumentQuery } from "../../app/services/documentAPI";
 import CenterModel from "../ui/centerModel/CenterModel";
 import FormCreator from "../Forms/FormCreator";
 import { reasonData } from "../../common/features/component/CustomerSupplierReason/Reason.data";
 import { useUpdateCustomerInActiveStatusMutation } from "../../app/services/basicdetailAPI";
+import { setDropDownOptionField } from "../../utils/FormFields/FieldsSetting/SetFieldSetting";
+import { excludingRoles } from "../../pages/customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -47,7 +49,7 @@ const ApprovalCheckList = ({
   isSupplierApproval,
   isSubCustomer,
   ownerType,
- 
+  customerData
 }) => {
   //** State */
   const reasonRef = useRef();
@@ -68,9 +70,10 @@ const ApprovalCheckList = ({
     { name: "settingInformation", isCheked: false },
   ]);
 
-  const addressInfoCheck = [{ name: "addressInformation", isCheked: false }];
+  const addressInfoCheck = [{ name: "addressInformation", isCheked: false }]
 
   //** API Call's */
+    const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
   const [
     getCheckList,
     {
@@ -112,6 +115,31 @@ const ApprovalCheckList = ({
       data: isDownalodData,
     },
   ] = useLazyDownloadDocumentQuery();
+  useEffect(()=>{
+    if(showModal)
+    getAllUser()
+        if (customerData.responsibleUserId) {
+          const responsibleUserIds = customerData?.responsibleUserId
+            ?.split(",")
+            .map((id) => Number(id.trim()));
+      
+          const formNew={...formData}
+          formNew.initialState = {
+              ...formNew.initialState,
+              responsibleUserId: responsibleUserIds,
+          };
+      setFormData(formNew);
+    }
+  },[showModal])
+
+  if (isGetAllUserSucess && allGetAllUserData) {
+    const filterData = allGetAllUserData.filter((item) => {
+        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+    });
+    // Remove duplicates based on fullName
+    const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
+    setDropDownOptionField(uniqueData, 'userId', 'fullName', reasonData, 'responsibleUserId');
+}
 
   const handleCheckbox = (name, isChecked) => {
     const listData = isSubCustomer ? addressInfoCheck : approvalChekedData;
@@ -144,7 +172,7 @@ const ApprovalCheckList = ({
         note: custData.inActiveReason,
       };
       updateCustomerInActiveStatus(req);
-     // setStatusCheckId(req.statusId);
+    
 
     }
   };
