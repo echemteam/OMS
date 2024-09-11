@@ -221,27 +221,9 @@
   }
 }
 
-.order-price-list {
-  table {
-    overflow: unset;
-    tbody {
-      overflow-y: unset;
-      overflow-x: unset;
-    }
-  }
-}
 
 @media only screen and (max-width: 1650px) {
   .input-field {
     height: 28px;
   }
 }
-
-// @media only screen and (max-width: 1300px) {
-  
-//   .parent-row {
-//     &:nth-child(1){
-//       width: 25% !important;
-//     }
-//   }
-// }
