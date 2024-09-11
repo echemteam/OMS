@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import "./MyTask.scss";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import CardSection from "../../components/ui/card/CardSection";
-import TaskDetail from "./feature/TaskDetail";
 import { MyTaskStatus } from "../../utils/Enums/commonEnums";
 import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
 import { getAuthProps } from "../../lib/authenticationLibrary";
@@ -12,6 +11,7 @@ import { useLazyGetAllModulesQuery } from "../../app/services/configurationAPI";
 //** Compoent's */
 const PendingTask = React.lazy(() => import("./feature/PendingTask"));
 const ArchiveTask = React.lazy(() => import("./feature/ArchiveTask"));
+const TaskDetail = React.lazy(() => import('./feature/TaskDetail'));
 
 const MyTask = () => {
   const authData = getAuthProps();
