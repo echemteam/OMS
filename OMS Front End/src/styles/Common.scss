@@ -1,8 +1,138 @@
-@import "./Variables.scss";
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 /* // Common Styles Start */
+// Variable Styling Start
+
+:root {
+  // --themeColor: #696cff;
+  --themeColor: #685dd8;
+  --themeColorLight: #e7e7ff;
+  --themeColorLightGridRow: #696cff08;
+  --whiteColor: #ffffff;
+  --textColor:#444050;;
+  --textColorLight: #6c7b8e;
+  --iconCOlor: #bba8bff5;
+  --bg-main-content: #f5f5f9;
+  --bg-light-content: #e7f6fe;
+  --primaryColor: #5563ff;
+  --primaryColorLight: #5765ff1d;
+  --dangerColor: #fe7096;
+  --dangerColorLight: #fe70963b;
+  --warningColor: #ffd500;
+  --infoColor: #0056d7;
+  --successColor: #07cdae;
+  --inputBorder: #c2c4cb;
+  --inputBorderLight: #e6e6e8;
+  --linkMenu: #ebecef;
+  --light-menuDot: #cbcdd0;
+  --cardTitleBg: #e7f6febd;
+  --lightDarkblack: #00000026;
+  --blackColor: #000;
+  --cardborderColor: #e0e0e0;
+  --tabBgColor: #dcdde0;
+  --placeholderColor: #aeaeae96;
+  --textGreyColor: #b8b8b8;
+
+  --sidebarColor: #2f3349;
+  --sidebarHoverColor: #393d53;
+  --sidebarTextColor: #c6c3db;
+  --sidebarHoverTextColor: #fff;
+  --sidebarActiveTextColor: #fff;
+  --sidebarActiveMenuColor: #4e536b;
+
+  --tableBorderColor: #e6e6e8;
+  --paginationActive: #7367f0;
+
+  // Stiky Background Start
+  --lightBlue: #e2f1ff;
+  --lightGreen: #e4f9e0;
+  --lightYellow: #fff7d1;
+  --lightPink: #ffe4f1;
+  --lightPurple: #f2e6ff;
+  --lightGray: #f3f2f1;
+  --lightOrange: #f3c79b;
+
+  // Stiky Background End
+
+  // Bg-Gradient Color Start
+  --gradient-theme: linear-gradient(to right, #9d9ee7, var(--themeColor));
+  --gradient-danger: linear-gradient(to right, #ffbf96, var(--dangerColor));
+  --gradient-warning: linear-gradient(to right, #f6e384, var(--warningColor));
+  --gradient-info: linear-gradient(to right, #90caf9, var(--infoColor));
+  --gradient-success: linear-gradient(to right, #7ec6c0, var(--successColor));
+
+  --gradient-sidebar: linear-gradient(270deg,rgba(115, 103, 240, 0.7) 0%,#7367f0 100%);
+
+  --white-card-shadow: 0px 0px 24px rgba(27, 46, 94, 0.05);
+  --card-shadow: 0px 8px 24px rgba(27, 46, 94, 0.12);
+  --pending-theme: #fff0e1;
+  --pending-theme-btn: #ffb36b;
+  --blocked-theme: #e3f1f9;
+  --blocked-theme-btn: #6444d8;
+  --frozen-theme: #e9e7fd;
+  --frozen-theme-btn: #867bf2;
+  --approved-theme: #ddf6e8;
+  --approved-theme-btn: #35cb78;
+  --submitted-theme: #d6f4f8;
+  --submitted-theme-btn: #06bcd2;
+  --disabled-theme: #e9ecef;
+  --disabled-theme-btn: #808080;
+  --PrimaryColor: #00b100;
+  --reject-color: #ffe2e3;
+  --reject-theme-btn: #ff4c51;
+  --submission-color: #e2ff9f;
+  --submission-color-btn: #a1bb2c;
+  --PrimaryColorBright: #4ad15f;
+  // --theme-btn-bg:#685dd8;
+  --theme-btn-hover-bg:#5c52c9;
+  --sidebar-btn-hover-bg: #e9e7fd;
+
+  --tab-btn-hover-bg: #e9e7fd;
+  --tab-btn-hoverColor: #685dd8;
+
+  // Bg-Gradient Color End
+
+  // Font-styling
+  --commonFont-2extraLarge: 21px;
+  --commonFont-extraLarge: 18px;
+  --commonFont-large: 16px;
+  --commonFont-average: 15px;
+  --commonFont: 14px;
+  --commonFont-medium: 13px;
+  --commonFont-small: 12px;
+  --commonFont-extraSmall: 10px;
+}
+
+// Variable Styling End
+
+// Media Query Start
+@media only screen and (max-width: 1750px) {
+  :root {
+    // Font-styling
+    --commonFont-2extraLarge: 19px;
+    --commonFont-extraLarge: 16px;
+    --commonFont-large: 14px;
+    --commonFont: 12px;
+    --commonFont-average: 13px;
+    --commonFont-medium: 11px;
+    --commonFont-small: 10px;
+    --commonFont-extraSmall: 9px;
+  }
+}
+@media only screen and (max-width: 1366px) {
+  :root {
+    // Font-styling
+    --commonFont-2extraLarge: 18px;
+    --commonFont-extraLarge: 15px;
+    --commonFont-large: 13px;
+    --commonFont: 11px;
+    --commonFont-medium: 10px;
+    --commonFont-small: 9px;
+    --commonFont-extraSmall: 8px;
+    --commonFont-average: 12px;
+  }
+}
 
 body {
   padding: 0;
