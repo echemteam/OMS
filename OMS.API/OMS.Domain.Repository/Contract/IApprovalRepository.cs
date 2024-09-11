@@ -15,10 +15,11 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDto<int>> AddApprovalRequests(ApprovalRequestsDto requestData);
         Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId);
         Task<AddEntityDto<int>> UpdateApprovalRequestsStatus(ApprovalRequestsDto requestData);
+        Task<CheckFieldValueExistsResponse> CheckFieldValueExists(string fieldName, string fieldValue);
         Task<string> GetPrimaryKeyColumnAsync(string tableName);
         Task Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text);
         Task<IEnumerable<string>> GetTableColumnsAsync(string tableName);
         Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration();
-        Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string? roleId);
+        Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string? roleId, string eventIds, string sortOrder);
     }
 }

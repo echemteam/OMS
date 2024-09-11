@@ -302,5 +302,31 @@ namespace OMS.API.Controllers
             List<GetAllIncotermResponse> responseData = await _serviceManager.commonServices.GetAllIncoterm().ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+
+        [HttpGet("GetAllDocumentByOwnerId")]
+        public async Task<IActionResult> GetAllDocumentByOwnerId(int ownerId, short ownerType)
+        {
+            List<GetAllDocumentByOwnerIdResponse> responseData = await _serviceManager.commonServices.GetAllDocumentByOwnerId(ownerId, ownerType).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+        [HttpGet("GetAllFunctionalityEventByFunctionalityId")]
+        public async Task<IActionResult> GetAllFunctionalityEventByFunctionalityId(int functionalityId)
+        {
+            List<GetAllFunctionalityEventByFunctionalityIdResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalityEventByFunctionalityId(functionalityId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
+        [HttpGet("GetNotesHistory")]
+        public async Task<IActionResult> GetNotesHistory(int entityId, int ownerId, byte ownerTypeId, string noteType)
+        {
+            List<GetNotesHistoryResponse> responseData = await _serviceManager.commonServices.GetNotesHistory(entityId, ownerId, ownerTypeId, noteType);
+            return APISucessResponce<object>(responseData);
+        }
+
+        [HttpGet("GetAllFunctionalityEventByModuleId")]
+        public async Task<IActionResult> GetAllFunctionalityEventByModuleId(int moduleId)
+        {
+            List<GetAllFunctionalityEventByFunctionalityIdResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalityEventByModuleId(moduleId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

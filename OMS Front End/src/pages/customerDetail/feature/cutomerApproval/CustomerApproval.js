@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 //** Libs's */
-import { ApprovalEnum } from "../../../../utils/Enums/commonEnums";
+import { ApprovalEnum, OwnerType } from "../../../../utils/Enums/commonEnums";
 //** Service's */
 import {
     useGetValidateCheckListMutation, useLazyGetCustomerAddresssInfoByIdQuery, useLazyGetCustomerContactInfoByIdQuery,
@@ -12,7 +12,7 @@ const ApprovalCheckList = React.lazy(() => import("../../../../components/Approv
 const ApprovalValidateData = React.lazy(() => import("../../../../components/ApprovalCheckList/feature/approvalValidateData/ApprovalValidateData"));
 
 
-const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval, isDetailPage, isAddPagePage }) => {
+const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval,customerData, isDetailPage, isAddPagePage,setStatusCheckId }) => {
 
     const parentRef = useRef();
     const [customerId, setCustomerId] = useState(0);
@@ -41,7 +41,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     };
 
     //** Validate check list Modal */
-    const handleShowValidateModal = (customerId, isSubCustomer, isShowApprovalCheckList) => {
+    const handleShowValidateModal = (customerId, isSubCustomer, isShowApprovalCheckList = true) => {
         setIsShowValidateModal(!isShowValidateModal);
         let request = {
             customerId: customerId,
@@ -74,6 +74,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     const handleValidateSuccess = () => {
         handleShowApprovalList();
         handleModalClose();
+        !showApprovalCheckList && updateCustomerApproval();
     }
 
     useEffect(() => {
@@ -96,7 +97,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
                 <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={customerId} onSuccessApprovalClose={onSuccessApprovalClose}
                     ApprovalData={isSubCustomer ? ApprovalEnum.APPROVESUBCUSTOMER : ApprovalEnum.APPROVECUSTOMER} isSupplierApproval={false} isSubCustomer={isSubCustomer}
                     getBasicInformationById={useLazyGetCustomersInfoByIdQuery} getAddressById={useLazyGetCustomerAddresssInfoByIdQuery}
-                    getContactById={useLazyGetCustomerContactInfoByIdQuery} getFinacialSettingById={useLazyGetCustomerFinacialSettingQuery}
+                    getContactById={useLazyGetCustomerContactInfoByIdQuery} getFinacialSettingById={useLazyGetCustomerFinacialSettingQuery} ownerType={OwnerType.Customer} basicData={customerData} setStatusCheckId={setStatusCheckId}
                 />
             }
         </React.Fragment>

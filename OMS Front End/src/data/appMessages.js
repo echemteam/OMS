@@ -44,7 +44,8 @@ export const ErrorMessage = {
 	FieldNameNotFound: "No fieldName property found in this rule",
 	FileExists: "The file already exists. Please choose a different file name.",
 	DocumentDetailMissing: "Your document details are missing",
-	DocumentTypeExists: "Document Type already exists."
+	DocumentTypeExists: "Document Type already exists.",
+	Invalidpostalcode: "Invalid Zip Code. Please enter a valid zip code"
 };
 
 export const SuccessMessage = {
@@ -66,6 +67,9 @@ export const SuccessMessage = {
 	Alret_Warning: 'Warning !',
 	TaxId: 'Minimum {0} and Maximum {1} characters allowed for Tax Id',
 	DefaultUSATaxId: 'Minimum 10 and Maximum 10 characters allowed.',
-	ApprovalSuccess: "We are currently reviewing your request and will respond shortly. If approved, your request will be added or updated accordingly."
+	// FieldsApprovalSuccess: "{0} is currently under review, and a response will be provided shortly.",
+	// ApprovalRequestSuccess: "Other fields are updated successfully",
+	FieldsApprovalExists: " {0} already exists in our records and, therefore, cannot be accepted.",
+	ApprovalSuccess: "We are currently reviewing your request and will respond shortly. If approved, your request will be added or updated accordingly.",
+	FinalSuccess: "We are currently reviewing your request for {0} and will respond shortly. If approved, your request will be added or updated accordingly. If any other data was included in the request, it has been successfully added or updated accordingly"
 };
-

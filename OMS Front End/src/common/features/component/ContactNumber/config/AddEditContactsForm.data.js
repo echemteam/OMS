@@ -50,7 +50,7 @@ export const addEditContactsFormData = {
     },
     {
       id: "phoneNumber",
-      lable: "",
+      lable: "Contact Number",
       Field_Name: "Phone Number",
       fieldType: FormFieldTypes.NUMERIC,
       dataField: "phoneNumber",
@@ -61,7 +61,7 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-7 col-xl-7 col-md-6 mt-3 mb-input pl-0 border-left-r-0-contactform",
+        containerCss: "col-xxl-7 col-xl-7 col-md-8 mb-input pl-0 border-left-r-0-contactform lable-none",
       },
     },
     {
@@ -77,7 +77,7 @@ export const addEditContactsFormData = {
         maxLength: 6,
       },
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-3 col-md-2 mt-3 mb-input pl-0 extension ",
+        containerCss: "col-xxl-2 col-xl-2 col-md-3 mt-3 mb-input pl-0 extension ",
       },
     },
     {

@@ -112,6 +112,10 @@ a {
   margin-right: 1.25rem;
 }
 
+.mt-0 {
+  margin-top: 0;
+}
+
 // Margin-top
 .mt-1 {
   margin-top: 0.25rem;
@@ -301,7 +305,7 @@ a {
 
   .middle-page-section {
     width: calc(100% - 250px);
-    padding: 5px 10px 0;
+    padding: 10px 10px 0;
     margin: 0 auto;
     transition: 0.5s all;
 
@@ -871,10 +875,10 @@ a {
 
 .vertical-tab-card {
   .card {
-    height: calc(100vh - 255px);
+    height: calc(100vh - 265px);
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 235px);
+      height: calc(100vh - 240px);
     }
 
     .vertical-tab-inner {
@@ -893,6 +897,7 @@ a {
     }
   }
 }
+
 .sidebar-model {
   .card {
     height: auto;
@@ -902,10 +907,10 @@ a {
 .vertical-tab-card {
   &.organization {
     .card {
-      height: calc(100vh - 120px);
+      height: calc(100vh - 93px);
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 106px);
+        height: calc(100vh - 83px);
       }
 
       .vertical-tab-inner {
@@ -928,10 +933,10 @@ a {
 
 .setting-tab-sec {
   .card {
-    height: calc(100vh - 255px);
+    height: calc(100vh - 265px);
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 235px);
+      height: calc(100vh - 240px);
     }
 
     .vertical-tab-inner {
@@ -1024,8 +1029,7 @@ a {
     .tab-content {
       padding-top: 0;
 
-      .tab-body-section {
-      }
+      .tab-body-section {}
     }
 
     &.vertical-tab {
@@ -1140,6 +1144,7 @@ a {
         padding-top: 0;
 
         .tab-sub-body-section {
+          margin-right: 10px;
         }
       }
     }
@@ -1176,6 +1181,7 @@ a {
 
             .card {
               margin: 4px 5px 0;
+              padding-top: 3px;
               height: 100%;
             }
           }
@@ -1215,6 +1221,7 @@ a {
     border-bottom-right-radius: 0 !important;
     border-top-right-radius: 0 !important;
     height: 31px !important;
+
     .css-1hb7zxy-IndicatorsContainer {
       margin: auto;
     }
@@ -1277,6 +1284,58 @@ a {
     @media only screen and (max-width: 1750px) {
       margin-top: 5px;
     }
+
+  }
+
+  @media only screen and (max-width: 1200px) {
+    margin-left: 0.75px;
+  }
+}
+
+// Customer Docuement Detail
+
+
+
+.supplier-document-detail {
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+      padding: 5px !important;
+      height: calc(100vh - 250px);
+      overflow: hidden;
+    }
+  }
+}
+
+.customer-document-detail {
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+      padding: 5px !important;
+      height: calc(100vh - 250px);
+      overflow: hidden;
+    }
+  }
+}
+
+// Docuement Section
+
+.docuement-section {
+  .card {
+    .card-body-sec {
+      height: fit-content;
+    }
+  }
+}
+
+//Supplier Docuement Detail
+
+.supplier-document-detail {
+  .card {
+    .card-body-sec {
+      margin-top: 0;
+      padding: 5px !important;
+    }
   }
 }
 
@@ -1333,6 +1392,7 @@ a {
             width: 82%;
             display: flex;
             flex-direction: column;
+
             @media only screen and (max-width: 1750px) {
               width: 75%;
             }
@@ -1462,11 +1522,9 @@ a {
           display: flex;
           align-items: center;
 
-          .email-sec {
-          }
+          .email-sec {}
 
-          .contact-sec {
-          }
+          .contact-sec {}
         }
 
         .contact-type {
@@ -1547,8 +1605,7 @@ a {
               color: var(--themeColor);
             }
 
-            @media only screen and (max-width: 1750px) {
-            }
+            @media only screen and (max-width: 1750px) {}
           }
 
           .contact-name {
@@ -1823,6 +1880,7 @@ a {
         justify-content: space-between;
         width: 100%;
 
+
         .doc-details {
           padding-left: 5px;
 
@@ -1887,7 +1945,7 @@ a {
     height: calc(100vh - 335px);
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 295px);
+      height: calc(100vh - 290px);
     }
 
     .document-list-sec {
@@ -1896,7 +1954,7 @@ a {
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 295px);
+        height: calc(100vh - 290px);
       }
     }
   }
@@ -1971,6 +2029,27 @@ a {
   }
 }
 
+.supplier-document {
+  .document-section {
+    .card-body-sec {
+      height: calc(100vh - 315px);
+
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 280px);
+      }
+
+      .document-list-sec {
+        height: calc(100vh - 315px);
+
+        @media only screen and (max-width: 1750px) {
+          height: calc(100vh - 280px);
+        }
+      }
+    }
+
+  }
+}
+
 @media only screen and (max-width: 1180px) {
   .tab-section {
     .tab-header {
@@ -1996,6 +2075,9 @@ a {
     align-items: flex-start;
     padding: 10px;
     height: 100%;
+
+
+
   }
 
   .note-label {
@@ -2065,7 +2147,49 @@ a {
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 290px);
+        height: calc(100vh - 300px);
+      }
+
+      .bottom-info {
+        .note-text {
+          &.editor-section {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+  }
+}
+
+.history-btn {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+
+    .custom-tooltip {
+      left: -12px;
+      display: block;
+      visibility: visible;
+    }
+  }
+
+}
+
+.supplier-note {
+  .card {
+    .card-body-sec {
+      .note-card-sec {
+        height: calc(100vh - 325px);
+
+        @media only screen and (max-width: 1750px) {
+          height: calc(100vh - 285px);
+        }
       }
     }
   }
@@ -2075,14 +2199,7 @@ a {
   .tab-sub-section {
     .tab-sub-content {
       .grid-section {
-        max-height: calc(100vh - 395px);
-        overflow: hidden;
-        overflow-y: auto;
         margin: 10px 0;
-
-        @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 235px);
-        }
       }
     }
   }
@@ -2120,6 +2237,7 @@ a {
 
     li {
       margin-bottom: 5px;
+      word-break: break-all;
     }
   }
 }
@@ -2347,6 +2465,7 @@ a {
   }
 
   .css-1nmdiq5-menu {
+
     .css-10wo9uf-option,
     .css-d7l1ni-option {
       color: var(--textColor);
@@ -2444,7 +2563,7 @@ input[type="checkbox"]:disabled {
         max-height: calc(100vh - 540px);
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 490px);
+          max-height: calc(100vh - 500px);
         }
       }
     }
@@ -2459,11 +2578,12 @@ input[type="checkbox"]:disabled {
 
     table {
       tbody {
-        max-height: calc(100vh - 365px);
+        max-height: calc(100vh - 325px);
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 330px);
+          max-height: calc(100vh - 285px);
         }
+
       }
     }
   }
@@ -2474,7 +2594,7 @@ input[type="checkbox"]:disabled {
         th {
           &:nth-child(3) {
             display: flex;
-            justify-content: center;
+            justify-content: left;
           }
 
           &:nth-child(4) {
@@ -2490,7 +2610,7 @@ input[type="checkbox"]:disabled {
         td {
           &:nth-child(3) {
             display: flex;
-            justify-content: center;
+            justify-content: left;
           }
 
           &:nth-child(4) {
@@ -2849,6 +2969,7 @@ input[type="checkbox"]:disabled {
 
 @media only screen and (max-width: 1750px) {
   .status-dropdown {
+
     .css-t3ipsp-control,
     .css-13cymwt-control {
       padding: 0 !important;
@@ -2923,8 +3044,9 @@ input[type="checkbox"]:disabled {
     padding: 8px;
 
     .card-top-title-btn {
-      min-height: unset;
-      padding-bottom: 7px;
+      min-height: 30px;
+      max-height: 30px;
+      padding-bottom: 8px;
     }
   }
 
@@ -3188,6 +3310,18 @@ input[type="checkbox"]:disabled {
   }
 }
 
+.lable-none {
+  .input-label {
+    visibility: hidden;
+  }
+
+  .input-label-part {
+    input {
+      margin-top: 0;
+    }
+  }
+}
+
 .basic-info-sec {
   .card {
     .card-body-sec {
@@ -3207,8 +3341,7 @@ input[type="checkbox"]:disabled {
         }
 
         .card-body-sec {
-          .note-card-sec {
-          }
+          .note-card-sec {}
         }
       }
     }
@@ -3296,8 +3429,7 @@ input[type="checkbox"]:disabled {
         .tab-content {
           // padding-top: 20px;
 
-          .tab-body-section {
-          }
+          .tab-body-section {}
         }
 
         &.vertical-tab {
@@ -3360,8 +3492,7 @@ input[type="checkbox"]:disabled {
   .tab-content {
     // padding-top: 20px;
 
-    .tab-body-section {
-    }
+    .tab-body-section {}
   }
 
   &.vertical-tab {
@@ -3427,7 +3558,7 @@ input[type="checkbox"]:disabled {
     position: relative;
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 300px);
+      height: calc(100vh - 305px);
     }
 
     .tab-header {
@@ -3487,7 +3618,7 @@ input[type="checkbox"]:disabled {
     .collapse-tab {
       position: absolute;
       top: -5px;
-      left: calc(17% - 37px);
+      left: calc(17% - 42px);
       min-height: 22px;
       min-width: 22px;
       max-height: 22px;
@@ -3692,17 +3823,33 @@ input[type="checkbox"]:disabled {
     .tab-section {
       display: flex;
       width: 100%;
-      height: calc(100vh - 190px);
+      height: calc(100vh - 130px);
       position: relative;
+
+      @media only screen and (max-width: 1750px) {
+      height: calc(100vh - 105px);
+      }
     }
 
     .tab-content {
       width: 85%;
-      padding: 0 0 15px 15px;
-      height: calc(100vh - 170px);
+      padding: 0 0 0px 15px;
+      height: calc(100vh - 130px);
       overflow: hidden;
       overflow-y: auto;
       transition: 0.5s all;
+
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 105px);
+      }
+
+      .organiazation-history .main-card {
+        max-height: calc(100vh - 138px);
+
+        @media only screen and (max-width: 1750px) {
+          max-height: calc(100vh - 115px);
+        }
+      }
     }
   }
 }
@@ -3953,7 +4100,7 @@ input[type="checkbox"]:disabled {
 
       .css-3w2yfm-ValueContainer {
         .css-1p3m7a8-multiValue {
-          max-height: 15px !important;
+          // max-height: 15px !important;
         }
 
         .css-wsp0cs-MultiValueGeneric {
@@ -4053,6 +4200,70 @@ input[type="checkbox"]:disabled {
     &:hover {
       .custom-tooltip {
         display: block;
+      }
+    }
+  }
+}
+
+
+@keyframes cd-bounce-1 {
+  0% {
+    transform: translateX(0%);
+  }
+
+  15% {
+    transform: translateX(-25%) rotate(-5deg);
+  }
+
+  30% {
+    transform: translateX(20%) rotate(3deg);
+  }
+
+  45% {
+    transform: translateX(-15%) rotate(-3deg);
+  }
+
+  60% {
+    transform: translateX(10%) rotate(2deg);
+  }
+
+  75% {
+    transform: translateX(-5%) rotate(-1deg);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+
+.document-view {
+  margin-top: 10px;
+  max-height: calc(100vh - 150px);
+  overflow: hidden;
+  overflow-y: auto;
+
+  @media only screen and (max-width: 1750px) {
+    max-height: calc(100vh - 140px);
+  }
+}
+
+.pg-viewer-wrapper {
+  overflow-y: auto !important;
+
+  .document-container {
+    padding: 15px !important;
+    width: 100% !important;
+  }
+}
+
+.right-side-sec-padding-0 {
+  .document-list-sec {
+    .document-listing {
+      .documents {
+        .right-desc {
+          padding-top: 0;
+        }
       }
     }
   }

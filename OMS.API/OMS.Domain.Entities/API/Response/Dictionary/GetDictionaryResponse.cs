@@ -8,6 +8,7 @@ namespace OMS.Domain.Entities.API.Response.Dictionary
 {
     public class GetDictionaryResponse
     {
+        public int? DictionaryId { get; set; }
         public string? Key { get; set; }
         public string? Value { get; set; }
     }

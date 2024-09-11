@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using OMS.Domain.Entities.Entity.CommonEntity;
-using OMS.Domain.Entities.Entity.OrderDocument;
+using OMS.Domain.Entities.Entity.OrderItems;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.DbContext;
@@ -19,15 +19,33 @@ namespace OMS.Domain.Repository.Implementation
         {
         }
 
-        public async Task<AddEntityDto<int>> AddOrderItem(DataTable orderItemsListDataTable, OrderDocumentDto requestData)
+        public async Task<AddEntityDto<int>> AddOrderItem(OrderItemsDto requestData)
         {
             return await _context.GetSingleAsync<AddEntityDto<int>>(ADDORDERITEM, new
             {
-                orderItemsList = orderItemsListDataTable.AsTableValuedParameter("[dbo].[OrderItemsTypeTable]"),
                 requestData.OrderId,
-                requestData.DocumentName,
-                requestData.OrderItemId,
-                requestData.DocumentType,
+                requestData.CatalogId,
+                requestData.CasNumber,
+                requestData.MdlNumber,
+                requestData.ChemicalName,
+                requestData.RequestDate,
+                requestData.PromiseDate,
+                requestData.OrderPriority,
+                requestData.ReferenceEntityId,
+                requestData.OrderItemStatusId,
+                requestData.OrderItemSubStatusId,
+                requestData.Quantity,
+                requestData.PackSize,
+                requestData.Unitid,
+                requestData.ItemUnitPrice,
+                requestData.PoItemUnitPrice,
+                requestData.SubTotalPrice,
+                requestData.SubTotalPOPrice,
+                requestData.OrderDisputTypeId,
+                requestData.OrderTimeCancelReason,
+                requestData.EntityType,
+                requestData.Note,
+                requestData.EntityId,
                 requestData.CreatedBy,
             }, CommandType.StoredProcedure);
         }

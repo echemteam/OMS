@@ -1,14 +1,14 @@
 import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const LabAddressForm = {
- 
+
   initialState: {
     addressLine1Id: "",
     addressLine2Id: "",
     stateId: "",
     zipCode: "",
     cityId: "",
-    countryId:""
+    countryId: ""
   },
   formFields: [
     {
@@ -22,7 +22,7 @@ export const LabAddressForm = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
-        maxLength:35,
+        maxLength: 35,
       },
       //validation: [{ type: "require" }],
       style: {
@@ -40,7 +40,7 @@ export const LabAddressForm = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
-        maxLength:35,
+        maxLength: 35,
       },
       // validation: [{ type: "require" }],
       style: {
@@ -56,11 +56,11 @@ export const LabAddressForm = {
       fieldSetting: {
         placeholder: "Select Country",
         isEnableOnChange: true,
-        maxLength:20,
+        maxLength: 20,
       },
       //validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
     {
@@ -73,11 +73,11 @@ export const LabAddressForm = {
         isDisabled: false,
         placeholder: "Select State",
         isEnableOnChange: true,
-        maxLength:20,
+        maxLength: 20,
       },
-     // validation: [{ type: "require" }],
+      // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
     {
@@ -90,27 +90,27 @@ export const LabAddressForm = {
         isDisabled: false,
         placeholder: "Select City",
         isEnableOnChange: true,
-        maxLength:9
+        maxLength: 9
       },
       //validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
     {
       id: "zipCode",
       lable: "Zip Code ",
       Field_Name: "Zip Code",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "zipCode",
       fieldSetting: {
         placeholder: "Enter Zip Code",
         allowSpace: true,
-        maxLength: 9,
+        maxLength: 10,
       },
-      //validation: [{ type: "require" }],
+      validation: [{ type: "validZipCode" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
 

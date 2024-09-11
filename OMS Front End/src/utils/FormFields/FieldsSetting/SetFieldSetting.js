@@ -33,6 +33,7 @@ getFieldData.propTypes = {
  * setDropDownOptionField(apiResponseData, 'id', 'name', formFieldsData, 'countryDropdown', filterCondition);
  */
 export const setDropDownOptionField = (apiResponseData, valueField, labelField, formFieldsData, fieldId, filterCondition = null) => {
+
     // Filter the API response data if a filter condition is provided
     const filteredData = filterCondition ? apiResponseData?.filter(filterCondition) : apiResponseData;
 
@@ -93,6 +94,9 @@ export const setFieldSetting = (formFieldsData, fieldId, fieldSettingType, value
                 //selectField.fieldSetting.isText = value;
                 selectField.fieldSetting.isText = value;
                 break;
+            case 'CKEditorDisabled':
+                    selectField.fieldSetting.isDisable = value;
+                    break;
             default:
                 break;
         }

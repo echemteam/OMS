@@ -13,7 +13,7 @@ export const OrganizationProfileManagementdata = {
             fieldSetting: {
                 placeholder: "Enter Registered Name",
                 allowSpace: true,
-                maxLength: 255,
+                maxLength: 100,
             },
             validation: [{ type: "require" }],
             style: {

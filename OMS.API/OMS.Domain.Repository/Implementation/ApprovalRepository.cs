@@ -23,6 +23,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETAPPROVALREQUESTSBYAPPROVALREQUESTID = "GetApprovalRequestsByApprovalRequestId";
         const string GETAPPROVALCONFIGURATION = "GetApprovalConfiguration";
         const string UPDATEAPPROVALREQUESTSSTATUS = "UpdateApprovalRequestsStatus";
+        const string CHECKFIELDVALUEEXISTS = "CheckFieldValueExists";
         #endregion
 
         public ApprovalRepository(DapperContext dapperContext) : base(dapperContext)
@@ -86,14 +87,18 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.OldValue,
                 requestData.NewValue,
                 requestData.RequestedByUserId,
+                requestData.OldValueTemplate,
+                requestData.NewValueTemplate,
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string status, string? roleId)
+        public async Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string status, string? roleId, string eventIds, string sortOrder)
         {
             List<GetApprovalRequestsListByStatusAndRoleIdResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusAndRoleIdResponse>(GETAPPROVALREQUESTSLISTBYSTATUSANDROLEID, new
             {
                 roleId,
-                status
+                status,
+                eventIds,
+                sortOrder
             }, commandType: CommandType.StoredProcedure);
             return getAllUsersResponse;
         }
@@ -105,6 +110,14 @@ namespace OMS.Domain.Repository.Implementation
                 approvalRequestId
             }, CommandType.StoredProcedure);
             return approvalRequestsDetails;
+        }
+        public async Task<CheckFieldValueExistsResponse> CheckFieldValueExists(string fieldName, string fieldValue)
+        {
+            return await _context.GetSingleAsync<CheckFieldValueExistsResponse>(CHECKFIELDVALUEEXISTS, new
+            {
+                fieldName,
+                fieldValue
+            }, CommandType.StoredProcedure);
         }
         public async Task<AddEntityDto<int>> UpdateApprovalRequestsStatus(ApprovalRequestsDto requestData)
         {

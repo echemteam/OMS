@@ -15,6 +15,8 @@ import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAll
 import PropTypes from 'prop-types';
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
+import { getDropdownLabelName } from "../../../../../utils/CommonUtils/CommonUtilsMethods";
 
 const SetInitialCountry = {
     label: "United States",
@@ -22,7 +24,7 @@ const SetInitialCountry = {
 }
 
 const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddress, getAddresssById, isModelOpen, editMode, isButtonDisable,
-    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage }) => {
+    onSidebarClose, editRef, isOrderManage, getAddressTypeIdOrder, onHandleOrderInfoRepeatCall, orderCustomerId, isEditablePage, customerStatusId }) => {
 
     //** States */
     const ref = useRef();
@@ -31,7 +33,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
     const [selectedCheckbox, setSelectedCheckbox] = useState(null);
     const [addressEditTableId, setAddressEditTableId] = useState(0)
-    const { ValidateRequestByApprovalRules, getEventName } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, getEventName, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     // const [stateChage, setStateChange] = useState(null)
 
@@ -111,8 +113,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         }
     }, [isSupplier, isModelOpen]);
 
-
-
     useEffect(() => {
         if (isGetAllCountriesSucess && allGetAllCountriesData) {
             setDropDownOptionField(allGetAllCountriesData, 'countryId', 'name', addressFormData, 'countryId');
@@ -135,7 +135,6 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
             const dropdownField = data?.formFields?.find(data => data.id === "cityId");
             dropdownField.fieldSetting.options = cities;
             setFormData(data);
-            // setDropDownOptionField(allGetAllCitiesData, 'cityId', 'name', addressFormData, 'cityId');
         }
     }, [isGetAllCitiesSucess, allGetAllCitiesData, isFetchingCities]);
 
@@ -344,30 +343,44 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const handleAddEdit = async () => {
         const data = ref.current.getFormData();
         if (!data) return;
-
         const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
+
+        const dropdownLabelRequestsFromData = createDropdownLabelRequests(data, allGetAllAddressTypesData,
+            allGetAllCountriesData, allGetAllStatesData, allGetAllCitiesData);
+
+        const dropdownLabelRequestsFromInitialState = createDropdownLabelRequests(formData.initialState, allGetAllAddressTypesData,
+            allGetAllCountriesData, allGetAllStatesData, allGetAllCitiesData);
 
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
-            // const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
-            // if (isEditablePage && eventName) {
-            //     await handleApprovalRequest(updateData, formData.initialState, eventName);
-            // } else {
-            update(updateData);
-            // }
+            if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+                let request = {
+                    ...updateData,
+                    ...dropdownLabelRequestsFromData
+                }
+                let initialStateRequest = {
+                    ...formData.initialState,
+                    ...dropdownLabelRequestsFromInitialState
+                }
+                const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
+                await handleApprovalRequest(request, initialStateRequest, eventName);
+            } else {
+                update(updateData);
+            }
         } else {
             // Add mode
             const customerId = orderCustomerId ? orderCustomerId : transformedData.customerId;
             const req = {
                 ...transformedData,
                 customerId: customerId,
+                ...dropdownLabelRequestsFromData
             };
-            // const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
-            // if (isEditablePage && eventName) {
-            //     await handleApprovalRequest(req, null, eventName);
-            // } else {
-            add(req);
-            // }
+            const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
+            if (!isSupplier && isEditablePage && eventName && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+                await handleApprovalRequest(req, null, eventName);
+            } else {
+                add(req);
+            }
         }
     };
 
@@ -376,6 +389,15 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         const modifyData = await ValidateRequestByApprovalRules(request);
         if (modifyData.newValue) onSidebarClose();
     };
+
+    const createDropdownLabelRequests = (sourceData, addressTypesData, countriesData, statesData, citiesData) => {
+        return {
+            addressTypeName: getDropdownLabelName(addressTypesData, 'addressTypeId', 'type', sourceData.addressTypeId),
+            countryName: getDropdownLabelName(countriesData, 'countryId', 'name', sourceData.countryId),
+            stateName: getDropdownLabelName(statesData, 'stateId', 'name', sourceData.stateId),
+            cityName: getDropdownLabelName(citiesData, 'cityId', 'name', sourceData.cityId)
+        };
+    }
 
 
     const extractValue = (field) => {
@@ -535,7 +557,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                         buttonTypeClassName="theme-button"
                         buttonText={editMode ? "Update" : "Save"}
                         onClick={handleAddEdit}
-                        isLoading={isAddLoading || isUpdateLoading}
+                        isLoading={isApprovelLoading || isAddLoading || isUpdateLoading}
                         isDisable={isButtonDisable} />
                     <Buttons
                         buttonTypeClassName="dark-btn ml-5"

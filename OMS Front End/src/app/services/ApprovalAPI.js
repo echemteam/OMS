@@ -36,7 +36,7 @@ const approvalAPI = createApi({
         }),
         getApprovalRequestsListByStatusAndRoleId: builder.query({
             query: (data) => ({
-                url: encryptQueryString(`/Approval/GetApprovalRequestsListByStatusAndRoleId/?status=${data.status}&roleId=${data.roleId}`),
+                url: encryptQueryString(`/Approval/GetApprovalRequestsListByStatusAndRoleId/?status=${data.status}&roleId=${data.roleId}&sortOrder=${data.orderby}`),
                 method: 'GET',
             }),
             // providesTags: ['User'],
@@ -129,7 +129,15 @@ const approvalAPI = createApi({
 
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
-        })
+        }),
+        checkFieldValueExists: builder.mutation({
+            query: (requestData) => ({
+                url: `/Approval/CheckFieldValueExists?fieldName=${requestData.fieldName}&fieldValue=${requestData.fieldValue}`,
+                method: 'POST'
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
@@ -140,6 +148,7 @@ export const {
     useAddUserChecklistResponseMutation,
     useGetValidateCheckListMutation,
     useUpdateApprovalRequestsStatusMutation,
+    useCheckFieldValueExistsMutation,
     //** Customer */
     useLazyGetCustomersInfoByIdQuery,
     useLazyGetCustomerAddresssInfoByIdQuery,

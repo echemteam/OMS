@@ -24,5 +24,7 @@
         public string? Status { get; set; }
         public string? RejectReason { get; set; }
         public bool? IsFunctional { get; set; }
+        public string? OldValueTemplate { get; set; }
+        public string? NewValueTemplate { get; set; }
     }
 }

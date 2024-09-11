@@ -9,26 +9,27 @@ import PropTypes from 'prop-types';
 import ToastService from "../../../../../../../services/toastService/ToastService";
 import { useValidateAndAddApprovalRequests } from "../../../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../../../utils/Enums/ApprovalFunctionalities";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 
 const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId,
-    handleGetDefaultList, handleDeleteClick, isEditablePage }) => {
+    handleGetDefaultList, handleDeleteClick, isEditablePage, customerStatusId }) => {
 
     const [dataSource, setDataSource] = useState(collectAccountData);
-    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
 
     useEffect(() => {
         if (!isGetDataLoading && collectAccountData) {
             // New blank row object
-            const blankRow = {
-                carrier: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
-                accountNumber: '',
-                handlingFee: '',
-                isPrimary: false,
-            };
+            // const blankRow = {
+            //     carrier: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
+            //     accountNumber: '',
+            //     handlingFee: '',
+            //     isPrimary: false,
+            // };
 
-            setDataSource([...collectAccountData, blankRow]);
+            setDataSource([...collectAccountData]);
         }
     }, [collectAccountData, isGetDataLoading]);
 
@@ -39,22 +40,28 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
             accountNumber: data.accountNumber,
             customerDeliveryCarrierId: data.customerDeliveryCarrierId || 0,
             carrierId: data.carrier?.value || data.carrierId,
-            handlingFee: data.handlingFee
+            handlingFee: data.handlingFee,
+            carrierName: data?.carrier
         };
-        // if (isEditablePage) {
-        //     await handleApprovalRequest(req, dataSource.initialState);
-        // } else {
-        let newGridData = [...dataSource]
-        newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
-        setDataSource(newGridData);
-        update(req);
-        // }
+        if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+            const oldValue = dataSource && dataSource.find(data => data.customerDeliveryCarrierId === req.customerDeliveryCarrierId);
+            let requestIntialState = {
+                ...oldValue,
+                carrierName: oldValue?.carrier
+            }
+            await handleApprovalRequest(req, requestIntialState);
+        } else {
+            let newGridData = [...dataSource]
+            newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
+            setDataSource(newGridData);
+            update(req);
+        }
     }
 
-    const handleGridCheckBoxChange = (fieldName, rowData) => {
-        if (fieldName === 'isPrimary') {
-            handleEditClick(rowData);
-        }
+    const handleApprovalRequest = async (newValue, oldValue) => {
+        const request = { newValue, oldValue, isFunctional: false, eventName: FunctionalitiesName.UPDATECUSTOMERSHIPPINGSETTING };
+        const modifyData = await ValidateRequestByApprovalRules(request);
+        if (modifyData.newValue) handleGetDefaultList();
     };
 
     useEffect(() => {
@@ -86,10 +93,9 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
                         dataSource={dataSource}
                         allowPagination={false}
                         onActionChange={actionHandler}
-                        isLoading={isGetDataLoading}
+                        isLoading={isApprovelLoading || isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
                         onRowDataDelete={handleDeleteClick}
-                        onColumnChange={handleGridCheckBoxChange}
                     />
                 </div>
             </CardSection>

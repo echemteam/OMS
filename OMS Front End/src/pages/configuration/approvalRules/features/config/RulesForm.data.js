@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const rulesFormData = {
-    initialState: { approvalConfigurationId: 0, ruleName: "", moduleId: "", functionalityId: "", functionalitiesFieldId: "", roleId: "", approvalAction: "" },
+    initialState: { approvalConfigurationId: 0, ruleName: "", moduleId: "", functionalityId: "",functionalityEventId: "", functionalitiesFieldId: "", roleId: "",isFunctional:false },
     formFields: [
         {
             id: "ruleName",
@@ -13,6 +13,7 @@ export const rulesFormData = {
             fieldSetting: {
                 placeholder: "Enter Rule Name",
                 allowSpace: true,
+                maxLength: 65,
             },
             validation: [{ type: "require" }],
             style: {
@@ -31,7 +32,7 @@ export const rulesFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
         {
@@ -47,7 +48,23 @@ export const rulesFormData = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
+            },
+        },
+        {
+            id: "functionalityEventId",
+            lable: "Functionality Event",
+            Field_Name: "Functionality Event",
+            fieldType: FormFieldTypes.SELECT,
+            dataField: "functionalityEventId",
+            fieldSetting: {
+                isDisabled: true,
+                placeholder: "Select Functionality Event",
+                isEnableOnChange: true
+            },
+            validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
         {
@@ -58,12 +75,12 @@ export const rulesFormData = {
             dataField: "functionalitiesFieldId",
             fieldSetting: {
                 isDisabled: true,
-                placeholder: "Select Module",
+                placeholder: "Select Field",
                 isEnableOnChange: true
             },
             // validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                containerCss: "col-xxl-6 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
         {
@@ -81,19 +98,38 @@ export const rulesFormData = {
                 containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
             },
         },
+
         {
-            id: "approvalAction",
-            lable: "Approval Action ",
-            Field_Name: "Approval Action",
-            fieldType: FormFieldTypes.INPUT,
-            dataField: "approvalAction",
+            id: "template",
+            lable: "Template",
+            Field_Name: "Template",
+            fieldType: FormFieldTypes.CKEDITOR,
+            dataField: "template",
             fieldSetting: {
-                placeholder: "Enter Approval Action",
+                placeholder: "",
                 allowSpace: true,
+                isDisable: false
             },
-            validation: [{ type: "require" }],
+            // validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2",
+                containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-2 ",
+            },
+        },
+        {
+            id: "isFunctional",
+            lable: "Is Functional",
+            Field_Name: "Is Functional",
+            fieldType: FormFieldTypes.CHECKBOX,
+            dataField: "isFunctional",
+            fieldSetting: {
+                placeholder: "",
+                allowSpace: true,
+                isDisable: true,
+
+            },
+            // validation: [{ type: "require" }],
+            style: {
+                containerCss: "col-xxl-5 col-xl-5 col-md-12 col-12 col-12 ",
             },
         },
     ],
@@ -105,15 +141,15 @@ export const rulesFormData = {
 export const rulesListData = {
     columns: [
         {
-            name: "Module Name",
+            name: "Module",
             fieldName: "moduleName",
             colStyle: {
-                width: "20%",
+                width: "10%",
             },
             allowShort: true,
         },
         {
-            name: "Functionality Name",
+            name: "Functionality",
             fieldName: "functionalityName",
             colStyle: {
                 width: "20%",
@@ -121,28 +157,32 @@ export const rulesListData = {
             allowShort: true,
         },
         {
-            name: "Rule Name",
+            name: "Rule",
             fieldName: "ruleName",
             colStyle: {
-                width: "20%",
+                width: "30%",
             },
             allowShort: true,
         },
         {
-            name: "Role Name",
+            name: "Role",
             fieldName: "roleName",
             colStyle: {
-                width: "20%",
+                width: "10%",
             },
             allowShort: true,
         },
         {
-            name: "Approval",
-            fieldName: "approvalAction",
+            name: "Is Functional",
+            fieldName: "isFunctional",
             colStyle: {
-                width: "20%",
+                width: "15%",
             },
-            allowShort: true,
+            colType: GridColumnType.CHECKBOX,
+            colSettings: {
+                //allowCheckbox: true,
+                isDisabled: true
+            },
         },
         {
             name: "Action",

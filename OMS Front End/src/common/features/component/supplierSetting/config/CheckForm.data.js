@@ -8,7 +8,7 @@ export const checkFormData = {
     stateId: "",
     zipCode: "",
     cityId: "",
-    countryId:""
+    countryId: ""
   },
   formFields: [
     {
@@ -30,7 +30,7 @@ export const checkFormData = {
     },
     {
       id: "addressLine2Id",
-      lable: "Address Line 2",
+      lable: "Address Line 26",
       Field_Name: "Address Line 2",
       fieldType: FormFieldTypes.INPUT,
       dataField: "addressLine2Id",
@@ -96,14 +96,14 @@ export const checkFormData = {
       id: "zipCode",
       lable: "Zip Code ",
       Field_Name: "Zip Code",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "zipCode",
       fieldSetting: {
         placeholder: "Enter Zip Code",
         allowSpace: true,
-        maxLength: 9,
+        maxLength: 10,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" }, { type: "validZipCode" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },

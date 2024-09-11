@@ -53,7 +53,8 @@ namespace OMS.Domain.Repository
         IOrderAddressRepository orderAddress { get; }
         IOrderContactRepository orderContact { get; }
         IOrderItemRepository orderItem { get; }
-        IDictionaryRepository dictionaryRepository { get; } 
-
+        IDictionaryRepository dictionaryRepository { get; }
+        IOrderDocumentRepository orderDocument { get; }
+        IEmailTemplatesRepository emailTemplates { get; }
     }
 }

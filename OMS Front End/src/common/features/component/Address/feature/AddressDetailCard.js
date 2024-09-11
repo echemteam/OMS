@@ -24,7 +24,9 @@ const AddressDetailCard = forwardRef(
     getByIdRef,
     selectedAddressTypeId,
     deleteAddress,
-    statusId
+    customerStatusId,
+    isModelOpen,
+    isSupplier
   }) => {
     //** States */
     const [addressData, setAddressData] = useState([]);
@@ -50,9 +52,10 @@ const AddressDetailCard = forwardRef(
       { isSuccess: isDeleteAddressSuccess, data: isDeleteAddressData },
     ] = deleteAddress();
 
-    //** Use Effect */
     useEffect(() => {
-      keyId && getById(keyId);
+      if (!isModelOpen && keyId) {
+        getById(keyId);
+      }
     }, [keyId, selectedAddressTypeId]);
 
     useEffect(() => {
@@ -198,7 +201,7 @@ const AddressDetailCard = forwardRef(
                         {/* <span className="label-txt">{address.stateName}</span> */}
                         <span className="label-txt">{address.countryName}</span>
                       </div>
-                      {statusId !== CustomerSupplierStatus.APPROVED &&
+                      {isSupplier ?
                         <div className="edit-delete-button">
                           {showEditIcon ? (
                             <button onClick={() => handleEdit(address)} className="edit-btn" >
@@ -208,13 +211,23 @@ const AddressDetailCard = forwardRef(
                           <button onClick={() => handleDelete(address)} className="edit-btn ml-2" >
                             <Iconify icon="mingcute:delete-2-line" className="delete-icon" />
                           </button>
-                        </div>
+                        </div> :
+                        <>
+                          {!isSupplier && customerStatusId !== CustomerSupplierStatus.APPROVED &&
+                            <div className="edit-delete-button">
+                              {showEditIcon ? (
+                                <button onClick={() => handleEdit(address)} className="edit-btn" >
+                                  <Iconify icon="tabler:pencil" />
+                                </button>
+                              ) : null}
+                              <button onClick={() => handleDelete(address)} className="edit-btn ml-2" >
+                                <Iconify icon="mingcute:delete-2-line" className="delete-icon" />
+                              </button>
+                            </div>
+                          }
+                        </>
                       }
-                      <div
-                        className={`contact-type-badge ${getAddressTypeClass(
-                          address.type
-                        )}`}
-                      >
+                      <div className={`contact-type-badge ${getAddressTypeClass(address.type)}`}>
                         {address.type}
                       </div>
                     </div>
@@ -225,8 +238,9 @@ const AddressDetailCard = forwardRef(
           </div>
         ) : (
           <DataLoader />
-        )}
-      </React.Fragment>
+        )
+        }
+      </React.Fragment >
     );
   }
 );

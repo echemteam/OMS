@@ -60,6 +60,7 @@ const CustomerBasicInfoCard = ({
   const [responsibleUserIds, setResponsibleUserIds] = useState([]);
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
+
   const [
     updateCustomerSubCustomer,
     {
@@ -132,6 +133,7 @@ const CustomerBasicInfoCard = ({
       handleToggleModal();
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
+
 
   useEffect(() => {
     if (customerData) {
@@ -249,7 +251,8 @@ const CustomerBasicInfoCard = ({
         if (childRef.current) {
           childRef.current.callChildFunction(
             customerId,
-            customerData.isSubCustomer ? customerData.isSubCustomer : false
+            customerData.isSubCustomer ? customerData.isSubCustomer : false,
+            selectedOption.value === CustomerSupplierStatus.SUBMITTED ? false : true
           );
         }
         setCustomerId(customerId);
@@ -387,6 +390,22 @@ const CustomerBasicInfoCard = ({
       }
     });
   };
+
+  useEffect(() => {
+    if (showModal) {
+      if (customerData.responsibleUserId) {
+        const responsibleUserIds = customerData?.responsibleUserId
+          ?.split(",")
+          .map((id) => Number(id.trim()));
+        const formNew={...formData}
+        formNew.initialState = {
+          ...formNew.initialState,
+              responsibleUserId: responsibleUserIds,
+            };
+            setFormData(formNew);
+          }
+    }
+  }, [showModal]);
 
   useEffect(() => {
     if (isSuccessUpdateCustomerSubCustomer && isUpdateCustomerSubCustomerData) {
@@ -639,6 +658,7 @@ const CustomerBasicInfoCard = ({
         isDetailPage={true}
         childRef={childRef}
         updateCustomerApproval={updateCustomerApproval}
+        customerData={customerData}
       />
     </div>
   ) : (

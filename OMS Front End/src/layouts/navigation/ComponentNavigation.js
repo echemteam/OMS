@@ -8,6 +8,7 @@ import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules
 import ApiProviderViewDetail from "../../pages/apiConfiguration/apiProviders/features/apiProviderViewDetail/ApiProviderViewDetail";
 import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/feature/thirdPartyApiConfigurationList/feature/thirdPartyApiConfigurationViewDetails/ThirdPartyApiConfigurationViewDetails";
 import OrderList from "../../pages/order/orderGrid/OrderList";
+import EmailTemplate from "../../pages/configuration/emailTemplate/EmailTemplate";
 
 const ApiProviders = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProviders"));
 //** Not Found */
@@ -45,6 +46,7 @@ const Organization = React.lazy(() => import("../../pages/organization/Organizat
 const ThirdPartyApiConfiguration = React.lazy(() => import("../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/ThirdPartyApiConfiguration"));
 const FunctionalConfiguration = React.lazy(() => import("../../pages/configuration/functionalConfiguration/FunctionalConfiguration"));
 const FunctionalConfigurationViewDetail = React.lazy(() => import("../../pages/configuration/functionalConfiguration/features/functionalConfigurationList/functionalConfigurationViewDetail/FunctionalConfigurationViewDetail"));
+const Dictionary=React.lazy(()=>import("../../pages/configuration/dictionary/Dictionary"));
 
 export const ComponentNavigation = [
   {
@@ -396,5 +398,24 @@ export const ComponentNavigation = [
     text: 'OrderList',
     // securityKey: securityKey.SUPPLIER
   },
-
+  {
+    id: 'dictionary',
+    path: '/Dictionary',
+    exact: true,
+    title: '',
+    component: Dictionary,
+    hasParams: false,
+    text: 'Dictionary',
+    securityKey: securityKey.DICTIONARY
+  },
+  {
+    id: 'emailTemplate',
+    path: '/EmailTemplate',
+    exact: true,
+    title: '',
+    component: EmailTemplate,
+    hasParams: false,
+    text: 'EmailTemplate',
+    securityKey: securityKey.DICTIONARY
+  },
 ];

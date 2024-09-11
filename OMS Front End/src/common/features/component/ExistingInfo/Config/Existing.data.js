@@ -4,10 +4,26 @@ import { getLabelClass } from "../../../../../utils/StatusColors/StatusColors";
 export const basicInfoData = {
     columns: [
         {
+            name: "Search Match (%)",
+            fieldName: "matchPercentage",
+            colType: GridColumnType.CUSTOM,
+            colStyle: {
+                width: "10%",
+            },
+            renderCustomCol: (rowData) => {
+                return (
+                    <>
+                        {rowData?.matchPercentage ? `${rowData.matchPercentage} %` : 'N/A'}
+                    </>
+                );
+            },
+            // allowShort: true,
+        },
+        {
             name: "Name",
             fieldName: "name",
             colStyle: {
-                width: "15%",
+                width: "20%",
             },
             // allowShort: true,
         },
@@ -15,7 +31,7 @@ export const basicInfoData = {
             name: "Tax Id",
             fieldName: "taxId",
             colStyle: {
-                width: "15%",
+                width: "10%",
             },
             // allowShort: true,
         },
@@ -50,13 +66,14 @@ export const basicInfoData = {
             allowShort: false,
             colType: GridColumnType.LABLE,
             colStyle: {
-                width: "15%",
+                width: "10%",
             },
             colSettings: {
                 valueField: "status",
                 getLableClass: getLabelClass,
             },
         },
+        
         {
             name: "Action",
             colStyle: {
@@ -97,8 +114,8 @@ export const OrderBasicInfoData = {
             fieldName: "orderReceivedDate",
             colType: GridColumnType.DATE,
             colSettings: {
-              isUTC: true,
-              format: "MM/DD/YYYY hh:mm A ",
+                isUTC: true,
+                format: "MM/DD/YYYY hh:mm A ",
             },
             // allowShort: true,
         },
@@ -108,7 +125,7 @@ export const OrderBasicInfoData = {
             colStyle: {
                 width: "25%",
                 textAlign: "center",
-                justifyContent:"center"
+                justifyContent: "center"
             },
             colType: GridColumnType.ACTION,
             defaultAction: {

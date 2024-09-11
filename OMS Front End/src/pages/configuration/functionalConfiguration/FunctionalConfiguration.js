@@ -58,9 +58,9 @@ const FunctionalConfiguration = () => {
                 <div className='functional-config'>
                     <CardSection
                         cardTitle="Functional Configuration"
-                        buttonClassName="btn theme-button"
-                        rightButton={true}
-                        buttonText="Add"
+                       // buttonClassName="btn theme-button"
+                      //  rightButton={true}
+                       // buttonText="Add"
                         textWithIcon={true}
                         iconImg={AppIcons.PlusIcon}
                         titleButtonClick={handleToggleModal}
@@ -70,7 +70,7 @@ const FunctionalConfiguration = () => {
 
                     <SidebarModel
                         modalTitle={`${isEdit ? "Update" : "Add"} Functional Configuration`}
-                        contentClass="content-35"
+                        contentClass="content-60"
                         onClose={onSidebarClose}
                         modalTitleIcon={AppIcons.AddIcon}
                         isOpen={isModelOpen}

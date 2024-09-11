@@ -24,7 +24,6 @@ import { supplierBasicData } from "./config/SupplierBasicDetail.data";
 import { excludingRoles } from "../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { getTaxIdMinMaxLength } from "../../../customerDetail/feature/customerBasicDetail/config/TaxIdValidator";
 import PropTypes from 'prop-types';
-// import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
 import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/validateRUser";
 import { useSelector } from "react-redux";
 
@@ -156,7 +155,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             setDropDownOptionField(allGetAllIncotermData, 'incotermId', 'incotermName', supplierBasicData, 'incotermId');
         }
     }, [isGetAllGroupTypesSucess, allGetAllGroupTypesData, isGetAllUserSucess, allGetAllUserData, isGetAllCountriesSucess, allGetAllCountriesData,
-        isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllSupplierTypeSucess, allGetAllSupplierTypeData , isGetAllIncotermSucess , allGetAllIncotermData]);
+        isGetAllTerritoriesSucess, allGetAllTerritoriesData, isGetAllSupplierTypeSucess, allGetAllSupplierTypeData, isGetAllIncotermSucess, allGetAllIncotermData]);
 
     useEffect(() => {
         if (isGetSupplierBasicInformationById && GetSupplierBasicInformationByIdData && !isGetSupplierBasicInformationByIdFetching) {
@@ -228,30 +227,28 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         };
 
         if (!data.taxId) {
-            addEditSupplierBasicInformation(req);
             // let request = {
             //     newValue: req,
             //     oldValue: formData.initialState,
-            //     functionalityName: isOpen ? FunctionalitiesName.UPDATESUPPLIER : FunctionalitiesName.ADDSUPPLIER
+            //     functionalityName: isOpen ? FunctionalitiesName.SUPPLIERBASICINFOUPDATE : FunctionalitiesName.ADDSUPPLIER
             // }
             // const modifyData = await ValidateRequestByApprovalRules(request);
             // if (modifyData.newValue) {
-            //     addEditSupplierBasicInformation(modifyData.newValue);
+            addEditSupplierBasicInformation(req);
             // }
             return;
         }
 
         const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(req.countryId || 0, supplierBasicData.formFields, 'taxId');
         if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
-            addEditSupplierBasicInformation(req);
             // let request = {
             //     newValue: req,
             //     oldValue: formData.initialState,
-            //     functionalityName: isOpen ? FunctionalitiesName.UPDATESUPPLIER : FunctionalitiesName.ADDSUPPLIER
+            //     functionalityName: isOpen ? FunctionalitiesName.SUPPLIERBASICINFOUPDATE : FunctionalitiesName.ADDSUPPLIER
             // }
             // const modifyData = await ValidateRequestByApprovalRules(request);
             // if (modifyData.newValue) {
-            //     addEditSupplierBasicInformation(modifyData.newValue);
+            addEditSupplierBasicInformation(req);
             // }
         } else {
             ToastService.warning(validateTaxIdMessage);
@@ -294,8 +291,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            const trimCustomerName = data.replace(/\s+/g, '');
-            setSupplierName(trimCustomerName);
+            // const trimCustomerName = data.replace(/\s+/g, '');
+            setSupplierName(data);
         }
     };
 
@@ -318,15 +315,15 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             ToastService.warning('Supplier name is invalid.');
             return;
         }
-        const trimmedName = supplierName.trim();
+        // const trimmedName = supplierName.trim();
 
-        if (trimmedName.length < 3) {
+        if (supplierName.length < 3) {
             ToastService.warning('Please enter at least three characters.');
             return;
         }
 
         if (parentRef.current) {
-            parentRef.current.callChildFunction(trimmedName);
+            parentRef.current.callChildFunction(supplierName);
         }
     };
 

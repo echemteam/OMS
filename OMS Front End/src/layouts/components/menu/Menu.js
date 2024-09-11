@@ -93,40 +93,52 @@ export const Menu = [
           },
         ],
       },
-      // {
-      //   id: "configuration",
-      //   name: "Configuration",
-      //   iconClass: "solar:settings-broken",
-      //   subMenu: true,
-      //   to: "#",
-      //   securityKey: securityKey.CONFIGURATION,
-      //   children: [
-      //     {
-      //       id: "approvalRules",
-      //       submenuName: "Approval Rules",
-      //       to: "/ApprovalRules",
-      //       securityKey: securityKey.APPROVALRULES,
-      //     },
-      //     {
-      //       id: "functionalConfiguration",
-      //       submenuName: "Functional Configuration",
-      //       to: "/FunctionalConfiguration",
-      //       securityKey: securityKey.FUNCTIONALCONFIGURATION,
-      //     },
-      //     {
-      //       id: "apiProviders",
-      //       submenuName: "API Providers",
-      //       to: "/APIProviders",
-      //       securityKey: securityKey.APIPROVIDERS,
-      //     },
-      //     {
-      //       id: "Api Configuration",
-      //       submenuName: "Third party API",
-      //       to: "/ThirdPartyApiConfiguration",
-      //       securityKey: securityKey.THIRDPARTYAPI,
-      //     },
-      //   ],
-      // },
+      {
+        id: "configuration",
+        name: "Configuration",
+        iconClass: "solar:settings-broken",
+        subMenu: true,
+        to: "#",
+        securityKey: securityKey.CONFIGURATION,
+        children: [
+          {
+            id: "approvalRules",
+            submenuName: "Approval Rules",
+            to: "/ApprovalRules",
+            securityKey: securityKey.APPROVALRULES,
+          },
+          {
+            id: "functionalConfiguration",
+            submenuName: "Functional Configuration",
+            to: "/FunctionalConfiguration",
+            securityKey: securityKey.FUNCTIONALCONFIGURATION,
+          },
+          {
+            id: "apiProviders",
+            submenuName: "API Providers",
+            to: "/APIProviders",
+            securityKey: securityKey.APIPROVIDERS,
+          },
+          {
+            id: "Api Configuration",
+            submenuName: "Third party API",
+            to: "/ThirdPartyApiConfiguration",
+            securityKey: securityKey.THIRDPARTYAPI,
+          },
+          {
+            id: "Dictionary",
+            submenuName: "Dictionary",
+            to: "/Dictionary",
+            securityKey: securityKey.DICTIONARY,
+          },
+          {
+            id: "Email Template",
+            submenuName: "Email Template",
+            to: "/EmailTemplate",
+            securityKey: securityKey.DICTIONARY,
+          },
+        ],
+      },
       // {
       //   id: "apiconfiguration",
       //   name: "API Configuration",
@@ -161,27 +173,27 @@ export const Menu = [
       // },
     ],
   },
-  {
-    groupLabel: "Orders",
-    items: [
-      {
-        name: "Order",
-        id: "Order",
-        to: "/Order",
-        iconClass: "lets-icons:order",
-        subMenu: false,
-        securityKey: securityKey.ORDER,
-        children: [],
-      },
-      // {
-      //   name: "My Task",
-      //   id: "MyTask",
-      //   to: "/MyTask",
-      //   iconClass: "octicon:tasklist-24",
-      //   subMenu: false,
-      //   securityKey: securityKey.MYTASK,
-      //   children: []
-      // }
-    ]
-  },
+  // {
+  //   groupLabel: "Orders",
+  //   items: [
+  //     {
+  //       name: "Order",
+  //       id: "Order",
+  //       to: "/Order",
+  //       iconClass: "lets-icons:order",
+  //       subMenu: false,
+  //       securityKey: securityKey.ORDER,
+  //       children: [],
+  //     },
+  //     // {
+  //     //   name: "My Task",
+  //     //   id: "MyTask",
+  //     //   to: "/MyTask",
+  //     //   iconClass: "octicon:tasklist-24",
+  //     //   subMenu: false,
+  //     //   securityKey: securityKey.MYTASK,
+  //     //   children: []
+  //     // }
+  //   ]
+  // },
 ];

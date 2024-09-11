@@ -1,254 +1,178 @@
-.approval-list-card-addressinformation,
-.approval-list-card-basicinformation,
-.approval-list-card-contact,
-.approval-list-card-financial {
-  background-color: var(--whiteColor);
-  border: 1px solid var(--themeColor);
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  margin: 10px;
-  box-sizing: border-box;
-  margin-top: 0px;
-  h5 {
-    font-size: var(--commonFont-extraLarge);
-    color: var(--themeColor);
-    margin-bottom: var(--commonFont-extraLarge);
-    width: 100%;
+.checklist-left-section {
+  .info-scrollable {
+    padding: 0 20px;
+    height: calc(100vh - 70px);
     position: relative;
-    margin-left: -10px;
-    padding-left: 20px;
+    overflow: hidden;
+    overflow-y: auto;
 
-    &::before {
-      content: "";
+    &:before {
       position: absolute;
-      left: 10px;
+      content: "";
+      background: var(--inputBorderLight);
+      height: 100%;
+      width: 1px;
+      right: 0;
       top: 0;
-      bottom: 0;
-      width: 2px;
-      background-color: var(--themeColor);
+    }
+
+    .checklist-info {
+      h5 {
+        color: var(--themeColor);
+      }
     }
   }
-}
-.approval-list-card-addressinformation {
-  h6:nth-child(1) {
-    font-size: var(--commonFont-medium);
-    color: var(--textGreyColor);
-    text-transform: uppercase;
-    margin: 0 0px 5px 20px;
-    position: relative;
 
-    &::before {
-      content: "";
-      position: absolute;
-      left: -17px;
-      top: 3px;
-      width: 8px;
-      height: 8px;
-      background-color: var(--themeColor);
-      border-radius: 50%;
+  .approval-list-part {
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 2px 15px 0px #6f9ccc64;
+    margin-bottom: 18px;
+    padding: 10px;
+    border-radius: 10px;
+
+    .card-top-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      // padding-bottom: 8px;
+      padding: 7px;
+      border-radius: 5px;
+      background: var(--inputBorderLight);
+
+
+      h5 {
+        font-weight: 800;
+        margin: 0;
+        font-size: var(--commonFont-large);
+      }
+
+      .checkbox {
+        margin: 0;
+      }
     }
-    &::after {
-      content: "";
-      position: absolute;
-      left: -20px;
-      width: 14px;
-      height: 14px;
-      border: 1px solid var(--themeColor);
-      border-radius: 50%;
-      top: 0px;
+
+    .info-sec {
+      .card-info {
+        display: flex;
+        padding: 0 8px;
+
+        // flex-direction: column;
+        .card-label {
+          font-weight: 700;
+          color: var(--textColor);
+          margin-right: 10px;
+          font-size: var(--commonFont);
+        }
+
+        .desc-part {
+          color: var(--textColor);
+        }
+      }
     }
-  }
-  h6:nth-child(2) {
-    font-size: var(--commonFont-average);
-    margin-bottom: -3px;
-    font-weight: 400;
-    margin-left: 20px;
-  }
-  p:nth-of-type(1) {
-    margin-left: 20px;
-    font-size: var(--commonFont-average);
-    margin-bottom: 5px;
-  }
-  p:nth-of-type(2) {
-    margin-left: 20px;
-    font-size: var(--commonFont-average);
-  }
-}
 
-.approval-list-card-basicinformation {
-  width: calc(30% - 20px);
-}
-.approval-list-card-addressinformation {
-  width: calc(70% - 20px);
-}
-.approval-list-card-contact,
-.approval-list-card-financial {
-  width: calc(100% - 20px);
-  margin-top: 10px;
-}
+    .card-info-checklist {
+      padding: 0 8px;
 
-.info-scrollable {
-  max-height: calc(100vh - 70px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: relative;
-  padding-left: 10px;
-  
-  &::after {
-    content: "";
-    position: absolute;
-    right: 0px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background-color: var(--themeColor);
-  }
+      .address-card-part {
+        margin-bottom: 7px;
+        margin-top: 5px;
+        border-bottom: 1px solid var(--themeColorLight);
+        padding-bottom: 10px;
 
-}
+        &:last-child {
+          margin-bottom: 0;
+          border-bottom: 0;
+          padding-bottom: 0;
+        }
 
-.approval-list-card-contact {
-  h5 {
-    margin-left: -5pxx;
-    padding-left: 30px;
-    &::before {
-      left: 20px;
-    }
-  }
-  h6:first-child {
-    font-size: var(--commonFont-medium);
-    color: var(--textGreyColor);
-    text-transform: uppercase;
-    margin: 0 0px 5px 20px;
-    position: relative;
+        .title {
+          font-weight: 700;
+          color: var(--themeColor);
+          font-size: var(--commonFont);
+          margin: 8px 0 5px;
+        }
 
-    &::before {
-      content: "";
-      position: absolute;
-      left: -17px;
-      top: 3px;
-      width: 8px;
-      height: 8px;
-      background-color: var(--themeColor);
-      border-radius: 50%;
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      left: -20px;
-      width: 14px;
-      height: 14px;
-      border: 1px solid var(--themeColor);
-      border-radius: 50%;
-      top: 0px;
-    }
-  }
-  h6 {
-    font-size: var(--commonFont-average);
-    margin-bottom: 5px;
-    font-weight: 500;
-    margin-left: 20px;
-    display: flex;
-    position: relative;
-    display: flex;
-    p {
-      margin-left: 8px;
-      font-weight: 400;
-      color: var(--textColor);
-      margin-bottom: 0;
-    }
-  }
-}
+        .add-line-desc {
+          font-size: var(--commonFont);
+          color: var(--textColor);
+          margin: 0;
+        }
+      }
 
-.approval-list-card-basicinformation {
-  h6 {
-    font-size: var(--commonFont-average);
-    margin-bottom: 5px;
-    font-weight: 400;
-    margin-left: 10px;
-  }
-}
+      .card-part {
+        margin-bottom: 7px;
+        margin-top: 5px;
+        border-bottom: 1px solid var(--themeColorLight);
+        padding-bottom: 10px;
 
-.approval-list-card-financial {
-  h6 {
-    font-size: var(--commonFont-average);
-    margin-bottom: 5px;
-    font-weight: 400;
-    margin-left: 20px;
-  }
-}
+        &:last-child {
+          margin-bottom: 0;
+          border-bottom: 0;
+          padding-bottom: 0;
+        }
 
-.is-primary {
-  &::after {
-    content: "\f00c";
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
-    margin-left: 5px;
-    padding: 3px;
-    border-radius: 100%;
-    color: #fff;
-    background-color: var(--PrimaryColorBright);
-    font-size: var(--commonFont-extraSmall);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 17px;
+        .title {
+          font-weight: 700;
+          color: var(--themeColor);
+          font-size: var(--commonFont);
+          margin: 8px 0 5px;
+        }
 
-    @media only screen and (max-width: 1750px) {
-      padding: 2px;
-      height: 15px;
+        .name-title {
+          display: flex;
+          align-items: center;
+          margin-bottom: 6px;
+          &:last-child{
+            margin-bottom: 0;
+          }
+
+          .label {
+            font-weight: 700;
+            font-size: var(--commonFont);
+            margin: 0;
+            margin-right: 7px;
+            min-width: 50px;
+            @media only screen and (max-width: 1750px) {
+            min-width: 45px;
+            }
+          }
+
+          .name-desc {
+            margin: 0;
+            font-size: var(--commonFont);
+            color: var(--textColor);
+            margin-right: 7px;
+          }
+
+          &.number-sec {
+            align-items: flex-start;
+
+            .label {
+              margin-top: 0;
+              min-width: 50px;
+              @media only screen and (max-width: 1750px) {
+                min-width: 45px;
+                }
+            }
+
+            .name-desc-sec {
+              width: calc(100% - 45px);
+              display: flex;
+              flex-wrap: wrap;
+
+              .name-desc {
+                margin-right: 7px;
+
+                &:last-child {
+                  margin-right: 0;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
-}
-
-.phone-number {
-  color: var(--themeColor);
-  &::before {
-    content: "\f095";
-    font-family: FontAwesome;
-    margin-right: 5px;
-  }
-}
-
-.email {
-  margin-top: 10px;
-  color: var(--themeColor);
-  &::before {
-    content: "\f0e0";
-    font-family: FontAwesome;
-    margin-right: 5px;
-  }
-}
-.email-address-applist {
-  margin-left: 40px !important;
-  margin-bottom: 10px !important;
-}
-
-.home {
-  &::before {
-    content: "\f015";
-    font-family: FontAwesome;
-    margin-right: 5px;
-    color: var(--textColor);
-    font-size: var(--commonFont-extraLarge);
-  }
-}
-
-.work {
-  &::before {
-    content: "\f0b1";
-    font-family: FontAwesome;
-    margin-right: 5px;
-    color: var(--textColor);
-  }
-}
-
-.name {
-  margin-top: 10px;
-}
-
-.approval-check-list {
-  min-height: calc(100vh - 70px);
 }

@@ -116,6 +116,22 @@ const commonAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+        getAllDocumentByOwnerId: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Common/GetAllDocumentByOwnerId/?ownerId=${data.ownerId}&ownerType=${data.ownerType}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
+        getNotesHistory: builder.query({
+            query: (data) => ({
+                url: encryptQueryString(`/Common/GetNotesHistory/?entityId=${data.entityId}&ownerId=${data.ownerId}&ownerTypeId=${data.ownerTypeId}&noteType=${data.noteType}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
     })
 })
 
@@ -124,7 +140,7 @@ export const {
     useUpdateResponsibleUserMutation,useLazyGetAllCustomersQuery,useGetAllSubCustomerByCustomerIdMutation , useLazyGetAllAccountTypeQuery
     , useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery,useAddApprovalRequestsMutation,
     useLazyGetAllOrderMethodQuery,
-    useLazyGetAllIncotermQuery
+    useLazyGetAllIncotermQuery, useLazyGetAllDocumentByOwnerIdQuery, useLazyGetNotesHistoryQuery,
 } = commonAPI
 
 export default commonAPI;

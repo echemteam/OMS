@@ -62,7 +62,8 @@ namespace OMS.Domain.Repository
         IOrderContactRepository _orderContactRepository;
         IOrderItemRepository _orderItemRepository;
         IDictionaryRepository _dictionaryRepository;
-
+        IOrderDocumentRepository _orderDocumentRepository;
+        IEmailTemplatesRepository _emailTemplatesRepository;
         public ITestRepository test
         {
             get
@@ -638,5 +639,30 @@ namespace OMS.Domain.Repository
             }
 
         }
+        public IOrderDocumentRepository orderDocument
+        {
+            get
+            {
+                if (_orderDocumentRepository == null)
+                {
+                    _orderDocumentRepository = new OrderDocumentRepository(_context);
+                }
+                return _orderDocumentRepository;
+            }
+
+        }
+        public IEmailTemplatesRepository emailTemplates
+        {
+            get
+            {
+                if (_emailTemplatesRepository == null)
+                {
+                    _emailTemplatesRepository = new EmailTemplatesRepository(_context);
+                }
+                return _emailTemplatesRepository;
+            }
+
+        }
+
     }
 }

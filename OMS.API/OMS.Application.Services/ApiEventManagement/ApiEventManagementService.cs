@@ -1,11 +1,13 @@
 ﻿using Common.Helper.Extension;
 using OMS.Application.Services.Implementation;
+using OMS.Domain.Entities.API.Request.ApiConfiguration;
 using OMS.Domain.Entities.API.Request.ApiEvent;
 using OMS.Domain.Entities.API.Request.ApiEventMapping;
 using OMS.Domain.Entities.API.Request.ApiEventParameter;
 using OMS.Domain.Entities.API.Request.ApiEventRequiredField;
 using OMS.Domain.Entities.API.Request.ApiEventRequiredFieldsMapping;
 using OMS.Domain.Entities.API.Request.ApiParameterMapping;
+using OMS.Domain.Entities.API.Response.ApiConfiguration;
 using OMS.Domain.Entities.API.Response.ApiEvent;
 using OMS.Domain.Entities.API.Response.ApiEventMapping;
 using OMS.Domain.Entities.API.Response.ApiEventParameter;
@@ -166,6 +168,11 @@ namespace OMS.Application.Services.ApiEventManagement
             return repositoryManager.apiEventRequiredFieldsMapping.GetAllEventParameterByEventId(apiEventId);
         }
 
+        public async Task<EntityList<GetApiEventLogByEventIdResponse>> GetApiEventLogByEventId(GetApiEventLogByEventIdRequest requestData)
+        {
+            var eventLogsList = await repositoryManager.apiEvent.GetApiEventLogByEventId(requestData);
+            return eventLogsList!;
+        }
         #endregion
     }
 }

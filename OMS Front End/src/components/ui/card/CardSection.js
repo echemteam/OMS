@@ -4,6 +4,7 @@ import SearchBar from "../../../common/features/component/SearchBar";
 import Buttons from "../button/Buttons";
 import Filter from "../../filter/Filter";
 import DropDown from "../dropdown/DropDrown";
+import Shorting from "../../shorting/Shorting";
 
 function CardSection({
   children,
@@ -48,15 +49,18 @@ function CardSection({
   searchValue,
   multipleButton,
   rightButtonArray,
+  isIcon,
+  iconClass,
+  isShort,
+  selectedSortOrder
 }) {
   return (
     <div
-      className={`card ${cardTitle ? "card-section-left" : ""}${
-        searchInput && rightButton ? "card-section-between" : ""
-      }${rightButton ? "card-button-only" : ""}`}
+      className={`card ${cardTitle ? "card-section-left" : ""}${searchInput && rightButton ? "card-section-between" : ""
+        }${rightButton ? "card-button-only" : ""}`}
     >
       {(cardTitle || rightButton || searchFilter || searchInput) && (
-        <div className="card-top-title-btn">
+        <div className="card-top-title-btn responsive-grid-title">
           {cardTitle && (
             <div className="section-title mr-3">
               <h4>{cardTitle}</h4>
@@ -133,6 +137,9 @@ function CardSection({
                 ) : (
                   ""
                 )}
+                {isShort ? <>
+                  <Shorting selectedSortOrder={selectedSortOrder} />
+                </> : null}
                 {multipleButton && (
                   <div className="btn-right-sec">
                     {rightButtonArray.map((button, index) => (
@@ -163,7 +170,10 @@ function CardSection({
                   imagePathBack={iconImgBack}
                   isLoading={isLoading}
                   titleText={titleText}
+                  isIcon={isIcon}
+                  iconClass={iconClass}
                 />
+
               </div>
             )
             // )

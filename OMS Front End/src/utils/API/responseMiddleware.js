@@ -24,6 +24,9 @@ export const transformSucessResponse = async (response, meta, arg) => {
     } else if (meta.request.url.includes('DownloadDocument') && arg?.fileName) {
         rData = response;
         apiData = rData;
+    } else if (meta.request.url.includes('DownloadApprovalRequestDocument') && arg?.fileName) {
+        rData = response;
+        apiData = rData;
     }
     else {
 
@@ -41,6 +44,12 @@ export const transformSucessResponse = async (response, meta, arg) => {
         }
         return responseData;
     } else if (meta.request.url.includes('DownloadDocument') && meta.response.status === 200 && arg.fileName) {
+        const responseData = {
+            fileName: arg.fileName,
+            fileData: apiData
+        }
+        return responseData;
+    } else if (meta.request.url.includes('DownloadApprovalRequestDocument') && arg?.fileName) {
         const responseData = {
             fileName: arg.fileName,
             fileData: apiData

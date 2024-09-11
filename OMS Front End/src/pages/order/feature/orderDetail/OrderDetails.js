@@ -42,7 +42,6 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
   const basicInformation = useRef();
   const parentRef = useRef();
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState(orderInformationData);
   const [isSubCustomerDropdownVisible, setIsSubCustomerDropdownVisible] =
     useState(false);
@@ -250,13 +249,12 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
         status: item.statusName,
         isBuyingForThirdParty: item.isBuyingForThirdParty,
       }));
-      const dropdownField = formData?.formFields?.find(
+      let data = { ...formData };
+      const dropdownField = data?.formFields?.find(
         (item) => item.dataField === "customerId"
       );
-
       dropdownField.fieldSetting.options = customerData;
-
-      // setShouldRerenderFormCreator((prevState) => !prevState);
+      setFormData(data);
     }
   }, [
     isGetAllCustomersFetching,

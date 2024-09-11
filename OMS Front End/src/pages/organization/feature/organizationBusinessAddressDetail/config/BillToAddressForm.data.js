@@ -60,7 +60,7 @@ export const BillToAddressForm = {
       },
      // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
     {
@@ -77,7 +77,7 @@ export const BillToAddressForm = {
       },
       //validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
     {
@@ -94,23 +94,23 @@ export const BillToAddressForm = {
       },
       //validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
     {
       id: "zipCode",
       lable: "Zip Code ",
       Field_Name: "Zip Code",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "zipCode",
       fieldSetting: {
         placeholder: "Enter Zip Code",
         allowSpace: true,
-        maxLength: 9,
+        maxLength: 10,
       },
-      //validation: [{ type: "require" }],
+      validation: [{ type: "validZipCode" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
+        containerCss: "col-xxl-3 col-xl-3 col-md-6 col-12 mb-input label-name-small",
       },
     },
 

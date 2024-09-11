@@ -5,17 +5,18 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
-import { CustomerSupplierStatus, ModulePathName } from "../../../../../utils/Enums/commonEnums";
+import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 import PropTypes from 'prop-types';
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 
-const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess, isEditablePage }) => {
+const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleModal, onSuccess, isEditablePage, customerStatusId }) => {
 
     const ref = useRef();
     const [formData, setFormData] = useState(DocumentFormData);
-    const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+    const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     /**
         * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -60,11 +61,11 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
                 [isSupplier ? 'supplierId' : 'customerId']: keyId,
                 documentInfoList: documentList
             };
-            // if (!isSupplier && isEditablePage) {
-            //     await handleApprovalRequest(requestData, null);
-            // } else {
-            add(requestData);
-            // }
+            if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+                await handleApprovalRequest(requestData, null);
+            } else {
+                add(requestData);
+            }
         }
     };
 
@@ -97,7 +98,7 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
                             // buttonText={editDocumentData ? "Update" : "Add"}
                             buttonText="Add"
                             onClick={handleSave}
-                            isLoading={isAddLoading} />
+                            isLoading={isApprovelLoading || isAddLoading} />
                         {/* <Buttons
                             buttonTypeClassName="theme-button ml-5"
                             buttonText={editDocumentData ? "Update and Close" : "Add and Close"}

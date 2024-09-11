@@ -183,11 +183,11 @@ namespace OMS.Application.Services.Common
         }
         public Task<List<GetAllAddressesByCustomerIdAndAddressTypeIdResponse>> GetAllAddressesByCustomerIdAndAddressTypeId(int customerId, short addressTypeId)
         {
-            return repositoryManager.commonRepository.GetAllAddressesByCustomerIdAndAddressTypeId(customerId,addressTypeId);
+            return repositoryManager.commonRepository.GetAllAddressesByCustomerIdAndAddressTypeId(customerId, addressTypeId);
         }
         public Task<List<GetAllContactsByCustomerIdAndContactTypeIdResponse>> GetAllContactsByCustomerIdAndContactTypeId(int customerId, short contactTypeId)
         {
-            return repositoryManager.commonRepository.GetAllContactsByCustomerIdAndContactTypeId(customerId,contactTypeId);
+            return repositoryManager.commonRepository.GetAllContactsByCustomerIdAndContactTypeId(customerId, contactTypeId);
         }
         public Task<List<GetAllOrderMethodResponse>> GetAllOrderMethod()
         {
@@ -196,6 +196,22 @@ namespace OMS.Application.Services.Common
         public Task<List<GetAllIncotermResponse>> GetAllIncoterm()
         {
             return repositoryManager.commonRepository.GetAllIncoterm();
+        }
+        public Task<List<GetAllDocumentByOwnerIdResponse>> GetAllDocumentByOwnerId(int ownerId, short ownerType)
+        {
+            return repositoryManager.commonRepository.GetAllDocumentByOwnerId(ownerId, ownerType);
+        }
+        public Task<List<GetAllFunctionalityEventByFunctionalityIdResponse>> GetAllFunctionalityEventByFunctionalityId(int functionalityId)
+        {
+            return repositoryManager.commonRepository.GetAllFunctionalityEventByFunctionalityId(functionalityId);
+        }
+        public async Task<List<GetNotesHistoryResponse>> GetNotesHistory(int entityId, int ownerId, byte ownerTypeId, string noteType)
+        {
+            return await repositoryManager.commonRepository.GetNotesHistory(entityId, ownerId, ownerTypeId, noteType);
+        }
+        public Task<List<GetAllFunctionalityEventByFunctionalityIdResponse>> GetAllFunctionalityEventByModuleId(int moduleId)
+        {
+            return repositoryManager.commonRepository.GetAllFunctionalityEventByModuleId(moduleId);
         }
     }
 }

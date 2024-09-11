@@ -2,6 +2,7 @@
   .card {
     margin-bottom: 0;
   }
+
   table {
     thead {
       tr {
@@ -11,11 +12,18 @@
         }
       }
     }
+
     tbody {
-      max-height: calc(100vh - 320px);
+      max-height: calc(100vh - 265px);
+
       @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 290px);
+        max-height: calc(100vh - 230px);
       }
+
+      @media only screen and (max-width: 1366px) {
+        max-height: calc(100vh - 225px);
+      }
+
       tr {
         td:nth-child(4) {
           display: flex;

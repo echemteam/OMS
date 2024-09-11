@@ -29,7 +29,7 @@
 
         .profile-sec {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
 
           .profile-icon {
             min-width: 25px !important;
@@ -52,6 +52,7 @@
             margin-left: 10px;
             font-weight: 600;
             text-transform: capitalize;
+            word-break: break-all;
           }
         }
 
@@ -469,6 +470,7 @@
                     min-width: 17px;
                     max-height: 17px;
                     max-width: 17px;
+
                     @media only screen and (max-width: 1750px) {
                       padding: 2px;
                       height: 15px;
@@ -678,7 +680,7 @@
         padding-bottom: 0;
 
         @media only screen and (max-width: 1750px) {
-          height: calc(100vh - 295px);
+          height: calc(100vh - 305px);
         }
       }
     }
@@ -686,3 +688,20 @@
 }
 
 // Contact Card New UI End
+
+
+@media only screen and (max-width:1280px) {
+  .custom-contact-card {
+   
+  
+    .contact-main-card-section {
+      width: 30%;
+      min-width: 220px;
+      
+    }
+  }
+  .address-main-card-section{
+    min-width: 32.33%;
+    margin: 0 0.5%;
+  }
+}

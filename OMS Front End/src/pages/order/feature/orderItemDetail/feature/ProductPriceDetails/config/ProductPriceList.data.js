@@ -40,7 +40,7 @@ export const priceListConfig = {
         // ],
       },
       colStyle: {
-        width: "7%",
+        width: "15%",
       },
       allowShort: false
     },

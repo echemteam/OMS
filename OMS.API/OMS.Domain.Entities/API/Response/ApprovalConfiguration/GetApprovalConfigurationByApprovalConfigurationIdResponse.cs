@@ -10,8 +10,10 @@
         public string? Name { get; set; }
         public int? FunctionalitiesFieldId { get; set; }
         public string? FieldName { get; set; }
+        public int? FunctionalityEventId { get; set; }
+        public string? EventName { get; set; }
         public byte? ApproverRoleId { get; set; }
         public string? RoleName { get; set; }
-        public string? ApprovalAction { get; set; }
+        public string? Template { get; set; }
     }
 }

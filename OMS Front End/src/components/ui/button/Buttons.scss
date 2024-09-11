@@ -47,7 +47,8 @@
   }
 
   &.danger-btn {
-    background-image: var(--gradient-danger);
+    // background-image: var(--gradient-danger);
+    background: var(--dangerColor);
 
     &:hover {
       box-shadow: 0 5px 15px -4px hsla(344, 99%, 72%, 0.75);

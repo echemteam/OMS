@@ -55,7 +55,7 @@
           padding-left: 10px;
           overflow: hidden;
           text-overflow: ellipsis;
-          transition: all .5s ease;
+          transition: all 0.5s ease;
           white-space: nowrap;
           max-width: 335px;
           @media only screen and (max-width: 1750px) {
@@ -266,47 +266,43 @@
   }
 
   .css-1nmdiq5-menu {
-    width: 120% !important;
+    width: 100% !important;
   }
 
-  .css-b62m3t-container {
-    .css-13cymwt-control {
-      .css-1xc3v61-indicatorContainer {
-        color: var(--whiteColor) !important;
-      }
+  // .css-b62m3t-container {
+  //   .css-13cymwt-control {
+  //     .css-1xc3v61-indicatorContainer {
+  //       color: var(--whiteColor) !important;
+  //     }
 
-      .css-1xc3v61-indicatorContainer:hover {
-        color: var(--whiteColor) !important;
-      }
+  //     .css-1xc3v61-indicatorContainer:hover {
+  //       color: var(--whiteColor) !important;
+  //     }
 
-      .css-15lsz6c-indicatorContainer {
-        color: var(--whiteColor) !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-      }
-    }
+  //     // .css-15lsz6c-indicatorContainer {
+  //     //   color: var(--whiteColor) !important;
+  //     //   opacity: 0 !important;
+  //     //   visibility: hidden !important;
+  //     // }
+  //   }
 
-    .css-t3ipsp-control {
-      .css-1xc3v61-indicatorContainer {
-        color: var(--whiteColor) !important;
-      }
+  //   .css-t3ipsp-control {
+  //     .css-1xc3v61-indicatorContainer {
+  //       color: var(--whiteColor) !important;
+  //     }
 
-      .css-1xc3v61-indicatorContainer:hover {
-        color: var(--whiteColor) !important;
-      }
+  //     .css-1xc3v61-indicatorContainer:hover {
+  //       color: var(--whiteColor) !important;
+  //     }
 
-      .css-15lsz6c-indicatorContainer {
-        color: var(--whiteColor) !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-      }
-    }
+  //   }
 
-    .css-1u9des2-indicatorSeparator {
-      display: none !important;
-    }
-  }
+  //   // .css-1u9des2-indicatorSeparator {
+  //   //   display: none !important;
+  //   // }
+  // }
 }
+
 
 .basic-info-model {
   .card {
@@ -552,3 +548,30 @@
 // .center-container {
 //   height: calc(100vh - 80px) !important;
 // }
+
+// Responsive CSS
+
+// @media only screen and (max-width: 1400px) {
+//   .vertical-tab-inner
+//   .tab-section {
+//     .tab-header {
+//       width: 30% !important;
+//     }
+//     .collapse-tab{
+//       left: calc(30% - 37px) !important;
+//     }
+//     .collapse-tabs{
+//       .tab-header{
+//         width: 10px !important;
+//       }
+//     }
+//   }
+// }
+
+// Responsive CSS
+
+@media only screen and (max-width: 1200px) {
+  .profile-info {
+    gap: 2rem !important;
+  }
+}

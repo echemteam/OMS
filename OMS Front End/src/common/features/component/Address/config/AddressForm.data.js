@@ -40,7 +40,7 @@ export const addressFormData = {
     },
     {
       id: "addressLine2",
-      lable: "Address Line 2 ",
+      lable: "Address Line 2",
       Field_Name: "Address Line 2",
       fieldType: FormFieldTypes.INPUT,
       dataField: "addressLine2",
@@ -158,14 +158,14 @@ export const addressFormData = {
       id: "zipCode",
       lable: "Zip Code ",
       Field_Name: "Zip Code",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.INPUT,
       dataField: "zipCode",
       fieldSetting: {
         placeholder: "Enter Zip Code",
         allowSpace: true,
-        maxLength: 9,
+        maxLength: 10,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" }, { type: "validZipCode" }],
       style: {
         containerCss: "col-xxl-6 col-xl-8 col-md-8 col-12 mb-input label-name-small",
       },

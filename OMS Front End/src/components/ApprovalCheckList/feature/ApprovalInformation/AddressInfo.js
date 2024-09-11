@@ -1,9 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { AddressType } from "../../../../utils/Enums/commonEnums";
+import PropTypes from "prop-types";
+import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
 
-const AddressInformation = ({ isModelOpen, mainId, getAddressById, isSubCustomer }) => {
+const AddressInformation = ({
+  isModelOpen,
+  mainId,
+  getAddressById,
+  isSubCustomer,
+  approvalChekedData,
+  handleCheckbox,
+}) => {
   //** State */
   const [addressInformation, setAddressInformation] = useState([]);
+  const [isChecked, setIsChecked] = useState(
+    approvalChekedData?.isChecked || false
+  );
 
   //** API Call's */
   const [
@@ -27,7 +40,9 @@ const AddressInformation = ({ isModelOpen, mainId, getAddressById, isSubCustomer
       isGetAddressByIdSuccess &&
       isGetAddressByIdData
     ) {
-      const addressTypeArray = isSubCustomer ? [AddressType.SHIPPING]:[AddressType.BILLING, AddressType.SHIPPING];
+      const addressTypeArray = isSubCustomer
+        ? [AddressType.SHIPPING]
+        : [AddressType.BILLING, AddressType.SHIPPING];
       const filteredData = isGetAddressByIdData.filter(
         (address) =>
           addressTypeArray.includes(address.addressTypeId) &&
@@ -38,17 +53,32 @@ const AddressInformation = ({ isModelOpen, mainId, getAddressById, isSubCustomer
     }
   }, [isGetAddressByIdFetching, isGetAddressByIdSuccess, isGetAddressByIdData]);
 
+  const handleChange = (checkedValue, newValue) => {
+    setIsChecked(newValue);
+    handleCheckbox(checkedValue, newValue);
+  };
+
   return (
-    <React.Fragment>
-      <h5> Address Information </h5>
-      <div className="row">
+    <>
+      <div className="card-top-title">
+        <h5> Address Information </h5>
+        <div className="checkbox-part">
+          <Checkbox
+            name={"addressInformation"}
+            dataField={"addressInformation"}
+            checked={isChecked || false}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="card-info-checklist">
         {addressInformation &&
           addressInformation.map((address, index) => (
-            <div className="col-6" key={index}>
-              <h6>{address.type}</h6>
-              <h6>{address.addressLine1}</h6>
-              <p>{address.isPreferredBilling}</p>
-              <p>
+            <div className="address-card-part" key={index}>
+              <h6 className="title">{address.type}</h6>
+              <h6 className="add-line-desc">{address.addressLine1}</h6>
+              <p className="add-line-desc">{address.isPreferredBilling}</p>
+              <p className="add-line-desc">
                 {address.cityName},{" "}
                 {address.stateCode ? address.stateCode : address.stateName}{" "}
                 {address.zipCode}
@@ -57,8 +87,17 @@ const AddressInformation = ({ isModelOpen, mainId, getAddressById, isSubCustomer
             </div>
           ))}
       </div>
-    </React.Fragment>
+    </>
   );
 };
-
+AddressInformation.propTypes = {
+  isModelOpen: PropTypes.bool.isRequired,
+  mainId: PropTypes.string.isRequired,
+  getAddressById: PropTypes.func.isRequired,
+  isSubCustomer: PropTypes.bool.isRequired,
+  approvalChekedData: PropTypes.shape({
+    isChecked: PropTypes.bool,
+  }).isRequired,
+  handleCheckbox: PropTypes.func.isRequired,
+};
 export default AddressInformation;

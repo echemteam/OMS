@@ -1,4 +1,8 @@
-﻿using OMS.Domain.Entities.API.Response.ApiEvent;
+﻿using OMS.Domain.Entities.API.Request.ApiConfiguration;
+using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Response.ApiConfiguration;
+using OMS.Domain.Entities.API.Response.ApiEvent;
+using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.Entity.ApiEvent;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Repository.Contract;
@@ -16,6 +20,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETAPIEVENTBYAPIEVENTID = "GetApiEventByApiEventId";
         const string DELETEAPIEVENT = "DeleteApiEvent";
         const string GETAPIEVENTS = "GetApiEvents";
+        const string GETAPIEVENTLOGBYEVENTID = "GetApiEventLogByEventId";
         #endregion
 
         public ApiEventRepository(DapperContext dapperContext) : base(dapperContext)
@@ -55,6 +60,17 @@ namespace OMS.Domain.Repository.Implementation
             {
                 requestData.Pagination?.PageNumber,
                 requestData.Pagination?.PageSize,
+                requestData.Filters?.SearchText,
+                requestData.SortString
+            }, true);
+        }
+        public async Task<EntityList<GetApiEventLogByEventIdResponse>> GetApiEventLogByEventId(GetApiEventLogByEventIdRequest requestData)
+        {
+            return await _context.GetListSP<GetApiEventLogByEventIdResponse>(GETAPIEVENTLOGBYEVENTID, new
+            {
+                requestData.EventId,
+                requestData.Pagination!.PageNumber,
+                requestData.Pagination.PageSize,
                 requestData.Filters?.SearchText,
                 requestData.SortString
             }, true);

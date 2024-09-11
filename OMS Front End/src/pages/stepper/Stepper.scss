@@ -1,6 +1,7 @@
 .stepper-card {
   overflow: hidden;
   width: 100%;
+
   .stepper-section {
     .stepper-header {
       display: flex;
@@ -94,6 +95,7 @@
           transform: rotate(270deg);
           filter: contrast(0);
         }
+
         svg {
           // width: 12px;
           transform: rotate(270deg);
@@ -109,11 +111,17 @@
       overflow: hidden;
       overflow-y: auto;
       width: 100%;
-      max-height: calc(100vh - 235px);
+      max-height: calc(100vh - 205px);
+
       @media only screen and (max-width: 1750px) {
         padding: 10px 15px;
-        max-height: calc(100vh - 179px);
+        max-height: calc(100vh - 155px);
       }
+
+      @media only screen and (max-width: 1650px) {
+        max-height: calc(100vh - 167px);
+      }
+
       .content {
         display: none;
 
@@ -121,6 +129,7 @@
           display: block;
         }
       }
+
       .record-not-found {
         // padding-top: 5px;
 
@@ -137,13 +146,16 @@
     .card {
       padding: 0px 5px 5px;
       margin-bottom: 0;
+
       .card {
         padding: 0;
       }
     }
+
     .stepper-section {
       .stepper-header {
         padding-bottom: 9px;
+
         .step {
           .step-button {
             .stepper-box {
@@ -174,7 +186,7 @@
   .stepper-card {
     .stepper-section {
       .stepper-content {
-        max-height: calc(100vh - 190px);
+        max-height: calc(100vh - 165px);
       }
     }
   }
@@ -192,6 +204,7 @@
       overflow: hidden;
     }
   }
+
   .vertical-tab-inner {
     .tab-section .tab-content {
       max-height: calc(100vh - 400px);
@@ -199,14 +212,28 @@
   }
 
   .card {
-    height: calc(100vh - 120px);
-    .stepper-content{
+    height: calc(100vh - 93px);
+    margin-bottom: 10px;
+
+    .stepper-content {
       padding-bottom: 0;
     }
+
     .card {
-      height: calc(100vh - 295px);
+      height: calc(100vh - 265px);
+
+      .card {
+        height: calc(100vh - 260px);
+
+        @media only screen and (max-width: 1280px) {
+          height: calc(100vh - 45px);
+          overflow: hidden;
+          overflow-y: auto;
+        }
+      }
     }
   }
+
   .model-content {
     .model-body {
       .card {
@@ -216,38 +243,50 @@
   }
 }
 
+
 @media only screen and (max-width: 1750px) {
   .stepper-view {
     .card {
-      height: calc(100vh - 106px);
+      height: calc(100vh - 83px);
 
       .card {
-        height: calc(100vh - 225px);
+        height: calc(100vh - 210px);
       }
     }
   }
-}
 
-@media only screen and (max-width: 1750px) {
+  @media only screen and (max-width: 1650px) {
+    .stepper-view {
+      .card {
+        .card {
+          height: calc(100vh - 220px);
+        }
+      }
+    }
+  }
+
   .stepper-view-supplier {
     .card {
       height: calc(100vh - 145px);
 
       .card {
-        height: calc(100vh - 265px);
+        height: calc(100vh - 255px);
       }
     }
   }
 }
+
 .stepper-view-supplier {
   .supplier-contacts {
     .card-body-sec {
       max-height: calc(100vh - 195px);
     }
   }
+
   .vertical-tab-inner {
     .tab-section {
       height: calc(100vh - 395px);
+
       .tab-content {
         max-height: calc(100vh - 400px);
       }
@@ -256,6 +295,7 @@
 
   .card {
     height: calc(100vh - 325px);
+
     @media only screen and (max-width: 1750px) {
       height: calc(100vh - 245px);
     }
@@ -274,18 +314,43 @@
   }
 }
 
+@media only screen and (max-width: 1280px) {
+  .stepper-view {
+    .card {
+      .card {
+        height: calc(100vh - 54px);
+      }
+    }
+  }
+
+  .stepper-card {
+    .stepper-section {
+      .stepper-content {
+        .content {
+          &.active {
+            padding-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
 .stepper-view-supplier {
   .financial-setting {
     .card {
       height: 100%;
     }
+
     .address-main-card-sec {
       .payment-method-sec {
         margin-top: -20px;
         height: calc(100vh - 390px);
         overflow: hidden;
+
         .tab-content {
           padding-bottom: 60px;
+
           .ach-wire-section {
             .centered {
               justify-content: center !important;
@@ -295,4 +360,36 @@
       }
     }
   }
+}
+
+
+// Responsive CSS
+
+
+@media only screen and (max-width: 1272px) {
+  .stepper-card {
+    .stepper-section {
+      .stepper-header {
+        overflow: hidden;
+        overflow-x: auto;
+        width: 100%;
+
+        .step {
+          min-width: 180px;
+        }
+      }
+
+      ::-webkit-scrollbar {
+        width: 5px;
+        height: 3px;
+        background-color: var(--inputBorder);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--gradient-theme);
+      }
+    }
+
+  }
+
 }

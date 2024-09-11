@@ -14,6 +14,7 @@ import ToastService from "../../../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../../../data/appMessages";
 import { useValidateAndAddApprovalRequests } from "../../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../../utils/Enums/ApprovalFunctionalities";
+import { isCustomerOrSupplierApprovedStatus } from "../../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 
 const getFileIcon = (extension) => {
   switch (extension) {
@@ -49,13 +50,14 @@ const AddMultipleDocument = ({
   handleMulDocToggleModal,
   addDocuments,
   documentTypes,
-  isEditablePage
+  isEditablePage,
+  customerStatusId
 }) => {
   const ref = useRef();
   const [attachment, setAttachment] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
-  const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
+  const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
   /**
    * This hook dynamically sets the API call based on the module (customer or supplier).
@@ -96,11 +98,11 @@ const AddMultipleDocument = ({
         [isSupplier ? "supplierId" : "customerId"]: keyId,
         documentInfoList: modifyData,
       };
-      // if (!isSupplier && isEditablePage) {
-      //   await handleApprovalRequest(requestData, null);
-      // } else {
-      add(requestData);
-      // }
+      if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+        await handleApprovalRequest(requestData, null);
+      } else {
+        add(requestData);
+      }
     } else {
       ToastService.warning(ErrorMessage.DocumentDetailMissing);
     }
@@ -249,7 +251,7 @@ const AddMultipleDocument = ({
       <div className="d-flex align-item-end justify-content-end mt-3">
         <Buttons
           buttonTypeClassName="theme-button"
-          isLoading={isAddLoading}
+          isLoading={isApprovelLoading || isAddLoading}
           buttonText="Save"
           onClick={handleSave}
         />

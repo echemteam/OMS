@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 //** Lib's */
-// import { AppIcons } from "../../../../../data/appIcons";
+
 import Image from "../../../../../components/image/Image";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../../../components/ui/noRecordFound/NoRecordFound";
@@ -18,6 +18,7 @@ import {
 //** Service's */
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import ToastService from "../../../../../services/toastService/ToastService";
+
 // import CenterModel from "../../../../../components/ui/centerModel/CenterModel";
 import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 import FileViewer from "react-file-viewer";
@@ -25,6 +26,7 @@ import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import SidebarModel from "../../../../../components/ui/sidebarModel/SidebarModel";
 import formatDate from "../../../../../lib/formatDate";
+// import { ModulePathName } from "../../../../../utils/Enums/commonEnums";
 
 const DocumentList = forwardRef(
   ({
@@ -36,6 +38,7 @@ const DocumentList = forwardRef(
     childRef,
     SecurityKey,
     isEditablePage,
+    isArchive,
   }) => {
     //** State */
     const { confirm } = SwalAlert();
@@ -48,16 +51,20 @@ const DocumentList = forwardRef(
     const [actionType, setActionType] = useState(null);
     const [downloadFileName, setDownloadFileName] = useState();
 
+    const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] =
+      deleteDocumentsById();
+
     /**
      * This hook dynamically sets the API call based on the module (customer or supplier).
      * The API endpoint and parameters are configured within the SupplierDocumentDetail OR CustomerDocumentDetail component.
      */
-    const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] =
-      deleteDocumentsById();
+    // const [Delete, { isSuccess: isDeleteSucess, data: isDeleteData }] =
+    //   deleteDocumentsById();
     const [
       getList,
       { isFetching: isListFetching, isSuccess: isListSucess, data: isListData },
     ] = getDocumentsById();
+
     const [
       Downalod,
       {
@@ -70,7 +77,7 @@ const DocumentList = forwardRef(
     //** UseEffect */
     useEffect(() => {
       onGetData();
-    }, [keyId]);
+    }, [keyId, isArchive]);
 
     useEffect(() => {
       if (isEditablePage && SecurityKey) {
@@ -78,6 +85,7 @@ const DocumentList = forwardRef(
         const hasDownalodPermission = hasFunctionalPermission(
           SecurityKey.DOWNALOD
         );
+
         if (hasDeletePermission) {
           if (hasDeletePermission.hasAccess === true) {
             setShowDeleteButton(true);
@@ -97,27 +105,34 @@ const DocumentList = forwardRef(
 
     useEffect(() => {
       if (isListSucess && isListData && !isListFetching) {
-        const modifyData = isSupplier
+        let modifyData = isSupplier
           ? supplierDocumentTransformData(isListData)
           : documentTransformData(isListData);
-        setDocumentListData(modifyData);
-        let detectedFileTypes = new Set();
-        Object.values(modifyData).forEach((items) => {
-          items.forEach((item) => {
-            const fileType = determineFileType(item.attachment);
-            if (["pdf", "csv", "docx", "xlsx"].includes(fileType)) {
-              detectedFileTypes.add(fileType);
-            }
-          });
+
+        // Ensure modifyData is an array
+        if (!Array.isArray(modifyData)) {
+          modifyData = Object.values(modifyData).flat();
+        }
+
+        // Filter documents based on isArchive flag
+
+        const filteredData = modifyData.filter(
+          (doc) => doc.isArchive === isArchive
+        );
+        setDocumentListData(filteredData);
+
+        // Detect file types
+        const detectedFileTypes = new Set();
+        filteredData.forEach((item) => {
+          const fileType = determineFileType(item.attachment);
+          if (["pdf", "csv", "docx", "xlsx"].includes(fileType)) {
+            detectedFileTypes.add(fileType);
+          }
         });
 
-        if (detectedFileTypes.size > 0) {
-          setGetFileType(Array.from(detectedFileTypes));
-        } else {
-          setGetFileType([]);
-        }
+        setGetFileType(Array.from(detectedFileTypes));
       }
-    }, [isListSucess, isListData, isListFetching]);
+    }, [isListSucess, isListData, isListFetching, isArchive]);
 
     useEffect(() => {
       if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
@@ -149,7 +164,7 @@ const DocumentList = forwardRef(
     }, [isDeleteSucess, isDeleteData]);
 
     const handleDocumentAction = (action, fileName, name) => {
-      setDownloadFileName(name)
+      setDownloadFileName(name);
       setSelectedDocument(null);
       setIsModalOpen(false);
       setActionType(action);
@@ -207,7 +222,6 @@ const DocumentList = forwardRef(
       keyId && getList(keyId);
     };
 
-    //** Use Imperative Handle  */
     useImperativeHandle(childRef, () => ({
       callChildFunction: onGetData,
     }));
@@ -223,102 +237,81 @@ const DocumentList = forwardRef(
         <div className="document-listing">
           <div className="row">
             {!isListFetching ? (
-              documentListData &&
-                Object.values(documentListData).some(
-                  (arr) => Array.isArray(arr) && arr.length > 0
-                ) ? (
-                <React.Fragment>
-                  {Object.entries(documentListData).map(
-                    ([type, items], index) => (
-                      <React.Fragment key={index}>
-                        <div className="col-xl-4 col-lg-4 col-md-4 col-12">
-                          {items.map((data) => (
-                            <div
-                              className="documents"
-                              key={data.customerDocumentId}
-                            >
-                              <div className="left-icons">
-                                <Image imagePath={data.documentIcon} alt="Document Icon" />
-                                {/* <Iconify icon="iconamoon:file-document-thin" /> */}
-                              </div>
-                              <div className="right-desc">
-                                <div className="doc-details">
-                                  <div className="document-typename">
-                                    {type}
-                                  </div>
-                                  <div className="document-name">
-                                    {data.name}
-                                  </div>
-                                  <div className="document-type">
-                                    {data.attachment}
-                                  </div>
-                                  <div className="document-type">
-                                    {formatDate(data.createdAt, "MM/DD/YYYY hh:mm A")}
-                                  </div>
-                                </div>
-                                <div className="document-action">
-                                  {/* <span className="action-icon" onClick={() => onHandleEditDocument(data)} >
-                                                                    <Image imagePath={AppIcons.editIcon} alt="Edit Icon" />
-                                                                </span> */}
-                                  {getFileType &&
-                                    getFileType.length > 0 &&
-                                    ["pdf", "csv", "docx", "xlsx"].includes(
-                                      determineFileType(data.attachment)
-                                    ) && (
-                                      <span
-                                        className="action-icon"
-                                        onClick={() =>
-                                          handleDocumentAction(
-                                            "view",
-                                            data.attachment
-                                          )
-                                        }
-                                      >
-                                        {/* <Image imagePath={AppIcons.EyeIcon} alt="View Icon" /> */}
-                                        <Iconify icon="lets-icons:view-light" />
-                                      </span>
-                                    )}
-
-                                  {showDownalodButton ? (
-                                    <span
-                                      className="action-icon"
-                                      onClick={() =>
-                                        handleDocumentAction(
-                                          "download",
-                                          data.attachment, data.name
-                                        )
-                                      }
-                                    >
-                                      {/* <Image
-                                        imagePath={AppIcons.DownloadIcon}
-                                        alt="Download Icon"
-                                      /> */}
-                                      <Iconify icon="uil:folder-download" />
-                                    </span>
-                                  ) : null}
-                                  {/* {showDeleteButton ? (
-                                    <span
-                                      className="action-icon"
-                                      onClick={() =>
-                                        handleDelete(
-                                          isSupplier
-                                            ? data.supplierDocumentId
-                                            : data.customerDocumentId
-                                        )
-                                      }
-                                    >
-                                      <Iconify icon="mingcute:delete-2-line" className="delete-icon"/>
-                                    </span>
-                                  ) : null} */}
-                                </div>
-                              </div>
-                            </div>
-                          ))}
+              documentListData.length > 0 ? (
+                documentListData.map((data) => (
+                  <div
+                    className="col-xl-4 col-lg-4 col-md-6 col-12"
+                    key={data.customerDocumentId}
+                  >
+                    <div className="documents">
+                      <div className="left-icons">
+                        <Image
+                          imagePath={data.documentIcon}
+                          alt="Document Icon"
+                        />
+                      </div>
+                      <div className="right-desc">
+                        <div className="doc-details">
+                          <div className="document-typename">{data.type}</div>
+                          <div className="document-name">{data.name}</div>
+                          <div className="document-type">{data.attachment}</div>
+                          <div className="document-type">
+                            {formatDate(data.createdAt, "MM/DD/YYYY hh:mm A")}
+                          </div>
                         </div>
-                      </React.Fragment>
-                    )
-                  )}
-                </React.Fragment>
+                        <div className="document-action">
+                          {getFileType.length > 0 &&
+                            ["pdf", "csv", "docx", "xlsx"].includes(
+                              determineFileType(data.attachment)
+                            ) && (
+                              <span
+                                className="action-icon"
+                                onClick={() =>
+                                  handleDocumentAction("view", data.attachment)
+                                }
+                              >
+                                <Iconify icon="lets-icons:view-light" />
+                              </span>
+                            )}
+
+                          {showDownalodButton && (
+                            <span
+                              className="action-icon"
+                              onClick={() =>
+                                handleDocumentAction(
+                                  "download",
+                                  data.attachment,
+                                  data.name
+                                )
+                              }
+                            >
+                              <Iconify icon="uil:folder-download" />
+                            </span>
+                          )}
+                          {isArchive
+                            ? null
+                            : showDeleteButton && (
+                              <span
+                                className="action-icon"
+                                onClick={() =>
+                                  handleDelete(
+                                    isSupplier
+                                      ? data.supplierDocumentId
+                                      : data.customerDocumentId
+                                  )
+                                }
+                              >
+                                <Iconify
+                                  icon="mingcute:delete-2-line"
+                                  className="delete-icon"
+                                />
+                              </span>
+                            )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
               ) : (
                 <NoRecordFound />
               )
@@ -327,6 +320,7 @@ const DocumentList = forwardRef(
             )}
           </div>
         </div>
+
         <SidebarModel
           // showModal={isModalOpen}
           // handleToggleModal={handleToggleModal}
@@ -359,11 +353,9 @@ DocumentList.propTypes = {
   deleteDocumentsById: PropTypes.func.isRequired,
   getDocumentsById: PropTypes.func.isRequired,
   childRef: PropTypes.object.isRequired,
-  SecurityKey: PropTypes.shape({
-    DELETE: PropTypes.string,
-    DOWNALOD: PropTypes.string,
-  }),
+  SecurityKey: PropTypes.object.isRequired,
   isEditablePage: PropTypes.bool.isRequired,
+  isArchive: PropTypes.bool.isRequired,
 };
 
 export default DocumentList;

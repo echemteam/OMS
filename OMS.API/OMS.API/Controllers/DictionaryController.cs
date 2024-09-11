@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
-using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Dictionary;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
@@ -11,7 +10,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  // [Authorize]
+   [Authorize]
     public class DictionaryController : BaseController
     {
         #region private variable
@@ -28,14 +27,14 @@ namespace OMS.API.Controllers
         [HttpPost("AddEditDictionary")]
         public async Task<IActionResult> AddEditDictionary(AddEditDictonaryRequest requestData)
         {
-            var dictionaryData = await _serviceManager.dictionaryServices.AddEditDictionary(requestData);
+            var dictionaryData = await _serviceManager.dictionaryServices.AddEditDictionary(requestData, CurrentUserId);
             return APISucessResponce(dictionaryData);
         }
 
-        [HttpPost("GetAllDictionary")]
+        [HttpPost("GetDictionary")]
         public async Task<IActionResult> GetAllDictionary([FromBody] ListEntityRequest<BaseFilter> requestData)
         {
-            var dictionaryList = await _serviceManager.dictionaryServices.GetAllDictionary(requestData);
+            var dictionaryList = await _serviceManager.dictionaryServices.GetDictionary(requestData);
             return APISucessResponce<object>(dictionaryList);
         }
 
@@ -46,6 +45,16 @@ namespace OMS.API.Controllers
             {
                 var dictionary = await _serviceManager.dictionaryServices.GetDictionaryByDictonaryId(dictionaryId).ConfigureAwait(true);
                 return APISucessResponce<object>(dictionary);
+            }
+            return APISucessResponce(dictionaryId);
+        }
+        [HttpDelete("DeleteDictionary")]
+        public async Task<IActionResult> DeleteDictionary(int dictionaryId)
+        {
+            if (dictionaryId > 0)
+            {
+                var deletedictionary = await _serviceManager.dictionaryServices.DeleteDictionary(dictionaryId, CurrentUserId).ConfigureAwait(true);
+                return APISucessResponce<object>(deletedictionary);
             }
             return APISucessResponce(dictionaryId);
         }
