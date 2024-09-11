@@ -161,7 +161,7 @@
 .approval-rules {
   table {
     tbody {
-      max-height: calc(100vh - 300px) !important;
+      max-height: calc(100vh - 270px) !important;
 
       @media only screen and (max-width: 1750px) {
         max-height: calc(100vh - 275px) !important;
@@ -187,10 +187,10 @@
 .api-provider {
   table {
     tbody {
-      max-height: calc(100vh - 300px);
+      max-height: calc(100vh - 270px);
 
       @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 265px) !important;
+        max-height: calc(100vh - 233px) !important;
       }
     }
   }
@@ -200,10 +200,10 @@
 .functional-config {
   table {
     tbody {
-      max-height: calc(100vh - 435px) !important;
+      max-height: calc(100vh - 405px) !important;
 
       @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 365px) !important;
+        max-height: calc(100vh - 337px) !important;
       }
     }
   }
@@ -234,18 +234,29 @@
   .api-management {
     table {
       tbody {
-        max-height: calc(100vh - 405px) !important;
+        max-height: calc(100vh - 395px) !important;
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 365px) !important;
+          max-height: calc(100vh - 356px) !important;
         }
 
         @media only screen and (max-width: 1650px) {
-          max-height: calc(100vh - 345px) !important;
+          max-height: calc(100vh - 336px) !important;
         }
 
         @media only screen and (max-width: 1280px) {
-          max-height: calc(100vh - 358px) !important;
+          max-height: calc(100vh - 348px) !important;
+        }
+      }
+    }
+  }
+}
+.main-page-layout {
+  .middle-page-section {
+    .center-content-part {
+      .content-desc-section {
+        .center-container{
+          max-height: calc(100vh - 55px);
         }
       }
     }

@@ -70,7 +70,7 @@ const FunctionalConfiguration = () => {
 
                     <SidebarModel
                         modalTitle={`${isEdit ? "Update" : "Add"} Functional Configuration`}
-                        contentClass="content-60"
+                        contentClass="content-70"
                         onClose={onSidebarClose}
                         modalTitleIcon={AppIcons.AddIcon}
                         isOpen={isModelOpen}

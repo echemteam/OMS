@@ -16,6 +16,7 @@
     border-radius: 0px;
   }
 
+
   .btn-archive {
     background-color: var(--textColorLight);
     border-radius: 0px;
@@ -43,7 +44,7 @@
     }
 
     &.active {
-      background-color: #ececff;
+      background-color: #eeeef3;
     }
 
     .profile-icon {
@@ -99,20 +100,16 @@
         .tab-content {
           .card {
             .card-body-sec {
-              min-height: calc(100vh - 235px);
-              max-height: calc(100vh - 235px);
+              min-height: calc(100vh - 210px);
+              max-height: calc(100vh - 210px);
+              
               overflow: hidden;
               overflow-y: auto;
               margin-top: 0;
 
               @media only screen and (max-width: 1750px) {
-                min-height: calc(100vh - 193px);
-                max-height: calc(100vh - 193px);
-              }
-
-              @media only screen and (max-width: 1280px) {
-                min-height: calc(100vh - 190px);
-                max-height: calc(100vh - 190px);
+                min-height: calc(100vh - 173px);
+                max-height: calc(100vh - 173px);
               }
             }
           }
@@ -120,7 +117,7 @@
       }
 
       .tab-header {
-        padding-bottom: 16px;
+        padding-bottom: 10px;
       }
     }
   }
@@ -403,14 +400,14 @@
       }
     }
 
-    min-height: calc(100vh - 200px);
-    max-height: calc(100vh - 200px);
+    min-height: calc(100vh - 180px);
+    max-height: calc(100vh - 180px);
     overflow: hidden;
     overflow-y: auto;
 
     @media only screen and (max-width: 1750px) {
-      min-height: calc(100vh - 175px);
-      max-height: calc(100vh - 175px);
+      min-height: calc(100vh - 160px);
+      max-height: calc(100vh - 160px);
     }
 
 
