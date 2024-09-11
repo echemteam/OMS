@@ -266,7 +266,6 @@ const AddEditRules = (props) => {
        
       form.initialState = {
         ...rulesFormData.initialState,
-        approvalAction: isGetApprovalConfigurationByApprovalConfigurationIdData.approvalAction,
         functionalitiesFieldId: isGetApprovalConfigurationByApprovalConfigurationIdData.functionalitiesFieldId,
         functionalityId: isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityId,
         functionalityEventId:isGetApprovalConfigurationByApprovalConfigurationIdData.functionalityEventId,
