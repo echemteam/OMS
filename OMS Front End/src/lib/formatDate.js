@@ -9,10 +9,13 @@ export const formatDate = (date, format) => {
 
 export default formatDate;
 
-export const formatDateInShort = (isdate) => {
-  if (isdate) {
-    var date = new Date(isdate);
-  }
+export const formatDateInShort = (isDate) => {
+  if (!isDate) return ""; // Return an empty string if no date is provided
+
+  const date = new Date(isDate);
+  
+  // Check for an invalid date
+  if (isNaN(date)) return "";
 
   return date.toLocaleDateString("en-US", {
     day: "numeric",
