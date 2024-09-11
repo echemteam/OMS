@@ -55,6 +55,10 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     //** Use for Move next step */
     const addCustomer = (data) => {
+
+        if(activeTab===3){
+            setActiveSubTab(0)
+        }
         if (customerId > 0 && data === 1) {
             if (nextRef.current) {
                 nextRef.current.handleAddBasicDetails();
