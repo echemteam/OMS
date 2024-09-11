@@ -58,9 +58,9 @@ const FunctionalConfiguration = () => {
                 <div className='functional-config'>
                     <CardSection
                         cardTitle="Functional Configuration"
-                        buttonClassName="btn theme-button"
-                        rightButton={true}
-                        buttonText="Add"
+                       // buttonClassName="btn theme-button"
+                      //  rightButton={true}
+                       // buttonText="Add"
                         textWithIcon={true}
                         iconImg={AppIcons.PlusIcon}
                         titleButtonClick={handleToggleModal}

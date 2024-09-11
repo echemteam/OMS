@@ -60,6 +60,7 @@ const CustomerBasicInfoCard = ({
   const [responsibleUserIds, setResponsibleUserIds] = useState([]);
   const [rUserValue, setRUserValue] = useState([]);
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
+
   const [
     updateCustomerSubCustomer,
     {
@@ -133,6 +134,7 @@ const CustomerBasicInfoCard = ({
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
+
   useEffect(() => {
     if (customerData) {
       const responsibleUserIds = customerData?.responsibleUserId
@@ -172,8 +174,8 @@ const CustomerBasicInfoCard = ({
 
       const filteredData = responsibleUserIds
         ? uniqueData.filter(
-          (item) => !responsibleUserIds.includes(item.userId.toString())
-        )
+            (item) => !responsibleUserIds.includes(item.userId.toString())
+          )
         : uniqueData;
 
       const modifyUserData = filteredData.map((item) => ({
@@ -381,6 +383,22 @@ const CustomerBasicInfoCard = ({
       }
     });
   };
+
+  useEffect(() => {
+    if (showModal) {
+      if (customerData.responsibleUserId) {
+        const responsibleUserIds = customerData?.responsibleUserId
+          ?.split(",")
+          .map((id) => Number(id.trim()));
+        const formNew={...formData}
+        formNew.initialState = {
+          ...formNew.initialState,
+              responsibleUserId: responsibleUserIds,
+            };
+            setFormData(formNew);
+          }
+    }
+  }, [showModal]);
 
   useEffect(() => {
     if (isSuccessUpdateCustomerSubCustomer && isUpdateCustomerSubCustomerData) {
@@ -633,6 +651,7 @@ const CustomerBasicInfoCard = ({
         isDetailPage={true}
         childRef={childRef}
         updateCustomerApproval={updateCustomerApproval}
+        customerData={customerData}
       />
     </div>
   ) : (

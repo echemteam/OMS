@@ -4,10 +4,26 @@ import { getLabelClass } from "../../../../../utils/StatusColors/StatusColors";
 export const basicInfoData = {
     columns: [
         {
+            name: "Search Match (%)",
+            fieldName: "matchPercentage",
+            colType: GridColumnType.CUSTOM,
+            colStyle: {
+                width: "10%",
+            },
+            renderCustomCol: (rowData) => {
+                return (
+                    <>
+                        {rowData?.matchPercentage ? `${rowData.matchPercentage} %` : 'N/A'}
+                    </>
+                );
+            },
+            // allowShort: true,
+        },
+        {
             name: "Name",
             fieldName: "name",
             colStyle: {
-                width: "25%",
+                width: "20%",
             },
             // allowShort: true,
         },
@@ -57,22 +73,7 @@ export const basicInfoData = {
                 getLableClass: getLabelClass,
             },
         },
-        {
-            name: "Matching (%)",
-            fieldName: "matchPercentage",
-            colType: GridColumnType.CUSTOM,
-            colStyle: {
-                width: "10%",
-            },
-            renderCustomCol: (rowData) => {
-                return (
-                    <>
-                        {rowData?.matchPercentage ? `${rowData.matchPercentage}%` : 'N/A'}
-                    </>
-                );
-            },
-            // allowShort: true,
-        },
+        
         {
             name: "Action",
             colStyle: {

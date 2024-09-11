@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../data/formFieldType";
 
 export const reasonData = {
   name: "",
-  initialState: { inActiveReason: "" },
+  initialState: {responsibleUserId:0, inActiveReason: "" },
   formFields: [
     {
       id: "ResponsibleUserId",

@@ -345,6 +345,7 @@ const ContactGrid = ({
             onhandleApiCall={null}
             orderResetValue={null}
             customerStatusId={customerStatusId}
+            allGetAllContactTypesData={allGetAllContactTypesData}
           />
         </SidebarModel>
       </div>
