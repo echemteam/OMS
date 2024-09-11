@@ -173,27 +173,27 @@ export const Menu = [
       // },
     ],
   },
-  // {
-  //   groupLabel: "Orders",
-  //   items: [
-  //     {
-  //       name: "Order",
-  //       id: "Order",
-  //       to: "/Order",
-  //       iconClass: "lets-icons:order",
-  //       subMenu: false,
-  //       securityKey: securityKey.ORDER,
-  //       children: [],
-  //     },
-  //     // {
-  //     //   name: "My Task",
-  //     //   id: "MyTask",
-  //     //   to: "/MyTask",
-  //     //   iconClass: "octicon:tasklist-24",
-  //     //   subMenu: false,
-  //     //   securityKey: securityKey.MYTASK,
-  //     //   children: []
-  //     // }
-  //   ]
-  // },
+  {
+    groupLabel: "Orders",
+    items: [
+      {
+        name: "Order",
+        id: "Order",
+        to: "/Order",
+        iconClass: "lets-icons:order",
+        subMenu: false,
+        securityKey: securityKey.ORDER,
+        children: [],
+      },
+      {
+        name: "My Task",
+        id: "MyTask",
+        to: "/MyTask",
+        iconClass: "octicon:tasklist-24",
+        subMenu: false,
+        securityKey: securityKey.MYTASK,
+        children: []
+      }
+    ]
+  },
 ];
