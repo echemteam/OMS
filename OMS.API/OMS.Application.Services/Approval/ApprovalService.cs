@@ -3,6 +3,7 @@ using Common.Helper.Enum;
 using Common.Helper.Export;
 using Common.Helper.Extension;
 using Common.Helper.ReplacePlaceholders;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
@@ -85,12 +86,12 @@ namespace OMS.Application.Services.Approval
             approvalRequestsDto.OldValueTemplate = string.Empty;
             approvalRequestsDto.NewValueTemplate = string.Empty;
 
-            if (!string.IsNullOrEmpty(requestData.OldValue))
+            if (!string.IsNullOrEmpty(requestData.OldValue) && FormatTemplate != null && FormatTemplate.Template != null)
             {
                 var oldValueData = JObject.Parse(requestData.OldValue!);
                 approvalRequestsDto.OldValueTemplate = ReplaceTemplatePlaceholders.ReplacePlaceholders(FormatTemplate.Template!, oldValueData);
             }
-            if (!string.IsNullOrEmpty(requestData.NewValue))
+            if (!string.IsNullOrEmpty(requestData.NewValue) && FormatTemplate != null && FormatTemplate.Template != null)
             {
                 var newValueData = JObject.Parse(requestData.NewValue!);
                 approvalRequestsDto.NewValueTemplate = ReplaceTemplatePlaceholders.ReplacePlaceholders(FormatTemplate.Template!, newValueData);

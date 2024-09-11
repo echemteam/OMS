@@ -36,6 +36,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const [phoneNumberList, setPhoneNumberList] = useState([]);
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
+    const [isWithOutApprovalContactType, setIsWithOutApprovalContactType] = useState(false);
     const approvalMessages = []; // Array to store all approval messages
     const { ValidateRequestByApprovalRules, getEventName, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
@@ -60,7 +61,11 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         const data = ref.current.getFormData();
         if (!data) return;
         const { filteredTypeIds, matchTypeIds } = isContactType(data.contactTypeId, isEdit);
-
+        if (filteredTypeIds.length > 0) {
+            setIsWithOutApprovalContactType(true);
+        } else {
+            setIsWithOutApprovalContactType(false);
+        }
         let eventName;
         let eventNameArr = [];
         if (Array.isArray(data.contactTypeId) && data.contactTypeId.length === 1) {
@@ -83,8 +88,10 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                     const request = requestData(data, currentTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
                     let req = {
                         ...request,
+                        phoneNumberList: isEdit ? isGetByIdData.phoneNumberList : formData.initialState.phoneNumberList,
+                        emailAddressList: isEdit ? isGetByIdData.emailAddressList : formData.initialState.emailAddressList,
                         contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', currentTypeId),
-                        ContactTypeName: customerId ? customerId : request.customerId
+                        customerId: customerId ? customerId : request.customerId
                     }
                     await handleApprovalRequest(req, isEdit ? formData.initialState : null, event, true, index, eventNameArr.length - 1);
                 }
@@ -96,6 +103,8 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 }
                 let initialStateRequest = {
                     ...formData.initialState,
+                    emailList: isEdit ? isGetByIdData.emailAddressList : formData.initialState.emailAddressList,
+                    phoneList: isEdit ? isGetByIdData.phoneNumberList : formData.initialState.phoneNumberList,
                     contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', request.contactTypeId)
                 }
                 await handleApprovalRequest(req, initialStateRequest, eventName, 0);
@@ -217,11 +226,11 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 return;
             }
             if (onSuccess) {
-                if (!isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+                if (!isWithOutApprovalContactType) {
                     onSuccess();
+                    ToastService.success(isAddEditData.errorMessage);
                 }
                 setContactId(isAddEditData?.keyValue);
-                ToastService.success(isAddEditData.errorMessage);
                 if (isOrderManage) {
                     onhandleApiCall(getContectTypeId)
                 }

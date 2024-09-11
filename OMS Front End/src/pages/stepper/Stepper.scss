@@ -111,11 +111,15 @@
       overflow: hidden;
       overflow-y: auto;
       width: 100%;
-      max-height: calc(100vh - 235px);
+      max-height: calc(100vh - 205px);
 
       @media only screen and (max-width: 1750px) {
         padding: 10px 15px;
-        max-height: calc(100vh - 179px);
+        max-height: calc(100vh - 155px);
+      }
+
+      @media only screen and (max-width: 1650px) {
+        max-height: calc(100vh - 167px);
       }
 
       .content {
@@ -182,7 +186,7 @@
   .stepper-card {
     .stepper-section {
       .stepper-content {
-        max-height: calc(100vh - 175px);
+        max-height: calc(100vh - 165px);
       }
     }
   }
@@ -208,14 +212,25 @@
   }
 
   .card {
-    height: calc(100vh - 120px);
+    height: calc(100vh - 93px);
+    margin-bottom: 10px;
 
     .stepper-content {
       padding-bottom: 0;
     }
 
     .card {
-      height: calc(100vh - 295px);
+      height: calc(100vh - 265px);
+
+      .card {
+        height: calc(100vh - 260px);
+
+        @media only screen and (max-width: 1280px) {
+          height: calc(100vh - 45px);
+          overflow: hidden;
+          overflow-y: auto;
+        }
+      }
     }
   }
 
@@ -232,10 +247,20 @@
 @media only screen and (max-width: 1750px) {
   .stepper-view {
     .card {
-      height: calc(100vh - 106px);
+      height: calc(100vh - 83px);
 
       .card {
-        height: calc(100vh - 235px);
+        height: calc(100vh - 210px);
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1650px) {
+    .stepper-view {
+      .card {
+        .card {
+          height: calc(100vh - 220px);
+        }
       }
     }
   }
@@ -293,7 +318,7 @@
   .stepper-view {
     .card {
       .card {
-        height: auto;
+        height: calc(100vh - 54px);
       }
     }
   }
@@ -303,7 +328,7 @@
       .stepper-content {
         .content {
           &.active {
-            padding-bottom: 15px;
+            padding-bottom: 0;
           }
         }
       }
@@ -341,29 +366,30 @@
 // Responsive CSS
 
 
-@media only screen and (max-width: 1272px){
+@media only screen and (max-width: 1272px) {
   .stepper-card {
     .stepper-section {
-      .stepper-header{
+      .stepper-header {
         overflow: hidden;
         overflow-x: auto;
         width: 100%;
 
-        .step{
+        .step {
           min-width: 180px;
         }
       }
+
       ::-webkit-scrollbar {
         width: 5px;
         height: 3px;
         background-color: var(--inputBorder);
       }
-      
+
       ::-webkit-scrollbar-thumb {
         background: var(--gradient-theme);
       }
     }
-    
+
   }
 
 }

@@ -305,7 +305,7 @@ a {
 
   .middle-page-section {
     width: calc(100% - 250px);
-    padding: 5px 10px 0;
+    padding: 10px 10px 0;
     margin: 0 auto;
     transition: 0.5s all;
 
@@ -320,11 +320,14 @@ a {
 
       .content-desc-section {
         .center-container {
-          height: calc(100vh - 15px);
+          height: calc(100vh - 85px);
           overflow: hidden;
           overflow-y: auto;
           margin-bottom: 0;
           padding-bottom: 6px;
+          @media only screen and (max-width: 1750px) {
+            height: calc(100vh - 70px);
+          }
         }
       }
     }
@@ -875,9 +878,12 @@ a {
 
 .vertical-tab-card {
   .card {
-    height: calc(100vh - 265px);
+    height: calc(100vh - 267px);
 
     @media only screen and (max-width: 1750px) {
+      height: calc(100vh - 245px);
+    }
+    @media only screen and (max-width: 1366px) {
       height: calc(100vh - 240px);
     }
 
@@ -907,10 +913,10 @@ a {
 .vertical-tab-card {
   &.organization {
     .card {
-      height: calc(100vh - 120px);
+      height: calc(100vh - 93px);
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 106px);
+        height: calc(100vh - 83px);
       }
 
       .vertical-tab-inner {
@@ -1181,6 +1187,7 @@ a {
 
             .card {
               margin: 4px 5px 0;
+              padding-top: 3px;
               height: 100%;
             }
           }
@@ -1311,8 +1318,11 @@ a {
     .card-body-sec {
       margin-top: 0;
       padding: 5px !important;
-      height: calc(100vh - 250px);
+      height: calc(100vh - 297px);
       overflow: hidden;
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 265px);
+      }
     }
   }
 }
@@ -1953,7 +1963,7 @@ a {
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 290px);
+        height: calc(100vh - 295px);
       }
     }
   }
@@ -2141,12 +2151,15 @@ a {
   .card-body-sec {
     .note-card-sec {
       // max-height: calc(100vh - 235px);
-      height: calc(100vh - 345px);
+      height: calc(100vh - 346px);
       overflow: hidden;
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 300px);
+        height: calc(100vh - 305px);
+      }
+      @media only screen and (max-width: 1650px) {
+        height: calc(100vh - 301px);
       }
 
       .bottom-info {
@@ -2198,14 +2211,7 @@ a {
   .tab-sub-section {
     .tab-sub-content {
       .grid-section {
-        max-height: calc(100vh - 395px);
-        overflow: hidden;
-        overflow-y: auto;
         margin: 10px 0;
-
-        @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 235px);
-        }
       }
     }
   }
@@ -2584,15 +2590,12 @@ input[type="checkbox"]:disabled {
 
     table {
       tbody {
-        max-height: calc(100vh - 355px);
+        max-height: calc(100vh - 325px);
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 325px);
+          max-height: calc(100vh - 285px);
         }
 
-        @media only screen and (max-width: 1650px) {
-          max-height: calc(100vh - 320px);
-        }
       }
     }
   }
@@ -3055,7 +3058,7 @@ input[type="checkbox"]:disabled {
     .card-top-title-btn {
       min-height: 30px;
       max-height: 30px;
-      padding-bottom: 7px;
+      padding-bottom: 8px;
     }
   }
 
@@ -3832,27 +3835,31 @@ input[type="checkbox"]:disabled {
     .tab-section {
       display: flex;
       width: 100%;
-      height: calc(100vh - 190px);
+      height: calc(100vh - 130px);
       position: relative;
+
+      @media only screen and (max-width: 1750px) {
+      height: calc(100vh - 105px);
+      }
     }
 
     .tab-content {
       width: 85%;
-      padding: 0 0 15px 15px;
-      height: calc(100vh - 140px);
+      padding: 0 0 0px 15px;
+      height: calc(100vh - 130px);
       overflow: hidden;
       overflow-y: auto;
       transition: 0.5s all;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 120px);
+        height: calc(100vh - 105px);
       }
 
       .organiazation-history .main-card {
-        max-height: calc(100vh - 165px);
+        max-height: calc(100vh - 138px);
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 145px);
+          max-height: calc(100vh - 115px);
         }
       }
     }
@@ -4059,6 +4066,8 @@ input[type="checkbox"]:disabled {
 
   table {
     tbody {
+      overflow: unset;
+      max-height: unset;
       tr {
         td {
           span {
@@ -4247,6 +4256,7 @@ input[type="checkbox"]:disabled {
   max-height: calc(100vh - 150px);
   overflow: hidden;
   overflow-y: auto;
+
   @media only screen and (max-width: 1750px) {
     max-height: calc(100vh - 140px);
   }
@@ -4254,16 +4264,18 @@ input[type="checkbox"]:disabled {
 
 .pg-viewer-wrapper {
   overflow-y: auto !important;
+
   .document-container {
     padding: 15px !important;
     width: 100% !important;
   }
 }
-.right-side-sec-padding-0{
+
+.right-side-sec-padding-0 {
   .document-list-sec {
     .document-listing {
       .documents {
-        .right-desc{
+        .right-desc {
           padding-top: 0;
         }
       }

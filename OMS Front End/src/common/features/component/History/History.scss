@@ -1,9 +1,12 @@
 // New Timeline Start
 
 .history-scroll-class {
-  height: calc(100vh - 295px);
+  height: calc(100vh - 345px);
   overflow: hidden;
   overflow-y: auto;
+  @media only screen and (max-width: 1750px) {
+    height: calc(100vh - 300px);
+  }
 }
 
 .main-card {
@@ -161,7 +164,6 @@
 // New Timeline Sec Start
 
 .new-timeline-sec {
-  max-height: calc(100vh - 320px);
   .timeline {
     width: 97%;
     max-width: 97%;
