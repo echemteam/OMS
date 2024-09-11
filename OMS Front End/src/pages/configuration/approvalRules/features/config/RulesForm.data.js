@@ -2,7 +2,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 import { GridColumnType } from "../../../../../data/gridColumnType";
 
 export const rulesFormData = {
-    initialState: { approvalConfigurationId: 0, ruleName: "", moduleId: "", functionalityId: "", functionalitiesFieldId: "", roleId: "", isFunctional: false },
+    initialState: { approvalConfigurationId: 0, ruleName: "", moduleId: "", functionalityId: "",functionalityEventId: "", functionalitiesFieldId: "", roleId: "",isFunctional:false },
     formFields: [
         {
             id: "ruleName",
@@ -58,7 +58,7 @@ export const rulesFormData = {
             fieldType: FormFieldTypes.SELECT,
             dataField: "functionalityEventId",
             fieldSetting: {
-                // isDisabled: true,
+                isDisabled: true,
                 placeholder: "Select Functionality Event",
                 isEnableOnChange: true
             },

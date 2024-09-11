@@ -160,13 +160,17 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
       // Retrieve the corresponding values
       const customerId = customerIdKey ? newValues[customerIdKey] : null;
       const supplierId = supplierIdKey ? newValues[supplierIdKey] : null;
-
       // Determine if the redirect button should be shown
       const showRedirectButton = !!customerId || !!supplierId;
-
       setCustomerId(customerId);
       setSupplierId(supplierId);
       setShowRedirectButton(showRedirectButton);
+    } else if (!approvedData) {
+      setOldFieldValue(null);
+      setNewFieldValue(null);
+      setCustomerId(null);
+      setSupplierId(null);
+      setShowRedirectButton(null);
     }
   }, [approvedData]);
 
@@ -266,9 +270,9 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
 
   return (
     <React.Fragment>
-      {approvedData ?
+      {(!isEventByIdLoading && !isUpdateLoading) || (isGetSupplierFetching || isGetCustomerFetching) ?
         <div className="task-detail">
-          {(approvedData && !isEventByIdLoading && !isUpdateLoading) || (isGetSupplierFetching || isGetCustomerFetching) ?
+          {approvedData ?
             <>
               <div className="task-head">
                 <div className="d-flex align-items-center">
@@ -346,10 +350,34 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                           {approvedData.oldValueTemplate ?
                             <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.oldValueTemplate }}></div>
                             :
+                            <>
+                              {Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).length > 0 ? (
+                                <ul className="value-content pl-0">
+                                  {Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).map(([key, value]) => (
+                                    <li key={key}>
+                                      <span className="value-label">{key}:</span>
+                                      <span className="value-data ml-2">
+                                        {renderValue(value)}
+                                      </span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              ) : (
+                                <div className="no-value">No new value available</div>
+                              )}
+                            </>
+                          }
+                        </div>
+                      }
+                      <div className="value-block w-100">
+                        <span className="value-title">New Value</span>
+                        {approvedData.newValueTemplate ?
+                          <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.newValueTemplate }}></div>
+                          :
                           <>
-                            {Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).length > 0 ? (
+                            {Object.entries(filterKeysWithId(parseJson(approvedData.newValue))).length > 0 ? (
                               <ul className="value-content pl-0">
-                                {Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).map(([key, value]) => (
+                                {Object.entries(filterKeysWithId(parseJson(approvedData.newValue))).map(([key, value]) => (
                                   <li key={key}>
                                     <span className="value-label">{key}:</span>
                                     <span className="value-data ml-2">
@@ -362,31 +390,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                               <div className="no-value">No new value available</div>
                             )}
                           </>
-                          } 
-                        </div>
-                      }
-                      <div className="value-block w-100">
-                        <span className="value-title">New Value</span>
-                         {approvedData.newValueTemplate ?
-                          <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.newValueTemplate }}></div>
-                          : 
-                        <>
-                          {Object.entries(filterKeysWithId(parseJson(approvedData.newValue))).length > 0 ? (
-                            <ul className="value-content pl-0">
-                              {Object.entries(filterKeysWithId(parseJson(approvedData.newValue))).map(([key, value]) => (
-                                <li key={key}>
-                                  <span className="value-label">{key}:</span>
-                                  <span className="value-data ml-2">
-                                    {renderValue(value)}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          ) : (
-                            <div className="no-value">No new value available</div>
-                          )}
-                        </>
-                        } 
+                        }
                       </div>
                     </React.Fragment>
                   }
@@ -463,10 +467,10 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                 </div>
               </CenterModel>
             </>
-            : <DataLoader />
+            : <NoRecordFound />
           }
         </div>
-        : <NoRecordFound />}
+        : <DataLoader />}
     </React.Fragment>
   );
 };

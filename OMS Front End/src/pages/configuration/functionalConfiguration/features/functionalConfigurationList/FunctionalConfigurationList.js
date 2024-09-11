@@ -2,14 +2,14 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import { functionalConfigurationListData } from './config/FunctionalConfigurationList.data';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useGetFunctionalitiesMutation } from '../../../../../app/services/configurationAPI';
-import { encryptUrlData } from '../../../../../services/CryptoService';
+// import { encryptUrlData } from '../../../../../services/CryptoService';
 import FinalMolGrid from '../../../../../components/FinalMolGrid/FinalMolGrid';
 
 const FunctionalConfigurationList = (props) => {
     const molGridRef = useRef();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [listData, setListData] = useState();
     const [totalRowCount, setTotalRowCount] = useState(0);
     const [getFunctionalities, { isLoading: isGetFunctionalitiesLoading, isSuccess: isGetFunctionalitiesSuccess, data: isGetFunctionalitiesData }] = useGetFunctionalitiesMutation();
@@ -63,11 +63,11 @@ const FunctionalConfigurationList = (props) => {
         }
     }, [props.moduleId]);
 
-    const handleViewClick = (data) => {
-        const encryptedFunctionalityId = encryptUrlData(data.functionalityId);
-        const encryptedModuleName = encryptUrlData(data.moduleName);
-        navigate(`/FunctionalConfigurationViewDetail/${encryptedFunctionalityId}/${encryptedModuleName}`, "_blank");
-    }
+    // const handleViewClick = (data) => {
+    //     const encryptedFunctionalityId = encryptUrlData(data.functionalityId);
+    //     const encryptedModuleName = encryptUrlData(data.moduleName);
+    //     navigate(`/FunctionalConfigurationViewDetail/${encryptedFunctionalityId}/${encryptedModuleName}`, "_blank");
+    // }
 
     const onGetData = () => {
         if (molGridRef.current) {

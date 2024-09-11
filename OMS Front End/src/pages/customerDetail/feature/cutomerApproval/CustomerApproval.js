@@ -12,7 +12,7 @@ const ApprovalCheckList = React.lazy(() => import("../../../../components/Approv
 const ApprovalValidateData = React.lazy(() => import("../../../../components/ApprovalCheckList/feature/approvalValidateData/ApprovalValidateData"));
 
 
-const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval, isDetailPage, isAddPagePage }) => {
+const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval,customerData, isDetailPage, isAddPagePage }) => {
 
     const parentRef = useRef();
     const [customerId, setCustomerId] = useState(0);
@@ -97,7 +97,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
                 <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={customerId} onSuccessApprovalClose={onSuccessApprovalClose}
                     ApprovalData={isSubCustomer ? ApprovalEnum.APPROVESUBCUSTOMER : ApprovalEnum.APPROVECUSTOMER} isSupplierApproval={false} isSubCustomer={isSubCustomer}
                     getBasicInformationById={useLazyGetCustomersInfoByIdQuery} getAddressById={useLazyGetCustomerAddresssInfoByIdQuery}
-                    getContactById={useLazyGetCustomerContactInfoByIdQuery} getFinacialSettingById={useLazyGetCustomerFinacialSettingQuery} ownerType={OwnerType.Customer}
+                    getContactById={useLazyGetCustomerContactInfoByIdQuery} getFinacialSettingById={useLazyGetCustomerFinacialSettingQuery} ownerType={OwnerType.Customer} customerData={customerData}
                 />
             }
         </React.Fragment>

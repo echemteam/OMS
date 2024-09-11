@@ -58,7 +58,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   };
 
   const showButtons = () => {
-    if (visibleItems.length > 0) {
+    if (visibleItems.length === validateCheckList.length) {
       const allDone = visibleItems.some(data => data.isValid === false);
       if (!allDone) {
         setShowDoneButton(true);
