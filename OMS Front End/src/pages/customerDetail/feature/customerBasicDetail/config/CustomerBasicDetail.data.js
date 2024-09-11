@@ -6,7 +6,7 @@ import { getLabelClass } from "../../../../../utils/StatusColors/StatusColors";
 export const excludingRoles = ['Admin', 'manager']
 
 export const customerbasicData = {
-  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isSubCustomer: false, taxId: "", isBuyingForThirdParty: false, responsibleUserId: "", customerNoteId: "" , incotermId:"" },
+  initialState: { name: "", groupTypeId: 1, countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", isSubCustomer: false, taxId: "", isBuyingForThirdParty: false, responsibleUserId: "", customerNoteId: "", incotermId: "" },
   formFields: [
     {
       id: "name",
@@ -137,9 +137,10 @@ export const customerbasicData = {
       dataField: "taxId",
       fieldSetting: {
         placeholder: "Tax Id",
-        allowSpace: true,
+        allowSpace: false,
         minLength: 10,
         maxLength: 10,
+        exemptBoundarySpaces: true
       },
       inputIcon: {
         isIconShow: true,
