@@ -192,7 +192,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         if (!data) return;
 
         const contactTypeId = getContactTypeId(data.contactTypeId, isEdit);
-        const request = requestData(data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
+        const request = requestData(data, contactTypeId.value, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
         let req = {
             ...request,
             customerId: customerId ? customerId : request.customerId
