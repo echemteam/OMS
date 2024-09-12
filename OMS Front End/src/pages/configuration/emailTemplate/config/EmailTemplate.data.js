@@ -47,7 +47,7 @@ export const EmailTemplateFormData = {
           allowSpace: true,
           maxLength: 1000,
         },
- 
+        validation: [{ type: "require" }],
         style: {
           containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12  mb-2",
         },

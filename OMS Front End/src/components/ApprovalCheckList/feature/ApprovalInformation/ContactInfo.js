@@ -10,12 +10,11 @@ const ContactInformation = ({
   getContactById,
   approvalChekedData,
   handleCheckbox,
+  isSupplierApproval
 }) => {
   //** State */
   const [contactInformation, setContactInformation] = useState([]);
-  const [isChecked, setIsChecked] = useState(
-    approvalChekedData?.isChecked || false
-  );
+  const [isChecked, setIsChecked] = useState(approvalChekedData?.isChecked || false);
 
   //** API Call's */
   const [
@@ -29,7 +28,7 @@ const ContactInformation = ({
 
   useEffect(() => {
     if (isModelOpen && mainId) {
-      const type = [ContactType.INVOICESUBMISSION, ContactType.AP];
+      const type = !isSupplierApproval ? [ContactType.INVOICESUBMISSION, ContactType.AP] : [ContactType.ACCOUNTSRECEIVABLE];
       let req = {
         id: mainId,
         searchText: "",
@@ -69,9 +68,8 @@ const ContactInformation = ({
               <div className="card-part" key={index}>
                 <h6 className="title">{contact.type}</h6>
                 <h6
-                  className={`name-title ${
-                    contact.isPrimary ? "is-primary" : ""
-                  }`}
+                  className={`name-title ${contact.isPrimary ? "is-primary" : ""
+                    }`}
                 >
                   <span className="label">Name :</span>
                   <p className="name-desc">
@@ -97,13 +95,12 @@ const ContactInformation = ({
                       contact.phoneNumberList.map((phoneData) => (
                         <>
                           <h6
-                            className={`name-desc d-flex ${
-                              phoneData.phoneType === "Home"
-                                ? "home"
-                                : phoneData.phoneType === "Work"
+                            className={`name-desc d-flex ${phoneData.phoneType === "Home"
+                              ? "home"
+                              : phoneData.phoneType === "Work"
                                 ? "work"
                                 : "home"
-                            } ${phoneData.isPrimary ? "is-primary" : ""}`}
+                              } ${phoneData.isPrimary ? "is-primary" : ""}`}
                           >
                             ({phoneData.phoneCode}) {phoneData.phoneNumber}
                             {phoneData.extension
