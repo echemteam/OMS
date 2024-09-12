@@ -1,41 +1,66 @@
 import React, { useEffect, useRef, useState } from "react";
-import Buttons from "../ui/button/Buttons";
 import "./Shorting.scss";
-import RadioButton from "../ui/inputs/radioButton/RadioButton";
+import Buttons from "../ui/button/Buttons";
 import Checkbox from "../ui/inputs/checkBox/CheckBox";
+import RadioButton from "../ui/inputs/radioButton/RadioButton";
 
 const options = [
   { label: "Newest", value: "Newest" },
   { label: "Oldest", value: "Oldest" },
 ];
-const checkboxOptions = [
-  { label: "Select All", value: "selectAll", checked: false },
-  { label: "First", value: "first", checked: false },
-  { label: "Second", value: "second", checked: false },
-  { label: "Third", value: "third", checked: false },
-  { label: "Fourth", value: "fourth", checked: false },
-  { label: "Fifth", value: "fifth", checked: false },
-];
+
 const Shorting = (props) => {
-  const [selectedOrderBy, setSelectedOrderBy] = useState("Newest");
-  const [checkboxes, setCheckboxes] = useState(checkboxOptions);
-  const [isDropdownActive, setIsDropdownActive] = useState(false);
+
   const dropdownRef = useRef(null);
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
+  const [selectedOrderBy, setSelectedOrderBy] = useState("Newest");
+  const [checkboxes, setCheckboxes] = useState(props.filtersOptions);
+
   const handleRadioChange = (event) => {
     setSelectedOrderBy(event.target.value);
     if (props.selectedSortOrder) {
       props.selectedSortOrder(event.target.value);
     }
   };
-  const handleCheckboxChange = (index) => {
-    const newCheckboxes = [...checkboxes];
-    newCheckboxes[index].checked = !newCheckboxes[index].checked;
+
+  const handleCheckboxChange = (value) => {
+    let newCheckboxes;
+
+    if (value === 0) {
+      const allSelected = checkboxes.every(option => option.isChecked);
+      newCheckboxes = checkboxes.map(option => ({
+        ...option,
+        isChecked: !allSelected
+      }));
+    } else {
+      newCheckboxes = checkboxes.map(option =>
+        option.value === value ? { ...option, isChecked: !option.isChecked } : option
+      );
+      const allSelected = newCheckboxes.every(option => option.value === 0 || option.isChecked);
+      newCheckboxes = newCheckboxes.map(option =>
+        option.value === 0 ? { ...option, isChecked: allSelected } : option
+      );
+    }
+
     setCheckboxes(newCheckboxes);
+
+    if (props.selectedFilterOptions) {
+      // Collect selected values to pass to the parent component
+      const selectedValues = newCheckboxes.filter(option => option.isChecked && option.value !== 0).map(option => option.value);
+      props.selectedFilterOptions(selectedValues);
+    }
   };
+
   // Toggle dropdown
   const toggleDropdown = () => {
     setIsDropdownActive((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    if (props.filtersOptions) {
+      setCheckboxes(props.filtersOptions);
+    }
+  }, [props.filtersOptions]);
 
   // Detect clicks outside of the dropdown to remove active class
   useEffect(() => {
@@ -45,10 +70,8 @@ const Shorting = (props) => {
         setIsDropdownActive(false); // Remove active class if clicked outside
       }
     };
-
     // Add event listener when the component mounts
     document.addEventListener("mousedown", handleClickOutside);
-
     // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -76,13 +99,14 @@ const Shorting = (props) => {
             <div className="shorting-title">Filters By</div>
             <div className="shorting-inputs">
               <div className="checkbox">
-                {checkboxes.map((checkbox, index) => (
+                {checkboxes && checkboxes.map((option, index) => (
                   <div className="input-checkbox">
                     <Checkbox
                       key={index}
-                      checked={checkbox.checked}
-                      label={checkbox.label}
-                      onChange={() => handleCheckboxChange(index)}
+                      name={option.label}
+                      checked={option.isChecked}
+                      label={option.label}
+                      onChange={() => handleCheckboxChange(option.value)}
                     />
                   </div>
                 ))}

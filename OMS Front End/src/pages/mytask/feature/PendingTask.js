@@ -1,20 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { useLazyGetApprovalRequestsListByStatusAndRoleIdQuery } from "../../../app/services/ApprovalAPI";
+//** Lib's */
 import "../../mytask/MyTask.scss";
-import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
-import DataLoader from "../../../components/ui/dataLoader/DataLoader";
-import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
+import PropTypes from "prop-types";
 import formatDate from "../../../lib/formatDate";
 import CardSection from "../../../components/ui/card/CardSection";
+import DataLoader from "../../../components/ui/dataLoader/DataLoader";
+import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
+import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
+//** Service's */
+import { useLazyGetApprovalRequestsListByStatusAndRoleIdQuery } from "../../../app/services/ApprovalAPI";
+//** Component's */
 import ModuleList from "./ModuleList";
 
 const PendingTask = (props) => {
+
   const [orderBy, setOrderBy] = useState("Newest");
   const [activeTab, setActiveTab] = useState(null);
   const [pendingData, setPendingData] = useState([]);
-  const [pendingEvents, setPendingEvents] = useState([]);
+  const [selectedfilterBy, setSelectedFilterBy] = useState([]);
+  const [selectedModule, setSelectedModule] = useState(props.moduleList[0]?.moduleId);
 
   const [
     getApprovalRequestsListByStatus,
@@ -26,90 +31,80 @@ const PendingTask = (props) => {
   ] = useLazyGetApprovalRequestsListByStatusAndRoleIdQuery();
 
   useEffect(() => {
-    if (props.Pending) {
-      getApprovalRequestList();
+    if (props.moduleList && props.moduleList.length > 0) {
+      handleRequest();
     }
-  }, [props.Pending, props.roleId]);
-
-  const getApprovalRequestList = () => {
-    let req = {
-      status: props.Pending,
-      roleId: props.roleId,
-      orderby: orderBy
-    };
-    getApprovalRequestsListByStatus(req);
-  };
+  }, [props.Pending, props.roleId, props.moduleList]);
 
   useEffect(() => {
     if (props.isApproval) {
-      getApprovalRequestList();
+      handleRequest();
     }
     props.setIsApproval(false);
   }, [props.isApproval]);
 
   useEffect(() => {
-    if (
-      !isGetApprovalRequestsListByStatusFetching &&
-      isGetApprovalRequestsListByStatusSuccess &&
-      isGetApprovalRequestsListByStatusData
+    if (!isGetApprovalRequestsListByStatusFetching && isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData
     ) {
-      const filterData =
-        props.moduleList[0]?.moduleId &&
-        isGetApprovalRequestsListByStatusData.filter(
-          (data) => data.moduleId === props.moduleList[0].moduleId
-        );
-      setPendingData(filterData);
-      setPendingEvents(isGetApprovalRequestsListByStatusData);
+      setPendingData(isGetApprovalRequestsListByStatusData);
+      if (!isGetApprovalRequestsListByStatusData || isGetApprovalRequestsListByStatusData?.length === 0) {
+        if (props.handleRestEventDetail) {
+          props.handleRestEventDetail();
+        }
+      } else {
+        handleTabClick(isGetApprovalRequestsListByStatusData[0]?.approvalRequestId);
+      }
     }
-  }, [
-    isGetApprovalRequestsListByStatusFetching,
-    isGetApprovalRequestsListByStatusSuccess,
-    isGetApprovalRequestsListByStatusData,
-  ]);
+  }, [isGetApprovalRequestsListByStatusFetching, isGetApprovalRequestsListByStatusSuccess, isGetApprovalRequestsListByStatusData]);
 
+  const handleRequest = (updatedFields = {}) => {
+    let req = {
+      status: props.Pending, // Common value
+      roleId: props.roleId,  // Common value
+      orderby: orderBy || "Newest", // Default to "Newest" if not set
+      eventIds: selectedfilterBy || [], // Default to empty array if no filter is set
+      moduleId: selectedModule || props.moduleList[0]?.moduleId, // Default to the first module if not set
+      ...updatedFields
+    };
+    getApprovalRequestsListByStatus(req);
+  };
   const handleTabClick = (id) => {
     setActiveTab(id);
     if (props.onGetById) {
       props.onGetById(id);
     }
   };
-
   const handleModuleClick = (moduleId) => {
-    const filterData = pendingEvents.filter(
-      (data) => data.moduleId === moduleId
-    );
-    setPendingData(filterData);
+    handleRequest({ moduleId });
+
     if (props.handleRestEventDetail) {
       props.handleRestEventDetail();
     }
+    setSelectedModule(moduleId);
   };
-
   const selectedSortOrder = (orderBy) => {
-    orderBy && setOrderBy(orderBy);
-    let req = {
-      status: props.Pending,
-      roleId: props.roleId,
-      orderby: orderBy
-    };
-    getApprovalRequestsListByStatus(req);
-  }
+    handleRequest({ orderby: orderBy });
+    setOrderBy(orderBy);
+  };
+  const selectedFilterOptions = (selectedFilterOption) => {
+    handleRequest({ eventIds: selectedFilterOption });
+    setSelectedFilterBy(selectedFilterOption);
+  };
 
   return (
     <>
       <div className="row">
         <div className="col-5 pr-0">
-          <ModuleList
-            moduleList={props.moduleList}
-            apiResponseData={pendingData}
-            handleTabClick={handleTabClick}
-            onModuleChange={handleModuleClick}
-          />
+          <ModuleList moduleList={props.moduleList}
+            onModuleChange={handleModuleClick} />
         </div>
         <div className="col-7 pl-1 pr-1">
           <CardSection
             cardTitle="Events"
             rightButton={true}
             isShort={true}
+            filtersOptions={props.eventList}
+            selectedFilterOptions={selectedFilterOptions}
             selectedSortOrder={selectedSortOrder}
           >
             <div className="customer-info">

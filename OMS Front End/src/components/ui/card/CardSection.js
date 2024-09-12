@@ -52,7 +52,9 @@ function CardSection({
   isIcon,
   iconClass,
   isShort,
-  selectedSortOrder
+  selectedSortOrder,
+  filtersOptions,
+  selectedFilterOptions
 }) {
   return (
     <div
@@ -138,7 +140,7 @@ function CardSection({
                   ""
                 )}
                 {isShort ? <>
-                  <Shorting selectedSortOrder={selectedSortOrder} />
+                  <Shorting selectedSortOrder={selectedSortOrder} filtersOptions={filtersOptions} selectedFilterOptions={selectedFilterOptions} />
                 </> : null}
                 {multipleButton && (
                   <div className="btn-right-sec">
