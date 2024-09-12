@@ -94,7 +94,7 @@ namespace OMS.Application.Services.Approval
             responceData = await repositoryManager.approval.AddApprovalRequests(approvalRequestsDto);
             return responceData;
         }
-        public Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string roleId, string eventIds, string sortOrder, int moduleId)
+        public Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string? roleId, string? eventIds, string? sortOrder, int? moduleId)
         {
             return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(status, roleId, eventIds, sortOrder,moduleId);
         }
