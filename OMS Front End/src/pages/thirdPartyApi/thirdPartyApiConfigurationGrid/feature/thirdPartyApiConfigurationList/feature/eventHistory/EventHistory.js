@@ -5,6 +5,7 @@ import DataLoader from "../../../../../../../components/ui/dataLoader/DataLoader
 import formatDate from "../../../../../../../lib/formatDate";
 import NoRecordFound from "../../../../../../../components/ui/noRecordFound/NoRecordFound";
 import '../../../../../../../pages/organization/feature/organizationHistory/OrganizationHistory.scss';
+import CardSection from "../../../../../../../components/ui/card/CardSection";
 
 const EventHistory = ({keyId}) => {
     const [historyLogList, setHistoryLogList] = useState([]);
@@ -95,11 +96,13 @@ const EventHistory = ({keyId}) => {
         return <NoRecordFound />;
       };
   return (
+    <CardSection>
     <div className="row">
       <div className="col-md-12">
         <div className="main-card">{renderContent()}</div>
       </div>
     </div>
+    </CardSection>
   );
 };
 export default EventHistory;

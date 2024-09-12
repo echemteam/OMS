@@ -22,6 +22,7 @@ import { reasonData } from "../../common/features/component/CustomerSupplierReas
 import { useUpdateCustomerInActiveStatusMutation } from "../../app/services/basicdetailAPI";
 import { setDropDownOptionField } from "../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { excludingRoles } from "../../pages/customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
+import { useAddCustomerNotesMutation } from "../../app/services/notesAPI";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -50,7 +51,7 @@ const ApprovalCheckList = ({
   isSubCustomer,
   ownerType,
   basicData,
-//  setStatusCheckId
+  //  setStatusCheckId
 }) => {
   //** State */
   const reasonRef = useRef();
@@ -83,6 +84,7 @@ const ApprovalCheckList = ({
       data: isGetCheckListData,
     },
   ] = useLazyGetUserCheckListQuery();
+  const [addCustomerNotes] = useAddCustomerNotesMutation();
   // const [
   //   addUserCheckResponse,
   //   {
@@ -163,7 +165,7 @@ const ApprovalCheckList = ({
 
 
   const handleUpdate = () => {
- 
+
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
@@ -173,9 +175,8 @@ const ApprovalCheckList = ({
         note: custData.inActiveReason,
       };
       updateCustomerInActiveStatus(req);
-    //  setStatusCheckId(req.statusId)
-    
-
+      addCustomerNotes(req)
+      //setStatusCheckId(req.statusId)
     }
   };
 
@@ -201,12 +202,9 @@ const ApprovalCheckList = ({
       }
     }
   }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
+  
   useEffect(() => {
-    if (
-      !isGetAllDocumentByOwnerIdFetching &&
-      isGetAllDocumentByOwnerIdSuccess &&
-      isGetAllDocumentByOwnerIdData
-    ) {
+    if ( !isGetAllDocumentByOwnerIdFetching && isGetAllDocumentByOwnerIdSuccess && isGetAllDocumentByOwnerIdData) {
       const transformedData = isGetAllDocumentByOwnerIdData.map((item) => ({
         value: item.documentId,
         label: item.name,
@@ -214,14 +212,11 @@ const ApprovalCheckList = ({
       }));
       setDocumentListData(transformedData);
     }
-  }, [
-    isGetAllDocumentByOwnerIdFetching,
-    isGetAllDocumentByOwnerIdSuccess,
-    isGetAllDocumentByOwnerIdData,
-  ]);
-const handleToggleModal=()=>{
-  setShowModal(false);
-  onSidebarClose();
+  }, [ isGetAllDocumentByOwnerIdFetching,isGetAllDocumentByOwnerIdSuccess,isGetAllDocumentByOwnerIdData]);
+
+  const handleToggleModal=()=>{
+      setShowModal(false);
+      onSidebarClose();
 }
   const determineFileType = (fileName) => {
     const extension = fileName.split(".").pop().toLowerCase();
