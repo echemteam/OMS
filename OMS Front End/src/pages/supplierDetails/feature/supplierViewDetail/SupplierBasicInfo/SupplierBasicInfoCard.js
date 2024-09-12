@@ -24,6 +24,7 @@ import { reasonData } from '../../../../../common/features/component/CustomerSup
 import { excludingRoles } from '../../../../customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data';
 import Iconify from '../../../../../components/ui/iconify/Iconify';
 import DropdownSelect from '../../../../../components/ui/dropdown/DropdownSelect';
+import { useAddSupplierNotesMutation } from '../../../../../app/services/supplierNotesAPI';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../supplierApproval/SupplierApproval"));
@@ -40,6 +41,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const [showEditIcon, setShowEditIcon] = useState(true);
   const [responsibleUserIds, setResponsibleUserIds] = useState([]);
   const [rUserValue, setRUserValue] = useState([]);
+  const [addSupplierNotes] = useAddSupplierNotesMutation();
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
   const [getAllUser, { isFetching: isSuppilierFetching, isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
   const [addEditResponsibleUserForSupplier, { isSuccess: isSuccessAddEditResponsibleUserForSupplier, data: isAddEditResponsibleUserForSupplierData }] = useAddEditResponsibleUserForSupplierMutation();
@@ -221,14 +223,18 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   }
 
   const handleUpdate = () => {
+  
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
         ...custData,
         supplierId: supplierId,
         statusId: selectedStatus ? selectedStatus : 0,
+        note: custData.inActiveReason,
+
       }
       updateSupplierInActiveStatus(req);
+      addSupplierNotes(req);
       updateRUserDataDropdown(custData.responsibleUserId);
     }
   }
