@@ -320,11 +320,15 @@ a {
 
       .content-desc-section {
         .center-container {
-          height: calc(100vh - 15px);
+          height: calc(100vh - 60px);
           overflow: hidden;
           overflow-y: auto;
           margin-bottom: 0;
           padding-bottom: 6px;
+
+          @media only screen and (max-width: 1750px) {
+            height: calc(100vh - 50px);
+          }
         }
       }
     }
@@ -747,9 +751,11 @@ a {
 .address-main-card-sec {
   .card {
     padding-top: 7px;
+    height: calc(100vh - 247px) !important;
 
     @media only screen and (max-width: 1750px) {
       padding-top: 7px;
+      height: calc(100vh - 225px) !important;
     }
   }
 }
@@ -875,9 +881,13 @@ a {
 
 .vertical-tab-card {
   .card {
-    height: calc(100vh - 265px);
+    height: calc(100vh - 267px);
 
     @media only screen and (max-width: 1750px) {
+      height: calc(100vh - 245px);
+    }
+
+    @media only screen and (max-width: 1366px) {
       height: calc(100vh - 240px);
     }
 
@@ -1312,8 +1322,12 @@ a {
     .card-body-sec {
       margin-top: 0;
       padding: 5px !important;
-      height: calc(100vh - 250px);
+      height: calc(100vh - 297px);
       overflow: hidden;
+
+      @media only screen and (max-width: 1750px) {
+        height: calc(100vh - 265px);
+      }
     }
   }
 }
@@ -1954,7 +1968,7 @@ a {
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 290px);
+        height: calc(100vh - 295px);
       }
     }
   }
@@ -2142,12 +2156,16 @@ a {
   .card-body-sec {
     .note-card-sec {
       // max-height: calc(100vh - 235px);
-      height: calc(100vh - 345px);
+      height: calc(100vh - 346px);
       overflow: hidden;
       overflow-y: auto;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 300px);
+        height: calc(100vh - 305px);
+      }
+
+      @media only screen and (max-width: 1650px) {
+        height: calc(100vh - 301px);
       }
 
       .bottom-info {
@@ -2185,10 +2203,10 @@ a {
   .card {
     .card-body-sec {
       .note-card-sec {
-        height: calc(100vh - 325px);
+        height: calc(100vh - 320px);
 
         @media only screen and (max-width: 1750px) {
-          height: calc(100vh - 285px);
+          height: calc(100vh - 280px);
         }
       }
     }
@@ -3554,11 +3572,11 @@ input[type="checkbox"]:disabled {
   .tab-section {
     display: flex;
     width: 100%;
-    height: calc(100vh - 355px);
+    height: calc(100vh - 320px);
     position: relative;
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 305px);
+      height: calc(100vh - 285px);
     }
 
     .tab-header {
@@ -3603,14 +3621,14 @@ input[type="checkbox"]:disabled {
 
     .tab-content {
       width: 85%;
-      padding: 0 15px 15px 15px;
-      height: calc(100vh - 355px);
+      padding: 0 15px 0 15px;
+      height: calc(100vh - 315px);
       overflow: hidden;
       overflow-y: auto;
       transition: 0.5s all;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 340px);
+        height: calc(100vh - 280px);
         padding-bottom: 0;
       }
     }
@@ -3711,15 +3729,14 @@ input[type="checkbox"]:disabled {
 }
 
 .order-body {
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 100px);
 
   .stepper-section {
     .stepper-content {
-      min-height: calc(100vh - 230px);
-      max-height: calc(100vh - 230px) !important;
+      max-height: calc(100vh - 150px);
 
       @media only screen and (max-width: 1750px) {
-        min-height: calc(100vh - 470px);
+        max-height: calc(100vh - 155px) !important;
       }
     }
   }
@@ -3827,7 +3844,7 @@ input[type="checkbox"]:disabled {
       position: relative;
 
       @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 105px);
+        height: calc(100vh - 105px);
       }
     }
 
@@ -3904,10 +3921,10 @@ input[type="checkbox"]:disabled {
       height: calc(100vh - 185px) !important;
 
       .tab-content {
-        height: calc(100vh - 165px) !important;
+        height: calc(100vh - 185px) !important;
 
         @media only screen and (max-width: 1750px) {
-          height: calc(100vh - 165px) !important;
+          height: calc(100vh - 155px) !important;
         }
       }
     }
@@ -3916,7 +3933,7 @@ input[type="checkbox"]:disabled {
   .api-provider {
     table {
       tbody {
-        max-height: calc(100vh - 315px) !important;
+        max-height: calc(100vh - 305px) !important;
 
         @media only screen and (max-width: 1750px) {
           max-height: calc(100vh - 255px) !important;
@@ -3927,10 +3944,10 @@ input[type="checkbox"]:disabled {
     &.api-partner {
       table {
         tbody {
-          max-height: calc(100vh - 375px) !important;
+          max-height: calc(100vh - 365px) !important;
 
           @media only screen and (max-width: 1750px) {
-            max-height: calc(100vh - 335px) !important;
+            max-height: calc(100vh - 315px) !important;
           }
         }
       }
@@ -4054,6 +4071,9 @@ input[type="checkbox"]:disabled {
 
   table {
     tbody {
+      overflow: unset;
+      max-height: unset;
+
       tr {
         td {
           span {

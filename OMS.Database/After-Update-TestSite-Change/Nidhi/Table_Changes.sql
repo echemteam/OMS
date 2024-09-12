@@ -1,0 +1,1 @@
+ALTER TABLE ApprovalConfiguration ADD Template NVARCHAR(MAX);

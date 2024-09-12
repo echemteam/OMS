@@ -198,28 +198,13 @@
 
 .stepper-card {
   &.order-stepper {
-    height: calc(100vh - 105px);
+    height: 100%;
     .card {
-      @media only screen and (max-width: 1750px) {
-        height: 100%;
-      }
+    height: auto;
     }
   }
 }
-.stepper-card {
-  &.order-stepper {
-    .stepper-section {
-      .stepper-content {
-        min-height: calc(100vh - 235px);
-        max-height: calc(100vh - 235px) !important;
-        @media only screen and (max-width: 1750px) {
-          min-height: calc(100vh - 175px);
-          max-height: calc(100vh - 175px) !important;
-        }
-      }
-    }
-  }
-}
+
 
 
 @media only screen and (max-width: 1650px) {
