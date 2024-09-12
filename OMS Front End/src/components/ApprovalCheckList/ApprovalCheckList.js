@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 //** Lib's */
 import Buttons from "../ui/button/Buttons";
 import FileViewer from "react-file-viewer";
 import { AppIcons } from "../../data/appIcons";
 import DataLoader from "../ui/dataLoader/DataLoader";
 import SidebarModel from "../ui/sidebarModel/SidebarModel";
-import { transformData } from "./Config/ApprovalTransformData";
+import { customerApprovalCheckList, subCustomerApprovalCheckList, supplierApprovalCheckList, transformData } from "./Config/ApprovalTransformData";
 //** Service's */
 import ToastService from "../../services/toastService/ToastService";
 import { useLazyGetUserCheckListQuery } from "../../app/services/ApprovalAPI";
@@ -64,18 +64,18 @@ const ApprovalCheckList = ({
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [getFileType, setGetFileType] = useState([]);
   const [actionType, setActionType] = useState(null);
-  
-  const [approvalChekedData, setApprovalChekedData] = useState([
-    { name: "basicInformation", isCheked: false },
-    { name: "addressInformation", isCheked: false },
-    { name: "contactInformation", isCheked: false },
-    { name: "settingInformation", isCheked: false },
-  ]);
 
-  const addressInfoCheck = [{ name: "addressInformation", isCheked: false }]
+  const [approvalChekedData, setApprovalChekedData] = useState(() => {
+    if (!isSupplierApproval) {
+      return isSubCustomer ? subCustomerApprovalCheckList : customerApprovalCheckList;
+    } else if (isSupplierApproval) {
+      return supplierApprovalCheckList;
+    }
+  });
+
 
   //** API Call's */
-    const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
+  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
   const [
     getCheckList,
     {
@@ -118,35 +118,34 @@ const ApprovalCheckList = ({
       data: isDownalodData,
     },
   ] = useLazyDownloadDocumentQuery();
-  useEffect(()=>{
-    if(showModal)
-    getAllUser()
-        if (basicData?.responsibleUserId) {
-          const responsibleUserIds = basicData?.responsibleUserId
-            ?.split(",")
-            .map((id) => Number(id.trim()));
-      
-          const formNew={...formData}
-          formNew.initialState = {
-              ...formNew.initialState,
-              responsibleUserId: responsibleUserIds,
-          };
+  useEffect(() => {
+    if (showModal)
+      getAllUser()
+    if (basicData?.responsibleUserId) {
+      const responsibleUserIds = basicData?.responsibleUserId
+        ?.split(",")
+        .map((id) => Number(id.trim()));
+
+      const formNew = { ...formData }
+      formNew.initialState = {
+        ...formNew.initialState,
+        responsibleUserId: responsibleUserIds,
+      };
       setFormData(formNew);
     }
-  },[showModal])
+  }, [showModal])
 
   if (isGetAllUserSucess && allGetAllUserData) {
     const filterData = allGetAllUserData.filter((item) => {
-        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+      return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
     });
     // Remove duplicates based on fullName
     const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
     setDropDownOptionField(uniqueData, 'userId', 'fullName', reasonData, 'responsibleUserId');
-}
+  }
 
   const handleCheckbox = (name, isChecked) => {
-    const listData = isSubCustomer ? addressInfoCheck : approvalChekedData;
-    const updatedData = listData.map((item) =>
+    const updatedData = approvalChekedData.map((item) =>
       item.name === name ? { ...item, isCheked: isChecked } : item
     );
     setCheckListData(updatedData);
@@ -158,8 +157,8 @@ const ApprovalCheckList = ({
       updateCustomerInActiveStatusData
     ) {
       ToastService.success(updateCustomerInActiveStatusData.errorMessage);
-     
-       handleToggleModal();
+
+      handleToggleModal();
     }
   }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
 
@@ -202,9 +201,9 @@ const ApprovalCheckList = ({
       }
     }
   }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
-  
+
   useEffect(() => {
-    if ( !isGetAllDocumentByOwnerIdFetching && isGetAllDocumentByOwnerIdSuccess && isGetAllDocumentByOwnerIdData) {
+    if (!isGetAllDocumentByOwnerIdFetching && isGetAllDocumentByOwnerIdSuccess && isGetAllDocumentByOwnerIdData) {
       const transformedData = isGetAllDocumentByOwnerIdData.map((item) => ({
         value: item.documentId,
         label: item.name,
@@ -212,12 +211,12 @@ const ApprovalCheckList = ({
       }));
       setDocumentListData(transformedData);
     }
-  }, [ isGetAllDocumentByOwnerIdFetching,isGetAllDocumentByOwnerIdSuccess,isGetAllDocumentByOwnerIdData]);
+  }, [isGetAllDocumentByOwnerIdFetching, isGetAllDocumentByOwnerIdSuccess, isGetAllDocumentByOwnerIdData]);
 
-  const handleToggleModal=()=>{
-      setShowModal(false);
-      onSidebarClose();
-}
+  const handleToggleModal = () => {
+    setShowModal(false);
+    onSidebarClose();
+  }
   const determineFileType = (fileName) => {
     const extension = fileName.split(".").pop().toLowerCase();
     switch (extension) {
@@ -305,7 +304,7 @@ const ApprovalCheckList = ({
   };
   const handleRejectResponse = () => {
     setShowModal(true);
-    
+
   };
   const handleDocumentChange = (selectedoption) => {
     setDocument(selectedoption.value);
@@ -350,10 +349,9 @@ const ApprovalCheckList = ({
                             isModelOpen={isModelOpen}
                             mainId={mainId}
                             getBasicInformationById={getBasicInformationById}
-                            approvalChekedData={approvalChekedData.find(
-                              (item) => item.name === "basicInformation"
-                            )}
+                            approvalChekedData={approvalChekedData.find((item) => item.name === "basicInformation")}
                             handleCheckbox={handleCheckbox}
+                            isSupplierApproval={isSupplierApproval}
                           />
                         </div>
                         {!isSubCustomer ? (
@@ -381,13 +379,11 @@ const ApprovalCheckList = ({
                             mainId={mainId}
                             getAddressById={getAddressById}
                             isSubCustomer={isSubCustomer}
-                            approvalChekedData={addressInfoCheck.find(
-                              (item) => item.name === "addressInformation"
-                            )}
+                            approvalChekedData={approvalChekedData.find((item) => item.name === "addressInformation")}
                             handleCheckbox={handleCheckbox}
                           />
                         </div>
-                        {!isSubCustomer ? (
+                        {!isSubCustomer && !isSupplierApproval ? (
                           <div className="col-12 mb-3">
                             <div className="approval-list-part">
                               <SettingInformation
@@ -395,9 +391,7 @@ const ApprovalCheckList = ({
                                 isModelOpen={isModelOpen}
                                 mainId={mainId}
                                 getFinacialSettingById={getFinacialSettingById}
-                                approvalChekedData={approvalChekedData.find(
-                                  (item) => item.name === "settingInformation"
-                                )}
+                                approvalChekedData={approvalChekedData.find((item) => item.name === "settingInformation")}
                                 handleCheckbox={handleCheckbox}
                               />
                             </div>
@@ -508,31 +502,31 @@ const ApprovalCheckList = ({
         )}
       </SidebarModel>
       <CenterModel
-            showModal={showModal}
-            handleToggleModal={handleToggleModal}
-            modalTitle={`Reject Reason`}
-            modelSizeClass="w-50s" >
-            <div className="row">
-              <FormCreator config={formData} ref={reasonRef} {...formData} />
-              <div className="col-md-12 mt-2">
-                <div className="d-flex align-item-end justify-content-end">
-                  <div className="d-flex align-item-end">
-                    <Buttons
-                      buttonTypeClassName="theme-button"
-                      buttonText="Update"
-                      isLoading={updateCustomerInActiveStatusCustomerLoading}
-                      onClick={handleUpdate}
-                    />
-                    <Buttons
-                      buttonTypeClassName="dark-btn ml-5"
-                      buttonText="Cancel"
-                      onClick={handleToggleModal}
-                    />
-                  </div>
-                </div>
+        showModal={showModal}
+        handleToggleModal={handleToggleModal}
+        modalTitle={`Reject Reason`}
+        modelSizeClass="w-50s" >
+        <div className="row">
+          <FormCreator config={formData} ref={reasonRef} {...formData} />
+          <div className="col-md-12 mt-2">
+            <div className="d-flex align-item-end justify-content-end">
+              <div className="d-flex align-item-end">
+                <Buttons
+                  buttonTypeClassName="theme-button"
+                  buttonText="Update"
+                  isLoading={updateCustomerInActiveStatusCustomerLoading}
+                  onClick={handleUpdate}
+                />
+                <Buttons
+                  buttonTypeClassName="dark-btn ml-5"
+                  buttonText="Cancel"
+                  onClick={handleToggleModal}
+                />
               </div>
             </div>
-          </CenterModel>
+          </div>
+        </div>
+      </CenterModel>
     </div>
   );
 };

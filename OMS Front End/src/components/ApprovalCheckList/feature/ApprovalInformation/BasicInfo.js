@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
 import PropTypes from "prop-types";
+import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../../app/services/supplierAPI";
 
-const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById, approvalChekedData, handleCheckbox }) => {
+const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById, approvalChekedData, handleCheckbox, isSupplierApproval }) => {
+
   const [basicInformation, setBasicInformation] = useState();
-  const [isChecked, setIsChecked] = useState(
-    approvalChekedData?.isChecked || false
-  );
+  const [isChecked, setIsChecked] = useState(approvalChekedData?.isChecked || false);
 
   //** API Call's */
   const [
@@ -19,25 +19,28 @@ const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById, approv
     },
   ] = getBasicInformationById();
 
+  const [getSupplierBasicInformationById, { isFetching: isGetSupplierBasicInformationByIdFetching, isSuccess: isGetSupplierBasicInformationById,
+    data: GetSupplierBasicInformationByIdData }] = useLazyGetSupplierBasicInformationByIdQuery();
+
   useEffect(() => {
-    if (isModelOpen && mainId) {
+    if (isModelOpen && mainId && !isSupplierApproval) {
       getCustomerBasicInfoById(mainId);
+    } else if (isSupplierApproval) {
+      getSupplierBasicInformationById(mainId);
     }
   }, [isModelOpen, mainId]);
 
   useEffect(() => {
-    if (
-      !isGetCustomerBasicInfoByIdFetching &&
-      isGetCustomerBasicInfoByIdSuccess &&
-      isGetCustomerBasicInfoByIdData
-    ) {
+    if (!isGetCustomerBasicInfoByIdFetching && isGetCustomerBasicInfoByIdSuccess && isGetCustomerBasicInfoByIdData) {
       setBasicInformation(isGetCustomerBasicInfoByIdData);
     }
-  }, [
-    isGetCustomerBasicInfoByIdFetching,
-    isGetCustomerBasicInfoByIdSuccess,
-    isGetCustomerBasicInfoByIdData,
-  ]);
+  }, [isGetCustomerBasicInfoByIdFetching, isGetCustomerBasicInfoByIdSuccess, isGetCustomerBasicInfoByIdData,]);
+
+  useEffect(() => {
+    if (!isGetSupplierBasicInformationByIdFetching && isGetSupplierBasicInformationById && GetSupplierBasicInformationByIdData) {
+      setBasicInformation(GetSupplierBasicInformationByIdData);
+    }
+  }, [isGetSupplierBasicInformationByIdFetching, isGetSupplierBasicInformationById, GetSupplierBasicInformationByIdData]);
 
   const handleChange = (checkedValue, newValue) => {
     setIsChecked(newValue);
@@ -76,16 +79,18 @@ const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById, approv
               <span className="label">Country:</span>
               <p className="name-desc">{basicInformation.countryName}</p>
             </h6>
-            <h6 className="name-title">
-              <span className="label">Is Sub Customer:</span>
-              <p className="name-desc">
-                {basicInformation && basicInformation.isSubCustomer ? (
-                  <i className="fa fa-check green-color"></i>
-                ) : (
-                  <i className="fa fa-times red-color"></i>
-                )}
-              </p>
-            </h6>
+            {!isSupplierApproval &&
+              <h6 className="name-title">
+                <span className="label">Is Sub Customer:</span>
+                <p className="name-desc">
+                  {basicInformation && basicInformation.isSubCustomer ? (
+                    <i className="fa fa-check green-color"></i>
+                  ) : (
+                    <i className="fa fa-times red-color"></i>
+                  )}
+                </p>
+              </h6>
+            }
           </div>
         )}
       </div>
