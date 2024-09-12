@@ -21,6 +21,7 @@
 }
 
 .verify-product-group {
+
   // margin-top: 36px;
   .loader-section {
     padding: 0;
@@ -47,6 +48,7 @@
       }
     }
   }
+
   .record-not-found {
     border: 1px solid var(--inputBorder);
     border-radius: 5px;
@@ -107,22 +109,26 @@
 
         .checkbox {
           margin-right: 15px;
+
           @media only screen and (max-width: 1366px) {
             margin-right: 7px;
           }
         }
+
         .right-edit-pencil {
           min-width: 45px;
           display: flex;
           align-items: center;
           justify-content: flex-end;
         }
+
         .edit-button {
           background: none;
           border: none;
           cursor: pointer;
           padding: 0;
           margin: 0 15px;
+
           &:first-child {
             margin-left: 0;
             margin-right: 15px;
@@ -199,8 +205,9 @@
 .stepper-card {
   &.order-stepper {
     height: 100%;
+
     .card {
-    height: auto;
+      height: auto;
     }
   }
 }
@@ -211,4 +218,41 @@
   .input-field {
     height: 28px;
   }
+}
+
+
+
+
+
+.order-listing {
+  .card {
+    &.card-section-left {
+      .card-top-title-btn {
+        .manage-customer-dropdown {
+          width: auto;
+
+          .col-md-4 {
+            width: 400px;
+          }
+        }
+      }
+    }
+
+    .card-body-sec {
+      table {
+        tbody {
+          max-height: calc(100vh - 215px);
+          @media only screen and (max-width: 1750px) {
+          max-height: calc(100vh - 196px);
+
+          }
+          @media only screen and (max-width: 1280px) {
+            max-height: calc(100vh - 227px);
+  
+            }
+        }
+      }
+    }
+  }
+
 }

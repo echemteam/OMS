@@ -8,6 +8,8 @@ export const securityKey = {
 
      // Order
      ORDER: "Order",
+     ADDORDER: "Add Order",
+     ORDERLIST: "Order List",
 
      //** User Management */
      USERMANAGEMENT: "User Management",
