@@ -8,23 +8,19 @@ namespace Common.Helper.ReplacePlaceholders
     {
         public static string ProcessTemplate(string jsonValue, string template)
         {
-            if (string.IsNullOrWhiteSpace(jsonValue))
-            {
-                return ReplacePlaceholdersWithTable(template, new List<Dictionary<string, object>>(), new Dictionary<string, object>());
-            }
 
             try
             {
                 var data = JObject.Parse(jsonValue).ToObject<Dictionary<string, object>>();
                 var dataList = new List<Dictionary<string, object>>();
 
-                foreach (var entry in data)
+                foreach (var entry in data!)
                 {
                     if (entry.Value is JArray jArray)
                     {
                         var listData = jArray.ToObject<List<Dictionary<string, object>>>();
                         template = ReplaceListPlaceholders(template, entry.Key, listData!);
-                        if (!listData.Any())
+                        if (!listData!.Any())
                         {
                             template = template.Replace($"#{entry.Key}#", "No data available");
                         }
