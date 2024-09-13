@@ -44,7 +44,8 @@ const AddressInformation = ({
       const addressTypeArray = !isSupplierApproval ? isSubCustomer ? [AddressType.SHIPPING] : [AddressType.BILLING, AddressType.SHIPPING] : [AddressType.BANKADDRESS];
 
       const customerFilteredData = isGetAddressByIdData.filter((address) => addressTypeArray.includes(address.addressTypeId)
-        && (address.isPreferredBilling === true || address.isPreferredShipping === true));
+        // && (address.isPreferredBilling === true || address.isPreferredShipping === true)
+      );
 
       const supplierFilteredData = isGetAddressByIdData.filter((address) => addressTypeArray.includes(address.addressTypeId));
 

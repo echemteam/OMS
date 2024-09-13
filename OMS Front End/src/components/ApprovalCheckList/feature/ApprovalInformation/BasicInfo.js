@@ -6,7 +6,8 @@ import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../../app/ser
 
 const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById, approvalChekedData, handleCheckbox, isSupplierApproval }) => {
 
-  const [basicInformation, setBasicInformation] = useState();
+  const [customerBasicInformation, setCustomerBasicInformation] = useState();
+  const [supplierBasicInformation, setSupplierBasicInformation] = useState();
   const [isChecked, setIsChecked] = useState(approvalChekedData?.isChecked || false);
 
   //** API Call's */
@@ -32,13 +33,13 @@ const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById, approv
 
   useEffect(() => {
     if (!isGetCustomerBasicInfoByIdFetching && isGetCustomerBasicInfoByIdSuccess && isGetCustomerBasicInfoByIdData) {
-      setBasicInformation(isGetCustomerBasicInfoByIdData);
+      setCustomerBasicInformation(isGetCustomerBasicInfoByIdData);
     }
   }, [isGetCustomerBasicInfoByIdFetching, isGetCustomerBasicInfoByIdSuccess, isGetCustomerBasicInfoByIdData,]);
 
   useEffect(() => {
     if (!isGetSupplierBasicInformationByIdFetching && isGetSupplierBasicInformationById && GetSupplierBasicInformationByIdData) {
-      setBasicInformation(GetSupplierBasicInformationByIdData);
+      setSupplierBasicInformation(GetSupplierBasicInformationByIdData);
     }
   }, [isGetSupplierBasicInformationByIdFetching, isGetSupplierBasicInformationById, GetSupplierBasicInformationByIdData]);
 
@@ -46,6 +47,9 @@ const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById, approv
     setIsChecked(newValue);
     handleCheckbox(checkedValue, newValue);
   };
+
+  // Determine which basic information to use
+  const basicInformation = isSupplierApproval ? supplierBasicInformation : customerBasicInformation;
 
   return (
     <>
@@ -64,7 +68,7 @@ const BasicInformation = ({ isModelOpen, mainId, getBasicInformationById, approv
         {basicInformation && (
           <div className="card-part">
             <h6 className="name-title">
-              <span className="label">Customer Name:</span>
+              <span className="label">{!isSupplierApproval ? "Customer" : "Supplier"} Name:</span>
               <p className="name-desc">{basicInformation.name} </p>
             </h6>
             <h6 className="name-title">
