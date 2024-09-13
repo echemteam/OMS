@@ -3,9 +3,7 @@ using Common.Helper.Enum;
 using Common.Helper.Export;
 using Common.Helper.Extension;
 using Common.Helper.ReplacePlaceholders;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
@@ -78,25 +76,27 @@ namespace OMS.Application.Services.Approval
         }
         public async Task<AddEntityDto<int>> AddApprovalRequests(AddApprovalRequests requestData, short CurrentUserId)
         {
-            AddEntityDto<int> responceData = new();
             var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(requestData.FunctionalityEventId);
 
-            if (formatTemplate == null || string.IsNullOrWhiteSpace(formatTemplate.Template))
-            {
-                responceData.ErrorMessage = "Template not found or is empty.";
-            }
             var approvalRequestsDto = requestData.ToMapp<AddApprovalRequests, ApprovalRequestsDto>();
             approvalRequestsDto.RequestedByUserId = CurrentUserId;
 
-            approvalRequestsDto.OldValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(requestData.OldValue!, formatTemplate!.Template!);
-            approvalRequestsDto.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(requestData.NewValue!, formatTemplate!.Template!);
-
-            responceData = await repositoryManager.approval.AddApprovalRequests(approvalRequestsDto);
-            return responceData;
+            if (formatTemplate?.Template != null && formatTemplate.Template != string.Empty && !string.IsNullOrWhiteSpace(formatTemplate.Template) && !string.IsNullOrEmpty(formatTemplate.Template))
+            {
+                if (!string.IsNullOrEmpty(requestData.OldValue))
+                {
+                    approvalRequestsDto.OldValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(requestData.OldValue!, formatTemplate!.Template!);
+                }
+                if (!string.IsNullOrEmpty(requestData.NewValue))
+                {
+                    approvalRequestsDto.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(requestData.NewValue!, formatTemplate!.Template!);
+                }
+            }
+            return await repositoryManager.approval.AddApprovalRequests(approvalRequestsDto);
         }
         public Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string? roleId, string? eventIds, string? sortOrder, int? moduleId)
         {
-            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(status, roleId, eventIds, sortOrder,moduleId);
+            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(status, roleId, eventIds, sortOrder, moduleId);
         }
         public async Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId)
         {
@@ -238,7 +238,7 @@ namespace OMS.Application.Services.Approval
         private async Task<AddEntityDto<int>> HandleUpdateAddress(string newValue, short currentUserId)
         {
             var updateAddressDto = JsonConvert.DeserializeObject<AddressDto>(newValue);
-            updateAddressDto!.CreatedBy = currentUserId;
+            updateAddressDto!.UpdatedBy = currentUserId;
 
             await repositoryManager.address.UpdateAddAddress(updateAddressDto);
 
@@ -300,7 +300,7 @@ namespace OMS.Application.Services.Approval
         private async Task<AddEntityDto<int>> HandleUpdateShippingSetting(string newValue, short currentUserId)
         {
             var customerShppingDeliveryCarriersDto = JsonConvert.DeserializeObject<CustomerShppingDeliveryCarriersDto>(newValue);
-            customerShppingDeliveryCarriersDto!.CreatedBy = currentUserId;
+            customerShppingDeliveryCarriersDto!.UpdatedBy = currentUserId;
             return await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
         }
 

@@ -121,7 +121,7 @@ const AddOrderTab = () => {
   ];
 
   return (
-    <div className="stepper-card order-stepper">
+    <div className="stepper-card order-stepper add-order-steps">
       <div className="card">
         <div className="card-body-sec order-body">
           <div className="stepper-section">

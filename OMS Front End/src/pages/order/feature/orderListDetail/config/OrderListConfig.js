@@ -148,8 +148,8 @@ export const orderListMolGridConfig = {
   OnColumnChangeEdit: null,
   hasChildGridTable: true,
   childGridSetting: {
-    parentKeyDataField: "movieId",
-    childKeyDataField: "movieId",
+    parentKeyDataField: "id",
+    childKeyDataField: "id",
     hideChildHeader: false,
   },
 };

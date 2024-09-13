@@ -208,6 +208,15 @@
 
     .card {
       height: auto;
+      margin-bottom: 0;
+      .stepper-section {
+        .stepper-content{
+          min-height: calc(100vh - 215px);
+          @media only screen and (max-width: 1750px) {
+            min-height: calc(100vh - 165px);
+          }
+        }
+      }
     }
   }
 }
@@ -243,11 +252,15 @@
         tbody {
           max-height: calc(100vh - 215px);
           @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 196px);
+          max-height: calc(100vh - 230px);
 
           }
+          @media only screen and (max-width: 1650px) {
+            max-height: calc(100vh - 250px);
+  
+            }
           @media only screen and (max-width: 1280px) {
-            max-height: calc(100vh - 227px);
+            max-height: calc(100vh - 241px);
   
             }
         }

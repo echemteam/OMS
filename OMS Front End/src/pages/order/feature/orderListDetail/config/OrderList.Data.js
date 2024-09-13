@@ -94,7 +94,7 @@ export const collapsibleChildGridData = [
     action:""
   },
   {
-    id: 1,
+    id: 2,
     catalog: "Leonardo DiCaprio",
     casNumber: "Dom Cobb",
     unitSize: "1",
@@ -103,4 +103,65 @@ export const collapsibleChildGridData = [
     deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
     action:""
   },
+  {
+    id: 3,
+    catalog: "Leonardo DiCaprio",
+    casNumber: "Dom Cobb",
+    unitSize: "1",
+    price: "12521",
+    status: "Complete",
+    deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
+    action:""
+  },
+  {
+    id: 4,
+    catalog: "Leonardo DiCaprio",
+    casNumber: "Dom Cobb",
+    unitSize: "1",
+    price: "12521",
+    status: "Complete",
+    deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
+    action:""
+  },
+  {
+    id: 5,
+    catalog: "Leonardo DiCaprio",
+    casNumber: "Dom Cobb",
+    unitSize: "1",
+    price: "12521",
+    status: "Complete",
+    deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
+    action:""
+  },
+  {
+    id: 6,
+    catalog: "Leonardo DiCaprio",
+    casNumber: "Dom Cobb",
+    unitSize: "1",
+    price: "12521",
+    status: "Complete",
+    deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
+    action:""
+  },
+  {
+    id: 7,
+    catalog: "Leonardo DiCaprio",
+    casNumber: "Dom Cobb",
+    unitSize: "1",
+    price: "12521",
+    status: "Complete",
+    deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
+    action:""
+  },
+  {
+    id: 8,
+    catalog: "Leonardo DiCaprio",
+    casNumber: "Dom Cobb",
+    unitSize: "1",
+    price: "12521",
+    status: "Complete",
+    deliveryMeter: "fkj kdsfksdh fksdfhskjd f",
+    action:""
+  },
+
 ];
