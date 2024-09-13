@@ -33,7 +33,6 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
     useEffect(() => {
         if (documentData) {
             const parsedData = JSON.parse(documentData);
-            console.log(parsedData);
             setDocumentList(parsedData.documentInfoList);
         }
     }, [documentData]);
