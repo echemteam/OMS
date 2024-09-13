@@ -94,9 +94,9 @@ namespace OMS.Application.Services.Approval
             }
             return await repositoryManager.approval.AddApprovalRequests(approvalRequestsDto);
         }
-        public Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string? roleId, string? eventIds, string? sortOrder, int? moduleId)
+        public Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(GetApprovalRequestsListByStatusAndRoleIdRequest requestData)
         {
-            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(status, roleId, eventIds, sortOrder, moduleId);
+            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(requestData);
         }
         public async Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId)
         {
