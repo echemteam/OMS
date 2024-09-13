@@ -10,7 +10,12 @@ import React, {
 import { useNavigate } from "react-router-dom";
 
 import CardSection from "../../../../../../components/ui/card/CardSection";
-import { useAddEditResponsibleUserForCustomerMutation, useGetCustomersMutation, useUpdateCustomerApproveStatusMutation, useUpdateCustomerInActiveStatusMutation } from "../../../../../../app/services/basicdetailAPI";
+import {
+  useAddEditResponsibleUserForCustomerMutation,
+  useGetCustomersMutation,
+  useUpdateCustomerApproveStatusMutation,
+  useUpdateCustomerInActiveStatusMutation,
+} from "../../../../../../app/services/basicdetailAPI";
 import BasicDetailContext from "../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import CustomerListContext from "../../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { useAddCustomerNotesMutation } from "../../../../../../app/services/notesAPI";
@@ -22,23 +27,36 @@ import { hasFunctionalPermission } from "../../../../../../utils/AuthorizeNaviga
 import { securityKey } from "../../../../../../data/SecurityKey";
 import ToastService from "../../../../../../services/toastService/ToastService";
 import { encryptUrlData } from "../../../../../../services/CryptoService";
-import { StatusEnums, StatusFeild } from "../../../../../../utils/Enums/StatusEnums";
+import {
+  StatusEnums,
+  StatusFeild,
+} from "../../../../../../utils/Enums/StatusEnums";
 import { AppIcons } from "../../../../../../data/appIcons";
 import CenterModel from "../../../../../../components/ui/centerModel/CenterModel";
 import FormCreator from "../../../../../../components/Forms/FormCreator";
 import Buttons from "../../../../../../components/ui/button/Buttons";
 import CustomerApproval from "../../../../feature/cutomerApproval/CustomerApproval";
 import { reasonData } from "../../../../../../common/features/component/CustomerSupplierReason/Reason.data";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 import { validateResponsibleUserId } from "../../../../../../utils/ResponsibleUser/validateRUser";
 import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
 // import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
 //import MolGrid from "../../../../../../components/Grid/MolGrid";
 
-
-export const CustomersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
-
+export const CustomersList = ({
+  statusId,
+  configFile,
+  handleChange,
+  search,
+  handleChangeDropdown,
+  statusOptions,
+  selectedDrpvalues,
+  searchStatusFilter,
+  handleSearch,
+  handleClear,
+  shouldRerenderFormCreator,
+}) => {
   const navigate = useNavigate();
   const molGridRef = useRef();
   const reasonRef = useRef();
@@ -53,7 +71,8 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   const { listRef } = useContext(CustomerListContext);
   const authState = useSelector((state) => state.auth);
   const [assignRUser, setAssignRUser] = useState();
-  const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
+  const { isResponsibleUser, setIsResponsibleUser } =
+    useContext(BasicDetailContext);
 
   const [
     getCustomers,
@@ -74,10 +93,16 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
 
   const [
     addEditResponsibleUserForCustomer,
-    { isSuccess: isSuccessAddEditResponsibleUserForCustomer, data: isAddEditResponsibleUserForCustomerData },
+    {
+      isSuccess: isSuccessAddEditResponsibleUserForCustomer,
+      data: isAddEditResponsibleUserForCustomerData,
+    },
   ] = useAddEditResponsibleUserForCustomerMutation();
 
-  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
+  const [
+    getAllUser,
+    { isSuccess: isGetAllUserSucess, data: allGetAlluserData },
+  ] = useLazyGetAllUserQuery();
   // const [updateResponsibleUser] = useUpdateResponsibleUserMutation();
 
   const [addCustomerNotes] = useAddCustomerNotesMutation();
@@ -87,21 +112,42 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   }, [statusId]);
 
   useEffect(() => {
-    if (isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
-      ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage);
+    if (
+      isSuccessAddEditResponsibleUserForCustomer &&
+      isAddEditResponsibleUserForCustomerData
+    ) {
+      ToastService.success(
+        isAddEditResponsibleUserForCustomerData.errorMessage
+      );
     }
-  }, [isSuccessAddEditResponsibleUserForCustomer, isAddEditResponsibleUserForCustomerData]);
+  }, [
+    isSuccessAddEditResponsibleUserForCustomer,
+    isAddEditResponsibleUserForCustomerData,
+  ]);
 
   useEffect(() => {
     if (isGetAllUserSucess && allGetAlluserData) {
       const filterData = allGetAlluserData.filter((item) => {
-        return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+        return (
+          item.roleName === null ||
+          !excludingRoles
+            .map((role) => role.toLowerCase())
+            .includes(item.roleName.toLowerCase())
+        );
       });
       // Remove duplicates based on fullName
-      const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
-      setDropDownOptionField(uniqueData, 'userId', 'fullName', reasonData, 'responsibleUserId');
+      const uniqueData = Array.from(
+        new Map(filterData.map((item) => [item.fullName, item])).values()
+      );
+      setDropDownOptionField(
+        uniqueData,
+        "userId",
+        "fullName",
+        reasonData,
+        "responsibleUserId"
+      );
     }
-  }, [isGetAllUserSucess, allGetAlluserData,]);
+  }, [isGetAllUserSucess, allGetAlluserData]);
 
   useEffect(() => {
     onCustomeActionHandler();
@@ -109,11 +155,15 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
 
   const hasResponsibleUserhasAccess = () => {
     onCustomeActionHandler();
-  }
+  };
 
   const onCustomeActionHandler = () => {
-    const actionColumn = configFile?.columns.find((column) => column.name === "Action");
-    const approvalAction = configFile?.columns.find((column) => column.name === "Approve");
+    const actionColumn = configFile?.columns.find(
+      (column) => column.name === "Action"
+    );
+    const approvalAction = configFile?.columns.find(
+      (column) => column.name === "Approve"
+    );
     if (actionColumn) {
       const hasEdit = hasFunctionalPermission(securityKey.EDITCUSTOMER);
       const hasBlock = hasFunctionalPermission(securityKey.BLOCKCUSTOMER);
@@ -125,10 +175,26 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       if (actionColumn.defaultAction) {
         actionColumn.defaultAction.allowEdit = hasEdit?.hasAccess;
       }
-      actionColumn.customAction = securityValidator(hasBlock?.hasAccess, actionColumn.customAction, "ALLOWBLOCKED");
-      actionColumn.customAction = securityValidator(hasFreeze?.hasAccess, actionColumn.customAction, "ALLOWFREEZE");
-      actionColumn.customAction = securityValidator(hasDisable?.hasAccess, actionColumn.customAction, "ALLOWDISABLE");
-      actionColumn.customAction = securityValidator(hasUnBlock?.hasAccess, actionColumn.customAction, "ALLOWUNBLOCKED");
+      actionColumn.customAction = securityValidator(
+        hasBlock?.hasAccess,
+        actionColumn.customAction,
+        "ALLOWBLOCKED"
+      );
+      actionColumn.customAction = securityValidator(
+        hasFreeze?.hasAccess,
+        actionColumn.customAction,
+        "ALLOWFREEZE"
+      );
+      actionColumn.customAction = securityValidator(
+        hasDisable?.hasAccess,
+        actionColumn.customAction,
+        "ALLOWDISABLE"
+      );
+      actionColumn.customAction = securityValidator(
+        hasUnBlock?.hasAccess,
+        actionColumn.customAction,
+        "ALLOWUNBLOCKED"
+      );
     }
     if (approvalAction && approvalAction.colSettings) {
       approvalAction.colSettings.isDisabled = true;
@@ -138,10 +204,11 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
         approvalAction.colSettings.isDisabled = false;
       }
     }
-  }
+  };
 
   const handlePageChange = (page, sortingString) => {
-    const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
+    const sortingStringObject =
+      sortingString || molGridRef.current.generateSortingString();
     const request = {
       pagination: {
         pageNumber: page.pageNumber,
@@ -149,7 +216,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       },
       filters: { searchText: search },
       statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
-      sortString: sortingStringObject
+      sortString: sortingStringObject,
     };
     getCustomers(request);
   };
@@ -157,8 +224,11 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   useEffect(() => {
     if (isListSuccess && isListeData) {
       if (isListeData) {
-        const isResponsibleId = isListeData.dataSource.find(data =>
-          validateResponsibleUserId(data.responsibleUserId, authState?.user?.userID)
+        const isResponsibleId = isListeData.dataSource.find((data) =>
+          validateResponsibleUserId(
+            data.responsibleUserId,
+            authState?.user?.userID
+          )
         );
         if (isResponsibleId) {
           setIsResponsibleUser(true);
@@ -166,9 +236,9 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
         } else {
           setIsResponsibleUser(false);
         }
-        const modifyCustomerData = isListeData.dataSource.map(data => ({
+        const modifyCustomerData = isListeData.dataSource.map((data) => ({
           ...data,
-          taxId: data.taxId === '' ? '-' : data.taxId
+          taxId: data.taxId === "" ? "-" : data.taxId,
         }));
         setDataSource(modifyCustomerData);
       }
@@ -203,8 +273,10 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   }));
 
   const getListApi = (pageObject, sortingString) => {
-    const currentPageObject = pageObject || molGridRef.current.getCurrentPageObject();
-    const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
+    const currentPageObject =
+      pageObject || molGridRef.current.getCurrentPageObject();
+    const sortingStringObject =
+      sortingString || molGridRef.current.generateSortingString();
     const request = {
       pagination: {
         pageNumber: currentPageObject.pageNumber,
@@ -219,7 +291,7 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
 
   const handleSorting = (shortString) => {
     getListApi(molGridRef.current.getCurrentPageObject(), shortString);
-  }
+  };
 
   const handleEditClick = (data) => {
     navigate(`/CustomerDetails/${encryptUrlData(data.customerId)}`, "_blank");
@@ -227,7 +299,10 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
 
   const handleGridCheckBoxChange = (fieldName, rowData) => {
     if (childRef.current) {
-      childRef.current.callChildFunction(rowData.customerId, rowData.isSubCustomer ? rowData.isSubCustomer : false);
+      childRef.current.callChildFunction(
+        rowData.customerId,
+        rowData.isSubCustomer ? rowData.isSubCustomer : false
+      );
     }
     setCustomerId(rowData.customerId);
   };
@@ -245,11 +320,13 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   };
 
   const removeFields = () => {
-    const removeFields = ['ResponsibleUserId']
+    const removeFields = ["ResponsibleUserId"];
     const newFrom = { ...formData };
-    newFrom.formFields = formData.formFields.filter(field => !removeFields.includes(field.id));
+    newFrom.formFields = formData.formFields.filter(
+      (field) => !removeFields.includes(field.id)
+    );
     setFormData(newFrom);
-  }
+  };
 
   const handlefreeze = (data) => {
     removeFields();
@@ -275,7 +352,9 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
     setStatusFeild(StatusFeild.Block);
   };
   const handleReject = (data) => {
-    const customerData = dataSource.find(customerItem => customerItem.customerId === data.customerId);
+    const customerData = dataSource.find(
+      (customerItem) => customerItem.customerId === data.customerId
+    );
     setShowModal(true);
     setAssignRUser(false);
     setCustomerId(data.customerId);
@@ -303,7 +382,11 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
       };
       updateCustomerInActiveStatus(req);
       addCustomerNotes(req);
-      if (!assignRUser && custData.responsibleUserId && custData.responsibleUserId) {
+      if (
+        !assignRUser &&
+        custData.responsibleUserId &&
+        custData.responsibleUserId
+      ) {
         updateRUserData(custData.responsibleUserId);
       }
     }
@@ -312,10 +395,10 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   const updateRUserData = (value) => {
     let req = {
       customerId: customerID,
-      userId: String(value)
-    }
+      userId: String(value),
+    };
     addEditResponsibleUserForCustomer(req);
-  }
+  };
 
   const actionHandler = {
     EDIT: handleEditClick,
@@ -328,7 +411,10 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
   return (
     <div>
       <div className="row">
-        <div className="col-xxl-12 col-xl-12 col-md-12 col-12" key={shouldRerenderFormCreator}>
+        <div
+          className="col-xxl-12 col-xl-12 col-md-12 col-12"
+          key={shouldRerenderFormCreator}
+        >
           <CardSection
             searchInput={true}
             handleChange={handleChange}
@@ -382,7 +468,8 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
             showModal={showModal}
             handleToggleModal={handleToggleModal}
             modalTitle={`${statusFeild} Reason`}
-            modelSizeClass="w-50s" >
+            modelSizeClass="w-50s"
+          >
             <div className="row">
               <FormCreator config={formData} ref={reasonRef} {...formData} />
               <div className="col-md-12 mt-2">
@@ -406,7 +493,11 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
           </CenterModel>
         </div>
       </div>
-      <CustomerApproval childRef={childRef} getListApi={getListApi} updateCustomerApproval={updateCustomerApproval} />
+      <CustomerApproval
+        childRef={childRef}
+        getListApi={getListApi}
+        updateCustomerApproval={updateCustomerApproval}
+      />
     </div>
   );
 };
@@ -414,32 +505,36 @@ export const CustomersList = ({ statusId, configFile, handleChange, search, hand
 CustomersList.propTypes = {
   statusId: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
-    PropTypes.string
+    PropTypes.string,
   ]).isRequired,
   configFile: PropTypes.shape({
-    columns: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      defaultAction: PropTypes.shape({
-        allowActiveCustomer: PropTypes.bool,
-        allowBlocked: PropTypes.bool,
-        allowEdit: PropTypes.bool,
-        allowFreeze: PropTypes.bool,
-        allowDisable: PropTypes.bool,
-        allowUnblocked: PropTypes.bool,
-        allowUnfreeze: PropTypes.bool
+    columns: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        defaultAction: PropTypes.shape({
+          allowActiveCustomer: PropTypes.bool,
+          allowBlocked: PropTypes.bool,
+          allowEdit: PropTypes.bool,
+          allowFreeze: PropTypes.bool,
+          allowDisable: PropTypes.bool,
+          allowUnblocked: PropTypes.bool,
+          allowUnfreeze: PropTypes.bool,
+        }),
       })
-    })).isRequired
+    ).isRequired,
   }).isRequired,
   handleChange: PropTypes.func.isRequired,
   search: PropTypes.string.isRequired,
   handleChangeDropdown: PropTypes.func.isRequired,
-  statusOptions: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.number,
-    label: PropTypes.string
-  })).isRequired,
+  statusOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.number,
+      label: PropTypes.string,
+    })
+  ).isRequired,
   selectedDrpvalues: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.number),
-    PropTypes.string
+    PropTypes.string,
   ]).isRequired,
   searchStatusFilter: PropTypes.bool.isRequired,
   handleSearch: PropTypes.func.isRequired,

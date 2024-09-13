@@ -7,7 +7,6 @@ import { securityKey } from "../../data/SecurityKey";
 import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules";
 import ApiProviderViewDetail from "../../pages/apiConfiguration/apiProviders/features/apiProviderViewDetail/ApiProviderViewDetail";
 import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/feature/thirdPartyApiConfigurationList/feature/thirdPartyApiConfigurationViewDetails/ThirdPartyApiConfigurationViewDetails";
-import OrderList from "../../pages/order/orderGrid/OrderList";
 import EmailTemplate from "../../pages/configuration/emailTemplate/EmailTemplate";
 
 const ApiProviders = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProviders"));
@@ -18,6 +17,8 @@ const Dashboard = React.lazy(() => import('../../pages/dashboard/Dashboard'));
 
 //** Order */
 const Order = React.lazy(() => import('../../pages/order/addOrder/AddOrder'));
+
+const OrderList = React.lazy(() => import('../../pages/order/orderGrid/OrderList'));
 
 //** MyTask */
 const MyTask = React.lazy(() => import('../../pages/mytask/MyTask'));
@@ -70,14 +71,24 @@ export const ComponentNavigation = [
     securityKey: securityKey.DASHBOARD
   },
   {
-    id: "Order",
-    path: "/Order",
+    id: "addOrder",
+    path: "/addOrder",
     exact: true,
     title: '',
     component: Order,
     hasParams: false,
     text: 'Add Order',
-    securityKey: securityKey.ORDER
+    securityKey: securityKey.ADDORDER
+  },
+  {
+    id: "orderList",
+    path: "/Orders",
+    exact: true,
+    title: '',
+    component: OrderList,
+    hasParams: false,
+    text: 'Orders',
+    securityKey: securityKey.ADDORDER
   },
 
   {
@@ -114,7 +125,7 @@ export const ComponentNavigation = [
     id: 'Users',
     path: '/Users',
     exact: true,
-    title: 'Manage User',
+    title: '',
     component: Users,
     hasParams: false,
     text: 'Users',

@@ -3,11 +3,11 @@
   box-shadow: var(--white-card-shadow);
   height: 100%;
   position: relative;
-  width: 300px;
+  width: 250px;
   height: 100vh;
   transition: 0.5s all;
   @media only screen and (max-width: 1366px) {
-    width: 260px;
+    width: 200px;
   }
 
   .sidebar {

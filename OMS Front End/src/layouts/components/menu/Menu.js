@@ -173,17 +173,32 @@ export const Menu = [
       // },
     ],
   },
+  
   {
     groupLabel: "Orders",
     items: [
+    
       {
-        name: "Order",
+        name: "Order Details",
         id: "Order",
-        to: "/Order",
+        to: "#",
         iconClass: "lets-icons:order",
-        subMenu: false,
+        subMenu: true,
         securityKey: securityKey.ORDER,
-        children: [],
+        children: [
+          {
+            id: "addOrder",
+            submenuName: "Add Order",
+            to: "/addOrder",
+            securityKey: securityKey.ORDER,
+          },
+          {
+            id: "Suppliers",
+            submenuName: "Order",
+            to: "/Orders",
+            securityKey: securityKey.ORDER,
+          },
+        ],
       },
       {
         name: "My Task",

@@ -1,10 +1,10 @@
 import React from 'react'
-import UnderCunstruction from '../../../components/ui/underCunstruction/UnderCunstruction'
+import Orders from './feature/Orders'
 
 const OrderList = () => {
     return (
         <div>
-            <UnderCunstruction />
+            <Orders />
         </div>
     )
 }

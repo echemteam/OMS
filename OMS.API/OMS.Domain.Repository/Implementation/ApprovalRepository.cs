@@ -91,14 +91,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.NewValueTemplate,
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string status, string? roleId, string eventIds, string sortOrder)
+        public async Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string? roleId, string? eventIds, string? sortOrder, int? moduleId)
         {
             List<GetApprovalRequestsListByStatusAndRoleIdResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusAndRoleIdResponse>(GETAPPROVALREQUESTSLISTBYSTATUSANDROLEID, new
             {
                 roleId,
                 status,
                 eventIds,
-                sortOrder
+                sortOrder,
+                moduleId
             }, commandType: CommandType.StoredProcedure);
             return getAllUsersResponse;
         }

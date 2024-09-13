@@ -22,6 +22,7 @@ import EditCheckBoxColumn from "./Grid Columns/FinalEditColumns/EditCheckBoxColu
 import EditDropdownColumn from "./Grid Columns/FinalEditColumns/EditDropdownColumn";
 import EditDatepickerColumn from "./Grid Columns/FinalEditColumns/EditDatepickerColumn";
 import { renderEditGridAction } from "./Grid Columns/FinalEditColumns/EditActionColumn";
+import Iconify from "../ui/iconify/Iconify";
 
 // Function for rendering the action column
 const MolGridDataRows = ({
@@ -373,10 +374,7 @@ const MolGridDataRows = ({
           >
             {configuration.hasChildGridTable ? (
               <td className="first-td" onClick={() => toggleRow(rowIndex)}>
-                <span
-                  className={`bi bi-chevron-${collapsedRows[rowIndex] ? "down" : "right"
-                    }`}
-                ></span>
+                <Iconify icon={`${collapsedRows[rowIndex] ? "lucide:folder-up" : "lucide:folder-down"}`}/>
               </td>
             ) : null}
             {columns.map((col) => (

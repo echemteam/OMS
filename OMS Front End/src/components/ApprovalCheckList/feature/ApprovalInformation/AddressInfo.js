@@ -11,6 +11,7 @@ const AddressInformation = ({
   isSubCustomer,
   approvalChekedData,
   handleCheckbox,
+  isSupplierApproval
 }) => {
   //** State */
   const [addressInformation, setAddressInformation] = useState([]);
@@ -40,16 +41,15 @@ const AddressInformation = ({
       isGetAddressByIdSuccess &&
       isGetAddressByIdData
     ) {
-      const addressTypeArray = isSubCustomer
-        ? [AddressType.SHIPPING]
-        : [AddressType.BILLING, AddressType.SHIPPING];
-      const filteredData = isGetAddressByIdData.filter(
-        (address) =>
-          addressTypeArray.includes(address.addressTypeId) &&
-          (address.isPreferredBilling === true ||
-            address.isPreferredShipping === true)
+      const addressTypeArray = !isSupplierApproval ? isSubCustomer ? [AddressType.SHIPPING] : [AddressType.BILLING, AddressType.SHIPPING] : [AddressType.BANKADDRESS];
+
+      const customerFilteredData = isGetAddressByIdData.filter((address) => addressTypeArray.includes(address.addressTypeId)
+        // && (address.isPreferredBilling === true || address.isPreferredShipping === true)
       );
-      setAddressInformation(filteredData);
+
+      const supplierFilteredData = isGetAddressByIdData.filter((address) => addressTypeArray.includes(address.addressTypeId));
+
+      setAddressInformation(!isSupplierApproval ? customerFilteredData : supplierFilteredData);
     }
   }, [isGetAddressByIdFetching, isGetAddressByIdSuccess, isGetAddressByIdData]);
 

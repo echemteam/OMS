@@ -14,21 +14,9 @@ export const viewFunctionalEventsData = {
       name: "event",
       fieldName: "eventName",
       colStyle: {
-        width: "20%",
+        width: "25%",
       },
       allowShort: true,
-    },
-    {
-      name: "created date",
-      colStyle: {
-        width: "20%",
-      },
-      fieldName: "createdAt",
-      colType: GridColumnType.DATE,
-      colSettings: {
-        isUTC: true,
-        format: "MM/DD/YYYY hh:mm A ",
-      },
     },
     {
       name: "event Date",
@@ -46,7 +34,7 @@ export const viewFunctionalEventsData = {
       name: "description",
       fieldName: "description",
       colStyle: {
-        width: "40%",
+        width: "35%",
       },
       allowShort: true,
     },

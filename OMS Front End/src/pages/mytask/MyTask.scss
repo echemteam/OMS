@@ -1,4 +1,7 @@
+
+
 .mytask-section {
+  overflow: hidden;
   .task-title {
     margin: 0 0 5px 0px;
 
@@ -299,10 +302,9 @@
         display: flex;
         justify-content: space-between;
         padding: 0 15px;
-
-
         overflow-y: auto;
         // background: #f9f9f9;
+        width: 100%;
 
         .value-block {
           width: 49%;
@@ -358,6 +360,7 @@
           }
         }
         .document-list-sec{
+          width: 100%;
           .document-listing{
             .documents{
               .right-desc{

@@ -30,7 +30,7 @@ export const checkFormData = {
     },
     {
       id: "addressLine2Id",
-      lable: "Address Line 26",
+      lable: "Address Line 2",
       Field_Name: "Address Line 2",
       fieldType: FormFieldTypes.INPUT,
       dataField: "addressLine2Id",

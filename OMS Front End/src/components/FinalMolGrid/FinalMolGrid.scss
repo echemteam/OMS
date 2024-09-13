@@ -201,12 +201,12 @@ table {
     tr {
       display: flex;
       width: 100%;
-      border-bottom: 1px solid var(--inputBorder) !important;
+      border-bottom: 1px solid var(--tableBorderColor) !important;
       border-left: 0 !important;
       border-right: 0 !important;
 
       td {
-        padding: 8px 10px 8px 19px;
+        padding: 8px 10px 8px 20px;
         font-size: var(--commonFont-medium);
         align-self: center;
 
@@ -300,7 +300,8 @@ table {
             }
           }
         }
-        .input-field{
+
+        .input-field {
           // height: 25px;
           border-radius: 3px;
         }
@@ -319,6 +320,7 @@ table {
             cursor: pointer;
             display: flex;
             align-items: center;
+
             img {
               min-height: 17px;
               min-width: 17px;
@@ -401,6 +403,7 @@ table {
       @media only screen and (max-width: 1750px) {
         max-height: calc(100vh - 305px);
       }
+
       @media only screen and (max-width: 1366px) {
         max-height: calc(100vh - 300px);
       }
@@ -414,7 +417,9 @@ table {
       tr {
         th {
           // padding: 8px 10px 8px 15px;
-          padding: 11px 15px;
+          padding: 10px 15px;
+          display: flex;
+          align-items: center;
         }
       }
     }
@@ -422,8 +427,7 @@ table {
     tbody {
       tr {
         td {
-          // padding: 7px 10px 7px 15px;
-          padding: 6px 15px;
+          padding: 6px 14px;
 
           &:last-child {
             a {
@@ -455,3 +459,410 @@ table {
     align-items: center;
   }
 }
+
+
+
+// Table Accordion collapsible row Start
+.collapsible-table {
+  table {
+    &.table {
+      border-width: 1px;
+
+      thead {
+        background: var(--tableHeader);
+        --bs-table-bg: var(--tableHeader) !important;
+
+        tr {
+          &.heading-row {
+            background: var(--tableHeader) !important;
+            --bs-table-bg: var(--tableHeader) !important;
+          }
+
+          th {
+            border: 1px solid #808080;
+            padding: 5px 10px;
+            font-weight: normal;
+            color: var(--whiteColor);
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) {
+            --bs-table-bg: var(--tableRows);
+            background: var(--tableRows);
+          }
+
+          td {
+            padding: 5px 10px;
+            border: 1px solid #808080;
+            border-top-color: #cbdaf5;
+            border-bottom-color: #cbdaf5;
+            text-align: left;
+
+            &.accordion-toggle {
+              text-align: center;
+              background: #cbdbf5;
+              cursor: pointer !important;
+              width: 36px;
+              border-left: 1px solid #808080;
+              border-right: 1px solid #808080;
+              border-bottom: none;
+
+              span {
+                padding: 0;
+              }
+            }
+
+            &:last-child {
+              padding-bottom: 0;
+              border-right: 1px solid #808080;
+            }
+
+
+            span {
+              &.bi-chevron-right {}
+
+            }
+          }
+
+          .hiddenRow {
+            padding: 0;
+            border-top: none;
+
+            .accordian-body {
+              .table {
+                margin-bottom: 0;
+                border: none;
+
+                tbody {
+                  tr {
+                    &:first-child {
+                      td {
+                        border-top: 0;
+                      }
+                    }
+
+                    &:last-child {
+                      td {
+                        border-bottom: 0;
+                      }
+                    }
+
+                    td {
+
+                      &:first-child {
+                        --bs-table-bg: #cbdbf5;
+                        background: #cbdbf5;
+                        width: 35px;
+                        border: none;
+                        border-right: 1px solid #808080;
+                      }
+
+                      &:last-child {
+                        border-right: 0;
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+          }
+
+          &.activeRow {
+            --bs-table-bg: #d3d7de;
+            background: #d3d7de;
+
+            .accordion-toggle {
+              border-bottom: 0;
+              border-right: 1px solid #808080;
+
+              span {
+                &:before {
+                  transform: rotate(90deg);
+                  -webkit-transform: rotate(90deg);
+                  -moz-transform: rotate(90deg);
+                  -ms-transform: rotate(90deg);
+                  -o-transform: rotate(90deg);
+                }
+              }
+            }
+
+            td {
+
+              border-bottom-color: #459e1d;
+              border-right-color: #d3d7de;
+
+              &:last-child {
+                border-right: 1px solid #808080;
+              }
+            }
+          }
+
+          &.activeRow-sub {
+            .hiddenRow {
+              border-left: 1px solid #808080;
+              border-top: 1px solid #cbdaf5;
+              border-bottom: 0;
+              border-right: 1px solid #808080;
+
+              tr {
+                td {
+                  &:first-child {
+                    border-right: 1px solid;
+                  }
+                }
+              }
+            }
+          }
+
+          &:last-child {
+            td {
+              border-bottom: 1px solid #808080;
+
+              &.accordion-toggle {
+                border: 1px solid #808080;
+                border-top: 1px solid #cbdbf5;
+              }
+
+              .accordian-body {
+                table {
+                  tr {
+                    td {
+                      border-bottom: 0;
+                    }
+                  }
+                }
+              }
+
+            }
+
+            &.activeRow-sub {
+              td {
+                &:first-child {
+                  border-bottom: 1px solid;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+.table-custom {
+  table {
+    tr {
+
+      th {
+        font-weight: 600;
+        text-transform: uppercase;
+
+        &:nth-child(1) {
+          width: 2%;
+        }
+
+        &:nth-child(2) {
+          width: 30%;
+          text-align: left;
+        }
+
+        &:nth-child(3) {
+          width: 20%;
+          text-align: left;
+        }
+
+        &:nth-child(4) {
+          width: 20%;
+          text-align: left;
+        }
+
+        &:nth-child(5) {
+          width: 6%;
+          text-align: left;
+
+          .checkbox-part {
+            justify-content: left;
+          }
+        }
+      }
+
+      &.parent-row {
+        background: transparent;
+
+        td {
+          &:nth-child(1) {
+            width: 2%;
+            text-align: center;
+            padding-left: 10px;
+            cursor: pointer;
+
+            span {
+              padding: 0;
+            }
+          }
+
+          &:nth-child(2) {
+            text-align: left;
+          }
+
+          &:nth-child(3) {
+            text-align: center;
+
+            .checkbox-part {
+              justify-content: center;
+            }
+          }
+
+          &:nth-child(4) {
+            text-align: center;
+
+            .checkbox-part {
+              justify-content: center;
+            }
+          }
+
+          &:nth-child(5) {
+            text-align: center;
+
+            .checkbox-part {
+              justify-content: center;
+            }
+          }
+        }
+
+        &:nth-child(even) {}
+
+        &.collapsed {
+          background-color: var(--lightGreen);
+
+          td {
+            font-weight: 600;
+
+            &:first-child {}
+          }
+        }
+
+        &:nth-child(even) {}
+      }
+
+      &.child-row {
+        &:nth-child(odd) {
+          background-color: #dfe9f0;
+        }
+      }
+
+      .first-td {
+        border-bottom: 0;
+      }
+
+      td {
+        text-align: left;
+
+        &.sub-table {
+          padding: 0;
+          width: 100%;
+          background: var(--bg-main-content);
+          padding: 0 10px 0 10px;
+
+          table {
+            width: 100%;
+            border: none;
+            margin: 10px 0;
+            border: 1px solid #e6e6e8;
+            border-bottom: 0;
+
+            tr {
+              th {
+                padding: 8px 10px;
+                background: #9898b490;
+                border: 1px solid #e6e6e8;
+                border-top: 0;
+                border-bottom: 0;
+                color: var(--blackColor);
+                font-weight: 600;
+                text-transform: uppercase;
+
+                &:first-child {
+                  border-left: 0;
+                  padding-left: 10px;
+                }
+
+                &:nth-child(1) {
+                  text-align: left;
+                }
+
+                &:nth-child(2) {
+                  text-align: left;
+                }
+
+
+              }
+
+              td {
+                border: none;
+                border-right: 1px solid #e6e6e8;
+                padding: 5px 10px 5px 10px;
+
+                &:first-child {
+                  padding: 5px 0 5px 10px;
+                }
+
+                &:nth-child(1) {
+                  text-align: left;
+                }
+
+                &:nth-child(2) {
+                  text-align: left;
+
+                  .checkbox-part {
+                    justify-content: left;
+                  }
+                }
+
+                &:nth-child(3) {
+                  text-align: left;
+
+                  .checkbox-part {
+                    justify-content: left;
+                  }
+                }
+
+                &:nth-child(4) {
+                  text-align: left;
+
+                  .checkbox-part {
+                    justify-content: left;
+                  }
+                }
+
+                &:last-child {
+                  border: none;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &:last-child {
+        td {
+          // border-bottom: 1px solid #e6e6e8;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        background: var(--bg-main-content);
+      }
+    }
+
+  }
+}
+
+// Table Accordion collapsible row End

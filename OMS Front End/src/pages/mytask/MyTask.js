@@ -1,12 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+//** Lib's */
 import "./MyTask.scss";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import CardSection from "../../components/ui/card/CardSection";
 import { MyTaskStatus } from "../../utils/Enums/commonEnums";
-import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
+import CardSection from "../../components/ui/card/CardSection";
 import { getAuthProps } from "../../lib/authenticationLibrary";
-import { useLazyGetAllModulesQuery } from "../../app/services/configurationAPI";
+//** Service's */
+import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
+import { useLazyGetAllFunctionalityEventByModuleIdQuery, useLazyGetAllModulesQuery } from "../../app/services/configurationAPI";
 
 //** Compoent's */
 const PendingTask = React.lazy(() => import("./feature/PendingTask"));
@@ -18,6 +21,7 @@ const MyTask = () => {
   const roleId = authData.roles.roleId;
   const [tabId, setTabId] = useState(0);
   const [moduleList, setModuleList] = useState([]);
+  const [eventList, setEventList] = useState([]);
   const [isApproval, setIsApproval] = useState(false);
   const [approvedData, setApprovedData] = useState(null);
   const [approvalRequestId, setApprovalRequestId] = useState(0);
@@ -35,6 +39,8 @@ const MyTask = () => {
     getAllModules,
     { isSuccess: isgetAllModulesSucess, data: allGetAllModulesData },
   ] = useLazyGetAllModulesQuery();
+
+  const [getEventsByModuleId, { isSuccess: isGetAllEventsSucess, data: isGetAllEventsData }] = useLazyGetAllFunctionalityEventByModuleIdQuery();
 
   const handleGetPendingId = (data) => {
     getApprovalRequestsByApprovalRequestId(data);
@@ -66,10 +72,32 @@ const MyTask = () => {
   }, [getAllModules]);
 
   useEffect(() => {
+    moduleList.length > 0 && getEventsByModuleId(moduleList[0].moduleId);
+  }, [moduleList]);
+
+  useEffect(() => {
     if (isgetAllModulesSucess && allGetAllModulesData) {
       setModuleList(allGetAllModulesData);
     }
   }, [isgetAllModulesSucess, allGetAllModulesData]);
+
+  useEffect(() => {
+    if (isGetAllEventsSucess && isGetAllEventsData) {
+      const modifyEventList = [
+        {
+          value: 0,  // Special value for select all
+          label: 'Select All',
+          isChecked: false
+        },
+        ...isGetAllEventsData.map(data => ({
+          value: data.functionalityEventId,
+          label: data.eventName,
+          isChecked: false
+        }))
+      ]
+      setEventList(modifyEventList);
+    }
+  }, [isGetAllEventsSucess, isGetAllEventsData]);
 
   useEffect(() => {
     if (
@@ -121,6 +149,7 @@ const MyTask = () => {
             onTabChange={handleSetTab}
             roleId={roleId}
             moduleList={moduleList}
+            eventList={eventList}
             setIsApproval={setIsApproval}
             handleRestEventDetail={handleRestEventDetail}
           />
@@ -137,6 +166,7 @@ const MyTask = () => {
             onGetById={handleGetArchiveId}
             roleId={roleId}
             moduleList={moduleList}
+            eventList={eventList}
             handleRestEventDetail={handleRestEventDetail}
           />
         </div>
