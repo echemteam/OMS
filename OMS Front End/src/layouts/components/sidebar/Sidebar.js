@@ -1,13 +1,38 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import "./Sidebar.scss";
 import { Link } from "react-router-dom";
 import { Menu } from "../menu/Menu";
 import { hasPermission } from "../../../utils/AuthorizeNavigation/authorizeNavigation";
 import Iconify from "../../../components/ui/iconify/Iconify";
+import { useLazyGetOrganizationProfileQuery } from "../../../app/services/organizationAPI";
 
 const Sidebar = (props) => {
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [clickedValueSubMenu, setClickedValueSubMenu] = useState(null);
+  const [registerName,setRegisterName]=useState(null);
+  const [
+    getOrganizationProfile,
+    {
+      isFetching: isGetOrganizationProfileFetching,
+      isSuccess: isGetOrganizationProfileSuccess,
+      data: isGetOrganizationProfileData,
+    },
+  ] = useLazyGetOrganizationProfileQuery();
+
+  useEffect(() => {
+
+    if (!isGetOrganizationProfileFetching && isGetOrganizationProfileSuccess && isGetOrganizationProfileData) {
+      if(isGetOrganizationProfileData){
+        setRegisterName(isGetOrganizationProfileData.registeredName);
+      }
+    }
+}, [isGetOrganizationProfileFetching, isGetOrganizationProfileSuccess, isGetOrganizationProfileData,]);
+
+
+  useEffect(() => {
+    getOrganizationProfile();
+  }, []);
 
   const handleClick = (menu) => {
     if (selectedMenu === menu) {
@@ -27,7 +52,12 @@ const Sidebar = (props) => {
       <nav className="sidebar">
         <div className="main-menus">
           <Link className="sidebar-brand">
-            OMS&nbsp;<span className="small-sidebar">Lite</span>
+            <div className="brand-name"> OMS&nbsp;<span className="small-sidebar">Lite</span></div>
+           
+            {
+              registerName ? <><div className="sidebar-user">{registerName} </div></>: null
+            }
+            
           </Link>
           <div className="sidebar-menu">
             <ul className="sidebar-menu-list">
@@ -55,27 +85,27 @@ const Sidebar = (props) => {
                           {menuItem.subMenu && (
                             <ul className="sidebar-dropdown">
                               <div className="collapse-dropdown">
-                              {menuItem.children.map((subMenu, subIndex) => (
-                                <React.Fragment key={subIndex}>
-                                  {hasPermission(subMenu.securityKey) && (
-                                    <li className="dropdown-menus">
-                                      <Link
-                                        to={subMenu.to}
-                                        className={
-                                          clickedValueSubMenu === subMenu.id
-                                            ? "active-submenu"
-                                            : ""
-                                        }
-                                        onClick={(e) =>
-                                          handleChildClick(e, subMenu.id)
-                                        }
-                                      >
-                                        {subMenu.submenuName}
-                                      </Link>
-                                    </li>
-                                  )}
-                                </React.Fragment>
-                              ))}
+                                {menuItem.children.map((subMenu, subIndex) => (
+                                  <React.Fragment key={subIndex}>
+                                    {hasPermission(subMenu.securityKey) && (
+                                      <li className="dropdown-menus">
+                                        <Link
+                                          to={subMenu.to}
+                                          className={
+                                            clickedValueSubMenu === subMenu.id
+                                              ? "active-submenu"
+                                              : ""
+                                          }
+                                          onClick={(e) =>
+                                            handleChildClick(e, subMenu.id)
+                                          }
+                                        >
+                                          {subMenu.submenuName}
+                                        </Link>
+                                      </li>
+                                    )}
+                                  </React.Fragment>
+                                ))}
                               </div>
                             </ul>
                           )}
