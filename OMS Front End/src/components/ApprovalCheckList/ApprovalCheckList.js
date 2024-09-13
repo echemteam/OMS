@@ -23,7 +23,7 @@ import { useAddEditResponsibleUserForCustomerMutation, useUpdateCustomerInActive
 import { setDropDownOptionField } from "../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { excludingRoles } from "../../pages/customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { useAddCustomerNotesMutation } from "../../app/services/notesAPI";
-import { StatusEnums, StatusFeild } from "../../utils/Enums/StatusEnums";
+import {  StatusFeild } from "../../utils/Enums/StatusEnums";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -79,7 +79,6 @@ const ApprovalCheckList = ({
 
   //** API Call's */
     const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
-    const [rUserValue, setRUserValue] = useState([]);
   const [
     getCheckList,
     {
@@ -143,7 +142,7 @@ const ApprovalCheckList = ({
         responsibleUserId: responsibleUserIds,
       };
       setFormData(formNew);
-      setRUserValue(formNew.initialState.responsibleUserId);
+    
     }
   }, [showModal])
 
@@ -177,8 +176,6 @@ const ApprovalCheckList = ({
 
 
   const handleUpdate = () => {
-debugger
-  
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
@@ -191,7 +188,7 @@ debugger
       updateRUserDataDropdown(custData.responsibleUserId);
       addCustomerNotes(req)
       setSelectedStatus(StatusFeild.Reject);
-    // setSelectedStatus(req.statusId);
+   
       setStatusCheckId(req.statusId)
      
 
@@ -211,7 +208,6 @@ debugger
     isAddEditResponsibleUserForCustomerData,
   ]);
   const updateRUserDataDropdown = (value) => {
-    debugger
     let req = {
       customerId: mainId,
       userId: String(value),
