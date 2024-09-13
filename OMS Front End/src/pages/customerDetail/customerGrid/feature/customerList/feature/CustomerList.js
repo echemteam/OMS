@@ -361,8 +361,17 @@ export const CustomersList = ({
     setStaticId(StatusEnums.Reject);
     setStatusFeild(StatusFeild.Reject);
     if (customerData.responsibleUserId) {
-      removeFields();
-      setAssignRUser(true);
+      // removeFields();
+      // setAssignRUser(true);
+      const responsibleUserIds = customerData?.responsibleUserId
+      ?.split(",")
+      .map((id) => Number(id.trim()));
+      const formNew = { ...formData }
+      formNew.initialState = {
+        ...formNew.initialState,
+        responsibleUserId: responsibleUserIds,
+      };
+      setFormData(formNew);
     }
   };
   const onReset = () => {
