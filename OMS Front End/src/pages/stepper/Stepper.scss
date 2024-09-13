@@ -342,28 +342,31 @@
   .financial-setting {
     .card {
       max-height: 100%;
+      min-height: 103px;
     }
 
     .address-main-card-sec {
       .payment-method-sec {
         margin-top: -20px;
-        max-height: calc(100vh - 340px);
+        max-height: calc(100vh - 360px);
         overflow: hidden;
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 266px);
+          max-height: calc(100vh - 305px);
         }
 
         .tab-content {
           padding-bottom: 85px;
-
+          
           @media only screen and (max-width: 1750px) {
+            max-height: calc(100vh - 350px);
             padding-bottom: 22px;
           }
 
           .ach-wire-section {
             .centered {
               justify-content: center !important;
+              margin-top: 20px;
             }
           }
         }
