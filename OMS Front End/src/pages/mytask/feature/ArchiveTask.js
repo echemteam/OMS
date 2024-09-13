@@ -64,19 +64,19 @@ const ArchiveTask = (props) => {
     }
   };
   const handleModuleClick = (moduleId) => {
-    handleRequest({ moduleId });
     setSelectedModule(moduleId);
+    handleRequest({ moduleId });
     if (props.handleRestEventDetail) {
       props.handleRestEventDetail();
     }
   };
   const selectedSortOrder = (orderBy) => {
-    handleRequest({ orderby: orderBy });
     setOrderBy(orderBy);
+    handleRequest({ orderby: orderBy });
   };
   const selectedFilterOptions = (selectedFilterOption) => {
-    handleRequest({ eventIds: selectedFilterOption });
     setSelectedFilterBy(selectedFilterOption);
+    handleRequest({ eventIds: selectedFilterOption });
   };
 
   return (
