@@ -19,10 +19,11 @@ import { useLazyDownloadDocumentQuery } from "../../app/services/documentAPI";
 import CenterModel from "../ui/centerModel/CenterModel";
 import FormCreator from "../Forms/FormCreator";
 import { reasonData } from "../../common/features/component/CustomerSupplierReason/Reason.data";
-import { useUpdateCustomerInActiveStatusMutation } from "../../app/services/basicdetailAPI";
+import { useAddEditResponsibleUserForCustomerMutation, useUpdateCustomerInActiveStatusMutation } from "../../app/services/basicdetailAPI";
 import { setDropDownOptionField } from "../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { excludingRoles } from "../../pages/customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { useAddCustomerNotesMutation } from "../../app/services/notesAPI";
+import { StatusEnums, StatusFeild } from "../../utils/Enums/StatusEnums";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -51,7 +52,9 @@ const ApprovalCheckList = ({
   isSubCustomer,
   ownerType,
   basicData,
-  //  setStatusCheckId
+    setStatusCheckId,
+    setSelectedStatus,
+  
 }) => {
   //** State */
   const reasonRef = useRef();
@@ -75,7 +78,8 @@ const ApprovalCheckList = ({
 
 
   //** API Call's */
-  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
+    const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
+    const [rUserValue, setRUserValue] = useState([]);
   const [
     getCheckList,
     {
@@ -93,6 +97,13 @@ const ApprovalCheckList = ({
   //     data: isAddUserCheckResponseData,
   //   },
   // ] = useAddUserChecklistResponseMutation();
+  const [
+    addEditResponsibleUserForCustomer,
+    {
+      isSuccess: isSuccessAddEditResponsibleUserForCustomer,
+      data: isAddEditResponsibleUserForCustomerData,
+    },
+  ] = useAddEditResponsibleUserForCustomerMutation();
   const [
     updateCustomerInActiveStatus,
     {
@@ -132,8 +143,10 @@ const ApprovalCheckList = ({
         responsibleUserId: responsibleUserIds,
       };
       setFormData(formNew);
+      setRUserValue(formNew.initialState.responsibleUserId);
     }
   }, [showModal])
+
 
   if (isGetAllUserSucess && allGetAllUserData) {
     const filterData = allGetAllUserData.filter((item) => {
@@ -164,7 +177,8 @@ const ApprovalCheckList = ({
 
 
   const handleUpdate = () => {
-
+debugger
+  
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
@@ -174,9 +188,35 @@ const ApprovalCheckList = ({
         note: custData.inActiveReason,
       };
       updateCustomerInActiveStatus(req);
+      updateRUserDataDropdown(custData.responsibleUserId);
       addCustomerNotes(req)
-      //setStatusCheckId(req.statusId)
+      setSelectedStatus(StatusFeild.Reject);
+    // setSelectedStatus(req.statusId);
+      setStatusCheckId(req.statusId)
+     
+
     }
+  };
+  useEffect(() => {
+    if (
+      isSuccessAddEditResponsibleUserForCustomer &&
+      isAddEditResponsibleUserForCustomerData
+    ) {
+      ToastService.success(
+        isAddEditResponsibleUserForCustomerData.errorMessage
+      );
+    }
+  }, [
+    isSuccessAddEditResponsibleUserForCustomer,
+    isAddEditResponsibleUserForCustomerData,
+  ]);
+  const updateRUserDataDropdown = (value) => {
+    debugger
+    let req = {
+      customerId: mainId,
+      userId: String(value),
+    };
+    addEditResponsibleUserForCustomer(req);
   };
 
   useEffect(() => {
@@ -213,10 +253,10 @@ const ApprovalCheckList = ({
     }
   }, [isGetAllDocumentByOwnerIdFetching, isGetAllDocumentByOwnerIdSuccess, isGetAllDocumentByOwnerIdData]);
 
-  const handleToggleModal = () => {
-    setShowModal(false);
-    onSidebarClose();
-  }
+  const handleToggleModal=()=>{
+      setShowModal(false);
+    //  onSidebarClose();
+}
   const determineFileType = (fileName) => {
     const extension = fileName.split(".").pop().toLowerCase();
     switch (extension) {
