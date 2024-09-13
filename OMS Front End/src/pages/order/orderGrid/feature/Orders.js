@@ -68,7 +68,7 @@ const Orders = () => {
                 childTableDataSource={gridChildDataSource}
                 dataSource={dataSource}
                 // dataSource={collapsibleMolGridData}
-                allowPagination={false}
+                allowPagination={true}
                 onActionChange={actionHandler}
               />
             </CardSection>

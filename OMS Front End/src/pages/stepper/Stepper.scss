@@ -111,6 +111,7 @@
       overflow: hidden;
       overflow-y: auto;
       width: 100%;
+      min-height: calc(100vh - 200px);
       max-height: calc(100vh - 200px);
 
       @media only screen and (max-width: 1750px) {
