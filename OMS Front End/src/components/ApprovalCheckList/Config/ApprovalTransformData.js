@@ -11,3 +11,20 @@ export const transformData = (data) => {
         }))
     })) : []
 };
+
+export const customerApprovalCheckList = [
+    { name: "basicInformation", isCheked: false },
+    { name: "addressInformation", isCheked: false },
+    { name: "contactInformation", isCheked: false },
+    { name: "settingInformation", isCheked: false }
+]
+
+export const subCustomerApprovalCheckList = [
+    { name: "addressInformation", isCheked: false }
+]
+
+export const supplierApprovalCheckList = [
+    { name: "basicInformation", isCheked: false },
+    { name: "addressInformation", isCheked: false },
+    { name: "contactInformation", isCheked: false }
+]

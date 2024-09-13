@@ -1,97 +1,97 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+//** Lib's */
 import PropTypes from "prop-types";
-import { useLazyGetApprovalRequestsListByStatusAndRoleIdQuery } from "../../../app/services/ApprovalAPI";
 import "../../mytask/MyTask.scss";
-import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
-import DataLoader from "../../../components/ui/dataLoader/DataLoader";
-import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
 import formatDate from "../../../lib/formatDate";
+import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
 import CardSection from "../../../components/ui/card/CardSection";
 import { getAuthProps } from "../../../lib/authenticationLibrary";
-import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
+import DataLoader from "../../../components/ui/dataLoader/DataLoader";
+import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
+import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
+//** Service's */
+import { useLazyGetApprovalRequestsListByStatusAndRoleIdQuery } from "../../../app/services/ApprovalAPI";
+//** Component's */
 import ModuleList from "./ModuleList";
 
 const ArchiveTask = (props) => {
+
   const authData = getAuthProps();
   const roleId = authData.roles.roleId;
+  const [orderBy, setOrderBy] = useState("Newest");
   const [activeTab, setActiveTab] = useState(null);
   const [archiveData, setArchiveData] = useState([]);
-  const [archiveEvents, setArchiveEvents] = useState([]);
+  const [selectedfilterBy, setSelectedFilterBy] = useState([]);
+  const [selectedModule, setSelectedModule] = useState(props.moduleList[0]?.moduleId);
 
-  const [
-    getApprovalRequestsListByStatus,
-    {
-      isFetching: isGetApprovalRequestsListByStatusFetching,
-      isSuccess: isGetApprovalRequestsListByStatusSuccess,
-      data: isGetApprovalRequestsListByStatusData,
-    },
-  ] = useLazyGetApprovalRequestsListByStatusAndRoleIdQuery();
+  const [getApprovalRequestsListByStatus, { isFetching: isGetApprovalRequestsListByStatusFetching, isSuccess: isGetApprovalRequestsListByStatusSuccess, data: isGetApprovalRequestsListByStatusData }] = useLazyGetApprovalRequestsListByStatusAndRoleIdQuery();
 
   useEffect(() => {
-    if (roleId) {
-      getApprovalRequestList();
+    if (roleId && props.moduleList && props.moduleList.length > 0) {
+      handleRequest();
     }
-  }, [roleId]);
+  }, [roleId, props.moduleList]);
 
-  const getApprovalRequestList = () => {
+  useEffect(() => {
+    if (!isGetApprovalRequestsListByStatusFetching && isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData) {
+      setArchiveData(isGetApprovalRequestsListByStatusData);
+      if (!isGetApprovalRequestsListByStatusData || isGetApprovalRequestsListByStatusData?.length === 0) {
+        if (props.handleRestEventDetail) {
+          props.handleRestEventDetail();
+        }
+      } else {
+        handleTabClick(isGetApprovalRequestsListByStatusData[0]?.approvalRequestId);
+      }
+    }
+  }, [isGetApprovalRequestsListByStatusFetching, isGetApprovalRequestsListByStatusSuccess, isGetApprovalRequestsListByStatusData]);
+
+  const handleRequest = (updatedFields = {}) => {
     let req = {
-      status: [MyTaskStatus.Accept, MyTaskStatus.Reject],
-      roleId: roleId,
+      status: [MyTaskStatus.Accept, MyTaskStatus.Reject], // Common value
+      roleId: roleId,  // Common value
+      orderby: orderBy || "Newest", // Default to "Newest" if not set
+      eventIds: selectedfilterBy || [], // Default to empty array if no filter is set
+      moduleId: selectedModule || props.moduleList[0]?.moduleId, // Default to the first module if not set
+      ...updatedFields
     };
     getApprovalRequestsListByStatus(req);
   };
-
-  useEffect(() => {
-    if (
-      !isGetApprovalRequestsListByStatusFetching &&
-      isGetApprovalRequestsListByStatusSuccess &&
-      isGetApprovalRequestsListByStatusData
-    ) {
-      const filterData =
-        props.moduleList[0]?.moduleId &&
-        isGetApprovalRequestsListByStatusData.filter(
-          (data) => data.moduleId === props.moduleList[0].moduleId
-        );
-      setArchiveData(filterData);
-      setArchiveEvents(isGetApprovalRequestsListByStatusData);
-    }
-  }, [
-    isGetApprovalRequestsListByStatusFetching,
-    isGetApprovalRequestsListByStatusSuccess,
-    isGetApprovalRequestsListByStatusData,
-  ]);
-
-  const handleTabClick = (id, moduleId) => {
+  const handleTabClick = (id) => {
     setActiveTab(id);
     if (props.onGetById) {
       props.onGetById(id);
     }
   };
-
   const handleModuleClick = (moduleId) => {
-    const filterData = archiveEvents.filter(
-      (data) => data.moduleId === moduleId
-    );
-    setArchiveData(filterData);
+    handleRequest({ moduleId });
+    setSelectedModule(moduleId);
     if (props.handleRestEventDetail) {
       props.handleRestEventDetail();
     }
+  };
+  const selectedSortOrder = (orderBy) => {
+    handleRequest({ orderby: orderBy });
+    setOrderBy(orderBy);
+  };
+  const selectedFilterOptions = (selectedFilterOption) => {
+    handleRequest({ eventIds: selectedFilterOption });
+    setSelectedFilterBy(selectedFilterOption);
   };
 
   return (
     <>
       <div className="row">
         <div className="col-5 pr-0">
-          <ModuleList
-            moduleList={props.moduleList}
-            apiResponseData={archiveData}
-            handleTabClick={handleTabClick}
+          <ModuleList moduleList={props.moduleList}
             onModuleChange={handleModuleClick}
           />
         </div>
         <div className="col-7 pl-1 pr-1">
-          <CardSection cardTitle="Events" rightButton={true} isShort={true}>
+          <CardSection cardTitle="Events" rightButton={true} isShort={true}
+            filtersOptions={props.eventList}
+            selectedFilterOptions={selectedFilterOptions}
+            selectedSortOrder={selectedSortOrder}>
             <div className="customer-info">
               {isGetApprovalRequestsListByStatusFetching ? (
                 <DataLoader />
@@ -101,9 +101,8 @@ const ArchiveTask = (props) => {
                     archiveData.map((tab) => (
                       <button
                         key={tab.approvalRequestId} // Use a unique key
-                        className={`tab-button ${
-                          activeTab === tab.approvalRequestId ? "active" : ""
-                        }`}
+                        className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""
+                          }`}
                         onClick={() => handleTabClick(tab.approvalRequestId)}
                       >
                         <div className="d-flex align-items-center">
@@ -122,13 +121,12 @@ const ArchiveTask = (props) => {
                                 {tab.moduleName}
                               </span>
                               <div
-                                className={`mytask-type-badge ${
-                                  tab.status === "Accept"
-                                    ? "badge-accept"
-                                    : tab.status === "Reject"
+                                className={`mytask-type-badge ${tab.status === "Accept"
+                                  ? "badge-accept"
+                                  : tab.status === "Reject"
                                     ? "badge-reject"
                                     : ""
-                                }`}
+                                  }`}
                               >
                                 {tab.status}
                               </div>
@@ -138,9 +136,9 @@ const ArchiveTask = (props) => {
                         <div className="date">
                           {tab.requestedDate
                             ? formatDate(
-                                tab.requestedDate,
-                                "MM/DD/YYYY hh:mm A"
-                              )
+                              tab.requestedDate,
+                              "MM/DD/YYYY hh:mm A"
+                            )
                             : "No Date"}
                         </div>
                       </button>

@@ -14,6 +14,7 @@
         public string? EventName { get; set; }
         public byte? ApproverRoleId { get; set; }
         public string? RoleName { get; set; }
+        public bool? IsFunctional {  get; set; }
         public string? Template { get; set; }
     }
 }

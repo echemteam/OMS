@@ -11,7 +11,6 @@
     top: 0;
     z-index: 2;
     tr {
-      display: contents;
       th {
         padding: 12px;
         text-align: left;
@@ -23,13 +22,14 @@
           text-align: center;
         }
         &:nth-child(2) {
-          width: 50%;
+          width: 40%;
         }
         &:nth-child(3) {
           width: 30%;
         }
         &:nth-child(4) {
           width: 20%;
+          justify-content: center;
         }
       }
     }
@@ -61,7 +61,7 @@
           text-align: center;
         }
         &:nth-child(2) {
-          width: 50%;
+          width: 40%;
           word-break: break-all;
         }
         &:nth-child(3) {

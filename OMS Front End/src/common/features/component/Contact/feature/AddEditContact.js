@@ -79,6 +79,13 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             eventName = getEventName(contactTypeId, isEdit, 'AddEditContactCustomer');
         }
 
+        let initialStateRequest = {
+            ...formData.initialState,
+            emailList: isEdit ? isGetByIdData.emailAddressList : formData.initialState.emailAddressList,
+            phoneList: isEdit ? isGetByIdData.phoneNumberList : formData.initialState.phoneNumberList,
+            contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', isGetByIdData.contactTypeId)
+        }
+
         if (matchTypeIds.length > 0 || matchTypeIds?.value) {
             if (eventNameArr.length > 0) {
                 const matchTypeIdsArray = matchTypeIds.split(',');
@@ -93,18 +100,13 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                         contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', currentTypeId),
                         customerId: customerId ? customerId : request.customerId
                     }
-                    await handleApprovalRequest(req, isEdit ? formData.initialState : null, event, true, index, eventNameArr.length - 1);
+                    await handleApprovalRequest(req, isEdit ? initialStateRequest : null, event, true, index, eventNameArr.length - 1);
                 }
             } else if (eventName) {
                 const request = requestData(data, matchTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
                 let req = {
                     ...request,
-                    customerId: customerId ? customerId : request.customerId
-                }
-                let initialStateRequest = {
-                    ...formData.initialState,
-                    emailList: isEdit ? isGetByIdData.emailAddressList : formData.initialState.emailAddressList,
-                    phoneList: isEdit ? isGetByIdData.phoneNumberList : formData.initialState.phoneNumberList,
+                    customerId: customerId ? customerId : request.customerId,
                     contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', request.contactTypeId)
                 }
                 await handleApprovalRequest(req, initialStateRequest, eventName, 0);
@@ -202,7 +204,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         if (isEdit) {
             return contactTypeId && typeof contactTypeId === "object" ? String(contactTypeId.value) : String(contactTypeId);
         } else {
-            return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId;
+            return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId && typeof contactTypeId === "object" ? String(contactTypeId.value) : String(contactTypeId);;
         }
     };
 

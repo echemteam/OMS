@@ -25,13 +25,17 @@
 
       .shorting-inputs {
         padding: 15px 10px;
+        max-height: calc(100vh - 380px);
+          overflow: hidden;
+          overflow-y: auto;
 
         .radio {
           .radio-buttons {
             margin: 0;
             margin-bottom: 20px;
-            
-
+            .radio-label{
+              font-size: var(--commonFont-small);
+            }
             &:last-child {
               margin-bottom: 0;
             }
@@ -39,12 +43,31 @@
         }
 
         .checkbox {
-
+          
           .input-checkbox {
             margin-bottom: 10px;
+            .checkbox-part{
+              align-items: flex-start;
+            }
 
             &:last-child {
               margin-bottom: 0;
+            }
+          }
+          .checkbox-part {
+            .checkbox input + .checkbox-label:before,
+            input[type=checkbox]:before,
+            .checkbox input + .checkbox-label,
+            .checkbox{
+              max-height: 15px;
+              max-width: 15px;
+              min-height: 15px;
+              min-width: 15px;
+            }
+            
+            
+            .input-label{
+              font-size: var(--commonFont-small);
             }
           }
         }
@@ -52,7 +75,6 @@
     }
 
     &.active {
-      height: auto;
       display: block;
     }
   }

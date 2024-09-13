@@ -3,9 +3,7 @@ using Common.Helper.Enum;
 using Common.Helper.Export;
 using Common.Helper.Extension;
 using Common.Helper.ReplacePlaceholders;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
@@ -13,7 +11,6 @@ using OMS.Domain.Entities.API.Request.Contact;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Response.Approval;
-using OMS.Domain.Entities.API.Response.EmailTemplates;
 using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -54,7 +51,7 @@ namespace OMS.Application.Services.Approval
         }
         public async Task<AddEntityDto<int>> AddUserChecklistResponse(AddUserChecklistRequest requestData, int CurrentUserId)
         {
-            DataTable CheckListDataTable = ExportHelper.ListToDataTable(requestData.CheckListRequest);
+            DataTable CheckListDataTable = ExportHelper.ListToDataTable(requestData.CheckListRequest!);
             CheckListDataTable.Columns.Add("UserId", typeof(int));
             foreach (DataRow row in CheckListDataTable.Rows)
             {
@@ -79,29 +76,27 @@ namespace OMS.Application.Services.Approval
         }
         public async Task<AddEntityDto<int>> AddApprovalRequests(AddApprovalRequests requestData, short CurrentUserId)
         {
-            GetTemplateByFunctionalityEventIdResponse FormatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(requestData.FunctionalityEventId);
-            ApprovalRequestsDto approvalRequestsDto = requestData.ToMapp<AddApprovalRequests, ApprovalRequestsDto>();
+            var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(requestData.FunctionalityEventId);
+
+            var approvalRequestsDto = requestData.ToMapp<AddApprovalRequests, ApprovalRequestsDto>();
             approvalRequestsDto.RequestedByUserId = CurrentUserId;
 
-            approvalRequestsDto.OldValueTemplate = string.Empty;
-            approvalRequestsDto.NewValueTemplate = string.Empty;
-
-            if (!string.IsNullOrEmpty(requestData.OldValue) && FormatTemplate != null && FormatTemplate.Template != null)
+            if (formatTemplate?.Template != null && formatTemplate.Template != string.Empty && !string.IsNullOrWhiteSpace(formatTemplate.Template) && !string.IsNullOrEmpty(formatTemplate.Template))
             {
-                var oldValueData = JObject.Parse(requestData.OldValue!);
-                approvalRequestsDto.OldValueTemplate = ReplaceTemplatePlaceholders.ReplacePlaceholders(FormatTemplate.Template!, oldValueData);
+                if (!string.IsNullOrEmpty(requestData.OldValue))
+                {
+                    approvalRequestsDto.OldValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(requestData.OldValue!, formatTemplate!.Template!);
+                }
+                if (!string.IsNullOrEmpty(requestData.NewValue))
+                {
+                    approvalRequestsDto.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(requestData.NewValue!, formatTemplate!.Template!);
+                }
             }
-            if (!string.IsNullOrEmpty(requestData.NewValue) && FormatTemplate != null && FormatTemplate.Template != null)
-            {
-                var newValueData = JObject.Parse(requestData.NewValue!);
-                approvalRequestsDto.NewValueTemplate = ReplaceTemplatePlaceholders.ReplacePlaceholders(FormatTemplate.Template!, newValueData);
-            }
-
             return await repositoryManager.approval.AddApprovalRequests(approvalRequestsDto);
         }
-        public Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string roleId, string eventIds, string sortOrder)
+        public Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string? roleId, string? eventIds, string? sortOrder, int? moduleId)
         {
-            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(status, roleId, eventIds, sortOrder);
+            return repositoryManager.approval.GetApprovalRequestsListByStatusAndRoleId(status, roleId, eventIds, sortOrder, moduleId);
         }
         public async Task<GetApprovalRequestsByApprovalRequestIdResponse> GetApprovalRequestsByApprovalRequestId(int approvalRequestId)
         {
@@ -243,7 +238,7 @@ namespace OMS.Application.Services.Approval
         private async Task<AddEntityDto<int>> HandleUpdateAddress(string newValue, short currentUserId)
         {
             var updateAddressDto = JsonConvert.DeserializeObject<AddressDto>(newValue);
-            updateAddressDto!.CreatedBy = currentUserId;
+            updateAddressDto!.UpdatedBy = currentUserId;
 
             await repositoryManager.address.UpdateAddAddress(updateAddressDto);
 
@@ -305,7 +300,7 @@ namespace OMS.Application.Services.Approval
         private async Task<AddEntityDto<int>> HandleUpdateShippingSetting(string newValue, short currentUserId)
         {
             var customerShppingDeliveryCarriersDto = JsonConvert.DeserializeObject<CustomerShppingDeliveryCarriersDto>(newValue);
-            customerShppingDeliveryCarriersDto!.CreatedBy = currentUserId;
+            customerShppingDeliveryCarriersDto!.UpdatedBy = currentUserId;
             return await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
         }
 

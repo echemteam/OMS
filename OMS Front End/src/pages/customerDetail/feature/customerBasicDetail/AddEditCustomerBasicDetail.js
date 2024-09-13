@@ -104,7 +104,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             } else if (!isOpen) { 
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
-                setFieldSetting(customerbasicData,'name',FieldSettingType.CKEDITORDISABLED,false);
+                
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON, true);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
             }
@@ -115,7 +115,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         if (isOpen) {
             if (customerId > 0) {
                                 getCustomersBasicInformationById(customerId);
-                setFieldSetting(customerbasicData,'name',FieldSettingType.CKEDITORDISABLED,true);
+                
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
             }
@@ -175,10 +175,10 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     useEffect(() => {
         if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
             if (isCustomerOrSupplierApprovedStatus(GetCustomersBasicInformationByIdData.statusId)) {
-                setFieldSetting(formData, 'name', 'isDisabled', true);
+                setFieldSetting(customerbasicData,'name',FieldSettingType.CKEDITORDISABLED,true);
                 setFieldSetting(formData, 'taxId', 'isDisabled', true);
             } else {
-                setFieldSetting(formData, 'name', 'isDisabled');
+                setFieldSetting(customerbasicData,'name',FieldSettingType.CKEDITORDISABLED,false);
                 setFieldSetting(formData, 'taxId', 'isDisabled');
             }
             const newFrom = { ...customerbasicData };
