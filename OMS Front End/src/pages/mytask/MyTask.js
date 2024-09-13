@@ -5,7 +5,6 @@ import "./MyTask.scss";
 import RenderTabs from "../../components/ui/tabs/RenderTabs";
 import CardSection from "../../components/ui/card/CardSection";
 import { MyTaskStatus } from "../../utils/Enums/commonEnums";
-import CardSection from "../../components/ui/card/CardSection";
 import { getAuthProps } from "../../lib/authenticationLibrary";
 //** Service's */
 import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";

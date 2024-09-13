@@ -87,17 +87,16 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
           ccNote: isGetPaymentSettingsBySupplierIdData.ccNote,
           isCCExistsOnFile: isGetPaymentSettingsBySupplierIdData.isCCExistsOnFile,
           checkMailingAddressId: isGetPaymentSettingsBySupplierIdData.checkMailingAddressId,
-       
+
         };
       }
       setGetCreditData(formCreditData);
-      
+
       if (activeTabIndex === 3 && isGetPaymentSettingsBySupplierIdData.otherNote) {
         formOtherData.initialState = {
           supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
           supplierId: supplierId,
           checkMailingAddressId: isGetPaymentSettingsBySupplierIdData.checkMailingAddressId,
-       supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
           otherNote: isGetPaymentSettingsBySupplierIdData.otherNote,
         };
         setGetOtherData(formOtherData);
