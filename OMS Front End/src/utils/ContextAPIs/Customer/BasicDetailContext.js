@@ -30,6 +30,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     //** */
 
     const [isResponsibleUser, setIsResponsibleUser] = useState(true);
+    const [statusCheckId,setStatusCheckId]=useState('');
 
     //** Use for Tab's */
     const nextRef = useRef(null);
@@ -89,7 +90,7 @@ export const BasicDetailContextProvider = ({ children }) => {
             customerCountryId,
             phoneNumberData, setMainId, mainId, setShowSubBackButton, showSubBackButton, setActiveSubTab, activeSubTab, handleActiveSubTabClick, saveFinacialSetting,
             emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
-            setIsResponsibleUser, isResponsibleUser,
+            setIsResponsibleUser, isResponsibleUser,setStatusCheckId,statusCheckId
         }}>
             {children}
         </BasicDetailContext.Provider>

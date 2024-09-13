@@ -94,7 +94,7 @@ const CustomerBasicInfoCard = ({
 
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
-  const { isResponsibleUser } = useContext(BasicDetailContext);
+  const { isResponsibleUser,  statusCheckId,setStatusCheckId } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(
     securityKey.EDITBASICCUSTOMERDETAILS
@@ -154,6 +154,12 @@ const CustomerBasicInfoCard = ({
     }
   }, [customerData]);
 
+  useEffect(()=>{
+    if(statusCheckId){
+        getCustomerById()
+    }  
+},[statusCheckId,setStatusCheckId,selectedStatus])
+
   useEffect(() => {
     if (!isFetching && isGetAllUserSucess && allGetAlluserData) {
       // const finalData = responsibleUserIds?.map(option => option.value).join(',')
@@ -209,6 +215,7 @@ const CustomerBasicInfoCard = ({
   }, [isGetAllUserSucess, allGetAlluserData, isFetching]);
 
   const handleStatusChange = (selectedOption) => {
+    
     if (selectedOption.label === customerData.status) {
       ToastService.warning(
         "You can't change the status of the customer to currect customer status."
@@ -312,6 +319,7 @@ const CustomerBasicInfoCard = ({
   };
 
   const handleUpdate = () => {
+    
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
@@ -346,6 +354,7 @@ const CustomerBasicInfoCard = ({
   };
 
   const getStatusClass = () => {
+    
     switch (selectedStatus) {
       case "Pending":
         return "badge-gradient-Pending";
@@ -508,7 +517,7 @@ const CustomerBasicInfoCard = ({
                   placeholder="Responsible User"
                   isDropdownDisabled={
                     isResponsibleUser ? true : isButtonDisable
-                  }
+                  } 
                   optionsValue={responsibleUserOptions}
                   value={rUserValue}
                   handleDropdownChange={updateRUserData}
@@ -652,6 +661,8 @@ const CustomerBasicInfoCard = ({
         childRef={childRef}
         updateCustomerApproval={updateCustomerApproval}
         customerData={customerData}
+        setSelectedStatus={setSelectedStatus}
+       
       />
     </div>
   ) : (
