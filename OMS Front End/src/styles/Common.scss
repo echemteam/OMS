@@ -755,11 +755,11 @@ a {
 .address-main-card-sec {
   .card {
     padding-top: 7px;
-    height: calc(100vh - 247px) !important;
+    max-height: calc(100vh - 265px);
 
     @media only screen and (max-width: 1750px) {
       padding-top: 7px;
-      height: calc(100vh - 225px) !important;
+      max-height: calc(100vh - 225px);
     }
   }
 }
@@ -885,14 +885,14 @@ a {
 
 .vertical-tab-card {
   .card {
-    height: calc(100vh - 267px);
+    max-height: calc(100vh - 267px);
 
     @media only screen and (max-width: 1750px) {
-      height: calc(100vh - 245px);
+      max-height: calc(100vh - 245px);
     }
 
     @media only screen and (max-width: 1366px) {
-      height: calc(100vh - 240px);
+      max-height: calc(100vh - 240px);
     }
 
     .vertical-tab-inner {
@@ -3626,20 +3626,20 @@ input[type="checkbox"]:disabled {
     .tab-content {
       width: 85%;
       padding: 0 15px 0 15px;
-      height: calc(100vh - 315px);
+      max-height: calc(100vh - 315px);
       overflow: hidden;
       overflow-y: auto;
       transition: 0.5s all;
 
       @media only screen and (max-width: 1750px) {
-        height: calc(100vh - 280px);
+        max-height: calc(100vh - 280px);
         padding-bottom: 0;
       }
     }
 
     .collapse-tab {
       position: absolute;
-      top: -5px;
+      top: 0;
       left: calc(17% - 42px);
       min-height: 22px;
       min-width: 22px;
