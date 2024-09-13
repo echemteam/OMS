@@ -192,7 +192,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         if (!data) return;
 
         const contactTypeId = getContactTypeId(data.contactTypeId, isEdit);
-        const request = requestData(data, contactTypeId.value, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
+        const request = requestData(data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
         let req = {
             ...request,
             customerId: customerId ? customerId : request.customerId
@@ -204,7 +204,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         if (isEdit) {
             return contactTypeId && typeof contactTypeId === "object" ? String(contactTypeId.value) : String(contactTypeId);
         } else {
-            return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId;
+            return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId && typeof contactTypeId === "object" ? String(contactTypeId.value) : String(contactTypeId);;
         }
     };
 
