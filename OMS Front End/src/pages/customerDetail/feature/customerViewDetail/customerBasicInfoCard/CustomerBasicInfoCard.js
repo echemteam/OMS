@@ -47,6 +47,7 @@ const CustomerBasicInfoCard = ({
   isLoading,
   customerId,
   getCustomerById,
+  isGetCustomersBasicInformationById
 }) => {
   const childRef = useRef();
   const reasonRef = useRef();
@@ -94,7 +95,7 @@ const CustomerBasicInfoCard = ({
 
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
-  const { isResponsibleUser,  statusCheckId,setStatusCheckId } = useContext(BasicDetailContext);
+  const { isResponsibleUser, statusCheckId, setStatusCheckId } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(
     securityKey.EDITBASICCUSTOMERDETAILS
@@ -136,7 +137,7 @@ const CustomerBasicInfoCard = ({
 
 
   useEffect(() => {
-    if (customerData) {
+    if (customerData && isGetCustomersBasicInformationById) {
       const responsibleUserIds = customerData?.responsibleUserId
         ?.split(",")
         .map((id) => id.trim());
@@ -152,13 +153,13 @@ const CustomerBasicInfoCard = ({
       setSelectedStatus(customerData.status);
       getAllUser();
     }
-  }, [customerData]);
+  }, [customerData, isGetCustomersBasicInformationById]);
 
-  useEffect(()=>{
-    if(statusCheckId){
-        getCustomerById()
-    }  
-},[statusCheckId,setStatusCheckId,selectedStatus])
+  useEffect(() => {
+    if (statusCheckId) {
+      getCustomerById()
+    }
+  }, [statusCheckId, setStatusCheckId, selectedStatus])
 
   useEffect(() => {
     if (!isFetching && isGetAllUserSucess && allGetAlluserData) {
@@ -180,8 +181,8 @@ const CustomerBasicInfoCard = ({
 
       const filteredData = responsibleUserIds
         ? uniqueData.filter(
-            (item) => !responsibleUserIds.includes(item.userId.toString())
-          )
+          (item) => !responsibleUserIds.includes(item.userId.toString())
+        )
         : uniqueData;
 
       const modifyUserData = filteredData.map((item) => ({
@@ -215,7 +216,7 @@ const CustomerBasicInfoCard = ({
   }, [isGetAllUserSucess, allGetAlluserData, isFetching]);
 
   const handleStatusChange = (selectedOption) => {
-    
+
     if (selectedOption.label === customerData.status) {
       ToastService.warning(
         "You can't change the status of the customer to currect customer status."
@@ -319,7 +320,7 @@ const CustomerBasicInfoCard = ({
   };
 
   const handleUpdate = () => {
-    
+
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
@@ -354,7 +355,7 @@ const CustomerBasicInfoCard = ({
   };
 
   const getStatusClass = () => {
-    
+
     switch (selectedStatus) {
       case "Pending":
         return "badge-gradient-Pending";
@@ -399,13 +400,13 @@ const CustomerBasicInfoCard = ({
         const responsibleUserIds = customerData?.responsibleUserId
           ?.split(",")
           .map((id) => Number(id.trim()));
-        const formNew={...formData}
+        const formNew = { ...formData }
         formNew.initialState = {
           ...formNew.initialState,
-              responsibleUserId: responsibleUserIds,
-            };
-            setFormData(formNew);
-          }
+          responsibleUserId: responsibleUserIds,
+        };
+        setFormData(formNew);
+      }
     }
   }, [showModal]);
 
@@ -517,7 +518,7 @@ const CustomerBasicInfoCard = ({
                   placeholder="Responsible User"
                   isDropdownDisabled={
                     isResponsibleUser ? true : isButtonDisable
-                  } 
+                  }
                   optionsValue={responsibleUserOptions}
                   value={rUserValue}
                   handleDropdownChange={updateRUserData}
@@ -662,7 +663,7 @@ const CustomerBasicInfoCard = ({
         updateCustomerApproval={updateCustomerApproval}
         customerData={customerData}
         setSelectedStatus={setSelectedStatus}
-       
+
       />
     </div>
   ) : (
