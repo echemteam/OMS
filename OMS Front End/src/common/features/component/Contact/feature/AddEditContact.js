@@ -80,12 +80,23 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         }
 
         let initialStateRequest = {
-            ...formData.initialState,
-            emailList: isEdit ? isGetByIdData.emailAddressList : formData.initialState.emailAddressList,
-            phoneList: isEdit ? isGetByIdData.phoneNumberList : formData.initialState.phoneNumberList,
-            contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', isGetByIdData.contactTypeId)
-        }
+            ...formData.initialState, // Spread the initial form data first
 
+            // Conditionally add fields based on the availability of isGetByIdData
+            ...(isGetByIdData && {
+                emailList: isEdit ? isGetByIdData.emailAddressList : formData.initialState.emailAddressList,
+                phoneList: isEdit ? isGetByIdData.phoneNumberList : formData.initialState.phoneNumberList,
+                contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', isGetByIdData.contactTypeId)
+            })
+        };
+        if (filteredTypeIds.length > 0) {
+            const request = requestData(data, filteredTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
+            let req = {
+                ...request,
+                customerId: customerId ? customerId : request.customerId
+            }
+            addEdit(req);
+        }
         if (matchTypeIds.length > 0 || matchTypeIds?.value) {
             if (eventNameArr.length > 0) {
                 const matchTypeIdsArray = matchTypeIds.split(',');
@@ -109,17 +120,9 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                     customerId: customerId ? customerId : request.customerId,
                     contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', request.contactTypeId)
                 }
-                await handleApprovalRequest(req, initialStateRequest, eventName, 0);
+                await handleApprovalRequest(req, isEdit ? initialStateRequest : null, eventName, 0);
             }
 
-        }
-        if (filteredTypeIds.length > 0) {
-            const request = requestData(data, filteredTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
-            let req = {
-                ...request,
-                customerId: customerId ? customerId : request.customerId
-            }
-            addEdit(req);
         }
     };
 
