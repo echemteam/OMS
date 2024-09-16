@@ -194,12 +194,12 @@ export const Menu = [
             to: "/addOrder",
             securityKey: securityKey.ORDER,
           },
-          // {
-          //   id: "Suppliers",
-          //   submenuName: "Order",
-          //   to: "/Orders",
-          //   securityKey: securityKey.ORDER,
-          // },
+          {
+            id: "Suppliers",
+            submenuName: "Order",
+            to: "/Orders",
+            securityKey: securityKey.ORDER,
+          },
         ],
       },
       {

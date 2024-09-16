@@ -399,31 +399,43 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                 <div className="value-comparison">
                   <div className="value-block">
                     <span className="value-title">Old Value</span>
-                    {approvedData.fieldName && oldFieldValue !== "N/A" ? (
-                      <div className="value-content">
-                        <span className="value-label">{renderKeyName(approvedData.fieldName)} : </span>
-                        <span className="value-data">
-                          {/* {renderValue(oldFieldValue)} */}
-                          {renderLableName(approvedData.fieldName, renderValue(oldFieldValue))}
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="no-value">No old value available</div>
-                    )}
+                    {approvedData.oldValueTemplate ?
+                      <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.oldValueTemplate }}></div>
+                      :
+                      <>
+                        {approvedData.fieldName && oldFieldValue !== "N/A" ? (
+                          <div className="value-content">
+                            <span className="value-label">{renderKeyName(approvedData.fieldName)} : </span>
+                            <span className="value-data">
+                              {/* {renderValue(oldFieldValue)} */}
+                              {renderLableName(approvedData.fieldName, renderValue(oldFieldValue))}
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="no-value">No old value available</div>
+                        )}
+                      </>
+                    }
                   </div>
                   <div className="value-block">
                     <span className="value-title">New Value</span>
-                    {approvedData.fieldName && newFieldValue !== "N/A" ? (
-                      <div className="value-content">
-                        <span className="value-label">{renderKeyName(approvedData.fieldName)} : </span>
-                        <span className="value-data">
-                          {/* {renderValue(newFieldValue)} */}
-                          {renderLableName(approvedData.fieldName, renderValue(newFieldValue))}
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="no-value">No new value available</div>
-                    )}
+                    {approvedData.newValueTemplate ?
+                      <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.newValueTemplate }}></div>
+                      :
+                      <>
+                        {approvedData.fieldName && newFieldValue !== "N/A" ? (
+                          <div className="value-content">
+                            <span className="value-label">{renderKeyName(approvedData.fieldName)} : </span>
+                            <span className="value-data">
+                              {/* {renderValue(newFieldValue)} */}
+                              {renderLableName(approvedData.fieldName, renderValue(newFieldValue))}
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="no-value">No new value available</div>
+                        )}
+                      </>
+                    }
                   </div>
                 </div>}
               {tabId !== 1 && approvedData.status !== "Reject" ?
