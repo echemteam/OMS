@@ -47,7 +47,7 @@ export const ThirdPartyApiConfigurationViewDetails = () => {
   }
 
   const handleBackClick = () => {
-    navigate("/ThirdPartyApiConfiguration");
+    navigate("/configuration/ThirdPartyApiConfiguration");
   }
 
   return (

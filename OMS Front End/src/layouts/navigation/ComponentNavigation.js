@@ -47,7 +47,7 @@ const Organization = React.lazy(() => import("../../pages/organization/Organizat
 const ThirdPartyApiConfiguration = React.lazy(() => import("../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/ThirdPartyApiConfiguration"));
 const FunctionalConfiguration = React.lazy(() => import("../../pages/configuration/functionalConfiguration/FunctionalConfiguration"));
 const FunctionalConfigurationViewDetail = React.lazy(() => import("../../pages/configuration/functionalConfiguration/features/functionalConfigurationList/functionalConfigurationViewDetail/FunctionalConfigurationViewDetail"));
-const Dictionary=React.lazy(()=>import("../../pages/configuration/dictionary/Dictionary"));
+const Dictionary = React.lazy(() => import("../../pages/configuration/dictionary/Dictionary"));
 
 export const ComponentNavigation = [
   {
@@ -307,9 +307,11 @@ export const ComponentNavigation = [
     text: 'Supplier Detail',
     securityKey: securityKey.SUPPLIER
   },
+
+  //**************** Configuration Menu Start ****************/
   {
     id: 'ApprovalRules',
-    path: '/ApprovalRules',
+    path: '/configuration/ApprovalRules',
     exact: true,
     title: '',
     component: ApprovalRules,
@@ -319,7 +321,7 @@ export const ComponentNavigation = [
   },
   {
     id: 'FunctionalConfiguration',
-    path: '/FunctionalConfiguration',
+    path: '/configuration/FunctionalConfiguration',
     exact: true,
     // title: 'Functional Configuration',
     title: '',
@@ -330,7 +332,7 @@ export const ComponentNavigation = [
   },
   {
     id: 'FunctionalConfigurationViewDetail',
-    path: '/FunctionalConfigurationViewDetail/:id/:data',
+    path: '/configuration/FunctionalConfigurationViewDetail/:id/:data',
     exact: true,
     title: 'Functional Configuration View Details',
     component: FunctionalConfigurationViewDetail,
@@ -340,7 +342,7 @@ export const ComponentNavigation = [
   },
   {
     id: 'apiProviders',
-    path: '/APIProviders',
+    path: '/configuration/APIProviders',
     exact: true,
     // title: 'API Providers',
     title: '',
@@ -351,7 +353,7 @@ export const ComponentNavigation = [
   },
   {
     id: 'apiProviderDetails',
-    path: '/APIProviderDetail/:id',
+    path: '/configuration/APIProviderDetail/:id',
     exact: true,
     title: 'API Provider Detail',
     component: ApiProviderViewDetail,
@@ -359,6 +361,47 @@ export const ComponentNavigation = [
     text: 'API Providers Detail',
     securityKey: securityKey.APIPROVIDERS
   },
+  {
+    id: 'ThirdPartyApiConfigurationViewDetails',
+    path: '/configuration/ThirdPartyApiConfigurationViewDetails/:id',
+    exact: true,
+    title: 'Third Party Api View Details',
+    component: ThirdPartyApiConfigurationViewDetails,
+    hasParams: false,
+    text: 'ThirdPartyApiConfigurationViewDetails',
+    securityKey: securityKey.THIRDPARTYAPI
+  },
+  {
+    id: 'ThirdPartyApiConfiguration',
+    path: '/configuration/ThirdPartyApiConfiguration',
+    exact: true,
+    title: '',
+    component: ThirdPartyApiConfiguration,
+    hasParams: false,
+    text: 'ThirdPartyApiConfiguration',
+    securityKey: securityKey.THIRDPARTYAPI
+  },
+  {
+    id: 'emailTemplate',
+    path: '/configuration/EmailTemplate',
+    exact: true,
+    title: '',
+    component: EmailTemplate,
+    hasParams: false,
+    text: 'EmailTemplate',
+    securityKey: securityKey.DICTIONARY
+  },
+  {
+    id: 'dictionary',
+    path: '/configuration/Dictionary',
+    exact: true,
+    title: '',
+    component: Dictionary,
+    hasParams: false,
+    text: 'Dictionary',
+    securityKey: securityKey.DICTIONARY
+  },
+  //**************** Configuration Menu End ****************/
   {
     id: "MyTask",
     path: "/MyTask",
@@ -380,26 +423,6 @@ export const ComponentNavigation = [
     securityKey: securityKey.ORGANIZATION
   },
   {
-    id: 'ThirdPartyApiConfigurationViewDetails',
-    path: '/ThirdPartyApiConfigurationViewDetails/:id',
-    exact: true,
-    title: 'Third Party Api View Details',
-    component: ThirdPartyApiConfigurationViewDetails,
-    hasParams: false,
-    text: 'ThirdPartyApiConfigurationViewDetails',
-    securityKey: securityKey.THIRDPARTYAPI
-  },
-  {
-    id: 'ThirdPartyApiConfiguration',
-    path: '/ThirdPartyApiConfiguration',
-    exact: true,
-    title: '',
-    component: ThirdPartyApiConfiguration,
-    hasParams: false,
-    text: 'ThirdPartyApiConfiguration',
-    securityKey: securityKey.THIRDPARTYAPI
-  },
-  {
     id: 'OrderList',
     path: '/OrderList',
     exact: true,
@@ -409,24 +432,6 @@ export const ComponentNavigation = [
     text: 'OrderList',
     // securityKey: securityKey.SUPPLIER
   },
-  {
-    id: 'dictionary',
-    path: '/Dictionary',
-    exact: true,
-    title: '',
-    component: Dictionary,
-    hasParams: false,
-    text: 'Dictionary',
-    securityKey: securityKey.DICTIONARY
-  },
-  {
-    id: 'emailTemplate',
-    path: '/EmailTemplate',
-    exact: true,
-    title: '',
-    component: EmailTemplate,
-    hasParams: false,
-    text: 'EmailTemplate',
-    securityKey: securityKey.DICTIONARY
-  },
+
+
 ];

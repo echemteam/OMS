@@ -6,8 +6,11 @@ import SearchBar from "../../../common/features/component/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../app/slice/authSlice";
 import Iconify from "../../../components/ui/iconify/Iconify";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isActive, setIsActive] = useState(false);
   const shortcutSecRef = useRef(null);
@@ -91,7 +94,11 @@ function Header() {
     };
   }, []);
 
-  const handleChange = () => {};
+  const handleChange = () => { };
+
+  const openAdmin = () => {
+    navigate("/configuration/ApprovalRules");
+  };
 
   return (
     <div className="header-section">
@@ -106,19 +113,17 @@ function Header() {
       </div>
       <div className="right-section">
         <div className="profile-section">
-          <div
-            className={`shortcut-sec ${isActive ? "active" : ""}`}
-            ref={shortcutSecRef}
-          >
-            <div
-              className="shortcut-icon"
-              onClick={() => setIsActive(!isActive)}
-            >
+          <div className={`shortcut-sec`}>
+            <div className="shortcut-icon header-icon-part" onClick={() => openAdmin()} >
+              <Iconify icon="line-md:cog-loop" />
+            </div>
+          </div>
+          <div className={`shortcut-sec ${isActive ? "active" : ""}`} ref={shortcutSecRef}>
+            <div className="shortcut-icon" onClick={() => setIsActive(!isActive)} >
               <Image
                 imagePath={AppIcons.ShortcutIcon}
                 imgCustomClassName="shortcut-icon"
-                altText="Icon"
-              />
+                altText="Icon" />
             </div>
             <div className="shortcuts-list">
               <div className="top-header-card-title">
