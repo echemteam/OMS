@@ -75,6 +75,44 @@ export const supplierBasicData = {
       },
     },
     {
+      id: "dbaName",
+      lable: "Doing Business As Name ",
+      Field_Name: "Doing Business As Name",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "dbaName",
+      fieldSetting: {
+        placeholder: "Doing Business As Name",
+        allowSpace: true,
+        maxLength: 50,
+      },
+      // validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+
+    {
+      id: "taxId",
+      lable: "Tax Id ",
+      Field_Name: "Tax Id",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "taxId",
+      fieldSetting: {
+        placeholder: "Tax Id",
+        allowSpace: true,
+        minLength: 10,
+        maxLength: 10,
+      },
+      inputIcon: {
+        isIconShow: true,
+        faIcon: "fa-info-circle",
+        message: SuccessMessage.DefaultUSATaxId
+      },
+      style: {
+        containerCss: "col-xxl-6 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+    {
       id: "groupTypeId",
       lable: "Group Type ",
       Field_Name: "Group Type",
@@ -82,21 +120,6 @@ export const supplierBasicData = {
       dataField: "groupTypeId",
       fieldSetting: {
         placeholder: "Select Group Type",
-        isEnableOnChange: true
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
-      },
-    },
-    {
-      id: "countryId",
-      lable: "Country ",
-      Field_Name: "Country",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "countryId",
-      fieldSetting: {
-        placeholder: "Select Country",
         isEnableOnChange: true
       },
       validation: [{ type: "require" }],
@@ -120,6 +143,22 @@ export const supplierBasicData = {
       },
     },
     {
+      id: "countryId",
+      lable: "Country ",
+      Field_Name: "Country",
+      fieldType: FormFieldTypes.SELECT,
+      dataField: "countryId",
+      fieldSetting: {
+        placeholder: "Select Country",
+        isEnableOnChange: true
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input",
+      },
+    },
+
+    {
       id: "supplierTypeId",
       lable: "Supplier Type ",
       Field_Name: "Supplier Type",
@@ -131,47 +170,10 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
+        containerCss: "col-xxl-6 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
-    {
-      id: "dbaName",
-      lable: "Doing Business As Name ",
-      Field_Name: "Doing Business As Name",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "dbaName",
-      fieldSetting: {
-        placeholder: "Doing Business As Name",
-        allowSpace: true,
-        maxLength: 50,
-      },
-      // validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
-      },
-    },
-
-    {
-      id: "taxId",
-      lable: "Tax Id ",
-      Field_Name: "Tax Id",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "taxId",
-      fieldSetting: {
-        placeholder: "Tax Id",
-        allowSpace: true,
-        minLength: 10,
-        maxLength: 10,
-      },
-      inputIcon: {
-        isIconShow: true,
-        faIcon: "fa-info-circle",
-        message: SuccessMessage.DefaultUSATaxId
-      },
-      style: {
-        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
-      },
-    },
+   
     {
       id: "incotermId",
       lable: "Incoterm",
@@ -184,7 +186,7 @@ export const supplierBasicData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-3 col-xl-4 col-md-4 col-12 mb-input",
+        containerCss: "col-xxl-6 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
     {
