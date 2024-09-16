@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import "./Header.scss";
 import Image from "../../../components/image/Image";
@@ -166,7 +167,7 @@ function Header() {
               <div className="title-clearall">
                 <span className="title">Notifications</span>
                 <span className="clear-all">
-                  <a>Clear All</a>
+                  <a href="#">Clear All</a>
                 </span>
               </div>
               <div className="notification-items">
@@ -176,7 +177,7 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a>Lorem Ipsum is simply dummy text</a>
+                      <a href="#">Lorem Ipsum is simply dummy text</a>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
@@ -185,7 +186,7 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a>Lorem Ipsum is simply dummy text</a>
+                      <a href="#">Lorem Ipsum is simply dummy text</a>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
@@ -194,7 +195,7 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a>Lorem Ipsum is simply dummy text</a>
+                      <a href="#">Lorem Ipsum is simply dummy text</a>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
@@ -203,14 +204,14 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a>Lorem Ipsum is simply dummy text</a>
+                      <a href="#">Lorem Ipsum is simply dummy text</a>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
                 </ul>
               </div>
               <div className="notification-footer">
-                <a>View All</a>
+                <a href="#">View All</a>
               </div>
             </div>
           </div>
