@@ -95,7 +95,7 @@ const CustomerBasicInfoCard = ({
 
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
-  const { isResponsibleUser, statusCheckId, setStatusCheckId } = useContext(BasicDetailContext);
+  const { isResponsibleUser, setRejectStatusId,rejectStatusId} = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(
     securityKey.EDITBASICCUSTOMERDETAILS
@@ -156,10 +156,10 @@ const CustomerBasicInfoCard = ({
   }, [customerData, isGetCustomersBasicInformationById]);
 
   useEffect(() => {
-    if (statusCheckId) {
+    if (rejectStatusId) {
       getCustomerById()
     }
-  }, [statusCheckId, setStatusCheckId, selectedStatus])
+  }, [rejectStatusId, setRejectStatusId, selectedStatus])
 
   useEffect(() => {
     if (!isFetching && isGetAllUserSucess && allGetAlluserData) {
@@ -284,6 +284,7 @@ const CustomerBasicInfoCard = ({
   };
 
   const updateRUserData = (data) => {
+
     const responsibleUserId = data.map((option) => option.value.toString());
     setRUserValue(data);
     setResponsibleUserIds(responsibleUserId);
@@ -346,6 +347,7 @@ const CustomerBasicInfoCard = ({
   const handleModelShow = () => {
     setIsInvoiceModelShow(true);
   };
+  
   const handleToggleModal = () => {
     setShowModal(false);
     setIsInvoiceModelShow(false);
@@ -395,20 +397,19 @@ const CustomerBasicInfoCard = ({
   };
 
   useEffect(() => {
-    if (showModal) {
-      if (customerData.responsibleUserId) {
-        const responsibleUserIds = customerData?.responsibleUserId
-          ?.split(",")
-          .map((id) => Number(id.trim()));
+    
+    if (showModal &&  selectedStatus === CustomerSupplierStatus.REJECT  ) {
+      if (responsibleUserIds) {
+        const responsibleUser = responsibleUserIds?.map((id) => Number(id.trim()));
         const formNew = { ...formData }
         formNew.initialState = {
           ...formNew.initialState,
-          responsibleUserId: responsibleUserIds,
+          responsibleUserId: responsibleUser,
         };
         setFormData(formNew);
       }
     }
-  }, [showModal]);
+  }, [showModal,selectedStatus]);
 
   useEffect(() => {
     if (isSuccessUpdateCustomerSubCustomer && isUpdateCustomerSubCustomerData) {
@@ -661,7 +662,7 @@ const CustomerBasicInfoCard = ({
         isDetailPage={true}
         childRef={childRef}
         updateCustomerApproval={updateCustomerApproval}
-        customerData={customerData}
+        responsibleUserIds={responsibleUserIds}
         setSelectedStatus={setSelectedStatus}
 
       />

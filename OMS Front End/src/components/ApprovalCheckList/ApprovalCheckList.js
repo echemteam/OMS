@@ -52,7 +52,7 @@ const ApprovalCheckList = ({
   isSubCustomer,
   ownerType,
   basicData,
-    setStatusCheckId,
+  setRejectStatusId,
     setSelectedStatus,
   
 }) => {
@@ -128,23 +128,20 @@ const ApprovalCheckList = ({
       data: isDownalodData,
     },
   ] = useLazyDownloadDocumentQuery();
-  useEffect(() => {
-    if (showModal)
-      getAllUser()
-    if (basicData?.responsibleUserId) {
-      const responsibleUserIds = basicData?.responsibleUserId
-        ?.split(",")
-        .map((id) => Number(id.trim()));
 
-      const formNew = { ...formData }
-      formNew.initialState = {
-        ...formNew.initialState,
-        responsibleUserId: responsibleUserIds,
-      };
-      setFormData(formNew);
-    
+  useEffect(() => {
+    if (showModal) {
+      if (basicData) {
+        const responsibleUser = basicData?.map((id) => Number(id.trim()));
+        const formNew = { ...formData }
+        formNew.initialState = {
+          ...formNew.initialState,
+          responsibleUserId: responsibleUser,
+        };
+        setFormData(formNew);
+      }
     }
-  }, [showModal])
+  }, [showModal]);
 
 
   if (isGetAllUserSucess && allGetAllUserData) {
@@ -188,10 +185,7 @@ const ApprovalCheckList = ({
       updateRUserDataDropdown(custData.responsibleUserId);
       addCustomerNotes(req)
       setSelectedStatus(StatusFeild.Reject);
-   
-      setStatusCheckId(req.statusId)
-     
-
+      setRejectStatusId(req.statusId);
     }
   };
   useEffect(() => {
