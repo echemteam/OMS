@@ -11,7 +11,7 @@ import DataLoader from "../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
 import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
 //** Service's */
-import { useLazyGetApprovalRequestsListByStatusAndRoleIdQuery } from "../../../app/services/ApprovalAPI";
+import { useGetApprovalRequestsListByStatusAndRoleIdMutation } from "../../../app/services/ApprovalAPI";
 //** Component's */
 import ModuleList from "./ModuleList";
 
@@ -25,7 +25,7 @@ const ArchiveTask = (props) => {
   const [selectedfilterBy, setSelectedFilterBy] = useState([]);
   const [selectedModule, setSelectedModule] = useState(props.moduleList[0]?.moduleId);
 
-  const [getApprovalRequestsListByStatus, { isFetching: isGetApprovalRequestsListByStatusFetching, isSuccess: isGetApprovalRequestsListByStatusSuccess, data: isGetApprovalRequestsListByStatusData }] = useLazyGetApprovalRequestsListByStatusAndRoleIdQuery();
+  const [getApprovalRequestsListByStatus, { isLoading, isSuccess: isGetApprovalRequestsListByStatusSuccess, data: isGetApprovalRequestsListByStatusData }] = useGetApprovalRequestsListByStatusAndRoleIdMutation();
 
   useEffect(() => {
     if (roleId && props.moduleList && props.moduleList.length > 0) {
@@ -34,7 +34,7 @@ const ArchiveTask = (props) => {
   }, [roleId, props.moduleList]);
 
   useEffect(() => {
-    if (!isGetApprovalRequestsListByStatusFetching && isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData) {
+    if (isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData) {
       setArchiveData(isGetApprovalRequestsListByStatusData);
       if (!isGetApprovalRequestsListByStatusData || isGetApprovalRequestsListByStatusData?.length === 0) {
         if (props.handleRestEventDetail) {
@@ -44,7 +44,7 @@ const ArchiveTask = (props) => {
         handleTabClick(isGetApprovalRequestsListByStatusData[0]?.approvalRequestId);
       }
     }
-  }, [isGetApprovalRequestsListByStatusFetching, isGetApprovalRequestsListByStatusSuccess, isGetApprovalRequestsListByStatusData]);
+  }, [isGetApprovalRequestsListByStatusSuccess, isGetApprovalRequestsListByStatusData]);
 
   const handleRequest = (updatedFields = {}) => {
     let req = {
@@ -93,7 +93,7 @@ const ArchiveTask = (props) => {
             selectedFilterOptions={selectedFilterOptions}
             selectedSortOrder={selectedSortOrder}>
             <div className="customer-info">
-              {isGetApprovalRequestsListByStatusFetching ? (
+              {isLoading ? (
                 <DataLoader />
               ) : (
                 <div className="tabs">

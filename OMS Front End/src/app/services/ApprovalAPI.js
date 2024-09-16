@@ -34,16 +34,16 @@ const approvalAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-        getApprovalRequestsListByStatusAndRoleId: builder.query({
-            query: (data) => ({
-                url: encryptQueryString(`/Approval/GetApprovalRequestsListByStatusAndRoleId/?status=${data.status}&roleId=${data.roleId}&sortOrder=${data.orderby}
-                &eventIds=${data.eventIds}&moduleId=${data.moduleId}`),
-                method: 'GET',
-            }),
-            // providesTags: ['User'],
-            transformResponse: transformSucessResponse,
-            transformErrorResponse: transformErrorResponse
-        }),
+        // getApprovalRequestsListByStatusAndRoleId: builder.query({
+        //     query: (data) => ({
+        //         url: encryptQueryString(`/Approval/GetApprovalRequestsListByStatusAndRoleId/?status=${data.status}&roleId=${data.roleId}&sortOrder=${data.orderby}
+        //         &eventIds=${data.eventIds}&moduleId=${data.moduleId}`),
+        //         method: 'GET',
+        //     }),
+        //     // providesTags: ['User'],
+        //     transformResponse: transformSucessResponse,
+        //     transformErrorResponse: transformErrorResponse
+        // }),
         getApprovalRequestsByApprovalRequestId: builder.query({
             query: (id) => ({
                 url: encryptQueryString(`/Approval/GetApprovalRequestsByApprovalRequestId/?approvalRequestId=${Number(id)}`),
@@ -139,12 +139,22 @@ const approvalAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
+
+        GetApprovalRequestsListByStatusAndRoleId: builder.mutation({
+            query: (requestData) => ({
+                url: `/Approval/GetApprovalRequestsListByStatusAndRoleId`,
+                method: 'POST',
+                body: transformRequest(requestData)
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse
+        }),
     })
 })
 
 export const {
     useLazyGetUserCheckListQuery,
-    useLazyGetApprovalRequestsListByStatusAndRoleIdQuery,
+    // useLazyGetApprovalRequestsListByStatusAndRoleIdQuery,
     useLazyGetApprovalRequestsByApprovalRequestIdQuery,
     useAddUserChecklistResponseMutation,
     useGetValidateCheckListMutation,
@@ -160,7 +170,8 @@ export const {
     useLazyGetSupplierBasicInfoByIdQuery,
     useLazyGetSupplierAddressInfoByIdQuery,
     useLazyGetSupplierContactInfoByIdQuery,
-    useLazyGetSupplierFinacialSettingQuery
+    useLazyGetSupplierFinacialSettingQuery,
+    useGetApprovalRequestsListByStatusAndRoleIdMutation,
 } = approvalAPI;
 
 export default approvalAPI;
