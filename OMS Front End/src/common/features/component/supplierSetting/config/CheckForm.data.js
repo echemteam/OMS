@@ -103,7 +103,7 @@ export const checkFormData = {
         allowSpace: true,
         maxLength: 10,
       },
-      validation: [{ type: "require" }, { type: "validZipCode" }],
+      validation: [{ type: "validZipCode" }],
       style: {
         containerCss: "col-xxl-3 col-xl-3 col-md-3 col-12 mb-input label-name-small",
       },

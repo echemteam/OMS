@@ -74,6 +74,14 @@ export const invalidBoundarySpaces = (value) => {
     return validPattern.test(value);
 }
 
+// Utility function to validate Characters
+export const validateCharacters = (value) => {
+    const specialCharsRegex = /^[A-Za-z0-9]+$/;
+    // Returns true if the string contains any special character
+    return specialCharsRegex.test(value);
+};
+
+
 export const isValidZipCode = (value) => {
     const patternData = getPostalCodePattern(value?.countryId);
     if (patternData && patternData.pattern) {

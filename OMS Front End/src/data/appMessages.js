@@ -45,7 +45,8 @@ export const ErrorMessage = {
 	FileExists: "The file already exists. Please choose a different file name.",
 	DocumentDetailMissing: "Your document details are missing",
 	DocumentTypeExists: "Document Type already exists.",
-	Invalidpostalcode: "The ZIP code is invalid. It should be a maximum of {maxLength} characters."
+	Invalidpostalcode: "The ZIP code is invalid. It should be a maximum of {maxLength} characters.",
+	InvalidSpecialCharacters: "The input contains invalid characters. Only letters and numbers are allowed."
 };
 
 export const SuccessMessage = {
