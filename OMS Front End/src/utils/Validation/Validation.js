@@ -164,9 +164,10 @@ export function ValidateField(value, fieldRules, state) {
           }
           break;
         case 'validZipCode':
-          if (!isValidZipCode(state)) {
+          const zipCodeValidation = isValidZipCode(state);
+          if (!zipCodeValidation.isValid) {
             result.isvalid = false;
-            result.message = rule.message
+            result.message = rule.message.replace('{maxLength}', zipCodeValidation?.maxLength || '');
           }
           break;
         default:
