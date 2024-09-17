@@ -103,6 +103,12 @@ const getValidationRule = (element, validation) => {
                 message: ErrorMessage.Invalidpostalcode
             }
             break;
+        case "validateCharacters":
+            valObj = {
+                type: validation.type,
+                message: ErrorMessage.InvalidSpecialCharacters
+            }
+            break;
         default:
             break;
     }

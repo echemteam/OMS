@@ -196,7 +196,7 @@ export const bankAddressFormData = {
         placeholder: "Please Enter Swift Code",
         isEnableOnChange: true
       },
-      // validation: [{ type: "require" }],
+      validation: [{ type: "validateCharacters" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
       },

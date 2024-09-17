@@ -1,5 +1,5 @@
 /* Component  */
-import { compare, email, number, required, uniqueIdentifier, isvalidPassword, maxLength, minLength, maxProspects, minEndDate, maxSum, distinct, isValidEIN, isValidPhone, isValidFax, isUnique, isWebsite, isTaxId, isOnlyText, invalidBoundarySpaces, isValidZipCode } from './ValidateField'
+import { compare, email, number, required, uniqueIdentifier, isvalidPassword, maxLength, minLength, maxProspects, minEndDate, maxSum, distinct, isValidEIN, isValidPhone, isValidFax, isUnique, isWebsite, isTaxId, isOnlyText, invalidBoundarySpaces, isValidZipCode, validateCharacters } from './ValidateField'
 
 // Validation functions 
 
@@ -164,7 +164,16 @@ export function ValidateField(value, fieldRules, state) {
           }
           break;
         case 'validZipCode':
-          if (!isValidZipCode(state)) {
+          if (state?.zipCode) {
+            const zipCodeValidation = isValidZipCode(state);
+            if (!zipCodeValidation.isValid) {
+              result.isvalid = false;
+              result.message = rule.message.replace('{maxLength}', zipCodeValidation?.maxLength || '');
+            }
+          }
+          break;
+        case 'validateCharacters':
+          if (value && !validateCharacters(value)) {
             result.isvalid = false;
             result.message = rule.message
           }
