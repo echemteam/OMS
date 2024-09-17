@@ -175,7 +175,7 @@ export function ValidateField(value, fieldRules, state) {
         case 'validateCharacters':
           if (value && !validateCharacters(value)) {
             result.isvalid = false;
-            result.message = rule.message
+            result.message = rule.message;
           }
           break;
         default:
