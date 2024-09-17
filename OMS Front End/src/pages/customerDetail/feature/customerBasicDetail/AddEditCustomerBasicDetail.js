@@ -21,8 +21,8 @@ import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/hand
 import PropTypes from 'prop-types';
 import SwalAlert from "../../../../services/swalService/SwalService";
 import { SuccessMessage } from "../../../../data/appMessages";
-import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
-import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
+// import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
+// import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
 import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/validateRUser";
 import { useSelector } from "react-redux";
 import { isCustomerOrSupplierApprovedStatus } from "../../../../utils/CustomerSupplier/CustomerSupplierUtils";
@@ -41,7 +41,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [formData, setFormData] = useState(customerbasicData);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const [isResponsibleUser, setIsResponsibleUser] = useState(false);
-    const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
+    // const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
     const { nextRef, customerId, setCustomerId, moveNextPage, setCustomerCountryId } = useContext(BasicDetailContext);
 
     //** API Call's */
@@ -97,14 +97,14 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             ]);
 
             if (isOpen) {
-                                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId', 'isSubCompany', 'note']);
+                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId', 'isSubCompany', 'note']);
                 // setFormData(modifyFormFields);
                 // setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
                 // setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
-            } else if (!isOpen) { 
+            } else if (!isOpen) {
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
-                
+
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON, true);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
             }
@@ -114,14 +114,14 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     useEffect(() => {
         if (isOpen) {
             if (customerId > 0) {
-                                getCustomersBasicInformationById(customerId);
-                
+                getCustomersBasicInformationById(customerId);
+
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
                 setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
             }
         }
     }, [isOpen, customerId, getCustomersBasicInformationById])
-     useEffect(() => {
+    useEffect(() => {
         if (isGetAllGroupTypesSucess && allGetAllGroupTypesData) {
             setDropDownOptionField(allGetAllGroupTypesData, 'groupTypeId', 'type', customerbasicData, 'groupTypeId');
         }
@@ -175,14 +175,14 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     useEffect(() => {
         if (isGetCustomersBasicInformationById && GetCustomersBasicInformationByIdData && !isGetCustomersBasicInformationByIdFetching) {
             if (isCustomerOrSupplierApprovedStatus(GetCustomersBasicInformationByIdData.statusId)) {
-                setFieldSetting(customerbasicData,'name',FieldSettingType.CKEDITORDISABLED,true);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.CKEDITORDISABLED, true);
                 setFieldSetting(formData, 'taxId', 'isDisabled', true);
             } else {
-                setFieldSetting(customerbasicData,'name',FieldSettingType.CKEDITORDISABLED,false);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.CKEDITORDISABLED, false);
                 setFieldSetting(formData, 'taxId', 'isDisabled');
             }
             const newFrom = { ...customerbasicData };
-                        const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, customerbasicData.formFields, 'taxId');
+            const { formFields } = getTaxIdMinMaxLength(GetCustomersBasicInformationByIdData.countryId, customerbasicData.formFields, 'taxId');
             newFrom.formFields = formFields;
             newFrom.initialState = { ...GetCustomersBasicInformationByIdData };
             newFrom.formFields = customerbasicData.formFields.filter(field => field.dataField !== "note" && field.dataField !== "isSubCustomer" && field.dataField !== "responsibleUserId");
@@ -200,7 +200,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         handleAddBasicDetails,
     }));
     const handleAddBasicDetails = async () => {
-                        let data = basicDetailRef.current.getFormData();
+        let data = basicDetailRef.current.getFormData();
         if (data) {
             setSubCustomer && setSubCustomer(data.isSubCustomer);
             let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
@@ -220,11 +220,11 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                     ...req,
                     responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                 }
-                if (isOpen && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-                    handleApprovalRequest(value, formData.initialState);
-                } else {
-                    addEditCustomersBasicInformation(value);
-                }
+                // if (isOpen && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+                //     handleApprovalRequest(value, formData.initialState);
+                // } else {
+                addEditCustomersBasicInformation(value);
+                // }
             } else {
                 if (data.taxId) {
                     const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, customerbasicData.formFields, 'taxId');
@@ -233,11 +233,11 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                             ...req,
                             responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
                         }
-                        if (isOpen && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-                            handleApprovalRequest(value, formData.initialState);
-                        } else {
-                            addEditCustomersBasicInformation(value);
-                        }
+                        // if (isOpen && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+                        //     handleApprovalRequest(value, formData.initialState);
+                        // } else {
+                        addEditCustomersBasicInformation(value);
+                        // }
                     } else {
                         ToastService.warning(validateTaxIdMessage);
                     }
@@ -248,11 +248,11 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         }
     };
 
-    const handleApprovalRequest = async (newValue, oldValue) => {
-        const request = { newValue, oldValue, eventName: isOpen && FunctionalitiesName.CUSTOMERUPDATE };
-        const modifyData = await ValidateRequestByApprovalRules(request);
-        if (modifyData.newValue) addEditCustomersBasicInformation(modifyData.newValue);
-    };
+    // const handleApprovalRequest = async (newValue, oldValue) => {
+    //     const request = { newValue, oldValue, eventName: isOpen && FunctionalitiesName.CUSTOMERUPDATE };
+    //     const modifyData = await ValidateRequestByApprovalRules(request);
+    //     if (modifyData.newValue) addEditCustomersBasicInformation(modifyData.newValue);
+    // };
 
     const handleValidateTextId = (data, dataField) => {
         if (dataField === 'countryId') {
@@ -353,7 +353,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                                 buttonTypeClassName="theme-button"
                                 buttonText="Update"
                                 onClick={handleAddBasicDetails}
-                                isLoading={isApprovelLoading || isAddEditCustomersBasicInformationLoading}
+                                isLoading={isAddEditCustomersBasicInformationLoading}
                                 isDisable={isButtonDisable}
                             />
                             <Buttons

@@ -108,7 +108,7 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
 
 
     const handleViewClick = (data) => {
-        navigate(`/ThirdPartyApiConfigurationViewDetails/${encryptUrlData(data.apiEventId)}`, "_blank");
+        navigate(`/configuration/ThirdPartyApiConfigurationViewDetails/${encryptUrlData(data.apiEventId)}`, "_blank");
     }
 
     const handleTestClick = (data) => {

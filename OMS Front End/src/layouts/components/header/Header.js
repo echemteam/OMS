@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import "./Header.scss";
 import Image from "../../../components/image/Image";
@@ -6,8 +7,11 @@ import SearchBar from "../../../common/features/component/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../app/slice/authSlice";
 import Iconify from "../../../components/ui/iconify/Iconify";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isActive, setIsActive] = useState(false);
   const shortcutSecRef = useRef(null);
@@ -91,7 +95,11 @@ function Header() {
     };
   }, []);
 
-  const handleChange = () => {};
+  const handleChange = () => { };
+
+  const openAdmin = () => {
+    navigate("/configuration/ApprovalRules");
+  };
 
   return (
     <div className="header-section">
@@ -106,19 +114,17 @@ function Header() {
       </div>
       <div className="right-section">
         <div className="profile-section">
-          <div
-            className={`shortcut-sec ${isActive ? "active" : ""}`}
-            ref={shortcutSecRef}
-          >
-            <div
-              className="shortcut-icon"
-              onClick={() => setIsActive(!isActive)}
-            >
+          <div className={`shortcut-sec`}>
+            <div className="shortcut-icon header-icon-part" onClick={() => openAdmin()} >
+              <Iconify icon="line-md:cog-loop" />
+            </div>
+          </div>
+          <div className={`shortcut-sec ${isActive ? "active" : ""}`} ref={shortcutSecRef}>
+            <div className="shortcut-icon" onClick={() => setIsActive(!isActive)} >
               <Image
                 imagePath={AppIcons.ShortcutIcon}
                 imgCustomClassName="shortcut-icon"
-                altText="Icon"
-              />
+                altText="Icon" />
             </div>
             <div className="shortcuts-list">
               <div className="top-header-card-title">
@@ -161,7 +167,7 @@ function Header() {
               <div className="title-clearall">
                 <span className="title">Notifications</span>
                 <span className="clear-all">
-                  <a>Clear All</a>
+                  <a href="#">Clear All</a>
                 </span>
               </div>
               <div className="notification-items">
@@ -171,7 +177,7 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a>Lorem Ipsum is simply dummy text</a>
+                      <a href="#">Lorem Ipsum is simply dummy text</a>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
@@ -180,7 +186,7 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a>Lorem Ipsum is simply dummy text</a>
+                      <a href="#">Lorem Ipsum is simply dummy text</a>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
@@ -189,7 +195,7 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a>Lorem Ipsum is simply dummy text</a>
+                      <a href="#">Lorem Ipsum is simply dummy text</a>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
@@ -198,14 +204,14 @@ function Header() {
                       <i className="bi bi-bell"></i>
                     </div>
                     <div className="notification-time">
-                      <a>Lorem Ipsum is simply dummy text</a>
+                      <a href="#">Lorem Ipsum is simply dummy text</a>
                       <div className="time-sec">15 mins ago</div>
                     </div>
                   </li>
                 </ul>
               </div>
               <div className="notification-footer">
-                <a>View All</a>
+                <a href="#">View All</a>
               </div>
             </div>
           </div>
