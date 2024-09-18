@@ -92,7 +92,13 @@ namespace OMS.Application.Services.Customers
                                         var propertyInfo = requestData.GetType().GetProperty(fieldName);
                                         if (propertyInfo != null && updatedValue != null)
                                         {
-                                            propertyInfo.SetValue(requestData, Convert.ChangeType(updatedValue, propertyInfo.PropertyType));
+                                            Type targetType = propertyInfo.PropertyType;
+                                            if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                                            {
+                                                targetType = Nullable.GetUnderlyingType(targetType);
+                                            }
+                                            var convertedValue = Convert.ChangeType(updatedValue, targetType);
+                                            propertyInfo.SetValue(requestData, convertedValue);
                                         }
                                     }
                                 }

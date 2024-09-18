@@ -39,59 +39,85 @@ namespace OMS.Application.Services.CustomerAccountingSettings
                 var existingData = await repositoryManager.customerAccountingSettings.GetDetailsbyCustomerID(Convert.ToInt32(requestData.CustomerId)).ConfigureAwait(false);
                 var oldJsonData = JsonConvert.SerializeObject(existingData);
                 var newJsonData = JsonConvert.SerializeObject(requestData);
+                var existingscustomerData = await repositoryManager.customers.GetCustomersBasicInformationById(Convert.ToInt16(requestData.CustomerId));
 
-                var oldDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(oldJsonData);
-                var newDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(newJsonData);
-
-                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
-                var requestProperties = typeof(AddEditCustomerSettingRequest).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-                foreach (var rule in approvalRules)
+                if (existingscustomerData.StatusId == (short)Status.Approved)
                 {
-                    var fieldName = rule.FieldName;
-                    if (string.IsNullOrEmpty(fieldName))
-                    {
-                        continue;
-                    }
-                    if (oldDataDict!.TryGetValue(fieldName, out var oldValue) &&
-                        newDataDict!.TryGetValue(fieldName, out var newValue))
-                    {
-                        bool valuesChanged = (oldValue == null && newValue != null) ||
-                                             (oldValue != null && !oldValue.Equals(newValue));
+                    var oldDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(oldJsonData);
+                    var newDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(newJsonData);
 
-                        if (valuesChanged)
+                    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+                    var requestProperties = typeof(AddEditCustomerSettingRequest).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+                    foreach (var rule in approvalRules)
+                    {
+                        var fieldName = rule.FieldName;
+                        if (string.IsNullOrEmpty(fieldName))
                         {
-                            var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(rule.FunctionalityEventId);
-                            var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                                oldJsonData,
-                                newJsonData,
-                                CurrentUserId,
-                                formatTemplate,
-                                rule
-                            );
-                            responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                            continue;
+                        }
+                        if (oldDataDict!.TryGetValue(fieldName, out var oldValue) &&
+                            newDataDict!.TryGetValue(fieldName, out var newValue))
+                        {
+                            bool valuesChanged = (oldValue == null && newValue != null) ||
+                                                 (oldValue != null && !oldValue.Equals(newValue));
+
+                            if (valuesChanged)
+                            {
+                                var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(rule.FunctionalityEventId);
+                                var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                                    oldJsonData,
+                                    newJsonData,
+                                    CurrentUserId,
+                                    formatTemplate,
+                                    rule
+                                );
+                                responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                                if (responceData.KeyValue > 0)
+                                {
+                                    try
+                                    {
+                                        if (oldDataDict!.TryGetValue(fieldName, out var updatedValue) && valuesChanged)
+                                        {
+                                            var propertyInfo = requestData.GetType().GetProperty(fieldName);
+                                            if (propertyInfo != null && updatedValue != null)
+                                            {
+                                                Type targetType = propertyInfo.PropertyType;
+                                                if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                                                {
+                                                    targetType = Nullable.GetUnderlyingType(targetType);
+                                                }
+                                                var convertedValue = Convert.ChangeType(updatedValue, targetType);
+                                                propertyInfo.SetValue(requestData, convertedValue);
+                                            }
+                                        }
+                                    }
+                                    catch(Exception ex) {
+                                        throw ex;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            }
+                CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
+                customerAccountingSettingsDto.CreatedBy = CurrentUserId;
+                responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
 
-            CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
-            customerAccountingSettingsDto.CreatedBy = CurrentUserId;
-            responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
-
-            if (requestData.CustomerAccountingSettingId == null)
-            {
-                CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = new()
+                if (requestData.CustomerAccountingSettingId == null)
                 {
-                    CustomerId = requestData.CustomerId,
-                    CreatedBy = CurrentUserId,
-                    DeliveryAccountId = (int)DeliveryAccount.OurAccount,
-                    IsByDefault = true
-                };
+                    CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = new()
+                    {
+                        CustomerId = requestData.CustomerId,
+                        CreatedBy = CurrentUserId,
+                        DeliveryAccountId = (int)DeliveryAccount.OurAccount,
+                        IsByDefault = true
+                    };
 
-                _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
+                    _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
+                }
+
             }
-
             return responceData;
 
         }
