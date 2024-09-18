@@ -303,10 +303,10 @@ namespace OMS.Application.Services.Approval
                             var addEditContactForCustomerRequest = new AddEditContactForCustomerRequest
                             {
                                 ContactId = currentResponse.KeyValue,
-                                ContactTypeId = shortTypeId ,
-                                CustomerId=contactDto.CustomerId,
-                                CustomerContactId=contactDto.CustomerContactId,
-                                IsPrimary =contactDto.IsPrimary,
+                                ContactTypeId = shortTypeId,
+                                CustomerId = contactDto.CustomerId,
+                                CustomerContactId = contactDto.CustomerContactId,
+                                IsPrimary = contactDto.IsPrimary,
                             };
 
                             await repositoryManager.customers.AddEditContactForCustomer(addEditContactForCustomerRequest, currentUserId);
@@ -438,7 +438,7 @@ namespace OMS.Application.Services.Approval
             addAddressDto!.CreatedBy = currentUserId;
 
             var response = await repositoryManager.address.AddAddress(addAddressDto);
-            if (addAddressDto.CustomerId > 0 && response.KeyValue > 0)
+            if (response.KeyValue > 0)
             {
                 var addAddressForSupplierRequest = JsonConvert.DeserializeObject<AddAddressForSupplierRequest>(newValue);
                 addAddressForSupplierRequest!.AddressId = response.KeyValue;

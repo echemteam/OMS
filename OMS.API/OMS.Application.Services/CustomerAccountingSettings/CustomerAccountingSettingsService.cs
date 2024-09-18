@@ -75,168 +75,194 @@ namespace OMS.Application.Services.CustomerAccountingSettings
                                 responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
                                 if (responceData.KeyValue > 0)
                                 {
-                                    try
+                                    if (oldDataDict!.TryGetValue(fieldName, out var updatedValue) && valuesChanged)
                                     {
-                                        if (oldDataDict!.TryGetValue(fieldName, out var updatedValue) && valuesChanged)
+                                        var propertyInfo = requestData.GetType().GetProperty(fieldName);
+                                        if (propertyInfo != null && updatedValue != null)
                                         {
-                                            var propertyInfo = requestData.GetType().GetProperty(fieldName);
-                                            if (propertyInfo != null && updatedValue != null)
+                                            Type targetType = propertyInfo.PropertyType;
+                                            if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
                                             {
-                                                Type targetType = propertyInfo.PropertyType;
-                                                if (targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
-                                                {
-                                                    targetType = Nullable.GetUnderlyingType(targetType);
-                                                }
-                                                var convertedValue = Convert.ChangeType(updatedValue, targetType);
-                                                propertyInfo.SetValue(requestData, convertedValue);
+                                                targetType = Nullable.GetUnderlyingType(targetType);
                                             }
+                                            var convertedValue = Convert.ChangeType(updatedValue, targetType);
+                                            propertyInfo.SetValue(requestData, convertedValue);
                                         }
-                                    }
-                                    catch(Exception ex) {
-                                        throw ex;
                                     }
                                 }
                             }
                         }
                     }
                 }
-                CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
-                customerAccountingSettingsDto.CreatedBy = CurrentUserId;
-                responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
-
-                if (requestData.CustomerAccountingSettingId == null)
-                {
-                    CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = new()
-                    {
-                        CustomerId = requestData.CustomerId,
-                        CreatedBy = CurrentUserId,
-                        DeliveryAccountId = (int)DeliveryAccount.OurAccount,
-                        IsByDefault = true
-                    };
-
-                    _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
-                }
-
             }
-            return responceData;
-
-        }
-
-        public async Task<AddEntityDto<int>> AddEditCustomerInvoice(AddEditCustomerInvoiceRequest requestData, short CurrentUserId)
-        {
-            CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerInvoiceRequest, CustomerAccountingSettingsDto>();
+            CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
             customerAccountingSettingsDto.CreatedBy = CurrentUserId;
-            return await repositoryManager.customerAccountingSettings.AddEditCustomerInvoice(customerAccountingSettingsDto);
-        }
+            responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
 
-        public async Task<AddEntityDto<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(AddCustomerShppingDeliveryCarriersAndDeliveryMethodsRequest requestData, short CurrentUserId)
-        {
-            CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = requestData.ToMapp<AddCustomerShppingDeliveryCarriersAndDeliveryMethodsRequest, CustomerShppingDeliveryCarriersDto>();
-            customerShppingDeliveryCarriersDto.CreatedBy = CurrentUserId;
-            return await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
-        }
-
-        public async Task<AddEntityDto<int>> UpdateShppingDeliveryCarriers(UpdateShppingDeliveryCarriersRequest requestData, short CurrentUserId)
-        {
-            AddEntityDto<int> responceData = new();
-            var customerId = Convert.ToInt32(requestData.CustomerId);
-            var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
-
-            if (existingData.StatusId == (short)Status.Approved)
+            if (requestData.CustomerAccountingSettingId == null)
             {
-                var approvalEventName = new[]
-            {
-            ApprovalEvent.UpdateCustomerShippingSetting
-            };
-
-                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
-                var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
-
-                if (matchingRule != null)
+                CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = new()
                 {
-                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-                    ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        null,
-                        requestData,
-                        CurrentUserId,
-                        formatTemplate,
-                        matchingRule
-                    );
-                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
-                }
+                    CustomerId = requestData.CustomerId,
+                    CreatedBy = CurrentUserId,
+                    DeliveryAccountId = (int)DeliveryAccount.OurAccount,
+                    IsByDefault = true
+                };
+
+                _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
             }
-            else
-            {
-                CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = requestData.ToMapp<UpdateShppingDeliveryCarriersRequest, CustomerShppingDeliveryCarriersDto>();
-                customerShppingDeliveryCarriersDto.UpdatedBy = CurrentUserId;
-                responceData = await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
-            }
+
+        }
             return responceData;
+
         }
 
-        public async Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId)
+    public async Task<AddEntityDto<int>> AddEditCustomerInvoice(AddEditCustomerInvoiceRequest requestData, short CurrentUserId)
+    {
+        CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerInvoiceRequest, CustomerAccountingSettingsDto>();
+        customerAccountingSettingsDto.CreatedBy = CurrentUserId;
+        return await repositoryManager.customerAccountingSettings.AddEditCustomerInvoice(customerAccountingSettingsDto);
+    }
+
+    public async Task<AddEntityDto<int>> AddCustomerShppingDeliveryCarriersAndDeliveryMethods(AddCustomerShppingDeliveryCarriersAndDeliveryMethodsRequest requestData, short CurrentUserId)
+    {
+        CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = requestData.ToMapp<AddCustomerShppingDeliveryCarriersAndDeliveryMethodsRequest, CustomerShppingDeliveryCarriersDto>();
+        customerShppingDeliveryCarriersDto.CreatedBy = CurrentUserId;
+        return await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
+    }
+
+    public async Task<AddEntityDto<int>> UpdateShppingDeliveryCarriers(UpdateShppingDeliveryCarriersRequest requestData, short CurrentUserId)
+    {
+        AddEntityDto<int> responceData = new();
+        var customerId = Convert.ToInt32(requestData.CustomerId);
+        var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+
+        if (existingData.StatusId == (short)Status.Approved)
         {
-            GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse shppingDetails = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarrierAndDeliveryMethodsById(customerId);
-            if (shppingDetails?.DeliveryAccountId != null)
+            var approvalEventName = new[]
             {
-                var deliveryAccountId = (DeliveryAccount)shppingDetails.DeliveryAccountId;
+                  ApprovalEvent.UpdateCustomerShippingSetting
+                };
 
-                if (deliveryAccountId == DeliveryAccount.OurAccount)
-                {
-                    shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
-                }
-                else if (deliveryAccountId == DeliveryAccount.CollectAccount)
-                {
-                    shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
-                    shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
-                }
+            var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+            var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+
+            if (matchingRule != null)
+            {
+                var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                    null,
+                    requestData,
+                    CurrentUserId,
+                    formatTemplate,
+                    matchingRule
+                );
+                responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
             }
+        }
+        else
+        {
+            CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = requestData.ToMapp<UpdateShppingDeliveryCarriersRequest, CustomerShppingDeliveryCarriersDto>();
+            customerShppingDeliveryCarriersDto.UpdatedBy = CurrentUserId;
+            responceData = await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
+        }
+        return responceData;
+    }
 
-            return shppingDetails!;
+    public async Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId)
+    {
+        GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse shppingDetails = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarrierAndDeliveryMethodsById(customerId);
+        if (shppingDetails?.DeliveryAccountId != null)
+        {
+            var deliveryAccountId = (DeliveryAccount)shppingDetails.DeliveryAccountId;
+
+            if (deliveryAccountId == DeliveryAccount.OurAccount)
+            {
+                shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
+            }
+            else if (deliveryAccountId == DeliveryAccount.CollectAccount)
+            {
+                shppingDetails.ShppingDeliveryCarriersList = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
+                shppingDetails.DeliveryMethodsList = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
+            }
         }
 
-        public async Task<AddEntityDto<int>> UpdateDeliveryMethods(UpdateDeliveryMethodsRequest requestData, short CurrentUserId)
+        return shppingDetails!;
+    }
+
+    public async Task<AddEntityDto<int>> UpdateDeliveryMethods(UpdateDeliveryMethodsRequest requestData, short CurrentUserId)
+    {
+        AddEntityDto<int> responceData = new();
+        var customerId = Convert.ToInt32(requestData.CustomerId);
+        var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+
+        if (existingData.StatusId == (short)Status.Approved)
+        {
+            var approvalEventName = new[]
+            {
+                  ApprovalEvent.UpdateCustomerShippingSetting
+                };
+
+            var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+            var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+
+            if (matchingRule != null)
+            {
+                var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                    null,
+                    requestData,
+                    CurrentUserId,
+                    formatTemplate,
+                    matchingRule
+                );
+                responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+            }
+        }
+        else
         {
             CustomerDeliveryMethodsDto customerDeliveryMethodsDto = requestData.ToMapp<UpdateDeliveryMethodsRequest, CustomerDeliveryMethodsDto>();
             customerDeliveryMethodsDto.UpdatedBy = CurrentUserId;
-            return await repositoryManager.customerAccountingSettings.UpdateDeliveryMethods(customerDeliveryMethodsDto);
+            responceData = await repositoryManager.customerAccountingSettings.UpdateDeliveryMethods(customerDeliveryMethodsDto);
         }
-
-        public async Task<AddEntityDto<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy)
-        {
-            return await repositoryManager.customerAccountingSettings.DeleteCustomerDeliveryCarriersById(customerDeliveryCarrierId, deletedBy);
-        }
-
-        public async Task<AddEntityDto<int>> DeleteCustomerDeliveryMethodsById(int customerDeliveryMethodId, int deletedBy)
-        {
-            return await repositoryManager.customerAccountingSettings.DeleteCustomerDeliveryMethodsById(customerDeliveryMethodId, deletedBy);
-
-        }
-
-        public async Task<AddEntityDto<int>> AddShppingDeliveryCarriers(AddShppingDeliveryCarriersRequest requestData, short CurrentUserId)
-        {
-            CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = requestData.ToMapp<AddShppingDeliveryCarriersRequest, CustomerShppingDeliveryCarriersDto>();
-            customerShppingDeliveryCarriersDto.CreatedBy = CurrentUserId;
-            return await repositoryManager.customerAccountingSettings.AddShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
-        }
-
-        public async Task<AddEntityDto<int>> AddDeliveryMethods(AddDeliveryMethodsRequest requestData, short CurrentUserId)
-        {
-            CustomerDeliveryMethodsDto customerDeliveryMethodsDto = requestData.ToMapp<AddDeliveryMethodsRequest, CustomerDeliveryMethodsDto>();
-            customerDeliveryMethodsDto.CreatedBy = CurrentUserId;
-            return await repositoryManager.customerAccountingSettings.AddDeliveryMethods(customerDeliveryMethodsDto);
-        }
-        public Task<GetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse> GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(int customerDeliveryCarrierId)
-        {
-            return repositoryManager.customerAccountingSettings.GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(customerDeliveryCarrierId);
-        }
-
-        public Task<GetCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse> GetCustomerDeliveryMethodByCustomerDeliveryMethodId(int customerDeliveryMethodId)
-        {
-            return repositoryManager.customerAccountingSettings.GetCustomerDeliveryMethodByCustomerDeliveryMethodId(customerDeliveryMethodId);
-        }
-
-
-        #endregion
+        return responceData;
     }
+
+    public async Task<AddEntityDto<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy)
+    {
+        return await repositoryManager.customerAccountingSettings.DeleteCustomerDeliveryCarriersById(customerDeliveryCarrierId, deletedBy);
+    }
+
+    public async Task<AddEntityDto<int>> DeleteCustomerDeliveryMethodsById(int customerDeliveryMethodId, int deletedBy)
+    {
+        return await repositoryManager.customerAccountingSettings.DeleteCustomerDeliveryMethodsById(customerDeliveryMethodId, deletedBy);
+
+    }
+
+    public async Task<AddEntityDto<int>> AddShppingDeliveryCarriers(AddShppingDeliveryCarriersRequest requestData, short CurrentUserId)
+    {
+        CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = requestData.ToMapp<AddShppingDeliveryCarriersRequest, CustomerShppingDeliveryCarriersDto>();
+        customerShppingDeliveryCarriersDto.CreatedBy = CurrentUserId;
+        return await repositoryManager.customerAccountingSettings.AddShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
+    }
+
+    public async Task<AddEntityDto<int>> AddDeliveryMethods(AddDeliveryMethodsRequest requestData, short CurrentUserId)
+    {
+        CustomerDeliveryMethodsDto customerDeliveryMethodsDto = requestData.ToMapp<AddDeliveryMethodsRequest, CustomerDeliveryMethodsDto>();
+        customerDeliveryMethodsDto.CreatedBy = CurrentUserId;
+        return await repositoryManager.customerAccountingSettings.AddDeliveryMethods(customerDeliveryMethodsDto);
+    }
+    public Task<GetCustomerDeliveryCarriersByCustomerDeliveryCarrierIdResponse> GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(int customerDeliveryCarrierId)
+    {
+        return repositoryManager.customerAccountingSettings.GetCustomerDeliveryCarriersByCustomerDeliveryCarrierId(customerDeliveryCarrierId);
+    }
+
+    public Task<GetCustomerDeliveryMethodByCustomerDeliveryMethodIdResponse> GetCustomerDeliveryMethodByCustomerDeliveryMethodId(int customerDeliveryMethodId)
+    {
+        return repositoryManager.customerAccountingSettings.GetCustomerDeliveryMethodByCustomerDeliveryMethodId(customerDeliveryMethodId);
+    }
+
+
+    #endregion
+}
 }

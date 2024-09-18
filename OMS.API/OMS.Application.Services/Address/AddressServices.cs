@@ -82,6 +82,7 @@ namespace OMS.Application.Services.Address
 
                             if (matchingRule != null)
                             {
+                                requestData.AddressTypeId = addressTypeId;
                                 var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
                                 var approvalRequest = await ApprovalRuleHelper.ProcessApprovalRequest(
                                     null,
