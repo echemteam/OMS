@@ -1,6 +1,7 @@
 ﻿using Common.Helper.ApprovalRules;
 using Common.Helper.Enum;
 using Common.Helper.Extension;
+using Newtonsoft.Json;
 using OMS.Application.Services.Implementation;
 using OMS.Application.Services.SupplierAccoutingSetting;
 using OMS.Domain.Entities.API.Request.SupplierAccoutingSetting;
@@ -52,7 +53,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
                 }
                 var approvalEventName = new[]
                 {
-                   ApprovalEvent.UpdateSupplierFinancialSetting
+                   ApprovalEvent.UpdateAchWireFinancialSetting
                 };
 
                 var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
@@ -60,9 +61,11 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
                 if (matchingRule != null)
                 {
+                    var oldJsonData = JsonConvert.SerializeObject(existingData);
                     var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+
                     ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        null,
+                        oldJsonData,
                         requestData,
                         CurrentUserId,
                         formatTemplate,
@@ -114,7 +117,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             var supplierId = Convert.ToInt32(requestData.SupplierId);
             var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
             var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
-            var existingSupplierFinancialSettingsData = repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
+            var existingSupplierFinancialSettingsData = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
 
             if (supplierData.StatusId == (short)Status.Approved && existingData.SupplierPaymentSettingId > 0)
             {
@@ -125,7 +128,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
                 var approvalEventName = new[]
                 {
-                    ApprovalEvent.UpdateSupplierFinancialSetting
+                    ApprovalEvent.UpdateCreditCardFinancialSetting
                 };
 
                 var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
@@ -133,9 +136,10 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
                 if (matchingRule != null)
                 {
+                    var oldJsonData = JsonConvert.SerializeObject(existingData);
                     var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
                     ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        null,
+                        oldJsonData,
                         requestData,
                         CurrentUserId,
                         formatTemplate,
@@ -174,7 +178,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
                 var approvalEventName = new[]
                 {
-                    ApprovalEvent.UpdateSupplierFinancialSetting
+                    ApprovalEvent.UpdateCheckFinancialSetting
                 };
 
                 var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
@@ -182,9 +186,10 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
                 if (matchingRule != null)
                 {
+                    var oldJsonData = JsonConvert.SerializeObject(existingData);
                     var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
                     ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        null,
+                        oldJsonData,
                         requestData,
                         CurrentUserId,
                         formatTemplate,
@@ -222,7 +227,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
                 var approvalEventName = new[]
                 {
-                    ApprovalEvent.UpdateSupplierFinancialSetting
+                    ApprovalEvent.UpdateOtherFinancialSetting,
                 };
 
                 var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
@@ -230,9 +235,10 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
                 if (matchingRule != null)
                 {
+                    var oldJsonData = JsonConvert.SerializeObject(existingData);
                     var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
                     ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        null,
+                        oldJsonData,
                         requestData,
                         CurrentUserId,
                         formatTemplate,

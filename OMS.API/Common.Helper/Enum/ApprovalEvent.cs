@@ -26,7 +26,10 @@
         public const string UpdateSupplierPrimaryContact = "Update Supplier Primary Contact";
         public const string AddSupplierAccountsReceivableContact = "Add Supplier Accounts Receivable Contact";
         public const string UpdateSupplierAccountsReceivableContact = "Update Supplier Accounts Receivable Contact";
-        public const string UpdateSupplierFinancialSetting = "Update Supplier Financial Setting";
+        public const string UpdateAchWireFinancialSetting = "Update Supplier ACH/WIRE Financial Setting";
+        public const string UpdateCreditCardFinancialSetting = "Update Supplier Credit Card Financial Setting";
+        public const string UpdateCheckFinancialSetting = "Update Supplier Check Financial Setting";
+        public const string UpdateOtherFinancialSetting = "Update Supplier Other Financial Setting";
 
     }
 }

@@ -5,12 +5,16 @@ using Common.Helper.Extension;
 using Common.Helper.ReplacePlaceholders;
 using Newtonsoft.Json;
 using OMS.Application.Services.Implementation;
+using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
 using OMS.Domain.Entities.API.Request.Contact;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
+using OMS.Domain.Entities.API.Request.SupplierAccoutingSetting;
+using OMS.Domain.Entities.API.Request.SupplierFinancialSettings;
+using OMS.Domain.Entities.API.Request.supplierPaymentSettings;
 using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.Approval;
@@ -18,6 +22,9 @@ using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Contact;
 using OMS.Domain.Entities.Entity.CustomerAccountingSettings;
 using OMS.Domain.Entities.Entity.CustomerDocuments;
+using OMS.Domain.Entities.Entity.SuppierBankDetails;
+using OMS.Domain.Entities.Entity.SupplierAccoutingSetting;
+using OMS.Domain.Entities.Entity.SupplierPaymentSettings;
 using OMS.Domain.Repository;
 using OMS.FileManger.Services;
 using OMS.Shared.Services.Contract;
@@ -209,8 +216,17 @@ namespace OMS.Application.Services.Approval
                 case ApprovalEvent.UpdateSupplierAccountsReceivableContact:
                     return await HandleSupplierAddEditContact(responceData.NewValue!, currentUserId);
 
-                case ApprovalEvent.UpdateSupplierFinancialSetting:
-                    return await HandleUpdateSupplierFinancialSetting(responceData.NewValue!, currentUserId);
+                case ApprovalEvent.UpdateAchWireFinancialSetting:
+                    return await HandleSupplierUpdateAchWireFinancialSetting(responceData.NewValue!, currentUserId);
+
+                case ApprovalEvent.UpdateCreditCardFinancialSetting:
+                    return await HandleSupplierUpdateCreditCardFinancialSetting(responceData.NewValue!, currentUserId);
+
+                case ApprovalEvent.UpdateCheckFinancialSetting:
+                    return await HandleSupplierUpdateCheckFinancialSetting(responceData.NewValue!, currentUserId);
+
+                case ApprovalEvent.UpdateOtherFinancialSetting:
+                    return await HandleSupplierUpdateOtherFinancialSetting(responceData.NewValue!, currentUserId);
                 default:
                     throw new InvalidOperationException("Unknown event type.");
             }
@@ -251,7 +267,6 @@ namespace OMS.Application.Services.Approval
             }
             return response;
         }
-
         private async Task<AddEntityDto<int>> HandleUpdateAddress(string newValue, short currentUserId)
         {
             var updateAddressDto = JsonConvert.DeserializeObject<AddressDto>(newValue);
@@ -264,7 +279,6 @@ namespace OMS.Application.Services.Approval
 
             return new AddEntityDto<int> { KeyValue = 1 };
         }
-
         private async Task<AddEntityDto<int>> HandleAddEditContact(string newValue, short currentUserId)
         {
             // Deserialize JSON to a dictionary
@@ -319,8 +333,6 @@ namespace OMS.Application.Services.Approval
 
             throw new ArgumentException("ContactTypeId not found or is invalid.");
         }
-
-
         private async Task HandleContactEmailsAndPhones(string newValue, int contactId, short currentUserId)
         {
             var jsonData = JsonConvert.DeserializeObject<AddEditContactRequest>(newValue);
@@ -381,8 +393,6 @@ namespace OMS.Application.Services.Approval
                 await repositoryManager.supplier.AddEditContactForSupplier(addEditContactForSupplierRequest!, currentUserId);
             }
         }
-
-
         private void AddAdditionalColumns(DataTable dataTable, OwnerType ownerType, short currentUserId)
         {
             dataTable.Columns.Add("OwnerTypeId", typeof(short));
@@ -393,14 +403,12 @@ namespace OMS.Application.Services.Approval
                 row["CreatedBy"] = currentUserId;
             }
         }
-
         private async Task<AddEntityDto<int>> HandleUpdateShippingSetting(string newValue, short currentUserId)
         {
             var customerShppingDeliveryCarriersDto = JsonConvert.DeserializeObject<CustomerShppingDeliveryCarriersDto>(newValue);
             customerShppingDeliveryCarriersDto!.UpdatedBy = currentUserId;
             return await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
         }
-
         private async Task<AddEntityDto<int>> HandleUploadCustomerDocument(string newValue, short currentUserId)
         {
             var documentData = JsonConvert.DeserializeObject<AddCustomerDocumentsRequest>(newValue);
@@ -431,7 +439,6 @@ namespace OMS.Application.Services.Approval
 
             return new AddEntityDto<int> { KeyValue = 1 }; // Assuming upload was successful
         }
-
         private async Task<AddEntityDto<int>> HandleAddSuupplierAddress(string newValue, short currentUserId)
         {
             var addAddressDto = JsonConvert.DeserializeObject<AddressDto>(newValue);
@@ -446,7 +453,6 @@ namespace OMS.Application.Services.Approval
             }
             return response;
         }
-
         private async Task<AddEntityDto<int>> HandleUpdateSupplierAddress(string newValue, short currentUserId)
         {
             var updateAddressDto = JsonConvert.DeserializeObject<AddressDto>(newValue);
@@ -459,12 +465,148 @@ namespace OMS.Application.Services.Approval
 
             return new AddEntityDto<int> { KeyValue = 1 };
         }
-
-        private async Task<AddEntityDto<int>> HandleUpdateSupplierFinancialSetting(string newValue, short currentUserId)
+        private async Task<AddEntityDto<int>> HandleSupplierUpdateAchWireFinancialSetting(string newValue, short currentUserId)
         {
-            var customerShppingDeliveryCarriersDto = JsonConvert.DeserializeObject<CustomerShppingDeliveryCarriersDto>(newValue);
-            customerShppingDeliveryCarriersDto!.UpdatedBy = currentUserId;
-            return await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
+            AddEntityDto<int> responseData = new();
+            var requestData = JsonConvert.DeserializeObject<AddEditACHWireRequest>(newValue);
+            if (requestData == null)
+            {
+                throw new ArgumentException("Invalid request data.");
+            }
+            var supplierFinancialSettingsData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings, currentUserId);
+            if (supplierFinancialSettingsData.KeyValue > 0)
+            {
+                var supplierPaymentSettingsDto = new SupplierPaymentSettingsDto
+                {
+                    UpdatedBy = currentUserId
+                };
+                responseData = await repositoryManager.supplierPaymentSettings.AddEditCreditCard(supplierPaymentSettingsDto);
+            }
+            var suppierBankDetailsDto = new SuppierBankDetailsDto();
+
+            if (requestData.BeneficiaryDetails != null)
+            {
+                var beneficiaryDetails = requestData.BeneficiaryDetails.ToMapp<BeneficiaryDetailsRequest, SuppierBankDetailsDto>();
+                beneficiaryDetails.BankAddressId = await AddEditAddress(requestData.BeneficiaryDetails, r => r.AddressId, currentUserId);
+                MergeDto(suppierBankDetailsDto, beneficiaryDetails);
+            }
+
+            if (requestData.BankDetails != null)
+            {
+                var bankDetails = requestData.BankDetails.ToMapp<BankDetailsRequest, SuppierBankDetailsDto>();
+                bankDetails.RecipientAddressId = await AddEditAddress(requestData.BankDetails, r => r.AddressId, currentUserId);
+                MergeDto(suppierBankDetailsDto, bankDetails);
+            }
+
+            if (requestData.OtherDetails != null)
+            {
+                MergeDto(suppierBankDetailsDto, requestData.OtherDetails.ToMapp<OtherDetailsRequest, SuppierBankDetailsDto>());
+            }
+
+            suppierBankDetailsDto.SupplierId = requestData.SupplierId;
+            suppierBankDetailsDto.CreatedBy = currentUserId;
+
+            responseData = await repositoryManager.suppierBankDetails.AddEditACHWire(suppierBankDetailsDto);
+
+            return responseData;
+        }
+        public async Task<AddEntityDto<int>> HandleSupplierUpdateCreditCardFinancialSetting(string newValue, short currentUserId)
+        {
+            AddEntityDto<int> responseData = new();
+            var requestData = JsonConvert.DeserializeObject<AddEditCreditCardRequest>(newValue);
+            if (requestData == null)
+            {
+                throw new ArgumentNullException(nameof(requestData), "The request data is null.");
+            }
+            var supplierAccoutingSettingDto = requestData.SupplierFinancialSettings?.ToMapp<SupplierFinancialSettingsRequest, SupplierAccoutingSettingDto>();
+            if (supplierAccoutingSettingDto != null)
+            {
+                supplierAccoutingSettingDto.CreatedBy = currentUserId;
+            }
+            var supplierFinancialSettingsData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, currentUserId);
+
+            var supplierPaymentSettingsDto = requestData.ToMapp<AddEditCreditCardRequest, SupplierPaymentSettingsDto>();
+            if (supplierPaymentSettingsDto != null)
+            {
+                supplierPaymentSettingsDto.CreatedBy = currentUserId;
+            }
+            if (supplierFinancialSettingsData.KeyValue > 0)
+            {
+                responseData= await repositoryManager.supplierPaymentSettings.AddEditCreditCard(supplierPaymentSettingsDto!);
+            }
+
+            return responseData;
+        }
+        private async Task<AddEntityDto<int>> HandleSupplierUpdateCheckFinancialSetting(string newValue, short currentUserId)
+        {
+            AddEntityDto<int> responseData = new();
+            var requestData = JsonConvert.DeserializeObject<AddEditCheckRequest>(newValue);
+
+            var supplierFinancialSettingsData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, currentUserId);
+            SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditCheckRequest, SupplierPaymentSettingsDto>();
+            if (requestData.MailingAddress != null)
+            {
+                supplierPaymentSettingsDto.CheckMailingAddressId = await AddEditAddress(requestData.MailingAddress, r => r.AddressId, currentUserId);
+            }
+
+            supplierPaymentSettingsDto.CreatedBy = currentUserId;
+            responseData = await repositoryManager.supplierPaymentSettings.AddEditCheck(supplierPaymentSettingsDto);
+
+            return responseData;
+        }
+        private async Task<AddEntityDto<int>> HandleSupplierUpdateOtherFinancialSetting(string newValue, short currentUserId)
+        {
+            var requestData = JsonConvert.DeserializeObject<AddEditOtherRequest>(newValue);
+
+            if (requestData == null)
+            {
+                throw new ArgumentException("Invalid data format.");
+            }
+            var responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings, currentUserId);
+
+            if (responceData.KeyValue > 0)
+            {
+                var supplierPaymentSettingsDto = requestData.ToMapp<AddEditOtherRequest, SupplierPaymentSettingsDto>();
+                supplierPaymentSettingsDto.CreatedBy = currentUserId;
+
+                responceData = await repositoryManager.supplierPaymentSettings.AddEditOther(supplierPaymentSettingsDto);
+            }
+            return responceData;
+        }
+        private async Task<AddEntityDto<int>> AddEditSupplierFinancialSettings(SupplierFinancialSettingsRequest requestData, short currentUserId)
+        {
+            SupplierAccoutingSettingDto supplierAccoutingSettingDto = requestData.ToMapp<SupplierFinancialSettingsRequest, SupplierAccoutingSettingDto>();
+            supplierAccoutingSettingDto.CreatedBy = currentUserId;
+            return await repositoryManager.supplierFinancialSettings.AddEditSupplierFinancialSettings(supplierAccoutingSettingDto);
+        }
+        private async Task<int> AddEditAddress<T>(T addressRequest, Func<T, int?> getAddressId, short currentUserId) where T : class
+        {
+            AddressDto addressDto = addressRequest.ToMapp<T, AddressDto>();
+            AddEntityDto<int> responseData;
+
+            if (getAddressId(addressRequest) > 0)
+            {
+                addressDto.UpdatedBy = currentUserId;
+                responseData = await repositoryManager.address.UpdateAddAddress(addressDto);
+            }
+            else
+            {
+                addressDto.CreatedBy = currentUserId;
+                responseData = await repositoryManager.address.AddAddress(addressDto);
+            }
+
+            return responseData.KeyValue;
+        }
+        private void MergeDto(SuppierBankDetailsDto destination, SuppierBankDetailsDto source)
+        {
+            foreach (var property in typeof(SuppierBankDetailsDto).GetProperties())
+            {
+                var value = property.GetValue(source);
+                if (value != null)
+                {
+                    property.SetValue(destination, value);
+                }
+            }
         }
         private async Task<AddEntityDto<int>> HandleFieldApproval(GetApprovalRequestsByApprovalRequestIdResponse responceData, ApprovalRequestsDto approvalRequestsDto, UpdateApprovalRequestsStatusRequest requestData)
         {
