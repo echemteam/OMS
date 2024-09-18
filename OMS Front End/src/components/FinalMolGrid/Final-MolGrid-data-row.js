@@ -374,7 +374,7 @@ const MolGridDataRows = ({
           >
             {configuration.hasChildGridTable ? (
               <td className="first-td" onClick={() => toggleRow(rowIndex)}>
-                <Iconify icon={`${collapsedRows[rowIndex] ? "lucide:folder-up" : "lucide:folder-down"}`}/>
+                <Iconify icon={`${collapsedRows[rowIndex] ? "ep:arrow-up-bold" : "ep:arrow-down-bold"}`}/>
               </td>
             ) : null}
             {columns.map((col) => (

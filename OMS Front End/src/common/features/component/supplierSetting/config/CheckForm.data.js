@@ -22,6 +22,7 @@ export const checkFormData = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
+        maxLength:50,
       },
       validation: [{ type: "require" }],
       style: {
@@ -39,6 +40,7 @@ export const checkFormData = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
+        maxLength: 50,
       },
       // validation: [{ type: "require" }],
       style: {
