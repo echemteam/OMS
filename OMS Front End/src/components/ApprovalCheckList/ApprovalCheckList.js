@@ -364,7 +364,6 @@ const ApprovalCheckList = ({
                       ) : null}
                       {isSupplierApproval ? (
                         <div className="col-12 mb-3">
-                          {console.log('approvalChekedData', approvalChekedData)}
                           <div className="approval-list-part">
                             <SupplierSettingInformation
                               isSupplierApproval={isSupplierApproval}
