@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "../../mytask/MyTask.scss";
 import formatDate from "../../../lib/formatDate";
-import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
 import CardSection from "../../../components/ui/card/CardSection";
 import { getAuthProps } from "../../../lib/authenticationLibrary";
 import DataLoader from "../../../components/ui/dataLoader/DataLoader";
