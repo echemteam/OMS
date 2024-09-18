@@ -59,3 +59,4 @@ OMS.ThirdPartyAPIIntegrator/.vs/ThirdPartyAPITester/v17/*
 OMS.ThirdPartyAPIIntegrator/ThirdPartyAPITester/obj/*
 /OMS.API/ClientIPAuthentication/bin/Debug/net8.0
 /OMS.API/ClientIPAuthentication/obj
+/OMS.API/OMS.API/Properties/*

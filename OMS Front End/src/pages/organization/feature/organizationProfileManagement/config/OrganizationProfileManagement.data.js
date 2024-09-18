@@ -17,7 +17,7 @@ export const OrganizationProfileManagementdata = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
             },
         },
         // {
@@ -51,7 +51,7 @@ export const OrganizationProfileManagementdata = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
             },
         },
         {
@@ -66,7 +66,7 @@ export const OrganizationProfileManagementdata = {
             },
              validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
             },
         },
         {
@@ -82,7 +82,7 @@ export const OrganizationProfileManagementdata = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
             },
         },
         {
@@ -98,7 +98,7 @@ export const OrganizationProfileManagementdata = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
             },
         },
         {
@@ -114,7 +114,7 @@ export const OrganizationProfileManagementdata = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
             },
         },
         {
@@ -130,7 +130,7 @@ export const OrganizationProfileManagementdata = {
              },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
             },
         },
         {
@@ -146,7 +146,7 @@ export const OrganizationProfileManagementdata = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
             },
         },
         {
@@ -162,7 +162,7 @@ export const OrganizationProfileManagementdata = {
             },
             validation: [{ type: "require" }],
             style: {
-                containerCss: "col-xxl-6 col-xl-6 col-md-12 col-12 mb-input",
+                containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
             },
         },
     ],

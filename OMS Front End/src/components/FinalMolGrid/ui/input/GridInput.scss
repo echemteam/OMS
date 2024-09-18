@@ -3,20 +3,23 @@
   height: 100%;
   text-align: left;
   word-break: break-all;
+
   .validation-text {
     color: #fff;
     font-size: var(--commonFont-extraSmall);
     font-weight: 500;
     margin-left: 0px;
     position: absolute;
-    top: 51px;
+    top: 91%;
+    right: 0;
     background: #000;
     padding: 2px 8px;
-    width: 100%;
+    width: 97%;
     text-align: left;
     border-radius: 4px;
     opacity: 70%;
     z-index: 11;
+
     &::after {
       content: "";
       position: absolute;
@@ -38,7 +41,8 @@
 }
 
 .validation-star {
-  color: #e30000;;
+  color: #e30000;
+  ;
   margin-left: 3px;
 }
 

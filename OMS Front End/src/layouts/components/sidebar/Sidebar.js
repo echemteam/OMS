@@ -48,6 +48,9 @@ const Sidebar = () => {
       case menuItem.startsWith("/configuration/"):
         setIsCustomSidebarVisible(true);
         setNavigationMenuList(ConfigurationMenu);
+        if (menuItem.startsWith("/configuration/ApprovalRules")) {
+          handleClick(ConfigurationMenu[0].items[0].id);
+        }
         /** 
          * Set the menu title to "Configuration" to display the configuration menu title. 
             // setMenuTitle("Configuration"); 
