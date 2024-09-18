@@ -42,20 +42,20 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
             chargeType: data?.name,
             zone: data?.zone,
         };
-        if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-            const oldValue = dataSource && dataSource.find(data => data.customerDeliveryMethodId === req.customerDeliveryMethodId);
-            let requestIntialState = {
-                ...oldValue,
-                chargeType: oldValue?.name,
-                zone: oldValue?.zone,
-            }
-            await handleApprovalRequest(req, requestIntialState);
-        } else {
-            let newGridData = [...dataSource]
-            newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
-            setDataSource(newGridData);
-            update(req);
-        }
+        // if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+        //     const oldValue = dataSource && dataSource.find(data => data.customerDeliveryMethodId === req.customerDeliveryMethodId);
+        //     let requestIntialState = {
+        //         ...oldValue,
+        //         chargeType: oldValue?.name,
+        //         zone: oldValue?.zone,
+        //     }
+        //     await handleApprovalRequest(req, requestIntialState);
+        // } else {
+        let newGridData = [...dataSource]
+        newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
+        setDataSource(newGridData);
+        update(req);
+        // }
     }
 
     const handleApprovalRequest = async (newValue, oldValue) => {
@@ -79,7 +79,7 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
         <div className="first-card">
             <CardSection
                 cardTitle="Delivery Method Details"
-                rightButton={isShowButton ? true : false}
+                rightButton={false}
                 buttonClassName="theme-button "
                 buttonText="Add"
                 textWithIcon={true}

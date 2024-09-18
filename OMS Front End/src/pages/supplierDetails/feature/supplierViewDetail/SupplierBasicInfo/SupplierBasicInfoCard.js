@@ -25,6 +25,7 @@ import { excludingRoles } from '../../../../customerDetail/feature/customerBasic
 import Iconify from '../../../../../components/ui/iconify/Iconify';
 import DropdownSelect from '../../../../../components/ui/dropdown/DropdownSelect';
 import { useAddSupplierNotesMutation } from '../../../../../app/services/supplierNotesAPI';
+import { CustomerSupplierStatus } from '../../../../../utils/Enums/commonEnums';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../supplierApproval/SupplierApproval"));
@@ -169,7 +170,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
     if (selectedOption.label === supplierData.status) {
       ToastService.warning("You can't change the status of the customer to currect customer status.");
     } else {
-      if (selectedOption.value === 1 || selectedOption.value === 2) {
+      if (selectedOption.value === CustomerSupplierStatus.PENDING) {
         confirm("Warning?", `Are you sure you want to change the supplier status to ${selectedOption.label}?`,
           "Yes", "Cancel").then((confirmed) => {
             if (confirmed) {
@@ -182,17 +183,24 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
               setSelectedStatus(selectedOption.value);
             }
           });
-      } else if (selectedOption.value === 4 || selectedOption.value === 5 || selectedOption.value === 6) {
+      } else if (selectedOption.value === CustomerSupplierStatus.FREEZE
+        || selectedOption.value === CustomerSupplierStatus.BLOCK || selectedOption.value === CustomerSupplierStatus.DISABLE) {
         removeFields();
         setShowModal(true);
         setSelectedStatus(selectedOption.value);
-      } else if (selectedOption.value === 3) {
+      } else if (
+        selectedOption.value === CustomerSupplierStatus.APPROVED ||
+        selectedOption.value === CustomerSupplierStatus.SUBMITTED
+      ) {
         removeFields();
         if (childRef.current) {
-          childRef.current.callChildFunction(supplierId);
+          childRef.current.callChildFunction(
+            supplierId,
+            selectedOption.value === CustomerSupplierStatus.SUBMITTED ? false : true
+          );
         }
         setStatusId(selectedOption.value);
-      } else if (selectedOption.value === 7) {
+      } else if (selectedOption.value === CustomerSupplierStatus.REJECT) {
         if (supplierData.responsibleUserId) {
           removeFields();
         }
@@ -223,7 +231,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   }
 
   const handleUpdate = () => {
-  
+
     let custData = reasonRef.current.getFormData();
     if (custData) {
       let req = {
@@ -300,7 +308,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                     : ""}
                 </div>
                 <div className='d-flex'>
-                <h5 className="ml-0" title={supplierData?.name}>{supplierData?.name}</h5>
+                  <h5 className="ml-0" title={supplierData?.name}>{supplierData?.name}</h5>
                 </div>
 
               </div>

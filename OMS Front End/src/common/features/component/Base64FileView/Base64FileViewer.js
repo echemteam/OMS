@@ -37,8 +37,8 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
         if (documentData) {
             let parsedData = JSON.parse(documentData);
            
-            setDocumentList(parsedData.documentInfoList);
-            parsedData= documentTransformData(parsedData.documentInfoList);
+            setDocumentList(parsedData.DocumentInfoList);
+            parsedData= documentTransformData(parsedData.DocumentInfoList);
             if (!Array.isArray(parsedData)) {
                 parsedData = Object.values(parsedData).flat();
               }
@@ -124,7 +124,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                                                  {["pdf", "csv", "docx", "xlsx"].includes(determineFileType(data.attachment)) && (
                                                 <span
                                                     className="action-icon"
-                                                    onClick={() => handleDocumentAction(data.documentIcon, data.name)}>
+                                                    onClick={() => handleDocumentAction(data.Base64File, data.Name)}>
                                                     <Iconify icon="lets-icons:view-light" />
                                                 </span>
                                                   )}  
