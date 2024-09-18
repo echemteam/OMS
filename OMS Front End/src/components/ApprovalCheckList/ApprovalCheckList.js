@@ -130,6 +130,7 @@ const ApprovalCheckList = ({
   ] = useLazyDownloadDocumentQuery();
 
   useEffect(() => {
+    getAllUser();
     if (showModal) {
       if (basicData) {
         const responsibleUser = basicData?.map((id) => Number(id.trim()));
@@ -222,6 +223,7 @@ const ApprovalCheckList = ({
 
   useEffect(() => {
     if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
+  
       const fileData = isDownalodData.fileData;
       const blob = new Blob([fileData], { type: fileData.type });
       const fileURL = URL.createObjectURL(blob);

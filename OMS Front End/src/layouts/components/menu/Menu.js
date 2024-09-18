@@ -140,7 +140,7 @@ export const Menu = [
 
 export const ConfigurationMenu = [
   {
-    groupLabel: "Management",
+    groupLabel: "System Configurations",
     items: [
       {
         id: "approvalRules",
