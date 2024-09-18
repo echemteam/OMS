@@ -8,13 +8,14 @@ import { useGetValidateCheckListMutation, useLazyGetSupplierAddressInfoByIdQuery
 //** Component's */
 const ApprovalValidateData = React.lazy(() => import("../../../../components/ApprovalCheckList/feature/approvalValidateData/ApprovalValidateData"));
 
-const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isDetailPage }) => {
+const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isDetailPage, isAddPagePage }) => {
 
     const parentRef = useRef();
     const [supplierId, setSupplierId] = useState(false);
     const [isShowApproval, setIsShowApproval] = useState(false);
     const [validateCheckList, setValidateCheckList] = useState([]);
     const [isShowValidateModal, setIsShowValidateModal] = useState(false);
+    const [showApprovalCheckList, setShowApprovalCheckList] = useState(false);
 
     const [getValidateCheckList, { isLoading: isGetCheckListLoading, isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
 
@@ -35,7 +36,7 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
     };
 
     //** Validate check list Modal */
-    const handleShowValidateModal = (supplierId) => {
+    const handleShowValidateModal = (supplierId, isShowApprovalCheckList = true) => {
         setIsShowValidateModal(!isShowValidateModal);
         let request = {
             customerId: 0,
@@ -43,11 +44,12 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
         }
         getValidateCheckList(request);
         setSupplierId(supplierId);
+        setShowApprovalCheckList(isShowApprovalCheckList);
     };
 
     const handleValidateModalClose = () => {
         setIsShowValidateModal(!isShowValidateModal);
-        if (!isDetailPage) {
+        if (!isDetailPage && !isAddPagePage) {
             getListApi();
         }
     };
@@ -64,6 +66,7 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
     const handleValidateSuccess = () => {
         handleShowApprovalList();
         handleModalClose();
+        !showApprovalCheckList && updateApproval();
     }
 
     useEffect(() => {
@@ -82,12 +85,13 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
             <ApprovalValidateData parentRef={parentRef} handleValidateSuccess={handleValidateSuccess} showModal={isShowValidateModal} isSupplierApproval={true}
                 isGetCheckListLoading={isGetCheckListLoading} mainId={supplierId} isDetailPage={isDetailPage} handleShowValidateModal={handleShowValidateModal}
                 handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList} />
-
-            <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={supplierId} isSupplierApproval={true}
-                ApprovalData={ApprovalEnum.APPROVESUPPLIER} onSuccessApprovalClose={onSuccessApprovalClose}
-                getBasicInformationById={useLazyGetSupplierBasicInfoByIdQuery} getAddressById={useLazyGetSupplierAddressInfoByIdQuery}
-                getContactById={useLazyGetSupplierContactInfoByIdQuery} getFinacialSettingById={useLazyGetSupplierFinacialSettingQuery} ownerType={OwnerType.Supplier}
-            />
+            {showApprovalCheckList &&
+                <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={supplierId} isSupplierApproval={true}
+                    ApprovalData={ApprovalEnum.APPROVESUPPLIER} onSuccessApprovalClose={onSuccessApprovalClose}
+                    getBasicInformationById={useLazyGetSupplierBasicInfoByIdQuery} getAddressById={useLazyGetSupplierAddressInfoByIdQuery}
+                    getContactById={useLazyGetSupplierContactInfoByIdQuery} getFinacialSettingById={useLazyGetSupplierFinacialSettingQuery} ownerType={OwnerType.Supplier}
+                />
+            }
         </React.Fragment>
     )
 });
