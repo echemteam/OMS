@@ -770,6 +770,9 @@ a {
       padding-top: 7px;
       max-height: calc(100vh - 225px);
     }
+    @media only screen and (max-width: 1366px) {
+      max-height: calc(100vh - 200px);
+    }
   }
 }
 
