@@ -61,11 +61,11 @@ const AddDocument = ({ showModal, keyId, isSupplier, addDocuments, handleToggleM
                 [isSupplier ? 'supplierId' : 'customerId']: keyId,
                 documentInfoList: documentList
             };
-            if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-                await handleApprovalRequest(requestData, null);
-            } else {
+            // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+            //     await handleApprovalRequest(requestData, null);
+            // } else {
                 add(requestData);
-            }
+            // }
         }
     };
 

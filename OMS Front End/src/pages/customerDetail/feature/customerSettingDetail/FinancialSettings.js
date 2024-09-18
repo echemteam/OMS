@@ -243,21 +243,21 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
       addEditCustomerSettings(request);
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
       const updaterequest = updateRequestObj(settingFormData);
-      let requestNewValue = {
-        ...updaterequest,
-        paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', updaterequest.paymentTermId),
-        paymentMethodName: getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', updaterequest.paymentMethodId),
-      }
-      let requestOldValue = {
-        ...isGetDetailByCustomerIDData,
-        paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', isGetDetailByCustomerIDData.paymentTermId),
-        paymentMethodName: getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', isGetDetailByCustomerIDData.paymentMethodId),
-      }
-      if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-        await handleApprovalRequest(requestNewValue, requestOldValue, FunctionalitiesName.UPDATECUSTOMERFINANCIALSETTING);
-      } else {
+      // let requestNewValue = {
+      //   ...updaterequest,
+      //   paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', updaterequest.paymentTermId),
+      //   paymentMethodName: getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', updaterequest.paymentMethodId),
+      // }
+      // let requestOldValue = {
+      //   ...isGetDetailByCustomerIDData,
+      //   paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', isGetDetailByCustomerIDData.paymentTermId),
+      //   paymentMethodName: getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', isGetDetailByCustomerIDData.paymentMethodId),
+      // }
+      // if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+      //   await handleApprovalRequest(requestNewValue, requestOldValue, FunctionalitiesName.UPDATECUSTOMERFINANCIALSETTING);
+      // } else {
         addEditCustomerSettings(updaterequest);
-      }
+      // }
     }
   };
 

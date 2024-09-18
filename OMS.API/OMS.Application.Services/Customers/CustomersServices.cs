@@ -1,6 +1,10 @@
-﻿using Common.Helper.Extension;
+﻿using Common.Helper.ApprovalRules;
+using Common.Helper.Enum;
+using Common.Helper.Extension;
+using Newtonsoft.Json;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.API.Response.Customers;
 using OMS.Domain.Entities.API.Response.Supplier;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -28,6 +32,64 @@ namespace OMS.Application.Services.Customers
         #region Customers Services
         public async Task<AddEditResponse> AddEditCustomersBasicInformation(AddEditCustomersBasicInformationRequest requestData, short CurrentUserId)
         {
+            AddEntityDto<int> responceData = new();
+            if (requestData.CustomerId > 0)
+            {
+                var customerId = Convert.ToInt32(requestData.CustomerId);
+                var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+
+                if (existingData.StatusId == (short)Status.Approved)
+                {
+                    var oldJsonData = JsonConvert.SerializeObject(existingData);
+                    var newJsonData = JsonConvert.SerializeObject(requestData);
+
+                    var oldDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(oldJsonData);
+                    var newDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(newJsonData);
+
+                    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+
+                    foreach (var rule in approvalRules)
+                    {
+                        var fieldName = rule.FieldName;
+
+                        if (string.IsNullOrEmpty(fieldName))
+                        {
+                            continue;
+                        }
+                        var fieldValue = newDataDict!.ContainsKey(fieldName) ? newDataDict[fieldName]?.ToString() : null;
+                        CheckFieldValueExistsResponse resData = await repositoryManager.approval.CheckFieldValueExists(fieldName, fieldValue!);
+
+                        if (oldDataDict!.TryGetValue(fieldName, out var oldValue) && newDataDict!.TryGetValue(fieldName, out var newValue))
+                        {
+                            bool valuesChanged = !Equals(oldValue, newValue);
+
+                            if (valuesChanged)
+                            {
+                                if (resData.Exist == true)
+                                {
+                                    return new AddEditResponse
+                                    {
+                                        ErrorMessage = resData.ErrorMessage
+                                    };
+                                }
+                                else
+                                {
+                                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(rule.FunctionalityEventId);
+                                    var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                                        oldJsonData,
+                                        newJsonData,
+                                        CurrentUserId,
+                                        formatTemplate,
+                                        rule
+                                    );
+                                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             CustomersDto customersDto = requestData.ToMapp<AddEditCustomersBasicInformationRequest, CustomersDto>();
             customersDto.CreatedBy = CurrentUserId;
             AddEditResponse responseData = await repositoryManager.customers.AddEditCustomersBasicInformation(customersDto);
@@ -62,9 +124,11 @@ namespace OMS.Application.Services.Customers
 
         public async Task<AddEntityDto<int>> UpdateCustomersBasicInformation(UpdateCustomersBasicInformationRequest requestData, short CurrentUserId)
         {
+            AddEntityDto<int> responceData = new();
             CustomersDto customersDto = requestData.ToMapp<UpdateCustomersBasicInformationRequest, CustomersDto>();
             customersDto.UpdatedBy = CurrentUserId;
-            return await repositoryManager.customers.UpdateCustomersBasicInformation(customersDto);
+            responceData = await repositoryManager.customers.UpdateCustomersBasicInformation(customersDto);
+            return responceData;
         }
 
         public async Task<GetCustomersBasicInformationByIdResponse> GetCustomersBasicInformationById(int customerId)

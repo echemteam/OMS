@@ -1,13 +1,16 @@
-﻿using Common.Helper.Enum;
+﻿using Common.Helper.ApprovalRules;
+using Common.Helper.Enum;
 using Common.Helper.Extension;
+using Newtonsoft.Json;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
 using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
+using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.CustomerAccountingSettings;
 using OMS.Domain.Repository;
-using OMS.Prisitance.Entities.Entities;
 using OMS.Shared.Services.Contract;
+using System.Reflection;
 
 namespace OMS.Application.Services.CustomerAccountingSettings
 {
@@ -30,11 +33,51 @@ namespace OMS.Application.Services.CustomerAccountingSettings
         }
         public async Task<AddEntityDto<int>> AddEditCustomerSettings(AddEditCustomerSettingRequest requestData, short CurrentUserId)
         {
+            AddEntityDto<int> responceData = new();
+            if (requestData.CustomerAccountingSettingId > 0)
+            {
+                var existingData = await repositoryManager.customerAccountingSettings.GetDetailsbyCustomerID(Convert.ToInt32(requestData.CustomerId)).ConfigureAwait(false);
+                var oldJsonData = JsonConvert.SerializeObject(existingData);
+                var newJsonData = JsonConvert.SerializeObject(requestData);
+
+                var oldDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(oldJsonData);
+                var newDataDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(newJsonData);
+
+                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+                var requestProperties = typeof(AddEditCustomerSettingRequest).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+                foreach (var rule in approvalRules)
+                {
+                    var fieldName = rule.FieldName;
+                    if (string.IsNullOrEmpty(fieldName))
+                    {
+                        continue;
+                    }
+                    if (oldDataDict!.TryGetValue(fieldName, out var oldValue) &&
+                        newDataDict!.TryGetValue(fieldName, out var newValue))
+                    {
+                        bool valuesChanged = (oldValue == null && newValue != null) ||
+                                             (oldValue != null && !oldValue.Equals(newValue));
+
+                        if (valuesChanged)
+                        {
+                            var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(rule.FunctionalityEventId);
+                            var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                                oldJsonData,
+                                newJsonData,
+                                CurrentUserId,
+                                formatTemplate,
+                                rule
+                            );
+                            responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                        }
+                    }
+                }
+            }
+
             CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
             customerAccountingSettingsDto.CreatedBy = CurrentUserId;
-            AddEntityDto<int> responceData = new AddEntityDto<int>();
-
-            responceData= await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
+            responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
 
             if (requestData.CustomerAccountingSettingId == null)
             {
@@ -69,9 +112,40 @@ namespace OMS.Application.Services.CustomerAccountingSettings
 
         public async Task<AddEntityDto<int>> UpdateShppingDeliveryCarriers(UpdateShppingDeliveryCarriersRequest requestData, short CurrentUserId)
         {
-            CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = requestData.ToMapp<UpdateShppingDeliveryCarriersRequest, CustomerShppingDeliveryCarriersDto>();
-            customerShppingDeliveryCarriersDto.UpdatedBy = CurrentUserId;
-            return await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
+            AddEntityDto<int> responceData = new();
+            var customerId = Convert.ToInt32(requestData.CustomerId);
+            var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
+
+            if (existingData.StatusId == (short)Status.Approved)
+            {
+                var approvalEventName = new[]
+            {
+            ApprovalEvent.UpdateCustomerShippingSetting
+            };
+
+                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+                var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+
+                if (matchingRule != null)
+                {
+                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+                    ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                        null,
+                        requestData,
+                        CurrentUserId,
+                        formatTemplate,
+                        matchingRule
+                    );
+                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+                }
+            }
+            else
+            {
+                CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = requestData.ToMapp<UpdateShppingDeliveryCarriersRequest, CustomerShppingDeliveryCarriersDto>();
+                customerShppingDeliveryCarriersDto.UpdatedBy = CurrentUserId;
+                responceData = await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
+            }
+            return responceData;
         }
 
         public async Task<GetShppingDeliveryCarrierAndDeliveryMethodsByIdResponse> GetShppingDeliveryCarrierAndDeliveryMethodsById(int customerId)
@@ -136,7 +210,7 @@ namespace OMS.Application.Services.CustomerAccountingSettings
             return repositoryManager.customerAccountingSettings.GetCustomerDeliveryMethodByCustomerDeliveryMethodId(customerDeliveryMethodId);
         }
 
-        
+
         #endregion
     }
 }

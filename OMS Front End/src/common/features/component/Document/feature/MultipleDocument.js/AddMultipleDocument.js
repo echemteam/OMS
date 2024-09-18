@@ -98,11 +98,11 @@ const AddMultipleDocument = ({
         [isSupplier ? "supplierId" : "customerId"]: keyId,
         documentInfoList: modifyData,
       };
-      if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-        await handleApprovalRequest(requestData, null);
-      } else {
+      // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+      //   await handleApprovalRequest(requestData, null);
+      // } else {
         add(requestData);
-      }
+      // }
     } else {
       ToastService.warning(ErrorMessage.DocumentDetailMissing);
     }
