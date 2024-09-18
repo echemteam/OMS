@@ -137,7 +137,6 @@ namespace OMS.Application.Services.Address
                     responseData = await repositoryManager.approval.AddApprovalRequests(approvalRequest);
                 }
             }
-
             return responseData;
         }
 

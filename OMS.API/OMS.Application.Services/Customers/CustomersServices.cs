@@ -56,33 +56,45 @@ namespace OMS.Application.Services.Customers
                         {
                             continue;
                         }
-                        var fieldValue = newDataDict!.ContainsKey(fieldName) ? newDataDict[fieldName]?.ToString() : null;
-                        CheckFieldValueExistsResponse resData = await repositoryManager.approval.CheckFieldValueExists(fieldName, fieldValue!);
 
                         if (oldDataDict!.TryGetValue(fieldName, out var oldValue) && newDataDict!.TryGetValue(fieldName, out var newValue))
                         {
                             bool valuesChanged = !Equals(oldValue, newValue);
-
-                            if (valuesChanged)
+                            if (!valuesChanged)
                             {
-                                if (resData.Exist == true)
+                                continue;
+                            }
+                            var fieldValue = newValue?.ToString();
+                            CheckFieldValueExistsResponse resData = await repositoryManager.approval.CheckFieldValueExists(fieldName, fieldValue!);
+
+                            if (resData.Exist == true)
+                            {
+                                return new AddEditResponse
                                 {
-                                    return new AddEditResponse
+                                    ErrorMessage = resData.ErrorMessage
+                                };
+                            }
+                            else
+                            {
+                                var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(rule.FunctionalityEventId);
+                                var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                                    oldJsonData,
+                                    newJsonData,
+                                    CurrentUserId,
+                                    formatTemplate,
+                                    rule
+                                );
+                                responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                                if(responceData.KeyValue >0)
+                                {
+                                    if (oldDataDict!.TryGetValue(fieldName, out var updatedValue) && valuesChanged)
                                     {
-                                        ErrorMessage = resData.ErrorMessage
-                                    };
-                                }
-                                else
-                                {
-                                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(rule.FunctionalityEventId);
-                                    var approvalResponseData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                                        oldJsonData,
-                                        newJsonData,
-                                        CurrentUserId,
-                                        formatTemplate,
-                                        rule
-                                    );
-                                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponseData);
+                                        var propertyInfo = requestData.GetType().GetProperty(fieldName);
+                                        if (propertyInfo != null && updatedValue != null)
+                                        {
+                                            propertyInfo.SetValue(requestData, Convert.ChangeType(updatedValue, propertyInfo.PropertyType));
+                                        }
+                                    }
                                 }
                             }
                         }
