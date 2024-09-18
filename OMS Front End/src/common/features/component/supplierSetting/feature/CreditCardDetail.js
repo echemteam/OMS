@@ -7,23 +7,25 @@ import Buttons from "../../../../../components/ui/button/Buttons";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
 import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
 import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
+import ToastService from "../../../../../services/toastService/ToastService";
+import { useAddEditCreditCardMutation } from "../../../../../app/services/supplierFinancialSettingsAPI";
 
 const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financialSettingFormRef }) => {
   const creditCardFormRef = useRef();
   const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
   const [creditCardForm, setCreditCardFormDataForm] = useState(creditCardFormData);
 
-  // const [addEditCreditCard, { isLoading: isAddEditCreditCardLoading, isSuccess: isAddEditCreditCardSuccess, data: isAddEditCreditCardData }] = useAddEditCreditCardMutation();
+  const [addEditCreditCard, { isLoading: isAddEditCreditCardLoading, isSuccess: isAddEditCreditCardSuccess, data: isAddEditCreditCardData }] = useAddEditCreditCardMutation();
 
-  // useEffect(() => {
-  //   handleResponse(isAddEditCreditCardSuccess, isAddEditCreditCardData);
-  // }, [isAddEditCreditCardSuccess, isAddEditCreditCardData]);
+  useEffect(() => {
+    handleResponse(isAddEditCreditCardSuccess, isAddEditCreditCardData);
+  }, [isAddEditCreditCardSuccess, isAddEditCreditCardData]);
 
-  // const handleResponse = (success, data) => {
-  //   if (success && data) {
-  //     handleAddResponse(success, data);
-  //   }
-  // };
+  const handleResponse = (success, data) => {
+    if (success && data) {
+      handleAddResponse(success, data);
+    }
+  };
 
   useEffect(() => {
     if (getCreditData.supplierPaymentSettingId > 0) {
@@ -36,18 +38,18 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
     }
   }, [getCreditData])
 
-  // const handleAddResponse = (isSuccess, responseData) => {
-  //   if (isSuccess && responseData) {
-  //     if (responseData.errorMessage.includes("exists")) {
-  //       ToastService.warning(responseData.errorMessage);
-  //       return;
-  //     }
-  //     ToastService.success(responseData.errorMessage);
-  //     if (supplierId) {
-  //       onHandleGetById(supplierId)
-  //     }
-  //   }
-  // }
+  const handleAddResponse = (isSuccess, responseData) => {
+    if (isSuccess && responseData) {
+      if (responseData.errorMessage.includes("exists")) {
+        ToastService.warning(responseData.errorMessage);
+        return;
+      }
+      ToastService.success(responseData.errorMessage);
+      if (supplierId) {
+        onHandleGetById(supplierId)
+      }
+    }
+  }
 
   const handleCreditCradAdd = async () => {
     let creditCardForm = creditCardFormRef.current.getFormData()
@@ -67,24 +69,24 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
         ccNote: creditCardForm.ccNote,
         isCCExistsOnFile: creditCardForm.isCCExistsOnFile,
       };
-      let requestIntialState = {
-        isActive: true,
-        supplierId: supplierId,
-        ...formsupplierFinancialSettings
-      }
-      await handleApprovalRequest(req, requestIntialState, FunctionalitiesName.SUPPLIERADDUPDATEFINANCIALSETTING);
-      //addEditCreditCard(req)
+      // let requestIntialState = {
+      //   isActive: true,
+      //   supplierId: supplierId,
+      //   ...formsupplierFinancialSettings
+      // }
+      // await handleApprovalRequest(req, requestIntialState, FunctionalitiesName.SUPPLIERADDUPDATEFINANCIALSETTING);
+      addEditCreditCard(req)
     }
   }
 
-  const handleApprovalRequest = async (newValue, oldValue, functionalityName) => {
-    const request = { newValue, oldValue, isFunctional: true, functionalityName };
-    const modifyData = await ValidateRequestByApprovalRules(request);
-    if (modifyData.newValue) {
-      onHandleGetById(supplierId);
-      onResetForm(creditCardForm, setCreditCardFormDataForm, creditCardFormData.initialState);
-    }
-  };
+  // const handleApprovalRequest = async (newValue, oldValue, functionalityName) => {
+  //   const request = { newValue, oldValue, isFunctional: true, functionalityName };
+  //   const modifyData = await ValidateRequestByApprovalRules(request);
+  //   if (modifyData.newValue) {
+  //     onHandleGetById(supplierId);
+  //     onResetForm(creditCardForm, setCreditCardFormDataForm, creditCardFormData.initialState);
+  //   }
+  // };
 
 
   return (
