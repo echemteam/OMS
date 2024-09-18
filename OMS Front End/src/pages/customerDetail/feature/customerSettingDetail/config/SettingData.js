@@ -116,7 +116,8 @@ export const SettingFormData = {
       fieldType: FormFieldTypes.NUMERIC,
       dataField: "bankWireFee",
       fieldSetting: {
-        placeholder: "Enter Bank Wire Fee"
+        placeholder: "Enter Bank Wire Fee",
+        maxLength:4,
       },
       validation: [{ type: "require" }],
       style: {
