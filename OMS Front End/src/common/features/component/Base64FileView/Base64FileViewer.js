@@ -113,9 +113,9 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                                         </div>
                                         <div className="right-desc">
                                             <div className="doc-details">
-                                                <div className="document-typename">{data.Type}</div>
-                                                <div className="document-name">{data.Name}</div>
-                                                <div className="document-type">{data.Attachment}</div>
+                                                <div className="document-typename">{data.type}</div>
+                                                <div className="document-name">{data.name}</div>
+                                                <div className="document-type">{data.attachment}</div>
                                                 <div className="document-type">
                                                     {formatDate(data.createdAt, "MM/DD/YYYY hh:mm A")}
                                                 </div>
