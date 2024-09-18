@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "../../mytask/MyTask.scss";
 import formatDate from "../../../lib/formatDate";
-import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
 import CardSection from "../../../components/ui/card/CardSection";
 import { getAuthProps } from "../../../lib/authenticationLibrary";
 import DataLoader from "../../../components/ui/dataLoader/DataLoader";
@@ -46,17 +45,25 @@ const ArchiveTask = (props) => {
     }
   }, [isGetApprovalRequestsListByStatusSuccess, isGetApprovalRequestsListByStatusData]);
 
-  const handleRequest = (updatedFields = {}) => {
-    let req = {
-      status: [MyTaskStatus.Accept, MyTaskStatus.Reject], // Common value
-      roleId: roleId,  // Common value
-      orderby: orderBy || "Newest", // Default to "Newest" if not set
-      eventIds: selectedfilterBy || [], // Default to empty array if no filter is set
-      moduleId: selectedModule || props.moduleList[0]?.moduleId, // Default to the first module if not set
-      ...updatedFields
+  const handleRequest = (key, value) => {
+    const request = {
+      status: props.Pending,
+      roleId: props.roleId,
+      sortOrder: orderBy || "Newest",
+      eventIds: Array.isArray(selectedfilterBy) ? selectedfilterBy.map(String).join(",") : selectedfilterBy,
+      moduleId: selectedModule || props.moduleList[0]?.moduleId,
     };
-    getApprovalRequestsListByStatus(req);
+
+    if (key) {
+      request[key] = value; // Add or update the specific key-value pair
+    }
+    if (key === "eventIds") {
+      request[key] = Array.isArray(value) ? value.map(String).join(",") : value;
+    }
+
+    getApprovalRequestsListByStatus(request);
   };
+
   const handleTabClick = (id) => {
     setActiveTab(id);
     if (props.onGetById) {
@@ -65,18 +72,18 @@ const ArchiveTask = (props) => {
   };
   const handleModuleClick = (moduleId) => {
     setSelectedModule(moduleId);
-    handleRequest({ moduleId });
+    handleRequest("moduleId", moduleId);
     if (props.handleRestEventDetail) {
       props.handleRestEventDetail();
     }
   };
   const selectedSortOrder = (orderBy) => {
     setOrderBy(orderBy);
-    handleRequest({ orderby: orderBy });
+    handleRequest("sortOrder", orderBy);
   };
   const selectedFilterOptions = (selectedFilterOption) => {
     setSelectedFilterBy(selectedFilterOption);
-    handleRequest({ eventIds: selectedFilterOption });
+    handleRequest("eventIds", selectedFilterOption);
   };
 
   return (
