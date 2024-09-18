@@ -48,6 +48,7 @@ export const bankAddressFormData = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
+        maxLength: 50,
       },
       validation: [{ type: "require" }],
       style: {
@@ -65,6 +66,7 @@ export const bankAddressFormData = {
         isEnableOnChange: true,
         isMultiSelect: false,
         isDisabled: false,
+        maxLength: 50,
       },
       // validation: [{ type: "require" }],
       style: {
@@ -160,7 +162,7 @@ export const bankAddressFormData = {
         isDisabled: false,
         placeholder: "Please Enter Account Number",
         isEnableOnChange: true,
-        // maxLength: 20,
+        maxLength: 35,
       },
       validation: [{ type: "require" }],
       style: {
@@ -194,9 +196,10 @@ export const bankAddressFormData = {
       fieldSetting: {
         isDisabled: false,
         placeholder: "Please Enter Swift Code",
-        isEnableOnChange: true
+        isEnableOnChange: true,
+        maxLength: 11,
       },
-      // validation: [{ type: "require" }],
+      validation: [{ type: "validateCharacters" }],
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
       },
@@ -211,7 +214,7 @@ export const bankAddressFormData = {
         isDisabled: false,
         placeholder: "Please Enter IBAN Number",
         isEnableOnChange: true,
-        maxLength: 50,
+        maxLength: 35,
       },
       // validation: [{ type: "require" }],
       style: {

@@ -94,92 +94,14 @@ export const Menu = [
             securityKey: securityKey.SUPPLIERLIST,
           },
         ],
-      },
-      {
-        id: "configuration",
-        name: "Configuration",
-        iconClass: "solar:settings-broken",
-        subMenu: true,
-        to: "#",
-        securityKey: securityKey.CONFIGURATION,
-        children: [
-          {
-            id: "approvalRules",
-            submenuName: "Approval Rules",
-            to: "/ApprovalRules",
-            securityKey: securityKey.APPROVALRULES,
-          },
-          {
-            id: "functionalConfiguration",
-            submenuName: "Functional Configuration",
-            to: "/FunctionalConfiguration",
-            securityKey: securityKey.FUNCTIONALCONFIGURATION,
-          },
-          {
-            id: "apiProviders",
-            submenuName: "API Providers",
-            to: "/APIProviders",
-            securityKey: securityKey.APIPROVIDERS,
-          },
-          {
-            id: "Api Configuration",
-            submenuName: "Third party API",
-            to: "/ThirdPartyApiConfiguration",
-            securityKey: securityKey.THIRDPARTYAPI,
-          },
-          {
-            id: "Dictionary",
-            submenuName: "Dictionary",
-            to: "/Dictionary",
-            securityKey: securityKey.DICTIONARY,
-          },
-          {
-            id: "Email Template",
-            submenuName: "Email Template",
-            to: "/EmailTemplate",
-            securityKey: securityKey.DICTIONARY,
-          },
-        ],
-      },
-      // {
-      //   id: "apiconfiguration",
-      //   name: "API Configuration",
-      //   iconClass: "hugeicons:api",
-      //   subMenu: true,
-      //   to: "#",
-      //   securityKey: securityKey.APICONFIGURATION,
-      //   children: [
-      //     {
-      //       id: "apiProviders",
-      //       submenuName: "API Providers",
-      //       to: "/APIProviders",
-      //       securityKey: securityKey.APIPROVIDERS,
-      //     },
-      //   ],
-      // },
-      // {
-      //   id: "ThirdPartyAPI",
-      //   name: "Third party API",
-      //   iconClass: "hugeicons:api",
-      //   subMenu: true,
-      //   to: "#",
-      //   securityKey: securityKey.SECURITY,
-      //   children: [
-      //     {
-      //       id: "Api Configuration",
-      //       submenuName: "Api Configuration",
-      //       to: "/ThirdPartyApiConfiguration",
-      //       securityKey: securityKey.USERMANAGEMENT,
-      //     },
-      //   ],
-      // },
+      }
     ],
   },
-  
+
   {
     groupLabel: "Orders",
     items: [
-    
+
       {
         name: "Order Details",
         id: "Order",
@@ -213,4 +135,67 @@ export const Menu = [
       }
     ]
   },
+];
+
+
+export const ConfigurationMenu = [
+  {
+    groupLabel: "System Configurations",
+    items: [
+      {
+        id: "approvalRules",
+        to: "/configuration/ApprovalRules",
+        securityKey: securityKey.APPROVALRULES,
+        name: "Approval Rules",
+        iconClass: "hugeicons:validation-approval",
+        subMenu: false,
+        children: []
+      },
+      {
+        id: "functionalConfiguration",
+        to: "/configuration/FunctionalConfiguration",
+        securityKey: securityKey.FUNCTIONALCONFIGURATION,
+        name: "Functional Configuration",
+        iconClass: "solar:settings-broken",
+        subMenu: false,
+        children: []
+      },
+      {
+        id: "apiProviders",
+        to: "/configuration/APIProviders",
+        securityKey: securityKey.APIPROVIDERS,
+        name: "API Providers",
+        iconClass: "icon-park-outline:api",
+        subMenu: false,
+        children: []
+      },
+      {
+        id: "Api Configuration",
+        to: "/configuration/ThirdPartyApiConfiguration",
+        securityKey: securityKey.THIRDPARTYAPI,
+        name: "Third party API",
+        iconClass: "hugeicons:api",
+        subMenu: false,
+        children: []
+      },
+      {
+        id: "Dictionary",
+        to: "/configuration/Dictionary",
+        securityKey: securityKey.DICTIONARY,
+        name: "Dictionary",
+        iconClass: "streamline:dictionary-language-book",
+        subMenu: false,
+        children: []
+      },
+      {
+        id: "Email Template",
+        to: "/configuration/EmailTemplate",
+        securityKey: securityKey.DICTIONARY,
+        name: "Email Template",
+        iconClass: "eos-icons:templates-outlined",
+        subMenu: false,
+        children: []
+      }
+    ]
+  }
 ];

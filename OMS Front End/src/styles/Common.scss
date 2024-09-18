@@ -345,9 +345,10 @@ a {
 
         .sidebar {
           .main-menus {
-            .sidebar-brand .brand-name{
+            .sidebar-brand .brand-name {
               margin-top: -5px;
             }
+
             .sidebar-brand {
               font-size: var(--commonFont-extraLarge);
               min-height: unset;
@@ -357,9 +358,10 @@ a {
               .small-sidebar {
                 display: none;
               }
+
               .sidebar-user {
                 bottom: 0%;
-               
+
               }
             }
 
@@ -944,6 +946,7 @@ a {
         padding: 5px !important;
         margin-top: 0;
         max-height: calc(100vh - 100px);
+
         @media only screen and (max-width: 1750px) {
           max-height: calc(100vh - 100px);
         }
@@ -3741,16 +3744,19 @@ input[type="checkbox"]:disabled {
     }
   }
 }
-.supplier-contacts{
+
+.supplier-contacts {
   .vertical-tab-inner {
     .tab-section {
       height: calc(100vh - 355px);
+
       @media only screen and (max-width: 1750px) {
         height: calc(100vh - 305px);
       }
     }
   }
 }
+
 .order-body {
   max-height: calc(100vh - 130px);
 
@@ -4310,4 +4316,13 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+}
+
+.sidebar-backIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.menu-title {
+  color: var(--sidebarActiveTextColor);
 }

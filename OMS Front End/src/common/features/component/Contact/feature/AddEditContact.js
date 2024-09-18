@@ -50,11 +50,12 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
 
 
     const handleAddEdit = async () => {
-        if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-            handleApprovalAddEdit();
-        } else {
-            handlWithoutApprovalAddEdit();
-        }
+        handlWithoutApprovalAddEdit();
+        // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+        //     handleApprovalAddEdit();
+        // } else {
+        //     handlWithoutApprovalAddEdit();
+        // }
     }
 
     const handleApprovalAddEdit = async () => {

@@ -14,7 +14,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const excludingRoles = ['Admin', 'manager'];
 export const supplierBasicData = {
-  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "", supplierNoteId: "" , incotermId:"" },
+  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "", supplierNoteId: "" , incotermId:11 },
   formFields: [
     {
       id: "name",

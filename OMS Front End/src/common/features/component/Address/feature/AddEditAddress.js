@@ -13,9 +13,9 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import { useLazyGetAllAddressTypesQuery, useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../../app/services/addressAPI";
 import PropTypes from 'prop-types';
-import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
-import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
-import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
+// import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
+// import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
+// import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 import { getDropdownLabelName } from "../../../../../utils/CommonUtils/CommonUtilsMethods";
 
 const SetInitialCountry = {
@@ -33,7 +33,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     const [selectedCheckboxFeild, setSelectedCheckboxFeild] = useState(null);
     const [selectedCheckbox, setSelectedCheckbox] = useState(null);
     const [addressEditTableId, setAddressEditTableId] = useState(0)
-    const { ValidateRequestByApprovalRules, getEventName, isApprovelLoading } = useValidateAndAddApprovalRequests();
+    // const { ValidateRequestByApprovalRules, getEventName, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     // const [stateChage, setStateChange] = useState(null)
 
@@ -345,50 +345,50 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
         if (!data) return;
         const transformedData = buildTransformedData(data, isSupplier, keyId, editMode);
 
-        const dropdownLabelRequestsFromData = createDropdownLabelRequests(data, allGetAllAddressTypesData,
-            allGetAllCountriesData, allGetAllStatesData, allGetAllCitiesData);
+        // const dropdownLabelRequestsFromData = createDropdownLabelRequests(data, allGetAllAddressTypesData,
+        //     allGetAllCountriesData, allGetAllStatesData, allGetAllCitiesData);
 
-        const dropdownLabelRequestsFromInitialState = createDropdownLabelRequests(formData.initialState, allGetAllAddressTypesData,
-            allGetAllCountriesData, allGetAllStatesData, allGetAllCitiesData);
+        // const dropdownLabelRequestsFromInitialState = createDropdownLabelRequests(formData.initialState, allGetAllAddressTypesData,
+        //     allGetAllCountriesData, allGetAllStatesData, allGetAllCitiesData);
 
         if (editMode) {
             const updateData = buildUpdateData(transformedData, isGetByIdData, isSupplier);
-            if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-                let request = {
-                    ...updateData,
-                    ...dropdownLabelRequestsFromData
-                }
-                let initialStateRequest = {
-                    ...formData.initialState,
-                    ...dropdownLabelRequestsFromInitialState
-                }
-                const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
-                await handleApprovalRequest(request, initialStateRequest, eventName);
-            } else {
-                update(updateData);
-            }
+            // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+            //     let request = {
+            //         ...updateData,
+            //         ...dropdownLabelRequestsFromData
+            //     }
+            //     let initialStateRequest = {
+            //         ...formData.initialState,
+            //         ...dropdownLabelRequestsFromInitialState
+            //     }
+            //     const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(updateData.addressTypeId, true, 'AddEditAddressCustomer');
+            //     await handleApprovalRequest(request, initialStateRequest, eventName);
+            // } else {
+            update(updateData);
+            // }
         } else {
-            // Add mode
+            // // Add mode
             const customerId = orderCustomerId ? orderCustomerId : transformedData.customerId;
             const req = {
                 ...transformedData,
                 customerId: customerId,
-                ...dropdownLabelRequestsFromData
+                // ...dropdownLabelRequestsFromData
             };
-            const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
-            if (!isSupplier && isEditablePage && eventName && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-                await handleApprovalRequest(req, null, eventName);
-            } else {
-                add(req);
-            }
+            // const eventName = isSupplier ? FunctionalitiesName.SUPPLIERADDADDRESS : getEventName(req.addressTypeId, false, 'AddEditAddressCustomer');
+            // if (!isSupplier && isEditablePage && eventName && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+            //     await handleApprovalRequest(req, null, eventName);
+            // } else {
+            add(req);
+            // }
         }
     };
 
-    const handleApprovalRequest = async (newValue, oldValue, eventName) => {
-        const request = { newValue, oldValue, isFunctional: true, eventName, isFunctionalObjMatch: true };
-        const modifyData = await ValidateRequestByApprovalRules(request);
-        if (modifyData.newValue) onSidebarClose();
-    };
+    // const handleApprovalRequest = async (newValue, oldValue, eventName) => {
+    //     const request = { newValue, oldValue, isFunctional: true, eventName, isFunctionalObjMatch: true };
+    //     const modifyData = await ValidateRequestByApprovalRules(request);
+    //     if (modifyData.newValue) onSidebarClose();
+    // };
 
     const createDropdownLabelRequests = (sourceData, addressTypesData, countriesData, statesData, citiesData) => {
         return {
@@ -557,7 +557,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
                         buttonTypeClassName="theme-button"
                         buttonText={editMode ? "Update" : "Save"}
                         onClick={handleAddEdit}
-                        isLoading={isApprovelLoading || isAddLoading || isUpdateLoading}
+                        isLoading={isAddLoading || isUpdateLoading}
                         isDisable={isButtonDisable} />
                     <Buttons
                         buttonTypeClassName="dark-btn ml-5"
