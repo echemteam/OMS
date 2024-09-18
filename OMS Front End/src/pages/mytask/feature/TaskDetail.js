@@ -141,7 +141,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
 
   useEffect(() => {
     if (approvedData) {
-      debugger
+
       getAllPaymentTerms();
       getAllPaymentMethod();
 
@@ -309,7 +309,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                 </div>
               </div>
               <div className="customer-information">
-                {customerId && customerData &&
+                {customerId && customerData ?
                   <div className="row mb-3">
                     <div className="col-md-5">
                       <span className="info-label fw-bold">Customer Name : </span>
@@ -323,9 +323,9 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                       <span className="info-label fw-bold">Country : </span>
                       <span className="info-value ml-2">{customerData?.countryName}</span>
                     </div>
-                  </div>
+                  </div> : null
                 }
-                {supplierData && supplierId &&
+                {supplierData && supplierId ?
                   <div className="row mb-3">
                     <div className="col-md-5">
                       <span className="info-label fw-bold">Supplier Name : </span>
@@ -340,6 +340,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                       <span className="info-value ml-2">{supplierData?.countryName}</span>
                     </div>
                   </div>
+                  : null
                 }
                 {!approvedData.isFunctional &&
                   <div className="info-row">

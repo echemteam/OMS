@@ -33,8 +33,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
     useEffect(() => {
         if (documentData) {
             const parsedData = JSON.parse(documentData);
-            console.log(parsedData);
-            setDocumentList(parsedData.documentInfoList);
+            setDocumentList(parsedData.DocumentInfoList);
         }
     }, [documentData]);
 
@@ -89,9 +88,9 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                                         </div>
                                         <div className="right-desc">
                                             <div className="doc-details">
-                                                <div className="document-typename">{data.type}</div>
-                                                <div className="document-name">{data.name}</div>
-                                                <div className="document-type">{data.attachment}</div>
+                                                <div className="document-typename">{data.Type}</div>
+                                                <div className="document-name">{data.Name}</div>
+                                                <div className="document-type">{data.Attachment}</div>
                                                 <div className="document-type">
                                                     {formatDate(data.createdAt, "MM/DD/YYYY hh:mm A")}
                                                 </div>
@@ -100,7 +99,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                                                 {/* {getFileType.length > 0 && ["pdf", "csv", "docx", "xlsx"].includes(determineFileType(data.attachment)) && ( */}
                                                 <span
                                                     className="action-icon"
-                                                    onClick={() => handleDocumentAction(data.base64File, data.name)}>
+                                                    onClick={() => handleDocumentAction(data.Base64File, data.Name)}>
                                                     <Iconify icon="lets-icons:view-light" />
                                                 </span>
                                                 {/* )} */}

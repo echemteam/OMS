@@ -213,9 +213,9 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   useEffect(() => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
-      if (approvalMessages.length > 0) {
-        ToastService.success(isAddEditCustomerSettingsData.errorMessage);
-      }
+      // if (approvalMessages.length > 0) {
+      ToastService.success(isAddEditCustomerSettingsData.errorMessage);
+      // }
       if (!isEditablePage) {
         handleActiveSubTabClick(CustomerSettingEnum.ShippingSettings);
       }
@@ -256,7 +256,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
       // if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
       //   await handleApprovalRequest(requestNewValue, requestOldValue, FunctionalitiesName.UPDATECUSTOMERFINANCIALSETTING);
       // } else {
-        addEditCustomerSettings(updaterequest);
+      addEditCustomerSettings(updaterequest);
       // }
     }
   };
