@@ -130,10 +130,12 @@ namespace OMS.Application.Services.Address
                 }
             }
 
-            // Process approval requests
-            foreach (var approvalRequest in approvalRequests)
+            if (approvalRequests.Count > 0)
             {
-                responseData = await repositoryManager.approval.AddApprovalRequests(approvalRequest);
+                foreach (var approvalRequest in approvalRequests)
+                {
+                    responseData = await repositoryManager.approval.AddApprovalRequests(approvalRequest);
+                }
             }
 
             return responseData;
