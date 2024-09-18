@@ -26,7 +26,7 @@ const ApiProviders = () => {
     setIsEdit(false);
   };
   const handleEditClick = (data) => {
-    navigate(`/APIProviderDetail/${encryptUrlData(data.providerId)}`);
+    navigate(`/configuration/APIProviderDetail/${encryptUrlData(data.providerId)}`);
   };
 
   const onSuccess = () => {
@@ -35,7 +35,7 @@ const ApiProviders = () => {
       childRef.current.callChildFunction();
     }
   };
-  
+
   const handleChange = (event) => {
     setSearch(event.target.value.trim());
   };
@@ -54,7 +54,7 @@ const ApiProviders = () => {
   };
   const handleClear = () => {
     setSearch("");
-     
+
   };
 
   return (

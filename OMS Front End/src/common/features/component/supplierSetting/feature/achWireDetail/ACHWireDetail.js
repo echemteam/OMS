@@ -103,7 +103,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
 
   const handleAddResponse = (isSuccess, responseData) => {
     if (isSuccess && responseData) {
-      if (responseData.errorMessage.includes("exists")) {
+      if (responseData.errorMessage && responseData.errorMessage.includes("exists")) {
         ToastService.warning(responseData.errorMessage);
         return;
       }

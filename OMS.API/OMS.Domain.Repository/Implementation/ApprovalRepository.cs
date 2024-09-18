@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using OMS.Domain.Entities.API.Request.Approval;
 using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -91,15 +92,15 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.NewValueTemplate,
             }, CommandType.StoredProcedure);
         }
-        public async Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string? roleId, string? eventIds, string? sortOrder, int? moduleId)
+        public async Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(GetApprovalRequestsListByStatusAndRoleIdRequest requestData)
         {
             List<GetApprovalRequestsListByStatusAndRoleIdResponse> getAllUsersResponse = await _context.GetList<GetApprovalRequestsListByStatusAndRoleIdResponse>(GETAPPROVALREQUESTSLISTBYSTATUSANDROLEID, new
             {
-                roleId,
-                status,
-                eventIds,
-                sortOrder,
-                moduleId
+                requestData.RoleId,
+                requestData.Status,
+                requestData.EventIds,
+                requestData.SortOrder,
+                requestData.ModuleId
             }, commandType: CommandType.StoredProcedure);
             return getAllUsersResponse;
         }
@@ -158,5 +159,6 @@ namespace OMS.Domain.Repository.Implementation
             List<GetApprovalConfigurationResponse> approvalConfigurationList = await _context.GetList<GetApprovalConfigurationResponse>(GETAPPROVALCONFIGURATION, commandType: CommandType.StoredProcedure);
             return approvalConfigurationList;
         }
+
     }
 }

@@ -87,6 +87,7 @@ const CustomerDetails = () => {
                 isLoading={!isModelOpen ? isGetCustomersBasicInformationByIdFetching : null}
                 customerId={customerId}
                 getCustomerById={onSuccess}
+                isGetCustomersBasicInformationById={isGetCustomersBasicInformationById}
               />
             </CardSection>
           </div>

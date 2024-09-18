@@ -15,9 +15,7 @@ const AddressInformation = ({
 }) => {
   //** State */
   const [addressInformation, setAddressInformation] = useState([]);
-  const [isChecked, setIsChecked] = useState(
-    approvalChekedData?.isChecked || false
-  );
+  const [isChecked, setIsChecked] = useState(approvalChekedData?.isChecked || false);
 
   //** API Call's */
   const [

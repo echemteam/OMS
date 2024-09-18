@@ -9,7 +9,7 @@ import DataLoader from "../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
 import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
 //** Service's */
-import { useLazyGetApprovalRequestsListByStatusAndRoleIdQuery } from "../../../app/services/ApprovalAPI";
+import { useGetApprovalRequestsListByStatusAndRoleIdMutation } from "../../../app/services/ApprovalAPI";
 //** Component's */
 import ModuleList from "./ModuleList";
 
@@ -21,14 +21,7 @@ const PendingTask = (props) => {
   const [selectedfilterBy, setSelectedFilterBy] = useState([]);
   const [selectedModule, setSelectedModule] = useState(props.moduleList[0]?.moduleId);
 
-  const [
-    getApprovalRequestsListByStatus,
-    {
-      isFetching: isGetApprovalRequestsListByStatusFetching,
-      isSuccess: isGetApprovalRequestsListByStatusSuccess,
-      data: isGetApprovalRequestsListByStatusData,
-    },
-  ] = useLazyGetApprovalRequestsListByStatusAndRoleIdQuery();
+  const [getApprovalRequestsListByStatus, { isLoading, isSuccess: isGetApprovalRequestsListByStatusSuccess, data: isGetApprovalRequestsListByStatusData }] = useGetApprovalRequestsListByStatusAndRoleIdMutation();
 
   useEffect(() => {
     if (props.moduleList && props.moduleList.length > 0) {
@@ -44,7 +37,7 @@ const PendingTask = (props) => {
   }, [props.isApproval]);
 
   useEffect(() => {
-    if (!isGetApprovalRequestsListByStatusFetching && isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData
+    if (isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData
     ) {
       setPendingData(isGetApprovalRequestsListByStatusData);
       if (!isGetApprovalRequestsListByStatusData || isGetApprovalRequestsListByStatusData?.length === 0) {
@@ -55,40 +48,52 @@ const PendingTask = (props) => {
         handleTabClick(isGetApprovalRequestsListByStatusData[0]?.approvalRequestId);
       }
     }
-  }, [isGetApprovalRequestsListByStatusFetching, isGetApprovalRequestsListByStatusSuccess, isGetApprovalRequestsListByStatusData]);
+  }, [isGetApprovalRequestsListByStatusSuccess, isGetApprovalRequestsListByStatusData]);
 
-  const handleRequest = (updatedFields = {}) => {
-    let req = {
-      status: props.Pending, // Common value
-      roleId: props.roleId,  // Common value
-      orderby: orderBy || "Newest", // Default to "Newest" if not set
-      eventIds: selectedfilterBy || [], // Default to empty array if no filter is set
-      moduleId: selectedModule || props.moduleList[0]?.moduleId, // Default to the first module if not set
-      ...updatedFields
+  const handleRequest = (key, value) => {
+    const request = {
+      status: props.Pending,
+      roleId: props.roleId,
+      sortOrder: orderBy || "Newest",
+      eventIds: Array.isArray(selectedfilterBy) ? selectedfilterBy.map(String).join(",") : selectedfilterBy,
+      moduleId: selectedModule || props.moduleList[0]?.moduleId,
     };
-    getApprovalRequestsListByStatus(req);
+
+    if (key) {
+      request[key] = value; // Add or update the specific key-value pair
+    }
+    if (key === "eventIds") {
+      request[key] = Array.isArray(value) ? value.map(String).join(",") : value;
+    }
+
+    getApprovalRequestsListByStatus(request);
   };
+
   const handleTabClick = (id) => {
     setActiveTab(id);
     if (props.onGetById) {
       props.onGetById(id);
     }
   };
+
   const handleModuleClick = (moduleId) => {
     setSelectedModule(moduleId);
-    handleRequest({ moduleId });
+    handleRequest("moduleId", moduleId);
     if (props.handleRestEventDetail) {
       props.handleRestEventDetail();
     }
   };
+
   const selectedSortOrder = (orderBy) => {
     setOrderBy(orderBy);
-    handleRequest({ orderby: orderBy });
+    handleRequest("sortOrder", orderBy);
   };
+
   const selectedFilterOptions = (selectedFilterOption) => {
     setSelectedFilterBy(selectedFilterOption);
-    handleRequest({ eventIds: selectedFilterOption });
+    handleRequest("eventIds", selectedFilterOption);
   };
+
 
   return (
     <>
@@ -107,7 +112,7 @@ const PendingTask = (props) => {
             selectedSortOrder={selectedSortOrder}
           >
             <div className="customer-info">
-              {isGetApprovalRequestsListByStatusFetching ? (
+              {isLoading ? (
                 <DataLoader />
               ) : (
                 <div className="tabs">

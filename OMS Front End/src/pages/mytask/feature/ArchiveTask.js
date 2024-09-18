@@ -4,16 +4,16 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "../../mytask/MyTask.scss";
 import formatDate from "../../../lib/formatDate";
-import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
 import CardSection from "../../../components/ui/card/CardSection";
 import { getAuthProps } from "../../../lib/authenticationLibrary";
 import DataLoader from "../../../components/ui/dataLoader/DataLoader";
 import NoRecordFound from "../../../components/ui/noRecordFound/NoRecordFound";
 import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLetter";
 //** Service's */
-import { useLazyGetApprovalRequestsListByStatusAndRoleIdQuery } from "../../../app/services/ApprovalAPI";
+import { useGetApprovalRequestsListByStatusAndRoleIdMutation } from "../../../app/services/ApprovalAPI";
 //** Component's */
 import ModuleList from "./ModuleList";
+import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
 
 const ArchiveTask = (props) => {
 
@@ -25,7 +25,7 @@ const ArchiveTask = (props) => {
   const [selectedfilterBy, setSelectedFilterBy] = useState([]);
   const [selectedModule, setSelectedModule] = useState(props.moduleList[0]?.moduleId);
 
-  const [getApprovalRequestsListByStatus, { isFetching: isGetApprovalRequestsListByStatusFetching, isSuccess: isGetApprovalRequestsListByStatusSuccess, data: isGetApprovalRequestsListByStatusData }] = useLazyGetApprovalRequestsListByStatusAndRoleIdQuery();
+  const [getApprovalRequestsListByStatus, { isLoading, isSuccess: isGetApprovalRequestsListByStatusSuccess, data: isGetApprovalRequestsListByStatusData }] = useGetApprovalRequestsListByStatusAndRoleIdMutation();
 
   useEffect(() => {
     if (roleId && props.moduleList && props.moduleList.length > 0) {
@@ -34,7 +34,7 @@ const ArchiveTask = (props) => {
   }, [roleId, props.moduleList]);
 
   useEffect(() => {
-    if (!isGetApprovalRequestsListByStatusFetching && isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData) {
+    if (isGetApprovalRequestsListByStatusSuccess && isGetApprovalRequestsListByStatusData) {
       setArchiveData(isGetApprovalRequestsListByStatusData);
       if (!isGetApprovalRequestsListByStatusData || isGetApprovalRequestsListByStatusData?.length === 0) {
         if (props.handleRestEventDetail) {
@@ -44,19 +44,27 @@ const ArchiveTask = (props) => {
         handleTabClick(isGetApprovalRequestsListByStatusData[0]?.approvalRequestId);
       }
     }
-  }, [isGetApprovalRequestsListByStatusFetching, isGetApprovalRequestsListByStatusSuccess, isGetApprovalRequestsListByStatusData]);
+  }, [isGetApprovalRequestsListByStatusSuccess, isGetApprovalRequestsListByStatusData]);
 
-  const handleRequest = (updatedFields = {}) => {
-    let req = {
-      status: [MyTaskStatus.Accept, MyTaskStatus.Reject], // Common value
-      roleId: roleId,  // Common value
-      orderby: orderBy || "Newest", // Default to "Newest" if not set
-      eventIds: selectedfilterBy || [], // Default to empty array if no filter is set
-      moduleId: selectedModule || props.moduleList[0]?.moduleId, // Default to the first module if not set
-      ...updatedFields
+  const handleRequest = (key, value) => {
+    const request = {
+      status: [MyTaskStatus.Accept, MyTaskStatus.Reject].join(','),
+      roleId: props.roleId,
+      sortOrder: orderBy || "Newest",
+      eventIds: Array.isArray(selectedfilterBy) ? selectedfilterBy.map(String).join(",") : selectedfilterBy,
+      moduleId: selectedModule || props.moduleList[0]?.moduleId,
     };
-    getApprovalRequestsListByStatus(req);
+
+    if (key) {
+      request[key] = value; // Add or update the specific key-value pair
+    }
+    if (key === "eventIds") {
+      request[key] = Array.isArray(value) ? value.map(String).join(",") : value;
+    }
+
+    getApprovalRequestsListByStatus(request);
   };
+
   const handleTabClick = (id) => {
     setActiveTab(id);
     if (props.onGetById) {
@@ -65,18 +73,18 @@ const ArchiveTask = (props) => {
   };
   const handleModuleClick = (moduleId) => {
     setSelectedModule(moduleId);
-    handleRequest({ moduleId });
+    handleRequest("moduleId", moduleId);
     if (props.handleRestEventDetail) {
       props.handleRestEventDetail();
     }
   };
   const selectedSortOrder = (orderBy) => {
     setOrderBy(orderBy);
-    handleRequest({ orderby: orderBy });
+    handleRequest("sortOrder", orderBy);
   };
   const selectedFilterOptions = (selectedFilterOption) => {
     setSelectedFilterBy(selectedFilterOption);
-    handleRequest({ eventIds: selectedFilterOption });
+    handleRequest("eventIds", selectedFilterOption);
   };
 
   return (
@@ -93,7 +101,7 @@ const ArchiveTask = (props) => {
             selectedFilterOptions={selectedFilterOptions}
             selectedSortOrder={selectedSortOrder}>
             <div className="customer-info">
-              {isGetApprovalRequestsListByStatusFetching ? (
+              {isLoading ? (
                 <DataLoader />
               ) : (
                 <div className="tabs">

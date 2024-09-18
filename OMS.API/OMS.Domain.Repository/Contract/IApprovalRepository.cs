@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.Approval;
+﻿using OMS.Domain.Entities.API.Request.Approval;
+using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using System.Data;
@@ -20,6 +21,6 @@ namespace OMS.Domain.Repository.Contract
         Task Execute(string query, object? parameters = null, CommandType commandType = CommandType.Text);
         Task<IEnumerable<string>> GetTableColumnsAsync(string tableName);
         Task<List<GetApprovalConfigurationResponse>> GetApprovalConfiguration();
-        Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(string? status, string? roleId, string? eventIds, string? sortOrder, int? moduleId);
+        Task<List<GetApprovalRequestsListByStatusAndRoleIdResponse>> GetApprovalRequestsListByStatusAndRoleId(GetApprovalRequestsListByStatusAndRoleIdRequest requestData);
     }
 }

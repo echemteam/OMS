@@ -345,9 +345,10 @@ a {
 
         .sidebar {
           .main-menus {
-            .sidebar-brand .brand-name{
+            .sidebar-brand .brand-name {
               margin-top: -5px;
             }
+
             .sidebar-brand {
               font-size: var(--commonFont-extraLarge);
               min-height: unset;
@@ -357,9 +358,10 @@ a {
               .small-sidebar {
                 display: none;
               }
+
               .sidebar-user {
                 bottom: 0%;
-               
+
               }
             }
 
@@ -768,6 +770,9 @@ a {
       padding-top: 7px;
       max-height: calc(100vh - 225px);
     }
+    @media only screen and (max-width: 1366px) {
+      max-height: calc(100vh - 200px);
+    }
   }
 }
 
@@ -944,6 +949,7 @@ a {
         padding: 5px !important;
         margin-top: 0;
         max-height: calc(100vh - 100px);
+
         @media only screen and (max-width: 1750px) {
           max-height: calc(100vh - 100px);
         }
@@ -3603,6 +3609,10 @@ input[type="checkbox"]:disabled {
       transition: 0.5s all;
       padding-top: 11px;
 
+      @media only screen and (max-width: 1024px) {
+        width: 20%;
+      }
+
       button {
         padding: 10px 15px;
         border: none;
@@ -3617,6 +3627,10 @@ input[type="checkbox"]:disabled {
         text-align: left;
         transition: 0.5s all;
         color: #5e6470;
+
+        @media only screen and (max-width: 1024px) {
+          padding: 7px 5px;
+        }
 
         &:hover {
           background: var(--linkMenu);
@@ -3645,6 +3659,10 @@ input[type="checkbox"]:disabled {
         max-height: calc(100vh - 280px);
         padding-bottom: 0;
       }
+
+      @media only screen and (max-width: 1024px) {
+        width: 80%;
+      }
     }
 
     .collapse-tab {
@@ -3664,6 +3682,10 @@ input[type="checkbox"]:disabled {
       cursor: pointer;
       transition: 0.5s all;
       z-index: 9;
+
+      @media only screen and (max-width: 991px) {
+        left: calc(23% - 45px);
+      }
 
       img {
         filter: brightness(100);
@@ -3741,16 +3763,19 @@ input[type="checkbox"]:disabled {
     }
   }
 }
-.supplier-contacts{
+
+.supplier-contacts {
   .vertical-tab-inner {
     .tab-section {
       height: calc(100vh - 355px);
+
       @media only screen and (max-width: 1750px) {
         height: calc(100vh - 305px);
       }
     }
   }
 }
+
 .order-body {
   max-height: calc(100vh - 130px);
 
@@ -4310,4 +4335,13 @@ input[type="checkbox"]:disabled {
       }
     }
   }
+}
+
+.sidebar-backIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.menu-title {
+  color: var(--sidebarActiveTextColor);
 }

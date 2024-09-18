@@ -9,6 +9,7 @@ import Iconify from "../../../../components/ui/iconify/Iconify";
 import formatDate from "../../../../lib/formatDate";
 import NoRecordFound from "../../../../components/ui/noRecordFound/NoRecordFound";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { documentTransformData } from "../../../../utils/TransformData/TransformAPIData";
 
 const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
 
@@ -16,38 +17,61 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
     const [documentList, setDocumentList] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedDocument, setSelectedDocument] = useState(null);
-
+   
     const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = useDownloadApprovalRequestDocumentMutation();
 
     useEffect(() => {
         if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
+      
             const fileData = isDownalodData.fileData;
             const blob = new Blob([fileData], { type: fileData.type });
             const fileURL = URL.createObjectURL(blob);
             setSelectedDocument(fileURL);
             setIsModalOpen(true);
-            setGetFileType(determineFileType(isDownalodData.fileName));
+          
         }
     }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
     useEffect(() => {
+       
         if (documentData) {
-            const parsedData = JSON.parse(documentData);
-            setDocumentList(parsedData.documentInfoList);
+            let parsedData = JSON.parse(documentData);
+           
+            setDocumentList(parsedData.DocumentInfoList);
+            parsedData= documentTransformData(parsedData.DocumentInfoList);
+            if (!Array.isArray(parsedData)) {
+                parsedData = Object.values(parsedData).flat();
+              }
+            setDocumentList(parsedData);
+           
+              // Detect file types
+              const detectedFileTypes = new Set();
+              parsedData.forEach((item) => {
+                const fileType = determineFileType(item.attachment);
+                if (["pdf", "csv", "docx", "xlsx"].includes(fileType)) {
+                  detectedFileTypes.add(fileType);
+                }
+              });
+      
+              setGetFileType(Array.from(detectedFileTypes));
         }
     }, [documentData]);
 
-    const handleDocumentAction = (base64Data, fileName) => {
-        const parts = base64Data.split(',');
+    const handleDocumentAction = (base64Data, fileName) => { 
+      
+         const parts = base64Data.split(','); 
+    
         let request = {
             base64FileData: parts.length > 1 ? parts[1] : base64Data,
             fileName: fileName
         }
-        Downalod(request);
+                Downalod(request);
+       
     };
 
     const determineFileType = (fileName) => {
-        const extension = fileName.split(".").pop().toLowerCase();
+       
+                const extension = fileName?.split(".").pop().toLowerCase();
         switch (extension) {
             case "pdf":
                 return "pdf";
@@ -81,6 +105,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                     {!isLoading ? (
                         documentList.length > 0 ? (
                             documentList.map((data) => (
+                                
                                 <div className="col-xl-6 col-lg-6 col-md-4 col-6" key={data.customerDocumentId} >
                                     <div className="documents">
                                         <div className="left-icons">
@@ -96,13 +121,13 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                                                 </div>
                                             </div>
                                             <div className="document-action">
-                                                {/* {getFileType.length > 0 && ["pdf", "csv", "docx", "xlsx"].includes(determineFileType(data.attachment)) && ( */}
+                                                 {["pdf", "csv", "docx", "xlsx"].includes(determineFileType(data.attachment)) && (
                                                 <span
                                                     className="action-icon"
-                                                    onClick={() => handleDocumentAction(data.base64File, data.name)}>
+                                                    onClick={() => handleDocumentAction(data.Base64File, data.Name)}>
                                                     <Iconify icon="lets-icons:view-light" />
                                                 </span>
-                                                {/* )} */}
+                                                  )}  
                                             </div>
                                         </div>
                                     </div>
@@ -121,7 +146,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                 modalTitle="File Preview"
                 onClose={handleToggleModal}>
                 <div className="model-hight-fix">
-                    {selectedDocument && getFileType && (
+                    {selectedDocument  && (
                         <FileViewer
                             fileType={getFileType}
                             filePath={selectedDocument}
