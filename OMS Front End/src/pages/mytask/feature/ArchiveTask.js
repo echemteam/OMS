@@ -13,6 +13,7 @@ import { FirstSecondLetter } from "../../../utils/FirstSecLetter/FirstSecondLett
 import { useGetApprovalRequestsListByStatusAndRoleIdMutation } from "../../../app/services/ApprovalAPI";
 //** Component's */
 import ModuleList from "./ModuleList";
+import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
 
 const ArchiveTask = (props) => {
 
@@ -47,7 +48,7 @@ const ArchiveTask = (props) => {
 
   const handleRequest = (key, value) => {
     const request = {
-      status: props.Pending,
+      status: [MyTaskStatus.Accept, MyTaskStatus.Reject].join(','),
       roleId: props.roleId,
       sortOrder: orderBy || "Newest",
       eventIds: Array.isArray(selectedfilterBy) ? selectedfilterBy.map(String).join(",") : selectedfilterBy,
