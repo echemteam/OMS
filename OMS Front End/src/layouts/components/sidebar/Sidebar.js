@@ -48,6 +48,9 @@ const Sidebar = () => {
       case menuItem.startsWith("/configuration/"):
         setIsCustomSidebarVisible(true);
         setNavigationMenuList(ConfigurationMenu);
+        if (menuItem.startsWith("/configuration/ApprovalRules")) {
+          handleClick(ConfigurationMenu[0].items[0].id);
+        }
         /** 
          * Set the menu title to "Configuration" to display the configuration menu title. 
             // setMenuTitle("Configuration"); 
@@ -107,7 +110,8 @@ const Sidebar = () => {
                       */}
                       <li className="menu-item mt-4" onClick={handleBackButtonClick}>
                         <Link>
-                          <Image imagePath={AppIcons.BackArrowIcon} altText="button Icon" imgCustomClassName="sidebar-backIcon" />
+                          {/* <Image imagePath={AppIcons.BackArrowIcon} altText="button Icon" imgCustomClassName="sidebar-backIcon" /> */}
+                          <Iconify icon="lets-icons:back" />
                           <span>Back to Main Menu</span>
                         </Link>
                       </li>

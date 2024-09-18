@@ -147,7 +147,7 @@ export const ConfigurationMenu = [
         to: "/configuration/ApprovalRules",
         securityKey: securityKey.APPROVALRULES,
         name: "Approval Rules",
-        iconClass: "solar:settings-broken",
+        iconClass: "hugeicons:validation-approval",
         subMenu: false,
         children: []
       },
@@ -165,7 +165,7 @@ export const ConfigurationMenu = [
         to: "/configuration/APIProviders",
         securityKey: securityKey.APIPROVIDERS,
         name: "API Providers",
-        iconClass: "solar:settings-broken",
+        iconClass: "icon-park-outline:api",
         subMenu: false,
         children: []
       },
@@ -174,7 +174,7 @@ export const ConfigurationMenu = [
         to: "/configuration/ThirdPartyApiConfiguration",
         securityKey: securityKey.THIRDPARTYAPI,
         name: "Third party API",
-        iconClass: "solar:settings-broken",
+        iconClass: "hugeicons:api",
         subMenu: false,
         children: []
       },
@@ -183,7 +183,7 @@ export const ConfigurationMenu = [
         to: "/configuration/Dictionary",
         securityKey: securityKey.DICTIONARY,
         name: "Dictionary",
-        iconClass: "solar:settings-broken",
+        iconClass: "streamline:dictionary-language-book",
         subMenu: false,
         children: []
       },
@@ -192,7 +192,7 @@ export const ConfigurationMenu = [
         to: "/configuration/EmailTemplate",
         securityKey: securityKey.DICTIONARY,
         name: "Email Template",
-        iconClass: "solar:settings-broken",
+        iconClass: "eos-icons:templates-outlined",
         subMenu: false,
         children: []
       }
