@@ -99,11 +99,11 @@ namespace OMS.Application.Services.Address
                         requestData.AddressTypeId = addressTypeId;
                         AddressDto addressDto = requestData.ToMapp<AddAddressRequest, AddressDto>();
                         addressDto.CreatedBy = CurrentUserId;
-                        var addResponse = await repositoryManager.address.AddAddress(addressDto);
+                        responseData = await repositoryManager.address.AddAddress(addressDto);
 
-                        if (addResponse.KeyValue > 0)
+                        if (responseData.KeyValue > 0)
                         {
-                            await LinkSameAddress(requestData, addResponse.KeyValue, CurrentUserId);
+                            await LinkSameAddress(requestData, responseData.KeyValue, CurrentUserId);
 
                             if (requestData.IsShippingAndBilling == true && customerId > 0)
                             {
