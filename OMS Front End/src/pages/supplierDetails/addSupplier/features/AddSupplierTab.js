@@ -195,7 +195,7 @@ const AddSupplierTab = () => {
             </div>
           </div>
         </CardSection>
-        <SupplierApproval childRef={childRef} isDetailPage={false} isAddPagePage={true} updateApproval={updateSubmitStatus} />
+        <SupplierApproval childRef={childRef} isDetailPage={true} isAddPagePage={true} updateApproval={updateSubmitStatus} />
       </div>
     </>
   );

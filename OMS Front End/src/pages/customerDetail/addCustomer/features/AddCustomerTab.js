@@ -192,7 +192,7 @@ const AddCustomerTab = () => {
         </div>
       </CardSection>
       <CustomerApproval
-        isDetailPage={false}
+        isDetailPage={true}
         isAddPagePage={true}
         childRef={childRef}
         updateCustomerApproval={updateStatus}
