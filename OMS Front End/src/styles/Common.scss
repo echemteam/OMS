@@ -3606,6 +3606,10 @@ input[type="checkbox"]:disabled {
       transition: 0.5s all;
       padding-top: 11px;
 
+      @media only screen and (max-width: 1024px) {
+        width: 20%;
+      }
+
       button {
         padding: 10px 15px;
         border: none;
@@ -3620,6 +3624,10 @@ input[type="checkbox"]:disabled {
         text-align: left;
         transition: 0.5s all;
         color: #5e6470;
+
+        @media only screen and (max-width: 1024px) {
+          padding: 7px 5px;
+        }
 
         &:hover {
           background: var(--linkMenu);
@@ -3648,6 +3656,10 @@ input[type="checkbox"]:disabled {
         max-height: calc(100vh - 280px);
         padding-bottom: 0;
       }
+
+      @media only screen and (max-width: 1024px) {
+        width: 80%;
+      }
     }
 
     .collapse-tab {
@@ -3667,6 +3679,10 @@ input[type="checkbox"]:disabled {
       cursor: pointer;
       transition: 0.5s all;
       z-index: 9;
+
+      @media only screen and (max-width: 991px) {
+        left: calc(23% - 45px);
+      }
 
       img {
         filter: brightness(100);
