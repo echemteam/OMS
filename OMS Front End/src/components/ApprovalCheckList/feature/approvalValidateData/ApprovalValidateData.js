@@ -50,7 +50,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
     const wordsToBold = ["Tax Id", "Billing Address", "Shipping Address", "Invoice Submission Contact",
       "Accounts Payable Contact", "Invoice Follow-up Contact", "Delivery Method", "Delivery Carrier Method", "Payment Terms", "Payment Method",
       "Credit Limit", "Billing Currency", "Physical Address", "Remittance Address", "Primary Contact", "Purchase Order Contact", "Accounts Receivable Contact",
-      "Purchase order delivery", "Credit Card Notes", "Check Mailing Address", "Bank Address"];
+      "Purchase order delivery", "Credit Card Notes", "Check Mailing Address", "Financial Settings Bank Address"];
     const regex = new RegExp(`\\b(${wordsToBold.join("|")})\\b`, "g");
     return text.replace(
       regex,

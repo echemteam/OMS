@@ -393,12 +393,13 @@ const ApprovalCheckList = ({
                         // isLoading={isAddUserCheckResponseLoading}
                         onClick={handleAddResponse}
                       />
-                      <Buttons
-                        buttonTypeClassName="danger-btn ml-5"
-                        buttonText="Reject"
-                        // isLoading={isAddUserCheckResponseLoading}
-                        onClick={handleRejectResponse}
-                      />
+                      {isSupplierApproval &&
+                        <Buttons
+                          buttonTypeClassName="danger-btn ml-5"
+                          buttonText="Reject"
+                          // isLoading={isAddUserCheckResponseLoading}
+                          onClick={handleRejectResponse}
+                        />}
                       <Buttons
                         buttonTypeClassName="dark-btn ml-5"
                         buttonText="Cancel"
