@@ -393,7 +393,7 @@ const ApprovalCheckList = ({
                         // isLoading={isAddUserCheckResponseLoading}
                         onClick={handleAddResponse}
                       />
-                      {isSupplierApproval &&
+                      {!isSupplierApproval &&
                         <Buttons
                           buttonTypeClassName="danger-btn ml-5"
                           buttonText="Reject"
