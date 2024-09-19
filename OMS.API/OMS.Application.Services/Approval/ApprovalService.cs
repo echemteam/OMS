@@ -9,6 +9,7 @@ using OMS.Domain.Entities.API.Request.Address;
 using OMS.Domain.Entities.API.Request.Appproval;
 using OMS.Domain.Entities.API.Request.Approval;
 using OMS.Domain.Entities.API.Request.Contact;
+using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.Customers;
 using OMS.Domain.Entities.API.Request.Supplier;
@@ -196,8 +197,11 @@ namespace OMS.Application.Services.Approval
                 case ApprovalEvent.UpdateCustomerInvoiceSubmissionContact:
                     return await HandleAddEditContact(responceData.NewValue!, currentUserId);
 
-                case ApprovalEvent.UpdateCustomerShippingSetting:
-                    return await HandleUpdateShippingSetting(responceData.NewValue!, currentUserId);
+                case ApprovalEvent.UpdateCustomerShippingCarrierDetails:
+                    return await HandleShppingDeliveryCarriers(responceData.NewValue!, currentUserId);
+
+                case ApprovalEvent.UpdateCustomerShippingDeliveryMethodDetails:
+                    return await HandleUpdateShippingDeliveryMethods(responceData.NewValue!, currentUserId);
 
                 case ApprovalEvent.UploadCustomerDocument:
                     return await HandleUploadCustomerDocument(responceData.NewValue!, currentUserId);
@@ -337,16 +341,16 @@ namespace OMS.Application.Services.Approval
         {
             var jsonData = JsonConvert.DeserializeObject<AddEditContactRequest>(newValue);
 
-            if (jsonData!.EmailList?.Count > 0)
+            if (jsonData!.EmailAddressList?.Count > 0)
             {
-                var emailDataTable = ExportHelper.ListToDataTable(jsonData.EmailList);
+                var emailDataTable = ExportHelper.ListToDataTable(jsonData.EmailAddressList);
                 AddAdditionalColumns(emailDataTable, OwnerType.CustomerContact, currentUserId);
                 await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);
             }
 
-            if (jsonData.PhoneList?.Count > 0)
+            if (jsonData.PhoneNumberList?.Count > 0)
             {
-                var phoneDataTable = ExportHelper.ListToDataTable(jsonData.PhoneList);
+                var phoneDataTable = ExportHelper.ListToDataTable(jsonData.PhoneNumberList);
                 AddAdditionalColumns(phoneDataTable, OwnerType.CustomerContact, currentUserId);
                 await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
             }
@@ -373,16 +377,16 @@ namespace OMS.Application.Services.Approval
         {
             var jsonData = JsonConvert.DeserializeObject<AddEditContactRequest>(newValue);
 
-            if (jsonData!.EmailList?.Count > 0)
+            if (jsonData!.EmailAddressList?.Count > 0)
             {
-                var emailDataTable = ExportHelper.ListToDataTable(jsonData.EmailList);
+                var emailDataTable = ExportHelper.ListToDataTable(jsonData.EmailAddressList);
                 AddAdditionalColumns(emailDataTable, OwnerType.SupplierContact, currentUserId);
                 await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);
             }
 
-            if (jsonData.PhoneList?.Count > 0)
+            if (jsonData.PhoneNumberList?.Count > 0)
             {
-                var phoneDataTable = ExportHelper.ListToDataTable(jsonData.PhoneList);
+                var phoneDataTable = ExportHelper.ListToDataTable(jsonData.PhoneNumberList);
                 AddAdditionalColumns(phoneDataTable, OwnerType.SupplierContact, currentUserId);
                 await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
             }
@@ -403,11 +407,18 @@ namespace OMS.Application.Services.Approval
                 row["CreatedBy"] = currentUserId;
             }
         }
-        private async Task<AddEntityDto<int>> HandleUpdateShippingSetting(string newValue, short currentUserId)
+        private async Task<AddEntityDto<int>> HandleShppingDeliveryCarriers(string newValue, short currentUserId)
         {
             var customerShppingDeliveryCarriersDto = JsonConvert.DeserializeObject<CustomerShppingDeliveryCarriersDto>(newValue);
             customerShppingDeliveryCarriersDto!.UpdatedBy = currentUserId;
             return await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
+        }
+        private async Task<AddEntityDto<int>> HandleUpdateShippingDeliveryMethods(string newValue, short currentUserId)
+        {
+            var customerDeliveryMethodsDto = JsonConvert.DeserializeObject<CustomerDeliveryMethodsDto>(newValue);
+            customerDeliveryMethodsDto!.UpdatedBy = currentUserId;
+            return  await repositoryManager.customerAccountingSettings.UpdateDeliveryMethods(customerDeliveryMethodsDto);
+
         }
         private async Task<AddEntityDto<int>> HandleUploadCustomerDocument(string newValue, short currentUserId)
         {

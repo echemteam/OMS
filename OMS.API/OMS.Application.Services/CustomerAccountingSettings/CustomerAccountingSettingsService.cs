@@ -2,8 +2,8 @@
 using Common.Helper.Enum;
 using Common.Helper.Extension;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
-using OMS.Domain.Entities.API.Request.Contact;
 using OMS.Domain.Entities.API.Request.CustomerAccountingNotes;
 using OMS.Domain.Entities.API.Response.CustomerAccountingSettings;
 using OMS.Domain.Entities.Entity.Approval;
@@ -137,17 +137,20 @@ namespace OMS.Application.Services.CustomerAccountingSettings
             var customerId = Convert.ToInt32(requestData.CustomerId);
             var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
 
-            var exstingCarriersData = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
 
-            var carrierData = exstingCarriersData
-                .FirstOrDefault(carrier => carrier.CustomerDeliveryCarrierId == requestData.CustomerDeliveryCarrierId);
-            
+
 
             if (existingData.StatusId == (short)Status.Approved)
             {
+                var exstingCarriersData = await repositoryManager.customerAccountingSettings.GetShppingDeliveryCarriersByCustomerId(customerId);
+
+                var carrierData = exstingCarriersData
+                    .FirstOrDefault(carrier => carrier.CustomerDeliveryCarrierId == requestData.CustomerDeliveryCarrierId);
+                var updatedJsonData = await ModifyDeliveryCarriersJson(requestData);
+
                 var approvalEventName = new[]
                 {
-                  ApprovalEvent.UpdateCustomerShippingSetting
+                  ApprovalEvent.UpdateCustomerShippingCarrierDetails
                 };
 
                 var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
@@ -159,7 +162,7 @@ namespace OMS.Application.Services.CustomerAccountingSettings
                     var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
                     ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
                         oldJsonData,
-                        requestData,
+                        updatedJsonData,
                         CurrentUserId,
                         formatTemplate,
                         matchingRule
@@ -203,16 +206,17 @@ namespace OMS.Application.Services.CustomerAccountingSettings
             var customerId = Convert.ToInt32(requestData.CustomerId);
             var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
 
-            var exstingCarriersData = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
-
-            var deliveryMethodData = exstingCarriersData
-                .FirstOrDefault(carrier => carrier.DeliveryMethodId == requestData.CustomerDeliveryMethodId);
-
             if (existingData.StatusId == (short)Status.Approved)
             {
+                var exstingCarriersData = await repositoryManager.customerAccountingSettings.GetDeliveryMethodsCustomerId(customerId);
+
+                var deliveryMethodData = exstingCarriersData
+                    .FirstOrDefault(carrier => carrier.CustomerDeliveryMethodId == requestData.CustomerDeliveryMethodId);
+
+                var updatedJsonData = await ModifyDeliveryMethodsJson(requestData);
                 var approvalEventName = new[]
                 {
-                  ApprovalEvent.UpdateCustomerShippingSetting
+                  ApprovalEvent.UpdateCustomerShippingDeliveryMethodDetails
                 };
 
                 var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
@@ -224,7 +228,7 @@ namespace OMS.Application.Services.CustomerAccountingSettings
                     var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
                     ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
                         oldJsonData,
-                        requestData,
+                        updatedJsonData,
                         CurrentUserId,
                         formatTemplate,
                         matchingRule
@@ -240,7 +244,47 @@ namespace OMS.Application.Services.CustomerAccountingSettings
             }
             return responceData;
         }
+        public async Task<string> ModifyDeliveryMethodsJson(UpdateDeliveryMethodsRequest requestData)
+        {
+            var newJsonData = JsonConvert.SerializeObject(requestData);
+            var jObject = JObject.Parse(newJsonData);
+            var getAllDeliveryMethodsResponse = await repositoryManager.commonRepository.GetAllDeliveryMethods();
 
+            var deliveryMethod = getAllDeliveryMethodsResponse
+                .FirstOrDefault(p => p.DeliveryMethodId == requestData.DeliveryMethodId);
+
+            if (deliveryMethod != null)
+            {
+                jObject["DeliveryMethod"] = deliveryMethod.Name;
+                jObject["IsForInternational"] = deliveryMethod.IsForInternational;
+            }
+            else
+            {
+                jObject["DeliveryMethod"] = "Unknown";
+                jObject["IsForInternational"] = false;
+            }
+            return jObject.ToString(Formatting.None);
+        }
+        public async Task<string> ModifyDeliveryCarriersJson(UpdateShppingDeliveryCarriersRequest requestData)
+        {
+            var newJsonData = JsonConvert.SerializeObject(requestData);
+            var jObject = JObject.Parse(newJsonData);
+            var getAllCarriersResponse = await repositoryManager.commonRepository.GetAllDeliveryCarriers();
+
+            var carrier = getAllCarriersResponse
+                .FirstOrDefault(p => p.CarrierId == requestData.CarrierId);
+
+            if (carrier != null)
+            {
+
+                jObject["Carrier"] = carrier.Carrier;
+            }
+            else
+            {
+                jObject["Carrier"] = "Unknown";
+            }
+            return jObject.ToString(Formatting.None);
+        }
         public async Task<AddEntityDto<int>> DeleteCustomerDeliveryCarriersById(int customerDeliveryCarrierId, int deletedBy)
         {
             return await repositoryManager.customerAccountingSettings.DeleteCustomerDeliveryCarriersById(customerDeliveryCarrierId, deletedBy);

@@ -2,11 +2,13 @@
 using Common.Helper.Enum;
 using Common.Helper.Extension;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
 using OMS.Application.Services.SupplierAccoutingSetting;
 using OMS.Domain.Entities.API.Request.SupplierAccoutingSetting;
 using OMS.Domain.Entities.API.Request.SupplierFinancialSettings;
 using OMS.Domain.Entities.API.Request.supplierPaymentSettings;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.SuppierBankDetails;
 using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
 using OMS.Domain.Entities.API.Response.supplierPaymentSettings;
@@ -40,12 +42,14 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             SuppierBankDetailsDto suppierBankDetailsDto = new();
             var supplierId = Convert.ToInt32(requestData.SupplierId);
             var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
-            var existingSupplierFinancialSettingsData = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
+            GetSupplierFinancialSettingsBySupplierIdResponse existingSupplierFinancialSettingsData = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
             var existingData = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
+
+
 
             if (supplierData.StatusId == (short)Status.Approved && existingSupplierFinancialSettingsData != null && existingSupplierFinancialSettingsData.SupplierAccountingSettingId > 0 && existingData.SupplierBankDetailsId > 0)
             {
-
+                var newJsonData = JsonConvert.SerializeObject(requestData);
                 if (existingData != null && supplierId > 0 && existingData.BankAddressId > 0 && existingData.RecipientAddressId > 0)
                 {
                     existingData.BankAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.BankAddressId);
@@ -63,10 +67,9 @@ namespace OMS.Application.Services.SupplierFinancialSettings
                 {
                     var oldJsonData = JsonConvert.SerializeObject(existingData);
                     var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-
                     ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
                         oldJsonData,
-                        requestData,
+                        newJsonData,
                         CurrentUserId,
                         formatTemplate,
                         matchingRule
@@ -169,7 +172,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             var existingSupplierFinancialSettingsData = repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
             var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
 
-            if (supplierData.StatusId == (short)Status.Approved && existingData?.SupplierPaymentSettingId > 0 && existingData !=null && existingSupplierFinancialSettingsData !=null)
+            if (supplierData.StatusId == (short)Status.Approved && existingData?.SupplierPaymentSettingId > 0 && existingData != null && existingSupplierFinancialSettingsData != null)
             {
                 if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
                 {
@@ -224,7 +227,6 @@ namespace OMS.Application.Services.SupplierFinancialSettings
                 {
                     existingData.MailingAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.CheckMailingAddressId);
                 }
-
                 var approvalEventName = new[]
                 {
                     ApprovalEvent.UpdateOtherFinancialSetting,

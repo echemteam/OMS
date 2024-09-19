@@ -215,8 +215,8 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             contactId: contactId,
             contactTypeId: String(contactTypeId),
             [isSupplier ? 'supplierId' : 'customerId']: keyId,
-            emailList: emailAddressList.length > 0 ? modifyEmailAddressData(emailAddressList) : null,
-            phoneList: phoneNumberList.length > 0 ? modifyPhoneNumberData(phoneNumberList) : null,
+            emailAddressList: emailAddressList.length > 0 ? modifyEmailAddressData(emailAddressList) : null,
+            phoneNumberList: phoneNumberList.length > 0 ? modifyPhoneNumberData(phoneNumberList) : null,
             [isSupplier ? 'supplierContactId' : 'customerContactId']: isSupplier ? supplierContactId : customerContactId,
         };
     };

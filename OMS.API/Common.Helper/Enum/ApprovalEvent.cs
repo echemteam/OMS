@@ -16,7 +16,9 @@
         public const string UpdateCustomerFinancialSetting = "Update Customer Financial Setting";
         public const string UpdateCustomerShippingSetting = "Update Customer Shipping Setting";
         public const string UploadCustomerDocument = "Upload Customer Document";
-        
+        public const string UpdateCustomerShippingCarrierDetails = "Update Customer Shipping Carrier Details";
+        public const string UpdateCustomerShippingDeliveryMethodDetails= "Update Customer Shipping Delivery Method Details";
+
         //Supplier 
         public const string AddSupplierPhysicalAddress = "Add Supplier Physical Address";
         public const string UpdateSupplierPhysicalAddress = "Update Supplier Physical Address";

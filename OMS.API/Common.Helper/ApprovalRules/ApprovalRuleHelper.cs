@@ -26,13 +26,13 @@ namespace Common.Helper.ApprovalRules
             };
             if (formatTemplate != null && !string.IsNullOrWhiteSpace(formatTemplate.Template))
             {
-                if (!string.IsNullOrWhiteSpace(newValueJson) && newValueJson != "{}" && newValueJson != "null" && newValueJson !=null)
-                {
-                    approvalRequest.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(newValueJson, formatTemplate.Template);
-                }
                 if (!string.IsNullOrWhiteSpace(existingValueJson) && existingValueJson != "{}" && existingValueJson != "null" && existingValueJson != null)
                 {
                     approvalRequest.OldValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(existingValueJson, formatTemplate.Template);
+                }
+                if (!string.IsNullOrWhiteSpace(newValueJson) && newValueJson != "{}" && newValueJson != "null" && newValueJson != null)
+                {
+                    approvalRequest.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(newValueJson, formatTemplate.Template);
                 }
             }
             return approvalRequest;
