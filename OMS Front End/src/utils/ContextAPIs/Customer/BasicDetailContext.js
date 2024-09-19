@@ -37,6 +37,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     //** Use for Tab's */
     const nextRef = useRef(null);
     const settingRef = useRef(null);
+    const financialRef = useRef(null);
     const [activeTab, setActiveTab] = useState(0);
     const [activeSubTab, setActiveSubTab] = useState(0);
 
@@ -89,7 +90,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     return (
         <BasicDetailContext.Provider value={{
             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setCustomerCountryId,
-            customerCountryId, setIsExistsFinancialSetting, isExistsFinancialSetting,
+            customerCountryId, setIsExistsFinancialSetting, isExistsFinancialSetting, financialRef,
             phoneNumberData, setMainId, mainId, setShowSubBackButton, showSubBackButton, setActiveSubTab, activeSubTab, handleActiveSubTabClick, saveFinacialSetting,
             emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
             setIsResponsibleUser, isResponsibleUser, setRejectStatusId, rejectStatusId
