@@ -31,6 +31,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
   const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
+  const [customerAccountingSettingId, setCustomerAccountingSettingId] = useState(0);
   const approvalMessages = [];
   const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, activeTab, setIsExistsFinancialSetting, financialRef } = useContext(BasicDetailContext);
 
@@ -60,6 +61,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
   useEffect(() => {
     getAllPaymentTerms();
     getAllPaymentMethod();
+    setCustomerAccountingSettingId(0);
     // removeCardProcessCharge();
   }, []);
 
@@ -213,6 +215,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
       ToastService.success(isAddEditCustomerSettingsData.errorMessage);
       setIsExistsFinancialSetting(true);
+      setCustomerAccountingSettingId(isAddEditCustomerSettingsData.keyValue);
       if (financialRef.current) {
         financialRef.current.handleGetDefaultList();
       }
@@ -225,7 +228,8 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   const onhandleEdit = async () => {
     const settingFormData = settingFormRef.current.getFormData();
-    if (settingFormData && !settingFormData.customerAccountingSettingId) {
+    const accountingSettingId = settingFormData.customerAccountingSettingId ? settingFormData.customerAccountingSettingId : customerAccountingSettingId;
+    if (settingFormData && !accountingSettingId) {
       const request = {
         ...settingFormData,
         customerId: customerId,
@@ -238,8 +242,8 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
         cardProcessingCharges: settingFormData.cardProcessingCharges && isCardCharges ? settingFormData.cardProcessingCharges : null,
       };
       addEditCustomerSettings(request);
-    } else if (settingFormData && settingFormData.customerAccountingSettingId) {
-      const updaterequest = updateRequestObj(settingFormData);
+    } else if (settingFormData && accountingSettingId) {
+      const updaterequest = updateRequestObj(settingFormData, accountingSettingId);
       // let requestNewValue = {
       //   ...updaterequest,
       //   paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', updaterequest.paymentTermId),
@@ -269,10 +273,10 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
     }
   };
 
-  const updateRequestObj = (data) => {
+  const updateRequestObj = (data, accountingSettingId) => {
     return {
       ...data,
-      customerAccountingSettingId: data.customerAccountingSettingId,
+      customerAccountingSettingId: data.customerAccountingSettingId ? data.customerAccountingSettingId : accountingSettingId,
       customerId: customerId,
       paymentTermId: data.paymentTermId && typeof data.paymentTermId === "object"
         ? data.paymentTermId.value : data.paymentTermId,
