@@ -26,7 +26,6 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
                     <OrganizationProfileManagement
-
                     />
                 </div>
             ),
