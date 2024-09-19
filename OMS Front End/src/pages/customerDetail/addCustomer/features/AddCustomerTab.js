@@ -81,7 +81,7 @@ const AddCustomerTab = () => {
     {
       label: "Documents",
       subLabel: "Customer Documents Details",
-      content: <CustomerDocumentDetail isEditablePage={false} />,
+      content: <CustomerDocumentDetail isEditablePage={true} />,
       tab: CustomerSupplierTabEnum.Documents,
     },
   ];
