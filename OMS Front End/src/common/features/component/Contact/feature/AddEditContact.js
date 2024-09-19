@@ -13,7 +13,6 @@ import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
-import { isCustomerOrSupplierApprovedStatus } from "../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
 import SwalAlert from "../../../../../services/swalService/SwalService";
 import { SuccessMessage } from "../../../../../data/appMessages";
 import { getDropdownLabelName } from "../../../../../utils/CommonUtils/CommonUtilsMethods";

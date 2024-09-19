@@ -16,16 +16,10 @@ const ContactDetailCard = forwardRef(
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     //** API Call's */
     const handleClickOutside = (event) => {
-      if (
-        emailDropdownRef.current &&
-        !emailDropdownRef.current.contains(event.target)
-      ) {
+      if (emailDropdownRef.current && !emailDropdownRef.current.contains(event.target)) {
         setShowEmailDropdown(false);
       }
-      if (
-        phoneDropdownRef.current &&
-        !phoneDropdownRef.current.contains(event.target)
-      ) {
+      if (phoneDropdownRef.current && !phoneDropdownRef.current.contains(event.target)) {
         setShowPhoneDropdown(false);
       }
     };
@@ -86,7 +80,7 @@ const ContactDetailCard = forwardRef(
       setOpenModalId(
         contactItem.contactId === openModalId ? null : contactItem.contactId
       );
-      // setIsOptionsOpen(!isOptionsOpen);
+      setIsOptionsOpen(!isOptionsOpen);
     };
 
     const handleBodyClick = (e) => {
@@ -110,9 +104,8 @@ const ContactDetailCard = forwardRef(
       <>
         <div className="contact-main-card-section d-none">
           <div
-            className={`contact-card ${
-              showEmailDropdown || showPhoneDropdown ? "dropdown-open" : ""
-            }`}
+            className={`contact-card ${showEmailDropdown || showPhoneDropdown ? "dropdown-open" : ""
+              }`}
           >
             <div className="contact-card-desc">
               <div className="contact-info">
@@ -173,7 +166,7 @@ const ContactDetailCard = forwardRef(
                 <span className="profile-icon">
                   {contactItem.firstName && contactItem.lastName
                     ? contactItem.firstName.charAt(0).toUpperCase() +
-                      contactItem.lastName.charAt(0).toUpperCase()
+                    contactItem.lastName.charAt(0).toUpperCase()
                     : ""}
                 </span>
                 <span className="contact-name">
@@ -212,16 +205,15 @@ const ContactDetailCard = forwardRef(
                 </div>
                 <div
                   ref={ref}
-                  className={`customer-detail-model ${
-                    openModalId === contactItem.contactId ? "open-model" : ""
-                  }`}
+                  className={`customer-detail-model ${openModalId === contactItem.contactId ? "open-model" : ""
+                    }`}
                 >
                   <div className="customer-card-top-sec">
                     <div className="profile-icon">
                       <span className="profile-text">
                         {contactItem.firstName && contactItem.lastName
                           ? contactItem.firstName.charAt(0).toUpperCase() +
-                            contactItem.lastName.charAt(0).toUpperCase()
+                          contactItem.lastName.charAt(0).toUpperCase()
                           : ""}
                       </span>
                     </div>
