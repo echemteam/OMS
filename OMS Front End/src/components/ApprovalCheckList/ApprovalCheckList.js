@@ -364,7 +364,6 @@ const ApprovalCheckList = ({
                       ) : null}
                       {isSupplierApproval ? (
                         <div className="col-12 mb-3">
-                          {console.log('approvalChekedData', approvalChekedData)}
                           <div className="approval-list-part">
                             <SupplierSettingInformation
                               isSupplierApproval={isSupplierApproval}
@@ -394,12 +393,13 @@ const ApprovalCheckList = ({
                         // isLoading={isAddUserCheckResponseLoading}
                         onClick={handleAddResponse}
                       />
-                      <Buttons
-                        buttonTypeClassName="danger-btn ml-5"
-                        buttonText="Reject"
-                        // isLoading={isAddUserCheckResponseLoading}
-                        onClick={handleRejectResponse}
-                      />
+                      {isSupplierApproval &&
+                        <Buttons
+                          buttonTypeClassName="danger-btn ml-5"
+                          buttonText="Reject"
+                          // isLoading={isAddUserCheckResponseLoading}
+                          onClick={handleRejectResponse}
+                        />}
                       <Buttons
                         buttonTypeClassName="dark-btn ml-5"
                         buttonText="Cancel"
