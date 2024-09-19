@@ -228,7 +228,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             } else {
                 if (data.taxId) {
                     const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, customerbasicData.formFields, 'taxId');
-                    if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
+                    if (data.taxId.length >= minLength || data.taxId.length <= maxLength) {
                         let value = {
                             ...req,
                             responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,

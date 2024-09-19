@@ -75,14 +75,19 @@ const Input = ({
   const handleInputChange = (e) => {
     if (!onChange) return;
 
-    let inputValue = e.target.value;
+    let inputValue = e.target.value
 
     if (type === TextInputType.NUMBER && maxLength) {
       inputValue = inputValue.slice(0, maxLength);
       e.target.value = inputValue;
     }
 
-    onChange(e);
+    if (allowSpace) {
+      onChange(e);
+    } else {
+      e.target.value = e.target.value.trim();
+      onChange(e);
+    }
 
     const unMaskedValue = inputValue.replace(/\D/g, '');
     setFormat(unMaskedValue.length >= minValueLength ? extendedFormat : maskFormat);

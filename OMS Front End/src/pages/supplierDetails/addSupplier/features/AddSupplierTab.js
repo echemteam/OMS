@@ -15,8 +15,12 @@ import SupplierContactDetail from "../../feature/supplierContactDetail/SupplierC
 import SupplierDocumentDetail from "../../feature/supplierDocumentDetail/SupplierDocumentDetail";
 import Iconify from "../../../../components/ui/iconify/Iconify";
 import FinancialSettings from "../../feature/financialSettings/FinancialSettings";
+import SupplierApproval from "../../feature/supplierApproval/SupplierApproval";
+import { useRef } from "react";
 
 const AddSupplierTab = () => {
+
+  const childRef = useRef();
   const navigate = useNavigate();
   const { activeTab, movePreviewPage, addSupplier, supplierId } =
     useContext(AddSupplierContext);
@@ -79,6 +83,15 @@ const AddSupplierTab = () => {
   }, [isSuccessUpdateSupplierStatus, updateSupplierStatusData]);
 
   const handleSubmit = () => {
+    if (childRef.current) {
+      childRef.current.callChildFunction(
+        supplierId,
+        false
+      );
+    }
+  };
+
+  const updateSubmitStatus = () => {
     let req = {
       supplierId: supplierId,
       statusId: StatusEnums.Submitted,
@@ -93,6 +106,9 @@ const AddSupplierTab = () => {
     };
     updateSupplierStatus(req);
   };
+
+
+
 
   return (
     <>
@@ -179,6 +195,7 @@ const AddSupplierTab = () => {
             </div>
           </div>
         </CardSection>
+        <SupplierApproval childRef={childRef} isDetailPage={false} isAddPagePage={true} updateApproval={updateSubmitStatus} />
       </div>
     </>
   );

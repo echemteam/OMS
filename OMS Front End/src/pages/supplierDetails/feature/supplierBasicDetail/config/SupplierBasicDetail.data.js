@@ -43,38 +43,6 @@ export const supplierBasicData = {
       },
     },
     {
-      id: "emailAddress",
-      lable: "Email ",
-      Field_Name: "Email",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "emailAddress",
-      fieldSetting: {
-        placeholder: "Enter Email",
-        allowSpace: true,
-        maxLength: 65,
-      },
-      validation: [{ type: "require" }, { type: "email" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
-      },
-    },
-    {
-      id: "website",
-      lable: "Website ",
-      Field_Name: "Website",
-      fieldType: FormFieldTypes.INPUT,
-      dataField: "website",
-      fieldSetting: {
-        placeholder: "https://www.xyz.com/",
-        allowSpace: true,
-        maxLength: 250,
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
-      },
-    },
-    {
       id: "dbaName",
       lable: "Doing Business As Name ",
       Field_Name: "Doing Business As Name",
@@ -112,6 +80,39 @@ export const supplierBasicData = {
         containerCss: "col-xxl-6 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
+    {
+      id: "emailAddress",
+      lable: "Email ",
+      Field_Name: "Email",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "emailAddress",
+      fieldSetting: {
+        placeholder: "Enter Email",
+        allowSpace: true,
+        maxLength: 65,
+      },
+      validation: [{ type: "require" }, { type: "email" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
+      },
+    },
+    {
+      id: "website",
+      lable: "Website ",
+      Field_Name: "Website",
+      fieldType: FormFieldTypes.INPUT,
+      dataField: "website",
+      fieldSetting: {
+        placeholder: "https://www.xyz.com/",
+        allowSpace: true,
+        maxLength: 250,
+      },
+      validation: [{ type: "require" }],
+      style: {
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
+      },
+    },
+    
     {
       id: "groupTypeId",
       lable: "Group Type ",

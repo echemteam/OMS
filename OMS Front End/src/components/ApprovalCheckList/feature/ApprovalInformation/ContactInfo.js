@@ -44,7 +44,8 @@ const ContactInformation = ({
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetcontactItem) {
-      setContactInformation(isGetcontactItem);
+      const filter = isGetcontactItem.filter((data) => data.isPrimary)
+      setContactInformation(filter);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetcontactItem]);
   const handleChange = (checkedValue, newValue) => {

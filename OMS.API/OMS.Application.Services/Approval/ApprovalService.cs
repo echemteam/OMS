@@ -10,6 +10,7 @@ using OMS.Domain.Entities.API.Request.Approval;
 using OMS.Domain.Entities.API.Request.Contact;
 using OMS.Domain.Entities.API.Request.CustomerDocuments;
 using OMS.Domain.Entities.API.Request.Customers;
+using OMS.Domain.Entities.API.Request.Supplier;
 using OMS.Domain.Entities.API.Response.Approval;
 using OMS.Domain.Entities.Entity.Address;
 using OMS.Domain.Entities.Entity.Approval;
@@ -194,6 +195,22 @@ namespace OMS.Application.Services.Approval
                 case ApprovalEvent.UploadCustomerDocument:
                     return await HandleUploadCustomerDocument(responceData.NewValue!, currentUserId);
 
+                //case ApprovalEvent.AddSupplierPhysicalAddress:
+                //case ApprovalEvent.AddSupplierBankAddress:
+                //    return await HandleAddSuupplierAddress(responceData.NewValue!, currentUserId);
+
+                //case ApprovalEvent.UpdateSupplierPhysicalAddress:
+                //case ApprovalEvent.UpdateSupplierBankAddress:
+                //    return await HandleUpdateSupplierAddress(responceData.NewValue!, currentUserId);
+
+                //case ApprovalEvent.AddSupplierPrimaryContact:
+                //case ApprovalEvent.AddSupplierAccountsReceivableContact:
+                //case ApprovalEvent.UpdateSupplierPrimaryContact:
+                //case ApprovalEvent.UpdateSupplierAccountsReceivableContact:
+                //    return await HandleSupplierAddEditContact(responceData.NewValue!, currentUserId);
+
+                //case ApprovalEvent.UpdateSupplierFinancialSetting:
+                //    return await HandleUpdateSupplierFinancialSetting(responceData.NewValue!, currentUserId);
                 default:
                     throw new InvalidOperationException("Unknown event type.");
             }
@@ -250,16 +267,59 @@ namespace OMS.Application.Services.Approval
 
         private async Task<AddEntityDto<int>> HandleAddEditContact(string newValue, short currentUserId)
         {
-            var contactDto = JsonConvert.DeserializeObject<ContactDto>(newValue);
-            contactDto!.CreatedBy = currentUserId;
+            // Deserialize JSON to a dictionary
+            var contactData = JsonConvert.DeserializeObject<Dictionary<string, object>>(newValue);
+            contactData["CreatedBy"] = currentUserId;
 
-            var response = await repositoryManager.contact.AddEditContact(contactDto);
-            if (response.KeyValue > 0)
+            // Retrieve and split ContactTypeId
+            if (contactData.TryGetValue("ContactTypeId", out var contactTypeIdValue) && contactTypeIdValue is string contactTypeIdString)
             {
-                await HandleContactEmailsAndPhones(newValue, response.KeyValue, currentUserId);
+                var contactTypeIds = contactTypeIdString.Split(',').Select(id => id.Trim()).ToArray();
+                var response = new AddEntityDto<int>();
+
+                foreach (var typeId in contactTypeIds)
+                {
+                    // Update the ContactTypeId in the dictionary
+                    contactData["ContactTypeId"] = typeId;
+
+                    // Convert the dictionary back to ContactDto or an appropriate object for AddEditContact method
+                    var contactDto = JsonConvert.DeserializeObject<ContactDto>(JsonConvert.SerializeObject(contactData));
+
+                    // Add or edit the contact
+                    var currentResponse = await repositoryManager.contact.AddEditContact(contactDto);
+
+                    if (currentResponse.KeyValue > 0)
+                    {
+                        // Update the response with the latest KeyValue
+                        response.KeyValue = currentResponse.KeyValue;
+
+                        // Handle emails and phones for the current contact
+                        await HandleContactEmailsAndPhones(newValue, currentResponse.KeyValue, currentUserId);
+
+                        // Add or edit contact for customer
+                        foreach (var typeIds in contactTypeIds)
+                        {
+                            var shortTypeId = short.Parse(typeIds); // Convert string to short
+                            var addEditContactForCustomerRequest = new AddEditContactForCustomerRequest
+                            {
+                                ContactId = currentResponse.KeyValue,
+                                ContactTypeId = shortTypeId,
+                                CustomerId = contactDto.CustomerId,
+                                CustomerContactId = contactDto.CustomerContactId,
+                                IsPrimary = contactDto.IsPrimary,
+                            };
+
+                            await repositoryManager.customers.AddEditContactForCustomer(addEditContactForCustomerRequest, currentUserId);
+                        }
+                    }
+                }
+
+                return response;
             }
-            return response;
+
+            throw new ArgumentException("ContactTypeId not found or is invalid.");
         }
+
 
         private async Task HandleContactEmailsAndPhones(string newValue, int contactId, short currentUserId)
         {
@@ -278,13 +338,50 @@ namespace OMS.Application.Services.Approval
                 AddAdditionalColumns(phoneDataTable, OwnerType.CustomerContact, currentUserId);
                 await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
             }
+            //if (contactId > 0)
+            //{
+            //    var addEditContactForCustomerRequest = JsonConvert.DeserializeObject<AddEditContactForCustomerRequest>(newValue);
+            //    addEditContactForCustomerRequest!.ContactId = contactId;
+            //    await repositoryManager.customers.AddEditContactForCustomer(addEditContactForCustomerRequest!, currentUserId);
+            //}
+        }
+        private async Task<AddEntityDto<int>> HandleSupplierAddEditContact(string newValue, short currentUserId)
+        {
+            var contactDto = JsonConvert.DeserializeObject<ContactDto>(newValue);
+            contactDto!.CreatedBy = currentUserId;
+
+            var response = await repositoryManager.contact.AddEditContact(contactDto);
+            if (response.KeyValue > 0)
+            {
+                await HandleSupplierContactEmailsAndPhones(newValue, response.KeyValue, currentUserId);
+            }
+            return response;
+        }
+        private async Task HandleSupplierContactEmailsAndPhones(string newValue, int contactId, short currentUserId)
+        {
+            var jsonData = JsonConvert.DeserializeObject<AddEditContactRequest>(newValue);
+
+            if (jsonData!.EmailList?.Count > 0)
+            {
+                var emailDataTable = ExportHelper.ListToDataTable(jsonData.EmailList);
+                AddAdditionalColumns(emailDataTable, OwnerType.SupplierContact, currentUserId);
+                await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);
+            }
+
+            if (jsonData.PhoneList?.Count > 0)
+            {
+                var phoneDataTable = ExportHelper.ListToDataTable(jsonData.PhoneList);
+                AddAdditionalColumns(phoneDataTable, OwnerType.SupplierContact, currentUserId);
+                await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
+            }
             if (contactId > 0)
             {
-                var addEditContactForCustomerRequest = JsonConvert.DeserializeObject<AddEditContactForCustomerRequest>(newValue);
-                addEditContactForCustomerRequest!.ContactId = contactId;
-                await repositoryManager.customers.AddEditContactForCustomer(addEditContactForCustomerRequest!, currentUserId);
+                var addEditContactForSupplierRequest = JsonConvert.DeserializeObject<AddEditContactForSupplierRequest>(newValue);
+                addEditContactForSupplierRequest!.ContactId = contactId;
+                await repositoryManager.supplier.AddEditContactForSupplier(addEditContactForSupplierRequest!, currentUserId);
             }
         }
+
 
         private void AddAdditionalColumns(DataTable dataTable, OwnerType ownerType, short currentUserId)
         {
@@ -335,7 +432,40 @@ namespace OMS.Application.Services.Approval
             return new AddEntityDto<int> { KeyValue = 1 }; // Assuming upload was successful
         }
 
+        private async Task<AddEntityDto<int>> HandleAddSuupplierAddress(string newValue, short currentUserId)
+        {
+            var addAddressDto = JsonConvert.DeserializeObject<AddressDto>(newValue);
+            addAddressDto!.CreatedBy = currentUserId;
 
+            var response = await repositoryManager.address.AddAddress(addAddressDto);
+            if (response.KeyValue > 0)
+            {
+                var addAddressForSupplierRequest = JsonConvert.DeserializeObject<AddAddressForSupplierRequest>(newValue);
+                addAddressForSupplierRequest!.AddressId = response.KeyValue;
+                await repositoryManager.supplier.AddAddressForSupplier(addAddressForSupplierRequest, currentUserId);
+            }
+            return response;
+        }
+
+        private async Task<AddEntityDto<int>> HandleUpdateSupplierAddress(string newValue, short currentUserId)
+        {
+            var updateAddressDto = JsonConvert.DeserializeObject<AddressDto>(newValue);
+            updateAddressDto!.UpdatedBy = currentUserId;
+
+            await repositoryManager.address.UpdateAddAddress(updateAddressDto);
+
+            var updateAddressForSupplierRequest = JsonConvert.DeserializeObject<UpdateAddressForSupplierRequest>(newValue);
+            await repositoryManager.supplier.UpdateAddressForSupplier(updateAddressForSupplierRequest, currentUserId);
+
+            return new AddEntityDto<int> { KeyValue = 1 };
+        }
+
+        private async Task<AddEntityDto<int>> HandleUpdateSupplierFinancialSetting(string newValue, short currentUserId)
+        {
+            var customerShppingDeliveryCarriersDto = JsonConvert.DeserializeObject<CustomerShppingDeliveryCarriersDto>(newValue);
+            customerShppingDeliveryCarriersDto!.UpdatedBy = currentUserId;
+            return await repositoryManager.customerAccountingSettings.UpdateShppingDeliveryCarriers(customerShppingDeliveryCarriersDto);
+        }
         private async Task<AddEntityDto<int>> HandleFieldApproval(GetApprovalRequestsByApprovalRequestIdResponse responceData, ApprovalRequestsDto approvalRequestsDto, UpdateApprovalRequestsStatusRequest requestData)
         {
             AddEntityDto<int> response = new();
@@ -426,6 +556,7 @@ namespace OMS.Application.Services.Approval
             WHERE {primaryKeyColumn} = @{primaryKeyColumn};";
             return query;
         }
+
         //private string BuildInsertQuery(string tableName, string fieldName, string primaryKeyColumn)
         //{
         //    var query = $@"

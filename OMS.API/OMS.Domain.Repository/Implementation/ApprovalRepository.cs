@@ -159,5 +159,6 @@ namespace OMS.Domain.Repository.Implementation
             List<GetApprovalConfigurationResponse> approvalConfigurationList = await _context.GetList<GetApprovalConfigurationResponse>(GETAPPROVALCONFIGURATION, commandType: CommandType.StoredProcedure);
             return approvalConfigurationList;
         }
+
     }
 }

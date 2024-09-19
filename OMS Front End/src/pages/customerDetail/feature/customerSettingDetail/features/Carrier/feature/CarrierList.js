@@ -43,19 +43,19 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
             handlingFee: data.handlingFee,
             carrierName: data?.carrier
         };
-        if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-            const oldValue = dataSource && dataSource.find(data => data.customerDeliveryCarrierId === req.customerDeliveryCarrierId);
-            let requestIntialState = {
-                ...oldValue,
-                carrierName: oldValue?.carrier
-            }
-            await handleApprovalRequest(req, requestIntialState);
-        } else {
-            let newGridData = [...dataSource]
-            newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
-            setDataSource(newGridData);
-            update(req);
-        }
+        // if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+        //     const oldValue = dataSource && dataSource.find(data => data.customerDeliveryCarrierId === req.customerDeliveryCarrierId);
+        //     let requestIntialState = {
+        //         ...oldValue,
+        //         carrierName: oldValue?.carrier
+        //     }
+        //     await handleApprovalRequest(req, requestIntialState);
+        // } else {
+        let newGridData = [...dataSource]
+        newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
+        setDataSource(newGridData);
+        update(req);
+        // }
     }
 
     const handleApprovalRequest = async (newValue, oldValue) => {
@@ -79,7 +79,7 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
         <div className="first-card">
             <CardSection
                 cardTitle="Carrier Details"
-                rightButton={isShowButton}
+                rightButton={false}
                 buttonClassName="theme-button "
                 buttonText="Add"
                 textWithIcon={true}

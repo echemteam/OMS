@@ -9,7 +9,6 @@ export const getDropdownLabelName = (apiResponseData, valueField, labelField, se
         // Find the matching entry based on selectedId
         const labelName = mappedData.find(data => Number(data.value) === Number(selectedId));
         if (labelName) {
-            console.log(labelName);
             return labelName.label; // Return the label field value
         }
     }

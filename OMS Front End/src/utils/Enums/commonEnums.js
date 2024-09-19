@@ -4,7 +4,7 @@ export const FieldSettingType = {
     MULTISELECT: "isMultiSelect",
     INPUTBUTTON: "isInputButton",
     SECOUNDRYINPUTBUTTON: "isSecoundryInputButton",
-    CKEDITORDISABLED:"CKEditorDisabled"
+    CKEDITORDISABLED: "CKEditorDisabled"
 }
 
 export const CustomerSupplierStatus = {
@@ -28,7 +28,8 @@ export const CustomerSupplierTabEnum = {
     Address: 2,
     Contact: 3,
     Documents: 4,
-    Setting: 5
+    FinancialSetting: 5,
+    ShippingSetting: 6,
 }
 
 export const CustomerSettingEnum = {

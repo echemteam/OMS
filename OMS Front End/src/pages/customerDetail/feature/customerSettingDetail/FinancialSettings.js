@@ -9,15 +9,13 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { getFieldData, setDropDownOptionField, setFieldSetting } from "../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import { hasFunctionalPermission } from "../../../../utils/AuthorizeNavigation/authorizeNavigation";
-import { CountryId, CustomerSettingEnum, PaymentMethodTypes } from "../../../../utils/Enums/commonEnums";
+import { CountryId, PaymentMethodTypes } from "../../../../utils/Enums/commonEnums";
 import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../services/toastService/ToastService";
 import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
 import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
-import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
 import { isCustomerOrSupplierApprovedStatus } from "../../../../utils/CustomerSupplier/CustomerSupplierUtils";
-import { getDropdownLabelName } from "../../../../utils/CommonUtils/CommonUtilsMethods";
 import { SuccessMessage } from "../../../../data/appMessages";
 import SwalAlert from "../../../../services/swalService/SwalService";
 
@@ -27,14 +25,14 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   const settingFormRef = useRef();
   const { success } = SwalAlert();
-  const [showButton, setShowButton] = useState(true);
   const [isBankFee, setIsBankFee] = useState(false);
+  const [showButton, setShowButton] = useState(true);
   const [isCardCharges, setIsCardCharges] = useState(false);
   const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
   const approvalMessages = [];
-  const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, handleActiveSubTabClick, activeTab } = useContext(BasicDetailContext);
+  const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, activeTab, setIsExistsFinancialSetting, financialRef } = useContext(BasicDetailContext);
 
   //** API Call's */
   const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
@@ -213,11 +211,10 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   useEffect(() => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
-      if (approvalMessages.length > 0) {
-        ToastService.success(isAddEditCustomerSettingsData.errorMessage);
-      }
-      if (!isEditablePage) {
-        handleActiveSubTabClick(CustomerSettingEnum.ShippingSettings);
+      ToastService.success(isAddEditCustomerSettingsData.errorMessage);
+      setIsExistsFinancialSetting(true);
+      if (financialRef.current) {
+        financialRef.current.handleGetDefaultList();
       }
     }
   }, [isAddEditCustomerSettingsSuccess, isAddEditCustomerSettingsData]);
@@ -243,21 +240,21 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
       addEditCustomerSettings(request);
     } else if (settingFormData && settingFormData.customerAccountingSettingId) {
       const updaterequest = updateRequestObj(settingFormData);
-      let requestNewValue = {
-        ...updaterequest,
-        paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', updaterequest.paymentTermId),
-        paymentMethodName: getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', updaterequest.paymentMethodId),
-      }
-      let requestOldValue = {
-        ...isGetDetailByCustomerIDData,
-        paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', isGetDetailByCustomerIDData.paymentTermId),
-        paymentMethodName: getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', isGetDetailByCustomerIDData.paymentMethodId),
-      }
-      if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-        await handleApprovalRequest(requestNewValue, requestOldValue, FunctionalitiesName.UPDATECUSTOMERFINANCIALSETTING);
-      } else {
-        addEditCustomerSettings(updaterequest);
-      }
+      // let requestNewValue = {
+      //   ...updaterequest,
+      //   paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', updaterequest.paymentTermId),
+      //   paymentMethodName: getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', updaterequest.paymentMethodId),
+      // }
+      // let requestOldValue = {
+      //   ...isGetDetailByCustomerIDData,
+      //   paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', isGetDetailByCustomerIDData.paymentTermId),
+      //   paymentMethodName: getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', isGetDetailByCustomerIDData.paymentMethodId),
+      // }
+      // if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
+      //   await handleApprovalRequest(requestNewValue, requestOldValue, FunctionalitiesName.UPDATECUSTOMERFINANCIALSETTING);
+      // } else {
+      addEditCustomerSettings(updaterequest);
+      // }
     }
   };
 
