@@ -42,7 +42,7 @@ export const customerbasicData = {
       dataField: "emailAddress",
       fieldSetting: {
         placeholder: "Enter Email",
-        allowSpace: true,
+        allowSpace: false,
         maxLength: 65,
       },
       validation: [{ type: "require" }, { type: "email" }],

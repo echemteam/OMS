@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useState } from 'react';
 import { createContext } from 'react';
+import { CustomerSupplierTabEnum } from '../../Enums/commonEnums';
 
 const BasicDetailContext = createContext();
 
@@ -21,6 +22,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [carriersList, setCarriersList] = useState([]);
     const [showSubBackButton, setShowSubBackButton] = useState(false);
     const [deliveryMethodsList, setDeliveryMethodsList] = useState([]);
+    const [isExistsFinancialSetting, setIsExistsFinancialSetting] = useState(false);
     //** */
 
     //** Using for Contact  */
@@ -30,7 +32,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     //** */
 
     const [isResponsibleUser, setIsResponsibleUser] = useState(true);
-    const [rejectStatusId,setRejectStatusId]=useState('');
+    const [rejectStatusId, setRejectStatusId] = useState('');
 
     //** Use for Tab's */
     const nextRef = useRef(null);
@@ -56,8 +58,7 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     //** Use for Move next step */
     const addCustomer = (data) => {
-
-        if(activeTab===3){
+        if (activeTab === 6) {
             setActiveSubTab(0)
         }
         if (customerId > 0 && data === 1) {
@@ -74,6 +75,7 @@ export const BasicDetailContextProvider = ({ children }) => {
         }
         if (data === 5) {
             setShowSubBackButton(false);
+            saveFinacialSetting();
         }
     }
 
@@ -87,10 +89,10 @@ export const BasicDetailContextProvider = ({ children }) => {
     return (
         <BasicDetailContext.Provider value={{
             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setCustomerCountryId,
-            customerCountryId,
+            customerCountryId, setIsExistsFinancialSetting, isExistsFinancialSetting,
             phoneNumberData, setMainId, mainId, setShowSubBackButton, showSubBackButton, setActiveSubTab, activeSubTab, handleActiveSubTabClick, saveFinacialSetting,
             emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
-            setIsResponsibleUser, isResponsibleUser,setRejectStatusId,rejectStatusId
+            setIsResponsibleUser, isResponsibleUser, setRejectStatusId, rejectStatusId
         }}>
             {children}
         </BasicDetailContext.Provider>

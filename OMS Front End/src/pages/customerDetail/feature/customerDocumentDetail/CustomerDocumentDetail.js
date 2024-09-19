@@ -126,6 +126,7 @@ const CustomerDocumentDetail = ({ isEditablePage, customerStatusId }) => {
 
     <div className="customer-document-detail">
       <CardSection>
+        {console.log('activeSubTab',activeSubTab)}
         <div className="main-customer-grid setting-tab-sec">
           <div className="tab-section tab-2-section">
             {tabs && tabs.length > 0 && (
