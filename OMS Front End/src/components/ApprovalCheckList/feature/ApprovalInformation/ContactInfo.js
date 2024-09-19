@@ -10,11 +10,13 @@ const ContactInformation = ({
   getContactById,
   approvalChekedData,
   handleCheckbox,
-  isSupplierApproval
+  isSupplierApproval,
 }) => {
   //** State */
   const [contactInformation, setContactInformation] = useState([]);
-  const [isChecked, setIsChecked] = useState(approvalChekedData?.isChecked || false);
+  const [isChecked, setIsChecked] = useState(
+    approvalChekedData?.isChecked || false
+  );
 
   //** API Call's */
   const [
@@ -28,7 +30,9 @@ const ContactInformation = ({
 
   useEffect(() => {
     if (isModelOpen && mainId) {
-      const type = !isSupplierApproval ? [ContactType.INVOICESUBMISSION, ContactType.AP] : [ContactType.ACCOUNTSRECEIVABLE];
+      const type = !isSupplierApproval
+        ? [ContactType.INVOICESUBMISSION, ContactType.AP]
+        : [ContactType.ACCOUNTSRECEIVABLE];
       let req = {
         id: mainId,
         searchText: "",
@@ -69,8 +73,9 @@ const ContactInformation = ({
               <div className="card-part" key={index}>
                 <h6 className="title">{contact.type}</h6>
                 <h6
-                  className={`name-title ${contact.isPrimary ? "is-primary" : ""
-                    }`}
+                  className={`name-title ${
+                    contact.isPrimary ? "is-primary" : ""
+                  }`}
                 >
                   <span className="label">Name :</span>
                   <p className="name-desc">
@@ -79,15 +84,17 @@ const ContactInformation = ({
                 </h6>
                 <h6 className="name-title">
                   <span className="label">Email :</span>
-                  {contact.emailAddressList &&
-                    contact.emailAddressList.map((emails) => (
-                      <div className="email-primary">
-                        <h6 className="name-desc">{emails.emailAddress}</h6>
-                        <span
-                          className={emails.isPrimary ? "is-primary" : ""}
-                        ></span>
-                      </div>
-                    ))}
+                  <div className="title-desc">
+                    {contact.emailAddressList &&
+                      contact.emailAddressList.map((emails) => (
+                        <div className="email-primary">
+                          <h6 className="name-desc">{emails.emailAddress}</h6>
+                          <span
+                            className={emails.isPrimary ? "is-primary" : ""}
+                          ></span>
+                        </div>
+                      ))}
+                  </div>
                 </h6>
                 <h6 className="name-title number-sec">
                   <span className="label">Phone :</span>
@@ -96,12 +103,13 @@ const ContactInformation = ({
                       contact.phoneNumberList.map((phoneData) => (
                         <>
                           <h6
-                            className={`name-desc d-flex ${phoneData.phoneType === "Home"
-                              ? "home"
-                              : phoneData.phoneType === "Work"
+                            className={`name-desc d-flex ${
+                              phoneData.phoneType === "Home"
+                                ? "home"
+                                : phoneData.phoneType === "Work"
                                 ? "work"
                                 : "home"
-                              } ${phoneData.isPrimary ? "is-primary" : ""}`}
+                            } ${phoneData.isPrimary ? "is-primary" : ""}`}
                           >
                             ({phoneData.phoneCode}) {phoneData.phoneNumber}
                             {phoneData.extension

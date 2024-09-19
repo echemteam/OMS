@@ -107,14 +107,13 @@ const SupplierDocumentDetail = ({ isEditablePage, supplierStatus }) => {
   ];
 
   // Safely retrieve the active tab's component
-  const activeTabComponent = tabs[activeSubTab]?.component;
+  // const activeTabComponent = tabs[activeSubTab]?.component;
 
   return (
 
 
 
     <div className="supplier-document-detail">
-
 
     <CardSection isDocuments={true}>
       <div className="main-customer-grid setting-tab-sec">

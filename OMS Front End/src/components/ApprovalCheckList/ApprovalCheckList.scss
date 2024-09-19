@@ -122,8 +122,12 @@
 
         .name-title {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           margin-bottom: 6px;
+          .title-desc{
+            display: flex;
+            flex-wrap: wrap;
+          }
           &:last-child{
             margin-bottom: 0;
           }

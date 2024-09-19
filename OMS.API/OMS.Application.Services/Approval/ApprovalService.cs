@@ -206,19 +206,19 @@ namespace OMS.Application.Services.Approval
                 case ApprovalEvent.UploadCustomerDocument:
                     return await HandleUploadCustomerDocument(responceData.NewValue!, currentUserId);
 
-                case ApprovalEvent.AddSupplierPhysicalAddress:
-                case ApprovalEvent.AddSupplierBankAddress:
-                    return await HandleAddSuupplierAddress(responceData.NewValue!, currentUserId);
+                //case ApprovalEvent.AddSupplierPhysicalAddress:
+                //case ApprovalEvent.AddSupplierBankAddress:
+                //    return await HandleAddSuupplierAddress(responceData.NewValue!, currentUserId);
 
-                case ApprovalEvent.UpdateSupplierPhysicalAddress:
-                case ApprovalEvent.UpdateSupplierBankAddress:
-                    return await HandleUpdateSupplierAddress(responceData.NewValue!, currentUserId);
+                //case ApprovalEvent.UpdateSupplierPhysicalAddress:
+                //case ApprovalEvent.UpdateSupplierBankAddress:
+                //    return await HandleUpdateSupplierAddress(responceData.NewValue!, currentUserId);
 
-                case ApprovalEvent.AddSupplierPrimaryContact:
-                case ApprovalEvent.AddSupplierAccountsReceivableContact:
-                case ApprovalEvent.UpdateSupplierPrimaryContact:
-                case ApprovalEvent.UpdateSupplierAccountsReceivableContact:
-                    return await HandleSupplierAddEditContact(responceData.NewValue!, currentUserId);
+                //case ApprovalEvent.AddSupplierPrimaryContact:
+                //case ApprovalEvent.AddSupplierAccountsReceivableContact:
+                //case ApprovalEvent.UpdateSupplierPrimaryContact:
+                //case ApprovalEvent.UpdateSupplierAccountsReceivableContact:
+                //    return await HandleSupplierAddEditContact(responceData.NewValue!, currentUserId);
 
                 case ApprovalEvent.UpdateAchWireFinancialSetting:
                     return await HandleSupplierUpdateAchWireFinancialSetting(responceData.NewValue!, currentUserId);
@@ -231,6 +231,8 @@ namespace OMS.Application.Services.Approval
 
                 case ApprovalEvent.UpdateOtherFinancialSetting:
                     return await HandleSupplierUpdateOtherFinancialSetting(responceData.NewValue!, currentUserId);
+                //case ApprovalEvent.UpdateSupplierFinancialSetting:
+                //    return await HandleUpdateSupplierFinancialSetting(responceData.NewValue!, currentUserId);
                 default:
                     throw new InvalidOperationException("Unknown event type.");
             }

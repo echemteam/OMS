@@ -7,25 +7,26 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { StatusEnums } from "../../../../utils/Enums/StatusEnums";
 import CardSection from "../../../../components/ui/card/CardSection";
 import Image from "../../../../components/image/Image";
-import { CustomerSettingEnum, CustomerSupplierTabEnum } from "../../../../utils/Enums/commonEnums";
+import { CustomerSupplierTabEnum } from "../../../../utils/Enums/commonEnums";
 import { AppIcons } from "../../../../data/appIcons";
 import PropTypes from 'prop-types';
 import CustomerApproval from "../../feature/cutomerApproval/CustomerApproval";
 
-
 //** Compoent's */
+const FinancialSettings = React.lazy(() => import("../../feature/customerSettingDetail/FinancialSettings"));
 const CustomerBasicDetail = React.lazy(() => import("../../feature/customerBasicDetail/CustomerBasicDetail"));
-const CustomerSettingDetails = React.lazy(() => import("../../feature/customerSettingDetail/CustomerSettingDetails"));
-const CustomerAddressDetail = React.lazy(() => import("../../feature/customerAddressDetail/CustomerAddressDetail"));
-const CustomerDocumentDetail = React.lazy(() => import("../../feature/customerDocumentDetail/CustomerDocumentDetail"));
 const CustomerContactDetail = React.lazy(() => import("../../feature/customerContactDetail/CustomerContactDetail"));
+const CustomerAddressDetail = React.lazy(() => import("../../feature/customerAddressDetail/CustomerAddressDetail"));
+// const CustomerSettingDetails = React.lazy(() => import("../../feature/customerSettingDetail/CustomerSettingDetails"));
+const CustomerDocumentDetail = React.lazy(() => import("../../feature/customerDocumentDetail/CustomerDocumentDetail"));
+const ShippingSettings = React.lazy(() => import("../../feature/customerSettingDetail/features/ShippingSetting/ShippingSettings"));
 
 const AddCustomerTab = () => {
 
   const childRef = useRef();
   const navigate = useNavigate();
   const [subCustomer, setSubCustomer] = useState(false);
-  const { activeTab, movePreviewPage, addCustomer, customerId, showSubBackButton, handleActiveSubTabClick, saveFinacialSetting } = useContext(BasicDetailContext);
+  const { activeTab, movePreviewPage, addCustomer, customerId, showSubBackButton, setActiveTab, handleActiveSubTabClick, saveFinacialSetting } = useContext(BasicDetailContext);
 
   const [
     updateCustomerStatus,
@@ -49,38 +50,38 @@ const AddCustomerTab = () => {
   const tabContent = [
     {
       label: "Basic Information",
-      subLabel: "Enter Customer Basic information",
+      subLabel: "Customer Basic information",
       content: <CustomerBasicDetail isEditablePage={false} setSubCustomer={setSubCustomer} />,
       tab: CustomerSupplierTabEnum.BasicInformation,
     },
     {
       label: "Address",
-      subLabel: "Enter Customer Address Details",
+      subLabel: "Customer Address Details",
       content: <CustomerAddressDetail isEditablePage={false} />,
       tab: CustomerSupplierTabEnum.Address,
     },
     {
       label: "Contact",
-      subLabel: "Enter Customer Contact Details",
+      subLabel: "Customer Contact Details",
       content: <CustomerContactDetail isEditablePage={false} isSearchFilterShow={false} />,
       tab: CustomerSupplierTabEnum.Contact,
     },
     {
-      label: "Setting",
-      subLabel: "Enter Customer Shipping Method",
-      content: (
-
-        <div className="mt-0">
-          <CustomerSettingDetails isEditablePage={false} />
-        </div>
-
-      ),
-      tab: CustomerSupplierTabEnum.Setting,
+      label: "Financial Settings",
+      subLabel: "Customer Financial Settings",
+      content: <FinancialSettings isEditablePage={false} />,
+      tab: CustomerSupplierTabEnum.FinancialSetting,
+    },
+    {
+      label: "Shipping Settings",
+      subLabel: "Customer Shipping Settings",
+      content: <ShippingSettings isEditablePage={false} />,
+      tab: CustomerSupplierTabEnum.ShippingSetting,
     },
     {
       label: "Documents",
-      subLabel: "Add Customer Documents Details",
-      content: <CustomerDocumentDetail isEditablePage={false} />,
+      subLabel: "Customer Documents Details",
+      content: <CustomerDocumentDetail isEditablePage={true} />,
       tab: CustomerSupplierTabEnum.Documents,
     },
   ];
@@ -89,15 +90,14 @@ const AddCustomerTab = () => {
 
   const handleSubmit = () => {
     if (childRef.current) {
-      childRef.current.callChildFunction(
-        customerId,
-        subCustomer,
-        false
-      );
+      childRef.current.callChildFunction(customerId, subCustomer, false);
     }
-
-
   };
+
+  // const handleTabClick = (index) => {
+  //   setActiveTab(index);
+  // };
+
 
   const updateStatus = () => {
     let req = {
@@ -147,7 +147,7 @@ const AddCustomerTab = () => {
                 <div key={index} className={`content ${activeTab === index ? "active" : ""}`} >
                   {step.content}
                   <div className="d-flex justify-content-end pt-2">
-                    {index > 0 && !showSubBackButton && (
+                    {index > 0 && (
                       <button type="button" className="btn dark-btn mr-3 btn-prev" onClick={movePreviewPage} >
                         <Image imagePath={AppIcons.nextArrowIcon} /> Back
                       </button>
@@ -155,15 +155,6 @@ const AddCustomerTab = () => {
                     {index < tabContent.length - 1 ? (
                       activeTab === 3 ? (
                         <React.Fragment>
-                          {!showSubBackButton ?
-                            <button type="button" className="btn theme-button" onClick={saveFinacialSetting}>
-                              Save Financial Settings
-                            </button>
-                            :
-                            <button type="button" className="btn dark-btn mr-3 btn-prev" onClick={() => handleActiveSubTabClick(CustomerSettingEnum.FinancialSettings)} >
-                              <Image imagePath={AppIcons.nextArrowIcon} /> Back
-                            </button>
-                          }
                           <button type="button" className="btn theme-button btn-next ml-3" onClick={() => addCustomer(step.tab)}>
                             Next <Image imagePath={AppIcons.nextArrowIcon} />
                           </button>
@@ -192,7 +183,7 @@ const AddCustomerTab = () => {
         </div>
       </CardSection>
       <CustomerApproval
-        isDetailPage={false}
+        isDetailPage={true}
         isAddPagePage={true}
         childRef={childRef}
         updateCustomerApproval={updateStatus}
