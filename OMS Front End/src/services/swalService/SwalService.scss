@@ -54,5 +54,6 @@ div:where(.swal2-icon).swal2-question{
 .swal2-actions{
   button{
     font-size: var(--commonFont-large);
+    height: auto !important;
   }
 }

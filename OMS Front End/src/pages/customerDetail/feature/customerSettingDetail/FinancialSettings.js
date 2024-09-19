@@ -32,7 +32,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
   const approvalMessages = [];
-  const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, activeTab, setIsExistsFinancialSetting } = useContext(BasicDetailContext);
+  const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, activeTab, setIsExistsFinancialSetting, financialRef } = useContext(BasicDetailContext);
 
   //** API Call's */
   const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
@@ -213,6 +213,9 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
     if (isAddEditCustomerSettingsSuccess && isAddEditCustomerSettingsData) {
       ToastService.success(isAddEditCustomerSettingsData.errorMessage);
       setIsExistsFinancialSetting(true);
+      if (financialRef.current) {
+        financialRef.current.handleGetDefaultList();
+      }
     }
   }, [isAddEditCustomerSettingsSuccess, isAddEditCustomerSettingsData]);
 

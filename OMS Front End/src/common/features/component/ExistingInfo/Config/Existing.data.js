@@ -66,7 +66,7 @@ export const basicInfoData = {
             allowShort: false,
             colType: GridColumnType.LABLE,
             colStyle: {
-                width: "10%",
+                width: "14%",
             },
             colSettings: {
                 valueField: "status",
@@ -77,7 +77,7 @@ export const basicInfoData = {
         {
             name: "Action",
             colStyle: {
-                width: "10%",
+                width: "8%",
             },
             colType: GridColumnType.ACTION,
             defaultAction: {
