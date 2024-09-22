@@ -2,13 +2,11 @@
 using Common.Helper.Enum;
 using Common.Helper.Extension;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
 using OMS.Application.Services.SupplierAccoutingSetting;
 using OMS.Domain.Entities.API.Request.SupplierAccoutingSetting;
 using OMS.Domain.Entities.API.Request.SupplierFinancialSettings;
 using OMS.Domain.Entities.API.Request.supplierPaymentSettings;
-using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.SuppierBankDetails;
 using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
 using OMS.Domain.Entities.API.Response.supplierPaymentSettings;
@@ -42,21 +40,43 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             SuppierBankDetailsDto suppierBankDetailsDto = new();
             var supplierId = Convert.ToInt32(requestData.SupplierId);
             var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
-            GetSupplierFinancialSettingsBySupplierIdResponse existingSupplierFinancialSettingsData = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
-            var existingData = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
+            GetSupplierFinancialSettingsWithACHWireBySupplierIdResponse existingSupplierFinancialSettingsData = new();
 
+            existingSupplierFinancialSettingsData.SupplierFinancialSettings = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
+            existingSupplierFinancialSettingsData.OtherDetails = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
 
-
-            if (supplierData.StatusId == (short)Status.Approved && existingSupplierFinancialSettingsData != null && existingSupplierFinancialSettingsData.SupplierAccountingSettingId > 0 && existingData.SupplierBankDetailsId > 0)
+            if (existingSupplierFinancialSettingsData != null && supplierId > 0 && existingSupplierFinancialSettingsData.OtherDetails.BankAddressId > 0 && existingSupplierFinancialSettingsData.OtherDetails.RecipientAddressId > 0)
             {
-                var newJsonData = JsonConvert.SerializeObject(requestData);
-                if (existingData != null && supplierId > 0 && existingData.BankAddressId > 0 && existingData.RecipientAddressId > 0)
-                {
-                    existingData.BankAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.BankAddressId);
-                    existingData.RecipientAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.RecipientAddressId);
-                }
+                existingSupplierFinancialSettingsData.OtherDetails = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
+
+                existingSupplierFinancialSettingsData.BeneficiaryDetails = await repositoryManager.suppierBankDetails.GetBeneficiaryDetailsAddressByAddressId(existingSupplierFinancialSettingsData.OtherDetails.BankAddressId);
+                existingSupplierFinancialSettingsData.BankDetails = await repositoryManager.suppierBankDetails.GetBankDetailsAddressByAddressId(existingSupplierFinancialSettingsData.OtherDetails.RecipientAddressId);
+            }
+
+            if (supplierData.StatusId == (short)Status.Approved && existingSupplierFinancialSettingsData != null && existingSupplierFinancialSettingsData.SupplierFinancialSettings.SupplierAccountingSettingId > 0 && existingSupplierFinancialSettingsData.OtherDetails.SupplierBankDetailsId > 0)
+            {
+
+                //var newJsonData = JsonConvert.SerializeObject(requestData);
+
+                var combinedDataDict = new Dictionary<string, object?>();
+
+                // Convert Supplier Financial Settings data to dictionary if not null
+                //if (existingSupplierFinancialSettingsData != null)
+                //{
+                //    combinedDataDict["BeneficiaryDetails"] = existingSupplierFinancialSettingsData;
+                //}
+
+                //// Convert Supplier Bank Details data to dictionary if not null
+                //if (existingData != null)
+                //{
+                //    combinedDataDict["BankDetails"] = existingData;
+                //}
+
+                // Serialize combined data to JSON
+                var oldJsonData = JsonConvert.SerializeObject(existingSupplierFinancialSettingsData);
+
                 var approvalEventName = new[]
-                {
+                    {
                    ApprovalEvent.UpdateAchWireFinancialSetting
                 };
 
@@ -65,14 +85,15 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
                 if (matchingRule != null)
                 {
-                    var oldJsonData = JsonConvert.SerializeObject(existingData);
+                    var newJsonData = JsonConvert.SerializeObject(requestData);
                     var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
                     ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
                         oldJsonData,
                         newJsonData,
                         CurrentUserId,
                         formatTemplate,
-                        matchingRule
+                        matchingRule,
+                        true
                     );
                     responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
                 }
@@ -114,6 +135,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
                 }
             }
         }
+
         public async Task<AddEntityDto<int>> AddEditCreditCard(AddEditCreditCardRequest requestData, short CurrentUserId)
         {
             AddEntityDto<int> responceData = new();
@@ -122,7 +144,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
             var existingSupplierFinancialSettingsData = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
 
-            if (supplierData.StatusId == (short)Status.Approved && existingData.SupplierPaymentSettingId > 0)
+            if (supplierData.StatusId == (short)Status.Approved && requestData.SupplierPaymentSettingId > 0)
             {
                 if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
                 {
@@ -310,6 +332,21 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             }
             return responseData!;
         }
+
+        //public async Task<GetSupplierFinancialSettingsWithACHWireBySupplierIdResponse> GetSupplierFinancialSettingsWithACHWireBySupplierId(int supplierId)
+        //{
+        //    GetSupplierFinancialSettingsWithACHWireBySupplierIdResponse responseData = new();
+
+        //    responseData.getSupplierFinancialSettingsBySupplierIdResponse = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
+        //    responseData.getACHWireBySupplierIdResponse = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
+
+        //    if (responseData != null && supplierId > 0 && responseData.getACHWireBySupplierIdResponse.BankAddressId > 0 && responseData.getACHWireBySupplierIdResponse.RecipientAddressId > 0)
+        //    {
+        //        responseData.getACHWireBySupplierIdResponse.BankAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(responseData.getACHWireBySupplierIdResponse.BankAddressId);
+        //        responseData.getACHWireBySupplierIdResponse.RecipientAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(responseData.getACHWireBySupplierIdResponse.RecipientAddressId);
+        //    }
+        //    return responseData!;
+        //}
         #endregion
     }
 }

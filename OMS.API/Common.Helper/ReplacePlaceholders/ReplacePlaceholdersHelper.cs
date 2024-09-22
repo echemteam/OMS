@@ -6,11 +6,16 @@ namespace Common.Helper.ReplacePlaceholders
 {
     public class ReplacePlaceholdersHelper
     {
-        public static string ProcessTemplate(string jsonValue, string template)
+        public static string ProcessTemplate(string jsonValue, string template, bool isMultiple = false)
         {
 
             try
             {
+                if (isMultiple)
+                {
+                    ProcessMultipleTemplate(jsonValue, template);
+                    return template;    
+                }
                 var data = JObject.Parse(jsonValue).ToObject<Dictionary<string, object>>();
                 var dataList = new List<Dictionary<string, object>>();
 
@@ -71,21 +76,7 @@ namespace Common.Helper.ReplacePlaceholders
             }
         }
 
-        public static string ReplacePlaceholders(string htmlBody, Dictionary<string, string> placeholders)
-        {
-            try
-            {
-                foreach (var placeholder in placeholders)
-                {
-                    htmlBody = htmlBody.Replace(placeholder.Key, placeholder.Value);
-                }
-                return htmlBody;
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Error replacing placeholders", ex);
-            }
-        }
+
 
         private static string ReplaceUnreplacedPlaceholdersWithNA(string template)
         {
@@ -130,6 +121,70 @@ namespace Common.Helper.ReplacePlaceholders
 
             tableHtml.AppendLine("</table>");
             return tableHtml.ToString();
+        }
+
+
+        public static string ProcessMultipleTemplate(string jsonValue, string template)
+        {
+            try
+            {
+                var data = JObject.Parse(jsonValue);
+                var placeholders = new Dictionary<string, string>();
+
+                // Flatten the JSON structure to match placeholders
+                FlattenJson(data, placeholders, string.Empty);
+
+                // Replace placeholders in the template
+                return template;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error processing template placeholder", ex);
+            }
+
+
+        }
+
+        private static void FlattenJson(JToken token, Dictionary<string, string> placeholders, string parentKey)
+        {
+            foreach (var property in token.Children<JProperty>())
+            {
+                var key = string.IsNullOrEmpty(parentKey) ? property.Name : $"{parentKey}.{property.Name}";
+
+                if (property.Value.Type == JTokenType.Object)
+                {
+                    FlattenJson(property.Value, placeholders, key);
+                }
+                else if (property.Value.Type == JTokenType.Array)
+                {
+                    // Handle arrays if necessary; you may need to adjust this logic
+                    var index = 0;
+                    foreach (var item in property.Value.Children())
+                    {
+                        FlattenJson(item, placeholders, $"{key}[{index}]");
+                        index++;
+                    }
+                }
+                else
+                {
+                    placeholders[$"##{key}##"] = property.Value?.ToString() ?? string.Empty;
+                }
+            }
+        }
+        public static string ReplacePlaceholders(string htmlBody, Dictionary<string, string> placeholders)
+        {
+            try
+            {
+                foreach (var placeholder in placeholders)
+                {
+                    htmlBody = htmlBody.Replace(placeholder.Key, placeholder.Value);
+                }
+                return htmlBody;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error replacing placeholders", ex);
+            }
         }
     }
 }
