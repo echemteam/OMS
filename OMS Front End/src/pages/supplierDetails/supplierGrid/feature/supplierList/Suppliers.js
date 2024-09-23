@@ -103,7 +103,12 @@ const Suppliers = () => {
     setSearch(event.target.value.trim());
   
   };
-
+  const handleKeyPress=(event)=>{
+    
+    if (event.code === "Enter") {
+      handleSearch();
+    }
+  }
 
   useEffect(() => {
     if (StatusValue) {
@@ -155,6 +160,7 @@ const Suppliers = () => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       ),
@@ -174,6 +180,7 @@ const Suppliers = () => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       ),
@@ -193,6 +200,7 @@ const Suppliers = () => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
 
           />
         </div>
@@ -213,6 +221,7 @@ const Suppliers = () => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
 
           />
         </div>
@@ -241,6 +250,7 @@ const Suppliers = () => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
 
           />
         </div>

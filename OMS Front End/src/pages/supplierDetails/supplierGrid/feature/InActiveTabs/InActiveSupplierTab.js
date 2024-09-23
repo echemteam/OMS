@@ -77,6 +77,13 @@ const InActiveSupplierTab = ({ statusId }) => {
     getListApi(); // Fetch data based on activeTab (if needed)
   }, [activeTab]);
 
+  const handleKeyPress=(event)=>{
+    
+    if (event.code === "Enter") {
+      handleSearch();
+    }
+  }
+
   const handleSearch = () => {
     if (search.length >= 3 || selectedDrpvalues.length > 0) {
       getListApi();
@@ -142,6 +149,7 @@ const InActiveSupplierTab = ({ statusId }) => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       ),
@@ -161,6 +169,7 @@ const InActiveSupplierTab = ({ statusId }) => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       ),
@@ -180,6 +189,7 @@ const InActiveSupplierTab = ({ statusId }) => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       ),
@@ -199,6 +209,7 @@ const InActiveSupplierTab = ({ statusId }) => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       ),
