@@ -54,7 +54,8 @@ function CardSection({
   isShort,
   selectedSortOrder,
   filtersOptions,
-  selectedFilterOptions
+  selectedFilterOptions,
+  handleKeyPress
 }) {
   return (
     <div
@@ -77,6 +78,7 @@ function CardSection({
                     searchValue={searchValue}
                     searchText={searchInputName}
                     handleChange={handleChange}
+                    handleKeyPress={handleKeyPress}
                   />
                 </div>
               </div>

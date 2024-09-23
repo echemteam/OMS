@@ -64,6 +64,12 @@ const ApprovalRules = () => {
       ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
   };
+  const handleKeyPress=(event)=>{
+    
+    if (event.code === "Enter") {
+      handleSearch();
+    }
+  }
   const handleClear = () => {
     setSelectedDrpvalues("");
     setSelectedStatusOptions("");
@@ -121,6 +127,7 @@ const ApprovalRules = () => {
           clearTextWithIcon={true}
           clearIconImg={AppIcons.ClearIcone}
           searchValue={search}
+          handleKeyPress={handleKeyPress}
 
          
         >

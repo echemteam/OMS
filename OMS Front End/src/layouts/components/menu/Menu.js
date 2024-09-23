@@ -117,11 +117,17 @@ export const Menu = [
             securityKey: securityKey.ORDER,
           },
           {
-            id: "Suppliers",
-            submenuName: "Order",
-            to: "/Orders",
+            id: "definedOrders",
+            submenuName: "Defined Order",
+            to: "/definedOrders",
             securityKey: securityKey.ORDER,
           },
+          // {
+          //   id: "confirmedOrders",
+          //   submenuName: "Confirmed Order",
+          //   to: "/confirmedOrders",
+          //   securityKey: securityKey.ORDER,
+          // },
         ],
       },
       {
