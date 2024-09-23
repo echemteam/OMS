@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.User;
+﻿using OMS.Domain.Entities.API.Response.Common;
+using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.User;
 using OMS.Domain.Repository.Contract;
@@ -18,6 +19,7 @@ namespace OMS.Domain.Repository.Implementation
         const string DELETEUSER = "DeleteUser";
         const string GETUSERS = "GetUsers";
         const string UPDATEUSERPASSWORD = "UpdateUserPassword";
+        const string GETUSERLOGINLOGOUTHISTORYBYUSERID = "GetUserLoginLogoutHistoryByUserId";
         #endregion
 
         public UserRepository(DapperContext dapperContext) : base(dapperContext)
@@ -91,6 +93,14 @@ namespace OMS.Domain.Repository.Implementation
                 updateUserPassword.UpdatedBy,
 
             }, CommandType.StoredProcedure);
+        }
+        public async Task<List<GetUserLoginLogoutHistoryByUserIdResponse>> GetUserLoginLogoutHistoryByUserId(short userId)
+        {
+            List<GetUserLoginLogoutHistoryByUserIdResponse> getUserLoginLogoutHistoryByUserId = await _context.GetList<GetUserLoginLogoutHistoryByUserIdResponse>(GETUSERLOGINLOGOUTHISTORYBYUSERID, new
+            {
+                userId
+            }, commandType: CommandType.StoredProcedure);
+            return getUserLoginLogoutHistoryByUserId;
         }
         #endregion
     }

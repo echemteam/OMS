@@ -1,8 +1,8 @@
-﻿using ClientIPAuthentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Application.Services;
 using OMS.Domain.Entities.API.Request.User;
+using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Framework;
 using OMS.Shared.Services.Contract;
@@ -87,7 +87,12 @@ namespace OMS.API.Controllers
             return APISucessResponce<object>(responseData);
         }
 
-
+        [HttpGet("GetUserLoginLogoutHistoryByUserId")]
+        public async Task<IActionResult> GetUserLoginLogoutHistoryByUserId(short userId)
+        {
+            List<GetUserLoginLogoutHistoryByUserIdResponse> responseData = await _serviceManager.userService.GetUserLoginLogoutHistoryByUserId(userId).ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
         #endregion 
     }
 }
