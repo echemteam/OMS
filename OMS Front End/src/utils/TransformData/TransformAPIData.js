@@ -55,7 +55,7 @@ export const modifyTimeLineData = (timelineData) => {
   return newArray;
 };
 
-const getFileTypeIcon = (filename) => {
+export const getFileTypeIcon = (filename) => {
   const parts = filename.split(".");
   const fileType = parts.length > 1 ? parts[parts.length - 1] : "";
   return getIconForFileType(fileType);
