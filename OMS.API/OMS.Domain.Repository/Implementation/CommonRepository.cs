@@ -53,6 +53,7 @@ namespace OMS.Domain.Repository.Implementation
         const string GETALLFUNCTIONALITYEVENTBYFUNCTIONALITYID = "GetAllFunctionalityEventByFunctionalityId";
         const string GETNOTESHISTORY = "GetNotesHistory";
         const string GETALLFUNCTIONALITYEVENTBYMODULEID = "GetAllFunctionalityEventByModuleId";
+        const string GETALLMODULESWITHPENDINGREQUESTCOUNT = "GetAllModulesWithPendingRequestCount";
         #endregion
 
         public CommonRepository(DapperContext dapperContext) : base(dapperContext)
@@ -312,6 +313,10 @@ namespace OMS.Domain.Repository.Implementation
                 moduleId
             }, commandType: CommandType.StoredProcedure);
             return getAllFunctionalityEventByFunctionalityIdResponse;
+        }
+        public async Task<List<GetAllModulesWithPendingRequestCountResponse>> GetAllModulesWithPendingRequestCount()
+        {
+            return await _context.GetList<GetAllModulesWithPendingRequestCountResponse>(GETALLMODULESWITHPENDINGREQUESTCOUNT, commandType: CommandType.StoredProcedure);
         }
     }
 }
