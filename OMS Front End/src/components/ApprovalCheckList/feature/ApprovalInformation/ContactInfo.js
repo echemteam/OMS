@@ -44,7 +44,7 @@ const ContactInformation = ({
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetcontactItem) {
-      const filter = isGetcontactItem.filter((data) => data.isPrimary)
+      const filter = isGetcontactItem.filter((data) => data.isPrimary);
       setContactInformation(filter);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetcontactItem]);
@@ -71,7 +71,15 @@ const ContactInformation = ({
           {contactInformation &&
             contactInformation.map((contact, index) => (
               <div className="card-part" key={index}>
-                <h6 className="title">{contact.type}</h6>
+                <div className="d-flex justify-content-between">
+                  <h6 className="title">{contact.type}</h6>
+                  <Checkbox
+                    name={"contactInformation"}
+                    dataField={"contactInformation"}
+                    checked={isChecked || false}
+                    onChange={handleChange}
+                  />
+                </div>
                 <h6
                   className={`name-title ${
                     contact.isPrimary ? "is-primary" : ""

@@ -2637,6 +2637,9 @@ input[type="checkbox"]:disabled {
             display: flex;
             justify-content: center;
           }
+          &:last-child{
+            justify-content: center;
+          }
         }
       }
     }
@@ -2651,6 +2654,9 @@ input[type="checkbox"]:disabled {
 
           &:nth-child(4) {
             display: flex;
+            justify-content: center;
+          }
+          &:last-child{
             justify-content: center;
           }
         }

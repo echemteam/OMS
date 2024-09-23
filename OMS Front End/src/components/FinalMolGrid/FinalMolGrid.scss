@@ -72,7 +72,7 @@ table {
       text-transform: capitalize;
 
       th {
-        padding: 10px 10px 10px 19px;
+        padding: 12px 10px 10px 19px;
         font-size: var(--commonFont);
         color: var(--blackColor);
         text-transform: uppercase;
@@ -186,6 +186,9 @@ table {
         &:last-child {
           width: 150px;
           text-align: center;
+          @media only screen and (max-width: 1750px) {
+            justify-content: center;
+          }
         }
       }
     }
@@ -450,7 +453,7 @@ table {
     thead {
       tr {
         th {
-          padding: 5px 10px;
+          padding: 7px 10px 5px;
         }
       }
     }
