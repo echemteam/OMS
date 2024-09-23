@@ -10,5 +10,8 @@
         public string? SmtpUserName { get; set; }
         public string? SmtpPassword { get; set; }
         public bool? UseSsl { get; set; }
+        public string? ClientId { get; set; }
+        public string? ClientSecret { get; set; }
+        public string? TenantId { get; set; }
     }
 }

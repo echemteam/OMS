@@ -33,5 +33,11 @@ namespace OMS.Domain.Entities.Entity.Organization
         public DateTime? DeletedAt { get; set; }
         [Column("DeletedBy")]
         public short? DeletedBy { get; set; }
+        [Column("ClientId")]
+        public string? ClientId { get; set; }
+        [Column("ClientSecret")]
+        public string? ClientSecret { get; set; }
+        [Column("TenantId")]
+        public string? TenantId { get; set; }
     }
 }
