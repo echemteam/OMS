@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.Entity.Roles;
+﻿using OMS.Domain.Entities.Entity.CommonEntity;
+using OMS.Domain.Entities.Entity.Roles;
 using OMS.Domain.Entities.Entity.User;
 using OMS.Domain.Repository.Contract;
 using OMS.Prisitance.Entities.Entities;
@@ -12,6 +13,7 @@ namespace OMS.Domain.Repository.Implementation
         #region SP
         const string GETUSERBYUSERNAME = "GetUserByUserName";
         const string GETUSERROLES = "GetUserRoles";
+        const string ADDUSERLOGINLOGOUTHISTORY = "AddUserLoginLogoutHistory";
         #endregion
 
         #region Constructor
@@ -36,6 +38,15 @@ namespace OMS.Domain.Repository.Implementation
                 userId
             }, CommandType.StoredProcedure);
             return userDto;
+        }
+        public async Task<AddEntityDto<int>> AddUserLoginLogoutHistory(UserHistoryDto requestData)
+        {
+            return await _context.GetSingleAsync<AddEntityDto<int>>(ADDUSERLOGINLOGOUTHISTORY, new
+            {
+                requestData.UserId,
+                requestData.IsLogin,
+                requestData.IPAddress,
+            }, CommandType.StoredProcedure);
         }
         #endregion
     }
