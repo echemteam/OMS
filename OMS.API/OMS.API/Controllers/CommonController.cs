@@ -328,5 +328,11 @@ namespace OMS.API.Controllers
             List<GetAllFunctionalityEventByFunctionalityIdResponse> responseData = await _serviceManager.commonServices.GetAllFunctionalityEventByModuleId(moduleId).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
+        [HttpGet("GetAllModulesWithPendingRequestCount")]
+        public async Task<IActionResult> GetAllModulesWithPendingRequestCount()
+        {
+            List<GetAllModulesWithPendingRequestCountResponse> responseData = await _serviceManager.commonServices.GetAllModulesWithPendingRequestCount().ConfigureAwait(true);
+            return APISucessResponce(responseData);
+        }
     }
 }

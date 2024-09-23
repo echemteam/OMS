@@ -84,10 +84,14 @@ const InActiveCustomerTab = ({ statusId }) => {
 
   const handleChange = (event) => {
    
-      setSearch(event.target.value.trim());
-    
+      setSearch(event.target.value.trim());   
   };
 
+  const handleKeyPress=(event)=>{
+    if (event.code === "Enter") {
+      handleSearch();
+    }
+  }
   useEffect(() => {
     if (StatusValue) {
       const statusListData = StatusValue.filter((data) => data.value !== 1 && data.value !== 2 && data.value !== 3 && data.value !== 7).map((item) => ({
@@ -140,6 +144,7 @@ const InActiveCustomerTab = ({ statusId }) => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       ),
@@ -161,6 +166,7 @@ const InActiveCustomerTab = ({ statusId }) => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       ),
@@ -182,6 +188,7 @@ const InActiveCustomerTab = ({ statusId }) => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       ),
@@ -203,6 +210,7 @@ const InActiveCustomerTab = ({ statusId }) => {
             handleSearch={handleSearch}
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
+            handleKeyPress={handleKeyPress}
           />
         </div>
       ),

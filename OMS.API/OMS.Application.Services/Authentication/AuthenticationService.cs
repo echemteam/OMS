@@ -1,8 +1,10 @@
 ﻿using Common.Helper.Extension;
 using Common.Helper.Utility;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.Authentication;
+using OMS.Domain.Entities.API.Request.User;
 using OMS.Domain.Entities.API.Response.Authentication;
 using OMS.Domain.Entities.API.Response.SecuritySetting;
 using OMS.Domain.Entities.Entity.CommonEntity;
@@ -98,5 +100,11 @@ namespace OMS.Application.Services.Authentication
             return tokenObj;
         }
         #endregion
+        public async Task<AddEntityDto<int>> AddUserLoginLogoutHistory(AddUserLoginLogoutHistoryRequest requestData, string iPAddress)
+        {
+            UserHistoryDto userHistoryDto = requestData.ToMapp<AddUserLoginLogoutHistoryRequest, UserHistoryDto>();
+            userHistoryDto.IPAddress = iPAddress;
+            return await repositoryManager.authentication.AddUserLoginLogoutHistory(userHistoryDto);
+        }
     }
 }

@@ -13,5 +13,6 @@ namespace OMS.Domain.Repository.Contract
         Task<AddEntityDto<int>> DeleteUser(short userId, short deletedBy);
         Task<EntityList<UserListResponse>> GetUsers(ListEntityRequest<BaseFilter> requestData);
         Task<AddEntityDto<int>> UpdateUserPassword(UserDto updateUserPassword);
+        Task<List<GetUserLoginLogoutHistoryByUserIdResponse>> GetUserLoginLogoutHistoryByUserId(short userId);
     }
 }

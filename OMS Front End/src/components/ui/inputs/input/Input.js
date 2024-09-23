@@ -35,7 +35,8 @@ const Input = ({
   inputButtonGroup,
   handleInputGroupButton,
   handleInputShowInfo,
-  inputIcon
+  inputIcon,
+  onKeyPress
 }) => {
 
   const [inputAttributes, setInputAttributes] = useState({});
@@ -153,6 +154,7 @@ const Input = ({
                 onKeyUp={onKeyup}
                 onKeyDown={handleKeyDown}
                 onBlur={onBlur}
+                onKeyPress={onKeyPress}
                 disabled={isDisable}
                 min={min}
                 max={max}
@@ -201,6 +203,7 @@ const Input = ({
                 onKeyUp={onKeyup}
                 onKeyDown={handleKeyDown}
                 onBlur={onBlur}
+                onKeyPress={onKeyPress}
                 disabled={isDisable}
                 min={min}
                 max={max}

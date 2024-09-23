@@ -2,6 +2,7 @@
 using Common.Helper.Utility;
 using OMS.Application.Services.Implementation;
 using OMS.Domain.Entities.API.Request.User;
+using OMS.Domain.Entities.API.Response.Common;
 using OMS.Domain.Entities.API.Response.User;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.User;
@@ -62,6 +63,10 @@ namespace OMS.Application.Services.User
             userDto.PasswordSalt = EncryptionUtil.GenerateSalt(8);
             userDto.HashedPassword = EncryptionUtil.GenerateHashKeyUsingSalt(userDto.Password!.Trim(), userDto.PasswordSalt);
             return await repositoryManager.user.UpdateUserPassword(userDto);
+        }
+        public Task<List<GetUserLoginLogoutHistoryByUserIdResponse>> GetUserLoginLogoutHistoryByUserId(short userId)
+        {
+            return repositoryManager.user.GetUserLoginLogoutHistoryByUserId(userId);
         }
         #endregion
     }

@@ -32,7 +32,7 @@ const ContactGrid = ({
   getContactById,
   isSearchFilterShow,
   contryIdCode,
-  customerStatusId
+  customerStatusId,
 }) => {
   //** State */
   const editRef = useRef();
@@ -107,6 +107,12 @@ const ContactGrid = ({
       ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
   };
+
+  const handleKeyPress=(event)=>{
+    if (event.code === "Enter") {
+      onhandleSearch();
+    }
+  }
   const onhandleClear = () => {
     setSearch("");
     let request = {
@@ -310,6 +316,7 @@ const ContactGrid = ({
         clearTextWithIcon={true}
         clearIconImg={AppIcons.ClearIcone}
         searchValue={search}
+        handleKeyPress={handleKeyPress}
       >
         <div className="vertical-tab-inner">
           <RenderTabs tabs={tabs} isCollapse={true} onTabClick={onTabClick} />

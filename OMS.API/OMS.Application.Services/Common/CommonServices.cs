@@ -213,5 +213,9 @@ namespace OMS.Application.Services.Common
         {
             return repositoryManager.commonRepository.GetAllFunctionalityEventByModuleId(moduleId);
         }
+        public Task<List<GetAllModulesWithPendingRequestCountResponse>> GetAllModulesWithPendingRequestCount()
+        {
+            return repositoryManager.commonRepository.GetAllModulesWithPendingRequestCount();
+        }
     }
 }

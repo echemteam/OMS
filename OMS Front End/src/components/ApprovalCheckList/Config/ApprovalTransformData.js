@@ -16,7 +16,8 @@ export const customerApprovalCheckList = [
     { name: "basicInformation", isCheked: false },
     { name: "addressInformation", isCheked: false },
     { name: "contactInformation", isCheked: false },
-    { name: "settingInformation", isCheked: false }
+    { name: "settingInformation", isCheked: false },
+    { name: "shippingsettingInformation", isCheked: false }
 ]
 
 export const subCustomerApprovalCheckList = [

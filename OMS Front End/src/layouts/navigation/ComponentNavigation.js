@@ -8,6 +8,7 @@ import ApprovalRules from "../../pages/configuration/approvalRules/ApprovalRules
 import ApiProviderViewDetail from "../../pages/apiConfiguration/apiProviders/features/apiProviderViewDetail/ApiProviderViewDetail";
 import { ThirdPartyApiConfigurationViewDetails } from "../../pages/thirdPartyApi/thirdPartyApiConfigurationGrid/feature/thirdPartyApiConfigurationList/feature/thirdPartyApiConfigurationViewDetails/ThirdPartyApiConfigurationViewDetails";
 import EmailTemplate from "../../pages/configuration/emailTemplate/EmailTemplate";
+import OrdersGrid from "../../pages/order/orderGrid/OrdersGrid";
 
 const ApiProviders = React.lazy(() => import("../../pages/apiConfiguration/apiProviders/ApiProviders"));
 //** Not Found */
@@ -432,6 +433,15 @@ export const ComponentNavigation = [
     text: 'OrderList',
     // securityKey: securityKey.SUPPLIER
   },
-
+  {
+    id: 'definedOrders',
+    path: '/definedOrders',
+    exact: true,
+    title: '',
+    component: OrdersGrid,
+    hasParams: false,
+    text: 'DefinedOrder',
+    // securityKey: securityKey.SUPPLIER
+  },
 
 ];
