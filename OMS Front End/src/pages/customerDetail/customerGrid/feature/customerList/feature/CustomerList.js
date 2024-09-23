@@ -55,6 +55,7 @@ export const CustomersList = ({
   searchStatusFilter,
   handleSearch,
   handleClear,
+  handleKeyPress,
   shouldRerenderFormCreator,
 }) => {
   const navigate = useNavigate();
@@ -448,6 +449,7 @@ export const CustomersList = ({
             searchTextWithIcon={true}
             clearTextWithIcon={true}
             clearIconImg={AppIcons.ClearIcone}
+            handleKeyPress={handleKeyPress}
           >
             <div className="row">
               <div className="col-md-12 table-striped">

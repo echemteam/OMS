@@ -22,6 +22,7 @@ import { setDropDownOptionField } from "../../utils/FormFields/FieldsSetting/Set
 import { excludingRoles } from "../../pages/customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { useAddCustomerNotesMutation } from "../../app/services/notesAPI";
 import { StatusFeild } from "../../utils/Enums/StatusEnums";
+import ShippingSetting from "./feature/ApprovalInformation/ShippingSetting";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -362,6 +363,20 @@ const ApprovalCheckList = ({
                           </div>
                         </div>
                       ) : null}
+                      {!isSubCustomer && !isSupplierApproval ? (
+                        <div className="col-12 mb-3">
+                          <div className="approval-list-part">
+                            <ShippingSetting
+                              isSupplierApproval={isSupplierApproval}
+                              isModelOpen={isModelOpen}
+                              mainId={mainId}
+                              getFinacialSettingById={getFinacialSettingById}
+                              approvalChekedData={approvalChekedData.find((item) => item.name === "shippingsettingInformation")}
+                              handleCheckbox={handleCheckbox}
+                            />
+                          </div>
+                        </div>
+                      ) : null}
                       {isSupplierApproval ? (
                         <div className="col-12 mb-3">
                           <div className="approval-list-part">
@@ -380,8 +395,6 @@ const ApprovalCheckList = ({
                   </div>
                 </div>
                 <div className="col-12 mb-3"></div>
-
-
               </div>
               <div className="row">
                 <div className="col-md-12 my-3 mt-4">

@@ -52,6 +52,12 @@ const ApiProviders = () => {
       ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
   };
+  const handleKeyPress=(event)=>{
+    
+    if (event.code === "Enter") {
+      handleSearch();
+    }
+  }
   const handleClear = () => {
     setSearch("");
 
@@ -82,6 +88,7 @@ const ApiProviders = () => {
         textWithIcon={true}
         iconImg={AppIcons.PlusIcon}
         titleButtonClick={handleToggleModal}
+        handleKeyPress={handleKeyPress}
       >
         <ApiProvidersList
           onGetData={onGetData}
