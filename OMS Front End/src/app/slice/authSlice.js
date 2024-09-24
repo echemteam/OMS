@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAuthProps, setAuthProps, signOut } from "../../lib/authenticationLibrary";
 import { saveData } from "../../utils/LocalStorage/LocalStorageManager";
-
+import { getAuthProps, setAuthProps, signOut } from "../../lib/authenticationLibrary";
 
 const authData = getAuthProps();
 
@@ -16,16 +15,6 @@ const authSlice = createSlice({
     isLogedin: false
   },
   reducers: {
-    // authentication: (state, action) => {
-    //   //Use to create cookie.
-    //   setAuthProps(action.payload);
-    //   const { isAuthenticated, message, token, user, sessionTimeout, userDisplayName, userName } = action.payload;
-    //   state.isLogedin = true;
-    // },
-    // logout: (state) => {
-    //   state.isLogedin = false;
-    //   signOut();
-    // },
     authentication: (state, action) => {
       //Use to create cookie.
       const { securityPermissions, approvalRulesConfiguration, smtpSettings, ...newAuthProps } = action.payload;
@@ -48,7 +37,7 @@ const authSlice = createSlice({
       saveData('SecurityPermission', action.payload);
       state.userPermissions = action.payload;
     }
-  },
+  }
 });
 
 

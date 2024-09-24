@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../app/slice/authSlice";
 import Iconify from "../../../components/ui/iconify/Iconify";
 import { useNavigate } from "react-router-dom";
+import { logUserLoginLogoutHistory } from "../../../utils/Thunk/UserHistory";
 
 function Header() {
 
@@ -78,6 +79,10 @@ function Header() {
   ];
   const LogoutButton = () => {
     dispatch(logout());
+    dispatch(logUserLoginLogoutHistory({
+      userId: authState.user.userID,
+      isLogin: authState.isAuthenticated
+    }));
   };
   const handleClickOutside = (event) => {
     if (
