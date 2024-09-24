@@ -1,4 +1,5 @@
-﻿using OMS.Domain.Entities.API.Response.Organization;
+﻿using OMS.Domain.Entities.API.Request.Organization;
+using OMS.Domain.Entities.API.Response.Organization;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.Organization;
 using OMS.Domain.Repository.Contract;
@@ -44,7 +45,7 @@ namespace OMS.Domain.Repository.Implementation
             GetOrganizationProfileResponse organizationProfileDetails = await _context.GetFrist<GetOrganizationProfileResponse>(GETORGANIZATIONPROFILE, CommandType.StoredProcedure);
             return organizationProfileDetails;
         }
-        public async Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(ListEntityRequest<BaseFilter> requestData)
+        public async Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(GetOrganizationHistoryRequest requestData)
         {
             return await _context.GetListSP<GetOrganizationHistorysResponse>(GETORGANIZATIONHISTORYS, new
             {
@@ -52,6 +53,8 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.Pagination?.PageSize,
                 requestData.Filters?.SearchText,
                 requestData.SortString,
+                requestData.ToDate,
+                requestData.FromDate,
             }, true);
         }
         #endregion

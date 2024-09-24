@@ -96,7 +96,7 @@ const DictionaryList = ({ handleEditClick, getDataRef  }) => {
           allowPagination={true}
           pagination={{
             totalCount: totalRowCount,
-            pageSize: 20,
+            pageSize: 25,
             currentPage: 1,
           }}
           onPageChange={handlePageChange}

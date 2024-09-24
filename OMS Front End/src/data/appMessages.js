@@ -46,7 +46,8 @@ export const ErrorMessage = {
 	DocumentDetailMissing: "Your document details are missing",
 	DocumentTypeExists: "Document Type already exists.",
 	Invalidpostalcode: "The ZIP code is invalid. It should be {length} characters long.",
-	InvalidSpecialCharacters: "The input contains invalid characters. Only letters and numbers are allowed."
+	InvalidSpecialCharacters: "The input contains invalid characters. Only letters and numbers are allowed.",
+	ContactEmailAddressRequired: "Please provide at least one email address before proceeding.",
 };
 
 export const SuccessMessage = {

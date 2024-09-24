@@ -17,8 +17,9 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { RemitToAddressForm } from "./config/RemitToAddressForm.data";
 import RemitToAddressDetail from "./features/RemitToAddressDetail";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { useSelector } from "react-redux";
 
-const OrganizationBusinessAddressDetail = () => {
+const OrganizationBusinessAddressDetail = (isEditablePage) => {
   const physicalAddressRef = useRef();
   const billToAddressRef = useRef();
   const labAddressRef = useRef();
@@ -32,6 +33,29 @@ const OrganizationBusinessAddressDetail = () => {
   const [warehouseAddressData] = useState(WarehouseAddressForm);
   const [remitToAddressData] = useState(RemitToAddressForm);
   const [registeredAddressData] = useState(RegisteredAddressForm);
+  const roles = useSelector((state) => state.auth.roles.roleName );
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
+
+  useEffect(() => {
+    const setFormSettingsForAll = (isViewOnly) => {
+      PhysicalAddressForm.formSetting.isViewOnly = isViewOnly;
+      BillToAddressForm.formSetting.isViewOnly = isViewOnly;
+      LabAddressForm.formSetting.isViewOnly = isViewOnly;
+      WarehouseAddressForm.formSetting.isViewOnly = isViewOnly;
+      RemitToAddressForm.formSetting.isViewOnly = isViewOnly;
+      RegisteredAddressForm.formSetting.isViewOnly = isViewOnly;
+    };
+  
+    if (isEditablePage) {
+      if (roles?.includes("Admin")) {
+        setIsButtonDisable(false);
+        setFormSettingsForAll(false);  
+      } else {
+        setIsButtonDisable(true);
+        setFormSettingsForAll(true);  
+      }
+    }
+  }, [isEditablePage, roles]);
 
   const [addressIds, setAddressIds] = useState({
     registeredAddressId: 0,
@@ -251,6 +275,7 @@ const OrganizationBusinessAddressDetail = () => {
         remitToAddressRef={remitToAddressRef}
         RemitToAddressForm={RemitToAddressForm}
       />
+      {isEditablePage ?
       <div className="col-md-12">
         <div className="d-flex align-item-end justify-content-end">
           <Buttons
@@ -258,9 +283,11 @@ const OrganizationBusinessAddressDetail = () => {
             buttonText="Save"
             isLoading={isAddEditBusinessAddressLoading}
             onClick={handleAddEditBusinessAddress}
+            isDisable={isButtonDisable}
           />
         </div>
       </div>
+       : null}
     </div>
   );
 };

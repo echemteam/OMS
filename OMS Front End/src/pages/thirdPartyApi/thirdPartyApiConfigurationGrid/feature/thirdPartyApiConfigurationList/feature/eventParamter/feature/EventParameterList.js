@@ -113,7 +113,7 @@ const EventParameterList = (props) => {
           ref={molGridRef}
           configuration={AddEditParameterConfigurationData}
           dataSource={listData}
-          allowPagination={true}
+          allowPagination={false}
           pagination={{
             totalCount: totalRowCount,
             pageSize: 20,

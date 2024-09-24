@@ -6,14 +6,31 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { OrganizationBankFormData } from "./config/OrganizationBank.data";
 import { useAddEditOrganizationBankDetailsMutation, useLazyGetOrganizationBankDetailsQuery } from "../../../../app/services/organizationAPI";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { useSelector } from "react-redux";
 
 
-const OrganizationBankDetail = () => {
+const OrganizationBankDetail = (isEditablePage) => {
     const organizationBankRef = useRef();
     const [organizationBankData, setOrganizationBankData] = useState(OrganizationBankFormData);
     const [addEditOrganizationBankDetails, { isLoading: isAddEditOrganizationBankDetailsLoading, isSuccess: isAddEditOrganizationBankDetailsSuccess, data: isAddEditOrganizationBankDetailsData }] = useAddEditOrganizationBankDetailsMutation();
     const [getOrganizationBankDetails, { isFetching: isGetOrganizationBankDetailsFetching, isSuccess: isGetOrganizationBankDetailsSuccess, data: isGetOrganizationBankDetailsData }] = useLazyGetOrganizationBankDetailsQuery();
     const [bankDetailId, setBankDetailId] = useState(0);
+    const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const { formSetting } = OrganizationBankFormData;
+    const roles = useSelector((state) => state.auth.roles.roleName );
+
+   
+   useEffect(() => {
+    if (isEditablePage) {
+      if (roles?.includes("Admin")) {  
+        setIsButtonDisable(false);
+        formSetting.isViewOnly = false;
+      } else {
+        setIsButtonDisable(true);
+        formSetting.isViewOnly = true;
+      }
+    }
+  }, [isEditablePage, roles]);
 
     useEffect(() => {
         if (isAddEditOrganizationBankDetailsSuccess && isAddEditOrganizationBankDetailsData) {
@@ -67,6 +84,7 @@ const OrganizationBankDetail = () => {
                 {...organizationBankData}
 
             />
+             {isEditablePage ?
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -74,10 +92,10 @@ const OrganizationBankDetail = () => {
                         buttonText="Save"
                         onClick={handleAddEditBankDetail}
                         isLoading={isAddEditOrganizationBankDetailsLoading}
-
+                        isDisable={isButtonDisable}
                     />
                 </div>
-            </div>
+            </div>:null}
         </div>
     )
 }

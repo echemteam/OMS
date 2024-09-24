@@ -6,15 +6,32 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { OrganizationLogisticFormData } from "./config/OrganizationLogistic.data";
 import { useAddEditOrganizationLogisticDetailsMutation, useLazyGetOrganizationLogisticDetailsQuery } from "../../../../app/services/organizationAPI";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { useSelector } from "react-redux";
 
 
 
-const OrganizationLogisticDetail = () => {
+const OrganizationLogisticDetail = (isEditablePage) => {
     const organizationLogisticRef = useRef();
     const [organizationLogisticData, setOrganizationLogisticData] = useState(OrganizationLogisticFormData);
     const [addEditOrganizationLogisticDetails, { isLoading: isAddEditOrganizationLogisticDetailsLoading, isSuccess: isAddEditOrganizationLogisticDetailsSuccess, data: isAddEditOrganizationLogisticDetailsData }] = useAddEditOrganizationLogisticDetailsMutation();
     const [getOrganizationLogisticDetails, { isFetching: isGetOrganizationLogisticDetailsFetching, isSuccess: isGetOrganizationLogisticDetailsSuccess, data: isGetOrganizationLogisticDetailsData }] = useLazyGetOrganizationLogisticDetailsQuery();
     const [logisticDetailId, setLogisticDetailId] = useState(0);
+    const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const { formSetting } = OrganizationLogisticFormData;
+    const roles = useSelector((state) => state.auth.roles.roleName );
+
+   
+   useEffect(() => {
+    if (isEditablePage) {
+      if (roles?.includes("Admin")) {  
+        setIsButtonDisable(false);
+        formSetting.isViewOnly = false;
+      } else {
+        setIsButtonDisable(true);
+        formSetting.isViewOnly = true;
+      }
+    }
+  }, [isEditablePage, roles]);
 
     useEffect(() => {
         if (isAddEditOrganizationLogisticDetailsSuccess && isAddEditOrganizationLogisticDetailsData) {
@@ -72,6 +89,7 @@ const OrganizationLogisticDetail = () => {
                 {...organizationLogisticData}
 
             />
+             {isEditablePage ?
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -79,9 +97,10 @@ const OrganizationLogisticDetail = () => {
                         buttonText="Save"
                         onClick={handleAddEditLogisticDetail}
                         isLoading={isAddEditOrganizationLogisticDetailsLoading}
+                        isDisable={isButtonDisable}
                     />
                 </div>
-            </div>
+            </div>:null}
         </div>
     )
 }
