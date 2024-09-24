@@ -10,7 +10,7 @@ namespace OMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     //[CheckClientIpActionFilter]
     public class OrganizationController : BaseController
     {
@@ -152,7 +152,7 @@ namespace OMS.API.Controllers
             return APISucessResponce<object>(organizationBusinessAddresses);
         }
         [HttpPost("GetOrganizationHistorys")]
-        public async Task<IActionResult> GetUsers([FromBody] ListEntityRequest<BaseFilter> requestData)
+        public async Task<IActionResult> GetUsers(GetOrganizationHistoryRequest requestData)
         {
             var organizationHistoryList = await _serviceManager.organizationService.GetOrganizationHistorys(requestData);
             return APISucessResponce<object>(organizationHistoryList);
