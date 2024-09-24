@@ -117,7 +117,7 @@ const ApiEndPointsList=({handleEditClick,childRef,  providerId,initData})=>{
               ref={molGridRef}
               configuration={ApiEndPointGridConfig}
               dataSource={listData}
-              allowPagination={true}
+              allowPagination={false}
               pagination={{
                 totalCount: totalRowCount,
                 pageSize: 20,

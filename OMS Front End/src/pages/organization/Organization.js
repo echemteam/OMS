@@ -48,91 +48,99 @@ const Organization = () => {
   const handleActiveTab = (id) => {
     setActiveTabId(id);
   };
+ 
 
-  const tabs = [
-    {
-      sMenuItemCaption: "Organization Profile",
-      component: (
-        <div className="mt-2">
-          <OrganizationProfileManagement setCompanyName={setCompanyName} />
-        </div>
-      ),
-    },
-    {
-      sMenuItemCaption: "Business Address",
-      component: (
-        <div className="mt-2">
-          <OrganizationBusinessAddressDetail />
-        </div>
-      ),
-    },
-    {
-      sMenuItemCaption: "Contact Details",
-      component: (
-        <div className="mt-2">
-          <OrganizationContactDetail />
-        </div>
-      ),
-    },
+    const tabs = [
+        {
+            sMenuItemCaption: "Organization Profile",
+            component: (
+                <div className="mt-2">
+                    <OrganizationProfileManagement setCompanyName={setCompanyName}  isEditablePage={true}
+                    />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Business Address",
+            component: (
+                <div className="mt-2">
 
-    {
-      sMenuItemCaption: "Logistic Details",
-      component: (
-        <div className="mt-2">
-          <OrganizationLogisticDetail />
-        </div>
-      ),
-    },
-    {
-      sMenuItemCaption: "Bank Details",
-      component: (
-        <div className="mt-2">
-          <OrganizationBankDetail />
-        </div>
-      ),
-    },
-    {
-      sMenuItemCaption: "Accounting Details",
-      component: (
-        <div className="mt-2">
-          <OrganizationAccountingDetail />
-        </div>
-      ),
-    },
-    {
-      sMenuItemCaption: "Shipping Charges",
-      component: (
-        <div className="mt-2">
-          <OrganizationShippingChargesDetail />
-        </div>
-      ),
-    },
-    {
-      sMenuItemCaption: "Other Charges",
-      component: (
-        <div className="mt-2">
-          <OrganizationOtherChargesDetail />
-        </div>
-      ),
-    },
-    // organizationId > 0 &&
-    {
-      sMenuItemCaption: "SMTP Settings",
-      component: (
-        <div className="mt-2">
-          <SMTPSettings />
-        </div>
-      ),
-    },
-    {
-      sMenuItemCaption: "History",
-      component: (
-        <div className="mt-2 organiazation-history">
-          <OrganizationHistory />
-        </div>
-      ),
-    },
-  ];
+                    <OrganizationBusinessAddressDetail  isEditablePage={true}/>
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Contact Details",
+            component: (
+                <div className="mt-2">
+                    <OrganizationContactDetail  isEditablePage={true}/>
+                </div>
+            ),
+        },
+
+        {
+            sMenuItemCaption: "Logistic Details",
+            component: (
+                <div className="mt-2">
+                    <OrganizationLogisticDetail  isEditablePage={true}/>
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Bank Details",
+            component: (
+                <div className="mt-2">
+                    <OrganizationBankDetail  isEditablePage={true}/>
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Accounting Details",
+            component: (
+                <div className="mt-2">
+                    <OrganizationAccountingDetail  isEditablePage={true}/>
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Shipping Charges",
+            component: (
+                <div className="mt-2">
+                    <OrganizationShippingChargesDetail  isEditablePage={true}/>
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "Other Charges",
+            component: (
+                <div className="mt-2">
+                    <OrganizationOtherChargesDetail  isEditablePage={true}/>
+                </div>
+            ),
+        },
+        // organizationId > 0 &&
+        {
+            sMenuItemCaption: "SMTP Settings",
+            component: (
+                <div className="mt-2">
+                    <SMTPSettings  isEditablePage={true}
+                    />
+                </div>
+            ),
+        },
+        {
+            sMenuItemCaption: "History",
+            component: (
+                <div className="mt-2 organiazation-history">
+                    <OrganizationHistory  />
+                </div>
+            ),
+
+        },
+
+    ];
+
+ 
 
   return (
     <div className="vertical-tab-card organization">

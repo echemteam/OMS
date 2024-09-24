@@ -109,7 +109,7 @@ const EventRequiredFieldsList = (props) => {
           ref={molGridRef}
           configuration={AddEditRequireConfigurationData}
           dataSource={listData}
-          allowPagination={true}
+          allowPagination={false}
           pagination={{
             totalCount: totalRowCount,
             pageSize: 20,

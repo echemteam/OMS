@@ -8,7 +8,7 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
         phoneCode: data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode,
         phoneTypeId: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId,
         phoneType: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.label : data.phoneTypeId,
-        isPrimary: data.isPrimaryPhoneNumber,
+        isPrimary: listData?.length === 0 ? true : data.isPrimaryPhoneNumber,
         extension: data.extension > 0 ? data.extension : '-'
     }
     if (listData && listData.length === 5) {
