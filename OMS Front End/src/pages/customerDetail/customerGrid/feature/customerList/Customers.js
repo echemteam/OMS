@@ -12,6 +12,7 @@ import { BasicDetailContextProvider } from "../../../../../utils/ContextAPIs/Cus
 import CustomerListContext from "../../../../../utils/ContextAPIs/Customer/CustomerListContext";
 import { AllCustomerGridConfig, ApprovedCustomerGridConfig, PendingCustomerGridConfig, RejectedCustomerGridConfig, SubmittedCustomerGridConfig } from "../../../../../common/features/component/CustomerSupplierListConfig/CustomerSupplierListConfig.data";
 import InActiveCustomerTab from "../customerInActiveTabs/InActiveCustomerTab";
+import { getData, saveData } from "../../../../../utils/LocalStorage/LocalStorageManager";
 
 const Customers = () => {
   const [activeTab, setActiveTab] = useState("0");
@@ -31,6 +32,7 @@ const Customers = () => {
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
+    saveData('selectedTab', tabIndex.toString());
   };
 
   const getListApi = () => {
@@ -43,8 +45,10 @@ const Customers = () => {
     setSearch("");
     setSelectedDrpvalues("");
     setShouldRerenderFormCreator((prevState) => !prevState);
+    const selectedTab = getData("selectedTab");
+    const tabIndex = selectedTab ? selectedTab : activeTab;
     const updateManageData = () => {
-      switch (activeTab) {
+      switch (tabIndex) {
         case "0":
           setAllManageData({
             ...AllCustomerGridConfig,
@@ -84,9 +88,9 @@ const Customers = () => {
           setAllManageData(AllCustomerGridConfig);
       }
     };
-
     updateManageData(); // Initial update based on activeTab
     getListApi(); // Fetch data based on activeTab (if needed)
+    handleTabClick(tabIndex);
   }, [activeTab]);
 
   const handleSearch = () => {
@@ -98,10 +102,10 @@ const Customers = () => {
   };
 
   const handleChange = (event) => {
-      setSearch(event.target.value.trim());   
+    setSearch(event.target.value.trim());
   };
 
-  const handleKeyPress=(event)=>{
+  const handleKeyPress = (event) => {
     if (event.code === "Enter") {
       handleSearch();
     }
@@ -159,6 +163,7 @@ const Customers = () => {
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
             handleKeyPress={handleKeyPress}
+            selectedTab="0"
           />
         </div>
       ),
@@ -181,6 +186,7 @@ const Customers = () => {
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
             handleKeyPress={handleKeyPress}
+            selectedTab="1"
           />
         </div>
       ),
@@ -203,6 +209,7 @@ const Customers = () => {
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
             handleKeyPress={handleKeyPress}
+            selectedTab="2"
           />
         </div>
       ),
@@ -225,6 +232,7 @@ const Customers = () => {
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
             handleKeyPress={handleKeyPress}
+            selectedTab="3"
           />
         </div>
       ),
@@ -233,13 +241,7 @@ const Customers = () => {
       sMenuItemCaption: "INACTIVE",
       component: (
         <div className="mt-2 inactive-list-sec">
-          <InActiveCustomerTab
-            statusId={[
-              StatusEnums.Freeze,
-              StatusEnums.Block,
-              StatusEnums.Disable,
-            ]}
-          />
+          <InActiveCustomerTab statusId={[StatusEnums.Freeze, StatusEnums.Block, StatusEnums.Disable]} selectedTab="4" />
         </div>
       ),
     },
@@ -261,6 +263,7 @@ const Customers = () => {
             handleClear={handleClear}
             shouldRerenderFormCreator={shouldRerenderFormCreator}
             handleKeyPress={handleKeyPress}
+            selectedTab="5"
           />
         </div>
       ),

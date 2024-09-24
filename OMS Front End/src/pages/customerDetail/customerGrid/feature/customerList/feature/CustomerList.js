@@ -41,6 +41,7 @@ import PropTypes from "prop-types";
 import FinalMolGrid from "../../../../../../components/FinalMolGrid/FinalMolGrid";
 import { validateResponsibleUserId } from "../../../../../../utils/ResponsibleUser/validateRUser";
 import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
+import { saveData } from "../../../../../../utils/LocalStorage/LocalStorageManager";
 // import { securityValidator } from "../../../../../../utils/CustomActionSecurity/actionsSecurityValidator";
 //import MolGrid from "../../../../../../components/Grid/MolGrid";
 
@@ -57,6 +58,7 @@ export const CustomersList = ({
   handleClear,
   handleKeyPress,
   shouldRerenderFormCreator,
+  selectedTab
 }) => {
   const navigate = useNavigate();
   const molGridRef = useRef();
@@ -72,8 +74,7 @@ export const CustomersList = ({
   const { listRef } = useContext(CustomerListContext);
   const authState = useSelector((state) => state.auth);
   const [assignRUser, setAssignRUser] = useState();
-  const { isResponsibleUser, setIsResponsibleUser } =
-    useContext(BasicDetailContext);
+  const { isResponsibleUser, setIsResponsibleUser } = useContext(BasicDetailContext);
 
   const [
     getCustomers,
@@ -208,8 +209,7 @@ export const CustomersList = ({
   };
 
   const handlePageChange = (page, sortingString) => {
-    const sortingStringObject =
-      sortingString || molGridRef.current.generateSortingString();
+    const sortingStringObject = sortingString || molGridRef.current.generateSortingString();
     const request = {
       pagination: {
         pageNumber: page.pageNumber,
@@ -219,6 +219,7 @@ export const CustomersList = ({
       statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
       sortString: sortingStringObject,
     };
+    saveData('customerPagination', request);
     getCustomers(request);
   };
 
@@ -365,8 +366,8 @@ export const CustomersList = ({
       // removeFields();
       // setAssignRUser(true);
       const responsibleUserIds = customerData?.responsibleUserId
-      ?.split(",")
-      .map((id) => Number(id.trim()));
+        ?.split(",")
+        .map((id) => Number(id.trim()));
       const formNew = { ...formData }
       formNew.initialState = {
         ...formNew.initialState,
