@@ -162,7 +162,9 @@
                 span {
                   color: var(--textColor);
                   width: 100%;
-                  display: inline-block;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
                   padding: 7px 10px;
                   text-transform: capitalize;
                   border-bottom: 1px dashed #e8eae8;
@@ -180,6 +182,18 @@
                     background: var(--bg-main-content);
                     color: var(--blackColor);
                   }
+                }
+                span>.module-count{
+                padding: 5px;
+                color:white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 25px;
+                height: 25px;
+                background-color: var(--themeColor);
+                border-radius: 50%;
+                font-size: 10px;
                 }
               }
             }

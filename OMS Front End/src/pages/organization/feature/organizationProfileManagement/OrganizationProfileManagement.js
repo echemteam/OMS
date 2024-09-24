@@ -7,7 +7,7 @@ import { useAddEditOrganizationProfileMutation, useLazyGetOrganizationProfileQue
 import ToastService from '../../../../services/toastService/ToastService';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
 
-const OrganizationProfileManagement = () => {
+const OrganizationProfileManagement = ({setCompanyName}) => {
     const organizationProfileRef = useRef();
     const [organizationProfileData, setOrganizationProfileData] = useState(OrganizationProfileManagementdata);
     const [addEditOrganization, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddEditOrganizationProfileMutation();
@@ -39,6 +39,7 @@ const OrganizationProfileManagement = () => {
             };
             setOrganizationProfileData(formData);
             setProfileId(isGetOrganizationProfileData.organizationProfileId);
+            setCompanyName(isGetOrganizationProfileData.registeredName);
 
         }
     }, [isGetOrganizationProfileFetching, isGetOrganizationProfileSuccess, isGetOrganizationProfileData,]);
@@ -78,9 +79,9 @@ const OrganizationProfileManagement = () => {
 
     return (
         <div className="row mt-2 add-address-form">
-            <h4 className='organization-tab-title'>
+            {/* <h4 className='organization-tab-title'>
                 Organization Profile
-            </h4>
+            </h4> */}
             <FormCreator
                 config={organizationProfileData}
                 ref={organizationProfileRef}
