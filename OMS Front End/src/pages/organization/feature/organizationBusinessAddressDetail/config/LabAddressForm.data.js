@@ -70,7 +70,7 @@ export const LabAddressForm = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "stateId",
       fieldSetting: {
-        isDisabled: false,
+       // isDisabled: false,
         placeholder: "Select State",
         isEnableOnChange: true,
         maxLength: 20,
@@ -87,7 +87,7 @@ export const LabAddressForm = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "cityId",
       fieldSetting: {
-        isDisabled: false,
+       // isDisabled: false,
         placeholder: "Select City",
         isEnableOnChange: true,
         maxLength: 9

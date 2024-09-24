@@ -7,12 +7,29 @@ import { useAddEditSmtpSettingsMutation, useLazyGetSmtpSettingsQuery } from '../
 import ToastService from '../../../../services/toastService/ToastService';
 import { decryptUrlData, encryptAES } from '../../../../services/CryptoService';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
+import { useSelector } from 'react-redux';
 
-const SMTPSettings = () => {
+const SMTPSettings = (isEditablePage) => {
     const smtpRef = useRef();
     const [smtpSettingData, setSmtpSettingData] = useState(SMTPSettingsData);
     const [addEditSmtpSetting, { isLoading: isAddEditSmtpSettingLoading, isSuccess: isAddEditSmtpSettingSuccess, data: isAddEditSmtpSettingData }] = useAddEditSmtpSettingsMutation();
     const [getSmtpSettings, { isFetching: isGetSmtpSettingsFetching, isSuccess: isGetSmtpSettingsSuccess, data: isGetSmtpSettingsData }] = useLazyGetSmtpSettingsQuery();
+    const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const { formSetting } = SMTPSettingsData;
+    const roles = useSelector((state) => state.auth.roles.roleName );
+
+   
+   useEffect(() => {
+    if (isEditablePage) {
+      if (roles?.includes("Admin")) {  
+        setIsButtonDisable(false);
+        formSetting.isViewOnly = false;
+      } else {
+        setIsButtonDisable(true);
+        formSetting.isViewOnly = true;
+      }
+    }
+  }, [isEditablePage, roles]);
 
     useEffect(() => {
         getSmtpSettings();
@@ -73,7 +90,7 @@ const SMTPSettings = () => {
                 {...smtpSettingData}
 
             />
-
+             {isEditablePage ?
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -81,10 +98,10 @@ const SMTPSettings = () => {
                         buttonText="Save"
                         onClick={handleAddEditSmtpSettings}
                         isLoading={isAddEditSmtpSettingLoading}
-
+                        isDisable={isButtonDisable}
                     />
                 </div>
-            </div>
+            </div>:null}
         </div>
     )
 }

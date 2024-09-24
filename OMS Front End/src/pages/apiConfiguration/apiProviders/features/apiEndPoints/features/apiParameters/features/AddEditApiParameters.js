@@ -206,7 +206,7 @@ const AddEditApiParameters = (props) => {
               ref={molGridRef}
             configuration={ApiParameterGridConfig}
               dataSource={listData}
-              allowPagination={true}
+              allowPagination={false}
               pagination={{
                totalCount: totalRowCount,
                 pageSize: 20,

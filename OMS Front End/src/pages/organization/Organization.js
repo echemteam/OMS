@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import CardSection from '../../components/ui/card/CardSection';
 import RenderTabs from '../../components/ui/tabs/RenderTabs';
+import { securityKey } from '../../data/SecurityKey';
 const OrganizationBusinessAddressDetail = React.lazy(() => import("./feature/organizationBusinessAddressDetail/OrganizationBusinessAddressDetail"));
 const OrganizationOtherChargesDetail = React.lazy(() => import("./feature/organizationOtherChargesDetail/OrganizationOtherChargesDetail"));
 const OrganizationShippingChargesDetail = React.lazy(() => import("./feature/organizationShippingCharges/OrganizationShippingChargesDetail"));
@@ -19,13 +20,12 @@ const Organization = () => {
         setActiveTabId(id);
     }
 
-
     const tabs = [
         {
             sMenuItemCaption: "Organization Profile",
             component: (
                 <div className="mt-2">
-                    <OrganizationProfileManagement
+                    <OrganizationProfileManagement  isEditablePage={true}
                     />
                 </div>
             ),
@@ -35,7 +35,7 @@ const Organization = () => {
             component: (
                 <div className="mt-2">
 
-                    <OrganizationBusinessAddressDetail />
+                    <OrganizationBusinessAddressDetail  isEditablePage={true}/>
                 </div>
             ),
         },
@@ -43,7 +43,7 @@ const Organization = () => {
             sMenuItemCaption: "Contact Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationContactDetail />
+                    <OrganizationContactDetail  isEditablePage={true}/>
                 </div>
             ),
         },
@@ -52,7 +52,7 @@ const Organization = () => {
             sMenuItemCaption: "Logistic Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationLogisticDetail />
+                    <OrganizationLogisticDetail  isEditablePage={true}/>
                 </div>
             ),
         },
@@ -60,7 +60,7 @@ const Organization = () => {
             sMenuItemCaption: "Bank Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationBankDetail />
+                    <OrganizationBankDetail  isEditablePage={true}/>
                 </div>
             ),
         },
@@ -68,7 +68,7 @@ const Organization = () => {
             sMenuItemCaption: "Accounting Details",
             component: (
                 <div className="mt-2">
-                    <OrganizationAccountingDetail />
+                    <OrganizationAccountingDetail  isEditablePage={true}/>
                 </div>
             ),
         },
@@ -76,7 +76,7 @@ const Organization = () => {
             sMenuItemCaption: "Shipping Charges",
             component: (
                 <div className="mt-2">
-                    <OrganizationShippingChargesDetail />
+                    <OrganizationShippingChargesDetail  isEditablePage={true}/>
                 </div>
             ),
         },
@@ -84,7 +84,7 @@ const Organization = () => {
             sMenuItemCaption: "Other Charges",
             component: (
                 <div className="mt-2">
-                    <OrganizationOtherChargesDetail />
+                    <OrganizationOtherChargesDetail  isEditablePage={true}/>
                 </div>
             ),
         },
@@ -93,7 +93,7 @@ const Organization = () => {
             sMenuItemCaption: "SMTP Settings",
             component: (
                 <div className="mt-2">
-                    <SMTPSettings
+                    <SMTPSettings  isEditablePage={true}
                     />
                 </div>
             ),
@@ -102,7 +102,7 @@ const Organization = () => {
             sMenuItemCaption: "History",
             component: (
                 <div className="mt-2 organiazation-history">
-                    <OrganizationHistory />
+                    <OrganizationHistory  />
                 </div>
             ),
 

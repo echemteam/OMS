@@ -336,7 +336,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
                   isLoading={isListLoading}
                   pagination={{
                     totalCount: totalRowCount,
-                    pageSize: 20,
+                    pageSize: 25,
                     currentPage: 1,
                   }}
                   onPageChange={handlePageChange}

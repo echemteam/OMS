@@ -6,14 +6,34 @@ import FormCreator from '../../../../components/Forms/FormCreator';
 import { useAddEditOrganizationProfileMutation, useLazyGetOrganizationProfileQuery } from '../../../../app/services/organizationAPI';
 import ToastService from '../../../../services/toastService/ToastService';
 import DataLoader from '../../../../components/ui/dataLoader/DataLoader';
+import { hasFunctionalPermission } from '../../../../utils/AuthorizeNavigation/authorizeNavigation';
+import { securityKey } from '../../../../data/SecurityKey';
+import { useSelector } from 'react-redux';
 
-const OrganizationProfileManagement = () => {
+
+const OrganizationProfileManagement = (isEditablePage) => {
     const organizationProfileRef = useRef();
     const [organizationProfileData, setOrganizationProfileData] = useState(OrganizationProfileManagementdata);
     const [addEditOrganization, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddEditOrganizationProfileMutation();
     const [getOrganizationProfile, { isFetching: isGetOrganizationProfileFetching, isSuccess: isGetOrganizationProfileSuccess, data: isGetOrganizationProfileData }] = useLazyGetOrganizationProfileQuery();
     const [profileId, setProfileId] = useState(0);
+    const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const { formSetting } = OrganizationProfileManagementdata;
+    const roles = useSelector((state) => state.auth.roles.roleName );
 
+   
+   useEffect(() => {
+    if (isEditablePage) {
+      if (roles?.includes("Developer")) {  
+        setIsButtonDisable(false);
+        formSetting.isViewOnly = false;
+      } else {
+        setIsButtonDisable(true);
+        formSetting.isViewOnly = true;
+      }
+    }
+  }, [isEditablePage, roles]);
+    
     useEffect(() => {
         getOrganizationProfile()
 
@@ -23,8 +43,6 @@ const OrganizationProfileManagement = () => {
 
         if (!isGetOrganizationProfileFetching && isGetOrganizationProfileSuccess && isGetOrganizationProfileData) {
             let formData = { ...organizationProfileData };
-
-
             formData.initialState = {
                 organizationProfileId: isGetOrganizationProfileData.organizationProfileId,
                 registeredName: isGetOrganizationProfileData.registeredName,
@@ -51,7 +69,6 @@ const OrganizationProfileManagement = () => {
     }, [isAddSuccess, isAddData]);
 
     const handleAddEdit = () => {
-
         let profileFormData = organizationProfileRef.current.getFormData();
         if (profileFormData) {
             let request = {
@@ -68,7 +85,6 @@ const OrganizationProfileManagement = () => {
                 tWCTaxAccountNumber: profileFormData.tWCTaxAccountNumber,
             }
             addEditOrganization(request)
-
         }
     }
 
@@ -86,7 +102,7 @@ const OrganizationProfileManagement = () => {
                 ref={organizationProfileRef}
             />
 
-
+        {isEditablePage ?
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -94,10 +110,13 @@ const OrganizationProfileManagement = () => {
                         buttonText="Save"
                         onClick={handleAddEdit}
                         isLoading={isAddLoading}
+                        isDisable={isButtonDisable}
                     />
                 </div>
             </div>
+             : null}
         </div>
+        
     );
 };
 
