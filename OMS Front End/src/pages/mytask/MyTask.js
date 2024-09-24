@@ -10,6 +10,7 @@ import { getAuthProps } from "../../lib/authenticationLibrary";
 //** Service's */
 import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
 import { useLazyGetAllFunctionalityEventByModuleIdQuery, useLazyGetAllModulesQuery } from "../../app/services/configurationAPI";
+import { useLazyGetAllModulesWithPendingRequestCountQuery } from "../../app/services/commonAPI";
 
 //** Compoent's */
 const PendingTask = React.lazy(() => import("./feature/PendingTask"));
@@ -35,9 +36,9 @@ const MyTask = () => {
   ] = useLazyGetApprovalRequestsByApprovalRequestIdQuery();
 
   const [
-    getAllModules,
-    { isSuccess: isgetAllModulesSucess, data: allGetAllModulesData },
-  ] = useLazyGetAllModulesQuery();
+    getAllModulesWithPendingRequestCount,
+    { isSuccess: isGetAllModulesWithPendingRequestCountSucess, data: allGetAllModulesWithPendingRequestCountData },
+  ] = useLazyGetAllModulesWithPendingRequestCountQuery();
 
   const [getEventsByModuleId, { isSuccess: isGetAllEventsSucess, data: isGetAllEventsData }] = useLazyGetAllFunctionalityEventByModuleIdQuery();
 
@@ -67,18 +68,22 @@ const MyTask = () => {
   };
 
   useEffect(() => {
-    getAllModules();
-  }, [getAllModules]);
+
+      getAllModulesWithPendingRequestCount();
+    
+  }, [getAllModulesWithPendingRequestCount,approvedData]);
 
   useEffect(() => {
     moduleList.length > 0 && getEventsByModuleId(moduleList[0].moduleId);
   }, [moduleList]);
 
   useEffect(() => {
-    if (isgetAllModulesSucess && allGetAllModulesData) {
-      setModuleList(allGetAllModulesData);
+    if (isGetAllModulesWithPendingRequestCountSucess && allGetAllModulesWithPendingRequestCountData) {
+      setModuleList(allGetAllModulesWithPendingRequestCountData);
     }
-  }, [isgetAllModulesSucess, allGetAllModulesData]);
+  }, [isGetAllModulesWithPendingRequestCountSucess, allGetAllModulesWithPendingRequestCountData]);
+
+
 
   useEffect(() => {
     if (isGetAllEventsSucess && isGetAllEventsData) {

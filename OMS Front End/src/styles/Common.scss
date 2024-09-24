@@ -4351,3 +4351,30 @@ input[type="checkbox"]:disabled {
 .menu-title {
   color: var(--sidebarActiveTextColor);
 }
+
+.organization-main-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--themeColor);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--linkMenu);
+
+  .company-title{
+    font-size: 10px;
+    align-items: center;
+    display: flex;
+    color:var(--textColor);
+    padding:10px;
+    margin-left: 10px;
+    border-radius: 15px;
+    background-color: var(--themeColorLight);
+    .company-image{
+      height:15px;
+      width: 15px;
+      margin-right: 5px;
+    }
+  }
+}

@@ -61,7 +61,7 @@ const OrganizationBankDetail = () => {
     return (
 
         <div className="row mt-2 add-address-form">
-            <h4 className="organization-tab-title">Bank Details</h4>
+            {/* <h4 className="organization-tab-title">Bank Details</h4> */}
             <FormCreator config={organizationBankData}
                 ref={organizationBankRef}
                 {...organizationBankData}

@@ -203,7 +203,7 @@ const OrganizationBusinessAddressDetail = () => {
 
   return (
     <div>
-      <h4 className="organization-tab-title">Business Address</h4>
+      {/* <h4 className="organization-tab-title">Business Address</h4> */}
       <RegisteredAddressDetail
         isGetOrganizationBusinessAddressesData={isGetOrganizationBusinessAddressesData}
         isGetOrganizationBusinessAddressesSuccess={isGetOrganizationBusinessAddressesSuccess}

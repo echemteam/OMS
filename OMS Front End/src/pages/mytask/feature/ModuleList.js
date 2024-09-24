@@ -27,7 +27,8 @@ const ModuleList = ({ moduleList, onModuleChange }) => {
                     {moduleList && moduleList.map((data, index) => (
                         <li className={activeModule === data.moduleId ? "active" : ""}
                             onClick={() => handleModuleClick(data)} key={index}>
-                            <span>{data.moduleName}</span>
+                            <span>{data.moduleName}<div className="module-count">{data.pendingRequestCount}</div></span>
+                            
                         </li>
                     ))}
                 </ul>
