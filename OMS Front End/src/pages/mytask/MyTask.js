@@ -9,8 +9,12 @@ import CardSection from "../../components/ui/card/CardSection";
 import { getAuthProps } from "../../lib/authenticationLibrary";
 //** Service's */
 import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
-import { useLazyGetAllFunctionalityEventByModuleIdQuery, useLazyGetAllModulesQuery } from "../../app/services/configurationAPI";
+import { useLazyGetAllFunctionalityEventByModuleIdQuery } from "../../app/services/configurationAPI";
 import { useLazyGetAllModulesWithPendingRequestCountQuery } from "../../app/services/commonAPI";
+// import {
+//   useLazyGetAllFunctionalityEventByModuleIdQuery,
+//   useLazyGetAllModulesQuery,
+// } from "../../app/services/configurationAPI";
 
 //** Compoent's */
 const PendingTask = React.lazy(() => import("./feature/PendingTask"));
@@ -40,7 +44,10 @@ const MyTask = () => {
     { isSuccess: isGetAllModulesWithPendingRequestCountSucess, data: allGetAllModulesWithPendingRequestCountData },
   ] = useLazyGetAllModulesWithPendingRequestCountQuery();
 
-  const [getEventsByModuleId, { isSuccess: isGetAllEventsSucess, data: isGetAllEventsData }] = useLazyGetAllFunctionalityEventByModuleIdQuery();
+  const [
+    getEventsByModuleId,
+    { isSuccess: isGetAllEventsSucess, data: isGetAllEventsData },
+  ] = useLazyGetAllFunctionalityEventByModuleIdQuery();
 
   const handleGetPendingId = (data) => {
     getApprovalRequestsByApprovalRequestId(data);
@@ -89,16 +96,16 @@ const MyTask = () => {
     if (isGetAllEventsSucess && isGetAllEventsData) {
       const modifyEventList = [
         {
-          value: 0,  // Special value for select all
-          label: 'Select All',
-          isChecked: false
+          value: 0, // Special value for select all
+          label: "Select All",
+          isChecked: false,
         },
-        ...isGetAllEventsData.map(data => ({
+        ...isGetAllEventsData.map((data) => ({
           value: data.functionalityEventId,
           label: data.eventName,
-          isChecked: false
-        }))
-      ]
+          isChecked: false,
+        })),
+      ];
       setEventList(modifyEventList);
     }
   }, [isGetAllEventsSucess, isGetAllEventsData]);
@@ -143,7 +150,7 @@ const MyTask = () => {
   const mainTabs = [
     {
       sMenuItemCaption: "Pending",
-      icon: "fa fa-check-circle-o",
+      // icon: "fa fa-check-circle-o",
       component: (
         <>
           <PendingTask
@@ -162,7 +169,7 @@ const MyTask = () => {
     },
     {
       sMenuItemCaption: "Archive",
-      icon: "fa fa-file-archive-o",
+      // icon: "fa fa-file-archive-o",
       component: (
         <div className="">
           <ArchiveTask
@@ -184,8 +191,12 @@ const MyTask = () => {
         <div className="row">
           <div className="col-xxl-5 col-xl-5 col-md-5 col-12 task-tab">
             <div className="task-title tab-section-desc">
-              <div className="filter-model-sec">
-                <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
+              <div className="filter-model-sec main-customer-grid">
+                <CardSection
+                // cardTitle="Other Information"
+                >
+                  <RenderTabs tabs={mainTabs} onTabClick={handleSetTab} />
+                </CardSection>
               </div>
             </div>
           </div>

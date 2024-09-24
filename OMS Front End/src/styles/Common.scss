@@ -770,6 +770,7 @@ a {
       padding-top: 7px;
       max-height: calc(100vh - 225px);
     }
+
     @media only screen and (max-width: 1366px) {
       max-height: calc(100vh - 200px);
     }
@@ -2637,7 +2638,8 @@ input[type="checkbox"]:disabled {
             display: flex;
             justify-content: center;
           }
-          &:last-child{
+
+          &:last-child {
             justify-content: center;
           }
         }
@@ -2656,7 +2658,8 @@ input[type="checkbox"]:disabled {
             display: flex;
             justify-content: center;
           }
-          &:last-child{
+
+          &:last-child {
             justify-content: center;
           }
         }
@@ -4200,6 +4203,16 @@ input[type="checkbox"]:disabled {
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--linkMenu);
+
+}
+
+.main-organiazation-history {
+  .card-body-sec{
+    padding-bottom: 0;
+    .mb-input {
+      margin-bottom: 25px;
+    }
+  }
 }
 
 .assign-user-model-section {

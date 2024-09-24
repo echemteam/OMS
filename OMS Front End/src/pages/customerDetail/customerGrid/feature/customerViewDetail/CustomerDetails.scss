@@ -199,10 +199,16 @@
                 }
 
                 .contact-type-list {
+                  display: flex;
+                  align-items: flex-start;
+                  i{
+                    padding-top: 3px;
+                    color: #6e839b;
+                  }
                   ul {
-                    margin-top: 0px;
+                    margin-top: -2px;
                     list-style-type: none;
-                    padding-left: 22px;
+                    padding-left: 7px;
                     margin-bottom: 0;
 
                     &.number-list {
@@ -248,15 +254,17 @@
                             border-radius: 100%;
                             color: #fff;
                             background-color: var(--PrimaryColorBright);
-                            font-size: var(--commonFont-extraSmall);
+                            font-size: 9px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            height: 17px;
+                            min-height: 13px;
+                            min-width: 13px;
+                            max-height: 13px;
+                            max-width: 13px;
 
                             @media only screen and (max-width: 1750px) {
                               padding: 2px;
-                              height: 15px;
                             }
                           }
                         }
@@ -293,18 +301,18 @@
                                 border-radius: 100%;
                                 color: #fff;
                                 background-color: var(--PrimaryColorBright);
-                                font-size: var(--commonFont-extraSmall);
+                                font-size: 9px;
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
-                                min-height: 17px;
-                                min-width: 17px;
-                                max-height: 17px;
-                                max-width: 17px;
+                                min-height: 13px;
+                                min-width: 13px;
+                                max-height: 13px;
+                                max-width: 13px;
 
                                 @media only screen and (max-width: 1750px) {
                                   padding: 2px;
-                                  height: 15px;
+                                 
                                 }
                               }
                             }
@@ -462,18 +470,17 @@
                     border-radius: 100%;
                     color: #fff;
                     background-color: var(--PrimaryColorBright);
-                    font-size: var(--commonFont-extraSmall);
+                    font-size: 8px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    min-height: 17px;
-                    min-width: 17px;
-                    max-height: 17px;
-                    max-width: 17px;
+                    min-height: 13px;
+                    min-width: 13px;
+                    max-height: 13px;
+                    max-width: 13px;
 
                     @media only screen and (max-width: 1750px) {
                       padding: 2px;
-                      height: 15px;
                     }
                   }
                 }
@@ -550,12 +557,14 @@
                     border-radius: 100%;
                     color: #fff;
                     background-color: var(--PrimaryColorBright);
-                    font-size: var(--commonFont-extraSmall);
+                    font-size: 8px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    height: 15px;
-                    width: 15px;
+                    min-height: 13px;
+                    min-width: 13px;
+                    max-height: 13px;
+                    max-width: 13px;
 
                     @media only screen and (max-width: 1750px) {
                       padding: 2px;
