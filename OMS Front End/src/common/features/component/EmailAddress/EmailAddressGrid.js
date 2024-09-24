@@ -13,7 +13,7 @@ import { useDeleteContactEmailMutation } from "../../../../app/services/emailAdd
 const EmailAddressList = React.lazy(() => import("./feature/EmailAddressList"));
 const AddEditEmailModal = React.lazy(() => import("./feature/AddEditEmailAddress"));
 
-const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, isButtonDisable , isOrderManage ,orderResetValue }) => {
+const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, isButtonDisable, isOrderManage, orderResetValue }) => {
 
     //** State */
     const molGridRef = useRef();
@@ -44,6 +44,15 @@ const ManageEmailAddress = ({ contactId, emailAddressList, setEmailAddressList, 
             actionColumn.defaultAction.allowDelete = true;
         }
     }, [isButtonDisable]);
+
+    // useEffect(() => {
+    //     if (emailAddressList?.length > 0) {
+    //         console.log(emailAddressList);
+    //         emailAddressList[0].isPrimary = true;
+    //         emailAddressList[0].isEmailPrimary = true;
+    //         setEmailAddressList(emailAddressList);
+    //     }
+    // }, [emailAddressList])
 
     //** Handle Changes */
     const handleToggleModal = () => {
