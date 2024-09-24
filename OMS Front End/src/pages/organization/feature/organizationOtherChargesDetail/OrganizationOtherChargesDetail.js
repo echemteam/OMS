@@ -100,7 +100,7 @@ const OrganizationOtherChargesDetail=(isEditablePage)=>{
     return( 
     
     <div className="row mt-2 add-address-form">
-        <h4 className="organization-tab-title">Other Charges</h4>
+        {/* <h4 className="organization-tab-title">Other Charges</h4> */}
                 <FormCreator config={organizationOtherChargesData}
                     ref={organizationOtherChargesRef}
                    {...organizationOtherChargesData}

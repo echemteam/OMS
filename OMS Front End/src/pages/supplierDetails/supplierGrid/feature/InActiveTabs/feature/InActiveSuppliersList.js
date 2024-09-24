@@ -23,7 +23,7 @@ import { securityValidator } from '../../../../../../utils/CustomActionSecurity/
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
 
 
-const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
+const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator, handleKeyPress }) => {
 
     const childRef = useRef();
     const molGridRef = useRef();
@@ -214,6 +214,7 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
                         searchTextWithIcon={true}
                         clearTextWithIcon={true}
                         clearIconImg={AppIcons.ClearIcone}
+                        handleKeyPress={handleKeyPress}
                     >
                         <div className="row">
                             <div className="col-md-12 table-striped last-center">

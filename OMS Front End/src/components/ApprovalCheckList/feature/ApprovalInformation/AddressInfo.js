@@ -11,11 +11,13 @@ const AddressInformation = ({
   isSubCustomer,
   approvalChekedData,
   handleCheckbox,
-  isSupplierApproval
+  isSupplierApproval,
 }) => {
   //** State */
   const [addressInformation, setAddressInformation] = useState([]);
-  const [isChecked, setIsChecked] = useState(approvalChekedData?.isChecked || false);
+  const [isChecked, setIsChecked] = useState(
+    approvalChekedData?.isChecked || false
+  );
 
   //** API Call's */
   const [
@@ -39,15 +41,24 @@ const AddressInformation = ({
       isGetAddressByIdSuccess &&
       isGetAddressByIdData
     ) {
-      const addressTypeArray = !isSupplierApproval ? isSubCustomer ? [AddressType.SHIPPING] : [AddressType.BILLING, AddressType.SHIPPING] : [AddressType.PHYSICALADDRESSHQ, AddressType.REMITTANCEADDRESS];
+      const addressTypeArray = !isSupplierApproval
+        ? isSubCustomer
+          ? [AddressType.SHIPPING]
+          : [AddressType.BILLING, AddressType.SHIPPING]
+        : [AddressType.PHYSICALADDRESSHQ, AddressType.REMITTANCEADDRESS];
 
-      const customerFilteredData = isGetAddressByIdData.filter((address) => addressTypeArray.includes(address.addressTypeId)
+      const customerFilteredData = isGetAddressByIdData.filter(
+        (address) => addressTypeArray.includes(address.addressTypeId)
         // && (address.isPreferredBilling === true || address.isPreferredShipping === true)
       );
 
-      const supplierFilteredData = isGetAddressByIdData.filter((address) => addressTypeArray.includes(address.addressTypeId));
+      const supplierFilteredData = isGetAddressByIdData.filter((address) =>
+        addressTypeArray.includes(address.addressTypeId)
+      );
 
-      setAddressInformation(!isSupplierApproval ? customerFilteredData : supplierFilteredData);
+      setAddressInformation(
+        !isSupplierApproval ? customerFilteredData : supplierFilteredData
+      );
     }
   }, [isGetAddressByIdFetching, isGetAddressByIdSuccess, isGetAddressByIdData]);
 
@@ -73,7 +84,15 @@ const AddressInformation = ({
         {addressInformation &&
           addressInformation.map((address, index) => (
             <div className="address-card-part" key={index}>
-              <h6 className="title">{address.type}</h6>
+              <div className="d-flex justify-content-between">
+                <h6 className="title">{address.type}</h6>
+                <Checkbox
+                  name={"addressInformation"}
+                  dataField={"addressInformation"}
+                  checked={isChecked || false}
+                  onChange={handleChange}
+                />
+              </div>
               <h6 className="add-line-desc">{address.addressLine1}</h6>
               <p className="add-line-desc">{address.isPreferredBilling}</p>
               <p className="add-line-desc">

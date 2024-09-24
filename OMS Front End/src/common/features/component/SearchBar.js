@@ -16,6 +16,7 @@ function SearchBar(props) {
             value={props.searchValue}
             placeholder={props.searchText}
             onChange={props.handleChange}
+            onKeyPress={props.handleKeyPress}
           />
           <div className="search-btn">
             <Button title="Search">

@@ -76,7 +76,7 @@ const OrganizationShippingChargesDetail=(isEditablePage)=>{
     return(
     
     <div className="row mt-2 add-address-form">
-        <h4 className="organization-tab-title">Shipping Charges</h4>
+        {/* <h4 className="organization-tab-title">Shipping Charges</h4> */}
                 <FormCreator config={organizationShippingChargesData}
                     ref={organizationShippingChargesRef}
                    {...organizationShippingChargesData}

@@ -54,6 +54,14 @@ const EmailTemplate=()=>{
           ToastService.warning(ErrorMessage.CommonErrorMessage);
         }
       };
+
+      const handleKeyPress=(event)=>{
+       
+        if (event.code === "Enter") {
+          handleSearch();
+        }
+      }
+
       const handleClear = () => {
         setSearch("");
          
@@ -83,6 +91,7 @@ const EmailTemplate=()=>{
           clearTextWithIcon={true}
           clearIconImg={AppIcons.ClearIcone}
           searchValue={search}
+          handleKeyPress={handleKeyPress}
         
         >
           <EmailTemplateList 

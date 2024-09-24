@@ -1,31 +1,61 @@
-import React, { useState } from 'react'
-import CardSection from '../../components/ui/card/CardSection';
-import RenderTabs from '../../components/ui/tabs/RenderTabs';
-import { securityKey } from '../../data/SecurityKey';
-const OrganizationBusinessAddressDetail = React.lazy(() => import("./feature/organizationBusinessAddressDetail/OrganizationBusinessAddressDetail"));
-const OrganizationOtherChargesDetail = React.lazy(() => import("./feature/organizationOtherChargesDetail/OrganizationOtherChargesDetail"));
-const OrganizationShippingChargesDetail = React.lazy(() => import("./feature/organizationShippingCharges/OrganizationShippingChargesDetail"));
-const OrganizationAccountingDetail = React.lazy(() => import("./feature/organizationAccountingDetail/OrganizationAccountingDetail"));
-const OrganizationLogisticDetail = React.lazy(() => import("./feature/organizationLogisticDetail/OrganizationLogisticDetail"))
-const OrganizationBankDetail = React.lazy(() => import("./feature/organizationBankDetail/OrganizationBankDetail"))
-const OrganizationHistory = React.lazy(() => import("./feature/organizationHistory/OrganizationHistory"))
-const OrganizationContactDetail = React.lazy(() => import("./feature/organizationContactDetail/OrganizationContactDetail"))
-const SMTPSettings = React.lazy(() => import("./feature/smtpSettings/SMTPSettings"));
-const OrganizationProfileManagement = React.lazy(() => import("./feature/organizationProfileManagement/OrganizationProfileManagement"));
+import React, { useState } from "react";
+import CardSection from "../../components/ui/card/CardSection";
+import RenderTabs from "../../components/ui/tabs/RenderTabs";
+import { AppIcons } from "../../data/appIcons";
+import Image from "../../components/image/Image";
+const OrganizationBusinessAddressDetail = React.lazy(() =>
+  import(
+    "./feature/organizationBusinessAddressDetail/OrganizationBusinessAddressDetail"
+  )
+);
+const OrganizationOtherChargesDetail = React.lazy(() =>
+  import(
+    "./feature/organizationOtherChargesDetail/OrganizationOtherChargesDetail"
+  )
+);
+const OrganizationShippingChargesDetail = React.lazy(() =>
+  import(
+    "./feature/organizationShippingCharges/OrganizationShippingChargesDetail"
+  )
+);
+const OrganizationAccountingDetail = React.lazy(() =>
+  import("./feature/organizationAccountingDetail/OrganizationAccountingDetail")
+);
+const OrganizationLogisticDetail = React.lazy(() =>
+  import("./feature/organizationLogisticDetail/OrganizationLogisticDetail")
+);
+const OrganizationBankDetail = React.lazy(() =>
+  import("./feature/organizationBankDetail/OrganizationBankDetail")
+);
+const OrganizationHistory = React.lazy(() =>
+  import("./feature/organizationHistory/OrganizationHistory")
+);
+const OrganizationContactDetail = React.lazy(() =>
+  import("./feature/organizationContactDetail/OrganizationContactDetail")
+);
+const SMTPSettings = React.lazy(() =>
+  import("./feature/smtpSettings/SMTPSettings")
+);
+const OrganizationProfileManagement = React.lazy(() =>
+  import(
+    "./feature/organizationProfileManagement/OrganizationProfileManagement"
+  )
+);
 
 const Organization = () => {
-
-    const [activeTabId, setActiveTabId] = useState(0)
-    const handleActiveTab = (id) => {
-        setActiveTabId(id);
-    }
+  const [activeTabId, setActiveTabId] = useState(0);
+  const [companyName, setCompanyName] = useState();
+  const handleActiveTab = (id) => {
+    setActiveTabId(id);
+  };
+ 
 
     const tabs = [
         {
             sMenuItemCaption: "Organization Profile",
             component: (
                 <div className="mt-2">
-                    <OrganizationProfileManagement  isEditablePage={true}
+                    <OrganizationProfileManagement setCompanyName={setCompanyName}  isEditablePage={true}
                     />
                 </div>
             ),
@@ -110,21 +140,46 @@ const Organization = () => {
 
     ];
 
-    return (
-        <div className="vertical-tab-card organization">
-            <div className="row">
-                <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
-                    <CardSection  >
-                        <div className='main-organiazation-history'>
-                            <div className="vertical-tab-inner">
-                                <RenderTabs tabs={tabs} isCollapse={true} onActiveTab={handleActiveTab} isOrganization={true} />
-                            </div>
-                        </div>
-                    </CardSection>
-                </div>
-            </div>
-        </div>
-    )
-}
+ 
 
-export default Organization
+  return (
+    <div className="vertical-tab-card organization">
+      <div className="row">
+        <div className="col-xxl-12 col-xl-12 col-md-12 col-12">
+          <CardSection>
+       
+        
+              <h1 className="organization-main-title ">
+                Organization Name
+                {
+                 companyName ?
+                <div className="company-title">
+                  <div className="company-image">
+                    <Image
+                      imagePath={AppIcons.CompanyIcon}
+                      altText="Company-icon"
+                    />
+                  </div>
+                  <span>{companyName}</span>
+                </div>
+                : null
+              }
+              </h1>
+            <div className="main-organiazation-history">
+              <div className="vertical-tab-inner">
+                <RenderTabs
+                  tabs={tabs}
+                  isCollapse={true}
+                  onActiveTab={handleActiveTab}
+                  isOrganization={true}
+                />
+              </div>
+            </div>
+          </CardSection>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Organization;

@@ -13,5 +13,6 @@ namespace OMS.Application.Services.User
         Task<AddEntityDto<int>> DeleteUser(short userId, short CurrentUserId);
         Task<EntityList<UserListResponse>> GetUsers(ListEntityRequest<BaseFilter> requestData);
         Task<AddEntityDto<int>> UpdateUserPassword(UpdateUserPasswordRequest updateUserPassword, short CurrentUserId);
+        Task<List<GetUserLoginLogoutHistoryByUserIdResponse>> GetUserLoginLogoutHistoryByUserId(short userId);
     }
 }
