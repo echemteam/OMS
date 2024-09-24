@@ -26,7 +26,7 @@ export const LabAddressForm = {
       },
       //validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {
@@ -44,7 +44,7 @@ export const LabAddressForm = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {

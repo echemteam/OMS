@@ -224,13 +224,14 @@ const ContactDetailCard = forwardRef(
                   <div className="bottom-contact-desc">
                     {contactItem.emailAddressList?.length > 0 ? (
                       <div className="contact-part">
-                        <div className="type-title">
+                        {/* <div className="type-title">
                           <i className="fa fa-envelope-o"></i>
                           <span className="contact-type-title">
                             Email Address
                           </span>
-                        </div>
+                        </div> */}
                         <div className="contact-type-list">
+                        <i className="fa fa-envelope-o"></i>
                           <ul>
                             <li>
                               {contactItem.emailAddressList?.length > 0 ? (
@@ -248,12 +249,12 @@ const ContactDetailCard = forwardRef(
                     ) : null}
                     {contactItem.phoneNumberList?.length > 0 ? (
                       <div className="contact-part">
-                        <div className="type-title">
+                        {/* <div className="type-title">
                           <i className="fa fa-phone"></i>
                           <span className="contact-type-title">
                             Phone Number
                           </span>
-                        </div>
+                        </div> */}
                         <div className="contact-type-list">
                           <ul className="number-list">
                             <li>
