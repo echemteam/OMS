@@ -75,15 +75,6 @@ const userAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse
         }),
-        addUserLoginLogoutHistory: builder.mutation({
-            query: (data) => ({
-                url: `/Authentication/AddUserLoginLogoutHistory`,
-                method: 'POST',
-                body: transformRequest(data)
-            }),
-            transformResponse: transformSucessResponse,
-            transformErrorResponse: transformErrorResponse
-        }),
     })
 })
 
@@ -92,8 +83,7 @@ export const { useGetUsersMutation,
     useUpdateUserPasswordMutation,
     useUpdateUserMutation,
     useDeleteUserMutation,
-    useLazyGetUserByUserIdQuery,
-    useAddUserLoginLogoutHistoryMutation,
+    useLazyGetUserByUserIdQuery
 } = userAPI;
 
 export default userAPI;
