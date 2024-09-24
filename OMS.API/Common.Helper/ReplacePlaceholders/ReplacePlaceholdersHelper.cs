@@ -13,8 +13,8 @@ namespace Common.Helper.ReplacePlaceholders
             {
                 if (isMultiple)
                 {
-                    ProcessMultipleTemplate(jsonValue, template);
-                    return template;    
+                    return ProcessMultipleTemplate(jsonValue, template); 
+
                 }
                 var data = JObject.Parse(jsonValue).ToObject<Dictionary<string, object>>();
                 var dataList = new List<Dictionary<string, object>>();
@@ -135,7 +135,8 @@ namespace Common.Helper.ReplacePlaceholders
                 FlattenJson(data, placeholders, string.Empty);
 
                 // Replace placeholders in the template
-                return template;
+                return ReplacePlaceholders(template, placeholders);
+
             }
             catch (Exception ex)
             {

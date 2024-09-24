@@ -2,6 +2,7 @@
 using Common.Helper.Enum;
 using Common.Helper.Extension;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
 using OMS.Application.Services.SupplierAccoutingSetting;
 using OMS.Domain.Entities.API.Request.SupplierAccoutingSetting;
@@ -55,23 +56,7 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
             if (supplierData.StatusId == (short)Status.Approved && existingSupplierFinancialSettingsData != null && existingSupplierFinancialSettingsData.SupplierFinancialSettings.SupplierAccountingSettingId > 0 && existingSupplierFinancialSettingsData.OtherDetails.SupplierBankDetailsId > 0)
             {
-
                 //var newJsonData = JsonConvert.SerializeObject(requestData);
-
-                var combinedDataDict = new Dictionary<string, object?>();
-
-                // Convert Supplier Financial Settings data to dictionary if not null
-                //if (existingSupplierFinancialSettingsData != null)
-                //{
-                //    combinedDataDict["BeneficiaryDetails"] = existingSupplierFinancialSettingsData;
-                //}
-
-                //// Convert Supplier Bank Details data to dictionary if not null
-                //if (existingData != null)
-                //{
-                //    combinedDataDict["BankDetails"] = existingData;
-                //}
-
                 // Serialize combined data to JSON
                 var oldJsonData = JsonConvert.SerializeObject(existingSupplierFinancialSettingsData);
 
@@ -85,11 +70,27 @@ namespace OMS.Application.Services.SupplierFinancialSettings
 
                 if (matchingRule != null)
                 {
-                    var newJsonData = JsonConvert.SerializeObject(requestData);
+                    ;
+
+                    // Serialize the combined object to a JSON string
+                    var modifiedData = await ModifyAllJsonData(requestData);
+
+                    // Serialize the combined data to a JSON string
+                    string combinedJsonString = JsonConvert.SerializeObject(modifiedData);
+
+
+                    // Deserialize the updated JSON strings back into their respective object types
+
+
+                    //var combinedNewJson = MergeJson(updatedNewlsJsonSupplierFinancialSettingsData, updatedNewJsonBeneficiaryDetailsData, updatedNewJsonBankDetailsData, updatedNewJsonOtherDetailsData);
+
+                    // If you need a string, call ToString() on combinedNewJson
+                    //var combinedJsonString = combinedNewJson.ToString(Formatting.None);
+
                     var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
                     ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+                        combinedJsonString,
                         oldJsonData,
-                        newJsonData,
                         CurrentUserId,
                         formatTemplate,
                         matchingRule,
@@ -332,21 +333,72 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             }
             return responseData!;
         }
+        public async Task<AddEditACHWireResponse> ModifyAllJsonData(AddEditACHWireRequest requestData)
+        {
+            var tasks = new List<Task>();
 
-        //public async Task<GetSupplierFinancialSettingsWithACHWireBySupplierIdResponse> GetSupplierFinancialSettingsWithACHWireBySupplierId(int supplierId)
-        //{
-        //    GetSupplierFinancialSettingsWithACHWireBySupplierIdResponse responseData = new();
+            // Create a new response object
+            var response = new AddEditACHWireResponse
+            {
+                SupplierFinancialSettings = await ModifyJsonData(requestData.SupplierFinancialSettings),
+                BeneficiaryDetails = await ModifyJsonData(requestData.BeneficiaryDetails),
+                BankDetails = await ModifyJsonData(requestData.BankDetails),
+                OtherDetails = await ModifyJsonData(requestData.OtherDetails),
+                SupplierId = requestData.SupplierId,
+            };
 
-        //    responseData.getSupplierFinancialSettingsBySupplierIdResponse = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
-        //    responseData.getACHWireBySupplierIdResponse = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
+            // Wait for all modifications to complete
+            await Task.WhenAll(tasks);
 
-        //    if (responseData != null && supplierId > 0 && responseData.getACHWireBySupplierIdResponse.BankAddressId > 0 && responseData.getACHWireBySupplierIdResponse.RecipientAddressId > 0)
-        //    {
-        //        responseData.getACHWireBySupplierIdResponse.BankAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(responseData.getACHWireBySupplierIdResponse.BankAddressId);
-        //        responseData.getACHWireBySupplierIdResponse.RecipientAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(responseData.getACHWireBySupplierIdResponse.RecipientAddressId);
-        //    }
-        //    return responseData!;
-        //}
+            return response;
+        }
+
+        public async Task<string> ModifyJsonData(object requestData)
+        {
+            var newJsonData = JsonConvert.SerializeObject(requestData);
+            var jObject = JObject.Parse(newJsonData);
+
+            var getAllCountriesResponse = await repositoryManager.commonRepository.GetAllCountries();
+            var getAllCitiesResponse = await repositoryManager.commonRepository.GetAllCities(Convert.ToInt16((jObject["StateId"] ?? 0)));
+            var getAllStatesResponse = await repositoryManager.commonRepository.GetAllStates();
+            var getAllPODeliveryMethodResponse = await repositoryManager.commonRepository.GetAllPODeliveryMethod();
+            var getAllPaymentTermsResponse = await repositoryManager.commonRepository.GetAllPaymentTerms();
+            var getAllPaymentMethodResponse = await repositoryManager.commonRepository.GetAllPaymentMethod();
+
+            var countryData = getAllCountriesResponse.FirstOrDefault(p => p.CountryId == (int)(jObject["CountryId"] ?? 0));
+            var stateData = getAllStatesResponse.FirstOrDefault(p => p.StateId == (int)(jObject["StateId"] ?? 0));
+            var cityData = getAllCitiesResponse.FirstOrDefault(p => p.CityId == (int)(jObject["CityId"] ?? 0));
+            var poDeliveryMethod = getAllPODeliveryMethodResponse.FirstOrDefault(p => p.PODeliveryMethodId == (int)(jObject["PoDeliveryMethodId"] ?? 0));
+            var paymentTerm = getAllPaymentTermsResponse.FirstOrDefault(p => p.PaymentTermId == (int)(jObject["PaymentTermId"] ?? 0));
+            var paymentMethod = getAllPaymentMethodResponse.FirstOrDefault(p => p.PaymentMethodId == (int)(jObject["InvoiceSubmissionMethod"] ?? 0));
+
+            if (countryData != null)
+            {
+                jObject["CountryName"] = countryData.Name;
+            }
+            if (stateData != null)
+            {
+                jObject["StateName"] = stateData.Name;
+            }
+            if (cityData != null)
+            {
+                jObject["CityName"] = cityData.Name;
+            }
+            if (poDeliveryMethod != null)
+            {
+                jObject["PODeliveryMethod"] = poDeliveryMethod.PODeliveryMethod;
+            }
+            if (paymentTerm != null)
+            {
+                jObject["PaymentTerm"] = paymentTerm.PaymentTerm;
+            }
+            if (paymentMethod != null)
+            {
+                jObject["PaymentMethod"] = paymentMethod.Method;
+            }
+            return jObject.ToString(Formatting.None);
+        }
+
         #endregion
     }
 }
