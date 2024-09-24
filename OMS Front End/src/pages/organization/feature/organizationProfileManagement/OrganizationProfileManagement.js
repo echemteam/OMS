@@ -11,7 +11,7 @@ import { securityKey } from '../../../../data/SecurityKey';
 import { useSelector } from 'react-redux';
 
 
-const OrganizationProfileManagement = (isEditablePage,setCompanyName) => {
+const OrganizationProfileManagement = ({isEditablePage,setCompanyName}) => {
     const organizationProfileRef = useRef();
     const [organizationProfileData, setOrganizationProfileData] = useState(OrganizationProfileManagementdata);
     const [addEditOrganization, { isLoading: isAddLoading, isSuccess: isAddSuccess, data: isAddData }] = useAddEditOrganizationProfileMutation();
