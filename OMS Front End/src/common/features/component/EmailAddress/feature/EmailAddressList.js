@@ -5,6 +5,8 @@ import { emailConfig } from "../config/AddEditEmailForm.data";
 import CardSection from "../../../../../components/ui/card/CardSection";
 import PropTypes from 'prop-types';
 import FinalMolGrid from "../../../../../components/FinalMolGrid/FinalMolGrid";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, actionHandler, isButtonDisable, handleCheckBoxChange }) => {
 
@@ -13,6 +15,16 @@ const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, act
             handleCheckBoxChange(rowData);
         }
     };
+
+    const [list, setList] = useState([]);
+
+    // const sortedEmailList = [...emailAddressList].sort((a, b) => b.id - a.id);
+    useEffect(() => {
+        if (emailAddressList) {
+            const sortedList = emailAddressList.sort((a, b) => b.id - a.id);
+            setList(sortedList);
+        }
+    }, [emailAddressList]);
 
     return (
         <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-1 table-email-sec">
@@ -29,7 +41,7 @@ const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, act
                         <FinalMolGrid
                             ref={molGridRef}
                             configuration={emailConfig}
-                            dataSource={emailAddressList}
+                            dataSource={list}
                             allowPagination={false}
                             onActionChange={actionHandler}
                             onColumnChange={handleGridCheckBoxChange}

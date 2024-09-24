@@ -21,6 +21,7 @@ const ContactList = forwardRef(
     getContactByKeyId,
     selectedContactTypeId,
     search,
+    isSupplier,
   }) => {
     const prevSelectedContactTypeIdRef = useRef();
     const [contactDetails, setContactDetails] = useState([]);
@@ -124,6 +125,8 @@ const ContactList = forwardRef(
                     showEditIcon={showEditIcon}
                     openModalId={openModalId}
                     setOpenModalId={setOpenModalId}
+                    isSupplier={isSupplier}
+                    onGetContactList={onGetContactList}
                     ref={(el) => (modalRefs.current[contactItem.contactId] = el)}
                   />
                 ))}

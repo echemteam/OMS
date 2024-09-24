@@ -49,23 +49,20 @@ const ContactPhoneNumberDropdown = ({ phoneNumberList, isOptionsOpen }) => {
                 {phoneTypesIcon(primaryPhoneNumber?.phoneTypeId)}
               </div>
               <div
-                className={`card-value ml-0 ${
-                  primaryPhoneNumber?.isPrimary ? "" : ""
-                }`}
+                className={`card-value ml-0 ${primaryPhoneNumber?.isPrimary ? "" : ""
+                  }`}
               >
                 {`(${primaryPhoneNumber?.phoneCode}) ${primaryPhoneNumber?.phoneNumber}`}
               </div>
 
               <div
-                className={`card-value ${
-                  primaryPhoneNumber?.isPrimary ? "primary-phone" : ""
-                }`}
+                className={`card-value ${isOptionsOpen && primaryPhoneNumber?.isPrimary ? "primary-phone" : ""
+                  }`}
               >
-                {`${
-                  primaryPhoneNumber?.extension > 0
+                {`${primaryPhoneNumber?.extension > 0
                     ? "," + primaryPhoneNumber?.extension
                     : ""
-                }`}
+                  }`}
               </div>
               {primaryPhoneNumber?.isPrimary ? (
                 <div className="primary-icon" title="Is Primary"></div>
@@ -76,14 +73,12 @@ const ContactPhoneNumberDropdown = ({ phoneNumberList, isOptionsOpen }) => {
                 style={{ cursor: "pointer" }}
                 onClick={() =>
                   CopyText(
-                    `(${primaryPhoneNumber.phoneCode}) ${
-                      primaryPhoneNumber.phoneNumber
+                    `(${primaryPhoneNumber.phoneCode}) ${primaryPhoneNumber.phoneNumber
                     } 
-                ${
-                  primaryPhoneNumber.extension > 0
-                    ? primaryPhoneNumber.extension
-                    : ""
-                }`,
+                ${primaryPhoneNumber.extension > 0
+                      ? primaryPhoneNumber.extension
+                      : ""
+                    }`,
                     "phone"
                   )
                 }
@@ -103,9 +98,8 @@ const ContactPhoneNumberDropdown = ({ phoneNumberList, isOptionsOpen }) => {
               <span className="number-list">
                 {phoneTypesIcon(phoneData?.phoneTypeId)}
                 <span className="">
-                  {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}${
-                    phoneData.extension ? `, ${phoneData.extension}` : ""
-                  }`}
+                  {`(${phoneData.phoneCode}) ${phoneData.phoneNumber}${phoneData.extension ? `, ${phoneData.extension}` : ""
+                    }`}
                 </span>
               </span>
               <span
@@ -114,8 +108,7 @@ const ContactPhoneNumberDropdown = ({ phoneNumberList, isOptionsOpen }) => {
                 style={{ cursor: "pointer" }}
                 onClick={() =>
                   CopyText(
-                    `(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${
-                      phoneData.extension > 0 ? phoneData.extension : ""
+                    `(${phoneData.phoneCode}) ${phoneData.phoneNumber} ${phoneData.extension > 0 ? phoneData.extension : ""
                     }`,
                     "phone"
                   )
