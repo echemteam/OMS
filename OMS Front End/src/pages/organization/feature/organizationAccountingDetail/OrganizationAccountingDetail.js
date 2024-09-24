@@ -57,7 +57,7 @@ const OrganizationAccountingDetail = () => {
     return (
 
         <div className="row mt-2 add-address-form">
-            <h4 className="organization-tab-title">Accounting Details</h4>
+            {/* <h4 className="organization-tab-title">Accounting Details</h4> */}
             <FormCreator config={organizationAccountingData}
                 ref={organizationAccountingRef}
                 {...organizationAccountingData}

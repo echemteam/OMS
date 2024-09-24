@@ -27,6 +27,6 @@ namespace OMS.Application.Services.Organization
         Task<GetOrganizationOtherChargesResponse> GetOrganizationOtherCharges();
         Task<AddEntityDto<int>> AddEditBusinessAddresses(AddEditOrganizationBusinessAddressesRequest requestData, short CurrentUserId);
         Task<GetOrganizationBusinessAddressesResponse> GetOrganizationBusinessAddresses();
-        Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(ListEntityRequest<BaseFilter> requestData);
+        Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(GetOrganizationHistoryRequest requestData);
     }
 }

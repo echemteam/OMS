@@ -87,7 +87,7 @@ import cancelIcon from "../assets/images/cancel.png";
 import testApiIcon from "../assets/images/testApi.png";
 import backArrow from "../assets/images/BackArrow.svg";
 import pencilIcon from "../assets/images/pencil.png";
-
+import businessIcon from "../assets/images/Business-icon.png"
 
 export const AppIcons = {
   // Menus & Header Images
@@ -174,5 +174,6 @@ export const AppIcons = {
   CancelIcon: cancelIcon,
   TestApiIcon: testApiIcon,
   PencilIcon: pencilIcon,
+  CompanyIcon:businessIcon,
 
 };

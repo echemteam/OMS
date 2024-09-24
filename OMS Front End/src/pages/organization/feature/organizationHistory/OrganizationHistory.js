@@ -53,7 +53,7 @@ const OrganizationHistory = () => {
     if (historyData.length > 0) {
       return (
         <>
-          <h4 className="organization-tab-title">History</h4>
+          {/* <h4 className="organization-tab-title">History</h4> */}
           <div className="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
             {historyData.map((event, index) => {
               const formattedDate = event.changeAt
@@ -73,11 +73,11 @@ const OrganizationHistory = () => {
                     <div className="vertical-timeline-element-content bounce-in">
                       <h4 className="timeline-title">
                         <span className="mr-1">{event.eventName}</span>
-                        <span className="mr-1 font-bold">
+                        {/* <span className="mr-1 font-bold">
                           {event.eventStatus}
-                        </span>
+                        </span> */}
                       </h4>
-                      <p>{event.description}</p>
+                      <p>{event.description} by {event.name}</p>
                       <span className="vertical-timeline-element-date">
                         {formattedDate}
                       </span>
