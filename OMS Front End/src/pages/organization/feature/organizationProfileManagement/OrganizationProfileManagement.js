@@ -24,7 +24,7 @@ const OrganizationProfileManagement = ({isEditablePage,setCompanyName}) => {
    
    useEffect(() => {
     if (isEditablePage) {
-      if (roles?.includes("Developer")) {  
+      if (roles?.includes("Admin")) {  
         setIsButtonDisable(false);
         formSetting.isViewOnly = false;
       } else {
