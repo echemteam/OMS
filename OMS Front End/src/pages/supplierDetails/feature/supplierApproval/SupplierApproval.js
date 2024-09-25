@@ -93,6 +93,7 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
                     getContactById={useLazyGetSupplierContactInfoByIdQuery} getFinacialSettingById={useLazyGetSupplierFinacialSettingQuery} ownerType={OwnerType.Supplier}
                     setRejectStatusId={setRejectStatusId}
                     setSelectedStatus={setSelectedStatus} basicData={responsibleUserIds}
+                    OnRejectedSupplierFromApproval={OnRejectedSupplierFromApproval}
                 />
             }
         </React.Fragment>
