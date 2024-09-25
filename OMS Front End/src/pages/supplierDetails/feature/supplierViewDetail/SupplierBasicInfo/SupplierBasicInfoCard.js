@@ -93,10 +93,11 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
     }
   }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
 
-
-  const rejectedSupplierFromApproval = () => {
-    getSupplierById()
-  };
+  useEffect(() => {
+    if (rejectStatusId) {
+      getSupplierById()
+    }
+  }, [rejectStatusId, setRejectStatusId, selectedStatus])
 
   // useEffect(() => {
   //   if (rejectStatusId) {
@@ -141,16 +142,16 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   // }, [supplierData]);
 
   useEffect(() => {
-    if (!isGetSupplierBasicInformationByIdFetching && isGetSupplierBasicInformationById) {
-      const responsibleUserIds = isGetSupplierBasicInformationById?.responsibleUserId?.split(',').map(id => id.trim());
-      const responsibleUserNames = isGetSupplierBasicInformationById?.responsibleUserName?.split(',').map(name => name.trim());
+    if (supplierData) {
+      const responsibleUserIds = supplierData?.responsibleUserId?.split(',').map(id => id.trim());
+      const responsibleUserNames = supplierData?.responsibleUserName?.split(',').map(name => name.trim());
       const responsibleUsers = responsibleUserIds?.map((id, index) => ({
         value: id,
         label: responsibleUserNames[index] || id,
       }));
       setResponsibleUserIds(responsibleUserIds);
       setRUserValue(responsibleUsers);
-      setSelectedStatus(isGetSupplierBasicInformationById.status);
+      setSelectedStatus(supplierData.status);
       getAllUser();
       let request = {
         customerId: 0,
@@ -158,7 +159,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       }
       getValidateCheckList(request);
     }
-  }, [!isGetSupplierBasicInformationByIdFetching, isGetSupplierBasicInformationById]);
+  }, [supplierData]); 
 
   useEffect(() => {
     if (showModal && selectedStatus === CustomerSupplierStatus.REJECT) {
@@ -531,7 +532,8 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       : <DataLoader />}
       <SupplierApproval
         childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} setSelectedStatus={setSelectedStatus} responsibleUserIds={responsibleUserIds}
-        OnRejectedSupplierFromApproval={rejectedSupplierFromApproval} />
+      // OnRejectedSupplierFromApproval={rejectedSupplierFromApproval} 
+      />
     </>
   );
 }

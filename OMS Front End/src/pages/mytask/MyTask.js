@@ -29,6 +29,7 @@ const MyTask = () => {
   const [isApproval, setIsApproval] = useState(false);
   const [approvedData, setApprovedData] = useState(null);
   const [approvalRequestId, setApprovalRequestId] = useState(0);
+  const [isPending,setIsPending]=useState(false);
 
   const [
     getApprovalRequestsByApprovalRequestId,
@@ -76,7 +77,7 @@ const MyTask = () => {
 
   useEffect(() => {
 
-      getAllModulesWithPendingRequestCount();
+      getAllModulesWithPendingRequestCount(isPending);
     
   }, [getAllModulesWithPendingRequestCount,approvedData]);
 
@@ -159,6 +160,7 @@ const MyTask = () => {
             onGetById={handleGetPendingId}
             onTabChange={handleSetTab}
             roleId={roleId}
+            setIsPending={setIsPending}
             moduleList={moduleList}
             eventList={eventList}
             setIsApproval={setIsApproval}
@@ -176,6 +178,7 @@ const MyTask = () => {
             Accept={MyTaskStatus.Accept}
             onGetById={handleGetArchiveId}
             roleId={roleId}
+            setIsPending={setIsPending}
             moduleList={moduleList}
             eventList={eventList}
             handleRestEventDetail={handleRestEventDetail}
