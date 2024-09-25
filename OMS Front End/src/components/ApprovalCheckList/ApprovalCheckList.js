@@ -6,25 +6,41 @@ import Buttons from "../ui/button/Buttons";
 import FileViewer from "react-file-viewer";
 import { AppIcons } from "../../data/appIcons";
 import SidebarModel from "../ui/sidebarModel/SidebarModel";
-import { customerApprovalCheckList, subCustomerApprovalCheckList, supplierApprovalCheckList } from "./Config/ApprovalTransformData";
+import {
+  customerApprovalCheckList,
+  subCustomerApprovalCheckList,
+  supplierApprovalCheckList,
+} from "./Config/ApprovalTransformData";
 //** Service's */
 import ToastService from "../../services/toastService/ToastService";
 import DropDown from "../../components/ui/dropdown/DropDrown";
 import "./ApprovalCheckList.scss";
-import { useLazyGetAllDocumentByOwnerIdQuery, useLazyGetAllUserQuery } from "../../app/services/commonAPI";
-import { CustomerSupplierStatus, ModulePathName } from "../../utils/Enums/commonEnums";
+import {
+  useLazyGetAllDocumentByOwnerIdQuery,
+  useLazyGetAllUserQuery,
+} from "../../app/services/commonAPI";
+import {
+  CustomerSupplierStatus,
+  ModulePathName,
+} from "../../utils/Enums/commonEnums";
 import { useLazyDownloadDocumentQuery } from "../../app/services/documentAPI";
 import CenterModel from "../ui/centerModel/CenterModel";
 import FormCreator from "../Forms/FormCreator";
 import { reasonData } from "../../common/features/component/CustomerSupplierReason/Reason.data";
-import { useAddEditResponsibleUserForCustomerMutation, useUpdateCustomerInActiveStatusMutation } from "../../app/services/basicdetailAPI";
+import {
+  useAddEditResponsibleUserForCustomerMutation,
+  useUpdateCustomerInActiveStatusMutation,
+} from "../../app/services/basicdetailAPI";
 import { setDropDownOptionField } from "../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { excludingRoles } from "../../pages/customerDetail/feature/customerBasicDetail/config/CustomerBasicDetail.data";
 import { useAddCustomerNotesMutation } from "../../app/services/notesAPI";
 import { StatusFeild } from "../../utils/Enums/StatusEnums";
 import ShippingSetting from "./feature/ApprovalInformation/ShippingSetting";
 import { useAddSupplierNotesMutation } from "../../app/services/supplierNotesAPI";
-import { useAddEditResponsibleUserForSupplierMutation, useUpdateSupplierInActiveStatusMutation } from "../../app/services/supplierAPI";
+import {
+  useAddEditResponsibleUserForSupplierMutation,
+  useUpdateSupplierInActiveStatusMutation,
+} from "../../app/services/supplierAPI";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -59,7 +75,7 @@ const ApprovalCheckList = ({
   setRejectStatusId,
   setSelectedStatus,
   onRejectedCustomerFromApproval,
-  OnRejectedSupplierFromApproval
+  OnRejectedSupplierFromApproval,
 }) => {
   //** State */
   const reasonRef = useRef();
@@ -75,30 +91,64 @@ const ApprovalCheckList = ({
 
   const [approvalChekedData, setApprovalChekedData] = useState(() => {
     if (!isSupplierApproval) {
-      return isSubCustomer ? subCustomerApprovalCheckList : customerApprovalCheckList;
+      return isSubCustomer
+        ? subCustomerApprovalCheckList
+        : customerApprovalCheckList;
     } else if (isSupplierApproval) {
       return supplierApprovalCheckList;
     }
   });
 
-
   //** API Call's */
-  const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
+  const [
+    getAllUser,
+    { isSuccess: isGetAllUserSucess, data: allGetAllUserData },
+  ] = useLazyGetAllUserQuery();
   const [addCustomerNotes] = useAddCustomerNotesMutation();
   const [addSupplierNotes] = useAddSupplierNotesMutation();
-  const [addEditResponsibleUserForCustomer] = useAddEditResponsibleUserForCustomerMutation();
-  const [addEditResponsibleUserForSupplier] = useAddEditResponsibleUserForSupplierMutation();
-  const [updateCustomerInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateCustomerInActiveStatus, data: updateCustomerInActiveStatusData }] = useUpdateCustomerInActiveStatusMutation();
-  const [updateSupplierInActiveStatus, { isLoading: updateSupplierInActiveStatusLoading, isSuccess: isSuccessupdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
-  const [getAllDocumentByOwnerId, { isFetching: isGetAllDocumentByOwnerIdFetching, isSuccess: isGetAllDocumentByOwnerIdSuccess, data: isGetAllDocumentByOwnerIdData }] = useLazyGetAllDocumentByOwnerIdQuery();
-  const [Downalod, { isFetching: isDownalodFetching, isSuccess: isDownalodSucess, data: isDownalodData }] = useLazyDownloadDocumentQuery();
+  const [addEditResponsibleUserForCustomer] =
+    useAddEditResponsibleUserForCustomerMutation();
+  const [addEditResponsibleUserForSupplier] =
+    useAddEditResponsibleUserForSupplierMutation();
+  const [
+    updateCustomerInActiveStatus,
+    {
+      isLoading: updateCustomerInActiveStatusCustomerLoading,
+      isSuccess: isSuccessUpdateCustomerInActiveStatus,
+      data: updateCustomerInActiveStatusData,
+    },
+  ] = useUpdateCustomerInActiveStatusMutation();
+  const [
+    updateSupplierInActiveStatus,
+    {
+      isLoading: updateSupplierInActiveStatusLoading,
+      isSuccess: isSuccessupdateSupplierInActiveStatus,
+      data: updateSupplierInActiveStatusData,
+    },
+  ] = useUpdateSupplierInActiveStatusMutation();
+  const [
+    getAllDocumentByOwnerId,
+    {
+      isFetching: isGetAllDocumentByOwnerIdFetching,
+      isSuccess: isGetAllDocumentByOwnerIdSuccess,
+      data: isGetAllDocumentByOwnerIdData,
+    },
+  ] = useLazyGetAllDocumentByOwnerIdQuery();
+  const [
+    Downalod,
+    {
+      isFetching: isDownalodFetching,
+      isSuccess: isDownalodSucess,
+      data: isDownalodData,
+    },
+  ] = useLazyDownloadDocumentQuery();
 
   useEffect(() => {
     getAllUser();
     if (showModal) {
       if (basicData) {
         const responsibleUser = basicData?.map((id) => Number(id.trim()));
-        const formNew = { ...formData }
+        const formNew = { ...formData };
         formNew.initialState = {
           ...formNew.initialState,
           responsibleUserId: responsibleUser,
@@ -108,14 +158,26 @@ const ApprovalCheckList = ({
     }
   }, [showModal]);
 
-
   if (isGetAllUserSucess && allGetAllUserData) {
     const filterData = allGetAllUserData.filter((item) => {
-      return (item.roleName === null || !excludingRoles.map((role) => role.toLowerCase()).includes(item.roleName.toLowerCase()));
+      return (
+        item.roleName === null ||
+        !excludingRoles
+          .map((role) => role.toLowerCase())
+          .includes(item.roleName.toLowerCase())
+      );
     });
     // Remove duplicates based on fullName
-    const uniqueData = Array.from(new Map(filterData.map((item) => [item.fullName, item])).values());
-    setDropDownOptionField(uniqueData, 'userId', 'fullName', reasonData, 'responsibleUserId');
+    const uniqueData = Array.from(
+      new Map(filterData.map((item) => [item.fullName, item])).values()
+    );
+    setDropDownOptionField(
+      uniqueData,
+      "userId",
+      "fullName",
+      reasonData,
+      "responsibleUserId"
+    );
   }
 
   const handleCheckbox = (name, isChecked) => {
@@ -127,17 +189,25 @@ const ApprovalCheckList = ({
   };
 
   useEffect(() => {
-    if (isSuccessupdateSupplierInActiveStatus && updateSupplierInActiveStatusData) {
+    if (
+      isSuccessupdateSupplierInActiveStatus &&
+      updateSupplierInActiveStatusData
+    ) {
       ToastService.success(updateSupplierInActiveStatusData.errorMessage);
       handleToggleModal();
     }
   }, [isSuccessupdateSupplierInActiveStatus, updateSupplierInActiveStatusData]);
 
   useEffect(() => {
-    if (isSuccessUpdateCustomerInActiveStatus && updateCustomerInActiveStatusData) {
+    if (
+      isSuccessUpdateCustomerInActiveStatus &&
+      updateCustomerInActiveStatusData
+    ) {
       ToastService.success(updateCustomerInActiveStatusData.errorMessage);
       handleToggleModal();
-      isSupplierApproval ? OnRejectedSupplierFromApproval() : onRejectedCustomerFromApproval();
+      isSupplierApproval
+        ? OnRejectedSupplierFromApproval()
+        : onRejectedCustomerFromApproval();
     }
   }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
 
@@ -165,7 +235,7 @@ const ApprovalCheckList = ({
         };
         updateCustomerInActiveStatus(req);
         updateRUserDataDropdown(custData.responsibleUserId);
-        addCustomerNotes(req)
+        addCustomerNotes(req);
         // setSelectedStatus(StatusFeild.Reject);
         // setRejectStatusId(req.statusId);
         // onRejectedCustomerFromApproval();
@@ -181,13 +251,12 @@ const ApprovalCheckList = ({
         };
         updateSupplierInActiveStatus(req);
         updateRUserDataDropdown(supplierData.responsibleUserId);
-        addSupplierNotes(req)
+        addSupplierNotes(req);
         setSelectedStatus(StatusFeild.Reject);
         setRejectStatusId(req.statusId);
       }
     }
   };
-
 
   const updateRUserDataDropdown = (value) => {
     if (!isSupplierApproval) {
@@ -215,7 +284,6 @@ const ApprovalCheckList = ({
     }
   }, [mainId]);
 
-
   useEffect(() => {
     if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
       const fileData = isDownalodData.fileData;
@@ -229,7 +297,11 @@ const ApprovalCheckList = ({
   }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
   useEffect(() => {
-    if (!isGetAllDocumentByOwnerIdFetching && isGetAllDocumentByOwnerIdSuccess && isGetAllDocumentByOwnerIdData) {
+    if (
+      !isGetAllDocumentByOwnerIdFetching &&
+      isGetAllDocumentByOwnerIdSuccess &&
+      isGetAllDocumentByOwnerIdData
+    ) {
       const transformedData = isGetAllDocumentByOwnerIdData.map((item) => ({
         value: item.documentId,
         label: item.name,
@@ -237,12 +309,16 @@ const ApprovalCheckList = ({
       }));
       setDocumentListData(transformedData);
     }
-  }, [isGetAllDocumentByOwnerIdFetching, isGetAllDocumentByOwnerIdSuccess, isGetAllDocumentByOwnerIdData]);
+  }, [
+    isGetAllDocumentByOwnerIdFetching,
+    isGetAllDocumentByOwnerIdSuccess,
+    isGetAllDocumentByOwnerIdData,
+  ]);
 
   const handleToggleModal = () => {
     setShowModal(false);
     onSidebarClose();
-  }
+  };
   const determineFileType = (fileName) => {
     const extension = fileName.split(".").pop().toLowerCase();
     switch (extension) {
@@ -279,7 +355,6 @@ const ApprovalCheckList = ({
   };
   const handleRejectResponse = () => {
     setShowModal(true);
-
   };
   const handleDocumentChange = (selectedoption) => {
     setDocument(selectedoption.value);
@@ -323,7 +398,9 @@ const ApprovalCheckList = ({
                           isModelOpen={isModelOpen}
                           mainId={mainId}
                           getBasicInformationById={getBasicInformationById}
-                          approvalChekedData={approvalChekedData.find((item) => item.name === "basicInformation")}
+                          approvalChekedData={approvalChekedData.find(
+                            (item) => item.name === "basicInformation"
+                          )}
                           handleCheckbox={handleCheckbox}
                           isSupplierApproval={isSupplierApproval}
                         />
@@ -353,7 +430,9 @@ const ApprovalCheckList = ({
                           mainId={mainId}
                           getAddressById={getAddressById}
                           isSubCustomer={isSubCustomer}
-                          approvalChekedData={approvalChekedData.find((item) => item.name === "addressInformation")}
+                          approvalChekedData={approvalChekedData.find(
+                            (item) => item.name === "addressInformation"
+                          )}
                           handleCheckbox={handleCheckbox}
                         />
                       </div>
@@ -365,7 +444,9 @@ const ApprovalCheckList = ({
                               isModelOpen={isModelOpen}
                               mainId={mainId}
                               getFinacialSettingById={getFinacialSettingById}
-                              approvalChekedData={approvalChekedData.find((item) => item.name === "settingInformation")}
+                              approvalChekedData={approvalChekedData.find(
+                                (item) => item.name === "settingInformation"
+                              )}
                               handleCheckbox={handleCheckbox}
                             />
                           </div>
@@ -379,7 +460,10 @@ const ApprovalCheckList = ({
                               isModelOpen={isModelOpen}
                               mainId={mainId}
                               getFinacialSettingById={getFinacialSettingById}
-                              approvalChekedData={approvalChekedData.find((item) => item.name === "shippingsettingInformation")}
+                              approvalChekedData={approvalChekedData.find(
+                                (item) =>
+                                  item.name === "shippingsettingInformation"
+                              )}
                               handleCheckbox={handleCheckbox}
                             />
                           </div>
@@ -393,7 +477,9 @@ const ApprovalCheckList = ({
                               isModelOpen={isModelOpen}
                               mainId={mainId}
                               getFinacialSettingById={getFinacialSettingById}
-                              approvalChekedData={approvalChekedData.find((item) => item.name === "settingInformation")}
+                              approvalChekedData={approvalChekedData.find(
+                                (item) => item.name === "settingInformation"
+                              )}
                               handleCheckbox={handleCheckbox}
                             />
                           </div>
@@ -450,22 +536,22 @@ const ApprovalCheckList = ({
               <div className="row">
                 <div className="col-12">
                   <div className="document-view">
-                  {selectedDocument && getFileType ? (
-                        getFileType === "pdf" ? (
-                            <div>
-                                <iframe
-                                    src={selectedDocument}
-                                    title="PDF Preview"
-                                    style={{ width: '100%', height: '200%' }}  
-                                />
-                            </div>
-                        ) : (
-                            <FileViewer
-                                fileType={getFileType}
-                                filePath={selectedDocument}
-                                onError={(error) => console.error("Error:", error)}
-                            />
-                        )
+                    {selectedDocument && getFileType ? (
+                      getFileType === "pdf" ? (
+                        <div className="pdf-iframe">
+                          <iframe
+                            src={selectedDocument}
+                            title="PDF Preview"
+                            style={{ width: "100%", height: "200%" }}
+                          />
+                        </div>
+                      ) : (
+                        <FileViewer
+                          fileType={getFileType}
+                          filePath={selectedDocument}
+                          onError={(error) => console.error("Error:", error)}
+                        />
+                      )
                     ) : null}
                   </div>
                 </div>
@@ -514,7 +600,8 @@ const ApprovalCheckList = ({
         showModal={showModal}
         handleToggleModal={handleToggleModal}
         modalTitle={`Reject Reason`}
-        modelSizeClass="w-50s" >
+        modelSizeClass="w-50s"
+      >
         <div className="row">
           <FormCreator config={formData} ref={reasonRef} {...formData} />
           <div className="col-md-12 mt-2">
@@ -523,7 +610,11 @@ const ApprovalCheckList = ({
                 <Buttons
                   buttonTypeClassName="theme-button"
                   buttonText="Update"
-                  isLoading={isSupplierApproval ? updateSupplierInActiveStatusLoading : updateCustomerInActiveStatusCustomerLoading}
+                  isLoading={
+                    isSupplierApproval
+                      ? updateSupplierInActiveStatusLoading
+                      : updateCustomerInActiveStatusCustomerLoading
+                  }
                   onClick={handleRejectUpdate}
                 />
                 <Buttons
