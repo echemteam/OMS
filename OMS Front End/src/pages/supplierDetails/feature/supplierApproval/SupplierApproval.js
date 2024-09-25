@@ -5,12 +5,11 @@ import { ApprovalEnum, OwnerType } from "../../../../utils/Enums/commonEnums";
 import ApprovalCheckList from "../../../../components/ApprovalCheckList/ApprovalCheckList";
 //** Service's */
 import { useGetValidateCheckListMutation, useLazyGetSupplierAddressInfoByIdQuery, useLazyGetSupplierBasicInfoByIdQuery, useLazyGetSupplierContactInfoByIdQuery, useLazyGetSupplierFinacialSettingQuery } from "../../../../app/services/ApprovalAPI";
-import BasicDetailContext from "../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Component's */
 const ApprovalValidateData = React.lazy(() => import("../../../../components/ApprovalCheckList/feature/approvalValidateData/ApprovalValidateData"));
 
-const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isDetailPage, isAddPagePage,setSelectedStatus,responsibleUserIds }) => {
+const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isDetailPage, isAddPagePage, setSelectedStatus, responsibleUserIds, OnRejectedSupplierFromApproval }) => {
 
     const parentRef = useRef();
     const [supplierId, setSupplierId] = useState(false);
@@ -18,7 +17,7 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
     const [validateCheckList, setValidateCheckList] = useState([]);
     const [isShowValidateModal, setIsShowValidateModal] = useState(false);
     const [showApprovalCheckList, setShowApprovalCheckList] = useState(false);
-    const {setRejectStatusId } = useContext(AddSupplierContext);
+    const { setRejectStatusId } = useContext(AddSupplierContext);
     const [getValidateCheckList, { isLoading: isGetCheckListLoading, isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
 
     //** Approval CheckList Modal*/
@@ -92,8 +91,8 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
                     ApprovalData={ApprovalEnum.APPROVESUPPLIER} onSuccessApprovalClose={onSuccessApprovalClose}
                     getBasicInformationById={useLazyGetSupplierBasicInfoByIdQuery} getAddressById={useLazyGetSupplierAddressInfoByIdQuery}
                     getContactById={useLazyGetSupplierContactInfoByIdQuery} getFinacialSettingById={useLazyGetSupplierFinacialSettingQuery} ownerType={OwnerType.Supplier}
-                     setRejectStatusId={setRejectStatusId}
-                     setSelectedStatus={setSelectedStatus} basicData={responsibleUserIds}
+                    setRejectStatusId={setRejectStatusId}
+                    setSelectedStatus={setSelectedStatus} basicData={responsibleUserIds}
                 />
             }
         </React.Fragment>

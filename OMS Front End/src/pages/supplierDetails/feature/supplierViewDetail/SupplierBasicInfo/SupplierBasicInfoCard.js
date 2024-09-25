@@ -52,7 +52,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const { isResponsibleUser } = useContext(AddSupplierContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
-  const {setRejectStatusId,rejectStatusId} = useContext(AddSupplierContext);
+  const { setRejectStatusId, rejectStatusId } = useContext(AddSupplierContext);
 
   useEffect(() => {
     if (!isResponsibleUser) {
@@ -88,11 +88,17 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
     }
   }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
 
-  useEffect(() => {
-    if (rejectStatusId) {
-      getSupplierById()
-    }
-  }, [rejectStatusId, setRejectStatusId, selectedStatus])
+  // useEffect(() => {
+  //   if (rejectStatusId) {
+  //     getSupplierById()
+  //   }
+  // }, [rejectStatusId, setRejectStatusId, selectedStatus])
+
+
+  const rejectedSupplierFromApproval = () => {
+    getSupplierById()
+  };
+
   // useEffect(() => {
   //   if (supplierData) {
   //     const statusId = supplierData.statusId;
@@ -146,7 +152,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   }, [supplierData]);
 
   useEffect(() => {
-    if (showModal &&  selectedStatus === CustomerSupplierStatus.REJECT  ) {
+    if (showModal && selectedStatus === CustomerSupplierStatus.REJECT) {
       if (responsibleUserIds) {
         const responsibleUser = responsibleUserIds?.map((id) => Number(id.trim()));
         const formNew = { ...formData }
@@ -157,7 +163,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
         setFormData(formNew);
       }
     }
-  }, [showModal,selectedStatus]);
+  }, [showModal, selectedStatus]);
 
   useEffect(() => {
     if (!isSuppilierFetching && isGetAllUserSucess && allGetAlluserData) {
@@ -512,7 +518,10 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
         )}
       </div>
       : <DataLoader />}
-      <SupplierApproval childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} setSelectedStatus={setSelectedStatus} responsibleUserIds={responsibleUserIds}/>
+      <SupplierApproval
+        childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} setSelectedStatus={setSelectedStatus} responsibleUserIds={responsibleUserIds}
+        OnRejectedSupplierFromApproval={rejectedSupplierFromApproval}
+      />
     </>
   );
 }

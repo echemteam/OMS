@@ -88,6 +88,8 @@ const CustomerDetails = () => {
                 customerId={customerId}
                 getCustomerById={onSuccess}
                 isGetCustomersBasicInformationById={isGetCustomersBasicInformationById}
+                isGetCustomersBasicInformationByIdFetching={isGetCustomersBasicInformationByIdFetching}
+                GetCustomersBasicInformationByIdData={GetCustomersBasicInformationByIdData}
               />
             </CardSection>
           </div>

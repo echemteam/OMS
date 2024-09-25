@@ -47,7 +47,9 @@ const CustomerBasicInfoCard = ({
   isLoading,
   customerId,
   getCustomerById,
-  isGetCustomersBasicInformationById
+  isGetCustomersBasicInformationById,
+  isGetCustomersBasicInformationByIdFetching,
+  GetCustomersBasicInformationByIdData
 }) => {
   const childRef = useRef();
   const reasonRef = useRef();
@@ -95,7 +97,7 @@ const CustomerBasicInfoCard = ({
 
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
-  const { isResponsibleUser, setRejectStatusId,rejectStatusId} = useContext(BasicDetailContext);
+  const { isResponsibleUser, setRejectStatusId, rejectStatusId } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(
     securityKey.EDITBASICCUSTOMERDETAILS
@@ -137,11 +139,11 @@ const CustomerBasicInfoCard = ({
 
 
   useEffect(() => {
-    if (customerData && isGetCustomersBasicInformationById) {
-      const responsibleUserIds = customerData?.responsibleUserId
+    if (GetCustomersBasicInformationByIdData && isGetCustomersBasicInformationById && !isGetCustomersBasicInformationByIdFetching) {
+      const responsibleUserIds = GetCustomersBasicInformationByIdData?.responsibleUserId
         ?.split(",")
         .map((id) => id.trim());
-      const responsibleUserNames = customerData?.responsibleUserName
+      const responsibleUserNames = GetCustomersBasicInformationByIdData?.responsibleUserName
         ?.split(",")
         .map((name) => name.trim());
       const responsibleUsers = responsibleUserIds?.map((id, index) => ({
@@ -150,16 +152,20 @@ const CustomerBasicInfoCard = ({
       }));
       setResponsibleUserIds(responsibleUserIds);
       setRUserValue(responsibleUsers);
-      setSelectedStatus(customerData.status);
+      setSelectedStatus(GetCustomersBasicInformationByIdData.status);
       getAllUser();
     }
-  }, [customerData, isGetCustomersBasicInformationById]);
+  }, [GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationById, isGetCustomersBasicInformationByIdFetching]);
 
-  useEffect(() => {
-    if (rejectStatusId) {
-      getCustomerById()
-    }
-  }, [rejectStatusId, setRejectStatusId, selectedStatus])
+  // useEffect(() => {
+  //   if (rejectStatusId) {
+  //     getCustomerById()
+  //   }
+  // }, [rejectStatusId, setRejectStatusId, selectedStatus])
+
+  const rejectedCustomerFromApproval = () => {
+    getCustomerById()
+  };
 
   useEffect(() => {
     if (!isFetching && isGetAllUserSucess && allGetAlluserData) {
@@ -347,7 +353,7 @@ const CustomerBasicInfoCard = ({
   const handleModelShow = () => {
     setIsInvoiceModelShow(true);
   };
-  
+
   const handleToggleModal = () => {
     setShowModal(false);
     setIsInvoiceModelShow(false);
@@ -397,8 +403,8 @@ const CustomerBasicInfoCard = ({
   };
 
   useEffect(() => {
-    
-    if (showModal &&  selectedStatus === CustomerSupplierStatus.REJECT  ) {
+
+    if (showModal && selectedStatus === CustomerSupplierStatus.REJECT) {
       if (responsibleUserIds) {
         const responsibleUser = responsibleUserIds?.map((id) => Number(id.trim()));
         const formNew = { ...formData }
@@ -409,7 +415,7 @@ const CustomerBasicInfoCard = ({
         setFormData(formNew);
       }
     }
-  }, [showModal,selectedStatus]);
+  }, [showModal, selectedStatus]);
 
   useEffect(() => {
     if (isSuccessUpdateCustomerSubCustomer && isUpdateCustomerSubCustomerData) {
@@ -664,6 +670,7 @@ const CustomerBasicInfoCard = ({
         updateCustomerApproval={updateCustomerApproval}
         responsibleUserIds={responsibleUserIds}
         setSelectedStatus={setSelectedStatus}
+        onRejectedCustomerFromApproval={rejectedCustomerFromApproval}
 
       />
     </div>

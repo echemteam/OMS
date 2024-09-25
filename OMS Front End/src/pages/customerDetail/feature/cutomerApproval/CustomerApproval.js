@@ -13,7 +13,7 @@ const ApprovalCheckList = React.lazy(() => import("../../../../components/Approv
 const ApprovalValidateData = React.lazy(() => import("../../../../components/ApprovalCheckList/feature/approvalValidateData/ApprovalValidateData"));
 
 
-const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval,responsibleUserIds, isDetailPage, isAddPagePage ,setSelectedStatus}) => {
+const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerApproval, responsibleUserIds, isDetailPage, isAddPagePage, setSelectedStatus, onRejectedCustomerFromApproval }) => {
 
     const parentRef = useRef();
     const [customerId, setCustomerId] = useState(0);
@@ -22,7 +22,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     const [validateCheckList, setValidateCheckList] = useState([]);
     const [isShowValidateModal, setIsShowValidateModal] = useState(false);
     const [showApprovalCheckList, setShowApprovalCheckList] = useState(false);
-    const {setRejectStatusId } = useContext(BasicDetailContext);
+    const { setRejectStatusId } = useContext(BasicDetailContext);
 
     const [getValidateCheckList, { isLoading: isGetCheckListLoading, isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
 
@@ -100,6 +100,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
                     ApprovalData={isSubCustomer ? ApprovalEnum.APPROVESUBCUSTOMER : ApprovalEnum.APPROVECUSTOMER} isSupplierApproval={false} isSubCustomer={isSubCustomer}
                     getBasicInformationById={useLazyGetCustomersInfoByIdQuery} getAddressById={useLazyGetCustomerAddresssInfoByIdQuery}
                     getContactById={useLazyGetCustomerContactInfoByIdQuery} getFinacialSettingById={useLazyGetCustomerFinacialSettingQuery} ownerType={OwnerType.Customer} basicData={responsibleUserIds} setRejectStatusId={setRejectStatusId} setSelectedStatus={setSelectedStatus}
+                    onRejectedCustomerFromApproval={onRejectedCustomerFromApproval}
                 />
             }
         </React.Fragment>
