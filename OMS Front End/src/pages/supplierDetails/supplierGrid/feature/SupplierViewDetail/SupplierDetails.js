@@ -95,14 +95,18 @@ const SupplierDetails = () => {
                 supplierData={supplierData}
                 isLoading={!isModelOpen ? isGetSupplierBasicInformationByIdFetching : null}
                 supplierId={supplierId}
-                getSupplierById={onSuccess} />
+                getSupplierById={onSuccess}
+                isGetSupplierBasicInformationByIdFetching={isGetSupplierBasicInformationByIdFetching}
+                GetSupplierBasicInformationByIdData={GetSupplierBasicInformationByIdData}
+                isGetSupplierBasicInformationById={isGetSupplierBasicInformationById}
+              />
             </CardSection>
           </div>
           <div className="col-xxl-12 col-xl-12 col-md-12 col-12 other-info-tab">
             <Buttons buttonTypeClassName="back-button btn dark-btn" onClick={handleBackClick}
               textWithIcon={true} buttonText="Back" imagePath={AppIcons.BackArrowIcon}></Buttons>
             {/* Supplier Tab's */}
-            <SupplierViewTab supplierId={supplierId} contryIdCode={supplierData?.countryId} supplierStatus={supplierData?.statusId}/>
+            <SupplierViewTab supplierId={supplierId} contryIdCode={supplierData?.countryId} supplierStatus={supplierData?.statusId} />
           </div>
         </div>
       </div>
