@@ -6,13 +6,30 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { OrganizationAccountingFormData } from "./config/OrganizationAccounting.data";
 import { useAddEditOrganizationAccountingDetailsMutation, useLazyGetOrganizationAccountingDetailsQuery } from "../../../../app/services/organizationAPI";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { useSelector } from "react-redux";
 
-const OrganizationAccountingDetail = () => {
+const OrganizationAccountingDetail = (isEditablePage) => {
     const organizationAccountingRef = useRef();
     const [organizationAccountingData, setOrganizationAccountingData] = useState(OrganizationAccountingFormData);
     const [addEditOrganizationAccountingDetails, { isLoading: isAddEditOrganizationAccountingDetailsLoading, isSuccess: isAddEditOrganizationAccountingDetailsSuccess, data: isAddEditOrganizationAccountingDetailsData }] = useAddEditOrganizationAccountingDetailsMutation();
     const [getOrganizationAccountingDetails, { isFetching: isGetOrganizationAccountingDetailsFetching, isSuccess: isGetOrganizationAccountingDetailsSuccess, data: isGetOrganizationAccountingDetailsData }] = useLazyGetOrganizationAccountingDetailsQuery();
     const [accountingDetailId, setAccountingDetailId] = useState(0);
+    const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const { formSetting } = OrganizationAccountingFormData;
+    const roles = useSelector((state) => state.auth.roles.roleName );
+
+   
+   useEffect(() => {
+    if (isEditablePage) {
+      if (roles?.includes("Admin")) {  
+        setIsButtonDisable(false);
+        formSetting.isViewOnly = false;
+      } else {
+        setIsButtonDisable(true);
+        formSetting.isViewOnly = true;
+      }
+    }
+  }, [isEditablePage, roles]);
 
     useEffect(() => {
         if (isAddEditOrganizationAccountingDetailsSuccess && isAddEditOrganizationAccountingDetailsData) {
@@ -57,13 +74,13 @@ const OrganizationAccountingDetail = () => {
     return (
 
         <div className="row mt-2 add-address-form">
-            <h4 className="organization-tab-title">Accounting Details</h4>
+            {/* <h4 className="organization-tab-title">Accounting Details</h4> */}
             <FormCreator config={organizationAccountingData}
                 ref={organizationAccountingRef}
                 {...organizationAccountingData}
 
             />
-
+             {isEditablePage ?
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -71,9 +88,10 @@ const OrganizationAccountingDetail = () => {
                         buttonText="Save"
                         onClick={handleAddEditAccountingDetail}
                         isLoading={isAddEditOrganizationAccountingDetailsLoading}
+                        isDisable={isButtonDisable}
                     />
                 </div>
-            </div>
+            </div>:null}
         </div>
     )
 }

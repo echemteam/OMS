@@ -7,7 +7,8 @@ import SearchBar from "../../../common/features/component/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../app/slice/authSlice";
 import Iconify from "../../../components/ui/iconify/Iconify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { logUserLoginLogoutHistory } from "../../../utils/Thunk/UserHistory";
 
 function Header() {
 
@@ -16,7 +17,7 @@ function Header() {
   const [isActive, setIsActive] = useState(false);
   const shortcutSecRef = useRef(null);
   const authState = useSelector((state) => state.auth);
-
+  const location = useLocation();
   const data = [
     {
       rowId: 1,
@@ -78,6 +79,10 @@ function Header() {
   ];
   const LogoutButton = () => {
     dispatch(logout());
+    dispatch(logUserLoginLogoutHistory({
+      userId: authState.user.userID,
+      isLogin: authState.isAuthenticated
+    }));
   };
   const handleClickOutside = (event) => {
     if (
@@ -96,11 +101,11 @@ function Header() {
   }, []);
 
   const handleChange = () => { };
-
+  
   const openAdmin = () => {
     navigate("/configuration/ApprovalRules");
   };
-
+  const isConfigPage = location.pathname.includes("/configuration");
   return (
     <div className="header-section">
       <div className="left-section">
@@ -115,9 +120,15 @@ function Header() {
       <div className="right-section">
         <div className="profile-section">
           <div className={`shortcut-sec`}>
-            <div className="shortcut-icon header-icon-part" onClick={() => openAdmin()} >
+          {isConfigPage ? (
+            <div className="header-icon-part" onClick={() => navigate("/")}>
+              <Iconify icon="mdi:home" />
+            </div>
+          ) : (
+            <div className="header-icon-part" onClick={openAdmin}>
               <Iconify icon="line-md:cog-loop" />
             </div>
+          )}
           </div>
           <div className={`shortcut-sec ${isActive ? "active" : ""}`} ref={shortcutSecRef}>
             <div className="shortcut-icon" onClick={() => setIsActive(!isActive)} >

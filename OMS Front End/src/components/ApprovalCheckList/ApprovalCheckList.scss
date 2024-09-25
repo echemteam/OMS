@@ -35,12 +35,25 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 5px;
+      // margin-bottom: 5px;
       // padding-bottom: 8px;
       padding: 7px;
       border-radius: 5px;
       background: var(--inputBorderLight);
+      cursor: pointer;
 
+      span {
+        display: flex;
+        align-items: 'center';
+        margin-right: 7px;
+
+        .component-iconify {
+          width: 15px !important;
+          height: 15px !important;
+          align-items: center;
+          transition: 0.5s all;
+        }
+      }
 
       h5 {
         font-weight: 800;
@@ -50,6 +63,13 @@
 
       .checkbox {
         margin: 0;
+      }
+      &.active{
+        span{
+          .component-iconify{
+            transform: rotate(180deg);
+          }
+        }
       }
     }
 
@@ -73,7 +93,7 @@
     }
 
     .card-info-checklist {
-      padding: 0 8px;
+      padding: 0 0 0 8px;
 
       .address-card-part {
         margin-bottom: 7px;
@@ -122,9 +142,15 @@
 
         .name-title {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           margin-bottom: 6px;
-          &:last-child{
+
+          .title-desc {
+            display: flex;
+            flex-wrap: wrap;
+          }
+
+          &:last-child {
             margin-bottom: 0;
           }
 
@@ -134,8 +160,9 @@
             margin: 0;
             margin-right: 7px;
             min-width: 50px;
+
             @media only screen and (max-width: 1750px) {
-            min-width: 45px;
+              min-width: 45px;
             }
           }
 
@@ -152,9 +179,10 @@
             .label {
               margin-top: 0;
               min-width: 50px;
+
               @media only screen and (max-width: 1750px) {
                 min-width: 45px;
-                }
+              }
             }
 
             .name-desc-sec {
@@ -171,6 +199,18 @@
               }
             }
           }
+        }
+      }
+    }
+  }
+}
+.right-document-view{
+  .document-view{
+    .pdf-iframe{
+      iframe{
+        height: calc(100vh - 156px) !important;
+        @media only screen and (max-width: 1750px) {
+          height: calc(100vh - 145px) !important;
         }
       }
     }

@@ -1,6 +1,7 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { logout } from './../../app/slice/authSlice'
 import { getAuthProps } from '../../lib/authenticationLibrary';
+import { logUserLoginLogoutHistory } from '../Thunk/UserHistory';
 
 const { Mutex } = require('async-mutex');
 
@@ -80,6 +81,12 @@ export const customFetchBase = async (args, api, extraOptions) => {
 
   if (!token) {
     // Handle the case where there is no token (user is not logged in)
+    if (authData?.user?.userID) {
+      await api.dispatch(logUserLoginLogoutHistory({
+        userId: authData.user.userID,
+        isLogin: false
+      }));
+    }
     api.dispatch(logout());
     window.location.href = '/login';
     return;
@@ -100,6 +107,12 @@ export const customFetchBase = async (args, api, extraOptions) => {
     // Handle the case where the request returned an error, e.g., token expiration
     if (result.error.status === 401) {
       // Token expired or invalid
+      if (authData?.user?.userID) {
+        await api.dispatch(logUserLoginLogoutHistory({
+          userId: authData.user.userID,
+          isLogin: false
+        }));
+      }
       api.dispatch(logout());
       window.location.href = '/login';
     }

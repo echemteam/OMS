@@ -55,6 +55,7 @@ export const CustomersList = ({
   searchStatusFilter,
   handleSearch,
   handleClear,
+  handleKeyPress,
   shouldRerenderFormCreator,
 }) => {
   const navigate = useNavigate();
@@ -218,6 +219,7 @@ export const CustomersList = ({
       statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
       sortString: sortingStringObject,
     };
+    // saveData('customerPagination', request);
     getCustomers(request);
   };
 
@@ -448,6 +450,7 @@ export const CustomersList = ({
             searchTextWithIcon={true}
             clearTextWithIcon={true}
             clearIconImg={AppIcons.ClearIcone}
+            handleKeyPress={handleKeyPress}
           >
             <div className="row">
               <div className="col-md-12 table-striped">
@@ -459,7 +462,7 @@ export const CustomersList = ({
                   isLoading={isListLoading}
                   pagination={{
                     totalCount: totalRowCount,
-                    pageSize: 20,
+                    pageSize: 25,
                     currentPage: 1,
                   }}
                   onPageChange={handlePageChange}

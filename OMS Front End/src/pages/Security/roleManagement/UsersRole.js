@@ -37,10 +37,8 @@ const UsersRole = () => {
                 return "status-btn badge-gradient-danger";
               case "Pending":
                 return "status-btn badge-gradient-warning";
-
               case "In progress":
                 return "status-btn badge-gradient-theme";
-
               default:
                 return "status-btn badge-gradient-info";
             }

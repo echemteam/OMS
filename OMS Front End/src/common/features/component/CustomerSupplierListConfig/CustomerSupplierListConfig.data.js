@@ -12,7 +12,7 @@ export const AllCustomerGridConfig = {
       name: "Customer Name",
       fieldName: "name",
       colStyle: {
-        width: "32%",
+        width: "35%",
       },
       allowShort: true,
     },
@@ -21,7 +21,7 @@ export const AllCustomerGridConfig = {
       name: "Supplier Name",
       fieldName: "name",
       colStyle: {
-        width: "32%",
+        width: "35%",
       },
       allowShort: true,
     },
@@ -122,7 +122,7 @@ export const PendingCustomerGridConfig = {
       name: "Web Site",
       fieldName: "website",
       colStyle: {
-        width: "35%",
+        width: "30%",
       },
       allowShort: true,
     },
@@ -135,7 +135,7 @@ export const PendingCustomerGridConfig = {
     {
       name: "Action",
       colStyle: {
-        width: "10%",
+        width: "15%",
       },
       colType: GridColumnType.ACTION,
       defaultAction: {
@@ -161,7 +161,7 @@ export const SubmittedCustomerGridConfig = {
       name: "Customer Name",
       fieldName: "name",
       colStyle: {
-        width: "20%",
+        width: "35%",
       },
       allowShort: true,
     },
@@ -170,14 +170,14 @@ export const SubmittedCustomerGridConfig = {
       name: "Supplier Name",
       fieldName: "name",
       colStyle: {
-        width: "25%",
+        width: "35%",
       },
     },
     {
       name: "Tax Id",
       fieldName: "taxId",
       colStyle: {
-        width: "20%",
+        width: "15%",
       },
       allowShort: true,
     },
@@ -185,7 +185,7 @@ export const SubmittedCustomerGridConfig = {
       name: "Web Site",
       fieldName: "website",
       colStyle: {
-        width: "35%",
+        width: "25%",
       },
       allowShort: true,
     },
@@ -204,7 +204,7 @@ export const SubmittedCustomerGridConfig = {
     {
       name: "Action",
       colStyle: {
-        width: "10%",
+        width: "15%",
       },
       colType: GridColumnType.ACTION,
       defaultAction: {
@@ -230,7 +230,7 @@ export const ApprovedCustomerGridConfig = {
       name: "Customer Name",
       fieldName: "name",
       colStyle: {
-        width: "35%",
+        width: "70%",
       },
       allowShort: true,
     },
@@ -239,13 +239,13 @@ export const ApprovedCustomerGridConfig = {
       name: "Supplier Name",
       fieldName: "name",
       colStyle: {
-        width: "35%",
+        width: "70%",
       },
     },
     {
       name: "Tax Id",
       colStyle: {
-        width: "35%",
+        width: "15%",
       },
       fieldName: "taxId",
       allowShort: true,
@@ -253,7 +253,7 @@ export const ApprovedCustomerGridConfig = {
     {
       name: "Action",
       colStyle: {
-        width: "30%",
+        width: "15%",
       },
       colType: GridColumnType.ACTION,
       defaultAction: {
@@ -296,7 +296,7 @@ export const RejectedCustomerGridConfig = {
       name: "Customer Name",
       fieldName: "name",
       colStyle: {
-        width: "35%",
+        width: "70%",
       },
       allowShort: true,
     },
@@ -305,7 +305,7 @@ export const RejectedCustomerGridConfig = {
       name: "Supplier Name",
       fieldName: "name",
       colStyle: {
-        width: "35%",
+        width: "70%",
       },
       allowShort: true,
     },
@@ -313,14 +313,14 @@ export const RejectedCustomerGridConfig = {
       name: "Reason",
       fieldName: "inActiveReason",
       colStyle: {
-        width: "35%",
+        width: "15%",
       },
       allowShort: true,
     },
     {
       name: "Action",
       colStyle: {
-        width: "30%",
+        width: "15%",
       },
       colType: GridColumnType.ACTION,
       defaultAction: {
@@ -338,7 +338,7 @@ export const AllInActiveCustomerGridConfig = {
       fieldName: "name",
       allowShort: true,
       colStyle: {
-        width: "25%",
+        width: "35%",
       },
     },
     {
@@ -346,7 +346,7 @@ export const AllInActiveCustomerGridConfig = {
       name: "Supplier Name",
       fieldName: "name",
       colStyle: {
-        width: "25%",
+        width: "35%",
       },
       allowShort: true,
     },
@@ -373,7 +373,7 @@ export const AllInActiveCustomerGridConfig = {
     {
       name: "Status",
       colStyle: {
-        width: "25%",
+        width: "15%",
       },
       fieldName: "status",
       allowShort: false,

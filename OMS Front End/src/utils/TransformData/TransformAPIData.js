@@ -12,6 +12,14 @@ export const modifyContactType = (apiResponseData) => {
   return [allType, ...apiResponseData];
 };
 
+export const getDropDownId = (id, isEdit) => {
+  if (isEdit) {
+    return id && typeof id === "object" ? String(id.value) : String(id);
+  } else {
+    return Array.isArray(id) ? id.map(String).join(",") : id && typeof id === "object" ? String(id.value) : String(id);;
+  }
+};
+
 export const modifyAddressType = (apiResponseData) => {
   const allType = {
     id: 0,
@@ -24,20 +32,20 @@ export const modifyAddressType = (apiResponseData) => {
 };
 
 export const modifyPhoneNumberData = (phoneDataArray) => {
-  const isSingleItem = phoneDataArray.length === 1;
-  const newArray = phoneDataArray.map((phoneData) => ({
+  const noPrimaryFound = phoneDataArray.every(data => !data.isPrimary);
+  const newArray = phoneDataArray.map((phoneData, index) => ({
     ...phoneData,
     extension: phoneData.extension === "-" ? 0 : phoneData.extension,
-    isPrimary: isSingleItem ? true : phoneData.isPrimary,
+    isPrimary: noPrimaryFound && index === 0 ? true : phoneData.isPrimary,
   }));
   return newArray;
 };
 
 export const modifyEmailAddressData = (emailDataArray) => {
-  const isSingleItem = emailDataArray.length === 1;
-  const newArray = emailDataArray.map((emailData) => ({
+  const noPrimaryFound = emailDataArray.every(data => !data.isPrimary);
+  const newArray = emailDataArray.map((emailData, index) => ({
     ...emailData,
-    isPrimary: isSingleItem ? true : emailData.isPrimary,
+    isPrimary: noPrimaryFound && index === 0 ? true : emailData.isPrimary
   }));
   return newArray;
 };
@@ -55,7 +63,7 @@ export const modifyTimeLineData = (timelineData) => {
   return newArray;
 };
 
-const getFileTypeIcon = (filename) => {
+export const getFileTypeIcon = (filename) => {
   const parts = filename.split(".");
   const fileType = parts.length > 1 ? parts[parts.length - 1] : "";
   return getIconForFileType(fileType);
@@ -68,7 +76,7 @@ const getIconForFileType = (fileType) => {
 
 export const documentTransformData = (data) => {
 
-  
+
   return data.reduce((acc, item) => {
     const {
       type,

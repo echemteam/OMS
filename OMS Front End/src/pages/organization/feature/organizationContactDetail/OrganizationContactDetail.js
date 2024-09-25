@@ -6,14 +6,32 @@ import Buttons from "../../../../components/ui/button/Buttons";
 import { useAddEditOrganizationContactDetailsMutation, useLazyGetOrganizationContactDetailsQuery } from "../../../../app/services/organizationAPI";
 import ToastService from "../../../../services/toastService/ToastService";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { useSelector } from "react-redux";
 
 
-const OrganizationContactDetail = () => {
+const OrganizationContactDetail = (isEditablePage
+    ) => {
     const organizationContactRef = useRef();
     const [organizationContactData, setOrganizationContactData] = useState(OrganizationContactFormData);
     const [addEditOrganizationContactDetails, { isLoading: isAddEditOrganizationContactDetailsLoading, isSuccess: isAddEditOrganizationContactDetailsSuccess, data: isAddEditOrganizationContactDetailsData }] = useAddEditOrganizationContactDetailsMutation();
     const [getOrganizationContactDetails, { isFetching: isGetOrganizationContactDetailsFetching, isSuccess: isGetOrganizationContactDetailsSuccess, data: isGetOrganizationContactDetailsData }] = useLazyGetOrganizationContactDetailsQuery();
     const [contactDetailId, setContactDetailId] = useState(0);
+    const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const { formSetting } = OrganizationContactFormData;
+    const roles = useSelector((state) => state.auth.roles.roleName );
+
+   
+   useEffect(() => {
+    if (isEditablePage) {
+      if (roles?.includes("Admin")) {  
+        setIsButtonDisable(false);
+        formSetting.isViewOnly = false;
+      } else {
+        setIsButtonDisable(true);
+        formSetting.isViewOnly = true;
+      }
+    }
+  }, [isEditablePage, roles]);
 
 
     useEffect(() => {
@@ -67,13 +85,13 @@ const OrganizationContactDetail = () => {
     return (<>
 
         <div className="row mt-2 add-address-form">
-        <h4 className="organization-tab-title">Contact Details</h4>
+        {/* <h4 className="organization-tab-title">Contact Details</h4> */}
             <FormCreator config={organizationContactData}
                 ref={organizationContactRef}
                 {...organizationContactData}
 
             />
-
+            {isEditablePage ?
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -81,10 +99,10 @@ const OrganizationContactDetail = () => {
                         buttonText="Save"
                         onClick={handleAddEditContactDetail}
                         isLoading={isAddEditOrganizationContactDetailsLoading}
-
+                        isDisable={isButtonDisable}
                     />
                 </div>
-            </div>
+            </div> :null}
         </div>
     </>)
 }

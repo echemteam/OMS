@@ -26,7 +26,7 @@ export const BillToAddressForm = {
       },
      // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {
@@ -44,7 +44,7 @@ export const BillToAddressForm = {
       },
       // validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-3",
+        containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-2",
       },
     },
     {
@@ -70,7 +70,7 @@ export const BillToAddressForm = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "stateId",
       fieldSetting: {
-        isDisabled: false,
+        //isDisabled: false,
         placeholder: "Select State",
         isEnableOnChange: true,
         maxLength:20,
@@ -87,7 +87,7 @@ export const BillToAddressForm = {
       fieldType: FormFieldTypes.SELECT,
       dataField: "cityId",
       fieldSetting: {
-        isDisabled: false,
+       // isDisabled: false,
         placeholder: "Select City",
         isEnableOnChange: true,
         maxLength:9

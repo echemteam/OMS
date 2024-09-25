@@ -494,7 +494,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
                 </div>
               </>
             ) : (
-              <NoRecordFound />
+              <NoRecordFound message="No Address Found"/>
             )}
           </div>
         </div>
@@ -512,7 +512,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
                 </div>
               </>
             ) : (
-              <NoRecordFound />
+              <NoRecordFound message="No Address Found"/>
             )}
           </div>
         </div>

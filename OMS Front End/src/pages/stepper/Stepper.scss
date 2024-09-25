@@ -288,12 +288,12 @@
   .stepper-view {
     .card {
       .card {
-        max-height: calc(100vh - 220px);
+        max-height: unset;
       }
     }
   }
 }
-@media only screen and (max-width: 1400px) {
+@media only screen and (max-width: 1566px) {
   .stepper-view {
     .stepper-section {
       .stepper-content{

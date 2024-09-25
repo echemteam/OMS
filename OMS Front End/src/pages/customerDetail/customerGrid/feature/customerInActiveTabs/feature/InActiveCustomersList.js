@@ -19,7 +19,7 @@ import FinalMolGrid from '../../../../../../components/FinalMolGrid/FinalMolGrid
 import { validateResponsibleUserId } from '../../../../../../utils/ResponsibleUser/validateRUser';
 import { securityValidator } from '../../../../../../utils/CustomActionSecurity/actionsSecurityValidator';
 
-const InActiveCustomersList = ({ statusId, configFile, handleChange, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
+const InActiveCustomersList = ({ statusId, configFile, handleChange,handleKeyPress, search, handleSearch, handleClear, shouldRerenderFormCreator, handleChangeDropdown, statusOptions, selectedDrpvalues, selectedStatusOptions, searchStatusFilter }) => {
 
   const navigate = useNavigate();
   const { confirm } = SwalAlert();
@@ -202,6 +202,7 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
             searchTextWithIcon={true}
             clearTextWithIcon={true}
             clearIconImg={AppIcons.ClearIcone}
+            handleKeyPress={handleKeyPress}
           >
             <div className="row">
               <div className="col-md-12 table-striped last-center">
@@ -214,7 +215,7 @@ const InActiveCustomersList = ({ statusId, configFile, handleChange, search, han
                     allowPagination={true}
                     pagination={{
                       totalCount: totalRowCount,
-                      pageSize: 20,
+                      pageSize: 25,
                       currentPage: 1,
                     }}
                     onPageChange={handlePageChange}

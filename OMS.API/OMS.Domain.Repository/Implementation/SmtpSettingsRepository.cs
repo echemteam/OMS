@@ -31,6 +31,9 @@ namespace OMS.Domain.Repository.Implementation
                 requestData.SmtpPassword,
                 requestData.UseSsl,
                 requestData.CreatedBy,
+                requestData.ClientId,
+                requestData.ClientSecret,
+                requestData.TenantId
             }, CommandType.StoredProcedure);
         }
         public async Task<GetSmtpSettingsResponse> GetSmtpSettings()

@@ -23,6 +23,7 @@ export const AddSupplierContextProvider = ({ children }) => {
 
   const [isResponsibleUser, setIsResponsibleUser] = useState(false);
 
+  const [rejectStatusId,setRejectStatusId]=useState('');
   const [showSubBackButton, setShowSubBackButton] = useState(false);
 
   const moveNextPage = () => {
@@ -84,6 +85,8 @@ export const AddSupplierContextProvider = ({ children }) => {
         setContactMainModal,
         handleActiveSubTabClick,
         activeSubTab,
+        setRejectStatusId,
+        rejectStatusId
       }}
     >
       {children}

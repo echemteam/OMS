@@ -3,11 +3,11 @@ import "./NoRecordFound.scss";
 import { AppIcons } from "../../../data/appIcons";
 import Image from "../../image/Image";
 
-const NoRecordFound = () => {
+const NoRecordFound = ({ message = "No Record Found" }) => {
   return (
     <div className="record-not-found">
       <Image imagePath={AppIcons.NoRecords} altText="Record Not Found" />
-      <h5>No Record Found</h5>
+      <h5>{message}</h5>
     </div>
   );
 }

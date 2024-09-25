@@ -70,7 +70,7 @@ const AddSupplierTab = () => {
     {
       label: "Documents",
       subLabel: "Add Supplier Documents Details",
-      content: <SupplierDocumentDetail isEditablePage={false} />,
+      content: <SupplierDocumentDetail isEditablePage={true} />,
       tab: CustomerSupplierTabEnum.Documents,
     },
   ];

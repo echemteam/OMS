@@ -1,14 +1,25 @@
 import ToastService from "../../../../../services/toastService/ToastService";
 import PropTypes from 'prop-types';
 export const addPhoneNumberData = (data, contactId, listData, setListData, successMessage, maxLengthMessage, duplicateMessage, onResetData, onSuccess) => {
+    const phoneCode = data.phoneNumber.phoneCode && typeof data.phoneNumber === "object" ? data.phoneNumber.phoneCode : data.phoneCode;
+    const fullPhoneNumber = data.phoneNumber.PhoneNumber && typeof data.phoneNumber === "object" ? data.phoneNumber.PhoneNumber : data.phoneNumber;
+
+    // Add '+' to phoneCode for comparison
+    const normalizedPhoneCode = `+${phoneCode}`;
+
+    // Remove phoneCode from phoneNumber if it starts with the normalized phoneCode
+    const phoneNumberWithoutCode = fullPhoneNumber.startsWith(normalizedPhoneCode)
+        ? fullPhoneNumber.slice(normalizedPhoneCode.length)
+        : fullPhoneNumber;
     let request = {
         ...data,
         contactId: contactId,
         id: listData ? listData?.length + 1 : 1,
-        phoneCode: data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode,
+        phoneCode: normalizedPhoneCode,
+        phoneNumber: phoneNumberWithoutCode,
         phoneTypeId: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId,
         phoneType: data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.label : data.phoneTypeId,
-        isPrimary: data.isPrimaryPhoneNumber,
+        isPrimary: listData?.length === 0 ? true : data.isPrimaryPhoneNumber,
         extension: data.extension > 0 ? data.extension : '-'
     }
     if (listData && listData.length === 5) {
@@ -48,7 +59,17 @@ export const addPhoneNumberData = (data, contactId, listData, setListData, succe
 
 export const updatePhoneNumberData = (data, listData, setListData, successMessage, duplicateMessage, inValidDate, onResetData, onSuccess) => {
     if (listData && data.id > 0) {
-        const phoneCode = data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode
+        // const phoneCode = data.phoneCode && typeof data.phoneCode === "object" ? data.phoneCode.label : data.phoneCode
+        const phoneCode = data.phoneNumber.phoneCode && typeof data.phoneNumber === "object" ? data.phoneNumber.phoneCode : data.phoneCode;
+        const fullPhoneNumber = data.phoneNumber.PhoneNumber && typeof data.phoneNumber === "object" ? data.phoneNumber.PhoneNumber : data.phoneNumber;
+
+        // Add '+' to phoneCode for comparison
+        const normalizedPhoneCode = `+${phoneCode}`;
+
+        // Remove phoneCode from phoneNumber if it starts with the normalized phoneCode
+        const phoneNumberWithoutCode = fullPhoneNumber.startsWith(normalizedPhoneCode)
+            ? fullPhoneNumber.slice(normalizedPhoneCode.length)
+            : fullPhoneNumber;
         const phoneTypeId = data.phoneTypeId && typeof data.phoneTypeId === "object" ? data.phoneTypeId.value : data.phoneTypeId
         const phoneType = data.phoneTypeId.label ? data.phoneTypeId.label : data.phoneType
         const isPrimary = data.isPrimaryPhoneNumber
@@ -62,7 +83,7 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
                         phoneCode: phoneCode,
                         phoneTypeId: phoneTypeId,
                         phoneType: phoneType,
-                        phoneNumber: data.phoneNumber,
+                        phoneNumber: phoneNumberWithoutCode,
                         // extension: data.extension ? data.extension : 0,
                         extension: data.extension > 0 ? data.extension : '-',
                         isPrimary: isPrimary
@@ -70,13 +91,18 @@ export const updatePhoneNumberData = (data, listData, setListData, successMessag
                 } else if (isPrimary) {
                     return {
                         ...item,
+                        phoneCode: phoneCode,
+                        phoneNumber: phoneNumberWithoutCode,
                         isPrimary: false
                     };
                 } else {
-                    return item;
+                    return {
+                        ...item,
+                        phoneCode: phoneCode,
+                        phoneNumber: phoneNumberWithoutCode,
+                    }
                 }
             });
-
             setListData(updatedData);
             ToastService.success(successMessage);
             onResetData?.();

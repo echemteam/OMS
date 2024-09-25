@@ -83,7 +83,7 @@ export const { useGetUsersMutation,
     useUpdateUserPasswordMutation,
     useUpdateUserMutation,
     useDeleteUserMutation,
-    useLazyGetUserByUserIdQuery,
+    useLazyGetUserByUserIdQuery
 } = userAPI;
 
 export default userAPI;

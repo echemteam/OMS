@@ -32,18 +32,8 @@ const ContactEmailsDropdown = ({ emailAddressesList, isOptionsOpen }) => {
               <div className={`values`}>
                 {primaryEmailAddress?.emailAddress}
               </div>
-              <span
-                className={`copy-icon ${
-                  primaryEmailAddress?.isPrimary ? "primary-email" : ""
-                }`}
-              >
-                <div
-                  className="copy"
-                  style={{ cursor: "pointer"}}
-                  onClick={() =>
-                    CopyText(primaryEmailAddress?.emailAddress, "email")
-                  }
-                >
+              <span className={`copy-icon ${isOptionsOpen && primaryEmailAddress?.isPrimary ? "primary-email" : ""}`}>
+                <div className="copy" style={{ cursor: "pointer" }} onClick={() => CopyText(primaryEmailAddress?.emailAddress, "email")}>
                   <Iconify icon="bitcoin-icons:copy-outline" />
                 </div>
               </span>
@@ -51,26 +41,28 @@ const ContactEmailsDropdown = ({ emailAddressesList, isOptionsOpen }) => {
           ) : null}
         </div>
       </div>
-      {isOptionsOpen ? (
-        <>
-          {emailAddresses.map((emaildata, index) => (
-            <span className="contact-list d-flex flex-row" key={index}>
-              <span>{emaildata?.emailAddress}</span>
-              <span
-                className="copy-icon"
-                title="Copy"
-                style={{ cursor: "pointer"}}
-                onClick={() => CopyText(emaildata?.emailAddress, "email")}
-              >
-                {/* <i className="fa fa-files-o"></i> */}
-                {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
-                <Iconify icon="bitcoin-icons:copy-outline" />
+      {
+        isOptionsOpen ? (
+          <>
+            {emailAddresses.map((emaildata, index) => (
+              <span className="contact-list d-flex flex-row" key={index}>
+                <span>{emaildata?.emailAddress}</span>
+                <span
+                  className="copy-icon"
+                  title="Copy"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => CopyText(emaildata?.emailAddress, "email")}
+                >
+                  {/* <i className="fa fa-files-o"></i> */}
+                  {/* <Image imagePath={AppIcons.copyIcon} altText="Icon" /> */}
+                  <Iconify icon="bitcoin-icons:copy-outline" />
+                </span>
               </span>
-            </span>
-          ))}
-        </>
-      ) : null}
-    </React.Fragment>
+            ))}
+          </>
+        ) : null
+      }
+    </React.Fragment >
   );
 };
 

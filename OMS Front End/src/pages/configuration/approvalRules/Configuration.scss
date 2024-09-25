@@ -256,7 +256,20 @@
     .center-content-part {
       .content-desc-section {
         .center-container{
-          max-height: calc(100vh - 55px);
+          max-height: calc(100vh - 47px) !important;
+
+          @media only screen and (max-width: 1750px) {
+            max-height: calc(100vh - 26px) !important;
+          }
+  
+          // @media only screen and (max-width: 1650px) {
+          //   max-height: calc(100vh - 336px) !important;
+          // }
+  
+          // @media only screen and (max-width: 1280px) {
+          //   max-height: calc(100vh - 348px) !important;
+          // }
+
         }
       }
     }

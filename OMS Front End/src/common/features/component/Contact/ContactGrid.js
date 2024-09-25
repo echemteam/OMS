@@ -32,7 +32,7 @@ const ContactGrid = ({
   getContactById,
   isSearchFilterShow,
   contryIdCode,
-  customerStatusId
+  customerStatusId,
 }) => {
   //** State */
   const editRef = useRef();
@@ -107,6 +107,12 @@ const ContactGrid = ({
       ToastService.warning(ErrorMessage.CommonErrorMessage);
     }
   };
+
+  const handleKeyPress = (event) => {
+    if (event.code === "Enter") {
+      onhandleSearch();
+    }
+  }
   const onhandleClear = () => {
     setSearch("");
     let request = {
@@ -175,7 +181,36 @@ const ContactGrid = ({
       <div className="mt-2">
         <ContactList
           keyId={keyId}
+          isSupplier={isSupplier}
           getListRef={getListRef}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+          search={search}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          isSupplier={isSupplier}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+          search={search}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          isSupplier={isSupplier}
           handleEdit={handleEdit}
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
@@ -202,6 +237,7 @@ const ContactGrid = ({
         <ContactList
           keyId={keyId}
           getListRef={getListRef}
+          isSupplier={isSupplier}
           handleEdit={handleEdit}
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
@@ -215,6 +251,7 @@ const ContactGrid = ({
         <ContactList
           keyId={keyId}
           getListRef={getListRef}
+          isSupplier={isSupplier}
           handleEdit={handleEdit}
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
@@ -228,32 +265,7 @@ const ContactGrid = ({
         <ContactList
           keyId={keyId}
           getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-          search={search}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-          search={search}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
+          isSupplier={isSupplier}
           handleEdit={handleEdit}
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
@@ -310,6 +322,7 @@ const ContactGrid = ({
         clearTextWithIcon={true}
         clearIconImg={AppIcons.ClearIcone}
         searchValue={search}
+        handleKeyPress={handleKeyPress}
       >
         <div className="vertical-tab-inner">
           <RenderTabs tabs={tabs} isCollapse={true} onTabClick={onTabClick} />

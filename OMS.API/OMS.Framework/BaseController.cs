@@ -1,5 +1,6 @@
 ﻿using Common.Helper.Enum;
 using Common.Helper.IO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OMS.Framework.Model;
 using OMS.Shared.Services.Contract;
@@ -11,13 +12,14 @@ namespace OMS.Framework
     public class BaseController : ControllerBase
     {
         public readonly ICommonSettingService _commonSettingService;
-
+        
         public BaseController(ICommonSettingService commonSettingService)
         {
             _commonSettingService = commonSettingService;
             ModelExtention.AESKey = _commonSettingService.EncryptionSettings.AESKey!;
             ModelExtention.AESIV = _commonSettingService.EncryptionSettings.AESIV!;
             ModelExtention.IsEncrypt = _commonSettingService.EncryptionSettings.IsEnableEncryption!;
+
         }
 
         public short CurrentUserId
@@ -36,7 +38,20 @@ namespace OMS.Framework
                 return 0;
             }
         }
-
+        protected string IPAddress
+        {
+            get
+            {
+                try
+                {
+                    return HttpContext?.Connection?.RemoteIpAddress?.ToString() ?? string.Empty;
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+        }
 
         [NonAction]
         public IActionResult APISucessResponce<T>(T itemResponce, string message = "", APIResponceCode responseCode = APIResponceCode.OK)

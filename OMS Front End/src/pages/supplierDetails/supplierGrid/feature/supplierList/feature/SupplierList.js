@@ -32,7 +32,7 @@ import { securityValidator } from '../../../../../../utils/CustomActionSecurity/
 const SupplierApproval = React.lazy(() => import("../../../../feature/supplierApproval/SupplierApproval"));
 
 
-const SupplierList = ({ statusId, configFile, handleChange, search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
+const SupplierList = ({ statusId, configFile, handleChange, handleKeyPress,search, handleChangeDropdown, statusOptions, selectedDrpvalues, searchStatusFilter, handleSearch, handleClear, shouldRerenderFormCreator }) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
@@ -325,6 +325,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
             searchTextWithIcon={true}
             clearTextWithIcon={true}
             clearIconImg={AppIcons.ClearIcone}
+            handleKeyPress={handleKeyPress}
           >
             <div className="row">
               <div className="col-md-12 table-striped">
@@ -336,7 +337,7 @@ const SupplierList = ({ statusId, configFile, handleChange, search, handleChange
                   isLoading={isListLoading}
                   pagination={{
                     totalCount: totalRowCount,
-                    pageSize: 20,
+                    pageSize: 25,
                     currentPage: 1,
                   }}
                   onPageChange={handlePageChange}

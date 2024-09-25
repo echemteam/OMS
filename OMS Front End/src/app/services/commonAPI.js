@@ -132,6 +132,14 @@ const commonAPI = createApi({
             transformResponse: transformSucessResponse,
             transformErrorResponse: transformErrorResponse,
         }),
+        getAllModulesWithPendingRequestCount: builder.query({
+            query: (isPending) => ({
+                url: encryptQueryString(`/Common/GetAllModulesWithPendingRequestCount?isPending=${isPending}`),
+                method: 'GET',
+            }),
+            transformResponse: transformSucessResponse,
+            transformErrorResponse: transformErrorResponse,
+        }),
     })
 })
 
@@ -140,7 +148,7 @@ export const {
     useUpdateResponsibleUserMutation,useLazyGetAllCustomersQuery,useGetAllSubCustomerByCustomerIdMutation , useLazyGetAllAccountTypeQuery
     , useLazyGetAllContactsByCustomerIdAndContactTypeIdQuery, useLazyGetAllAddressesByCustomerIdAndAddressTypeIdQuery,useAddApprovalRequestsMutation,
     useLazyGetAllOrderMethodQuery,
-    useLazyGetAllIncotermQuery, useLazyGetAllDocumentByOwnerIdQuery, useLazyGetNotesHistoryQuery,
+    useLazyGetAllIncotermQuery, useLazyGetAllDocumentByOwnerIdQuery, useLazyGetNotesHistoryQuery,useLazyGetAllModulesWithPendingRequestCountQuery,
 } = commonAPI
 
 export default commonAPI;

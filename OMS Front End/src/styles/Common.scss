@@ -324,14 +324,14 @@ a {
 
       .content-desc-section {
         .center-container {
-          height: calc(100vh - 60px);
+          height: calc(100vh - 47px);
           overflow: hidden;
           overflow-y: auto;
           margin-bottom: 0;
           padding-bottom: 6px;
 
           @media only screen and (max-width: 1750px) {
-            height: calc(100vh - 50px);
+            height: calc(100vh - 26px);
           }
         }
       }
@@ -770,6 +770,7 @@ a {
       padding-top: 7px;
       max-height: calc(100vh - 225px);
     }
+
     @media only screen and (max-width: 1366px) {
       max-height: calc(100vh - 200px);
     }
@@ -2637,6 +2638,10 @@ input[type="checkbox"]:disabled {
             display: flex;
             justify-content: center;
           }
+
+          &:last-child {
+            justify-content: center;
+          }
         }
       }
     }
@@ -2651,6 +2656,10 @@ input[type="checkbox"]:disabled {
 
           &:nth-child(4) {
             display: flex;
+            justify-content: center;
+          }
+
+          &:last-child {
             justify-content: center;
           }
         }
@@ -3899,20 +3908,20 @@ input[type="checkbox"]:disabled {
     .tab-content {
       width: 85%;
       padding: 0 0 0px 15px;
-      max-height: calc(100vh - 130px);
+      max-height: calc(100vh - 190px);
       overflow: hidden;
       overflow-y: auto;
       transition: 0.5s all;
 
       @media only screen and (max-width: 1750px) {
-        max-height: calc(100vh - 105px);
+        max-height: calc(100vh - 171px);
       }
 
       .organiazation-history .main-card {
-        max-height: calc(100vh - 138px);
+        max-height: calc(100vh - 198px);
 
         @media only screen and (max-width: 1750px) {
-          max-height: calc(100vh - 115px);
+          max-height: calc(100vh - 180px);
         }
       }
     }
@@ -4194,6 +4203,16 @@ input[type="checkbox"]:disabled {
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--linkMenu);
+
+}
+
+.main-organiazation-history {
+  .card-body-sec{
+    padding-bottom: 0;
+    .mb-input {
+      margin-bottom: 25px;
+    }
+  }
 }
 
 .assign-user-model-section {
@@ -4344,4 +4363,32 @@ input[type="checkbox"]:disabled {
 
 .menu-title {
   color: var(--sidebarActiveTextColor);
+}
+
+.organization-main-title {
+  font-size: var(--commonFont-large);
+  font-weight: 700;
+  color: var(--themeColor);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--linkMenu);
+
+  .company-title{
+    font-size: 12px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color:var(--textColor);
+    padding: 5px 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    background-color: #e7e7ff75;
+    .company-image{
+      // height:20px;
+      width: 18px;
+      margin-right: 5px;
+    }
+  }
 }
