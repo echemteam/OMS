@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { useState } from 'react';
 import { createContext } from 'react';
-import { CustomerSupplierTabEnum } from '../../Enums/commonEnums';
 
 const BasicDetailContext = createContext();
 

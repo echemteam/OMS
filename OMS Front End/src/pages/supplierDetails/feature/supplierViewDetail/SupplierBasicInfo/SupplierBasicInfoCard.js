@@ -98,6 +98,42 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       getSupplierById()
     }
   }, [rejectStatusId, setRejectStatusId, selectedStatus])
+  // useEffect(() => {
+  //   if (supplierData) {
+  //     const statusId = supplierData.statusId;
+  //     switch (statusId) {
+  //       case 1:
+  //       case 2:
+  //       case 3:
+  //         setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+  //         break;
+  //       case 4:
+  //         setOptions([
+  //           { value: "4", label: "Freeze" },
+  //           { value: "3", label: "Approved" },
+  //           { value: "1", label: "Pending" },
+  //         ]);
+  //         break;
+  //       case 5:
+  //         setOptions([
+  //           { value: "5", label: "Block" },
+  //           { value: "3", label: "Approved" },
+  //           { value: "1", label: "Pending" },
+  //         ]);
+  //         break;
+  //       case 6:
+  //         setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
+  //         break;
+  //       case 7:
+  //         setOptions(StaticStatus[StatusValue[statusId - 1].label]);
+  //         break;
+  //       default:
+  //         setOptions([]);
+  //     }
+
+  //     setSelectedStatus(StatusValue[statusId - 1].label);
+  //   }
+  // }, [supplierData]);
 
   useEffect(() => {
     if (supplierData) {
@@ -120,18 +156,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   }, [supplierData]);
 
   useEffect(() => {
-    if (isGetCheckListSuccess && isGetCheckListData) {
-      if (isGetCheckListData && isGetCheckListData.length > 0) {
-        const successCheckList = isGetCheckListData.filter(data => data.isValid);
-        setApprovalSuccessCount(successCheckList.length);
-        setTotalCount(isGetCheckListData.length);
-      }
-    }
-  }, [isGetCheckListSuccess, isGetCheckListData])
-
-
-  useEffect(() => {
-    if (showModal && selectedStatus === CustomerSupplierStatus.REJECT) {
+    if (showModal &&  selectedStatus === CustomerSupplierStatus.REJECT  ) {
       if (responsibleUserIds) {
         const responsibleUser = responsibleUserIds?.map((id) => Number(id.trim()));
         const formNew = { ...formData }
@@ -499,7 +524,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
         )}
       </div>
       : <DataLoader />}
-      <SupplierApproval childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} setSelectedStatus={setSelectedStatus} responsibleUserIds={responsibleUserIds} />
+      <SupplierApproval childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} setSelectedStatus={setSelectedStatus} responsibleUserIds={responsibleUserIds}/>
     </>
   );
 }
