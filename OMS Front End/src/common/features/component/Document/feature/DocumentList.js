@@ -291,22 +291,22 @@ const DocumentList = forwardRef(
                           {isArchive
                             ? null
                             : showDeleteButton && (
-                              <span
-                                className="action-icon"
-                                onClick={() =>
-                                  handleDelete(
-                                    isSupplier
-                                      ? data.supplierDocumentId
-                                      : data.customerDocumentId
-                                  )
-                                }
-                              >
-                                <Iconify
-                                  icon="mingcute:delete-2-line"
-                                  className="delete-icon"
-                                />
-                              </span>
-                            )}
+                                <span
+                                  className="action-icon"
+                                  onClick={() =>
+                                    handleDelete(
+                                      isSupplier
+                                        ? data.supplierDocumentId
+                                        : data.customerDocumentId
+                                    )
+                                  }
+                                >
+                                  <Iconify
+                                    icon="mingcute:delete-2-line"
+                                    className="delete-icon"
+                                  />
+                                </span>
+                              )}
                         </div>
                       </div>
                     </div>
@@ -321,32 +321,32 @@ const DocumentList = forwardRef(
           </div>
         </div>
 
-           <SidebarModel
-                isOpen={isModalOpen}
-                contentClass="content-65"
-                modalTitle="File Preview"
-                onClose={handleToggleModal}
-            >
-                <div className="model-height-fix">
-                    {selectedDocument && getFileType ? (
-                        getFileType === "pdf" ? (
-                            <div>
-                                <iframe
-                                    src={selectedDocument}
-                                    title="PDF Preview"
-                                    style={{ width: '100%', height: '200%' }}  
-                                />
-                            </div>
-                        ) : (
-                            <FileViewer
-                                fileType={getFileType}
-                                filePath={selectedDocument}
-                                onError={(error) => console.error("Error:", error)}
-                            />
-                        )
-                    ) : null}
+        <SidebarModel
+          isOpen={isModalOpen}
+          contentClass="content-65"
+          modalTitle="File Preview"
+          onClose={handleToggleModal}
+        >
+          <div className="model-height-fix doc-view">
+            {selectedDocument && getFileType ? (
+              getFileType === "pdf" ? (
+                <div className="pdf-iframe">
+                  <iframe
+                    src={selectedDocument}
+                    title="PDF Preview"
+                    style={{ width: "100%", height: "200%" }}
+                  />
                 </div>
-            </SidebarModel>
+              ) : (
+                <FileViewer
+                  fileType={getFileType}
+                  filePath={selectedDocument}
+                  onError={(error) => console.error("Error:", error)}
+                />
+              )
+            ) : null}
+          </div>
+        </SidebarModel>
       </div>
     );
   }
