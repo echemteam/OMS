@@ -329,9 +329,9 @@ namespace OMS.API.Controllers
             return APISucessResponce(responseData);
         }
         [HttpGet("GetAllModulesWithPendingRequestCount")]
-        public async Task<IActionResult> GetAllModulesWithPendingRequestCount()
+        public async Task<IActionResult> GetAllModulesWithPendingRequestCount(bool isPending)
         {
-            List<GetAllModulesWithPendingRequestCountResponse> responseData = await _serviceManager.commonServices.GetAllModulesWithPendingRequestCount().ConfigureAwait(true);
+            List<GetAllModulesWithPendingRequestCountResponse> responseData = await _serviceManager.commonServices.GetAllModulesWithPendingRequestCount(isPending).ConfigureAwait(true);
             return APISucessResponce(responseData);
         }
     }
