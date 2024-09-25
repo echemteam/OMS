@@ -35,6 +35,9 @@ const FormEditableSelectField = React.lazy(() =>
 const FormCustomSelectField = React.lazy(() =>
   import("./formField/FormCustomSelectField")
 );
+const FormPhoneInputField = React.lazy(() => 
+import("./formField/FormPhoneInputField")
+);
 
 const FormFields = ({
   fields,
@@ -406,6 +409,27 @@ const FormFields = ({
             />
           </div>
         );
+        case FormFieldTypes.PHONE:
+          return (
+            <div className={containerCss}>
+              <FormPhoneInputField
+                key={field.dataField}
+                dataField={field.dataField}
+                labelName={field.label}
+                name={field.id}
+                type={fieldTypeToInputType(field.fieldType)}
+                value={formData?.[field.dataField] || ""}
+                onChange={handleInputChange}
+                error={validState.error[field.dataField] || ""}
+                onValidation={onUpdateValidation}
+                formSetting={formSetting}
+                formData={formData}
+                changeAction={field.changeAction}
+                overRideProps={overRideProps?.[field.dataField]}
+                {...field.fieldSetting}
+              />
+            </div>
+          );
       default:
         return null;
     }

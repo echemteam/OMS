@@ -13,7 +13,7 @@ export const FormFieldTypes = {
     IMAGE: 13,
     CUSTOMSELECT: 14,
     EDITABLEDROPDOWN: 15,
-
+    PHONE:16
     // DECIMAL :4
     // NUMERIC: 4,
     // PASSWORD: 7,

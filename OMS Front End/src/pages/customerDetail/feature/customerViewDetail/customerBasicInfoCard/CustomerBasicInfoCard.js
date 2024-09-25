@@ -49,6 +49,8 @@ const CustomerBasicInfoCard = ({
   customerId,
   getCustomerById,
   isGetCustomersBasicInformationById,
+  isGetCustomersBasicInformationByIdFetching,
+  GetCustomersBasicInformationByIdData,
   isShippingMethodChange
 }) => {
   const childRef = useRef();
@@ -143,11 +145,11 @@ const CustomerBasicInfoCard = ({
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
   useEffect(() => {
-    if (customerData && isGetCustomersBasicInformationById) {
-      const responsibleUserIds = customerData?.responsibleUserId
+    if (GetCustomersBasicInformationByIdData && isGetCustomersBasicInformationById && !isGetCustomersBasicInformationByIdFetching) {
+      const responsibleUserIds = GetCustomersBasicInformationByIdData?.responsibleUserId
         ?.split(",")
         .map((id) => id.trim());
-      const responsibleUserNames = customerData?.responsibleUserName
+      const responsibleUserNames = GetCustomersBasicInformationByIdData?.responsibleUserName
         ?.split(",")
         .map((name) => name.trim());
       const responsibleUsers = responsibleUserIds?.map((id, index) => ({
@@ -156,7 +158,7 @@ const CustomerBasicInfoCard = ({
       }));
       setResponsibleUserIds(responsibleUserIds);
       setRUserValue(responsibleUsers);
-      setSelectedStatus(customerData.status);
+      setSelectedStatus(GetCustomersBasicInformationByIdData.status);
       getAllUser();
       let request = {
         customerId: customerId,
@@ -165,7 +167,7 @@ const CustomerBasicInfoCard = ({
       }
       getValidateCheckList(request);
     }
-  }, [customerData, isGetCustomersBasicInformationById, isShippingMethodChange]);
+  }, [GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationById, isGetCustomersBasicInformationByIdFetching, isShippingMethodChange]);
 
   useEffect(() => {
     if (isGetCheckListSuccess && isGetCheckListData) {
@@ -177,11 +179,15 @@ const CustomerBasicInfoCard = ({
     }
   }, [isGetCheckListSuccess, isGetCheckListData])
 
-  useEffect(() => {
-    if (rejectStatusId) {
-      getCustomerById()
-    }
-  }, [rejectStatusId, setRejectStatusId, selectedStatus])
+  // useEffect(() => {
+  //   if (rejectStatusId) {
+  //     getCustomerById()
+  //   }
+  // }, [rejectStatusId, setRejectStatusId, selectedStatus])
+
+  const rejectedCustomerFromApproval = () => {
+    getCustomerById()
+  };
 
   useEffect(() => {
     if (!isFetching && isGetAllUserSucess && allGetAlluserData) {
@@ -412,6 +418,7 @@ const CustomerBasicInfoCard = ({
   };
 
   useEffect(() => {
+
     if (showModal && selectedStatus === CustomerSupplierStatus.REJECT) {
       if (responsibleUserIds) {
         const responsibleUser = responsibleUserIds?.map((id) => Number(id.trim()));
@@ -630,7 +637,7 @@ const CustomerBasicInfoCard = ({
 
             <div className="field-desc">
               <div className="inf-label inf-label-width">Customer Completion</div>
-              {approvalSuccessCount && totalCount &&
+              {totalCount &&
                 <>
                   <b>&nbsp;:&nbsp;</b>
                   <div className="info-desc submission-tab d-flex gap-2 align-items-center" style={{ cursor: 'pointer', fontSize: '13px' }} onClick={getApprovalCheckList}>
@@ -694,7 +701,9 @@ const CustomerBasicInfoCard = ({
         childRef={childRef}
         updateCustomerApproval={updateCustomerApproval}
         responsibleUserIds={responsibleUserIds}
-        setSelectedStatus={setSelectedStatus} />
+        setSelectedStatus={setSelectedStatus} 
+        onRejectedCustomerFromApproval={rejectedCustomerFromApproval}
+        />
     </div >
   ) : (
     <DataLoader />
