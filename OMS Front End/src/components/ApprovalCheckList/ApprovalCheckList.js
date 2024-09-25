@@ -23,6 +23,8 @@ import { excludingRoles } from "../../pages/customerDetail/feature/customerBasic
 import { useAddCustomerNotesMutation } from "../../app/services/notesAPI";
 import { StatusFeild } from "../../utils/Enums/StatusEnums";
 import ShippingSetting from "./feature/ApprovalInformation/ShippingSetting";
+import { useAddSupplierNotesMutation } from "../../app/services/supplierNotesAPI";
+import { useAddEditResponsibleUserForSupplierMutation, useUpdateSupplierInActiveStatusMutation } from "../../app/services/supplierAPI";
 //** Component's */
 const BasicInformation = React.lazy(() =>
   import("./feature/ApprovalInformation/BasicInfo")
@@ -82,38 +84,13 @@ const ApprovalCheckList = ({
   //** API Call's */
   const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData }] = useLazyGetAllUserQuery();
   const [addCustomerNotes] = useAddCustomerNotesMutation();
-  const [
-    addEditResponsibleUserForCustomer,
-    {
-      isSuccess: isSuccessAddEditResponsibleUserForCustomer,
-      data: isAddEditResponsibleUserForCustomerData,
-    },
-  ] = useAddEditResponsibleUserForCustomerMutation();
-  const [
-    updateCustomerInActiveStatus,
-    {
-      isLoading: updateCustomerInActiveStatusCustomerLoading,
-      isSuccess: isSuccessUpdateCustomerInActiveStatus,
-      data: updateCustomerInActiveStatusData,
-    },
-  ] = useUpdateCustomerInActiveStatusMutation();
-  const [
-    getAllDocumentByOwnerId,
-    {
-      isFetching: isGetAllDocumentByOwnerIdFetching,
-      isSuccess: isGetAllDocumentByOwnerIdSuccess,
-      data: isGetAllDocumentByOwnerIdData,
-    },
-  ] = useLazyGetAllDocumentByOwnerIdQuery();
-
-  const [
-    Downalod,
-    {
-      isFetching: isDownalodFetching,
-      isSuccess: isDownalodSucess,
-      data: isDownalodData,
-    },
-  ] = useLazyDownloadDocumentQuery();
+  const [addSupplierNotes] = useAddSupplierNotesMutation();
+  const [addEditResponsibleUserForCustomer,{isSuccess: isSuccessAddEditResponsibleUserForCustomer, data: isAddEditResponsibleUserForCustomerData}] = useAddEditResponsibleUserForCustomerMutation();
+  const [addEditResponsibleUserForSupplier,{isSuccess: isSuccessAddEditResponsibleUserForSupplier,data: isAddEditResponsibleUserForSupplierData,},] = useAddEditResponsibleUserForSupplierMutation();
+  const [updateCustomerInActiveStatus, {isLoading: updateCustomerInActiveStatusCustomerLoading,isSuccess: isSuccessUpdateCustomerInActiveStatus,data: updateCustomerInActiveStatusData,},] = useUpdateCustomerInActiveStatusMutation();
+  const [updateSupplierInActiveStatus, {isLoading: updateSupplierInActiveStatusLoading,isSuccess: isSuccessupdateSupplierInActiveStatus,data: updateSupplierInActiveStatusData,},] = useUpdateSupplierInActiveStatusMutation();
+  const [ getAllDocumentByOwnerId,{isFetching: isGetAllDocumentByOwnerIdFetching,isSuccess: isGetAllDocumentByOwnerIdSuccess,data: isGetAllDocumentByOwnerIdData,},] = useLazyGetAllDocumentByOwnerIdQuery();
+  const [Downalod,{ isFetching: isDownalodFetching,isSuccess: isDownalodSucess,data: isDownalodData,},] = useLazyDownloadDocumentQuery();
 
   useEffect(() => {
     getAllUser();
@@ -147,53 +124,82 @@ const ApprovalCheckList = ({
     setCheckListData(updatedData);
     setApprovalChekedData(updatedData);
   };
-  useEffect(() => {
-    if (
-      isSuccessUpdateCustomerInActiveStatus &&
-      updateCustomerInActiveStatusData
-    ) {
-      ToastService.success(updateCustomerInActiveStatusData.errorMessage);
 
+  useEffect(() => {
+    if (isSuccessupdateSupplierInActiveStatus &&updateSupplierInActiveStatusData) {
+      ToastService.success(updateSupplierInActiveStatusData.errorMessage);
+      handleToggleModal();
+    }
+  }, [isSuccessupdateSupplierInActiveStatus, updateSupplierInActiveStatusData]);
+
+  useEffect(() => {
+    if (isSuccessUpdateCustomerInActiveStatus && updateCustomerInActiveStatusData) {
+      ToastService.success(updateCustomerInActiveStatusData.errorMessage);
       handleToggleModal();
     }
   }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
 
+  useEffect(() => {
+    if ( isSuccessAddEditResponsibleUserForCustomer && isAddEditResponsibleUserForCustomerData) {
+      // ToastService.success(isAddEditResponsibleUserForCustomerData.errorMessage );
+    }
+  }, [isSuccessAddEditResponsibleUserForCustomer,isAddEditResponsibleUserForCustomerData,]);
+
+  useEffect(() => {
+  if ( isSuccessAddEditResponsibleUserForSupplier && isAddEditResponsibleUserForSupplierData) {
+      // ToastService.success(isAddEditResponsibleUserForSupplierData.errorMessage );
+    }
+  }, [ isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
 
   const handleUpdate = () => {
-    let custData = reasonRef.current.getFormData();
-    if (custData) {
-      let req = {
-        ...custData,
-        customerId: mainId,
-        statusId: CustomerSupplierStatus.REJECT,
-        note: custData.inActiveReason,
-      };
-      updateCustomerInActiveStatus(req);
-      updateRUserDataDropdown(custData.responsibleUserId);
-      addCustomerNotes(req)
-      setSelectedStatus(StatusFeild.Reject);
-      setRejectStatusId(req.statusId);
+    if (!isSupplierApproval) {
+      let custData = reasonRef.current.getFormData();
+      if (custData) {
+        let req = {
+          ...custData,
+          customerId: mainId,
+          statusId: CustomerSupplierStatus.REJECT,
+          note: custData.inActiveReason,
+        };
+        updateCustomerInActiveStatus(req);
+        updateRUserDataDropdown(custData.responsibleUserId);
+        addCustomerNotes(req)
+        setSelectedStatus(StatusFeild.Reject);
+        setRejectStatusId(req.statusId);
+      }
+    } else {
+      let supplierData = reasonRef.current.getFormData();
+      if (supplierData) {
+        let req = {
+          ...supplierData,
+          supplierId: mainId,
+          statusId: CustomerSupplierStatus.REJECT,
+          note: supplierData.inActiveReason,
+        };
+        updateSupplierInActiveStatus(req);
+        updateRUserDataDropdown(supplierData.responsibleUserId);
+        addSupplierNotes(req)
+        setSelectedStatus(StatusFeild.Reject);
+        setRejectStatusId(req.statusId);
+      }
     }
   };
-  useEffect(() => {
-    if (
-      isSuccessAddEditResponsibleUserForCustomer &&
-      isAddEditResponsibleUserForCustomerData
-    ) {
-      ToastService.success(
-        isAddEditResponsibleUserForCustomerData.errorMessage
-      );
-    }
-  }, [
-    isSuccessAddEditResponsibleUserForCustomer,
-    isAddEditResponsibleUserForCustomerData,
-  ]);
+
+  
   const updateRUserDataDropdown = (value) => {
-    let req = {
-      customerId: mainId,
-      userId: String(value),
-    };
-    addEditResponsibleUserForCustomer(req);
+    if (!isSupplierApproval) {
+      let req = {
+        customerId: mainId,
+        userId: String(value),
+      };
+      addEditResponsibleUserForCustomer(req);
+    } else {
+      let req = {
+        supplierId: mainId,
+        userId: String(value),
+      };
+      addEditResponsibleUserForSupplier(req);
+    }
   };
 
   useEffect(() => {
@@ -209,7 +215,6 @@ const ApprovalCheckList = ({
 
   useEffect(() => {
     if (!isDownalodFetching && isDownalodSucess && isDownalodData) {
-
       const fileData = isDownalodData.fileData;
       const blob = new Blob([fileData], { type: fileData.type });
       const fileURL = URL.createObjectURL(blob);
@@ -233,7 +238,7 @@ const ApprovalCheckList = ({
 
   const handleToggleModal = () => {
     setShowModal(false);
-    //  onSidebarClose();
+    onSidebarClose();
   }
   const determineFileType = (fileName) => {
     const extension = fileName.split(".").pop().toLowerCase();
@@ -406,13 +411,13 @@ const ApprovalCheckList = ({
                         // isLoading={isAddUserCheckResponseLoading}
                         onClick={handleAddResponse}
                       />
-                      {isSupplierApproval &&
-                        <Buttons
-                          buttonTypeClassName="danger-btn ml-5"
-                          buttonText="Reject"
-                          // isLoading={isAddUserCheckResponseLoading}
-                          onClick={handleRejectResponse}
-                        />}
+
+                      <Buttons
+                        buttonTypeClassName="danger-btn ml-5"
+                        buttonText="Reject"
+                        // isLoading={isAddUserCheckResponseLoading}
+                        onClick={handleRejectResponse}
+                      />
                       <Buttons
                         buttonTypeClassName="dark-btn ml-5"
                         buttonText="Cancel"
@@ -504,7 +509,7 @@ const ApprovalCheckList = ({
                 <Buttons
                   buttonTypeClassName="theme-button"
                   buttonText="Update"
-                  isLoading={updateCustomerInActiveStatusCustomerLoading}
+                  isLoading={isSupplierApproval ? updateSupplierInActiveStatusLoading : updateCustomerInActiveStatusCustomerLoading}
                   onClick={handleUpdate}
                 />
                 <Buttons

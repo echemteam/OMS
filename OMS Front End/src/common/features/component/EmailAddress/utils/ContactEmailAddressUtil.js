@@ -25,7 +25,7 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
     let request = {
         ...data,
         contactId: contactId,
-        isPrimary: data.isEmailPrimary,
+        isPrimary: listData?.length === 0 ? true : data.isEmailPrimary,
         id: listData ? listData?.length + 1 : 1
     }
     if (listData && listData.length === 2) {
@@ -34,7 +34,7 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
         onSuccess();
         return;
     }
-    const isDuplicate =  listData?.some(item => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase());
+    const isDuplicate = listData?.some(item => item.emailAddress.toLowerCase() === data.emailAddress.toLowerCase());
     if (!isDuplicate) {
         let addData;
         if (listData) {
@@ -51,7 +51,7 @@ export const addData = (data, contactId, listData, setListData, successMessage, 
             ToastService.success(successMessage);
             onResetData();
             onSuccess();
-        } 
+        }
     } else {
         ToastService.warning(duplicateMessage);
     }

@@ -6,13 +6,30 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { OrganizationShippingChargesFormData } from "./config/OrganizationShippingCharges.data";
 import { useAddEditOrganizationShippingChargesMutation, useLazyGetOrganizationShippingChargesQuery } from "../../../../app/services/organizationAPI";
 import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
+import { useSelector } from "react-redux";
 
-const OrganizationShippingChargesDetail=()=>{
+const OrganizationShippingChargesDetail=(isEditablePage)=>{
     const organizationShippingChargesRef = useRef();
     const [organizationShippingChargesData, setOrganizationShippingChargesData] = useState(OrganizationShippingChargesFormData);
     const [addEditOrganizationShippingCharges, { isLoading: isAddEditOrganizationShippingChargesLoading, isSuccess: isAddEditOrganizationShippingChargesSuccess, data: isAddEditOrganizationShippingChargesData }] =useAddEditOrganizationShippingChargesMutation();
     const [getOrganizationShippingCharges, { isFetching: isGetOrganizationShippingChargesFetching, isSuccess: isGetOrganizationShippingChargesSuccess, data: isGetOrganizationShippingChargesData }] = useLazyGetOrganizationShippingChargesQuery();
     const[shippingChargeId,setShippingChargeId]=useState(0);
+    const [isButtonDisable, setIsButtonDisable] = useState(false);
+    const { formSetting } = OrganizationShippingChargesFormData;
+    const roles = useSelector((state) => state.auth.roles.roleName );
+
+   
+   useEffect(() => {
+    if (isEditablePage) {
+      if (roles?.includes("Admin")) {  
+        setIsButtonDisable(false);
+        formSetting.isViewOnly = false;
+      } else {
+        setIsButtonDisable(true);
+        formSetting.isViewOnly = true;
+      }
+    }
+  }, [isEditablePage, roles]);
 
     useEffect(() => {
         if (isAddEditOrganizationShippingChargesSuccess && isAddEditOrganizationShippingChargesData) {
@@ -64,7 +81,8 @@ const OrganizationShippingChargesDetail=()=>{
                     ref={organizationShippingChargesRef}
                    {...organizationShippingChargesData}
    
-                />       
+                />   
+            {isEditablePage ?    
             <div className="col-md-12 mt-2">
                 <div className="d-flex align-item-end justify-content-end">
                     <Buttons
@@ -72,9 +90,10 @@ const OrganizationShippingChargesDetail=()=>{
                         buttonText="Save"
                         onClick={handleAddEditShippingChargesDetail}
                          isLoading={isAddEditOrganizationShippingChargesLoading}
+                         isDisable={isButtonDisable}
                     />
                 </div>
-            </div>
+            </div>:null}
         </div>
     )
 }

@@ -99,10 +99,10 @@ const FunctionalConfigurationList = (props) => {
                     ref={molGridRef}
                     configuration={functionalConfigurationListData}
                     dataSource={listData}
-                    allowPagination={true}
+                    allowPagination={false}
                     pagination={{
                         totalCount: totalRowCount,
-                        pageSize: 20,
+                        pageSize: 25,
                         currentPage: 1,
                     }}
                     onPageChange={handlePageChange}

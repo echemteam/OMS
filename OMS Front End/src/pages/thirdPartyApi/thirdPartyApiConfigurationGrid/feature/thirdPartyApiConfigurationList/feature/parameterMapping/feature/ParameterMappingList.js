@@ -104,7 +104,7 @@ const ParameterMappingList = (props) => {
                     ref={molGridRef}
                     configuration={AddEditParameterMappingConfigurationData}
                     dataSource={listData}
-                    allowPagination={true}
+                    allowPagination={false}
                     pagination={{
                         totalCount: totalRowCount,
                         pageSize: 20,

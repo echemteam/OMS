@@ -108,7 +108,7 @@ const ContactGrid = ({
     }
   };
 
-  const handleKeyPress=(event)=>{
+  const handleKeyPress = (event) => {
     if (event.code === "Enter") {
       onhandleSearch();
     }
@@ -181,7 +181,36 @@ const ContactGrid = ({
       <div className="mt-2">
         <ContactList
           keyId={keyId}
+          isSupplier={isSupplier}
           getListRef={getListRef}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+          search={search}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          isSupplier={isSupplier}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+          search={search}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          isSupplier={isSupplier}
           handleEdit={handleEdit}
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
@@ -208,6 +237,7 @@ const ContactGrid = ({
         <ContactList
           keyId={keyId}
           getListRef={getListRef}
+          isSupplier={isSupplier}
           handleEdit={handleEdit}
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
@@ -221,6 +251,7 @@ const ContactGrid = ({
         <ContactList
           keyId={keyId}
           getListRef={getListRef}
+          isSupplier={isSupplier}
           handleEdit={handleEdit}
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
@@ -234,32 +265,7 @@ const ContactGrid = ({
         <ContactList
           keyId={keyId}
           getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-          search={search}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-          search={search}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
+          isSupplier={isSupplier}
           handleEdit={handleEdit}
           showEditIcon={showEditIcon}
           getContactByKeyId={getContactByKeyId}
