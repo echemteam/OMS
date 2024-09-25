@@ -48,6 +48,7 @@ export const ErrorMessage = {
 	Invalidpostalcode: "The ZIP code is invalid. It should be {length} characters long.",
 	InvalidSpecialCharacters: "The input contains invalid characters. Only letters and numbers are allowed.",
 	ContactEmailAddressRequired: "Please provide at least one email address before proceeding.",
+	OnlyNumber: "Only letter are allowed"
 };
 
 export const SuccessMessage = {
