@@ -26,6 +26,7 @@ import Iconify from '../../../../../components/ui/iconify/Iconify';
 import DropdownSelect from '../../../../../components/ui/dropdown/DropdownSelect';
 import { useAddSupplierNotesMutation } from '../../../../../app/services/supplierNotesAPI';
 import { CustomerSupplierStatus } from '../../../../../utils/Enums/commonEnums';
+import { useGetValidateCheckListMutation } from '../../../../../app/services/ApprovalAPI';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../supplierApproval/SupplierApproval"));
@@ -44,15 +45,19 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const [rUserValue, setRUserValue] = useState([]);
   const [addSupplierNotes] = useAddSupplierNotesMutation();
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
+  const [totalCount, setTotalCount] = useState();
+  const [approvalSuccessCount, setApprovalSuccessCount] = useState();
+
   const [getAllUser, { isFetching: isSuppilierFetching, isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
   const [addEditResponsibleUserForSupplier, { isSuccess: isSuccessAddEditResponsibleUserForSupplier, data: isAddEditResponsibleUserForSupplierData }] = useAddEditResponsibleUserForSupplierMutation();
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
   const [updateSupplierInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
+  const [getValidateCheckList, { isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
 
   const { isResponsibleUser } = useContext(AddSupplierContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
-  const {setRejectStatusId,rejectStatusId} = useContext(AddSupplierContext);
+  const { setRejectStatusId, rejectStatusId } = useContext(AddSupplierContext);
 
   useEffect(() => {
     if (!isResponsibleUser) {
@@ -93,42 +98,6 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       getSupplierById()
     }
   }, [rejectStatusId, setRejectStatusId, selectedStatus])
-  // useEffect(() => {
-  //   if (supplierData) {
-  //     const statusId = supplierData.statusId;
-  //     switch (statusId) {
-  //       case 1:
-  //       case 2:
-  //       case 3:
-  //         setOptions(StaticStatus[StatusValue[statusId - 1].label]);
-  //         break;
-  //       case 4:
-  //         setOptions([
-  //           { value: "4", label: "Freeze" },
-  //           { value: "3", label: "Approved" },
-  //           { value: "1", label: "Pending" },
-  //         ]);
-  //         break;
-  //       case 5:
-  //         setOptions([
-  //           { value: "5", label: "Block" },
-  //           { value: "3", label: "Approved" },
-  //           { value: "1", label: "Pending" },
-  //         ]);
-  //         break;
-  //       case 6:
-  //         setOptions(StaticStatus.Approved.filter(option => option.label === StatusValue[statusId - 1].label));
-  //         break;
-  //       case 7:
-  //         setOptions(StaticStatus[StatusValue[statusId - 1].label]);
-  //         break;
-  //       default:
-  //         setOptions([]);
-  //     }
-
-  //     setSelectedStatus(StatusValue[statusId - 1].label);
-  //   }
-  // }, [supplierData]);
 
   useEffect(() => {
     if (supplierData) {
@@ -142,11 +111,27 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       setRUserValue(responsibleUsers);
       setSelectedStatus(supplierData.status);
       getAllUser();
+      let request = {
+        customerId: 0,
+        supplierId: supplierId
+      }
+      getValidateCheckList(request);
     }
   }, [supplierData]);
 
   useEffect(() => {
-    if (showModal &&  selectedStatus === CustomerSupplierStatus.REJECT  ) {
+    if (isGetCheckListSuccess && isGetCheckListData) {
+      if (isGetCheckListData && isGetCheckListData.length > 0) {
+        const successCheckList = isGetCheckListData.filter(data => data.isValid);
+        setApprovalSuccessCount(successCheckList.length);
+        setTotalCount(isGetCheckListData.length);
+      }
+    }
+  }, [isGetCheckListSuccess, isGetCheckListData])
+
+
+  useEffect(() => {
+    if (showModal && selectedStatus === CustomerSupplierStatus.REJECT) {
       if (responsibleUserIds) {
         const responsibleUser = responsibleUserIds?.map((id) => Number(id.trim()));
         const formNew = { ...formData }
@@ -157,7 +142,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
         setFormData(formNew);
       }
     }
-  }, [showModal,selectedStatus]);
+  }, [showModal, selectedStatus]);
 
   useEffect(() => {
     if (!isSuppilierFetching && isGetAllUserSucess && allGetAlluserData) {
@@ -315,6 +300,13 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
     return status ? status.label : 'Unknown'; // Returns 'Unknown' if value not found
   };
 
+  const getApprovalCheckList = () => {
+    if (childRef.current) {
+      childRef.current.callChildFunction(supplierId, false, false);
+      // childRef.current.callChildFunction(customerId, customerData.isSubCustomer ? customerData.isSubCustomer : false, false, false);
+    }
+  }
+
   return (
     <>{!isLoading ?
       <div className="basic-customer-detail">
@@ -447,36 +439,31 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
 
             <div className="col-3">
               <div className="field-desc">
-                <div className="inf-label">Group Type</div>
+                <div className="inf-label" style={{ minWidth: '120px', maxWidth: '120px' }}>Group Type</div>
                 <b>&nbsp;:&nbsp;</b>
                 <div className="info-desc">{supplierData?.groupType}</div>
               </div>
               <div className="field-desc">
-                <div className="inf-label">Incoterm</div>
+                <div className="inf-label" style={{ minWidth: '120px', maxWidth: '120px' }}>Incoterm</div>
                 <b>&nbsp;:&nbsp;</b>
                 <div className="info-desc">{supplierData?.incotermName}</div>
               </div>
-
-              {/* <div className="field-desc">
-              <div className="inf-label">Is Company</div>
-              <b>&nbsp;:&nbsp;</b>
-              <div className="info-desc">
-                {supplierData?.isCompany}
-                {supplierData && supplierData.isCompany ? (
-                  <i className="fa fa-check green-color"></i>
-                ) : (
-                  <i className="fa fa-times red-color"></i>
-                )}
+              <div className="field-desc">
+                <div className="inf-label" style={{ minWidth: '120px', maxWidth: '120px' }}>Customer Completion</div>
+                <b>&nbsp;:&nbsp;</b>
+                {approvalSuccessCount && totalCount ?
+                  <>
+                    <div className="info-desc submission-tab d-flex gap-2 align-items-center" style={{ cursor: 'pointer', fontSize: '13px' }} onClick={getApprovalCheckList}>
+                      {approvalSuccessCount + "/" + totalCount}
+                      <Iconify icon="clarity:info-solid" className="info" />
+                    </div>
+                  </>
+                  : null}
               </div>
-            </div> */}
             </div>
           </div>
           {showEditIcon ?
             <div className="edit-icons" onClick={editClick}>
-              {/* <Image
-                imagePath={AppIcons.editThemeIcon}
-                altText="Website Icon"
-              /> */}
               <Iconify icon="tabler:pencil" />
             </div>
             : null}
@@ -512,7 +499,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
         )}
       </div>
       : <DataLoader />}
-      <SupplierApproval childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} setSelectedStatus={setSelectedStatus} responsibleUserIds={responsibleUserIds}/>
+      <SupplierApproval childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} setSelectedStatus={setSelectedStatus} responsibleUserIds={responsibleUserIds} />
     </>
   );
 }

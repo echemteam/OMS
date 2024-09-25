@@ -26,7 +26,7 @@ const CustomerDetails = () => {
   const [customerData, setCustomerData] = useState(null);
   const [isBuyingForThirdParty, setIsBuyingForThirdParty] = useState(false);
 
-  const { setCustomerId, customerId, setIsResponsibleUser, setCustomerCountryId } = useContext(BasicDetailContext);
+  const { setCustomerId, customerId, setIsResponsibleUser, setCustomerCountryId, isShippingMethodChange } = useContext(BasicDetailContext);
 
   const [
     getCustomersBasicInformationById,
@@ -88,6 +88,7 @@ const CustomerDetails = () => {
                 customerId={customerId}
                 getCustomerById={onSuccess}
                 isGetCustomersBasicInformationById={isGetCustomersBasicInformationById}
+                isShippingMethodChange={isShippingMethodChange}
               />
             </CardSection>
           </div>
