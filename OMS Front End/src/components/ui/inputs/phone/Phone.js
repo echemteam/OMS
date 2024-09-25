@@ -37,6 +37,7 @@ const Phone = ({
         disabled={isDisable}
         placeholder={placeholder}
         {...inputAttributes}
+        className="input-group"
       />
     </div>
   );
