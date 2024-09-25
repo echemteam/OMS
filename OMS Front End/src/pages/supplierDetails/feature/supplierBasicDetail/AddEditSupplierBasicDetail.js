@@ -294,6 +294,12 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             // const trimCustomerName = data.replace(/\s+/g, '');
             setSupplierName(data);
         }
+        if (dataField === 'website') {
+            const trimmedUrl = data.replace(/\/$/, "");
+            basicDetailRef.current.updateFormFieldValue({
+                website: trimmedUrl
+            });
+        }
     };
 
     //** Use Imperative Handle */

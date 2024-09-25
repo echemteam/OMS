@@ -86,64 +86,129 @@ export const isValidZipCode = (value) => {
     const patternData = getPostalCodePattern(value?.countryId);
     if (patternData && patternData.pattern) {
         const isValid = patternData.pattern.test(value?.zipCode);
-        return { isValid: isValid, maxLength: patternData.maxLength };
+        return {
+            isValid: isValid,
+            minLength: patternData.minLength,
+            maxLength: patternData.maxLength
+        };
     } else {
-        return { isValid: true, maxLength: patternData.maxLength };
+        return {
+            isValid: true,
+            minLength: patternData.minLength,
+            maxLength: patternData.maxLength
+        };
     }
 }
 
 const getPostalCodePattern = (country) => {
     switch (country) {
-        case 11:
-            return { pattern: /^[A-Za-z]\d{4}[A-Za-z]{3}$/, maxLength: 8 }; // Argentina: B1234ABC
+        case 11: // Argentina: B1234ABC
+            return { pattern: /^[A-Za-z]\d{4}[A-Za-z]{3}$/, minLength: 8, maxLength: 8 };
         /**
-            * Australia, Switzerland, South Africa, Norway, Denmark, 
-            * Belgium, Austria, New Zealand, Hungary, Luxembourg  
-        **/
+         * Australia, Switzerland, South Africa, Norway, Denmark, 
+         * Belgium, Austria, New Zealand, Hungary, Luxembourg  
+         **/
         case 14: case 15: case 22: case 59: case 99:
         case 127: case 158: case 165: case 204: case 214:
-            return { pattern: /^\d{4}$/, maxLength: 4 };
-        case 31:
-            return { pattern: /^\d{5}-\d{3}$/, maxLength: 9 }; // Brazil: 12345-678
-        case 39:
-            return { pattern: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/, maxLength: 7 }; // Canada: A1A 1A1
+            return { pattern: /^\d{4}$/, minLength: 4, maxLength: 4 };
+        case 31: // Brazil: 12345-678
+            return { pattern: /^\d{5}-\d{3}$/, minLength: 9, maxLength: 9 };
+        case 39: // Canada: A1A 1A1
+            return { pattern: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/, minLength: 6, maxLength: 7 };
         /**
-            * France, Germany, Italy, Spain, Mexico, South Korea, 
-            * Finland, Turkey, Saudi Arabia, Malaysia, United Arab Emirates
-        **/
+         * France, Germany, Italy, Spain, Mexico, South Korea, 
+         * Finland, Turkey, Saudi Arabia, Malaysia, UAE
+         **/
         case 75: case 74: case 82: case 107: case 116: case 194:
         case 207: case 225: case 132: case 142: case 231:
-            return { pattern: /^\d{5}$/, maxLength: 5 };
+            return { pattern: /^\d{5}$/, minLength: 5, maxLength: 5 };
         /**
-            * India, Russia, China, Singapore
-        **/
+         * India, Russia, China, Singapore
+         **/
         case 45: case 101: case 182: case 199:
-            return { pattern: /^\d{6}$/, maxLength: 6 };
-        case 58:
-            return { pattern: /^\d{3}\s?\d{2}$/, maxLength: 6 }; // Czech Republic: 123 45
-        case 85:
-            return { pattern: /^\d{3}\s?\d{2}$/, maxLength: 6 }; // Greece: 123 45
-        case 100:
-            return { pattern: /^\d{3}$/, maxLength: 3 }; // Iceland: 101
-        case 106:
-            return { pattern: /^\d{5,7}$/, maxLength: 7 }; // Israel: 12345 or 1234567
-        case 109:
-            return { pattern: /^\d{3}-\d{4}$/, maxLength: 8 }; // Japan: 123-4567
-        case 135:
-            return { pattern: /^[A-Za-z]{3}\s?\d{4}$/, maxLength: 8 }; // Malta: ABC 1234
-        case 156:
-            return { pattern: /^\d{4}\s?[A-Za-z]{2}$/, maxLength: 6 }; // Netherlands: 1234 AB
-        case 176:
-            return { pattern: /^\d{2}-\d{3}$/, maxLength: 6 }; // Poland: 12-345
-        case 177:
-            return { pattern: /^\d{4}-\d{3}$/, maxLength: 8 }; // Portugal: 1234-567
-        case 213:
-            return { pattern: /^\d{3}\s?\d{2}$/, maxLength: 6 }; // Sweden: 123 45
-        case 232:
-            return { pattern: /^[A-Za-z]{1,2}\d{1,2}[A-Za-z]?\d[A-Za-z]{2}$/, maxLength: 8 }; // UK: AA9A 9AA
-        case 233: //** US
-            return { pattern: /^\d{5}(-\d{4})?$/, maxLength: 10 }; // USA: 12345 or 12345-6789
+            return { pattern: /^\d{6}$/, minLength: 6, maxLength: 6 };
+        case 58: // Czech Republic: 123 45
+            return { pattern: /^\d{3}\s?\d{2}$/, minLength: 5, maxLength: 6 };
+        case 85: // Greece: 123 45
+            return { pattern: /^\d{3}\s?\d{2}$/, minLength: 5, maxLength: 6 };
+        case 100: // Iceland: 101
+            return { pattern: /^\d{3}$/, minLength: 3, maxLength: 3 };
+        case 106: // Israel: 12345 or 1234567
+            return { pattern: /^\d{5,7}$/, minLength: 5, maxLength: 7 };
+        case 109: // Japan: 123-4567
+            return { pattern: /^\d{3}-\d{4}$/, minLength: 8, maxLength: 8 };
+        case 135: // Malta: ABC 1234
+            return { pattern: /^[A-Za-z]{3}\s?\d{4}$/, minLength: 7, maxLength: 8 };
+        case 156: // Netherlands: 1234 AB
+            return { pattern: /^\d{4}\s?[A-Za-z]{2}$/, minLength: 6, maxLength: 6 };
+        case 176: // Poland: 12-345
+            return { pattern: /^\d{2}-\d{3}$/, minLength: 6, maxLength: 6 };
+        case 177: // Portugal: 1234-567
+            return { pattern: /^\d{4}-\d{3}$/, minLength: 8, maxLength: 8 };
+        case 213: // Sweden: 123 45
+            return { pattern: /^\d{3}\s?\d{2}$/, minLength: 5, maxLength: 6 };
+        case 232: // UK: AA9A 9AA
+            return { pattern: /^[A-Za-z]{1,2}\d{1,2}[A-Za-z]?\d[A-Za-z]{2}$/, minLength: 6, maxLength: 8 };
+        case 233: // US: 12345 or 12345-6789
+            return { pattern: /^\d{5}(-\d{4})?$/, minLength: 5, maxLength: 10 };
         default:
-            return { pattern: null, maxLength: 10 }; // Default length 
+            return null;
     }
 };
+
+
+// const getPostalCodePattern = (country) => {
+//     switch (country) {
+//         case 11:
+//             return { pattern: /^[A-Za-z]\d{4}[A-Za-z]{3}$/, maxLength: 8 }; // Argentina: B1234ABC
+//         /**
+//             * Australia, Switzerland, South Africa, Norway, Denmark,
+//             * Belgium, Austria, New Zealand, Hungary, Luxembourg
+//         **/
+//         case 14: case 15: case 22: case 59: case 99:
+//         case 127: case 158: case 165: case 204: case 214:
+//             return { pattern: /^\d{4}$/, maxLength: 4 };
+//         case 31:
+//             return { pattern: /^\d{5}-\d{3}$/, maxLength: 9 }; // Brazil: 12345-678
+//         case 39:
+//             return { pattern: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/, maxLength: 7 }; // Canada: A1A 1A1
+//         /**
+//             * France, Germany, Italy, Spain, Mexico, South Korea,
+//             * Finland, Turkey, Saudi Arabia, Malaysia, United Arab Emirates
+//         **/
+//         case 75: case 74: case 82: case 107: case 116: case 194:
+//         case 207: case 225: case 132: case 142: case 231:
+//             return { pattern: /^\d{5}$/, maxLength: 5 };
+//         /**
+//             * India, Russia, China, Singapore
+//         **/
+//         case 45: case 101: case 182: case 199:
+//             return { pattern: /^\d{6}$/, maxLength: 6 };
+//         case 58:
+//             return { pattern: /^\d{3}\s?\d{2}$/, maxLength: 6 }; // Czech Republic: 123 45
+//         case 85:
+//             return { pattern: /^\d{3}\s?\d{2}$/, maxLength: 6 }; // Greece: 123 45
+//         case 100:
+//             return { pattern: /^\d{3}$/, maxLength: 3 }; // Iceland: 101
+//         case 106:
+//             return { pattern: /^\d{5,7}$/, maxLength: [5, 7] }; // Israel: 12345 or 1234567
+//         case 109:
+//             return { pattern: /^\d{3}-\d{4}$/, maxLength: 8 }; // Japan: 123-4567
+//         case 135:
+//             return { pattern: /^[A-Za-z]{3}\s?\d{4}$/, maxLength: 8 }; // Malta: ABC 1234
+//         case 156:
+//             return { pattern: /^\d{4}\s?[A-Za-z]{2}$/, maxLength: 6 }; // Netherlands: 1234 AB
+//         case 176:
+//             return { pattern: /^\d{2}-\d{3}$/, maxLength: 6 }; // Poland: 12-345
+//         case 177:
+//             return { pattern: /^\d{4}-\d{3}$/, maxLength: 8 }; // Portugal: 1234-567
+//         case 213:
+//             return { pattern: /^\d{3}\s?\d{2}$/, maxLength: 6 }; // Sweden: 123 45
+//         case 232:
+//             return { pattern: /^[A-Za-z]{1,2}\d{1,2}[A-Za-z]?\d[A-Za-z]{2}$/, maxLength: 8 }; // UK: AA9A 9AA
+//         case 233: //** US
+//             return { pattern: /^\d{5}(-\d{4})?$/, maxLength: [5, 10] }; // USA: 12345 or 12345-6789
+//         default:
+//             return { pattern: null, maxLength: [5, 10] }; // Default length
+//     }
+// };
