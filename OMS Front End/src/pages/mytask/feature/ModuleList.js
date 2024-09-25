@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import CardSection from "../../../components/ui/card/CardSection";
+import { MyTaskStatus } from "../../../utils/Enums/commonEnums";
 
-const ModuleList = ({ moduleList, onModuleChange }) => {
+const ModuleList = ({ moduleList, onModuleChange,isPending }) => {
     const [activeModule, setActiveModule] = useState(null);
 
     // Set the first module as active by default when the component mounts
@@ -27,7 +28,7 @@ const ModuleList = ({ moduleList, onModuleChange }) => {
                     {moduleList && moduleList.map((data, index) => (
                         <li className={activeModule === data.moduleId ? "active" : ""}
                             onClick={() => handleModuleClick(data)} key={index}>
-                            <span>{data.moduleName}<div className="module-count">{data.requestCount}</div></span>
+                            <span>{data.moduleName}{ !isPending ? <div className="module-count">{data.requestCount}</div>: null}</span>
                             
                         </li>
                     ))}

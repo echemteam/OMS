@@ -181,6 +181,7 @@ const MyTask = () => {
             setIsPending={setIsPending}
             moduleList={moduleList}
             eventList={eventList}
+            isPending={isPending}
             handleRestEventDetail={handleRestEventDetail}
           />
         </div>
