@@ -88,7 +88,7 @@ const ArchiveTask = (props) => {
 
   const handleTabClick = (id) => {
     setActiveTab(id);
-   // props.setIsPending(false);
+    props.setIsPending(false);
     if (props.onGetById) {
       props.onGetById(id);
     }
@@ -112,7 +112,7 @@ const ArchiveTask = (props) => {
   return (
     <>
       <div className="row">
-       
+
         <div className="col-5 pr-0 left-modual-sec">
           <ModuleList
             moduleList={props.moduleList} isPending={props.isPending}
@@ -137,9 +137,8 @@ const ArchiveTask = (props) => {
                     archiveData.map((tab) => (
                       <button
                         key={tab.approvalRequestId} // Use a unique key
-                        className={`tab-button ${
-                          activeTab === tab.approvalRequestId ? "active" : ""
-                        }`}
+                        className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""
+                          }`}
                         onClick={() => handleTabClick(tab.approvalRequestId)}
                       >
                         <div className="d-flex align-items-start">
@@ -153,9 +152,9 @@ const ArchiveTask = (props) => {
                               <div className="date">
                                 {tab.requestedDate
                                   ? formatDate(
-                                      tab.requestedDate,
-                                      "MM/DD/YYYY hh:mm A"
-                                    )
+                                    tab.requestedDate,
+                                    "MM/DD/YYYY hh:mm A"
+                                  )
                                   : "No Date"}
                               </div>
                             </div>
@@ -164,13 +163,12 @@ const ArchiveTask = (props) => {
                                 {tab.moduleName}
                               </span> */}
                               <div
-                                className={`mytask-type-badge ${
-                                  tab.status === "Accept"
+                                className={`mytask-type-badge ${tab.status === "Accept"
                                     ? "badge-accept"
                                     : tab.status === "Reject"
-                                    ? "badge-reject"
-                                    : ""
-                                }`}
+                                      ? "badge-reject"
+                                      : ""
+                                  }`}
                               >
                                 {tab.status} by {tab.approvedByUserName} on{" "}
                                 {formatDate(
