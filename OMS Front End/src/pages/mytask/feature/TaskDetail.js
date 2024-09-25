@@ -24,6 +24,7 @@ import { useLazyGetCustomersBasicInformationByIdQuery } from "../../../app/servi
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../app/services/supplierAPI";
 import { useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery } from "../../../app/services/customerSettingsAPI";
 import { getDropdownLabelName } from "../../../utils/CommonUtils/CommonUtilsMethods";
+import SwalAlert from "../../../services/swalService/SwalService";
 
 const parseJson = (jsonStr) => {
   try {
@@ -105,6 +106,8 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
   const [getAllPaymentTerms, { data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
   const [getAllPaymentMethod, { data: isGetAllPaymentMethodData }] = useLazyGetAllPaymentMethodQuery();
 
+  const { confirm } = SwalAlert();
+
   useEffect(() => {
     if (isUpdateSuccess && isUpdateData) {
       setShowModal(false)
@@ -185,8 +188,14 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
   };
 
   const handleApprovalRequest = () => {
-    approvalStatus(MyTaskStatus.Accept);
-  }
+   confirm("Are you sure?", "Do you really want to approve this request?","Yes", "Cancel").then((confirmed) => {
+          if (confirmed) {
+            approvalStatus(MyTaskStatus.Accept)
+          }
+        });
+      };
+    //approvalStatus(MyTaskStatus.Accept);
+  //}
 
   const handleRejectRequest = () => {
     approvalStatus(MyTaskStatus.Reject);

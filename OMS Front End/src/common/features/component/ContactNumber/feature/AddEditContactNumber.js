@@ -90,7 +90,7 @@ const AddEditContactNumber = ({
         extension: editFormData.extension,
         id: editFormData.id,
         isPrimaryPhoneNumber: editFormData.isPrimary,
-        phoneCode: editFormData.phoneCode,
+       // phoneCode: editFormData.phoneCode,
         phoneId: editFormData.phoneId,
         phoneNumber: editFormData.phoneNumber,
         phoneType: editFormData.phoneType,
@@ -101,7 +101,7 @@ const AddEditContactNumber = ({
       let form = { ...addEditContactsFormData };
       form.initialState = {
         ...form.initialState,
-        phoneCode: newPhoneCode,
+        //phoneCode: newPhoneCode,
       };
       setFormData(form);
     }
@@ -155,7 +155,7 @@ AddEditContactNumber.propTypes = {
   contactId: PropTypes.number.isRequired,
   phoneNumberList: PropTypes.arrayOf(PropTypes.shape({
     phoneNumber: PropTypes.string.isRequired,
-    phoneCode: PropTypes.string.isRequired,
+    //phoneCode: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     phoneTypeId: PropTypes.number,
     phoneType: PropTypes.string,
@@ -167,7 +167,7 @@ AddEditContactNumber.propTypes = {
     extension: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     id: PropTypes.number,
     isPrimary: PropTypes.bool,
-    phoneCode: PropTypes.string,
+   // phoneCode: PropTypes.string,
     phoneId: PropTypes.number,
     phoneNumber: PropTypes.string,
     phoneType: PropTypes.string,
