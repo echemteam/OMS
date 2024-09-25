@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ToastService from "../../../services/toastService/ToastService";
 import { authentication } from "../../../app/slice/authSlice";
 import { useUserLoginMutation } from "../../../app/services/authAPI";
+import { logUserLoginLogoutHistory } from "../../../utils/Thunk/UserHistory";
 
 const LoginForm = () => {
 
@@ -45,6 +46,11 @@ const LoginForm = () => {
       }
       else if (authData.isAuthenticated === true) {
         dispatch(authentication(authData));
+        // Track user login
+        dispatch(logUserLoginLogoutHistory({
+          userId: authData.user.userID, // Set appropriate userId from userData
+          isLogin: authData.isAuthenticated
+        }));
       }
     }
   }, [loginSuccess, authData, dispatch])

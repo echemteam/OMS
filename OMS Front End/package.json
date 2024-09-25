@@ -13,6 +13,7 @@
     "@tinymce/tinymce-react": "^4.3.2",
     "@wojtekmaj/react-daterange-picker": "^6.0.0",
     "async-mutex": "^0.4.0",
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.2",
     "bs-stepper": "^1.7.0",
