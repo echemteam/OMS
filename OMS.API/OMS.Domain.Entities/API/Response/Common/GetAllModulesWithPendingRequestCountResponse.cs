@@ -4,6 +4,6 @@
     {
         public int? ModuleId { get; set; }
         public string? ModuleName { get; set; }
-        public int? PendingRequestCount { get; set; }
+        public int? RequestCount { get; set; }
     }
 }

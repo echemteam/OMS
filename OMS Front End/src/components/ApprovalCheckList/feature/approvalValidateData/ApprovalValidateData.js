@@ -12,7 +12,7 @@ import ToastService from "../../../../services/toastService/ToastService";
 import PropTypes from 'prop-types';
 
 const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckList, handleDone, showModal, handleShowValidateModal, handleValidateModalClose,
-  isGetCheckListLoading, mainId, isDetailPage, isSupplierApproval }) => {
+  isGetCheckListLoading, mainId, isDetailPage, isSupplierApproval, isShowBothButton }) => {
 
   const scrollRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -47,7 +47,7 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
   }, [showModal])
 
   const boldSpecificWords = (text) => {
-    const wordsToBold = ["Tax Id", "Billing Address", "Shipping Address", "Invoice Submission Contact",
+    const wordsToBold = ["Tax Id", "Billing Address", "Shipping Address", "Invoice Submission Contact", "Shipping Setting",
       "Accounts Payable Contact", "Invoice Follow-up Contact", "Delivery Method", "Delivery Carrier Method", "Payment Terms", "Payment Method",
       "Credit Limit", "Billing Currency", "Physical Address", "Remittance Address", "Primary Contact", "Purchase Order Contact", "Accounts Receivable Contact",
       "Purchase order delivery", "Credit Card Notes", "Check Mailing Address", "Financial Settings Bank Address"];
@@ -131,13 +131,17 @@ const ApprovalValidateData = ({ parentRef, handleValidateSuccess, validateCheckL
           <div className="col-md-12 mt-lg-4">
             <div className="d-flex align-item-center justify-content-center">
               <div className="d-flex align-item-center">
-                {showDoneButton ?
-                  <Buttons buttonTypeClassName="theme-button" buttonText="Done" onClick={handleDone} />
-                  : null}
-                {!isDetailPage && showViewButton ?
-                  <Buttons buttonTypeClassName="theme-button ml-5" buttonText={isSupplierApproval ? 'View Supplier Details' : 'View Customer Details'}
-                    onClick={handleRedirectToDetails} /> :
-                  null}
+                {isShowBothButton &&
+                  <>
+                    {showDoneButton ?
+                      <Buttons buttonTypeClassName="theme-button" buttonText="Done" onClick={handleDone} />
+                      : null}
+                    {!isDetailPage && showViewButton ?
+                      <Buttons buttonTypeClassName="theme-button ml-5" buttonText={isSupplierApproval ? 'View Supplier Details' : 'View Customer Details'}
+                        onClick={handleRedirectToDetails} /> :
+                      null}
+                  </>
+                }
                 <Buttons buttonTypeClassName="dark-btn ml-5" buttonText="Cancel" onClick={handleValidateModalClose} />
               </div>
             </div>
