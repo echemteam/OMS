@@ -178,7 +178,7 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
                           </span>
                         </div> */}
                         <div className="contact-type-list">
-                        <i className="fa fa-envelope-o"></i>
+                          <i className="fa fa-envelope-o"></i>
                           <ul>
                             <li>
                               {contactItem.emailAddressList?.length > 0 ? (
@@ -269,15 +269,15 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
             </div>
             <div className="right-action-icon">
               <div className="edit-view-icon">
-                <div className="edit-delete-button">
+                <div className="d-flex edit-delete-button">
                   {showEditIcon ? (
                     <>
-                      <button onClick={() => handleEdit(contactItem?.contactId)} className="edit-btn" >
+                      <button onClick={() => handleClone(contactItem)} className="edit-btn">
+                        <Iconify icon="clarity:clone-line" />
+                      </button>
+                      <button onClick={() => handleEdit(contactItem?.contactId)} className="edit-btn ml-1" >
                         {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
                         <Iconify icon="tabler:pencil" />
-                      </button>
-                      <button onClick={() => handleClone(contactItem)} className="edit-btn">
-                        <Iconify icon="bitcoin-icons:copy-outline" />
                       </button>
                     </>
                   ) : null}
