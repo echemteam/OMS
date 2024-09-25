@@ -449,16 +449,16 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                 <div className="info-desc">{supplierData?.incotermName}</div>
               </div>
               <div className="field-desc">
-                <div className="inf-label" style={{ minWidth: '120px', maxWidth: '120px' }}>Customer Completion</div>
+                <div className="inf-label" style={{ minWidth: '120px', maxWidth: '120px' }}>Supplier Completion</div>
                 <b>&nbsp;:&nbsp;</b>
-                {approvalSuccessCount && totalCount ?
+                {totalCount &&
                   <>
                     <div className="info-desc submission-tab d-flex gap-2 align-items-center" style={{ cursor: 'pointer', fontSize: '13px' }} onClick={getApprovalCheckList}>
                       {approvalSuccessCount + "/" + totalCount}
                       <Iconify icon="clarity:info-solid" className="info" />
                     </div>
                   </>
-                  : null}
+                }
               </div>
             </div>
           </div>

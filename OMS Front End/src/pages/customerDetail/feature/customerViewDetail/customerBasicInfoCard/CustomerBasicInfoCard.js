@@ -630,7 +630,7 @@ const CustomerBasicInfoCard = ({
 
             <div className="field-desc">
               <div className="inf-label inf-label-width">Customer Completion</div>
-              {approvalSuccessCount && totalCount &&
+              {totalCount &&
                 <>
                   <b>&nbsp;:&nbsp;</b>
                   <div className="info-desc submission-tab d-flex gap-2 align-items-center" style={{ cursor: 'pointer', fontSize: '13px' }} onClick={getApprovalCheckList}>
