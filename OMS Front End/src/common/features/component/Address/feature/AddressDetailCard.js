@@ -220,7 +220,7 @@ const AddressDetailCard = forwardRef(
                                   <Iconify icon="tabler:pencil" />
                                 </button>
                               ) : null}
-                              <button onClick={() => handleDelete(address)} className="edit-btn ml-2" >
+                              <button onClick={() => handleDelete(address)} className="clone-btn ml-2" >
                                 <Iconify icon="mingcute:delete-2-line" className="delete-icon" />
                               </button>
                             </div>
