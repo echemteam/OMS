@@ -88,6 +88,7 @@ const ArchiveTask = (props) => {
 
   const handleTabClick = (id) => {
     setActiveTab(id);
+    props.setIsPending(false);
     if (props.onGetById) {
       props.onGetById(id);
     }
