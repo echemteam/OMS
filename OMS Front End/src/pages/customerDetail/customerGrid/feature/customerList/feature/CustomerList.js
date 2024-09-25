@@ -219,6 +219,7 @@ export const CustomersList = ({
       statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
       sortString: sortingStringObject,
     };
+    // saveData('customerPagination', request);
     getCustomers(request);
   };
 
@@ -461,7 +462,7 @@ export const CustomersList = ({
                   isLoading={isListLoading}
                   pagination={{
                     totalCount: totalRowCount,
-                    pageSize: 20,
+                    pageSize: 25,
                     currentPage: 1,
                   }}
                   onPageChange={handlePageChange}

@@ -262,3 +262,13 @@ form {
     }
   }
 }
+
+.react-international-phone-input-container {
+  .react-international-phone-country-selector-button {
+    border-color: var(--inputBorder) !important;
+  }
+  .react-international-phone-input {
+    width: calc(100% - 36px);
+    border-color: var(--inputBorder) !important;
+  }
+}

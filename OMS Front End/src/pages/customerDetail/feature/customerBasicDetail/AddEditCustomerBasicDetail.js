@@ -297,6 +297,12 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             // const trimCustomerName = data.replace(/\s+/g, '');
             setCustomerName(data);
         }
+        if (dataField === 'website') {
+            const trimmedUrl = data.replace(/\/$/, "");
+            basicDetailRef.current.updateFormFieldValue({
+                website: trimmedUrl
+            });
+        }
     }
     const formInputHandler = {
         INPUT_CHANGED: handleInputFields,

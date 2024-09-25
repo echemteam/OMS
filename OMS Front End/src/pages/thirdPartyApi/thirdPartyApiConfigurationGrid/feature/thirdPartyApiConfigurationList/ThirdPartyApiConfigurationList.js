@@ -141,7 +141,7 @@ const ThirdPartyApiConfigurationList = ({ childRef }) => {
                     ref={molGridRef}
                     configuration={thirdPartyListConfigurationData}
                     dataSource={listData}
-                    allowPagination={true}
+                    allowPagination={false}
                     pagination={{
                         totalCount: totalRowCount,
                         pageSize: 20,

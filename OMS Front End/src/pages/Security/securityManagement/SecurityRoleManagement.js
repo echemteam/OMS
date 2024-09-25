@@ -232,7 +232,7 @@ const SecurityRoleManagement = () => {
               ref={molGridRef}
               configuration={SecurityRoleGridConfig}
               dataSource={listData}
-              allowPagination={true}
+              allowPagination={false}
               pagination={{
                 totalCount: totalRowCount,
                 pageSize: 20,

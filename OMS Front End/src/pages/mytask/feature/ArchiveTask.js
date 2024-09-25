@@ -126,9 +126,9 @@ const ArchiveTask = (props) => {
                           <div className="title">
                             {tab.eventName}
                             <div className="bage-fix">
-                              <span className="sub-title">
+                              {/* <span className="sub-title">
                                 {tab.moduleName}
-                              </span>
+                              </span> */}
                               <div
                                 className={`mytask-type-badge ${tab.status === "Accept"
                                   ? "badge-accept"
@@ -137,7 +137,7 @@ const ArchiveTask = (props) => {
                                     : ""
                                   }`}
                               >
-                                {tab.status}
+                               {tab.status} by {tab.approvedByUserName} on {formatDate(tab.approvedDate,"MM/DD/YYYY hh:mm A")}
                               </div>
                             </div>
                           </div>

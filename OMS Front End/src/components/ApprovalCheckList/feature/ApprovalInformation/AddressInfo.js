@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AddressType } from "../../../../utils/Enums/commonEnums";
 import PropTypes from "prop-types";
 import Checkbox from "../../../ui/inputs/checkBox/CheckBox";
+import Iconify from "../../../ui/iconify/Iconify";
 
 const AddressInformation = ({
   isModelOpen,
@@ -14,10 +15,9 @@ const AddressInformation = ({
   isSupplierApproval,
 }) => {
   //** State */
+  const [openSections, setOpenSections] = useState([true]);
   const [addressInformation, setAddressInformation] = useState([]);
-  const [isChecked, setIsChecked] = useState(
-    approvalChekedData?.isChecked || false
-  );
+  const [isChecked, setIsChecked] = useState(approvalChekedData?.isChecked || false);
 
   //** API Call's */
   const [
@@ -47,63 +47,90 @@ const AddressInformation = ({
           : [AddressType.BILLING, AddressType.SHIPPING]
         : [AddressType.PHYSICALADDRESSHQ, AddressType.REMITTANCEADDRESS];
 
-      const customerFilteredData = isGetAddressByIdData.filter(
-        (address) => addressTypeArray.includes(address.addressTypeId)
+      const modifyData = isGetAddressByIdData.map((data) => ({
+        ...data,
+        isChecked: false
+      }))
+
+      const customerFilteredData = modifyData.filter((address) => addressTypeArray.includes(address.addressTypeId)
         // && (address.isPreferredBilling === true || address.isPreferredShipping === true)
       );
-
-      const supplierFilteredData = isGetAddressByIdData.filter((address) =>
-        addressTypeArray.includes(address.addressTypeId)
-      );
-
-      setAddressInformation(
-        !isSupplierApproval ? customerFilteredData : supplierFilteredData
-      );
+      const supplierFilteredData = isGetAddressByIdData.filter((address) => addressTypeArray.includes(address.addressTypeId));
+      setAddressInformation(!isSupplierApproval ? customerFilteredData : supplierFilteredData);
     }
   }, [isGetAddressByIdFetching, isGetAddressByIdSuccess, isGetAddressByIdData]);
 
-  const handleChange = (checkedValue, newValue) => {
-    setIsChecked(newValue);
-    handleCheckbox(checkedValue, newValue);
+  useEffect(() => {
+    if (addressInformation && addressInformation.length > 0) {
+      const allChildChecked = addressInformation.every(data => data.isChecked);
+      if (allChildChecked) {
+        handleCheckbox("addressInformation", true);
+        setIsChecked(true);
+      } else {
+        setIsChecked(false);
+        handleCheckbox("addressInformation", false);
+      }
+    }
+  }, [addressInformation])
+
+  const handleChange = (name, value) => {
+    const modifyData = addressInformation.map((item) =>
+      item.addressId === name ? { ...item, isChecked: value } : item
+    )
+    setAddressInformation(modifyData);
   };
 
+  // Toggle active section
+  const toggleSection = (index) => {
+    const updatedSections = [...openSections];
+    updatedSections[index] = !updatedSections[index]; // Toggle the clicked section
+    setOpenSections(updatedSections);
+  };
   return (
     <>
-      <div className="card-top-title">
-        <h5> Address Information </h5>
-        <div className="checkbox-part">
+      <div className={`card-top-title ${openSections[0] ? 'active' : ''}`} onClick={() => toggleSection(0)}>
+        <div className="d-flex align-items-center mr-2">
+          <span>
+            <Iconify icon="ep:arrow-down-bold" className="open-bar" />
+          </span>
+          <h5> Address Information </h5>
+        </div>
+        {/* <div className="checkbox-part">
           <Checkbox
             name={"addressInformation"}
             dataField={"addressInformation"}
             checked={isChecked || false}
-            onChange={handleChange}
+            // onChange={handleChange}
+            isDisable={true}
           />
-        </div>
+        </div> */}
       </div>
-      <div className="card-info-checklist">
-        {addressInformation &&
-          addressInformation.map((address, index) => (
-            <div className="address-card-part" key={index}>
-              <div className="d-flex justify-content-between">
-                <h6 className="title">{address.type}</h6>
-                <Checkbox
-                  name={"addressInformation"}
-                  dataField={"addressInformation"}
-                  checked={isChecked || false}
-                  onChange={handleChange}
-                />
+      {openSections[0] && (
+        <div className="card-info-checklist">
+          {addressInformation &&
+            addressInformation.map((address, index) => (
+              <div className="address-card-part" key={index}>
+                <div className="d-flex justify-content-between">
+                  <h6 className="title">{address.type}</h6>
+                  <Checkbox
+                    name={address.addressId}
+                    dataField={address.addressId}
+                    checked={address.isChecked}
+                    onChange={handleChange}
+                  />
+                </div>
+                <h6 className="add-line-desc">{address.addressLine1}</h6>
+                <p className="add-line-desc">{address.isPreferredBilling}</p>
+                <p className="add-line-desc">
+                  {address.cityName},{" "}
+                  {address.stateCode ? address.stateCode : address.stateName}{" "}
+                  {address.zipCode}
+                  <div>{address.countryName}</div>
+                </p>
               </div>
-              <h6 className="add-line-desc">{address.addressLine1}</h6>
-              <p className="add-line-desc">{address.isPreferredBilling}</p>
-              <p className="add-line-desc">
-                {address.cityName},{" "}
-                {address.stateCode ? address.stateCode : address.stateName}{" "}
-                {address.zipCode}
-                <div>{address.countryName}</div>
-              </p>
-            </div>
-          ))}
-      </div>
+            ))}
+        </div>
+      )}
     </>
   );
 };

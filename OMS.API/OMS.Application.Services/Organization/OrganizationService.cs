@@ -206,7 +206,7 @@ namespace OMS.Application.Services.Organization
 
             return responseData.KeyValue;
         }
-        public async Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(ListEntityRequest<BaseFilter> requestData)
+        public async Task<EntityList<GetOrganizationHistorysResponse>> GetOrganizationHistorys(GetOrganizationHistoryRequest requestData)
         {
             return await repositoryManager.organization.GetOrganizationHistorys(requestData);
         }

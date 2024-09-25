@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { useState } from 'react';
 import { createContext } from 'react';
-import { CustomerSupplierTabEnum } from '../../Enums/commonEnums';
 
 const BasicDetailContext = createContext();
 
@@ -22,6 +21,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [carriersList, setCarriersList] = useState([]);
     const [showSubBackButton, setShowSubBackButton] = useState(false);
     const [deliveryMethodsList, setDeliveryMethodsList] = useState([]);
+    const [isShippingMethodChange, setIsShippingMethodChange] = useState(false);
     const [isExistsFinancialSetting, setIsExistsFinancialSetting] = useState(false);
     //** */
 
@@ -90,7 +90,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     return (
         <BasicDetailContext.Provider value={{
             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setCustomerCountryId,
-            customerCountryId, setIsExistsFinancialSetting, isExistsFinancialSetting, financialRef,
+            customerCountryId, setIsExistsFinancialSetting, isExistsFinancialSetting, financialRef, isShippingMethodChange, setIsShippingMethodChange,
             phoneNumberData, setMainId, mainId, setShowSubBackButton, showSubBackButton, setActiveSubTab, activeSubTab, handleActiveSubTabClick, saveFinacialSetting,
             emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
             setIsResponsibleUser, isResponsibleUser, setRejectStatusId, rejectStatusId

@@ -10,7 +10,7 @@ export const initialPhoneTypeState = {
 export const addEditContactsFormData = {
   name: "Add Edit Role Form",
   initialState: {
-    phoneCode: '+1',
+    phoneCode: '',
     phoneNumber: '',
     phoneTypeId: initialPhoneTypeState.value,
     extension: 0,
@@ -33,26 +33,26 @@ export const addEditContactsFormData = {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 mb-input",
       },
     },
-    {
-      id: "phoneCode",
-      lable: "Contact Number ",
-      Field_Name: "Phone Code",
-      fieldType: FormFieldTypes.SELECT,
-      dataField: "phoneCode",
-      fieldSetting: {
-        placeholder: "",
-        isEnableOnChange: true
-      },
-      validation: [{ type: "require" }],
-      style: {
-        containerCss: "col-xxl-3 col-xl-3 col-md-4 mb-input pr-0 border-right-0",
-      },
-    },
+    // {
+    //   id: "phoneCode",
+    //   lable: "Contact Number ",
+    //   Field_Name: "Phone Code",
+    //   fieldType: FormFieldTypes.SELECT,
+    //   dataField: "phoneCode",
+    //   fieldSetting: {
+    //     placeholder: "",
+    //     isEnableOnChange: true
+    //   },
+    //   validation: [{ type: "require" }],
+    //   style: {
+    //     containerCss: "col-xxl-3 col-xl-3 col-md-4 mb-input pr-0 border-right-0",
+    //   },
+    // },
     {
       id: "phoneNumber",
       lable: "Contact Number",
       Field_Name: "Phone Number",
-      fieldType: FormFieldTypes.NUMERIC,
+      fieldType: FormFieldTypes.PHONE,
       dataField: "phoneNumber",
       fieldSetting: {
         placeholder: "Enter Phone Number",
@@ -61,7 +61,7 @@ export const addEditContactsFormData = {
       },
       validation: [{ type: "require" }],
       style: {
-        containerCss: "col-xxl-7 col-xl-7 col-md-8 mb-input pl-0 border-left-r-0-contactform lable-none",
+        containerCss: "col-xxl-6 col-xl-12 col-md-12 mb-input",
       },
     },
     {
@@ -77,7 +77,7 @@ export const addEditContactsFormData = {
         maxLength: 6,
       },
       style: {
-        containerCss: "col-xxl-2 col-xl-2 col-md-3 mt-3 mb-input pl-0 extension ",
+        containerCss: "col-xxl-3 col-xl-12 col-md-12 mb-input ",
       },
     },
     {
@@ -114,8 +114,8 @@ export const phoneNumberConfig = {
     },
     {
       name: "Phone Number",
-      fieldName: "phoneCode,phoneNumber",
-      colType: GridColumnType.CUSTOM,
+      fieldName: "phoneNumber",
+     // colType: GridColumnType.CUSTOM,
       colStyle: {
         width: "30%",
       },

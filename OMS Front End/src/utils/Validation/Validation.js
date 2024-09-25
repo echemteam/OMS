@@ -168,7 +168,11 @@ export function ValidateField(value, fieldRules, state) {
             const zipCodeValidation = isValidZipCode(state);
             if (!zipCodeValidation.isValid) {
               result.isvalid = false;
-              result.message = rule.message.replace('{maxLength}', zipCodeValidation?.maxLength || '');
+              const lengthMessage = zipCodeValidation.minLength === zipCodeValidation.maxLength
+                ? `${zipCodeValidation.minLength}`
+                : `between ${zipCodeValidation.minLength} and ${zipCodeValidation.maxLength}`;
+
+              result.message = rule.message.replace('{length}', lengthMessage || '');
             }
           }
           break;

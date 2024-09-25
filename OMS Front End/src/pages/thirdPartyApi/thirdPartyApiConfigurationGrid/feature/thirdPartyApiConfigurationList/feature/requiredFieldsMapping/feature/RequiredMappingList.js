@@ -103,7 +103,7 @@ const RequiredMappingList = (props) => {
           ref={molGridRef}
           configuration={AddEditRequiredMappingConfigurationData}
           dataSource={listData}
-          allowPagination={true}
+          allowPagination={false}
           pagination={{
             totalCount: totalRowCount,
             pageSize: 20,

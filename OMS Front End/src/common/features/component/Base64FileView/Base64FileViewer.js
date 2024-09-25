@@ -135,6 +135,33 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                 isOpen={isModalOpen}
                 contentClass="content-65"
                 modalTitle="File Preview"
+                onClose={handleToggleModal}
+            >
+                <div className="model-height-fix">
+                    {selectedDocument && getFileType ? (
+                        getFileType === "pdf" ? (
+                            <div>
+                                <iframe
+                                    src={selectedDocument}
+                                    title="PDF Preview"
+                                    style={{ width: '100%', height: '200%' }}  
+                                />
+                            </div>
+                        ) : (
+                            <FileViewer
+                                fileType={getFileType}
+                                filePath={selectedDocument}
+                                onError={(error) => console.error("Error:", error)}
+                            />
+                        )
+                    ) : null}
+                </div>
+            </SidebarModel>
+
+            {/* <SidebarModel
+                isOpen={isModalOpen}
+                contentClass="content-65"
+                modalTitle="File Preview"
                 onClose={handleToggleModal}>
                 <div className="model-hight-fix">
                     {selectedDocument && (
@@ -145,7 +172,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                         />
                     )}
                 </div>
-            </SidebarModel>
+            </SidebarModel> */}
         </div>
     );
 }

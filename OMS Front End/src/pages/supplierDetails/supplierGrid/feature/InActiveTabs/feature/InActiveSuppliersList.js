@@ -227,7 +227,7 @@ const InActiveSuppliersList = ({ statusId, configFile, handleChange, search, han
                                         allowPagination={true}
                                         pagination={{
                                             totalCount: totalRowCount,
-                                            pageSize: 20,
+                                            pageSize: 25,
                                             currentPage: 1,
                                         }}
                                         onPageChange={handlePageChange}
