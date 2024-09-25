@@ -46,13 +46,29 @@ const ContactInformation = ({
 
   useEffect(() => {
     if (!isGetContactFetching && isGetContactSucess && isGetcontactItem) {
-      const filter = isGetcontactItem.filter((data) => data.isPrimary);
+      const filter = isGetcontactItem.filter((data) => data.isPrimary).map(data => ({ ...data, isChecked: false }));;
       setContactInformation(filter);
     }
   }, [isGetContactFetching, isGetContactSucess, isGetcontactItem]);
-  const handleChange = (checkedValue, newValue) => {
-    setIsChecked(newValue);
-    handleCheckbox(checkedValue, newValue);
+
+  useEffect(() => {
+    if (contactInformation && contactInformation.length > 0) {
+      const allChildChecked = contactInformation.every(data => data.isChecked);
+      if (allChildChecked) {
+        setIsChecked(true);
+        handleCheckbox("contactInformation", true);
+      } else {
+        setIsChecked(false);
+        handleCheckbox("contactInformation", false);
+      }
+    }
+  }, [contactInformation]);
+
+  const handleChange = (name, value) => {
+    const modifyData = contactInformation.map((item) =>
+      item.customerContactId === name ? { ...item, isChecked: value } : item
+    )
+    setContactInformation(modifyData);
   };
 
   // Toggle active section
@@ -67,19 +83,20 @@ const ContactInformation = ({
       <>
         <div className={`card-top-title ${openSections[0] ? 'active' : ''}`} onClick={() => toggleSection(0)}>
           <div className="d-flex align-items-center mr-2">
-          <span>
-            <Iconify icon="ep:arrow-down-bold" className="open-bar" />
-          </span>
-          <h5> Contact Information </h5>
-        </div>
-          <div className="checkbox-part">
+            <span>
+              <Iconify icon="ep:arrow-down-bold" className="open-bar" />
+            </span>
+            <h5> Contact Information </h5>
+          </div>
+          {/* <div className="checkbox-part">
             <Checkbox
               name={"contactInformation"}
               dataField={"contactInformation"}
               checked={isChecked || false}
-              onChange={handleChange}
+              // onChange={handleChange}
+              isDisable={true}
             />
-          </div>
+          </div> */}
         </div>
         {openSections[0] && (
           <div className="card-info-checklist">
@@ -89,16 +106,15 @@ const ContactInformation = ({
                   <div className="d-flex justify-content-between">
                     <h6 className="title">{contact.type}</h6>
                     <Checkbox
-                      name={"contactInformation"}
-                      dataField={"contactInformation"}
-                      checked={isChecked || false}
+                      name={contact.customerContactId}
+                      dataField={contact.customerContactId}
+                      checked={contact.isChecked}
                       onChange={handleChange}
                     />
                   </div>
                   <h6
-                    className={`name-title ${
-                      contact.isPrimary ? "is-primary" : ""
-                    }`}
+                    className={`name-title ${contact.isPrimary ? "is-primary" : ""
+                      }`}
                   >
                     <span className="label">Name :</span>
                     <p className="name-desc">
@@ -126,13 +142,12 @@ const ContactInformation = ({
                         contact.phoneNumberList.map((phoneData) => (
                           <>
                             <h6
-                              className={`name-desc d-flex ${
-                                phoneData.phoneType === "Home"
-                                  ? "home"
-                                  : phoneData.phoneType === "Work"
+                              className={`name-desc d-flex ${phoneData.phoneType === "Home"
+                                ? "home"
+                                : phoneData.phoneType === "Work"
                                   ? "work"
                                   : "home"
-                              } ${phoneData.isPrimary ? "is-primary" : ""}`}
+                                } ${phoneData.isPrimary ? "is-primary" : ""}`}
                             >
                               ({phoneData.phoneCode}) {phoneData.phoneNumber}
                               {phoneData.extension
