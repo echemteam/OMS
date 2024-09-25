@@ -66,7 +66,7 @@ const ContactInformation = ({
 
   const handleChange = (name, value) => {
     const modifyData = contactInformation.map((item) =>
-      item.type === name ? { ...item, isChecked: value } : item
+      item.customerContactId === name ? { ...item, isChecked: value } : item
     )
     setContactInformation(modifyData);
   };
@@ -106,8 +106,8 @@ const ContactInformation = ({
                   <div className="d-flex justify-content-between">
                     <h6 className="title">{contact.type}</h6>
                     <Checkbox
-                      name={contact.type}
-                      dataField={contact.type}
+                      name={contact.customerContactId}
+                      dataField={contact.customerContactId}
                       checked={contact.isChecked}
                       onChange={handleChange}
                     />

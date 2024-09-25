@@ -55,9 +55,7 @@ const AddressInformation = ({
       const customerFilteredData = modifyData.filter((address) => addressTypeArray.includes(address.addressTypeId)
         // && (address.isPreferredBilling === true || address.isPreferredShipping === true)
       );
-
       const supplierFilteredData = isGetAddressByIdData.filter((address) => addressTypeArray.includes(address.addressTypeId));
-
       setAddressInformation(!isSupplierApproval ? customerFilteredData : supplierFilteredData);
     }
   }, [isGetAddressByIdFetching, isGetAddressByIdSuccess, isGetAddressByIdData]);
@@ -77,7 +75,7 @@ const AddressInformation = ({
 
   const handleChange = (name, value) => {
     const modifyData = addressInformation.map((item) =>
-      item.type === name ? { ...item, isChecked: value } : item
+      item.addressId === name ? { ...item, isChecked: value } : item
     )
     setAddressInformation(modifyData);
   };
@@ -115,8 +113,8 @@ const AddressInformation = ({
                 <div className="d-flex justify-content-between">
                   <h6 className="title">{address.type}</h6>
                   <Checkbox
-                    name={address.type}
-                    dataField={address.type}
+                    name={address.addressId}
+                    dataField={address.addressId}
                     checked={address.isChecked}
                     onChange={handleChange}
                   />
