@@ -31,7 +31,7 @@ import { useGetValidateCheckListMutation } from '../../../../../app/services/App
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../supplierApproval/SupplierApproval"));
 
-const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId, getSupplierById, isGetSupplierBasicInformationById, isGetSupplierBasicInformationByIdFetching }) => {
+const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId, getSupplierById, GetSupplierBasicInformationByIdData, isGetSupplierBasicInformationByIdFetching, isGetSupplierBasicInformationById }) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
@@ -93,11 +93,16 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
     }
   }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
 
-  useEffect(() => {
-    if (rejectStatusId) {
-      getSupplierById()
-    }
-  }, [rejectStatusId, setRejectStatusId, selectedStatus])
+  // useEffect(() => {
+  //   if (rejectStatusId) {
+  //     getSupplierById()
+  //   }
+  // }, [rejectStatusId, setRejectStatusId, selectedStatus])
+
+
+  const rejectedSupplierFromApproval = () => {
+    getSupplierById();
+  }
 
   // useEffect(() => {
   //   if (rejectStatusId) {
@@ -142,16 +147,16 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   // }, [supplierData]);
 
   useEffect(() => {
-    if (supplierData) {
-      const responsibleUserIds = supplierData?.responsibleUserId?.split(',').map(id => id.trim());
-      const responsibleUserNames = supplierData?.responsibleUserName?.split(',').map(name => name.trim());
+    if (isGetSupplierBasicInformationById && !isGetSupplierBasicInformationByIdFetching && GetSupplierBasicInformationByIdData) {
+      const responsibleUserIds = GetSupplierBasicInformationByIdData?.responsibleUserId?.split(',').map(id => id.trim());
+      const responsibleUserNames = GetSupplierBasicInformationByIdData?.responsibleUserName?.split(',').map(name => name.trim());
       const responsibleUsers = responsibleUserIds?.map((id, index) => ({
         value: id,
         label: responsibleUserNames[index] || id,
       }));
       setResponsibleUserIds(responsibleUserIds);
       setRUserValue(responsibleUsers);
-      setSelectedStatus(supplierData.status);
+      setSelectedStatus(GetSupplierBasicInformationByIdData.status);
       getAllUser();
       let request = {
         customerId: 0,
@@ -159,7 +164,17 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       }
       getValidateCheckList(request);
     }
-  }, [supplierData]); 
+  }, [isGetSupplierBasicInformationByIdFetching, isGetSupplierBasicInformationById, GetSupplierBasicInformationByIdData]);
+
+  useEffect(() => {
+    if (isGetCheckListSuccess && isGetCheckListData) {
+      if (isGetCheckListData && isGetCheckListData.length > 0) {
+        const successCheckList = isGetCheckListData.filter(data => data.isValid);
+        setApprovalSuccessCount(successCheckList.length);
+        setTotalCount(isGetCheckListData.length);
+      }
+    }
+  }, [isGetCheckListSuccess, isGetCheckListData])
 
   useEffect(() => {
     if (showModal && selectedStatus === CustomerSupplierStatus.REJECT) {
@@ -532,7 +547,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       : <DataLoader />}
       <SupplierApproval
         childRef={childRef} isDetailPage={true} updateApproval={updateCustomerApproval} setSelectedStatus={setSelectedStatus} responsibleUserIds={responsibleUserIds}
-      // OnRejectedSupplierFromApproval={rejectedSupplierFromApproval} 
+        OnRejectedSupplierFromApproval={rejectedSupplierFromApproval}
       />
     </>
   );
