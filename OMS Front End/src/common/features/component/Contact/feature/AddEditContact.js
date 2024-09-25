@@ -195,6 +195,8 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
             const request = requestData(data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
             let req = {
                 ...request,
+                emailAddressList: request?.emailList,
+                phoneNumberList: request?.phoneList,
                 customerId: customerId ? customerId : request.customerId
             }
             addEdit(req);
