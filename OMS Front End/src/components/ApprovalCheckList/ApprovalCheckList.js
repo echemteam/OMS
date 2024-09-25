@@ -447,17 +447,28 @@ const ApprovalCheckList = ({
               <div className="row">
                 <div className="col-12">
                   <div className="document-view">
-                    {selectedDocument && getFileType && (
-                      <FileViewer
-                        fileType={getFileType}
-                        filePath={selectedDocument}
-                        onError={(error) => console.error("Error:", error)}
-                      />
-                    )}
+                  {selectedDocument && getFileType ? (
+                        getFileType === "pdf" ? (
+                            <div>
+                                <iframe
+                                    src={selectedDocument}
+                                    title="PDF Preview"
+                                    style={{ width: '100%', height: '200%' }}  
+                                />
+                            </div>
+                        ) : (
+                            <FileViewer
+                                fileType={getFileType}
+                                filePath={selectedDocument}
+                                onError={(error) => console.error("Error:", error)}
+                            />
+                        )
+                    ) : null}
                   </div>
                 </div>
               </div>
             </div>
+
             {/* <div className="col-md-4 d-flex flex-column justify-content-between approval-check-list">
                 <div>
                   {checkListData.map((item) => (
