@@ -8,7 +8,7 @@ namespace Common.Helper.ApprovalRules
 {
     public class ApprovalRuleHelper
     {
-        public static async Task<ApprovalRequestsDto> ProcessApprovalRequest<T>(string? existingRequestData, T newRequestData, short currentUserId, GetTemplateByFunctionalityEventIdResponse formatTemplate, GetApprovalConfigurationResponse matchingRule,bool isMultiple=false)
+        public static async Task<ApprovalRequestsDto> ProcessApprovalRequest<T>(string? existingRequestData, T newRequestData, short currentUserId, GetTemplateByFunctionalityEventIdResponse formatTemplate, GetApprovalConfigurationResponse matchingRule, bool isMultiple = false)
         {
             var existingValueJson = existingRequestData is string ? existingRequestData.ToString() : JsonSerializer.Serialize(existingRequestData);
             var newValueJson = newRequestData is string ? newRequestData.ToString() : JsonSerializer.Serialize(newRequestData);
@@ -32,7 +32,7 @@ namespace Common.Helper.ApprovalRules
                 }
                 if (!string.IsNullOrWhiteSpace(newValueJson) && newValueJson != "{}" && newValueJson != "null" && newValueJson != null)
                 {
-                    approvalRequest.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(newValueJson, formatTemplate.Template,isMultiple);
+                    approvalRequest.NewValueTemplate = ReplacePlaceholdersHelper.ProcessTemplate(newValueJson, formatTemplate.Template, isMultiple);
                 }
             }
             return approvalRequest;

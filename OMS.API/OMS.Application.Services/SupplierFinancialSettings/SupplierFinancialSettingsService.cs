@@ -1,6 +1,4 @@
-﻿using Common.Helper.ApprovalRules;
-using Common.Helper.Enum;
-using Common.Helper.Extension;
+﻿using Common.Helper.Extension;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OMS.Application.Services.Implementation;
@@ -12,7 +10,6 @@ using OMS.Domain.Entities.API.Response.SuppierBankDetails;
 using OMS.Domain.Entities.API.Response.SupplierFinancialSettings;
 using OMS.Domain.Entities.API.Response.supplierPaymentSettings;
 using OMS.Domain.Entities.Entity.Address;
-using OMS.Domain.Entities.Entity.Approval;
 using OMS.Domain.Entities.Entity.CommonEntity;
 using OMS.Domain.Entities.Entity.SuppierBankDetails;
 using OMS.Domain.Entities.Entity.SupplierAccoutingSetting;
@@ -39,90 +36,90 @@ namespace OMS.Application.Services.SupplierFinancialSettings
         {
             AddEntityDto<int> responceData = new();
             SuppierBankDetailsDto suppierBankDetailsDto = new();
-            var supplierId = Convert.ToInt32(requestData.SupplierId);
-            var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
-            GetSupplierFinancialSettingsWithACHWireBySupplierIdResponse existingSupplierFinancialSettingsData = new();
+            //var supplierId = Convert.ToInt32(requestData.SupplierId);
+            //var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
+            //GetSupplierFinancialSettingsWithACHWireBySupplierIdResponse existingSupplierFinancialSettingsData = new();
 
-            existingSupplierFinancialSettingsData.SupplierFinancialSettings = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
-            existingSupplierFinancialSettingsData.OtherDetails = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
+            //existingSupplierFinancialSettingsData.SupplierFinancialSettings = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
+            //existingSupplierFinancialSettingsData.OtherDetails = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
 
-            if (existingSupplierFinancialSettingsData != null && supplierId > 0 && existingSupplierFinancialSettingsData.OtherDetails.BankAddressId > 0 && existingSupplierFinancialSettingsData.OtherDetails.RecipientAddressId > 0)
+            //if (existingSupplierFinancialSettingsData != null && supplierId > 0 && existingSupplierFinancialSettingsData.OtherDetails.BankAddressId > 0 && existingSupplierFinancialSettingsData.OtherDetails.RecipientAddressId > 0)
+            //{
+            //    existingSupplierFinancialSettingsData.OtherDetails = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
+
+            //    existingSupplierFinancialSettingsData.BeneficiaryDetails = await repositoryManager.suppierBankDetails.GetBeneficiaryDetailsAddressByAddressId(existingSupplierFinancialSettingsData.OtherDetails.BankAddressId);
+            //    existingSupplierFinancialSettingsData.BankDetails = await repositoryManager.suppierBankDetails.GetBankDetailsAddressByAddressId(existingSupplierFinancialSettingsData.OtherDetails.RecipientAddressId);
+            //}
+
+            //if (supplierData.StatusId == (short)Status.Approved && existingSupplierFinancialSettingsData != null && existingSupplierFinancialSettingsData.SupplierFinancialSettings.SupplierAccountingSettingId > 0 && existingSupplierFinancialSettingsData.OtherDetails.SupplierBankDetailsId > 0)
+            //{
+            //    //var newJsonData = JsonConvert.SerializeObject(requestData);
+            //    // Serialize combined data to JSON
+            //    var oldJsonData = JsonConvert.SerializeObject(existingSupplierFinancialSettingsData);
+
+            //    var approvalEventName = new[]
+            //        {
+            //       ApprovalEvent.UpdateAchWireFinancialSetting
+            //    };
+
+            //    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+            //    var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+
+            //    if (matchingRule != null)
+            //    {
+            //        ;
+
+            //        // Serialize the combined object to a JSON string
+            //        var modifiedData = await ModifyAllJsonData(requestData);
+
+            //        // Serialize the combined data to a JSON string
+            //        string combinedJsonString = JsonConvert.SerializeObject(modifiedData);
+
+
+            //        // Deserialize the updated JSON strings back into their respective object types
+
+
+            //        //var combinedNewJson = MergeJson(updatedNewlsJsonSupplierFinancialSettingsData, updatedNewJsonBeneficiaryDetailsData, updatedNewJsonBankDetailsData, updatedNewJsonOtherDetailsData);
+
+            //        // If you need a string, call ToString() on combinedNewJson
+            //        //var combinedJsonString = combinedNewJson.ToString(Formatting.None);
+
+            //        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+            //        ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+            //            combinedJsonString,
+            //            oldJsonData,
+            //            CurrentUserId,
+            //            formatTemplate,
+            //            matchingRule,
+            //            true
+            //        );
+            //        responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+            //    }
+
+            //}
+            //else
+            //{
+            var rData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
+            if (requestData.BeneficiaryDetails != null)
             {
-                existingSupplierFinancialSettingsData.OtherDetails = await repositoryManager.supplierPaymentSettings.GetACHWireBySupplierId(supplierId);
-
-                existingSupplierFinancialSettingsData.BeneficiaryDetails = await repositoryManager.suppierBankDetails.GetBeneficiaryDetailsAddressByAddressId(existingSupplierFinancialSettingsData.OtherDetails.BankAddressId);
-                existingSupplierFinancialSettingsData.BankDetails = await repositoryManager.suppierBankDetails.GetBankDetailsAddressByAddressId(existingSupplierFinancialSettingsData.OtherDetails.RecipientAddressId);
+                var beneficiaryDetails = requestData.BeneficiaryDetails.ToMapp<BeneficiaryDetailsRequest, SuppierBankDetailsDto>();
+                beneficiaryDetails.BankAddressId = await AddEditAddress(requestData.BeneficiaryDetails, r => r.AddressId, CurrentUserId);
+                MergeDto(suppierBankDetailsDto, beneficiaryDetails);
             }
-
-            if (supplierData.StatusId == (short)Status.Approved && existingSupplierFinancialSettingsData != null && existingSupplierFinancialSettingsData.SupplierFinancialSettings.SupplierAccountingSettingId > 0 && existingSupplierFinancialSettingsData.OtherDetails.SupplierBankDetailsId > 0)
+            if (requestData.BankDetails != null)
             {
-                //var newJsonData = JsonConvert.SerializeObject(requestData);
-                // Serialize combined data to JSON
-                var oldJsonData = JsonConvert.SerializeObject(existingSupplierFinancialSettingsData);
-
-                var approvalEventName = new[]
-                    {
-                   ApprovalEvent.UpdateAchWireFinancialSetting
-                };
-
-                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
-                var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
-
-                if (matchingRule != null)
-                {
-                    ;
-
-                    // Serialize the combined object to a JSON string
-                    var modifiedData = await ModifyAllJsonData(requestData);
-
-                    // Serialize the combined data to a JSON string
-                    string combinedJsonString = JsonConvert.SerializeObject(modifiedData);
-
-
-                    // Deserialize the updated JSON strings back into their respective object types
-
-
-                    //var combinedNewJson = MergeJson(updatedNewlsJsonSupplierFinancialSettingsData, updatedNewJsonBeneficiaryDetailsData, updatedNewJsonBankDetailsData, updatedNewJsonOtherDetailsData);
-
-                    // If you need a string, call ToString() on combinedNewJson
-                    //var combinedJsonString = combinedNewJson.ToString(Formatting.None);
-
-                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-                    ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        combinedJsonString,
-                        oldJsonData,
-                        CurrentUserId,
-                        formatTemplate,
-                        matchingRule,
-                        true
-                    );
-                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
-                }
-
+                var bankDetails = requestData.BankDetails.ToMapp<BankDetailsRequest, SuppierBankDetailsDto>();
+                bankDetails.RecipientAddressId = await AddEditAddress(requestData.BankDetails, r => r.AddressId, CurrentUserId);
+                MergeDto(suppierBankDetailsDto, bankDetails);
             }
-            else
+            if (requestData.OtherDetails != null)
             {
-                var rData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
-                if (requestData.BeneficiaryDetails != null)
-                {
-                    var beneficiaryDetails = requestData.BeneficiaryDetails.ToMapp<BeneficiaryDetailsRequest, SuppierBankDetailsDto>();
-                    beneficiaryDetails.BankAddressId = await AddEditAddress(requestData.BeneficiaryDetails, r => r.AddressId, CurrentUserId);
-                    MergeDto(suppierBankDetailsDto, beneficiaryDetails);
-                }
-                if (requestData.BankDetails != null)
-                {
-                    var bankDetails = requestData.BankDetails.ToMapp<BankDetailsRequest, SuppierBankDetailsDto>();
-                    bankDetails.RecipientAddressId = await AddEditAddress(requestData.BankDetails, r => r.AddressId, CurrentUserId);
-                    MergeDto(suppierBankDetailsDto, bankDetails);
-                }
-                if (requestData.OtherDetails != null)
-                {
-                    MergeDto(suppierBankDetailsDto, requestData.OtherDetails.ToMapp<OtherDetailsRequest, SuppierBankDetailsDto>());
-                }
-                suppierBankDetailsDto.SupplierId = requestData.SupplierId;
-                suppierBankDetailsDto.CreatedBy = CurrentUserId;
-                responceData = await repositoryManager.suppierBankDetails.AddEditACHWire(suppierBankDetailsDto);
+                MergeDto(suppierBankDetailsDto, requestData.OtherDetails.ToMapp<OtherDetailsRequest, SuppierBankDetailsDto>());
             }
+            suppierBankDetailsDto.SupplierId = requestData.SupplierId;
+            suppierBankDetailsDto.CreatedBy = CurrentUserId;
+            responceData = await repositoryManager.suppierBankDetails.AddEditACHWire(suppierBankDetailsDto);
+            //}
             return responceData;
         }
         private void MergeDto(SuppierBankDetailsDto destination, SuppierBankDetailsDto source)
@@ -140,146 +137,156 @@ namespace OMS.Application.Services.SupplierFinancialSettings
         public async Task<AddEntityDto<int>> AddEditCreditCard(AddEditCreditCardRequest requestData, short CurrentUserId)
         {
             AddEntityDto<int> responceData = new();
-            var supplierId = Convert.ToInt32(requestData.SupplierId);
-            var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
-            var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
-            var existingSupplierFinancialSettingsData = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
+            //var supplierId = Convert.ToInt32(requestData.SupplierId);
+            //var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
+            //var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
+            //var existingSupplierFinancialSettingsData = await repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
 
-            if (supplierData.StatusId == (short)Status.Approved && requestData.SupplierPaymentSettingId > 0)
-            {
-                if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
-                {
-                    existingData.MailingAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.CheckMailingAddressId);
-                }
+            //if (supplierData.StatusId == (short)Status.Approved && requestData.SupplierPaymentSettingId > 0)
+            //{
+            //    if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
+            //    {
+            //        existingData.MailingAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.CheckMailingAddressId);
+            //    }
 
-                var approvalEventName = new[]
-                {
-                    ApprovalEvent.UpdateCreditCardFinancialSetting
-                };
+            //    var approvalEventName = new[]
+            //    {
+            //        ApprovalEvent.UpdateCreditCardFinancialSetting
+            //    };
 
-                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
-                var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+            //    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+            //    var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
 
-                if (matchingRule != null)
-                {
-                    var oldJsonData = JsonConvert.SerializeObject(existingData);
-                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-                    ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        oldJsonData,
-                        requestData,
-                        CurrentUserId,
-                        formatTemplate,
-                        matchingRule
-                    );
-                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
-                }
-            }
-            else
-            {
-                SupplierAccoutingSettingDto supplierAccoutingSettingDto = requestData.SupplierFinancialSettings!.ToMapp<SupplierFinancialSettingsRequest, SupplierAccoutingSettingDto>();
-                supplierAccoutingSettingDto.CreatedBy = CurrentUserId;
-                responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
+            //    if (matchingRule != null)
+            //    {
+            //        var oldJsonData = JsonConvert.SerializeObject(existingData);
+            //        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+            //        ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+            //            oldJsonData,
+            //            requestData,
+            //            CurrentUserId,
+            //            formatTemplate,
+            //            matchingRule
+            //        );
+            //        responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+            //    }
+            //}
+            //else
+            //{
+            SupplierAccoutingSettingDto supplierAccoutingSettingDto = requestData.SupplierFinancialSettings!.ToMapp<SupplierFinancialSettingsRequest, SupplierAccoutingSettingDto>();
+            supplierAccoutingSettingDto.CreatedBy = CurrentUserId;
+            responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
 
-                SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditCreditCardRequest, SupplierPaymentSettingsDto>();
-                supplierPaymentSettingsDto.CreatedBy = CurrentUserId;
-                responceData = await repositoryManager.supplierPaymentSettings.AddEditCreditCard(supplierPaymentSettingsDto);
-            }
+            SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditCreditCardRequest, SupplierPaymentSettingsDto>();
+            supplierPaymentSettingsDto.CreatedBy = CurrentUserId;
+            responceData = await repositoryManager.supplierPaymentSettings.AddEditCreditCard(supplierPaymentSettingsDto);
+            //}
             return responceData;
         }
 
         public async Task<AddEntityDto<int>> AddEditCheck(AddEditCheckRequest requestData, short CurrentUserId)
         {
             AddEntityDto<int> responceData = new();
-            var supplierId = Convert.ToInt32(requestData.SupplierId);
-            var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
-            var existingSupplierFinancialSettingsData = repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
-            var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
+            //var supplierId = Convert.ToInt32(requestData.SupplierId);
+            //var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
+            //var existingSupplierFinancialSettingsData = repositoryManager.supplierFinancialSettings.GetSupplierFinancialSettingsBySupplierId(supplierId);
+            //var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
 
-            if (supplierData.StatusId == (short)Status.Approved && existingData?.SupplierPaymentSettingId > 0 && existingData != null && existingSupplierFinancialSettingsData != null)
+            //if (supplierData.StatusId == (short)Status.Approved && existingData?.SupplierPaymentSettingId > 0 && existingData != null && existingSupplierFinancialSettingsData != null)
+            //{
+            //    if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
+            //    {
+            //        existingData.MailingAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.CheckMailingAddressId);
+            //    }
+
+            //    var approvalEventName = new[]
+            //    {
+            //        ApprovalEvent.UpdateCheckFinancialSetting
+            //    };
+
+            //    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+            //    var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+
+            //    var modifiedData = await ModifyAllCheckJsonData(requestData);
+            //    string combinedJsonString = JsonConvert.SerializeObject(modifiedData);
+
+            //    if (matchingRule != null)
+            //    {
+            //        var oldJsonData = JsonConvert.SerializeObject(existingData);
+            //        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+            //        ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+            //            oldJsonData,
+            //            combinedJsonString,
+            //            CurrentUserId,
+            //            formatTemplate,
+            //            matchingRule,
+            //            true
+            //        );
+            //        responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+            //    }
+            //}
+            //else
+            //{
+            responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
+
+            SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditCheckRequest, SupplierPaymentSettingsDto>();
+            if (requestData.MailingAddress != null)
             {
-                if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
-                {
-                    existingData.MailingAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.CheckMailingAddressId);
-                }
-
-                var approvalEventName = new[]
-                {
-                    ApprovalEvent.UpdateCheckFinancialSetting
-                };
-
-                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
-                var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
-
-                if (matchingRule != null)
-                {
-                    var oldJsonData = JsonConvert.SerializeObject(existingData);
-                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-                    ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        oldJsonData,
-                        requestData,
-                        CurrentUserId,
-                        formatTemplate,
-                        matchingRule
-                    );
-                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
-                }
+                supplierPaymentSettingsDto.CheckMailingAddressId = await AddEditAddress(requestData.MailingAddress, r => r.AddressId, CurrentUserId);
             }
-            else
-            {
-                responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
-
-                SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditCheckRequest, SupplierPaymentSettingsDto>();
-                if (requestData.MailingAddress != null)
-                {
-                    supplierPaymentSettingsDto.CheckMailingAddressId = await AddEditAddress(requestData.MailingAddress, r => r.AddressId, CurrentUserId);
-                }
-                supplierPaymentSettingsDto.CreatedBy = CurrentUserId;
-                responceData = await repositoryManager.supplierPaymentSettings.AddEditCheck(supplierPaymentSettingsDto);
-            }
+            supplierPaymentSettingsDto.CreatedBy = CurrentUserId;
+            responceData = await repositoryManager.supplierPaymentSettings.AddEditCheck(supplierPaymentSettingsDto);
+            //}
             return responceData;
         }
         public async Task<AddEntityDto<int>> AddEditOther(AddEditOtherRequest requestData, short CurrentUserId)
         {
             AddEntityDto<int> responceData = new();
-            var supplierId = Convert.ToInt32(requestData.SupplierId);
-            var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
-            var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
-            if (supplierData.StatusId == (short)Status.Approved && existingData?.SupplierPaymentSettingId > 0 && existingData != null && existingData != null)
-            {
-                if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
-                {
-                    existingData.MailingAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.CheckMailingAddressId);
-                }
-                var approvalEventName = new[]
-                {
-                    ApprovalEvent.UpdateOtherFinancialSetting,
-                };
+            //var supplierId = Convert.ToInt32(requestData.SupplierId);
+            //var supplierData = await repositoryManager.supplier.GetSupplierBasicInformationById(supplierId);
+            //var existingData = await repositoryManager.supplierPaymentSettings.GetPaymentSettingsBySupplierId(supplierId);
 
-                var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
-                var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
+            //if (supplierData.StatusId == (short)Status.Approved && existingData?.SupplierPaymentSettingId > 0 && existingData != null && existingData != null)
+            //{
+            //    if (existingData != null && supplierId > 0 && existingData.CheckMailingAddressId > 0 && existingData.CheckMailingAddressId > 0)
+            //    {
+            //        existingData.MailingAddress = await repositoryManager.supplierPaymentSettings.GetAddressByAddressId(existingData.CheckMailingAddressId);
+            //    }
+            //    var approvalEventName = new[]
+            //    {
+            //        ApprovalEvent.UpdateOtherFinancialSetting,
+            //    };
 
-                if (matchingRule != null)
-                {
-                    var oldJsonData = JsonConvert.SerializeObject(existingData);
-                    var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
-                    ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
-                        oldJsonData,
-                        requestData,
-                        CurrentUserId,
-                        formatTemplate,
-                        matchingRule
-                    );
-                    responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
-                }
-            }
-            else
-            {
-                responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
+            //    var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
+            //    var matchingRule = approvalRules?.FirstOrDefault(rule => approvalEventName.Contains(rule.EventName));
 
-                SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditOtherRequest, SupplierPaymentSettingsDto>();
-                supplierPaymentSettingsDto.CreatedBy = CurrentUserId;
-                responceData = await repositoryManager.supplierPaymentSettings.AddEditOther(supplierPaymentSettingsDto);
-            }
+            //    //var modifiedData = await ModifyAllJsonData(requestData);
+
+            //    //// Serialize the combined data to a JSON string
+            //    //string combinedJsonString = JsonConvert.SerializeObject(modifiedData);
+
+            //    if (matchingRule != null)
+            //    {
+            //        var oldJsonData = JsonConvert.SerializeObject(existingData);
+            //        var formatTemplate = await repositoryManager.emailTemplates.GetTemplateByFunctionalityEventId(matchingRule.FunctionalityEventId);
+            //        ApprovalRequestsDto approvalResponceData = await ApprovalRuleHelper.ProcessApprovalRequest(
+            //            oldJsonData,
+            //            requestData,
+            //            CurrentUserId,
+            //            formatTemplate,
+            //            matchingRule
+            //        );
+            //        responceData = await repositoryManager.approval.AddApprovalRequests(approvalResponceData);
+            //    }
+            //}
+            //else
+            //{
+            responceData = await AddEditSupplierFinancialSettings(requestData.SupplierFinancialSettings!, CurrentUserId);
+
+            SupplierPaymentSettingsDto supplierPaymentSettingsDto = requestData.ToMapp<AddEditOtherRequest, SupplierPaymentSettingsDto>();
+            supplierPaymentSettingsDto.CreatedBy = CurrentUserId;
+            responceData = await repositoryManager.supplierPaymentSettings.AddEditOther(supplierPaymentSettingsDto);
+            //}
             return responceData;
         }
 
@@ -333,26 +340,45 @@ namespace OMS.Application.Services.SupplierFinancialSettings
             }
             return responseData!;
         }
+
         public async Task<AddEditACHWireResponse> ModifyAllJsonData(AddEditACHWireRequest requestData)
         {
-            var tasks = new List<Task>();
+            // Modify the JSON data using your existing ModifyJsonData method
+            var jsonData = await ModifyJsonData(requestData.SupplierFinancialSettings!);
+            var supplierFinancialSettingsResponse = JsonConvert.DeserializeObject<SupplierFinancialSettingsResponse>(jsonData);
+
+            var jsonBeneficiaryDetailsData = await ModifyJsonData(requestData.BeneficiaryDetails!);
+            var beneficiaryDetailsResponse = JsonConvert.DeserializeObject<BeneficiaryDetailsDataResponse>(jsonBeneficiaryDetailsData);
+
+            var bankDetailsJsonData = await ModifyJsonData(requestData.BankDetails!);
+            var bankDetailsResponse = JsonConvert.DeserializeObject<BankDetailsDataResponse>(bankDetailsJsonData);
+
+            var otherDetailsJsonData = await ModifyJsonData(requestData.OtherDetails!);
+            var otherDetailsResponse = JsonConvert.DeserializeObject<OtherDetailsResponce>(otherDetailsJsonData);
+
 
             // Create a new response object
             var response = new AddEditACHWireResponse
             {
-                SupplierFinancialSettings = await ModifyJsonData(requestData.SupplierFinancialSettings),
-                BeneficiaryDetails = await ModifyJsonData(requestData.BeneficiaryDetails),
-                BankDetails = await ModifyJsonData(requestData.BankDetails),
-                OtherDetails = await ModifyJsonData(requestData.OtherDetails),
-                SupplierId = requestData.SupplierId,
+                SupplierFinancialSettings = supplierFinancialSettingsResponse!,
+                BeneficiaryDetails = beneficiaryDetailsResponse!,
+                BankDetails = bankDetailsResponse!,
+                OtherDetails = otherDetailsResponse!,
+                SupplierId = requestData.SupplierId
             };
-
-            // Wait for all modifications to complete
-            await Task.WhenAll(tasks);
 
             return response;
         }
-
+        public async Task<AddEditCheckRequestResponse> ModifyAllCheckJsonData(AddEditCheckRequest requestData)
+        {
+            var jsonData = await ModifyJsonData(requestData.MailingAddress!);
+            var mailingAddressResponse = JsonConvert.DeserializeObject<MailingAddressResponce>(jsonData);
+            var response = new AddEditCheckRequestResponse
+            {
+                MailingAddress = mailingAddressResponse
+            };
+            return response;
+        }
         public async Task<string> ModifyJsonData(object requestData)
         {
             var newJsonData = JsonConvert.SerializeObject(requestData);

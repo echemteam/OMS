@@ -65,7 +65,6 @@ namespace OMS.Application.Services.Address
                             else if (addressType == AddressType.Shipping)
                                 approvalEventName = ApprovalEvent.AddCustomerShippingAddress;
                         }
-
                         if (supplierId > 0)
                         {
                             if (addressType == AddressType.HQ)
@@ -76,9 +75,10 @@ namespace OMS.Application.Services.Address
 
                         if (approvalEventName != null && !approvalEventNames.Contains(approvalEventName))
                         {
+                            requestData.AddressTypeId = addressTypeId;
                             approvalEventNames.Add(approvalEventName);
                             var updatedJsonData = await ModifyUpdateAddressJson(requestData, addressTypeId);
-
+           
                             var approvalRules = await repositoryManager.approval.GetApprovalConfiguration();
                             var matchingRule = approvalRules?.FirstOrDefault(rule => rule.EventName == approvalEventName);
                             if (matchingRule != null)
@@ -269,13 +269,11 @@ namespace OMS.Application.Services.Address
         {
             var newJObject = JObject.FromObject(requestData);
 
-            // Retrieve all necessary data from the repository
             var getAllCountriesResponse = await repositoryManager.commonRepository.GetAllCountries();
             var getAllCitiesResponse = await repositoryManager.commonRepository.GetAllCities(Convert.ToInt16((newJObject["StateId"] ?? 0)));
             var getAllStatesResponse = await repositoryManager.commonRepository.GetAllStates();
             var getAllAddressTypesResponse = await repositoryManager.commonRepository.GetAllAddressTypes();
 
-            // Create dictionaries for quick lookup
             var countryDictionary = getAllCountriesResponse.ToDictionary(
                 p => p.CountryId.ToString(),
                 p => p.Name
@@ -293,7 +291,7 @@ namespace OMS.Application.Services.Address
                 p => p.Type
             );
 
-            // Update country, state, and city names
+
             var countryId = (newJObject["CountryId"] ?? 0).ToString();
             if (countryDictionary.TryGetValue(countryId, out var countryName))
             {
@@ -311,34 +309,11 @@ namespace OMS.Application.Services.Address
             {
                 newJObject["CityName"] = cityName;
             }
-
-            // Handle address type updates
-            var addressTypeIdList = addressTypeIds
-                .Split(',')
-                .Select(id => id.Trim())
-                .ToList();
-
-            // Only update AddressType if not already set
-            foreach (var addressTypeIdString in addressTypeIdList)
+            var addressType = (newJObject["AddressTypeId"] ?? 0).ToString();
+            if (addressTypeDictionary.TryGetValue(addressType, out var type))
             {
-                if (int.TryParse(addressTypeIdString, out int addressTypeId))
-                {
-                    if (addressTypeDictionary.TryGetValue(addressTypeId.ToString(), out var addressTypeName))
-                    {
-                        if (newJObject["AddressType"] == null)
-                        {
-                            newJObject["AddressType"] = addressTypeName;
-                        }
-                        // Break if AddressType is already set to avoid overwriting
-                        else
-                        {
-                            break;
-                        }
-                    }
-                }
+                newJObject["AddressType"] = type;
             }
-
-            // Return the updated JObject as a JSON string
             return newJObject.ToString(Formatting.None);
         }
         private async Task<AddEntityDto<int>> UpdateAddressDirectly(UpdateAddressRequest requestData, short CurrentUserId)
@@ -375,8 +350,6 @@ namespace OMS.Application.Services.Address
 
             return responseData;
         }
-
-
         public Task<List<GetAddresssBySupplierIdResponse>> GetAddresssBySupplierId(int supplierId)
         {
             return repositoryManager.address.GetAddresssBySupplierId(supplierId);
