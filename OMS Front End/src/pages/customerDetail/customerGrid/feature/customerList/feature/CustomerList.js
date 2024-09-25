@@ -219,6 +219,7 @@ export const CustomersList = ({
       statusId: Array.isArray(statusId) ? statusId.join(",") : String(statusId),
       sortString: sortingStringObject,
     };
+    // saveData('customerPagination', request);
     getCustomers(request);
   };
 

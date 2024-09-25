@@ -31,6 +31,7 @@ const Customers = () => {
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex.toString());
+    // saveData('selectedTab', tabIndex.toString());
   };
 
   const getListApi = () => {
@@ -43,6 +44,8 @@ const Customers = () => {
     setSearch("");
     setSelectedDrpvalues("");
     setShouldRerenderFormCreator((prevState) => !prevState);
+    // const selectedTab = getData("selectedTab");
+    const tabIndex = activeTab;
     const updateManageData = () => {
       switch (activeTab) {
         case "0":
@@ -87,6 +90,7 @@ const Customers = () => {
 
     updateManageData(); // Initial update based on activeTab
     getListApi(); // Fetch data based on activeTab (if needed)
+    // handleTabClick(tabIndex);
   }, [activeTab]);
 
   const handleSearch = () => {

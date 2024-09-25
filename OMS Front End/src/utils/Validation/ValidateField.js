@@ -152,7 +152,7 @@ const getPostalCodePattern = (country) => {
         case 233: // US: 12345 or 12345-6789
             return { pattern: /^\d{5}(-\d{4})?$/, minLength: 5, maxLength: 10 };
         default:
-            return null;
+            return { pattern: null, minLength: 5, maxLength: 10 };
     }
 };
 

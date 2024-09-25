@@ -9,12 +9,13 @@ import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSuppli
 //** Component's */
 const ApprovalValidateData = React.lazy(() => import("../../../../components/ApprovalCheckList/feature/approvalValidateData/ApprovalValidateData"));
 
-const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isDetailPage, isAddPagePage, setSelectedStatus, responsibleUserIds, OnRejectedSupplierFromApproval }) => {
+const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isDetailPage, isAddPagePage,setSelectedStatus,responsibleUserIds }) => {
 
     const parentRef = useRef();
     const [supplierId, setSupplierId] = useState(false);
     const [isShowApproval, setIsShowApproval] = useState(false);
     const [validateCheckList, setValidateCheckList] = useState([]);
+    const [isShowBothButton, setIsShowBothButton] = useState(false);
     const [isShowValidateModal, setIsShowValidateModal] = useState(false);
     const [showApprovalCheckList, setShowApprovalCheckList] = useState(false);
     const { setRejectStatusId } = useContext(AddSupplierContext);
@@ -37,7 +38,7 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
     };
 
     //** Validate check list Modal */
-    const handleShowValidateModal = (supplierId, isShowApprovalCheckList = true) => {
+    const handleShowValidateModal = (supplierId, isShowApprovalCheckList = true, isShowBothButton = true) => {
         setIsShowValidateModal(!isShowValidateModal);
         let request = {
             customerId: 0,
@@ -46,6 +47,7 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
         getValidateCheckList(request);
         setSupplierId(supplierId);
         setShowApprovalCheckList(isShowApprovalCheckList);
+        setIsShowBothButton(isShowBothButton);
     };
 
     const handleValidateModalClose = () => {
@@ -85,15 +87,14 @@ const SupplierApproval = forwardRef(({ childRef, getListApi, updateApproval, isD
         <React.Fragment>
             <ApprovalValidateData parentRef={parentRef} handleValidateSuccess={handleValidateSuccess} showModal={isShowValidateModal} isSupplierApproval={true}
                 isGetCheckListLoading={isGetCheckListLoading} mainId={supplierId} isDetailPage={isDetailPage} handleShowValidateModal={handleShowValidateModal}
-                handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList} />
+                handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList} isShowBothButton={isShowBothButton} />
             {showApprovalCheckList &&
                 <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={supplierId} isSupplierApproval={true}
                     ApprovalData={ApprovalEnum.APPROVESUPPLIER} onSuccessApprovalClose={onSuccessApprovalClose}
                     getBasicInformationById={useLazyGetSupplierBasicInfoByIdQuery} getAddressById={useLazyGetSupplierAddressInfoByIdQuery}
                     getContactById={useLazyGetSupplierContactInfoByIdQuery} getFinacialSettingById={useLazyGetSupplierFinacialSettingQuery} ownerType={OwnerType.Supplier}
-                    setRejectStatusId={setRejectStatusId}
-                    setSelectedStatus={setSelectedStatus} basicData={responsibleUserIds}
-                    OnRejectedSupplierFromApproval={OnRejectedSupplierFromApproval}
+                     setRejectStatusId={setRejectStatusId}
+                     setSelectedStatus={setSelectedStatus} basicData={responsibleUserIds}
                 />
             }
         </React.Fragment>

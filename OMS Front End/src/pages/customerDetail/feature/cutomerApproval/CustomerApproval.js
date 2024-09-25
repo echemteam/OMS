@@ -20,6 +20,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     const [isSubCustomer, setIsSubCustomer] = useState(false);
     const [isShowApproval, setIsShowApproval] = useState(false);
     const [validateCheckList, setValidateCheckList] = useState([]);
+    const [isShowBothButton, setIsShowBothButton] = useState(false);
     const [isShowValidateModal, setIsShowValidateModal] = useState(false);
     const [showApprovalCheckList, setShowApprovalCheckList] = useState(false);
     const { setRejectStatusId } = useContext(BasicDetailContext);
@@ -43,7 +44,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
     };
 
     //** Validate check list Modal */
-    const handleShowValidateModal = (customerId, isSubCustomer, isShowApprovalCheckList = true) => {
+    const handleShowValidateModal = (customerId, isSubCustomer, isShowApprovalCheckList = true, isShowBothButton = true) => {
         setIsShowValidateModal(!isShowValidateModal);
         let request = {
             customerId: customerId,
@@ -54,6 +55,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
         getValidateCheckList(request);
         setCustomerId(customerId);
         setShowApprovalCheckList(isShowApprovalCheckList);
+        setIsShowBothButton(isShowBothButton);
     };
 
     const handleValidateModalClose = () => {
@@ -94,7 +96,7 @@ const CustomerApproval = forwardRef(({ childRef, getListApi, updateCustomerAppro
         <React.Fragment>
             <ApprovalValidateData parentRef={parentRef} handleValidateSuccess={handleValidateSuccess} showModal={isShowValidateModal} isSupplierApproval={false}
                 isGetCheckListLoading={isGetCheckListLoading} mainId={customerId} isDetailPage={isDetailPage} handleShowValidateModal={handleShowValidateModal}
-                handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList ? validateCheckList : null} />
+                handleValidateModalClose={handleValidateModalClose} handleDone={handleDone} validateCheckList={validateCheckList ? validateCheckList : null} isShowBothButton={isShowBothButton} />
             {showApprovalCheckList &&
                 <ApprovalCheckList onSidebarClose={onSidebarApprovalClose} isModelOpen={isShowApproval} mainId={customerId} onSuccessApprovalClose={onSuccessApprovalClose}
                     ApprovalData={isSubCustomer ? ApprovalEnum.APPROVESUBCUSTOMER : ApprovalEnum.APPROVECUSTOMER} isSupplierApproval={false} isSubCustomer={isSubCustomer}

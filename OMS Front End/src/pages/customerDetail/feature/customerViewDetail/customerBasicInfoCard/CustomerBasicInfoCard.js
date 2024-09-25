@@ -35,6 +35,7 @@ import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSe
 import { useAddCustomerNotesMutation } from "../../../../../app/services/notesAPI";
 import { CustomerSupplierStatus } from "../../../../../utils/Enums/commonEnums";
 import Tooltip from "../../../../../components/ui/tooltip/Tooltip";
+import { useGetValidateCheckListMutation } from "../../../../../app/services/ApprovalAPI";
 
 //** Component's */
 const CustomerApproval = React.lazy(() =>
@@ -49,11 +50,13 @@ const CustomerBasicInfoCard = ({
   getCustomerById,
   isGetCustomersBasicInformationById,
   isGetCustomersBasicInformationByIdFetching,
-  GetCustomersBasicInformationByIdData
+  GetCustomersBasicInformationByIdData,
+  isShippingMethodChange
 }) => {
   const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
+  const getCheckListRef = useRef();
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [formData, setFormData] = useState(reasonData);
   const [showModal, setShowModal] = useState(false);
@@ -94,6 +97,10 @@ const CustomerBasicInfoCard = ({
       data: updateCustomerInActiveStatusData,
     },
   ] = useUpdateCustomerInActiveStatusMutation();
+
+  const [totalCount, setTotalCount] = useState();
+  const [approvalSuccessCount, setApprovalSuccessCount] = useState();
+  const [getValidateCheckList, { isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
 
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
@@ -137,7 +144,6 @@ const CustomerBasicInfoCard = ({
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
 
-
   useEffect(() => {
     if (GetCustomersBasicInformationByIdData && isGetCustomersBasicInformationById && !isGetCustomersBasicInformationByIdFetching) {
       const responsibleUserIds = GetCustomersBasicInformationByIdData?.responsibleUserId
@@ -154,8 +160,24 @@ const CustomerBasicInfoCard = ({
       setRUserValue(responsibleUsers);
       setSelectedStatus(GetCustomersBasicInformationByIdData.status);
       getAllUser();
+      let request = {
+        customerId: customerId,
+        supplierId: 0,
+        isSubCustomer: customerData.isSubCustomer ? customerData.isSubCustomer : false
+      }
+      getValidateCheckList(request);
     }
-  }, [GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationById, isGetCustomersBasicInformationByIdFetching]);
+  }, [GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationById, isGetCustomersBasicInformationByIdFetching, isShippingMethodChange]);
+
+  useEffect(() => {
+    if (isGetCheckListSuccess && isGetCheckListData) {
+      if (isGetCheckListData && isGetCheckListData.length > 0) {
+        const successCheckList = isGetCheckListData.filter(data => data.isValid);
+        setApprovalSuccessCount(successCheckList.length);
+        setTotalCount(isGetCheckListData.length);
+      }
+    }
+  }, [isGetCheckListSuccess, isGetCheckListData])
 
   // useEffect(() => {
   //   if (rejectStatusId) {
@@ -171,7 +193,6 @@ const CustomerBasicInfoCard = ({
     if (!isFetching && isGetAllUserSucess && allGetAlluserData) {
       // const finalData = responsibleUserIds?.map(option => option.value).join(',')
       //
-
       const filterData = allGetAlluserData.filter((item) => {
         return (
           item.roleName === null ||
@@ -180,17 +201,14 @@ const CustomerBasicInfoCard = ({
             .includes(item.roleName.toLowerCase())
         );
       });
-
       const uniqueData = Array.from(
         new Map(filterData.map((item) => [item.fullName, item])).values()
       );
-
       const filteredData = responsibleUserIds
         ? uniqueData.filter(
           (item) => !responsibleUserIds.includes(item.userId.toString())
         )
         : uniqueData;
-
       const modifyUserData = filteredData.map((item) => ({
         value: item.userId,
         label: item.fullName,
@@ -222,7 +240,6 @@ const CustomerBasicInfoCard = ({
   }, [isGetAllUserSucess, allGetAlluserData, isFetching]);
 
   const handleStatusChange = (selectedOption) => {
-
     if (selectedOption.label === customerData.status) {
       ToastService.warning(
         "You can't change the status of the customer to currect customer status."
@@ -290,7 +307,6 @@ const CustomerBasicInfoCard = ({
   };
 
   const updateRUserData = (data) => {
-
     const responsibleUserId = data.map((option) => option.value.toString());
     setRUserValue(data);
     setResponsibleUserIds(responsibleUserId);
@@ -363,7 +379,6 @@ const CustomerBasicInfoCard = ({
   };
 
   const getStatusClass = () => {
-
     switch (selectedStatus) {
       case "Pending":
         return "badge-gradient-Pending";
@@ -428,6 +443,12 @@ const CustomerBasicInfoCard = ({
     const status = StatusValue.find((item) => item.value === value);
     return status ? status.label : "Unknown"; // Returns 'Unknown' if value not found
   };
+
+  const getApprovalCheckList = () => {
+    if (childRef.current) {
+      childRef.current.callChildFunction(customerId, customerData.isSubCustomer ? customerData.isSubCustomer : false, false, false);
+    }
+  }
 
   return !isLoading ? (
     <div className="basic-customer-detail">
@@ -613,6 +634,19 @@ const CustomerBasicInfoCard = ({
                   <di className="tooltip-arrow-icon"></di>
                 </div>
               </div> : null}
+
+            <div className="field-desc">
+              <div className="inf-label inf-label-width">Customer Completion</div>
+              {totalCount &&
+                <>
+                  <b>&nbsp;:&nbsp;</b>
+                  <div className="info-desc submission-tab d-flex gap-2 align-items-center" style={{ cursor: 'pointer', fontSize: '13px' }} onClick={getApprovalCheckList}>
+                    {approvalSuccessCount + "/" + totalCount}
+                    <Iconify icon="clarity:info-solid" className="info" />
+                  </div>
+                </>
+              }
+            </div>
           </div>
         </div>
         <div className="edit-icons" onClick={editClick}>
@@ -647,8 +681,7 @@ const CustomerBasicInfoCard = ({
               </div>
             </div>
           </div>
-        </CenterModel>
-      )}
+        </CenterModel>)}
       {isInvoiceModelShow && (
         <CenterModel
           showModal={isInvoiceModelShow}
@@ -662,18 +695,16 @@ const CustomerBasicInfoCard = ({
             setIsInvoiceModelShow={setIsInvoiceModelShow}
             handleToggleModal={handleToggleModal}
           />
-        </CenterModel>
-      )}
+        </CenterModel>)}
       <CustomerApproval
         isDetailPage={true}
         childRef={childRef}
         updateCustomerApproval={updateCustomerApproval}
         responsibleUserIds={responsibleUserIds}
-        setSelectedStatus={setSelectedStatus}
+        setSelectedStatus={setSelectedStatus} 
         onRejectedCustomerFromApproval={rejectedCustomerFromApproval}
-
-      />
-    </div>
+        />
+    </div >
   ) : (
     <DataLoader />
   );
