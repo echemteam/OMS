@@ -163,7 +163,7 @@ const CustomerBasicInfoCard = ({
       let request = {
         customerId: customerId,
         supplierId: 0,
-        isSubCustomer: customerData.isSubCustomer ? customerData.isSubCustomer : false
+        isSubCustomer: customerData?.isSubCustomer ? customerData?.isSubCustomer : false
       }
       getValidateCheckList(request);
     }
