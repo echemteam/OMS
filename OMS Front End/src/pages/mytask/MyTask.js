@@ -175,6 +175,7 @@ const MyTask = () => {
       component: (
         <div className="">
           <ArchiveTask
+          isPending={isPending}
             Accept={MyTaskStatus.Accept}
             onGetById={handleGetArchiveId}
             roleId={roleId}
