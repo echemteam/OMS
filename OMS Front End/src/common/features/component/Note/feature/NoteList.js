@@ -16,11 +16,11 @@ import { useLazyGetNotesHistoryQuery } from "../../../../../app/services/commonA
 import { NoteTypes, OwnerType } from "../../../../../utils/Enums/commonEnums";
 
 const NoteList = forwardRef(
-  ({ keyId, handleEditClick, onGetByIdNotes, showEditIcon, listRef ,isSupplier}) => {
+  ({ keyId, handleEditClick, onGetByIdNotes, showEditIcon, listRef, isSupplier }) => {
     //** States */
     const [notesFormData, setNotesFormData] = useState([]);
     const [isModelOpen, setIsModelOpen] = useState(false);
-    const[noteTimeLineList,setNoteTimeLineList]=useState([]);
+    const [noteTimeLineList, setNoteTimeLineList] = useState([]);
 
     //** API Call's */
     /**
@@ -44,15 +44,15 @@ const NoteList = forwardRef(
       },
     ] = useLazyGetNotesHistoryQuery();
 
-    const handleHistory=(noteId)=>{
+    const handleHistory = (noteId) => {
       let req = {
-         entityId:noteId,
-         ownerId: keyId,
-         ownerTypeId:isSupplier ? OwnerType.Supplier:OwnerType.Customer,
-         noteType:NoteTypes.DefaultNote,
+        entityId: noteId,
+        ownerId: keyId,
+        ownerTypeId: isSupplier ? OwnerType.Supplier : OwnerType.Customer,
+        noteType: NoteTypes.DefaultNote,
 
-       };
-       getNotesHistory(req);
+      };
+      getNotesHistory(req);
     }
 
     //** UseEffect */
@@ -61,21 +61,21 @@ const NoteList = forwardRef(
     }, [keyId]);
 
     useEffect(() => {
-      
-      if ( !isGetNotesHistoryFetching &&isGetNotesHistorySuccess && isGetNotesHistoryData ) {
-        if(isGetNotesHistoryData){
+
+      if (!isGetNotesHistoryFetching && isGetNotesHistorySuccess && isGetNotesHistoryData) {
+        if (isGetNotesHistoryData) {
           setNoteTimeLineList(isGetNotesHistoryData);
         }
       }
     }, [isGetNotesHistoryFetching, isGetNotesHistorySuccess, isGetNotesHistoryData,]);
 
-    useEffect(() => { 
-    
+    useEffect(() => {
+
       if (!isGetNotesFetching && isGetNotesSuccess && isGetNotesData) {
-      
+
         if (Array.isArray(isGetNotesData)) {
           setNotesFormData(isGetNotesData);
-         
+
         }
       }
     }, [isGetNotesFetching, isGetNotesSuccess, isGetNotesData]);
@@ -122,13 +122,13 @@ const NoteList = forwardRef(
                           ></div>
                           <div
                             className="history-btn"
-                            onClick={() =>handleToggleModal(isSupplier ? notes.supplierNoteId : notes.customerNoteId)}
+                            onClick={() => handleToggleModal(isSupplier ? notes.supplierNoteId : notes.customerNoteId)}
                           >
                             <Iconify
                               icon="iconamoon:history-bold"
                               className="history-btn"
                             />
-                            <Tooltip text="History"/>
+                            <Tooltip text="History" />
                           </div>
                         </div>
                         <div className="card-notes ">

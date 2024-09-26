@@ -452,7 +452,7 @@ const TaskDetail = ({
                   >
                     {approvedData.status}
                   </span>
-                  {approvedData?.eventName !=
+                  {/* {approvedData?.eventName !=
                     FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? <>
                     &nbsp; <span className="value-btn" onClick={() => handlebtnClick("old Value")}>
                       Old Value
@@ -460,7 +460,7 @@ const TaskDetail = ({
                     <span className="value-btn" onClick={() => handlebtnClick("new Value")}>
                       New Value
                     </span>
-                  </> : null}
+                  </> : null} */}
 
                 </div>
 
