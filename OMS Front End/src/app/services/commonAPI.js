@@ -133,8 +133,8 @@ const commonAPI = createApi({
             transformErrorResponse: transformErrorResponse,
         }),
         getAllModulesWithPendingRequestCount: builder.query({
-            query: () => ({
-                url: encryptQueryString('/Common/GetAllModulesWithPendingRequestCount'),
+            query: (isPending) => ({
+                url: encryptQueryString(`/Common/GetAllModulesWithPendingRequestCount?isPending=${isPending}`),
                 method: 'GET',
             }),
             transformResponse: transformSucessResponse,
