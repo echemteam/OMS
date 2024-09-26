@@ -170,7 +170,7 @@ export function ValidateField(value, fieldRules, state) {
               result.isvalid = false;
               const lengthMessage = zipCodeValidation.minLength === zipCodeValidation.maxLength
                 ? `${zipCodeValidation.minLength}`
-                : `between ${zipCodeValidation.minLength} and ${zipCodeValidation.maxLength}`;
+                : `${zipCodeValidation.minLength} or ${zipCodeValidation.maxLength}`;
 
               result.message = rule.message.replace('{length}', lengthMessage || '');
             }

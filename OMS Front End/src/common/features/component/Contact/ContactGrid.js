@@ -33,6 +33,7 @@ const ContactGrid = ({
   isSearchFilterShow,
   contryIdCode,
   customerStatusId,
+  getCompletionCount
 }) => {
   //** State */
   const editRef = useRef();
@@ -188,6 +189,7 @@ const ContactGrid = ({
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
           search={search}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     </div>,
@@ -202,6 +204,7 @@ const ContactGrid = ({
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
           search={search}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     </div>,
@@ -216,6 +219,7 @@ const ContactGrid = ({
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
           search={search}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     </div>,
@@ -229,20 +233,7 @@ const ContactGrid = ({
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
           search={search}
-        />
-      </div>
-    </div>,
-    (contactTypeId) => <div className="mt-2">
-      <div className="mt-2">
-        <ContactList
-          keyId={keyId}
-          getListRef={getListRef}
-          isSupplier={isSupplier}
-          handleEdit={handleEdit}
-          showEditIcon={showEditIcon}
-          getContactByKeyId={getContactByKeyId}
-          selectedContactTypeId={contactTypeId}
-          search={search}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     </div>,
@@ -257,6 +248,7 @@ const ContactGrid = ({
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
           search={search}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     </div>,
@@ -271,6 +263,22 @@ const ContactGrid = ({
           getContactByKeyId={getContactByKeyId}
           selectedContactTypeId={contactTypeId}
           search={search}
+          getCompletionCount={getCompletionCount}
+        />
+      </div>
+    </div>,
+    (contactTypeId) => <div className="mt-2">
+      <div className="mt-2">
+        <ContactList
+          keyId={keyId}
+          getListRef={getListRef}
+          isSupplier={isSupplier}
+          handleEdit={handleEdit}
+          showEditIcon={showEditIcon}
+          getContactByKeyId={getContactByKeyId}
+          selectedContactTypeId={contactTypeId}
+          search={search}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     </div>
@@ -359,6 +367,7 @@ const ContactGrid = ({
             orderResetValue={null}
             customerStatusId={customerStatusId}
             allGetAllContactTypesData={allGetAllContactTypesData}
+            getCompletionCount={getCompletionCount}
           />
         </SidebarModel>
       </div>

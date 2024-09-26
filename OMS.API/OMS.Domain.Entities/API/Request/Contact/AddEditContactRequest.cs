@@ -11,8 +11,8 @@
         public bool? IsPrimary { get; set; }
         public int? SupplierId { get; set; }
         public int? SupplierContactId { get; set; }
-        public List<AddContactEmailRequest>? EmailList { get; set; }
-        public List<AddContactPhoneRequest>? PhoneList { get; set; }
+        public List<AddContactEmailRequest>? EmailAddressList { get; set; }
+        public List<AddContactPhoneRequest>? PhoneNumberList { get; set; }
 
     }
 }

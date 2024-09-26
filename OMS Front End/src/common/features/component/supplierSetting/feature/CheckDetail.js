@@ -13,7 +13,8 @@ import { useLazyGetAllCitiesQuery, useLazyGetAllStatesQuery } from "../../../../
 import { useLazyGetAllCountriesQuery } from "../../../../../app/services/basicdetailAPI";
 import DataLoader from "../../../../../components/FinalMolGrid/ui/dataLoader/DataLoader";
 
-const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSettingFormRef,isGetPaymentSettingsBySupplierIdSuccess,isGetPaymentSettingsBySupplierIdData }) => {
+const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSettingFormRef, isGetPaymentSettingsBySupplierIdSuccess,
+  isGetPaymentSettingsBySupplierIdData, getSupplierCompletionCount }) => {
   const checkFormRef = useRef();
   const [checkformData, setCheckFormData] = useState(checkFormData);
 
@@ -69,12 +70,13 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
       if (supplierId) {
         onHandleGetById(supplierId)
       }
+      getSupplierCompletionCount(supplierId);
     }
   }
   useEffect(() => {
 
-    if ( !isGetAllStateFetching && isGetAllStateSuccess &&isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData?.mailingAddress ) {
-      const {mailingAddress }= isGetPaymentSettingsBySupplierIdData;
+    if (!isGetAllStateFetching && isGetAllStateSuccess && isGetPaymentSettingsBySupplierIdSuccess && isGetPaymentSettingsBySupplierIdData?.mailingAddress) {
+      const { mailingAddress } = isGetPaymentSettingsBySupplierIdData;
       let data = { ...checkformData };
       if (mailingAddress.countryId) {
         setDropDownOptionField(allGetAllStatesData, 'stateId', 'name', data, 'stateId', item => item.countryId === mailingAddress.countryId);
@@ -95,7 +97,7 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
       };
       setCheckFormData(data);
     }
-  }, [isGetAllStateFetching,isGetAllStateSuccess,isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData]);
+  }, [isGetAllStateFetching, isGetAllStateSuccess, isGetPaymentSettingsBySupplierIdSuccess, isGetPaymentSettingsBySupplierIdData]);
 
   const handleAddCheckDetail = () => {
 
@@ -159,34 +161,34 @@ const CheckDetail = ({ onHandleGetById, getCheckData, supplierId, financialSetti
   }
 
   return (
-     
-      <div className="ach-wire-section">
-        <div className="sub-card-sec-add">
-          <CardSection cardTitle="Mailing Address">
-            <div className="row">
-              <FormCreator
-                config={checkformData}
-                ref={checkFormRef}
-                {...checkformData}
-                // key={shouldRerenderFormCreator}
-                onActionChange={formActionHandler}
+
+    <div className="ach-wire-section">
+      <div className="sub-card-sec-add">
+        <CardSection cardTitle="Mailing Address">
+          <div className="row">
+            <FormCreator
+              config={checkformData}
+              ref={checkFormRef}
+              {...checkformData}
+              // key={shouldRerenderFormCreator}
+              onActionChange={formActionHandler}
+            />
+          </div>
+          <div className="col-md-12">
+            <div className="d-flex align-item-end justify-content-end centered" >
+              <Buttons
+                buttonTypeClassName="theme-button"
+                buttonText="Save"
+                onClick={handleAddCheckDetail}
+                isLoading={isAddEditCheckLoading}
+              // isDisable={isButtonDisable}
               />
             </div>
-            <div className="col-md-12">
-              <div className="d-flex align-item-end justify-content-end centered" >
-                <Buttons
-                  buttonTypeClassName="theme-button"
-                  buttonText="Save"
-                  onClick={handleAddCheckDetail}
-                  isLoading={isAddEditCheckLoading}
-                // isDisable={isButtonDisable}
-                />
-              </div>
-            </div>
-          </CardSection>
-        </div>
+          </div>
+        </CardSection>
       </div>
-     
+    </div>
+
   );
 };
 

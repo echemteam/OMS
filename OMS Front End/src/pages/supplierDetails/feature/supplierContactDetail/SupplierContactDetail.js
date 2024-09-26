@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { securityKey } from "../../../../data/SecurityKey";
 import AddSupplierContext from "../../../../utils/ContextAPIs/Supplier/AddSupplierContext";
 //** Service */
@@ -12,8 +12,13 @@ const supplierSecurityKey = {
   EDIT: securityKey.EDITSUPPLIERCONTACT,
 };
 
-const SupplierContactDetail = ({ isEditablePage, isSearchFilterShow , contryIdCode }) => {
-  const { supplierId, isResponsibleUser } = useContext(AddSupplierContext);
+const SupplierContactDetail = ({ isEditablePage, isSearchFilterShow, contryIdCode }) => {
+
+  const { supplierId, isResponsibleUser, getSupplierCompletionCount } = useContext(AddSupplierContext);
+
+  const getCompletionCount = () => {
+    getSupplierCompletionCount(supplierId);
+  }
 
   return (
     /**
@@ -31,6 +36,7 @@ const SupplierContactDetail = ({ isEditablePage, isSearchFilterShow , contryIdCo
         SecurityKey={!isResponsibleUser ? supplierSecurityKey : null}
         getContactById={useLazyGetSupllierContactByContactQuery}
         contryIdCode={contryIdCode}
+        getCompletionCount={getCompletionCount}
       />
     </div>
   );
