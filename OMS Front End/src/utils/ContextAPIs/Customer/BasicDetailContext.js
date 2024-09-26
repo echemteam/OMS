@@ -47,7 +47,15 @@ export const BasicDetailContextProvider = ({ children }) => {
         if (tabIndex === 1) {
             setShowSubBackButton(true);
         }
+
     }
+   
+   const handleSubTabDefaultValue = (tab)=>{
+    if(tab===2 || tab===3){
+        setActiveSubTab(0)
+    }
+   }
+
 
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
@@ -89,6 +97,8 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     return (
         <BasicDetailContext.Provider value={{
+            nextRef, customerId, handleSubTabDefaultValue,setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setCustomerCountryId,
+            customerCountryId, setIsExistsFinancialSetting, isExistsFinancialSetting, financialRef,
             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setCustomerCountryId,
             customerCountryId, setIsExistsFinancialSetting, isExistsFinancialSetting, financialRef, isShippingMethodChange, setIsShippingMethodChange,
             phoneNumberData, setMainId, mainId, setShowSubBackButton, showSubBackButton, setActiveSubTab, activeSubTab, handleActiveSubTabClick, saveFinacialSetting,

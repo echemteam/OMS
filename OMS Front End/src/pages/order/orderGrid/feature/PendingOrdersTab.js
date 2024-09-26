@@ -14,7 +14,6 @@ const PendingOrdersTab=()=>{
           component: (
             <div className="mt-2">
               <Orders
-              
               />
             </div>
           ),
@@ -23,8 +22,7 @@ const PendingOrdersTab=()=>{
           sMenuItemCaption: "Review pending",
           component: (
             <div className="mt-2">
-              <Orders
-                
+              <Orders  
               />
             </div>
           ),
@@ -34,7 +32,6 @@ const PendingOrdersTab=()=>{
           component: (
             <div className="mt-2">
               <Orders
-              
               />
             </div>
           ),

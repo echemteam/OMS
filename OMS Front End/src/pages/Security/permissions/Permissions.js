@@ -81,7 +81,7 @@ const Permissions = () => {
       <SecurityPermissionsContext.Provider value={{ togglePermissionCard, selectedRoleId, childRef }}>
         <div className="mt-2">
         <CardSection
-          cardTitle="Select Group"
+          cardTitle="Security Permissions Role"
           rightButton={true}
           buttonText="Go Back"
           buttonClassName="btn dark-btn"
