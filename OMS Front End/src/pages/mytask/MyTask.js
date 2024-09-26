@@ -11,6 +11,9 @@ import { getAuthProps } from "../../lib/authenticationLibrary";
 import { useLazyGetApprovalRequestsByApprovalRequestIdQuery } from "../../app/services/ApprovalAPI";
 import { useLazyGetAllFunctionalityEventByModuleIdQuery } from "../../app/services/configurationAPI";
 import { useLazyGetAllModulesWithPendingRequestCountQuery } from "../../app/services/commonAPI";
+import Checkbox from "../../components/ui/inputs/checkBox/CheckBox";
+import Image from "../../components/image/Image";
+import { AppIcons } from "../../data/appIcons";
 // import {
 //   useLazyGetAllFunctionalityEventByModuleIdQuery,
 //   useLazyGetAllModulesQuery,
@@ -29,7 +32,7 @@ const MyTask = () => {
   const [isApproval, setIsApproval] = useState(false);
   const [approvedData, setApprovedData] = useState(null);
   const [approvalRequestId, setApprovalRequestId] = useState(0);
-  const [isPending,setIsPending]=useState(false);
+  const [isPending, setIsPending] = useState(false);
 
   const [
     getApprovalRequestsByApprovalRequestId,
@@ -42,7 +45,10 @@ const MyTask = () => {
 
   const [
     getAllModulesWithPendingRequestCount,
-    { isSuccess: isGetAllModulesWithPendingRequestCountSucess, data: allGetAllModulesWithPendingRequestCountData },
+    {
+      isSuccess: isGetAllModulesWithPendingRequestCountSucess,
+      data: allGetAllModulesWithPendingRequestCountData,
+    },
   ] = useLazyGetAllModulesWithPendingRequestCountQuery();
 
   const [
@@ -76,22 +82,24 @@ const MyTask = () => {
   };
 
   useEffect(() => {
-
-      getAllModulesWithPendingRequestCount(isPending);
-    
-  }, [getAllModulesWithPendingRequestCount,approvedData]);
+    getAllModulesWithPendingRequestCount(isPending);
+  }, [getAllModulesWithPendingRequestCount, approvedData]);
 
   useEffect(() => {
     moduleList.length > 0 && getEventsByModuleId(moduleList[0].moduleId);
   }, [moduleList]);
 
   useEffect(() => {
-    if (isGetAllModulesWithPendingRequestCountSucess && allGetAllModulesWithPendingRequestCountData) {
+    if (
+      isGetAllModulesWithPendingRequestCountSucess &&
+      allGetAllModulesWithPendingRequestCountData
+    ) {
       setModuleList(allGetAllModulesWithPendingRequestCountData);
     }
-  }, [isGetAllModulesWithPendingRequestCountSucess, allGetAllModulesWithPendingRequestCountData]);
-
-
+  }, [
+    isGetAllModulesWithPendingRequestCountSucess,
+    allGetAllModulesWithPendingRequestCountData,
+  ]);
 
   useEffect(() => {
     if (isGetAllEventsSucess && isGetAllEventsData) {
@@ -175,7 +183,7 @@ const MyTask = () => {
       component: (
         <div className="">
           <ArchiveTask
-          isPending={isPending}
+            isPending={isPending}
             Accept={MyTaskStatus.Accept}
             onGetById={handleGetArchiveId}
             roleId={roleId}
