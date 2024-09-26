@@ -229,14 +229,9 @@ const TaskDetail = ({
   };
 
   const handleApprovalRequest = () => {
-    confirm(
-      "Are you sure?",
-      "Do you really want to approve this request?",
-      "Yes",
-      "Cancel"
-    ).then((confirmed) => {
+    confirm("Confirmation?", "Would you like to approve this request?", "Yes", "Cancel").then((confirmed) => {
       if (confirmed) {
-        approvalStatus(MyTaskStatus.Accept);
+        approvalStatus(MyTaskStatus.Accept)
       }
     });
   };

@@ -15,9 +15,7 @@ const ContactInformation = ({
 }) => {
   //** State */
   const [contactInformation, setContactInformation] = useState([]);
-  const [isChecked, setIsChecked] = useState(
-    approvalChekedData?.isChecked || false
-  );
+  const [isChecked, setIsChecked] = useState(approvalChekedData?.isChecked || false);
 
   const [openSections, setOpenSections] = useState([true]);
   //** API Call's */
@@ -66,7 +64,7 @@ const ContactInformation = ({
 
   const handleChange = (name, value) => {
     const modifyData = contactInformation.map((item) =>
-      item.customerContactId === name ? { ...item, isChecked: value } : item
+      item.contactId === name ? { ...item, isChecked: value } : item
     )
     setContactInformation(modifyData);
   };
@@ -106,8 +104,8 @@ const ContactInformation = ({
                   <div className="d-flex justify-content-between">
                     <h6 className="title">{contact.type}</h6>
                     <Checkbox
-                      name={contact.customerContactId}
-                      dataField={contact.customerContactId}
+                      name={contact.contactId}
+                      dataField={contact.contactId}
                       checked={contact.isChecked}
                       onChange={handleChange}
                     />
