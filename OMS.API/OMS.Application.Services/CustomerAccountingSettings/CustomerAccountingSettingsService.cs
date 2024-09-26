@@ -95,7 +95,29 @@ namespace OMS.Application.Services.CustomerAccountingSettings
                         }
                     }
                 }
+                else
+                {
+                    CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
+                    customerAccountingSettingsDto.CreatedBy = CurrentUserId;
+                    responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
 
+                    if (requestData.CustomerAccountingSettingId == null)
+                    {
+                        CustomerShppingDeliveryCarriersDto customerShppingDeliveryCarriersDto = new()
+                        {
+                            CustomerId = requestData.CustomerId,
+                            CreatedBy = CurrentUserId,
+                            DeliveryAccountId = (int)DeliveryAccount.OurAccount,
+                            IsByDefault = true
+                        };
+
+                        _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
+                    }
+                }
+
+            }
+            else
+            {
                 CustomerAccountingSettingsDto customerAccountingSettingsDto = requestData.ToMapp<AddEditCustomerSettingRequest, CustomerAccountingSettingsDto>();
                 customerAccountingSettingsDto.CreatedBy = CurrentUserId;
                 responceData = await repositoryManager.customerAccountingSettings.AddEditCustomerSettings(customerAccountingSettingsDto);
@@ -112,7 +134,6 @@ namespace OMS.Application.Services.CustomerAccountingSettings
 
                     _ = await repositoryManager.customerAccountingSettings.AddCustomerShppingDeliveryCarriersAndDeliveryMethods(customerShppingDeliveryCarriersDto);
                 }
-
             }
             return responceData;
 
@@ -137,9 +158,6 @@ namespace OMS.Application.Services.CustomerAccountingSettings
             AddEntityDto<int> responceData = new();
             var customerId = Convert.ToInt32(requestData.CustomerId);
             var existingData = await repositoryManager.customers.GetCustomersBasicInformationById(customerId);
-
-
-
 
             if (existingData.StatusId == (short)Status.Approved)
             {

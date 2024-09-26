@@ -48,10 +48,10 @@ namespace Common.Helper.ReplacePlaceholders
 
             switch (listName.ToLower())
             {
-                case "emaillist":
+                case "EmailAddressList":
                     return template.Replace("#EmailList#", listHtml);
 
-                case "phonelist":
+                case "PhoneNumberList":
                     return template.Replace("#PhoneList#", listHtml);
 
                 // Add cases for future lists here
