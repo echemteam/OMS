@@ -28,7 +28,7 @@ const ShippingSettings = ({ isEditablePage, customerStatusId }) => {
   const [isShowButton, setIsShowButton] = useState(true);
   const [accountTypeId, setAccountTypeId] = useState(0);
   const [formData, setFormData] = useState(shippingFormData);
-  const { customerId, setDeliveryMethodsList, setCarriersList, isResponsibleUser, isExistsFinancialSetting, financialRef } = useContext(BasicDetailContext);
+  const { customerId, setDeliveryMethodsList, setCarriersList, isResponsibleUser, isExistsFinancialSetting, financialRef, setIsShippingMethodChange } = useContext(BasicDetailContext);
 
   const [getAllAccountType, { isFetching: isAccountTypeFetching, isSuccess: isAccountTypeSuccess, data: isAccountTypeData, },] = useLazyGetAllDeliveryAccountsQuery();
   const [addDefaultShippings, { isSuccess: isAddDefaultShippingsSuccess, data: isAddDefaultShippingsData, },] = useAddCustomerShppingDeliveryCarriersAndDeliveryMethodsMutation();
@@ -73,9 +73,9 @@ const ShippingSettings = ({ isEditablePage, customerStatusId }) => {
 
   useEffect(() => {
     if (isAddDefaultShippingsSuccess && isAddDefaultShippingsData) {
-
       handleGetDefaultList();
       ToastService.success(isAddDefaultShippingsData.errorMessage);
+      setIsShippingMethodChange(false);
     }
   }, [isAddDefaultShippingsSuccess, isAddDefaultShippingsData]);
 
@@ -131,6 +131,7 @@ const ShippingSettings = ({ isEditablePage, customerStatusId }) => {
           addDefaultShippings(defaultRequest);
           setAccountTypeId(data.value);
         }
+        setIsShippingMethodChange(true);
       });
     }
   }

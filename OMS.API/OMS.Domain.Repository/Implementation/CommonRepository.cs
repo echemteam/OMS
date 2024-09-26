@@ -314,9 +314,14 @@ namespace OMS.Domain.Repository.Implementation
             }, commandType: CommandType.StoredProcedure);
             return getAllFunctionalityEventByFunctionalityIdResponse;
         }
-        public async Task<List<GetAllModulesWithPendingRequestCountResponse>> GetAllModulesWithPendingRequestCount()
+        public async Task<List<GetAllModulesWithPendingRequestCountResponse>> GetAllModulesWithPendingRequestCount(bool isPending)
         {
-            return await _context.GetList<GetAllModulesWithPendingRequestCountResponse>(GETALLMODULESWITHPENDINGREQUESTCOUNT, commandType: CommandType.StoredProcedure);
+            List<GetAllModulesWithPendingRequestCountResponse> getAllModulesWithPendingRequestCountResponse = await _context.GetList<GetAllModulesWithPendingRequestCountResponse>(GETALLMODULESWITHPENDINGREQUESTCOUNT, new
+            {
+                isPending
+            }, commandType: CommandType.StoredProcedure);
+
+            return getAllModulesWithPendingRequestCountResponse;
         }
     }
 }
