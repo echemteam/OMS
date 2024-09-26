@@ -12,7 +12,7 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { getFileTypeIcon } from "../../../../utils/TransformData/TransformAPIData";
 
 const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
-  const [getFileType, setGetFileType] = useState([]);
+  const [getFileType, setGetFileType] = useState();
   const [documentList, setDocumentList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
@@ -33,6 +33,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
       const fileURL = URL.createObjectURL(blob);
       setSelectedDocument(fileURL);
       setIsModalOpen(true);
+      setGetFileType(determineFileType(isDownalodData.fileName));
     }
   }, [isDownalodFetching, isDownalodSucess, isDownalodData]);
 
@@ -54,7 +55,7 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
           detectedFileTypes.add(fileType);
         }
       });
-      setGetFileType(Array.from(detectedFileTypes));
+      // setGetFileType(Array.from(detectedFileTypes));
     }
   }, [documentData]);
 
@@ -126,15 +127,15 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
                         {["pdf", "csv", "docx", "xlsx"].includes(
                           determineFileType(data.Attachment)
                         ) && (
-                          <span
-                            className="action-icon"
-                            onClick={() =>
-                              handleDocumentAction(data.Base64File, data.Name)
-                            }
-                          >
-                            <Iconify icon="lets-icons:view-light" />
-                          </span>
-                        )}
+                            <span
+                              className="action-icon"
+                              onClick={() =>
+                                handleDocumentAction(data.Base64File, data.Name)
+                              }
+                            >
+                              <Iconify icon="lets-icons:view-light" />
+                            </span>
+                          )}
                       </div>
                     </div>
                   </div>
@@ -154,6 +155,25 @@ const Base64FileViewer = forwardRef(({ isLoading, documentData }) => {
         modalTitle="File Preview"
         onClose={handleToggleModal}
       >
+        {/* <div className="model-height-fix doc-view">
+          {selectedDocument && getFileType ? (
+            getFileType === "pdf" ? (
+              <div className="pdf-iframe">
+                <iframe
+                  src={selectedDocument}
+                  title="PDF Preview"
+                  style={{ width: "100%", height: "200%" }}
+                />
+              </div>
+            ) : (
+              <FileViewer
+                fileType={getFileType}
+                filePath={selectedDocument}
+                onError={(error) => console.error("Error:", error)}
+              />
+            )
+          ) : null}
+        </div> */}
         <div className="model-height-fix doc-view">
           {selectedDocument && getFileType ? (
             getFileType === "pdf" ? (

@@ -119,15 +119,15 @@ const Organization = () => {
             ),
         },
         // organizationId > 0 &&
-        {
-            sMenuItemCaption: "SMTP Settings",
-            component: (
-                <div className="mt-2">
-                    <SMTPSettings  isEditablePage={true}
-                    />
-                </div>
-            ),
-        },
+        // {
+        //     sMenuItemCaption: "SMTP Settings",
+        //     component: (
+        //         <div className="mt-2">
+        //             <SMTPSettings  isEditablePage={true}
+        //             />
+        //         </div>
+        //     ),
+        // },
         {
             sMenuItemCaption: "History",
             component: (
