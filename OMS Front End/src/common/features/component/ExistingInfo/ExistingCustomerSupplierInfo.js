@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 //** Libs's */
@@ -16,6 +17,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
     const molGridRef = useRef();
     const [isExistingModel, setIsExistingModel] = useState(false);
     const [existingInfoData, setExistingInfoData] = useState([]);
+    const [isClickOpenModle, setIsClickOpenModle] = useState(false);
 
     //** API Call's */
     const [checkExistingInformation, { isFetching: isGetSupplierDetailsBySupplierNameFetching, isSuccess: isGetSupplierDetailsBySupplierNameSucess,
@@ -23,12 +25,19 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
 
     //** UseEffect's */
     useEffect(() => {
+        setIsClickOpenModle(false);
+    }, [])
+
+
+    useEffect(() => {
         if (!isGetSupplierDetailsBySupplierNameFetching && isGetSupplierDetailsBySupplierNameSucess && isGetSupplierDetailsBySupplierNameData) {
-            if (isGetSupplierDetailsBySupplierNameData.length > 0) {
-                setIsExistingModel(true);
-                setExistingInfoData(isGetSupplierDetailsBySupplierNameData)
-             } else {
-                ToastService.info(ErrorMessage.NoFound);
+            if (isClickOpenModle) {
+                if (isGetSupplierDetailsBySupplierNameData.length > 0) {
+                    setIsExistingModel(true);
+                    setExistingInfoData(isGetSupplierDetailsBySupplierNameData);
+                } else {
+                    ToastService.info(ErrorMessage.NoFound);
+                }
             }
         }
     }, [isGetSupplierDetailsBySupplierNameFetching, isGetSupplierDetailsBySupplierNameSucess, isGetSupplierDetailsBySupplierNameData]);
@@ -43,8 +52,9 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
         }
         window.open(url, "_blank");
     };
-    const onHandleExistingInfo = (supplierName) => {
-        checkExistingInformation(supplierName);
+    const onHandleExistingInfo = (name) => {
+        checkExistingInformation(name);
+        setIsClickOpenModle(true);
     };
 
     //** Action Handler */
@@ -54,6 +64,8 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
 
     const sidebarClose = () => {
         setIsExistingModel(false);
+        setIsClickOpenModle(false);
+        // setIsDialogOpen(false);
     }
 
     //** Use Imperative Handle */
@@ -62,7 +74,7 @@ const ExistingCustomerSupplierInfo = forwardRef(({ parentRef, isSupplier, getExi
     }));
 
     return (
-        <SidebarModel modalTitle={isOrderManage ? "Order Information" : !isSupplier ? "Existing Customer Information" : " Existing Supplier Information" } contentClass="content-75 basic-info-model"
+        <SidebarModel modalTitle={isOrderManage ? "Order Information" : !isSupplier ? "Existing Customer Information" : " Existing Supplier Information"} contentClass="content-75 basic-info-model"
             onClose={sidebarClose} isOpen={isExistingModel}>
             <div className='pop-up-input-btn mt-3'>
                 <CardSection>

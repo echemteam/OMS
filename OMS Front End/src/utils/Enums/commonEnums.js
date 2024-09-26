@@ -2,8 +2,8 @@ export const FieldSettingType = {
     DISABLED: "isDisabled",
     ISTEXT: "isText",
     MULTISELECT: "isMultiSelect",
-    INPUTBUTTON: "isInputButton",
-    SECOUNDRYINPUTBUTTON: "isSecoundryInputButton",
+    ISPRIMARYBUTTONVISIBLE: "isPrimaryButtonVisible",
+    ISINFOBUTTONVISIBLE: "isInfoButtonVisible",
     CKEDITORDISABLED: "CKEditorDisabled"
 }
 

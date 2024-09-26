@@ -16,7 +16,6 @@ import ToastService from "../../../../services/toastService/ToastService";
 import { useAddEditCustomerSettingsMutation, useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery, useLazyGetDetailsbyCustomerIDQuery, } from "../../../../app/services/customerSettingsAPI";
 import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
 import { isCustomerOrSupplierApprovedStatus } from "../../../../utils/CustomerSupplier/CustomerSupplierUtils";
-import { SuccessMessage } from "../../../../data/appMessages";
 import SwalAlert from "../../../../services/swalService/SwalService";
 
 const ExemptSalesTax = { exemptSalesTax: true };
@@ -24,16 +23,14 @@ const ExemptSalesTax = { exemptSalesTax: true };
 const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
 
   const settingFormRef = useRef();
-  const { success } = SwalAlert();
   const [isBankFee, setIsBankFee] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const [isCardCharges, setIsCardCharges] = useState(false);
-  const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
   const [customerSettingFormData, setCustomerSettingFormData] = useState(SettingFormData);
   const [customerAccountingSettingId, setCustomerAccountingSettingId] = useState(0);
-  const approvalMessages = [];
-  const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, activeTab, setIsExistsFinancialSetting, financialRef } = useContext(BasicDetailContext);
+  const { customerId, customerCountryId, setCustomerCountryId, isResponsibleUser, settingRef, activeTab, setIsExistsFinancialSetting, financialRef,
+    subCustomer, getCustomerCompletionCount } = useContext(BasicDetailContext);
 
   //** API Call's */
   const [getAllPaymentTerms, { isSuccess: isGetAllPaymentTermsSuccess, data: isGetAllPaymentTermsData, },] = useLazyGetAllPaymentTermsQuery();
@@ -219,6 +216,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
       if (financialRef.current) {
         financialRef.current.handleGetDefaultList();
       }
+      getCustomerCompletionCount(customerId, subCustomer);
     }
   }, [isAddEditCustomerSettingsSuccess, isAddEditCustomerSettingsData]);
 
@@ -244,31 +242,6 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
       addEditCustomerSettings(request);
     } else if (settingFormData && accountingSettingId) {
       const updaterequest = updateRequestObj(settingFormData, accountingSettingId);
-      // let requestNewValue = {
-      //   ...updaterequest,
-      //   paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', updaterequest.paymentTermId),
-      //   paymentMethodName: getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', updaterequest.paymentMethodId),
-      // }
-      // let requestOldValue = {
-      //   ...isGetDetailByCustomerIDData,
-      //   paymentTermName: getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', isGetDetailByCustomerIDData.paymentTermId),
-      //   paymentMethodName: getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', isGetDetailByCustomerIDData.paymentMethodId),
-      // }
-      // if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-      //   await handleApprovalRequest(requestNewValue, requestOldValue, FunctionalitiesName.UPDATECUSTOMERFINANCIALSETTING);
-      // } else {
-      addEditCustomerSettings(updaterequest);
-      // }
-    }
-  };
-
-  const handleApprovalRequest = async (newValue, oldValue, eventName) => {
-    const request = { newValue, oldValue, isFunctional: false, eventName, isCustomeMessage: true };
-    const modifyData = await ValidateRequestByApprovalRules(request);
-    approvalMessages.push(modifyData.approvalMessage);
-    if (modifyData.newValue) {
-      const updaterequest = updateRequestObj(modifyData.newValue);
-      success(SuccessMessage.FinalSuccess.replace("{0}", approvalMessages));
       addEditCustomerSettings(updaterequest);
     }
   };
@@ -421,7 +394,7 @@ const FinancialSettings = ({ isEditablePage, customerStatusId }) => {
                 buttonTypeClassName="theme-button"
                 buttonText="Save"
                 onClick={onhandleEdit}
-                isLoading={isApprovelLoading || isAddEditCustomerSettingsLoading}
+                isLoading={isAddEditCustomerSettingsLoading}
               />
             </div>
           </div>

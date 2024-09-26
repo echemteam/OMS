@@ -35,7 +35,6 @@ import { setDropDownOptionField } from "../../../../../utils/FormFields/FieldsSe
 import { useAddCustomerNotesMutation } from "../../../../../app/services/notesAPI";
 import { CustomerSupplierStatus } from "../../../../../utils/Enums/commonEnums";
 import Tooltip from "../../../../../components/ui/tooltip/Tooltip";
-import { useGetValidateCheckListMutation } from "../../../../../app/services/ApprovalAPI";
 
 //** Component's */
 const CustomerApproval = React.lazy(() =>
@@ -50,13 +49,11 @@ const CustomerBasicInfoCard = ({
   getCustomerById,
   isGetCustomersBasicInformationById,
   isGetCustomersBasicInformationByIdFetching,
-  GetCustomersBasicInformationByIdData,
-  isShippingMethodChange
+  GetCustomersBasicInformationByIdData
 }) => {
   const childRef = useRef();
   const reasonRef = useRef();
   const { confirm } = SwalAlert();
-  const getCheckListRef = useRef();
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [formData, setFormData] = useState(reasonData);
   const [showModal, setShowModal] = useState(false);
@@ -98,23 +95,16 @@ const CustomerBasicInfoCard = ({
     },
   ] = useUpdateCustomerInActiveStatusMutation();
 
-  const [totalCount, setTotalCount] = useState();
-  const [approvalSuccessCount, setApprovalSuccessCount] = useState();
-  const [getValidateCheckList, { isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
-
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
-  const { isResponsibleUser, setRejectStatusId, rejectStatusId } = useContext(BasicDetailContext);
+  const { isResponsibleUser, totalCount, approvalSuccessCount, getCustomerCompletionCount, setSubCustomer } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
-  const hasEditPermission = hasFunctionalPermission(
-    securityKey.EDITBASICCUSTOMERDETAILS
-  );
+  const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
 
   const [
     getAllUser,
     { isFetching, isSuccess: isGetAllUserSucess, data: allGetAlluserData },
   ] = useLazyGetAllUserQuery();
-
   useEffect(() => {
     if (!isResponsibleUser) {
       if (hasEditPermission && hasEditPermission.isViewOnly === true) {
@@ -126,7 +116,6 @@ const CustomerBasicInfoCard = ({
       }
     }
   }, [hasEditPermission, isResponsibleUser]);
-
   useEffect(() => {
     if (
       isSuccessUpdateCustomerInActiveStatus &&
@@ -136,14 +125,12 @@ const CustomerBasicInfoCard = ({
       handleToggleModal();
     }
   }, [isSuccessUpdateCustomerInActiveStatus, updateCustomerInActiveStatusData]);
-
   useEffect(() => {
     if (isSuccessUpdateCustomerStatus && updateCustomerStatusData) {
       ToastService.success(updateCustomerStatusData.errorMessage);
       handleToggleModal();
     }
   }, [isSuccessUpdateCustomerStatus, updateCustomerStatusData]);
-
   useEffect(() => {
     if (GetCustomersBasicInformationByIdData && isGetCustomersBasicInformationById && !isGetCustomersBasicInformationByIdFetching) {
       const responsibleUserIds = GetCustomersBasicInformationByIdData?.responsibleUserId
@@ -160,30 +147,10 @@ const CustomerBasicInfoCard = ({
       setRUserValue(responsibleUsers);
       setSelectedStatus(GetCustomersBasicInformationByIdData.status);
       getAllUser();
-      let request = {
-        customerId: customerId,
-        supplierId: 0,
-        isSubCustomer: customerData?.isSubCustomer ? customerData?.isSubCustomer : false
-      }
-      getValidateCheckList(request);
+      getCustomerCompletionCount(customerId, GetCustomersBasicInformationByIdData?.isSubCustomer);
+      setSubCustomer(GetCustomersBasicInformationByIdData?.isSubCustomer);
     }
-  }, [GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationById, isGetCustomersBasicInformationByIdFetching, isShippingMethodChange]);
-
-  useEffect(() => {
-    if (isGetCheckListSuccess && isGetCheckListData) {
-      if (isGetCheckListData && isGetCheckListData.length > 0) {
-        const successCheckList = isGetCheckListData.filter(data => data.isValid);
-        setApprovalSuccessCount(successCheckList.length);
-        setTotalCount(isGetCheckListData.length);
-      }
-    }
-  }, [isGetCheckListSuccess, isGetCheckListData])
-
-  // useEffect(() => {
-  //   if (rejectStatusId) {
-  //     getCustomerById()
-  //   }
-  // }, [rejectStatusId, setRejectStatusId, selectedStatus])
+  }, [GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationById, isGetCustomersBasicInformationByIdFetching]);
 
   const rejectedCustomerFromApproval = () => {
     getCustomerById()
@@ -191,8 +158,6 @@ const CustomerBasicInfoCard = ({
 
   useEffect(() => {
     if (!isFetching && isGetAllUserSucess && allGetAlluserData) {
-      // const finalData = responsibleUserIds?.map(option => option.value).join(',')
-      //
       const filterData = allGetAlluserData.filter((item) => {
         return (
           item.roleName === null ||
@@ -647,7 +612,8 @@ const CustomerBasicInfoCard = ({
               {totalCount &&
                 <>
                   <b>&nbsp;:&nbsp;</b>
-                  <div className="info-desc submission-tab d-flex gap-2 align-items-center" style={{ cursor: 'pointer', fontSize: '13px' }} onClick={getApprovalCheckList}>
+                  <div className="info-desc submission-tab d-flex gap-2 align-items-center"
+                    style={{ cursor: 'pointer', fontSize: '13px' }} onClick={getApprovalCheckList}>
                     {approvalSuccessCount + "/" + totalCount}
                     <Iconify icon="clarity:info-solid" className="info" />
                   </div>
@@ -708,9 +674,9 @@ const CustomerBasicInfoCard = ({
         childRef={childRef}
         updateCustomerApproval={updateCustomerApproval}
         responsibleUserIds={responsibleUserIds}
-        setSelectedStatus={setSelectedStatus} 
+        setSelectedStatus={setSelectedStatus}
         onRejectedCustomerFromApproval={rejectedCustomerFromApproval}
-        />
+      />
     </div >
   ) : (
     <DataLoader />

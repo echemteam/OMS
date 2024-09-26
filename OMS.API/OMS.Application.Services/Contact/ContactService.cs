@@ -69,8 +69,8 @@ namespace OMS.Application.Services.Contact
 
                         foreach (DataRow row in emailDataTable.Rows)
                         {
-                            row[OwnerTypeIdColumnName] = ownerTypeId;
-                            row[CreatedByColumnName] = CurrentUserId;
+                            List<AddContactEmailRequest> emailDT = requestData.EmailAddressList ?? new List<AddContactEmailRequest>();
+                            List<AddContactPhoneRequest> phoneDT = requestData.PhoneNumberList ?? new List<AddContactPhoneRequest>();
 
                         }
                         _ = await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);

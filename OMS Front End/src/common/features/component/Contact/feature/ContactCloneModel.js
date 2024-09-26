@@ -11,7 +11,7 @@ import ToastService from "../../../../../services/toastService/ToastService";
 import { useAddEditContactMutation, useLazyGetAllContactTypesQuery } from "../../../../../app/services/contactAPI";
 import PropTypes from "prop-types";
 
-const ContactCloneModel = ({ cloneRef, isSupplier, onGetContactList }) => {
+const ContactCloneModel = ({ cloneRef, isSupplier, onGetContactList, getCompletionCount }) => {
 
     const ref = useRef();
     const [cloneData, setCloneData] = useState();
@@ -32,11 +32,11 @@ const ContactCloneModel = ({ cloneRef, isSupplier, onGetContactList }) => {
                 contactTypeId: contactType,
                 [isSupplier ? 'supplierContactId' : 'customerContactId']: 0,
                 contactId: 0,
-                emailList: cloneData.emailAddressList.map(data => ({
+                emailAddressList: cloneData.emailAddressList.map(data => ({
                     emailAddress: data.emailAddress,
                     isPrimary: data.isPrimary
                 })),
-                phoneList: cloneData.phoneNumberList.map((data) => ({
+                phoneNumberList: cloneData.phoneNumberList.map((data) => ({
                     extension: data.extension,
                     isPrimary: data.isPrimary,
                     phoneCode: data.phoneCode,
@@ -75,6 +75,7 @@ const ContactCloneModel = ({ cloneRef, isSupplier, onGetContactList }) => {
                 setIsCloneModel(!isCloneModel);
                 ToastService.success(isAddEditData.errorMessage);
             }
+            getCompletionCount();
         }
     }, [isAddEditSuccess, isAddEditData]);
 

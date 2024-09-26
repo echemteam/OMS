@@ -26,6 +26,7 @@ import { getTaxIdMinMaxLength } from "../../../customerDetail/feature/customerBa
 import PropTypes from 'prop-types';
 import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/validateRUser";
 import { useSelector } from "react-redux";
+import SwalAlert from "../../../../services/swalService/SwalService";
 
 //** Compoent's */
 const ExistingCustomerSupplierInfo = React.lazy(() => import("../../../../common/features/component/ExistingInfo/ExistingCustomerSupplierInfo"));
@@ -35,6 +36,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     //** State */
     const parentRef = useRef();
     const basicDetailRef = useRef();
+    const { confirm } = SwalAlert();
     const authState = useSelector((state) => state.auth);
     const [noteId, setNoteId] = useState(0);
     const { formSetting } = supplierBasicData;
@@ -44,6 +46,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     // const { ValidateRequestByApprovalRules } = useValidateAndAddApprovalRequests();
     const { nextStepRef, setSupplierId, moveNextPage, supplierId } = useContext(AddSupplierContext);
+    const [checkExistingInformation] = useLazyGetSupplierDetailsBySupplierNameQuery();
 
     //** API Call's */
     const [getAllUser, { isSuccess: isGetAllUserSucess, data: allGetAllUserData, }] = useLazyGetAllUserQuery();
@@ -209,11 +212,30 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             ToastService.warning('Please enter supplier basic information');
             return;
         }
+        if (!isOpen) {
+            const result = await checkExistingInformation(data.name).unwrap().catch(error => {
+                ToastService.warning('Failed to check existing information.');
+            });
+            if (result && result.length > 0) {
+                confirm("Similar Supplier Names Found?", "We've found some supplier with matching names. Would you like to review them before moving forward? Simply click the magnifier button to view the existing supplier details, or proceed with adding the new supplier.",
+                    "Countine", 'Close and View', true).then((confirmed) => {
+                        if (confirmed) {
+                            addSupplierCountine();
+                        }
+                    });
+            } else {
+                addSupplierCountine();
+            }
+        } else {
+            addSupplierCountine();
+        }
+    };
 
+    const addSupplierCountine = () => {
+        let data = basicDetailRef.current.getFormData();
         const getIdValue = (field) => {
             return field && typeof field === "object" ? field.value : field;
         }
-
         const req = {
             ...data,
             groupTypeId: getIdValue(data.groupTypeId),
@@ -225,55 +247,23 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             supplierId: keyId || supplierId,
             supplierNoteId: noteId || 0
         };
-
         if (!data.taxId) {
-            // let request = {
-            //     newValue: req,
-            //     oldValue: formData.initialState,
-            //     functionalityName: isOpen ? FunctionalitiesName.SUPPLIERBASICINFOUPDATE : FunctionalitiesName.ADDSUPPLIER
-            // }
-            // const modifyData = await ValidateRequestByApprovalRules(request);
-            // if (modifyData.newValue) {
             addEditSupplierBasicInformation(req);
-            // }
             return;
         }
-
         const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(req.countryId || 0, supplierBasicData.formFields, 'taxId');
-        if (data.taxId.length === minLength || data.taxId.length >= maxLength) {
-            // let request = {
-            //     newValue: req,
-            //     oldValue: formData.initialState,
-            //     functionalityName: isOpen ? FunctionalitiesName.SUPPLIERBASICINFOUPDATE : FunctionalitiesName.ADDSUPPLIER
-            // }
-            // const modifyData = await ValidateRequestByApprovalRules(request);
-            // if (modifyData.newValue) {
+        if (data.taxId.length >= minLength || data.taxId.length <= maxLength) {
             addEditSupplierBasicInformation(req);
-            // }
         } else {
             ToastService.warning(validateTaxIdMessage);
         }
-    };
+    }
 
     const handleInputGroupButton = () => {
         if (supplierName.trim() !== '') {
             CheckSupplierNameExist({ name: supplierName.trim() });
         }
     };
-
-    // const handleValidateTextId = (data, dataField) => {
-    //     if (dataField !== 'countryId') return;
-
-    //     const updatedFormFields = getTaxIdMinMaxLength(data.value, supplierBasicData.formFields, 'taxId');
-    //     const filteredFields = supplierBasicData.formFields.filter(field => {
-    //         if (isOpen) {
-    //             return field.dataField !== "note";
-    //         }
-    //         return field.id !== "name-input" && field.dataField !== "responsibleUserId";
-    //     });
-
-    //     setFormData({ ...formData, formFields: isOpen ? filteredFields : updatedFormFields });
-    // };
 
     const handleValidateTextId = (data, dataField) => {
         if (dataField === 'countryId') {
@@ -291,8 +281,8 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
 
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            // const trimCustomerName = data.replace(/\s+/g, '');
-            setSupplierName(data);
+            const trimName = data.replace(/\s+/g, ' ').trim();
+            setSupplierName(trimName);
         }
         if (dataField === 'website') {
             const trimmedUrl = data.replace(/\/$/, "");
@@ -368,9 +358,9 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
                     </div>
                 </div>
             }
-            {!isOpen ?
+            {!isOpen &&
                 <ExistingCustomerSupplierInfo parentRef={parentRef} isOrderManage={false} isSupplier={true} getExistingInfoByName={useLazyGetSupplierDetailsBySupplierNameQuery} />
-                : null}
+            }
         </React.Fragment>
     );
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
 import { AppIcons } from "../../../../../../../data/appIcons";
 import { OurAccountGridConfig } from "../config/DevliveryConfig";
@@ -7,27 +7,17 @@ import PropTypes from 'prop-types';
 import FinalMolGrid from "../../../../../../../components/FinalMolGrid/FinalMolGrid";
 import { useUpdateDeliveryMethodsMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import ToastService from "../../../../../../../services/toastService/ToastService";
-import { FunctionalitiesName } from "../../../../../../../utils/Enums/ApprovalFunctionalities";
-import { useValidateAndAddApprovalRequests } from "../../../../../../../utils/CustomHook/useValidateAndAddApproval";
-import { isCustomerOrSupplierApprovedStatus } from "../../../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
+import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton,
     customerId, handleGetDefaultList, handleDeleteClick, isEditablePage, customerStatusId }) => {
 
     const [dataSource, setDataSource] = useState(ourAccountData);
-    const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
+    const { subCustomer, getCustomerCompletionCount } = useContext(BasicDetailContext);
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateDeliveryMethodsMutation();
 
     useEffect(() => {
         if (!isGetDataLoading && ourAccountData) {
-            // New blank row object
-            // const blankRow = {
-            //     zone: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
-            //     name: '',
-            //     charge: '',
-            //     isPrimary: false,
-            // };
-
             setDataSource([...ourAccountData]);
         }
     }, [ourAccountData, isGetDataLoading]);
@@ -42,27 +32,11 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
             chargeType: data?.name,
             zone: data?.zone,
         };
-        // if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-        //     const oldValue = dataSource && dataSource.find(data => data.customerDeliveryMethodId === req.customerDeliveryMethodId);
-        //     let requestIntialState = {
-        //         ...oldValue,
-        //         chargeType: oldValue?.name,
-        //         zone: oldValue?.zone,
-        //     }
-        //     await handleApprovalRequest(req, requestIntialState);
-        // } else {
         let newGridData = [...dataSource]
         newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
         setDataSource(newGridData);
         update(req);
-        // }
     }
-
-    const handleApprovalRequest = async (newValue, oldValue) => {
-        const request = { newValue, oldValue, isFunctional: false, eventName: FunctionalitiesName.UPDATECUSTOMERSHIPPINGSETTING };
-        const modifyData = await ValidateRequestByApprovalRules(request);
-        if (modifyData.newValue) handleGetDefaultList();
-    };
 
     useEffect(() => {
         if (isUpdateSuccess && isUpdateData) {
@@ -72,6 +46,7 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
             }
             handleGetDefaultList()
             ToastService.success(isUpdateData.errorMessage);
+            getCustomerCompletionCount(customerId, subCustomer);
         }
     }, [isUpdateSuccess, isUpdateData]);
 
@@ -94,7 +69,7 @@ const DeliveryMethodList = ({ molGridRef, ourAccountData, actionHandler, handleT
                         dataSource={dataSource}
                         allowPagination={false}
                         onActionChange={actionHandler}
-                        isLoading={isApprovelLoading || isGetDataLoading}
+                        isLoading={isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
                         onRowDataDelete={handleDeleteClick}
                     />
