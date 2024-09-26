@@ -325,16 +325,16 @@ namespace OMS.Application.Services.Approval
         {
             var jsonData = JsonConvert.DeserializeObject<AddEditContactRequest>(newValue);
 
-            if (jsonData!.EmailList?.Count > 0)
+            if (jsonData!.EmailAddressList?.Count > 0)
             {
-                var emailDataTable = ExportHelper.ListToDataTable(jsonData.EmailList);
+                var emailDataTable = ExportHelper.ListToDataTable(jsonData.EmailAddressList);
                 AddAdditionalColumns(emailDataTable, OwnerType.CustomerContact, currentUserId);
                 await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);
             }
 
-            if (jsonData.PhoneList?.Count > 0)
+            if (jsonData.PhoneNumberList?.Count > 0)
             {
-                var phoneDataTable = ExportHelper.ListToDataTable(jsonData.PhoneList);
+                var phoneDataTable = ExportHelper.ListToDataTable(jsonData.PhoneNumberList);
                 AddAdditionalColumns(phoneDataTable, OwnerType.CustomerContact, currentUserId);
                 await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
             }
@@ -361,16 +361,16 @@ namespace OMS.Application.Services.Approval
         {
             var jsonData = JsonConvert.DeserializeObject<AddEditContactRequest>(newValue);
 
-            if (jsonData!.EmailList?.Count > 0)
+            if (jsonData!.EmailAddressList?.Count > 0)
             {
-                var emailDataTable = ExportHelper.ListToDataTable(jsonData.EmailList);
+                var emailDataTable = ExportHelper.ListToDataTable(jsonData.EmailAddressList);
                 AddAdditionalColumns(emailDataTable, OwnerType.SupplierContact, currentUserId);
                 await repositoryManager.emailAddress.AddEditContactEmail(emailDataTable, contactId);
             }
 
-            if (jsonData.PhoneList?.Count > 0)
+            if (jsonData.PhoneNumberList?.Count > 0)
             {
-                var phoneDataTable = ExportHelper.ListToDataTable(jsonData.PhoneList);
+                var phoneDataTable = ExportHelper.ListToDataTable(jsonData.PhoneNumberList);
                 AddAdditionalColumns(phoneDataTable, OwnerType.SupplierContact, currentUserId);
                 await repositoryManager.phoneNumber.AddEditContactPhone(phoneDataTable, contactId);
             }

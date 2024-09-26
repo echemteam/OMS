@@ -7,7 +7,7 @@ import { useAddEditOtherMutation } from "../../../../../app/services/supplierFin
 import ToastService from "../../../../../services/toastService/ToastService";
 import Buttons from "../../../../../components/ui/button/Buttons";
 
-const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId, onHandleGetById }) => {
+const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId, onHandleGetById, getSupplierCompletionCount }) => {
   const otherFormRef = useRef();
   const [otherForm, setOtherForm] = useState(otherFormData);
   const [addEditOther, { isLoading: isAddEditOtherLoading, isSuccess: isAddEditOtherSuccess, data: isAddEditOtherData }] = useAddEditOtherMutation();
@@ -32,6 +32,7 @@ const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId, onHand
       if (supplierId) {
         onHandleGetById(supplierId)
       }
+      getSupplierCompletionCount(supplierId);
     }
   }
 
@@ -69,36 +70,36 @@ const OtherDetail = ({ getOtherData, financialSettingFormRef, supplierId, onHand
   }
 
   return (
-    
-      <div className="ach-wire-section">
-        <div className="sub-card-sec-add">
-          <div className="row">
-            <FormCreator
-              config={otherForm}
-              ref={otherFormRef}
-              {...otherForm}
+
+    <div className="ach-wire-section">
+      <div className="sub-card-sec-add">
+        <div className="row">
+          <FormCreator
+            config={otherForm}
+            ref={otherFormRef}
+            {...otherForm}
+          />
+        </div>
+        <div className="col-md-12">
+          <div className="d-flex align-item-end justify-content-end centered" >
+            <Buttons
+              buttonTypeClassName="theme-button"
+              buttonText="Save"
+              onClick={handleOtherDetailAdd}
+              isLoading={isAddEditOtherLoading}
+            // isDisable={isButtonDisable}
             />
-          </div>
-          <div className="col-md-12">
-            <div className="d-flex align-item-end justify-content-end centered" >
-              <Buttons
-                buttonTypeClassName="theme-button"
-                buttonText="Save"
-                onClick={handleOtherDetailAdd}
-                isLoading={isAddEditOtherLoading}
-              // isDisable={isButtonDisable}
-              />
-              {/* <Buttons
+            {/* <Buttons
                 buttonTypeClassName="dark-btn ml-5"
                 buttonText="Cancel"
               // onClick={onSidebarClose}
               /> */}
-            </div>
-            {/* ))} */}
           </div>
+          {/* ))} */}
         </div>
       </div>
-    
+    </div>
+
   );
 };
 OtherDetail.propTypes = {

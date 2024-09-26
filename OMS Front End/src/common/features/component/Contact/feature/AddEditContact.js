@@ -6,22 +6,20 @@ import { FieldSettingType } from "../../../../../utils/Enums/commonEnums";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { contactDetailFormData } from "../config/ContactDetailForm.data";
 import DataLoader from "../../../../../components/ui/dataLoader/DataLoader";
-import { getContactTypeId, getDropDownId, modifyEmailAddressData, modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
+import { getDropDownId, modifyEmailAddressData, modifyPhoneNumberData } from "../../../../../utils/TransformData/TransformAPIData";
 import { setFieldSetting } from "../../../../../utils/FormFields/FieldsSetting/SetFieldSetting";
 import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 import PropTypes from "prop-types";
 //** Service's */
 import ToastService from "../../../../../services/toastService/ToastService";
 import { ErrorMessage } from "../../../../../data/appMessages";
-// import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
-// import { SuccessMessage } from "../../../../../data/appMessages";
-// import { getDropdownLabelName } from "../../../../../utils/CommonUtils/CommonUtilsMethods";
 //** Component's */
 const EmailAddressGrid = React.lazy(() => import("../../EmailAddress/EmailAddressGrid"));
 const ContactNumbersGrid = React.lazy(() => import("../../ContactNumber/ContactNumbersGrid"));
 
 const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClose, onSuccess, childRef, editRef, SecurityKey, customerStatusId, allGetAllContactTypesData,
-    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode, orderResetValue }) => {
+    isEditablePage, isSupplier, isEdit, isOpen, getContactById, getContectTypeId, customerId, isOrderManage, onhandleApiCall, contryIdCode, orderResetValue,
+    getCompletionCount }) => {
 
     //** State */
     const ref = useRef();
@@ -34,9 +32,6 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const [phoneNumberList, setPhoneNumberList] = useState([]);
     const [emailAddressList, setEmailAddressList] = useState([]);
     const [formData, setFormData] = useState(contactDetailFormData);
-    // const [isWithOutApprovalContactType, setIsWithOutApprovalContactType] = useState(false);
-    // const approvalMessages = []; // Array to store all approval messages
-    // const { ValidateRequestByApprovalRules, getEventName, isApprovelLoading } = useValidateAndAddApprovalRequests();
 
     //** API Call's */
     /**
@@ -49,143 +44,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
 
     const handleAddEdit = async () => {
         handlWithoutApprovalAddEdit();
-        // if (!isSupplier && isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-        //     handleApprovalAddEdit();
-        // } else {
-        //     handlWithoutApprovalAddEdit();
-        // }
     }
-
-    // const handleApprovalAddEdit = async () => {
-    //     const data = ref.current.getFormData();
-    //     if (!data) return;
-    //     const { filteredTypeIds, matchTypeIds } = isContactType(data.contactTypeId, isEdit);
-    //     if (filteredTypeIds.length > 0) {
-    //         setIsWithOutApprovalContactType(true);
-    //     } else {
-    //         setIsWithOutApprovalContactType(false);
-    //     }
-    //     let eventName;
-    //     let eventNameArr = [];
-    //     if (Array.isArray(data.contactTypeId) && data.contactTypeId.length === 1) {
-    //         eventName = getEventName(data.contactTypeId[0], isEdit, 'AddEditContactCustomer');
-    //     } else if (Array.isArray(data.contactTypeId) && data.contactTypeId.length >= 2) {
-    //         eventNameArr = data.contactTypeId.map((id) => {
-    //             return getEventName(id, isEdit, 'AddEditContactCustomer');
-    //         }).filter(event => event);
-    //     } else {
-    //         let contactTypeId = data.contactTypeId && typeof data.contactTypeId === "object" ? String(data.contactTypeId.value) : String(data.contactTypeId);
-    //         eventName = getEventName(contactTypeId, isEdit, 'AddEditContactCustomer');
-    //     }
-
-    //     let initialStateRequest = {
-    //         ...formData.initialState,
-    //         emailList: isEdit ? isGetByIdData.emailAddressList : formData.initialState.emailAddressList,
-    //         phoneList: isEdit ? isGetByIdData.phoneNumberList : formData.initialState.phoneNumberList,
-    //         contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', isGetByIdData.contactTypeId)
-    //     }
-
-    //     if (matchTypeIds.length > 0 || matchTypeIds?.value) {
-    //         if (eventNameArr.length > 0) {
-    //             const matchTypeIdsArray = matchTypeIds.split(',');
-    //             for (let index = 0; index < eventNameArr.length; index++) {
-    //                 const event = eventNameArr[index];
-    //                 const currentTypeId = matchTypeIdsArray[index];
-    //                 const request = requestData(data, currentTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
-    //                 let req = {
-    //                     ...request,
-    //                     phoneNumberList: isEdit ? isGetByIdData.phoneNumberList : formData.initialState.phoneNumberList,
-    //                     emailAddressList: isEdit ? isGetByIdData.emailAddressList : formData.initialState.emailAddressList,
-    //                     contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', currentTypeId),
-    //                     customerId: customerId ? customerId : request.customerId
-    //                 }
-    //                 await handleApprovalRequest(req, isEdit ? initialStateRequest : null, event, true, index, eventNameArr.length - 1);
-    //             }
-    //         } else if (eventName) {
-    //             const request = requestData(data, matchTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
-    //             let req = {
-    //                 ...request,
-    //                 customerId: customerId ? customerId : request.customerId,
-    //                 contactTypeName: getDropdownLabelName(allGetAllContactTypesData, 'contactTypeId', 'type', request.contactTypeId)
-    //             }
-    //             await handleApprovalRequest(req, initialStateRequest, eventName, 0);
-    //         }
-
-    //     }
-    //     if (filteredTypeIds.length > 0) {
-    //         const request = requestData(data, filteredTypeIds, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
-    //         let req = {
-    //             ...request,
-    //             customerId: customerId ? customerId : request.customerId
-    //         }
-    //         addEdit(req);
-    //     }
-    // };
-
-    // Normalize typeIds to an array of values
-    // const normalizeTypeIds = (typeIds) => {
-    //     if (Array.isArray(typeIds)) {
-    //         return typeIds;
-    //     }
-    //     if (typeof typeIds === 'object' && typeIds.value !== undefined) {
-    //         return [typeIds.value];
-    //     }
-    //     if (typeof typeIds === 'number') {
-    //         return [typeIds];
-    //     }
-    //     return [];
-    // };
-    // const isContactType = (typeIds, isEdit) => {
-    //     let filteredTypeIds = [];
-    //     let matchTypeIds = [];
-
-    //     const typeIdsArray = normalizeTypeIds(typeIds);
-
-    //     if (isEdit) {
-    //         if (typeIdsArray.includes(ContactType.INVOICESUBMISSION) || typeIdsArray.includes(ContactType.INVOICEFOLLOWUP)) {
-    //             return {
-    //                 filteredTypeIds: [],
-    //                 matchTypeIds: getCustomerContactTypeId(typeIdsArray)
-    //             };
-    //         } else {
-    //             return {
-    //                 filteredTypeIds: getCustomerContactTypeId(typeIdsArray),
-    //                 matchTypeIds: []
-    //             };
-    //         }
-    //     } else if (!isEdit) {
-    //         if (isSupplier) {
-    //             // Remove the supplier-related contact type if it exists.
-    //             //filteredTypeIds = typeIdsArray.filter(id => id !== ContactType.INVOICESUBMISSION);
-    //         } else if (!isSupplier) {
-    //             // Remove customer-related contact types (INVOICESUBMISSION and AP) if they exist.
-    //             filteredTypeIds = typeIdsArray?.filter(id => id !== ContactType.INVOICESUBMISSION && id !== ContactType.INVOICEFOLLOWUP);
-    //             matchTypeIds = typeIdsArray.filter(id => id === ContactType.INVOICESUBMISSION || id === ContactType.INVOICEFOLLOWUP);
-    //         }
-    //     }
-    //     return {
-    //         filteredTypeIds: filteredTypeIds.length > 0 ? getCustomerContactTypeId(filteredTypeIds, isEdit) : filteredTypeIds, // Values remaining after filtering
-    //         matchTypeIds: matchTypeIds.length > 0 ? getCustomerContactTypeId(matchTypeIds, isEdit) : matchTypeIds,      // Values that were removed
-    //     };
-    // };
-    // const handleApprovalRequest = async (newValue, oldValue, eventName, isCustomeMessage, index, contactLength) => {
-    //     const request = { newValue, oldValue, isFunctional: true, eventName, isCustomeMessage };
-    //     const modifyData = await ValidateRequestByApprovalRules(request);
-    //     approvalMessages.push(modifyData.approvalMessage);
-    //     if (index === contactLength) {
-    //         if (modifyData.newValue && onSuccess) {
-    //             if (isCustomeMessage) {
-    //                 const formattedResponse = approvalMessages.length === 1
-    //                     ? approvalMessages[0] : approvalMessages.slice(0, -1).join(', ') + ' and ' + approvalMessages.slice(-1);
-    //                 success(SuccessMessage.FinalSuccess.replace("{0}", formattedResponse));
-    //             }
-    //             onSuccess();
-    //         }
-    //     }
-    // };
-    // const getCustomerContactTypeId = (contactTypeId, isEdit) => {
-    //     return Array.isArray(contactTypeId) ? contactTypeId.map(String).join(",") : contactTypeId;
-    // };
 
     const handlWithoutApprovalAddEdit = () => {
         const data = ref.current.getFormData();
@@ -223,15 +82,14 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 return;
             }
             if (onSuccess) {
-                // if (!isWithOutApprovalContactType) {
                 onSuccess();
                 ToastService.success(isAddEditData.errorMessage);
-                // }
                 setContactId(isAddEditData?.keyValue);
                 if (isOrderManage) {
                     onhandleApiCall(getContectTypeId)
                 }
             }
+            getCompletionCount();
         }
     }, [isAddEditSuccess, isAddEditData]);
 

@@ -4,15 +4,11 @@ import PropTypes from "prop-types";
 import FormCreator from "../../../../../components/Forms/FormCreator";
 import { creditCardFormData } from "../config/CreditCardForm.data";
 import Buttons from "../../../../../components/ui/button/Buttons";
-import { useValidateAndAddApprovalRequests } from "../../../../../utils/CustomHook/useValidateAndAddApproval";
-import { FunctionalitiesName } from "../../../../../utils/Enums/ApprovalFunctionalities";
-import { onResetForm } from "../../../../../utils/FormFields/ResetForm/handleResetForm";
 import ToastService from "../../../../../services/toastService/ToastService";
 import { useAddEditCreditCardMutation } from "../../../../../app/services/supplierFinancialSettingsAPI";
 
-const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financialSettingFormRef }) => {
+const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financialSettingFormRef, getSupplierCompletionCount }) => {
   const creditCardFormRef = useRef();
-  const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
   const [creditCardForm, setCreditCardFormDataForm] = useState(creditCardFormData);
 
   const [addEditCreditCard, { isLoading: isAddEditCreditCardLoading, isSuccess: isAddEditCreditCardSuccess, data: isAddEditCreditCardData }] = useAddEditCreditCardMutation();
@@ -48,6 +44,7 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
       if (supplierId) {
         onHandleGetById(supplierId)
       }
+      getSupplierCompletionCount(supplierId);
     }
   }
 
@@ -105,7 +102,7 @@ const CreditCardDetail = ({ onHandleGetById, getCreditData, supplierId, financia
               buttonTypeClassName="theme-button"
               buttonText="Save"
               onClick={handleCreditCradAdd}
-              isLoading={isApprovelLoading}
+              isLoading={isAddEditCreditCardLoading}
             // isDisable={isButtonDisable}
             />
             {/* <Buttons

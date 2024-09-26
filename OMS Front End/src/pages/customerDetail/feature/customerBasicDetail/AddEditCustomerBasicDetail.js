@@ -20,12 +20,10 @@ import DataLoader from "../../../../components/ui/dataLoader/DataLoader";
 import { removeFormFields } from "../../../../utils/FormFields/RemoveFields/handleRemoveFields";
 import PropTypes from 'prop-types';
 import SwalAlert from "../../../../services/swalService/SwalService";
-import { SuccessMessage } from "../../../../data/appMessages";
-// import { useValidateAndAddApprovalRequests } from "../../../../utils/CustomHook/useValidateAndAddApproval";
-// import { FunctionalitiesName } from "../../../../utils/Enums/ApprovalFunctionalities";
 import { validateResponsibleUserId } from "../../../../utils/ResponsibleUser/validateRUser";
 import { useSelector } from "react-redux";
 import { isCustomerOrSupplierApprovedStatus } from "../../../../utils/CustomerSupplier/CustomerSupplierUtils";
+import { SuccessMessage } from "../../../../data/appMessages";
 
 
 const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarClose, isEditablePage, setSubCustomer, customerStatusId }) => {
@@ -41,7 +39,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     const [formData, setFormData] = useState(customerbasicData);
     const [isButtonDisable, setIsButtonDisable] = useState(false);
     const [isResponsibleUser, setIsResponsibleUser] = useState(false);
-    // const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
     const { nextRef, customerId, setCustomerId, moveNextPage, setCustomerCountryId } = useContext(BasicDetailContext);
 
     //** API Call's */
@@ -55,6 +52,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         data: GetCustomersBasicInformationByIdData }] = useLazyGetCustomersBasicInformationByIdQuery();
     const [addEditCustomersBasicInformation, { isLoading: isAddEditCustomersBasicInformationLoading, isSuccess: isAddEditCustomersBasicInformationSuccess,
         data: isAddEditCustomersBasicInformationData }] = useAddEditCustomersBasicInformationMutation();
+    const [checkExistingInformation] = useLazyGetCustomersDetailsByCutomerNameQuery();
 
     //** Security Key */
     const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
@@ -85,7 +83,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         } else {
             formSetting.isViewOnly = false;
         }
-    }, [isEditablePage, hasEditPermission, isResponsibleUser])
+    }, [isEditablePage, hasEditPermission, isResponsibleUser]);
+
     useEffect(() => {
         const fetchData = async () => {
             await Promise.all([
@@ -95,18 +94,10 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
                 getAllTerritories(),
                 getAllIncoterm()
             ]);
-
-            if (isOpen) {
-                // const modifyFormFields = removeFormFields(formData, ['responsibleUserId', 'isSubCompany', 'note']);
-                // setFormData(modifyFormFields);
-                // setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
-                // setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
-            } else if (!isOpen) {
+            if (!isOpen) {
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
-
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON, true);
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.ISINFOBUTTONVISIBLE, true);
             }
         };
         fetchData();
@@ -115,12 +106,11 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         if (isOpen) {
             if (customerId > 0) {
                 getCustomersBasicInformationById(customerId);
-
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.INPUTBUTTON);
-                setFieldSetting(customerbasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
+                setFieldSetting(customerbasicData, 'name', FieldSettingType.ISINFOBUTTONVISIBLE);
             }
         }
-    }, [isOpen, customerId, getCustomersBasicInformationById])
+    }, [isOpen, customerId, getCustomersBasicInformationById]);
+
     useEffect(() => {
         if (isGetAllGroupTypesSucess && allGetAllGroupTypesData) {
             setDropDownOptionField(allGetAllGroupTypesData, 'groupTypeId', 'type', customerbasicData, 'groupTypeId');
@@ -191,6 +181,7 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             setIsResponsibleUser(validateResponsibleUserId(GetCustomersBasicInformationByIdData.responsibleUserId, authState?.user?.userID));
         }
     }, [isGetCustomersBasicInformationById, GetCustomersBasicInformationByIdData, isGetCustomersBasicInformationByIdFetching]);
+
     useEffect(() => {
         if (isOpen) {
             customerId && getCustomersBasicInformationById(customerId);
@@ -199,60 +190,67 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     useImperativeHandle(nextRef, () => ({
         handleAddBasicDetails,
     }));
+
     const handleAddBasicDetails = async () => {
         let data = basicDetailRef.current.getFormData();
         if (data) {
-            setSubCustomer && setSubCustomer(data.isSubCustomer);
-            let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
-            let req = {
-                ...data,
-                groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object" ? data.groupTypeId.value : data.groupTypeId,
-                territoryId: data.territoryId && typeof data.territoryId === "object" ? data.territoryId.value : data.territoryId,
-                incotermId: data.incotermId && typeof data.incotermId === "object" ? data.incotermId.value : data.incotermId,
-                countryId: data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId,
-                responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
-                customerId: keyId ? keyId : customerId,
-                customerNoteId: noteId ? noteId : 0
-            };
-
-            if (data.taxId === "") {
-                let value = {
-                    ...req,
-                    responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
+            if (!isOpen) {
+                const result = await checkExistingInformation(data.name).unwrap().catch(error => {
+                    ToastService.warning('Failed to check existing information.');
+                });
+                if (result && result.length > 0) {
+                    confirm("Similar Customer Names Found?", "We've found some customers with matching names. Would you like to review them before moving forward? Simply click the magnifier button to view the existing customer details, or proceed with adding the new customer.",
+                        "Countine", 'Close and View', true).then((confirmed) => {
+                            if (confirmed) {
+                                addCustomerCountine();
+                            }
+                        });
+                } else {
+                    addCustomerCountine();
                 }
-                // if (isOpen && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-                //     handleApprovalRequest(value, formData.initialState);
-                // } else {
-                addEditCustomersBasicInformation(value);
-                // }
             } else {
-                if (data.taxId) {
-                    const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, customerbasicData.formFields, 'taxId');
-                    if (data.taxId.length >= minLength || data.taxId.length <= maxLength) {
-                        let value = {
-                            ...req,
-                            responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
-                        }
-                        // if (isOpen && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-                        //     handleApprovalRequest(value, formData.initialState);
-                        // } else {
-                        addEditCustomersBasicInformation(value);
-                        // }
-                    } else {
-                        ToastService.warning(validateTaxIdMessage);
-                    }
-                }
+                addCustomerCountine();
             }
         } else {
             ToastService.warning('Please enter customer basic information');
         }
     };
 
-    // const handleApprovalRequest = async (newValue, oldValue) => {
-    //     const request = { newValue, oldValue, eventName: isOpen && FunctionalitiesName.CUSTOMERUPDATE };
-    //     const modifyData = await ValidateRequestByApprovalRules(request);
-    //     if (modifyData.newValue) addEditCustomersBasicInformation(modifyData.newValue);
-    // };
+    const addCustomerCountine = () => {
+        let data = basicDetailRef.current.getFormData();
+        setSubCustomer && setSubCustomer(data.isSubCustomer);
+        let countryId = data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId;
+        let req = {
+            ...data,
+            groupTypeId: data.groupTypeId && typeof data.groupTypeId === "object" ? data.groupTypeId.value : data.groupTypeId,
+            territoryId: data.territoryId && typeof data.territoryId === "object" ? data.territoryId.value : data.territoryId,
+            incotermId: data.incotermId && typeof data.incotermId === "object" ? data.incotermId.value : data.incotermId,
+            countryId: data.countryId && typeof data.countryId === "object" ? data.countryId.value : data.countryId,
+            responsibleUserId: data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
+            customerId: keyId ? keyId : customerId,
+            customerNoteId: noteId ? noteId : 0
+        };
+        if (data.taxId === "") {
+            let value = {
+                ...req,
+                responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
+            }
+            addEditCustomersBasicInformation(value);
+        } else {
+            if (data.taxId) {
+                const { message: validateTaxIdMessage, minLength, maxLength } = getTaxIdMinMaxLength(countryId ? countryId : 0, customerbasicData.formFields, 'taxId');
+                if (data.taxId.length >= minLength || data.taxId.length <= maxLength) {
+                    let value = {
+                        ...req,
+                        responsibleUserId: data.responsibleUserId === "" ? 0 : data.responsibleUserId && typeof data.responsibleUserId === "object" ? data.responsibleUserId.value : data.responsibleUserId,
+                    }
+                    addEditCustomersBasicInformation(value);
+                } else {
+                    ToastService.warning(validateTaxIdMessage);
+                }
+            }
+        }
+    }
 
     const handleValidateTextId = (data, dataField) => {
         if (dataField === 'countryId') {
@@ -268,7 +266,6 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
         }
     }
     const handleCheckboxchange = (data, datafield) => {
-
         if (customerId) {
             if (datafield === "isBuyingForThirdParty" && GetCustomersBasicInformationByIdData.isBuyingForThirdParty === true) {
                 confirm(
@@ -294,8 +291,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
     };
     const handleInputFields = (data, dataField) => {
         if (dataField === 'name') {
-            // const trimCustomerName = data.replace(/\s+/g, '');
-            setCustomerName(data);
+            const trimName = data.replace(/\s+/g, ' ').trim();
+            setCustomerName(trimName);
         }
         if (dataField === 'website') {
             const trimmedUrl = data.replace(/\/$/, "");
@@ -374,7 +371,8 @@ const AddEditCustomerBasicDetail = ({ keyId, getCustomerById, isOpen, onSidebarC
             </CardSection>
 
             {!isOpen ?
-                <ExistingCustomerSupplierInfo parentRef={parentRef} isOrderManage={false} isSupplier={false} getExistingInfoByName={useLazyGetCustomersDetailsByCutomerNameQuery} />
+                <ExistingCustomerSupplierInfo parentRef={parentRef} isOrderManage={false} isSupplier={false}
+                    getExistingInfoByName={useLazyGetCustomersDetailsByCutomerNameQuery} />
                 : null}
 
         </div>
