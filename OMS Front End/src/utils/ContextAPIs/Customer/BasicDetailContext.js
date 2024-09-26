@@ -1,6 +1,7 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { createContext } from 'react';
+import { useGetValidateCheckListMutation } from '../../../app/services/ApprovalAPI';
 
 const BasicDetailContext = createContext();
 
@@ -14,6 +15,7 @@ export const BasicDetailContextProvider = ({ children }) => {
     //****  If we have supplier page we have set main id as supplierId. and If we have customer page we have set main id as customerId   */
     const [mainId, setMainId] = useState(0);
     const [customerId, setCustomerId] = useState(0);
+    const [subCustomer, setSubCustomer] = useState(false);
     const [customerCountryId, setCustomerCountryId] = useState('');
     //** */
 
@@ -21,7 +23,6 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [carriersList, setCarriersList] = useState([]);
     const [showSubBackButton, setShowSubBackButton] = useState(false);
     const [deliveryMethodsList, setDeliveryMethodsList] = useState([]);
-    const [isShippingMethodChange, setIsShippingMethodChange] = useState(false);
     const [isExistsFinancialSetting, setIsExistsFinancialSetting] = useState(false);
     //** */
 
@@ -41,21 +42,37 @@ export const BasicDetailContextProvider = ({ children }) => {
     const [activeTab, setActiveTab] = useState(0);
     const [activeSubTab, setActiveSubTab] = useState(0);
 
+    //** Completion Changes  */
+    const [totalCount, setTotalCount] = useState();
+    const [approvalSuccessCount, setApprovalSuccessCount] = useState();
+    const [getValidateCheckList, { isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
+
+    const getCustomerCompletionCount = (customerId, isSubCustomer) => {
+        let request = {
+            customerId: customerId,
+            supplierId: 0,
+            isSubCustomer: isSubCustomer ? isSubCustomer : false
+        }
+        getValidateCheckList(request);
+    }
+
+    useEffect(() => {
+        if (isGetCheckListSuccess && isGetCheckListData) {
+            if (isGetCheckListData && isGetCheckListData.length > 0) {
+                const successCheckList = isGetCheckListData.filter(data => data.isValid);
+                setApprovalSuccessCount(successCheckList.length);
+                setTotalCount(isGetCheckListData.length);
+            }
+        }
+    }, [isGetCheckListSuccess, isGetCheckListData])
+
     const handleActiveSubTabClick = (tabIndex) => {
         setActiveSubTab(tabIndex);
         setShowSubBackButton(false);
         if (tabIndex === 1) {
             setShowSubBackButton(true);
         }
-
     }
-   
-   const handleSubTabDefaultValue = (tab)=>{
-    if(tab===2 || tab===3){
-        setActiveSubTab(0)
-    }
-   }
-
 
     const moveNextPage = () => {
         setActiveTab((prev) => prev + 1);
@@ -97,13 +114,12 @@ export const BasicDetailContextProvider = ({ children }) => {
 
     return (
         <BasicDetailContext.Provider value={{
-            nextRef, customerId, handleSubTabDefaultValue,setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setCustomerCountryId,
-            customerCountryId, setIsExistsFinancialSetting, isExistsFinancialSetting, financialRef,
             nextRef, customerId, setCustomerId, activeTab, setActiveTab, moveNextPage, movePreviewPage, addCustomer, setPhoneNumberData, setCustomerCountryId,
-            customerCountryId, setIsExistsFinancialSetting, isExistsFinancialSetting, financialRef, isShippingMethodChange, setIsShippingMethodChange,
+            customerCountryId, setIsExistsFinancialSetting, isExistsFinancialSetting, financialRef,
             phoneNumberData, setMainId, mainId, setShowSubBackButton, showSubBackButton, setActiveSubTab, activeSubTab, handleActiveSubTabClick, saveFinacialSetting,
             emailAddressData, setEmailAddressData, molGridRef, setDeliveryMethodsList, deliveryMethodsList, setCarriersList, carriersList, settingRef,
-            setIsResponsibleUser, isResponsibleUser, setRejectStatusId, rejectStatusId
+            setIsResponsibleUser, isResponsibleUser, setRejectStatusId, rejectStatusId, totalCount, approvalSuccessCount, getCustomerCompletionCount,
+            subCustomer, setSubCustomer
         }}>
             {children}
         </BasicDetailContext.Provider>

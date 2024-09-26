@@ -17,7 +17,7 @@ import { otherFormData } from "./config/OtherForm.data";
 import ACHWireDetail from "./feature/achWireDetail/ACHWireDetail";
 import PropTypes from 'prop-types';
 
-const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
+const FinancialSettingsgGrid = ({ supplierId, isEditablePage, getSupplierCompletionCount }) => {
   const financialSettingFormRef = useRef();
   const [financialSettingForm, setFinancialSettingForm] = useState(financialSettingFormData);
   const [shouldRerenderFormCreator, setShouldRerenderFormCreator] = useState(false);
@@ -87,11 +87,11 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
           ccNote: isGetPaymentSettingsBySupplierIdData.ccNote,
           isCCExistsOnFile: isGetPaymentSettingsBySupplierIdData.isCCExistsOnFile,
           checkMailingAddressId: isGetPaymentSettingsBySupplierIdData.checkMailingAddressId,
-       
+
         };
       }
       setGetCreditData(formCreditData);
-      
+
       if (activeTabIndex === 3 && isGetPaymentSettingsBySupplierIdData.otherNote) {
         formOtherData.initialState = {
           supplierPaymentSettingId: isGetPaymentSettingsBySupplierIdData.supplierPaymentSettingId,
@@ -121,6 +121,7 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
             financialSettingFormRef={financialSettingFormRef}
             supplierId={supplierId}
             isEditablePage={isEditablePage}
+            getSupplierCompletionCount={getSupplierCompletionCount}
           />
         </div>
       ),
@@ -135,6 +136,7 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
             supplierId={supplierId}
             getCreditData={getCreditData.initialState}
             onHandleGetById={handleGetById}
+            getSupplierCompletionCount={getSupplierCompletionCount}
           />
         </div>
       ),
@@ -151,6 +153,7 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
             onHandleGetById={handleGetById}
             isGetPaymentSettingsBySupplierIdData={isGetPaymentSettingsBySupplierIdData}
             isGetPaymentSettingsBySupplierIdSuccess={isGetPaymentSettingsBySupplierIdSuccess}
+            getSupplierCompletionCount={getSupplierCompletionCount}
           />
         </div>
       ),
@@ -165,6 +168,7 @@ const FinancialSettingsgGrid = ({ supplierId, isEditablePage }) => {
             supplierId={supplierId}
             getOtherData={getOtherData.initialState}
             onHandleGetById={handleGetById}
+            getSupplierCompletionCount={getSupplierCompletionCount}
           />
         </div>
       ),

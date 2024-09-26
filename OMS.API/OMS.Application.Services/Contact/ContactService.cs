@@ -127,8 +127,8 @@ namespace OMS.Application.Services.Contact
 
                         if (responseData.KeyValue > 0)
                         {
-                            List<AddContactEmailRequest> emailDT = requestData.EmailList ?? new List<AddContactEmailRequest>();
-                            List<AddContactPhoneRequest> phoneDT = requestData.PhoneList ?? new List<AddContactPhoneRequest>();
+                            List<AddContactEmailRequest> emailDT = requestData.EmailAddressList ?? new List<AddContactEmailRequest>();
+                            List<AddContactPhoneRequest> phoneDT = requestData.PhoneNumberList ?? new List<AddContactPhoneRequest>();
 
                             int contactId = responseData.KeyValue;
                             OwnerType ownerTypeId = requestData.CustomerId > 0 ? OwnerType.CustomerContact : OwnerType.SupplierContact;
