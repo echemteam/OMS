@@ -32,11 +32,11 @@ const ContactCloneModel = ({ cloneRef, isSupplier, onGetContactList }) => {
                 contactTypeId: contactType,
                 [isSupplier ? 'supplierContactId' : 'customerContactId']: 0,
                 contactId: 0,
-                emailList: cloneData.emailAddressList.map(data => ({
+                emailAddressList: cloneData.emailAddressList.map(data => ({
                     emailAddress: data.emailAddress,
                     isPrimary: data.isPrimary
                 })),
-                phoneList: cloneData.phoneNumberList.map((data) => ({
+                phoneNumberList: cloneData.phoneNumberList.map((data) => ({
                     extension: data.extension,
                     isPrimary: data.isPrimary,
                     phoneCode: data.phoneCode,
