@@ -26,7 +26,8 @@ const AddressGrid = ({
   addAddress,
   getAddresssById,
   deleteAddress,
-  customerStatusId
+  customerStatusId,
+  getCompletionCount
 }) => {
   //** States */
   const editRef = useRef();
@@ -129,6 +130,7 @@ const AddressGrid = ({
           customerStatusId={customerStatusId}
           isModelOpen={isModelOpen}
           isSupplier={isSupplier}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     ),
@@ -146,6 +148,7 @@ const AddressGrid = ({
           customerStatusId={customerStatusId}
           isModelOpen={isModelOpen}
           isSupplier={isSupplier}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     ),
@@ -163,6 +166,7 @@ const AddressGrid = ({
           customerStatusId={customerStatusId}
           isModelOpen={isModelOpen}
           isSupplier={isSupplier}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     ),
@@ -180,6 +184,7 @@ const AddressGrid = ({
           customerStatusId={customerStatusId}
           isModelOpen={isModelOpen}
           isSupplier={isSupplier}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     ),
@@ -197,6 +202,7 @@ const AddressGrid = ({
           customerStatusId={customerStatusId}
           isModelOpen={isModelOpen}
           isSupplier={isSupplier}
+          getCompletionCount={getCompletionCount}
         />
       </div>
     ),
@@ -254,6 +260,7 @@ const AddressGrid = ({
             getAddressTypeIdOrder={null}
             orderCustomerId={null}
             customerStatusId={customerStatusId}
+            getCompletionCount={getCompletionCount}
           />
         </SidebarModel>
       </div>

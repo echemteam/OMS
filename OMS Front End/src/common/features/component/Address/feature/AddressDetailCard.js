@@ -26,7 +26,8 @@ const AddressDetailCard = forwardRef(
     deleteAddress,
     customerStatusId,
     isModelOpen,
-    isSupplier
+    isSupplier,
+    getCompletionCount
   }) => {
     //** States */
     const [addressData, setAddressData] = useState([]);
@@ -81,6 +82,7 @@ const AddressDetailCard = forwardRef(
       if (isDeleteAddressSuccess && isDeleteAddressData) {
         ToastService.success(isDeleteAddressData.errorMessage);
         handleGetAddress();
+        getCompletionCount();
       }
     }, [isDeleteAddressSuccess, isDeleteAddressData]);
 

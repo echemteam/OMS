@@ -84,11 +84,11 @@ export const setFieldSetting = (formFieldsData, fieldId, fieldSettingType, value
             case 'isDisabled':
                 selectField.fieldSetting.isDisabled = value;
                 break;
-            case 'isInputButton':
-                selectField.inputButtonGroup.isInputButton = value;
+            case 'isPrimaryButtonVisible':
+                selectField.inputButtonGroupConfig.isPrimaryButtonVisible = value;
                 break;
-            case 'isSecoundryInputButton':
-                selectField.inputButtonGroup.showInformation.showInputButton = value;
+            case 'isInfoButtonVisible':
+                selectField.inputButtonGroupConfig.infoButtonConfig.isInfoButtonVisible = value;
                 break;
             case 'isText':
                 //selectField.fieldSetting.isText = value;

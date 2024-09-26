@@ -13,7 +13,11 @@ import Iconify from "../../../components/ui/iconify/Iconify";
 import { useUpdateApprovalRequestsStatusMutation } from "../../../app/services/ApprovalAPI";
 import ToastService from "../../../services/toastService/ToastService";
 import { Button } from "react-bootstrap";
-import { MyTaskFieldNames, MyTaskKeyNames, MyTaskStatus } from "../../../utils/Enums/commonEnums";
+import {
+  MyTaskFieldNames,
+  MyTaskKeyNames,
+  MyTaskStatus,
+} from "../../../utils/Enums/commonEnums";
 import Buttons from "../../../components/ui/button/Buttons";
 import FormCreator from "../../../components/Forms/FormCreator";
 import CenterModel from "../../../components/ui/centerModel/CenterModel";
@@ -22,7 +26,10 @@ import Base64FileViewer from "../../../common/features/component/Base64FileView/
 import { FunctionalitiesName } from "../../../utils/Enums/ApprovalFunctionalities";
 import { useLazyGetCustomersBasicInformationByIdQuery } from "../../../app/services/basicdetailAPI";
 import { useLazyGetSupplierBasicInformationByIdQuery } from "../../../app/services/supplierAPI";
-import { useLazyGetAllPaymentMethodQuery, useLazyGetAllPaymentTermsQuery } from "../../../app/services/customerSettingsAPI";
+import {
+  useLazyGetAllPaymentMethodQuery,
+  useLazyGetAllPaymentTermsQuery,
+} from "../../../app/services/customerSettingsAPI";
 import { getDropdownLabelName } from "../../../utils/CommonUtils/CommonUtilsMethods";
 import SwalAlert from "../../../services/swalService/SwalService";
 
@@ -70,11 +77,11 @@ const getFieldDifference = (oldJsonStr, newJsonStr, fieldName) => {
 
 const filterKeysWithId = (obj) => {
   if (Array.isArray(obj)) {
-    return obj.map(item => filterKeysWithId(item));
-  } else if (typeof obj === 'object' && obj !== null) {
+    return obj.map((item) => filterKeysWithId(item));
+  } else if (typeof obj === "object" && obj !== null) {
     const filteredObj = {};
     for (const [key, value] of Object.entries(obj)) {
-      if (!key.toLowerCase().endsWith('id')) {
+      if (!key.toLowerCase().endsWith("id")) {
         filteredObj[key] = filterKeysWithId(value);
       }
     }
@@ -85,8 +92,13 @@ const filterKeysWithId = (obj) => {
 
 const formatBoolean = (value) => (value ? "True" : "False");
 
-const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, approvalRequest, tabId }) => {
-
+const TaskDetail = ({
+  approvalRequestId,
+  approvedData,
+  isEventByIdLoading,
+  approvalRequest,
+  tabId,
+}) => {
   // const navigate = useNavigate();
   const ref = useRef();
   const [customerId, setCustomerId] = useState(0);
@@ -97,20 +109,45 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
   const [customerData, setCustomerData] = useState({});
   const [supplierData, setSupplierData] = useState({});
   const [showRedirectButton, setShowRedirectButton] = useState(false);
-  const [updateApprovalRequest, { isLoading: isUpdateLoading, isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateApprovalRequestsStatusMutation();
+  const [isModelOpen, setIsModelOpen] = useState(false);
+  const [valueTypes,setValueTypes]=useState("");
+  const [
+    updateApprovalRequest,
+    {
+      isLoading: isUpdateLoading,
+      isSuccess: isUpdateSuccess,
+      data: isUpdateData,
+    },
+  ] = useUpdateApprovalRequestsStatusMutation();
 
-  const [getSupplierInfoById, { isFetching: isGetSupplierFetching, isSuccess: isGetSupplierSuccess, data: isGetSupplierData }] = useLazyGetSupplierBasicInformationByIdQuery();
-  const [getCustomersInfoById, { isFetching: isGetCustomerFetching, isSuccess: isGetCustomerSuccess, data: isGetCustomerData }] = useLazyGetCustomersBasicInformationByIdQuery();
+  const [
+    getSupplierInfoById,
+    {
+      isFetching: isGetSupplierFetching,
+      isSuccess: isGetSupplierSuccess,
+      data: isGetSupplierData,
+    },
+  ] = useLazyGetSupplierBasicInformationByIdQuery();
+  const [
+    getCustomersInfoById,
+    {
+      isFetching: isGetCustomerFetching,
+      isSuccess: isGetCustomerSuccess,
+      data: isGetCustomerData,
+    },
+  ] = useLazyGetCustomersBasicInformationByIdQuery();
 
   //** API Call's For Setting Data */
-  const [getAllPaymentTerms, { data: isGetAllPaymentTermsData }] = useLazyGetAllPaymentTermsQuery();
-  const [getAllPaymentMethod, { data: isGetAllPaymentMethodData }] = useLazyGetAllPaymentMethodQuery();
+  const [getAllPaymentTerms, { data: isGetAllPaymentTermsData }] =
+    useLazyGetAllPaymentTermsQuery();
+  const [getAllPaymentMethod, { data: isGetAllPaymentMethodData }] =
+    useLazyGetAllPaymentMethodQuery();
 
   const { confirm } = SwalAlert();
 
   useEffect(() => {
     if (isUpdateSuccess && isUpdateData) {
-      setShowModal(false)
+      setShowModal(false);
       ToastService.success(isUpdateData.errorMessage);
       approvalRequest(approvalRequestId);
     }
@@ -144,11 +181,15 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
 
   useEffect(() => {
     if (approvedData) {
-
       getAllPaymentTerms();
       getAllPaymentMethod();
 
-      const { oldValue: oldFieldValue, newValue: newFieldValue } = getFieldDifference(approvedData.oldValue, approvedData.newValue, approvedData.fieldName);
+      const { oldValue: oldFieldValue, newValue: newFieldValue } =
+        getFieldDifference(
+          approvedData.oldValue,
+          approvedData.newValue,
+          approvedData.fieldName
+        );
       const newValues = parseJson(approvedData.newValue);
       setOldFieldValue(oldFieldValue);
       setNewFieldValue(newFieldValue);
@@ -159,8 +200,8 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
       };
 
       // Check for the presence of customerId or supplierId keys
-      const customerIdKey = findKey(newValues, 'customerid');
-      const supplierIdKey = findKey(newValues, 'supplierid');
+      const customerIdKey = findKey(newValues, "customerid");
+      const supplierIdKey = findKey(newValues, "supplierid");
 
       // Retrieve the corresponding values
       const customerId = customerIdKey ? newValues[customerIdKey] : null;
@@ -181,9 +222,9 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
 
   const handleRedirectClick = () => {
     if (customerId) {
-      window.open(`/CustomerDetails/${encryptUrlData(customerId)}`, '_blank');
+      window.open(`/CustomerDetails/${encryptUrlData(customerId)}`, "_blank");
     } else if (supplierId) {
-      window.open(`/SupplierDetails/${encryptUrlData(supplierId)}`, '_blank');
+      window.open(`/SupplierDetails/${encryptUrlData(supplierId)}`, "_blank");
     }
   };
 
@@ -199,14 +240,14 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
 
   const handleRejectRequest = () => {
     approvalStatus(MyTaskStatus.Reject);
-  }
+  };
 
   const approvalStatus = (status) => {
     if (status === "Accept") {
       let request = {
         status: status,
         approvalRequestId: approvalRequestId,
-      }
+      };
       updateApprovalRequest(request);
     } else {
       let data = ref.current.getFormData();
@@ -214,13 +255,13 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
         let request = {
           status: status,
           approvalRequestId: approvalRequestId,
-          rejectReason: data.rejectReason
-        }
+          rejectReason: data.rejectReason,
+        };
         updateApprovalRequest(request);
-        setShowModal(false)
+        setShowModal(false);
       }
     }
-  }
+  };
 
   const handleToggleModal = () => {
     setShowModal(!showModal);
@@ -237,7 +278,7 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
           ))}
         </ul>
       );
-    } else if (typeof value === 'object' && value !== null) {
+    } else if (typeof value === "object" && value !== null) {
       return (
         <ul className="pl-1 mt-1 border-dashed">
           {Object.entries(value).map(([subKey, subValue]) => (
@@ -248,25 +289,35 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
           ))}
         </ul>
       );
-    } else if (typeof value === 'boolean') {
+    } else if (typeof value === "boolean") {
       // Handle booleans
       return formatBoolean(value);
     } else {
       // Handle other values
-      return value !== null ? value?.toString() : 'N/A';
+      return value !== null ? value?.toString() : "N/A";
     }
   };
 
   const renderLableName = (fieldName, value) => {
     switch (fieldName.toLowerCase()) {
       case MyTaskFieldNames.PAYMENTMETHODID.toLowerCase():
-        return getDropdownLabelName(isGetAllPaymentMethodData, 'paymentMethodId', 'method', value);
+        return getDropdownLabelName(
+          isGetAllPaymentMethodData,
+          "paymentMethodId",
+          "method",
+          value
+        );
       case MyTaskFieldNames.PAYMENTTERMID.toLowerCase():
-        return getDropdownLabelName(isGetAllPaymentTermsData, 'paymentTermId', 'paymentTerm', value);
+        return getDropdownLabelName(
+          isGetAllPaymentTermsData,
+          "paymentTermId",
+          "paymentTerm",
+          value
+        );
       default:
         return value;
     }
-  }
+  };
 
   const renderKeyName = (fieldName) => {
     switch (fieldName.toLowerCase()) {
@@ -277,13 +328,24 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
       default:
         return fieldName;
     }
-  }
+  };
+
+  const handlebtnClick = (valueType) => {
+    setIsModelOpen(true);
+    setValueTypes(valueType);
+  };
+
+  const handleClose = () => {
+    setIsModelOpen(false);
+  };
 
   return (
     <React.Fragment>
-      {(!isEventByIdLoading && !isUpdateLoading) || (isGetSupplierFetching || isGetCustomerFetching) ?
+      {(!isEventByIdLoading && !isUpdateLoading) ||
+      isGetSupplierFetching ||
+      isGetCustomerFetching ? (
         <div className="task-detail">
-          {approvedData ?
+          {approvedData ? (
             <>
               <div className="task-head">
                 <div className="d-flex align-items-center">
@@ -296,7 +358,10 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                       Generated by <b>{approvedData.requestedByUserName}</b> on
                       <b className="date ml-1">
                         {approvedData.requestedDate
-                          ? formatDate(approvedData.requestedDate, "MM/DD/YYYY hh:mm A")
+                          ? formatDate(
+                              approvedData.requestedDate,
+                              "MM/DD/YYYY hh:mm A"
+                            )
                           : "No Date"}
                       </b>
                       {/* <b>Requested By:</b>  */}
@@ -310,82 +375,145 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                       : "No Date"}
                   </div> */}
                   {showRedirectButton && (
-                    <div className="view-customer" onClick={handleRedirectClick}>
-                      <Image imagePath={AppIcons.Iicon} altText="View Customer Icon" />
+                    <div
+                      className="view-customer"
+                      onClick={handleRedirectClick}
+                    >
+                      <Image
+                        imagePath={AppIcons.Iicon}
+                        altText="View Customer Icon"
+                      />
                       View Details
                     </div>
                   )}
                 </div>
               </div>
               <div className="customer-information">
-                {customerId && customerData ?
+                {customerId && customerData ? (
                   <div className="row mb-3">
                     <div className="col-md-5">
-                      <span className="info-label fw-bold">Customer Name : </span>
-                      <span className="info-value ml-2">{customerData?.name}</span>
+                      <span className="info-label fw-bold">
+                        Customer Name :{" "}
+                      </span>
+                      <span className="info-value ml-2">
+                        {customerData?.name}
+                      </span>
                     </div>
                     <div className="col-md-4">
                       <span className="info-label fw-bold">Email: </span>
-                      <span className="info-value ml-2">{customerData?.emailAddress}</span>
+                      <span className="info-value ml-2">
+                        {customerData?.emailAddress}
+                      </span>
                     </div>
                     <div className="col-md-3">
                       <span className="info-label fw-bold">Country : </span>
-                      <span className="info-value ml-2">{customerData?.countryName}</span>
-                    </div>
-                  </div> : null
-                }
-                {supplierData && supplierId ?
-                  <div className="row mb-3">
-                    <div className="col-md-5">
-                      <span className="info-label fw-bold">Supplier Name : </span>
-                      <span className="info-value ml-2">{supplierData?.name}</span>
-                    </div>
-                    <div className="col-md-4">
-                      <span className="info-label fw-bold">Email: </span>
-                      <span className="info-value ml-2">{supplierData?.emailAddress}</span>
-                    </div>
-                    <div className="col-md-3">
-                      <span className="info-label fw-bold">Country : </span>
-                      <span className="info-value ml-2">{supplierData?.countryName}</span>
+                      <span className="info-value ml-2">
+                        {customerData?.countryName}
+                      </span>
                     </div>
                   </div>
-                  : null
-                }
-                {!approvedData.isFunctional &&
+                ) : null}
+                {supplierData && supplierId ? (
+                  <div className="row mb-3">
+                    <div className="col-md-5">
+                      <span className="info-label fw-bold">
+                        Supplier Name :{" "}
+                      </span>
+                      <span className="info-value ml-2">
+                        {supplierData?.name}
+                      </span>
+                    </div>
+                    <div className="col-md-4">
+                      <span className="info-label fw-bold">Email: </span>
+                      <span className="info-value ml-2">
+                        {supplierData?.emailAddress}
+                      </span>
+                    </div>
+                    <div className="col-md-3">
+                      <span className="info-label fw-bold">Country : </span>
+                      <span className="info-value ml-2">
+                        {supplierData?.countryName}
+                      </span>
+                    </div>
+                  </div>
+                ) : null}
+                {!approvedData.isFunctional && (
                   <div className="info-row">
                     <span className="info-label">Field Name : </span>
-                    <span className="info-value ml-2">{renderKeyName(approvedData.fieldName)}</span>
+                    <span className="info-value ml-2">
+                      {renderKeyName(approvedData.fieldName)}
+                    </span>
                   </div>
-                }
+                )}
                 <div className="info-row">
                   <span className="info-label">Status : </span>
-                  <span className={`ml-2 ${getLabelClass(approvedData.status)}`}>{approvedData.status}</span>
+                  <span
+                    className={`ml-2 ${getLabelClass(approvedData.status)}`}
+                  >
+                    {approvedData.status}
+                  </span>
+                  {approvedData?.eventName !=
+                  FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? <>
+                  &nbsp; <span className="value-btn" onClick={()=>handlebtnClick("old Value")}>
+                  Old Value
+                </span> &nbsp;&nbsp;
+                <span className="value-btn" onClick={()=>handlebtnClick("new Value")}>
+                  New Value
+                </span>
+                </> : null}
+                 
                 </div>
-                {approvedData.rejectReason &&
+               
+                {approvedData.rejectReason && (
                   <div className="info-row">
                     <span className="info-label">Rejection Reason : </span>
-                    <span className="info-value ml-2">{approvedData.rejectReason}</span>
+                    <span className="info-value ml-2">
+                      {approvedData.rejectReason}
+                    </span>
                   </div>
-                }
+                )}
               </div>
-              {approvedData.isFunctional ?
+              {approvedData.isFunctional ? (
                 <div className="value-comparison">
-                  {approvedData?.eventName === FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ?
-                    <Base64FileViewer documentData={approvedData.newValue} isLoading={isEventByIdLoading} />
-                    :
+                  {approvedData?.eventName ===
+                  FunctionalitiesName.UPLOADCUSTOMERDOCUMENT ? (
+                    <Base64FileViewer
+                      documentData={approvedData.newValue}
+                      isLoading={isEventByIdLoading}
+                    />
+                  ) : (
                     <React.Fragment>
-                      {approvedData?.eventName.toLowerCase().includes("update") &&
+                      {approvedData?.eventName
+                        .toLowerCase()
+                        .includes("update") && (
                         <div className="value-block w-100">
                           <span className="value-title">Old Value</span>
-                          {approvedData.oldValueTemplate ?
-                            <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.oldValueTemplate }}></div>
-                            :
+
+                          {approvedData.oldValueTemplate ? (
+                            <div
+                              className="html-render mb-0"
+                              dangerouslySetInnerHTML={{
+                                __html: approvedData.oldValueTemplate,
+                              }}
+                            ></div>
+                          ) : (
                             <>
-                              {approvedData.oldValue && Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).length > 0 ? (
+                              {approvedData.oldValue &&
+                              Object.entries(
+                                filterKeysWithId(
+                                  parseJson(approvedData.oldValue)
+                                )
+                              ).length > 0 ? (
                                 <ul className="value-content pl-0">
-                                  {Object.entries(filterKeysWithId(parseJson(approvedData.oldValue))).map(([key, value]) => (
+                                  {Object.entries(
+                                    filterKeysWithId(
+                                      parseJson(approvedData.oldValue)
+                                    )
+                                  ).map(([key, value]) => (
                                     <li key={key}>
-                                      <span className="value-label">{key}:</span>
+                                      <span className="value-label">
+                                        {key}:
+                                      </span>
                                       <span className="value-data ml-2">
                                         {renderValue(value)}
                                       </span>
@@ -393,21 +521,35 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                                   ))}
                                 </ul>
                               ) : (
-                                <div className="no-value">No old value available</div>
+                                <div className="no-value">
+                                  No old value available
+                                </div>
                               )}
                             </>
-                          }
+                          )}
                         </div>
-                      }
+                      )}
                       <div className="value-block w-100">
                         <span className="value-title">New Value</span>
-                        {approvedData.newValueTemplate ?
-                          <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.newValueTemplate }}></div>
-                          :
+
+                        {approvedData.newValueTemplate ? (
+                          <div
+                            className="html-render mb-0"
+                            dangerouslySetInnerHTML={{
+                              __html: approvedData.newValueTemplate,
+                            }}
+                          ></div>
+                        ) : (
                           <>
-                            {Object.entries(filterKeysWithId(parseJson(approvedData.newValue))).length > 0 ? (
+                            {Object.entries(
+                              filterKeysWithId(parseJson(approvedData.newValue))
+                            ).length > 0 ? (
                               <ul className="value-content pl-0">
-                                {Object.entries(filterKeysWithId(parseJson(approvedData.newValue))).map(([key, value]) => (
+                                {Object.entries(
+                                  filterKeysWithId(
+                                    parseJson(approvedData.newValue)
+                                  )
+                                ).map(([key, value]) => (
                                   <li key={key}>
                                     <span className="value-label">{key}:</span>
                                     <span className="value-data ml-2">
@@ -417,78 +559,115 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                                 ))}
                               </ul>
                             ) : (
-                              <div className="no-value">No new value available</div>
+                              <div className="no-value">
+                                No new value available
+                              </div>
                             )}
                           </>
-                        }
+                        )}
                       </div>
                     </React.Fragment>
-                  }
+                  )}
                 </div>
-                :
-                <div className="value-comparison">
+              ) : (
+                <div className="value-comparison value-btn-card">
                   <div className="value-block">
                     <span className="value-title">Old Value</span>
-                    {approvedData.oldValueTemplate ?
-                      <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.oldValueTemplate }}></div>
-                      :
+
+                    {approvedData.oldValueTemplate ? (
+                      <div
+                        className="html-render mb-0"
+                        dangerouslySetInnerHTML={{
+                          __html: approvedData.oldValueTemplate,
+                        }}
+                      ></div>
+                    ) : (
                       <>
                         {approvedData.fieldName && oldFieldValue !== "N/A" ? (
                           <div className="value-content">
-                            <span className="value-label">{renderKeyName(approvedData.fieldName)} : </span>
+                            <span className="value-label">
+                              {renderKeyName(approvedData.fieldName)} :{" "}
+                            </span>
                             <span className="value-data">
                               {/* {renderValue(oldFieldValue)} */}
-                              {renderLableName(approvedData.fieldName, renderValue(oldFieldValue))}
+                              {renderLableName(
+                                approvedData.fieldName,
+                                renderValue(oldFieldValue)
+                              )}
                             </span>
                           </div>
                         ) : (
                           <div className="no-value">No old value available</div>
                         )}
                       </>
-                    }
+                    )}
                   </div>
                   <div className="value-block">
                     <span className="value-title">New Value</span>
-                    {approvedData.newValueTemplate ?
-                      <div className="html-render mb-0" dangerouslySetInnerHTML={{ __html: approvedData.newValueTemplate }}></div>
-                      :
+
+                    {approvedData.newValueTemplate ? (
+                      <div
+                        className="html-render mb-0"
+                        dangerouslySetInnerHTML={{
+                          __html: approvedData.newValueTemplate,
+                        }}
+                      ></div>
+                    ) : (
                       <>
                         {approvedData.fieldName && newFieldValue !== "N/A" ? (
                           <div className="value-content">
-                            <span className="value-label">{renderKeyName(approvedData.fieldName)} : </span>
+                            <span className="value-label">
+                              {renderKeyName(approvedData.fieldName)} :{" "}
+                            </span>
                             <span className="value-data">
                               {/* {renderValue(newFieldValue)} */}
-                              {renderLableName(approvedData.fieldName, renderValue(newFieldValue))}
+                              {renderLableName(
+                                approvedData.fieldName,
+                                renderValue(newFieldValue)
+                              )}
                             </span>
                           </div>
                         ) : (
                           <div className="no-value">No new value available</div>
                         )}
                       </>
-                    }
+                    )}
                   </div>
-                </div>}
-              {tabId !== 1 && approvedData.status !== "Reject" ?
+                </div>
+              )}
+              {tabId !== 1 && approvedData.status !== "Reject" ? (
                 <div className="task-footer mt-3">
                   <Button className="reject-btn" onClick={handleToggleModal}>
                     {/* <Image imagePath={AppIcons.CloseIcon} altText="Reject Icon" /> */}
                     <Iconify icon="gg:close-o" className="mr-1" />
                     Reject
                   </Button>
-                  <Button className="accept-btn" onClick={handleApprovalRequest}>
-                    <Image imagePath={AppIcons.RightTickIcon} altText="Accept Icon" />
+                  <Button
+                    className="accept-btn"
+                    onClick={handleApprovalRequest}
+                  >
+                    <Image
+                      imagePath={AppIcons.RightTickIcon}
+                      altText="Accept Icon"
+                    />
                     Accept
                   </Button>
-                </div> : null}
+                </div>
+              ) : null}
               <CenterModel
                 showModal={showModal}
                 handleToggleModal={handleToggleModal}
                 modalTitle="Add Rejection Reason"
-                modelSizeClass="w-40">
+                modelSizeClass="w-40"
+              >
                 <div className="row  phone-numer-card">
                   <div className="col-md-12 add-edit-phoneForm">
                     <div className="row vertical-form">
-                      <FormCreator config={addResonData} ref={ref} {...addResonData} />
+                      <FormCreator
+                        config={addResonData}
+                        ref={ref}
+                        {...addResonData}
+                      />
                     </div>
                   </div>
                   <div className="col-md-12 mt-2">
@@ -508,11 +687,51 @@ const TaskDetail = ({ approvalRequestId, approvedData, isEventByIdLoading, appro
                   </div>
                 </div>
               </CenterModel>
+              {isModelOpen ? (
+                <div className="customer-task-model">
+                  <div className="customer-card-top-sec">
+                    <div className="detail-card">
+                      <div classname="detail-item">
+                        {valueTypes === "old Value" && approvedData.oldValue ? (
+                          <div
+                            className="html-render mb-0"
+                            dangerouslySetInnerHTML={{
+                              __html: approvedData.oldValue,
+                            }}
+                          ></div>
+                        ) : valueTypes === "new Value" && approvedData.newValue ? (
+                          <div
+                            className="html-render mb-0"
+                            dangerouslySetInnerHTML={{
+                              __html: approvedData.newValue,
+                            }}
+                          ></div>
+                        ) :  <div className="no-value">
+                        No {valueTypes} available
+                      </div>}
+                      </div>
+
+                      <div className="btn-item">
+                        <button
+                          type="button"
+                          className="btn dark-btn ml-5 mt-2"
+                          onClick={handleClose}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
             </>
-            : <NoRecordFound />
-          }
+          ) : (
+            <NoRecordFound />
+          )}
         </div>
-        : <DataLoader />}
+      ) : (
+        <DataLoader />
+      )}
     </React.Fragment>
   );
 };

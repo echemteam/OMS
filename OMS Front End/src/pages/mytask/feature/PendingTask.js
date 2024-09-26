@@ -18,6 +18,7 @@ const PendingTask = (props) => {
   const [activeTab, setActiveTab] = useState(null);
   const [pendingData, setPendingData] = useState([]);
   const [selectedfilterBy, setSelectedFilterBy] = useState([]);
+ 
   const [selectedModule, setSelectedModule] = useState(
     props.moduleList[0]?.moduleId
   );
@@ -32,6 +33,7 @@ const PendingTask = (props) => {
   ] = useGetApprovalRequestsListByStatusAndRoleIdMutation();
 
   useEffect(() => {
+   
     if (props.moduleList && props.moduleList.length > 0) {
       handleRequest();
     }
@@ -91,7 +93,6 @@ const PendingTask = (props) => {
 
   const handleTabClick = (id) => {
     setActiveTab(id);
-    props.setIsPending(true);
     if (props.onGetById) {
       props.onGetById(id);
     }
@@ -120,8 +121,8 @@ const PendingTask = (props) => {
       <div className="row">
         <div className="col-5 pr-0 left-modual-sec">
           <ModuleList
-            moduleList={props.moduleList}
-            onModuleChange={handleModuleClick}
+            moduleList={props.moduleList} isPending={true}
+            onModuleChange={handleModuleClick} setModuleList={props.setModuleList}
           />
         </div>
         <div className="col-7 pl-1 pr-1">

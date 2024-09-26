@@ -18,7 +18,7 @@ import { bankAddressFormData } from "../../config/BankAddressForm.data";
 import DataLoader from "../../../../../../components/ui/dataLoader/DataLoader";
 
 
-const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) => {
+const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef, getSupplierCompletionCount }) => {
   const aCHWireFormRef = useRef();
   const aCHWireOtherRef = useRef();
   const bankFormRef = useRef();
@@ -111,6 +111,7 @@ const ACHWireDetail = ({ activeTabIndex, supplierId, financialSettingFormRef }) 
       if (supplierId) {
         getACHWireBySupplierId(supplierId)
       }
+      getSupplierCompletionCount(supplierId);
     }
   }
 

@@ -24,13 +24,13 @@ export const customerbasicData = {
       style: {
         containerCss: "col-xxl-8 col-xl-8 col-md-8 col-12 mb-input",
       },
-      inputButtonGroup: {
-        isInputButton: true,
-        buttonText: 'Verify',
-        showInformation: {
-          showInputButton: true,
-          faIcon: "fa-search",
-          title: "Customer Information"
+      inputButtonGroupConfig: {
+        isPrimaryButtonVisible: false,
+        // primaryButtonText: 'Verify',
+        infoButtonConfig: {
+          isInfoButtonVisible: true,
+          infoButtonIcon: "fa-search",
+          infoButtonTooltip: "Customer Information"
         }
       }
     },
@@ -44,6 +44,7 @@ export const customerbasicData = {
         placeholder: "Enter Email",
         allowSpace: false,
         maxLength: 65,
+        exemptBoundarySpaces: true
       },
       validation: [{ type: "require" }, { type: "email" }],
       style: {
@@ -57,9 +58,9 @@ export const customerbasicData = {
       fieldType: FormFieldTypes.INPUT,
       dataField: "website",
       fieldSetting: {
-        placeholder: "https://www.xyz.com/",
-        allowSpace: true,
-        maxLength: 250,
+        placeholder: "https://www.xyz.com",
+        allowSpace: false,
+        maxLength: 250
       },
       validation: [{ type: "require" }, { type: "website" }],
       style: {
@@ -194,7 +195,6 @@ export const customerbasicData = {
       dataField: "note",
       fieldSetting: {
         placeholder: "Enter Notes",
-        allowSpace: true,
         maxLength: 1000,
       },
       // validation: [{ type: "require" }],
