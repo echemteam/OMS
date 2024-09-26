@@ -52,13 +52,13 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
         if (emailAddressList.length > 0) {
             const contactTypeId = getDropDownId(data.contactTypeId, isEdit);
             const request = requestData(data, contactTypeId, isSupplier, keyId, emailAddressList, phoneNumberList, supplierContactId, customerContactId);
-            let req = {
-                ...request,
-                emailAddressList: request?.emailList,
-                phoneNumberList: request?.phoneList,
-                customerId: customerId ? customerId : request.customerId
-            }
-            addEdit(req);
+            // let req = {
+            //     ...request,
+            //     emailAddressList: request?.emailList,
+            //     phoneNumberList: request?.phoneList,
+            //     customerId: customerId ? customerId : request.customerId
+            // }
+            addEdit(request);
         } else {
             ToastService.warning(ErrorMessage.ContactEmailAddressRequired);
         }
