@@ -17,12 +17,12 @@ const FormInputFields = ({
   changeAction,
   formData,
   overRideProps,
-  inputButtonGroup,
   handleInputGroupButton,
   handleInputShowInfo,
   inputField,
   inputIcon,
   inputshowField,
+  inputButtonGroupConfig,
   ...inputProps
 }) => {
 
@@ -35,6 +35,8 @@ const FormInputFields = ({
         let newValue = e.target.value;
         if (inputProps.exemptBoundarySpaces) {
           newValue = newValue.trimStart();
+          // newValue = newValue.replace(/\s+/g, ' ').trim();
+          // newValue = newValue.trimEnd();
         }
         onChange(dataField, newValue);
         if (inputField) {
@@ -76,10 +78,10 @@ const FormInputFields = ({
                 filename={selectedFile}
                 onChange={handleInputChange}
                 onBlur={handleOnBlur}
-                inputButtonGroup={inputButtonGroup}
                 inputIcon={inputIcon}
                 handleInputGroupButton={handleInputGroupButton}
                 handleInputShowInfo={handleInputShowInfo}
+                inputButtonGroupConfig={inputButtonGroupConfig}
                 isDisable={
                   formSetting?.isViewOnly ||
                   inputProps?.isDisable ||
@@ -96,10 +98,10 @@ const FormInputFields = ({
               filename={selectedFile}
               onChange={handleInputChange}
               onBlur={handleOnBlur}
-              inputButtonGroup={inputButtonGroup}
               inputIcon={inputIcon}
               handleInputGroupButton={handleInputGroupButton}
               handleInputShowInfo={handleInputShowInfo}
+              inputButtonGroupConfig={inputButtonGroupConfig}
               isDisable={
                 formSetting?.isViewOnly ||
                 inputProps?.isDisable ||
@@ -109,7 +111,7 @@ const FormInputFields = ({
             />
           </>
         )}
-      <ValidationText error={error || ""} />
+        <ValidationText error={error || ""} />
       </div>
     </>
   );
@@ -126,7 +128,6 @@ FormInputFields.propTypes = {
   changeAction: PropTypes.func,
   formData: PropTypes.object,
   overRideProps: PropTypes.object,
-  inputButtonGroup: PropTypes.node,
   handleInputGroupButton: PropTypes.func,
   handleInputShowInfo: PropTypes.func,
   inputField: PropTypes.func,
@@ -136,6 +137,6 @@ FormInputFields.propTypes = {
   isRequired: PropTypes.bool,
   isDisable: PropTypes.bool,
   formSaparateTitle: PropTypes.string,
-   
+
 };
 export default FormInputFields;

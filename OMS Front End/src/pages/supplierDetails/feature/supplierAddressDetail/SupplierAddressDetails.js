@@ -17,9 +17,13 @@ const supplierSecurityKey = {
     EDIT: securityKey.EDITSUPPLIERADDRESS,
 }
 
-const SuplierAddressDetails = ({ isEditablePage ,supplierStatus }) => {
+const SuplierAddressDetails = ({ isEditablePage, supplierStatus }) => {
 
-    const { supplierId, isResponsibleUser } = useContext(AddSupplierContext);
+    const { supplierId, isResponsibleUser, setIsAddressChange, getSupplierCompletionCount } = useContext(AddSupplierContext);
+
+    const getCompletionCount = () => {
+        getSupplierCompletionCount(supplierId);
+    }
 
     return (
         /**
@@ -34,10 +38,12 @@ const SuplierAddressDetails = ({ isEditablePage ,supplierStatus }) => {
             getAddresssByCustomerId={useLazyGetAddresssBySupplierIdQuery}
             getAddresssById={useLazyGetSupplierAddresssByAddressIdQuery}
             addAddress={useAddAddressMutation}
-            updateAddress={useUpdateAddAddressMutation} 
+            updateAddress={useUpdateAddAddressMutation}
             deleteAddress={useDeleteAddressMutation}
             statusId={supplierStatus}
-            />
+            setIsAddressChange={setIsAddressChange}
+            getCompletionCount={getCompletionCount}
+        />
     )
 }
 

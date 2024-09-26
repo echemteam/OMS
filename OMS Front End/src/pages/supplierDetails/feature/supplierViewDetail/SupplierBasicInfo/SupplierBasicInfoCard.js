@@ -26,12 +26,12 @@ import Iconify from '../../../../../components/ui/iconify/Iconify';
 import DropdownSelect from '../../../../../components/ui/dropdown/DropdownSelect';
 import { useAddSupplierNotesMutation } from '../../../../../app/services/supplierNotesAPI';
 import { CustomerSupplierStatus } from '../../../../../utils/Enums/commonEnums';
-import { useGetValidateCheckListMutation } from '../../../../../app/services/ApprovalAPI';
 
 //** Component's */
 const SupplierApproval = React.lazy(() => import("../../supplierApproval/SupplierApproval"));
 
-const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId, getSupplierById, GetSupplierBasicInformationByIdData, isGetSupplierBasicInformationByIdFetching, isGetSupplierBasicInformationById }) => {
+const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId, getSupplierById, GetSupplierBasicInformationByIdData,
+  isGetSupplierBasicInformationByIdFetching, isGetSupplierBasicInformationById }) => {
 
   const childRef = useRef();
   const reasonRef = useRef();
@@ -45,19 +45,17 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   const [rUserValue, setRUserValue] = useState([]);
   const [addSupplierNotes] = useAddSupplierNotesMutation();
   const [responsibleUserOptions, setResponsibleUserOptions] = useState([]);
-  const [totalCount, setTotalCount] = useState();
-  const [approvalSuccessCount, setApprovalSuccessCount] = useState();
 
   const [getAllUser, { isFetching: isSuppilierFetching, isSuccess: isGetAllUserSucess, data: allGetAlluserData }] = useLazyGetAllUserQuery();
-  const [addEditResponsibleUserForSupplier, { isSuccess: isSuccessAddEditResponsibleUserForSupplier, data: isAddEditResponsibleUserForSupplierData }] = useAddEditResponsibleUserForSupplierMutation();
+  const [addEditResponsibleUserForSupplier, { isSuccess: isSuccessAddEditResponsibleUserForSupplier,
+    data: isAddEditResponsibleUserForSupplierData }] = useAddEditResponsibleUserForSupplierMutation();
   const [updateSupplierStatus, { isSuccess: isSuccessUpdateSupplierStatus, data: updateSupplierStatusData }] = useUpdateSupplierStatusMutation();
-  const [updateSupplierInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus, data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
-  const [getValidateCheckList, { isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
+  const [updateSupplierInActiveStatus, { isLoading: updateCustomerInActiveStatusCustomerLoading, isSuccess: isSuccessUpdateSupplierInActiveStatus,
+    data: updateSupplierInActiveStatusData }] = useUpdateSupplierInActiveStatusMutation();
 
-  const { isResponsibleUser } = useContext(AddSupplierContext);
+  const { isResponsibleUser, totalCount, approvalSuccessCount, getSupplierCompletionCount } = useContext(AddSupplierContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICSUPPLIERDETAILS);
-  const { setRejectStatusId, rejectStatusId } = useContext(AddSupplierContext);
 
   useEffect(() => {
     if (!isResponsibleUser) {
@@ -92,13 +90,6 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       ToastService.success(isAddEditResponsibleUserForSupplierData.errorMessage);
     }
   }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
-
-  // useEffect(() => {
-  //   if (rejectStatusId) {
-  //     getSupplierById()
-  //   }
-  // }, [rejectStatusId, setRejectStatusId, selectedStatus])
-
 
   const rejectedSupplierFromApproval = () => {
     getSupplierById();
@@ -158,23 +149,9 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
       setRUserValue(responsibleUsers);
       setSelectedStatus(GetSupplierBasicInformationByIdData.status);
       getAllUser();
-      let request = {
-        customerId: 0,
-        supplierId: supplierId
-      }
-      getValidateCheckList(request);
+      getSupplierCompletionCount(GetSupplierBasicInformationByIdData.supplierId);
     }
   }, [isGetSupplierBasicInformationByIdFetching, isGetSupplierBasicInformationById, GetSupplierBasicInformationByIdData]);
-
-  useEffect(() => {
-    if (isGetCheckListSuccess && isGetCheckListData) {
-      if (isGetCheckListData && isGetCheckListData.length > 0) {
-        const successCheckList = isGetCheckListData.filter(data => data.isValid);
-        setApprovalSuccessCount(successCheckList.length);
-        setTotalCount(isGetCheckListData.length);
-      }
-    }
-  }, [isGetCheckListSuccess, isGetCheckListData])
 
   useEffect(() => {
     if (showModal && selectedStatus === CustomerSupplierStatus.REJECT) {

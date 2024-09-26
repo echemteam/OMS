@@ -14,7 +14,7 @@ import { FormFieldTypes } from "../../../../../data/formFieldType";
 
 export const excludingRoles = ['Admin', 'manager'];
 export const supplierBasicData = {
-  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "", supplierNoteId: "" , incotermId:11 },
+  initialState: { name: "", groupTypeId: "", supplierTypeId: "", countryId: 233, territoryId: 2, emailAddress: "", website: "", note: "", taxId: "", dbaName: "", responsibleUserId: "", supplierNoteId: "", incotermId: 11 },
   formFields: [
     {
       id: "name",
@@ -32,15 +32,15 @@ export const supplierBasicData = {
       style: {
         containerCss: "col-xxl-8 col-xl-8 col-md-8 col-12 mb-input",
       },
-      inputButtonGroup: {
-        isInputButton: true,
-        buttonText: 'Verify',
-        showInformation: {
-          showInputButton: true,
-          faIcon: "fa-search",
-          title: "Supplier Information"
+      inputButtonGroupConfig: {
+        isPrimaryButtonVisible: false,
+        // primaryButtonText: 'Verify',
+        infoButtonConfig: {
+          isInfoButtonVisible: true,
+          infoButtonIcon: "fa-search",
+          infoButtonTooltip: "Customer Information"
         }
-      },
+      }
     },
     {
       id: "dbaName",
@@ -88,7 +88,7 @@ export const supplierBasicData = {
       dataField: "emailAddress",
       fieldSetting: {
         placeholder: "Enter Email",
-        allowSpace: true,
+        allowSpace: false,
         maxLength: 65,
       },
       validation: [{ type: "require" }, { type: "email" }],
@@ -103,16 +103,16 @@ export const supplierBasicData = {
       fieldType: FormFieldTypes.INPUT,
       dataField: "website",
       fieldSetting: {
-        placeholder: "https://www.xyz.com/",
-        allowSpace: true,
+        placeholder: "https://www.xyz.com",
+        allowSpace: false,
         maxLength: 250,
       },
-      validation: [{ type: "require" }],
+      validation: [{ type: "require" }, { type: "website" }],
       style: {
         containerCss: "col-xxl-6 col-xl-6 col-md-6 col-12 mb-input",
       },
     },
-    
+
     {
       id: "groupTypeId",
       lable: "Group Type ",
@@ -174,7 +174,6 @@ export const supplierBasicData = {
         containerCss: "col-xxl-6 col-xl-4 col-md-4 col-12 mb-input",
       },
     },
-   
     {
       id: "incotermId",
       lable: "Incoterm",
@@ -198,7 +197,6 @@ export const supplierBasicData = {
       dataField: "note",
       fieldSetting: {
         placeholder: "Enter Notes",
-        allowSpace: true,
         maxLength: 1000,
       },
       style: {

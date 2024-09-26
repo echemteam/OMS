@@ -1,11 +1,13 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
+import { useGetValidateCheckListMutation } from "../../../app/services/ApprovalAPI";
 
 const AddSupplierContext = createContext();
 
 export default AddSupplierContext;
 
 export const AddSupplierContextProvider = ({ children }) => {
+
   const nextStepRef = useRef(null);
   const [mainId, setMainId] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
@@ -23,8 +25,8 @@ export const AddSupplierContextProvider = ({ children }) => {
 
   const [isResponsibleUser, setIsResponsibleUser] = useState(false);
 
-  const [rejectStatusId,setRejectStatusId]=useState('');
-  const [showSubBackButton, setShowSubBackButton] = useState(false);
+  const [rejectStatusId, setRejectStatusId] = useState('');
+  // const [showSubBackButton, setShowSubBackButton] = useState(false);
 
   const moveNextPage = () => {
     setActiveTab((prev) => prev + 1);
@@ -50,15 +52,41 @@ export const AddSupplierContextProvider = ({ children }) => {
 
   const handleActiveSubTabClick = (tabIndex) => {
     setActiveSubTab(tabIndex);
-    setShowSubBackButton(false);
+    // setShowSubBackButton(false);
     if (tabIndex === 1) {
-      setShowSubBackButton(true);
+      // setShowSubBackButton(true);
     }
   };
+
+  //** Completion Changes  */
+  const [totalCount, setTotalCount] = useState();
+  const [approvalSuccessCount, setApprovalSuccessCount] = useState();
+  const [getValidateCheckList, { isSuccess: isGetCheckListSuccess, data: isGetCheckListData }] = useGetValidateCheckListMutation();
+
+  const getSupplierCompletionCount = (supplierId) => {
+    let request = {
+      customerId: 0,
+      supplierId: supplierId
+    }
+    getValidateCheckList(request);
+  }
+
+  useEffect(() => {
+    if (isGetCheckListSuccess && isGetCheckListData) {
+      if (isGetCheckListData && isGetCheckListData.length > 0) {
+        const successCheckList = isGetCheckListData.filter(data => data.isValid);
+        setTotalCount(isGetCheckListData.length);
+        setApprovalSuccessCount(successCheckList.length);
+      }
+    }
+  }, [isGetCheckListSuccess, isGetCheckListData])
 
   return (
     <AddSupplierContext.Provider
       value={{
+        totalCount,
+        approvalSuccessCount,
+        getSupplierCompletionCount,
         nextStepRef,
         supplierId,
         setSupplierId,
@@ -86,7 +114,7 @@ export const AddSupplierContextProvider = ({ children }) => {
         handleActiveSubTabClick,
         activeSubTab,
         setRejectStatusId,
-        rejectStatusId
+        rejectStatusId,
       }}
     >
       {children}

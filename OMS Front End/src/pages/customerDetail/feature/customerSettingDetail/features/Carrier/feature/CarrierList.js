@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useUpdateShppingDeliveryCarriersMutation } from "../../../../../../../app/services/customerSettingsAPI";
 import FinalMolGrid from "../../../../../../../components/FinalMolGrid/FinalMolGrid";
 import CardSection from "../../../../../../../components/ui/card/CardSection";
@@ -7,28 +7,17 @@ import { AppIcons } from "../../../../../../../data/appIcons";
 import { AccountGridConfig } from "../config/CarrierConfig";
 import PropTypes from 'prop-types';
 import ToastService from "../../../../../../../services/toastService/ToastService";
-import { useValidateAndAddApprovalRequests } from "../../../../../../../utils/CustomHook/useValidateAndAddApproval";
-import { FunctionalitiesName } from "../../../../../../../utils/Enums/ApprovalFunctionalities";
-import { isCustomerOrSupplierApprovedStatus } from "../../../../../../../utils/CustomerSupplier/CustomerSupplierUtils";
+import BasicDetailContext from "../../../../../../../utils/ContextAPIs/Customer/BasicDetailContext";
 
 const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleToggleModal, isGetDataLoading, isShowButton, customerId,
     handleGetDefaultList, handleDeleteClick, isEditablePage, customerStatusId }) => {
 
     const [dataSource, setDataSource] = useState(collectAccountData);
-    const { ValidateRequestByApprovalRules, isApprovelLoading } = useValidateAndAddApprovalRequests();
-
+    const { subCustomer, getCustomerCompletionCount } = useContext(BasicDetailContext);
     const [update, { isSuccess: isUpdateSuccess, data: isUpdateData }] = useUpdateShppingDeliveryCarriersMutation();
 
     useEffect(() => {
         if (!isGetDataLoading && collectAccountData) {
-            // New blank row object
-            // const blankRow = {
-            //     carrier: '', // Assuming movieId is a unique key, use an empty string or a temporary placeholder
-            //     accountNumber: '',
-            //     handlingFee: '',
-            //     isPrimary: false,
-            // };
-
             setDataSource([...collectAccountData]);
         }
     }, [collectAccountData, isGetDataLoading]);
@@ -43,26 +32,11 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
             handlingFee: data.handlingFee,
             carrierName: data?.carrier
         };
-        // if (isEditablePage && isCustomerOrSupplierApprovedStatus(customerStatusId)) {
-        //     const oldValue = dataSource && dataSource.find(data => data.customerDeliveryCarrierId === req.customerDeliveryCarrierId);
-        //     let requestIntialState = {
-        //         ...oldValue,
-        //         carrierName: oldValue?.carrier
-        //     }
-        //     await handleApprovalRequest(req, requestIntialState);
-        // } else {
         let newGridData = [...dataSource]
         newGridData[rowIndex] = { ...dataSource[rowIndex], ...data };
         setDataSource(newGridData);
         update(req);
-        // }
     }
-
-    const handleApprovalRequest = async (newValue, oldValue) => {
-        const request = { newValue, oldValue, isFunctional: false, eventName: FunctionalitiesName.UPDATECUSTOMERSHIPPINGSETTING };
-        const modifyData = await ValidateRequestByApprovalRules(request);
-        if (modifyData.newValue) handleGetDefaultList();
-    };
 
     useEffect(() => {
         if (isUpdateSuccess && isUpdateData) {
@@ -72,6 +46,7 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
             }
             handleGetDefaultList()
             ToastService.success(isUpdateData.errorMessage);
+            getCustomerCompletionCount(customerId, subCustomer);
         }
     }, [isUpdateSuccess, isUpdateData]);
 
@@ -93,7 +68,7 @@ const CarrierList = ({ molGridRef, collectAccountData, actionHandler, handleTogg
                         dataSource={dataSource}
                         allowPagination={false}
                         onActionChange={actionHandler}
-                        isLoading={isApprovelLoading || isGetDataLoading}
+                        isLoading={isGetDataLoading}
                         onRowDataUpdate={handleEditClick}
                         onRowDataDelete={handleDeleteClick}
                     />

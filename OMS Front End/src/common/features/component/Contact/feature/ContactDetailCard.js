@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import ContactCloneModel from "./ContactCloneModel";
 
-const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, openModalId, setOpenModalId, isSupplier, onGetContactList }, ref) => {
+const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, openModalId, setOpenModalId, isSupplier, onGetContactList, getCompletionCount }, ref) => {
 
   const cloneRef = useRef();
   const emailDropdownRef = useRef(null);
@@ -131,22 +131,16 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
                         onClick={() => handleEdit(contactItem?.contactId)}
                         className="edit-btn"
                       >
-                        {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
                         <Iconify icon="tabler:pencil" />
                       </button>
                     ) : null}
                   </div>
-                  {/* <span className="option-icon" onClick={handleOptionsClick}> */}
                   <span
                     className="option-icon"
                     role="button"
                     tabIndex="0"
                     onClick={handleOptionsClick}
                   >
-                    {/* <Image
-                      imagePath={AppIcons.EllipsisIcon}
-                      altText="EllipsisIcon"
-                    /> */}
                     <Iconify icon="mdi:ellipsis-vertical" />
                   </span>
                 </div>
@@ -171,12 +165,6 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
                   <div className="bottom-contact-desc">
                     {contactItem.emailAddressList?.length > 0 ? (
                       <div className="contact-part">
-                        {/* <div className="type-title">
-                          <i className="fa fa-envelope-o"></i>
-                          <span className="contact-type-title">
-                            Email Address
-                          </span>
-                        </div> */}
                         <div className="contact-type-list">
                           <i className="fa fa-envelope-o"></i>
                           <ul>
@@ -196,12 +184,6 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
                     ) : null}
                     {contactItem.phoneNumberList?.length > 0 ? (
                       <div className="contact-part">
-                        {/* <div className="type-title">
-                          <i className="fa fa-phone"></i>
-                          <span className="contact-type-title">
-                            Phone Number
-                          </span>
-                        </div> */}
                         <div className="contact-type-list">
                           <ul className="number-list">
                             <li>
@@ -401,7 +383,7 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
           </div>
         </div>
       </div>
-      <ContactCloneModel cloneRef={cloneRef} isSupplier={isSupplier} onGetContactList={onGetContactList} />
+      <ContactCloneModel cloneRef={cloneRef} isSupplier={isSupplier} onGetContactList={onGetContactList} getCompletionCount={getCompletionCount} />
     </>
   );
 }
