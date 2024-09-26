@@ -41,7 +41,6 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
     const [getById, { isFetching: isGetByIdFetching, isSuccess: isGetByIdSucess, data: isGetByIdData }] = getContactById();
     const [addEdit, { isLoading: isAddEditLoading, isSuccess: isAddEditSuccess, data: isAddEditData }] = addEditContactMutation();
 
-
     const handleAddEdit = async () => {
         handlWithoutApprovalAddEdit();
     }
