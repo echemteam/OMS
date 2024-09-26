@@ -67,7 +67,7 @@ const ArchiveTask = (props) => {
 
   const handleTabClick = (id) => {
     setActiveTab(id);
-   // props.setIsPending(false);
+    props.setIsPending(false);
     if (props.onGetById) {
       props.onGetById(id);
     }
@@ -93,7 +93,7 @@ const ArchiveTask = (props) => {
       <div className="row">
         <div className="col-5 pr-0">
           <ModuleList moduleList={props.moduleList}
-            onModuleChange={handleModuleClick} isPending={props.isPending}
+            onModuleChange={handleModuleClick}
           />
         </div>
         <div className="col-7 pl-1 pr-1">

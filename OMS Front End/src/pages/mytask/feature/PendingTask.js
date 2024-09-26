@@ -70,10 +70,8 @@ const PendingTask = (props) => {
   };
 
   const handleTabClick = (id) => {
-    
-    //props.setIsPending(true);
     setActiveTab(id);
-    //
+    props.setIsPending(true);
     if (props.onGetById) {
       props.onGetById(id);
     }
