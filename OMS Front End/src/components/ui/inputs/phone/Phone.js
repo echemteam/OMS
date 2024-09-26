@@ -32,11 +32,12 @@ const Phone = ({
     <div className="phone-input-component">
       <PhoneInput
         defaultCountry={defaultCountry}
-        value={value}
+        value={value?.PhoneNumber}
         onChange={handleInputChange}
         disabled={isDisable}
         placeholder={placeholder}
         {...inputAttributes}
+        className="input-group custom-phone"
       />
     </div>
   );

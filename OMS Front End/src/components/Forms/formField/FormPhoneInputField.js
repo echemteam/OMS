@@ -19,7 +19,11 @@ const FormPhoneInputFields = ({
 }) => {
   const handleInputChange = (phone, phoneDetails) => {
     if (onChange) {
-      onChange(dataField, phone);
+      const newPhoneObject = {
+        phoneCode: phoneDetails?.country?.dialCode,
+        PhoneNumber: phone,
+      };
+      onChange(dataField, newPhoneObject);
     }
   };
 

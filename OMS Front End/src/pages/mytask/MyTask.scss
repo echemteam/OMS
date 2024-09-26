@@ -31,7 +31,6 @@
   .tab-button {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
     border: none;
     background-color: var(--whiteColor);
     border-bottom: 1px solid #e8eae8;
@@ -75,15 +74,16 @@
 
     .title {
       display: flex;
-      flex-direction: column;
       font-size: var(--commonFont-small);
       color: var(--blackColor);
 
-      .sub-title {
-        font-size: var(--commonFont-small);
 
-        color: #797979;
-      }
+    }
+
+    .sub-title {
+      font-size: var(--commonFont-small);
+      color: #797979;
+      margin-right: 10px;
     }
   }
 
@@ -119,9 +119,11 @@
       .tab-header {
         padding-bottom: 0;
         margin-bottom: 5px;
-        button{
+
+        button {
           text-transform: uppercase;
-          &:hover{
+
+          &:hover {
             background: unset;
             color: var(--textColorLight);
           }
@@ -129,6 +131,7 @@
       }
     }
   }
+
   .card-section-left .card-button-only {
     padding: 8px;
   }
@@ -143,6 +146,7 @@
           @media only screen and (max-width: 1750px) {
             padding: 8px 0;
           }
+
 
           .card-top-title-btn {
             padding-left: 12px;
@@ -183,17 +187,18 @@
                     color: var(--blackColor);
                   }
                 }
-                span>.module-count{
-                padding: 5px;
-                color:white;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 25px;
-                height: 25px;
-                background-color: var(--themeColor);
-                border-radius: 50%;
-                font-size: 10px;
+
+                span>.module-count {
+                  padding: 5px;
+                  color: white;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  width: 25px;
+                  height: 25px;
+                  background-color: var(--themeColor);
+                  border-radius: 50%;
+                  font-size: 10px;
                 }
               }
             }
@@ -202,6 +207,10 @@
       }
     }
   }
+}
+
+.left-modual-sec {
+  border-right: 1px solid #e8eae8;
 }
 
 .right-desc {
@@ -451,19 +460,14 @@
 }
 
 .mytask-type-badge {
-  margin-left: 7px;
+  margin-top: 5px;
   padding: 0px 5px;
-  // position: relative;
   display: flex;
-  // top: -10px;
   background: var(--themeColorLight);
   color: var(--blackColor);
-  // right: 0;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  border-radius: 3px;
   font-size: var(--commonFont-extraSmall);
   font-weight: 600;
-  // left: 145px;
 }
 
 .badge-accept {
@@ -480,6 +484,7 @@
   text-align: end;
   font-size: var(--commonFont-small);
   white-space: nowrap;
+  color: var(--textColorLight);
 }
 
 .list-style {
