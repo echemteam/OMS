@@ -29,8 +29,6 @@ const MyTask = () => {
   const [isApproval, setIsApproval] = useState(false);
   const [approvedData, setApprovedData] = useState(null);
   const [approvalRequestId, setApprovalRequestId] = useState(0);
-  const [isPending,setIsPending]=useState(false);
-
   const [
     getApprovalRequestsByApprovalRequestId,
     {
@@ -40,10 +38,7 @@ const MyTask = () => {
     },
   ] = useLazyGetApprovalRequestsByApprovalRequestIdQuery();
 
-  const [
-    getAllModulesWithPendingRequestCount,
-    { isSuccess: isGetAllModulesWithPendingRequestCountSucess, data: allGetAllModulesWithPendingRequestCountData },
-  ] = useLazyGetAllModulesWithPendingRequestCountQuery();
+
 
   const [
     getEventsByModuleId,
@@ -76,20 +71,10 @@ const MyTask = () => {
   };
 
   useEffect(() => {
-
-      getAllModulesWithPendingRequestCount(isPending);
-    
-  }, [getAllModulesWithPendingRequestCount,approvedData]);
-
-  useEffect(() => {
     moduleList.length > 0 && getEventsByModuleId(moduleList[0].moduleId);
   }, [moduleList]);
 
-  useEffect(() => {
-    if (isGetAllModulesWithPendingRequestCountSucess && allGetAllModulesWithPendingRequestCountData) {
-      setModuleList(allGetAllModulesWithPendingRequestCountData);
-    }
-  }, [isGetAllModulesWithPendingRequestCountSucess, allGetAllModulesWithPendingRequestCountData]);
+
 
 
 
@@ -118,6 +103,7 @@ const MyTask = () => {
       isGetApprovalRequestsByApprovalRequestIdData
     ) {
       setApprovedData(isGetApprovalRequestsByApprovalRequestIdData);
+
     }
   }, [
     isGetApprovalRequestsByApprovalRequestIdFetching,
@@ -159,8 +145,8 @@ const MyTask = () => {
             Pending={MyTaskStatus.Pending}
             onGetById={handleGetPendingId}
             onTabChange={handleSetTab}
+            setModuleList={setModuleList}
             roleId={roleId}
-            setIsPending={setIsPending}
             moduleList={moduleList}
             eventList={eventList}
             setIsApproval={setIsApproval}
@@ -175,13 +161,12 @@ const MyTask = () => {
       component: (
         <div className="">
           <ArchiveTask
-          isPending={isPending}
             Accept={MyTaskStatus.Accept}
             onGetById={handleGetArchiveId}
             roleId={roleId}
-            setIsPending={setIsPending}
             moduleList={moduleList}
             eventList={eventList}
+            setModuleList={setModuleList}
             handleRestEventDetail={handleRestEventDetail}
           />
         </div>
