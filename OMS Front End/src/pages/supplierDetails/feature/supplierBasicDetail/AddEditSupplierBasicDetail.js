@@ -93,11 +93,11 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             formSetting.isViewOnly = false;
         }
         if (isOpen) {
-            setFieldSetting(supplierBasicData, 'name', FieldSettingType.INPUTBUTTON);
-            setFieldSetting(supplierBasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
+            // setFieldSetting(supplierBasicData, 'name', FieldSettingType.ISPRIMARYBUTTONVISIBLE);
+            setFieldSetting(supplierBasicData, 'name', FieldSettingType.ISINFOBUTTONVISIBLE);
         } else if (!isOpen) {
-            setFieldSetting(supplierBasicData, 'name', FieldSettingType.INPUTBUTTON, true);
-            setFieldSetting(supplierBasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
+            // setFieldSetting(supplierBasicData, 'name', FieldSettingType.ISPRIMARYBUTTONVISIBLE, true);
+            setFieldSetting(supplierBasicData, 'name', FieldSettingType.ISINFOBUTTONVISIBLE, true);
         }
 
     }, [isOpen, isEditablePage, hasEditPermission, formSetting, formData, isResponsibleUser])
@@ -116,7 +116,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             if (!isOpen) {
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
-                setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON, true);
+                // setFieldSetting(formData, 'name', FieldSettingType.ISPRIMARYBUTTONVISIBLE, true);
             }
         };
 
@@ -128,7 +128,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         if (isOpen) {
             if (supplierId > 0) {
                 getSupplierBasicInformationById(supplierId);
-                setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON);
+                // setFieldSetting(formData, 'name', FieldSettingType.ISPRIMARYBUTTONVISIBLE);
             }
         }
     }, [isOpen, supplierId, getSupplierBasicInformationById])
@@ -296,7 +296,6 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
     useImperativeHandle(nextStepRef, () => ({
         handleAddEditSupplier
     }));
-
     //** Form Handler */
     const formInputHandler = {
         INPUT_CHANGED: handleInputFields
