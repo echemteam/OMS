@@ -26,10 +26,10 @@ export const productDetailsList = {
       style: {
         containerCss: "col-xxl-12 col-xl-12 col-md-12 col-12 mb-input relative",
       },
-      inputButtonGroup: {
-        isInputButton: true,
-        buttonText: "Search",
-      },
+      inputButtonGroupConfig: {
+        isPrimaryButtonVisible: true,
+        primaryButtonText: 'Search'
+      }
     },
     {
       id: "attachment",

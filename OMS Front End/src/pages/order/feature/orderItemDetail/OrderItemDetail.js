@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useImperativeHandle, useState } from "react";
+import React, { useContext, useImperativeHandle, useState } from "react";
 import AddOrderContext from "../../../../utils/Order/AddOrderContext";
 
 //** Component's */
@@ -17,26 +17,23 @@ const VerifyProductDetail = React.lazy(() =>
 );
 
 const OrderItemDetail = ({ onhandleAddOrderData }) => {
-  const { productId , itemRef } = useContext(AddOrderContext);
+  const { productId, itemRef } = useContext(AddOrderContext);
 
   const [priceList, setPriceList] = useState([]);
-  const [verifyProductData, setVerifyProductData] = useState([]);
   const [isDocumentData, setIsDocumentData] = useState(false);
+  const [isVerifyProduct, setIsVerifyProduct] = useState(false);
+  const [verifyProductData, setVerifyProductData] = useState([]);
   const [priceListAndVerifyProductData, setPriceListAndVerifyProductData] = useState([])
-  const [productDetailsListData, setProductDetailsListData] = useState({
-    documentName: "",
-    base64File: ""
-  });
+  const [productDetailsListData, setProductDetailsListData] = useState({ documentName: "", base64File: "" });
 
   const handlePriceListUpdate = (updatedPriceList) => {
     const listToAdd = Array.isArray(updatedPriceList) ? updatedPriceList : [updatedPriceList];
     const newPriceList = [...priceList];
-    const priceListMap = new Map(newPriceList.map(item => [item.Size, item]));
-    listToAdd.forEach(item => {
-      priceListMap.set(item.Size, item);
-    });
-    const mergedPriceList = Array.from(priceListMap.values());
-    setPriceList(mergedPriceList);
+    newPriceList.push(...listToAdd);
+    // const priceListMap = new Map(newPriceList.map(item => [item.Size, item]));
+    // listToAdd.forEach(item => { priceListMap.set(item.Size, item) });
+    // const mergedPriceList = Array.from(priceListMap.values());
+    setPriceList(newPriceList);
   };
 
   const handleVerifyProductDetail = (productlist) => {
@@ -98,12 +95,12 @@ const OrderItemDetail = ({ onhandleAddOrderData }) => {
 
   return (
     <div className="row">
-      <ProductDetailsList onhandleProductDetailsListData={handleProductDetailsListData} isDocumentData={isDocumentData}/>
+      <ProductDetailsList onhandleProductDetailsListData={handleProductDetailsListData} isDocumentData={isDocumentData} />
       <div className="col-xl-6 col-2xl-6 col-lg-12 col-12 mb-2">
-        <VerifyProductDetail productId={productId} onVerifyProductList={handleVerifyProductDetail} />
+        <VerifyProductDetail productId={productId} onVerifyProductList={handleVerifyProductDetail} setIsVerifyProduct={setIsVerifyProduct} />
       </div>
       <div className="col-12">
-        <ProductPriceList productId={productId} onPriceListUpdate={handlePriceListUpdate} />
+        <ProductPriceList productId={productId} onPriceListUpdate={handlePriceListUpdate} isVerifyProduct={isVerifyProduct} />
       </div>
       <div className="col-12 mt-3">
         <OrderItemsList priceList={priceList} verifyProductData={verifyProductData} onHandlePriceListAndVerifyProductData={handlePriceListAndVerifyProductData} />
