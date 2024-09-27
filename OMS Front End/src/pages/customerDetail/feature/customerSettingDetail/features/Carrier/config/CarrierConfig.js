@@ -155,7 +155,7 @@ export const AccountGridConfig = {
       colSettings: {
         // allowCheckbox: true,
         // isDisabled: false
-        isDisabled: false,
+        isDisabled: true,
         allowEdit: true,
       },
       allowShort: false,
@@ -171,33 +171,17 @@ export const AccountGridConfig = {
         allowEdit: true,
         allowDelete: false,
       },
-      // editColumn: {
-      //     editColType: EditGridColumnType.ACTION,
-      //     defaultEditAction: {
-      //         allowSave: true,
-      //         allowCancel: true,
-      //     },
-      // },
       allowShort: false,
     },
   ],
-  // editSettings: {
-  //     defualtEditableView: false,
-  //     buttons: {
-  //         save: true,
-  //         cancel: true,
-  //     }
-  // },
-  // allowEdit: true,
-  // handleRowDataUpdate: null,
-  // OnColumnChangeEdit: null
-  allowEdit: true,
   editSettings: {
-    defualtEditableView: true,
+    defualtEditableView: false,
     buttons: {
       save: true,
-      delete: false,
-      cancel: false,
-    },
+      cancel: true,
+    }
   },
+  allowEdit: true,
+  handleRowDataUpdate: null,
+  OnColumnChangeEdit: null
 };

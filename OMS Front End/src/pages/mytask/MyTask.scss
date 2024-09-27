@@ -72,12 +72,15 @@
       }
     }
 
+    .right-name-desc {
+      width: calc(100% - 35px);
+    }
+
     .title {
       display: flex;
+      justify-content: space-between;
       font-size: var(--commonFont-small);
       color: var(--blackColor);
-
-
     }
 
     .sub-title {
@@ -332,8 +335,6 @@
         display: flex;
         justify-content: space-between;
         padding: 0 10px;
-        overflow-y: auto;
-        // background: #f9f9f9;
         width: 100%;
 
         .value-block {
@@ -586,3 +587,229 @@
     justify-content: end;
   }
 }
+// Email template-style Start
+
+// Address Start
+.value-comparison-section {
+  padding: 0 5px;
+  margin: 10px 10px 0;
+
+  .value-block {
+    background: var(--whiteColor);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 16px -8px var(--themeColor);
+
+    .main-title {
+      padding: 0 5px 5px;
+      border-bottom: 1px solid var(--themeColor);
+      font-weight: 600;
+      color: var(--themeColor);
+      margin-bottom: 5px;
+    }
+
+    .sub-title {
+      padding-left: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 5px;
+
+      span {
+        &.main-title-type {
+          text-transform: uppercase;
+          font-size: var(--commonFont-small);
+          color: #6e839b;
+        }
+
+        &.badge {
+          background: var(--themeColorLight);
+          color: var(--themeColor);
+        }
+      }
+    }
+
+    .section-desc {
+      ul {
+        list-style-type: none;
+        padding: 0 0 0 10px;
+        margin-bottom: 0;
+
+        li {
+          display: flex;
+          align-items: center;
+
+          span {
+            font-weight: 600;
+
+            &.true-false-value {
+              color: var(--themeColor);
+              font-weight: 600;
+              span{
+                color: var(--textColor);
+              }
+            }
+          }
+
+          @media only screen and (max-width: 1650px) {
+            font-size: var(--commonFont-medium);
+          }
+
+        }
+      }
+
+      .table-sec {
+        .email-table {
+          thead {
+            tr {
+              th {
+                &:first-child {
+                  width: 80%;
+                }
+
+                &:last-child {
+                  width: 20%;
+                  text-align: center;
+                }
+              }
+            }
+          }
+
+          tbody {
+            tr {
+              td {
+                &:first-child {
+                  width: 80%;
+                }
+
+                &:last-child {
+                  width: 20%;
+                  text-align: center;
+                  text-transform: capitalize;
+                  color: var(--themeColor);
+                  font-weight: 600;
+                }
+              }
+            }
+          }
+        }
+
+      }
+
+      .phone-table {
+        thead {
+          tr {
+            th {
+              &:nth-child(1) {
+                width: 26%;
+              }
+
+              &:nth-child(2) {
+                width: 19%;
+                text-align: center;
+              }
+
+              &:nth-child(3) {
+                width: 19%;
+                text-align: center;
+              }
+
+              &:nth-child(4) {
+                width: 21%;
+                text-align: center;
+              }
+
+              &:last-child {
+                width: 15%;
+                text-align: center;
+
+              }
+            }
+          }
+        }
+
+        tbody {
+          tr {
+            td {
+              &:nth-child(1) {
+                width: 26%;
+              }
+
+              &:nth-child(2) {
+                width: 19%;
+                text-align: center;
+              }
+
+              &:nth-child(3) {
+                width: 19%;
+                text-align: center;
+              }
+
+              &:nth-child(4) {
+                width: 21%;
+                text-align: center;
+              }
+
+              &:last-child {
+                width: 15%;
+                text-align: center;
+                text-transform: capitalize;
+                color: var(--themeColor);
+                font-weight: 600;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.delivery-method-sec{
+    .value-block {
+      .section-desc {
+        ul {
+          li {
+            span{
+              &:first-child{
+                min-width: 130px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.career-method-sec{
+    .value-block {
+      .section-desc {
+        ul {
+          li {
+            span{
+              &:first-child{
+                min-width: 120px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.address-info-sec{
+    .value-block {
+      .section-desc {
+        ul {
+          li {
+            span{
+              &:first-child{
+                min-width: 200px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Address End
+
+// Email template-style End

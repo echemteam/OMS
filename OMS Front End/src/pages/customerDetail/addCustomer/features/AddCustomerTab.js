@@ -26,7 +26,7 @@ const AddCustomerTab = () => {
   const childRef = useRef();
   const navigate = useNavigate();
   const [subCustomer, setSubCustomer] = useState(false);
-  const { activeTab, movePreviewPage, addCustomer, customerId, showSubBackButton, setActiveTab, handleActiveSubTabClick, saveFinacialSetting } = useContext(BasicDetailContext);
+  const { activeTab, movePreviewPage, addCustomer, customerId } = useContext(BasicDetailContext);
 
   const [
     updateCustomerStatus,
