@@ -18,10 +18,8 @@ const PendingTask = (props) => {
   const [activeTab, setActiveTab] = useState(null);
   const [pendingData, setPendingData] = useState([]);
   const [selectedfilterBy, setSelectedFilterBy] = useState([]);
- 
-  const [selectedModule, setSelectedModule] = useState(
-    props.moduleList[0]?.moduleId
-  );
+
+  const [selectedModule, setSelectedModule] = useState(props.moduleList[0]?.moduleId);
 
   const [
     getApprovalRequestsListByStatus,
@@ -33,7 +31,7 @@ const PendingTask = (props) => {
   ] = useGetApprovalRequestsListByStatusAndRoleIdMutation();
 
   useEffect(() => {
-   
+
     if (props.moduleList && props.moduleList.length > 0) {
       handleRequest();
     }
@@ -143,9 +141,8 @@ const PendingTask = (props) => {
                     pendingData.map((tab) => (
                       <button
                         key={tab.approvalRequestId} // Use a unique key
-                        className={`tab-button ${
-                          activeTab === tab.approvalRequestId ? "active" : ""
-                        }`}
+                        className={`tab-button ${activeTab === tab.approvalRequestId ? "active" : ""
+                          }`}
                         onClick={() => handleTabClick(tab.approvalRequestId)}
                       >
                         <div className="d-flex align-items-start">
@@ -159,9 +156,9 @@ const PendingTask = (props) => {
                               <div className="date">
                                 {tab.requestedDate
                                   ? formatDate(
-                                      tab.requestedDate,
-                                      "MM/DD/YYYY hh:mm A"
-                                    )
+                                    tab.requestedDate,
+                                    "MM/DD/YYYY hh:mm A"
+                                  )
                                   : "No Date"}
                               </div>
                             </div>
@@ -170,9 +167,8 @@ const PendingTask = (props) => {
                                 {tab.moduleName}
                               </span>
                               <div
-                                className={`mytask-type-badge ${
-                                  tab.isFunctional ? "badge-accept" : ""
-                                }`}
+                                className={`mytask-type-badge ${tab.isFunctional ? "badge-accept" : ""
+                                  }`}
                               >
                                 {tab.isFunctional ? "Functional" : "Field"}
                               </div>
