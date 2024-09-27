@@ -31,6 +31,15 @@ const ContactNumberList = ({
     }
   }, [phoneNumberList]);
 
+  useEffect(() => {
+    const customActionExist = phoneNumberConfig && phoneNumberConfig.columns?.find(action => action?.fieldName === "isPrimary");
+    if (isButtonDisable) {
+      customActionExist.colSettings.isDisabled = true;
+    } else {
+      customActionExist.colSettings.isDisabled = false;
+    }
+  }, [isButtonDisable]);
+
   const handleGridCheckBoxChange = (fieldName, rowData) => {
     if (fieldName === "isPrimary") {
       handleCheckBoxChange(rowData);

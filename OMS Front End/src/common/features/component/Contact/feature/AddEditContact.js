@@ -153,7 +153,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                 }
             }
         }
-    }, [editMode, editRef, SecurityKey])
+    }, [editMode, editRef, SecurityKey]);
 
     const handleEditMode = (contactId) => {
         setEditMode(true);
