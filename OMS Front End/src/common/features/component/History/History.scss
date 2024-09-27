@@ -4,6 +4,7 @@
   height: calc(100vh - 345px);
   overflow: hidden;
   overflow-y: auto;
+
   @media only screen and (max-width: 1750px) {
     height: calc(100vh - 300px);
   }
@@ -19,6 +20,7 @@
   width: 100%;
   position: relative;
   padding: 0;
+  padding-top: 20px;
   max-height: 100%;
   overflow: hidden;
   overflow-y: auto;
@@ -27,10 +29,9 @@
     content: "";
     position: absolute;
     top: 0;
-    //   left: 82px;
-    left: 10px;
+    left: 6px;
     height: 100%;
-    width: 4px;
+    width: 3px;
     background: #e9ecef;
     border-radius: 0.25rem;
   }
@@ -173,10 +174,12 @@
     border-left: 3px dashed var(--textColor);
     margin-left: 3%;
     margin-right: 2%;
+
     // max-height: calc(100vh - 345px);
     @media only screen and (max-width: 1750px) {
       // max-height: calc(100vh - 295px);
     }
+
     .timeline-item {
       display: flex;
       gap: 20px;
@@ -292,6 +295,7 @@
 @media only screen and (max-width: 1750px) {
   .new-timeline-sec {
     max-height: calc(100vh - 300px);
+
     .timeline {
       .timeline-item {
         .timeline-item-icon {

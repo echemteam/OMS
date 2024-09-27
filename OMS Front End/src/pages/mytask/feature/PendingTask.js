@@ -148,12 +148,12 @@ const PendingTask = (props) => {
                         }`}
                         onClick={() => handleTabClick(tab.approvalRequestId)}
                       >
-                        <div className="d-flex align-items-start">
+                        <div className="d-flex align-items-start w-100">
                           <span className="profile-icon">
                             {" "}
                             {FirstSecondLetter(tab.eventName)}
                           </span>
-                          <div>
+                          <div className="right-name-desc">
                             <div className="title">
                               {tab.eventName}
                               <div className="date">

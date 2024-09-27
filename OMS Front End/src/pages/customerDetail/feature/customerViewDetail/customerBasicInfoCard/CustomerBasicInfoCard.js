@@ -97,7 +97,7 @@ const CustomerBasicInfoCard = ({
 
   const [addCustomerNotes] = useAddCustomerNotesMutation();
 
-  const { isResponsibleUser, totalCount, approvalSuccessCount, getCustomerCompletionCount, setSubCustomer } = useContext(BasicDetailContext);
+  const { isResponsibleUser, totalCount, approvalSuccessCount, getCustomerCompletionCount, setSubCustomer, subCustomer } = useContext(BasicDetailContext);
   const [isButtonDisable, setIsButtonDisable] = useState(false);
   const hasEditPermission = hasFunctionalPermission(securityKey.EDITBASICCUSTOMERDETAILS);
 
@@ -286,6 +286,7 @@ const CustomerBasicInfoCard = ({
       ToastService.success(
         isAddEditResponsibleUserForCustomerData.errorMessage
       );
+      getCustomerCompletionCount(customerId, subCustomer);
     }
   }, [
     isSuccessAddEditResponsibleUserForCustomer,
@@ -401,6 +402,7 @@ const CustomerBasicInfoCard = ({
     if (isSuccessUpdateCustomerSubCustomer && isUpdateCustomerSubCustomerData) {
       ToastService.success(isUpdateCustomerSubCustomerData.errorMessage);
       getCustomerById();
+      getCustomerCompletionCount(customerId, subCustomer);
     }
   }, [isSuccessUpdateCustomerSubCustomer, isUpdateCustomerSubCustomerData]);
 
