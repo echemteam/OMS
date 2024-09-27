@@ -171,21 +171,21 @@ export const orderInformationData = {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-12 mb-input label-name-small",
       },
     },
-    {
-      id: "orderReceivedDate",
-      lable: "Order Received Date :",
-      Field_Name: "Order Received Date",
-      fieldType: FormFieldTypes.DATEPICKER,
-      dataField: "orderReceivedDate",
-      fieldSetting: {
-        placeholder: "Enter Order Received Date",
-        options: [],
-      },
-      validation: [{ type: "require" }, { type: "text" }],
-      style: {
-        containerCss: "col-4 mb-2",
-      },
-    },
+    // {
+    //   id: "orderReceivedDate",
+    //   lable: "Order Received Date :",
+    //   Field_Name: "Order Received Date",
+    //   fieldType: FormFieldTypes.DATEPICKER,
+    //   dataField: "orderReceivedDate",
+    //   fieldSetting: {
+    //     placeholder: "Enter Order Received Date",
+    //     options: [],
+    //   },
+    //   validation: [{ type: "require" }, { type: "text" }],
+    //   style: {
+    //     containerCss: "col-4 mb-2",
+    //   },
+    // },
     {
       id: "isBillingId",
       lable: "Billing Address ",
@@ -225,6 +225,21 @@ export const orderInformationData = {
         icon: AppIcons.PlusIcon,
         GetByID: AddressType.SHIPPING
       }
+    },
+    {
+      id: "orderReceivedDate",
+      lable: "Order Received Date :",
+      Field_Name: "Order Received Date",
+      fieldType: FormFieldTypes.DATEPICKER,
+      dataField: "orderReceivedDate",
+      fieldSetting: {
+        placeholder: "Enter Order Received Date",
+        options: [],
+      },
+      validation: [{ type: "require" }, { type: "text" }],
+      style: {
+        containerCss: "col-4 mb-2",
+      },
     },
   ],
 };
