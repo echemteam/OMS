@@ -89,7 +89,7 @@ const AddEditContact = forwardRef(({ keyId, addEditContactMutation, onSidebarClo
                     onhandleApiCall(getContectTypeId)
                 }
             }
-            getCompletionCount();
+            getCompletionCount && getCompletionCount();
         }
     }, [isAddEditSuccess, isAddEditData]);
 

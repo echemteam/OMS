@@ -603,7 +603,7 @@ const CustomerBasicInfoCard = ({
               </div> : null}
 
             <div className="field-desc">
-              <div className="inf-label inf-label-width">Customer Completion</div>
+              <div className="inf-label inf-label-width">Profile Completion</div>
               {totalCount &&
                 <>
                   <b>&nbsp;:&nbsp;</b>

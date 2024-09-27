@@ -222,7 +222,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     const handleAddressResponse = (isSuccess, responseData) => {
         if (isSuccess && responseData) {
-            getCompletionCount();
+            getCompletionCount && getCompletionCount();
             if (responseData.errorMessage.includes("exists")) {
                 ToastService.warning(responseData.errorMessage);
                 getById(keyId);
