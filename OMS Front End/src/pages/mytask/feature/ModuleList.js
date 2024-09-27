@@ -13,9 +13,7 @@ const ModuleList = ({ moduleList, onModuleChange, isPending, setModuleList }) =>
 
     // Set the first module as active by default when the component mounts
     useEffect(() => {
-
         getAllModulesWithPendingRequestCount(isPending);
-
     }, [getAllModulesWithPendingRequestCount]);
 
     useEffect(() => {
