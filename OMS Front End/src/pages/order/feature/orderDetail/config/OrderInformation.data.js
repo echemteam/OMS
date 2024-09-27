@@ -136,13 +136,22 @@ export const orderInformationData = {
       style: {
         containerCss: "col-xxl-4 col-xl-4 col-md-4 col-4 mb-input",
       },
-      inputButtonGroup: {
-        isInputButton: true,
-        buttonText: 'Verify',
-        showInformation: {
-          showInputButton: true,
-          faIcon: "fa-search",
-          title: "PO Number"
+      // inputButtonGroup: {
+      //   isInputButton: true,
+      //   buttonText: 'Verify',
+      //   showInformation: {
+      //     showInputButton: true,
+      //     faIcon: "fa-search",
+      //     title: "PO Number"
+      //   }
+      // }
+      inputButtonGroupConfig: {
+        isPrimaryButtonVisible: true,
+        primaryButtonText: 'Verify',
+        infoButtonConfig: {
+          isInfoButtonVisible: true,
+          infoButtonIcon: "fa-search",
+          infoButtonTooltip: "PO Number"
         }
       }
     },

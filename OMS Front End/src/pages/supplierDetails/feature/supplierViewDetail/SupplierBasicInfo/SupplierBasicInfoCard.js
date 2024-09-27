@@ -473,7 +473,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
                 <div className="info-desc">{supplierData?.incotermName}</div>
               </div>
               <div className="field-desc">
-                <div className="inf-label " style={{ minWidth: '130px', maxWidth: '130px' }}>Supplier Completion</div>
+                <div className="inf-label" style={{ minWidth: '130px', maxWidth: '130px' }}>Profile Completion</div>
                 <b>&nbsp;:&nbsp;</b>
                 {totalCount &&
                   <>
