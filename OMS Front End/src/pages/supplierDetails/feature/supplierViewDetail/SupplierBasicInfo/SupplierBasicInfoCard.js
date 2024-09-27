@@ -88,6 +88,7 @@ const SupplierBasicInfoCard = ({ editClick, supplierData, isLoading, supplierId,
   useEffect(() => {
     if (isSuccessAddEditResponsibleUserForSupplier && isAddEditResponsibleUserForSupplierData) {
       ToastService.success(isAddEditResponsibleUserForSupplierData.errorMessage);
+      getSupplierCompletionCount(supplierId);
     }
   }, [isSuccessAddEditResponsibleUserForSupplier, isAddEditResponsibleUserForSupplierData]);
 
