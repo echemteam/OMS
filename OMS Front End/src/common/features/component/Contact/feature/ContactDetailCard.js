@@ -4,13 +4,16 @@ import ContactPhoneNumberDropdown from "./ContactPhoneNumberDropdown";
 import PropTypes from "prop-types";
 import Iconify from "../../../../../components/ui/iconify/Iconify";
 import ContactCloneModel from "./ContactCloneModel";
+import { hasFunctionalPermission } from "../../../../../utils/AuthorizeNavigation/authorizeNavigation";
 
-const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, openModalId, setOpenModalId, isSupplier, onGetContactList, getCompletionCount }, ref) => {
+const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, openModalId, setOpenModalId, isSupplier, onGetContactList,
+  getCompletionCount, isEditablePage, SecurityKey }, ref) => {
 
   const cloneRef = useRef();
   const emailDropdownRef = useRef(null);
   const phoneDropdownRef = useRef(null);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
   const [showEmailDropdown, setShowEmailDropdown] = useState(false);
 
@@ -30,6 +33,20 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (isEditablePage && SecurityKey) {
+      const hasEditPermission = hasFunctionalPermission(SecurityKey.EDIT);
+      if (hasEditPermission) {
+        if (hasEditPermission.isViewOnly === true) {
+          setIsButtonDisable(true);
+        }
+        else {
+          setIsButtonDisable(false);
+        }
+      }
+    }
+  }, [isEditablePage, SecurityKey]);
 
   const getContactTypeClass = (type) => {
     switch (type) {
@@ -254,9 +271,11 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
                 <div className="d-flex edit-delete-button">
                   {showEditIcon ? (
                     <>
-                      <button onClick={() => handleClone(contactItem)} className="edit-btn">
-                        <Iconify icon="clarity:clone-line" />
-                      </button>
+                      {!isButtonDisable &&
+                        <button onClick={() => handleClone(contactItem)} className="edit-btn">
+                          <Iconify icon="clarity:clone-line" />
+                        </button>
+                      }
                       <button onClick={() => handleEdit(contactItem?.contactId)} className="edit-btn ml-1" >
                         {/* <Image imagePath={AppIcons.editThemeIcon} /> */}
                         <Iconify icon="tabler:pencil" />
@@ -383,7 +402,8 @@ const ContactDetailCard = forwardRef(({ contactItem, handleEdit, showEditIcon, o
           </div>
         </div>
       </div>
-      <ContactCloneModel cloneRef={cloneRef} isSupplier={isSupplier} onGetContactList={onGetContactList} getCompletionCount={getCompletionCount} />
+      <ContactCloneModel cloneRef={cloneRef} isSupplier={isSupplier} onGetContactList={onGetContactList} isEditablePage={isEditablePage}
+        getCompletionCount={getCompletionCount} SecurityKey={SecurityKey} />
     </>
   );
 }
