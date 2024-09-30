@@ -450,11 +450,11 @@ const SupplierBasicInfoCard = ({
               <div className="d-flex col-3 flex-column profile-icon-desc justify-content-center">
                 <div className="d-flex w-100">
                   <div className="profile-icon ">
-                    {" "}
-                  {supplierData?.name
-                    ? supplierData?.name.charAt(0).toUpperCase()
-                    : ""}
-                    {/* <Image imagePath={AppIcons.DummyLogo} altText="button Icon" /> */}
+                    {/* {" "}
+                    {supplierData?.name
+                      ? supplierData?.name.charAt(0).toUpperCase()
+                      : ""} */}
+                    <Image imagePath={AppIcons.DummyLogo} altText="button Icon" />
                   </div>
                   <div className="detail-sec">
                     <div className="customer-name">
@@ -472,6 +472,7 @@ const SupplierBasicInfoCard = ({
                           </div>
                         </a>
                         <span
+                          title="Copy Email Address"
                           className="copy-icon"
                           onClick={() =>
                             CopyText(supplierData?.emailAddress, "email")
@@ -490,6 +491,7 @@ const SupplierBasicInfoCard = ({
                         <div className="info-desc">{supplierData?.website}</div>
 
                         <span
+                          title="Copy Website"
                           className="copy-icon"
                           onClick={() =>
                             CopyText(supplierData?.website, "website")

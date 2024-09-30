@@ -483,6 +483,7 @@ const CustomerBasicInfoCard = ({
                       </div>
                     </a>
                     <span
+                    title="Copy Email Address"
                       className="copy-icon"
                       onClick={() =>
                         CopyText(customerData?.emailAddress, "email")
@@ -499,6 +500,7 @@ const CustomerBasicInfoCard = ({
 
                     <span
                       className="copy-icon"
+                      title="Copy Website"
                       onClick={() => CopyText(customerData?.website, "website")}
                     >
                       {/* <Image imagePath={AppIcons.copyIcon} altText="Website Icon" /> */}
