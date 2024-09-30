@@ -91,17 +91,17 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
     useEffect(() => {
         if (isSupplier && isModelOpen) {
             setFieldSetting(formData, 'cityId', FieldSettingType.DISABLED, true);
-            setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, false);
+            // setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, false);
             setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, true);
             if (editMode) {
                 setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, false);
-                setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
+                // setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, true);
             }
         } else if (!isModelOpen && !isOrderManage) {
             onResetForm(addressFormData, setFormData, null);
         } else if (!isSupplier && !isOrderManage) {
             setFieldSetting(formData, 'addressTypeId', FieldSettingType.MULTISELECT, false);
-            setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, false);
+            // setFieldSetting(addressFormData, 'addressTypeId', FieldSettingType.DISABLED, false);
         }
     }, [isSupplier, isModelOpen]);
 
@@ -222,7 +222,7 @@ const AddEditAddress = forwardRef(({ keyId, isSupplier, updateAddress, addAddres
 
     const handleAddressResponse = (isSuccess, responseData) => {
         if (isSuccess && responseData) {
-            getCompletionCount();
+            getCompletionCount && getCompletionCount();
             if (responseData.errorMessage.includes("exists")) {
                 ToastService.warning(responseData.errorMessage);
                 getById(keyId);

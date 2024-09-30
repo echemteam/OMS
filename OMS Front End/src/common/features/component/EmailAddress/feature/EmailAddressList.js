@@ -16,6 +16,15 @@ const EmailAddressList = ({ emailAddressList, molGridRef, handleToggleModal, act
         }
     };
 
+    useEffect(() => {
+        const customActionExist = emailConfig && emailConfig.columns?.find(action => action?.fieldName === "isPrimary");
+        if (isButtonDisable) {
+            customActionExist.colSettings.isDisabled = true;
+        } else {
+            customActionExist.colSettings.isDisabled = false;
+        }
+    }, [isButtonDisable]);
+
     const [list, setList] = useState([]);
 
     // const sortedEmailList = [...emailAddressList].sort((a, b) => b.id - a.id);

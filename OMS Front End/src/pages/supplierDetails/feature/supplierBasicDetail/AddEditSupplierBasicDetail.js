@@ -93,10 +93,10 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             formSetting.isViewOnly = false;
         }
         if (isOpen) {
-            setFieldSetting(supplierBasicData, 'name', FieldSettingType.INPUTBUTTON);
+            // setFieldSetting(supplierBasicData, 'name', FieldSettingType.INPUTBUTTON);
             setFieldSetting(supplierBasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON);
         } else if (!isOpen) {
-            setFieldSetting(supplierBasicData, 'name', FieldSettingType.INPUTBUTTON, true);
+            // setFieldSetting(supplierBasicData, 'name', FieldSettingType.INPUTBUTTON, true);
             setFieldSetting(supplierBasicData, 'name', FieldSettingType.SECOUNDRYINPUTBUTTON, true);
         }
 
@@ -116,7 +116,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
             if (!isOpen) {
                 const modifyFormFields = removeFormFields(formData, ['responsibleUserId']);
                 setFormData(modifyFormFields);
-                setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON, true);
+                // setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON, true);
             }
         };
 
@@ -128,7 +128,7 @@ const AddEditSupplierBasicDetail = ({ keyId, getSupplierById, isOpen, onSidebarC
         if (isOpen) {
             if (supplierId > 0) {
                 getSupplierBasicInformationById(supplierId);
-                setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON);
+                // setFieldSetting(formData, 'name', FieldSettingType.INPUTBUTTON);
             }
         }
     }, [isOpen, supplierId, getSupplierBasicInformationById])

@@ -63,7 +63,6 @@ export const addEditDeliveryFormData = {
 
 export const OurAccountGridConfig = {
     columns: [
-
         {
             name: "Zone",
             fieldName: "zone",
@@ -98,24 +97,6 @@ export const OurAccountGridConfig = {
             colSettings: {},
             allowShort: false
         },
-        // {
-        //     name: "Is Primary",
-        //     fieldName: "isPrimary",
-        //     colStyle: {
-        //         width: "20%",
-        //     },
-        //     colType: GridColumnType.CHECKBOX,
-        //     allowEditColumn: true,
-        //     editColumn: {
-        //         editColType: EditGridColumnType.CHECKBOX,
-        //         editColFieldName: "isPrimary",
-        //         editColValidation: [],
-        //     },
-        //     colSettings: {
-        //         allowCheckbox: true,
-        //         allowDisable: true
-        //     }
-        // },
         {
             name: "Is Primary",
             fieldName: "isPrimary",
@@ -124,7 +105,7 @@ export const OurAccountGridConfig = {
                 width: "20%",
             },
             colSettings: {
-                isDisabled: false,
+                isDisabled: true,
                 allowEdit: true
             },
             allowEditColumn: true,
@@ -149,13 +130,14 @@ export const OurAccountGridConfig = {
             allowShort: false
         },
     ],
-    allowEdit: true,
     editSettings: {
-        defualtEditableView: true,
         buttons: {
             save: true,
-            delete: false,
-            cancel: false
+            cancel: true
         }
-    }
+    },
+    allowEdit: true,
+    handleRowDataUpdate: null,
+    OnColumnChangeEdit: null,
+    hasChildGridTable: false,
 };

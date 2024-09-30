@@ -271,9 +271,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
       if (isGetAllSubCustomersData.length === 0) {
         setFormData((prevFormData) => ({
           ...prevFormData,
-          formFields: prevFormData.formFields.filter(
-            (field) => field.dataField !== "subCustomerMainCustomerId"
-          ),
+          formFields: prevFormData.formFields.filter((field) => field.dataField !== "subCustomerMainCustomerId"),
         }));
       } else {
         const subcustomerOptions = isGetAllSubCustomersData.map((item) => ({
@@ -282,9 +280,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
         }));
         setFormData((prevFormData) => {
           const updatedFormData = { ...prevFormData };
-          const dropdownField = updatedFormData.formFields?.find(
-            (item) => item.dataField === "subCustomerMainCustomerId"
-          );
+          const dropdownField = updatedFormData.formFields?.find((item) => item.dataField === "subCustomerMainCustomerId");
           if (dropdownField) {
             dropdownField.fieldSetting.options = subcustomerOptions;
           }
@@ -302,9 +298,7 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
     if (!isSubCustomerDropdownVisible) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        formFields: prevFormData.formFields.filter(
-          (field) => field.dataField !== "subCustomerMainCustomerId"
-        ),
+        formFields: prevFormData.formFields.filter((field) => field.dataField !== "subCustomerMainCustomerId"),
       }));
     }
   }, [isSubCustomerDropdownVisible]);
@@ -479,43 +473,48 @@ const OrderDetails = ({ onHandleOrderInformation }) => {
         />
       </div>
       <div className="row address-group">
-        {/* <div className="col-4"></div> */}
-        <div className="col-4">
-          <div className="address">
-            {getBillingAddressData ? (
-              <>
-                <div>{getBillingAddressData.addressLine1}</div>
-                <div>{getBillingAddressData.addressLine2}</div>
-                <div>{getBillingAddressData.cityName}</div>
-                <div>{getBillingAddressData.stateName}</div>
-                <div>
-                  {getBillingAddressData.countryName},{" "}
-                  {getBillingAddressData.zipCode}
-                </div>
-              </>
-            ) : (
-              <NoRecordFound message="No Address Found"/>
-            )}
+        {getBillingAddressData &&
+          <div className="col-4">
+            <h6>Billing Address</h6>
+            <div className="address">
+              {getBillingAddressData ? (
+                <>
+                  <div>{getBillingAddressData.addressLine1}</div>
+                  <div>{getBillingAddressData.addressLine2}</div>
+                  <div>{getBillingAddressData.cityName}</div>
+                  <div>{getBillingAddressData.stateName}</div>
+                  <div>
+                    {getBillingAddressData.countryName},{" "}
+                    {getBillingAddressData.zipCode}
+                  </div>
+                </>
+              ) : (
+                <NoRecordFound message="No Address Found" />
+              )}
+            </div>
           </div>
-        </div>
-        <div className="col-4">
-          <div className="address">
-            {getShippingAddressData ? (
-              <>
-                <div>{getShippingAddressData.addressLine1}</div>
-                <div>{getShippingAddressData.addressLine2}</div>
-                <div>{getShippingAddressData.cityName}</div>
-                <div>{getShippingAddressData.stateName}</div>
-                <div>
-                  {getShippingAddressData.countryName},{" "}
-                  {getShippingAddressData.zipCode}
-                </div>
-              </>
-            ) : (
-              <NoRecordFound message="No Address Found"/>
-            )}
+        }
+        {getShippingAddressData &&
+          <div className="col-4">
+            <h6>Shipping Address</h6>
+            <div className="address">
+              {getShippingAddressData ? (
+                <>
+                  <div>{getShippingAddressData.addressLine1}</div>
+                  <div>{getShippingAddressData.addressLine2}</div>
+                  <div>{getShippingAddressData.cityName}</div>
+                  <div>{getShippingAddressData.stateName}</div>
+                  <div>
+                    {getShippingAddressData.countryName},{" "}
+                    {getShippingAddressData.zipCode}
+                  </div>
+                </>
+              ) : (
+                <NoRecordFound message="No Address Found" />
+              )}
+            </div>
           </div>
-        </div>
+        }
       </div>
 
       <ExistingCustomerSupplierInfo
